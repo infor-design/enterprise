@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="readonly-datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+    $('body').on('initialized', function () {
+     //Locale.set('en-US').done(function () {
+      var columns = [],
+        data = [];
+
+      var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
+
+      $.getJSON(url, function(res) {
+
+        //Define Columns for the Grid.
+        columns.push({ id: 'productId',name: 'Product Id', field: 'productId',  formatter: Formatters.Readonly });
+        columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+        columns.push({ id: 'custom', name: 'Custom', field: 'quantity', postRender: true});
+
+        //Init and get the api for the grid
+        $('#readonly-datagrid').datagrid({
+          columns: columns,
+          dataset: res.data,
+          columnReorder: true,
+          paging: true,
+          pagesize: 8,
+          onPostRenderCell: function (container, args) {
+            console.log('Post Render Row', args.row);
+            if (args.row !== 1) { //Simulate some logic around the buttons you might need
+              container.innerHTML = '<button onclick="alert(\'Great Click!\')" type="button" class="btn-icon"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-settings"/></svg><span>Date</span></button>';
+            }
+          },
+          onDestroyCell: function (container, args) {
+            console.log('Destroy Row', args.row);
+          }
+
+        });
+
+      });
+
+    });
+
+</script>

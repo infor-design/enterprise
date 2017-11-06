@@ -91,7 +91,18 @@
         }
         else {
           this.container = $('<span class="'+ cssClass +'"></span>');
-          lookup.wrap(this.container);
+
+          if (this.element.is('.field-options')) {
+            var field = this.element.closest('.field'),
+              fieldOptionsTrigger = field.find('.btn-actions');
+
+            lookup
+              .add(fieldOptionsTrigger)
+              .add(fieldOptionsTrigger.next('.popupmenu'))
+              .wrapAll(this.container);
+          } else {
+            lookup.wrap(this.container);
+          }
         }
 
         // this.container = $('<span class="lookup-wrapper"></span>');
@@ -110,6 +121,14 @@
         if (!this.settings.editable) {
           this.element.attr('readonly', 'true').addClass('is-not-editable');
         }
+
+        // Fix field options in case lookup is initialized after
+        var wrapper = this.element.parent('.lookup-wrapper');
+        if (wrapper.next().is('.btn-actions')) {
+          this.element.data('fieldoptions').destroy();
+          this.element.fieldoptions();
+        }
+
         this.addAria();
       },
 

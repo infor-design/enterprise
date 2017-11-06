@@ -1,1838 +1,243 @@
-    <div class="page-container">
 
-            <div class="busy" id="busy1" style="min-height: 820px;">
-                <div id="divMainContainer" class="main-content-wrapper">
-                    <div class="main-left" role="main">
-                        <div id="tabs-vertical" class="vertical tab-container scrollable">
-                            <div class="tab-list-container">
-                                <div class="tab-list-info">
-                                    <h2 id="lblSettings">Settings</h2>
-                                </div>
-                                <ul class="tab-list">
-                                    <li class="tab"><a href="#PersonalInformationPanel" id="lnkTabPersonalInformation">Personal Information</a></li>
-                                    <li class="tab"><a href="#CommunicationAndDisplayPanel" id="lnkTabCommunicatonAndDisplay">Communication &amp; Display</a></li>
-                                    <li class="tab"><a href="#ProductAccessPanel" id="lnkTabProductAccess">Product Access</a></li>
-                                    <li class="tab"><a href="#IncidentSettingsPanel" id="lnkTabIncidentSettings">Incident Settings</a></li>
-                                    <li class="tab"><a href="#IncidentViewsPanel" id="lnkTabIncidentViews">Incident Views</a></li>
-                                    <li class="tab"><a href="#NewsPanel" id="lnkTabNews">News Email Settings</a></li>
-                                    <li id="liInforCommunity" class="tab"><a href="#InforCommunityPanel" id="lnkTabInforCommunity">Infor Community Settings</a></li>
+<style>
+  @media (max-width: 980px){.column, .columns {width: 100% !important;}}
+</style>
+<div class="page-container">
 
-                                    <li id="liAHRS" class="tab"><a href="#AHRSPanel" id="lnkTabAHRS">AHRS</a></li>
-                                </ul>
-                                <div class="tab-list-info">
-                                    <input type="submit" name="btnSave" value="Save" id="btnSave" class="btn-primary" style="text-align:center;" />
-                                </div>
-                            </div>
+  <div class="busy" id="busy1">
+    <div id="divMainContainer" class="main-content-wrapper">
+      <div class="main-left" role="main">
+        <div id="tabs-vertical" class="vertical tab-container scrollable">
+          <div class="tab-list-container">
+            <div class="tab-list-info">
+              <h2 id="lblSettings">Settings</h2>
+            </div>
+            <ul class="tab-list">
+              <li class="tab"><a href="#PersonalInformationPanel" id="lnkTabPersonalInformation">Personal Information</a></li>
+              <li class="tab"><a href="#CommunicationAndDisplayPanel" id="lnkTabCommunicatonAndDisplay">Communication &amp; Display</a></li>
+              <li class="tab"><a href="#ProductAccessPanel" id="lnkTabProductAccess">Product Access</a></li>
+              <li class="tab"><a href="#IncidentSettingsPanel" id="lnkTabIncidentSettings">Incident Settings</a></li>
+              <li class="tab"><a href="#IncidentViewsPanel" id="lnkTabIncidentViews">Incident Views</a></li>
+              <li class="tab"><a href="#NewsPanel" id="lnkTabNews">News Email Settings</a></li>
+              <li id="liInforCommunity" class="tab"><a href="#InforCommunityPanel" id="lnkTabInforCommunity">Infor Community Settings</a></li>
+              <li id="liAHRS" class="tab"><a href="#AHRSPanel" id="lnkTabAHRS">AHRS</a></li>
+            </ul>
+            <div class="tab-list-info">
+              <input type="submit" name="btnSave" value="Save" id="btnSave" class="btn-primary" style="text-align:center;" />
+            </div>
+          </div>
 
-                            <div class="tab-panel-container">
+          <div class="tab-panel-container">
 
-                            <!-- Start of PersonalInformation tab-panel -->
-                                <div id="PersonalInformationPanel" class="tab-panel">
-                                    <a href="#"><span id="spnPersonalInformation">Personal Information</span></a>
-                                    <div class="row">
-                                        <div class="six columns">
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div id="divEmailError" class="six columns">
-                                            <label id="lblEmailLoginID" for="txtEmailLoginID" class="required">Email</label>
-                                            <button id="btnEmailLoginIDValue" class="label" data-placement="top" data-popover="divPopoverEmailLoginID" data-trigger="click" type="button">martin.lick@infor.com</button>
-                                            <div id="divPopoverEmailLoginID" class="hidden">To update your email address, please contact your Contact Administrator or <a href="/espublic/EN/AnswerLinkDotNet/SoHo/Cases/SoHoPopNewCase.aspx?byProductID=2801"> click here </a> to enter an Incident to request a change.</div>
-                                        </div>
-                                        <div class="six columns desktop-only">
-                                            <label id="lblInforXtremeID" for="lblInforXtremeIDValue">Infor Xtreme ID</label>
-                                            <br />
-                                            <label id="lblInforXtremeIDValue">213264</label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblCompany" for="lblCompanyValue">Company</label>
-                                            <br />
-                                            <label id="lblCompanyValue">Infor Xtreme Support (4000018)</label>
-                                        </div>
-                                        <div class="six columns desktop-only">
-                                            <label id="lblDepartment" for="lblDepartmentVal" style="display:;">Department</label>
-                                            <br />
-                                            <label id="lblDepartmentVal" style="display:;">IT Architecture &amp; Development</label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                            <div class="six columns field">
-                                            <label id="lblSalutation" for="ddlSalutation" class="required">Salutation</label>
-                                            <select name="ddlSalutation" id="ddlSalutation" class="dropdown">
-	<option value="17">Ind</option>
-	<option selected="selected" value="9">Mr</option>
-	<option value="10">Mrs</option>
-	<option value="11">Ms</option>
-</select>
-                                        </div>
-                                        <div class="six columns field">
-                                            <label id="lblJobTitle" for="txtJobTitle" class="required">Job Title</label>
-                                            <input name="txtJobTitle" type="text" id="txtJobTitle" maxlength="80" aria-required="true" data-validate="required" value="Software Engineer, Senior" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblFirstName" for="lblFirstNameVal">First Name</label>
-                                            <label id="lblFirstNameVal">Marty</label>
-                                        </div>
-                                        <div class="six columns desktop-only">
-                                            <label id="lblLastName" for="lblLastNameVal">Last Name</label>
-                                            <label id="lblLastNameVal">Lick</label>
-                                        </div>
-                                    </div>
+            <!-- Start of PersonalInformation tab-panel -->
+            <div id="PersonalInformationPanel" class="tab-panel">
+              <a href="#"><span id="spnPersonalInformation">Personal Information</span></a>
+              <div class="row">
+                <div class="six columns"></div>
+                <div class="six columns"></div>
+              </div>
+              <div class="row">
+                <div id="divEmailError" class="six columns">
+                  <label id="lblEmailLoginID" for="txtEmailLoginID" class="required">Email</label>
+                  <button id="btnEmailLoginIDValue" class="label" data-placement="top" data-popover="divPopoverEmailLoginID" data-trigger="click" type="button">martin.lick@infor.com</button>
+                  <div id="divPopoverEmailLoginID" class="hidden">To update your email address, please contact your Contact Administrator or <a href="/espublic/EN/AnswerLinkDotNet/SoHo/Cases/SoHoPopNewCase.aspx?byProductID=2801"> click here </a> to enter an Incident to request a change.</div>
+                </div>
+                <div class="six columns desktop-only">
+                  <label id="lblInforXtremeID" for="lblInforXtremeIDValue">Infor Xtreme ID</label>
+                  <br />
+                  <label id="lblInforXtremeIDValue">213264</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="six columns">
+                  <label id="lblCompany" for="lblCompanyValue">Company</label>
+                  <br />
+                  <label id="lblCompanyValue">Infor Xtreme Support (4000018)</label>
+                </div>
+                <div class="six columns desktop-only">
+                  <label id="lblDepartment" for="lblDepartmentVal">Department</label>
+                  <br />
+                  <label id="lblDepartmentVal">IT Architecture &amp; Development</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblSalutation" for="ddlSalutation" class="required">Salutation</label>
+                    <select name="ddlSalutation" id="ddlSalutation" class="dropdown">
+                    	<option value="17">Ind</option>
+                    	<option selected="selected" value="9">Mr</option>
+                    	<option value="10">Mrs</option>
+                    	<option value="11">Ms</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblJobTitle" for="txtJobTitle" class="required">Job Title</label>
+                    <input name="txtJobTitle" type="text" id="txtJobTitle" maxlength="80" aria-required="true" data-validate="required" value="Software Engineer, Senior" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="six columns">
+                  <label id="lblFirstName" for="lblFirstNameVal">First Name</label>
+                  <label id="lblFirstNameVal">Marty</label>
+                </div>
+                <div class="six columns desktop-only">
+                  <label id="lblLastName" for="lblLastNameVal">Last Name</label>
+                  <label id="lblLastNameVal">Lick</label>
+                </div>
+              </div>
 
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblPreferredName" for="txtPreferredName">Preferred Name</label>
-                                            <input name="txtPreferredName" type="text" id="txtPreferredName" maxlength="50" value="Marty" />
-                                        </div>
-                                        <div class="six columns desktop-only">
-                                            <label id="lblAliasName" for="txtAliasName">Alias Name</label>
-                                            <input name="txtAliasName" type="text" id="txtAliasName" maxlength="15" />
-                                        </div>
-                                    </div>
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblPreferredName" for="txtPreferredName">Preferred Name</label>
+                    <input name="txtPreferredName" type="text" id="txtPreferredName" maxlength="50" value="Marty" />
+                  </div>
+                </div>
+                <div class="six columns desktop-only">
+                  <div class="field">
+                    <label id="lblAliasName" for="txtAliasName">Alias Name</label>
+                    <input name="txtAliasName" type="text" id="txtAliasName" maxlength="15" />
+                  </div>
+                </div>
+              </div>
 
-                                    <div class="row">
-                                        <div class="six columns field">
-                                            <label id="lblPreferredPhone" for="txtPreferredPhone" class="required">Preferred Phone</label>
-                                            <input name="txtPreferredPhone" type="text" id="txtPreferredPhone" maxlength="32" data-validate="required" aria-required="true" placeholder="Country + Area Code + Phone Number" value="+1 312 258 6200" />
-                                            <a href="#" data-popover="divPopoverPreferredPhone" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
-                                                <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg>
-                                            </a>
-                                            <div id="divPopoverPreferredPhone">Country + Area Code + Phone Number</div>
-                                        </div>
-                                        <div class="six columns field">
-                                            <label id="lblPExtension" for="txtPExtension">Extension</label>
-                                            <input name="txtPExtension" type="text" id="txtPExtension" maxlength="10" class="input-sm" value="444" />
-                                        </div>
-                                    </div>
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblPreferredPhone" for="txtPreferredPhone" class="required">Preferred Phone</label>
+                    <input name="txtPreferredPhone" type="text" id="txtPreferredPhone" maxlength="32" data-validate="required" aria-required="true" placeholder="Country + Area Code + Phone Number" value="+1 312 258 6200" />
+                    <a href="#" data-popover="divPopoverPreferredPhone" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
+                    <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg></a>
+                    <div id="divPopoverPreferredPhone">Country + Area Code + Phone Number</div>
+                  </div>
+                </div>
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblPExtension" for="txtPExtension">Extension</label>
+                    <input name="txtPExtension" type="text" id="txtPExtension" maxlength="10" class="input-sm" value="444" />
+                  </div>
+                </div>
+              </div>
 
-                                    <div class="row">
-                                        <div class="six columns field">
-                                            <label id="lblCompanyPhone" for="txtCompanyPhone">Alternate Phone</label>
-                                            <input name="txtCompanyPhone" type="text" id="txtCompanyPhone" maxlength="30" placeholder="Country + Area Code + Phone Number" />
-                                            <a href="#" data-popover="divPopoverCompanyPhone" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
-                                                <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg>
-                                            </a>
-                                            <div id="divPopoverCompanyPhone">Country + Area Code + Phone Number</div>
-                                        </div>
-                                        <div class="six columns field">
-                                            <label id="lblCompanyExtension" for="txtCompanyExtension">Extension</label>
-                                            <input name="txtCompanyExtension" type="text" id="txtCompanyExtension" maxlength="30" class="input-sm" />
-                                        </div>
-                                    </div>
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblCompanyPhone" for="txtCompanyPhone">Alternate Phone</label>
+                    <input name="txtCompanyPhone" type="text" id="txtCompanyPhone" maxlength="30" placeholder="Country + Area Code + Phone Number" />
+                    <a href="#" data-popover="divPopoverCompanyPhone" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
+                    <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg></a>
+                    <div id="divPopoverCompanyPhone">Country + Area Code + Phone Number</div>
+                  </div>
+                </div>
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblCompanyExtension" for="txtCompanyExtension">Extension</label>
+                    <input name="txtCompanyExtension" type="text" id="txtCompanyExtension" maxlength="30" class="input-sm" />
+                  </div>
+                </div>
+              </div>
 
-                                    <div class="row">
-                                        <div class="six columns field">
-                                            <label id="lblMobile" for="txtMobile">Mobile</label>
-                                            <input name="txtMobile" type="text" id="txtMobile" maxlength="32" placeholder="Country + Area Code + Phone Number" />
-                                            <a href="#" data-popover="divPopoverMobile" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
-                                                <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg>
-                                            </a>
-                                            <div id="divPopoverMobile">Country + Area Code + Phone Number</div>
-                                        </div>
-                                        <div class="six columns field">
-                                            <label id="lblFax" for="txtFax">Fax</label>
-                                            <input name="txtFax" type="text" id="txtFax" maxlength="30" placeholder="Country + Area Code + Phone Number" />
-                                            <a href="#" data-popover="divPopoverFax" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
-                                                <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg>
-                                            </a>
-                                            <div id="divPopoverFax">Country + Area Code + Phone Number</div>
-                                        </div>
-                                    </div>
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblMobile" for="txtMobile">Mobile</label>
+                    <input name="txtMobile" type="text" id="txtMobile" maxlength="32" placeholder="Country + Area Code + Phone Number" />
+                    <a href="#" data-popover="divPopoverMobile" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
+                    <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg></a>
+                    <div id="divPopoverMobile">Country + Area Code + Phone Number</div>
+                  </div>
+                </div>
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblFax" for="txtFax">Fax</label>
+                    <input name="txtFax" type="text" id="txtFax" maxlength="30" placeholder="Country + Area Code + Phone Number" />
+                    <a href="#" data-popover="divPopoverFax" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
+                    <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg></a>
+                    <div id="divPopoverFax">Country + Area Code + Phone Number</div>
+                  </div>
+                </div>
+              </div>
 
-                                    <div class="row">
-                                        <div class="six columns field">
-                                            <label id="lblTimeZone" for="ddlTimeZones" class="required">Time Zone</label>
-                                            <select name="ddlTimeZones" id="ddlTimeZones" class="dropdown">
-	<option value="51">Alaska Standard Time</option>
-	<option value="50">Arizona</option>
-	<option value="29">Atlantic Standard Time</option>
-	<option value="47">Australian Central Daylight Time</option>
-	<option value="39">Australian Central Standard Time</option>
-	<option value="48">Australian Eastern Daylight Time</option>
-	<option value="40">Australian Eastern Standard Time</option>
-	<option value="44">Australian Western Standard Time</option>
-	<option value="46">Central European Time</option>
-	<option selected="selected" value="26">Central Standard Time</option>
-	<option value="45">Eastern European Time</option>
-	<option value="25">Eastern Standard Time</option>
-	<option value="35">Greenwich Mean Time (GMT and BST)</option>
-	<option value="32">Hawaii-Aleutian Standard Time</option>
-	<option value="31">Indiana</option>
-	<option value="27">Mountain Standard Time</option>
-	<option value="49">New Zealand Daylight Time</option>
-	<option value="41">New Zealand Standard Time</option>
-	<option value="30">Newfoundland Standard Time</option>
-	<option value="28">Pacific Standard Time</option>
-	<option value="37">Portuguese Winter Time</option>
-	<option value="38">South African Standard Time</option>
-	<option value="36">Western European Standard Time</option>
-	<option value="13">World Time Zone A - GMT +1</option>
-	<option value="14">World Time Zone B - GMT +2</option>
-	<option value="15">World Time Zone C - GMT +3</option>
-	<option value="16">World Time Zone D - GMT +4</option>
-	<option value="17">World Time Zone E - GMT +5</option>
-	<option value="18">World Time Zone F - GMT +6</option>
-	<option value="19">World Time Zone G - GMT +7</option>
-	<option value="20">World Time Zone H - GMT +8</option>
-	<option value="21">World Time Zone I - GMT +9</option>
-	<option value="22">World Time Zone K - GMT +10</option>
-	<option value="23">World Time Zone L - GMT+11</option>
-	<option value="24">World Time Zone M - GMT +12</option>
-	<option value="11">World Time Zone N - GMT -1</option>
-	<option value="10">World Time Zone O - GMT -2</option>
-	<option value="9">World Time Zone P - GMT -3</option>
-	<option value="8">World Time Zone Q - GMT -4</option>
-	<option value="42">World Time Zone R - GMT -5</option>
-	<option value="6">World Time Zone S - GMT -6</option>
-	<option value="5">World Time Zone T - GMT -7</option>
-	<option value="4">World Time Zone U - GMT -8</option>
-	<option value="3">World Time Zone V - GMT -9</option>
-	<option value="2">World Time Zone W - GMT -10</option>
-	<option value="1">World Time Zone X - GMT -11</option>
-	<option value="43">World Time Zone Y - GMT -12</option>
-	<option value="12">World Time Zone Z - GMT</option>
-	<option value="33">Yukon Standard Time</option>
-</select>
-                                        </div>
-                                        <div class="six columns field desktop-only">
-                                            <label id="lblCountry" for="ddlCountry" class="required">Country</label>
-                                            <select name="ddlCountry" id="ddlCountry" class="dropdown">
-	<option value="Afghanistan">Afghanistan</option>
-	<option value="Albania">Albania</option>
-	<option value="Algeria">Algeria</option>
-	<option value="Andorra">Andorra</option>
-	<option value="Angola">Angola</option>
-	<option value="Anguilla">Anguilla</option>
-	<option value="Antigua and Barbuda">Antigua and Barbuda</option>
-	<option value="Argentina">Argentina</option>
-	<option value="Armenia">Armenia</option>
-	<option value="Aruba">Aruba</option>
-	<option value="Australia">Australia</option>
-	<option value="Austria">Austria</option>
-	<option value="Azerbaijan">Azerbaijan</option>
-	<option value="Bahamas">Bahamas</option>
-	<option value="Bahrain">Bahrain</option>
-	<option value="Bangladesh">Bangladesh</option>
-	<option value="Barbados">Barbados</option>
-	<option value="Belarus">Belarus</option>
-	<option value="Belgium">Belgium</option>
-	<option value="Belize">Belize</option>
-	<option value="Benin">Benin</option>
-	<option value="Bermuda">Bermuda</option>
-	<option value="Bhutan">Bhutan</option>
-	<option value="Bolivia">Bolivia</option>
-	<option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
-	<option value="Botswana">Botswana</option>
-	<option value="Brazil">Brazil</option>
-	<option value="British Virgin Islands">British Virgin Islands</option>
-	<option value="Brunei">Brunei</option>
-	<option value="Bulgaria">Bulgaria</option>
-	<option value="Burkina Faso">Burkina Faso</option>
-	<option value="Burundi">Burundi</option>
-	<option value="Cambodia">Cambodia</option>
-	<option value="Cameroon">Cameroon</option>
-	<option value="Canada">Canada</option>
-	<option value="Cape Verde">Cape Verde</option>
-	<option value="Cayman Islands">Cayman Islands</option>
-	<option value="Central African Republic">Central African Republic</option>
-	<option value="Chad">Chad</option>
-	<option value="Chile">Chile</option>
-	<option value="China">China</option>
-	<option value="Colombia">Colombia</option>
-	<option value="Congo">Congo</option>
-	<option value="Cook Islands">Cook Islands</option>
-	<option value="Costa Rica">Costa Rica</option>
-	<option value="Côte d&#39;Ivoire">C&#244;te d&#39;Ivoire</option>
-	<option value="Croatia">Croatia</option>
-	<option value="Cuba">Cuba</option>
-	<option value="Curaçao">Cura&#231;ao</option>
-	<option value="Cyprus">Cyprus</option>
-	<option value="Czech Republic">Czech Republic</option>
-	<option value="Denmark">Denmark</option>
-	<option value="Djibouti">Djibouti</option>
-	<option value="Dominica">Dominica</option>
-	<option value="Dominican Republic">Dominican Republic</option>
-	<option value="East Timor">East Timor</option>
-	<option value="Ecuador">Ecuador</option>
-	<option value="Egypt">Egypt</option>
-	<option value="El Salvador">El Salvador</option>
-	<option value="Equatorial Guinea">Equatorial Guinea</option>
-	<option value="Estonia">Estonia</option>
-	<option value="Ethiopia">Ethiopia</option>
-	<option value="Fiji">Fiji</option>
-	<option value="Finland">Finland</option>
-	<option value="France">France</option>
-	<option value="French Guiana">French Guiana</option>
-	<option value="French Polynesia">French Polynesia</option>
-	<option value="French Southern Terr">French Southern Terr</option>
-	<option value="Gabon">Gabon</option>
-	<option value="Gambia">Gambia</option>
-	<option value="Gaza Strip (Palestine)">Gaza Strip (Palestine)</option>
-	<option value="Georgia">Georgia</option>
-	<option value="Germany">Germany</option>
-	<option value="Ghana">Ghana</option>
-	<option value="Gibraltar">Gibraltar</option>
-	<option value="Greece">Greece</option>
-	<option value="Greenland">Greenland</option>
-	<option value="Grenada">Grenada</option>
-	<option value="Guadeloupe">Guadeloupe</option>
-	<option value="Guam">Guam</option>
-	<option value="Guatemala">Guatemala</option>
-	<option value="Guernsey">Guernsey</option>
-	<option value="Guinea">Guinea</option>
-	<option value="Guinea-Bissau">Guinea-Bissau</option>
-	<option value="Guyana">Guyana</option>
-	<option value="Haiti">Haiti</option>
-	<option value="Honduras">Honduras</option>
-	<option value="Hong Kong">Hong Kong</option>
-	<option value="Hungary">Hungary</option>
-	<option value="Iceland">Iceland</option>
-	<option value="India">India</option>
-	<option value="Indonesia">Indonesia</option>
-	<option value="Iran">Iran</option>
-	<option value="Iraq">Iraq</option>
-	<option value="Ireland">Ireland</option>
-	<option value="Isle of Man">Isle of Man</option>
-	<option value="Israel">Israel</option>
-	<option value="Italy">Italy</option>
-	<option value="Jamaica">Jamaica</option>
-	<option value="Japan">Japan</option>
-	<option value="Jersey">Jersey</option>
-	<option value="Jordan">Jordan</option>
-	<option value="Kazakhstan">Kazakhstan</option>
-	<option value="Kenya">Kenya</option>
-	<option value="Korea North">Korea North</option>
-	<option value="Kosovo">Kosovo</option>
-	<option value="Kuwait">Kuwait</option>
-	<option value="Laos">Laos</option>
-	<option value="Latvia">Latvia</option>
-	<option value="Lebanon">Lebanon</option>
-	<option value="Lesotho">Lesotho</option>
-	<option value="Liberia">Liberia</option>
-	<option value="Libya">Libya</option>
-	<option value="Liechtenstein">Liechtenstein</option>
-	<option value="Lithuania">Lithuania</option>
-	<option value="Luxembourg">Luxembourg</option>
-	<option value="Macau">Macau</option>
-	<option value="Macedonia">Macedonia</option>
-	<option value="Madagascar">Madagascar</option>
-	<option value="Malawi">Malawi</option>
-	<option value="Malaysia">Malaysia</option>
-	<option value="Maldives">Maldives</option>
-	<option value="Mali">Mali</option>
-	<option value="Malta">Malta</option>
-	<option value="Martinique">Martinique</option>
-	<option value="Mauritania">Mauritania</option>
-	<option value="Mauritius">Mauritius</option>
-	<option value="Mayotte">Mayotte</option>
-	<option value="Mexico">Mexico</option>
-	<option value="Moldova">Moldova</option>
-	<option value="Monaco">Monaco</option>
-	<option value="Mongolia">Mongolia</option>
-	<option value="Montenegro">Montenegro</option>
-	<option value="Montserrat">Montserrat</option>
-	<option value="Morocco">Morocco</option>
-	<option value="Mozambique">Mozambique</option>
-	<option value="Myanmar">Myanmar</option>
-	<option value="Namibia">Namibia</option>
-	<option value="Nepal">Nepal</option>
-	<option value="Netherlands">Netherlands</option>
-	<option value="Netherlands Antilles">Netherlands Antilles</option>
-	<option value="New Caledonia">New Caledonia</option>
-	<option value="New Zealand">New Zealand</option>
-	<option value="Nicaragua">Nicaragua</option>
-	<option value="Niger">Niger</option>
-	<option value="Nigeria">Nigeria</option>
-	<option value="Norfolk Island">Norfolk Island</option>
-	<option value="Northern Ireland">Northern Ireland</option>
-	<option value="Northern Mariana Islands">Northern Mariana Islands</option>
-	<option value="Norway">Norway</option>
-	<option value="Oman">Oman</option>
-	<option value="Pakistan">Pakistan</option>
-	<option value="Palau">Palau</option>
-	<option value="Panama">Panama</option>
-	<option value="Papua New Guinea">Papua New Guinea</option>
-	<option value="Paraguay">Paraguay</option>
-	<option value="Peru">Peru</option>
-	<option value="Philippines">Philippines</option>
-	<option value="Poland">Poland</option>
-	<option value="Portugal">Portugal</option>
-	<option value="Puerto Rico">Puerto Rico</option>
-	<option value="Qatar">Qatar</option>
-	<option value="Republic of Korea">Republic of Korea</option>
-	<option value="Reunion">Reunion</option>
-	<option value="Romania">Romania</option>
-	<option value="Russian Federation">Russian Federation</option>
-	<option value="Rwanda">Rwanda</option>
-	<option value="Saint Lucia">Saint Lucia</option>
-	<option value="Saint Martin">Saint Martin</option>
-	<option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
-	<option value="Samoa">Samoa</option>
-	<option value="San Marino">San Marino</option>
-	<option value="Saudi Arabia">Saudi Arabia</option>
-	<option value="Scotland">Scotland</option>
-	<option value="Senegal">Senegal</option>
-	<option value="Serbia and Montenegro">Serbia and Montenegro</option>
-	<option value="Seychelles">Seychelles</option>
-	<option value="Sierra Leone">Sierra Leone</option>
-	<option value="Singapore">Singapore</option>
-	<option value="Slovakia">Slovakia</option>
-	<option value="Slovenia">Slovenia</option>
-	<option value="Solomon Islands">Solomon Islands</option>
-	<option value="Somalia">Somalia</option>
-	<option value="South Africa">South Africa</option>
-	<option value="South Wales">South Wales</option>
-	<option value="Spain">Spain</option>
-	<option value="Sri Lanka">Sri Lanka</option>
-	<option value="St Kitts and Nevis">St Kitts and Nevis</option>
-	<option value="St. Lucia">St. Lucia</option>
-	<option value="St. Vincent">St. Vincent</option>
-	<option value="Sudan">Sudan</option>
-	<option value="Suriname">Suriname</option>
-	<option value="Swaziland">Swaziland</option>
-	<option value="Sweden">Sweden</option>
-	<option value="Switzerland">Switzerland</option>
-	<option value="Syria">Syria</option>
-	<option value="Taiwan">Taiwan</option>
-	<option value="Tajikistan">Tajikistan</option>
-	<option value="Thailand">Thailand</option>
-	<option value="Togo">Togo</option>
-	<option value="Tonga">Tonga</option>
-	<option value="Trinidad">Trinidad</option>
-	<option value="Trinidad and Tobago">Trinidad and Tobago</option>
-	<option value="Tunisia">Tunisia</option>
-	<option value="Turkey">Turkey</option>
-	<option value="Turkmenistan">Turkmenistan</option>
-	<option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
-	<option value="Uganda">Uganda</option>
-	<option value="Ukraine">Ukraine</option>
-	<option value="United Arab Emirates">United Arab Emirates</option>
-	<option value="United Kingdom">United Kingdom</option>
-	<option value="United Republic of Tanzania">United Republic of Tanzania</option>
-	<option value="Uruguay">Uruguay</option>
-	<option selected="selected" value="USA">USA</option>
-	<option value="Uzbekistan">Uzbekistan</option>
-	<option value="Vanuatu">Vanuatu</option>
-	<option value="Venezuela">Venezuela</option>
-	<option value="Vietnam">Vietnam</option>
-	<option value="Virgin Islands">Virgin Islands</option>
-	<option value="Wales">Wales</option>
-	<option value="Wallis and Futuna Islands">Wallis and Futuna Islands</option>
-	<option value="West Indies">West Indies</option>
-	<option value="Western Sahara">Western Sahara</option>
-	<option value="Yemen">Yemen</option>
-	<option value="Yugoslavia">Yugoslavia</option>
-	<option value="Zambia">Zambia</option>
-	<option value="Zimbabwe">Zimbabwe</option>
-</select>
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- End of PersonalInformation tab-panel -->
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblTimeZone" for="ddlTimeZones" class="required">Time Zone</label>
+                    <select name="ddlTimeZones" id="ddlTimeZones" class="dropdown">
+                    	<option value="51">Alaska Standard Time</option>
+                    	<option value="50">Arizona</option>
+                    	<option value="29">Atlantic Standard Time</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="six columns desktop-only">
+                  <div class="field">
+                    <label id="lblCountry" for="ddlCountry" class="required">Country</label>
+                    <select name="ddlCountry" id="ddlCountry" class="dropdown">
+                    	<option value="Afghanistan">Afghanistan</option>
+                    	<option value="Albania">Albania</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End of PersonalInformation tab-panel -->
 
-                            <!-- Start of CommunicationAndDisplay tab-panel -->
-                                <div id="CommunicationAndDisplayPanel" class="tab-panel">
-                                    <a href="#"><span id="spnCommDispSettings">Communication and Display Settings</span></a>
-                                    <div class="row">
-                                        <div class="six columns field">
-                                            <label id="lblDisplayLanguage" for="ddlDisplayLanguage">Display Language</label>
-                                            <select name="ddlDisplayLanguage" id="ddlDisplayLanguage" class="dropdown">
-	<option value="BR">Brazilian Portuguese</option>
-	<option value="ZH">Chinese</option>
-	<option value="NL">Dutch</option>
-	<option selected="selected" value="EN">English</option>
-	<option value="FR">French</option>
-	<option value="DE">German</option>
-	<option value="JA">Japanese</option>
-	<option value="ES">Spanish</option>
-</select>
-                                        </div>
-                                        <div class="six columns field">
-                                            <label id="lblSpokenLanguage" for="ddlSpokenLanguage">Spoken Language</label>
-                                            <select name="ddlSpokenLanguage" id="ddlSpokenLanguage" class="dropdown">
-	<option value="Arabic">Arabic</option>
-	<option value="Belgian French">Belgian French</option>
-	<option value="Brazilian Portuguese">Brazilian Portuguese</option>
-	<option value="Bulgarian">Bulgarian</option>
-	<option value="Cantonese">Cantonese</option>
-	<option value="Czech">Czech</option>
-	<option value="Danish">Danish</option>
-	<option value="Dutch">Dutch</option>
-	<option selected="selected" value="English">English</option>
-	<option value="Finnish">Finnish</option>
-	<option value="French">French</option>
-	<option value="German">German</option>
-	<option value="Greek">Greek</option>
-	<option value="Hebrew">Hebrew</option>
-	<option value="Hungarian">Hungarian</option>
-	<option value="Italian">Italian</option>
-	<option value="Japanese">Japanese</option>
-	<option value="Korean">Korean</option>
-	<option value="Mandarin">Mandarin</option>
-	<option value="Norwegian">Norwegian</option>
-	<option value="Other">Other</option>
-	<option value="Polish">Polish</option>
-	<option value="Portuguese">Portuguese</option>
-	<option value="Romanian">Romanian</option>
-	<option value="Russian">Russian</option>
-	<option value="Simplified Chinese">Simplified Chinese</option>
-	<option value="Sinhalese">Sinhalese</option>
-	<option value="Slovak">Slovak</option>
-	<option value="Slovenian">Slovenian</option>
-	<option value="Spanish">Spanish</option>
-	<option value="Swedish">Swedish</option>
-	<option value="Swiss German">Swiss German</option>
-	<option value="Thai">Thai</option>
-	<option value="Traditional Chinese">Traditional Chinese</option>
-	<option value="Turkish">Turkish</option>
-	<option value="Ukrainian">Ukrainian</option>
-	<option value="Vietnamese">Vietnamese</option>
-</select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblEmailLanguage" for="ddlEmailLanguage">Incident Email Language</label>
-                                            <select name="ddlEmailLanguage" id="ddlEmailLanguage" class="dropdown">
-	<option value="BR">Brazilian Portuguese</option>
-	<option value="ZH">Chinese</option>
-	<option value="NL">Dutch</option>
-	<option selected="selected" value="EN">English</option>
-	<option value="FR">French</option>
-	<option value="DE">German</option>
-	<option value="JA">Japanese</option>
-	<option value="ES">Spanish</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                            <label id="lblEmailFormat">Email Format</label>
-                                            <div id="divEmailFormat" class="radio-group" style="padding-top: 4px;">
-                                                <input value="rbHtml" name="emailFormat" type="radio" id="rbHtml" role="radio" class="radio" checked="checked" />
-                                                <label id="lblHtml" for="rbHtml">HTML</label>
-                                                <input value="rbText" name="emailFormat" type="radio" id="rbText" role="radio" class="radio" />
-                                                <label id="lblText" for="rbText">Text</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns field">
-                                            <label id="lblCommPref">Communication Preference</label>
-                                            <div id="divCommPref" class="radio-group" style="padding-top: 4px;">
-                                                <input value="rbCommPrefWeb" name="CommunicationPref" type="radio" id="rbCommPrefWeb" role="radio" class="radio" />
-                                                <label id="lblCommPrefWeb" for="rbCommPrefWeb">Web</label>
-                                                <input value="rbCommPrefPhone" name="CommunicationPref" type="radio" id="rbCommPrefPhone" role="radio" class="radio" checked="checked" />
-                                                <label id="lblCommPrefPhone" for="rbCommPrefPhone">Phone</label>
-                                            </div>
-                                        </div>
-                                        <div class="six columns field">
-                                            <label id="lblTimeDispFormat">Time Display Format</label>
-                                            <div id="divTimeDispFormat" class="radio-group" style="padding-top: 4px;">
-                                                <input value="rbTimeDispFormat12hr" name="TimeDisplayFrmt" type="radio" id="rbTimeDispFormat12hr" role="radio" class="radio" checked="checked" />
-                                                <label id="lblTimeDispFormat12hr" for="rbTimeDispFormat12hr">12 hr</label>
-                                                <input value="rbTimeDispFormat24hr" name="TimeDisplayFrmt" type="radio" id="rbTimeDispFormat24hr" role="radio" class="radio" />
-                                                <label id="lblTimeDispFormat24hr" for="rbTimeDispFormat24hr">24 hr</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
+            <!-- Start of CommunicationAndDisplay tab-panel -->
+            <div id="CommunicationAndDisplayPanel" class="tab-panel">
+            </div>
+            <!-- End of CommunicationAndDisplay tab-panel -->
 
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
+            <!-- Start of ProductAccess tab-panel -->
+            <div id="ProductAccessPanel" class="tab-panel">
+            </div>
+            <!-- End of ProductAccess tab-panel -->
 
-                                    <div class="row">
-                                        <div id="divDefectDisplayGroup" class="six columns" style="display:;">
-                                            <label id="lblDefectDisplayGroup" for="ddlDefectDisplayGroup">Defect Display Group</label>
-                                            <select name="ddlDefectDisplayGroup" id="ddlDefectDisplayGroup" class="dropdown">
-	<option value="0">-- Default display group --</option>
-</select>
-                                        </div>
+            <!-- Start of IncidentSettings tab-panel -->
+            <div id="IncidentSettingsPanel" class="tab-panel">
+            </div>
+            <!-- End of IncidentSettings tab-panel -->
 
-                                    </div>
-                                    <div class="row">
+            <!-- Start of IncidentViews tab-panel -->
+            <div id="IncidentViewsPanel" class="tab-panel">
+            </div>
+            <!-- End of IncidentViews tab-panel -->
 
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- End of CommunicationAndDisplay tab-panel -->
+            <!-- Start of News tab-panel -->
+            <div id="NewsPanel" class="tab-panel">
+            </div>
+            <!-- End of News tab-panel -->
 
-                            <!-- Start of ProductAccess tab-panel -->
-                                <div id="ProductAccessPanel" class="tab-panel">
-                                    <a href="#"><span id="spnProducts">Products</span></a>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblPrimaryProductLine" for="ddlPrimaryProductLine">Primary Product Line</label>
-                                            <select name="ddlPrimaryProductLine" id="ddlPrimaryProductLine" class="dropdown">
-	<option value="SELECT">Select</option>
-	<option value="63">Adage</option>
-	<option value="117">Agilisys</option>
-	<option value="6">ALLTAX</option>
-	<option value="62">AMSI</option>
-	<option value="27">Anael</option>
-	<option value="95">Aplus</option>
-	<option value="139">APM</option>
-	<option value="154">Approva</option>
-	<option selected="selected" value="124">AutoConnect</option>
-	<option value="96">AutoRelease</option>
-	<option value="65">Baan A&amp;D</option>
-	<option value="66">Baan Automotive</option>
-	<option value="67">Baan Construction</option>
-	<option value="68">Baan CRM</option>
-	<option value="94">Baan Dimensions</option>
-	<option value="69">Baan ERP</option>
-	<option value="70">Baan ERP - Brazil Localization</option>
-	<option value="71">Baan ERP - India Localization</option>
-	<option value="72">Baan ERP - Portugal Localization</option>
-	<option value="73">Baan ERP - Spain Localization</option>
-	<option value="44">BI/Cognos</option>
-	<option value="97">Blending</option>
-	<option value="47">BOSS</option>
-	<option value="121">Bridgelogix</option>
-	<option value="74">Business Objects (Crystal)</option>
-	<option value="75">CAPS</option>
-	<option value="57">CAS</option>
-	<option value="213">Cloud Aerospace &amp; Defense</option>
-	<option value="203">Cloud Automotive</option>
-	<option value="234">Cloud Distribution Enterprise</option>
-	<option value="237">Cloud Equipment Rental</option>
-	<option value="226">Cloud Fashion</option>
-	<option value="227">Cloud Food and Beverage</option>
-	<option value="224">Cloud Industrial Machinery</option>
-	<option value="220">CloudSuite Business or Industrial</option>
-	<option value="239">CloudSuite Financials &amp; Supply Management</option>
-	<option value="225">CloudSuite HCM</option>
-	<option value="244">CloudSuite Self Service Portal</option>
-	<option value="98">COM</option>
-	<option value="99">Commerce</option>
-	<option value="123">Companion</option>
-	<option value="91">Core Banking</option>
-	<option value="159">Core Hospitality</option>
-	<option value="100">CORrelation</option>
-	<option value="186">CPQ</option>
-	<option value="204">CSS LN</option>
-	<option value="56">Demand Planning</option>
-	<option value="223">Distribution Common</option>
-	<option value="101">DMAS</option>
-	<option value="3">E Series</option>
-	<option value="102">EAM</option>
-	<option value="76">E-Enterprise</option>
-	<option value="35">Elevon</option>
-	<option value="19">EnRoute</option>
-	<option value="103">Enspire</option>
-	<option value="145">ENXSuite</option>
-	<option value="135">EPAK</option>
-	<option value="51">Epiphany Interaction Advisor</option>
-	<option value="52">Epiphany Marketing</option>
-	<option value="43">Epiphany Sales and Service</option>
-	<option value="160">Epitome</option>
-	<option value="46">ERP LX</option>
-	<option value="61">Evolve</option>
-	<option value="21">Expense Management</option>
-	<option value="32">F9</option>
-	<option value="183">Factory Track</option>
-	<option value="104">FACTS</option>
-	<option value="172">Fashion PLM</option>
-	<option value="45">FMS Masterpiece</option>
-	<option value="216">Fourth Shift</option>
-	<option value="128">Frontres</option>
-	<option value="188">Fujitsu POS</option>
-	<option value="105">Global Finance</option>
-	<option value="77">Growth Power</option>
-	<option value="106">Hansen</option>
-	<option value="171">Healthcare - Cloverleaf</option>
-	<option value="20">Help - zSeries</option>
-	<option value="156">HHIE</option>
-	<option value="129">Hospitality</option>
-	<option value="236">Hospitality - Dining POS</option>
-	<option value="170">Hospitality - EzRMS</option>
-	<option value="162">Hospitality - HMS</option>
-	<option value="161">Hospitality 3rd Party</option>
-	<option value="141">Hospitality Deu</option>
-	<option value="8">Host General</option>
-	<option value="130">Hotix</option>
-	<option value="168">HR Service Delivery - Enwisen</option>
-	<option value="29">HR Tax &amp; Reg</option>
-	<option value="173">HRCM</option>
-	<option value="163">HUN</option>
-	<option value="17">i2</option>
-	<option value="125">IBP</option>
-	<option value="228">Implementation Accelerators</option>
-	<option value="48">INFINIUM</option>
-	<option value="131">Infogenesis</option>
-	<option value="140">Infogenesis POS</option>
-	<option value="189">Infor AS</option>
-	<option value="205">Infor Care Solutions</option>
-	<option value="118">Infor Configuration</option>
-	<option value="230">Infor Consulting Services</option>
-	<option value="238">Infor Contract Lifecycle Management</option>
-	<option value="219">Infor CRM</option>
-	<option value="119">Infor CRM Business</option>
-	<option value="193">Infor Document Management</option>
-	<option value="192">Infor e-Commerce</option>
-	<option value="229">Infor Enterprise Marketing Suite</option>
-	<option value="144">Infor Federation Services</option>
-	<option value="120">Infor ICEE</option>
-	<option value="201">Infor Learning Accelerator</option>
-	<option value="136">Infor Ming.le</option>
-	<option value="148">Infor Motion</option>
-	<option value="182">Infor Orbis</option>
-	<option value="7">Infor Partner Network</option>
-	<option value="252">Infor Physician Relationship Management</option>
-	<option value="88">Infor Planning</option>
-	<option value="181">Infor Reporting</option>
-	<option value="247">Infor Rhythm for Civics</option>
-	<option value="249">Infor Rhythm for Commerce: B2B</option>
-	<option value="150">Infor Service Mgmt</option>
-	<option value="142">Infor Starlight PMS</option>
-	<option value="78">Infor Studio</option>
-	<option value="195">Infor Talent Science</option>
-	<option value="240">Infor Xi Platform</option>
-	<option value="152">Infor Xtreme - Portal</option>
-	<option value="198">Infra</option>
-	<option value="174">Integration</option>
-	<option value="221">IOCM</option>
-	<option value="126">ION</option>
-	<option value="157">ION Business Vault</option>
-	<option value="42">IRONSIDE</option>
-	<option value="147">ISA Support</option>
-	<option value="55">iSeries EAM</option>
-	<option value="79">ISP</option>
-	<option value="53">KBM</option>
-	<option value="232">Kern Mobile</option>
-	<option value="235">Landmark</option>
-	<option value="164">LANmark</option>
-	<option value="177">Lawson</option>
-	<option value="28">Library Solutions</option>
-	<option value="184">LMS</option>
-	<option value="80">LN ERP</option>
-	<option value="81">LN ERP - India Localization</option>
-	<option value="194">Local.ly</option>
-	<option value="4">M Series</option>
-	<option value="175">M3</option>
-	<option value="187">MACPAC</option>
-	<option value="64">Managed Services</option>
-	<option value="59">MANMAN</option>
-	<option value="251">Marketo</option>
-	<option value="190">MAS90</option>
-	<option value="202">Mavim</option>
-	<option value="36">MAX</option>
-	<option value="231">MDM</option>
-	<option value="165">Medallion</option>
-	<option value="176">Medisuite</option>
-	<option value="207">MercuryGate</option>
-	<option value="82">MK</option>
-	<option value="151">Mongoose Framework</option>
-	<option value="83">Open World/ Integration</option>
-	<option value="84">Optiva</option>
-	<option value="107">Order Management</option>
-	<option value="24">Pathway</option>
-	<option value="199">Payroll</option>
-	<option value="208">PLM Accelerate</option>
-	<option value="85">PLM Discrete</option>
-	<option value="22">PM</option>
-	<option value="146">PM/XBRL</option>
-	<option value="86">Point.Man</option>
-	<option value="166">PORTfolio</option>
-	<option value="180">PreAMT</option>
-	<option value="37">Prism</option>
-	<option value="41">PRMS</option>
-	<option value="87">Process</option>
-	<option value="38">Protean</option>
-	<option value="58">PROVIA</option>
-	<option value="34">Q&amp;A/Vision</option>
-	<option value="233">Rate My Hospital</option>
-	<option value="214">Regression Test</option>
-	<option value="245">Rhythm for Retail</option>
-	<option value="167">RIO</option>
-	<option value="149">Salesforce</option>
-	<option value="217">SAP</option>
-	<option value="50">SCEM</option>
-	<option value="49">SCM WM</option>
-	<option value="1">SmartStream</option>
-	<option value="143">SPA</option>
-	<option value="132">Starlight</option>
-	<option value="108">STOREFRONT</option>
-	<option value="11">StreamLine</option>
-	<option value="89">Streamserve</option>
-	<option value="33">SunSystems</option>
-	<option value="109">SupplyWEB</option>
-	<option value="200">Swan / Sage</option>
-	<option value="110">SX.enterprise</option>
-	<option value="39">SXe</option>
-	<option value="12">System 21</option>
-	<option value="122">System i Common Components</option>
-	<option value="90">SyteLine</option>
-	<option value="111">TAKESTOCK</option>
-	<option value="60">Talent Management</option>
-	<option value="16">TIMS</option>
-	<option value="178">TM</option>
-	<option value="54">TMS</option>
-	<option value="206">Tolas</option>
-	<option value="112">TRANS4M</option>
-	<option value="40">Unison</option>
-	<option value="133">VG</option>
-	<option value="113">VISUAL</option>
-	<option value="134">VR</option>
-	<option value="179">WFM</option>
-	<option value="92">Workbrain</option>
-	<option value="93">Workflow</option>
-	<option value="114">XA</option>
-	<option value="115">XDEX</option>
-	<option value="116">XPERT</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblSecondaryProductLines" for="ddlSecondaryProductLines">Secondary Product Lines</label>
-                                            <select name="ddlSecondaryProductLines" id="ddlSecondaryProductLines" multiple="multiple" class="multiselect">
-	<option value="63">Adage</option>
-	<option value="117">Agilisys</option>
-	<option value="6">ALLTAX</option>
-	<option value="62">AMSI</option>
-	<option value="27">Anael</option>
-	<option value="95">Aplus</option>
-	<option value="139">APM</option>
-	<option value="154">Approva</option>
-	<option value="96">AutoRelease</option>
-	<option value="65">Baan A&amp;D</option>
-	<option value="66">Baan Automotive</option>
-	<option value="67">Baan Construction</option>
-	<option value="68">Baan CRM</option>
-	<option value="94">Baan Dimensions</option>
-	<option value="69">Baan ERP</option>
-	<option value="70">Baan ERP - Brazil Localization</option>
-	<option value="71">Baan ERP - India Localization</option>
-	<option value="72">Baan ERP - Portugal Localization</option>
-	<option value="73">Baan ERP - Spain Localization</option>
-	<option value="44">BI/Cognos</option>
-	<option value="97">Blending</option>
-	<option value="47">BOSS</option>
-	<option value="121">Bridgelogix</option>
-	<option value="74">Business Objects (Crystal)</option>
-	<option value="75">CAPS</option>
-	<option value="57">CAS</option>
-	<option value="213">Cloud Aerospace &amp; Defense</option>
-	<option value="203">Cloud Automotive</option>
-	<option value="234">Cloud Distribution Enterprise</option>
-	<option value="237">Cloud Equipment Rental</option>
-	<option value="226">Cloud Fashion</option>
-	<option value="227">Cloud Food and Beverage</option>
-	<option value="224">Cloud Industrial Machinery</option>
-	<option value="220">CloudSuite Business or Industrial</option>
-	<option value="239">CloudSuite Financials &amp; Supply Management</option>
-	<option value="225">CloudSuite HCM</option>
-	<option value="244">CloudSuite Self Service Portal</option>
-	<option value="98">COM</option>
-	<option value="99">Commerce</option>
-	<option value="123">Companion</option>
-	<option value="91">Core Banking</option>
-	<option value="159">Core Hospitality</option>
-	<option value="100">CORrelation</option>
-	<option value="186">CPQ</option>
-	<option value="204">CSS LN</option>
-	<option value="56">Demand Planning</option>
-	<option value="223">Distribution Common</option>
-	<option value="101">DMAS</option>
-	<option value="3">E Series</option>
-	<option value="102">EAM</option>
-	<option value="76">E-Enterprise</option>
-	<option value="35">Elevon</option>
-	<option value="19">EnRoute</option>
-	<option value="103">Enspire</option>
-	<option value="145">ENXSuite</option>
-	<option value="135">EPAK</option>
-	<option value="51">Epiphany Interaction Advisor</option>
-	<option value="52">Epiphany Marketing</option>
-	<option value="43">Epiphany Sales and Service</option>
-	<option value="160">Epitome</option>
-	<option value="46">ERP LX</option>
-	<option value="61">Evolve</option>
-	<option value="21">Expense Management</option>
-	<option value="32">F9</option>
-	<option value="183">Factory Track</option>
-	<option value="104">FACTS</option>
-	<option value="172">Fashion PLM</option>
-	<option value="45">FMS Masterpiece</option>
-	<option value="216">Fourth Shift</option>
-	<option value="128">Frontres</option>
-	<option value="188">Fujitsu POS</option>
-	<option value="105">Global Finance</option>
-	<option value="77">Growth Power</option>
-	<option value="106">Hansen</option>
-	<option value="171">Healthcare - Cloverleaf</option>
-	<option value="20">Help - zSeries</option>
-	<option value="156">HHIE</option>
-	<option value="129">Hospitality</option>
-	<option value="236">Hospitality - Dining POS</option>
-	<option value="170">Hospitality - EzRMS</option>
-	<option value="162">Hospitality - HMS</option>
-	<option value="161">Hospitality 3rd Party</option>
-	<option value="141">Hospitality Deu</option>
-	<option value="8">Host General</option>
-	<option value="130">Hotix</option>
-	<option value="168">HR Service Delivery - Enwisen</option>
-	<option value="29">HR Tax &amp; Reg</option>
-	<option value="173">HRCM</option>
-	<option value="163">HUN</option>
-	<option value="17">i2</option>
-	<option value="125">IBP</option>
-	<option value="228">Implementation Accelerators</option>
-	<option value="48">INFINIUM</option>
-	<option value="131">Infogenesis</option>
-	<option value="140">Infogenesis POS</option>
-	<option value="189">Infor AS</option>
-	<option value="205">Infor Care Solutions</option>
-	<option value="118">Infor Configuration</option>
-	<option value="230">Infor Consulting Services</option>
-	<option value="238">Infor Contract Lifecycle Management</option>
-	<option value="219">Infor CRM</option>
-	<option value="119">Infor CRM Business</option>
-	<option value="193">Infor Document Management</option>
-	<option value="192">Infor e-Commerce</option>
-	<option value="229">Infor Enterprise Marketing Suite</option>
-	<option value="144">Infor Federation Services</option>
-	<option value="120">Infor ICEE</option>
-	<option value="201">Infor Learning Accelerator</option>
-	<option value="136">Infor Ming.le</option>
-	<option value="148">Infor Motion</option>
-	<option value="182">Infor Orbis</option>
-	<option value="7">Infor Partner Network</option>
-	<option value="252">Infor Physician Relationship Management</option>
-	<option value="88">Infor Planning</option>
-	<option value="181">Infor Reporting</option>
-	<option value="247">Infor Rhythm for Civics</option>
-	<option value="249">Infor Rhythm for Commerce: B2B</option>
-	<option value="150">Infor Service Mgmt</option>
-	<option value="142">Infor Starlight PMS</option>
-	<option value="78">Infor Studio</option>
-	<option value="195">Infor Talent Science</option>
-	<option value="240">Infor Xi Platform</option>
-	<option value="152">Infor Xtreme - Portal</option>
-	<option value="198">Infra</option>
-	<option value="174">Integration</option>
-	<option value="221">IOCM</option>
-	<option value="126">ION</option>
-	<option value="157">ION Business Vault</option>
-	<option value="42">IRONSIDE</option>
-	<option value="147">ISA Support</option>
-	<option value="55">iSeries EAM</option>
-	<option value="79">ISP</option>
-	<option value="53">KBM</option>
-	<option value="232">Kern Mobile</option>
-	<option value="235">Landmark</option>
-	<option value="164">LANmark</option>
-	<option value="177">Lawson</option>
-	<option value="28">Library Solutions</option>
-	<option value="184">LMS</option>
-	<option value="80">LN ERP</option>
-	<option value="81">LN ERP - India Localization</option>
-	<option value="194">Local.ly</option>
-	<option value="4">M Series</option>
-	<option value="175">M3</option>
-	<option value="187">MACPAC</option>
-	<option value="64">Managed Services</option>
-	<option value="59">MANMAN</option>
-	<option value="251">Marketo</option>
-	<option value="190">MAS90</option>
-	<option value="202">Mavim</option>
-	<option value="36">MAX</option>
-	<option value="231">MDM</option>
-	<option value="165">Medallion</option>
-	<option value="176">Medisuite</option>
-	<option value="207">MercuryGate</option>
-	<option value="82">MK</option>
-	<option value="151">Mongoose Framework</option>
-	<option value="83">Open World/ Integration</option>
-	<option value="84">Optiva</option>
-	<option value="107">Order Management</option>
-	<option value="24">Pathway</option>
-	<option value="199">Payroll</option>
-	<option value="208">PLM Accelerate</option>
-	<option value="85">PLM Discrete</option>
-	<option value="22">PM</option>
-	<option value="146">PM/XBRL</option>
-	<option value="86">Point.Man</option>
-	<option value="166">PORTfolio</option>
-	<option value="180">PreAMT</option>
-	<option value="37">Prism</option>
-	<option value="41">PRMS</option>
-	<option value="87">Process</option>
-	<option value="38">Protean</option>
-	<option value="58">PROVIA</option>
-	<option value="34">Q&amp;A/Vision</option>
-	<option value="233">Rate My Hospital</option>
-	<option value="214">Regression Test</option>
-	<option value="245">Rhythm for Retail</option>
-	<option value="167">RIO</option>
-	<option value="149">Salesforce</option>
-	<option value="217">SAP</option>
-	<option value="50">SCEM</option>
-	<option value="49">SCM WM</option>
-	<option value="1">SmartStream</option>
-	<option value="143">SPA</option>
-	<option value="132">Starlight</option>
-	<option value="108">STOREFRONT</option>
-	<option value="11">StreamLine</option>
-	<option value="89">Streamserve</option>
-	<option value="33">SunSystems</option>
-	<option value="109">SupplyWEB</option>
-	<option value="200">Swan / Sage</option>
-	<option value="110">SX.enterprise</option>
-	<option value="39">SXe</option>
-	<option value="12">System 21</option>
-	<option value="122">System i Common Components</option>
-	<option value="90">SyteLine</option>
-	<option value="111">TAKESTOCK</option>
-	<option value="60">Talent Management</option>
-	<option value="16">TIMS</option>
-	<option value="178">TM</option>
-	<option value="54">TMS</option>
-	<option value="206">Tolas</option>
-	<option value="112">TRANS4M</option>
-	<option value="40">Unison</option>
-	<option value="133">VG</option>
-	<option value="113">VISUAL</option>
-	<option value="134">VR</option>
-	<option value="179">WFM</option>
-	<option value="92">Workbrain</option>
-	<option value="93">Workflow</option>
-	<option value="114">XA</option>
-	<option value="115">XDEX</option>
-	<option value="116">XPERT</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                       <div class="six columns">
-                                            <div class="switch">
-                                                <input name="cbPAR" type="checkbox" id="cbPAR" class="switch" checked="checked" />
-                                                <label id="lblPAR" for="cbPAR">Would you like to receive Product Advisory Reports?</label>
-                                            </div>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- End of ProductAccess tab-panel -->
+            <!-- Start of AHRS tab-panel -->
+            <div id="AHRSPanel" class="tab-panel">
+            </div>
+            <!-- End of AHRS tab-panel -->
 
-                            <!-- Start of IncidentSettings tab-panel -->
-                                <div id="IncidentSettingsPanel" class="tab-panel">
-                                    <a href="#"><span id="spnIncidentSettings">Incident Settings</span></a>
-                                    <div class="row" id="divIndcidentSettings">
-                                        <div class="six columns">
-                                            <label id="lblEventLogSortOrder">Event Log Sort Order</label>
-                                            <div id="divEventLogSortOrder" class="radio-group" style="padding-top: 4px;">
-                                                <input value="rbRecent" name="evtLogSortOrder" type="radio" id="rbRecent" role="radio" class="radio" checked="checked" />
-                                                <label id="lblRecent" for="rbRecent">Recent</label>
-                                                <input value="rbOldest" name="evtLogSortOrder" type="radio" id="rbOldest" role="radio" class="radio" />
-                                                <label id="lblOldest" for="rbOldest">Oldest</label>
-                                            </div>
-                                        </div>
-                                        <div class="six columns">
-                                            <label id="lblEventLogDisplay">Event Log Display</label>
-                                            <div id="divEventLogDisplay" class="radio-group" style="padding-top: 4px;">
-                                                <input value="rbTabular" name="evtLogDisplay" type="radio" id="rbTabular" role="radio" class="radio" checked="checked" />
-                                                <label id="lblTabular" for="rbTabular">Tabular</label>
-                                                <input value="rbClassic" name="evtLogDisplay" type="radio" id="rbClassic" role="radio" class="radio" />
-                                                <label id="lblClassic" for="rbClassic">Classic</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblSendEmailMyIncidents" for="ddlSendEmailMyIncidents">Send Email for My Incidents</label>
-                                            <select name="ddlSendEmailMyIncidents" id="ddlSendEmailMyIncidents" class="dropdown">
-	<option value="0">Never</option>
-	<option selected="selected" value="1">Always</option>
-	<option value="2">On Create</option>
-	<option value="3">On Close</option>
-	<option value="4">On Create or Close</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                            <label id="lblMyCompanyIncidents" for="ddlMyCompanyIncidents">Send Email for My Company Incidents</label>
-                                            <select name="ddlMyCompanyIncidents" id="ddlMyCompanyIncidents" class="dropdown">
-	<option selected="selected" value="0">never email me</option>
-	<option value="1">there is any Incident update</option>
-	<option value="2">the Incident is entered</option>
-	<option value="3">the Incident is closed</option>
-	<option value="4">the Incident is entered or closed</option>
-</select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblForRegions" for="ddlForRegions">For Regions</label>
-                                            <select name="ddlForRegions" id="ddlForRegions" multiple="multiple" class="multiselect">
-	<option value="APJ">APJ</option>
-	<option value="EMEA">EMEA</option>
-	<option value="LA">LA</option>
-	<option value="NA">NA</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                            <label id="lblForSeverities" for="ddlForSeverities">For Severities</label>
-                                            <select name="ddlForSeverities" id="ddlForSeverities" multiple="multiple" class="multiselect">
-	<option value="4">1 - Production Down</option>
-	<option value="3">2 - High</option>
-	<option value="2">3 - Medium</option>
-	<option value="1">4 - Low</option>
-	<option value="7">5 - Enhancement</option>
-</select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <div class="switch">
-                                                <input name="cbOpenNewBrowser" type="checkbox" id="cbOpenNewBrowser" class="switch" checked="checked" />
-                                                <label id="lblOpenNewBrowser" for="cbOpenNewBrowser">Open in new browser window</label>
-                                            </div>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
+            <!-- Start of InforCommunity tab-panel -->
+            <div id="InforCommunityPanel" class="tab-panel">
+            </div>
+            <!-- End of Community tab-panel -->
 
-                                    <div id="divAutoIncidentOwner" class="row">
-                                        <div class="six columns">
-                                            <div class="switch">
-                                                <input name="cbAutoIncidentOwner" type="checkbox" id="cbAutoIncidentOwner" class="switch" checked="checked" />
-                                                <label id="lblAutoIncidentOwner" for="cbAutoIncidentOwner">Autocheck Incident Owner</label>
-                                            </div>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div id="divSendProdDownEmail" class="row">
-                                        <div class="six columns">
-                                            <div class="switch">
-                                                <input name="cbSendProdDownEmail" type="checkbox" id="cbSendProdDownEmail" class="switch" checked="checked" />
-                                                <label id="lblSendProdDownEmail" for="cbSendProdDownEmail">Send Production Down Email</label>
-                                            </div>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div id="divEscalationPoint" class="row">
-                                        <div class="six columns">
-                                            <div class="switch">
-                                                <input name="cbEscalationPoint" type="checkbox" id="cbEscalationPoint" class="switch" />
-                                                <label id="lblEscalationPoint" for="cbEscalationPoint">Would you like to be an escalation point?</label>
-                                            </div>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div id="divEscalationPointRegionLists" class="row" style="display:none;">
-                                        <div class="six columns">
-                                            <label id="lblEscalationRegions" for="ddlEscalationRegions">Escalation Regions</label>
-                                            <select name="ddlEscalationRegions" id="ddlEscalationRegions" multiple="multiple" class="multiselect">
-	<option value="APJ">APJ</option>
-	<option value="EMEA">EMEA</option>
-	<option value="LA">LA</option>
-	<option value="NA">NA</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div id="divEscalationPointLists" class="row" style="display:none;">
-                                        <div class="six columns">
-                                            <label id="lblEscalationProductLines" for="ddlEscalationProductLines">Escalation Product Lines</label>
-                                            <select name="ddlEscalationProductLines" id="ddlEscalationProductLines" multiple="multiple" class="multiselect">
-	<option value="63">Adage</option>
-	<option value="117">Agilisys</option>
-	<option value="6">ALLTAX</option>
-	<option value="62">AMSI</option>
-	<option value="27">Anael</option>
-	<option value="95">Aplus</option>
-	<option value="139">APM</option>
-	<option value="154">Approva</option>
-	<option value="124">AutoConnect</option>
-	<option value="96">AutoRelease</option>
-	<option value="65">Baan A&amp;D</option>
-	<option value="66">Baan Automotive</option>
-	<option value="67">Baan Construction</option>
-	<option value="68">Baan CRM</option>
-	<option value="94">Baan Dimensions</option>
-	<option value="69">Baan ERP</option>
-	<option value="70">Baan ERP - Brazil Localization</option>
-	<option value="71">Baan ERP - India Localization</option>
-	<option value="72">Baan ERP - Portugal Localization</option>
-	<option value="73">Baan ERP - Spain Localization</option>
-	<option value="44">BI/Cognos</option>
-	<option value="97">Blending</option>
-	<option value="47">BOSS</option>
-	<option value="121">Bridgelogix</option>
-	<option value="74">Business Objects (Crystal)</option>
-	<option value="75">CAPS</option>
-	<option value="57">CAS</option>
-	<option value="213">Cloud Aerospace &amp; Defense</option>
-	<option value="203">Cloud Automotive</option>
-	<option value="234">Cloud Distribution Enterprise</option>
-	<option value="237">Cloud Equipment Rental</option>
-	<option value="226">Cloud Fashion</option>
-	<option value="227">Cloud Food and Beverage</option>
-	<option value="224">Cloud Industrial Machinery</option>
-	<option value="220">CloudSuite Business or Industrial</option>
-	<option value="239">CloudSuite Financials &amp; Supply Management</option>
-	<option value="225">CloudSuite HCM</option>
-	<option value="244">CloudSuite Self Service Portal</option>
-	<option value="98">COM</option>
-	<option value="99">Commerce</option>
-	<option value="123">Companion</option>
-	<option value="91">Core Banking</option>
-	<option value="159">Core Hospitality</option>
-	<option value="100">CORrelation</option>
-	<option value="186">CPQ</option>
-	<option value="204">CSS LN</option>
-	<option value="56">Demand Planning</option>
-	<option value="223">Distribution Common</option>
-	<option value="101">DMAS</option>
-	<option value="3">E Series</option>
-	<option value="102">EAM</option>
-	<option value="76">E-Enterprise</option>
-	<option value="35">Elevon</option>
-	<option value="19">EnRoute</option>
-	<option value="103">Enspire</option>
-	<option value="145">ENXSuite</option>
-	<option value="135">EPAK</option>
-	<option value="51">Epiphany Interaction Advisor</option>
-	<option value="52">Epiphany Marketing</option>
-	<option value="43">Epiphany Sales and Service</option>
-	<option value="160">Epitome</option>
-	<option value="46">ERP LX</option>
-	<option value="61">Evolve</option>
-	<option value="21">Expense Management</option>
-	<option value="32">F9</option>
-	<option value="183">Factory Track</option>
-	<option value="104">FACTS</option>
-	<option value="172">Fashion PLM</option>
-	<option value="45">FMS Masterpiece</option>
-	<option value="216">Fourth Shift</option>
-	<option value="128">Frontres</option>
-	<option value="188">Fujitsu POS</option>
-	<option value="105">Global Finance</option>
-	<option value="77">Growth Power</option>
-	<option value="106">Hansen</option>
-	<option value="171">Healthcare - Cloverleaf</option>
-	<option value="20">Help - zSeries</option>
-	<option value="156">HHIE</option>
-	<option value="129">Hospitality</option>
-	<option value="236">Hospitality - Dining POS</option>
-	<option value="170">Hospitality - EzRMS</option>
-	<option value="162">Hospitality - HMS</option>
-	<option value="161">Hospitality 3rd Party</option>
-	<option value="141">Hospitality Deu</option>
-	<option value="8">Host General</option>
-	<option value="130">Hotix</option>
-	<option value="168">HR Service Delivery - Enwisen</option>
-	<option value="29">HR Tax &amp; Reg</option>
-	<option value="173">HRCM</option>
-	<option value="163">HUN</option>
-	<option value="17">i2</option>
-	<option value="125">IBP</option>
-	<option value="228">Implementation Accelerators</option>
-	<option value="48">INFINIUM</option>
-	<option value="131">Infogenesis</option>
-	<option value="140">Infogenesis POS</option>
-	<option value="189">Infor AS</option>
-	<option value="205">Infor Care Solutions</option>
-	<option value="118">Infor Configuration</option>
-	<option value="230">Infor Consulting Services</option>
-	<option value="238">Infor Contract Lifecycle Management</option>
-	<option value="219">Infor CRM</option>
-	<option value="119">Infor CRM Business</option>
-	<option value="193">Infor Document Management</option>
-	<option value="192">Infor e-Commerce</option>
-	<option value="229">Infor Enterprise Marketing Suite</option>
-	<option value="144">Infor Federation Services</option>
-	<option value="120">Infor ICEE</option>
-	<option value="201">Infor Learning Accelerator</option>
-	<option value="136">Infor Ming.le</option>
-	<option value="148">Infor Motion</option>
-	<option value="182">Infor Orbis</option>
-	<option value="7">Infor Partner Network</option>
-	<option value="252">Infor Physician Relationship Management</option>
-	<option value="88">Infor Planning</option>
-	<option value="181">Infor Reporting</option>
-	<option value="247">Infor Rhythm for Civics</option>
-	<option value="249">Infor Rhythm for Commerce: B2B</option>
-	<option value="150">Infor Service Mgmt</option>
-	<option value="142">Infor Starlight PMS</option>
-	<option value="78">Infor Studio</option>
-	<option value="195">Infor Talent Science</option>
-	<option value="196">Infor Training and Education</option>
-	<option value="240">Infor Xi Platform</option>
-	<option value="152">Infor Xtreme - Portal</option>
-	<option value="5">Infor Xtreme Support</option>
-	<option value="198">Infra</option>
-	<option value="174">Integration</option>
-	<option value="221">IOCM</option>
-	<option value="126">ION</option>
-	<option value="157">ION Business Vault</option>
-	<option value="42">IRONSIDE</option>
-	<option value="147">ISA Support</option>
-	<option value="55">iSeries EAM</option>
-	<option value="79">ISP</option>
-	<option value="53">KBM</option>
-	<option value="232">Kern Mobile</option>
-	<option value="235">Landmark</option>
-	<option value="164">LANmark</option>
-	<option value="177">Lawson</option>
-	<option value="28">Library Solutions</option>
-	<option value="184">LMS</option>
-	<option value="80">LN ERP</option>
-	<option value="81">LN ERP - India Localization</option>
-	<option value="194">Local.ly</option>
-	<option value="4">M Series</option>
-	<option value="175">M3</option>
-	<option value="187">MACPAC</option>
-	<option value="64">Managed Services</option>
-	<option value="59">MANMAN</option>
-	<option value="251">Marketo</option>
-	<option value="190">MAS90</option>
-	<option value="202">Mavim</option>
-	<option value="36">MAX</option>
-	<option value="231">MDM</option>
-	<option value="165">Medallion</option>
-	<option value="176">Medisuite</option>
-	<option value="207">MercuryGate</option>
-	<option value="82">MK</option>
-	<option value="151">Mongoose Framework</option>
-	<option value="83">Open World/ Integration</option>
-	<option value="84">Optiva</option>
-	<option value="107">Order Management</option>
-	<option value="24">Pathway</option>
-	<option value="199">Payroll</option>
-	<option value="208">PLM Accelerate</option>
-	<option value="85">PLM Discrete</option>
-	<option value="22">PM</option>
-	<option value="146">PM/XBRL</option>
-	<option value="86">Point.Man</option>
-	<option value="166">PORTfolio</option>
-	<option value="180">PreAMT</option>
-	<option value="37">Prism</option>
-	<option value="41">PRMS</option>
-	<option value="87">Process</option>
-	<option value="38">Protean</option>
-	<option value="58">PROVIA</option>
-	<option value="34">Q&amp;A/Vision</option>
-	<option value="233">Rate My Hospital</option>
-	<option value="214">Regression Test</option>
-	<option value="245">Rhythm for Retail</option>
-	<option value="167">RIO</option>
-	<option value="149">Salesforce</option>
-	<option value="217">SAP</option>
-	<option value="50">SCEM</option>
-	<option value="49">SCM WM</option>
-	<option value="1">SmartStream</option>
-	<option value="143">SPA</option>
-	<option value="132">Starlight</option>
-	<option value="108">STOREFRONT</option>
-	<option value="11">StreamLine</option>
-	<option value="89">Streamserve</option>
-	<option value="33">SunSystems</option>
-	<option value="109">SupplyWEB</option>
-	<option value="200">Swan / Sage</option>
-	<option value="110">SX.enterprise</option>
-	<option value="39">SXe</option>
-	<option value="12">System 21</option>
-	<option value="122">System i Common Components</option>
-	<option value="90">SyteLine</option>
-	<option value="111">TAKESTOCK</option>
-	<option value="60">Talent Management</option>
-	<option value="16">TIMS</option>
-	<option value="178">TM</option>
-	<option value="54">TMS</option>
-	<option value="206">Tolas</option>
-	<option value="112">TRANS4M</option>
-	<option value="40">Unison</option>
-	<option value="133">VG</option>
-	<option value="113">VISUAL</option>
-	<option value="134">VR</option>
-	<option value="179">WFM</option>
-	<option value="92">Workbrain</option>
-	<option value="93">Workflow</option>
-	<option value="114">XA</option>
-	<option value="115">XDEX</option>
-	<option value="116">XPERT</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- End of IncidentSettings tab-panel -->
+            <!-- Start of ERS Settings tab-panel -->
 
-                            <!-- Start of IncidentViews tab-panel -->
-                                <div id="IncidentViewsPanel" class="tab-panel">
-                                    <a href="#"><span id="spnIncidentViewSettings">Incident View Settings</span></a>
-                                    <div class="row">
-                                        <div class="six columns field">
-                                            <label id="lblResponseDue" for="ddlResponseDue" class="required">Regional Response Due View Region Default</label>
-                                            <select name="ddlResponseDue" id="ddlResponseDue" multiple="multiple" class="dropdown">
-	<option value="APJ">APJ</option>
-	<option value="EMEA">EMEA</option>
-	<option value="LA">LA</option>
-	<option selected="selected" value="NA">NA</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns field">
-                                            <label id="lblDeploymentTypes" for="ddlDeploymentTypes">Global and Regional Response Due, and Unassigned View Deployment Type Default</label>
-                                            <select name="ddlDeploymentTypes" id="ddlDeploymentTypes" multiple="multiple" class="dropdown">
-	<option value="1">Cloud</option>
-	<option value="2">Hosted</option>
-	<option value="3">On-Premise</option>
-	<option value="4">Do not know</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- End of IncidentViews tab-panel -->
+            <!-- End of ERS Settings tab-panel -->
+          </div>
 
-                            <!-- Start of News tab-panel -->
-                                <div id="NewsPanel" class="tab-panel">
-                                    <a href="#"><span id="spnNewsSettings">News Email Settings</span></a>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblNewsLikeReceive">Send email for News</label>
-                                            <div id="divNewsLikeReceive" class="radio-group" style="padding-top: 3px;">
-                                                <input value="rbAll" name="NotifyNews" type="radio" id="rbAll" role="radio" class="radio" />
-                                                <label id="lblAll" for="rbAll">All Types</label>
-                                                <input value="rbCritical" name="NotifyNews" type="radio" id="rbCritical" role="radio" class="radio" />
-                                                <label id="lblCritical" for="rbCritical">Critical Only</label>
-                                                <input value="rbNone" name="NotifyNews" type="radio" id="rbNone" role="radio" class="radio" checked="checked" />
-                                                <label id="lblNone" for="rbNone">None</label>
-                                            </div>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div id="divFilterNewsByProd" class="row">
-                                        <div class="six columns">
-                                            <div class="switch">
-                                                <input name="cbFilterNewsByProduct" type="checkbox" id="cbFilterNewsByProduct" class="switch" />
-                                                <label id="lblFilterNewsByProduct" for="cbFilterNewsByProduct" style="padding-bottom: 2px;">Send emails - restrict by product filter?</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="divProductTree" class="row">
-                                        <div class="twelve columns">
-                                            <label id="lblProductFilter">Product Filter</label>
-                                            <div id="divProductAccess" style="display: none;">
-                                                <div id="TreeProductAccess">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- End of News tab-panel -->
-
-                            <!-- Start of AHRS tab-panel -->
-                                <div id="AHRSPanel" class="tab-panel">
-                                    <a href="#"><span id="spnAHRSSettings">AHRS Settings</span></a>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblRatePlan" for="ddlRatePlan">Rate Plan</label>
-                                            <select name="ddlRatePlan" id="ddlRatePlan" class="dropdown">
-	<option value="0">Select</option>
-	<option value="12">Australia</option>
-	<option value="5">Canada</option>
-	<option value="6">Denmark</option>
-	<option value="16">DO NOT USE</option>
-	<option value="15">HCL-Canada</option>
-	<option value="18">HCL-United Kingdon</option>
-	<option value="14">HCL-United States</option>
-	<option value="7">India</option>
-	<option value="8">Japan</option>
-	<option value="17">Mexico</option>
-	<option value="19">STARMOUNT</option>
-	<option value="13">Sweden</option>
-	<option value="9">Switzerland</option>
-	<option value="10">United Kingdom</option>
-	<option value="11">United States</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div class="row" id="trAHRSAPP1">
-                                        <div class="six columns">
-                                            <label id="lblApprover1" for="ddlApprover1" class="required">Level One Approver</label>
-                                            <select name="ddlApprover1" id="ddlApprover1" class="dropdown">
-	<option value="0">Select</option>
-	<option value="777332">Barb Felten</option>
-	<option value="815914">Bill McKinney</option>
-	<option value="234869">Bjorn Svensson</option>
-	<option value="1248882">Brad Bolinger</option>
-	<option value="816014">Brett Stansell</option>
-	<option value="1332574">Brian OHara</option>
-	<option value="921238">Bruce Middendorf</option>
-	<option value="816000">Bruce Schwendenman</option>
-	<option value="260220">Craig Baltimore</option>
-	<option value="815977">Dan SanSouci</option>
-	<option value="252164">Dan Sjodin</option>
-	<option value="1335343">David Kurtz</option>
-	<option value="182148">Debbie McKeen</option>
-	<option value="236036">Dorothy Kahihikolo</option>
-	<option value="797277">Doug Frank</option>
-	<option value="235426">Doug Young-Koontz</option>
-	<option value="161737">Ed Gilbert</option>
-	<option value="258191">Elizabeth Homewood</option>
-	<option value="969922">Emma Nixon</option>
-	<option value="171191">Eric Ryerson</option>
-	<option value="242732">Gilbert Morris</option>
-	<option value="212519">Hanspal Randhawa</option>
-	<option value="797438">Hanspal Randhawa</option>
-	<option value="790903">Harpreet Panesar</option>
-	<option value="815899">Heather Ludlam</option>
-	<option value="511164">Ian Whitaker</option>
-	<option value="180957">Jack Casey</option>
-	<option value="777412">Jacqueline Moody</option>
-	<option value="814904">Javed Siddiqui</option>
-	<option value="1250916">Jaya Tutika</option>
-	<option value="176011">Jey Charles</option>
-	<option value="797311">Jim Ignatoski</option>
-	<option value="174262">Joan Mapes</option>
-	<option value="969792">John Gariepy</option>
-	<option value="777394">Josh Lunn</option>
-	<option value="777207">Kathleen Cuzner</option>
-	<option value="177530">Keith Long</option>
-	<option value="179451">Ken Facemyer</option>
-	<option value="165516">Lauren Scibeck</option>
-	<option value="170150">Lee Taphouse2</option>
-	<option value="777261">Leslie Wachholz</option>
-	<option value="777181">Lianne Ascott</option>
-	<option value="777231">Luis Miranda</option>
-	<option value="797464">Marcel van Schaik</option>
-	<option value="175561">Marcel van Schaik</option>
-	<option value="776496">Mark Nadasdy</option>
-	<option value="276365">Mark Sele</option>
-	<option value="47165">Martin Schauder</option>
-	<option value="777239">Matthew Prescott</option>
-	<option value="969788">Matthew Walters</option>
-	<option value="777260">Mikhail Vorontsov</option>
-	<option value="777418">Nadia Nadeem</option>
-	<option value="227049">Nancy Oliveira</option>
-	<option value="797330">Nitesh Kapoor</option>
-	<option value="777188">Owen Beer</option>
-	<option value="859236">Parama Alamuri</option>
-	<option value="9193">Patrick Pollet</option>
-	<option value="777268">Paul Wright</option>
-	<option value="777257">Peter Thornton</option>
-	<option value="797122">Prashant Shewale</option>
-	<option value="275417">Priyanka Shah</option>
-	<option value="777216">Ralph Francis</option>
-	<option value="251528">Rick Hauser</option>
-	<option value="790914">Ron Wood</option>
-	<option value="1244940">Sara Johnson</option>
-	<option value="777546">Shannon Lapekas</option>
-	<option value="16369">Sheila McInerney</option>
-	<option value="777376">Sreeni Konda</option>
-	<option value="815766">Steve Criger</option>
-	<option value="1312031">Sudhir Madyastha</option>
-	<option value="510159">Sue Eckersley</option>
-	<option value="6569">Sue Smith</option>
-	<option value="213384">Sumathi Raisinghani</option>
-	<option value="815909">Susan Bell</option>
-	<option value="777238">Susan Clark</option>
-	<option value="921481">Tarek Sahir</option>
-	<option value="170845">Tat Wing Chan</option>
-	<option value="1312014">Tim Boyd</option>
-	<option value="797150">Tom Welch</option>
-	<option value="777544">Vasantha Kottage</option>
-	<option value="797380">Vince Mazzucco</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblApprover2" for="ddlApprover2">Level Two Approver</label>
-                                            <select name="ddlApprover2" id="ddlApprover2" class="dropdown">
-	<option value="0">Select</option>
-	<option value="777332">Barb Felten</option>
-	<option value="815914">Bill McKinney</option>
-	<option value="234869">Bjorn Svensson</option>
-	<option value="1248882">Brad Bolinger</option>
-	<option value="816014">Brett Stansell</option>
-	<option value="1332574">Brian OHara</option>
-	<option value="921238">Bruce Middendorf</option>
-	<option value="816000">Bruce Schwendenman</option>
-	<option value="260220">Craig Baltimore</option>
-	<option value="815977">Dan SanSouci</option>
-	<option value="252164">Dan Sjodin</option>
-	<option value="1335343">David Kurtz</option>
-	<option value="182148">Debbie McKeen</option>
-	<option value="236036">Dorothy Kahihikolo</option>
-	<option value="797277">Doug Frank</option>
-	<option value="235426">Doug Young-Koontz</option>
-	<option value="161737">Ed Gilbert</option>
-	<option value="258191">Elizabeth Homewood</option>
-	<option value="969922">Emma Nixon</option>
-	<option value="171191">Eric Ryerson</option>
-	<option value="242732">Gilbert Morris</option>
-	<option value="212519">Hanspal Randhawa</option>
-	<option value="797438">Hanspal Randhawa</option>
-	<option value="790903">Harpreet Panesar</option>
-	<option value="815899">Heather Ludlam</option>
-	<option value="511164">Ian Whitaker</option>
-	<option value="180957">Jack Casey</option>
-	<option value="777412">Jacqueline Moody</option>
-	<option value="814904">Javed Siddiqui</option>
-	<option value="1250916">Jaya Tutika</option>
-	<option value="176011">Jey Charles</option>
-	<option value="797311">Jim Ignatoski</option>
-	<option value="174262">Joan Mapes</option>
-	<option value="969792">John Gariepy</option>
-	<option value="777394">Josh Lunn</option>
-	<option value="777207">Kathleen Cuzner</option>
-	<option value="177530">Keith Long</option>
-	<option value="179451">Ken Facemyer</option>
-	<option value="165516">Lauren Scibeck</option>
-	<option value="170150">Lee Taphouse2</option>
-	<option value="777261">Leslie Wachholz</option>
-	<option value="777181">Lianne Ascott</option>
-	<option value="777231">Luis Miranda</option>
-	<option value="797464">Marcel van Schaik</option>
-	<option value="175561">Marcel van Schaik</option>
-	<option value="776496">Mark Nadasdy</option>
-	<option value="276365">Mark Sele</option>
-	<option value="47165">Martin Schauder</option>
-	<option value="777239">Matthew Prescott</option>
-	<option value="969788">Matthew Walters</option>
-	<option value="777260">Mikhail Vorontsov</option>
-	<option value="777418">Nadia Nadeem</option>
-	<option value="227049">Nancy Oliveira</option>
-	<option value="797330">Nitesh Kapoor</option>
-	<option value="777188">Owen Beer</option>
-	<option value="859236">Parama Alamuri</option>
-	<option value="9193">Patrick Pollet</option>
-	<option value="777268">Paul Wright</option>
-	<option value="777257">Peter Thornton</option>
-	<option value="797122">Prashant Shewale</option>
-	<option value="275417">Priyanka Shah</option>
-	<option value="777216">Ralph Francis</option>
-	<option value="251528">Rick Hauser</option>
-	<option value="790914">Ron Wood</option>
-	<option value="1244940">Sara Johnson</option>
-	<option value="777546">Shannon Lapekas</option>
-	<option value="16369">Sheila McInerney</option>
-	<option value="777376">Sreeni Konda</option>
-	<option value="815766">Steve Criger</option>
-	<option value="1312031">Sudhir Madyastha</option>
-	<option value="510159">Sue Eckersley</option>
-	<option value="6569">Sue Smith</option>
-	<option value="213384">Sumathi Raisinghani</option>
-	<option value="815909">Susan Bell</option>
-	<option value="777238">Susan Clark</option>
-	<option value="921481">Tarek Sahir</option>
-	<option value="170845">Tat Wing Chan</option>
-	<option value="1312014">Tim Boyd</option>
-	<option value="797150">Tom Welch</option>
-	<option value="777544">Vasantha Kottage</option>
-	<option value="797380">Vince Mazzucco</option>
-</select>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- End of AHRS tab-panel -->
-
-                            <!-- Start of InforCommunity tab-panel -->
-                                <div id="InforCommunityPanel" class="tab-panel">
-                                    <a href="#"><span id="spnCommunitySettings">Infor Community Settings</span></a>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblCommDisplayName" for="txtCommDisplayName">Display Name</label>
-                                            <input name="txtCommDisplayName" type="text" id="txtCommDisplayName" maxlength="255" />
-                                            <span class="inforSectionLabel">(Changes take 24 Hours to reflect in Infor Communities)</span>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="six columns">
-                                            <label id="lblCommLastAccessed" for="lblCommLastAccessedValue">Last Accessed</label>
-                                            <label id="lblCommLastAccessedValue">
-                                            </label>
-                                        </div>
-                                        <div class="six columns">
-                                        </div>
-                                    </div>
-                                </div>
-                            <!-- End of Community tab-panel -->
-
-                            <!-- Start of ERS Settings tab-panel -->
-
-                            <!-- End of ERS Settings tab-panel -->
-                            </div>
-
-                        </div> <!-- End of main tab-container -->
-
-                    </div>
-
-                    <div class="main-right" role="complementary">
-                        <script id="company-admin-template" type="text/html">
-                            <ul>
-                                {{#dataset}}
-                                    <li>
-                                        <p class="listview-heading">{{fullname}}</p>
-                                        <span class="listview-subheading"><a href="mailto:{{email_address}}">{{email_address}}</a></span>
-                                        <p class="listview-subheading">{{voice_number}}</p>
-                                    </li>
-                                {{/dataset}}
-                            </ul>
-                        </script>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 id="hdMyCompanyAdministrators" class="card-title">My Company Administrators</h2>
-                            </div>
-                            <div class="card-content">
-                                <div id="divCompanyAdminsListView" class="listview" data-init="false" data-tmpl="company-admin-template"></div>
-                            </div>
-                        </div>
-
-                        <script id="infor-contacts-template" type="text/html">
-                            <ul>
-                                {{#dataset}}
-                                    <li>
-                                        <p class="listview-heading">{{title}}</p>
-                                        <p class="listview-subheading">{{fullname}}</p>
-                                        <span class="listview-subheading"><a href="mailto:{{email_address}}">{{email_address}}</a></span>
-                                        <p class="listview-subheading">{{voice_number}}</p>
-                                    </li>
-                                {{/dataset}}
-                            </ul>
-                        </script>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 id="hdInforContacts" class="card-title">Infor Contacts</h2>
-                            </div>
-                            <div class="card-content">
-                                <br />
-                                <div id="divInforContactsListView" class="listview" data-init="false" data-tmpl="infor-contacts-template"></div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="row">
-                            <div class="twelve columns">
-                                <label id="lblLastLogin" for="lblLastLoginVal">Last Successful Login</label>
-                                <label id="lblLastLoginVal">26 Sep 2017 11:42 AM</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="twelve columns">
-                                <label id="lblLastUpdateDate" for="lblLastUpdateDateVal">Last Updated Date</label>
-                                <label id="lblLastUpdateDateVal">22 Sep 2017 03:01 PM</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="twelve columns">
-                                <label id="lblLastUpdatedBy" for="lblLastUpdatedByVal">Last Updated By</label>
-                                <label id="lblLastUpdatedByVal">Marty Lick</label>
-                            </div>
-                        </div>
-                    </div> <!-- End of main-right -->
-                    <div class="footer-top-padding">
-                        &nbsp;
-                    </div>
-
-
-<footer class="ixs-footer">
-    <span id="Footer_spnFooterContent" class="ixs-footer-content"><span class="ixs-footer-desktop-mobile-text">Mobile | </span><a href="javascript:SwitchDesktopMobile('desktop');" class="hyperlink">Desktop</a></span>
-</footer>
-                    <input name="hdnUserId" type="hidden" id="hdnUserId" value="213264" />
-                    <input name="hdnSecondaryProdLines" type="hidden" id="hdnSecondaryProdLines" />
-                    <input name="hdnEscalationProdlines" type="hidden" id="hdnEscalationProdlines" />
-                    <input name="hdnEscalationRegions" type="hidden" id="hdnEscalationRegions" />
-                    <input name="hdnImageName" type="hidden" id="hdnImageName" />
-                    <input name="hdnProductAccessAdd" type="hidden" id="hdnProductAccessAdd" />
-                    <input name="hdnProductAccessDel" type="hidden" id="hdnProductAccessDel" />
-                    <input name="hdnSMLProductAdd" type="hidden" id="hdnSMLProductAdd" />
-                    <input name="hdnSMLProductDel" type="hidden" id="hdnSMLProductDel" />
-                    <input name="hdnNewsSettingVal" type="hidden" id="hdnNewsSettingVal" />
-                    <input name="hdnInforContactsData" type="hidden" id="hdnInforContactsData" value="[{&quot;title&quot;:&quot;Subscription Services Manager&quot;},{&quot;title&quot;:&quot;Sales Account Manager&quot;},{&quot;title&quot;:&quot;Customer Success Manager&quot;},{&quot;title&quot;:&quot;Service Delivery Manager&quot;}]" />
-                    <input name="hdnERSProductLines" type="hidden" id="hdnERSProductLines" value="{}" />
-                </div> <!-- end of divMainContainer -->
-            </div> <!-- end of busy -->
-
-
-
-<script type="text/javascript">
-//<![CDATA[
-// ;(function() {
-//                         function loadHandler() {
-//                             var hf = $get('XiHeadlineHead_SoHeadLineRadStyleSheetManager_TSSM');
-//                             if (!hf._RSSM_init) { hf._RSSM_init = true; hf.value = ''; }
-//                             hf.value += ';Telerik.Web.UI, Version=2017.3.913.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4:en-US:70dd22d0-3f85-41d1-8db7-7b9b784b522c:92753c09';
-//                             Sys.Application.remove_load(loadHandler);
-//                         };
-//                         Sys.Application.add_load(loadHandler);
-//                     })();Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":0,"clientStateFieldID":"XiHeadline_LogoffWindow_ClientState","enableShadow":true,"formID":"form1","height":"535px","iconUrl":"","minimizeIconUrl":"","modal":true,"name":"LogoffWindow","navigateUrl":"/espublic/EN/AnswerLinkDotNet/Cases/CaseLockedDetails.aspx","reloadOnShow":true,"showContentDuringLoad":false,"skin":"XiBlack","visibleStatusbar":false,"visibleTitlebar":false,"width":"825px"}, null, null, $get("XiHeadline_LogoffWindow"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":55,"clientStateFieldID":"Awards_ClientState","enableShadow":true,"formID":"form1","height":"575px","iconUrl":"","left":"10px","minimizeIconUrl":"","name":"Awards","showContentDuringLoad":false,"skin":"XiBlack","top":"10px","visibleStatusbar":false,"visibleTitlebar":false,"width":"750px"}, null, null, $get("Awards"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":53,"clientStateFieldID":"XiHeadline_documentation_ClientState","enableShadow":true,"formID":"form1","height":"575px","iconUrl":"","left":"10px","minimizeIconUrl":"","name":"documentation","reloadOnShow":true,"showContentDuringLoad":false,"skin":"XiBlack","top":"10px","visibleStatusbar":false,"visibleTitlebar":false,"width":"750px"}, null, null, $get("XiHeadline_documentation"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":53,"clientStateFieldID":"XiHeadline_download_ClientState","enableShadow":true,"formID":"form1","height":"575px","iconUrl":"","left":"10px","minimizeIconUrl":"","name":"download","reloadOnShow":true,"showContentDuringLoad":false,"skin":"XiBlack","top":"10px","visibleStatusbar":false,"visibleTitlebar":false,"width":"750px"}, null, null, $get("XiHeadline_download"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":53,"clientStateFieldID":"rwdSoftwareKeys_ClientState","enableShadow":true,"formID":"form1","height":"575px","iconUrl":"","left":"10px","minimizeIconUrl":"","name":"rwdSoftwareKeys","reloadOnShow":true,"showContentDuringLoad":false,"skin":"XiBlack","top":"10px","visibleStatusbar":false,"visibleTitlebar":false,"width":"750px"}, null, null, $get("rwdSoftwareKeys"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":53,"clientStateFieldID":"XiHeadline_rwdEditProfile_ClientState","enableShadow":true,"formID":"form1","height":"575px","iconUrl":"","left":"10px","minimizeIconUrl":"","name":"rwdEditProfile","reloadOnShow":true,"showContentDuringLoad":false,"skin":"XiBlack","top":"10px","visibleStatusbar":false,"visibleTitlebar":false,"width":"750px"}, null, null, $get("XiHeadline_rwdEditProfile"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":53,"clientStateFieldID":"rwdDefectDisplayGroup_ClientState","enableShadow":true,"formID":"form1","height":"575px","iconUrl":"","left":"10px","minimizeIconUrl":"","name":"rwdDefectDisplayGroup","reloadOnShow":true,"showContentDuringLoad":false,"skin":"XiBlack","top":"10px","visibleStatusbar":false,"visibleTitlebar":false,"width":"750px"}, null, null, $get("rwdDefectDisplayGroup"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":55,"clientStateFieldID":"rwdBriefings_ClientState","enableShadow":true,"formID":"form1","height":"575px","iconUrl":"","minimizeIconUrl":"","name":"rwdBriefings","showContentDuringLoad":false,"skin":"XiBlack","visibleStatusbar":false,"visibleTitlebar":false,"width":"750px"}, null, null, $get("rwdBriefings"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":55,"clientStateFieldID":"rwdAffiliateToCustomer_ClientState","enableShadow":true,"formID":"form1","height":"350px","iconUrl":"","minimizeIconUrl":"","name":"rwdAffiliateToCustomer","showContentDuringLoad":false,"skin":"XiBlack","visibleStatusbar":false,"visibleTitlebar":false,"width":"975px"}, null, null, $get("rwdAffiliateToCustomer"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":55,"clientStateFieldID":"rwdSwitchToContactLogin_ClientState","enableShadow":true,"formID":"form1","height":"350px","iconUrl":"","minimizeIconUrl":"","modal":true,"name":"rwdSwitchToContactLogin","showContentDuringLoad":false,"skin":"XiBlack","visibleStatusbar":false,"visibleTitlebar":false,"width":"975px"}, null, null, $get("rwdSwitchToContactLogin"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindow, {"_dockMode":false,"behaviors":55,"clientStateFieldID":"rwdSecretServerFolders_ClientState","enableShadow":true,"formID":"form1","height":"350px","iconUrl":"","minimizeIconUrl":"","name":"rwdSecretServerFolders","showContentDuringLoad":false,"skin":"XiBlack","visibleStatusbar":false,"visibleTitlebar":false,"width":"975px"}, null, null, $get("rwdSecretServerFolders"));
-// });
-// Sys.Application.add_init(function() {
-//     $create(Telerik.Web.UI.RadWindowManager, {"behaviors":55,"clientStateFieldID":"XiHeadline_rwmHeadlineWindow_ClientState","enableShadow":true,"formID":"form1","height":"575px","iconUrl":"","minimizeIconUrl":"","name":"rwmHeadlineWindow","reloadOnShow":true,"showContentDuringLoad":false,"skin":"XiBlack","visibleStatusbar":false,"visibleTitlebar":false,"width":"750px","windowControls":"['XiHeadline_LogoffWindow','Awards','XiHeadline_documentation','XiHeadline_download','rwdSoftwareKeys','XiHeadline_rwdEditProfile','rwdDefectDisplayGroup','rwdBriefings','rwdAffiliateToCustomer','rwdSwitchToContactLogin','rwdSecretServerFolders']"}, null, {"child":"XiHeadline_LogoffWindow"}, $get("XiHeadline_rwmHeadlineWindow"));
-// });
-//]]>
-</script>
-</form>
         </div>
+        <!-- End of main tab-container -->
+
+      </div>
     </div>
+    <!-- end of divMainContainer -->
+  </div>
+  <!-- end of busy -->
+
+  </form>
+</div>
+</div>
 </body>
+
 </html>

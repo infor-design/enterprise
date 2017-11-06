@@ -84,7 +84,9 @@
           datepicker = self.element.data('datepicker'),
           timepicker = self.element.data('timepicker'),
           dropdown = self.element.data('dropdown'),
-          lookup = self.element.data('lookup'),
+          lookup = self.element.data('lookup') || self.element.hasClass('lookup'),
+          isFileupload = self.element.is('.fileupload'),
+          isSearchfield = self.element.is('.searchfield'),
 
           // Helper functions
           isFocus = function(elem) {
@@ -109,6 +111,7 @@
 
         // Update target element
         self.targetElem = dropdown ? dropdown.pseudoElem : self.targetElem;
+        self.targetElem = isFileupload ? self.field.find('.fileupload[type="text"]') : self.targetElem;
 
         // Adjust stack order for dropdown
         if (dropdown) {
@@ -124,13 +127,30 @@
         // Move trigger(action-button) in to lookup-wrapper
         if (lookup) {
           self.field.addClass('is-fieldoptions');
-          self.trigger.add(self.trigger.next('.popupmenu'))
-            .appendTo(self.element.closest('.lookup-wrapper'));
           if (lookup.icon) {
-            lookup.icon.on('click.' + pluginName, function() {
+            self.field.on('click.' + pluginName, '.lookup-wrapper .trigger', function() {
               doActive();
             });
           }
+        }
+        // Bind fileupload events
+        if (isFileupload) {
+          self.element.on('change.' + pluginName, function() {
+            self.targetElem.focus();
+          });
+          self.field.on('click.' + pluginName, 'label.fileclose .trigger', function() {
+            self.targetElem.focus();
+          });
+          self.field.on('click.' + pluginName, 'label.fileupload .trigger', function() {
+            doActive();
+          });
+        }
+        // Move trigger(action-button) in to searchfield-wrapper
+        if (isSearchfield) {
+          setTimeout(function() {
+            self.trigger.add(self.trigger.next('.popupmenu'))
+              .appendTo(self.element.closest('.searchfield-wrapper'));
+          }, 0);
         }
 
         // Element events
@@ -205,27 +225,11 @@
 
       // Unbind all events
       unbind: function() {
-        this.element.off(
-          ' listopened.' + pluginName +
-          ' listclosed.' + pluginName
-        );
-        this.targetElem.off(
-          'focus.' + pluginName +
-          ' blur.' + pluginName +
-          ' keydown.' + pluginName
-        );
-        this.trigger.off(
-          'focus.' + pluginName +
-          ' blur.' + pluginName +
-          ' close.' + pluginName +
-          ' click.' + pluginName
-        );
-
-        var lookup = this.element.data('lookup');
-        if (lookup && lookup.icon) {
-          lookup.icon.off('click.' + pluginName);
-        }
-
+        this.field
+          .add(this.element)
+          .add(this.targetElem)
+          .add(this.trigger)
+          .off('.' + pluginName);
         return this;
       },
 

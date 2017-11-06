@@ -3,10 +3,10 @@
   <div class="one-half column">
 
     <div class="field">
-      <label class="required" for="item-desc">Item Description</label>
-      <input type="text" id="item-desc" class="field-options" aria-required="true" name="item-desc" data-validate="required">
+      <label for="item-desc">Text Field</label>
+      <input type="text" class="field-options" aria-required="true" name="item-desc">
 
-      <button class="btn-actions btn-tertiary btn-menu" type="button">
+      <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use xlink:href="#icon-more"/>
@@ -19,14 +19,14 @@
     </div>
 
     <div class="field">
-      <label for="states" class="label">States</label>
-      <select id="states" name="states" class="dropdown field-options">
+      <label for="example-dropdown" class="label">Dropdown</label>
+      <select id="example-dropdown" name="example-dropdown" class="dropdown field-options">
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>
       </select>
 
-      <button class="btn-actions btn-tertiary btn-menu" type="button">
+      <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use xlink:href="#icon-more"/>
@@ -39,10 +39,14 @@
     </div>
 
     <div class="field">
-      <label for="product-lookup" class="label required">Products</label>
-      <input id="product-lookup" data-init="false" data-validate="required" class="lookup field-options" name="product-lookup" type="text">
+      <label for="example-multiselect" class="label">Multiselect (Max 2)</label>
+      <select id="example-multiselect" name="example-multiselect" class="multiselect field-options" data-maxselected="2" multiple>
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+      </select>
 
-      <button class="btn-actions btn-tertiary btn-menu" type="button">
+      <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use xlink:href="#icon-more"/>
@@ -55,10 +59,58 @@
     </div>
 
     <div class="field">
-      <label for="item-date" class="label">Item Date</label>
+      <label for="autocomplete-default">Autocomplete</label>
+      <input type="text" autocomplete="off" class="autocomplete  field-options" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search">
+
+      <button class="btn-actions btn-menu" type="button">
+        <span class="audible">Actions for Item Description</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"/>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Show History</a></li>
+        <li><a href="#">Edit Record</a></li>
+      </ul>
+    </div>
+
+    <div class="field">
+      <label for="fileupload">Fileupload</label>
+      <input type="file" class="fileupload field-options" id="fileupload" name="fileupload">
+
+      <button class="btn-actions btn-menu" type="button">
+        <span class="audible">Actions for Item Description</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"/>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Show History</a></li>
+        <li><a href="#">Edit Record</a></li>
+      </ul>
+    </div>
+
+    <div class="field">
+      <label for="product-lookup" class="label">Lookup</label>
+      <input id="product-lookup" data-init="false" class="lookup field-options" name="product-lookup" type="text">
+
+      <button class="btn-actions btn-menu" type="button">
+        <span class="audible">Actions for Item Description</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"/>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Show History</a></li>
+        <li><a href="#">Edit Record</a></li>
+      </ul>
+    </div>
+
+    <div class="field">
+      <label for="item-date" class="label">Date Picker</label>
       <input id="item-date" class="datepicker field-options" name="item-date" type="text" >
 
-      <button class="btn-actions btn-tertiary btn-menu" type="button">
+      <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use xlink:href="#icon-more"/>
@@ -71,10 +123,10 @@
     </div>
 
     <div class="field">
-       <label for="item-time" class="label">Item Time</label>
+       <label for="item-time" class="label">Time Picker</label>
        <input id="item-time" class="timepicker field-options" name="item-time" type="text" >
 
-       <button class="btn-actions btn-tertiary btn-menu" type="button">
+       <button class="btn-actions btn-menu" type="button">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
              <use xlink:href="#icon-more"/>
@@ -90,7 +142,7 @@
       <label for="department">Disabled</label>
       <input class="field-options" type="text" disabled value="Field not editable" id="department" name="department">
 
-      <button class="btn-actions btn-tertiary btn-menu" type="button">
+      <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use xlink:href="#icon-more"/>
@@ -106,7 +158,7 @@
       <label for="department-code">Readonly</label>
       <input class="field-options" type="text" readonly value="02006" id="department-code" name="department-code">
 
-      <button class="btn-actions btn-tertiary btn-menu" type="button">
+      <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use xlink:href="#icon-more"/>
@@ -124,7 +176,7 @@
         <label for="input-cost">Cost</label>
         <input type="text" class="input-xs field-options" id="input-cost" name="input-cost">
 
-        <button class="btn-actions btn-tertiary btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use xlink:href="#icon-more"/>
@@ -139,9 +191,9 @@
 
       <div class="field">
         <label for="input-quantity">Quantity</label>
-        <input type="text" class="input-xs field-options"  id="input-quantity" class="input-sm" name="input-quantity">
+        <input type="text" class="input-xs field-options"  id="input-quantity" name="input-quantity">
 
-        <button class="btn-actions btn-tertiary btn-menu" type="button">
+        <button class="btn-actions btn-menu" type="button">
           <span class="audible">Actions for Item Description</span>
           <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
             <use xlink:href="#icon-more"/>
@@ -156,10 +208,42 @@
     </div>
 
     <div class="field">
-      <label for="item-notes">Notes</label>
+      <label for="clearable">Clearable Input</label>
+      <input type="text" class="field-options" name="clearable" data-clearable="true">
+
+      <button class="btn-actions btn-menu" type="button">
+        <span class="audible">Actions for Item Description</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"/>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Show History</a></li>
+        <li><a href="#">Edit Record</a></li>
+      </ul>
+    </div>
+
+    <div class="field">
+      <label for="searchfield-clearable">Clearable Searchfield</label>
+      <input data-autocomplete="{{basepath}}api/states?term=" data-options="{clearable: true}" id="searchfield-clearable" type="text" class="searchfield field-options">
+
+      <button class="btn-actions btn-menu" type="button">
+        <span class="audible">Actions for Item Description</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"/>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Show History</a></li>
+        <li><a href="#">Edit Record</a></li>
+      </ul>
+    </div>
+
+    <div class="field">
+      <label for="item-notes">Textarea</label>
       <textarea id="item-notes" class="textarea field-options" name="item-notes" placeholder="Type your notes here..."></textarea>
 
-      <button class="btn-actions btn-tertiary btn-menu" type="button">
+      <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use xlink:href="#icon-more"/>
