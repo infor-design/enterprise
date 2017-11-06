@@ -65,6 +65,7 @@
 
         //Handle Personalization and theme
         window.Soho.theme = 'light';
+        $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(window.Soho.theme + '-theme');
 
         window.Soho.setTheme = function(theme) { // jshint ignore:line
           self.setTheme(theme);
@@ -253,6 +254,8 @@
         if (this.availableThemes.indexOf(theme) === -1) {
           return;
         }
+
+        $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(theme + '-theme');
 
         this.blockUi();
 
