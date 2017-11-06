@@ -110,6 +110,14 @@
         if (!this.settings.editable) {
           this.element.attr('readonly', 'true').addClass('is-not-editable');
         }
+
+        // Fix field options in case lookup is initialized after
+        var wrapper = this.element.parent('.lookup-wrapper');
+        if (wrapper.next().is('.btn-actions')) {
+          this.element.data('fieldoptions').destroy();
+          this.element.fieldoptions();
+        }
+
         this.addAria();
       },
 
