@@ -5211,7 +5211,9 @@ $.fn.datagrid = function(options) {
             beforeOpen: self.settings.menuBeforeOpen,
             trigger: 'immediate'})
           .off('selected').on('selected', function (e, args) {
-            self.settings.menuSelected(e, args);
+            if (self.settings.menuSelected) {
+              self.settings.menuSelected(e, args);
+            }
           });
         }
 
