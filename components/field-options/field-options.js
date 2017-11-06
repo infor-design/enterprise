@@ -127,8 +127,6 @@
         // Move trigger(action-button) in to lookup-wrapper
         if (lookup) {
           self.field.addClass('is-fieldoptions');
-          self.trigger.add(self.trigger.next('.popupmenu'))
-            .appendTo(self.element.closest('.lookup-wrapper'));
           if (lookup.icon) {
             self.field.on('click.' + pluginName, '.lookup-wrapper .trigger', function() {
               doActive();

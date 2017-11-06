@@ -91,7 +91,18 @@
         }
         else {
           this.container = $('<span class="'+ cssClass +'"></span>');
-          lookup.wrap(this.container);
+
+          if (this.element.is('.field-options')) {
+            var field = this.element.closest('.field'),
+              fieldOptionsTrigger = field.find('.btn-actions');
+
+            lookup
+              .add(fieldOptionsTrigger)
+              .add(fieldOptionsTrigger.next('.popupmenu'))
+              .wrapAll(this.container);
+          } else {
+            lookup.wrap(this.container);
+          }
         }
 
         // this.container = $('<span class="lookup-wrapper"></span>');
