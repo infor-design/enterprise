@@ -205,6 +205,7 @@
         var containerClass = this.element.parent().attr('class');
         if ((this.element.hasClass('btn-menu') ||
             this.element.hasClass('btn-actions') ||
+            this.element.hasClass('btn-icon') && this.element.find('use').attr('xlink:href') === '#icon-more' ||
             this.settings.menu === 'colorpicker-menu' ||
             this.element.closest('.toolbar').length > 0 ||
             this.element.closest('.masthead').length > 0 ||
