@@ -1,0 +1,73 @@
+<style>
+
+  .dark-theme > .icon-empty-main-color {
+    fill: red !important;
+  }
+
+  .dark-theme > .icon-empty-center-color {
+    fill: red !important;
+  }
+
+  .dark-theme > .icon-empty-offset-color {
+    fill: red !important;
+  }
+</style>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Define Some Sample Data
+      data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', quantity: 1, price: 410.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action', status: 'Error'});
+      data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold', status: 'Error'});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 1, price: 620.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action', status: 'Error'});
+      data.push({ id: 4, productId: 2445204, productName: undefined, inStock: false, activity:  'Assemble Paint', quantity: 3, price: 1210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', status: 'Confirmed'});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', quantity: 4, price: 810.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold', status: 'Confirmed'});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', quantity: 41, price: 1120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Error'});
+      data.push({ id: 6, productId: null, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Confirmed'});
+      data.push({ id: 7, productId: null, productName: null, activity:  null, quantity: null, price: null, status: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+
+      var statuses = [{id:'Confirmed', value:'Confirmed', label:'Confirmed'},
+                         {id:'Error', value:'Error', label:'Error'}];
+
+      var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
+                         {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'contents', options: activities});
+      columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
+      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Alert, filterType: 'select', options: statuses, ranges: [{'value':'Confirmed', 'classes': 'confirm', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
+      columns.push({ id: 'price',  name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###,####.000'});
+
+      //Supported Filter Types: text, integer, date, select, decimal, checkbox, contents (FUTURE: lookup, percent)
+
+      //Init and get the api for the grid
+      var api = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        filterable: true,
+        selectable: 'single',
+        editable: true,
+        toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
+      }).data('datagrid');
+
+      var filter = [{columnId: 'productId', operator: 'equals', value: '2142201'}]; // Text Type
+      api.applyFilter(filter);
+
+ });
+
+</script>
