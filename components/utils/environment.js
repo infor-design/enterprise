@@ -15,14 +15,40 @@
 }(function($) {
   /* end-amd-strip-block */
 
+  /**
+   * Checks the breakpoint and triggers an event if the breakpoint's changed.
+   */
+  function breakpointCheck() {
+    if (!Soho.breakpoints.last) {
+      Soho.breakpoints.last = '';
+    }
+
+    var cur = Soho.breakpoints.current();
+    if (Soho.breakpoints.last !== cur) {
+      $('body').triggerHandler('breakpoint-change', [{
+        previous: Soho.breakpoints.last,
+        current: cur
+      }]);
+      Soho.breakpoints.last = cur;
+    }
+  }
+
+
   var version = '4.3.3',
     environment = {
 
     // Setup a global resize event trigger for controls to listen to
     addGlobalResize: function() {
+      window.Soho.breakpoints = window.Soho.breakpoints || {};
+
+      // Global resize event
       $(window).debouncedResize(function() {
         $('body').triggerHandler('resize', [window]);
+        breakpointCheck();
       });
+
+      // Also detect whenenver a load or orientation change occurs
+      $(window).on('orientationchange load', breakpointCheck);
 
       return this;
     },

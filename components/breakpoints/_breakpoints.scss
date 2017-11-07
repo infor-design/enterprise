@@ -16,7 +16,6 @@ $breakpoints: phone, phonedown, tablet, desktop, extralarge;
 
 // Setup breakpoint sizes on "content" so that Javascript components can accurately detect size
 // This works by placing an after pseudo-element on the body tag with the correct name.
-
 // NOTE: Some of the `respond-to` breakpoints are intentionally skipped due to high-granularity.
 // Javascript only needs to know about the major ones.
 body {
