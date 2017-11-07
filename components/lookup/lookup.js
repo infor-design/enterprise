@@ -114,7 +114,9 @@
         // Fix field options in case lookup is initialized after
         var wrapper = this.element.parent('.lookup-wrapper');
         if (wrapper.next().is('.btn-actions')) {
-          this.element.data('fieldoptions').destroy();
+          if (this.element.data('fieldoptions')) {
+            this.element.data('fieldoptions').destroy();
+          }
           this.element.fieldoptions();
         }
 
