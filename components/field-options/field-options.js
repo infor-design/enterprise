@@ -93,10 +93,10 @@
             return $(':focus').is(elem);
           },
           doActive = function() {
-            self.element.add(self.trigger).addClass('is-active');
+            self.element.add(self.trigger).add(self.field).addClass('is-active');
           },
           doUnactive = function() {
-            self.element.add(self.trigger).removeClass('is-active');
+            self.element.add(self.trigger).add(self.field).removeClass('is-active');
           },
           canUnactive = function(e) {
             var r = !isFocus(self.element);
@@ -112,6 +112,15 @@
         // Update target element
         self.targetElem = dropdown ? dropdown.pseudoElem : self.targetElem;
         self.targetElem = isFileupload ? self.field.find('.fileupload[type="text"]') : self.targetElem;
+
+        // Set is-hover for field
+        self.targetElem
+          .on('mouseenter.' + pluginName, function() {
+            self.field.addClass('is-hover');
+          })
+          .on('mouseleave.' + pluginName, function() {
+            self.field.removeClass('is-hover');
+          });
 
         // Adjust stack order for dropdown
         if (dropdown) {
@@ -188,7 +197,7 @@
 
         // FIX: Safari - by default does not get focus on some elements while using tab key
         // https://stackoverflow.com/a/29106095
-        if (self.isSafari) {
+        if (self.isSafari || isFileupload) {
           self.targetElem.on('keydown.' + pluginName, function(e) {
             var key = e.which || e.keyCode || e.charCode || 0;
             if (key === 9 && !e.shiftKey) {
