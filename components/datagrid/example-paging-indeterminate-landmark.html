@@ -91,7 +91,10 @@
      * Returns a promise to get data spoofing an async call to the back end.
      */
     function getDataPage(request) {
-      return new Promise(function(resolve, reject) {
+      var dfd = $.Deferred();
+
+      setTimeout(function () {
+
         switch (request.type) {
           case 'initial': beginIndex = 0; break;
           case 'first':   beginIndex = 0; break;
@@ -111,8 +114,10 @@
           lastPage: endIndex >= getData().length - 1
         };
 
-        resolve(result);
-      });
+        dfd.resolve(result);
+      }, 100);
+
+      return dfd.promise();
     }
 
     function getColumns() {
