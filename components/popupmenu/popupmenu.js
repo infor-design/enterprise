@@ -1491,6 +1491,7 @@
        * Teardown markup and detach all events.
        */
       destroy: function() {
+        this.close();
         this.teardown();
         this.menu.trigger('destroy');
         $.removeData(this.element[0], pluginName);
