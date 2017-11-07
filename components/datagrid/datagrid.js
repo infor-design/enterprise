@@ -4905,8 +4905,8 @@ $.fn.datagrid = function(options) {
         count = self.tableBody.find('tr:visible').length,
         isClientSide = self.settings.paging && !(self.settings.source);
 
-      if (isClientSide || (!totals && !self.settings.paging)) {
-        count = self.recordCount;
+      if (!totals) {
+        totals = self.totalRows;
       }
 
       //Update Selected
@@ -4914,11 +4914,7 @@ $.fn.datagrid = function(options) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
-      if (totals && totals !== -1) {
-        count = totals;
-      }
-
-      var countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
+      var countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
 
       if (self.settings.resultsText) {
         if (typeof self.settings.resultsText === 'function') {
@@ -7771,6 +7767,7 @@ $.fn.datagrid = function(options) {
       pagerElem
       .on('afterpaging', function (e, args) {
 
+        self.totalRows = args.total;
         self.displayCounts(args.total);
 
         //Handle row selection across pages
