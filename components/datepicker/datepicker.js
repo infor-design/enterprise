@@ -459,7 +459,7 @@
         $('#validation-tooltip').addClass('is-hidden');
 
 
-        this.element.addClass('is-active').trigger('listopened');
+        this.element.addClass('is-active is-open').trigger('listopened');
 
         // Calendar Html in Popups
         var prevButton = '<button type="button" class="btn-icon prev">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button>',
@@ -731,7 +731,7 @@
 
         if (this.element.hasClass('is-active')) {
           this.element.trigger('listclosed');
-          this.element.removeClass('is-active');
+          this.element.removeClass('is-active is-open');
         }
       },
 
