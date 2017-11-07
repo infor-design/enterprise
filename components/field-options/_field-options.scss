@@ -30,17 +30,26 @@
     left: -11px;
     line-height: normal;
     min-width: 30px;
-    visibility: hidden;
+    opacity: 0;
     width: 30px;
 
+    &:hover,
     &.is-active {
-      visibility: visible;
+      opacity: 1;
     }
 
     &:focus,
     &:active {
       color: transparent;
       text-shadow: 0 0 0 $black;
+    }
+
+    &:focus:not(.hide-focus) {
+      box-shadow: none;
+
+      .icon {
+        fill: $input-focus-border-color;
+      }
     }
   }
 
@@ -49,9 +58,17 @@
     padding: 0 5px;
   }
 
-  &.is-active {
+  &:hover {
     ~ .btn-actions {
-      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &.is-active {
+    @include focus-state();
+
+    ~ .btn-actions {
+      opacity: 1;
     }
   }
 
@@ -61,12 +78,12 @@
     width: calc(100% - 40px) !important;
 
     ~ .icon.close {
+      opacity: 1;
       right: 44px;
-      visibility: visible;
 
       &.is-empty {
         display: block;
-        visibility: hidden;
+        opacity: 0;
       }
     }
 
@@ -145,6 +162,7 @@
   }
 }
 
+
 .is-fieldoptions {
   .lookup-wrapper {
     width: 100%;
@@ -152,6 +170,22 @@
 
   .btn-actions {
     left: -8px;
+  }
+}
+
+.field.is-hover {
+  .btn-actions {
+    opacity: 1;
+  }
+}
+
+.field.is-active {
+  .field-options:not([disabled]) {
+    @include focus-state();
+  }
+
+  .btn-actions {
+    opacity: 1;
   }
 }
 
