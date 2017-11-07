@@ -1,0 +1,28 @@
+// Soho Breakpoints
+//================================================== //
+
+// NOTE:
+// See the @mixin "respond-to" in `/sass/_mixins.scss` to see what the actual
+// media queries are (Sass compiler doesn't like that mixin residing in this file).
+$breakpoints: phone, phonedown, tablet, desktop, extralarge;
+
+// Defines the breakpoint on a particular element
+@mixin define-breakpoint($name) {
+  &::after {
+    content: $name;
+    display: none;
+  }
+}
+
+// Setup breakpoint sizes on "content" so that Javascript components can accurately detect size
+// This works by placing an after pseudo-element on the body tag with the correct name.
+
+// NOTE: Some of the `respond-to` breakpoints are intentionally skipped due to high-granularity.
+// Javascript only needs to know about the major ones.
+body {
+  @each $bp in $breakpoints {
+    @include respond-to(#{$bp}) {
+      @include define-breakpoint('#{$bp}');
+    }
+  }
+}

@@ -175,8 +175,6 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
     @media (min-width: $breakpoint-tablet-to-desktop) and (max-width: $breakpoint-desktop-to-extralarge - 1) { @content; }
   } @else if $media == extralarge {
     @media (min-width: $breakpoint-desktop-to-extralarge) { @content; }
-  } @else if $media == extralarge {
-    @media (min-width: $breakpoint-desktop-to-extralarge) { @content; }
   }
 }
 
