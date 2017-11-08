@@ -49,7 +49,8 @@
         self.isSafari = Soho.env.browser.name === 'safari';
 
         self.targetElem = self.element;
-        self.field = self.element.closest('.field');
+        self.hoverElem = self.targetElem;
+        self.field = self.element.closest('.field, .radio-group');
         self.fieldParent = self.element.closest('.field').parent();
         self.trigger = self.field.find('.btn-actions');
 
@@ -88,6 +89,10 @@
           lookup = self.element.data('lookup') || self.element.hasClass('lookup'),
           isFileupload = self.element.is('.fileupload'),
           isSearchfield = self.element.is('.searchfield'),
+          isSpinbox = self.element.is('.spinbox'),
+          isColorpicker = self.element.is('.colorpicker'),
+          isRadio = self.element.closest('.radio-group').length > 0,
+          isFieldset = self.element.is('.data') && self.element.closest('.summary-form').length > 0,
 
           // Helper functions
           isFocus = function(elem) {
@@ -109,14 +114,32 @@
             r = dropdown && dropdown.isOpen() ? false : r;
             r = lookup && lookup.modal && lookup.modal.isOpen() ? false : r;
             return r;
+          },
+          getTriggerTopVal = function() {
+            var height = self.element.height();
+
+            if (isFieldset) {
+              var lineHeight = parseInt(self.element.css('line-height'), 10);
+              return height > lineHeight ? (((height - lineHeight)/2) * -1) : 0;
+            }
+            else if (isRadio) {
+              return ((height - self.trigger.height())/2) * -1;
+            }
+          },
+          setTriggerCssTop = function() {
+            self.trigger.css({top:  getTriggerTopVal() +'px'});
           };
 
         // Update target element
         self.targetElem = dropdown ? dropdown.pseudoElem : self.targetElem;
         self.targetElem = isFileupload ? self.field.find('.fileupload[type="text"]') : self.targetElem;
 
+        // Update hover element
+        self.hoverElem = isSpinbox ? self.element.add(self.field.find('.down, .up')) : self.targetElem;
+        self.hoverElem = isColorpicker ? self.element.add(self.field.find('.colorpicker-container, .swatch, .trigger')) : self.hoverElem;
+
         // Set is-hover for field
-        self.targetElem
+        self.hoverElem
           .on('mouseenter.' + pluginName, function() {
             self.field.addClass('is-hover');
           })
@@ -136,13 +159,11 @@
           timepicker.settings.returnFocus = false;
         }
         // Move trigger(action-button) in to lookup-wrapper
-        if (lookup) {
+        if (lookup || isColorpicker) {
           self.field.addClass('is-fieldoptions');
-          if (lookup.icon) {
-            self.field.on('click.' + pluginName, '.lookup-wrapper .trigger', function() {
-              doActive();
-            });
-          }
+          self.field.on('click.' + pluginName, '.lookup-wrapper .trigger, .colorpicker-container .trigger', function() {
+            doActive();
+          });
         }
         // Bind fileupload events
         if (isFileupload) {
@@ -162,6 +183,43 @@
             self.trigger.add(self.trigger.next('.popupmenu'))
               .appendTo(self.element.closest('.searchfield-wrapper'));
           }, 0);
+        }
+        // Fieldset - set trigger(action-button) top value and bind events
+        if (isFieldset) {
+          setTriggerCssTop();
+          self.trigger.on('keydown.' + pluginName, function(e) {
+            var key = e.which || e.keyCode || e.charCode || 0;
+            if (key === 13) {
+              setTimeout(function() {
+                doActive();
+              }, 0);
+            }
+          });
+          self.targetElem.attr('tabindex', 0)
+          .on('click.' + pluginName, function() {
+            doActive();
+          });
+          $(document).on('click.' + pluginName, function(e) {
+            if (!$(e.target).is(self.element)) {
+              doUnactive();
+            }
+          });
+          $('body').on('resize.' + pluginName, function() {
+            setTriggerCssTop();
+          });
+        }
+        // Radio group - set trigger(action-button) top value and bind events
+        if (isRadio) {
+          setTriggerCssTop();
+          self.element.find('.radio').on('focusin.' + pluginName, function() {
+            var delay = self.isSafari ? 200 : 0;
+            setTimeout(function() {
+              doActive();
+            }, delay);
+          });
+          $('body').on('resize.' + pluginName, function() {
+            setTriggerCssTop();
+          });
         }
 
         // Element events
@@ -200,6 +258,9 @@
         // FIX: Safari - by default does not get focus on some elements while using tab key
         // https://stackoverflow.com/a/29106095
         if (self.isSafari || isFileupload) {
+          if (isRadio) {
+            self.element.attr('tabindex', 0);
+          }
           self.targetElem.on('keydown.' + pluginName, function(e) {
             var key = e.which || e.keyCode || e.charCode || 0;
             if (key === 9 && !e.shiftKey) {
@@ -236,10 +297,14 @@
 
       // Unbind all events
       unbind: function() {
-        this.field
+        $(document)
+          .add('body')
+          .add(this.field)
           .add(this.element)
-          .add(this.targetElem)
           .add(this.trigger)
+          .add(this.hoverElem)
+          .add(this.targetElem)
+          .add(this.element.find('.radio'))
           .off('.' + pluginName);
         return this;
       },

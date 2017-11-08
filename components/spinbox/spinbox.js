@@ -119,7 +119,18 @@
           this.inlineLabel.addClass('spinbox-wrapper');
         }
         else if (!this.isWrapped) {
-          this.element.wrap('<span class="spinbox-wrapper"></span>');
+          var spinboxWrapper = '<span class="spinbox-wrapper"></span>';
+          if (this.element.is('.field-options')) {
+            var field = this.element.closest('.field'),
+              fieldOptionsTrigger = field.find('.btn-actions');
+
+            this.element
+              .add(fieldOptionsTrigger)
+              .add(fieldOptionsTrigger.next('.popupmenu'))
+              .wrapAll(spinboxWrapper);
+          } else {
+            this.element.wrap(spinboxWrapper);
+          }
         }
 
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
