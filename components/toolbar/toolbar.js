@@ -440,7 +440,7 @@
               a.text(text.trim());
             }
 
-            if (item.is('.hidden') || item.parent().is('.hidden')) {
+            if (item.isHiddenAtBreakpoint() || item.parent().isHiddenAtBreakpoint()) {
               li.addClass('hidden');
             } else {
               li.removeClass('hidden');
@@ -1083,7 +1083,7 @@
         function toggleClass($elem, doHide) {
           var elem = $elem[0],
             li = $elem.data('action-button-link').parent()[0],
-            elemIsHidden = elem.classList.contains('hidden');
+            elemIsHidden = $elem.isHiddenAtBreakpoint();
 
           if (doHide) {
             li.classList.add('hidden');

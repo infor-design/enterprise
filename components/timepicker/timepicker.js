@@ -780,7 +780,7 @@
           self.closeTimePopup();
         }
 
-        this.element.addClass('is-active');
+        this.element.addClass('is-active is-open');
 
         // Build a different Time Popup based on settings
         if (self.settings.mode === 'range') {
@@ -826,7 +826,7 @@
         this.trigger.data('tooltip').destroy();
         this.trigger.data('tooltip', undefined);
         $('#timepicker-popup').remove();
-        this.element.removeClass('is-active');
+        this.element.removeClass('is-active is-open');
       },
 
       /**
