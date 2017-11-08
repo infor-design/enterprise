@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Breakpoints Test: Event-based Change Detection</h2>
+    <p>
+      Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7087" target="_blank">SOHO-7087</a>
+    </p>
+    <p>
+      An event gets triggered on a Soho application's body tag whenever the Soho CSS determines that a breakpoint change should be made.  In any application that implements Soho UX, there will be an <span class="code">::after</span> pseudo-element appended to the body tag with a content property that describes the current breakpoint.
+    </p>
+    <p>
+      There is also a small utility, <span class="code">Soho.breakpoints</span>, that has a few convenience functions for working with the breakpoint system.
+    </p>
+    <p>
+      In this test, causing this page to have an orientation change or resize event that results in a new breakpoint change will cause a toast message to appear containing the custom event's data.
+    </p>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('breakpoint-change', function(e, breakpointState) {
+    $(this).toast({
+      title: 'Breakpoint Change',
+      message: '<b>Current: </b>' + breakpointState.current + '<br /><b>Previous: </b>' + breakpointState.previous
+    });
+  });
+</script>

@@ -3,6 +3,7 @@
 ### Table of Contents
 
 -   [parseOptions](#parseoptions)
+-   [isHiddenAtBreakpoint](#ishiddenatbreakpoint)
 -   [getHiddenSize](#gethiddensize)
 -   [smoothScroll](#smoothscroll)
 -   [parseOptions](#parseoptions-1)
@@ -16,10 +17,12 @@
 -   [safeSetSelection](#safesetselection)
 -   [isElement](#iselement)
 -   [getDimensions](#getdimensions)
+-   [isHiddenAtBreakpoint](#ishiddenatbreakpoint-1)
 -   [splice](#splice)
 -   [removeDuplicates](#removeduplicates)
 -   [smoothScrollTo](#smoothscrollto)
 -   [defer](#defer)
+-   [current](#current)
 -   [isAbove](#isabove)
 -   [isBelow](#isbelow)
 -   [HideFocus](#hidefocus)
@@ -40,6 +43,14 @@ Returns **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 -   **deprecated**: This is deprecated.
 
+
+## isHiddenAtBreakpoint
+
+jQuery wrapper for `Soho.DOM.isHiddenAtBreakpoint()`
+NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.
+This method is NOT chainable.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## getHiddenSize
 
@@ -114,7 +125,7 @@ Takes an element that is currently hidden by some means (FX: "display: none;") a
 
 -   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
 -   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
--   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
+-   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
@@ -171,6 +182,20 @@ as a plain object instead of a ClientRect
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
 
+## isHiddenAtBreakpoint
+
+Checks an element for Soho visibility classes and determines whether or not
+should be hidden based on those values at the current breakpoint.
+NOTE: this method does NOT determine if the element is ACTUALLY hidden with a
+`display: none;` or `visibility: hidden;` rule.  It determines whether or not a CSS
+visibility rule alone would hide the element.
+
+**Parameters**
+
+-   `element`  
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 ## splice
 
 The splice() method changes the content of a string by removing a range of
@@ -217,6 +242,15 @@ Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
 -   `timer`  
 
 Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout))** 
+
+## current
+
+Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the
+
+<body> tag's `::after` pseudo-element.  These names should be reflected in the breakpoints object
+above.
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ## isAbove
 
