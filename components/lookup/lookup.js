@@ -29,7 +29,8 @@
           editable: true,
           typeahead: false, // Future TODO
           autoApply: true,
-          validator: null
+          validator: null,
+          autoWidth: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -47,6 +48,7 @@
     * @param {Boolean} editable  &nbsp;-&nbsp; Can the user type text in the field
     * @param {String} autoApply  &nbsp;-&nbsp; If set to false the dialog wont apply the value on clicking a value.
     * @param {Function} validator  &nbsp;-&nbsp; A function that fires to let you validate form items on open and select
+    * @param {Boolean} autoWidth  &nbsp;-&nbsp; If true the field will grow/change in size based on the content selected.
     *
     */
     function Lookup(element) {
@@ -88,8 +90,7 @@
         this.icon = $('<span class="trigger" tabindex="-1"></span>').append($.createIcon('search-list'));
         if (this.isInlineLabel) {
           this.inlineLabel.addClass(cssClass);
-        }
-        else {
+        } else {
           this.container = $('<span class="'+ cssClass +'"></span>');
 
           if (this.element.is('.field-options')) {
@@ -108,6 +109,10 @@
         // this.container = $('<span class="lookup-wrapper"></span>');
         // lookup.wrap(this.container);
         lookup.after(this.icon);
+
+        if (this.settings.autoWidth) {
+          this.applyAutoWidth();
+        }
 
         //Add Masking to show the #
         if (lookup.attr('data-mask')) {
@@ -475,6 +480,7 @@
         }
 
         self.element.val(value).trigger('change', [self.selectedRows]);
+        self.applyAutoWidth();
         self.element.focus();
       },
 
@@ -499,6 +505,18 @@
       */
       readonly: function() {
         this.element.prop('readonly', true);
+      },
+
+      /**
+      * Make the input the size of the text.
+      * @private
+      */
+      applyAutoWidth: function() {
+        var value = this.element.val(),
+          length = value.length,
+          isUpperCase = (value === value.toUpperCase());
+
+        this.element.attr('size', length + (isUpperCase ? 2 :1));
       },
 
       /**

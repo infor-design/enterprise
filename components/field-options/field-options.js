@@ -50,6 +50,7 @@
 
         self.targetElem = self.element;
         self.field = self.element.closest('.field');
+        self.fieldParent = self.element.closest('.field').parent();
         self.trigger = self.field.find('.btn-actions');
 
         // Fix: Some reason firfox "event.relatedTarget" not working
@@ -93,10 +94,10 @@
             return $(':focus').is(elem);
           },
           doActive = function() {
-            self.element.add(self.trigger).add(self.field).addClass('is-active');
+            self.element.add(self.trigger).add(self.field).add(self.fieldParent).addClass('is-active');
           },
           doUnactive = function() {
-            self.element.add(self.trigger).add(self.field).removeClass('is-active');
+            self.element.add(self.trigger).add(self.field).add(self.fieldParent).removeClass('is-active');
           },
           canUnactive = function(e) {
             var r = !isFocus(self.element);
@@ -104,6 +105,7 @@
             r = self.trigger.is('.is-open') ? false : r;
             r = datepicker && datepicker.isOpen() ? false : r;
             r = timepicker && timepicker.isOpen() ? false : r;
+            r = $(e.relatedTarget).prev().is(self.element) ? false : r;
             r = dropdown && dropdown.isOpen() ? false : r;
             r = lookup && lookup.modal && lookup.modal.isOpen() ? false : r;
             return r;
