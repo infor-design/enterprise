@@ -58,7 +58,26 @@
   }
 
   //=================================================
-  // Responsive Mode
+  // Side-Summary Mode
+  //=================================================
+
+  &.on-side {
+    flex-direction: row;
+
+    > .scrollable-flex-header {
+      width: 250px;
+    }
+
+    > .scrollable-flex-content {
+      border-left: 1px solid #bdbdbd;
+      border-top: 0;
+      width: calc(100% - 250px);
+    }
+
+  }
+
+  //=================================================
+  // Responsive Mode (more columns)
   //=================================================
   &.is-in-responsive-mode {
 
@@ -73,6 +92,43 @@
 
         + .tab-panel-container {
           height: calc(100% - 41px);
+        }
+      }
+    }
+
+    // Revert the side-oriented version of the composite form back to its normal state
+    // while in "responsive" mode.
+    &.on-side {
+      flex-direction: column;
+
+      > .scrollable-flex-header,
+      > .scrollable-flex-content {
+        width: auto;
+      }
+
+      > .scrollable-flex-content {
+        border-left: 0 !important;
+        border-right: 0 !important;
+        border-top: 1px solid #bdbdbd;
+      }
+    }
+  }
+
+  //==================================================
+  // Explicitly NOT Responsive Mode
+  //==================================================
+  &:not(.is-in-responsive-mode) {
+    &.on-side {
+      .scrollable-flex-header {
+        .one-third.column {
+          float: none;
+          width: auto;
+        }
+      }
+
+      > .scrollable-flex-header {
+        .expandable-expander {
+          display: none;
         }
       }
     }
@@ -95,6 +151,13 @@ html[dir='rtl'] {
     > .scrollable-flex-content {
       > .tab-container.horizontal {
         padding: 0 20px 0 0;
+      }
+    }
+
+    &.on-side {
+      > .scrollable-flex-content {
+        border-left: 0;
+        border-right: 1px solid #bdbdbd;
       }
     }
   }
