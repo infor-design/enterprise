@@ -36,7 +36,6 @@
     -webkit-text-fill-color: $input-readonly-color;
   }
 
-
   &.is-placeholder {
     color: $input-placeholder-color;
 
@@ -53,7 +52,8 @@
     }
     }
 
-  &:focus {
+  &:focus,
+  &.is-focused {
     @include focus-state();
   }
 
@@ -144,7 +144,6 @@
   }
 
 }
-
 
 // Field Style
 .field .checkbox-label,
@@ -308,8 +307,8 @@
   padding-right: 32px;
 
   & + .icon.close {
-    right: auto;
     margin-left: -30px;
+    right: auto;
 
     &:hover {
       fill: $trigger-hover-color;
@@ -328,6 +327,40 @@
 input,
 textarea {
   @include input-style();
+}
+
+// Element with input "like" style borders
+.input-style {
+  background-color: $input-bg-color;
+  border: 1px solid $input-border-color;
+  border-collapse: separate;
+
+  &:hover,
+  &.is-hovered {
+    border-color: $input-hover-border-color;
+  }
+
+  &[disabled],
+  &.is-disabled {
+    background-color: $input-disabled-bg-color;
+    border: solid 1px $input-disabled-border-color;
+    -webkit-text-fill-color: $input-disabled-color;
+  }
+
+  &[readonly],
+  &.is-readonly {
+    background-color: $input-readonly-bg-color;
+    border-color: $input-readonly-border-color;
+    -webkit-text-fill-color: $input-readonly-color;
+  }
+
+  &.is-placeholder {
+    color: $input-placeholder-color;
+  }
+
+  &.is-focused {
+    @include focus-state();
+  }
 }
 
 // Text Area

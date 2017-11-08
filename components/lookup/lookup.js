@@ -514,9 +514,10 @@
       applyAutoWidth: function() {
         var value = this.element.val(),
           length = value.length,
-          isUpperCase = (value === value.toUpperCase());
+          isUpperCase = (value === value.toUpperCase()),
+          isNumber = !isNaN(value);
 
-        this.element.attr('size', length + (isUpperCase ? 2 :1));
+        this.element.attr('size', length + (isUpperCase && !isNumber ? 2 :1));
       },
 
       /**
