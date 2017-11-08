@@ -1243,6 +1243,7 @@
     'phone-to-tablet': 767,
     'wide-tablet': 968,
     'tablet-to-desktop': 1280,
+    'desktop': 1024,
     'desktop-to-extralarge': 1600
   };
 
