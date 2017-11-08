@@ -1561,6 +1561,7 @@ $.fn.datagrid = function(options) {
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
         resultsText: null,  // Can provide a custom function to adjust results text
+        fullViewResult : false, // Paging results display (false for m, true for n of m)
         virtualized: false, // Prevent Unused rows from being added to the DOM
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
@@ -4914,14 +4915,11 @@ $.fn.datagrid = function(options) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
-      var countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
-
-      if (self.settings.resultsText) {
-        if (typeof self.settings.resultsText === 'function') {
-          countText = self.settings.resultsText(self, count);
-        } else {
-          countText = self.settings.resultsText;
-        }
+      var countText;
+      if (self.settings.fullViewResult) {
+        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';        
+      } else {
+        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';        
       }
 
       if (self.toolbar) {
