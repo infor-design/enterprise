@@ -1561,6 +1561,7 @@ $.fn.datagrid = function(options) {
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
         resultsText: null,  // Can provide a custom function to adjust results text
+        showResultTotal : false, // Paging results display (true for n of m, false for m)
         virtualized: false, // Prevent Unused rows from being added to the DOM
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
@@ -1615,6 +1616,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} disableClientFilter &nbsp;-&nbsp Disable Filter Logic client side and let your server do it
   * @param {Boolean} disableClientSort &nbsp;-&nbsp Disable Sort Logic client side and let your server do it
   * @param {String} resultsText &nbsp;-&nbsp Can provide a custom function to adjust results text on the toolbar
+  * @param {Boolean} showResultTotal &nbsp;-&nbsp Paging results display (true for n of m, false for m)
   * @param {Boolean} rowReorder &nbsp;-&nbsp If set you can reorder rows. Requires rowReorder formatter
   * @param {Boolean} showDirty &nbsp;-&nbsp  If true the dirty indicator will be shown on the rows
   * @param {Boolean} allowOneExpandedRow  &nbsp;-&nbsp Controls if you cna expand more than one expandable row.
@@ -4905,8 +4907,8 @@ $.fn.datagrid = function(options) {
         count = self.tableBody.find('tr:visible').length,
         isClientSide = self.settings.paging && !(self.settings.source);
 
-      if (isClientSide || (!totals && !self.settings.paging)) {
-        count = self.recordCount;
+      if (!totals) {
+        totals = self.totalRows;
       }
 
       //Update Selected
@@ -4914,18 +4916,11 @@ $.fn.datagrid = function(options) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
-      if (totals && totals !== -1) {
-        count = totals;
-      }
-
-      var countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
-
-      if (self.settings.resultsText) {
-        if (typeof self.settings.resultsText === 'function') {
-          countText = self.settings.resultsText(self, count);
-        } else {
-          countText = self.settings.resultsText;
-        }
+      var countText;
+      if (self.settings.showResultTotal) {
+        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';        
+      } else {
+        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';        
       }
 
       if (self.toolbar) {
@@ -7771,6 +7766,7 @@ $.fn.datagrid = function(options) {
       pagerElem
       .on('afterpaging', function (e, args) {
 
+        self.totalRows = args.total;
         self.displayCounts(args.total);
 
         //Handle row selection across pages
