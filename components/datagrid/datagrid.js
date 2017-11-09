@@ -7305,7 +7305,9 @@ $.fn.datagrid = function(options) {
 
       //Remove previous tab index
       if (prevCell.node && prevCell.node.length ===1) {
-        self.activeCell.node.removeAttr('tabindex');
+        self.activeCell.node
+          .removeAttr('tabindex')
+          .removeClass('is-active');
       }
 
       //Hide any cell tooltips (Primarily for validation)
@@ -7380,6 +7382,12 @@ $.fn.datagrid = function(options) {
         headers.eq(cell).addClass('is-active');
       }
       this.activeCell.isFocused = true;
+
+      // Expand On Activate Feature
+      var col = this.settings.columns[cell];
+      if (col && col.expandOnActivate && this.activeCell && this.activeCell.node) {
+        self.activeCell.node.addClass('is-active');
+      }
 
       self.element.trigger('activecellchange', [{node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell}]);
     },
