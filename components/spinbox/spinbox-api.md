@@ -33,6 +33,7 @@ The Spinbox component provides easy access to modification of a numeric input fi
 
 **Parameters**
 
+-   `element`  
 -   `min` **(null | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  if defined, provides a minimum numeric limit
 -   `max` **(null | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  if defined, provides a maximum numeric limit
 -   `step` **(null | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.

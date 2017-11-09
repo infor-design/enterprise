@@ -283,7 +283,9 @@
           return;
         }
 
-        this.closeMenu();
+        if (!this.userOpened) {
+          this.closeMenu();
+        }
         return;
       }
 
@@ -321,13 +323,12 @@
         }
 
         self.isAnimating = false;
-        self.element.trigger('applicationmenuopen');
-        $('body').triggerHandler('resize');
-
         if (userOpened) {
           self.userOpened = true;
           self.userClosed = undefined;
         }
+        self.element.trigger('applicationmenuopen');
+        $('body').triggerHandler('resize');
 
         self.menu.removeClass('no-transition');
         $('.page-container').removeClass('no-transition');
