@@ -1573,7 +1573,7 @@ $.fn.datagrid = function(options) {
         expandableRow: false, // Supply an empty expandable row template
         redrawOnResize: true, //Run column redraw logic on resize
         exportConvertNegative: false, // Export data with trailing negative signs moved in front
-        onPostRenderCell: null, //A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
+        onPostRenderCell: null, //A call back function that will fire and send you the cell container and related information for any cells with a component attribute in the column definition.
         onDestroyCell: null //A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
       },
       settings = $.extend({}, defaults, options);
@@ -1626,7 +1626,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
   * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
-  * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
+  * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
   * @param {Boolean} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
   */
   function Datagrid(element) {
@@ -3314,7 +3314,7 @@ $.fn.datagrid = function(options) {
         for (var i = 0; i < this.settings.columns.length; i++) {
           var col = this.settings.columns[i];
 
-          if (col.postRender) {
+          if (col.component) {
             self.tableBody.find('tr').each(function () {
               var row = $(this),
                 rowIdx = row.attr('data-index'),
@@ -3398,7 +3398,7 @@ $.fn.datagrid = function(options) {
         for (var i = 0; i < this.settings.columns.length; i++) {
           var col = this.settings.columns[i];
 
-          if (col.postRender) {
+          if (col.component) {
             rows.each(function () {
               var row = $(this),
                 rowIdx = row.index(),
@@ -3717,7 +3717,7 @@ $.fn.datagrid = function(options) {
           }
         }
 
-        if (col.postRender) {
+        if (self.settings.onPostRenderCell && col.component) {
           rowHtml += '<div class="content"></div>';
           formatted = '';
         }
@@ -4904,8 +4904,7 @@ $.fn.datagrid = function(options) {
     //Show Summary and any other count info
     displayCounts: function(totals) {
       var self = this,
-        count = self.tableBody.find('tr:visible').length,
-        isClientSide = self.settings.paging && !(self.settings.source);
+        count = self.tableBody.find('tr:visible').length;
 
       if (!totals) {
         totals = self.totalRows;
@@ -4918,9 +4917,9 @@ $.fn.datagrid = function(options) {
 
       var countText;
       if (self.settings.showResultTotal) {
-        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';        
+        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
       } else {
-        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';        
+        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
       }
 
       if (self.toolbar) {
