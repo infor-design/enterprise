@@ -227,8 +227,9 @@ var express = require('express'),
    * @private
    * @param {Object[]} pathDefs -
    * @param {String} link -
+   * @param {String} directoryPrepender - prepends the "link" portion with a directory that is not processed by the filter
    */
-  function filterUnusablePaths(pathDefs, excludes) {
+  function filterUnusablePaths(pathDefs, excludes, directoryPrepender) {
     var truePaths = [];
     if (excludes === undefined) {
       excludes = [];
@@ -248,6 +249,11 @@ var express = require('express'),
 
       if (match) {
         return;
+      }
+
+      // Add the directory into the link.
+      if (directoryPrepender) {
+        pathDef.link = directoryPrepender + pathDef.link;
       }
 
       truePaths.push(pathDef);
@@ -308,16 +314,15 @@ var express = require('express'),
     return mappedPath;
   }
 
+
   /**
    * Excluded file names that should never appear in the DemoApp List Pages
    */
   const GENERAL_LISTING_EXCLUDES = [
-    /^(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
+    /(_)?(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
     /footer\.html/,
     /_header\.html/,
-    /_layout\.html/,
     /(api.md$)/,
-    /layout/,
     /partial/,
     /\.DS_Store/
   ];
@@ -362,11 +367,10 @@ var express = require('express'),
     }
 
     // Add Component-specific file name filters
+    // (\D|\W|\S).*?('+ type +')\.(html)+ - pick up all files that end with 'type' before the extension.
     extraExcludes = extraExcludes.concat([
-      new RegExp(type + '\\.html'),
-      new RegExp('(\d|\w|\s|-)*?\.(scss)'),
-      new RegExp(type + '\\.js'),
-      new RegExp(type + '\\.md')
+      new RegExp('[^-](_)?('+ type +')\.(html)'),
+      new RegExp('(\d|\w|\s|-)*?\.(scss|js|md)')
     ]);
 
     function componentTextFormatter(path) {
@@ -435,15 +439,19 @@ var express = require('express'),
         return next();
       }
 
+      var strippedDir = hasTrailingSlash(directory) ? directory.substring(0, (directory.length - 1)) : directory;
+
       // Strip out paths that aren't going to ever work
       paths.forEach(function pathIterator(path, i) {
         paths[i] = {
           text: path,
-          link: '/' + directory + '/' + path
+          link: path
         };
       });
 
-      paths = filterUnusablePaths(paths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
+      var directoryPrepender = '/' + strippedDir + '/';
+
+      paths = filterUnusablePaths(paths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes), directoryPrepender);
 
       var opts = extend({}, res.opts, {
         subtitle: 'Listing for ' + directory,
@@ -869,7 +877,6 @@ var express = require('express'),
   }
 
   router.get('/layouts/:layout', layoutRouteHandler);
-  router.get('/layouts/', defaultLayoutRouteHandler);
   router.get('/layouts', defaultLayoutRouteHandler);
 
   // =========================================

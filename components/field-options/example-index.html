@@ -3,8 +3,8 @@
   <div class="one-half column">
 
     <div class="field">
-      <label for="item-desc">Text Field</label>
-      <input type="text" class="field-options" aria-required="true" name="item-desc">
+      <label for="example-textfield">Text Field</label>
+      <input type="text" class="field-options" aria-required="true" name="example-textfield" id="example-textfield">
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -20,7 +20,7 @@
 
     <div class="field">
       <label for="example-dropdown" class="label">Dropdown</label>
-      <select id="example-dropdown" name="example-dropdown" class="dropdown field-options">
+      <select name="example-dropdown" class="dropdown field-options" id="example-dropdown">
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>
@@ -40,7 +40,7 @@
 
     <div class="field">
       <label for="example-multiselect" class="label">Multiselect (Max 2)</label>
-      <select id="example-multiselect" name="example-multiselect" class="multiselect field-options" data-maxselected="2" multiple>
+      <select name="example-multiselect" class="multiselect field-options" data-maxselected="2" id="example-multiselect" multiple>
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>
@@ -59,8 +59,8 @@
     </div>
 
     <div class="field">
-      <label for="autocomplete-default">Autocomplete</label>
-      <input type="text" autocomplete="off" class="autocomplete  field-options" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search">
+      <label for="example-autocomplete">Autocomplete</label>
+      <input type="text" autocomplete="off" class="autocomplete field-options" data-options="{source: '{{basepath}}api/states?term='}" placeholder="Type to Search" id="example-autocomplete">
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -75,8 +75,8 @@
     </div>
 
     <div class="field">
-      <label for="fileupload">Fileupload</label>
-      <input type="file" class="fileupload field-options" id="fileupload" name="fileupload">
+      <label for="example-fileupload">Fileupload</label>
+      <input type="file" class="fileupload field-options" name="example-fileupload" id="example-fileupload">
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -91,8 +91,8 @@
     </div>
 
     <div class="field">
-      <label for="product-lookup" class="label">Lookup</label>
-      <input id="product-lookup" data-init="false" class="lookup field-options" name="product-lookup" type="text">
+      <label for="example-lookup" class="label">Lookup</label>
+      <input data-init="false" class="lookup field-options" name="example-lookup" type="text" id="example-lookup">
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -107,8 +107,8 @@
     </div>
 
     <div class="field">
-      <label for="item-date" class="label">Date Picker</label>
-      <input id="item-date" class="datepicker field-options" name="item-date" type="text" >
+      <label for="example-datepicker" class="label">Date Picker</label>
+      <input class="datepicker field-options" name="example-datepicker" type="text" id="example-datepicker">
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -123,8 +123,8 @@
     </div>
 
     <div class="field">
-       <label for="item-time" class="label">Time Picker</label>
-       <input id="item-time" class="timepicker field-options" name="item-time" type="text" >
+       <label for="example-timepicker" class="label">Time Picker</label>
+       <input class="timepicker field-options" name="example-timepicker" type="text" id="example-timepicker">
 
        <button class="btn-actions btn-menu" type="button">
           <span class="audible">Actions for Item Description</span>
@@ -138,9 +138,9 @@
        </ul>
     </div>
 
-    <div class="field is-disabled">
-      <label for="department">Disabled</label>
-      <input class="field-options" type="text" disabled value="Field not editable" id="department" name="department">
+    <div class="field">
+      <label for="example-spinbox">Spinbox</label>
+      <input name="example-spinbox" type="text" class="spinbox field-options"  id="example-spinbox">
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -155,8 +155,69 @@
     </div>
 
     <div class="field">
-      <label for="department-code">Readonly</label>
-      <input class="field-options" type="text" readonly value="02006" id="department-code" name="department-code">
+      <label for="example-colorpicker">Color Picker</label>
+      <input class="colorpicker field-options" type="text" name="example-colorpicker" id="example-colorpicker">
+
+      <button class="btn-actions btn-menu" type="button">
+        <span class="audible">Actions for Item Description</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"/>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Show History</a></li>
+        <li><a href="#">Edit Record</a></li>
+      </ul>
+    </div>
+
+    <fieldset class="radio-group">
+      <legend>Select delivery method</legend>
+
+      <div class="field-options">
+        <input type="radio" class="radio" name="options" id="option1" value="option1" />
+        <label for="option1" class="radio-label">Option one</label>
+        <br>
+        <input type="radio" class="radio" name="options" id="option2" value="option1" checked />
+        <label for="option2"  class="radio-label">Option two</label>
+        <br>
+        <input type="radio" class="radio" name="options" id="option3" value="option3" />
+        <label for="option3" class="radio-label">Option three</label>
+        <br>
+        <input type="radio" class="radio" name="options" id="option4" value="delivery" disabled />
+        <label for="option4" class="radio-label">Option four</label>
+      </div>
+
+      <button class="btn-actions btn-menu" type="button">
+        <span class="audible">Actions for Item Description</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"/>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Show History</a></li>
+        <li><a href="#">Edit Record</a></li>
+      </ul>
+    </fieldset>
+
+    <div class="field is-disabled">
+      <label for="example-disabled-textfield">Disabled</label>
+      <input class="field-options" type="text" disabled value="Field not editable" name="example-disabled-textfield" id="example-disabled-textfield">
+
+      <button class="btn-actions btn-menu" type="button">
+        <span class="audible">Actions for Item Description</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"/>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Show History</a></li>
+        <li><a href="#">Edit Record</a></li>
+      </ul>
+    </div>
+
+    <div class="field">
+      <label for="example-readonly-textfield">Readonly</label>
+      <input class="field-options" type="text" readonly value="02006" name="example-readonly-textfield" id="example-readonly-textfield">
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -208,8 +269,8 @@
     </div>
 
     <div class="field">
-      <label for="clearable">Clearable Input</label>
-      <input type="text" class="field-options" name="clearable" data-clearable="true">
+      <label for="example-clearable">Clearable Input</label>
+      <input type="text" class="field-options" data-clearable="true" name="example-clearable" id="example-clearable">
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -224,8 +285,8 @@
     </div>
 
     <div class="field">
-      <label for="searchfield-clearable">Clearable Searchfield</label>
-      <input data-autocomplete="{{basepath}}api/states?term=" data-options="{clearable: true}" id="searchfield-clearable" type="text" class="searchfield field-options">
+      <label for="example-searchfield-clearable">Clearable Searchfield</label>
+      <input data-autocomplete="{{basepath}}api/states?term=" data-options="{clearable: true}" type="text" class="searchfield field-options" name="example-searchfield-clearable" id="example-searchfield-clearable">
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -240,8 +301,8 @@
     </div>
 
     <div class="field">
-      <label for="item-notes">Textarea</label>
-      <textarea id="item-notes" class="textarea field-options" name="item-notes" placeholder="Type your notes here..."></textarea>
+      <label for="example-textarea">Textarea</label>
+      <textarea class="textarea field-options" placeholder="Type your notes here..." name="example-textarea" id="example-textarea"></textarea>
 
       <button class="btn-actions btn-menu" type="button">
         <span class="audible">Actions for Item Description</span>
@@ -280,7 +341,7 @@
   columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
 
   //Init and get the api for the grid
-  grid = $('#product-lookup').lookup({
+  grid = $('#example-lookup').lookup({
     field: 'productId',
     autoApply: true,
     options: {

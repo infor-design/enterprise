@@ -21,6 +21,7 @@
     // Settings and Options
     var pluginName = 'compositeform',
         defaults = {
+          breakpoint: 'phone-to-tablet',
           trigger: null,
           expandedText: Locale.translate('ShowLess'),
           collapsedText: Locale.translate('ShowMore'),
@@ -31,6 +32,7 @@
     * The About Dialog Component is displays information regarding the application.
     *
     * @class CompositeForm
+    * @param {String} breakpoint  &nbsp;-&nbsp; Defines the breakpoint at which the composite form will change into its responsive mode
     * @param {String} trigger  &nbsp;-&nbsp; Expandable area trigger selector. Passed to expandable area.
     * @param {String} expandedText  &nbsp;-&nbsp; Text to use for the expand button (Default localized)
     * @param {String} collapsedText  &nbsp;-&nbsp; Text to use for the collapse button (Default localized)
@@ -123,10 +125,13 @@
       checkResponsive: function() {
         var cl = this.element[0].classList;
 
-        if (Soho.breakpoints.isBelow('phone-to-tablet')) {
+        if (Soho.breakpoints.isBelow(this.settings.breakpoint)) {
           cl.add('is-in-responsive-mode');
         } else {
           cl.remove('is-in-responsive-mode');
+          if (this.isSideOriented() && !this.expandableAreaAPI.isExpanded()) {
+            this.expandableAreaAPI.open();
+          }
         }
       },
 
@@ -149,6 +154,14 @@
           textSpan = this.expander;
         }
         textSpan.text(expanderText);
+      },
+
+      /***
+       * Determines if this component is configured for "on-side" orientation of the Summary area.
+       * @returns {boolean}
+       */
+      isSideOriented: function() {
+        return this.element[0].classList.contains('on-side');
       },
 
       /**
