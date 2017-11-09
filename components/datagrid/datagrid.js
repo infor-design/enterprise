@@ -1565,6 +1565,7 @@ $.fn.datagrid = function(options) {
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
         showDirty: false,
+        showSelectAllCheckBox: true, // Allow to hide the checkbox header (true to show, false to hide)
         allowOneExpandedRow: true, //Only allows one expandable row at a time
         enableTooltips: false,  //Process tooltip logic at a cost of performance
         disableRowDeactivation: false, // If a row is activated the user should not be able to deactivate it by clicking on the activated row
@@ -1617,6 +1618,7 @@ $.fn.datagrid = function(options) {
   * @param {String} resultsText &nbsp;-&nbsp Can provide a custom function to adjust results text on the toolbar
   * @param {Boolean} rowReorder &nbsp;-&nbsp If set you can reorder rows. Requires rowReorder formatter
   * @param {Boolean} showDirty &nbsp;-&nbsp  If true the dirty indicator will be shown on the rows
+  * @param {Boolean} showSelectAllCheckBox &nbsp;-&nbsp Allow to hide the checkbox header (true to show, false to hide)
   * @param {Boolean} allowOneExpandedRow  &nbsp;-&nbsp Controls if you cna expand more than one expandable row.
   * @param {Boolean} enableTooltips &nbsp;-&nbsp Process tooltip logic at a cost of performance
   * @param {Boolean} disableRowDeactivation &nbsp;-&nbsp if a row is activated the user should not be able to deactivate it by clicking on the activated row
@@ -2156,7 +2158,11 @@ $.fn.datagrid = function(options) {
         }
 
         if (isSelection) {
-          headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          if (self.settings.showSelectAllCheckBox) {
+            headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          } else {
+            headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none"></span>';
+          }
         }
 
         if (isSortable) {
