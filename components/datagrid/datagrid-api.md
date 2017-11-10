@@ -35,7 +35,6 @@ The Datagrid Component displays and process data in tabular format.
 
 **Parameters**
 
--   `element`  
 -   `actionableMode` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If actionableMode is "true”, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
 -   `cellNavigation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If cellNavigation is "false”, will show border around whole row on focus
 -   `rowNavigation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If rowNavigation is "false”, will NOT show border around the row
@@ -73,6 +72,7 @@ The Datagrid Component displays and process data in tabular format.
 -   `showResultTotal` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Paging results display (true for n of m, false for m)
 -   `rowReorder` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set you can reorder rows. Requires rowReorder formatter
 -   `showDirty` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the dirty indicator will be shown on the rows
+-   `showSelectAllCheckBox` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Allow to hide the checkbox header (true to show, false to hide)
 -   `allowOneExpandedRow` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Controls if you cna expand more than one expandable row.
 -   `enableTooltips` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Process tooltip logic at a cost of performance
 -   `disableRowDeactivation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  if a row is activated the user should not be able to deactivate it by clicking on the activated row

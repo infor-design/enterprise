@@ -2851,6 +2851,13 @@ $.fn.datagrid = function(options) {
       return self.filterExpr;
     },
 
+    // Get height for current target in header
+    getTargetHeight: function () {
+      var h = this.settings.filterable ?
+        {short: 48, medium: 51, normal: 56} : {short: 20, medium: 28, normal: 35};
+      return h[this.settings.rowHeight];
+    },
+
     /**
     * Create draggable columns
     * @private
@@ -2861,9 +2868,7 @@ $.fn.datagrid = function(options) {
         showTarget = $('.drag-target-arrows', self.element);
 
       if (!showTarget.length) {
-        var headerHeight = this.settings.rowHeight === 'normal' ? 56 : 48;
-
-        self.element.prepend('<span class="drag-target-arrows" style="height: '+ headerHeight +'px;"></span>');
+        self.element.prepend('<span class="drag-target-arrows" style="height: '+ self.getTargetHeight() +'px;"></span>');
         showTarget = $('.drag-target-arrows', self.element);
       }
 
@@ -5365,24 +5370,26 @@ $.fn.datagrid = function(options) {
         med = toolbar.find('[data-option="row-medium"]'),
         normal = toolbar.find('[data-option="row-normal"]');
 
-        if (this.settings.rowHeight === 'short') {
-          short.parent().addClass('is-checked');
-          med.parent().removeClass('is-checked');
-          normal.parent().removeClass('is-checked');
-        }
+      if (this.settings.rowHeight === 'short') {
+        short.parent().addClass('is-checked');
+        med.parent().removeClass('is-checked');
+        normal.parent().removeClass('is-checked');
+      }
 
-        if (this.settings.rowHeight === 'medium') {
-          short.parent().removeClass('is-checked');
-          med.parent().addClass('is-checked');
-          normal.parent().removeClass('is-checked');
-        }
+      if (this.settings.rowHeight === 'medium') {
+        short.parent().removeClass('is-checked');
+        med.parent().addClass('is-checked');
+        normal.parent().removeClass('is-checked');
+      }
 
-        if (this.settings.rowHeight === 'normal') {
-          short.parent().removeClass('is-checked');
-          med.parent().removeClass('is-checked');
-          normal.parent().addClass('is-checked');
-        }
+      if (this.settings.rowHeight === 'normal') {
+        short.parent().removeClass('is-checked');
+        med.parent().removeClass('is-checked');
+        normal.parent().addClass('is-checked');
+      }
 
+      // Set draggable targets arrow height
+      $('.drag-target-arrows', this.element).css('height', this.getTargetHeight() +'px');
     },
 
     appendToolbar: function () {
