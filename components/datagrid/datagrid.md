@@ -30,6 +30,7 @@
 27. Summary Row  [View Example]( ../components/datagrid/example-summary-row.html)
 28. Export to Excel [View Example]( ../components/datagrid/example-export-from-button.html)
 28. Export with trailing negative signs moved in front [View Example]( ../components/datagrid/example-export-convert-negative.html)
+28. Expandable Cells [View Example]( ../components/datagrid/example-expandable-cells.html)
 
 {{api-details}}
 
@@ -82,6 +83,7 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
 - **reorderable* The column cannot be dragged around to have its order in the list changed.
 - **colSpan* The cells can be split over a header. When set to an integer > 1 this next number of columns will be split over this header.
 - **uppercase* If true the text will be transformed to upper case in readonly view. Also in edit mode uppercase will be enforced.
+- **expandOnActivate* If true the cell can be expanded on focus to show additional / all content.
 
 ## Column Settings (Formatter Specific)
 

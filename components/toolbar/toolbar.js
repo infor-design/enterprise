@@ -627,6 +627,18 @@
           // Make sure the active button is set properly
           this.setActiveButton(itemLink);
 
+          // Handle popdowns with a custom placement algorithm that correctly pops the menu
+          // open against the "More Actions" button instead of in an empty space
+          // SOHO-7087
+          if (itemLink.is('[data-popdown]')) {
+            popupTrigger = itemLink.data('popdown');
+
+            if (this.isItemOverflowed(itemLink)) {
+              popupTrigger.settings.trigger = this.more;
+              popupTrigger.updated();
+            }
+          }
+
           // Fire Angular Events
           if (itemLink.attr('ng-click') || itemLink.attr('data-ng-click')) {
             itemLink.trigger('click');

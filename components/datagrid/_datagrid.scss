@@ -1671,14 +1671,28 @@ $datagrid-short-row-height: 23px;
     }
 
     &.text-ellipsis {
+
       .datagrid-cell-wrapper {
         cursor: default;
         text-overflow: ellipsis;
+        // transition: height, line-height .5s cubic-bezier(.17, .04, .03, .94);
+        white-space: nowrap;
+      }
+
+      // Expandable Cells
+      &.is-active {
+        cursor: default;
+        line-height: 22px;
+        white-space: normal;
+
+        .datagrid-cell-wrapper {
+          padding: 7px 20px;
+          white-space: normal;
+        }
       }
     }
 
     span {
-
       &.exclamation {
         line-height: 44px;
       }

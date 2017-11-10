@@ -1566,6 +1566,7 @@ $.fn.datagrid = function(options) {
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
         showDirty: false,
+        showSelectAllCheckBox: true, // Allow to hide the checkbox header (true to show, false to hide)
         allowOneExpandedRow: true, //Only allows one expandable row at a time
         enableTooltips: false,  //Process tooltip logic at a cost of performance
         disableRowDeactivation: false, // If a row is activated the user should not be able to deactivate it by clicking on the activated row
@@ -1619,6 +1620,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} showResultTotal &nbsp;-&nbsp Paging results display (true for n of m, false for m)
   * @param {Boolean} rowReorder &nbsp;-&nbsp If set you can reorder rows. Requires rowReorder formatter
   * @param {Boolean} showDirty &nbsp;-&nbsp  If true the dirty indicator will be shown on the rows
+  * @param {Boolean} showSelectAllCheckBox &nbsp;-&nbsp Allow to hide the checkbox header (true to show, false to hide)
   * @param {Boolean} allowOneExpandedRow  &nbsp;-&nbsp Controls if you cna expand more than one expandable row.
   * @param {Boolean} enableTooltips &nbsp;-&nbsp Process tooltip logic at a cost of performance
   * @param {Boolean} disableRowDeactivation &nbsp;-&nbsp if a row is activated the user should not be able to deactivate it by clicking on the activated row
@@ -2158,7 +2160,11 @@ $.fn.datagrid = function(options) {
         }
 
         if (isSelection) {
-          headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          if (self.settings.showSelectAllCheckBox) {
+            headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          } else {
+            headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none"></span>';
+          }
         }
 
         if (isSortable) {
@@ -2331,17 +2337,22 @@ $.fn.datagrid = function(options) {
 
       //Attach Keyboard support
       this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
+        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}},
+          popupmenu = $(this).data('popupmenu');
 
-        $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
-          self.applyFilter();
-        }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
-          var data = $(this).data('popupmenu');
-          if (data) {
-            data.destroy();
-          }
-        });
-
+        if (popupmenu) {
+          popupmenu.close(true, true);
+        }
+        else {
+          $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
+            self.applyFilter();
+          }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
+            var data = $(this).data('popupmenu');
+            if (data) {
+              data.destroy();
+            }
+          });
+        }
         return false;
       });
 
@@ -4919,7 +4930,7 @@ $.fn.datagrid = function(options) {
       if (self.settings.showResultTotal) {
         countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
       } else {
-        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
+        countText = '(' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
       }
 
       if (self.toolbar) {
@@ -7305,7 +7316,9 @@ $.fn.datagrid = function(options) {
 
       //Remove previous tab index
       if (prevCell.node && prevCell.node.length ===1) {
-        self.activeCell.node.removeAttr('tabindex');
+        self.activeCell.node
+          .removeAttr('tabindex')
+          .removeClass('is-active');
       }
 
       //Hide any cell tooltips (Primarily for validation)
@@ -7380,6 +7393,12 @@ $.fn.datagrid = function(options) {
         headers.eq(cell).addClass('is-active');
       }
       this.activeCell.isFocused = true;
+
+      // Expand On Activate Feature
+      var col = this.settings.columns[cell];
+      if (col && col.expandOnActivate && this.activeCell && this.activeCell.node) {
+        self.activeCell.node.addClass('is-active');
+      }
 
       self.element.trigger('activecellchange', [{node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell}]);
     },
