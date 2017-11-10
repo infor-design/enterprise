@@ -2337,9 +2337,9 @@ $.fn.datagrid = function(options) {
 
       //Attach Keyboard support
       this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
+        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}},
+          popupmenu = $(this).data('popupmenu');
 
-        var popupmenu = $(this).data('popupmenu');
         if (popupmenu) {
           popupmenu.close(true, true);
         }
