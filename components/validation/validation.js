@@ -125,6 +125,8 @@
         events = self.extractEvents(events);
 
         field.on(events, function (e) {
+          e.stopPropagation();
+          e.stopImmediatePropagation();
 
           //Skip on Tab
           if (e.type === 'keyup' && e.keyCode === 9) {
@@ -201,7 +203,7 @@
           e.preventDefault();
           self.validateForm(function (isValid) {
             self.element.off('submit.validate');
-            self.element.trigger('validated', isValid);
+            self.element.triggerHandler('validated', isValid);
             self.element.data('isValid', isValid);
             self.element.on('submit.validate', submitHandler);
           });
@@ -431,6 +433,10 @@
      * @param {jQuery.Event} e
      */
     validate: function (field, showTooltip, e) {
+      if (!e.type) {
+        return;
+      }
+
       //call the validation function inline on the element
       var self = this,
         types = self.getTypes(field, e) || [],
@@ -441,7 +447,7 @@
         value = self.value(field),
         placeholder = field.attr('placeholder'),
 
-        manageResult = function (result, showTooltip) {
+        manageResult = function (result, showTooltip, type) {
           // Only remove if "false", not any other value ie.. undefined
           if (rule.positive === false) {
             self.removePositive(field);
@@ -481,17 +487,25 @@
           }
 
           self.setIconOnParent(field, rule.type);
+          self.validationStatus[type] = result;
+
+          if (self.eventsStatus(types) && type !== 'required' && !self.validationStatus.triggerValid) {
+            self.validationStatus.triggerValid = true;
+            field.triggerHandler('valid', {field: field, message: ''});
+          }
           field.triggerHandler('isvalid', [result]);
 
         };
 
       for (var props in $.fn.validation.ValidationTypes) {
         validationType = $.fn.validation.ValidationTypes[props];
-        self.removeMessage(field, (validationType.type));
-        field.removeData('data-' + (validationType.type) + 'message');
+        self.removeMessage(field, validationType.type, true);
+        field.removeData('data-' + validationType.type + 'message');
       }
 
+      self.validationStatus = {};
       for (i = 0, l = types.length; i < l; i++) {
+        self.validationStatus[types[i]] = false;
         rule = $.fn.validation.rules[types[i]];
         dfd = $.Deferred();
 
@@ -506,7 +520,7 @@
         if (rule.async) {
           rule.check(value, field, manageResult);
         } else {
-          manageResult(rule.check(value, field), showTooltip);
+          manageResult(rule.check(value, field), showTooltip, types[i]);
         }
         dfds.push(dfd);
       }
@@ -547,6 +561,9 @@
      * @param {boolean} showTooltip
      */
     addMessage: function(field, message, type, inline, showTooltip) {
+      if (message === '') {
+        return;
+      }
       var loc = this.getField(field).addClass(type),
          dataMsg = loc.data('data-' + type + 'message'),
          appendedMsg = message,
@@ -765,8 +782,8 @@
         field.parent().find('.icon-confirm').remove();
       }
       // Trigger an event
-      field.trigger(validationType.type, {field: field, message: message});
-      field.closest('form').trigger(validationType.type, {field: field, message: message});
+      field.triggerHandler(validationType.type, {field: field, message: message});
+      field.closest('form').triggerHandler(validationType.type, {field: field, message: message});
     },
 
     /**
@@ -789,7 +806,7 @@
      * @private
      * @param {jQuery[]} field
      */
-    removeMessage: function(field, type) {
+    removeMessage: function(field, type, noTrigger) {
       var loc = this.getField(field),
         isRadio = field.is(':radio'),
         errorIcon = field.closest('.field, .field-short').find('.icon-error'),
@@ -862,10 +879,38 @@
       field.closest('.field, .field-short').find('.' + type + '-message').remove();
       field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(type);
 
-      if (type === 'error') {
-        field.trigger('valid', {field: field, message: ''});
-        field.closest('form').trigger('valid', {field: field, message: ''});
+      if (type === 'error' && !noTrigger && this.eventsStatus()) {
+        field.triggerHandler('valid', {field: field, message: ''});
+        field.closest('form').triggerHandler('valid', {field: field, message: ''});
       }
+    },
+
+    // Check if all given events are true/valid
+    eventsStatus: function(types) {
+      var r, status = this.validationStatus;
+      if (status) {
+        r = true;
+
+        if (types) {
+          for (var i=0,l=types.length; i<l; i++) {
+            if(!status[types[i]]) {
+              r = false;
+            }
+          }
+        } else {
+          for (var key in status) {
+            if (status.hasOwnProperty(key)) {
+              if(!status[key]) {
+                r = false;
+              }
+            }
+          }
+        }
+
+      } else {
+        r = false;
+      }
+      return r;
     },
 
     /**
@@ -1084,41 +1129,47 @@
             return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
           }
 
-          if(value !== '' && self.rules.date.check(value, field)) { //if valid date
-            var d, i, l, min, max,
-              d2 = createDateAsUTC(new Date(value)),
-              options = field.data('datepicker').settings;
+          if (value !== '') {
+            if (self.rules.date.check(value, field)) { //if valid date
+              var d, i, l, min, max,
+                d2 = createDateAsUTC(new Date(value)),
+                options = field.data('datepicker').settings;
 
-            if (options) {
+              if (options) {
 
-              min = (createDateAsUTC(new Date(options.disable.minDate))).setHours(0,0,0,0);
-              max = (createDateAsUTC(new Date(options.disable.maxDate))).setHours(0,0,0,0);
+                min = (createDateAsUTC(new Date(options.disable.minDate))).setHours(0,0,0,0);
+                max = (createDateAsUTC(new Date(options.disable.maxDate))).setHours(0,0,0,0);
 
-              //dayOfWeek
-              if(options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
-                check = false;
-              }
-
-              d2 = d2.setHours(0,0,0,0);
-
-              //min and max
-              if((d2 <= min) || (d2 >= max)) {
-                check = false;
-              }
-
-              //dates
-              if (options.disable.dates.length && typeof options.disable.dates === 'string') {
-                options.disable.dates = [options.disable.dates];
-              }
-              for (i=0, l=options.disable.dates.length; i<l; i++) {
-                d = new Date(options.disable.dates[i]);
-                if(d2 === d.setHours(0,0,0,0)) {
+                //dayOfWeek
+                if(options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
                   check = false;
-                  break;
+                }
+
+                d2 = d2.setHours(0,0,0,0);
+
+                //min and max
+                if((d2 <= min) || (d2 >= max)) {
+                  check = false;
+                }
+
+                //dates
+                if (options.disable.dates.length && typeof options.disable.dates === 'string') {
+                  options.disable.dates = [options.disable.dates];
+                }
+                for (i=0, l=options.disable.dates.length; i<l; i++) {
+                  d = new Date(options.disable.dates[i]);
+                  if(d2 === d.setHours(0,0,0,0)) {
+                    check = false;
+                    break;
+                  }
                 }
               }
+              check = ((check && !options.disable.isEnable) || (!check && options.disable.isEnable)) ? true : false;
             }
-            check = ((check && !options.disable.isEnable) || (!check && options.disable.isEnable)) ? true : false;
+            else {// Invalid date
+              check = false;
+              this.message = '';
+            }
           }
 
           return check;
