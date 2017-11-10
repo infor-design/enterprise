@@ -4925,7 +4925,7 @@ $.fn.datagrid = function(options) {
       if (self.settings.showResultTotal) {
         countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
       } else {
-        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
+        countText = '(' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
       }
 
       if (self.toolbar) {
