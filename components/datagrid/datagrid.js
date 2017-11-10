@@ -2337,17 +2337,22 @@ $.fn.datagrid = function(options) {
 
       //Attach Keyboard support
       this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
+        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}},
+          popupmenu = $(this).data('popupmenu');
 
-        $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
-          self.applyFilter();
-        }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
-          var data = $(this).data('popupmenu');
-          if (data) {
-            data.destroy();
-          }
-        });
-
+        if (popupmenu) {
+          popupmenu.close(true, true);
+        }
+        else {
+          $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
+            self.applyFilter();
+          }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
+            var data = $(this).data('popupmenu');
+            if (data) {
+              data.destroy();
+            }
+          });
+        }
         return false;
       });
 
