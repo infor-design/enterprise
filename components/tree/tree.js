@@ -210,20 +210,20 @@
             }
           }
 
-          var badgeStyle = "";
+          var badgeStyle = '';
           if (/info|good|error|alert|pending/i.test(badgeData.type)) {
             badge.elem.addClass(badgeData.type);
           } else if (badgeData.type && badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
-            badgeStyle = "background-color: " + badgeData.type + " !important;";
+            badgeStyle = 'background-color: ' + badgeData.type + ' !important;';
           }
-          if (typeof badgeData.backColor !== 'undefined') {
-            badgeStyle = "background-color: " + badgeData.backColor + " !important;";
+          if (badgeData.backColor) {
+            badgeStyle = 'background-color: ' + badgeData.backColor + ' !important;';
           }
-          if (typeof badgeData.foreColor !== 'undefined') {
-            badgeStyle += "color: " + badgeData.foreColor + " !important;";
+          if (badgeData.foreColor) {
+            badgeStyle += 'color: ' + badgeData.foreColor + ' !important;';
           }
 
-          badge.elem.attr("style", badgeStyle);
+          badge.elem.attr('style', badgeStyle);
 
           if (badge.elem.text() !== '') {
             a.append(badge.elem);
