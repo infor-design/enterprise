@@ -120,13 +120,6 @@
           this.inputWrapper.removeClass('is-open');
         }
 
-        // When the Toolbar component is rendered, re-enable transitions/animation
-        var self = this;
-        this.toolbarParent.one('rendered.toolbarsearchfield', function() {
-          self.element.removeClass('no-transition no-animation');
-          self.inputWrapper.removeClass('no-transition no-animation');
-        });
-
         return this;
       },
 
@@ -578,6 +571,10 @@
        * @private
        */
       getToolbarElements: function() {
+        if (!(this.toolbarParent instanceof $) || !this.toolbarParent.length) {
+          this.toolbarParent = this.element.parents('.toolbar');
+        }
+
         this.buttonsetElem = this.toolbarParent.children('.buttonset')[0];
         if (this.toolbarParent.children('.title').length) {
           this.titleElem = this.toolbarParent.children('.title')[0];
@@ -938,6 +935,9 @@
           self.handleKeydown(e);
         }).on('collapse.toolbarsearchfield', function() {
           self.collapse();
+        }).on('reanimate.toolbarsearchfield', function() {
+          self.element.removeClass('no-transition no-animation');
+          self.inputWrapper.removeClass('no-transition no-animation');
         });
 
         if (this.categoryButton && this.categoryButton.length) {

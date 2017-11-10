@@ -22,7 +22,8 @@
           rightAligned: false,
           maxVisibleButtons: 3,
           resizeContainers: true,
-          favorButtonset: true
+          favorButtonset: true,
+          noSearchfieldReinvoke: false,
         },
         settings = $.extend({}, defaults, options);
 
@@ -37,6 +38,7 @@
      * @param {Number} maxVisibleButtons   &nbsp;-&nbsp; Total amount of buttons that can be present, not including the More button.
      * @param {boolean} resizeContainers   &nbsp;-&nbsp; If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
      * @param {boolean} favorButtonset   &nbsp;-&nbsp; If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
+     * @param {boolean} noSearchfieldReinvoke   &nbsp;-&nbsp; If true, does not manage the lifecycle of an internal toolbarsearchfield automatically.  Allows an external controller to do it instead.
      */
     function Toolbar(element) {
       this.settings = $.extend({}, settings);
@@ -163,18 +165,20 @@
         });
 
         // Invoke searchfields
-        var searchfields = this.items.filter('.searchfield, .toolbar-searchfield-wrapper, .searchfield-wrapper');
-        searchfields.each(function(i, item) {
-          var sf = $(item);
-          if (sf.is('.toolbar-searchfield-wrapper, .searchfield-wrapper')) {
-            sf = sf.children('.searchfield');
-          }
+        if (!this.settings.noSearchfieldReinvoke) {
+          var searchfields = this.items.filter('.searchfield, .toolbar-searchfield-wrapper, .searchfield-wrapper');
+          searchfields.each(function(i, item) {
+            var sf = $(item);
+            if (sf.is('.toolbar-searchfield-wrapper, .searchfield-wrapper')) {
+              sf = sf.children('.searchfield');
+            }
 
-          if (!sf.data('searchfield')) {
-            var searchfieldOpts = $.extend({}, $.fn.parseOptions(sf[0]));
-            sf.toolbarsearchfield(searchfieldOpts);
-          }
-        });
+            if (!sf.data('searchfield')) {
+              var searchfieldOpts = $.extend({}, $.fn.parseOptions(sf[0]));
+              sf.toolbarsearchfield(searchfieldOpts);
+            }
+          });
+        }
 
         // Setup the More Actions Menu.  Add Menu Items for existing buttons/elements in the toolbar, but
         // hide them initially.  They are revealed when overflow checking happens as the menu is opened.
@@ -273,6 +277,12 @@
         this.handleResize();
 
         this.element.triggerHandler('rendered');
+
+        var searchfieldWrapper = this.buttonset.find('.searchfield-wrapper, .toolbar-searchfield-wrapper');
+        if (searchfieldWrapper.length) {
+          searchfieldWrapper.trigger('reanimate');
+        }
+
         return this;
       },
 
