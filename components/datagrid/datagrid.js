@@ -2339,15 +2339,20 @@ $.fn.datagrid = function(options) {
       this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
         var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
 
-        $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
-          self.applyFilter();
-        }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
-          var data = $(this).data('popupmenu');
-          if (data) {
-            data.destroy();
-          }
-        });
-
+        var popupmenu = $(this).data('popupmenu');
+        if (popupmenu) {
+          popupmenu.close(true, true);
+        }
+        else {
+          $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
+            self.applyFilter();
+          }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
+            var data = $(this).data('popupmenu');
+            if (data) {
+              data.destroy();
+            }
+          });
+        }
         return false;
       });
 
