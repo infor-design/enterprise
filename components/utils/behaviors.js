@@ -258,7 +258,6 @@
     return deferMethod(callback, timer);
   };
 
-
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */

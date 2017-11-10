@@ -873,7 +873,7 @@
        * @returns {this}
        */
       teardown: function() {
-        this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield focusout.toolbarsearchfield keydown.toolbarsearchfield collapse.toolbarsearchfield');
+        this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield keydown.toolbarsearchfield collapse.toolbarsearchfield');
         this.inputWrapper.find('.icon').remove();
 
         this.toolbarParent.off('navigate.toolbarsearchfield');
@@ -925,14 +925,17 @@
       handleEvents: function() {
         var self = this;
 
+        this.element.on('cleared.toolbarsearchfield', function() {
+          self.element.addClass('active is-open has-focus');
+          self.isFocused = true;
+        });
+
         this.inputWrapper.on('mousedown.toolbarsearchfield', function() {
           self.fastExpand = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
         }).on('keydown.toolbarsearchfield', function(e) {
           self.handleKeydown(e);
-        }).on('focusout.toolbarsearchfield', function(e) {
-          self.handleFocusOut(e);
         }).on('collapse.toolbarsearchfield', function() {
           self.collapse();
         });
