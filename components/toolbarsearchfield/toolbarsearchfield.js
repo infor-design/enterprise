@@ -608,7 +608,6 @@
         if (!notFullWidth) {
           this.appendToParent();
         } else {
-
           // Re-adjust the size of the buttonset element if the expanded searchfield would be
           // too large to fit.
           var buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width),
@@ -622,25 +621,6 @@
           containerSizeSetters = {
             buttonset: buttonsetElemWidth
           };
-
-          if (toolbarSettings && toolbarSettings.favorButtonset === true && this.titleElem) {
-            var toolbarStyle = window.getComputedStyle(this.toolbarParent[0]),
-              titleStyle = window.getComputedStyle(this.titleElem),
-              toolbarElemWidth = parseInt(toolbarStyle.width),
-              toolbarPadding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
-              titleElemWidth = parseInt(titleStyle.width),
-              moreElem = this.toolbarParent.children('more'),
-              moreStyle, moreElemWidth = 0;
-
-            if (moreElem.length) {
-              moreStyle = window.getComputedStyle(moreElem[0]);
-              moreElemWidth = moreStyle.width;
-            }
-
-            if (toolbarElemWidth < (toolbarPadding + titleElemWidth + buttonsetElemWidth + moreElemWidth)) {
-              containerSizeSetters.title = (titleElemWidth - d);
-            }
-          }
         }
 
         this.inputWrapper.addClass('active');
@@ -676,6 +656,7 @@
             self.input.focus();
           }
 
+          self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
           self.inputWrapper.triggerHandler('expanded');
           self.isExpanded = true;
         });
@@ -734,7 +715,9 @@
           $('head').triggerHandler('enable-zoom');
         }
 
-        self.toolbarParent.triggerHandler('recalculate-buttons');
+        self.inputWrapper.one($.fn.transitionEndName(), function() {
+          self.toolbarParent.triggerHandler('recalculate-buttons');
+        });
       },
 
       /**

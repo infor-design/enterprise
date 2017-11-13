@@ -834,24 +834,24 @@
         }
 
         // Get the target size of the title element
-        var targetTitleWidth, targetButtonsetWidth, d;
+        var hasTitleSizeGetter = (titleSize !== undefined && !isNaN(titleSize)),
+          hasButtonsetSizeGetter = (buttonsetSize !== undefined && !isNaN(buttonsetSize)),
+          targetTitleWidth, targetButtonsetWidth, d;
         this.cutoffTitle = false;
 
-        // Setter functionality
-        if (titleSize && buttonsetSize && !isNaN(titleSize) && !isNaN(buttonsetSize)) {
-          targetTitleWidth = parseInt(titleSize);
-          targetButtonsetWidth = parseInt(buttonsetSize);
-        } else {
-          //if ((buttonsetDims.scrollWidth + titleDims.scrollWidth + moreDims.width + toolbarPadding) > toolbarDims.width) {
-            if (this.settings.favorButtonset) {
-              targetButtonsetWidth = buttonsetDims.width;
-              targetTitleWidth = toolbarDims.width - (toolbarPadding + buttonsetDims.width + moreDims.width);
-            } else {
-              targetTitleWidth = titleDims.scrollWidth;
-              targetButtonsetWidth = toolbarDims.width - (toolbarPadding + titleDims.scrollWidth + moreDims.width);
-            }
-          //}
-        }
+
+        // Determine the target sizes for title and buttonset, based on external setters, or building an estimated size.
+        targetTitleWidth = hasTitleSizeGetter ?
+          parseInt(titleSize) :
+          this.settings.favorButtonset === true ?
+            toolbarDims.width - (toolbarPadding + (hasButtonsetSizeGetter ? parseInt(buttonsetSize) : buttonsetDims.width) + moreDims.width) :
+            titleDims.scrollWidth;
+        targetButtonsetWidth = hasButtonsetSizeGetter ?
+          parseInt(buttonsetSize) :
+          this.settings.favorButtonset === true ?
+            buttonsetDims.width :
+            toolbarDims.width - (toolbarPadding + (hasTitleSizeGetter ? parseInt(titleSize) : titleDims.scrollWidth) + moreDims.width);
+
 
         if (this.settings.favorButtonset) {
           // Cut off the buttonset anyway if title is completely hidden.  Something's gotta give!
