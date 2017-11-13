@@ -120,7 +120,7 @@
     }
 
     // If explicitly visible, return
-    if (cl.toString().indexOf(visibleClassName >= -1)) {
+    if (cl.toString().indexOf(visibleClassName) > -1) {
       return false;
     }
 
