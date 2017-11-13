@@ -125,15 +125,21 @@
         events = self.extractEvents(events);
 
         field.on(events, function (e) {
-          e.stopPropagation();
-          e.stopImmediatePropagation();
+          var field = $(this),
+            handleEventData = field.data('handleEvent' +[e.type]);
+          if (handleEventData &&
+              handleEventData.type === e.type &&
+              e.handleObj.namespace === 'validate') {
+            return;
+          } else {
+            field.data('handleEvent' +[e.type], e.handleObj);
+          }
 
           //Skip on Tab
           if (e.type === 'keyup' && e.keyCode === 9) {
             return;
           }
 
-          var field = $(this);
           setTimeout(function () {
             if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field[0].style.visibility === 'is-hidden' || !field.is(':visible')) {
               return;
@@ -436,6 +442,7 @@
       if (!e.type) {
         return;
       }
+      field.data('handleEvent' +[e.type], null);
 
       //call the validation function inline on the element
       var self = this,
