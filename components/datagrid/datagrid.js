@@ -7791,11 +7791,18 @@ $.fn.datagrid = function(options) {
       pagerElem
       .on('afterpaging', function (e, args) {
 
+        // Hide the entire pager bar if we're only showing one page, if applicable
+        if (self.pager.hidePagerBar(args)) {
+          self.element.removeClass('paginated');
+        } else {
+          self.element.addClass('paginated');
+        }
+
         self.totalRows = args.total;
         self.displayCounts(args.total);
 
         //Handle row selection across pages
-      self.syncSelectedUI();
+        self.syncSelectedUI();
 
         if (self.filterExpr && self.filterExpr[0] && self.filterExpr[0].column === 'all') {
           self.highlightSearchRows(self.filterExpr[0].value);
