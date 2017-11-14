@@ -593,33 +593,50 @@
       keepFocus: function() {
         var self = this, tabbableElements;
 
-          $(self.element).on('keypress.modal keydown.modal', function (e) {
-            var keyCode = e.which || e.keyCode;
-
-            if (keyCode === 27) {
-              setTimeout(function () {
+        // Escape key
+        $(document).on('keyup.modal', function (e) {
+          var keyCode = e.which || e.keyCode;
+          if (keyCode === 27) {
+            // setTimeout(function () {
+              var modals = $('.modal.is-visible');
+              if (modals.length > 1) {
+                modals.not(':last').on('beforeclose.modal', function () {
+                  return false;
+                });
+                modals.on('afterclose.modal', function () {
+                  modals.off('beforeclose.modal');
+                });
+                var api = modals.last().data('modal');
+                if (api && api.close) {
+                  api.close();
+                }
+              } else {
                 self.close();
-              }, 0);
-
-              e.stopPropagation();
-            }
-
-            if (keyCode === 9) {
-              tabbableElements = self.getTabbableElements();
-
-              // Move focus to first element that can be tabbed if Shift isn't used
-              if (e.target === tabbableElements.last && !e.shiftKey) {
-                e.preventDefault();
-                tabbableElements.first.focus();
-              } else if (e.target === tabbableElements.first && e.shiftKey) {
-                e.preventDefault();
-                tabbableElements.last.focus();
               }
+            // }, 0);
+            e.stopPropagation();
+          }
+        });
 
-              self.element.find('#message-title').removeAttr('tabindex');
+        $(self.element).on('keypress.modal keydown.modal', function (e) {
+          var keyCode = e.which || e.keyCode;
+
+          if (keyCode === 9) {
+            tabbableElements = self.getTabbableElements();
+
+            // Move focus to first element that can be tabbed if Shift isn't used
+            if (e.target === tabbableElements.last && !e.shiftKey) {
+              e.preventDefault();
+              tabbableElements.first.focus();
+            } else if (e.target === tabbableElements.first && e.shiftKey) {
+              e.preventDefault();
+              tabbableElements.last.focus();
             }
 
-          });
+            self.element.find('#message-title').removeAttr('tabindex');
+          }
+
+        });
       },
 
       close: function (destroy) {

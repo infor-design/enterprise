@@ -2217,7 +2217,7 @@
           }
           self.ignoreKeys($(this), e);
 
-          if (!self.settings.noSearch) {
+          if (!self.settings.noSearch && e.keyCode !== 27) {
             self.toggleList();
           }
           self.handleAutoComplete(e);
