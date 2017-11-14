@@ -215,12 +215,12 @@
     float: left;
     margin-right: 10px;
     outline: none;
-    padding: 7px 6px 4px;
+    padding: 7px;
 
     &:focus {
       border-color: $input-focus-border-color;
       // Removed box shadow to match current style
-      // box-shadow: 0 0 5px rgba(8, 150, 233, .2);
+      box-shadow: $focus-box-shadow;
       outline: none;
     }
   }

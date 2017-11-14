@@ -938,6 +938,10 @@
           return;
         }
 
+        if (e.metaKey) {
+          return ;
+        }
+
         if (self.isOpen()) {
           options = this.listUl.find(excludes);
           selectedIndex = -1;

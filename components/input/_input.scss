@@ -64,6 +64,7 @@
       // Needed for printing
       // scss-lint:disable ImportantRule
       border-color: $error-color !important;
+      box-shadow: $error-focus-box-shadow !important;
       color: $input-color !important;
     }
   }

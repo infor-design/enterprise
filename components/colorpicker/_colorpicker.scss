@@ -11,6 +11,7 @@
 
   &.is-focused {
     border-color: $input-focus-border-color;
+    box-shadow: $focus-box-shadow;
   }
 
   &:hover:not(.is-focused):not(.is-open):not(.is-disabled) {
@@ -188,6 +189,7 @@
       padding: 0;
 
       &:focus {
+        box-shadow: $focus-box-shadow;
         outline: 1px solid $primary-color;
       }
 

@@ -4926,6 +4926,10 @@ $.fn.datagrid = function(options) {
         totals = self.totalRows;
       }
 
+      if (!totals && !self.totalRows) {
+        totals = self.settings.dataset.length;
+      }
+
       //Update Selected
       if (self.contextualToolbar && self.contextualToolbar.length) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));

@@ -26,7 +26,7 @@ http://usalvlhlpool1.infor.com/4.3.3/components/
 -
 
 ### <a name="version-4.3.3-improvements">Improvements</a>
--
+- Enhanced the focus state styling.
 
 ### <a name="version-4.3.3-bug-fixes">Bug Fixes</a>
 -

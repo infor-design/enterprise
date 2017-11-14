@@ -23,18 +23,6 @@
       }
     }
 
-    &.is-focused {
-      color: $primary-color;
-
-      &::-moz-focus-inner {
-        border: 0;
-      }
-
-      &:focus {
-        outline: none;
-      }
-    }
-
     .icon {
       height: 14px;
       top: 1px;

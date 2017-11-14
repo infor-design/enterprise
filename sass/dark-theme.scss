@@ -19,9 +19,12 @@ $header-button-focus-color: rgba($white, 1);
 $header-button-hover-color: rgba($white, 1);
 $header-button-disabled-color: rgba($white, .3);
 $header-disabled-color: $slate05;
+$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, .3);
+
 $panel-bg-color: $slate07;
 $panel-border-color: $slate05;
 $drop-shadow-depth: rgba(0, 0, 0, .4);
+$focus-box-shadow: 0 0 4px 2px rgba(141, 201, 230, .3);
 
 // Base Colors
 $primary-color: $azure06;
@@ -107,7 +110,6 @@ $badge-info-color: $white;
 $badge-info-bg-color: $primary-color;
 $badge-neutral-icon-color: $slate03;
 $badge-neutral-hover-icon-color: $white;
-$badge-focus-transparent-shadow: 0 0 0 1px $body-bg-color inset;
 
 
 // Popup Menu
@@ -174,6 +176,7 @@ $input-readonly-color: $white;
 
 //States
 $error-color: $alert-red;
+$error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, .3);
 $error-icon-fill: $alert-red;
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
@@ -367,7 +370,8 @@ $editor-middle-border-color: $slate04;
 $editor-btn-color: $slate03;
 $editor-btn-hover-color: $white;
 $editor-btn-active-color: $primary-color;
-$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color, $focus-box-shadow;
+$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, .3);
 
 // Radio Buttons
 $radio-border-color: $slate04;
@@ -377,7 +381,7 @@ $radio-selected-bg-color: $white;
 $radio-disabled-border-color: #64676f;
 $radio-disabled-bg-color: $body-bg-color;
 $radio-disabled-select-bg-color: $slate03;
-$radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
+$radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color, 0 0 4px 5px rgba(255, 255, 255, .3);
 
 //Pager
 $pager-text-color: $primary-color;
@@ -512,6 +516,7 @@ $datagrid-cell-bg-color: $slate08;
 $datagrid-cell-readonly-bg-color: $slate07;
 $datagrid-cell-readonly-color: $white;
 $datagrid-cell-border-color: $slate05;
+$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(101, 104, 113, .4);
 $datagrid-data-color: $font-color-extrahighcontrast;
 $datagrid-row-selected-color: #334d60;
 $datagrid-row-selected-color-dark: #3e586c;
@@ -522,6 +527,9 @@ $datagrid-header-focus-bg-color: $primary-color;
 $datagrid-alternate-bg-color: #414348;
 $datagrid-alternate-row-hover-color: $slate06;
 $datagrid-list-header-bg-color: $slate09;
+
+$datagrid-list-header-focus-border-color: $primary-color;
+$datagrid-list-header-box-shadow: 0 0 4px 1px rgba(101, 104, 113, .4);
 $datagrid-list-header-border-color: $slate05;
 $datagrid-list-header-color: $slate03;
 $datagrid-list-header-hover-color: $slate09;
@@ -531,7 +539,7 @@ $datagrid-list-sort-icon-hover-color: $slate01;
 $datagrid-header-focus-bg-color: $datagrid-header-bg-color;
 $datagrid-header-focus-border-color: $white;
 $datagrid-list-header-checkbox-border-color: $slate05;
-$datagrid-list-header-active-color: $slate08;
+$datagrid-list-header-active-color: $slate10;
 
 $datagrid-filter-border-color: $slate05;
 $datagrid-filter-hover-border-color: $slate10;
@@ -616,7 +624,7 @@ $searchfield-alt-border-color: $slate08;
 $searchfield-context-bg: $slate08;
 $searchfield-context-alt-bg: $slate10;
 $searchfield-context-border-color: $slate09;
-$searchfield-context-boxshadow-color: $slate09;
+$searchfield-context-box-shadow-color: $slate09;
 $searchfield-context-icon-color: $slate06;
 $searchfield-context-text-color: $font-color;
 
@@ -654,7 +662,7 @@ $about-text-hover-border-color: $slate03;
 
 // Header Tabs
 $header-tabcontainer-border-color: $slate09;
-$header-tab-separator: $slate10;
+$header-tab-separator: rgba(255, 255, 255, .4);
 $header-tab-normal-color: $slate03;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
