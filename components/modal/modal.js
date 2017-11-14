@@ -597,24 +597,21 @@
         $(document).on('keyup.modal', function (e) {
           var keyCode = e.which || e.keyCode;
           if (keyCode === 27) {
-            // setTimeout(function () {
-              var modals = $('.modal.is-visible');
-              if (modals.length > 1) {
-                modals.not(':last').on('beforeclose.modal', function () {
-                  return false;
-                });
-                modals.on('afterclose.modal', function () {
-                  modals.off('beforeclose.modal');
-                });
-                var api = modals.last().data('modal');
-                if (api && api.close) {
-                  api.close();
-                }
-              } else {
-                self.close();
+            var modals = $('.modal.is-visible');
+            if (modals.length > 1) {
+              modals.not(':last').on('beforeclose.modal', function () {
+                return false;
+              });
+              modals.on('afterclose.modal', function () {
+                modals.off('beforeclose.modal');
+              });
+              var api = modals.last().data('modal');
+              if (api && api.close) {
+                api.close();
               }
-            // }, 0);
-            e.stopPropagation();
+            } else {
+              self.close();
+            }
           }
         });
 
