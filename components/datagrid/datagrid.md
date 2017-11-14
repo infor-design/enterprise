@@ -30,6 +30,7 @@
 27. Summary Row  [View Example]( ../components/datagrid/example-summary-row.html)
 28. Export to Excel [View Example]( ../components/datagrid/example-export-from-button.html)
 28. Export with trailing negative signs moved in front [View Example]( ../components/datagrid/example-export-convert-negative.html)
+29. Empty Message Area [View Example]( ../components/datagrid/example-empty-message.html)
 
 {{api-details}}
 

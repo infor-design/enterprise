@@ -1573,7 +1573,8 @@ $.fn.datagrid = function(options) {
         redrawOnResize: true, //Run column redraw logic on resize
         exportConvertNegative: false, // Export data with trailing negative signs moved in front
         onPostRenderCell: null, //A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
-        onDestroyCell: null //A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+        onDestroyCell: null, //A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+        emptyMessage: {title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: ''}
       },
       settings = $.extend({}, defaults, options);
 
@@ -1626,6 +1627,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
   * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
   * @param {Boolean} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+  * @param {Boolean} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form `emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'no-data'}` set this to null for no message.
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -1750,6 +1752,28 @@ $.fn.datagrid = function(options) {
       self.element.append(self.contentContainer);
       self.renderHeader();
       self.container = self.element.closest('.datagrid-container');
+
+      if (this.settings.emptyMessage) {
+        self.emptyMessageContainer = $('<div class="datagrid-empty-message">'+
+          '<div class="card-empty-icon">'+
+            '<svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">'+
+            '<use xlink:href="#icon-empty-new-project"></use>'+
+            '</svg>'+
+          '</div>'+
+          '<div class="card-empty-title">'+
+            'Add a New Project'+
+          '</div>'+
+          '<div class="card-empty-info">'+
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp.'+
+          '</div>'+
+          '<div class="card-empty-actions">'+
+            '<button type="button" class="btn-secondary hide-focus">'+
+              '<span>Start</span>'+
+            '</button>'+
+          '</div>'+
+        '</div>');
+        self.contentContainer.after(self.emptyMessageContainer);
+      }
 
       self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
       $(self.settings.buttonSelector, self.table).button();
