@@ -69,10 +69,10 @@
           self.slides.push({ node: $(this) });
         });
 
-        if (this.slides.length) {
-          // Do not go less than slide width
-          this.element.css({'min-width': this.slidesJQ.eq(0).width() + 5});
-        }
+        // if (this.slides.length) {
+        //   // Do not go less than slide width
+        //   this.element.css({'min-width': this.slidesJQ.eq(0).width() + 5});
+        // }
 
         this.activeIndex = s.startingSlide !== null &&
           s.startingSlide > -1 && s.startingSlide < this.slides.length ?

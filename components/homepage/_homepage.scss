@@ -295,11 +295,20 @@
 @media only screen and (max-width: 1120px) {
   .hero-widget {
     .hero-content {
-      max-width: 400px;
+      max-width: calc(100% - 200px);
+      // max-width: 400px;
     }
 
     .hero-bottom {
       display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 549px) {
+  .hero-widget {
+    .hero-content {
+      max-width: 100%;
     }
   }
 }
