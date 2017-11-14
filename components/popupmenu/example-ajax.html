@@ -4,27 +4,18 @@
     <p>
       Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6940" target="_blank">SOHO-6940</a>
     </p>
+    <p>
+      In this example, both the top-level and submenus are populated via AJAX calls.
+    </p>
   </div>
 </div>
-
-<style id="popupmenu-test-style">
-  #targetBlock {
-    background-color: #880E0E;
-    border-radius: 2px;
-    cursor: pointer;
-    height: 192px;
-    width: 192px;
-  }
-  #targetBlock::after {
-    display: inline-block;
-    content: ' ';
-  }
-</style>
 
 <div class="row">
   <div class="six columns">
 
-    <div id="targetBlock"></div>
+    <button id="targetButton" class="btn-menu">
+      <span>Open Menu</span>
+    </button>
     <ul id="popup-menu" class="popupmenu"></ul>
 
   </div>
@@ -62,7 +53,7 @@
     }, 100);
   }
 
-  $('#targetBlock').popupmenu({
+  $('#targetButton').popupmenu({
     beforeOpen: popupmenuTestBeforeOpen,
     menu: 'popup-menu'
   });
