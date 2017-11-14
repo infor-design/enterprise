@@ -69,8 +69,10 @@ The Datagrid Component displays and process data in tabular format.
 -   `disableClientFilter` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Disable Filter Logic client side and let your server do it
 -   `disableClientSort` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Disable Sort Logic client side and let your server do it
 -   `resultsText` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can provide a custom function to adjust results text on the toolbar
+-   `showResultTotal` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Paging results display (true for n of m, false for m)
 -   `rowReorder` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set you can reorder rows. Requires rowReorder formatter
 -   `showDirty` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the dirty indicator will be shown on the rows
+-   `showSelectAllCheckBox` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Allow to hide the checkbox header (true to show, false to hide)
 -   `allowOneExpandedRow` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Controls if you cna expand more than one expandable row.
 -   `enableTooltips` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Process tooltip logic at a cost of performance
 -   `disableRowDeactivation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  if a row is activated the user should not be able to deactivate it by clicking on the activated row
@@ -78,7 +80,7 @@ The Datagrid Component displays and process data in tabular format.
 -   `expandableRow` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true we append an expandable row area without the rowTemplate feature being needed.
 -   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to false we skip redraw logic on the resize of the page.
 -   `exportConvertNegative` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true export data with trailing negative signs moved in front.
--   `onPostRenderCell` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
+-   `onPostRenderCell` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
 -   `onDestroyCell` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
 -   `emptyMessage` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  An empty message will be displayed when there is no rows in the grid. This accepts an object of the form `emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'no-data'}` set this to null for no message.
 

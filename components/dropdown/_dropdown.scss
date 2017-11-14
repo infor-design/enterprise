@@ -103,7 +103,8 @@ div.multiselect {
     height: 16px;
     left: 16px;
     position: absolute;
-    top: 9px;
+    top: 7px;
+    vertical-align: middle;
 
     + span {
       padding-left: 33px;
@@ -183,7 +184,7 @@ div.multiselect {
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
-  box-shadow: $dropdown-box-shadow;
+  box-shadow: $dropdown-box-shadow, $focus-box-shadow;
   font-size: 1.4rem;
   max-height: 300px;
   min-height: 30px;
@@ -353,8 +354,8 @@ div.multiselect {
     overflow: hidden;
     text-decoration: none;
     text-overflow: ellipsis;
-    width: inherit;
     white-space: nowrap;
+    width: inherit;
   }
 
   // Added to the dropdown list when doing a search
@@ -558,6 +559,7 @@ div.multiselect {
 
 input.dropdown.error:focus {
   border-color: $error-color;
+  box-shadow: $error-focus-box-shadow;
   color: $input-color;
 }
 
@@ -601,11 +603,6 @@ input.dropdown.error:focus {
       right: auto;
     }
 
-    /*
-    > span {
-      min-height: 14px;
-    }
-    */
   }
 
 }
@@ -639,8 +636,6 @@ div.dropdown-xs,
 }
 
 // Shorter Drop Down Lists
-
-
 
 .dropdown-list.dropdown-short {
   .dropdown-search {

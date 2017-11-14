@@ -128,7 +128,10 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus {
-        background-color: $datagrid-list-header-bg-color;
+        box-shadow: $datagrid-list-header-box-shadow;
+        // scss-lint:disable ImportantRule
+        outline: 1px solid $datagrid-list-header-focus-border-color !important;
+        // scss-lint:enable ImportantRule
       }
 
       &.is-active {
@@ -375,7 +378,7 @@ $datagrid-short-row-height: 23px;
       .is-draggable-target {
         font-size: 2.3em;
         height: $datagrid-medium-header-height;
-        padding: 2px 0 0 7px;
+        padding: 0 0 0 5px;
         width: 16px;
       }
     }
@@ -1217,6 +1220,7 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-cell-wrapper {
+      @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
       border: 1px solid transparent;
       display: block;
       min-height: inherit;
@@ -1274,6 +1278,8 @@ $datagrid-short-row-height: 23px;
 
     &:focus ,
     &.is-focused {
+      box-shadow: $datagrid-cell-focus-box-shadow;
+
       .datagrid-cell-wrapper {
         border: 1px solid $primary-color;
       }
@@ -1671,14 +1677,28 @@ $datagrid-short-row-height: 23px;
     }
 
     &.text-ellipsis {
+
       .datagrid-cell-wrapper {
         cursor: default;
         text-overflow: ellipsis;
+        // transition: height, line-height .5s cubic-bezier(.17, .04, .03, .94);
+        white-space: nowrap;
+      }
+
+      // Expandable Cells
+      &.is-active {
+        cursor: default;
+        line-height: 22px;
+        white-space: normal;
+
+        .datagrid-cell-wrapper {
+          padding: 7px 20px;
+          white-space: normal;
+        }
       }
     }
 
     span {
-
       &.exclamation {
         line-height: 44px;
       }
@@ -1774,6 +1794,7 @@ $datagrid-short-row-height: 23px;
     //Editing and Focus State
     &:focus {
       background-color: $datagrid-header-focus-bg-color;
+      box-shadow: $header-focus-box-shadow;
       color: $datagrid-header-color;
       outline: 1px solid $datagrid-header-focus-border-color;
       outline-offset: -2px;
@@ -2060,6 +2081,7 @@ $datagrid-short-row-height: 23px;
     &:focus ,
     &.is-focused {
       border: 1px solid $primary-color;
+      box-shadow: $focus-box-shadow;
     }
 
     span {

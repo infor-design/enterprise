@@ -215,12 +215,12 @@
     float: left;
     margin-right: 10px;
     outline: none;
-    padding: 7px 6px 4px;
+    padding: 7px;
 
     &:focus {
       border-color: $input-focus-border-color;
       // Removed box shadow to match current style
-      // box-shadow: 0 0 5px rgba(8, 150, 233, .2);
+      box-shadow: $focus-box-shadow;
       outline: none;
     }
   }
@@ -323,6 +323,7 @@
     .completed {
       background-color: $turquoise06;
 
+      &.error-color,
       &.error {
         background-color: $error-color;
       }
@@ -356,6 +357,7 @@
     position: relative;
     text-align: center;
 
+    &.error-color,
     &.error {
       color: $error-color;
     }
@@ -414,6 +416,7 @@
       }
     }
 
+    &.error-color,
     &.error {
       background-color: $error-color;
 
@@ -546,6 +549,7 @@
   .target-line {
 
     &.bar {
+      &.error-color,
       &.error {
         background-color: $error-color;
       }
@@ -577,6 +581,7 @@
 
     .text,
     .value {
+      &.error-color,
       &.error {
         color: $error-color;
       }
@@ -616,6 +621,7 @@
       font-weight: bold;
     }
 
+    .error-color,
     .error {
       color: $error-color;
     }
@@ -745,6 +751,7 @@
   .value {
     color: $turquoise06;
 
+    &.error-color,
     &.error {
       color: $error-color;
     }

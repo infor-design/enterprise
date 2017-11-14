@@ -1,5 +1,33 @@
 // FieldOptions
 //==============================================================================
+@mixin trigger-button {
+  @include rotate(90);
+  left: -11px;
+  line-height: normal;
+  min-width: 30px;
+  opacity: 0;
+  width: 30px;
+
+  &:hover,
+  &.is-active {
+    opacity: 1;
+  }
+
+  &:focus,
+  &:active {
+    color: transparent;
+    text-shadow: 0 0 0 $black;
+  }
+
+  &:focus:not(.hide-focus) {
+    box-shadow: none;
+
+    .icon {
+      fill: $input-focus-border-color;
+    }
+  }
+}
+
 .field-options {
   max-width: $field-md;
   width: calc(100% - 40px);
@@ -26,22 +54,7 @@
 
   // Trigger button ============================================================
   ~ .btn-actions {
-    @include rotate(90);
-    left: -11px;
-    line-height: normal;
-    min-width: 30px;
-    visibility: hidden;
-    width: 30px;
-
-    &.is-active {
-      visibility: visible;
-    }
-
-    &:focus,
-    &:active {
-      color: transparent;
-      text-shadow: 0 0 0 $black;
-    }
+    @include trigger-button();
   }
 
   ~ a.btn-actions {
@@ -49,24 +62,32 @@
     padding: 0 5px;
   }
 
-  &.is-active {
+  &:hover {
     ~ .btn-actions {
-      visibility: visible;
+      opacity: 1;
     }
   }
 
-  // Searchfield =================================================================
+  &.is-active:not([disabled]):not(.colorpicker) {
+    @include focus-state();
+
+    ~ .btn-actions {
+      opacity: 1;
+    }
+  }
+
+  // Searchfield ===============================================================
   // scss-lint:disable ImportantRule
   &.searchfield {
     width: calc(100% - 40px) !important;
 
     ~ .icon.close {
+      opacity: 1;
       right: 44px;
-      visibility: visible;
 
       &.is-empty {
         display: block;
-        visibility: hidden;
+        opacity: 0;
       }
     }
 
@@ -88,6 +109,15 @@
       ~ .btn-actions {
         left: -11px;
       }
+    }
+  }
+
+  // Spinbox ===================================================================
+  &.spinbox {
+    width: 84px;
+
+    ~ .btn-actions {
+      left: -8px;
     }
   }
 
@@ -145,13 +175,67 @@
   }
 }
 
-.is-fieldoptions {
+// Colorpicker & Lookup ========================================================
+.field.is-fieldoptions {
+  .colorpicker-container {
+    ~ .btn-actions {
+      top: -12px;
+    }
+  }
+
   .lookup-wrapper {
     width: 100%;
   }
 
   .btn-actions {
-    left: -8px;
+    @include trigger-button();
+  }
+}
+
+// Fieldset (Summary Form) =====================================================
+.summary-form {
+  .data.field-options {
+    border: solid 1px transparent;
+    display: inline-block;
+    max-width: 100%;
+    outline: 0;
+  }
+}
+
+// Radio buttons group =========================================================
+.radio-group {
+  .field-options {
+    border: solid 1px transparent;
+    display: inline-block;
+    max-width: 100%;
+    outline: 0;
+    width: auto;
+  }
+
+  .btn-actions .icon {
+    width: 16px;
+  }
+}
+
+// Hover effect ================================================================
+.field.is-hover {
+  .btn-actions {
+    opacity: 1;
+  }
+}
+
+// Active effect ===============================================================
+.field.is-active {
+  .field-options:not([disabled]):not(.colorpicker) {
+    @include focus-state();
+  }
+
+  .colorpicker-container {
+    border-color: $input-focus-border-color;
+  }
+
+  .btn-actions {
+    opacity: 1;
   }
 }
 
@@ -171,6 +255,14 @@
       line-height: normal;
     }
   }
+
+  .field.is-fieldoptions {
+    .colorpicker-container {
+      ~ .btn-actions {
+        top: -14px;
+      }
+    }
+  }
 }
 
 .is-safari {
@@ -179,6 +271,14 @@
     &.datepicker {
       ~ .btn-actions {
         left: -8px;
+      }
+    }
+  }
+
+  .field.is-fieldoptions {
+    .colorpicker-container {
+      ~ .btn-actions {
+        top: auto;
       }
     }
   }
@@ -203,6 +303,13 @@ html[dir='rtl'] {
         margin-left: inherit;
         margin-right: -8px;
         right: auto;
+      }
+    }
+
+    &.spinbox {
+      ~ .btn-actions {
+        left: auto;
+        right: -8px;
       }
     }
 

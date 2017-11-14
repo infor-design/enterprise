@@ -48,6 +48,7 @@
     * @param {String} trigger  &nbsp;-&nbsp; Action on which to trigger a menu can be: click, rightClick, immediate ect
     * @param {Boolean} autoFocus  &nbsp;-&nbsp; If false the focus will not focus the first list element. (At the cost of accessibility)
     * @param {Boolean} attachToBody  &nbsp;-&nbsp; If true the menu will be moved out to the body. To be used in certin overflow situations.
+    * @param {function} beforeOpen  &nbsp;-&nbsp; Callback that can be used for populating the contents of the menu.
     * @param {String} ariaListbox  &nbsp;-&nbsp;  Switches aria to use listbox construct instead of menu construct (internal)
     * @param {String} eventObj  &nbsp;-&nbsp; Can pass in the event object so you can do a right click with immediate
     * @param {String} returnFocus  &nbsp;-&nbsp; If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
@@ -250,10 +251,20 @@
         }
       },
 
-      markupItems: function () {
-        var self = this,
-          lis = this.menu.find('li:not(.heading):not(.separator)'),
-          menuClassName = this.menu[0].className,
+      /**
+       * @param {jQuery[]|HTMLElement}
+       */
+      markupItems: function (contextElement) {
+        var self = this;
+
+        if (!contextElement) {
+          contextElement = this.menu;
+        } else if (contextElement instanceof HTMLElement) {
+          contextElement = $(contextElement);
+        }
+
+        var lis = contextElement.find('li:not(.heading):not(.separator)'),
+          menuClassName = contextElement[0].className,
           isTranslatable = Soho.DOM.classNameHas(menuClassName, 'isTranslatable');
 
         lis.each(function(i, li) {
@@ -282,7 +293,7 @@
             } else {
               $li.removeClass('is-disabled');
               $a.removeAttr('aria-disabled');
-              a.setAttribute('disabled', false);
+              a.removeAttribute('disabled');
             }
 
             // menu items that contain submenus
@@ -620,7 +631,7 @@
               e.preventDefault();
 
               if (focus.parent().hasClass('submenu')) {
-                self.showSubmenu(focus.parent());
+                self.openSubmenu(focus.parent());
                 self.highlight(focus.parent().find('.popupmenu a:first'));
               }
             }
@@ -949,14 +960,51 @@
       /**
        * Calls an external source.
        * @private
+       * @param {jQuery.Event} e
+       * @param {boolean} doOpen
+       * @param {jQuery[]|HTMLElement} [contextElement] - if passed, represents a submenu as the actionable, replaceable menu element instead of the main menu.
        */
-      callSource: function (e, doOpen) {
+      callSource: function (e, doOpen, contextElement) {
         if (typeof this.settings.beforeOpen !== 'function') {
           return;
         }
 
-        var self = this;
+        var self = this,
+          targetMenu = this.menu;
+
+        // Use a different menu, if applicable
+        if (Soho.DOM.isElement(contextElement) && $(contextElement).is('.popupmenu, .submenu')) {
+          targetMenu = $(contextElement);
+        }
+
         var response = function(content) {
+          var existingMenuItems = targetMenu.children();
+          existingMenuItems.off().remove();
+
+          if (content === false) {
+            return false;
+          }
+
+          var newContent = $(content);
+          targetMenu.append(newContent);
+
+          var wrapper = targetMenu.parent('.wrapper, .popupmenu-wrapper');
+          if (!wrapper.length) {
+            wrapper = targetMenu.wrap('<div class="wrapper">').parent();
+          }
+          wrapper.removeAttr('style');
+          self.markupItems(targetMenu);
+
+          if (doOpen) {
+            if (!targetMenu.is(self.menu)) {
+              self.openSubmenu(wrapper.parent('li'), true);
+            } else {
+              self.open(e, true);
+            }
+          }
+          return true;
+
+          /*
           if (self.ajaxContent instanceof $) {
             self.ajaxContent.off().remove();
           }
@@ -966,7 +1014,7 @@
           }
 
           self.ajaxContent = $(content);
-          self.menu.append(self.ajaxContent);
+          targetMenu.append(self.ajaxContent);
 
           self.wrapper.removeAttr('style');
           self.markupItems();
@@ -975,14 +1023,20 @@
             self.open(e, true);
           }
           return true;
+          */
         };
 
+        var callbackOpts = {};
+        if (!targetMenu.is(this.menu)) {
+          callbackOpts.contextElement = targetMenu;
+        }
+
         if (typeof this.settings.beforeOpen === 'string') {
-          window[this.settings.beforeOpen](response);
+          window[this.settings.beforeOpen](response, callbackOpts);
           return;
         }
 
-        this.settings.beforeOpen(response);
+        this.settings.beforeOpen(response, callbackOpts);
         return;
       },
 
@@ -1118,7 +1172,7 @@
 
           clearTimeout(timeout);
           timeout = setTimeout(function () {
-            self.showSubmenu(menuitem);
+            self.openSubmenu(menuitem);
           }, 300);
 
           $(document).on('mousemove.popupmenu.' + this.id, function (e) {
@@ -1129,7 +1183,8 @@
 
           menuToClose = $(this).find('ul');
 
-          var isLeft = parseInt(menuToClose.parent('.wrapper')[0].style.left) < 0,
+          var hasWrapper = menuToClose.parent('.wrapper').length > 0,
+            isLeft = (hasWrapper ? parseInt(menuToClose.parent('.wrapper')[0].style.left) : 0) < 0,
             canClose = (tracker - startY) < 3.5;
 
           if (isLeft) {
@@ -1160,11 +1215,33 @@
         }
       },
 
-      showSubmenu: function (li) {
+      openSubmenu: function(li, ajaxReturn) {
         if (Soho.DOM.classNameHas(li[0].className, 'is-disabled') || li[0].disabled) {
           return;
         }
 
+        var submenu = li.children('.wrapper, .popupmenu');
+        if (submenu.length && submenu.is('.wrapper')) {
+          submenu = submenu.children('.popupmenu');
+        }
+
+        var canOpen = this.element.triggerHandler('beforeopen', [submenu]);
+        if (canOpen === false) {
+          return;
+        }
+
+        // Check external AJAX source, if applicable
+        if (!ajaxReturn) {
+          canOpen = this.callSource(null, true, submenu);
+          if (this.settings.beforeOpen) {
+            return;
+          }
+        }
+
+        return this.showSubmenu(li);
+      },
+
+      showSubmenu: function (li) {
         // Trigger an event so other components can listen to this element as a popupmenu trigger.
         this.element.triggerHandler('show-submenu', [li]);
 
@@ -1492,6 +1569,7 @@
        * Teardown markup and detach all events.
        */
       destroy: function() {
+        this.close();
         this.teardown();
         this.menu.trigger('destroy');
         $.removeData(this.element[0], pluginName);

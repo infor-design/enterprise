@@ -135,6 +135,7 @@
 
   &.is-visible {
     @include tab-outline-focus;
+    box-shadow: $focus-box-shadow;
   }
 }
 

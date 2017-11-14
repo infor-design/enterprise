@@ -1,0 +1,50 @@
+<div id="maincontent" class="two-column page-container scrollable" role="main">
+
+    <nav class="sidebar scrollable-y" role="complementary">
+      <div class="content darker">
+
+        <ul role="tree" id="addnode-tree" aria-label="Asset Types" class="tree">
+          <li>
+            <a href="#" id="sales-target" data-badge="{'text': '0', 'backColor': '#5224c2', 'foreColor': '#f5cc2b'}">Sales Target</a>
+            <ul></ul>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+
+    <section class="main scrollable-y" role="main">
+      <div class="content"></div>
+    </section>
+
+  </div>
+
+
+  <script type="text/javascript">
+    var elem = $('#addnode-tree').tree();
+    var api = elem.data('tree');
+
+    // Add Node with badge
+    api.addNode({text: 'New Item 1', id: 'new1', badge: {'text': '1', 'type':'good', 'foreColor': '#ff0000'}});
+    api.addNode({
+      text: 'New Item 2',
+      id: 'new2',
+      badge: {'text': '912', 'type':'info', 'backColor': '#febc92', 'foreColor': '#00bfff'},
+      children: [
+        {id: 'new21', text: 'Node 2.1'},
+        {id: 'new22', text: 'Node 2.2'},
+        {id: 'new23', text: 'Node 2.3'},
+        {id: 'new24', text: 'Node 2.4'},
+        {id: 'new25', text: 'Node 2.5'}
+      ]
+    });
+
+    // Add badge to existing node
+    api.updateNode({node: $('#public'), badge: {'text': '5', 'type':'info'}});
+
+    // Update badge
+    api.updateNode({node: $('#leadership'), badge: {'type':'alert'}});
+
+    // Remove badge
+    api.updateNode({node: $('#sales-orders'), badge: {'remove': true}});
+  </script>

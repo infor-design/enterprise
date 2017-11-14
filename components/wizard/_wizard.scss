@@ -172,7 +172,7 @@ $wizard-current-state-size: ($wizard-tick-size * 1.3);
     }
 
     &:focus:not(.hide-focus):not(.is-disabled):not([disabled]) .label {
-      box-shadow: $wizard-focus-box-shadow;
+      box-shadow: $wizard-focus-box-shadow, $focus-box-shadow;
     }
   }
 }

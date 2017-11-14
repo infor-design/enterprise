@@ -1561,10 +1561,12 @@ $.fn.datagrid = function(options) {
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
         resultsText: null,  // Can provide a custom function to adjust results text
+        showResultTotal : false, // Paging results display (true for n of m, false for m)
         virtualized: false, // Prevent Unused rows from being added to the DOM
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
         showDirty: false,
+        showSelectAllCheckBox: true, // Allow to hide the checkbox header (true to show, false to hide)
         allowOneExpandedRow: true, //Only allows one expandable row at a time
         enableTooltips: false,  //Process tooltip logic at a cost of performance
         disableRowDeactivation: false, // If a row is activated the user should not be able to deactivate it by clicking on the activated row
@@ -1616,8 +1618,10 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} disableClientFilter &nbsp;-&nbsp Disable Filter Logic client side and let your server do it
   * @param {Boolean} disableClientSort &nbsp;-&nbsp Disable Sort Logic client side and let your server do it
   * @param {String} resultsText &nbsp;-&nbsp Can provide a custom function to adjust results text on the toolbar
+  * @param {Boolean} showResultTotal &nbsp;-&nbsp Paging results display (true for n of m, false for m)
   * @param {Boolean} rowReorder &nbsp;-&nbsp If set you can reorder rows. Requires rowReorder formatter
   * @param {Boolean} showDirty &nbsp;-&nbsp  If true the dirty indicator will be shown on the rows
+  * @param {Boolean} showSelectAllCheckBox &nbsp;-&nbsp Allow to hide the checkbox header (true to show, false to hide)
   * @param {Boolean} allowOneExpandedRow  &nbsp;-&nbsp Controls if you cna expand more than one expandable row.
   * @param {Boolean} enableTooltips &nbsp;-&nbsp Process tooltip logic at a cost of performance
   * @param {Boolean} disableRowDeactivation &nbsp;-&nbsp if a row is activated the user should not be able to deactivate it by clicking on the activated row
@@ -1625,7 +1629,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
   * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
-  * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
+  * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
   * @param {Boolean} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
   * @param {Boolean} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form `emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'no-data'}` set this to null for no message.
   */
@@ -2180,7 +2184,11 @@ $.fn.datagrid = function(options) {
         }
 
         if (isSelection) {
-          headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          if (self.settings.showSelectAllCheckBox) {
+            headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          } else {
+            headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none"></span>';
+          }
         }
 
         if (isSortable) {
@@ -2353,17 +2361,22 @@ $.fn.datagrid = function(options) {
 
       //Attach Keyboard support
       this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
+        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}},
+          popupmenu = $(this).data('popupmenu');
 
-        $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
-          self.applyFilter();
-        }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
-          var data = $(this).data('popupmenu');
-          if (data) {
-            data.destroy();
-          }
-        });
-
+        if (popupmenu) {
+          popupmenu.close(true, true);
+        }
+        else {
+          $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
+            self.applyFilter();
+          }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
+            var data = $(this).data('popupmenu');
+            if (data) {
+              data.destroy();
+            }
+          });
+        }
         return false;
       });
 
@@ -2862,6 +2875,13 @@ $.fn.datagrid = function(options) {
       return self.filterExpr;
     },
 
+    // Get height for current target in header
+    getTargetHeight: function () {
+      var h = this.settings.filterable ?
+        {short: 48, medium: 51, normal: 56} : {short: 20, medium: 28, normal: 35};
+      return h[this.settings.rowHeight];
+    },
+
     /**
     * Create draggable columns
     * @private
@@ -2872,9 +2892,7 @@ $.fn.datagrid = function(options) {
         showTarget = $('.drag-target-arrows', self.element);
 
       if (!showTarget.length) {
-        var headerHeight = this.settings.rowHeight === 'normal' ? 56 : 48;
-
-        self.element.prepend('<span class="drag-target-arrows" style="height: '+ headerHeight +'px;"></span>');
+        self.element.prepend('<span class="drag-target-arrows" style="height: '+ self.getTargetHeight() +'px;"></span>');
         showTarget = $('.drag-target-arrows', self.element);
       }
 
@@ -3336,7 +3354,7 @@ $.fn.datagrid = function(options) {
         for (var i = 0; i < this.settings.columns.length; i++) {
           var col = this.settings.columns[i];
 
-          if (col.postRender) {
+          if (col.component) {
             self.tableBody.find('tr').each(function () {
               var row = $(this),
                 rowIdx = row.attr('data-index'),
@@ -3420,7 +3438,7 @@ $.fn.datagrid = function(options) {
         for (var i = 0; i < this.settings.columns.length; i++) {
           var col = this.settings.columns[i];
 
-          if (col.postRender) {
+          if (col.component) {
             rows.each(function () {
               var row = $(this),
                 rowIdx = row.index(),
@@ -3739,7 +3757,7 @@ $.fn.datagrid = function(options) {
           }
         }
 
-        if (col.postRender) {
+        if (self.settings.onPostRenderCell && col.component) {
           rowHtml += '<div class="content"></div>';
           formatted = '';
         }
@@ -4926,11 +4944,14 @@ $.fn.datagrid = function(options) {
     //Show Summary and any other count info
     displayCounts: function(totals) {
       var self = this,
-        count = self.tableBody.find('tr:visible').length,
-        isClientSide = self.settings.paging && !(self.settings.source);
+        count = self.tableBody.find('tr:visible').length;
 
-      if (isClientSide || (!totals && !self.settings.paging)) {
-        count = self.recordCount;
+      if (!totals) {
+        totals = self.totalRows;
+      }
+
+      if (!totals && !self.totalRows) {
+        totals = self.settings.dataset.length;
       }
 
       //Update Selected
@@ -4938,18 +4959,11 @@ $.fn.datagrid = function(options) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
-      if (totals && totals !== -1) {
-        count = totals;
-      }
-
-      var countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
-
-      if (self.settings.resultsText) {
-        if (typeof self.settings.resultsText === 'function') {
-          countText = self.settings.resultsText(self, count);
-        } else {
-          countText = self.settings.resultsText;
-        }
+      var countText;
+      if (self.settings.showResultTotal) {
+        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
+      } else {
+        countText = '(' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
       }
 
       if (self.toolbar) {
@@ -5384,24 +5398,26 @@ $.fn.datagrid = function(options) {
         med = toolbar.find('[data-option="row-medium"]'),
         normal = toolbar.find('[data-option="row-normal"]');
 
-        if (this.settings.rowHeight === 'short') {
-          short.parent().addClass('is-checked');
-          med.parent().removeClass('is-checked');
-          normal.parent().removeClass('is-checked');
-        }
+      if (this.settings.rowHeight === 'short') {
+        short.parent().addClass('is-checked');
+        med.parent().removeClass('is-checked');
+        normal.parent().removeClass('is-checked');
+      }
 
-        if (this.settings.rowHeight === 'medium') {
-          short.parent().removeClass('is-checked');
-          med.parent().addClass('is-checked');
-          normal.parent().removeClass('is-checked');
-        }
+      if (this.settings.rowHeight === 'medium') {
+        short.parent().removeClass('is-checked');
+        med.parent().addClass('is-checked');
+        normal.parent().removeClass('is-checked');
+      }
 
-        if (this.settings.rowHeight === 'normal') {
-          short.parent().removeClass('is-checked');
-          med.parent().removeClass('is-checked');
-          normal.parent().addClass('is-checked');
-        }
+      if (this.settings.rowHeight === 'normal') {
+        short.parent().removeClass('is-checked');
+        med.parent().removeClass('is-checked');
+        normal.parent().addClass('is-checked');
+      }
 
+      // Set draggable targets arrow height
+      $('.drag-target-arrows', this.element).css('height', this.getTargetHeight() +'px');
     },
 
     appendToolbar: function () {
@@ -7335,7 +7351,9 @@ $.fn.datagrid = function(options) {
 
       //Remove previous tab index
       if (prevCell.node && prevCell.node.length ===1) {
-        self.activeCell.node.removeAttr('tabindex');
+        self.activeCell.node
+          .removeAttr('tabindex')
+          .removeClass('is-active');
       }
 
       //Hide any cell tooltips (Primarily for validation)
@@ -7410,6 +7428,12 @@ $.fn.datagrid = function(options) {
         headers.eq(cell).addClass('is-active');
       }
       this.activeCell.isFocused = true;
+
+      // Expand On Activate Feature
+      var col = this.settings.columns[cell];
+      if (col && col.expandOnActivate && this.activeCell && this.activeCell.node) {
+        self.activeCell.node.addClass('is-active');
+      }
 
       self.element.trigger('activecellchange', [{node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell}]);
     },
@@ -7795,10 +7819,18 @@ $.fn.datagrid = function(options) {
       pagerElem
       .on('afterpaging', function (e, args) {
 
+        // Hide the entire pager bar if we're only showing one page, if applicable
+        if (self.pager.hidePagerBar(args)) {
+          self.element.removeClass('paginated');
+        } else {
+          self.element.addClass('paginated');
+        }
+
+        self.totalRows = args.total;
         self.displayCounts(args.total);
 
         //Handle row selection across pages
-      self.syncSelectedUI();
+        self.syncSelectedUI();
 
         if (self.filterExpr && self.filterExpr[0] && self.filterExpr[0].column === 'all') {
           self.highlightSearchRows(self.filterExpr[0].value);

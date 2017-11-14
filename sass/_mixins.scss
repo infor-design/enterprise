@@ -171,10 +171,10 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
     @media (max-width: $breakpoint-phablet) { @content; }
   } @else if $media == phabletdown {
     @media (min-width: 0) and (max-width: $breakpoint-wide-tablet - 1) { @content; }
+  } @else if $media == tabletup {
+    @media (min-width: $breakpoint-phone-to-tablet) { @content; }
   } @else if $media == desktop {
     @media (min-width: $breakpoint-tablet-to-desktop) and (max-width: $breakpoint-desktop-to-extralarge - 1) { @content; }
-  } @else if $media == extralarge {
-    @media (min-width: $breakpoint-desktop-to-extralarge) { @content; }
   } @else if $media == extralarge {
     @media (min-width: $breakpoint-desktop-to-extralarge) { @content; }
   }
@@ -204,7 +204,7 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
 @mixin focus-state {
   border: solid 1px $input-focus-border-color;
-  // box-shadow: 0 0 4px 3px rgba(54, 138 ,192, 0.30);
+  box-shadow: $focus-box-shadow;  //wanted 0 0 4px 3px rgba(54, 138 ,192, 0.30)
   outline: none;
   outline-color: transparent;
 }

@@ -1684,12 +1684,14 @@ window.Chart = function(container) {
         }
         cont.empty();
         api.initChartType(api.settings);
-      }, 100);
+      }, 200);
     }
 
     if (this.redrawOnResize) {
       $(window).on('resize.charts', resizeCharts);
       $(container).off('resize').on('resize', resizeCharts);
+
+      resizeCharts();
     }
   };
 

@@ -303,6 +303,7 @@
 
     &:focus:not(.hide-focus) {
       border: 1px solid $input-focus-border-color;
+      box-shadow: $focus-box-shadow;
       outline: none;
       outline-color: transparent;
     }

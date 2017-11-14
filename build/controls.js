@@ -3,6 +3,8 @@ module.exports = [
   'temp/amd/initialize.js',
   'temp/amd/base.js',
   'temp/amd/utils.js',
+  'temp/amd/behaviors.js',
+  'temp/amd/breakpoints.js',
   'temp/amd/environment.js',
   'temp/amd/animations.js',
   'temp/amd/locale.js',

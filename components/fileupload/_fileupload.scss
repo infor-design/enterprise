@@ -235,7 +235,9 @@ input.fileupload-background-transparent.readonly {
 
         span {
           @include font-size(14);
-          padding-top: 5px;
+          margin-left: -2.5px;
+          margin-right: -2.5px;
+          padding: 5px;
         }
 
         input[type="file"] {
@@ -259,6 +261,7 @@ input.fileupload-background-transparent.readonly {
       &.is-focus {
         .hyperlink {
           border-color: $fileupload-droparea-dd-hover-border-color;
+          box-shadow: $focus-box-shadow;
         }
       }
 
