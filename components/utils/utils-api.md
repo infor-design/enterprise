@@ -97,7 +97,7 @@ Takes an element that is currently hidden by some means (FX: "display: none;") a
 
 -   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
 -   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
--   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
+-   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 

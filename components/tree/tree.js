@@ -125,7 +125,7 @@
        * @param {jQuery[]} node
        */
       setFocus: function (node) {
-        node.focus();
+        node.focus().removeClass('hide-focus');
       },
 
       /**

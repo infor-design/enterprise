@@ -303,6 +303,7 @@
 
           &.is-focused:not(.hide-focus) {
             border-bottom-color: $accordion-focused-border-color;
+            box-shadow: $focus-box-shadow;
           }
 
           &.is-selected,
@@ -348,6 +349,7 @@
         > [class^="btn"] {
           &:focus:not(.hide-focus) {
             border-color: $accordion-inverse-focus-state-color;
+            box-shadow: $focus-box-shadow;
           }
         }
 
@@ -386,6 +388,7 @@
           > [class^="btn"] {
             &:focus:not(.hide-focus) {
               border-color: $accordion-selected-text-color;
+              box-shadow: $focus-box-shadow;
             }
           }
         }
@@ -426,6 +429,7 @@
 
           &.is-focused:not(.hide-focus) {
             border-bottom-color: $accordion-selected-bg-color;
+            box-shadow: $focus-box-shadow;
           }
 
           &.is-selected,
@@ -557,6 +561,7 @@
   // Selected color scheme
   &.is-focused:not(.hide-focus) {
     border-color: $accordion-focused-border-color;
+    box-shadow: $focus-box-shadow;
   }
 
   &.has-chevron {

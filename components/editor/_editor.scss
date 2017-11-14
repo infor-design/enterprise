@@ -2,7 +2,6 @@
 //================================================== //
 
 .editor-container {
-  overflow: hidden;
 
   &.is-readonly,
   &.is-disabled {
@@ -67,6 +66,7 @@
       border-left-color: $editor-focus-border-color;
       border-right-color: $editor-focus-border-color;
       border-top-color: $editor-focus-border-color;
+      box-shadow: $editor-top-focus-box-shadow; //-2px -2px 3px 0px rgba(54, 138, 192, 0.3);
 
       &.error {
         border-left-color: $error-color;
@@ -78,6 +78,7 @@
     .editor,
     .editor-source {
       border-color: transparent $editor-focus-border-color $editor-focus-border-color;
+      box-shadow: $focus-box-shadow;
 
       &.error {
         border-color: transparent $error-color $error-color;
@@ -539,15 +540,6 @@
   margin-top: -38px;
   position: absolute;
   white-space: pre;
-}
-
-// Older versions of Internet Explorer incorrectly size the line number fonts,
-// So we need to adjust it slightly.
-.ie8 .editor-source,
-.ie9 .editor-source {
-  .line-numbers li {
-    @include font-size(14.5);
-  }
 }
 
 //RTL Styles

@@ -8,6 +8,7 @@ $toolbarsearchfield-empty-width: 34px;
 $toolbarsearchfield-category-empty-width: 51px;
 
 .toolbar-searchfield-wrapper {
+  box-shadow: none !important;
   cursor: pointer;
   display: inline-block;
   margin-bottom: 0;

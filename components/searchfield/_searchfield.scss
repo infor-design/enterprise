@@ -13,8 +13,8 @@
   @include font-size(14);
 }
 
-@mixin context-searchfield-boxshadow() {
-  box-shadow: 0 3px 5px 0 rgba($searchfield-context-boxshadow-color, .7);
+@mixin context-searchfield-box-shadow() {
+  box-shadow: 0 3px 5px 0 rgba($searchfield-context-box-shadow-color, .7);
 }
 
 .searchfield-wrapper {
@@ -78,7 +78,7 @@
       width: 100%;
 
       &.is-open {
-        @include context-searchfield-boxshadow();
+        @include context-searchfield-box-shadow();
       }
 
       &.input-xl {
@@ -86,7 +86,6 @@
       }
 
     }
-
 
     > .icon {
       fill: $searchfield-context-icon-color;
@@ -151,6 +150,7 @@
     }
 
     &.has-focus {
+
       .btn {
         border-color: $searchfield-context-border-color;
       }
@@ -190,6 +190,8 @@
   }
 
   &.has-focus {
+    box-shadow: $focus-box-shadow;
+
     .btn {
       border-color: $input-focus-border-color;
 
@@ -211,6 +213,10 @@
       &.show-category {
         .searchfield {
           border-left-color: $input-focus-border-color;
+
+          &:focus {
+            box-shadow: none;
+          }
         }
       }
     }
@@ -272,6 +278,10 @@
 
       .searchfield {
         border-left: 1px solid $input-border-color;
+
+        &:focus {
+          box-shadow: none;
+        }
       }
     }
   }
@@ -296,7 +306,7 @@
 
 // Context Searchfield's Popupmenu has alternate styles
 .popupmenu.autocomplete.context {
-  @include context-searchfield-boxshadow();
+  @include context-searchfield-box-shadow();
   background-color: $searchfield-context-bg;
   border: 0;
   border-top: 1px solid $azure07;

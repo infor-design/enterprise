@@ -136,6 +136,7 @@
       // scss-lint:disable ImportantRule - need for modal dialog (personalization in grid)
       border-color: $primary-color !important;
       // scss-lint:enable ImportantRule
+      box-shadow: $focus-box-shadow;
       outline: none;
 
       + li {

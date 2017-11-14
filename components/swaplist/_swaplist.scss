@@ -103,7 +103,7 @@
       }
 
       &:focus:not(.hide-focus):not(.is-disabled) {
-        box-shadow: 0 0 0 1px $swaplist-border-color-hover;
+        box-shadow: 0 0 0 1px $swaplist-border-color-hover, $focus-box-shadow;
       }
 
       .icon {
@@ -119,7 +119,8 @@
     .buttons {
       position: absolute;
       right: 10px;
-      top: 0;
+      top: 7px;
+      vertical-align: bottom;
     }
 
     .card-title {
@@ -306,16 +307,9 @@
     .handle {
       top: 4px;
     }
-  }
-}
 
-// IE9
-.ie9 {
-  .swaplist {
-    .is-muliselect {
-      [aria-grabbed="true"]:not(.is-dragging) {
-        display: none;
-      }
+    .buttons {
+      top: -3px;
     }
   }
 }

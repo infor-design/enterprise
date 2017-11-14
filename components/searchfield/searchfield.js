@@ -631,12 +631,18 @@
        * @returns {undefined}
        */
       handleCategoryBlur: function() {
+        var self = this;
+
         // if Toolbar Searchfield, allow that control to handle adding this class
         if (this.isToolbarSearchfield()) {
           return;
         }
 
-        this.wrapper.removeClass('has-focus');
+        setTimeout(function () {
+          if (!self.hasFocus()) {
+            self.wrapper.removeClass('has-focus');
+          }
+        }, 1);
       },
 
       /**
