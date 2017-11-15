@@ -283,15 +283,15 @@
   &.top-padding {
     margin-top: 3rem;
   }
+}
 
-  .field-pane {
-    height: 0;
-    overflow: hidden;
-    padding: 0 0 0 25px;
+.field-pane {
+  height: 0;
+  overflow: hidden;
+  padding: 0 0 0 25px;
 
-    .field-content {
-      padding: 20px 0;
-    }
+  .field-content {
+    padding: 20px 0;
   }
 }
 
