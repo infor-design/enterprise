@@ -239,6 +239,8 @@
       'NextMonth': {id: 'NextMonth', value: 'Siguiente mes', comment: 'the label for the button that moves calendar to next/prev'},
       'No': {id: 'No', value: 'No', comment: 'On a dialog button'},
       'NoData': {id: 'NoData', value: 'Datos no disponibles', comment: 'Shown when there is no rows shown in a list'},
+      'NoDataFilter': {id: 'NoDataFilter', value: 'No hay datos disponibles, realice una nueva selección de filtro para ver más resultados.', comment: 'Shown when there is no rows shown in a list'},
+      'NoDataList': {id: 'NoDataList', value: 'Sin datos disponibles, haga una selección en la lista de arriba para ver más resultados.', comment: 'Shown when there is no rows shown in a list'},
       'NoResults': {id: 'NoResults', value: 'Ningún resultado', comment: 'Search Results Text'},
       'Normal': {id: 'Normal', value: 'Normal', comment: 'Normal row height'},
       'Notes': {id: 'Notes', value: 'Notas', comment: 'Notes icon tooltip'},
