@@ -126,13 +126,13 @@
 
         field.on(events, function (e) {
           var field = $(this),
-            handleEventData = field.data('handleEvent' +[e.type]);
+            handleEventData = field.data('handleEvent' +[(e.type || '')]);
           if (handleEventData &&
               handleEventData.type === e.type &&
               e.handleObj.namespace === 'validate') {
             return;
           } else {
-            field.data('handleEvent' +[e.type], e.handleObj);
+            field.data('handleEvent' +[(e.type || '')], e.handleObj);
           }
 
           //Skip on Tab
@@ -439,10 +439,7 @@
      * @param {jQuery.Event} e
      */
     validate: function (field, showTooltip, e) {
-      if (!e.type) {
-        return;
-      }
-      field.data('handleEvent' +[e.type], null);
+      field.data('handleEvent' +[(e.type || '')], null);
 
       //call the validation function inline on the element
       var self = this,
