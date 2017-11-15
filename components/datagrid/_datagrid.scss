@@ -21,12 +21,21 @@ $datagrid-short-row-height: 23px;
   position: relative;
 
   // Empty Space Background Fill
-  &.is-windows {
+  &.is-windows.has-vertical-scroll {
     background-color: $datagrid-header-bg-color;
 
     .datagrid-body {
       background-color: $datagrid-empty-bg-color;
     }
+  }
+
+  // Empty Area Scrolling
+  &.is-empty .datagrid-header {
+    overflow-x: auto;
+  }
+
+  &.is-empty .datagrid-body { //Avoid dup scroll bar in IE
+    overflow-x: hidden;
   }
 
   .datagrid-body {
@@ -312,6 +321,8 @@ $datagrid-short-row-height: 23px;
       }
 
       .datagrid-filter-wrapper {
+        margin-bottom: 5px;
+        top: -3px;
 
         .btn-filter {
           left: 6px;
@@ -345,11 +356,6 @@ $datagrid-short-row-height: 23px;
       .sort-desc {
         margin-top: -1px;
       }
-    }
-
-    .is-filterable .datagrid-filter-wrapper {
-      margin-bottom: 5px;
-      top: -3px;
     }
 
     .arrange-placeholder {
@@ -2289,8 +2295,8 @@ td .btn-actions {
       &:not(.colorpicker-container) {
         overflow: hidden;
         text-overflow: ellipsis;
-        white-space: nowrap;
         vertical-align: middle;
+        white-space: nowrap;
       }
     }
 
@@ -2898,8 +2904,10 @@ html[dir='rtl'] {
 
   }
 
-  .datagrid tr .tag {
-    line-height: 24px;
+  .datagrid {
+    tr .tag {
+      line-height: 24px;
+    }
   }
 }
 
@@ -3171,4 +3179,20 @@ html[dir='rtl'] {
       }
     }
   }
+}
+
+.datagrid-empty-message {
+  background-color: $body-bg-color;
+  display: none;
+  min-height: 60px;
+  padding-bottom: 5px;
+
+  .empty-title {
+    padding: 0 0 15px;
+  }
+
+  .empty-icon {
+    padding: 25px 0;
+  }
+
 }

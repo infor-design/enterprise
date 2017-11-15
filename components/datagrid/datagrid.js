@@ -1574,8 +1574,9 @@ $.fn.datagrid = function(options) {
         expandableRow: false, // Supply an empty expandable row template
         redrawOnResize: true, //Run column redraw logic on resize
         exportConvertNegative: false, // Export data with trailing negative signs moved in front
-        onPostRenderCell: null, //A call back function that will fire and send you the cell container and related information for any cells with a component attribute in the column definition.
-        onDestroyCell: null //A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+        onPostRenderCell: null, //A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
+        onDestroyCell: null, //A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need notification of that.
+        emptyMessage: {title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data'}
       },
       settings = $.extend({}, defaults, options);
 
@@ -1630,6 +1631,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
   * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
   * @param {Boolean} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+  * @param {Boolean} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -1754,6 +1756,31 @@ $.fn.datagrid = function(options) {
       self.element.append(self.contentContainer);
       self.renderHeader();
       self.container = self.element.closest('.datagrid-container');
+
+      if (this.settings.emptyMessage) {
+        var opts = this.settings.emptyMessage;
+        //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
+
+        self.emptyMessageContainer = $('<div class="datagrid-empty-message">'+
+          (!opts.icon ? '' : '<div class="empty-icon">'+
+            '<svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">'+
+            '<use xlink:href="#'+opts.icon+'"></use>'+
+            '</svg>'+
+          '</div>')+
+          '<div class="empty-title">'+
+            opts.title +
+          '</div>'+
+          (!opts.info ? '' : '<div class="empty-info">'+
+            opts.info +
+          '</div>')+
+          (!opts.button ? '' : '<div class="empty-actions">'+
+            '<button type="button" class="btn-secondary hide-focus '+ opts.button.cssClass +'" id="'+ opts.button.id +'">'+
+              '<span>'+ opts.button.text +'</span>'+
+            '</button>'+
+          '</div>')+
+        '</div>');
+        self.contentContainer.after(self.emptyMessageContainer);
+      }
 
       self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
       $(self.settings.buttonSelector, self.table).button();
@@ -4923,11 +4950,7 @@ $.fn.datagrid = function(options) {
         count = self.tableBody.find('tr:visible').length;
 
       if (!totals) {
-        totals = self.totalRows;
-      }
-
-      if (!totals && !self.totalRows) {
-        totals = self.settings.dataset.length;
+        totals = self.recordCount;
       }
 
       //Update Selected
@@ -4949,6 +4972,15 @@ $.fn.datagrid = function(options) {
       }
       self.element.closest('.modal').find('.datagrid-result-count').html(countText);
 
+      if (this.settings.emptyMessage && self.emptyMessageContainer) {
+        if (totals > 0) {
+          self.emptyMessageContainer.hide();
+          self.element.removeClass('is-empty');
+        } else {
+          self.emptyMessageContainer.show();
+          self.element.addClass('is-empty');
+        }
+      }
     },
 
     //Trigger event on parent and compose the args
@@ -7802,7 +7834,7 @@ $.fn.datagrid = function(options) {
           self.element.addClass('paginated');
         }
 
-        self.totalRows = args.total;
+        self.recordCount = args.total;
         self.displayCounts(args.total);
 
         //Handle row selection across pages

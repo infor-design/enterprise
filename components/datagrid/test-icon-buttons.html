@@ -38,13 +38,14 @@
       columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'actionLink', name: 'As Link', field: 'action', sortable: false, align: 'center', width: 80, formatter: Formatters.Hyperlink, icon: 'reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id)}});
-      columns.push({ id: 'action', name: 'Active', field: 'action', sortable: false, align: 'center', width: 80, formatter: Formatters.Button, icon: 'reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}
+      columns.push({ id: 'actionLink', name: 'As Link', field: 'action', sortable: false, align: 'center', width: 80, formatter: Formatters.Hyperlink, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id)}});
+      columns.push({ id: 'action', name: 'Active', field: 'action', sortable: false, align: 'center', width: 80, formatter: Formatters.Button, icon: 'reset', tooltip: 'Reset', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}
       , contentVisible: function (row, cell, data, col, item) { return (item.status === 'OK');} });
 
       //Init and get the api for the grid
       grid = $('#readonly-datagrid').datagrid({
         columns: columns,
+        enableTooltips: true,
         dataset: data,
         toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
       });

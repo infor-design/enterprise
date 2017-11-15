@@ -321,7 +321,11 @@
 .widget-empty-info,
 .card-empty-info,
 .widget-empty-actions,
-.card-empty-actions {
+.card-empty-actions,
+.empty-icon,
+.empty-title,
+.empty-actions,
+.empty-info {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-weight: normal;
@@ -330,12 +334,14 @@
 }
 
 .card-empty-icon,
-.widget-empty-icon {
+.widget-empty-icon,
+.empty-icon {
   padding: 40px 0;
 }
 
 .card-empty-title,
-.widget-empty-title {
+.widget-empty-title,
+.empty-title {
   @include font-size(16);
   padding: 0 0 20px;
 
@@ -345,7 +351,8 @@
 }
 
 .card-empty-info,
-.widget-empty-info {
+.widget-empty-info,
+.empty-info {
   @include font-size(14);
   padding: 0 20px 40px;
 
@@ -355,6 +362,7 @@
 }
 
 .card-empty-actions,
-.widget-empty-actions {
+.widget-empty-actions,
+.empty-actions {
   padding: 0 0 40px;
 }

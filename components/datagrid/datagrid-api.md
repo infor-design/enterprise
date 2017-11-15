@@ -82,6 +82,7 @@ The Datagrid Component displays and process data in tabular format.
 -   `exportConvertNegative` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true export data with trailing negative signs moved in front.
 -   `onPostRenderCell` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
 -   `onDestroyCell` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+-   `emptyMessage` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
 
 ### render
 

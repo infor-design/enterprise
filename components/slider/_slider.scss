@@ -210,7 +210,7 @@ input[type="range"] {
   display: inline-block;
   height: 16px;
   line-height: 16px;
-  position: relative;
+  position: absolute;
   width: 16px;
   @include css3(touch-callout, none);
   z-index: 20;
