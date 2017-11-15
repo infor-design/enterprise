@@ -33,7 +33,7 @@
         parentElement: null,
         keepOpen: false,
         extraClass: null,
-        placementOpts: undefined,
+        placementOpts: {},
         maxWidth: null
       };
 
@@ -375,6 +375,14 @@
           contentArea.find('.hidden').removeClass('hidden');
         } else {
           contentArea.html(content);
+        }
+
+        if (!this.settings.placementOpts) {
+          this.settings.placementOpts = {};
+        }
+
+        if (!this.settings.placementOpts.parent) {
+          this.settings.placementOpts.parent = this.element;
         }
 
         content[0].classList.remove('hidden');
