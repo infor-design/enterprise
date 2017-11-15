@@ -981,6 +981,7 @@
           case 27: { //Esc - Close the Combo and Do not change value
             if (self.isOpen()) {
               // Close the option list
+              self.element.closest('.modal.is-visible').data('listclosed', true);
               self.closeList('cancel');
               self.activate();
               e.stopPropagation();
@@ -2217,7 +2218,7 @@
           }
           self.ignoreKeys($(this), e);
 
-          if (!self.settings.noSearch) {
+          if (!self.settings.noSearch && e.keyCode !== 27) {
             self.toggleList();
           }
           self.handleAutoComplete(e);
