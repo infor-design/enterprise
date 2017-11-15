@@ -597,7 +597,15 @@
         $(document).on('keyup.modal', function (e) {
           var keyCode = e.which || e.keyCode;
           if (keyCode === 27) {
-            var modals = $('.modal.is-visible');
+            var modals = $('.modal.is-visible'),
+              doAction = function(api) {
+                if (!api.element.data('listclosed')) {
+                  api.close();
+                }
+                setTimeout(function() {
+                  api.element.removeData('listclosed');
+                }, 0);
+              };
             if (modals.length > 1) {
               modals.not(':last').on('beforeclose.modal', function () {
                 return false;
@@ -605,12 +613,12 @@
               modals.on('afterclose.modal', function () {
                 modals.off('beforeclose.modal');
               });
-              var api = modals.last().data('modal');
-              if (api && api.close) {
-                api.close();
+              var apiModal = modals.last().data('modal');
+              if (apiModal && apiModal.close) {
+                doAction(apiModal);
               }
             } else {
-              self.close();
+              doAction(self);
             }
           }
         });

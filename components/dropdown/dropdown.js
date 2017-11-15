@@ -981,6 +981,7 @@
           case 27: { //Esc - Close the Combo and Do not change value
             if (self.isOpen()) {
               // Close the option list
+              self.element.closest('.modal.is-visible').data('listclosed', true);
               self.closeList('cancel');
               self.activate();
               e.stopPropagation();
