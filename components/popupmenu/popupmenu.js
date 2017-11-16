@@ -270,7 +270,9 @@
         lis.each(function(i, li) {
           var a = $(li).children('a')[0], // TODO: do this better when we have the infrastructure
             span = $(a).children('span')[0],
+            submenu = $(li).children('ul')[0],
             submenuWrapper = $(li).children('.wrapper')[0];
+
           li.setAttribute('role', 'presentation');
 
           if (a) {
@@ -297,8 +299,13 @@
             }
 
             // menu items that contain submenus
+            if (submenu instanceof HTMLElement) {
+              submenu.classList.add('popupmenu');
+            }
             if (submenuWrapper instanceof HTMLElement) {
               li.className += (Soho.DOM.classNameExists(li) ? ' ' : '') + 'submenu';
+              submenu = $(submenuWrapper).children('ul')[0];
+              submenu.classList.add('popupmenu');
             }
             if (Soho.DOM.classNameHas(li.className, 'submenu')) {
 
@@ -312,6 +319,9 @@
                 $a.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
               }
               a.setAttribute('aria-haspopup', 'true');
+
+              // Check for existing menus, and if present, apply a `.popupmenu` class automatically.
+
             }
 
             // is-checked
