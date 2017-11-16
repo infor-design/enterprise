@@ -177,8 +177,13 @@
             doActive();
           });
         }
+        // Spinbox add parent css class
+        if (isSpinbox) {
+          self.field.addClass('is-fieldoptions');
+        }
         // Move trigger(action-button) in to searchfield-wrapper
         if (isSearchfield) {
+          self.field.addClass('is-fieldoptions');
           setTimeout(function() {
             self.trigger.add(self.trigger.next('.popupmenu'))
               .appendTo(self.element.closest('.searchfield-wrapper'));
