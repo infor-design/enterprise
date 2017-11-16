@@ -3,6 +3,7 @@
 ### Table of Contents
 
 -   [ApplicationMenu](#applicationmenu)
+    -   [getAdjacentContainerElement](#getadjacentcontainerelement)
     -   [isOpen](#isopen)
     -   [testWidth](#testwidth)
     -   [openMenu](#openmenu)
@@ -30,6 +31,12 @@ The Application Menu provides access to all the functions, pages, and forms in a
 -   `openOnLarge` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
 -   `triggers` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
 
+### getAdjacentContainerElement
+
+Gets a reference to this Application Menu's adjacent container element.
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
 ### isOpen
 
 Detects whether or not the application menu is open
@@ -47,7 +54,8 @@ Opens the Application Menu
 **Parameters**
 
 -   `noFocus` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, sets focus on the first item in the application menu.
--   `userOpened` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, notifies the component that the menu was manually opened by the user.
+-   `userOpened` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If true, notifies the component that the menu was manually opened by the user.
+-   `openedByClass` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If true, only adjusts bare-miniumum requirements for the application menu to appear open (should be used in cases where the application menu has the `is-open` CSS appended to it via markup).  This skips events, animation, etc.
 
 ### closeMenu
 
