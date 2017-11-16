@@ -6,57 +6,18 @@
 
        <div class="field">
         <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
-        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required " placeholder="someone@someplace.com" value="someone@someplace.com">
+        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required" value="someone@someplace.com">
       </div>
 
       <div class="field">
         <label class="required" for="credit-card">Credit Card <span class="audible">Required</span></label>
-        <input type="text" id="credit-card" name="credit-card" data-validate="required customInformationRule" value="xxxx-xxxx-xxxx-xxxx">
-      </div>
-
-      <div class="field hidden">
-        <label class="required" for="hidden-credit-card">Credit Card <span class="audible">Required</span></label>
-        <input type="text" id="hidden-credit-card" name="hidden-credit-card" data-validate="required" value="xxxx-xxxx-xxxx-xxxx">
+        <input type="text" id="credit-card" name="credit-card" data-validate="required" value="xxxx-xxxx-xxxx-xxxx">
       </div>
 
       <div class="field">
-        <label for="credit-code">Code</label>
-        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="customWarningRule" data-mask-mode="number">
-      </div>
-
-      <div class="field">
-          <input class="checkbox" id="checkbox2" checked="" type="checkbox">
-          <label for="checkbox2" class="checkbox-label">Test Checkbox</label>
-      </div>
-
-      <div class="field">
-        <label class="required" for="credit-code2">Code <span class="audible">Required</span></label>
-        <input type="text" id="credit-code2" class="input-xs" name="credit-code2" data-validate="required" data-mask-mode="number">
-      </div>
-
-      <div class="field">
-        <label class="required label" for="states">States</label>
-        <select id="states" data-validate="required" name="states" class="dropdown">
-          <option value="" selected>&nbsp;</option>
-          <option value="AL" >Alabama</option>
-          <option value="DE">Delaware</option>
-          <option value="DC">District Of Columbia</option>
-          <option value="FL">Florida</option>
-          <option value="GA">Georgia</option>
-          <option value="HI">Hawaii</option>
-          <option value="ID">Idaho</option>
-          <option value="OK">Oklahoma</option>
-          <option value="OR">Oregon</option>
-          <option value="PA">Pennsylvania</option>
-          <option value="RI">Rhode Island</option>
-          <option value="SC">South Carolina</option>
-          </select>
-      </div>
-
-      <div class="field">
-        <span class="label required">Editor <span class="audible">Required</span></span>
-        <div class="editor" data-validate="required">
-        </div>
+        <label class="required" for="date-field" >Date Field <span class="audible">Required</span></label>
+        <input id="date-field-normal" class="datepicker" name="date-field" type="text" data-validate="required date">
+        <!-- data-validation-events="{'required': 'change blur keypress', 'date' : 'change blur'}"-->
       </div>
 
       <button type="submit" id="test1" class="btn-primary" disabled>Submit</button>
