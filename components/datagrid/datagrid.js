@@ -4973,7 +4973,7 @@ $.fn.datagrid = function(options) {
       self.element.closest('.modal').find('.datagrid-result-count').html(countText);
 
       if (this.settings.emptyMessage && self.emptyMessageContainer) {
-        if (totals > 0) {
+        if (totals > 0 || count > 0) {
           self.emptyMessageContainer.hide();
           self.element.removeClass('is-empty');
         } else {

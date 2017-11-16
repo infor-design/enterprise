@@ -70,6 +70,7 @@
       display: inline-block;
       height: 32px;
       margin: 0 2px;
+      outline: none;
       padding: 5px;
       position: relative;
       text-align: center;
@@ -78,6 +79,7 @@
 
       // Disabled
       &[disabled] {
+        box-shadow: none;
         cursor: default;
 
         .icon {
