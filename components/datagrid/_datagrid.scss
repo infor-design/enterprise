@@ -30,12 +30,9 @@ $datagrid-short-row-height: 23px;
   }
 
   // Empty Area Scrolling
-  &.is-empty .datagrid-header {
-    overflow-x: auto;
-  }
-
-  &.is-empty .datagrid-body { //Avoid dup scroll bar in IE
-    overflow-x: hidden;
+  &.is-empty .datagrid {
+    border-bottom: 1px solid transparent;
+    height: auto;
   }
 
   .datagrid-body {
