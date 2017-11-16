@@ -26,7 +26,8 @@ $header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, .3);
 $panel-bg-color: $graphite02;
 $panel-border-color: $graphite06;
 $drop-shadow-depth: rgba(0, 0, 0, .2);
-$focus-box-shadow: 0 0 4px 2px rgba(41, 41, 41, .3);
+$focus-box-shadow-color: rgba(41, 41, 41, .3);
+$focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
 
 // Base Colors
 $primary-color: $azure09;

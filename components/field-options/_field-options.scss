@@ -68,7 +68,7 @@
     }
   }
 
-  &.is-active:not([disabled]):not(.colorpicker) {
+  &.is-active:not([disabled]):not(.colorpicker):not(.spinbox) {
     @include focus-state();
 
     ~ .btn-actions {
@@ -110,6 +110,11 @@
         left: -11px;
       }
     }
+  }
+
+  // Autocomplete ===================================================================
+  &.autocomplete {
+    box-shadow: $focus-box-shadow-transparent;
   }
 
   // Spinbox ===================================================================
@@ -175,8 +180,12 @@
   }
 }
 
-// Colorpicker & Lookup ========================================================
+// Colorpicker|Lookup|Searchfield ==============================================
 .field.is-fieldoptions {
+  .btn-actions {
+    @include trigger-button();
+  }
+
   .colorpicker-container {
     ~ .btn-actions {
       top: -12px;
@@ -187,8 +196,20 @@
     width: 100%;
   }
 
-  .btn-actions {
-    @include trigger-button();
+  .searchfield-wrapper {
+    box-shadow: none;
+
+    .btn-actions {
+      left: -8px;
+    }
+  }
+
+  .spinbox-wrapper {
+    box-shadow: none;
+
+    .btn-actions {
+      left: -8px;
+    }
   }
 }
 
@@ -209,6 +230,7 @@
     display: inline-block;
     max-width: 100%;
     outline: 0;
+    padding: 0 5px;
     width: auto;
   }
 
@@ -226,12 +248,26 @@
 
 // Active effect ===============================================================
 .field.is-active {
-  .field-options:not([disabled]):not(.colorpicker) {
+  .field-options:not([disabled]):not(.colorpicker):not(.spinbox) {
     @include focus-state();
   }
 
   .colorpicker-container {
     border-color: $input-focus-border-color;
+  }
+
+  .spinbox-wrapper {
+    .down {
+      box-shadow: $focus-box-shadow-spinbox-down;
+    }
+
+    .spinbox {
+      box-shadow: $focus-box-shadow-spinbox;
+    }
+
+    .up {
+      box-shadow: $focus-box-shadow-spinbox-up;
+    }
   }
 
   .btn-actions {
