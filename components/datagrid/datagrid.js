@@ -1779,7 +1779,7 @@ $.fn.datagrid = function(options) {
             '</button>'+
           '</div>')+
         '</div>');
-        self.contentContainer.after(self.emptyMessageContainer);
+        self.contentContainer.prepend(self.emptyMessageContainer);
       }
 
       self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
@@ -4973,7 +4973,7 @@ $.fn.datagrid = function(options) {
       self.element.closest('.modal').find('.datagrid-result-count').html(countText);
 
       if (this.settings.emptyMessage && self.emptyMessageContainer) {
-        if (totals > 0) {
+        if (totals > 0 || count > 0) {
           self.emptyMessageContainer.hide();
           self.element.removeClass('is-empty');
         } else {
