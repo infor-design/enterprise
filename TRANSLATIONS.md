@@ -1,5 +1,13 @@
 # Notes on Getting Translations and Localization
 
+## Process Summary
+
+- We use the en-US.js as the source in http://git.infor.com/projects/SOHO/repos/controls/browse/components/locale/cultures
+- We copy that to \\nlbavwmemq1\cc\FromDev\SohoUX\
+- Arrange timing with the translation team (Henry Wondergem contact)
+- When it comes back it comes in \\nlbavwmemq1\cc\ToDev\SohoUX\
+- We have to manually copy and paste the sections in the rest of the files in http://git.infor.com/projects/SOHO/repos/controls/browse/components/locale/cultures as parts of the files are different except the messages section.
+
 ## Dates and numbers
 
 All the date and number info in each file comes from or is derived from the http://cldr.unicode.org/.

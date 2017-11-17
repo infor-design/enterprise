@@ -363,7 +363,7 @@
         this.setFormat();
 
         var validation = 'date availableDate',
-          events = {'date': 'change blur', 'availableDate': 'change blur'},
+          events = {'date': 'change blur enter', 'availableDate': 'change blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events'),
           maskOptions = {
