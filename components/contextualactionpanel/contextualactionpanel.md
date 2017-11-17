@@ -9,11 +9,10 @@
 3. CAP example triggering on adjacent content [View Example]( ../components/contextualactionpanel/example-trigger)
 4. Toolbar Alignment Test [View Test]( /component/scontextualactionpanel/test-alignment)
 5. Destroy Test [View Test]( ../components/contextualactionpanel/test-destroy)
-6. Markup Test [View Test]( ../components/contextualactionpanel/test-from-markup)
-7. Launching From a Menu [View Test]( ../components/contextualactionpanel/test-from-menu)
-8. IFrame for Contents [View Test]( ../components/contextualactionpanel/test-iframe)
-9. Open on Grid Rows [View Test]( ../components/contextualactionpanel/test-trigger-immediate)
-10. Search Field / Keyboard Test [View Test]( ../components/contextualactionpanel/test-searchfield)
+6. Launching From a Menu [View Test]( ../components/contextualactionpanel/test-from-menu)
+7. IFrame for Contents [View Test]( ../components/contextualactionpanel/test-iframe)
+8. Open on Grid Rows [View Test]( ../components/contextualactionpanel/test-trigger-immediate)
+9. Search Field / Keyboard Test [View Test]( ../components/contextualactionpanel/test-searchfield)
 
 {{api-details}}
 
