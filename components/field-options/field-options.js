@@ -120,7 +120,13 @@
 
             if (isFieldset) {
               var lineHeight = parseInt(self.element.css('line-height'), 10);
-              return height > lineHeight ? (((height - lineHeight)/2) * -1) : 0;
+              if (height > lineHeight) {
+                self.element.css({'margin-bottom': '', 'padding-bottom': ''});
+                return ((height - lineHeight)/2) * -1;
+              } else {
+                self.element.css({'margin-bottom': '8px', 'padding-bottom': '12px'});
+                return 6;
+              }
             }
             else if (isRadio) {
               return ((height - self.trigger.height())/2) * -1;
@@ -192,7 +198,7 @@
         // Fieldset - set trigger(action-button) top value and bind events
         if (isFieldset) {
           setTriggerCssTop();
-          self.trigger.on('keydown.' + pluginName, function(e) {
+          self.targetElem.add(self.trigger).on('keydown.' + pluginName, function(e) {
             var key = e.which || e.keyCode || e.charCode || 0;
             if (key === 13) {
               setTimeout(function() {
