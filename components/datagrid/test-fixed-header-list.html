@@ -1,9 +1,4 @@
 <div class="full-height full-width">
-    <div class="toolbar" role="toolbar">
-       <div class="title">
-         <span class="datagrid-row-count"></span> results in Companies for "Gravel"
-       </div>
-     </div>
     <div id="datagrid" class="datagrid">
     </div>
 </div>
@@ -33,7 +28,7 @@
           editable: false,
           isList: true,
           dataset: res,
-          toolbar: {results: true}
+          toolbar: {title: 'results in Companies for "Gravel"', actions: true, rowHeight: true, personalize: true}
         });
       });
 

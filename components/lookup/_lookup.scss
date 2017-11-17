@@ -102,6 +102,10 @@
     padding: 0;
 
     .buttonset {
+      width: calc(100%);
+    }
+
+    &.has-more-button .buttonset {
       width: calc(100% - 44px);
     }
   }
