@@ -32,7 +32,6 @@ category or section header, and the second level provides the associated options
 
 **Parameters**
 
--   `element`  
 -   `rightAligned` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Will always attempt to right-align the contents of the toolbar. By default if there is no title it will left align. This forces right alignment.
 -   `maxVisibleButtons` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  Total amount of buttons that can be present, not including the More button.
 -   `resizeContainers` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.

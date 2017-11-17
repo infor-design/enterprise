@@ -102,8 +102,10 @@ $datagrid-short-row-height: 23px;
 
   // States - List Style Datagrid
   &.is-gridlist {
-    background-color: transparent;
+    // scss-lint:disable ImportantRule
+    background-color: transparent !important;
     border: 0;
+    // scss-lint:enable ImportantRule
 
     &.datagrid-alternate-bg-color {
       background-color: $panel-bg-color;
@@ -166,7 +168,9 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-body {
-      background-color: transparent;
+      // scss-lint:disable ImportantRule
+      background-color: transparent !important;
+      // scss-lint:enable ImportantRule
     }
 
     tr td {
