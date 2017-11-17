@@ -13,9 +13,6 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  window.Soho = window.Soho || {};
-  window.Soho.components = window.Soho.components || {};
-
   var DEFAULT_APPLICATIONMENU_OPTIONS = {
     breakpoint: 'phone-to-tablet',
     filterable: false,

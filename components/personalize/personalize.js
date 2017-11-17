@@ -61,8 +61,6 @@
       makeSohoObject: function () {
         var self = this;
 
-        window.Soho = window.Soho || {};
-
         //Handle Personalization and theme
         window.Soho.theme = 'light';
         $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(window.Soho.theme + '-theme');

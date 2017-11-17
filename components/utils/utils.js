@@ -20,10 +20,6 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  window.Soho = window.Soho || {};
-  window.Soho.utils = {};
-  window.Soho.DOM = {};
-
   // Used for changing the stacking order of jQuery events.  This is needed to override certain
   // Events invoked by other plugins http://stackoverflow.com/questions/2360655
   $.fn.bindFirst = function(name, fn) {

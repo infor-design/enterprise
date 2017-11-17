@@ -15,9 +15,6 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  window.Soho = window.Soho || {};
-  window.Soho.components = window.Soho.components || {};
-
   var DEFAULT_ACCORDION_OPTIONS = {
     allowOnePane: true,
     displayChevron: true,

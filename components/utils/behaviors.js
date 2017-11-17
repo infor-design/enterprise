@@ -13,9 +13,6 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  window.Soho = window.Soho || {};
-  window.Soho.behaviors = window.Soho.behaviors || {};
-
   /**
    * HideFocus Behavior
    * Only shows the focus state on key entry (tabs or arrows).

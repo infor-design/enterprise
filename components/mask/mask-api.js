@@ -1,4 +1,4 @@
-window.Soho = window.Soho || {};
+
 window.Soho.masks = window.Soho.masks || {
   EMPTY_STRING: '',
   PLACEHOLDER_CHAR: '_',

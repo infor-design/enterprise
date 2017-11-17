@@ -143,7 +143,6 @@
     },
 
     makeSohoObject: function() {
-      window.Soho = window.Soho || {};
 
       window.Soho.logTimeStart = function(label) {
         if (window.Soho.logTime) {

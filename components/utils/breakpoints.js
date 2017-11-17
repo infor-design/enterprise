@@ -13,9 +13,6 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  window.Soho = window.Soho || {};
-  window.Soho.DOM = window.Soho.DOM || {};
-
   //==================================================================
   // JS-level Breakpoint Access
   // NOTE: these should match whatever the breakpoints are in "/sass/_config.scss"
