@@ -69,7 +69,7 @@ The Datagrid Component displays and process data in tabular format.
 -   `disableClientFilter` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Disable Filter Logic client side and let your server do it
 -   `disableClientSort` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Disable Sort Logic client side and let your server do it
 -   `resultsText` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can provide a custom function to adjust results text on the toolbar
--   `showResultTotal` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Paging results display (true for n of m, false for m)
+-   `showFilterTotal` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Paging results display filter count, change to false to not show filtered count
 -   `rowReorder` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set you can reorder rows. Requires rowReorder formatter
 -   `showDirty` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the dirty indicator will be shown on the rows
 -   `showSelectAllCheckBox` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Allow to hide the checkbox header (true to show, false to hide)

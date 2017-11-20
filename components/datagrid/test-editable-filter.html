@@ -47,14 +47,14 @@
 
 		var columns = [];
 
-		columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 30, formatter: Formatters.SelectionCheckbox, align: 'center'});
-		columns.push({ id: 'rowStatus', resizable: false, width: 30, focusable: false, formatter: Formatters.Status, align: 'center'});
-		columns.push({ id: 'SCREEN_NAME', name: 'Screen Name', required: true, field: 'SCREEN_NAME', filterType: 'text', width: 125, editor: Editors.Input});
-		columns.push({ id: 'SCREEN_VERSION', name: 'Version', required: true, field: 'SCREEN_VERSION', filterType: 'text', width: 125, editor: Editors.Input});
-		columns.push({ id: 'PROC', name: 'Process', required: false, field: 'PROC', filterType: 'text', width: 125, editor: Editors.Input});
-		columns.push({ id: 'STDPROD', name: 'Standard Product', field: 'STDPROD', filterType: 'checkbox', focusable: false, width: 60, align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox, readonly: true});
+		columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+		columns.push({ id: 'rowStatus', resizable: false, formatter: Formatters.Status, align: 'center'});
+		columns.push({ id: 'SCREEN_NAME', name: 'Screen Name', required: true, field: 'SCREEN_NAME', filterType: 'text', editor: Editors.Input});
+		columns.push({ id: 'SCREEN_VERSION', name: 'Version', required: true, field: 'SCREEN_VERSION', filterType: 'text', editor: Editors.Input});
+		columns.push({ id: 'PROC', name: 'Process', required: false, field: 'PROC', filterType: 'text', editor: Editors.Input});
+		columns.push({ id: 'STDPROD', name: 'Standard Product', field: 'STDPROD', filterType: 'checkbox', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
 
-		var pagesize = 20;
+		var pagesize = 10;
 
 		$('#theGrid').datagrid({
 			columns: columns,

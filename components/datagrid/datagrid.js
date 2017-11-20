@@ -1561,7 +1561,7 @@ $.fn.datagrid = function(options) {
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
         resultsText: null,  // Can provide a custom function to adjust results text
-        showResultTotal : false, // Paging results display (true for n of m, false for m)
+        showFilterTotal : true, // Paging results show filtered count, false to not show.
         virtualized: false, // Prevent Unused rows from being added to the DOM
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
@@ -1618,7 +1618,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} disableClientFilter &nbsp;-&nbsp Disable Filter Logic client side and let your server do it
   * @param {Boolean} disableClientSort &nbsp;-&nbsp Disable Sort Logic client side and let your server do it
   * @param {String} resultsText &nbsp;-&nbsp Can provide a custom function to adjust results text on the toolbar
-  * @param {Boolean} showResultTotal &nbsp;-&nbsp Paging results display (true for n of m, false for m)
+  * @param {Boolean} showFilterTotal &nbsp;-&nbsp Paging results display filter count, change to false to not show filtered count
   * @param {Boolean} rowReorder &nbsp;-&nbsp If set you can reorder rows. Requires rowReorder formatter
   * @param {Boolean} showDirty &nbsp;-&nbsp  If true the dirty indicator will be shown on the rows
   * @param {Boolean} showSelectAllCheckBox &nbsp;-&nbsp Allow to hide the checkbox header (true to show, false to hide)
@@ -2398,6 +2398,10 @@ $.fn.datagrid = function(options) {
       this.headerRow.find('tr:last th').each(function () {
         var col = self.columnById($(this).attr('data-column-id'))[0],
           elem = $(this);
+
+        if (!col) { //No ID found
+          return true;
+        }
 
         elem.find('select.dropdown').dropdown(col.editorOptions).on('selected.datagrid', function () {
           self.applyFilter();
@@ -3222,6 +3226,11 @@ $.fn.datagrid = function(options) {
       self.bodyColGroupHtml = '<colgroup>';
       self.triggerDestroyCell();  // Trigger Destroy on previous cells
 
+      // Prevent flashing message area on filter / reload
+      if (this.settings.emptyMessage && self.emptyMessageContainer) {
+        self.emptyMessageContainer.hide();
+      }
+
       if (body.length === 0) {
         self.tableBody = $('<tbody></tbody>');
         self.table.append(self.tableBody);
@@ -3249,6 +3258,8 @@ $.fn.datagrid = function(options) {
           if (activePage === 1 && (i - this.filteredCount) >= pagesize){
             if (!dataset[i].isFiltered) {
               this.recordCount++;
+            } else {
+              this.filteredCount++;
             }
             continue;
           }
@@ -3396,6 +3407,8 @@ $.fn.datagrid = function(options) {
 
         if (!self.settings.source) {
           self.displayCounts();
+        } else {
+          self.checkEmptyMessage();
         }
 
         self.setAlternateRowShading();
@@ -4947,10 +4960,11 @@ $.fn.datagrid = function(options) {
     //Show Summary and any other count info
     displayCounts: function(totals) {
       var self = this,
-        count = self.tableBody.find('tr:visible').length;
+        count = self.tableBody.find('tr:visible').length,
+        isClientSide = self.settings.paging && !(self.settings.source);
 
-      if (!totals) {
-        totals = self.recordCount;
+      if (isClientSide || (!totals)) {
+        this.recordCount = count = self.settings.dataset.length;
       }
 
       //Update Selected
@@ -4958,11 +4972,28 @@ $.fn.datagrid = function(options) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
+      if (self.settings.source && !totals) {
+        self.checkEmptyMessage();
+        return;
+      }
+
+      if (totals && totals !== -1) {
+        count = totals;
+      }
+
       var countText;
-      if (self.settings.showResultTotal) {
-        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' of ' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
+      if (self.settings.showFilterTotal && self.filteredCount > 0) {
+        countText = '(' + Locale.formatNumber(count - self.filteredCount, {style: 'integer'}) + ' of ' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
       } else {
-        countText = '(' + Locale.formatNumber(totals, {style: 'integer'}) + ' ' + Locale.translate(totals === 1 ? 'Result' : 'Results') + ')';
+        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
+      }
+
+      if (self.settings.resultsText) {
+        if (typeof self.settings.resultsText === 'function') {
+          countText = self.settings.resultsText(self, count, count - self.filteredCount);
+        } else {
+          countText = self.settings.resultsText;
+        }
       }
 
       if (self.toolbar) {
@@ -4972,17 +5003,20 @@ $.fn.datagrid = function(options) {
       }
       self.element.closest('.modal').find('.datagrid-result-count').html(countText);
 
-      if (this.settings.emptyMessage && self.emptyMessageContainer) {
-        if (totals > 0 || count > 0) {
-          self.emptyMessageContainer.hide();
-          self.element.removeClass('is-empty');
+      this.checkEmptyMessage();
+    },
+
+    checkEmptyMessage: function () {
+      if (this.settings.emptyMessage && this.emptyMessageContainer) {
+        if (this.filteredCount ===  this.recordCount || this.recordCount === 0) {
+          this.emptyMessageContainer.show();
+          this.element.addClass('is-empty');
         } else {
-          self.emptyMessageContainer.show();
-          self.element.addClass('is-empty');
+          this.emptyMessageContainer.hide();
+          this.element.removeClass('is-empty');
         }
       }
     },
-
     //Trigger event on parent and compose the args
     triggerRowEvent: function (eventName, e, stopPropagation) {
       var self = this,
@@ -7824,7 +7858,7 @@ $.fn.datagrid = function(options) {
 
       this.pager = pagerElem.data('pager');
 
-      pagerElem
+      pagerElem.off('afterpaging')
       .on('afterpaging', function (e, args) {
 
         // Hide the entire pager bar if we're only showing one page, if applicable
