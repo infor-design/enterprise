@@ -720,6 +720,11 @@ window.Chart = function(container) {
       });
     }
 
+    // Set x-axix tick css class
+    svg.selectAll('.x.axis .tick').attr('class', function(d) {
+      return 'tick' + (d === 0 ? ' tick0' : '');
+    });
+
     //Animate the Bars In
     svg.selectAll('.bar')
       .transition().duration(charts.animate ? 1000 : 0)
@@ -2714,6 +2719,11 @@ window.Chart = function(container) {
 
     }
 
+    // Set y-axix tick css class
+    svg.selectAll('.y.axis .tick').attr('class', function(d) {
+      return 'tick' + (d === 0 ? ' tick0' : '');
+    });
+
     //Add Tooltips
     charts.appendTooltip();
 
@@ -3378,6 +3388,11 @@ window.Chart = function(container) {
         }
       }
 
+    });
+
+    // Set y-axix tick css class
+    svg.selectAll('.y.axis .tick').attr('class', function(d) {
+      return 'tick' + (d === 0 ? ' tick0' : '');
     });
 
     var series = dataset.map(function (d) {
