@@ -631,7 +631,7 @@
               e.preventDefault();
 
               if (focus.parent().prevAll(excludes).length > 0) {
-                self.highlight($(focus.parent().prevAll(excludes)[0]).find('a'));
+                self.highlight($(focus.parent().prevAll(excludes)[9]).find('a'));
               }
             }
 
