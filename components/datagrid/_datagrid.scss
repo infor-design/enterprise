@@ -255,6 +255,10 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 25px);
     }
 
+    &.has-group-headers .datagrid-body {
+      height: calc(100% - 50px);
+    }
+
     &.has-filterable-columns .datagrid-body {
       height: calc(100% - 54px);
     }
@@ -1079,7 +1083,7 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &:not(.error):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
+    &:not(.error):not(.is-selected):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {

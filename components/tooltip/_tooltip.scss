@@ -52,6 +52,15 @@
     border-left-color: $tooltip-bg-color;
   }
 
+  .hyperlink {
+    @include font-size(12);
+    color: $tooltip-color;
+
+    &:hover {
+      color: $tooltip-color;
+    }
+  }
+
   &.is-error {
     background-color: $tooltip-error-bg-color;
     border-color: $tooltip-error-border-color;
