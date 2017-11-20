@@ -28,7 +28,7 @@
       stroke: $chart-line-color;
     }
 
-    .tick:first-child line {
+    .tick0 line {
       stroke: $chart-line-color-axis;
     }
 
@@ -88,7 +88,7 @@
         stroke: $chart-line-color;
       }
 
-      &:first-child {
+      &.tick0 {
         line {
           stroke: $chart-line-color-axis;
         }
