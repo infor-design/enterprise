@@ -13,7 +13,7 @@ module.exports = {
     },
     build: {
       options: {
-        wait: false
+        wait: true
       },
       cmd: 'npm',
       args: [

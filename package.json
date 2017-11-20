@@ -89,6 +89,7 @@
     "requirejs": "^2.2.0",
     "rollup": "^0.51.7",
     "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "selenium-standalone": "^6.0.0",
     "spec-xunit-file": "0.0.1-3"

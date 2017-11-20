@@ -1,6 +1,7 @@
 // Rollup Configuration
 var resolve = require('rollup-plugin-node-resolve');
 var babel = require('rollup-plugin-babel');
+var json = require('rollup-plugin-json');
 
 module.exports = {
   input: 'components/index.js',
@@ -13,6 +14,7 @@ module.exports = {
   name: 'Soho',
   plugins: [
     resolve(),
+    json(),
     babel({
       exclude: 'node_modules/**' // only transpile our source code
     })
