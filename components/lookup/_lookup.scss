@@ -106,7 +106,14 @@
     }
 
     &.has-more-button .buttonset {
+      margin-bottom: 10px;
+      overflow: visible;
+      padding-top: 7px;
       width: calc(100% - 44px);
+
+      + .more {
+        padding-top: 10px;
+      }
     }
   }
 
