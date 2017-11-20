@@ -2143,6 +2143,7 @@ $.fn.datagrid = function(options) {
       // Handle Nested Headers
       var colGroups = this.settings.columnGroups;
       if (colGroups) {
+        this.element.addClass('has-group-headers');
 
         var total = 0;
 
@@ -4935,7 +4936,7 @@ $.fn.datagrid = function(options) {
           columnStartWidth = self.currentHeader[0].offsetWidth;
         })
         .on('drag.datagrid', function (e, ui) {
-          if (!self.currentHeader) {
+          if (!self.currentHeader || !columnDef) {
             return;
           }
 
