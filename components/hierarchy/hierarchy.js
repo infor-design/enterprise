@@ -29,7 +29,8 @@
           mobileView: false,
           leafHeight: null,
           leafWidth: null,
-          beforeExpand: null
+          beforeExpand: null,
+          paging: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -71,10 +72,12 @@
 
         this.handleEvents();
 
+        // Safety check, check for data
         if (settings.dataset) {
-          if (settings.dataset[0].children.length > 0) {
-            var data = settings.dataset[0] === undefined ? settings.dataset : settings.dataset[0];
-            this.render(data);
+          if (settings.dataset[0] && settings.dataset[0].children.length > 0) {
+            this.render(settings.dataset[0]);
+          } else if (settings.dataset && settings.dataset.children.length > 0) {
+            this.render(settings.dataset);
           } else {
             $(this.element).append('<p style=\'padding:10px;\'>No data available</p>');
           }
@@ -137,22 +140,33 @@
          *  Public,
          *  Usage: $('#hierarchy').on('selected', function(event, eventInfo) {}
          */
-        self.element.on('mousedown', '.leaf', function(event) {
+        self.element.on('mousedown', '.leaf, .back button', function(event) {
+          var hierarchy = $(this).closest('.hierarchy').data('hierarchy');
           var nodeData = $(this).data();
           var targetInfo = {target: event.target, pageX: event.pageX, pageY: event.pageY};
           var eventType = 'selected';
+          var isButton = $(event.target).is('button');
+          var isNotBack = !$(event.target).hasClass('btn-back');
+          var isBack = $(event.target).is('.btn-back');
+          var svgHref = $(event.target).find('use').prop('href');
+          var isCollapseButton = svgHref ? svgHref.baseVal === '#icon-caret-up' : false;
+          var isExpandButton = svgHref ? svgHref.baseVal === '#icon-caret-down' : false;
 
           $('.is-selected').removeClass('is-selected');
           $('#' + nodeData.id).addClass('is-selected');
 
           // Is collapse event
-          if ( $(event.target).is('button') && $(event.target).find('use').prop('href').baseVal === '#icon-caret-up') {
+          if (isButton && isCollapseButton && isNotBack) {
             eventType = 'collapse';
           }
 
           // Is expand event
-          if ( $(event.target).is('button') && $(event.target).find('use').prop('href').baseVal === '#icon-caret-down') {
+          if ( isButton && isExpandButton && isNotBack) {
             eventType = 'expand';
+          }
+
+          if (isBack) {
+            eventType = 'back';
           }
 
           // Is right click event
@@ -163,11 +177,81 @@
           var eventInfo = {
             data: nodeData,
             targetInfo: targetInfo,
-            eventType: eventType
+            eventType: eventType,
+            isAddEvent: hierarchy.isAddEvent(eventType),
+            isExpandEvent: hierarchy.isExpandEvent(),
+            isCollapseEvent: hierarchy.isCollapseEvent(),
+            isSelectedEvent: hierarchy.isSelectedEvent(),
+            allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
           };
 
           $(this).trigger('selected', eventInfo);
         });
+      },
+
+      /**
+       * Private function
+       * check if event is add
+       */
+      isAddEvent: function(eventType) {
+
+        if (eventType === undefined) {
+          return false;
+        }
+
+        return eventType === 'add';
+      },
+
+      /**
+       * Private function
+       * check if event is expand
+       */
+      isExpandEvent: function(eventType) {
+
+        if (eventType === undefined) {
+          return false;
+        }
+
+        return eventType === 'expand';
+      },
+
+      /**
+       * Private function
+       * check if event is collapse
+       */
+      isCollapseEvent: function(eventType) {
+
+        if (eventType === undefined) {
+          return false;
+        }
+
+        return eventType === 'collapse';
+      },
+
+      /**
+       * Private function
+       * check if event is select
+       */
+      isSelectedEvent: function(eventType) {
+
+        if (eventType === undefined) {
+          return false;
+        }
+
+        return eventType === 'select';
+      },
+
+      /**
+       * Private function
+       * Check to see if lazy load is allowed
+       */
+      allowLazyLoad: function (data, eventType) {
+
+        if(data === undefined || eventType === undefined) {
+          return false;
+        }
+
+        return !data.isLoaded && !data.isLeaf && eventType === 'expand';
       },
 
       /**
@@ -355,13 +439,12 @@
       render: function (data) {
         var legend       = settings.legend;
         var children     = data.children;
-        var hasSubLevel  = this.checkChildren(children, 'sub-level');
         var rootNodeHTML = [];
         var structure    = {
           legend    : '<legend><ul></ul></legend>',
-          chart     : '<ul class=\'container\'><li class=\'chart\'></li></ul>',
-          toplevel  : '<ul class=\'top-level\'></ul>',
-          sublevel  : '<ul class=\'sub-level\'></ul>'
+          chart     : settings.paging ? '<ul class=\'container\'><li class=\'chart display-for-paging\'></li></ul>' : '<ul class=\'container\'><li class=\'chart\'></li></ul>',
+          toplevel  : settings.paging ? '<ul class=\'child-nodes\'></ul>' : '<ul class=\'top-level\'></ul>',
+          sublevel  : settings.paging ? '' : '<ul class=\'sub-level\'></ul>'
         };
 
         var chartContainer  = this.element.append(structure.chart);
@@ -373,8 +456,34 @@
           this.createLegend(element);
         }
 
+        // check to see how many children are not leafs and have children
+        if (this.isSingleChildWithChildren()) {
+          $(chart).addClass('has-single-child');
+        }
+
         // Create root node
         this.setColor(data);
+
+        if (settings.paging && data.parentDataSet) {
+          var backMarkup = '' +
+            '<div class=\'back\'>' +
+              '<button type="button" class="btn-icon hide-focus btn-back">' +
+                '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
+                  '<use xlink:href="#icon-caret-up"></use>' +
+                '</svg>' +
+                '<span>Back</span>' +
+              '</button>' +
+            '</div>';
+
+          // Append back button to chart to go back to view previous level
+          var backButton = $(backMarkup).appendTo(chart);
+
+          // Attach data reference to back button
+          backButton.children('button').data(data);
+
+          // Class used to adjust heights and account for back button
+          $(chart).addClass('has-back');
+        }
 
         if (data.isMultiRoot) {
           var multiRootHTML = '<div class=\'leaf multiRoot\'><div><h2>' + data.multiRootText +'</h2></div></div>';
@@ -407,7 +516,12 @@
 
             var childObject = data.children[i].children;
 
-            if (this.isLeaf(children[i])) {
+            // If child has no children then render the element in the top level
+            // If paging then render all children in the top level
+            // If not paging and child has children then render in the sub level
+            if (this.isLeaf(children[i]) && !settings.paging) {
+              this.createLeaf(data.children[i], $(structure.toplevel));
+            } else if (settings.paging) {
               this.createLeaf(data.children[i], $(structure.toplevel));
             }
             else {
@@ -440,10 +554,6 @@
           }
         }
 
-        if (!hasSubLevel) {
-          $('.top-level').addClass('no-sublevel');
-        }
-
         var containerWidth = this.element.find('.container').outerWidth();
         var windowWidth = $(window).width();
         var center = (containerWidth - windowWidth) / 2;
@@ -452,27 +562,25 @@
       },
 
       /**
-       * Private function
-       * @param children
-       * @param param
-       * @returns {boolean}
+       *  Private function:
+       *  Checks to see if children have children
+       *  used to set a class if there is only a single child with children
        */
-      checkChildren : function(children, param) {
-        var n = 0;
-        var i = children.length;
-        while(i--) {
-          if (param === 'top-level') {
-            if (children[i].isLeaf) {
-              n += 1;
+      isSingleChildWithChildren: function() {
+        if (settings.dataset && settings.dataset[0].children) {
+          var i = settings.dataset[0].children.length;
+          var count = 0;
+
+          while (i--) {
+            if (!settings.dataset[0].children[i].isLeaf) {
+              count++;
             }
           }
-          if (param === 'subLevel') {
-            if (children[i].children) {
-              n += 1;
-            }
-          }
+
+          return count === 1;
+        } else {
+          return false;
         }
-        return n > 0;
       },
 
       /**
@@ -635,14 +743,16 @@
 
         // set data if it has not been set already
         if ($.isEmptyObject($(leaf).data()) && nodeData) {
-          $(leaf).data(nodeData);
+          var d = nodeData === undefined ? {} : nodeData;
+          $(leaf).data(d);
         }
 
         var btn = $(leaf).find('.btn');
         var data = $(leaf).data();
+        var expandCaret = settings.paging ? 'caret-right' : 'caret-up';
 
         // data has been loaded if it has children
-        if (data.children || eventType === 'add') {
+        if ((data.children && data.children.length !== 0) || eventType === 'add') {
           data.isLoaded = true;
         }
 
@@ -661,7 +771,7 @@
         }
 
         if (data.isExpanded) {
-          btn.find('svg.icon').changeIcon('caret-up');
+          btn.find('svg.icon').changeIcon(expandCaret);
           btn.addClass('btn-expand').removeClass('btn-collapse');
         } else {
           btn.find('svg.icon').changeIcon('caret-down');
@@ -676,6 +786,9 @@
           data.isLoaded = false;
           data.isExpanded = false;
         }
+
+        // Keep reference of the parent dataset for paging
+        data.parentDataSet = settings.dataset;
 
         // Reset data
         $(leaf).data(data);

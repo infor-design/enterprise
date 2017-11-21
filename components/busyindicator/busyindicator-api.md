@@ -14,7 +14,6 @@ A Busy Indicator notifies the user that the system is processing a request, and 
 
 **Parameters**
 
--   `element`  
 -   `blockUI` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  makes the element that Busy Indicator is invoked on unusable while it's displayed.
 -   `text` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Custom Text To Show or Will Show Localized Loading....
 -   `displayDelay` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  umber in miliseconds to pass before the markup is displayed.  If 0, displays immediately.

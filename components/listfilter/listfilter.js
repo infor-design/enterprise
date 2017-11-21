@@ -17,7 +17,8 @@
       caseSensitive: false,
       filterMode: 'startsWith',
       highlightMatchedText: false,
-      highlightCallback: null
+      highlightCallback: null,
+      searchableTextCallback: undefined
     },
     filterModes = ['startsWith', 'contains'];
 
@@ -29,7 +30,8 @@
   * @param {Boolean} caseSensitive  &nbsp;-&nbsp; Set to true if searches ARE case sensitive
   * @param {String} filterMode  &nbsp;-&nbsp; Type of search can current be either 'startsWith' or 'contains'
   * @param {Boolean} highlightMatchedText  &nbsp;-&nbsp; Inserts markup that appears to highlight text
-  * @param {Boolean} highlightCallback  &nbsp;-&nbsp; If defined, will execute this code for highlighting text instead of the built-in highlighting code
+  * @param {function} highlightCallback  &nbsp;-&nbsp; If defined, will execute this code for highlighting text instead of the built-in highlighting code
+  * @param {function} searchableTextCallback  &nbsp;-&nbsp; If defined, will take each filterable item passed and return user-defined, searchable text content
   *
   */
   function ListFilter(settings) {
@@ -64,7 +66,7 @@
     * Run the filter on the list for the given sreach term.
     * @param {Array} list  &nbsp;-&nbsp; The array to search.
     * @param {String} term  &nbsp;-&nbsp; The term to look for.
-    * @returns {Array}
+    * @returns {boolean|Array|jQuery[]}
     */
     filter: function(list, term) {
       if (!list) {
@@ -98,9 +100,20 @@
         }
       }
 
+      // If a custom callback for getting searchable content is defined, return a string result from that callback.
+      // Otherwise, perform the standard method of grabbing text content.
+      function getSearchableContent(item) {
+        if (typeof self.settings.searchableTextCallback === 'function') {
+          return self.settings.searchableTextCallback(item);
+        }
+
+        var isString = typeof item === 'string';
+        return (isString ? item : $(item).text());
+      }
+
+      // Iterates through each list item and attempts to find the provided search term.
       function searchItemIterator(item) {
-        var isString = typeof item === 'string',
-          text = (isString ? item : $(item).text()),
+        var text = getSearchableContent(item),
           parts = text.split(' '),
           match = false;
 

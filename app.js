@@ -227,8 +227,9 @@ var express = require('express'),
    * @private
    * @param {Object[]} pathDefs -
    * @param {String} link -
+   * @param {String} directoryPrepender - prepends the "link" portion with a directory that is not processed by the filter
    */
-  function filterUnusablePaths(pathDefs, excludes) {
+  function filterUnusablePaths(pathDefs, excludes, directoryPrepender) {
     var truePaths = [];
     if (excludes === undefined) {
       excludes = [];
@@ -248,6 +249,11 @@ var express = require('express'),
 
       if (match) {
         return;
+      }
+
+      // Add the directory into the link.
+      if (directoryPrepender) {
+        pathDef.link = directoryPrepender + pathDef.link;
       }
 
       truePaths.push(pathDef);
@@ -308,16 +314,15 @@ var express = require('express'),
     return mappedPath;
   }
 
+
   /**
    * Excluded file names that should never appear in the DemoApp List Pages
    */
   const GENERAL_LISTING_EXCLUDES = [
-    /^(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
+    /(_)?(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
     /footer\.html/,
     /_header\.html/,
-    /_layout\.html/,
     /(api.md$)/,
-    /layout/,
     /partial/,
     /\.DS_Store/
   ];
@@ -362,11 +367,10 @@ var express = require('express'),
     }
 
     // Add Component-specific file name filters
+    // (\D|\W|\S).*?('+ type +')\.(html)+ - pick up all files that end with 'type' before the extension.
     extraExcludes = extraExcludes.concat([
-      new RegExp(type + '\\.html'),
-      new RegExp('(\d|\w|\s|-)*?\.(scss)'),
-      new RegExp(type + '\\.js'),
-      new RegExp(type + '\\.md')
+      new RegExp('[^-](_)?('+ type +')\.(html)'),
+      new RegExp('(\d|\w|\s|-)*?\.(scss|js|md)')
     ]);
 
     function componentTextFormatter(path) {
@@ -435,15 +439,19 @@ var express = require('express'),
         return next();
       }
 
+      var strippedDir = hasTrailingSlash(directory) ? directory.substring(0, (directory.length - 1)) : directory;
+
       // Strip out paths that aren't going to ever work
       paths.forEach(function pathIterator(path, i) {
         paths[i] = {
           text: path,
-          link: '/' + directory + '/' + path
+          link: path
         };
       });
 
-      paths = filterUnusablePaths(paths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
+      var directoryPrepender = '/' + strippedDir + '/';
+
+      paths = filterUnusablePaths(paths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes), directoryPrepender);
 
       var opts = extend({}, res.opts, {
         subtitle: 'Listing for ' + directory,
@@ -650,6 +658,11 @@ var express = require('express'),
       if (exampleName.indexOf('test-header-gauntlet') > -1) {
         opts.layout = 'header/layout-header-gauntlet';
       }
+    }
+
+    // Override any of these changes to layouts if the "No Frills" option was set by the user.
+    if (res.opts.nofrillslayout) {
+      opts.layout = 'tests/layout-noheader';
     }
 
     if (req.params.example !== undefined) {
@@ -864,7 +877,6 @@ var express = require('express'),
   }
 
   router.get('/layouts/:layout', layoutRouteHandler);
-  router.get('/layouts/', defaultLayoutRouteHandler);
   router.get('/layouts', defaultLayoutRouteHandler);
 
   // =========================================
@@ -1405,7 +1417,8 @@ var express = require('express'),
           children:[
             { id: '1_7_1', Name: 'Katie Olland',  Position: 'Workers’ Compensation Specialist', EmploymentType: 'FT', Picture: womenPath +'12.jpg', isLeaf:true},
             { id: '1_7_2', Name: 'Tanya Wright',  Position: 'Workers’ Compensation Specialist', EmploymentType: 'FT', Picture: womenPath +'13.jpg', isLeaf:true},
-            { id: '1_7_3', Name: 'OPEN', Position: 'Workers’ Compensation Specialist', EmploymentType: 'O', isLeaf:true}
+            { id: '1_7_3', Name: 'OPEN', Position: 'Workers’ Compensation Specialist', EmploymentType: 'O', isLeaf:true},
+            { id: '1_7_4', Name: 'John Johnson', Position: 'Workers’ Compensation Specialist', Initials: 'JJ', EmploymentType: 'FT', isLeaf:true}
           ]
         }
       ]
@@ -1505,7 +1518,9 @@ router.get('/api/orgstructure-large', function(req, res, next) {
               { id: '1_5_2', Name: 'Emily Johnson',  Position: 'Senior Software Engineer',    EmploymentType: 'FT', Picture: womenPath +'9.jpg',  isLeaf:true},
               { id: '1_5_3', Name: 'Kari Anderson',  Position: 'Principle Software Engineer', EmploymentType: 'FT', Picture: womenPath +'10.jpg', isLeaf:true},
             ]
-          }
+          },
+          { id: '1_1-e', Name: 'Sarah Smith', Position: 'Administration', EmploymentType: 'FT', Picture: womenPath +'4.jpg', isLeaf:true},
+          { id: '1_2-f', Name: 'Greg Peterson', Position: 'Assistant Director', EmploymentType: 'FT', Picture: menPath + '5.jpg', isLeaf:true},
         ]
       }];
 
@@ -1513,6 +1528,26 @@ router.get('/api/orgstructure-large', function(req, res, next) {
     res.end(JSON.stringify(orgdata));
     next();
   });
+
+router.get('/api/orgstructure-paging', function(req, res, next) {
+  var
+    menPath = 'https://randomuser.me/api/portraits/med/men/',
+    womenPath = 'https://randomuser.me/api/portraits/med/women/' ,
+    orgdata = [{
+      id: '1', Name: 'Jonathan Cargill', Position: 'Director', EmploymentType: 'FT', Picture: menPath +'2.jpg',
+      children:[
+        { id: '1_3', Name: 'Kaylee Edwards',  Position: 'Records Manager', EmploymentType: 'FT', Picture: womenPath +'11.jpg', children: []},
+        { id: '1_4', Name: 'Jason Ayers', Position: 'HR Manager', EmploymentType: 'FT', Picture: menPath + '12.jpg', children: []},
+        { id: '1_5', Name: 'Daniel Calhoun',  Position: 'Manager', EmploymentType: 'FT', Picture: menPath + '4.jpg', children: []},
+        { id: '1_1-e', Name: 'Sarah Smith', Position: 'Administration', EmploymentType: 'FT', Picture: womenPath +'4.jpg', isLeaf:true},
+        { id: '1_2-f', Name: 'Greg Peterson', Position: 'Assistant Director', EmploymentType: 'FT', Picture: menPath + '5.jpg', isLeaf:true},
+      ]
+    }];
+
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(orgdata));
+  next();
+});
 
   router.get('/api/orgstructure-children', function(req, res, next) {
     var
@@ -1702,6 +1737,16 @@ router.get('/api/orgstructure-large', function(req, res, next) {
 
   router.get('/api/companies', function(req, res, next) {
     sendJSONFile('companies', req, res, next);
+  });
+
+  router.get('/api/colleagues', function(req, res, next) {
+
+    if (req.query.favorites) {
+      sendJSONFile('favorite-colleagues', req, res, next);
+      return;
+    }
+
+    sendJSONFile('colleagues', req, res, next);
   });
 
   router.get('/api/construction', function(req, res, next) {

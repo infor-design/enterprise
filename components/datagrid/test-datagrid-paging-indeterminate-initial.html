@@ -1,0 +1,64 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      //Init and get the api for the grid
+      var pageSize = 10;
+
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        selectable: 'single',
+        paging: true,
+        pagesize: pageSize,
+        indeterminate: true,
+        source: function(req, response) {
+          // ISSUE: landmark doesn't know what page 'number' we are on in a list since we don't keep track
+          // of that due to data volume and dynamic filtering. We do keep track of the page we are on
+          // by storing the first and last record keys in local storage for a particular page of records.
+          // When the user returns to the list we get those keys and load the data at the page where the
+          // user last left off.
+          // When landmark get that page of data somewhere in the middle of a set of data included are flags
+          // indicating if we are on the first and/or last page. If we are not on the first page then I set
+          // pagingInfo.firstpage = false but the first and prev paging bar buttons are showing disabled.
+          // Expected result is they should be enabled since pagingInfo.firstPage === false.
+
+          if (req.type === 'initial') {
+            $.getJSON('{{basepath}}api/compressors?pageNum='+ 2 +'&pageSize='+ pageSize, function(res) {
+              var pageInfo = { pagesize: pageSize, activePage: -1, firstPage: false, lastPage: false };
+              response(res.data, pageInfo);
+            });
+          }
+        },
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+      });
+  });
+</script>
+

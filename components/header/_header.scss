@@ -66,7 +66,7 @@ $subheader-height: 60px;
     }
 
     &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $azure07, 0 0 0 3px $white;
+      box-shadow: 0 0 0 2px $azure07, 0 0 0 3px $white, $header-focus-box-shadow;
 
       &:active {
         box-shadow: none;
@@ -153,6 +153,11 @@ $subheader-height: 60px;
       }
     }
 
+    .buttonset > .separator {
+      background-color: $header-button-color;
+      padding: 0;
+    }
+
     .panel-title {
       @include font-size(20);
       line-height: 1.2;
@@ -213,13 +218,6 @@ $subheader-height: 60px;
     height: inherit;
     margin-bottom: 0;
   }
-
-  .full-searchfield-container {
-    margin: 0 auto;
-    max-width: $breakpoint-tablet-to-desktop;
-    padding: 1.4rem 4rem 0;
-    vertical-align: middle;
-  }
 }
 
 .header,
@@ -263,7 +261,7 @@ $subheader-height: 60px;
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow;
         color: $header-button-focus-color;
 
         .icon {
@@ -295,6 +293,25 @@ $subheader-height: 60px;
       }
       .ripple-effect {
         background-color: $header-text-color;
+      }
+
+    }
+  }
+
+  .full-searchfield-container {
+    margin: 0 auto;
+    max-width: $breakpoint-tablet-to-desktop;
+    padding: 1.4rem 4rem 0;
+    vertical-align: middle;
+
+    .hyperlink {
+      @include font-size(14);
+      color: $white;
+      float: right;
+
+      &:focus:not(.hide-focus)::after,
+      &:active::after {
+        border-color: $white;
       }
 
     }

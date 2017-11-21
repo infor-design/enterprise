@@ -11,7 +11,7 @@
 
       <div class="field">
         <label class="required" for="credit-card">Credit Card <span class="audible">Required</span></label>
-        <input type="text" id="credit-card" name="credit-card" data-validate="required" value="xxxx-xxxx-xxxx-xxxx">
+        <input type="text" id="credit-card" name="credit-card" data-validate="required customInformationRule" value="xxxx-xxxx-xxxx-xxxx">
       </div>
 
       <div class="field hidden">
@@ -21,7 +21,7 @@
 
       <div class="field">
         <label for="credit-code">Code</label>
-        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-mask-mode="number">
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="customWarningRule" data-mask-mode="number">
       </div>
 
       <div class="field">
@@ -64,12 +64,31 @@
 
     <script>
       $(function() {
-        $.fn.validation.rules.customRule = {
+        $.fn.validation.rules.customErrorRule = {
           check: function (value) {
 
             return false;
           },
-          message: 'Custom Error'
+          message: 'Custom Error',
+		  type: 'error'
+        };
+
+		$.fn.validation.rules.customWarningRule = {
+          check: function (value) {
+
+            return false;
+          },
+          message: 'Custom Warning',
+		  type: 'alert'
+        };
+
+		$.fn.validation.rules.customInformationRule = {
+          check: function (value) {
+
+            return false;
+          },
+          message: 'Custom Information',
+		  type: 'info'
         };
 
         $('#test').on('validated', function (e, isValid) {

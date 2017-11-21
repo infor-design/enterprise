@@ -14,6 +14,8 @@ Described below is the general API that is present in all searchfields.  There i
 6. [No "All Results For `x`" Link]( ../components/searchfield/example-no-all-results-link.html)
 7. [Categories (Compact Size)]( ../components/searchfield/example-categories-short.html)
 8. [Categories (Full Size)]( ../components/searchfield/example-categories-full.html)
+8. [Header Search Field (Compact)]( ../components/header/example-searchfield-expanded)
+9. [Header Search Field (Large)]( ../components/header/example-searchfield-large)
 
 {{api-details}}
 

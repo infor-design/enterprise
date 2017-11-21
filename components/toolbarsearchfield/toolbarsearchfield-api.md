@@ -5,8 +5,12 @@
 -   [ToolbarSearchfield](#toolbarsearchfield)
     -   [build](#build)
     -   [hasFocus](#hasfocus)
+    -   [hasCategories](#hascategories)
+    -   [hasGoButton](#hasgobutton)
     -   [handleFocus](#handlefocus)
     -   [handleFakeBlur](#handlefakeblur)
+    -   [handleFocusOut](#handlefocusout)
+    -   [isSearchfieldElement](#issearchfieldelement)
     -   [handleOutsideClick](#handleoutsideclick)
     -   [handleKeydown](#handlekeydown)
     -   [handleOutsideKeydown](#handleoutsidekeydown)
@@ -47,17 +51,52 @@ Detects whether or not the Toolbar Searchfield has focus.
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+### hasCategories
+
+Detects the existence of a "Categories" button added to the searchfield
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasGoButton
+
+Detects the existence of a "Go" button added to the main searchfield API
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 ### handleFocus
 
-Handles the focus of the searchfield, expanding it on time delay.
+Handles the focus of the searchfield.
 
 ### handleFakeBlur
 
 Triggers an artificial "blur" of the searchfield, resulting in a time-delayed collapse.
+TODO: Deprecate in 4.4.0
+
+**Parameters**
+
+-   `e`  
+
+### handleFocusOut
+
+Handles the "focusout" event
+
+### isSearchfieldElement
+
+Detects whether or not an element is part of this instance of the Searchfield component
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ### handleOutsideClick
 
 Event Handler for dealing with global (document) level clicks.
+
+**Parameters**
+
+-   `e`  
 
 ### handleKeydown
 
@@ -150,6 +189,10 @@ Returns **this**
 ### destroy
 
 Removes the entire control from the DOM and from this element's internal data
+
+**Parameters**
+
+-   `dontDestroySearchfield` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy a linked instance of the Searchfield component.
 
 ### handleEvents
 

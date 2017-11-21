@@ -56,7 +56,7 @@
     <p>
       When using the <span class="inline-code">.hidden-*</span> classes, the opposite rules apply.  The element will be display as normal, with the exception of the target breakpoint size.
     </p>
-    <p>Badges below will display in <span class="badge info">Azure</span> if the browser window's current form factor matches.</span>
+    <p>Badges below will display in <span class="badge info">Azure</span> if the browser window's current form factor matches.</p>
     <p>
       <b>Current Form Factor:</b>
       <span class="info badge visible-sm-inline-block">Phone</span>
@@ -83,6 +83,22 @@
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td><span class="inline-code">.visible-xs-*</span></td>
+          <td><span>0px - 480px</span></td>
+          <td>
+            <span class="info badge visible-xs-inline-block">Only visible on Smaller Phone</span>
+            <span class="badge hidden-xs">Only visible on Smaller Phone</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.hidden-xs</span></td>
+          <td><span>0px - 480px</span></td>
+          <td>
+            <span class="info badge hidden-xs">Visible on anything BUT Smaller Phone</span>
+            <span class="badge visible-xs-inline-block">Visible on anything BUT Smaller Phone</span>
+          </td>
+        </tr>
         <tr>
           <td><span class="inline-code">.visible-sm-*</span></td>
           <td><span>0px - 767px</span></td>

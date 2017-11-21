@@ -128,6 +128,8 @@
             this.toolbar = $('<div class="toolbar"></div>');
           }
 
+		      this.toolbar.searchField = this.toolbar.find('.searchfield');
+
           this.toolbar.appendTo(this.header);
           var toolbarTitle = this.toolbar.find('.title');
           if (!toolbarTitle.length) {
@@ -213,15 +215,29 @@
           // Focus the first focusable element inside the Contextual Panel's Body
           self.panel.find('.modal-body-wrapper').find(':focusable').first().focus();
           Soho.utils.fixSVGIcons(self.panel);
+        }).on('click.contextualactionpanel', function() {
+          if (self.ctrlPressed) {
+            var searchfield = self.toolbar.find('.searchfield');
+            if (searchfield.length) {
+              searchfield[0].select();
+            }
+            self.ctrlPressed = false;
+          }
+        }).on('keydown.contextualactionpanel', function(event) {
+          if (event.key === 'Control') {
+            self.ctrlPressed = true;
+          }
         }).on('beforedestroy.contextualactionpanel', function() {
           self.teardown();
         });
 
-        if (this.toolbar)  {
-          this.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
+        if (self.toolbar)  {
+          self.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
             .onTouchClick('contextualactionpanel').on('click.contextualactionpanel', function() {
             self.handleToolbarSelected();
           });
+
+          self.ctrlPressed = false;
         }
 
         return this;
@@ -252,6 +268,10 @@
         //self.panel.detach().insertAfter(self.element);
         var toolbar = self.toolbar.data('toolbar');
         if (toolbar) {
+          if (toolbar.searchField instanceof $ && toolbar.searchField.length) {
+            toolbar.searchField.off('keydown.contextualactionpanel');
+            toolbar.searchField.off('click.contextualactionpanel');
+          }
           toolbar.destroy();
         }
 

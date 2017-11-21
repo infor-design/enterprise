@@ -1,0 +1,73 @@
+<div class="row">
+	<div class="full column">
+			<h2>Datagrid Groupable - selection test</h2>
+			<p><strong>Note: </strong>Currently Paging not supported with Groupable</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="full column">
+			<div id="datagrid"></div>
+	</div>
+</div>
+
+<script>
+
+ 	var grid, columns = [];
+
+	function populateGrid() {
+
+		columns.push({id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+		columns.push({id: 'col0', name: 'col0', field: 'col0',  selectable: false });
+		columns.push({id: 'col1', name: 'col1', field: 'col1',  selectable: false });
+		columns.push({id: 'col2', name: 'col2', field: 'col2',  selectable: false });
+		columns.push({id: 'col3', name: 'col3', field: 'col3',  selectable: false });
+		columns.push({id: 'col4', name: 'col4', field: 'col4',  selectable: false });
+
+
+		var data = [];
+
+		data.push({id: 0, col0: 'data0', col1: 'data1', col2: 'data2', col3: 'data3', col4: 2});
+		data.push({id: 1, col0: 'data1', col1: 'data2', col2: 'data2', col3: 'data3', col4: 5});
+		data.push({id: 2, col0: 'data0', col1: 'data3', col2: 'data2', col3: 'data3', col4: 3});
+		data.push({id: 3, col0: 'data2', col1: 'data4', col2: 'data2', col3: 'data3', col4: 15});
+		data.push({id: 4, col0: 'data0', col1: 'data5', col2: 'data2', col3: 'data3', col4: 27});
+		data.push({id: 5, col0: 'data1', col1: 'data6', col2: 'data2', col3: 'data3', col4: 33});
+
+
+	  var options = {
+			columns: columns,
+			idProperty: 'id',
+			dataset: data,
+			editable: true,
+			clickToSelect: false,
+			alternateRowShading: true,
+			rowHeight: 'short',
+			cellNavigation: false,
+			selectable: 'multiple',
+			groupable: {
+        fields: ['col0'],
+        expanded: true,
+				aggregator: 'sum', //sum, averge, max ect
+				aggregate: 'col4',
+				groupFooterRow: true
+				,groupFooterRowFormatter: function (idx, row, cell, value, col, item, api) {
+					return '<td role="gridcell" colspan=' + (idx-1) + ' style="border-right: 0"><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell" style="border-right: 0"><div class="datagrid-cell-wrapper"> <b style="float: right;">Total</b> </div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
+				}
+      },
+			toolbar: {title: 'Title', results: true, dateFilter: false,
+				keywordFilter: true, advancedFilter: false, actions: true, views: false,
+				rowHeight: true, collapsibleFilter: true, exportToExcel: true}
+			};
+
+		grid = $('#datagrid').datagrid(options)
+			.on('selected', function (e, args, action) {
+				console.log(args, action);
+			})
+			.data('datagrid');
+	}
+
+  $('body').on('initialized', function() {
+  	populateGrid();
+  });
+</script>

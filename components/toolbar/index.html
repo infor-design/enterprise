@@ -21,7 +21,8 @@
 <li><code>rightAligned</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  Will always attempt to right-align the contents of the toolbar. By default if there is no title it will left align. This forces right alignment.<br /></li>
 <li><code>maxVisibleButtons</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong>  -  Total amount of buttons that can be present, not including the More button.<br /></li>
 <li><code>resizeContainers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.<br /></li>
-<li><code>favorButtonset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If &quot;resizeContainers&quot; is true, setting this to true will try to display as many buttons as possible while resizing the toolbar. Setting to false attempts to show the entire title instead.</li>
+<li><code>favorButtonset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If &quot;resizeContainers&quot; is true, setting this to true will try to display as many buttons as possible while resizing the toolbar. Setting to false attempts to show the entire title instead.<br /></li>
+<li><code>noSearchfieldReinvoke</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If true, does not manage the lifecycle of an internal toolbarsearchfield automatically. Allows an external controller to do it instead.</li>
 </ul>
 <h3 id="functions">Functions</h3>
 <h4 id="buildmoreactionsmenuitem">buildMoreActionsMenuItem</h4>
@@ -86,9 +87,7 @@
 <h4 id="triggerselect">triggerSelect</h4>
 <p>Triggers a &quot;selected&quot; event on the base Toolbar element using a common element as an argument.</p>
 <p><strong>Parameters</strong></p>
-<ul>
-<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> a jQuery Object containing an anchor tag, button, or input field.</li>
-</ul>
+<p><strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> a jQuery Object containing an anchor tag, button, or input field.</p>
 <h4 id="getbuttonsetbuttons">_getButtonsetButtons</h4>
 <p>Assembles and returns a list of all buttons inside the Buttonset element.</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong></p>

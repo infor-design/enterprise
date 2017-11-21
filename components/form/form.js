@@ -102,12 +102,16 @@
         })
         .on('change.dirty doresetdirty.dirty', function (e) {
           var el = input,
-            field = input.closest('.field'),
+            field = input.closest('.field, .radio-group'),
             label = $('label:visible', field),
             d = {class: '', style: ''};
 
           if (field.is('.field-fileupload')) {
             el = label.prev('input');
+          }
+
+          if (field.is('.editor-container')) {
+            el = field.closest('textarea');
           }
 
           // Used element without .field wrapper
@@ -143,16 +147,29 @@
             d.msg = '<span class="audible msg-dirty">'+ d.msg +'</span>';
 
             // Add icon and msg
-            el.before(d.icon);
-            label.append(d.msg);
+            var firstInput = $($(el[0].parentElement).find('input')[0]);
+            el = input.is('[type="radio"]') ? firstInput : el;
+
+            if ($(el[0].parentElement).find('.icon-dirty').length === 0) {
+              el.before(d.icon);
+              label.append(d.msg);
+            }
 
             // Cache icon and msg
             d.icon = el.prev();
             d.msg = label.find('.msg-dirty');
           }
 
-          //Handle reseting value back
-          if (valMethod(input) === input.data('original')) {
+          //Handle resetting value back
+          var original = input.data('original');
+          var current = valMethod(input);
+          if(field.is('.editor-container')) {
+            // editors values are further down it's tree in a textarea, so get the elements with the value
+            var textArea = field.find('textarea');
+            original = textArea[0].defaultValue;
+            current = valMethod(textArea);
+          }
+          if (current === original) {
             input.removeClass('dirty');
             $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
             input.trigger(e.type === 'doresetdirty' ? 'afterresetdirty' : 'pristine');

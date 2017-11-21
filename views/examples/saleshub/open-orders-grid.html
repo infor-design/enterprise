@@ -25,7 +25,7 @@
         <header class="subheader">
           <div class="full-searchfield-container">
             <label class="audible" for="maincontent"></label>
-            <input id="maincontent" class="searchfield context" placeholder="Search for a customer"/>
+            <input id="maincontent" data-init="false" class="searchfield context" placeholder="Search for a customer"/>
           </div>
         </header>
         <div class="row top-padding">
@@ -121,5 +121,17 @@
       }).data('datagrid');
 
     });
+  });
+
+  //Init category search
+  var   categoryData = [
+      {name: 'Product: Sales', id: 'sales', value: 'sales', checked: true},
+      {name: 'Product: Supplies', id: 'sup', value: 'sup', checked: false},
+      {name: 'Product: References', id: 'ref', value: 'ref', checked: true},
+    ];
+
+  $('#maincontent').searchfield({
+    categories: categoryData,
+    showCategoryText: true
   });
 </script>

@@ -1,0 +1,78 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <h2 class="fieldset-title">ListView  - Click Events</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Tasks</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Add new action item</a></li>
+          <li><a href="#">Regular action</a></li>
+          <li><a href="#">Individual Action</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'single'}"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ul class="popupmenu" id="menu">
+  <li><a href="#">Option One</a></li>
+  <li><a href="#">Option Two</a></li>
+  <li><a href="#">Option Three</a></li>
+</ul>
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}} </p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<script>
+  $('#task-listview').on('click', function (e, args) {
+    console.log('Click Event', args);
+  }).on('dblclick', function (e, args) {
+    console.log('Double Click Event', args);
+  }).on('contextmenu', function (e, args) {
+
+    console.log('right click menu event', args);
+    e.preventDefault();
+
+    args.elem.popupmenu({
+      menu: $('#menu'),
+      trigger: 'immediate',
+      attachToBody: true,
+      eventObj: args.originalEvent
+    }).on('selected', function (e, args) {
+      console.log(args);
+    });
+
+  });
+</script>

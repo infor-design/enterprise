@@ -20,15 +20,22 @@
   }
 
   // Line Colors - and Visibility
-  .axis path,
-  .axis line {
-    fill: none;
-    shape-rendering: crispEdges;
-    stroke: $chart-line-color;
-  }
+  .axis {
+    path,
+    line {
+      fill: none;
+      shape-rendering: crispEdges;
+      stroke: $chart-line-color;
+    }
 
-  .axis.x .domain {
-    stroke: transparent;
+    .tick0 line {
+      stroke: $chart-line-color-axis;
+    }
+
+    &.x .domain,
+    &.y .domain {
+      stroke: transparent;
+    }
   }
 
   // Text Color
@@ -61,12 +68,12 @@
   }
 
   .arc {
-    stroke: $inverse-color;
+    stroke: $chart-arc-stroke;
   }
 
   .bar {
     cursor: pointer;
-    stroke: $inverse-color;
+    stroke: transparent;
     stroke-width: 1px;
   }
 
@@ -79,6 +86,12 @@
     .tick {
       line {
         stroke: $chart-line-color;
+      }
+
+      &.tick0 {
+        line {
+          stroke: $chart-line-color-axis;
+        }
       }
 
       &.is-selected {
@@ -103,7 +116,7 @@
 
     .dot {
       cursor: pointer;
-      stroke: $white;
+      stroke: transparent;
     }
 
     .line-group .line {
@@ -202,12 +215,12 @@
     float: left;
     margin-right: 10px;
     outline: none;
-    padding: 7px 6px 4px;
+    padding: 7px;
 
     &:focus {
       border-color: $input-focus-border-color;
       // Removed box shadow to match current style
-      // box-shadow: 0 0 5px rgba(8, 150, 233, .2);
+      box-shadow: $focus-box-shadow;
       outline: none;
     }
   }
@@ -310,6 +323,7 @@
     .completed {
       background-color: $turquoise06;
 
+      &.error-color,
       &.error {
         background-color: $error-color;
       }
@@ -332,6 +346,48 @@
       position: static;
       text-align: left;
       width: 100%;
+    }
+  }
+
+  .chart-percent-text {
+    @include font-size(14);
+    cursor: default;
+    height: 25px;
+    margin-top: -25px;
+    position: relative;
+    text-align: center;
+
+    &.error-color,
+    &.error {
+      color: $error-color;
+    }
+
+    &.alert {
+      color: $alert-orange;
+    }
+
+    &.alert-yellow {
+      color: $alert-yellow;
+    }
+
+    &.alert-neutral {
+      color: $alert-neutral;
+    }
+
+    &.dark {
+      color: $chart-progressbar-dark-fill;
+    }
+
+    &.good {
+      color: $alert-green;
+    }
+
+    &.primary {
+      color: $chart-progressbar-primary-fill;
+    }
+
+    &.inverse {
+      color: $inverse-color;
     }
   }
 
@@ -360,6 +416,7 @@
       }
     }
 
+    &.error-color,
     &.error {
       background-color: $error-color;
 
@@ -488,9 +545,11 @@
   .total,
   .remaining,
   .completed,
+  .completed-label,
   .target-line {
 
     &.bar {
+      &.error-color,
       &.error {
         background-color: $error-color;
       }
@@ -522,6 +581,7 @@
 
     .text,
     .value {
+      &.error-color,
       &.error {
         color: $error-color;
       }
@@ -561,6 +621,7 @@
       font-weight: bold;
     }
 
+    .error-color,
     .error {
       color: $error-color;
     }
@@ -658,6 +719,16 @@
     display: none;
   }
 
+  .icon-error {
+    display: inline-block;
+    height: 16px;
+    margin-bottom: 1px;
+    margin-right: 6px;
+    right: inherit;
+    top: 0;
+    width: 16px;
+  }
+
 }
 
 .colored.label {
@@ -680,6 +751,7 @@
   .value {
     color: $turquoise06;
 
+    &.error-color,
     &.error {
       color: $error-color;
     }
@@ -757,6 +829,19 @@
   .measure.s4 {fill: $azure10;};
 }
 
+// Firefox
+.is-firefox {
+  .chart-percent-text {
+    margin-top: -26px;
+  }
+
+  &.is-mac {
+    .chart-percent-text {
+      margin-top: -23px;
+    }
+  }
+}
+
 // Temporary fix for SVG Tooltips
 // scss-lint:disable IdSelector
 #svg-tooltip.tooltip {
@@ -797,6 +882,13 @@ html[dir='rtl'] {
   .completion-chart {
     .icon-error {
       left: -20px;
+    }
+
+    &.chart-targeted-achievement {
+      .icon-error {
+        left: auto;
+        right: -5px;
+      }
     }
   }
 

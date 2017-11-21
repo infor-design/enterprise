@@ -13,11 +13,16 @@
 <h2 id="api-details">API Details</h2>
 <h3 id="settings">Settings</h3>
 <ul>
+<li><code>options</code><br /></li>
 <li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)<br /></li>
+<li><code>filterable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong><br /></li>
 <li><code>openOnLarge</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.<br /></li>
 <li><code>triggers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  An Array of jQuery-wrapped elements that are able to open/close this nav menu.</li>
 </ul>
 <h3 id="functions">Functions</h3>
+<h4 id="getadjacentcontainerelement">getAdjacentContainerElement</h4>
+<p>Gets a reference to this Application Menu's adjacent container element.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></p>
 <h4 id="isopen">isOpen</h4>
 <p>Detects whether or not the application menu is open</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
@@ -28,7 +33,8 @@
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>noFocus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> If true, sets focus on the first item in the application menu.<br /></li>
-<li><code>userOpened</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> If true, notifies the component that the menu was manually opened by the user.</li>
+<li><code>userOpened</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> If true, notifies the component that the menu was manually opened by the user.<br /></li>
+<li><code>openedByClass</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> If true, only adjusts bare-miniumum requirements for the application menu to appear open (should be used in cases where the application menu has the <code>is-open</code> CSS appended to it via markup). This skips events, animation, etc.</li>
 </ul>
 <h4 id="closemenu">closeMenu</h4>
 <p>Closes the Application Menu</p>
@@ -47,6 +53,18 @@
 <li><code>remove</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> if defined, triggers that are defined will be removed internally instead of added.<br /></li>
 <li><code>norebuild</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> if defined, this control's events won't automatically be rebound to include the new triggers.</li>
 </ul>
+<h4 id="filterresultscallback">filterResultsCallback</h4>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>results</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong><br /></li>
+<li><code>done</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong></li>
+</ul>
+<h4 id="handlesearchfieldinputevent">handleSearchfieldInputEvent</h4>
+<p>handles the Searchfield Input event</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong></li>
+</ul>
 <h4 id="teardown">teardown</h4>
 <p>Unbinds event listeners and removes extraneous markup from the Application Menu.</p>
 <p>Returns <strong>this</strong></p>
@@ -61,6 +79,13 @@
 <li><code>applicationmenuopen</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the menu is opened.<br /></li>
 <li><code>applicationmenuclose</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires as the menu is closed.</li>
 </ul>
+<h2 id="applicationmenu">applicationmenu</h2>
+<p>jQuery component wrapper for the Application Menu</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
+</ul>
+<p>Returns <strong><a href="#applicationmenu">ApplicationMenu</a></strong></p>
 <h2 id="additional-test-case-pages">Additional Test Case Pages</h2>
 <ol>
 <li>No Errors on an Empty Menu <a href="../components/applicationmenu/test-empty">View Example</a><br /></li>

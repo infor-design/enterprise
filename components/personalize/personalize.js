@@ -65,6 +65,7 @@
 
         //Handle Personalization and theme
         window.Soho.theme = 'light';
+        $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(window.Soho.theme + '-theme');
 
         window.Soho.setTheme = function(theme) { // jshint ignore:line
           self.setTheme(theme);
@@ -179,6 +180,7 @@
         ' .module-tabs.is-personalizable .tab-more.is-open { background-color: '+ Soho.colors.hover +' !important}' +
         ' .module-tabs.is-personalizable .tab-more.is-selected { background-color: '+ Soho.colors.header +' !important}' +
         ' .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield { background-color: '+ Soho.colors.hover +' !important; border-bottom-color: ' + Soho.colors.hover  +' !important}' +
+        ' .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield-category-button { background-color: '+ Soho.colors.hover +' !important; border-bottom-color: ' + Soho.colors.hover  +' !important}' +
         ' .subheader.is-personalizable { background-color: '+ Soho.colors.subheader +' !important}' +
         ' .builder .sidebar .header {border-right: 1px solid '+ Soho.colors.hover +' !important}' +
         ' .module-tabs.is-personalizable .tab:hover { background-color: '+ Soho.colors.hover +' !important}' +
@@ -252,6 +254,8 @@
         if (this.availableThemes.indexOf(theme) === -1) {
           return;
         }
+
+        $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(theme + '-theme');
 
         this.blockUi();
 

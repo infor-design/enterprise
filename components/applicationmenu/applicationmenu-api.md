@@ -3,16 +3,20 @@
 ### Table of Contents
 
 -   [ApplicationMenu](#applicationmenu)
+    -   [getAdjacentContainerElement](#getadjacentcontainerelement)
     -   [isOpen](#isopen)
     -   [testWidth](#testwidth)
     -   [openMenu](#openmenu)
     -   [closeMenu](#closemenu)
     -   [hasTriggers](#hastriggers)
     -   [modifyTriggers](#modifytriggers)
+    -   [filterResultsCallback](#filterresultscallback)
+    -   [handleSearchfieldInputEvent](#handlesearchfieldinputevent)
     -   [teardown](#teardown)
     -   [updated](#updated)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
+-   [applicationmenu](#applicationmenu-1)
 
 ## ApplicationMenu
 
@@ -21,9 +25,17 @@ The Application Menu provides access to all the functions, pages, and forms in a
 **Parameters**
 
 -   `element`  
+-   `options`  
 -   `breakpoint` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
+-   `filterable` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `openOnLarge` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
 -   `triggers` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
+
+### getAdjacentContainerElement
+
+Gets a reference to this Application Menu's adjacent container element.
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
 
 ### isOpen
 
@@ -42,7 +54,8 @@ Opens the Application Menu
 **Parameters**
 
 -   `noFocus` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, sets focus on the first item in the application menu.
--   `userOpened` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, notifies the component that the menu was manually opened by the user.
+-   `userOpened` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If true, notifies the component that the menu was manually opened by the user.
+-   `openedByClass` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If true, only adjusts bare-miniumum requirements for the application menu to appear open (should be used in cases where the application menu has the `is-open` CSS appended to it via markup).  This skips events, animation, etc.
 
 ### closeMenu
 
@@ -68,6 +81,21 @@ Externally Facing function that can be used to add/remove application nav menu t
 -   `remove` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if defined, triggers that are defined will be removed internally instead of added.
 -   `norebuild` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if defined, this control's events won't automatically be rebound to include the new triggers.
 
+### filterResultsCallback
+
+**Parameters**
+
+-   `results` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** 
+-   `done` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+### handleSearchfieldInputEvent
+
+handles the Searchfield Input event
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+
 ### teardown
 
 Unbinds event listeners and removes extraneous markup from the Application Menu.
@@ -90,3 +118,13 @@ This component fires the following events.
 
 -   `applicationmenuopen` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is opened.
 -   `applicationmenuclose` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the menu is closed.
+
+## applicationmenu
+
+jQuery component wrapper for the Application Menu
+
+**Parameters**
+
+-   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+Returns **[ApplicationMenu](#applicationmenu)** 

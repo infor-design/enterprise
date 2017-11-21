@@ -3,6 +3,8 @@
 ### Table of Contents
 
 -   [ColorPicker](#colorpicker)
+    -   [getHexFromLabel](#gethexfromlabel)
+    -   [getLabelFromHex](#getlabelfromhex)
     -   [setColor](#setcolor)
     -   [enable](#enable)
     -   [disable](#disable)
@@ -22,6 +24,24 @@ The ColorPicker Component is a trigger field with a listing colors that can be s
 -   `showLabel` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Show the label if true vs the hex value if false.
 -   `editable` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If false, the field is readonly and transparent. I.E. The value cannot be typed only editable by selecting.
 -   `uppercase` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If false, lower case hex is allowed. If true upper case hex is allowed. If showLabel is true this setting is ignored.
+-   `colorOnly` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true the field will be shrunk to only show the color portion.
+
+### getHexFromLabel
+
+Get the hex value based on a label. Does not handle duplicates.
+
+**Parameters**
+
+-   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The label to search for in the color labels.
+
+### getLabelFromHex
+
+Get the label value based on a hex. Does not handle duplicates.
+Can pass with or without the #
+
+**Parameters**
+
+-   `hex` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The hex to search for in the color set.
 
 ### setColor
 
@@ -30,6 +50,7 @@ Set the Visible Color
 **Parameters**
 
 -   `hex` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The hex value to use (can have the # or not).
+-   `label`  
 -   `text` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The text to display
 
 ### enable

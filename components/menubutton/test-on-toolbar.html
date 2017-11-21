@@ -1,0 +1,201 @@
+<div class="row">
+  <div class="twelve columns">
+        
+    <h2>MenuButton</h2>
+    <p><a class="hyperlink hide-focus" href="http://jira.infor.com/browse/SOHO-4913" target="_blank">Related JIRA Ticket</a>. Please check the inline comments in the Code to learn more about the with or without whiteSpace.</p> <p>Comment line number 364-366 of _button.scss and uncomment line 197-203 in this page if you like to test and see the result manually.</p>
+    <p>Default menuButton with whitespace</p>
+    <!-- button with whitespace -->
+    <button type="button" id="test" class="btn-menu">
+      <span>Add Item</span>
+    </button>
+    <ul class="popupmenu has-icons">
+      <li><a href="#">Create a form</a></li>
+      <li class="separator"></li>
+      <li><a href="#">Spelling...</a></li>
+      <li><a href="#" disabled onclick="alert('Should not be Allowed')" aria-disabled="true">Solver...</a></li>
+      <li class="separator"></li>
+      <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+      <li><a href="#">Notification Rules</a></li>
+      <li><a href="#">Protect Sheet Rules</a></li>
+    </ul>
+
+    <hr class="fieldset-hr">
+    <h1 class="fieldset-title">Toolbar </h1>
+    <p>Example <u>menuButton without whitespace</u> inside toolbar</p>
+    <div class="toolbar">
+      <div class="title">
+        Toolbar Title
+      </div>
+			<div class="buttonset">
+        <!-- button with whitespace -->
+				<button type="button" id="test" class="btn-menu">
+          <span>Add Item</span>
+        </button>
+				<ul class="popupmenu">
+          <li><a href="#">Create a form</a></li>
+        </ul>
+        
+        <!-- button without whitespace -->
+				<button type="button" id="test2" class="btn-menu"><span>Another item</span></button>
+				<ul class="popupmenu has-icons">
+					<li><a href="#">Another create a form</a></li>
+				</ul>
+			</div>
+    </div>
+
+    <hr class="fieldset-hr">
+      <h1 class="fieldset-title">Compound Fields </h1>
+      <p> Example <u>menuButton without whitespace</u> inside compound fields</p>
+        
+      <div class="compound-field">
+        <div class="field">
+          <label for="price">Price</label>
+          <input type="text" id="price" name="price" value="1,000">
+        </div>
+        <div class="field">
+          <!-- button without whitespace -->
+          <button type="button" id="test2" class="btn-menu"><span>Add Item</span></button>
+          <ul class="popupmenu has-icons">
+            <li><a href="#">Create a form</a></li>
+            <li class="separator"></li>
+            <li><a href="#">Spelling...</a></li>
+            <li><a href="#" disabled onclick="alert('Should not be Allowed')" aria-disabled="true">Solver...</a></li>
+            <li class="separator"></li>
+            <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+            <li><a href="#">Notification Rules</a></li>
+            <li><a href="#">Protect Sheet Rules</a></li>
+          </ul>
+        </div>
+        <div class="field">
+          <button id="suubmit" class="btn-primary" type="button">Submit</button>
+        </div>
+      </div>
+        
+      <div class="compound-field">
+        <div class="field">
+          <!-- button without whitespace -->
+          <button type="button" id="test2" class="btn-menu"><span>Add Item</span></button>
+          <ul class="popupmenu has-icons">
+            <li><a href="#">Create a form</a></li>
+            <li class="separator"></li>
+            <li><a href="#">Spelling...</a></li>
+            <li><a href="#" disabled onclick="alert('Should not be Allowed')" aria-disabled="true">Solver...</a></li>
+            <li class="separator"></li>
+            <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+            <li><a href="#">Notification Rules</a></li>
+            <li><a href="#">Protect Sheet Rules</a></li>
+          </ul>
+        </div>
+        <div class="field">
+          <button id="ub2" class="btn-secondary hide-focus" type="button">Update</button>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <hr class="fieldset-hr">
+    <h1 class="fieldset-title">Form</h1>
+    <p> Example <u>menuButton without whitespace</u> inside form</p>
+  </div>
+</div>
+<form id="example-cf2-form">
+  <div class="row demo-grid">
+    <div class="full column">
+  
+      <div class="compound-field">
+        <div class="field">
+          <label for="cf2-date" class="label">Select Date</label>
+          <input type="text" id="cf2-date" name="cf2-date" value="10/5/2015" placeholder="M / D / YYYY" class="datepicker">
+
+          <!-- button without whitespace -->
+          <button type="button" id="test2" class="btn-menu"><span>Add Item</span></button>
+          <ul class="popupmenu has-icons">
+              <li><a href="#">Create a form</a></li>
+              <li class="separator"></li>
+              <li><a href="#">Spelling...</a></li>
+              <li><a href="#" disabled onclick="alert('Should not be Allowed')" aria-disabled="true">Solver...</a></li>
+              <li class="separator"></li>
+              <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+              <li><a href="#">Notification Rules</a></li>
+              <li><a href="#">Protect Sheet Rules</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="compound-field">
+        <div class="field">
+          <label for="cf2-cost" class="required">Cost</label>
+          <input type="text" id="cf2-cost" name="cf2-cost" value="30" class="input-xs" aria-required="true" data-validate="required" data-mask="###.00" data-mask-mode="number" data-options="{showSymbol: 'currency'}">
+        </div>
+  
+        <div class="field">
+          <label for="cf2-quantity" class="required">Quantity</label>
+          <input type="text" id="cf2-quantity" name="cf2-quantity" value="10" class="input-xs" aria-required="true" data-validate="required" data-mask-mode="number" data-mask="#####">
+        </div>
+
+        <div class="field">
+          <!-- button without whitespace -->
+          <button type="button" id="test2" class="btn-menu"><span>Add Item</span></button>
+          <ul class="popupmenu has-icons">
+              <li><a href="#">Create a form</a></li>
+              <li class="separator"></li>
+              <li><a href="#">Spelling...</a></li>
+              <li><a href="#" disabled onclick="alert('Should not be Allowed')" aria-disabled="true">Solver...</a></li>
+              <li class="separator"></li>
+              <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+              <li><a href="#">Notification Rules</a></li>
+              <li><a href="#">Protect Sheet Rules</a></li>
+          </ul>
+        </div>
+  
+      </div>
+  
+      <div class="compound-field">
+        <div class="field">
+          <span class="audible">File Upload</span>
+          <input type="file" name="cf2-file-upload" class="fileupload input-sm" id="fileupload" name="fileupload">
+        </div>
+        <div class="field">
+          <!-- button with whitespace -->
+          <button type="button" id="test" class="btn-menu">
+            <span>With WhiteSpace</span>
+          </button>
+          <ul class="popupmenu has-icons">
+            <li><a href="#">Create a form</a></li>
+            <li class="separator"></li>
+            <li><a href="#">Spelling...</a></li>
+            <li><a href="#" disabled onclick="alert('Should not be Allowed')" aria-disabled="true">Solver...</a></li>
+            <li class="separator"></li>
+            <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+            <li><a href="#">Notification Rules</a></li>
+            <li><a href="#">Protect Sheet Rules</a></li>
+          </ul>
+          <!-- button without whitespace -->
+          <button type="button" id="test2" class="btn-menu"><span>Without WhiteSpace</span></button>
+          <ul class="popupmenu has-icons">
+            <li><a href="#">Create a form</a></li>
+            <li class="separator"></li>
+            <li><a href="#">Spelling...</a></li>
+            <li><a href="#" disabled onclick="alert('Should not be Allowed')" aria-disabled="true">Solver...</a></li>
+            <li class="separator"></li>
+            <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+            <li><a href="#">Notification Rules</a></li>
+            <li><a href="#">Protect Sheet Rules</a></li>
+          </ul>
+        </div>
+      </div>
+      <button class="btn-primary" type="submit">Add to Request</button>
+    </div>
+  </div>
+</form>
+
+
+<!-- Use this to test the with and without whiteSpace
+<style>
+    #test2.btn-menu span:after {
+        content: ' ';
+    }
+</style>
+-->

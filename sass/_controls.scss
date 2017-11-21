@@ -1,5 +1,6 @@
 // Required
 @import 'components/icons/icons';
+@import 'components/breakpoints/breakpoints';
 @import 'components/typography/typography';
 @import 'layouts/layouts';
 @import 'components/visibility/visibility';
@@ -67,6 +68,10 @@
 @import 'components/counts/counts';
 @import 'components/splitter/splitter';
 @import 'components/form/form';
+@import 'components/field-options/field-options';
+
+// Charts
+@import 'components/stepchart/stepchart';
 
 // Patterns
 @import 'components/homepage/homepage';

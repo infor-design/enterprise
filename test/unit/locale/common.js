@@ -75,7 +75,14 @@ define([
       expect(Locale.formatDate()).to.equal(undefined);
     },
 
+    'should format arabic month format': function() {
+      Locale.set('ar-SA');    //year, month, day
+      expect(Locale.formatDate(new Date(2000, 12, 1), { pattern: Locale.calendar().dateFormat.month })).to.equal('01 محرم');
+      expect(Locale.formatDate(new Date(2017, 10, 8), { pattern: Locale.calendar().dateFormat.month })).to.equal('08 ذو القعدة');
+    },
+
     'should format timestamp': function() {
+      Locale.set('en-US');
       expect(Locale.formatDate(new Date(2015, 10, 5, 10, 20, 5), {date: 'timestamp'})).to.equal('10:20:05 AM');
       expect(Locale.formatDate(new Date(2015, 10, 5, 10, 20, 5), {pattern: 'hhmmss'})).to.equal('102005');
 
@@ -92,6 +99,7 @@ define([
     },
 
     'should format millis': function() {
+      Locale.set('en-US');    //year, month, day
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS a '})).to.equal('15/3/2016 12:30:36.142 PM');
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS '})).to.equal('15/3/2016 12:30:36.142');
     },
@@ -457,6 +465,14 @@ define([
       expect(Locale.formatNumber(-2.53, {style: 'percent', minimumFractionDigits: 2})).to.equal('-253,00 %');
       expect(Locale.formatNumber(-2.53, {style: 'percent'})).to.equal('-253 %');
 
+    },
+
+    'allow currency override': function() {
+      Locale.set('es-ES');
+      expect(Locale.formatNumber(12345.12, {style: 'currency', currencySign: '$'})).to.equal('12.345,12 $');
+      Locale.set('de-DE');
+      expect(Locale.formatNumber(12345.12, {style: 'currency', decimal: '.', group: ',',
+              currencyFormat: '¤ #,##0.00' ,currencySign: '$'})).to.equal('$ 12,345.12');
     },
 
     'should format percent': function() {

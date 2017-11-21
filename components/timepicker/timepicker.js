@@ -24,7 +24,8 @@
           secondInterval: 5,
           mode: 'standard',
           roundToInterval: true,
-          parentElement: null
+          parentElement: null,
+          returnFocus: true
         },
         settings = $.extend({}, defaults, options);
 
@@ -38,6 +39,7 @@
     * @param {String} mode  &nbsp;-&nbsp; can be set to 'standard', 'range',
     * @param {boolean} roundToInterval  &nbsp;-&nbsp; if `false`, does not automatically round user-entered values from the pickers to their nearest interval.
     * @param {null|jQuery[]} [parentElement] &nbsp;-&nbsp;  if defined as a jQuery-wrapped element, will be used as the target element.
+    * @param {String} returnFocus  &nbsp;-&nbsp; If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
     */
     function TimePicker(element) {
       this.settings = $.extend({}, settings);
@@ -463,7 +465,9 @@
           .on('show.timepicker', function(e, ui) {
             self.afterShow(ui);
           }).on('hide.timepicker', function() {
-            self.element.focus();
+            if (self.settings.returnFocus) {
+              self.element.focus();
+            }
           });
 
         }
@@ -633,7 +637,7 @@
 
 		val = val.replace(/[T\s:.-]/g, sep).replace(/z/i, '');
 		parts = val.split(sep);
-		
+
         // Check the last element in the array for a time period, and add it as an array
         // member if necessary
         if (!this.is24HourFormat()) {
@@ -776,7 +780,7 @@
           self.closeTimePopup();
         }
 
-        this.element.addClass('is-active');
+        this.element.addClass('is-active is-open');
 
         // Build a different Time Popup based on settings
         if (self.settings.mode === 'range') {
@@ -822,7 +826,7 @@
         this.trigger.data('tooltip').destroy();
         this.trigger.data('tooltip', undefined);
         $('#timepicker-popup').remove();
-        this.element.removeClass('is-active');
+        this.element.removeClass('is-active is-open');
       },
 
       /**

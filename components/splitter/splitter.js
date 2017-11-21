@@ -72,13 +72,18 @@
         s.uniqueId = this.uniqueId();
 
         if (this.isSplitterRightSide) {
-          this.leftSide = thisSide;
+          var thisPrev = thisSide.prev();
+          if (thisPrev.is('.main')) {
+            this.leftSide = thisPrev;
+            w = thisSide.parent().outerWidth() - w;
+          } else {
+            this.leftSide = thisSide;
+            splitter.addClass('splitter-right');
+          }
 
           thisSide.addClass('is-right-side')
             .next().addClass('flex-grow-shrink is-right-side')
             .parent().addClass('splitter-container');
-
-          splitter.addClass('splitter-right');
 
           if (s.collapseButton) {
             var savedOffset = 0;

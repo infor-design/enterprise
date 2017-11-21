@@ -22,7 +22,8 @@
           rightAligned: false,
           maxVisibleButtons: 3,
           resizeContainers: true,
-          favorButtonset: true
+          favorButtonset: true,
+          noSearchfieldReinvoke: false,
         },
         settings = $.extend({}, defaults, options);
 
@@ -37,6 +38,7 @@
      * @param {Number} maxVisibleButtons   &nbsp;-&nbsp; Total amount of buttons that can be present, not including the More button.
      * @param {boolean} resizeContainers   &nbsp;-&nbsp; If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
      * @param {boolean} favorButtonset   &nbsp;-&nbsp; If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
+     * @param {boolean} noSearchfieldReinvoke   &nbsp;-&nbsp; If true, does not manage the lifecycle of an internal toolbarsearchfield automatically.  Allows an external controller to do it instead.
      */
     function Toolbar(element) {
       this.settings = $.extend({}, settings);
@@ -163,18 +165,20 @@
         });
 
         // Invoke searchfields
-        var searchfields = this.items.filter('.searchfield, .toolbar-searchfield-wrapper, .searchfield-wrapper');
-        searchfields.each(function(i, item) {
-          var sf = $(item);
-          if (sf.is('.toolbar-searchfield-wrapper, .searchfield-wrapper')) {
-            sf = sf.children('.searchfield');
-          }
+        if (!this.settings.noSearchfieldReinvoke) {
+          var searchfields = this.items.filter('.searchfield, .toolbar-searchfield-wrapper, .searchfield-wrapper');
+          searchfields.each(function(i, item) {
+            var sf = $(item);
+            if (sf.is('.toolbar-searchfield-wrapper, .searchfield-wrapper')) {
+              sf = sf.children('.searchfield');
+            }
 
-          if (!sf.data('searchfield')) {
-            var searchfieldOpts = $.extend({}, $.fn.parseOptions(sf[0]));
-            sf.toolbarsearchfield(searchfieldOpts);
-          }
-        });
+            if (!sf.data('searchfield')) {
+              var searchfieldOpts = $.extend({}, $.fn.parseOptions(sf[0]));
+              sf.toolbarsearchfield(searchfieldOpts);
+            }
+          });
+        }
 
         // Setup the More Actions Menu.  Add Menu Items for existing buttons/elements in the toolbar, but
         // hide them initially.  They are revealed when overflow checking happens as the menu is opened.
@@ -184,10 +188,16 @@
         if (!popupMenuInstance) {
           this.moreMenu = $('#' + moreAriaAttr);
           if (!this.moreMenu.length) {
-            this.moreMenu = this.more.next('.popupmenu');
+            this.moreMenu = this.more.next('.popupmenu, .popupmenu-wrapper');
           }
           if (!this.moreMenu.length) {
             this.moreMenu = $('<ul id="popupmenu-toolbar-'+ this.id +'" class="popupmenu"></ul>').insertAfter(this.more);
+          }
+
+          // Allow toolbar to understand pre-wrapped popupmenus
+          // Angular Support -- See SOHO-7008
+          if (this.moreMenu.is('.popupmenu-wrapper')) {
+            this.moreMenu = this.moreMenu.children('.popupmenu');
           }
         } else {
           this.moreMenu = popupMenuInstance.menu;
@@ -267,6 +277,12 @@
         this.handleResize();
 
         this.element.triggerHandler('rendered');
+
+        var searchfieldWrapper = this.buttonset.find('.searchfield-wrapper, .toolbar-searchfield-wrapper');
+        if (searchfieldWrapper.length) {
+          searchfieldWrapper.trigger('reanimate');
+        }
+
         return this;
       },
 
@@ -434,7 +450,7 @@
               a.text(text.trim());
             }
 
-            if (item.is('.hidden') || item.parent().is('.hidden')) {
+            if (item.isHiddenAtBreakpoint() || item.parent().isHiddenAtBreakpoint()) {
               li.addClass('hidden');
             } else {
               li.removeClass('hidden');
@@ -621,6 +637,18 @@
           // Make sure the active button is set properly
           this.setActiveButton(itemLink);
 
+          // Handle popdowns with a custom placement algorithm that correctly pops the menu
+          // open against the "More Actions" button instead of in an empty space
+          // SOHO-7087
+          if (itemLink.is('[data-popdown]')) {
+            popupTrigger = itemLink.data('popdown');
+
+            if (this.isItemOverflowed(itemLink)) {
+              popupTrigger.settings.trigger = this.more;
+              popupTrigger.updated();
+            }
+          }
+
           // Fire Angular Events
           if (itemLink.attr('ng-click') || itemLink.attr('data-ng-click')) {
             itemLink.trigger('click');
@@ -806,24 +834,24 @@
         }
 
         // Get the target size of the title element
-        var targetTitleWidth, targetButtonsetWidth, d;
+        var hasTitleSizeGetter = (titleSize !== undefined && !isNaN(titleSize)),
+          hasButtonsetSizeGetter = (buttonsetSize !== undefined && !isNaN(buttonsetSize)),
+          targetTitleWidth, targetButtonsetWidth, d;
         this.cutoffTitle = false;
 
-        // Setter functionality
-        if (titleSize && buttonsetSize && !isNaN(titleSize) && !isNaN(buttonsetSize)) {
-          targetTitleWidth = parseInt(titleSize);
-          targetButtonsetWidth = parseInt(buttonsetSize);
-        } else {
-          if ((buttonsetDims.scrollWidth + titleDims.scrollWidth + moreDims.width + toolbarPadding) > toolbarDims.width) {
-            if (this.settings.favorButtonset) {
-              targetButtonsetWidth = buttonsetDims.width;
-              targetTitleWidth = toolbarDims.width - (toolbarPadding + buttonsetDims.width + moreDims.width);
-            } else {
-              targetTitleWidth = titleDims.scrollWidth;
-              targetButtonsetWidth = toolbarDims.width - (toolbarPadding + titleDims.scrollWidth + moreDims.width);
-            }
-          }
-        }
+
+        // Determine the target sizes for title and buttonset, based on external setters, or building an estimated size.
+        targetTitleWidth = hasTitleSizeGetter ?
+          parseInt(titleSize) :
+          this.settings.favorButtonset === true ?
+            toolbarDims.width - (toolbarPadding + (hasButtonsetSizeGetter ? parseInt(buttonsetSize) : buttonsetDims.width) + moreDims.width) :
+            titleDims.scrollWidth;
+        targetButtonsetWidth = hasButtonsetSizeGetter ?
+          parseInt(buttonsetSize) :
+          this.settings.favorButtonset === true ?
+            buttonsetDims.width :
+            toolbarDims.width - (toolbarPadding + (hasTitleSizeGetter ? parseInt(titleSize) : titleDims.scrollWidth) + moreDims.width);
+
 
         if (this.settings.favorButtonset) {
           // Cut off the buttonset anyway if title is completely hidden.  Something's gotta give!
@@ -1077,7 +1105,7 @@
         function toggleClass($elem, doHide) {
           var elem = $elem[0],
             li = $elem.data('action-button-link').parent()[0],
-            elemIsHidden = elem.classList.contains('hidden');
+            elemIsHidden = $elem.isHiddenAtBreakpoint();
 
           if (doHide) {
             li.classList.add('hidden');

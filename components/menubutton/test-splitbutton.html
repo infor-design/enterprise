@@ -9,7 +9,7 @@
 <div class="row">
   <div class="twelve columns">
 
-    <div id="example-toolbar" class="toolbar" role="toolbar" data-options="{maxVisibleButtons: 4}">
+    <div id="example-toolbar" class="toolbar" role="toolbar" data-options="{maxVisibleButtons: 10}">
       <div class="title">
         Toolbar Title
       </div>
@@ -45,6 +45,74 @@
           <li><a href="#">Inquire</a></li>
           <li><a href="#">Next</a></li>
         </ul>
+
+        <!--
+        Split Button with Label only
+        -->
+        <button id="split-button-sort-label-action" type="button" class="btn-split-menu btn">
+          <span>Sort Descending</span>
+        </button>
+        <div class="separator"></div>
+        <button id="split-button-sort-label-menu-trigger" type="button" class="btn-split-menu btn-menu">
+          <span class="audible">Change Sort Order</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#">Sort By ID</a></li>
+          <li><a href="#">Sort By Name</a></li>
+          <li><a href="#">sort By Status</a></li>
+        </ul>
+
+
+        <!--
+        Split Button with Icon only
+        -->
+        <button id="split-button-sort-icon-action" type="button" class="btn-split-menu btn btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation" >
+            <use xlink:href="#icon-sort-up">
+              <span class="audible">Sort Descending</span>
+            </use>
+          </svg>
+        </button>
+        <div class="separator"></div>
+        <button id="split-button-sort-icon-menu-trigger" type="button" class="btn-split-menu btn-menu">
+          <span class="audible">Change Sort Order</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#">Sort By ID</a></li>
+          <li><a href="#">Sort By Name</a></li>
+          <li><a href="#">sort By Status</a></li>
+        </ul>
+
+        <!--
+        Split Button with Label and Icon
+        -->
+        <button id="split-button-sort-icon-label-action" type="button" class="btn-split-menu btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation" >
+            <use xlink:href="#icon-sort-up">
+              <span class="audible">Sort Descending</span>
+            </use>
+          </svg>
+          <span>Sort</span>
+        </button>
+        <div class="separator"></div>
+        <button id="split-button-sort-icon-label-menu-trigger" type="button" class="btn-split-menu btn-menu">
+          <span class="audible">Change Sort Order</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#">Sort By ID</a></li>
+          <li><a href="#">Sort By Name</a></li>
+          <li><a href="#">sort By Status</a></li>
+        </ul>
+
 
         <button type="button" id="btn-settings" class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -83,4 +151,72 @@
       ul.find('.is-checked').removeClass('is-checked');
       ul.find('li:contains('+ args.text() +')').addClass('is-checked');
     });
+
+  (function() {
+    var $splitButtonSortAction = $('#split-button-sort-label-action');
+    var $splitButtonSortLabelMenuTrigger = $('#split-button-sort-label-menu-trigger');
+    var isAscending = true;
+
+    $splitButtonSortAction.find('use').attr('xlink:href', '#icon-sort-up');
+
+    // Action Button fires the action
+    $splitButtonSortAction.on('click', function (e) {
+      isAscending = !isAscending;
+      $(this).find('span').html(isAscending ? 'Sort Descending' : 'Sort Ascending');
+    });
+
+    // MenuButton selection changes the default action
+    $splitButtonSortLabelMenuTrigger.on('selected', function (e, args) {
+      setTimeout(function() {
+        alert(args.text() + ' selected');
+      }, 50);
+    });
+  })();
+
+  // ------------------------------------------------
+  // Split Button with Icon only
+  // ------------------------------------------------
+  (function() {
+    var $splitButtonSortAction = $('#split-button-sort-icon-action');
+    var $splitButtonSortIconMenuTrigger = $('#split-button-sort-icon-menu-trigger');
+    var isAscending = true;
+
+    $splitButtonSortAction.find('span').html('Sort Descending');
+
+    // Action Button fires the action
+    $splitButtonSortAction.on('click', function (e) {
+      isAscending = !isAscending;
+      $(this).find('use').attr('xlink:href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
+    });
+
+    // MenuButton selection changes the default action
+    $splitButtonSortIconMenuTrigger.on('selected', function (e, args) {
+      setTimeout(function() {
+        alert(args.text() + ' selected');
+      }, 50);
+    });
+  })();
+
+  // ------------------------------------------------
+  // Split Button with Icon and Label
+  // ------------------------------------------------
+  (function() {
+    var $splitButtonSortAction = $('#split-button-sort-icon-label-action');
+    var $splitButtonSortMenuTrigger = $('#split-button-sort-icon-label-menu-trigger');
+    var isAscending = true;
+
+    // Action Button fires the action
+    $splitButtonSortAction.on('click', function (e) {
+      isAscending = !isAscending;
+      $(this).find('use').attr('xlink:href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
+    });
+
+    // MenuButton selection changes the default action
+    $splitButtonSortMenuTrigger.on('selected', function (e, args) {
+      setTimeout(function() {
+        alert(args.text() + ' selected');
+      }, 50);
+    });
+  })();
+
 </script>

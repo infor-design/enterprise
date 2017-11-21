@@ -68,94 +68,97 @@
           <div id="kpis" class="tab-panel">
             <h3>KPIs</h3>
 
-            <div class="compound-field">
-              <div class="field">
-                <label for="kpi-net-sales-operator">Net Sales Amount</label>
-                <select id="kpi-net-sales-operator" class="dropdown">
-                  <option value="=">Equal to</option>
-                  <option value="!=">Not equal to</option>
-                  <option value="<">Less than</option>
-                  <option value="<=">Less than or equal to</option>
-                  <option value=">">Greater than</option>
-                  <option value=">=">Greater than or equal to</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="kpi-net-sales-amount">Sales Amount</label>
-                <input class="input-sm" id="kpi-net-sales-amount" data-mask data-options="{ pattern: '#,###,###.00', number: true }"/>
-              </div>
-              <div class="field">
-                <label for="kpi-net-sales-weight">Weight</label>
-                <input id="kpi-net-sales-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
+            <div class="row">
+              <div class="column">
+                <div class="compound-field">
+                  <div class="field">
+                    <label for="kpi-net-sales-operator">Net Sales Amount</label>
+                    <select id="kpi-net-sales-operator" class="dropdown">
+                      <option value="=">Equal to</option>
+                      <option value="!=">Not equal to</option>
+                      <option value="<">Less than</option>
+                      <option value="<=">Less than or equal to</option>
+                      <option value=">">Greater than</option>
+                      <option value=">=">Greater than or equal to</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="kpi-net-sales-amount">Sales Amount</label>
+                    <input class="input-sm" id="kpi-net-sales-amount" data-mask data-options="{ pattern: '#,###,###.00', number: true }"/>
+                  </div>
+                  <div class="field attach-up-relative-x2">
+                    <label for="kpi-net-sales-weight">Weight</label>
+                    <input id="kpi-net-sales-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
+                  </div>
+                </div>
+
+                <div class="compound-field">
+                  <div class="field">
+                    <label for="kpi-customer-count-operator">Customer Count</label>
+                    <select id="kpi-customer-count-operator" class="dropdown">
+                      <option value="=">Equal to</option>
+                      <option value="!=">Not equal to</option>
+                      <option value="<">Less than</option>
+                      <option value="<=">Less than or equal to</option>
+                      <option value=">">Greater than</option>
+                      <option value=">=">Greater than or equal to</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="kpi-customer-count-amount">Customer Amount</label>
+                    <input class="input-sm" id="kpi-customer-count-amount" />
+                  </div>
+                  <div class="field attach-up-relative-x2">
+                    <label for="kpi-customer-count-weight">Weight</label>
+                    <input id="kpi-customer-count-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
+                  </div>
+                </div>
+
+                <div class="compound-field">
+                  <div class="field">
+                    <label for="kpi-order-count-operator">Order Count</label>
+                    <select id="kpi-order-count-operator" class="dropdown">
+                      <option value="=">Equal to</option>
+                      <option value="!=">Not equal to</option>
+                      <option value="<">Less than</option>
+                      <option value="<=">Less than or equal to</option>
+                      <option value=">">Greater than</option>
+                      <option value=">=">Greater than or equal to</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="kpi-order-count-amount">Order Count</label>
+                    <input class="input-sm" id="kpi-order-count-amount" />
+                  </div>
+                  <div class="field attach-up-relative-x2">
+                    <label for="kpi-order-count-weight">Weight</label>
+                    <input id="kpi-order-count-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
+                  </div>
+                </div>
+
+                <div class="compound-field">
+                  <div class="field">
+                    <label for="kpi-unit-cost-operator">Unit Cost</label>
+                    <select id="kpi-unit-cost-operator" class="dropdown">
+                      <option value="=">Equal to</option>
+                      <option value="!=">Not equal to</option>
+                      <option value="<">Less than</option>
+                      <option value="<=">Less than or equal to</option>
+                      <option value=">">Greater than</option>
+                      <option value=">=">Greater than or equal to</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="kpi-unit-cost-amount">Cost Amount</label>
+                    <input class="input-sm" id="kpi-unit-cost-amount" data-mask data-options="{ pattern: '#,###,###.00', number: true }" value="0.01"/>
+                  </div>
+                  <div class="field attach-up-relative-x2">
+                    <label for="kpi-unit-cost-weight">Weight</label>
+                    <input id="kpi-unit-cost-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
+                  </div>
+                </div>
               </div>
             </div>
-
-            <div class="compound-field">
-              <div class="field">
-                <label for="kpi-customer-count-operator">Customer Count</label>
-                <select id="kpi-customer-count-operator" class="dropdown">
-                  <option value="=">Equal to</option>
-                  <option value="!=">Not equal to</option>
-                  <option value="<">Less than</option>
-                  <option value="<=">Less than or equal to</option>
-                  <option value=">">Greater than</option>
-                  <option value=">=">Greater than or equal to</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="kpi-customer-count-amount">Customer Amount</label>
-                <input class="input-sm" id="kpi-customer-count-amount" />
-              </div>
-              <div class="field">
-                <label for="kpi-customer-count-weight">Weight</label>
-                <input id="kpi-customer-count-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
-              </div>
-            </div>
-
-            <div class="compound-field">
-              <div class="field">
-                <label for="kpi-order-count-operator">Order Count</label>
-                <select id="kpi-order-count-operator" class="dropdown">
-                  <option value="=">Equal to</option>
-                  <option value="!=">Not equal to</option>
-                  <option value="<">Less than</option>
-                  <option value="<=">Less than or equal to</option>
-                  <option value=">">Greater than</option>
-                  <option value=">=">Greater than or equal to</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="kpi-order-count-amount">Order Count</label>
-                <input class="input-sm" id="kpi-order-count-amount" />
-              </div>
-              <div class="field">
-                <label for="kpi-order-count-weight">Weight</label>
-                <input id="kpi-order-count-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
-              </div>
-            </div>
-
-            <div class="compound-field">
-              <div class="field">
-                <label for="kpi-unit-cost-operator">Unit Cost</label>
-                <select id="kpi-unit-cost-operator" class="dropdown">
-                  <option value="=">Equal to</option>
-                  <option value="!=">Not equal to</option>
-                  <option value="<">Less than</option>
-                  <option value="<=">Less than or equal to</option>
-                  <option value=">">Greater than</option>
-                  <option value=">=">Greater than or equal to</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="kpi-unit-cost-amount">Cost Amount</label>
-                <input class="input-sm" id="kpi-unit-cost-amount" data-mask data-options="{ pattern: '#,###,###.00', number: true }" value="0.01"/>
-              </div>
-              <div class="field">
-                <label for="kpi-unit-cost-weight">Weight</label>
-                <input id="kpi-unit-cost-weight" name="regular" class="slider" type="range" min="0" max="1000" value="20" data-tooltip-content='["", " lbs."]' style="width: 200px;"/>
-              </div>
-            </div>
-
           </div>
 
           <div id="customer-unit-level" class="tab-panel">

@@ -29,6 +29,9 @@
 26. Selection (Mixed)  [View Example]( ../components/datagrid/example-mixed-selection.html)
 27. Summary Row  [View Example]( ../components/datagrid/example-summary-row.html)
 28. Export to Excel [View Example]( ../components/datagrid/example-export-from-button.html)
+28. Export with trailing negative signs moved in front [View Example]( ../components/datagrid/example-export-convert-negative.html)
+29. Empty Message Area [View Example]( ../components/datagrid/example-empty-message.html)
+30. Expandable Cells [View Example]( ../components/datagrid/example-expandable-cells.html)
 
 {{api-details}}
 
@@ -79,6 +82,9 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
 - **resizable** If false the column will not be resizable, thus is a fixed size and can never be changed by the user by dragging the left and right edge.
 - **headerTooltip* Can be used to set a tooltip specific to the column header.
 - **reorderable* The column cannot be dragged around to have its order in the list changed.
+- **colSpan* The cells can be split over a header. When set to an integer > 1 this next number of columns will be split over this header.
+- **uppercase* If true the text will be transformed to upper case in readonly view. Also in edit mode uppercase will be enforced.
+- **expandOnActivate* If true the cell can be expanded on focus to show additional / all content.
 
 ## Column Settings (Formatter Specific)
 
@@ -98,6 +104,7 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
 - **ranges** For example `[{'min': 151, '(max': 9999, 'classes': 'info'}]` for example any value between 151 and 999 will add the info class which formats the color in info blue. Default color is grey. Used on badges and alerts.
 - **options** Used on the dropdown and multiselect editor/formatters. For example `[{'value': 1, 'id': 1, 'label': 'Some Value'}]`. This should map to a select elements id, value and text option when populating.
 - **isChecked** Used on checkbox and favorite columns. This can be a function that returns the checked state based on the dynamic data thats passed in.
+- **postRender** If postColumnRender is set to true on the grid. This will be called for each cell in that column passing you a container and args similar to the formatter. This can be used for more complicated render logic at the cost of performance.
 
 ## Formatters
 

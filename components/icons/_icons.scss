@@ -57,11 +57,46 @@ svg.icon-dirty,
     width: 18px;
   }
 
+  .icon-confirm,
+  [data-error-type="tooltip"] ~ .icon-error,
+  [data-error-type="tooltip"] ~ .icon-confirm {
+    position: relative;
+    right: auto;
+    top: auto;
+  }
+
+  .dropdown-wrapper {
+    [data-error-type="tooltip"] ~ .icon-error,
+    [data-error-type="tooltip"] ~ .icon-confirm {
+      position: absolute;
+      right: 25px;
+      top: 1px;
+    }
+  }
+
+  &.editor-container {
+    [data-error-type="tooltip"] ~ .icon-error,
+    [data-error-type="tooltip"] ~ .icon-confirm {
+      position: absolute;
+      right: 10px;
+      top: 55px;
+    }
+  }
+
   .lookup-wrapper {
     .icon-error,
     .icon-confirm {
       margin-right: -20px;
       right: 55px;
+      top: auto;
+    }
+  }
+
+  .popover-trigger {
+    .icon-info {
+      height: 14px;
+      position: relative;
+      width: 14px;
     }
   }
 }
@@ -84,7 +119,7 @@ svg.icon-dirty,
 }
 
 .icon-alert {
-  fill: $alert-yellow !important;
+  fill: $alert-orange !important;
 }
 
 .icon-pending {
@@ -566,18 +601,20 @@ html[dir='rtl'] {
 
 .icon-empty-state {
   display: inline-block;
+  fill: $azure06; // Themable Empty Icons
   height: 65px;
   position: relative;
   width: 65px;
 }
 
-// color defs
-.icon-empty-main-color {
-  fill: $azure06;
+.datagrid-empty-message .icon-empty-state {
+  fill: $icon-empty-bg-color; // Themable Empty Icons
 }
 
+// color defs
+
 .icon-empty-offset-color {
-  fill: $azure03;
+  opacity: .4;
 }
 
 .icon-empty-center-color {

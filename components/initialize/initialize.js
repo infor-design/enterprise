@@ -64,7 +64,7 @@
             noinitExcludes = '.no-init, [data-init]';
 
           function invokeWithInlineOptions(elem, plugin) {
-            var options = $.fn.parseOptions(elem);
+            var options = Soho.utils.parseOptions(elem);
             $(elem)[plugin](options);
           }
 
@@ -170,7 +170,7 @@
             ['editor'],
 
             //Tooltips
-            ['tooltip', '[title]'],
+            ['tooltip', 'button[title], span[title], .hyperlink[title]'],
 
             //Tree
             ['tree'],
@@ -240,9 +240,11 @@
 
             ['header'],
 
-            ['fileupload'],
+            ['fileupload', 'input.fileupload:not(.fileupload-background-transparent)'],
 
             ['fileuploadadvanced', '.fileupload-advanced'],
+
+            ['fieldoptions', '.field-options'],
 
             ['about'],
 
@@ -258,7 +260,9 @@
 
             ['wizard'],
 
-            ['popdown', '[data-popdown]']
+            ['popdown', '[data-popdown]'],
+
+            ['stepchart', '.step-chart']
           ];
 
           //Do initialization for all the simple controls
@@ -273,7 +277,7 @@
             //Context Menus
             matchedItems('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
               var triggerButton = $(this),
-                options = $.extend({}, $.fn.parseOptions(this)),
+                options = $.extend({}, Soho.utils.parseOptions(this)),
                 popupData = triggerButton.attr('data-popupmenu');
 
               if (popupData) {
@@ -300,17 +304,32 @@
           //Popovers
           if ($.fn.popover) {
             matchedItems('[data-popover]:not('+ noinitExcludes +')').each(function () {
-              var obj = $(this),
+              var options = Soho.utils.parseOptions(this),
+                obj = $(this),
                 trigger = obj.attr('data-trigger'),
                 title = obj.attr('data-title'),
                 placement = obj.attr('data-placement');
 
-              obj.popover({
-                content: $('#' + obj.attr('data-popover')),
-                trigger: trigger ? trigger : 'click',
-                title: title ? title : undefined,
-                placement: placement || 'right'
-              });
+              if (!$.isEmptyObject(options)) {
+                obj.popover({
+                  content: $(options.content),
+                  popover: true,
+                  trigger: options.trigger || 'click',
+                  title: options.title || undefined,
+                  placement:  options.placement || 'right',
+                  extraClass: options.extraClass || undefined
+                });
+              } else {
+                obj.popover({
+                  content: $('#' + obj.attr('data-popover')),
+                  popover: true,
+                  trigger: trigger || 'click',
+                  title: title || undefined,
+                  placement: placement || 'right',
+                  extraClass: options.extraClass || undefined
+                });
+              }
+
             });
           }
 
@@ -320,7 +339,7 @@
               var cs = $(this),
                 attr = cs.attr('data-dataset'),
                 tmpl = cs.attr('data-tmpl'),
-                options = $.fn.parseOptions(this) || {};
+                options = Soho.utils.parseOptions(this) || {};
 
               options.dataset = options.dataset || attr;
               options.template = options.template || tmpl;

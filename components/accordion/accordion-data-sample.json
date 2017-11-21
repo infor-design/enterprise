@@ -1,0 +1,37 @@
+[
+  {
+    "id": "settings-header",
+    "text": "Settings",
+    "icon": "icon-settings",
+    "content": "<h2>HTML Content</h2><p>Inner-accordion pane HTML content goes here.</p>",
+    "children": [
+      {
+        "id": "setting-1",
+        "text": "Setting 1"
+      },
+      {
+        "id": "setting-2",
+        "text": "Setting 2"
+      },
+      {
+        "id": "setting-3",
+        "text": "Setting 3",
+        "content": "<p>This setting has some information!</p>"
+      },
+    ]
+  },
+  {
+    "id": "user-header",
+    "text": "User",
+    "icon": "icon-user"
+  },
+  {
+    "id": "header-3",
+    "text": "Accordion Header 3",
+    "disabled": true
+  },
+  {
+    "id": "header-4",
+    "text": "Accordion Header 4"
+  }
+]

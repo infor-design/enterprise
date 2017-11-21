@@ -355,5 +355,13 @@ html[dir='rtl'] {
         }
       }
     }
+
+    &:not(.vertical) {
+      > .tick {
+        > .label {
+          left: auto !important;
+        }
+      }
+    }
   }
 }

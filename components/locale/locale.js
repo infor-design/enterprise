@@ -679,12 +679,11 @@
         minimumFractionDigits = 0;
       }
 
-      //TODO: Doc Note: Uses Truncation
       if (options && options.style === 'currency') {
-        var sign = this.currentLocale.data.currencySign;
+        var sign = options && options.currencySign ? options.currencySign : this.currentLocale.data.currencySign,
+          format = options && options.currencyFormat ? options.currencyFormat : this.currentLocale.data.currencyFormat;
 
-        curFormat = this.currentLocale.data.currencyFormat;
-        curFormat = curFormat.replace('¤', sign);
+        curFormat = format.replace('¤', sign);
       }
 
       if (options && options.style === 'percent') {
@@ -735,10 +734,12 @@
       //Confirm Logic After All Locales are added.
       if (options && options.style === 'currency') {
         formattedNum = curFormat.replace('#,##0.00', formattedNum);
+        formattedNum = formattedNum.replace('#,##0.00', formattedNum);
       }
 
       if (options && options.style === 'percent') {
         formattedNum = percentFormat.replace('#,##0', formattedNum);
+        formattedNum = formattedNum.replace('#.##0', formattedNum);
       }
 
       if (isNegative) {
@@ -1058,12 +1059,12 @@
   //Has to delay in order to check if no culture in head since scripts load async
   $(function() {
     setTimeout(function() {
-      if (!window.Locale.cultureInHead() && !window.Locale.currentLocale.name) {
+      if (window.Locale && !window.Locale.cultureInHead() && !window.Locale.currentLocale.name) {
         window.Locale.set('en-US');
       }
 
       // ICONS: Right to Left Direction
-      if (window.Locale.isRTL()) {
+      if (window.Locale && window.Locale.isRTL()) {
         window.Locale.flipIconsHorizontally();
       }
     }, 50);

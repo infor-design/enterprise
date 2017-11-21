@@ -21,6 +21,10 @@ $gutter-neg-size: -20px;
     max-width: 100%;
   }
 
+  &.reduced {
+    max-width: $breakpoint-tablet-reduced;
+  }
+
   &:last-child {
     margin-bottom: 30px;
   }

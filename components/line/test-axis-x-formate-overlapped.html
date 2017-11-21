@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="two-thirds column">
+    <h2 class="widget-title">Line Chart &mdash; Format x-axis not to be overlapped</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Line Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="line-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+  var dataset = [{
+    "name": "EAM",
+    "data": [
+      {"name": "00:00", "value": 0, "tooltip": "00:00, 0"},
+      {"name": "01:00", "value": 0, "tooltip": "01:00, 0"},
+      {"name": "02:00", "value": 1, "tooltip": "02:00, 1"},
+      {"name": "03:00", "value": 0, "tooltip": "03:00, 0"},
+      {"name": "04:00", "value": 0, "tooltip": "04:00, 0"},
+      {"name": "05:00", "value": 0, "tooltip": "05:00, 0"},
+      {"name": "06:00", "value": 0, "tooltip": "06:00, 0"},
+      {"name": "07:00", "value": 0, "tooltip": "07:00, 0"},
+      {"name": "08:00", "value": 0, "tooltip": "08:00, 0"},
+      {"name": "09:00", "value": 0, "tooltip": "09:00, 0"},
+      {"name": "10:00", "value": 0, "tooltip": "10:00, 0"},
+      {"name": "11:00", "value": 0, "tooltip": "11:00, 0"},
+      {"name": "12:00", "value": 0, "tooltip": "12:00, 0"},
+      {"name": "13:00", "value": 0, "tooltip": "13:00, 0"},
+      {"name": "14:00", "value": 0, "tooltip": "14:00, 0"},
+      {"name": "15:00", "value": 0, "tooltip": "15:00, 0"},
+      {"name": "16:00", "value": 0, "tooltip": "16:00, 0"},
+      {"name": "17:00", "value": 0, "tooltip": "17:00, 0"},
+      {"name": "18:00", "value": 0, "tooltip": "18:00, 0"},
+      {"name": "19:00", "value": 0, "tooltip": "19:00, 0"},
+      {"name": "20:00", "value": 0, "tooltip": "20:00, 0"},
+      {"name": "21:00", "value": 0, "tooltip": "21:00, 0"},
+      {"name": "22:00", "value": 0, "tooltip": "22:00, 0"},
+      {"name": "23:00", "value": 0, "tooltip": "23:00, 0"},
+      {"name": "24:00", "value": 0, "tooltip": "24:00, 0"},
+      {"name": "25:00", "value": 0, "tooltip": "25:00, 0"},
+      {"name": "26:00", "value": 0, "tooltip": "26:00, 0"},
+      {"name": "27:00", "value": 0, "tooltip": "27:00, 0"},
+      {"name": "28:00", "value": 0, "tooltip": "28:00, 0"},
+      {"name": "29:00", "value": 0, "tooltip": "29:00, 0"},
+      {"name": "30:00", "value": 0, "tooltip": "30:00, 0"},
+      {"name": "31:00", "value": 0, "tooltip": "31:00, 0"},
+      {"name": "32:00", "value": 0, "tooltip": "32:00, 0"}
+    ]
+  }];
+
+  $('#line-example').chart({
+    type: 'line',
+    dataset: dataset,
+    xAxis: {
+      ticks: 'auto'
+    },
+    dots: {
+      radius: 3,
+      radiusOnHover: 4,
+      strokeWidth: 0,
+      class: 'custom-dots'
+    }
+  });
+
+});
+</script>

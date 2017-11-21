@@ -1,0 +1,120 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Target to Achievement</h2>
+          <button class="btn-actions" type="button" id="menu-button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top is-selectable">
+            <li><a href="#">One</a></li>
+            <li><a href="#">Two</a></li>
+            <li><a href="#">Three</a></li>
+          </ul>
+      </div>
+      <div class="card-content">
+        <div id="example-1" class="chart-container"></div>
+        <div id="example-2" class="chart-container"></div>
+        <div id="example-3" class="chart-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="three columns">
+    <button type="button" class="btn btn-menu" id="btn-update">
+      <span>Update</span>
+    </button>
+    <ul class="popupmenu">
+      <li><a href="#" data-value="1">Label A</a></li>
+      <li><a href="#" data-value="2">Label B</a></li>
+      <li><a href="#" data-value="3">Label C</a></li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+<script>
+$('body').on('initialized', function () {
+
+  var btnUpdate = $('#btn-update'),
+    elm1 = $('#example-1'),
+    elm2 = $('#example-2'),
+    elm3 = $('#example-3'),
+
+    // Some data
+    dataset1 = [{
+      data: [{
+        name: {text: 'Label A'},
+        completed: {text: '50K of 250K', value: 50000, format: '.2s', color: 'primary'},
+        remaining: {value: 60000, format: '.2s', text: ' To Target'},
+        total: {value: 250000, format: '.2s'},
+        percentText: {show: true}
+      }]
+    }],
+    dataset2 = [{
+      data: [{
+        name: {text: 'Label B'},
+        completed: {text: '250K of 250K', value: 250000, format: '.2s', color: 'primary'},
+        remaining: {value: 250000, format: '.2s', text: ' Complete'},
+        total: {value: 250000, format: '.2s'},
+        percentText: {show: true}
+      }]
+    }],
+    dataset3 = [{
+      data: [{
+        name: {text: 'Label C'},
+        completed: {text: '40K of 250K', value: 40000, format: '.2s', color: 'dark'},
+        total: {value: 250000, difference: true, text: ' Remaining', format: '.2s'},
+        percentText: {show: true, color1: '#880e0e', color2: 'good'}
+      }]
+    }],
+
+    // Initialize and cached api
+    api1 = elm1.chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart'),
+    api2 = elm2.chart({dataset: dataset2, type: 'targeted-achievement'}).data('chart'),
+    api3 = elm3.chart({dataset: dataset3, type: 'targeted-achievement'}).data('chart');
+
+
+
+  // Example updating
+  btnUpdate.on('selected', function (e, args) {
+    var ds, index = args.attr('data-value');
+
+    // Update first
+    if (index === '1') {
+      ds = {
+        completed: {text: '190K of 250K', value: 190000},
+        remaining: {text: 'More than 80k from Target', textOnly: true}
+      };
+      api1.update(ds);
+    }
+
+    // Update second
+    else if (index === '2') {
+      ds = {
+        completed: {text: '230K of 250K', value: 230000},
+        remaining: {value: 20000, text: ' to Complete'}
+      };
+      api2.update(ds);
+    }
+
+    // Update third
+    else if (index === '3') {
+      ds = {
+        completed: {text: '250K of 250K', value: 250000},
+        total: {text: 'Complete', textOnly: true}
+      };
+      api3.update(ds);
+    }
+  });
+
+});
+</script>

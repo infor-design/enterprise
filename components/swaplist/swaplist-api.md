@@ -16,7 +16,6 @@ The SwapList Component creates a list of options that can be picked and organize
 
 **Parameters**
 
--   `element`  
 -   `searchable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
 -   `available` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  An array containing items for the available bucket.
 -   `selected` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -   An array containing items for the selected bucket.
@@ -29,6 +28,7 @@ The SwapList Component creates a list of options that can be picked and organize
 -   `selectedBtnRight` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the move right button element.
 -   `additionalBtn` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the additional button element.
 -   `template` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An Html String with the mustache template for the view.
+-   `draggable` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
 
 ### getAvailable
 

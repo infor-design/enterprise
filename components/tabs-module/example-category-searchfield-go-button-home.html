@@ -1,0 +1,88 @@
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/applicationmenu}}
+
+  <div class="page-container">
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title">
+          <button id="app-menu-trigger" class="btn-icon application-menu-trigger">
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+            <span class="audible">App Menu</span>
+          </button>
+          <h1>Menu</h1>
+        </div>
+        <div class="buttonset">
+          <label for="searchfield-category-go">Searchfield</label>
+          <input id="searchfield-category-go" class="searchfield is-personalizable"/>
+
+          <button id="home-button" class="btn">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-home"></use>
+            </svg>
+            <span class="audible">Home</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="page-container">
+      <section class="tab-container module-tabs is-personalizable" data-options='{ "containerElement": "#module-tab-panel-container" }'>
+        <div class="tab-list-container">
+          <ul class="tab-list">
+            <li class="tab is-selected"><a href="#tab-one">Tab One</a></li>
+            <li class="tab"><a href="#tab-two">Tab Two</a></li>
+            <li class="tab"><a href="#tab-three">Tab Three</a></li>
+          </ul>
+        </div>
+      </section>
+      <section id="module-tab-panel-container" class="tab-panel-container">
+        <div class="tab-panel" id="tab-one">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Module Tabs Test: Header + Category Searchfield + Go Button</h3>
+              <p>
+                <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6711" target="_blank">SOHO-6711</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="tab-panel" id="tab-two">
+
+        </div>
+        <div class="tab-panel" id="tab-three">
+
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var body = $('body'),
+      sf = $('#searchfield-category-go');
+
+    // Go Button Action
+    function goButtonAction(e, value, categoryData) {
+      var msg = '<p><b>Searchfield Value: </b>'+ value +'</p>' +
+        '<p><b>Category Data</b>'+  JSON.stringify(categoryData) +'</p>';
+
+      body.toast({
+        'title': 'Go Button Clicked',
+        'message': msg
+      });
+    }
+
+    sf.toolbarsearchfield({
+      'collapsible': false,
+      'goButtonAction': goButtonAction,
+      'showGoButton': true,
+      'categories': [ 'Books', 'Movies', 'Music', 'Video Games' ],
+      'showCategoryText': true
+    });
+
+  </script>

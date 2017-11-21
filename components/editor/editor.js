@@ -80,7 +80,7 @@
         this.isFirefox = Soho.env.browser.name === 'firefox';
 
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
-        this.id = $('.editor-toolbar').length + 1;
+        this.id = this.element.uniqueId('editor') + 'Unique';
         this.container = this.element.parent('.field, .field-short').addClass('editor-container');
 
         settings.anchor = $.extend({}, defaults.anchor, settings.anchor);
@@ -346,9 +346,11 @@
         // fill the text area with any content that may already exist within the editor DIV
         this.textarea.text(this.element.html().toString());
 
-        this.element.on('input.editor keyup.editor', function() {
+        this.element.on('input.editor keyup.editor', Soho.utils.debounce( function(){
           self.textarea.val(self.element.html().toString());
-        });
+          // setting the value via .val doesn't trigger the change event
+          $(this).trigger('change');
+        }, 500 ));
 
         this.setupTextareaEvents();
         return this.textarea;
@@ -625,8 +627,8 @@
             'superscript': '<button type="button" class="btn" title="'+ Locale.translate('Superscript') + '" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
             'subscript': '<button type="button" class="btn" title="'+ Locale.translate('Subscript') + '" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
             'separator': '<div class="separator"></div>',
-            'anchor': '<button type="button" class="btn" title="'+ Locale.translate('InsertAnchor') + '" data-action="anchor" data-modal="editor-modal-url" data-element="a">' + buttonLabels.anchor + '</button>',
-            'image': '<button type="button" class="btn" title="'+ Locale.translate('InsertImage') + '" data-action="image" data-modal="editor-modal-image" data-element="img">' + buttonLabels.image + '</button>',
+            'anchor': '<button type="button" class="btn" title="'+ Locale.translate('InsertAnchor') + '" data-action="anchor" data-modal="modal-url-'+ this.id +'" data-element="a">' + buttonLabels.anchor + '</button>',
+            'image': '<button type="button" class="btn" title="'+ Locale.translate('InsertImage') + '" data-action="image" data-modal="modal-image-'+ this.id +'" data-element="img">' + buttonLabels.image + '</button>',
             'header1': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH3') + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
             'header2': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH4') + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
             'quote': '<button type="button" class="btn" title="'+ Locale.translate('Blockquote') + '" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
@@ -736,11 +738,11 @@
 
         $('[name="em-target"]').dropdown();
 
-        $('#editor-modal-url, #editor-modal-image').modal()
+        $('#modal-url-'+ self.id +', #modal-image-'+ self.id).modal()
           .on('beforeopen', function () {
             self.savedSelection = self.saveSelection();
 
-            if ($(this).attr('id') === 'editor-modal-url') {
+            if ($(this).attr('id') === ('modal-url-' + self.id)) {
 
               if (!self.selectionRange) {
                 return undefined;
@@ -762,7 +764,7 @@
             // $('[id="em-target-shdo"]').val($('[name="em-target"] option:selected').text());
 
             setTimeout(function () {
-              if (isTouch && id === 'editor-modal-image') {
+              if (isTouch && id === 'modal-image-'+ self.id) {
                 button.focus();
               } else {
                 input.focus().select();
@@ -779,7 +781,7 @@
             }
 
             //insert image or link
-            if ($(this).attr('id') === 'editor-modal-url') {
+            if ($(this).attr('id') === ('modal-url-'+ self.id)) {
               var currentLink = $(self.findElementInSelection('a', self.element[0]));
               if (currentLink.length) {
                 self.updateCurrentLink(currentLink);
@@ -795,12 +797,12 @@
       },
 
       /**
-      * Function that creates the Url Modal Dialog. This can be customized by making a modal with ID `#editor-modal-url`
+      * Function that creates the Url Modal Dialog. This can be customized by making a modal with ID `#modal-url-{this.id}`
       */
       createURLModal: function() {
         var targetOptions = '',
           isTargetCustom = true,
-          urlModal = $('#editor-modal-url');
+          urlModal = $('#modal-url-'+ this.id);
 
         if (urlModal.length > 0) {
           return urlModal;
@@ -816,7 +818,7 @@
           targetOptions += '<option value="'+ settings.anchor.target +'">'+ settings.anchor.target +'</option>';
         }
 
-        return $('<div class="modal editor-modal-url" id="editor-modal-url"></div>')
+        return $('<div class="modal editor-modal-url" id="modal-url-'+ this.id +'"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
               '<h1 class="modal-title">' + Locale.translate('InsertAnchor') + '</h1>' +   //TODO: Rename to link when you get strings
@@ -849,14 +851,14 @@
       },
 
        /**
-       * Function that creates the Image Dialog. This can be customized by making a modal with ID `#editor-modal-image`
+       * Function that creates the Image Dialog. This can be customized by making a modal with ID `#modal-image-{this.id}`
        */
       createImageModal: function() {
-        var imageModal = $('#editor-modal-image');
+        var imageModal = $('#modal-image-' + this.id);
         if (imageModal.length > 0) {
           return imageModal;
         }
-        return $('<div class="modal editor-modal-image" id="editor-modal-image"></div>')
+        return $('<div class="modal editor-modal-image" id="modal-image-'+ this.id +'"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
               '<h1 class="modal-title">' + Locale.translate('InsertImage') + '</h1>' +
@@ -1484,7 +1486,7 @@
           selparent = rng.commonAncestorContainer || rng.parentElement();
           // Look for an element *around* the selected range
           for (el = selparent; el !== container; el = el.parentNode) {
-            if (el.tagName && el.tagName.toLowerCase() === tagname) {
+            if (el && el.tagName && el.tagName.toLowerCase() === tagname) {
               return el;
             }
           }
@@ -1991,7 +1993,7 @@
         this.destroyToolbar();
         this.sourceView.remove();
         if ($('[data-editor="true"]').length === 1) {
-          $('#editor-modal-url, #editor-modal-image').remove();
+          $('#modal-url-'+ this.id +', #modal-image-'+ this.id).remove();
         }
         $.removeData(this.element[0], pluginName);
       },

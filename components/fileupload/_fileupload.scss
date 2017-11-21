@@ -1,85 +1,86 @@
 // File Upload
 //================================================== //
+.field-fileupload {
+  input[type="text"] {
+    padding-right: 56px;
+    text-overflow: ellipsis;
+  }
 
-label.fileupload {
-  display: inline-block;
-  margin-left: -34px;
-  position: absolute;
-  top: 18px;
-
-  // Label
-  span.trigger {
+  .trigger,
+  .trigger-close {
     cursor: pointer;
     display: inline-block;
-    height: 34px;
+    margin-left: -36px;
     outline: 0;
-    padding-top: 14px;
-    position: relative;
     text-align: center;
     width: 36px;
 
-    &.trigger {
-
-      .icon {
-        fill: $trigger-icon-fill-color;
-        height: 14px;
-        width: 14px;
-      }
-
-      &:hover {
-        .icon {
-          fill: $trigger-hover-color;
-        }
-      }
-
-      &:active .icon {
-        fill: $trigger-active-color;
-      }
-    }
-  }
-}
-
-// Make this flow offscreen
-label.fileupload input[type="file"],
-input.fileupload[type="file"] {
-  left: -10000px;
-  position: fixed;
-
-  &:disabled + span:not(.audible),
-  &:disabled + label.fileupload {
-
-    .trigger {
-      cursor: default;
+    &.trigger-close {
+      display: none;
+      margin-left: -50px;
     }
 
-    svg {
-      fill: $input-disabled-border-color;
+    .icon {
+      fill: $trigger-icon-fill-color;
+      height: 14px;
+      top: 2px;
+      width: 14px;
     }
 
     &:hover {
-      svg {
-        fill: $input-disabled-border-color;
+      .icon {
+        fill: $trigger-hover-color;
+      }
+    }
+
+    &:active .icon {
+      fill: $trigger-active-color;
+    }
+  }
+
+  label {
+    &.fileupload {
+      display: inline-block;
+    }
+  }
+
+  //Allows fileupload to be readonly without textarea readonly styling
+  input {
+    &.fileupload-background-transparent {
+      background-color: transparent;
+      padding-right: 50px;
+      text-overflow: ellipsis;
+
+      &.readonly {
+        background-color: $input-readonly-bg-color;
       }
     }
   }
-}
 
-.field-fileupload {
-  input[type="text"] {
-    padding-right: 30px;
-    text-overflow: ellipsis;
+  // Make this flow offscreen
+  label.fileupload input[type="file"],
+  input.fileupload[type="file"] {
+    left: -10000px;
+    position: fixed;
+
+    &:disabled + span:not(.audible),
+    &:disabled + label.fileupload {
+
+      .trigger {
+        cursor: default;
+      }
+
+      svg {
+        fill: $input-disabled-border-color;
+      }
+
+      &:hover {
+        svg {
+          fill: $input-disabled-border-color;
+        }
+      }
+    }
   }
-}
-
-//Allows fileupload to be readonly without textarea readonly styling
-input.fileupload-background-transparent {
-  background-color: transparent;
-  padding-right: 30px;
-  text-overflow: ellipsis;
-}
-
-input.fileupload-background-transparent.readonly {
-  background-color: $input-readonly-bg-color;
 }
 
 // File Upload Advanced
@@ -190,7 +191,9 @@ input.fileupload-background-transparent.readonly {
 
         span {
           @include font-size(14);
-          padding-top: 5px;
+          margin-left: -2.5px;
+          margin-right: -2.5px;
+          padding: 5px;
         }
 
         input[type="file"] {
@@ -214,6 +217,7 @@ input.fileupload-background-transparent.readonly {
       &.is-focus {
         .hyperlink {
           border-color: $fileupload-droparea-dd-hover-border-color;
+          box-shadow: $focus-box-shadow;
         }
       }
 
@@ -407,20 +411,6 @@ input.fileupload-background-transparent.readonly {
   }
 }
 
-@include respond-to(phone) {
-  .is-safari {
-    .modal {
-      label.fileupload {
-        position: absolute;
-      }
-    }
-  }
-
-  label.fileupload {
-    margin-left: -36px;
-  }
-}
-
 // OVERWRITES
 //================================================== //
 
@@ -430,39 +420,30 @@ input.fileupload-background-transparent.readonly {
   background-color: rgba($white, 0);
 }
 
-// Safari Hack
-.is-safari {
-  label.fileupload {
-    position: static;
-  }
-
-  .field-fileupload .icon-dirty {
-    margin-top: 9px;
-  }
-}
-
 // RTL Styles
 html[dir='rtl'] {
-
-  label.fileupload {
-    margin-left: inherit;
-    margin-right: -34px;
-
-    // Make this flow offscreen
-    input[type="file"] {
-      left: auto;
-      right: -1000px;
-    }
-  }
-
   .field-fileupload {
     input[type="text"] {
-      padding-left: 30px;
-      padding-right: 10px;
+      padding-left: 56px;
+      padding-right: 8px;
     }
 
-    .trigger .icon {
-      left: 1px;
+    .trigger,
+    .trigger-close {
+      margin-left: inherit;
+      margin-right: -30px;
+
+      &.trigger-close {
+        margin-left: inherit;
+        margin-right: -50px;
+      }
+    }
+
+    // Make this flow offscreen
+    label.fileupload input[type="file"],
+    input.fileupload[type="file"] {
+      left: auto;
+      right: -10000px;
     }
   }
 

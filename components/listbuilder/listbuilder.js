@@ -263,7 +263,7 @@
           self.arrangeApi.updated();
           self.editItem(true);
 
-          data = self.dataset[index];
+          data = {index: index, data: self.dataset[index]};
           self.element.triggerHandler('afteradd', [data]);
         });
       },
@@ -463,7 +463,7 @@
           nodes = $('li', this.ul),
           lv = $('.listview', this.element).data('listview');
 
-        lv.unselectRowsBetweenIndexes([0, nodes.length-1]);
+        lv.deselectItemsBetweenIndexes([0, nodes.length-1]);
         this.settings.dataset = ds;
         lv.loadData(this.settings.dataset);
 

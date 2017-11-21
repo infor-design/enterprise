@@ -210,7 +210,7 @@
         });
 
         //Attach button click and touch
-        this.pagerBar.onTouchClick('pager', 'a').on('click.pager', 'a', function (e) {
+        this.pagerBar.on('click.pager', 'a', function (e) {
           var li = $(this).parent();
           e.preventDefault();
 
@@ -233,7 +233,7 @@
             return false;
           }
 
-         if (li.is('.pager-last')) {
+          if (li.is('.pager-last')) {
             self.setActivePage(self.pageCount(), false, 'last');  //TODO Calculate Last Page?
             return false;
           }
@@ -265,7 +265,36 @@
             setTimeout(function () {
               parent.attr('tabindex', '0');
             }, 0);
+          // Handle pressing Enter on arrow icons and prevent pagerBar.onTouchClick from being triggered
+          } else if (key === 13) {
+            var li = $(this).parent();
+            e.preventDefault();
+
+            if ($(this).attr('disabled')) {
+              return;
+            }
+
+            if (li.is('.pager-prev')) {
+              self.setActivePage(self.activePage - 1, false, 'prev');
+              return false;
+            }
+
+            if (li.is('.pager-next')) {
+              self.setActivePage((self.activePage === -1 ? 0 : self.activePage)  + 1, false, 'next');
+              return false;
+            }
+
+            if (li.is('.pager-first')) {
+              self.setActivePage(1, false, 'first');
+              return false;
+            }
+
+            if (li.is('.pager-last')) {
+              self.setActivePage(self.pageCount(), false, 'last');  //TODO Calculate Last Page?
+              return false;
+            }
           }
+
           btn = $('a', btn).length ? btn : $(':text', btn);
           if (btn.length && !btn.is('[disabled]')) {
             btn.focus();
@@ -401,6 +430,9 @@
           }).on('keydown', function (e) {
             if (e.which === 13) {
               self.setActivePage(parseInt($(this).val()), false, 'page');
+
+              e.stopPropagation();
+              e.preventDefault();
             }
           });
         }
@@ -556,13 +588,7 @@
           }
         }
 
-        // Hide the entire pager bar if we're only showing one page, if applicable
-        if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
-          this.pagerBar[0].classList.add('hidden');
-        }
-
-        // Hide the entire pager bar if both sides are disabled, if applicable
-        if ((pagingInfo.firstPage === true && pagingInfo.lastPage === true) && pagingInfo.hideDisabledPagers) {
+        if (this.hidePagerBar(pagingInfo)) {
           this.pagerBar[0].classList.add('hidden');
         }
 
@@ -586,7 +612,7 @@
       },
 
       // Render Paged Items
-      renderPages: function(op) {
+      renderPages: function(op, callback) {
         var expr,
           self = this,
           request = {
@@ -620,6 +646,10 @@
               // This method should also tell the Pager how to re-render itself.
               self.settings.componentAPI.loadData(data, pagingInfo, true);
 
+              if (callback && typeof callback === 'function') {
+                callback(true);
+              }
+
               setTimeout(function () {
                 self.element.trigger('afterpaging', pagingInfo);
               },1);
@@ -648,7 +678,7 @@
 
             self.updatePagingInfo(request);
 
-            if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function') {
+            if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function' && request.type && request.type !=='initial') {
               self.settings.componentAPI.renderRows();
             }
 
@@ -712,6 +742,19 @@
         }
 
         this.renderBar(pagingInfo);
+      },
+
+      // to reclaim the pager height so that datagrid can use it's full container
+      hidePagerBar: function(pagingInfo) {
+        if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
+          return true;
+        }
+
+        if ((pagingInfo.firstPage === true && pagingInfo.lastPage === true) && pagingInfo.hideDisabledPagers) {
+          return true;
+        }
+
+        return false;
       },
 
       /**

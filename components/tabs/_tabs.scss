@@ -135,6 +135,7 @@
 
   &.is-visible {
     @include tab-outline-focus;
+    box-shadow: $focus-box-shadow;
   }
 }
 
@@ -317,7 +318,7 @@
   }
 
   > .tab-list-container {
-    margin-bottom: -17px; // Hide the scrollbar
+    margin-bottom: -18px; // Hide the scrollbar
 
     > .tab-list {
       display: inline-block;
@@ -411,8 +412,9 @@
       &.has-popupmenu {
         .icon {
           height: 16px;
-          margin: 0 0 0 -10px;
+          margin: 0 0 0 -5px;
           width: 32px;
+          position: static;
         }
 
         .icon-error {
@@ -562,7 +564,8 @@
   .icon.icon-error {
     height: 14px;
     // scss-lint:disable ImportantRule
-    left: auto !important;
+    left: 7px;
+    top: 8px;
     // scss-lint:enable ImportantRule
     width: 14px;
   }
@@ -676,4 +679,43 @@ html[dir='rtl'] {
   .tab-focus-indicator {
     right: auto;
   }
+}
+
+// Special Style introduced on SOHO-5680
+.tab-container.tab-borders {
+  background-color: $panel-bg-color;
+  border: 1px solid $panel-border-color;
+  border-bottom: 0;
+
+  .tab-more {
+    background-color: $panel-bg-color;
+  }
+
+  .tab.is-selected a {
+    font-weight: bold;
+  }
+
+  + .tab-panel-container {
+    border: 1px solid $panel-border-color;
+
+    // Nested Tabs
+    .tab-panel-container,
+    .tab-container {
+      border-bottom: 0;
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .tab-panel {
+      .tab-container:first-child {
+        margin-top: -21px;
+      }
+    }
+  }
+
+  .animated-bar {
+    height: 5px;
+    margin-top: -2px;
+  }
+
 }

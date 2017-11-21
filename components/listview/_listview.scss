@@ -20,7 +20,8 @@
     outline: none;
   }
 
-  .listview-heading {
+  .listview-heading,
+  .listview-data {
     @include ellipsis();
     @include font-size(14);
     color: $listview-color;
@@ -32,20 +33,31 @@
     }
   }
 
-  .listview-image-round {
-    border-radius: 50%;
-    display: inline-block;
+  .image-user-status {
     float: left;
-    height: 70px;
-    margin-right: 20px;
-    width: 70px;
+    padding-right: 10px;
+  }
+
+  .listview-heading-lg {
+    @include font-size(18);
+    display: block;
+    margin: 8px 0 5px;
+    vertical-align: top;
+
+    .icon-favorite {
+      display: inline;
+      margin-top: -10px;
+      position: absolute;
+      vertical-align: top;
+    }
   }
 
   .listview-image-column {
     width: 100px;
   }
 
-  .listview-subheading {
+  .listview-subheading,
+  .listview-data-label {
     @include font-size(12);
     color: $listview-secondary-color;
     overflow-wrap: break-word;
@@ -124,6 +136,7 @@
       // scss-lint:disable ImportantRule - need for modal dialog (personalization in grid)
       border-color: $primary-color !important;
       // scss-lint:enable ImportantRule
+      box-shadow: $focus-box-shadow;
       outline: none;
 
       + li {
@@ -166,14 +179,20 @@
 
     &.alert {
       // scss-lint:disable ImportantRule
-      border-left-color: $alert-yellow !important;
+      border-left-color: $alert-orange !important;
       // scss-lint:enable ImportantRule
 
       .days,
       .hours,
       .day-sign,
       .hour-sign {
-        color: $alert-yellow;
+        color: $alert-orange;
+      }
+
+      .icon-alert {
+        // scss-lint:disable ImportantRule
+        fill: $alert-orange !important;
+        // scss-lint:enable ImportantRule
       }
     }
 
@@ -351,8 +370,17 @@
     }
   }
 
-  li.is-selected,
-  tr.is-selected {
+  li.is-selected:not(.hide-selected-color),
+  tr.is-selected:not(.hide-selected-color) {
+    background-color: $selected-bg-color;
+
+    &:hover {
+      background-color: $selected-bg-color;
+    }
+  }
+
+  li.is-activated,
+  tr.is-activated {
     background-color: $selected-bg-color;
 
     &:hover {
@@ -379,33 +407,23 @@
     padding-left: 45px;
     position: relative;
 
-    &::before {
-      @include checkbox-unchecked-before-style;
-      height: 14px;
-      left: 19px;
-      margin-left: 0;
-      top: 12px;
-      width: 14px;
+    .listview-selection-checkbox {
+      left: 18px;
+      margin-top: 2px;
+      position: absolute;
     }
 
-    &.is-selected::before {
-      @include checkbox-checked-before-style;
-    }
+    &.is-disabled {
+      .listview-selection-checkbox .label-text {
+        cursor: default;
+      }
 
-    &.is-selected::after {
-      @include checkbox-checked-after-style;
-      @include css3(transform-origin, -11px top 0);
-      @include checkbox-animation;
-      height: 9px;
-      left: 24px;
-      margin-top: 0;
-      top: 17px;
-    }
-
-    &:hover:not(.is-disabled):not(.is-selected):not(.is-error),
-    &:focus:not(.is-disabled):not(.is-selected):not(.is-error) {
-      &::before {
-        border-color: $listview-color;
+      .listview-selection-checkbox .label-text::before,
+      .listview-selection-checkbox .checkbox:hover label-text::before {
+        // scss-lint:disable ImportantRule
+        border-color: $listview-disabled-color !important;
+        // scss-lint:enable ImportantRule
+        opacity: .5;
       }
     }
 
@@ -646,6 +664,10 @@
       }
     }
   }
+
+  .icon-favorite {
+    top: 10px;
+  }
 }
 
 .ios .listview {
@@ -714,7 +736,8 @@ html[dir='rtl'] {
     }
 
     .l-pull-right {
-      .icon-error {
+      .icon-error,
+      .icon-alert {
         left: auto;
         right: -10px;
       }

@@ -25,6 +25,11 @@
            <input id="context-desc" name="context-desc" ng-model="pageTitle">
           </div>
 
+          <div class="field">
+            <input type="checkbox" class="checkbox" id="upsert-column-dialog-checkbox" ng-model="ctrl.column.sortable">
+            <label for="upsert-column-dialog-checkbox" class="checkbox-label">Sortable</label>
+          </div>
+
           <div class="modal-buttonset">
             <button type="button" class="btn-modal" ng-click="cancel()">{{cancelLabel}}</button>
             <button type="button" id="submit" class="btn-modal-primary" ng-click="submit()">{{submitLabel}}</button>
@@ -39,6 +44,7 @@
 
 <script>
   var controller = $('.modal').find('[data-ng-controller]');
+
   if (controller.length > 0) {
     $('.modal').attr('data-ng-controller', controller.attr('data-ng-controller'));
     controller.removeAttr('data-ng-controller');
@@ -56,6 +62,12 @@
 
     $scope.submit = function () {
       alert('Submit Clicked');
+      $('#modal-1').data('modal').close();
+    };
+
+    $scope.cancel = function () {
+      alert('Cancel Clicked');
+      $('#modal-1').data('modal').close();
     };
   });
 

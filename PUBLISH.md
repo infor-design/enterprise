@@ -79,41 +79,65 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 - Update dev53
 - add label to successful build
 
-# How To Make Release (4.3.2)
+# How To Publish to AWS
+
+Only needed for debugging/publishing versions.
+
+- Setup now so you can run `grunt publish` and then `npm run publish-aws`. For some reason the && doesnt work here so need to run both commands.
+- Also install AWS for testing and configuring http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+- Once installed run aws configure to enter the keys in the right spot http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+
+
+# How To Make Release (4.3.3)
 
 ## Info
 * Check ChangeLog.md is updated this info is distributed by email
 * Create new version in Jira and mark current as released https://jira/plugins/servlet/project-config/SOHO/versions
 * Generate Release Notes http://bit.ly/2w6X8Xw
+* Add version to board
 
 ## Git Operations
-* Edit version in package.json and publish package.json (from 4.3.1-rc to 4.3.1 as an example)
+* Edit version in package.json and publish package.json (from 4.3.3-rc to 4.3.3 as an example)
 * Push a PR
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests and make sure all merged
-* Merge  4.3.1-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
+* Merge  4.3.3-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
 * Git Tag the release from the 4.3.x branch
 ```bash
- git tag 4.3.1
+ git tag 4.3.3
  git push origin --tags
 ```
-* Delete the 4.2.6-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
-* Make the new branch off 4.3.x for the new version (4.3.2-rc)
-  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.2-rc branch as the default
+* Make the new branch off 4.3.x for the new version (4.3.3-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.3-rc branch as the default
   * set branch permissions
+* Delete the 4.3.3-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
+
 
 ## Build Operations
-* Change the v-Next build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-NEXT-JOB1
-  * change the name to 4.3.2 (v next)
+* Change the v-Next build http://bamboo.infor.com/chain/admin/config/editChainDetails.action?buildKey=SOHO-NEXT
+  * change the name to 4.3.3-RC (Version Next)
   * change the repo it points to
+  * checkout 4.3.3-rc and bump the versions in package.json and publish/package.json
 * Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
   * change the versions in the build config
-  * Label the build release-431 for example http://bamboo.infor.com/browse/label/release-431
+  * Label the build release-432 for example http://bamboo.infor.com/browse/label/release-432
+
+## Update version in @infor/sohoxi-angular
+* Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
+* Bump version in package.json and publish/package.json
+* Commit, tag and push changes
+* Update the build to the next release
+* Test
+```bash
+npm info @infor/sohoxi-angular dist-tags
+```
 
 ## Test Out Operations
 * Test Npm packages and rebuild if you got it wrong
-* New and old links for example:
-http://usalvlhlpool1.infor.com/4.3.1/components/
-http://usalvlhlpool1.infor.com/4.3.2-rc/components/
+git chec
+npm view @infor/sohoxi versions
+* Test New and old links for example:
+http://usalvlhlpool1.infor.com/4.3.2/components/
+http://usalvlhlpool1.infor.com/4.3.3-rc/components/
 
 ## Deploy Site Operations
 
@@ -129,18 +153,15 @@ docker rm 6410bbcfd5e2
 docker images | grep <name>
 docker rmi PID
 ```
+* Deploy to AWS
 
-## Update version in @infor/sohoxi-angular
-* Clone repo
 ```bash
-$ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
+AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.3.3 -v
 ```
-* Bump version in package.json to match new version of `@infor/sohoxi`
-* Bump `@infor/sohoxi's verion` under dependencies to match new version (i.e "^4.2.3-develop")
-* Commit, tag and push changes
 
 ## Notify
-- On Slack, Teams, By Email ect.
+- On Slack, MS Teams, And Dev's by Email ect.
+- Partners: Jeff Shoneman (PMA) <jeff@projectmanagementassociates.com>
 
 # How To Sync SoHo Staging Site to prod
 

@@ -44,7 +44,9 @@
         cellNavigation: false,
         toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
       }).on('selected', function (e, args) {
-        console.log(args);
+        if (args[0]) {
+          console.log(args[0].idx, args[0].data.productId, args[0].elem);
+        }
       }).data('datagrid');
 
       grid.selectedRows([0]);

@@ -44,12 +44,13 @@
 
     &:focus,
     &.focusbody {
-      border-color: $input-focus-border-color;
+      @include focus-state();
     }
   }
 
   .modal-body-wrapper {
     margin-bottom: 20px;
+    overflow: visible;
   }
 
   .additional-content {
@@ -71,7 +72,6 @@
     padding: 10px;
 
     &:focus {
-      border: 1px solid $azure06;
       outline: none;
     }
   }

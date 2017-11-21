@@ -33,7 +33,7 @@
         parentElement: null,
         keepOpen: false,
         extraClass: null,
-        placementOpts: undefined,
+        placementOpts: {},
         maxWidth: null
       };
 
@@ -183,8 +183,9 @@
         function toggleTooltipDisplay() {
           if (!self.tooltip.hasClass('is-hidden')) {
             self.hide();
+          } else {
+            self.show();
           }
-          self.show();
         }
 
         if (this.settings.trigger === 'click') {
@@ -376,8 +377,25 @@
           contentArea.html(content);
         }
 
+        if (!this.settings.placementOpts) {
+          this.settings.placementOpts = {};
+        }
+
+        if (!this.settings.placementOpts.parent) {
+          this.settings.placementOpts.parent = this.element;
+        }
+
         content[0].classList.remove('hidden');
         contentArea[0].firstElementChild.classList.remove('hidden');
+
+        var popoverWidth = this.settings.content.width();
+        var parentWidth = this.settings.placementOpts.parent.width();
+
+        if (Locale.isRTL()) {
+          this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'left' : 'right';
+        } else {
+          this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'right' : 'left';
+        }
 
         if (this.settings.title !== null) {
           if (!title) {
@@ -388,7 +406,12 @@
             titleFrag.appendChild(title);
             this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);
           } else {
+            title.style.display = '';
             title.childNodes[0].nodeValue = this.settings.title;
+          }
+        } else {
+          if(title) {
+            title.style.display = 'none';
           }
         }
 
@@ -486,7 +509,9 @@
             }
           });
 
-          if (self.settings.isError && !self.element.is(':visible') && !self.element.is('.dropdown')) {
+          if (self.settings.isError &&
+              !self.element.is(':visible, .dropdown') &&
+              self.element.is('[aria-describedby]')) {
             self.hide();
           }
 
@@ -519,7 +544,6 @@
               self.hide();
             });
           }
-
           self.element.trigger('aftershow', [self.tooltip]);
         }, 400);
 
@@ -645,6 +669,10 @@
         this.element.removeAttr('aria-describedby').removeAttr('aria-haspopup');
         if (!this.tooltip.hasClass('is-hidden')) {
           this.hide();
+        }
+
+        if (this.tooltip && this.tooltip.data('place')) {
+          this.tooltip.data('place').destroy();
         }
 
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');

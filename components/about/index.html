@@ -26,6 +26,27 @@
 <p>Progamatically Close the About Dialog.</p>
 <h4 id="destroy">destroy</h4>
 <p>Teardown and remove any added markup and events.</p>
+<h2 id="beforeclose">beforeclose</h2>
+<p>Fires before the dialog is closing. You can return false syncronously to delay closing.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><code>event</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The jquery event object.<br /></li>
+<li><code>ui</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The dialog object</li>
+</ul>
+<h2 id="close-1">close</h2>
+<p>Fires as the dialog is closing</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><code>event</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The jquery event object.<br /></li>
+<li><code>ui</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The dialog object</li>
+</ul>
+<h2 id="afterclose">afterclose</h2>
+<p>Fires after the dialog has closed in the DOM entirely.</p>
+<p><strong>Properties</strong></p>
+<ul>
+<li><code>event</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The jquery event object.<br /></li>
+<li><code>ui</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The dialog object</li>
+</ul>
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke the about dialog on demand, passing in some content, version info and the product name and product line.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">

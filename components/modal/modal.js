@@ -69,6 +69,14 @@
 
         self.isCancelled = false;
 
+        if (window.history && window.history.pushState) {
+          $(window).off('popstate.modal');
+
+          $(window).on('popstate.modal', function() {
+            self.destroy();
+          });
+        }
+
         //ensure is appended to body for new dom tree
         if (this.settings.content) {
 
@@ -110,11 +118,7 @@
             isAppended = true;
             this.element = this.settings.content.closest('.modal');
           } else {
-            var self = this,
-              body = self.element.find('.modal-body');
-
-            body.append(self.settings.content);
-            Soho.utils.fixSVGIcons(body);
+            this.element.find('.modal-body').append(this.settings.content);
           }
 
           if (this.settings.content instanceof jQuery){
@@ -137,6 +141,8 @@
         if (!isAppended) {
           this.addButtons(this.settings.buttons);
         }
+
+        Soho.utils.fixSVGIcons(this.element);
       },
 
       reStructure: function() {
@@ -250,9 +256,11 @@
           buttonset.empty();
         }
 
-        $.each(buttons, function (name, props) {
+        var decorateButtons = function(props, cnt) {
+
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
+          btn.attr('type', props.type || 'button');
 
           if (props.cssClass === 'separator') {
             btn = $('<div class="separator"></div>');
@@ -275,9 +283,9 @@
           var attrs = {},
             attrTypes = ['id', 'name', 'text'];
 
-          for (var i = 0; i < attrTypes.length; i++) {
-            if (props[attrTypes[i]]) {
-              attrs[attrTypes[i]] = props[attrTypes[i]];
+          for (var k = 0; k < attrTypes.length; k++) {
+            if (props[attrTypes[k]]) {
+              attrs[attrTypes[k]] = props[attrTypes[k]];
             }
           }
 
@@ -297,13 +305,13 @@
             }).prependTo(btn);
           }
 
-          if (props.id) {
-            btn.attr('id', props.id);
-          }
+          btn.attr('id', props.id || $.fn.uniqueId('button', 'modal'));
+
+          var func = buttons[cnt].click;
 
           btn.on('click.modal', function(e) {
-            if (props.click) {
-              props.click.apply(self.element[0], [e, self]);
+            if (func) {
+              func.apply(self.element[0], [e, self]);
               return;
             }
             self.close();
@@ -316,7 +324,11 @@
           btn.button();
           buttonset.append(btn);
 
-        });
+        };
+
+        for (var cnt = 0; cnt < buttons.length; cnt++) {
+          decorateButtons(buttons[cnt], cnt);
+        }
 
       },
 
@@ -581,31 +593,55 @@
       keepFocus: function() {
         var self = this, tabbableElements;
 
-          $(self.element).on('keypress.modal keydown.modal', function (e) {
-            var keyCode = e.which || e.keyCode;
-
-            if (keyCode === 27) {
-              setTimeout(function () {
-                self.close();
-              }, 0);
-            }
-
-            if (keyCode === 9) {
-              tabbableElements = self.getTabbableElements();
-
-              // Move focus to first element that can be tabbed if Shift isn't used
-              if (e.target === tabbableElements.last && !e.shiftKey) {
-                e.preventDefault();
-                tabbableElements.first.focus();
-              } else if (e.target === tabbableElements.first && e.shiftKey) {
-                e.preventDefault();
-                tabbableElements.last.focus();
+        // Escape key
+        $(document).on('keyup.modal', function (e) {
+          var keyCode = e.which || e.keyCode;
+          if (keyCode === 27) {
+            var modals = $('.modal.is-visible'),
+              doAction = function(api) {
+                if (!api.element.data('listclosed')) {
+                  api.close();
+                }
+                setTimeout(function() {
+                  api.element.removeData('listclosed');
+                }, 0);
+              };
+            if (modals.length > 1) {
+              modals.not(':last').on('beforeclose.modal', function () {
+                return false;
+              });
+              modals.on('afterclose.modal', function () {
+                modals.off('beforeclose.modal');
+              });
+              var apiModal = modals.last().data('modal');
+              if (apiModal && apiModal.close) {
+                doAction(apiModal);
               }
+            } else {
+              doAction(self);
+            }
+          }
+        });
 
-              self.element.find('#message-title').removeAttr('tabindex');
+        $(self.element).on('keypress.modal keydown.modal', function (e) {
+          var keyCode = e.which || e.keyCode;
+
+          if (keyCode === 9) {
+            tabbableElements = self.getTabbableElements();
+
+            // Move focus to first element that can be tabbed if Shift isn't used
+            if (e.target === tabbableElements.last && !e.shiftKey) {
+              e.preventDefault();
+              tabbableElements.first.focus();
+            } else if (e.target === tabbableElements.first && e.shiftKey) {
+              e.preventDefault();
+              tabbableElements.last.focus();
             }
 
-          });
+            self.element.find('#message-title').removeAttr('tabindex');
+          }
+
+        });
       },
 
       close: function (destroy) {
@@ -695,6 +731,8 @@
 
           self.element.closest('.modal-page-container').remove();
           $.removeData(self.element[0], 'modal');
+
+          $(window).off('popstate.modal');
         }
 
         if (!this.isOpen()) {

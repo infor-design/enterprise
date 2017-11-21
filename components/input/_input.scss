@@ -36,16 +36,24 @@
     -webkit-text-fill-color: $input-readonly-color;
   }
 
-
   &.is-placeholder {
     color: $input-placeholder-color;
 
     &.error {
       color: $error-color;
     }
-  }
 
-  &:focus {
+    &.alert {
+      color: $alert-color;
+    }
+
+    &.info {
+      color: $info-color;
+    }
+    }
+
+  &:focus,
+  &.is-focused {
     @include focus-state();
   }
 
@@ -56,6 +64,40 @@
       // Needed for printing
       // scss-lint:disable ImportantRule
       border-color: $error-color !important;
+      box-shadow: $error-focus-box-shadow !important;
+      color: $input-color !important;
+    }
+  }
+
+  &.alert {
+    border-color: $alert-color;
+
+    &:focus {
+      // Needed for printing
+      // scss-lint:disable ImportantRule
+      border-color: $alert-color !important;
+      color: $input-color !important;
+    }
+  }
+
+  &.confirm {
+    border-color: $confirm-color;
+
+    &:focus {
+      // Needed for printing
+      // scss-lint:disable ImportantRule
+      border-color: $confirm-color !important;
+      color: $input-color !important;
+    }
+  }
+
+  &.info {
+    border-color: $info-color;
+
+    &:focus {
+      // Needed for printing
+      // scss-lint:disable ImportantRule
+      border-color: $info-color !important;
       color: $input-color !important;
     }
   }
@@ -103,7 +145,6 @@
   }
 
 }
-
 
 // Field Style
 .field .checkbox-label,
@@ -160,6 +201,14 @@
   margin-top: -10px;
 }
 
+.attach-up-relative {
+  top: -15px;
+}
+
+.attach-up-relative-x2 {
+  top: -35px;
+}
+
 .field {
   margin-bottom: 20px;
   position: relative;
@@ -194,6 +243,10 @@
 
   &.field-radio {
     margin-bottom: 10px;
+
+    .icon-dirty {
+      left: -2px;
+    }
   }
 
   &.field-checkbox {
@@ -239,7 +292,16 @@
   &.top-padding {
     margin-top: 3rem;
   }
+}
 
+.field-pane {
+  height: 0;
+  overflow: hidden;
+  padding: 0 0 0 25px;
+
+  .field-content {
+    padding: 20px 0;
+  }
 }
 
 //Clearable input fx on search or input/clearable
@@ -259,6 +321,19 @@
   }
 }
 
+[data-clearable="true"] {
+  padding-right: 32px;
+
+  & + .icon.close {
+    margin-left: -30px;
+    right: auto;
+
+    &:hover {
+      fill: $trigger-hover-color;
+    }
+  }
+}
+
 .is-disabled {
   .icon.close {
     cursor: default;
@@ -270,6 +345,40 @@
 input,
 textarea {
   @include input-style();
+}
+
+// Element with input "like" style borders
+.input-style {
+  background-color: $input-bg-color;
+  border: 1px solid $input-border-color;
+  border-collapse: separate;
+
+  &:hover,
+  &.is-hovered {
+    border-color: $input-hover-border-color;
+  }
+
+  &[disabled],
+  &.is-disabled {
+    background-color: $input-disabled-bg-color;
+    border: solid 1px $input-disabled-border-color;
+    -webkit-text-fill-color: $input-disabled-color;
+  }
+
+  &[readonly],
+  &.is-readonly {
+    background-color: $input-readonly-bg-color;
+    border-color: $input-readonly-border-color;
+    -webkit-text-fill-color: $input-readonly-color;
+  }
+
+  &.is-placeholder {
+    color: $input-placeholder-color;
+  }
+
+  &.is-focused {
+    @include focus-state();
+  }
 }
 
 // Text Area
@@ -417,6 +526,72 @@ label,
 
 .error:-ms-input-placeholder {
   color: $error-color;
+  opacity: 1;
+}
+
+// Alert States
+.alert,
+.alert-message,
+.alert-message p {
+  color: $alert-color;
+}
+
+.alert::-webkit-input-placeholder {
+  color: $alert-color;
+  opacity: 1;
+}
+
+.alert::-moz-placeholder {
+  color: $alert-color;
+  opacity: 1;
+}
+
+.alert:-ms-input-placeholder {
+  color: $alert-color;
+  opacity: 1;
+}
+
+// Confirm States
+.confirm,
+.confirm-message,
+.confirm-message p {
+  color: $confirm-color;
+}
+
+.confirm::-webkit-input-placeholder {
+  color: $confirm-color;
+  opacity: 1;
+}
+
+.confirm::-moz-placeholder {
+  color: $confirm-color;
+  opacity: 1;
+}
+
+.confirm:-ms-input-placeholder {
+  color: $confirm-color;
+  opacity: 1;
+}
+
+// Information States
+.info,
+.info-message,
+.info-message p {
+  color: $info-color;
+}
+
+.info::-webkit-input-placeholder {
+  color: $info-color;
+  opacity: 1;
+}
+
+.info::-moz-placeholder {
+  color: $info-color;
+  opacity: 1;
+}
+
+.info:-ms-input-placeholder {
+  color: $info-color;
   opacity: 1;
 }
 
@@ -569,6 +744,96 @@ label,
 
   @include font-size(12);
   color: $error-color;
+  display: block;
+  line-height: 1.2rem;
+  margin-top: 7px;
+  max-width: 300px;
+  position: relative;
+
+  .icon {
+    height: $icon-width;
+    left: 0;
+    margin-left: 0;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    width: $icon-width;
+  }
+
+  .message-text {
+    font-size: inherit;
+    line-height: 15px;
+    max-width: 280px;
+    padding-left: $icon-width + 5;
+  }
+}
+
+// Alert Field
+.alert-message {
+  $icon-width: 14px;
+
+  @include font-size(12);
+  color: $alert-color;
+  display: block;
+  line-height: 1.2rem;
+  margin-top: 7px;
+  max-width: 300px;
+  position: relative;
+
+  .icon {
+    height: $icon-width;
+    left: 0;
+    margin-left: 0;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    width: $icon-width;
+  }
+
+  .message-text {
+    font-size: inherit;
+    line-height: 15px;
+    max-width: 280px;
+    padding-left: $icon-width + 5;
+  }
+}
+
+// Confirm Field
+.confirm-message {
+  $icon-width: 14px;
+
+  @include font-size(12);
+  color: $confirm-color;
+  display: block;
+  line-height: 1.2rem;
+  margin-top: 7px;
+  max-width: 300px;
+  position: relative;
+
+  .icon {
+    height: $icon-width;
+    left: 0;
+    margin-left: 0;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    width: $icon-width;
+  }
+
+  .message-text {
+    font-size: inherit;
+    line-height: 15px;
+    max-width: 280px;
+    padding-left: $icon-width + 5;
+  }
+}
+
+//Information Field
+.info-message {
+  $icon-width: 14px;
+
+  @include font-size(12);
+  color: $info-color;
   display: block;
   line-height: 1.2rem;
   margin-top: 7px;
@@ -751,6 +1016,16 @@ html[dir='rtl'] {
 
   [data-mask-mode="number"].spinbox {
     text-align: center;
+  }
+
+  [data-clearable="true"] {
+    padding-right: 10px;
+    padding-left: 32px;
+
+    & + .icon.close {
+      right: auto;
+      margin-right: -30px;
+    }
   }
 
   .field-short {

@@ -11,10 +11,15 @@
 
   &.is-focused {
     border-color: $input-focus-border-color;
+    box-shadow: $focus-box-shadow;
   }
 
   &:hover:not(.is-focused):not(.is-open):not(.is-disabled) {
     border-color: $input-hover-border-color;
+  }
+
+  &.error {
+    border-color: $error-color;
   }
 
   &.is-disabled {
@@ -32,6 +37,19 @@
       fill: $trigger-disabled-color !important;
     }
     // scss-lint:enable ImportantRule
+  }
+
+  &.color-only {
+    width: 70px;
+
+    input {
+      width: 0;
+    }
+
+    .trigger {
+      margin-left: -15px;
+    }
+
   }
 
   &.is-readonly {
@@ -171,6 +189,7 @@
       padding: 0;
 
       &:focus {
+        box-shadow: $focus-box-shadow;
         outline: 1px solid $primary-color;
       }
 

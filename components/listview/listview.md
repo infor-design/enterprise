@@ -10,6 +10,8 @@
 5. Paging Client Side [View Example]( ../components/listview/example-paging-clientside)
 6. Single Select [View Example]( ../components/listview/example-singleselect.html)
 7. Status Indicators [View Example]( ../components/listview/example-status)
+8. Click Events [View Example]( ../components/listview/example-click-events)
+9. Mixed Selection Mode [View Example]( ../components/listview/example-mixed-selection)
 
 {{api-details}}
 

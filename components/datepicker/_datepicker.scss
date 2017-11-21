@@ -2,7 +2,7 @@
 //================================================== *
 
 .datepicker {
-  width: 150px;
+  width: $datepicker-default-width;
 
   &.input-xs {
     width: $field-xs;
@@ -53,8 +53,9 @@
     }
   }
 
-  &.is-active {
+  &.is-open {
     border-color: $input-focus-border-color;
+    box-shadow: $focus-box-shadow;
 
     + .icon {
       fill: $datepicker-icon-active-color;
@@ -176,10 +177,6 @@
     //Today
     &.is-today,
     &.is-today:focus {
-      //border-color: $datepicker-today-color;
-      // color: $datepicker-today-color;
-      // font-weight: bold;
-
       span {
         color: $datepicker-today-color;
         font-weight: bold;
@@ -227,13 +224,10 @@
 
     &:focus {
       border-color: $datepicker-focus-border-color;
+      box-shadow: $focus-box-shadow;
       outline: none;
       -moz-outline-style: none;
     }
-
-    // &:focus:not(.is-selected) {
-    //   box-shadow: 0 0 0 2px $popover-bg-color inset;
-    // }
 
     &:active span {
       background-color: $datepicker-selected-bg-color;
@@ -467,7 +461,7 @@ html[dir='rtl'] {
   // Short fields
   .field-short {
     .datepicker {
-      padding-left: 18px;
+      padding-left: 24px;
       padding-right: 2px;
 
       + .icon {
@@ -495,7 +489,12 @@ html[dir='rtl'] {
 
     .month,
     .year {
-      line-height: 50px;
+      position: relative;
+      top: 15px;
+    }
+
+    .btn-icon {
+      top: 11px;
     }
   }
 
@@ -504,6 +503,8 @@ html[dir='rtl'] {
     .month,
     .year {
       line-height: normal;
+      position: relative;
+      top: 7px;
     }
 
     .calendar-header {

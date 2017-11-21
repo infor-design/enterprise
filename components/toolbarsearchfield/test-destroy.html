@@ -35,12 +35,10 @@
       var element = $('#regular-toolbar-searchfield');
       console.log(element.data());
 
-      if (element.data('searchfield')) {
-        element.data('searchfield').destroy();
+      if (element.data('toolbarsearchfield')) {
         element.data('toolbarsearchfield').destroy();
         $(this).text('Invoke');
       } else {
-        element.searchfield();
         element.toolbarsearchfield();
         console.log(element.data());
         $(this).text('Destroy');

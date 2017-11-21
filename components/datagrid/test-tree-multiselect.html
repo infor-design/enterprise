@@ -12,10 +12,10 @@
 
     //Define Columns for the Grid.
     columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250});
-    columns.push({ id: 'id', name: 'Id', field: 'id', width: 25,  formatter: Formatters.Hyperlink});
-    columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200});
-    columns.push({ id: 'time', name: 'Time', field: 'time', width: 60});
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+    columns.push({ id: 'time', name: 'Time', field: 'time'});
 
     //Get some data via ajax
     var url = '{{basepath}}api/tree-tasks';
@@ -29,8 +29,8 @@
         treeGrid: true,
         toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
       })
-      .on('selected', function (e, args) {
-        console.log(args);
+      .on('selected', function (e, args, action) {
+        console.log(args, action);
       });
 
     });

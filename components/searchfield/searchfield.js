@@ -21,10 +21,14 @@
     }
 
     // Settings and Options
-    var pluginName = 'searchfield',
+    var pluginName  = 'searchfield',
         defaults = {
+          resultsCallback: undefined,
           allResultsCallback: undefined,
           showAllResults: true,
+          showGoButton: false,
+          goButtonCopy: Locale.translate('Go') || 'Go',
+          goButtonAction: undefined, // if defined as a function, will fire this callback on the Go Button "click"
           categories: undefined, // If defined as an array, displays a dropdown containing categories that can be used to filter results.
           categoryMultiselect: false, // If true, creates a multiselectable Categories list
           showCategoryText: false, // If true, will show any available categories that are selected to the left of the Dropdown field.
@@ -118,14 +122,14 @@
         if (this.hasCategories()) {
           this.wrapper.addClass('has-categories');
 
-          this.button = this.wrapper.find('.btn, .searchfield-category-button');
-          if (!this.button.length) {
-            this.button = $('<button type="button" class="btn searchfield-category-button"></button>');
+          this.categoryButton = this.wrapper.find('.btn, .searchfield-category-button');
+          if (!this.categoryButton.length) {
+            this.categoryButton = $('<button type="button" class="btn searchfield-category-button"></button>');
           }
-          icon.appendTo(this.button);
-          icon = this.button;
+          icon.appendTo(this.categoryButton);
+          icon = this.categoryButton;
 
-          this.button.insertBefore(this.element);
+          this.categoryButton.insertBefore(this.element);
 
           if (this.settings.showCategoryText) {
             this.wrapper.addClass('show-category');
@@ -137,7 +141,7 @@
           }
           ddIcon.appendTo(icon);
 
-          var popupAPI = this.button.data('popupmenu');
+          var popupAPI = this.categoryButton.data('popupmenu');
           if (!popupAPI) {
             this.list = this.wrapper.find('ul.popupmenu');
             if (!this.list || !this.list.length) {
@@ -156,7 +160,7 @@
             this.setCategories(this.settings.categories);
 
             this.list.insertAfter(this.element);
-            this.button.popupmenu({
+            this.categoryButton.popupmenu({
               menu: this.list,
               offset: {
                 y: 10
@@ -170,6 +174,28 @@
           this.setCategoryButtonText();
         }
 
+        // Pull a Go Button from markup, if applicable.
+        var goButton = this.wrapper.next('.go-button');
+        if (!goButton.length) {
+          goButton = this.wrapper.find('.go-button');
+        }
+
+        if (goButton.length) {
+          this.settings.showGoButton = true;
+          this.goButton = goButton;
+          this.element.after(this.goButton);
+        }
+
+        // Add a "Go" Button from scratch if we enable the setting
+        if (this.settings.showGoButton && (!this.goButton || !this.goButton.length)) {
+          this.goButton = $('<button class="btn-secondary go-button"><span>'+ this.settings.goButtonCopy +'</span></button>');
+          this.goButton.attr('id', this.goButton.uniqueId('searchfield-go-button-'));
+          this.wrapper.addClass('has-go-button');
+          this.element.after(this.goButton);
+        } else {
+          this.wrapper.removeClass('has-go-button');
+        }
+
         // Hoist the 'alternate' CSS class to the wrapper, if applicable
         var isAlternate = this.element.hasClass('alternate');
         this.wrapper[isAlternate ? 'addClass' : 'removeClass']('alternate');
@@ -177,6 +203,8 @@
         if (this.settings.clearable) {
           this.element.clearable();
         }
+
+        this.calculateSearchfieldWidth();
 
         return this;
       },
@@ -205,6 +233,14 @@
        */
       hasCategories: function() {
         return this.settings.categories && $.isArray(this.settings.categories) && this.settings.categories.length > 0;
+      },
+
+      /**
+       * Detects the existence of a "Go" button added to the main searchfield API
+       * @returns {boolean}
+       */
+      hasGoButton: function() {
+        return this.settings.showGoButton && this.goButton && this.goButton.length;
       },
 
       /**
@@ -239,7 +275,7 @@
         });
 
         if (this.hasCategories()) {
-          this.button.on('selected.searchfield', function(e, anchor) {
+          this.categoryButton.on('selected.searchfield', function(e, anchor) {
             self.handleCategorySelected(e, anchor);
           }).on('focus.searchfield', function(e) {
             self.handleCategoryFocus(e);
@@ -247,6 +283,12 @@
             self.handleCategoryBlur(e);
           }).on('close.searchfield', function(e) { // Popupmenu Close
             self.handlePopupClose(e);
+          });
+        }
+
+        if (this.hasGoButton()) {
+          this.goButton.on('click.searchfield', function(e) {
+            return self.handleGoButtonClick(e);
           });
         }
 
@@ -298,7 +340,7 @@
 
             self.element.trigger('selected', [a, ret]);
             self.element.data('popupmenu').close();
-            e.preventDefault();
+            //e.preventDefault();
             return false;
           });
 
@@ -341,12 +383,12 @@
        * @returns {undefined}
        */
       setAsActive: function(force, doFocus) {
-        if (!force && this.element.hasClass('active')) {
+        if (!force && this.wrapper.hasClass('active')) {
           return;
         }
 
         // Activate
-        this.element.addClass('active');
+        this.wrapper.addClass('active');
         var toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
         if (toolbar.length) {
           toolbar.addClass('searchfield-active');
@@ -360,8 +402,6 @@
         if (doFocus === true) {
           this.element.focus();
         }
-
-        this.recalculateParent();
       },
 
       /**
@@ -376,8 +416,8 @@
         }
 
         // Don't close if a category is being selected from a category menu
-        if (this.button && this.button.length) {
-          var menu = this.button.data('popupmenu').menu;
+        if (this.categoryButton && this.categoryButton.length) {
+          var menu = this.categoryButton.data('popupmenu').menu;
           if (menu.has(active).length) {
             return true;
           }
@@ -401,13 +441,9 @@
        * @returns {undefined}
        */
       handleBlur: function() {
-        this.recalculateParent();
-
         if (!this.hasFocus()) {
           this.wrapper.removeClass('has-focus active');
-          return;
         }
-
       },
 
       /**
@@ -450,6 +486,28 @@
 
         return true;
       },
+
+
+      /**
+       * @param {jQuery.Event} e
+       */
+      handleGoButtonClick: function(e) {
+        var action = this.settings.goButtonAction;
+        if (typeof action !== 'function') {
+          return;
+        }
+
+        var searchfieldValue = this.element.val(),
+          categorySelection;
+
+        if (this.hasCategories()) {
+          categorySelection =this.getCategoryData();
+        }
+
+        // gives access to the current searchfield value, and category data if applicable.
+        return action(e, searchfieldValue, categorySelection);
+      },
+
 
       /**
        * Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.
@@ -494,6 +552,41 @@
       },
 
       /**
+       * Ensures that the size of the Searchfield Wrapper does not change whenever a category
+       * is chosen from a category searchfield.
+       * NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
+       */
+      calculateSearchfieldWidth: function() {
+        if (this.isToolbarSearchfield()) {
+          // If this is a toolbar searchfield, run its internal size check that fixes the
+          // trigger button and input field size.
+          var tsAPI = this.element.data('toolbarsearchfield');
+          if (tsAPI && typeof tsAPI.setOpenWidth === 'function') {
+            tsAPI.calculateOpenWidth();
+            tsAPI.setOpenWidth();
+          }
+          return;
+        }
+
+        var subtractWidth = 0,
+          targetWidthProp = '100%';
+
+        if (this.hasCategories()) {
+          subtractWidth = subtractWidth + this.categoryButton.outerWidth(true);
+        }
+        if (this.hasGoButton()) {
+          subtractWidth = subtractWidth + this.goButton.outerWidth(true);
+        }
+
+        // NOTE: final width can only be 100% if no value is subtracted for other elements
+        if (subtractWidth > 0) {
+          targetWidthProp = 'calc(100% - '+ subtractWidth +'px)';
+        }
+
+        this.element[0].style.width = targetWidthProp;
+      },
+
+      /**
        * Detects whether or not this component is a Toolbar Searchfield
        * @returns {boolean}
        */
@@ -507,15 +600,13 @@
        * @returns {undefined}
        */
       handleCategorySelected: function(e, anchor) {
-        this.setCategoryButtonText(e, anchor.text().trim());
-
-        // If this is a toolbar searchfield, run the size check that fixes the
-        // trigger button and input field size.
-        var tsAPI = this.element.data('toolbarsearchfield');
-        if (tsAPI && typeof tsAPI.setOpenWidth === 'function') {
-          tsAPI.calculateOpenWidth();
-          tsAPI.setOpenWidth();
+        // Only change the text and searchfield size if we can
+        if (!this.settings.showCategoryText) {
+          return;
         }
+
+        this.setCategoryButtonText(e, anchor.text().trim());
+        this.calculateSearchfieldWidth();
       },
 
       /**
@@ -530,7 +621,7 @@
         }
 
         this.wrapper
-          .removeClass('active')
+          .addClass('active')
           .addClass('has-focus');
       },
 
@@ -540,12 +631,18 @@
        * @returns {undefined}
        */
       handleCategoryBlur: function() {
+        var self = this;
+
         // if Toolbar Searchfield, allow that control to handle adding this class
         if (this.isToolbarSearchfield()) {
           return;
         }
 
-        this.wrapper.removeClass('has-focus');
+        setTimeout(function () {
+          if (!self.hasFocus()) {
+            self.wrapper.removeClass('has-focus');
+          }
+        }, 1);
       },
 
       /**
@@ -671,7 +768,7 @@
           self.list.append('<li'+ selected + id + value + '><a href="#">' + val.name + '</a></li>');
         });
 
-        var api = this.button.data('popupmenu');
+        var api = this.categoryButton.data('popupmenu');
         if (api && typeof api.updated === 'function') {
           api.updated();
         }
@@ -797,10 +894,18 @@
 
       /**
        * Destroys the Searchfield and removes all jQuery component instancing.
+       * @param {boolean} dontDestroyToolbarSearchfield - if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
        * @returns {undefined}
        */
-      destroy: function() {
+      destroy: function(dontDestroyToolbarSearchfield) {
         this.teardown();
+
+        // Destroy the linked Toolbar Searchfield instance
+        var tbsf = this.element.data('toolbarsearchfield');
+        if (!dontDestroyToolbarSearchfield && tbsf && typeof tbsf.destroy === 'function') {
+          tbsf.destroy(true);
+        }
+
         $.removeData(this.element[0], pluginName);
       }
     };

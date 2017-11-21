@@ -1,0 +1,243 @@
+
+<style>
+  @media (max-width: 980px){.column, .columns {width: 100% !important;}}
+</style>
+<div class="page-container">
+
+  <div class="busy" id="busy1">
+    <div id="divMainContainer" class="main-content-wrapper">
+      <div class="main-left" role="main">
+        <div id="tabs-vertical" class="vertical tab-container scrollable">
+          <div class="tab-list-container">
+            <div class="tab-list-info">
+              <h2 id="lblSettings">Settings</h2>
+            </div>
+            <ul class="tab-list">
+              <li class="tab"><a href="#PersonalInformationPanel" id="lnkTabPersonalInformation">Personal Information</a></li>
+              <li class="tab"><a href="#CommunicationAndDisplayPanel" id="lnkTabCommunicatonAndDisplay">Communication &amp; Display</a></li>
+              <li class="tab"><a href="#ProductAccessPanel" id="lnkTabProductAccess">Product Access</a></li>
+              <li class="tab"><a href="#IncidentSettingsPanel" id="lnkTabIncidentSettings">Incident Settings</a></li>
+              <li class="tab"><a href="#IncidentViewsPanel" id="lnkTabIncidentViews">Incident Views</a></li>
+              <li class="tab"><a href="#NewsPanel" id="lnkTabNews">News Email Settings</a></li>
+              <li id="liInforCommunity" class="tab"><a href="#InforCommunityPanel" id="lnkTabInforCommunity">Infor Community Settings</a></li>
+              <li id="liAHRS" class="tab"><a href="#AHRSPanel" id="lnkTabAHRS">AHRS</a></li>
+            </ul>
+            <div class="tab-list-info">
+              <input type="submit" name="btnSave" value="Save" id="btnSave" class="btn-primary" style="text-align:center;" />
+            </div>
+          </div>
+
+          <div class="tab-panel-container">
+
+            <!-- Start of PersonalInformation tab-panel -->
+            <div id="PersonalInformationPanel" class="tab-panel">
+              <a href="#"><span id="spnPersonalInformation">Personal Information</span></a>
+              <div class="row">
+                <div class="six columns"></div>
+                <div class="six columns"></div>
+              </div>
+              <div class="row">
+                <div id="divEmailError" class="six columns">
+                  <label id="lblEmailLoginID" for="txtEmailLoginID" class="required">Email</label>
+                  <button id="btnEmailLoginIDValue" class="label" data-placement="top" data-popover="divPopoverEmailLoginID" data-trigger="click" type="button">martin.lick@infor.com</button>
+                  <div id="divPopoverEmailLoginID" class="hidden">To update your email address, please contact your Contact Administrator or <a href="/espublic/EN/AnswerLinkDotNet/SoHo/Cases/SoHoPopNewCase.aspx?byProductID=2801"> click here </a> to enter an Incident to request a change.</div>
+                </div>
+                <div class="six columns desktop-only">
+                  <label id="lblInforXtremeID" for="lblInforXtremeIDValue">Infor Xtreme ID</label>
+                  <br />
+                  <label id="lblInforXtremeIDValue">213264</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="six columns">
+                  <label id="lblCompany" for="lblCompanyValue">Company</label>
+                  <br />
+                  <label id="lblCompanyValue">Infor Xtreme Support (4000018)</label>
+                </div>
+                <div class="six columns desktop-only">
+                  <label id="lblDepartment" for="lblDepartmentVal">Department</label>
+                  <br />
+                  <label id="lblDepartmentVal">IT Architecture &amp; Development</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblSalutation" for="ddlSalutation" class="required">Salutation</label>
+                    <select name="ddlSalutation" id="ddlSalutation" class="dropdown">
+                    	<option value="17">Ind</option>
+                    	<option selected="selected" value="9">Mr</option>
+                    	<option value="10">Mrs</option>
+                    	<option value="11">Ms</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblJobTitle" for="txtJobTitle" class="required">Job Title</label>
+                    <input name="txtJobTitle" type="text" id="txtJobTitle" maxlength="80" aria-required="true" data-validate="required" value="Software Engineer, Senior" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="six columns">
+                  <label id="lblFirstName" for="lblFirstNameVal">First Name</label>
+                  <label id="lblFirstNameVal">Marty</label>
+                </div>
+                <div class="six columns desktop-only">
+                  <label id="lblLastName" for="lblLastNameVal">Last Name</label>
+                  <label id="lblLastNameVal">Lick</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblPreferredName" for="txtPreferredName">Preferred Name</label>
+                    <input name="txtPreferredName" type="text" id="txtPreferredName" maxlength="50" value="Marty" />
+                  </div>
+                </div>
+                <div class="six columns desktop-only">
+                  <div class="field">
+                    <label id="lblAliasName" for="txtAliasName">Alias Name</label>
+                    <input name="txtAliasName" type="text" id="txtAliasName" maxlength="15" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblPreferredPhone" for="txtPreferredPhone" class="required">Preferred Phone</label>
+                    <input name="txtPreferredPhone" type="text" id="txtPreferredPhone" maxlength="32" data-validate="required" aria-required="true" placeholder="Country + Area Code + Phone Number" value="+1 312 258 6200" />
+                    <a href="#" data-popover="divPopoverPreferredPhone" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
+                    <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg></a>
+                    <div id="divPopoverPreferredPhone">Country + Area Code + Phone Number</div>
+                  </div>
+                </div>
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblPExtension" for="txtPExtension">Extension</label>
+                    <input name="txtPExtension" type="text" id="txtPExtension" maxlength="10" class="input-sm" value="444" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblCompanyPhone" for="txtCompanyPhone">Alternate Phone</label>
+                    <input name="txtCompanyPhone" type="text" id="txtCompanyPhone" maxlength="30" placeholder="Country + Area Code + Phone Number" />
+                    <a href="#" data-popover="divPopoverCompanyPhone" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
+                    <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg></a>
+                    <div id="divPopoverCompanyPhone">Country + Area Code + Phone Number</div>
+                  </div>
+                </div>
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblCompanyExtension" for="txtCompanyExtension">Extension</label>
+                    <input name="txtCompanyExtension" type="text" id="txtCompanyExtension" maxlength="30" class="input-sm" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblMobile" for="txtMobile">Mobile</label>
+                    <input name="txtMobile" type="text" id="txtMobile" maxlength="32" placeholder="Country + Area Code + Phone Number" />
+                    <a href="#" data-popover="divPopoverMobile" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
+                    <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg></a>
+                    <div id="divPopoverMobile">Country + Area Code + Phone Number</div>
+                  </div>
+                </div>
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblFax" for="txtFax">Fax</label>
+                    <input name="txtFax" type="text" id="txtFax" maxlength="30" placeholder="Country + Area Code + Phone Number" />
+                    <a href="#" data-popover="divPopoverFax" data-trigger="hover" tabindex="-1" class="popover-trigger PopoverFix">
+                    <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info"><use xlink:href="#icon-info"/></svg></a>
+                    <div id="divPopoverFax">Country + Area Code + Phone Number</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label id="lblTimeZone" for="ddlTimeZones" class="required">Time Zone</label>
+                    <select name="ddlTimeZones" id="ddlTimeZones" class="dropdown">
+                    	<option value="51">Alaska Standard Time</option>
+                    	<option value="50">Arizona</option>
+                    	<option value="29">Atlantic Standard Time</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="six columns desktop-only">
+                  <div class="field">
+                    <label id="lblCountry" for="ddlCountry" class="required">Country</label>
+                    <select name="ddlCountry" id="ddlCountry" class="dropdown">
+                    	<option value="Afghanistan">Afghanistan</option>
+                    	<option value="Albania">Albania</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End of PersonalInformation tab-panel -->
+
+            <!-- Start of CommunicationAndDisplay tab-panel -->
+            <div id="CommunicationAndDisplayPanel" class="tab-panel">
+            </div>
+            <!-- End of CommunicationAndDisplay tab-panel -->
+
+            <!-- Start of ProductAccess tab-panel -->
+            <div id="ProductAccessPanel" class="tab-panel">
+            </div>
+            <!-- End of ProductAccess tab-panel -->
+
+            <!-- Start of IncidentSettings tab-panel -->
+            <div id="IncidentSettingsPanel" class="tab-panel">
+            </div>
+            <!-- End of IncidentSettings tab-panel -->
+
+            <!-- Start of IncidentViews tab-panel -->
+            <div id="IncidentViewsPanel" class="tab-panel">
+            </div>
+            <!-- End of IncidentViews tab-panel -->
+
+            <!-- Start of News tab-panel -->
+            <div id="NewsPanel" class="tab-panel">
+            </div>
+            <!-- End of News tab-panel -->
+
+            <!-- Start of AHRS tab-panel -->
+            <div id="AHRSPanel" class="tab-panel">
+            </div>
+            <!-- End of AHRS tab-panel -->
+
+            <!-- Start of InforCommunity tab-panel -->
+            <div id="InforCommunityPanel" class="tab-panel">
+            </div>
+            <!-- End of Community tab-panel -->
+
+            <!-- Start of ERS Settings tab-panel -->
+
+            <!-- End of ERS Settings tab-panel -->
+          </div>
+
+        </div>
+        <!-- End of main tab-container -->
+
+      </div>
+    </div>
+    <!-- end of divMainContainer -->
+  </div>
+  <!-- end of busy -->
+
+  </form>
+</div>
+</div>
+</body>
+
+</html>

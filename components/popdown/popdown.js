@@ -21,7 +21,9 @@
 
     // Settings and Options
     var pluginName = 'popdown',
-        defaults = {},
+        defaults = {
+          trigger: undefined // If defined, provides a way to place the popdown against an alternate element.
+        },
         settings = $.extend({}, defaults, options);
 
     /**
@@ -52,6 +54,10 @@
 
         // Setup the proper trigger element to use
         this.trigger = this.element;
+        if (this.settings.trigger instanceof $ || Soho.DOM.isElement(this.settings.trigger)) {
+          this.trigger = $(this.settings.trigger);
+        }
+        // Force-change the trigger element in some specific scenarios
         if (this.trigger.is('.dropdown, .multiselect')) {
           this.trigger = $('#' + this.element.attr('id') + '-shdo');
         }
@@ -133,6 +139,10 @@
           });
 
         return this;
+      },
+
+      hasValidTriggerSetting: function() {
+        return (this.settings.trigger instanceof $ || Soho.DOM.isElement(this.settings.trigger));
       },
 
       isOpen: function() {
@@ -334,6 +344,10 @@
       },
 
       updated: function() {
+        if (this.hasValidTriggerSetting()) {
+          this.trigger = $(this.settings.trigger);
+        }
+
         return this;
       },
 

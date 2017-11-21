@@ -363,7 +363,7 @@
         this.setFormat();
 
         var validation = 'date availableDate',
-          events = {'date': 'blur', 'availableDate': 'blur'},
+          events = {'date': 'change blur enter', 'availableDate': 'change blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events'),
           maskOptions = {
@@ -459,7 +459,7 @@
         $('#validation-tooltip').addClass('is-hidden');
 
 
-        this.element.addClass('is-active').trigger('listopened');
+        this.element.addClass('is-active is-open').trigger('listopened');
 
         // Calendar Html in Popups
         var prevButton = '<button type="button" class="btn-icon prev">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button>',
@@ -501,7 +501,7 @@
 
         }
 
-        this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') + (this.settings.hideDays ? ' is-monthyear' : '') +'"></div')
+        this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') + (this.settings.hideDays ? ' is-monthyear' : '') +'"></div>')
           .append(
             this.header,
             this.table,
@@ -731,7 +731,7 @@
 
         if (this.element.hasClass('is-active')) {
           this.element.trigger('listclosed');
-          this.element.removeClass('is-active');
+          this.element.removeClass('is-active is-open');
         }
       },
 
@@ -1047,6 +1047,8 @@
         if (!this.settings.showMonthYearPicker) {
           return;
         }
+
+        this.header.addClass('is-monthyear');
 
         var monthDropdown = '<label for="month-dropdown" class="audible">'+ Locale.translate('Month') +'</label>'+
           '<select id="month-dropdown" class="dropdown">';

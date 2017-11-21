@@ -56,7 +56,8 @@
           instructions = Locale.translate('FileUpload'),
           label = $('<label for="'+ id +'-filename">'+ elem.text() +' <span class="audible">'+ instructions +'</span></label>'),
           shadowField = $('<input readonly id="'+ id +'-filename" class="fileupload-background-transparent'+ (elemClass ? ' '+ elemClass : '') +'" type="text">'),
-          svg = (!hasInlineLabel ? '<label class="fileupload">' : '') + '<span class="trigger" tabindex="-1">' + $.createIcon('folder') + '</span>' + (!hasInlineLabel ? '</label>' : '');
+          svg = '<span class="trigger" tabindex="-1">' + $.createIcon('folder') + '</span>',
+          svgClose = '<span class="trigger-close" tabindex="-1">' + $.createIcon('close') + '</span>';
 
         if (!hasInlineLabel) {
           var orgLabel = elem.prev('label');
@@ -67,27 +68,45 @@
 
           label = $('<label for="'+ (elem.attr('id') || elem.attr('name')) +'-filename">'+ orgLabel.text() +'</label>');
           elem.before(label, shadowField);
+          this.fileInput.after(svgClose);
           this.fileInput.after(svg);
           orgLabel.addClass('audible').append('<span class="audible">'+ instructions +'</span>');
         } else {
           elem.before(label, shadowField);
+          this.fileInput.after(svgClose);
           this.fileInput.after(svg);
         }
 
         this.textInput = elem.parent().find('[type="text"]');
-        this.textInput.on('keypress.fileupload', function (e) {
+        this.svg = elem.parent().find('.trigger');
+        this.svgClose = elem.parent().find('.trigger-close');
+
+        /*
+        * Added Keydown for Keyboard Backspace and remove Keypress because it doesn't detect Backspace
+        */
+        this.textInput.on('keydown.fileupload', function(e) {
+          var handle = false;
           if (e.which === 13 || e.which === 32) {
+            elem.parent().find('[type="file"]').trigger('click');
+            handle = true;
+          } else if (e.which === 8) {
+            self.clearUploadFile();
+            handle = true;
+          }
+          if (handle) {
             e.stopPropagation();
-            elem.find('input').trigger('click');
           }
         });
 
-        if (!hasInlineLabel) {
-          svg = elem.parent().find('label.fileupload');
-          svg.on('click', function () {
-            elem.parent().find('[type="file"]').trigger('click');
-          });
-        }
+        this.svg.on('click.fileupload', function () {
+          self.fileInput.trigger('click');
+          return false;
+        });
+
+        this.svgClose.on('click.fileupload', function () {
+          self.clearUploadFile();
+          return false;
+        });
 
         if (this.fileInput.is(':disabled')) {
           this.textInput.prop('disabled', true);
@@ -109,8 +128,16 @@
           this.fileInput.attr('disabled', 'disabled');
         }
 
-        this.fileInput.attr('tabindex', '-1').on('change.fileupload', function () {
-          elem.prev('input').val(this.files ? this.files[0].name : '');
+        /*
+        * New Event for File Upload Change
+        */
+        this.fileInput.on('change.fileupload', function() {
+          if (this.files.length > 0) {
+            self.textInput.val(this.files[0].name);
+            self.svgClose.show().addClass('is-visible');
+          } else {
+            self.clearUploadFile();
+          }
         });
 
         // Fix: not sure why, but some browser(ie. safari) need to rerender,
@@ -121,15 +148,29 @@
         }, 0);
       },
 
+      /*
+      * Clear the Input Upload File
+      */
+      clearUploadFile: function() {
+        var val = this.fileInput.val();
+        this.fileInput.add(this.textInput).val('');
+        this.svgClose.hide().removeClass('is-visible');
+        if (val !== '') {
+          this.fileInput.triggerHandler('change');
+        }
+      },
+
       /**
       * Teardown - Remove added markup and events
       */
       destroy: function() {
-        this.fileInput.removeAttr('tabindex').off('change.fileupload');
-        this.textInput.off('keypress.fileupload');
+        this.svg.add(this.svgClose).off('click.fileupload');
+        this.fileInput.off('change.fileupload');
+        this.textInput.off('keydown.fileupload');
+
         this.element.closest('.field-fileupload')
           .removeClass('field-fileupload')
-          .find('>label:first, >[type="text"]:first, .trigger, .icon-dirty, .msg-dirty').remove();
+          .find('>label:first, >[type="text"]:first, .trigger, .trigger-close, .icon-dirty, .msg-dirty').remove();
 
         $.removeData(this.element[0], pluginName);
       },

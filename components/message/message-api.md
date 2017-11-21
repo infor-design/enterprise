@@ -11,7 +11,6 @@ The Message Component is used to show warning / error messages.
 
 **Parameters**
 
--   `element`  
 -   `title` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Title text or content shown in the message
 -   `isError` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, will show title styled as an error with an error icon
 -   `message` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The message content or text

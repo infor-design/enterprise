@@ -37,7 +37,7 @@
   <div id="maincontent" class="page-container tab-panel-container scrollable" role="main">
     <div id="header-tab0" class="tab-panel">
       <div class="page-container">
-        <section class="pane single no-scroll full-width full-height">{{> examples/landmark/pagepanes-grid1}}</section>
+        <section class="pane no-scroll full-width full-height">{{> examples/landmark/pagepanes-grid1}}</section>
       </div>
     </div>
     <div id="header-tab1" class="tab-panel">
@@ -124,7 +124,7 @@
       clickToSelect: true,
       rowHeight: 'short', //(short, medium or tall)
       paging: true,
-      filterable: false,
+      filterable: true,
       pagesize: gridPageSize,
       indeterminate: true,
       source: function(req, response) {

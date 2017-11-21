@@ -31,6 +31,7 @@
     &.is-focused {
       > a {
         border: 1px solid $pager-text-color;
+        box-shadow: $focus-box-shadow;
 
         &[disabled] {
           border: 1px solid transparent;
@@ -69,6 +70,7 @@
       display: inline-block;
       height: 32px;
       margin: 0 2px;
+      outline: none;
       padding: 5px;
       position: relative;
       text-align: center;
@@ -77,6 +79,7 @@
 
       // Disabled
       &[disabled] {
+        box-shadow: none;
         cursor: default;
 
         .icon {
@@ -177,20 +180,6 @@ li + .pager-count {
   margin-left: 10px;
 }
 
-//Special Styles for Datagrid
-.datagrid + .pager-toolbar {
-
-  > li > a {
-    margin: 0;
-    padding: 0;
-    width: 28px;
-  }
-
-  .pager-prev {
-    margin-right: 5px;
-  }
-}
-
 .pager-pagesize {
   float: right;
   padding: 2px;// Keep 2px padding around for border to show around on focus
@@ -201,7 +190,7 @@ li + .pager-count {
 
     &:focus {
       border-color: $primary-color;
-      box-shadow: none;
+      box-shadow: $focus-box-shadow;
     }
 
     span {

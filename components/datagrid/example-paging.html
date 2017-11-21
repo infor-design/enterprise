@@ -17,13 +17,13 @@
       columns.push({ id: 'drilldown', name: '', field: '', width: 95, formatter: Formatters.Drilldown, click: function(e, args) {
           console.log(args);
         }, align: 'center', sortable: false});
-      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Editors.Input});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'Text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly, filterType: 'Text'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, filterType: 'Text', formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, filterType: 'Integer', editor: Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'Integer', width: 125});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, filterType: 'Decimal', formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'Date', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -31,6 +31,7 @@
         selectable: 'multiple',
         paging: true,
         editable: true,
+        filterable: true,
         pagesize: 10,
         source: function(req, response) {
           var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
@@ -51,7 +52,7 @@
         },
         toolbar: {title: 'Data Grid Header Title', personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
       }).on('selected', function (e, args) {
-        console.log(args.row, args.item);
+        console.log(args);
       });
 
   });
