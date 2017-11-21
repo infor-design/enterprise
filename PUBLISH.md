@@ -106,20 +106,20 @@ Only needed for debugging/publishing versions.
  git tag 4.3.3
  git push origin --tags
 ```
-* Make the new branch off 4.3.x for the new version (4.3.3-rc)
-  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.3-rc branch as the default
+* Make the new branch off 4.3.x for the new version (4.3.4-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.4-rc branch as the default
   * set branch permissions
 * Delete the 4.3.3-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
 
 
 ## Build Operations
 * Change the v-Next build http://bamboo.infor.com/chain/admin/config/editChainDetails.action?buildKey=SOHO-NEXT
-  * change the name to 4.3.3-RC (Version Next)
+  * change the name to 4.3.4-RC (Version Next)
   * change the repo it points to
-  * checkout 4.3.3-rc and bump the versions in package.json and publish/package.json
+  * checkout 4.3.4-rc and bump the versions in package.json and publish/package.json
 * Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
   * change the versions in the build config
-  * Label the build release-432 for example http://bamboo.infor.com/browse/label/release-432
+  * Label the build release-433 for example http://bamboo.infor.com/browse/label/release-433
 
 ## Update version in @infor/sohoxi-angular
 * Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
@@ -136,8 +136,8 @@ npm info @infor/sohoxi-angular dist-tags
 git chec
 npm view @infor/sohoxi versions
 * Test New and old links for example:
-http://usalvlhlpool1.infor.com/4.3.2/components/
-http://usalvlhlpool1.infor.com/4.3.3-rc/components/
+http://usalvlhlpool1.infor.com/4.3.3/components/
+http://usalvlhlpool1.infor.com/4.3.4-rc/components/
 
 ## Deploy Site Operations
 
