@@ -44,7 +44,8 @@
       build: function() {
         var self = this,
           elem = this.element,
-          hasInlineLabel = !elem.is('input.fileupload');
+          hasInlineLabel = !elem.is('input.fileupload'),
+          isReadonly = elem.attr('readonly');
 
         this.fileInput = hasInlineLabel ? elem.find('input') : elem;
 
@@ -92,7 +93,10 @@
 
         if (!hasInlineLabel) {
           svg = elem.parent().find('label.fileupload');
-          svg.on('click', function () {
+          svg.on('click.fileupload', function () {
+            if (self.textInput.is(':disabled')) {
+              return;
+            }
             elem.parent().find('[type="file"]').trigger('click');
           });
 
@@ -117,7 +121,7 @@
           this.textInput.validate();
         }
 
-        if (this.fileInput.attr('readonly')) {
+        if (isReadonly) {
           this.textInput.prop('disabled', false);
           this.textInput[0].classList.remove('fileupload-background-transparent');
           this.fileInput.attr('disabled', 'disabled');
