@@ -1,18 +1,21 @@
 ## <a name="version-4.3.3">4.3.3</a>
 
-Release Date: 2017-11-17
+Release Date: 2017-11-21
+
 Full Jira Release Notes: http://bit.ly/2jHU9CS
 
 ### <a name="version-4.3.3-download-build-assets">Download Build Assets:</a>
 
 Build Server: http://bamboo.infor.com/browse/label/release-433
+
 Npm: http://npm.infor.com
 
 ### <a name="version-4.3.3-download-build-assets">Demo Site</a>
+
 http://usalvlhlpool1.infor.com/4.3.3/components/
 
 ### <a name="version-4.3.3-key-new-features">Key New Features</a>
-- Datagrid - Added a message area and scroll bar with a configurable message for when there is no visible rows, example: http://usalvlhlpool1.infor.com/4.3.3-rc/components/datagrid/example-empty-message.html
+- Datagrid - Added a message area and scroll bar with a configurable message for when there is no visible rows, example: http://bit.ly/2B0zo9d
 - Soho XI Now available on a global CDN , see http://git.infor.com/projects/SOHO/repos/controls/browse/README.md for details.
 - Angular samples updated to use Angular version 5.0
 - Added a search example with larger search - http://bit.ly/2hHSSre
@@ -155,6 +158,8 @@ http://usalvlhlpool1.infor.com/4.3.3/components/
 - Validation - Fixed bug using incorrect field to trigger.
 - Validation - Fixed issue in removeError with inline errors
 - Validation - Fixed some excess events firing
+
+(172 Jira Issues Solved this release, Backlog Dev 335, Design 237, Unresolved 663)
 
 ## <a name="version-4.3.2">4.3.2</a>
 
