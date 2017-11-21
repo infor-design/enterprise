@@ -88,27 +88,28 @@ Only needed for debugging/publishing versions.
 - Once installed run aws configure to enter the keys in the right spot http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 
 
-# How To Make Release (4.3.2)
+# How To Make Release (4.3.3)
 
 ## Info
 * Check ChangeLog.md is updated this info is distributed by email
 * Create new version in Jira and mark current as released https://jira/plugins/servlet/project-config/SOHO/versions
 * Generate Release Notes http://bit.ly/2w6X8Xw
+* Add version to board
 
 ## Git Operations
-* Edit version in package.json and publish package.json (from 4.3.2-rc to 4.3.2 as an example)
+* Edit version in package.json and publish package.json (from 4.3.3-rc to 4.3.3 as an example)
 * Push a PR
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests and make sure all merged
-* Merge  4.3.2-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
+* Merge  4.3.3-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
 * Git Tag the release from the 4.3.x branch
 ```bash
- git tag 4.3.2
+ git tag 4.3.3
  git push origin --tags
 ```
 * Make the new branch off 4.3.x for the new version (4.3.3-rc)
   * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.3-rc branch as the default
   * set branch permissions
-* Delete the 4.3.2-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
+* Delete the 4.3.3-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
 
 
 ## Build Operations
