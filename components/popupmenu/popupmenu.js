@@ -608,6 +608,26 @@
               return targetA;
             };
 
+            // Count number of rows in picker
+            var rowCount = 0,
+                colors = self.menu.children(excludes),
+                colorsLength = colors.length,
+                currentOffsetTop = 0;
+
+            for (var i = 0; i < colorsLength; i++) {
+              var colorItem = colors[i];
+
+              if (currentOffsetTop === 0) {
+                currentOffsetTop = colorItem.offsetTop;
+              }
+
+              if(colorItem.offsetTop === currentOffsetTop) {
+                rowCount++;
+              } else {
+                break;
+              }
+            }
+
             //Up on Up
             if ((!isPicker && key === 38) || (isPicker && key === 37)) {
                e.stopPropagation();
@@ -631,7 +651,7 @@
               e.preventDefault();
 
               if (focus.parent().prevAll(excludes).length > 0) {
-                self.highlight($(focus.parent().prevAll(excludes)[0]).find('a'));
+                self.highlight($(focus.parent().prevAll(excludes)[rowCount - 1]).find('a'));
               }
             }
 
@@ -669,7 +689,7 @@
               e.preventDefault();
 
               if (focus.parent().nextAll(excludes).length > 0) {
-                self.highlight($(focus.parent().nextAll(excludes)[9]).find('a'));
+                self.highlight($(focus.parent().nextAll(excludes)[rowCount - 1]).find('a'));
               }
             }
 
