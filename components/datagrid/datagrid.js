@@ -2372,7 +2372,11 @@ $.fn.datagrid = function(options) {
           popupmenu.close(true, true);
         }
         else {
-          $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
+
+          $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
+            var menu = $(this).next('.popupmenu-wrapper');
+            Soho.utils.fixSVGIcons(menu);
+          }).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
             self.applyFilter();
           }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
             var data = $(this).data('popupmenu');
@@ -2380,6 +2384,7 @@ $.fn.datagrid = function(options) {
               data.destroy();
             }
           });
+
         }
         return false;
       });
