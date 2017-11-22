@@ -369,12 +369,16 @@
 
         this.tooltip[0].setAttribute('class', classes);
 
+        var popoverWidth;
+
         if (typeof content === 'string') {
           content = $(content);
           contentArea.html(content);
           contentArea.find('.hidden').removeClass('hidden');
+          popoverWidth = contentArea.width();
         } else {
           contentArea.html(content);
+          popoverWidth = this.settings.content.width();
         }
 
         if (!this.settings.placementOpts) {
@@ -388,7 +392,6 @@
         content[0].classList.remove('hidden');
         contentArea[0].firstElementChild.classList.remove('hidden');
 
-        var popoverWidth = this.settings.content.width();
         var parentWidth = this.settings.placementOpts.parent.width();
 
         if (Locale.isRTL()) {
