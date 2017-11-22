@@ -559,6 +559,10 @@
           table[0].style.maxWidth = calcWidth + 'px';
         }
 
+        var toolbars = this.element.find('.toolbar');
+        if (toolbars.length) {
+          toolbars.triggerHandler('recalculate-buttons');
+        }
       },
 
       isOpen: function() {
