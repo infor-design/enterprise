@@ -111,7 +111,6 @@ Only needed for debugging/publishing versions.
   * set branch permissions
 * Delete the 4.3.3-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
 
-
 ## Build Operations
 * Change the v-Next build http://bamboo.infor.com/chain/admin/config/editChainDetails.action?buildKey=SOHO-NEXT
   * change the name to 4.3.4-RC (Version Next)
@@ -123,8 +122,18 @@ Only needed for debugging/publishing versions.
 
 ## Update version in @infor/sohoxi-angular
 * Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
-* Bump version in package.json and publish/package.json
-* Commit, tag and push changes
+* Edit version in package.json and publish package.json (2) places
+* Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and merge
+* Merge  4.3.3-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
+* Git Tag the release from the 4.3.x branch
+```bash
+ git tag 4.3.3
+ git push origin --tags
+```
+* Make the new branch off 4.3.x for the new version (4.3.4-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.4-rc branch as the default
+  * set branch permissions
+* Delete the 4.3.3-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
 * Update the build to the next release
 * Test
 ```bash
@@ -133,8 +142,10 @@ npm info @infor/sohoxi-angular dist-tags
 
 ## Test Out Operations
 * Test Npm packages and rebuild if you got it wrong
-git chec
+```
+npm info @infor/sohoxi dist-tags
 npm view @infor/sohoxi versions
+```
 * Test New and old links for example:
 http://usalvlhlpool1.infor.com/4.3.3/components/
 http://usalvlhlpool1.infor.com/4.3.4-rc/components/
@@ -144,7 +155,7 @@ http://usalvlhlpool1.infor.com/4.3.4-rc/components/
 * Delete the old version from pool server usalvlhlpool1
 ```bash
 curl -u hookandloop:hookandloop http://usalvlhlpool1/swarm/get_endpoints
-curl -X DELETE -H "Content-Type: application/json"     -u hookandloop:n98Y-uhPb-llGa-LdUl     http://usalvlhlpool1.infor.com/swarmproxy/rm_service     -d '{"name":"sohoxi-4-3-1-rc"}'
+curl -X DELETE -H "Content-Type: application/json"     -u hookandloop:n98Y-uhPb-llGa-LdUl     http://usalvlhlpool1.infor.com/swarmproxy/rm_service     -d '{"name":"sohoxi-4-3-3-rc"}'
 
 sudo docker ps -a
 docker stop 6410bbcfd5e2
