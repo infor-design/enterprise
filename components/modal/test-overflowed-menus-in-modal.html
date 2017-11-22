@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Modal Test: Context Menu Overflow</h2>
+    <p>
+      Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7170" target="_blank">SOHO-7170</a>.  The "More Actions" menu in this Modal component's toolbar should not be cut-off when it sits atop the dark overlay outside of the modal's body.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="add-context">Add Context</button><br><br>
+
+    <!-- "Context" Example -->
+    <div id="modal-add-context" style="display: none; width: 200px;">
+      <div id="regular-toolbar-example" class="toolbar" role="toolbar">
+        <div class="title">
+          Context
+        </div>
+        <div class="buttonset">
+          <button id="btn-row" class="btn" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-add"></use>
+            </svg>
+            <span>Row</span>
+          </button>
+
+          <button id="btn-options" class="btn-menu" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-settings"></use>
+            </svg>
+            <span>Options</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Long Option Name #1</a></li>
+            <li><a href="#">Long Option Name #2</a></li>
+            <li><a href="#">Long Option Name #3</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+var modals = {
+    'add-context': {
+      'title': 'Add Context',
+      'content': $('#modal-add-context')
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+      //  id: 'modal-button-1',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+      //  id: 'modal-button-2',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-context').on('click', function () {
+    setModal(modals[this.id]);
+  });
+</script>
