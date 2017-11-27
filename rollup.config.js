@@ -1,7 +1,6 @@
 //================================================= /
 // Soho Xi - Rollup Configuration
 //================================================= /
-var path = require('path');
 var resolve = require('rollup-plugin-node-resolve');
 var babel = require('rollup-plugin-babel');
 var json = require('rollup-plugin-json');
