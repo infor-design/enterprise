@@ -1,7 +1,13 @@
-// Rollup Configuration
+//================================================= /
+// Soho Xi - Rollup Configuration
+//================================================= /
+var path = require('path');
 var resolve = require('rollup-plugin-node-resolve');
 var babel = require('rollup-plugin-babel');
 var json = require('rollup-plugin-json');
+var license = require('rollup-plugin-license');
+
+var bundleBanner = require('./build/generate-bundle-banner');
 
 module.exports = {
   input: 'components/index.js',
@@ -17,6 +23,10 @@ module.exports = {
     json(),
     babel({
       exclude: 'node_modules/**' // only transpile our source code
+    }),
+    license({
+      sourceMap: true,
+      banner: bundleBanner
     })
   ],
   globals: {
