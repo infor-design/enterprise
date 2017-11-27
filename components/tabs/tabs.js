@@ -1517,9 +1517,10 @@
         var tab = this.getTab(null, tabId),
           filter = 'li:not(.separator):not(:hidden):not(.is-disabled)',
           tabs = this.tablist.find(filter),
-          target = tabs.eq(tabs.index(tab) - 1);
+          idx = tabs.index(tab),
+          target = tabs.eq(idx === 0 ? 1 :  idx - 1);
 
-        while(target.length && !target.is(filter)) {
+        while (target.length && !target.is(filter)) {
           target = tabs.eq(tabs.index(target) - 1);
         }
 
@@ -2306,6 +2307,9 @@
         var tab = this.doGetTab(e, tabId);
 
         if (tab.is('.is-selected')) {
+          if (typeof e === 'string') {
+            tabId = e;
+          }
           this.activatePreviousTab(tabId);
         }
         tab.addClass('is-disabled');
