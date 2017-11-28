@@ -5,7 +5,7 @@
   //border-radius: top-right | bottom-right | bottom-left | top-left
   border-radius: 2px 2px 0 0;
   height: 22px;
-  left: -11px;
+  left: -10px;
   line-height: normal;
   min-width: 0;
   min-height: 0;
@@ -18,7 +18,6 @@
 
   &.is-active {
     border-color: $input-focus-border-color;
-    box-shadow: $focus-box-shadow;
     opacity: 1;
   }
 
@@ -29,6 +28,8 @@
   }
 
   &:focus:not(.hide-focus) {
+    box-shadow: $focus-box-shadow;
+
     .icon {
       fill: $input-focus-border-color;
     }
@@ -75,16 +76,6 @@
     }
   }
 
-  &.is-active:not([disabled]):not(.colorpicker):not(.spinbox) {
-    @include focus-state();
-
-    ~ .btn-actions {
-      border-color: $input-focus-border-color;
-      box-shadow: $focus-box-shadow;
-      opacity: 1;
-    }
-  }
-
   // Searchfield ===============================================================
   // scss-lint:disable ImportantRule
   &.searchfield {
@@ -100,28 +91,24 @@
       }
     }
 
-    ~ .btn-actions {
-      left: -8px;
-    }
-
   }
   // scss-lint:enable ImportantRule
 
   // Clearable =================================================================
   &[data-clearable="true"] {
     ~ .btn-actions {
-      left: -3px;
+      left: -2px;
     }
 
     ~ .is-empty {
       ~ .btn-actions {
-        left: -11px;
+        left: -10px;
       }
     }
   }
 
   // Autocomplete ==============================================================
-  &.autocomplete {
+  &.autocomplete:not(:focus) {
     box-shadow: $focus-box-shadow-transparent;
   }
 
@@ -133,14 +120,16 @@
     }
   }
 
+  // Fileupload ================================================================
+  &.fileupload {
+    ~ .trigger-close.is-visible ~ .btn-actions {
+      left: 26px;
+    }
+  }
+
   // Spinbox ===================================================================
   &.spinbox {
     width: 84px;
-
-    ~ .btn-actions {
-      height: 24px;
-      left: -8px;
-    }
   }
 
   // Textarea ==================================================================
@@ -149,7 +138,7 @@
 
     ~ .btn-actions {
       left: auto;
-      margin-left: -6px;
+      margin-left: -7px;
       position: absolute;
       top: calc(50% - 6px);
     }
@@ -205,7 +194,7 @@
 
   .colorpicker-container {
     ~ .btn-actions {
-      left: -10px;
+      left: -11px;
       top: -13px;
       width: 36px;
     }
@@ -215,7 +204,7 @@
     width: 100%;
 
     .btn-actions {
-      left: -8px;
+      left: -7px;
     }
   }
 
@@ -223,7 +212,7 @@
     box-shadow: none;
 
     .btn-actions {
-      left: -8px;
+      left: -7px;
     }
   }
 
@@ -231,7 +220,7 @@
     box-shadow: none;
 
     .btn-actions {
-      left: -7px;
+      left: -8px;
       width: 36px;
     }
   }
@@ -266,10 +255,21 @@
   }
 
   .btn-actions {
-    left: -10px;
+    left: -11px;
 
     .icon {
       width: 16px;
+    }
+  }
+
+  // Radio active state
+  &.is-active {
+    .field-options {
+      border-color: $input-focus-border-color;
+
+      &.is-focused {
+        @include focus-state();
+      }
     }
   }
 }
@@ -285,15 +285,14 @@
 .field.is-active {
   div.dropdown:not(.is-open),
   .field-options:not([disabled]):not(.colorpicker):not(.spinbox) {
-    @include focus-state();
-  }
-
-  .colorpicker-container {
-    @include focus-state();
     border-color: $input-focus-border-color;
   }
 
-  .spinbox-wrapper {
+  .colorpicker-container {
+    border-color: $input-focus-border-color;
+  }
+
+  .spinbox-wrapper.is-focused {
     .down {
       box-shadow: $focus-box-shadow-spinbox-down;
     }
@@ -309,7 +308,6 @@
 
   .btn-actions {
     border-color: $input-focus-border-color;
-    box-shadow: $focus-box-shadow;
     opacity: 1;
   }
 }
@@ -363,7 +361,7 @@
 
     .spinbox-wrapper {
       .btn-actions {
-        left: -7px;
+        left: -8px;
         width: 35px;
       }
     }
@@ -371,7 +369,7 @@
 
   .radio-group {
     .btn-actions {
-      left: -9px;
+      left: -10px;
     }
   }
 
@@ -380,16 +378,10 @@
 // Safari
 .is-safari {
   .field-options {
-    &.fileupload {
-      ~ .btn-actions {
-        left: -12px;
-      }
-    }
-
     &.timepicker,
     &.datepicker {
       ~ .btn-actions {
-        left: -8px;
+        left: -7px;
       }
     }
   }
@@ -397,7 +389,7 @@
   .field.is-fieldoptions {
     .colorpicker-container {
       ~ .btn-actions {
-        left: -11px;
+        // left: -11px;
         top: auto;
       }
     }
@@ -405,7 +397,7 @@
 
   .radio-group {
     .btn-actions {
-      left: -9px;
+      left: -10px;
     }
   }
 
@@ -550,10 +542,49 @@ html[dir='rtl'] {
   // RTL with Firefox on Mac
   &.is-mac.is-firefox {
     .field-options {
+      ~ .btn-actions {
+        left: auto;
+        right: -10px;
+      }
+
+      &.dropdown,
+      &.multiselect {
+        ~ .btn-actions {
+          left: auto;
+          right: -11px;
+        }
+      }
+
+      &.fileupload {
+        ~ .btn-actions {
+          left: auto;
+          right: -16px;
+        }
+
+        ~ .trigger-close.is-visible ~ .btn-actions {
+          left: auto;
+          right: 20px;
+        }
+      }
+
       &.searchfield {
         ~ .btn-actions {
           left: auto;
           right: -6px;
+        }
+      }
+
+      &.spinbox {
+        ~ .btn-actions {
+          left: auto;
+          right: -8px;
+        }
+      }
+
+      &.textarea {
+        ~ .btn-actions {
+          left: auto;
+          right: auto;
         }
       }
     }
@@ -577,7 +608,7 @@ html[dir='rtl'] {
     .radio-group {
       .btn-actions {
         left: auto;
-        right: -9px;
+        right: -10px;
       }
     }
 
@@ -647,7 +678,7 @@ html[dir='rtl'] {
     .radio-group {
       .btn-actions {
         left: auto;
-        right: -9px;
+        right: -10px;
       }
     }
 
