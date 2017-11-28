@@ -228,9 +228,9 @@ a.btn-menu {
     }
   }
 
-  &:focus + .separator {
-    opacity: 0;
-  }
+  // &:focus + .separator {
+  //   opacity: 0;
+  // }
 
   &.btn {
     margin-right: -8px;
