@@ -3,8 +3,8 @@
     <br />
     <h3>Grid Example: Customization</h3>
     <p>
-    Shows you can dynamically set a mask on different cells. In this example peices columns allows decimals.
-    The other cells allow just integer values.
+    Shows you can dynamically set a mask on different cells. In this example pieces columns allows decimals.
+    The other cells allow just integer values (no decimal).
     </p>
   </div>
 </div>
@@ -30,14 +30,28 @@
       data.push({ id: 4, productId: 2445204, productName: 'Gold Pieces', activity:  'Assemble Paint', quantity: 9.25, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action', pieces: true});
 
       var maskFormatter = function (row, cell, value, column, item) {
-        return item.pieces ? '###.00' : '###';
+
+        var defaults = {
+          patternOptions: {allowNegative: true,
+          allowDecimal: item.pieces ? true : false,
+          allowThousandsSeparator: false,
+          integerLimit: 4, decimalLimit: item.pieces ? 2 : 0,
+          symbols: {
+            thousands: ',',
+            decimal: '.',
+            negative: '-'
+          }},
+          process: 'number'
+        };
+
+        return defaults;
       };
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, editor: Editors.Input});
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 125, editor: Editors.Input});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160, editor: Editors.Input});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200, mask: maskFormatter, editor: Editors.Input, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 2}});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', editor: Editors.Input});
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', editor: Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', maskOptions: maskFormatter, editor: Editors.Input, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 2}});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input});
 
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({

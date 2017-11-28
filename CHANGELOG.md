@@ -1,3 +1,38 @@
+## <a name="version-4.3.4">4.3.5</a>
+
+Release Date: TBD
+
+Full Jira Release Notes: TBD
+
+### <a name="version-4.3.4-download-build-assets">Download Build Assets:</a>
+
+Build Server: TBD
+Npm: http://npm.infor.com
+
+### <a name="version-4.3.4-download-build-assets">Demo Site</a>
+
+http://usalvlhlpool1.infor.com/4.3.4-rc/components/
+
+### <a name="version-4.3.4-key-new-features">Key New Features</a>
+-
+
+### <a name="version-4.3.3-breaking-changes">Breaking Changes</a>
+-
+
+### <a name="version-4.3.4-breaking-changes">Corrections to Your Code</a>
+- Datagrid - The dynamic mask example now uses the new mask options (example components/mask/test-number-mask-gauntlet.html). Please refactor to pass an object back with the options like the sample page http://git.infor.com/projects/SOHO/repos/controls/browse/components/datagrid/test-dynamic-mask.html
+
+### <a name="version-4.3.3-behavior-changes">Behavior Changes</a>
+-
+
+### <a name="version-4.3.3-improvements">Improvements</a>
+-
+
+### <a name="version-4.3.3-bug-fixes">Bug Fixes</a>
+-
+
+(TBD Jira Issues Solved this release, Backlog Dev TBD, Design TBD, Unresolved TBD)
+
 ## <a name="version-4.3.3">4.3.3</a>
 
 Release Date: 2017-11-21

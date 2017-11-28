@@ -584,6 +584,9 @@ window.Editors = {
       if (column.mask && typeof column.mask === 'function') {
         var mask = column.mask(row, cell, value, column, item);
         this.input.mask({pattern: mask, mode: column.maskMode});
+      } else if (column.maskOptions && typeof column.maskOptions === 'function') {
+        var maskOptions = column.maskOptions(row, cell, value, column, item);
+        this.input.mask(maskOptions);
       } else if (column.mask) {
         this.input.mask({pattern: column.mask, mode: column.maskMode});
       }
@@ -608,6 +611,10 @@ window.Editors = {
       if (column.numberFormat) {
         useMask = true;
         defaults = {patternOptions : {decimalLimit: column.numberFormat.maximumFractionDigits }};
+      }
+
+      if (column.maskOptions && typeof column.maskOptions === 'function') {
+        useMask = false;
       }
 
       if (useMask) {
