@@ -7,12 +7,16 @@ export * from './utils/debug';
 export { uniqueIdCount, utils, DOM } from './utils/utils';
 export { stringUtils as string } from './utils/string';
 export { breakpoints } from './utils/breakpoints';
+export { Locale } from './locale/locale';
 export { Environment } from './utils/environment';
 export { theme } from './utils/theme';
 
 // Behaviors ======================== /
-//export { Initialize } from './components/initialize/initialize';
+export { Personalize } from './personalize/personalize';
+export { HideFocus, smoothScrollTo, defer } from './utils/behaviors';
+export { Initialize } from './initialize/initialize';
 
 // Components ======================= /
+export { Button } from './button/button';
 
 // Patterns ========================= /

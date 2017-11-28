@@ -1,17 +1,3 @@
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
 
   /**
    * HideFocus Behavior
@@ -118,8 +104,10 @@
     }
   };
 
-  window.Soho.behaviors.hideFocus = HideFocus;
 
+  /**
+   * jQuery component wrapper for the HideFocus behavior
+   */
   $.fn.hideFocus = function() {
     return this.each(function() {
       var instance = $.data(this, 'hidefocus');
@@ -143,7 +131,7 @@
    * @param {Number} duration - the time that will be needed for the scrolling to complete.
    * @returns {$.Deferred}
    */
-  window.Soho.behaviors.smoothScrollTo = function(el, target, duration) {
+  function smoothScrollTo(el, target, duration) {
     var dfd = $.Deferred();
 
     if (!Soho.DOM.isElement(el)) {
@@ -232,7 +220,7 @@
     setTimeout(scrollFrame, 0);
 
     return dfd;
-  };
+  }
 
 
   /**
@@ -242,7 +230,7 @@
    * @returns {$.Deferred}
    */
   $.fn.smoothScroll = function(target, duration) {
-    return window.Soho.behaviors.smoothScrollTo(this, target, duration);
+    return smoothScrollTo(this, target, duration);
   };
 
 
@@ -250,11 +238,10 @@
    * Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
    * @returns {requestAnimationFrame|setTimeout}
    */
-  window.Soho.behaviors.defer = function defer(callback, timer) {
+  function defer(callback, timer) {
     var deferMethod = typeof window.requestAnimationFrame !== 'undefined' ? window.requestAnimationFrame : setTimeout;
     return deferMethod(callback, timer);
-  };
+  }
 
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+
+export { HideFocus, smoothScrollTo, defer };

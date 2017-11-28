@@ -2,28 +2,17 @@
 // Data From: http://www.unicode.org/repos/cldr-aux/json/22.1/main/
 // For Docs See: http://ibm.co/1nXyNxp
 
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+/**
+  TODO: Re-implement this with proper scope.
 
-  //If there already exists a Locale object with a culturesPath use that path
-  //This allows manually setting the directory for the culture files to be retrieved from
+  // If there already exists a Locale object with a culturesPath use that path
+  // This allows manually setting the directory for the culture files to be retrieved from
   var existingCulturePath = '';
 
   if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
     existingCulturePath = window.Locale.culturesPath;
   }
+*/
 
   /**
   * The Locale component handles i18n
@@ -32,11 +21,11 @@
   * @param {String} currentLocale  &nbsp;-&nbsp; The Currently Set Locale
   *
   */
-  window.Locale = {
+  let Locale = { //jshint ignore:line
 
     currentLocale:  {name: '', data: {}}, //default
     cultures: {},
-    culturesPath: existingCulturePath,
+    culturesPath: '', //existingCulturePath
 
     //Sets the Lang in the Html Header
     updateLang: function () {
@@ -1070,7 +1059,4 @@
     }, 50);
   });
 
-
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+export { Locale };
