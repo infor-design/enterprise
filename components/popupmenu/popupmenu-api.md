@@ -13,7 +13,6 @@ Responsive Popup Menu Control aka Context Menu when doing a right click action.
 
 **Parameters**
 
--   `element`  
 -   `menu` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Menu's ID Selector, or a jQuery object representing a menu
 -   `trigger` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Action on which to trigger a menu can be: click, rightClick, immediate ect
 -   `autoFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If false the focus will not focus the first list element. (At the cost of accessibility)

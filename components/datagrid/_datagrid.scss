@@ -102,8 +102,10 @@ $datagrid-short-row-height: 23px;
 
   // States - List Style Datagrid
   &.is-gridlist {
-    background-color: transparent;
+    // scss-lint:disable ImportantRule
+    background-color: transparent !important;
     border: 0;
+    // scss-lint:enable ImportantRule
 
     &.datagrid-alternate-bg-color {
       background-color: $panel-bg-color;
@@ -166,7 +168,9 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-body {
-      background-color: transparent;
+      // scss-lint:disable ImportantRule
+      background-color: transparent !important;
+      // scss-lint:enable ImportantRule
     }
 
     tr td {
@@ -249,6 +253,10 @@ $datagrid-short-row-height: 23px;
     //Set Container Heights for scrolling
     .datagrid-body {
       height: calc(100% - 25px);
+    }
+
+    &.has-group-headers .datagrid-body {
+      height: calc(100% - 50px);
     }
 
     &.has-filterable-columns .datagrid-body {
@@ -1075,7 +1083,7 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &:not(.error):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
+    &:not(.error):not(.is-selected):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {

@@ -2,14 +2,23 @@
 //==============================================================================
 @mixin trigger-button {
   @include rotate(90);
+  //border-radius: top-right | bottom-right | bottom-left | top-left
+  border-radius: 2px 2px 0 0;
+  height: 22px;
   left: -11px;
   line-height: normal;
-  min-width: 30px;
+  min-width: 0;
+  min-height: 0;
   opacity: 0;
-  width: 30px;
+  width: 34px;
 
-  &:hover,
+  &:hover {
+    opacity: 1;
+  }
+
   &.is-active {
+    border-color: $input-focus-border-color;
+    box-shadow: $focus-box-shadow;
     opacity: 1;
   }
 
@@ -20,8 +29,6 @@
   }
 
   &:focus:not(.hide-focus) {
-    box-shadow: none;
-
     .icon {
       fill: $input-focus-border-color;
     }
@@ -72,6 +79,8 @@
     @include focus-state();
 
     ~ .btn-actions {
+      border-color: $input-focus-border-color;
+      box-shadow: $focus-box-shadow;
       opacity: 1;
     }
   }
@@ -98,7 +107,6 @@
   }
   // scss-lint:enable ImportantRule
 
-
   // Clearable =================================================================
   &[data-clearable="true"] {
     ~ .btn-actions {
@@ -112,9 +120,17 @@
     }
   }
 
-  // Autocomplete ===================================================================
+  // Autocomplete ==============================================================
   &.autocomplete {
     box-shadow: $focus-box-shadow-transparent;
+  }
+
+  // Dropdown ==================================================================
+  &.dropdown,
+  &.multiselect {
+    ~ .btn-actions {
+      top: 2px;
+    }
   }
 
   // Spinbox ===================================================================
@@ -122,6 +138,7 @@
     width: 84px;
 
     ~ .btn-actions {
+      height: 24px;
       left: -8px;
     }
   }
@@ -132,7 +149,7 @@
 
     ~ .btn-actions {
       left: auto;
-      margin-left: -8px;
+      margin-left: -6px;
       position: absolute;
       top: calc(50% - 6px);
     }
@@ -188,12 +205,18 @@
 
   .colorpicker-container {
     ~ .btn-actions {
-      top: -12px;
+      left: -10px;
+      top: -13px;
+      width: 36px;
     }
   }
 
   .lookup-wrapper {
     width: 100%;
+
+    .btn-actions {
+      left: -8px;
+    }
   }
 
   .searchfield-wrapper {
@@ -208,7 +231,8 @@
     box-shadow: none;
 
     .btn-actions {
-      left: -8px;
+      left: -7px;
+      width: 36px;
     }
   }
 }
@@ -218,8 +242,15 @@
   .data.field-options {
     border: solid 1px transparent;
     display: inline-block;
+    margin-left: -5px;
     max-width: 100%;
     outline: 0;
+    padding: 0 5px;
+    width: calc(100% - 46px);
+
+    ~ .btn-actions {
+      left: -9px;
+    }
   }
 }
 
@@ -234,8 +265,12 @@
     width: auto;
   }
 
-  .btn-actions .icon {
-    width: 16px;
+  .btn-actions {
+    left: -10px;
+
+    .icon {
+      width: 16px;
+    }
   }
 }
 
@@ -248,11 +283,13 @@
 
 // Active effect ===============================================================
 .field.is-active {
+  div.dropdown:not(.is-open),
   .field-options:not([disabled]):not(.colorpicker):not(.spinbox) {
     @include focus-state();
   }
 
   .colorpicker-container {
+    @include focus-state();
     border-color: $input-focus-border-color;
   }
 
@@ -271,11 +308,14 @@
   }
 
   .btn-actions {
+    border-color: $input-focus-border-color;
+    box-shadow: $focus-box-shadow;
     opacity: 1;
   }
 }
 
 // Overwrites ******************************************************************
+// Firefox
 .is-firefox {
   .field-options {
     ~ .btn-actions {
@@ -285,24 +325,67 @@
   }
 }
 
+// Firefox on Mac
 .is-mac.is-firefox {
   .field-options {
     ~ .btn-actions {
       line-height: normal;
+      width: 33px;
+    }
+
+    &.dropdown,
+    &.multiselect {
+      ~ .btn-actions {
+        top: 1px;
+      }
+    }
+
+    &.searchfield {
+      ~ .btn-actions {
+        left: -6px;
+      }
     }
   }
 
   .field.is-fieldoptions {
     .colorpicker-container {
       ~ .btn-actions {
+        left: -11px;
         top: -14px;
       }
     }
+
+    .lookup-wrapper {
+      .btn-actions {
+        left: -6px;
+      }
+    }
+
+    .spinbox-wrapper {
+      .btn-actions {
+        left: -7px;
+        width: 35px;
+      }
+    }
   }
+
+  .radio-group {
+    .btn-actions {
+      left: -9px;
+    }
+  }
+
 }
 
+// Safari
 .is-safari {
   .field-options {
+    &.fileupload {
+      ~ .btn-actions {
+        left: -12px;
+      }
+    }
+
     &.timepicker,
     &.datepicker {
       ~ .btn-actions {
@@ -314,7 +397,50 @@
   .field.is-fieldoptions {
     .colorpicker-container {
       ~ .btn-actions {
+        left: -11px;
         top: auto;
+      }
+    }
+  }
+
+  .radio-group {
+    .btn-actions {
+      left: -9px;
+    }
+  }
+
+  .summary-form {
+    .data.field-options {
+      ~ .btn-actions {
+        left: -10px;
+      }
+    }
+  }
+}
+
+// IE
+.ie {
+  .field-options {
+    &.multiselect {
+      ~ .btn-actions {
+        top: 1px;
+      }
+    }
+  }
+
+  .radio-group {
+    .btn-actions {
+      left: -9px;
+    }
+  }
+}
+
+// IE 11
+.ie11 {
+  .field-options {
+    &.textarea {
+      ~ .btn-actions {
+        margin-left: -9px;
       }
     }
   }
@@ -330,14 +456,24 @@ html[dir='rtl'] {
     }
 
     ~ .btn-actions {
+      //border-radius: top-right | bottom-right | bottom-left | top-left
+      border-radius: 0 0 2px 2px;
       left: auto;
-      right: -11px;
+      right: -9px;
+    }
+
+    &.dropdown,
+    &.multiselect {
+      ~ .btn-actions {
+        right: -10px;
+        width: 35px;
+      }
     }
 
     &.textarea {
       ~ .btn-actions {
         margin-left: inherit;
-        margin-right: -8px;
+        margin-right: -6px;
         right: auto;
       }
     }
@@ -345,7 +481,7 @@ html[dir='rtl'] {
     &.spinbox {
       ~ .btn-actions {
         left: auto;
-        right: -8px;
+        right: -7px;
       }
     }
 
@@ -380,6 +516,150 @@ html[dir='rtl'] {
     .btn-actions {
       left: auto;
       right: -8px;
+    }
+
+    .colorpicker-container {
+      ~ .btn-actions {
+        //border-radius: top-right | bottom-right | bottom-left | top-left
+        border-radius: 0 0 2px 2px;
+        left: auto;
+        right: -10px;
+      }
+    }
+  }
+
+  .radio-group {
+    .btn-actions {
+      left: auto;
+      right: -10px;
+    }
+  }
+
+  .summary-form {
+    .data.field-options {
+      margin-left: inherit;
+      margin-right: -5px;
+
+      ~ .btn-actions {
+        left: auto;
+        right: -10px;
+      }
+    }
+  }
+
+  // RTL with Firefox on Mac
+  &.is-mac.is-firefox {
+    .field-options {
+      &.searchfield {
+        ~ .btn-actions {
+          left: auto;
+          right: -6px;
+        }
+      }
+    }
+
+    .field.is-fieldoptions {
+      .colorpicker-container {
+        ~ .btn-actions {
+          left: auto;
+          right: -11px;
+        }
+      }
+
+      .lookup-wrapper {
+        .btn-actions {
+          left: auto;
+          right: -6px;
+        }
+      }
+    }
+
+    .radio-group {
+      .btn-actions {
+        left: auto;
+        right: -9px;
+      }
+    }
+
+  }
+
+  // RTL with Safari
+  &.is-safari {
+    .field-options {
+      ~ .btn-actions {
+        left: auto;
+        right: -10px;
+      }
+
+      &.fileupload {
+        ~ .btn-actions {
+          left: auto;
+          right: -12px;
+        }
+      }
+
+      &.timepicker,
+      &.datepicker {
+        ~ .btn-actions {
+          left: auto;
+          right: -8px;
+        }
+      }
+
+      &.searchfield {
+        ~ .btn-actions {
+          left: auto;
+          right: -8px;
+        }
+      }
+
+      &.spinbox {
+        ~ .btn-actions {
+          left: auto;
+          right: -9px;
+        }
+      }
+
+      &.textarea {
+        ~ .btn-actions {
+          left: auto;
+          right: auto;
+        }
+      }
+    }
+
+    .field.is-fieldoptions {
+      .colorpicker-container {
+        ~ .btn-actions {
+          left: auto;
+          right: -11px;
+        }
+      }
+
+      .lookup-wrapper {
+        .btn-actions {
+          left: auto;
+          right: -8px;
+        }
+      }
+    }
+
+    .radio-group {
+      .btn-actions {
+        left: auto;
+        right: -9px;
+      }
+    }
+
+  }
+
+  // RTL with IE
+  &.ie {
+    .radio-group {
+      .btn-actions {
+        left: auto;
+        right: -9px;
+      }
     }
   }
 

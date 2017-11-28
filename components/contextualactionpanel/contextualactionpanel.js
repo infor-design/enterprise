@@ -127,9 +127,9 @@
           if (!this.toolbar.length) {
             this.toolbar = $('<div class="toolbar"></div>');
           }
-		  
+
 		      this.toolbar.searchField = this.toolbar.find('.searchfield');
-		  
+
           this.toolbar.appendTo(this.header);
           var toolbarTitle = this.toolbar.find('.title');
           if (!toolbarTitle.length) {
@@ -231,15 +231,13 @@
           self.teardown();
         });
 
-        if (this.toolbar)  {
-          this.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
+        if (self.toolbar)  {
+          self.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
             .onTouchClick('contextualactionpanel').on('click.contextualactionpanel', function() {
             self.handleToolbarSelected();
           });
-		  
-          this.ctrlPressed = false;
-          this.toolbar.searchField.on('keydown.contextualactionpanel');
-          this.toolbar.searchField.on('click.contextualactionpanel');
+
+          self.ctrlPressed = false;
         }
 
         return this;
@@ -269,10 +267,11 @@
 
         //self.panel.detach().insertAfter(self.element);
         var toolbar = self.toolbar.data('toolbar');
-        this.toolbar.searchField.off('keydown.contextualactionpanel');
-        this.toolbar.searchField.off('click.contextualactionpanel');
-
         if (toolbar) {
+          if (toolbar.searchField instanceof $ && toolbar.searchField.length) {
+            toolbar.searchField.off('keydown.contextualactionpanel');
+            toolbar.searchField.off('click.contextualactionpanel');
+          }
           toolbar.destroy();
         }
 

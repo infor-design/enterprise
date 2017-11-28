@@ -44,6 +44,7 @@
         this.inputs = $().add(this.element);
       }
 
+      this.element.addClass('validation-active');
       this.timeout = null;
     },
 
@@ -124,7 +125,17 @@
 
         events = self.extractEvents(events);
 
-        field.on(events, function (e) {
+        //Custom enter event
+        if (events.indexOf('enter.validate') > -1) {
+          field.off('keypress.enter.validate').on('keypress.enter.validate', function (e) {
+            var field = $(this);
+            if (e.which === 13) {
+              self.validate(field, true, e);
+            }
+          });
+        }
+
+        field.off(events).on(events, function (e) {
           var field = $(this),
             handleEventData = field.data('handleEvent' +[(e.type || '')]);
           if (handleEventData &&
@@ -1015,6 +1026,7 @@
     // Initializing the Control Once or Call Methods.
     return this.each(function() {
       var instance = $.data(this, pluginName);
+
       if (instance) {
         if (typeof instance[options] === 'function') {
           instance[options](args);
@@ -1026,7 +1038,6 @@
       }
     });
   };
-
 
   //The validation rules object
   var Validation = function () {

@@ -226,7 +226,7 @@ Initialize.prototype = {
 
         ['header'],
 
-        ['fileupload'],
+        ['fileupload', 'input.fileupload:not(.fileupload-background-transparent)'],
 
         ['fileuploadadvanced', '.fileupload-advanced'],
 
