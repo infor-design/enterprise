@@ -98,14 +98,18 @@
           }
         });
 
-        this.svg.on('click.fileupload', function () {
+        this.svg.on('click.fileupload', function (e) {
           self.fileInput.trigger('click');
-          return false;
+          if (hasInlineLabel) {
+            self.fileInput.data('handleEvent' +[(e.type || '')], e.handleObj);
+          }
         });
 
-        this.svgClose.on('click.fileupload', function () {
+        this.svgClose.on('click.fileupload', function (e) {
           self.clearUploadFile();
-          return false;
+          if (hasInlineLabel) {
+            self.fileInput.data('handleEvent' +[(e.type || '')], e.handleObj);
+          }
         });
 
         if (this.fileInput.is(':disabled')) {
@@ -137,6 +141,17 @@
             self.svgClose.show().addClass('is-visible');
           } else {
             self.clearUploadFile();
+          }
+        });
+
+        // Fix - Not to buble events when clicked on trigger/close icons
+        this.fileInput.on('click.fileupload', function(e) {
+          var handleEventData = self.fileInput.data('handleEvent' +[(e.type || '')]);
+          if (handleEventData &&
+              handleEventData.type === e.type &&
+              e.handleObj.namespace === 'fileupload') {
+            self.fileInput.data('handleEvent' +[(e.type || '')], null);
+            e.preventDefault();
           }
         });
 

@@ -98,6 +98,12 @@
           isFocus = function(elem) {
             return $(':focus').is(elem);
           },
+          addFocused = function(elem) {
+            (elem || self.element).addClass('is-focused');
+          },
+          removeFocused = function(elem) {
+            (elem || self.element).removeClass('is-focused');
+          },
           doActive = function() {
             self.element.add(self.trigger).add(self.field).add(self.fieldParent).addClass('is-active');
           },
@@ -113,7 +119,22 @@
             r = $(e.relatedTarget).prev().is(self.element) ? false : r;
             r = dropdown && dropdown.isOpen() ? false : r;
             r = lookup && lookup.modal && lookup.modal.isOpen() ? false : r;
+            r = isColorpicker && self.element.is('.is-open') ? false : r;
             return r;
+          },
+          onPopupToggle = function(elem) {
+            if (elem.trigger) {
+              elem.trigger
+                .off('show.' + pluginName).on('show.' + pluginName, function () {
+                  doActive();
+                })
+                .off('hide.' + pluginName).on('hide.' + pluginName, function (e) {
+                  if (canUnactive(e)) {
+                    doUnactive();
+                    self.element.removeClass('is-open');
+                  }
+                });
+            }
           },
           getTriggerTopVal = function() {
             var height = self.element.height();
@@ -160,6 +181,14 @@
               .menu.closest('.popupmenu-wrapper').css({'z-index': '4502'});
           }, 0);
         }
+        // Bind active/unactive on show datepicker or timepicker
+        if (datepicker || timepicker) {
+          if (datepicker) {
+            onPopupToggle(datepicker);
+          } else {
+            onPopupToggle(timepicker);
+          }
+        }
         // Adjust return focus for timepicker
         if (timepicker) {
           timepicker.settings.returnFocus = false;
@@ -170,16 +199,20 @@
           self.field.on('click.' + pluginName, '.lookup-wrapper .trigger, .colorpicker-container .trigger', function() {
             doActive();
           });
+
+          if (isColorpicker) {
+            self.element
+              .off('beforeopen.' + pluginName).on('beforeopen.' + pluginName, function () {
+                doActive();
+              });
+          }
         }
         // Bind fileupload events
         if (isFileupload) {
           self.element.on('change.' + pluginName, function() {
             self.targetElem.focus();
           });
-          self.field.on('click.' + pluginName, 'label.fileclose .trigger', function() {
-            self.targetElem.focus();
-          });
-          self.field.on('click.' + pluginName, 'label.fileupload .trigger', function() {
+          self.field.on('click.' + pluginName, '.trigger, .trigger-close', function() {
             doActive();
           });
         }
@@ -222,12 +255,17 @@
         // Radio group - set trigger(action-button) top value and bind events
         if (isRadio) {
           setTriggerCssTop();
-          self.element.find('.radio').on('focusin.' + pluginName, function() {
-            var delay = self.isSafari ? 200 : 0;
-            setTimeout(function() {
-              doActive();
-            }, delay);
-          });
+          self.element.find('.radio')
+            .on('focusin.' + pluginName, function() {
+              var delay = self.isSafari ? 200 : 0;
+              addFocused();
+              setTimeout(function() {
+                doActive();
+              }, delay);
+            })
+            .on('focusout.' + pluginName, function() {
+              removeFocused();
+            });
           $('body').on('resize.' + pluginName, function() {
             setTriggerCssTop();
           });
@@ -237,9 +275,15 @@
         self.targetElem
           .on('focusin.' + pluginName, function() {
             doActive();
+            if (isRadio && self.isSafari) {
+              addFocused();
+            }
           })
           .on('focusout.' + pluginName, function(e) {
             var delay = self.isSafari ? 200 : 0;
+            if (isRadio && self.isSafari) {
+              removeFocused();
+            }
             setTimeout(function() {
               if (canUnactive(e)) {
                 doUnactive();
@@ -275,7 +319,21 @@
           self.targetElem.on('keydown.' + pluginName, function(e) {
             var key = e.which || e.keyCode || e.charCode || 0;
             if (key === 9 && !e.shiftKey) {
-              self.trigger.focus();
+              if (isRadio) {
+                self.targetElem.find(':checked, .radio:first').not(':disabled').focus();
+                self.targetElem.find('.radio')
+                .off('keydown.' + pluginName).on('keydown.' + pluginName, function(e) {
+                  var key = e.which || e.keyCode || e.charCode || 0;
+                  if (key === 9 && !e.shiftKey) {
+                    setTimeout(function() {
+                      self.trigger.focus();
+                    }, 0);
+                  }
+                });
+              }
+              else {
+                self.trigger.focus();
+              }
               doActive();
               e.preventDefault();
               e.stopPropagation();
