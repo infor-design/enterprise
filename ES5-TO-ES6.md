@@ -18,8 +18,37 @@ We are migrating the Soho codebase to an ES6-based project.  Major reasons inclu
 
 Last updated:  *Nov 28, 2017*
 
+See the file `<project root>/components/index.js` to see which Soho components are currently being bundled.
+
+## Development Environment Changes
+
+- If pulling this branch down for the first time, a few preliminary steps need to be taken before builds can compile:
+  - a fresh run of `$ npm install` should be performed.
+  - it may be necessary to use `$ npm install -g rollup` to get the [Rollup](https://github.com/rollup/rollup) bundler to be usable via terminal.
+  - the demoapp's `app.js` has been modified to no-longer duplicate files to the `/public` folder in this project, and will instead serve compiled JS/CSS files directly from `/dist`.  Because of this, if you have JS/CSS files in `/public`, they will be served instead of the compiled JS/CSS files from `/dist`, and you'll never see any changes.  You must manually remove any JS/CSS/map files from `/public` before starting the server.
+- `$ grunt` will now run `rollup -c` instead of the old build process.
+- `$ grunt` no longer attempts to clean the `/public` folder.
+- `$ grunt watch` currently does not perform the rollup process, so CI doesn't currently work.
+- Rollup is completely managing the addition of the software license and any build meta-data to the final `sohoxi.js` bundle.  This code cut is no longer using any of the grunt revision, banner, etc stuff.  There's an additional file being used in `<project root>/build/generate-build-banner.js` that is grabbing all the necessary stuff and spitting out the text content that Rollup is using for the banner.
+
+#### TODO for the Dev environment:
+
+- Continue cleaning up `gruntfile.js` to remove any unnecessary duplciate code/tasks that Rollup's responsible for.
+- Create a route in the demoapp for tests that demonstrate asynchronous loading of ES6 modules (the idea being that some of these lower-level components will stand on their own with a small Soho "core").
+
+## `sohoxi.js` Deliverable Changes
+
 - Utility functions / environment / some behaviors have been converted to ES6.
 - global `Soho` object is in-tact.
 - Locale is in a quasi-working state:
   - Currently working because its been re-located to `Soho.Locale` to become bundled.  It may need to stay here so that we can properly have other components depend on it via `import` syntax.
   - Cultures system needs to be looked at because it works synchronously, but we may need to come up with a better way to do async scripts (Promise-based?)
+
+#### TODO for the JS deliverable:
+
+- Figure out the final location of Locale
+- Figure out if there's a better way to do async loading of culture files (promises?)
+- Get all "building-block"-level components standing on their own in ES6.
+  - Break the actual constructors/prototype defs out from inside the jQuery wrappers.
+  - Still invoke the jQuery wrappers within each `<component>.js` file, but allow the Vanilla JS constructors to stand on their own.
+  - (eventually) figure out a Vanilla-JS, stand-alone replacement for `$.data()` for element-level Soho component access.
