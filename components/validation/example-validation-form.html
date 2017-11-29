@@ -11,7 +11,7 @@
 
       <div class="field">
         <label class="required" for="credit-card">Credit Card <span class="audible">Required</span></label>
-        <input type="text" id="credit-card" name="credit-card" data-validate="required customInformationRule" value="xxxx-xxxx-xxxx-xxxx">
+        <input type="text" id="credit-card" name="credit-card" data-validate="required customInformationRule" placeholder="0000-0000-0000-0000" class="new-mask" data-options='{ "pattern" : "####-####-####-####" }'>
       </div>
 
       <div class="field hidden">
@@ -21,7 +21,7 @@
 
       <div class="field">
         <label for="credit-code">Code</label>
-        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="customWarningRule" data-mask-mode="number">
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-validate="customWarningRule" data-mask="###" data-mask-mode="number">
       </div>
 
       <div class="field">
@@ -31,7 +31,7 @@
 
       <div class="field">
         <label class="required" for="credit-code2">Code <span class="audible">Required</span></label>
-        <input type="text" id="credit-code2" class="input-xs" name="credit-code2" data-validate="required" data-mask-mode="number">
+        <input type="text" id="credit-code2" class="input-xs" name="credit-code2" data-validate="required" data-mask="###" data-mask-mode="number">
       </div>
 
       <div class="field">

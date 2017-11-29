@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "d3": "^3.4.6",
-    "intern": "^3.4.5",
     "jquery": "^3.1.1"
   },
   "main": "dist/js/sohoxi",
@@ -77,7 +76,7 @@
     "grunt-sass": "^2.0.0",
     "grunt-shell": "^2.1.0",
     "grunt-strip-code": "^1.0.4",
-    "intern": "^3.2.0",
+    "intern": "^3.4.6",
     "jsdom": "^9.9.1",
     "jshint": "^2.9.2",
     "load-grunt-tasks": "^3.5.2",
