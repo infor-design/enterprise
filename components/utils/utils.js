@@ -274,8 +274,14 @@
    */
   window.Soho.utils.parseOptions = function parseOptions(element, attr) {
     var options = {};
-    if (!element || !(element instanceof HTMLElement)) {
+    if (!element ||
+      (!(element instanceof HTMLElement) && !(element instanceof $)) ||
+      (element instanceof $ && !element.length)) {
       return options;
+    }
+
+    if (element instanceof $) {
+      element = element[0];
     }
 
     // Use `data-options` as a default.
