@@ -22,9 +22,3 @@ export { Initialize } from './initialize/initialize';
 // Components ======================= /
 import * as components from './components';
 export { components };
-
-// Patterns ========================= /
-
-
-// Soho Bootstrapper ================ /
-export { bootstrapper } from './utils/bootstrapper';
