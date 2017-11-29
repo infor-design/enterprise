@@ -584,6 +584,9 @@ window.Editors = {
       if (column.mask && typeof column.mask === 'function') {
         var mask = column.mask(row, cell, value, column, item);
         this.input.mask({pattern: mask, mode: column.maskMode});
+      } else if (column.maskOptions && typeof column.maskOptions === 'function') {
+        var maskOptions = column.maskOptions(row, cell, value, column, item);
+        this.input.mask(maskOptions);
       } else if (column.mask) {
         this.input.mask({pattern: column.mask, mode: column.maskMode});
       }
@@ -608,6 +611,10 @@ window.Editors = {
       if (column.numberFormat) {
         useMask = true;
         defaults = {patternOptions : {decimalLimit: column.numberFormat.maximumFractionDigits }};
+      }
+
+      if (column.maskOptions && typeof column.maskOptions === 'function') {
+        useMask = false;
       }
 
       if (useMask) {
@@ -3867,8 +3874,24 @@ $.fn.datagrid = function(options) {
       this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
       var context = this.canvas.getContext('2d');
       context.font = '14px arial';
-      var metrics = context.measureText(maxText);
-      return Math.round(metrics.width + (chooseHeader ? 60 : 52));  //Add padding and borders
+
+      var metrics = context.measureText(maxText),
+        hasImages = columnDef.formatter ?
+          columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false,
+        padding = (chooseHeader ? 60 + (hasImages ? 36 : 0) : 40 + (hasImages ? 36 : 0));
+
+      if (columnDef.filterType) {
+        var minWidth = columnDef.filterType === 'date' ? 170 : 100;
+
+        if (columnDef.filterType === 'checkbox') {
+          minWidth = 40;
+          padding = 40;
+        }
+
+        return Math.round(Math.max(metrics.width + padding, minWidth));
+      }
+
+      return Math.round(metrics.width + padding);  //Add padding and borders
     },
 
     headerWidths: [], //Cache

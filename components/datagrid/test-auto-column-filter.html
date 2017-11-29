@@ -1,0 +1,41 @@
+<div class="page-container top-padding scrollable" id="maincontent" role="main" initialize>
+
+   <div class="row">
+      <div class="twelve columns">
+         <div id="datagrid"></div>
+      </div>
+   </div>
+
+
+   <script>
+      $('body').one('initialized', function () {
+         var columns = [
+            {"id":"col0","name":"  ","field":"col0","focusable":false,"align":"left","filterType":"text","hidden":false},
+            {"id":"col1","name":"Int Ref ","field":"col1","focusable":false,"align":"left","filterType":"text","hidden":false},
+            {"id":"col2","name":"Doc ","field":"col2","focusable":false,"align":"left","filterType":"text","hidden":true},
+            {"id":"col3","name":"Original ","field":"col3","focusable":false,"align":"right","filterType":"decimal","hidden":true},
+            {"id":"col4","name":"Outstanding ","field":"col4","focusable":false,"align":"right","filterType":"decimal","hidden":false},
+            {"id":"col5","name":"P ","field":"col5","focusable":false,"align":"right","filterType":"integer","hidden":false},
+            {"id":"col6","name":"Perd ","field":"col6","focusable":false,"align":"right","filterType":"integer","hidden":false},
+            {"id":"col7","name":"Due ","field":"col7","focusable":false,"align":"right","filterType":"text","hidden":false},
+            {"id":"col8","name":"Cur ","field":"col8","focusable":false,"align":"left","filterType":"text","hidden":false}
+            ],
+            data = [
+              {"col0":"IN","col1":"200508DA","col2":"200508","col3":"876.00","col4":"876.00","col5":"6","col6":"0805","col7":"20/05/08","col8":"GBP"},
+              {"col0":"IN","col1":"200508DB","col2":"200508","col3":"153.30","col4":"153.30","col5":"6","col6":"0805","col7":"19/06/08","col8":"GBP"},
+              {"col0":"IN","col1":"200508E","col2":"200508","col3":"865.74","col4":"865.74","col5":"6","col6":"0805","col7":"19/06/08","col8":"GBP"},
+              {"col0":"IN","col1":"RC2-008A","col2":"080915","col3":"120.00","col4":"120.00","col5":"6","col6":"1506","col7":"08/09/15","col8":"GBP"},
+              {"col0":"IN","col1":"RC2-008B","col2":"080915","col3":"24.00","col4":"24.00","col5":"6","col6":"1506","col7":"08/10/15","col8":"GBP"}
+            ];
+
+         $('#datagrid').datagrid({
+            columns: columns,
+            dataset: data,
+            filterable: true
+        });
+
+      });
+
+   </script>
+
+</div>
