@@ -15,7 +15,6 @@ let INITIALIZE_DEFAULTS = {
 };
 
 
-
 /**
  * Page Bootstrapper
  * @constructor
@@ -41,7 +40,7 @@ Initialize.prototype = {
     return this;
   },
 
-  initAll : function () {
+  initAll: function () {
     var self = this;
 
     // Iterate all objects we are initializing

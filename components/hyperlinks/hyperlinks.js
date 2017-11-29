@@ -1,89 +1,81 @@
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+import { HideFocus } from '../utils/behaviors';
 
-  var DEFAULT_HYPERLINK_OPTIONS = {};
+/**
+ * Plugin Name
+ */
+let PLUGIN_NAME = 'hyperlink';
 
-  /**
-   * Soho component wrapper for Hyperlinks.
-   * @class Hyperlink
-   *
-   * @param {HTMLElement} element
-   * @param {Object} options
-   * @returns {Hyperlink}
-   */
-  function Hyperlink(element, options) {
-    return this.init(element, options);
-  }
+/**
+ *
+ */
+var DEFAULT_HYPERLINK_OPTIONS = {};
 
-  Hyperlink.prototype = {
-    init: function(element, options) {
-      if (!this.element && element instanceof HTMLElement) {
-        this.element = element;
-      }
+/**
+ * Soho component wrapper for Hyperlinks.
+ * @class Hyperlink
+ *
+ * @param {HTMLElement} element
+ * @param {Object} options
+ * @returns {Hyperlink}
+ */
+function Hyperlink(element, options) {
+  return this.init(element, options);
+}
 
-      if (typeof options === 'object') {
-        var previousOptions = this.options || DEFAULT_HYPERLINK_OPTIONS;
-        this.options = $.extend({}, previousOptions, options);
-      }
-
-      if (!this.focusBehavior) {
-        this.focusBehavior = new Soho.behaviors.hideFocus(this.element);
-      }
-
-      return this;
-    },
-
-    handleEvents: function() {
-      return this;
-    },
-
-    updated: function(options) {
-      $.extend({}, this.options, options);
-
-      return this
-        .teardown()
-        .init();
-    },
-
-    teardown: function() {
-      return this;
+Hyperlink.prototype = {
+  init: function(element, options) {
+    if (!this.element && element instanceof HTMLElement) {
+      this.element = element;
     }
-  };
 
-  // Add to the Soho object
-  window.Soho.components.hyperlink = Hyperlink;
+    if (typeof options === 'object') {
+      var previousOptions = this.options || DEFAULT_HYPERLINK_OPTIONS;
+      this.options = $.extend({}, previousOptions, options);
+    }
 
-  // Legacy jQuery wrappers
-  $.fn.hyperlink = function(options) {
-    'use strict';
+    if (!this.focusBehavior) {
+      this.focusBehavior = new HideFocus(this.element);
+    }
 
-    // Initialize the plugin (Once)
-    return this.each(function() {
-      var instance = $.data(this, 'hyperlink');
-      if (instance) {
-        instance.updated(options);
-      } else {
-        instance = $.data(this, 'hyperlink', new Hyperlink(this, options));
-        instance.destroy = function destroy() {
-          this.teardown();
-          $.removeData(this, 'hyperlink');
-        };
-      }
-    });
-  };
+    return this;
+  },
 
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+  handleEvents: function() {
+    return this;
+  },
+
+  updated: function(options) {
+    $.extend({}, this.options, options);
+
+    return this
+      .teardown()
+      .init();
+  },
+
+  teardown: function() {
+    return this;
+  }
+};
+
+
+// Legacy jQuery wrappers
+$.fn.hyperlink = function(options) {
+  'use strict';
+
+  // Initialize the plugin (Once)
+  return this.each(function() {
+    var instance = $.data(this, PLUGIN_NAME);
+    if (instance) {
+      instance.updated(options);
+    } else {
+      instance = $.data(this, PLUGIN_NAME, new Hyperlink(this, options));
+      instance.destroy = function destroy() {
+        this.teardown();
+        $.removeData(this, PLUGIN_NAME);
+      };
+    }
+  });
+};
+
+
+export { Hyperlink };

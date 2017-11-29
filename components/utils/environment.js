@@ -136,4 +136,10 @@ Environment.pasteEvent = (function getPasteEvent() {
 })();
 
 
+/**
+ * Automatically set up the environment by virtue of including this script
+ */
+Environment.set();
+
+
 export { Environment };
