@@ -375,11 +375,11 @@
           content = $(content);
           contentArea.html(content);
           contentArea.find('.hidden').removeClass('hidden');
-          popoverWidth = contentArea.width();
         } else {
           contentArea.html(content);
-          popoverWidth = this.settings.content.width();
         }
+
+        popoverWidth = contentArea.width();
 
         if (!this.settings.placementOpts) {
           this.settings.placementOpts = {};
