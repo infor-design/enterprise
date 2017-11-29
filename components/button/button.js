@@ -27,7 +27,7 @@ let BUTTON_DEFAULTS = {
  */
 function Button(element, options) {
   this.element = $(element);
-  this.settings = utils.extend({}, BUTTON_DEFAULTS, options);
+  this.settings = utils.extend({}, BUTTON_DEFAULTS, options, utils.parseOptions(element));
   debug.logTimeStart(PLUGIN_NAME);
   this.init();
   debug.logTimeEnd(PLUGIN_NAME);

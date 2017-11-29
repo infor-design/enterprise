@@ -24,7 +24,7 @@ let DEFAULT_ICON_OPTIONS = {
  * @param {Object} element
  */
 function Icon(element, settings) {
-  this.settings = utils.extend({}, DEFAULT_ICON_OPTIONS, settings);
+  this.settings = utils.extend({}, DEFAULT_ICON_OPTIONS, settings, utils.parseOptions(element));
   this.element = $(element);
   debug.logTimeStart(PLUGIN_NAME);
   this.init();
@@ -135,8 +135,7 @@ $.fn.icon = function(options) {
     if (!instance) {
       instance = $.data(this, PLUGIN_NAME, new Icon(this, options));
     } else {
-      instance.settings = utils.extend({}, instance.settings, options);
-      instance.updated();
+      instance.updated(options);
     }
   });
 };

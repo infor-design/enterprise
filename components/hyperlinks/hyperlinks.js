@@ -31,7 +31,7 @@ Hyperlink.prototype = {
 
     if (typeof options === 'object') {
       var previousOptions = this.options || DEFAULT_HYPERLINK_OPTIONS;
-      this.options = utils.extend({}, previousOptions, options);
+      this.options = utils.extend({}, previousOptions, options, utils.parseOptions(element));
     }
 
     if (!this.focusBehavior) {
