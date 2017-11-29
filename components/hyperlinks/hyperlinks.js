@@ -1,3 +1,4 @@
+import { utils } from '../utils/utils';
 import { HideFocus } from '../utils/behaviors';
 
 /**
@@ -30,7 +31,7 @@ Hyperlink.prototype = {
 
     if (typeof options === 'object') {
       var previousOptions = this.options || DEFAULT_HYPERLINK_OPTIONS;
-      this.options = $.extend({}, previousOptions, options);
+      this.options = utils.extend({}, previousOptions, options);
     }
 
     if (!this.focusBehavior) {
@@ -45,7 +46,9 @@ Hyperlink.prototype = {
   },
 
   updated: function(options) {
-    $.extend({}, this.options, options);
+    if (options) {
+      this.options = utils.extend({}, this.options, options);
+    }
 
     return this
       .teardown()
@@ -58,11 +61,10 @@ Hyperlink.prototype = {
 };
 
 
-// Legacy jQuery wrappers
+/**
+ * Legacy jQuery wrappers
+ */
 $.fn.hyperlink = function(options) {
-  'use strict';
-
-  // Initialize the plugin (Once)
   return this.each(function() {
     var instance = $.data(this, PLUGIN_NAME);
     if (instance) {

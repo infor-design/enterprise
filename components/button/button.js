@@ -1,4 +1,5 @@
 import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
 
 /**
  * Component name as referenced by jQuery/event namespace/etc
@@ -26,11 +27,12 @@ let BUTTON_DEFAULTS = {
  */
 function Button(element, options) {
   this.element = $(element);
-  this.settings = $.extend({}, BUTTON_DEFAULTS, options);
+  this.settings = utils.extend({}, BUTTON_DEFAULTS, options);
   debug.logTimeStart(PLUGIN_NAME);
   this.init();
   debug.logTimeEnd(PLUGIN_NAME);
 }
+
 
 // Plugin Methods
 Button.prototype = {
@@ -171,6 +173,18 @@ Button.prototype = {
     }, 1000);
   },
 
+
+  /**
+   *
+   */
+  updated: function(settings) {
+    if (settings) {
+      this.settings = utils.extend({}, this.settings, settings);
+    }
+    return this;
+  },
+
+
   /**
   * Teardown and remove any added markup and events.
   */
@@ -193,6 +207,7 @@ Button.prototype = {
    * @param {Object} focus  &nbsp;-&nbsp; Fires when the menu is focused.
    */
   handleEvents: function () {
+
   }
 };
 
@@ -201,13 +216,15 @@ Button.prototype = {
  * jQuery Component Wrapper for the Soho Button Element
  */
 $.fn.button = function(options) {
-  // Initialize the plugin (Once)
   return this.each(function() {
     var instance = $.data(this, PLUGIN_NAME);
     if (!instance) {
       instance = $.data(this, PLUGIN_NAME, new Button(this, options));
+    } else {
+      instance.updated(options);
     }
   });
 };
+
 
 export { Button };

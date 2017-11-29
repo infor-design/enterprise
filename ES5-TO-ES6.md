@@ -16,7 +16,7 @@ We are migrating the Soho codebase to an ES6-based project.  Major reasons inclu
 
 # Current Status
 
-Last updated:  *Nov 28, 2017*
+Last updated:  *Nov 29, 2017*
 
 See the file `<project root>/components/index.js` to see which Soho components are currently being bundled.
 
@@ -43,6 +43,13 @@ See the file `<project root>/components/index.js` to see which Soho components a
 - Locale is in a quasi-working state:
   - Currently working because its been re-located to `Soho.Locale` to become bundled.  It may need to stay here so that we can properly have other components depend on it via `import` syntax.
   - Cultures system needs to be looked at because it works synchronously, but we may need to come up with a better way to do async scripts (Promise-based?)
+- Added a handful of low-level components (see `<project root>/components/components.js` for the list of currently-available components after build time)
+- Modifications to the desired component lifecycle
+  - Remove as much "setting of options" from the jQuery component wrappers as possible, in favor of working them directly into Vanilla JS constructors (should probably start a JIRA ticket for this)
+    - Each component's constructor should set `this.options` on its own.
+    - the jQuery wrappers' path for "when instance exists" should pass incoming options to the Vanilla JS component's `updated()` method (ex: `instance.updated(options)`)
+    - component `updated()` methods should understand how to deal with setting incoming options over top of existing options and sanitizing the incoming options (sanitizing process may need to be a utility function).
+    - should also take advantage of `utils.parseOptions` to take HTML-based options into account.  Need to figure out whether or not DOM or JS-based options take precedence (as of now, DOM-based options take precedence over JS options in most cases, but it's not 100% done that way throughout)
 
 #### TODO for the JS deliverable:
 
