@@ -274,7 +274,7 @@
       if (modalFields.length > 0) {
         modalFields.each(function () {
           var modalField = $(this);
-          console.log(modalField.data('isValid')) ;//, isValid);
+
           if (modalField.closest('.datagrid-filter-wrapper').length > 0) {
             return;
           }
