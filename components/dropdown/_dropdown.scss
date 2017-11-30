@@ -749,11 +749,23 @@ div.dropdown-xs,
       }
     }
 
+    .dropdown-search {
+      padding-bottom: 8px;
+      padding-top: 10px;
+    }
+
     &.dropdown-short {
       .dropdown-search {
         @include font-size(12);
         padding: 5px 21px 5px 5px;
       }
+    }
+  }
+
+  div.dropdown,
+  div.multiselect {
+    > span {
+      padding-top: 1px;
     }
   }
 }
@@ -845,7 +857,7 @@ html[dir='rtl'] {
 
     > .trigger {
       .icon {
-        margin-right: -24px;
+        margin-right: -22px;
       }
     }
 
@@ -953,10 +965,5 @@ html[dir='rtl'] {
         }
       }
     }
-  }
-
-  .trigger .icon {
-    left: 6px;
-    right: auto;
   }
 }
