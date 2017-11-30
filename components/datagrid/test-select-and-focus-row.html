@@ -37,7 +37,7 @@
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Init and get the api for the grid
-      $('#datagrid').datagrid({
+      grid = $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
         selectable: 'single',
@@ -48,8 +48,10 @@
         if (args[0]) {
           console.log(args[0].idx, args[0].data.productId, args[0].elem);
         }
-      });
+      }).data('datagrid');
 
+      grid.selectRow(0);
+      grid.setActiveCell(0, 0);
  });
 
 </script>
