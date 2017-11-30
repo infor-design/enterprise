@@ -101,13 +101,14 @@ div.multiselect {
     @include list-icon-colors();
     fill: $popupmenu-icon-color;
     height: 16px;
-    left: 16px;
+    left: 14px;
     position: absolute;
-    top: 7px;
+    top: 9px;
     vertical-align: middle;
+    width: 16px;
 
     + span {
-      padding-left: 33px;
+      padding-left: 29px;
     }
   }
 
@@ -230,9 +231,7 @@ div.multiselect {
   }
 
   li {
-    min-height: 32px;
-    padding-left: 4px;
-    padding-right: 5px;
+    //min-height: 32px;
     position: relative;
 
     i {
@@ -322,27 +321,22 @@ div.multiselect {
     }
   }
 
-  .has-groups li.dropdown-option {
-    padding-left: 9px;
-    padding-right: 9px;
-  }
-
   > .listoption-icon {
     @include list-icon-colors();
     fill: $popupmenu-icon-color;
     height: 16px;
-    left: 15px;
+    left: 10px;
     position: absolute;
     top: 8px;
 
     + span {
-      padding-left: 43px;
+      padding-left: 39px;
     }
   }
 
   &.has-icons {
     .dropdown-search {
-      padding-left: 43px;
+      padding-left: 39px;
     }
   }
 
@@ -391,8 +385,8 @@ div.multiselect {
 
     li::before {
       @include checkbox-unchecked-before-style;
-      margin-left: -27px;
-      top: 4px;
+      margin-left: 10px;
+      margin-top: 8px;
     }
 
     li.is-disabled::before {
@@ -415,7 +409,7 @@ div.multiselect {
       @include checkbox-checked-after-style;
       left: 15px;
       margin-top: 0;
-      top: 9px;
+      top: 8px;
     }
 
     li.is-disabled.is-selected::before {
@@ -580,7 +574,7 @@ input.dropdown.error:focus {
 
     > .listoption-icon {
       height: 14px;
-      left: 3px;
+      left: 6px;
       top: 6px;
 
       + span {
@@ -656,13 +650,12 @@ div.dropdown-xs,
 
   li {
     > a {
-      line-height: 25px;
+      line-height: 24px;
     }
 
     .listoption-icon {
       height: 14px;
-      left: -7px;
-      margin-right: -5px;
+      width: 14px;
     }
   }
 
@@ -700,28 +693,16 @@ div.dropdown-xs,
   &.multiple {
     li {
       &::before {
-        margin-left: 0;
-        top: 4px;
+        margin-left: 5px;
       }
 
       &::after {
         margin-top: 0;
       }
 
-      &.is-focused {
-        &::before {
-          margin-left: 0;
-        }
-
-        &::after {
-          margin-top: 0;
-        }
-      }
-
       a {
-        display: inline-block;
-        padding-left: 18px;
-        padding-top: 1px;
+        display: inline;
+        padding-left: 26px;
       }
     }
   }
@@ -822,11 +803,11 @@ html[dir='rtl'] {
   div.dropdown {
     > .listoption-icon {
       left: auto;
-      right: 16px;
+      right: 14px;
 
       + span {
         padding-left: inherit;
-        padding-right: 33px;
+        padding-right: 29px;
       }
     }
   }
@@ -838,7 +819,7 @@ html[dir='rtl'] {
 
       li::before {
         margin-left: inherit;
-        margin-right: -27px;
+        margin-right: 5px;
       }
 
       li.is-selected::after {
@@ -862,11 +843,12 @@ html[dir='rtl'] {
       }
     }
 
-    >.trigger {
+    > .trigger {
       .icon {
-        margin-right: -15px;
+        margin-right: -24px;
       }
     }
+
 
     li {
       .listoption-icon {
@@ -879,18 +861,18 @@ html[dir='rtl'] {
 
     > .listoption-icon {
       left: auto;
-      right: 41px;
+      right: 36px;
 
       + span {
         padding-left: inherit;
-        padding-right: 43px;
+        padding-right: 39px;
       }
     }
 
     &.has-icons {
       .dropdown-search {
         padding-left: inherit;
-        padding-right: 43px;
+        padding-right: 39px;
       }
     }
   }
@@ -908,18 +890,8 @@ html[dir='rtl'] {
   }
 
   .dropdown-list.dropdown-short {
-
     .dropdown-search {
       padding: 5px 5px 5px 32px;
-    }
-
-    li {
-      .listoption-icon {
-        left: auto;
-        margin-left: -5px;
-        margin-right: inherit;
-        right: -7px;
-      }
     }
 
     &.has-icons {
@@ -932,6 +904,15 @@ html[dir='rtl'] {
     > .listoption-icon {
       left: auto;
       right: 31px;
+    }
+
+    &.multiple {
+      li {
+        a {
+          padding-left: 0;
+          padding-right: 27px;
+        }
+      }
     }
   }
 
@@ -964,7 +945,7 @@ html[dir='rtl'] {
     div.dropdown {
       > .listoption-icon {
         left: auto;
-        right: 3px;
+        right: 6px;
 
         + span {
           padding-left: inherit;
@@ -976,29 +957,6 @@ html[dir='rtl'] {
 
   .trigger .icon {
     left: 6px;
-  }
-
-  .dropdown-short {
-    &.multiple {
-      li {
-        a {
-          padding-left: 0;
-          padding-right: 18px;
-        }
-
-        &::before {
-          margin-left: inherit;
-          margin-right: inherit;
-        }
-
-        &.is-selected::after {
-          left: inherit;
-        }
-      }
-    }
-
-    .trigger .icon {
-      right: auto;
-    }
+    right: auto;
   }
 }
