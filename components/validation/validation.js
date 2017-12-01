@@ -118,11 +118,6 @@
         var field = $(this),
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate keyup.validate');
-
-        if (field.is('[readonly]') && !field.parent().is('.field-fileupload')) {
-          return;
-        }
-
         events = self.extractEvents(events);
 
         //Custom enter event
@@ -138,6 +133,12 @@
         field.off(events).on(events, function (e) {
           var field = $(this),
             handleEventData = field.data('handleEvent' +[(e.type || '')]);
+
+
+          if (field.is('[readonly]') && !field.parent().is('.field-fileupload')) {
+            return;
+          }
+
           if (handleEventData &&
               handleEventData.type === e.type &&
               e.handleObj.namespace === 'validate') {
@@ -266,7 +267,7 @@
      * Set disable/enable primary button in modal
      * @private
      */
-    setModalPrimaryBtn: function(field, modalBtn, isValid) {
+    setModalPrimaryBtn: function(field, modalBtn) {
       var modal = field.closest('.modal'),
         modalFields = modal.find('[data-validate]:visible, select[data-validate], :checkbox[data-validate]'),
         allValid = true;
@@ -274,7 +275,7 @@
       if (modalFields.length > 0) {
         modalFields.each(function () {
           var modalField = $(this);
-          modalField.data('isValid', isValid);
+
           if (modalField.closest('.datagrid-filter-wrapper').length > 0) {
             return;
           }
@@ -283,10 +284,9 @@
             if ((isVisible || modalField.is('select, :checkbox'))  && !modalField.val()) {
               allValid = false;
             }
-          } else {
-            if ((isVisible  || modalField.is('select, :checkbox')) && !modalField.isValid()) {
-              allValid = false;
-            }
+          }
+          if ((isVisible  || modalField.is('select, :checkbox')) && !modalField.isValid()) {
+            allValid = false;
           }
         });
       }
@@ -601,10 +601,12 @@
         return;
       }
 
+      field.data('isValid', false);
+
       // Disable primary button in modal
       var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
       if (modalBtn.length) {
-        this.setModalPrimaryBtn(field, modalBtn, false);
+        this.setModalPrimaryBtn(field, modalBtn);
       }
 
       this.showInlineMessage(field, message, validationType.type);
@@ -884,12 +886,6 @@
         field.closest('.field-fileupload').find('input.' + type).removeClass(type);
       }
 
-      // Enable primary button in modal
-      var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
-      if (modalBtn.length) {
-        this.setModalPrimaryBtn(field, modalBtn, true);
-      }
-
       //Stuff for the inline error
       field.closest('.field, .field-short').find('.' + type + '-message').remove();
       field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(type);
@@ -897,6 +893,14 @@
       if (type === 'error' && !noTrigger && this.eventsStatus()) {
         field.triggerHandler('valid', {field: field, message: ''});
         field.closest('form').triggerHandler('valid', {field: field, message: ''});
+      }
+
+      field.data('isValid', true);
+
+      // Test Enabling primary button in modal
+      var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
+      if (modalBtn.length) {
+        this.setModalPrimaryBtn(field, modalBtn);
       }
     },
 

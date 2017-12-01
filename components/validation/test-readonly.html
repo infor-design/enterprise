@@ -1,0 +1,25 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+     <div class="field">
+      <label class="required" for="ro-email-address-ok">Readonly Email Address <span class="audible">Required</span></label>
+      <input type="text" readonly id="ro-email-address-ok" name="ro-email-address-ok" data-validate="required">
+    </div>
+
+     <div class="field">
+      <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
+      <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required">
+    </div>
+
+    <button class="btn-secondary" id="toggle" type="button">Toggle Readonly</button>
+
+  </div>
+</div>
+
+<script>
+  $('#toggle').on('click', function () {
+    var input = $('#ro-email-address-ok');
+    input.prop('readonly', !input.prop('readonly'));
+  });
+</script>

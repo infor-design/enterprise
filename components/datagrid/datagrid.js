@@ -2620,7 +2620,7 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
-          if ((typeof rowValue === 'number' || !isNaN(rowValue)) &&
+          if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '')) &&
               columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
             rowValue =  parseFloat(rowValue);
             conditionValue = Locale.parseNumber(conditionValue);
@@ -3113,12 +3113,12 @@ $.fn.datagrid = function(options) {
           placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
           handle: '.datagrid-reorder-icon'
         })
-        .on('beforearrange.datagrid', function(e, status) {
+        .off('beforearrange.datagrid').on('beforearrange.datagrid', function(e, status) {
           if (self.isSafari) {
             status.start.css({'display': 'inline-block'});
           }
         })
-        .on('arrangeupdate.datagrid', function(e, status) {
+        .off('arrangeupdate.datagrid').on('arrangeupdate.datagrid', function(e, status) {
           if (self.isSafari) {
             status.end.css({'display': ''});
           }

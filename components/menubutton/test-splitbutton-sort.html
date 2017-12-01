@@ -1,0 +1,164 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Menu Button Example: Split Button</h2>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5922" target="_blank">Related JIRA Ticket</a>.</p>
+    <p>Split buttons are not officially supported. This is a non-official way you could implement them.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="example-toolbar" class="toolbar" role="toolbar" data-options="{maxVisibleButtons: 10}">
+      <div class="title">
+        Toolbar Title
+      </div>
+
+      <div class="buttonset">
+
+        <!--
+        Split Button with Label only
+        -->
+        <button id="split-button-sort-label-action" type="button" class="btn-split-menu btn">
+          <span>Sort Descending</span>
+        </button>
+        <div class="separator"></div>
+        <button id="split-button-sort-label-menu-trigger" type="button" class="btn-split-menu btn-menu">
+          <span class="audible">Change Sort Order</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#">Sort By ID</a></li>
+          <li><a href="#">Sort By Name</a></li>
+          <li><a href="#">sort By Status</a></li>
+        </ul>
+
+
+        <!--
+        Split Button with Icon only
+        -->
+        <button id="split-button-sort-icon-action" type="button" class="btn-split-menu btn btn-icon" focusable="false">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation" >
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sort-up">
+              <span class="audible">Sort Descending</span>
+            </use>
+          </svg>
+        </button>
+        <div class="separator"></div>
+        <button id="split-button-sort-icon-menu-trigger" type="button" class="btn-split-menu btn-menu">
+          <span class="audible">Change Sort Order</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#">Sort By ID</a></li>
+          <li><a href="#">Sort By Name</a></li>
+          <li><a href="#">sort By Status</a></li>
+        </ul>
+
+        <!--
+        Split Button with Label and Icon
+        -->
+        <button id="split-button-sort-icon-label-action" type="button" class="btn-split-menu btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation" >
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sort-up">
+              <span class="audible">Sort Descending</span>
+            </use>
+          </svg>
+          <span>Sort</span>
+        </button>
+        <div class="separator"></div>
+        <button id="split-button-sort-icon-label-trigger" type="button" class="btn-split-menu btn-menu">
+          <span class="audible">Change Sort Order</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#">Sort By ID</a></li>
+          <li><a href="#">Sort By Name</a></li>
+          <li><a href="#">sort By Status</a></li>
+        </ul>
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+  // ------------------------------------------------
+  // Split Button with Label only
+  // ------------------------------------------------
+  (function() {
+    var $splitButtonSortAction = $('#split-button-sort-label-action');
+    var $splitButtonSortLabelMenuTrigger = $('#split-button-sort-label-menu-trigger');
+    var isAscending = true;
+
+    $splitButtonSortAction.find('use').attr('xlink:href', '#icon-sort-up');
+
+    // Action Button fires the action
+    $splitButtonSortAction.on('click', function (e) {
+      isAscending = !isAscending;
+      $(this).find('span').html(isAscending ? 'Sort Descending' : 'Sort Ascending');
+    });
+
+    // MenuButton selection changes the default action
+    $splitButtonSortLabelMenuTrigger.on('selected', function (e, args) {
+      setTimeout(function() {
+        alert(args.text() + ' selected');
+      }, 50);
+    });
+  })();
+
+  // ------------------------------------------------
+  // Split Button with Icon only
+  // ------------------------------------------------
+  (function() {
+    var $splitButtonSortAction = $('#split-button-sort-icon-action');
+    var $splitButtonSortIconMenuTrigger = $('#split-button-sort-icon-menu-trigger');
+    var isAscending = true;
+
+    $splitButtonSortAction.find('span').html('Sort Descending');
+
+    // Action Button fires the action
+    // $splitButtonSortAction.on('click', function (e) {
+    //   isAscending = !isAscending;
+    //   $(this).find('use').attr('xlink:href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
+    // });
+
+    // MenuButton selection changes the default action
+    $splitButtonSortIconMenuTrigger.on('selected', function (e, args) {
+      setTimeout(function() {
+        alert(args.text() + ' selected');
+      }, 50);
+    });
+  })();
+
+  // ------------------------------------------------
+  // Split Button with Icon and Label
+  // ------------------------------------------------
+  (function() {
+    var $splitButtonSortAction = $('#split-button-sort-icon-label-action');
+    var $splitButtonSortMenuTrigger = $('#split-button-sort-icon-label-menu-trigger');
+    var isAscending = true;
+
+    // Action Button fires the action
+    $splitButtonSortAction.on('click', function (e) {
+      isAscending = !isAscending;
+      $(this).find('use').attr('xlink:href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
+    });
+
+    // MenuButton selection changes the default action
+    $splitButtonSortMenuTrigger.on('selected', function (e, args) {
+      setTimeout(function() {
+        alert(args.text() + ' selected');
+      }, 50);
+    });
+  })();
+</script>
