@@ -118,11 +118,6 @@
         var field = $(this),
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate keyup.validate');
-
-        if (field.is('[readonly]') && !field.parent().is('.field-fileupload')) {
-          return;
-        }
-
         events = self.extractEvents(events);
 
         //Custom enter event
@@ -138,6 +133,11 @@
         field.off(events).on(events, function (e) {
           var field = $(this),
             handleEventData = field.data('handleEvent' +[(e.type || '')]);
+
+          if (field.is('[readonly]') && !field.parent().is('.field-fileupload')) {
+            return;
+          }
+
           if (handleEventData &&
               handleEventData.type === e.type &&
               e.handleObj.namespace === 'validate') {
