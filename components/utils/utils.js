@@ -979,6 +979,25 @@ utils.safeSetSelection = function safeSetSelection(element, startPos, endPos) {
 
 
 /**
+ * @private
+ */
+function isValidOptions(o) {
+  return (typeof o === 'object' || typeof o === 'function');
+}
+
+
+/**
+ * @private
+ */
+function resolveFunction(o) {
+  if (typeof o === 'function') {
+    return o();
+  }
+  return o;
+}
+
+
+/**
  * Merges various sets of options into a single object,
  * whose intention is to be set as options on a Soho component.
  * @param {HTMLElement|SVGElement|jQuery[]} element
@@ -987,27 +1006,12 @@ utils.safeSetSelection = function safeSetSelection(element, startPos, endPos) {
  * @returns {Object}
  */
 utils.setOptions = function setOptions(element, incomingOptions, defaultOptions) {
-  function isValidOptions(o) {
-    return (typeof o === 'object' || typeof o === 'function');
-  }
-
-  function resolveFunction(o) {
-    if (typeof o === 'object') {
-      return o;
-    }
-    return o();
-  }
-
-  if (!incomingOptions || isValidOptions(incomingOptions)) {
+  if (!incomingOptions || !isValidOptions(incomingOptions)) {
     if (isValidOptions(defaultOptions)) {
       incomingOptions = defaultOptions;
     } else {
       incomingOptions = {};
     }
-  }
-
-  if (!DOM.isElement(element)) {
-    return resolveFunction(incomingOptions);
   }
 
   if (element instanceof $) {

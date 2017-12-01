@@ -959,7 +959,7 @@ PopupMenu.prototype = {
       self.handleAfterPlace(e, positionObj);
     });
 
-    this.wrapperPlace = new Place(opts);
+    this.wrapperPlace = new Place(wrapper, opts);
     this.wrapperPlace.place(opts);
   },
 
