@@ -2620,7 +2620,7 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
-          if ((typeof rowValue === 'number' || !isNaN(rowValue)) &&
+          if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '')) &&
               columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
             rowValue =  parseFloat(rowValue);
             conditionValue = Locale.parseNumber(conditionValue);
