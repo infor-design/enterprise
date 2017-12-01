@@ -38,7 +38,9 @@
         folderIconOpen: 'open-folder',
         folderIconClosed: 'closed-folder',
         sortable: false, // Allow nodes to be sortable
-        onBeforeSelect: null
+        onBeforeSelect: null,
+        onExpand: null,
+        onCollapse: null
       },
       settings = $.extend({}, defaults, options);
 
@@ -66,7 +68,7 @@
         this.initTree();
         this.handleKeys();
         this.setupEvents();
-
+        
         if (this.loadData(this.settings.dataset) === -1) {
           this.syncDataset(this.element);
           this.initSelected();
@@ -539,6 +541,26 @@
         if (next.is('ul[role="group"]')) {
           if (next.hasClass('is-open')) {
 
+            var result;
+            if (typeof self.settings.onCollapse === 'function') {
+              
+              result = self.settings.onCollapse(node);
+    
+              if (result.done && typeof result.done === 'function') { // A promise is returned
+                result.done(function(continueSelectNode) {
+                  if (continueSelectNode) {
+                    self.selectNodeFinish(node, focus);
+                  }
+                });
+              } else if (result) { // Boolean is returned instead of a promise
+                self.selectNodeFinish(node, focus);
+              }
+    
+            } else { // No Callback specified
+              self.selectNodeFinish(node, focus);
+            }
+
+            
             self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
 
             if (node.closest('.folder a').is('[class^="icon"]')) {
@@ -563,6 +585,25 @@
 
 
           } else {
+            var result;
+            if (typeof self.settings.onExpand === 'function') {
+              
+              result = self.settings.onExpand(node);
+    
+              if (result.done && typeof result.done === 'function') { // A promise is returned
+                result.done(function(continueSelectNode) {
+                  if (continueSelectNode) {
+                    self.selectNodeFinish(node, focus);
+                  }
+                });
+              } else if (result) { // Boolean is returned instead of a promise
+                self.selectNodeFinish(node, focus);
+              }
+    
+            } else { // No Callback specified
+              self.selectNodeFinish(node, focus);
+            }
+  
             var nodeData = node.data('jsonData');
 
             if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
