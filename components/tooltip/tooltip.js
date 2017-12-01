@@ -605,7 +605,13 @@
           self.handleAfterPlace(e, placementObj);
         });
 
-        this.tooltip.data('place').place(opts);
+        //Tool tip may be cleaned up on a modal or CAP
+        if (this.tooltip.data('place')) {
+          this.tooltip.data('place').place(opts);
+        } else {
+          this.tooltip.place(opts);
+          this.tooltip.data('place').place(opts);
+        }
         return this;
       },
 
