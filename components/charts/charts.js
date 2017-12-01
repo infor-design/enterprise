@@ -1695,8 +1695,6 @@ window.Chart = function(container) {
     if (this.redrawOnResize) {
       $(window).on('resize.charts', resizeCharts);
       $(container).off('resize').on('resize', resizeCharts);
-
-      resizeCharts();
     }
   };
 
@@ -3194,7 +3192,7 @@ window.Chart = function(container) {
 
     if (charts.isRTL) {
       svg.selectAll('text').attr('transform', 'scale(-1, 1)');
-      svg.selectAll('.y.axis text').style('text-anchor', 'start');
+      svg.selectAll('.y.axis text').style('text-anchor', 'end');
     }
 
     if (isAxisXRotate) {
