@@ -102,6 +102,10 @@
     word-wrap: break-word;
   }
 
+  span {
+    @include font-size(12);
+  }
+
   .icon {
     display: inline-block;
     fill: $tooltip-color;

@@ -1013,8 +1013,11 @@
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
-      var instance = new Validator(this, settings);
-      instance.removeMessage($(this), 'error');
+      var instance = new Validator(this, settings),
+        field = $(this);
+
+      instance.removeMessage(field, 'error');
+      instance.setIconOnParent(field, 'error');
     });
   };
 
