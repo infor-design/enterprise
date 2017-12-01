@@ -11,7 +11,7 @@ let PLUGIN_NAME = 'popupmenu';
 /**
  * Default Popupmenu Settings
  */
-let DEFAULT_POPUPMENU_OPTIONS = {
+let POPUPMENU_DEFAULTS = {
   menu: null,
   trigger: 'click',
   autoFocus: true,
@@ -50,7 +50,7 @@ let DEFAULT_POPUPMENU_OPTIONS = {
 *
 */
 function PopupMenu(element, settings) {
-  this.settings = utils.setOptions(element, settings, DEFAULT_POPUPMENU_OPTIONS);
+  this.settings = utils.mergeSettings(element, settings, POPUPMENU_DEFAULTS);
   this.element = $(element);
   this.isOldIe  = $('html').is('.ie11, .ie10, .ie9');
   debug.logTimeStart(PLUGIN_NAME);
@@ -1584,7 +1584,7 @@ PopupMenu.prototype = {
   },
 
   updated: function(settings) {
-    this.settings = utils.setOptions(this.element[0], settings, this.settings);
+    this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     return this
       .teardown()
       .init();
@@ -1605,13 +1605,13 @@ PopupMenu.prototype = {
 /**
  * jQuery component wrapper for Popupmenu
  */
-$.fn.popupmenu = function(options) {
+$.fn.popupmenu = function(settings) {
   return this.each(function() {
     var instance = $.data(this, PLUGIN_NAME);
     if (instance) {
-      instance.updated(options);
+      instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new PopupMenu(this, options));
+      instance = $.data(this, PLUGIN_NAME, new PopupMenu(this, settings));
     }
   });
 };

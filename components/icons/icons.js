@@ -10,7 +10,7 @@ let PLUGIN_NAME = 'icon';
 /**
  * Default Options
  */
-let DEFAULT_ICON_OPTIONS = {
+let ICON_DEFAULTS = {
   use: 'user-profile', // Match this to one of the SoHo Xi icons, prefixed with an ID of '#icon-'
   focusable: false
 };
@@ -24,7 +24,7 @@ let DEFAULT_ICON_OPTIONS = {
  * @param {Object} element
  */
 function Icon(element, settings) {
-  this.settings = utils.extend({}, DEFAULT_ICON_OPTIONS, settings, utils.parseOptions(element));
+  this.settings = utils.mergeSettings(element, settings, ICON_DEFAULTS);
   this.element = $(element);
   debug.logTimeStart(PLUGIN_NAME);
   this.init();
@@ -104,7 +104,7 @@ Icon.prototype = {
   // Handle Updating Settings
   updated: function(settings) {
     if (settings) {
-      this.settings = utils.extend({}, this.settings, settings);
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
 
     return this
@@ -129,13 +129,13 @@ Icon.prototype = {
 /**
  * jQuery component wrappers
  */
-$.fn.icon = function(options) {
+$.fn.icon = function(settings) {
   return this.each(function() {
     var instance = $.data(this, PLUGIN_NAME);
     if (!instance) {
-      instance = $.data(this, PLUGIN_NAME, new Icon(this, options));
+      instance = $.data(this, PLUGIN_NAME, new Icon(this, settings));
     } else {
-      instance.updated(options);
+      instance.updated(settings);
     }
   });
 };

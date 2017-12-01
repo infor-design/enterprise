@@ -302,7 +302,7 @@ let utils = {};
  * @param {String} [attr]
  * @returns {Object}
  */
-utils.parseOptions = function parseOptions(element, attr) {
+utils.parseSettings = function parseSettings(element, attr) {
   var options = {};
   if (!element ||
     (!(element instanceof HTMLElement) && !(element instanceof $)) ||
@@ -346,6 +346,14 @@ utils.parseOptions = function parseOptions(element, attr) {
 
   return options;
 };
+
+
+/**
+ * Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
+ * TODO: Remove in 4.4.1 ?
+ */
+utils.parseOptions = utils.parseSettings;
+
 
 
 /**
@@ -1005,7 +1013,7 @@ function resolveFunction(o) {
  * @param {Object|function} [defaultOptions]
  * @returns {Object}
  */
-utils.setOptions = function setOptions(element, incomingOptions, defaultOptions) {
+utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOptions) {
   if (!incomingOptions || !isValidOptions(incomingOptions)) {
     if (isValidOptions(defaultOptions)) {
       incomingOptions = defaultOptions;
@@ -1019,7 +1027,7 @@ utils.setOptions = function setOptions(element, incomingOptions, defaultOptions)
   }
 
   // Actually get ready to merge incoming options if we get to this point.
-  return utils.extend(true, {}, resolveFunction(defaultOptions || {}), resolveFunction(incomingOptions), utils.parseOptions(element));
+  return utils.extend(true, {}, resolveFunction(defaultOptions || {}), resolveFunction(incomingOptions), utils.parseSettings(element));
 };
 
 

@@ -50,6 +50,7 @@ See the file `<project root>/components/index.js` to see which Soho components a
     - the jQuery wrappers' path for "when instance exists" should pass incoming options to the Vanilla JS component's `updated()` method (ex: `instance.updated(options)`)
     - component `updated()` methods should understand how to deal with setting incoming options over top of existing options and sanitizing the incoming options (sanitizing process may need to be a utility function).
     - should also take advantage of `utils.parseOptions` to take HTML-based options into account.  Need to figure out whether or not DOM or JS-based options take precedence (as of now, DOM-based options take precedence over JS options in most cases, but it's not 100% done that way throughout)
+- Standardized our usage of "settings" and "options" to simply go with "settings", in the ES6 components that have already been converted. (see `<project root>/components/components.js` for the list of currently-available components after build time)
 
 #### TODO for the JS deliverable:
 

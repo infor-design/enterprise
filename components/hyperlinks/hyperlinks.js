@@ -9,7 +9,7 @@ let PLUGIN_NAME = 'hyperlink';
 /**
  *
  */
-var DEFAULT_HYPERLINK_OPTIONS = {};
+var HYPERLINK_DEFAULTS = {};
 
 /**
  * Soho component wrapper for Hyperlinks.
@@ -19,19 +19,19 @@ var DEFAULT_HYPERLINK_OPTIONS = {};
  * @param {Object} options
  * @returns {Hyperlink}
  */
-function Hyperlink(element, options) {
-  return this.init(element, options);
+function Hyperlink(element, settings) {
+  return this.init(element, settings);
 }
 
 Hyperlink.prototype = {
-  init: function(element, options) {
+  init: function(element, settings) {
     if (!this.element && element instanceof HTMLElement) {
       this.element = element;
     }
 
-    if (typeof options === 'object') {
-      var previousOptions = this.options || DEFAULT_HYPERLINK_OPTIONS;
-      this.options = utils.extend({}, previousOptions, options, utils.parseOptions(element));
+    if (typeof settings === 'object') {
+      var previousSettings = this.settings || HYPERLINK_DEFAULTS;
+      this.settings = utils.mergeSettings(this.element, settings, previousSettings);
     }
 
     if (!this.focusBehavior) {
@@ -45,9 +45,9 @@ Hyperlink.prototype = {
     return this;
   },
 
-  updated: function(options) {
-    if (options) {
-      this.options = utils.extend({}, this.options, options);
+  updated: function(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
 
     return this
@@ -64,13 +64,13 @@ Hyperlink.prototype = {
 /**
  * Legacy jQuery wrappers
  */
-$.fn.hyperlink = function(options) {
+$.fn.hyperlink = function(settings) {
   return this.each(function() {
     var instance = $.data(this, PLUGIN_NAME);
     if (instance) {
-      instance.updated(options);
+      instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Hyperlink(this, options));
+      instance = $.data(this, PLUGIN_NAME, new Hyperlink(this, settings));
       instance.destroy = function destroy() {
         this.teardown();
         $.removeData(this, PLUGIN_NAME);

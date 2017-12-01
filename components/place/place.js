@@ -118,7 +118,7 @@ PlacementObject.prototype = {
  * This is the actual "thing" that is tied to a Placeable Element.
  */
 function Place(element, settings) {
-  this.settings = utils.setOptions(element, settings, DEFAULT_PLACE_SETTINGS);
+  this.settings = utils.mergeSettings(element, settings, DEFAULT_PLACE_SETTINGS);
   this.element = $(element);
   this.init();
 }
@@ -890,7 +890,7 @@ Place.prototype = {
   //Handle Updating Settings
   updated: function(settings) {
     if (settings) {
-      this.settings = utils.setOptions(this.element[0], settings, this.settings);
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
 
     return this
@@ -920,13 +920,13 @@ Place.prototype = {
 /**
  * jQuery Component Wrapper
  */
-$.fn.place = function(options) {
+$.fn.place = function(settings) {
   return this.each(function() {
     var instance = $.data(this, PLUGIN_NAME);
     if (instance) {
-      instance.updated(options);
+      instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Place(this, options));
+      instance = $.data(this, PLUGIN_NAME, new Place(this, settings));
     }
   });
 };

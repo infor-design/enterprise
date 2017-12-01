@@ -25,9 +25,9 @@ let BUTTON_DEFAULTS = {
  * @param {String} toggleOffIcon  &nbsp;-&nbsp; The icon to use for off state on toggle buttons
  * @param {String} replaceText  &nbsp;-&nbsp; If true the selection will be used to replace the content in the button.
  */
-function Button(element, options) {
+function Button(element, settings) {
   this.element = $(element);
-  this.settings = utils.extend({}, BUTTON_DEFAULTS, options, utils.parseOptions(element));
+  this.settings = utils.mergeSettings(element, settings, BUTTON_DEFAULTS);
   debug.logTimeStart(PLUGIN_NAME);
   this.init();
   debug.logTimeEnd(PLUGIN_NAME);
@@ -215,13 +215,13 @@ Button.prototype = {
 /**
  * jQuery Component Wrapper for the Soho Button Element
  */
-$.fn.button = function(options) {
+$.fn.button = function(settings) {
   return this.each(function() {
     var instance = $.data(this, PLUGIN_NAME);
-    if (!instance) {
-      instance = $.data(this, PLUGIN_NAME, new Button(this, options));
+    if (instance) {
+      instance.updated(settings);
     } else {
-      instance.updated(options);
+      instance = $.data(this, PLUGIN_NAME, new Button(this, settings));
     }
   });
 };
