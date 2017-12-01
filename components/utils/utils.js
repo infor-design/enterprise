@@ -978,4 +978,45 @@ utils.safeSetSelection = function safeSetSelection(element, startPos, endPos) {
 };
 
 
+/**
+ * Merges various sets of options into a single object,
+ * whose intention is to be set as options on a Soho component.
+ * @param {HTMLElement|SVGElement|jQuery[]} element
+ * @param {Object|function} incomingOptions
+ * @param {Object|function} [defaultOptions]
+ * @returns {Object}
+ */
+utils.setOptions = function setOptions(element, incomingOptions, defaultOptions) {
+  function isValidOptions(o) {
+    return (typeof o === 'object' || typeof o === 'function');
+  }
+
+  function resolveFunction(o) {
+    if (typeof o === 'object') {
+      return o;
+    }
+    return o();
+  }
+
+  if (!incomingOptions || isValidOptions(incomingOptions)) {
+    if (isValidOptions(defaultOptions)) {
+      incomingOptions = defaultOptions;
+    } else {
+      incomingOptions = {};
+    }
+  }
+
+  if (!DOM.isElement(element)) {
+    return resolveFunction(incomingOptions);
+  }
+
+  if (element instanceof $) {
+    element = element[0];
+  }
+
+  // Actually get ready to merge incoming options if we get to this point.
+  return utils.extend(true, {}, resolveFunction(defaultOptions || {}), resolveFunction(incomingOptions), utils.parseOptions(element));
+};
+
+
 export { utils, DOM };

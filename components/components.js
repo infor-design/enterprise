@@ -12,7 +12,7 @@ export { Icon } from './icons/icons';
 // -- ex: modal
 
 // Molecules
-// -- ex: popupenu
+export { PopupMenu } from './popupmenu/popupmenu';
 // -- ex: dropdown/multiselect
 
 // Oraganisms

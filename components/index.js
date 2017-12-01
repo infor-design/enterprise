@@ -17,6 +17,7 @@ export { theme } from './utils/theme';
 // Behaviors ======================== /
 export { behaviors };
 export { Personalize } from './personalize/personalize';
+export { Place } from './place/place';
 export { Initialize } from './initialize/initialize';
 
 // Components ======================= /
