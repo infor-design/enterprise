@@ -123,9 +123,18 @@ button {
     fill: $primary-btn-color;
   }
 
+  // In case both are specified
+  &.btn {
+    color: $primary-btn-color;
+  }
+
   &:hover {
     background-color: $primary-btn-hover-bg-color;
     border: 1px solid $primary-btn-hover-bg-color;
+
+    &.btn {
+      color: $primary-btn-color;
+    }
   }
 
   &:active {
