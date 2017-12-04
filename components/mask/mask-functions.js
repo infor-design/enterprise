@@ -261,7 +261,7 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
 
         if (part.length === 1 && rawValueFirstDigit > maxFirstDigit) {
           mask.push(digitRegex);
-        } else if (rawValueStr !== '0' && rawValueStr.length === 1 && rawValueFirstDigit <= maxFirstDigit && rawValueArray[i+1] !== undefined && part !== 'HH') {
+        } else if (rawValueStr !== '0' && rawValueStr.length === 1 && rawValueFirstDigit <= maxFirstDigit && rawValueArray[i+1] !== undefined && part.toUpperCase() !== 'HH') {
           mask.push(digitRegex);
         } else {
           mask = mask.concat(getRegexForPart(value, 'digits'));
