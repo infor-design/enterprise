@@ -51,6 +51,9 @@ See the file `<project root>/components/index.js` to see which Soho components a
     - component `updated()` methods should understand how to deal with setting incoming options over top of existing options and sanitizing the incoming options (sanitizing process may need to be a utility function).
     - should also take advantage of `utils.parseOptions` to take HTML-based options into account.  Need to figure out whether or not DOM or JS-based options take precedence (as of now, DOM-based options take precedence over JS options in most cases, but it's not 100% done that way throughout)
 - Standardized our usage of "settings" and "options" to simply go with "settings", in the ES6 components that have already been converted. (see `<project root>/components/components.js` for the list of currently-available components after build time)
+- Standard, Vanilla-JS Constructors for Soho components are (generally) being separated away from the jQuery component wrappers, into their own files.  This allows:
+  - Clear isolation of jQuery-specific code from Vanilla-JS code (not currently perfect, but in-progress and with the goal of eventually 100% separating them).
+  - Inclusion of jQuery components only by larger components that need them.
 
 #### TODO for the JS deliverable:
 
