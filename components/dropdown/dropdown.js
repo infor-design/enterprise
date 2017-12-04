@@ -1419,7 +1419,7 @@
         // Ignores Scrolling on Mobile, and will not close the list if accessing an item within the list
         function scrollDocument(e) {
           var focus = $('*:focus'); //dont close on timepicker arrow down and up
-          if (touchPrevented || isDropdownElement($(e.target)) || focus.is('.tmepicker')) {
+          if (touchPrevented || isDropdownElement($(e.target)) || focus.is('.timepicker')) {
             return;
           }
           self.closeList('cancel');
