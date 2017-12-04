@@ -22,7 +22,7 @@
         return;
       }
 
-      if (value.disable) {
+      if (value && value.disable) {
         value.disable();
       }
     });
@@ -39,7 +39,7 @@
         return;
       }
 
-      if (value.enable) {
+      if (value && value.enable) {
         value.enable();
       }
     });
@@ -56,7 +56,7 @@
         return;
       }
 
-      if (value.readonly) {
+      if (value && value.readonly) {
         value.readonly();
       }
     });
