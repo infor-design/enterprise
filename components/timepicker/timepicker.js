@@ -221,6 +221,10 @@
         return (value.match('HH') || []).length > 0;
       },
 
+      hourText: function(value) {
+        return (((this.settings.timeFormat.toUpperCase().match('HH') || []).length > 0 && value < 10 ? '0': '') + value);
+      },
+
       /**
        * Checks a time format value to see if it includes seconds.
        * @param {String} value - a string value representing a time format.
@@ -357,7 +361,7 @@
           if (parseInt(self.initValues.hours, 10)  === hourCounter) {
             selected = ' selected';
           }
-          self.hourSelect.append($('<option' + selected + '>' + hourCounter + '</option>'));
+          self.hourSelect.append($('<option' + selected + '>' + self.hourText(hourCounter) + '</option>'));
           hourCounter++;
         }
         timeParts.append($('<label for="timepicker-hours" class="audible">' + Locale.translate('Hours') + '</label>'));
@@ -635,8 +639,8 @@
           endParts,
           timeparts = {};
 
-		val = val.replace(/[T\s:.-]/g, sep).replace(/z/i, '');
-		parts = val.split(sep);
+    		val = val.replace(/[T\s:.-]/g, sep).replace(/z/i, '');
+    		parts = val.split(sep);
 
         // Check the last element in the array for a time period, and add it as an array
         // member if necessary
@@ -674,7 +678,8 @@
         } else {
           parts[0] = '' + parseInt(parts[0], 10);
         }
-        timeparts.hours = parts[0];
+        timeparts.hours = self.hourText(parts[0]);
+        // timeparts.hours = parts[0];
 
         // Handle Minutes
         if (parts[1]) {
