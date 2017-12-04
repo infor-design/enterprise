@@ -16,7 +16,7 @@ We are migrating the Soho codebase to an ES6-based project.  Major reasons inclu
 
 # Current Status
 
-Last updated:  *Nov 29, 2017*
+Last updated:  *December 4, 2017*
 
 See the file `<project root>/components/index.js` to see which Soho components are currently being bundled.
 
@@ -63,3 +63,19 @@ See the file `<project root>/components/index.js` to see which Soho components a
   - Break the actual constructors/prototype defs out from inside the jQuery wrappers.
   - Still invoke the jQuery wrappers within each `<component>.js` file, but allow the Vanilla JS constructors to stand on their own.
   - (eventually) figure out a Vanilla-JS, stand-alone replacement for `$.data()` for element-level Soho component access.
+
+# How to migrate a Soho Xi component from ES5 to ES6:
+
+- Remove the AMD scaffolding from the component.
+- Hoist the Vanilla-JS component's constructor, prototype definition, and any "default settings" objects out from the jQuery component wrapper, and place them in the root of the JS file.
+- Change `pluginName` to `PLUGIN_NAME` (global namespace) and hoist this to the root as well.  Prefix with `let` instead of `var`.  Change any references from the original `pluginName` to `PLUGIN_NAME` (ctrl+f).
+- Change the default settings (`defaults`) to `<COMPONENT_NAME>_DEFAULTS`. Prefix with `let` instead of `var`.
+- Change any instances of the word "options" to "settings", where settings need to be propagated to a component's instance.
+- If there are jQuery wrappers in this component, make sure they are not doing any special handling of incoming options.  We are attempting to make the jQuery component wrappers as "dumb" as possible, meaning that any parsing of options should be completely handled by a component's Vanilla-JS constructor, as well as its internal `updated()` API method.  See any of the pre-converted components (specifically the constructors and `updated()`) to see how we deal with managing settings internally.
+- Look for any instances of calling the Soho object directly, as well as any direct calls to constructors belonging to components or behaviors (like `Soho.components.Button` or `Soho.behaviors.hideFocus`).  If this component needs a utility function of any kind, or invokes a Soho component directly, use an ES6 import at the top of the file to call the imported function/constructor/whatever directly instead (fx: `import { Button } from '../button/button';` or `import '../button/button.jquery';`).
+- Make sure that the Prototype of the component you're working on is exported, along with the name of the plugin file (fx: `export { MyComponent, PLUGIN_NAME };`).
+- If the component in question needs a jQuery component wrapper, create one or move the existing one to a separate file called `mycomponent.jquery.js`.  Move the jQuery wrapper from the original component's file into this file.  No need to export anything - these files are meant to be void.
+- Include the new files in the entry points:
+  - new Utility files or items that are "core" and needed everywhere belong in `<project-root>/components/index.js`.  Files that are included here may need to be directly exported.
+  - regular Vanilla-JS files go in `<project-root>/components/components.js`.  The `components` object should directly export any files included here.
+  - jQuery components go in `<project-root>/components/components.jquery.js`.  These files simply need to be included and not re-exported.
