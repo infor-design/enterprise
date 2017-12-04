@@ -1,6 +1,6 @@
 <div class="row top-padding">
     <div class="six columns">
-      <h3>Tree Control: onSelect Callback as a Function</h3>
+      <h3>Tree Control: Collapse and Expand Callback as a Function</h3>
       <p>This example shows how to use a function to allow/deny access to tree nodes.</p>
       <br />
     </div>
@@ -34,7 +34,7 @@
   
     // Mock ajax call to get permissions and returns a promise
     var hasNodePermission = function (node) {
-      var hasPermission = canViewNode[node.attr('id')];
+      var hasPermission = canViewNode[node.attr('id')] || {};
       if (!hasPermission) {
         showPermissionDenied();
       }
@@ -43,13 +43,13 @@
 
     var onExpand = function (node) {
         // Do Something with the onExpand CallBack
-        console.log('expand');
+        console.log('expand callback');
         return node;
     };
 
     var onCollapse = function (node) {
         // Do Something with the OnCollapse CallBack
-        console.log('collapse');
+        console.log('collapse callback');
         return node;
     };
   

@@ -396,10 +396,8 @@
         // Possibly Call the onBeforeSelect
         var result;
         if (typeof self.settings.onBeforeSelect === 'function') {
-
           result = self.settings.onBeforeSelect(node);
-
-          if (result.done && typeof result.done === 'function') { // A promise is returned
+          if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done(function(continueSelectNode) {
               if (continueSelectNode) {
                 self.selectNodeFinish(node, focus);
@@ -537,16 +535,13 @@
       toggleNode: function(node) {
         var next = node.next(),
           self = this;
-
+        var result;
         if (next.is('ul[role="group"]')) {
           if (next.hasClass('is-open')) {
 
-            var result;
             if (typeof self.settings.onCollapse === 'function') {
-              
               result = self.settings.onCollapse(node);
-    
-              if (result.done && typeof result.done === 'function') { // A promise is returned
+              if (result && result.done && typeof result.done === 'function') { // A promise is returned
                 result.done(function(continueSelectNode) {
                   if (continueSelectNode) {
                     self.selectNodeFinish(node, focus);
@@ -555,7 +550,6 @@
               } else if (result) { // Boolean is returned instead of a promise
                 self.selectNodeFinish(node, focus);
               }
-    
             } else { // No Callback specified
               self.selectNodeFinish(node, focus);
             }
@@ -582,15 +576,10 @@
 
             node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
 
-
-
           } else {
-            var result;
             if (typeof self.settings.onExpand === 'function') {
-              
               result = self.settings.onExpand(node);
-    
-              if (result.done && typeof result.done === 'function') { // A promise is returned
+              if (result && result.done && typeof result.done === 'function') { // A promise is returned
                 result.done(function(continueSelectNode) {
                   if (continueSelectNode) {
                     self.selectNodeFinish(node, focus);
@@ -599,7 +588,6 @@
               } else if (result) { // Boolean is returned instead of a promise
                 self.selectNodeFinish(node, focus);
               }
-    
             } else { // No Callback specified
               self.selectNodeFinish(node, focus);
             }
