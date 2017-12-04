@@ -679,7 +679,6 @@
           parts[0] = '' + parseInt(parts[0], 10);
         }
         timeparts.hours = self.hourText(parts[0]);
-        // timeparts.hours = parts[0];
 
         // Handle Minutes
         if (parts[1]) {
