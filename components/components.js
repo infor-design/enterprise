@@ -1,5 +1,7 @@
 // All desired Soho components ==================== /
 // Atomic Design: http://bradfrost.com/blog/post/atomic-web-design/
+// TODO: Make this file auto-generated for custom builds?
+
 
 // NOTE: this one just needs to be here until we get things in order
 // TODO: make placement/storage on Soho object more logical?
@@ -9,9 +11,9 @@ export { Base } from './utils/base';
 export { Button } from './button/button';
 export { Hyperlink } from './hyperlinks/hyperlinks';
 export { Icon } from './icons/icons';
-// -- ex: modal
 
 // Molecules
+export { Modal } from './modal/modal';
 export { PopupMenu } from './popupmenu/popupmenu';
 // -- ex: dropdown/multiselect
 

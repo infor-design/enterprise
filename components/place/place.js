@@ -917,19 +917,4 @@ Place.prototype = {
 };
 
 
-/**
- * jQuery Component Wrapper
- */
-$.fn.place = function(settings) {
-  return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
-    if (instance) {
-      instance.updated(settings);
-    } else {
-      instance = $.data(this, PLUGIN_NAME, new Place(this, settings));
-    }
-  });
-};
-
-
-export { PlacementObject, Place };
+export { PlacementObject, Place, PLUGIN_NAME };

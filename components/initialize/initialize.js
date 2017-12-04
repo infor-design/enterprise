@@ -1,6 +1,9 @@
 import * as debug from '../utils/debug';
 import { Locale } from '../locale/locale';
 
+// jQuery components
+import '../components.jquery';
+
 
 /**
  * Component name as referenced by jQuery/event namespace/etc

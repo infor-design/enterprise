@@ -1,6 +1,10 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
+// jQuery components
+import '../icons/icons.jquery';
+
+
 /**
  * Component name as referenced by jQuery/event namespace/etc
  */
@@ -212,19 +216,4 @@ Button.prototype = {
 };
 
 
-/**
- * jQuery Component Wrapper for the Soho Button Element
- */
-$.fn.button = function(settings) {
-  return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
-    if (instance) {
-      instance.updated(settings);
-    } else {
-      instance = $.data(this, PLUGIN_NAME, new Button(this, settings));
-    }
-  });
-};
-
-
-export { Button };
+export { Button, PLUGIN_NAME };
