@@ -768,6 +768,10 @@
           return;
         }
 
+        if (e.ctrlKey  || e.metaKey) {
+          return false;
+        }
+
         return true;
       },
 
@@ -2213,13 +2217,19 @@
         var self = this;
 
         this.pseudoElem.on('keydown.dropdown', function(e) {
-          self.ignoreKeys($(this), e);
+          if (!self.ignoreKeys($(this), e)) {
+            return;
+          }
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
+
           if (e.keyCode === 9) {
             return;
           }
-          self.ignoreKeys($(this), e);
+
+          if (!self.ignoreKeys($(this), e)) {
+            return;
+          }
 
           if (!self.settings.noSearch && e.keyCode !== 27) {
             self.toggleList();
