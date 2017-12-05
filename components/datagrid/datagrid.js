@@ -788,6 +788,7 @@ window.Editors = {
     this.name = 'checkbox';
     this.originalValue = value;
     this.useValue = true; //use the data set value not cell value
+    this.container = container;
 
     this.init = function () {
 
@@ -825,6 +826,7 @@ window.Editors = {
 
     this.focus = function () {
       this.input.trigger('focusout');
+      this.container.parent().focus();
     };
 
     this.destroy = function () {
@@ -5242,7 +5244,6 @@ $.fn.datagrid = function(options) {
           self.toggleRowSelection(target.closest('tr'));
         }
 
-        self.lastClicked = target;
         var isEditable = self.makeCellEditable(self.activeCell.dataRow, self.activeCell.cell, e);
 
         //Handle Cell Click Event
@@ -5421,12 +5422,28 @@ $.fn.datagrid = function(options) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {
-            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
-                !!self.editor && self.editor.input.is(target)) {
 
-              if ($('*:focus').is('.spinbox')) {
+            var focusElem = $('*:focus');
+
+            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
+                self.editor) {
+
+              if (focusElem.is('.spinbox')) {
                 return;
               }
+
+              if (focusElem.is('.trigger')) {
+                return;
+              }
+
+              if (!$(target).is(':visible')) {
+                return;
+              }
+
+              if (focusElem && self.editor.className && focusElem.closest(self.editor.className).length > 0) {
+                return;
+              }
+
               self.commitCellEdit(self.editor.input);
             }
 
@@ -5441,7 +5458,6 @@ $.fn.datagrid = function(options) {
         }
 
         if (self.editor && self.editor.input) {
-          self.lastClicked = null;
           self.commitCellEdit(self.editor.input);
         }
 
@@ -6847,10 +6863,17 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      //Already in edit mode
+      var cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
+        cellParent = cellNode.parent('td');
+
+      if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
+        return false;
+      }
+
+      //Commit Previous Edit
       if (this.editor && this.editor.input) {
-        if (this.editor.input.is('.timepicker, .datepicker, .lookup, .spinbox, #colorpicker-menu') && !$(event.target).prev().is(this.editor.input)) {
-          this.commitCellEdit(this.editor.input);
-        }
+        this.commitCellEdit(this.editor.input);
       }
 
       //Locate the Editor
@@ -6868,8 +6891,6 @@ $.fn.datagrid = function(options) {
         rowData = this.settings.treeGrid ?
           this.settings.treeDepth[dataRowIndex].node :
           this.settings.dataset[dataRowIndex],
-        cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
-        cellParent = cellNode.parent('td'),
         cellWidth = cellParent.outerWidth(),
         isEditor = $('.is-editor', cellParent).length > 0,
         cellValue = (cellNode.text() ?
@@ -6880,12 +6901,6 @@ $.fn.datagrid = function(options) {
       }
 
       if (!this.isCellEditable(dataRowIndex, cell)) {
-        return false;
-      }
-
-      if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
-        //Already in edit mode
-        cellNode.find('input').focus();
         return false;
       }
 
@@ -7510,13 +7525,15 @@ $.fn.datagrid = function(options) {
     },
 
     setNextActiveCell: function (e) {
+      var self = this;
       if (e.type === 'keydown') {
         if (this.settings.actionableMode) {
-          var evt = $.Event('keydown.datagrid');
-          evt.keyCode = 40; // move down
-          this.activeCell.node.trigger(evt);
-        }
-        else {
+          setTimeout(function() {
+            var evt = $.Event('keydown.datagrid');
+            evt.keyCode = 40; // move down
+            self.activeCell.node.trigger(evt);
+          }, 0);
+        } else {
           this.setActiveCell(this.activeCell.row, this.activeCell.cell);
         }
       }

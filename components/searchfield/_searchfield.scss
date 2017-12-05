@@ -208,6 +208,7 @@
     &.has-categories {
       .searchfield {
         border-left-color: transparent;
+        box-shadow: none;
       }
 
       &.show-category {
