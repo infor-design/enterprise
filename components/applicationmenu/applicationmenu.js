@@ -389,8 +389,10 @@
         this.menu.find('.is-selected > a').focus();
       }
 
-      var container = this.getAdjacentContainerElement();
-      container.addClass('ios-click-target');
+      if (Soho.env.os.name === 'ios') {
+        var container = this.getAdjacentContainerElement();
+        container.addClass('ios-click-target');
+      }
 
       if (!openedByClass) {
         this.menu.one(transitionEnd + '.applicationmenu', isOpen);
@@ -451,8 +453,10 @@
         }
       });
 
-      var container = this.getAdjacentContainerElement();
-      container.removeClass('ios-click-target');
+      if (Soho.env.os.name === 'ios') {
+        var container = this.getAdjacentContainerElement();
+        container.removeClass('ios-click-target');
+      }
 
       this.menu.one(transitionEnd + '.applicationmenu', close);
       this.timeout = setTimeout(close, 300);
