@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Searchfield Test: Categories</h2>
+    <p>Making sure the selected event fires (check the console after selecting from the list)</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="short-category-searchfield">Short Category Searchfield</label>
+      <input id="short-category-searchfield" class="searchfield" data-options="{ categories: ['Animals', 'Baby', 'Clothing', 'Images', 'People', 'Places'] }"/>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  console.log($('#short-category-searchfield'));
+  $('#short-category-searchfield').on('selected', function (e, anchor) {
+    console.log(anchor)
+  });
+</script>

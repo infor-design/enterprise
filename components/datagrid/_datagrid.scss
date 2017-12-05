@@ -1528,12 +1528,15 @@ $datagrid-short-row-height: 23px;
 
         .trigger {
           margin-left: -21px;
-          margin-top: -1px;
+          margin-top: 1px;
         }
       }
 
       .checkbox-label::before {
-        margin-left: -25px;
+        top: 50%;
+        left: 50%;
+        margin-left: -8px;
+        margin-top: 4px;
       }
 
       .checkbox-label::after {
@@ -2276,6 +2279,7 @@ td .btn-actions {
 
     &.icon-search-list {
       left: -2px;
+      top: 4px;
     }
   }
 
@@ -2509,10 +2513,9 @@ td .btn-actions {
       td.is-editing {
         // scss-lint:disable NestingDepth
         .lookup-wrapper {
-          margin-top: 4px;
 
           .lookup ~ .trigger .icon {
-            top: calc(50% - 7px);
+            top: calc(50% - 5px);
           }
         }
         // scss-lint:enable NestingDepth
@@ -2551,6 +2554,18 @@ td .btn-actions {
 
   &.is-editing {
     margin-top: -2.5px;
+
+    ul {
+      text-indent: 20px;
+    }
+
+    &.medium-rowheight ul {
+      text-indent: 15px;
+    }
+
+    &.short-rowheight ul {
+      text-indent: 10px;
+    }
   }
 
   input {
