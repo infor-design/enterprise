@@ -55,7 +55,6 @@
 
   &.is-open {
     border-color: $input-focus-border-color;
-    box-shadow: $focus-box-shadow;
 
     + .icon {
       fill: $datepicker-icon-active-color;

@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Popdown Example: `keepOpen` setting</h2>
+    <p>Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7136">SOHO-7136</a>.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button id="popdown-example-trigger" class="btn-tertiary" type="button" data-popdown="true" data-options='{ "keepOpen": true }'>
+      <svg class="icon" focusable="false" aria-hidden="true">
+        <use xlink:href="#icon-cart"></use>
+      </svg>
+      <span>My Cart</span>
+    </button>
+    <div class="popdown hidden">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">My Cart <span class="extra">(8 Items)</span></h2>
+        </div>
+        <div class="widget-content">
+          <div id="popover-listview-example" class="listview is-selectable" data-tmpl="popdown-content-tmpl" data-dataset="{{basepath}}api/construction-cart-items"></div>
+        </div>
+        <div class="widget-footer modal-buttonset">
+          <button type="button" class="btn-modal-secondary" style="width: 50%;">Edit Cart</button>
+          <button type="button" class="btn-modal-primary" style="width: 50%;">Checkout</button>
+        </div>
+      </div>
+    </div>
+
+    {{={{{ }}}=}}
+    <script id="popdown-content-tmpl" type="text/html">
+    <ul>
+      {{#dataset}}
+        <li>
+          <span class="listview-micro l-pull-right">{{totalPrice}}</span>
+          <p class="listview-heading">{{itemName}}</p>
+          <p class="listview-subheading">
+            Item Price: {{itemPrice}}/{{quantifier}}<br>
+            Quantity: {{quantity}}
+          </p>
+        </li>
+      {{/dataset}}
+    </ul>
+    </script>
+
+  </div>
+</div>

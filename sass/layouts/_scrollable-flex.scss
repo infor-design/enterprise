@@ -18,6 +18,21 @@
   flex-grow: 0;
 }
 
+.scrollable-flex-header {
+  .breadcrumb {
+    display: block;
+    padding: 1px 20px 0;
+  }
+  .breadcrumb.alternate {
+    background-color: #ffffff;
+    border-bottom: 1px solid #383838;
+
+    ol {
+      padding: 15px 0;
+    }
+  }
+}
+
 .scrollable-flex-content,
 .scrollable-area,
 .scrollable-flex-shrink {

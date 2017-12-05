@@ -1,18 +1,63 @@
+## <a name="version-4.3.4">4.3.5</a>
+
+Release Date: TBD
+
+Full Jira Release Notes: TBD
+
+### <a name="version-4.3.4-download-build-assets">Download Build Assets:</a>
+
+Build Server: TBD
+Npm: http://npm.infor.com
+
+### <a name="version-4.3.4-download-build-assets">Demo Site</a>
+
+http://usalvlhlpool1.infor.com/4.3.4-rc/components/
+
+### <a name="version-4.3.4-key-new-features">Key New Features</a>
+-
+
+### <a name="version-4.3.3-breaking-changes">Breaking Changes</a>
+-
+
+### <a name="version-4.3.4-breaking-changes">Corrections to Your Code</a>
+- Datagrid - The dynamic mask example now uses the new mask options (example components/mask/test-number-mask-gauntlet.html). Please refactor to pass an object back with the options like the sample page http://git.infor.com/projects/SOHO/repos/controls/browse/components/datagrid/test-dynamic-mask.html
+
+### <a name="version-4.3.3-behavior-changes">Behavior Changes</a>
+-
+
+### <a name="version-4.3.3-improvements">Improvements</a>
+-
+
+### <a name="version-4.3.3-bug-fixes">Bug Fixes</a>
+-
+
+(TBD Jira Issues Solved this release, Backlog Dev TBD, Design TBD, Unresolved TBD)
+
 ## <a name="version-4.3.3">4.3.3</a>
 
-Release Date: 2017-11-09
-Full Jira Release Notes: TBD
+Release Date: 2017-11-21
+
+Full Jira Release Notes: http://bit.ly/2jHU9CS
 
 ### <a name="version-4.3.3-download-build-assets">Download Build Assets:</a>
 
 Build Server: http://bamboo.infor.com/browse/label/release-433
+
 Npm: http://npm.infor.com
 
 ### <a name="version-4.3.3-download-build-assets">Demo Site</a>
+
 http://usalvlhlpool1.infor.com/4.3.3/components/
 
 ### <a name="version-4.3.3-key-new-features">Key New Features</a>
--
+- Datagrid - Added a message area and scroll bar with a configurable message for when there is no visible rows, example: http://bit.ly/2B0zo9d
+- Soho XI Now available on a global CDN , see http://git.infor.com/projects/SOHO/repos/controls/browse/README.md for details.
+- Angular samples updated to use Angular version 5.0
+- Added a search example with larger search - http://bit.ly/2hHSSre
+- Added a image initials and statuses - http://bit.ly/2jb4CCU
+- Added search to the application menu - http://bit.ly/2zb0WYZ
+- Dropdown now supports icons in the list
+- Added a new Step Process Chart - http://bit.ly/2mOH9N6
 
 ### <a name="version-4.3.3-breaking-changes">Breaking Changes</a>
 - Tabs - changed custom event `beforeactivate` to `beforeactivated` to prevent clashing with a Microsoft IE11/Edge-specific event by the same name (SOHO-5994).
@@ -20,16 +65,136 @@ http://usalvlhlpool1.infor.com/4.3.3/components/
 
 ### <a name="version-4.3.3-breaking-changes">Corrections to Your Code</a>
 - Svgs -> Search and replace ` xmlns:xlink="http://www.w3.org/1999/xlink"` with nothing. This fixes a security scan issue.
--
 
 ### <a name="version-4.3.3-behavior-changes">Behavior Changes</a>
--
+- Enhanced the focus state styling based on customer feedback
 
 ### <a name="version-4.3.3-improvements">Improvements</a>
-- Enhanced the focus state styling.
+- Charts - Darkened up lines
+- Charts - Made a setting to draw the axis from the middle of charts
+- Composite Form - Made a setting to place the header on the left or the top - http://bit.ly/2zUicVZ
+- Datagrid - Added a setting to split a cell
+- Datagrid - Added a column setting (uppercase: true)  to uppercase cell content
+- Datagrid - Added a setting to remove the select all checkbox
+- Datagrid - Fixed wrong scrollbar height on grouped headers + short rows
+- Datagrid - Added a column setting columns (exportable: false) to specify columns that should not be export when exporting to excel
+- Datagrid - Added a setting to show filter count in the results
+- Datagrid - Added a setting to move the negative sign on export
+- Datagrid - Added a color picker editor
+- Dropdown - Added a maxWidth option so lists could have a contained width.
+- Dropdown - Added tooltip support for list items
+- Icons - Added more icons, mostly related to file types
+- Fileupload - Added an x to clear the selection
+- Field Options - Added a menu next to each field type
+- Reduced gap between labels and inputs
+- Locale - Allow currency sign to be set in format and parse
+- Listview - Added mixed selection mode and click and double click click events
+- Mask - Can now work with localization settings properly
+- Patterns - Added header detail sample http://bit.ly/2jbzFi6
+- Targetted Achievement - Added ability to set text on the body of the element.
+- Swap List - Added setting to disable sections
+- Validation - Added ability to make info and warning messages
+- Validation - Added ability to focus an error field
 
 ### <a name="version-4.3.3-bug-fixes">Bug Fixes</a>
--
+- Angular - Added more settings to colorpicker
+- Angular - Fixed dirty tracking on editor
+- Angular - Added new api to angular masked input
+- Angular - Fixed broken grouped data example
+- Angular - Allow swap list buttons to be localized
+- Angular - Added paging example for Hierarch Component
+- Angular - Added Advanced file upload
+- Application Menu - Fixed bug that caused ESC to toggle the menu
+- Autocomplete - Fixed visual separation between input and list
+- Autocomplete - Fixed cursor trap
+- Builder - Fixed problems with popdown
+- Charts - Fixed issue and made examples for large numbers of axis points
+- Charts - Made tooltip destroy on component destroy
+- Compound Field - Aligned labels on dropdown
+- Color Picker - Improved keyboard support
+- Color Picker - Added an example just showing the swatch
+- Contextual Action Panel - Made esc key work to close
+- Datagrid - Fixed alignment issue on the datagrid tree
+- Datagrid - Fixed text overlap on long text on dropdown editor
+- Datagrid - Fixed sorting issue with paging (on checkbox columns)
+- Datagrid - Fixed grid to have a scroll bar when there is no rows
+- Datagrid - Added a message to the toolbar if errors are on a different page
+- Datagrid - Added a fix to filter results count when zero
+- Datagrid - Fixed alignment on grouping
+- Datagrid - Fixed scroll bar sizing and dark background on IE
+- Datagrid - Fixed default filter sizes
+- Datagrid - Fixed column misalignment issue
+- Datagrid - Fixed filter issue on numbers with a thousands separator
+- Datagrid - Filter now resets page to page one
+- Datagrid - Fixed retainment of selections and activations when re-rendering or sorting
+- Datagrid - Fixed wrong data passed to click event
+- Datagrid - Synced editor , formatter and filter with new Mask API
+- Datagrid - Fixed gap between drag arrows
+- Datagrid - Fixed bug with select all checkbox and paging
+- Datagrid - Allow filter buttons to toggle when clicked twice
+- Datepicker - Fixed bad validation on YYYY
+- Datepicker - Made tree and selections work better together
+- Datepicker - Fixed error when filtering on some date column data
+- Datepicker - Made grouping and selection work better together.
+- Datepicker - Fixed bug with thousands separator on filter bar
+- Datepicker - Fixed bug working with activation and paging
+- Datepicker - Allow validation to fire on enter key
+- Dropdown - Allow backspace to reset the search
+- Dropdown - Close dropdown when scrolling on dialogs
+- Dropdown - Fixed issue with empty whitespace in the items.
+- Dropdown - Changed padding on Group headers
+- Expandable Area - Fixed spacing on consecutive expandable areas
+- Header - Fixed separator style issue
+- Hero - Fixed mobile display issue
+- Fieldset - Added an example of intending different sections.
+- Fileupload - fixed IE Edge infinite popup loop
+- Input - Fixed clear button alignment issues
+- Input - Fixed style issues on short fields
+- List View - Fixed missing border on IE
+- Locale - Fixed Russian / Ukraine translations on about component
+- Locale - Improved time support
+- Locale - Fixed Japanese translations of AM and PM
+- Locale - Fixed exception on formatDate with Arabic
+- Locale - Added new translations (Hindi, Japanese)
+- Lookup - Fixed bug and keyboard on single select
+- Lookup - Fixed display with and without the actions button
+- List Builder - Fixed an error using updateDataset
+- Message - Improved confirmation message alignment
+- Menu Button - Fixed padding issue when no whitespace is in the markup
+- Modal - Made the close event not bubble down to components on the modal.
+- Modal - Fixed bug that the enter key closed the form on pager buttons
+- Modal - will now close when using the browser back button in SPA apps
+- Modal - Fixed missing icons on IE
+- Module Tabs - Added setting to set Menu Text
+- Pager - Fixed display issue on Android
+- Popup Menu - Fixed RTL issues
+- Popup Menu - Fixed bug with disabled sub items and keyboard
+- RTL Fixes on Property Sheet, List View and Password Samples/Patterns and searchfield
+- Tabs - Fixed error icon alignment issue
+- Targeted Achievement - Fixed issue when measure is based on 100
+- Targeted Achievement - Fixed display issue on labels
+- Targeted Achievement - Added setting to remove the icon
+- Text Area - Fixed text display on counter
+- Toolbar - Improvements to alignment, overflow and search field algorithm
+- Tooltip - Fixed contrast with links on tooltips
+- Tree - All setting of background color on badges
+- Radio - Fixed dirty tracking
+- Timepicker - Fixed dropdown alignment issues
+- Tooltip - Fixed IOS font issue
+- Tooltip - Fixed bug where sometimes tooltip didn't display
+- Tooltip - Fixed destroy error message
+- Searchfield - Fixed issue with reseting search
+- Searchfield - Fixed problem using ctrl+arrow on cap
+- Searchfield - Fixed bug on collapsible search fields hitting the x
+- Searchfield - Fixed bug on collapsible search fields in the header
+- Splitter - Fixed an IE 11 visual issue
+- Splitter - Added a right side example and ability to set a initial split width there.
+- Swap List - Fixed UI checkbox position
+- Validation - Fixed bug using incorrect field to trigger.
+- Validation - Fixed issue in removeError with inline errors
+- Validation - Fixed some excess events firing
+
+(172 Jira Issues Solved this release, Backlog Dev 335, Design 237, Unresolved 663)
 
 ## <a name="version-4.3.2">4.3.2</a>
 
