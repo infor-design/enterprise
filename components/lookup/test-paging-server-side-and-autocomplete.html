@@ -56,7 +56,7 @@
                //Get Page Based on info in Req, return results into response;
                $.getJSON(url, function(res) {
                   req.total = res.total;
-                  response([], req);
+                  response(res.data, req);
                });
             }
          }

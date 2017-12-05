@@ -5440,15 +5440,6 @@ $.fn.datagrid = function(options) {
                 return;
               }
 
-              var newRow = true;
-              if (self.editingRow && target.closest('tr') ) {
-                newRow = self.editingRow !== parseInt($(target).closest('tr').attr('data-index'));
-                console.log(newRow);
-                //self.editingRow, $(target).closest('tr').attr('data-index'));
-              }
-              /*if (!newRow && focusElem && self.editor.className && focusElem.closest(self.editor.className).length > 0) {
-                return;
-              }*/
               if (focusElem && self.editor.className && focusElem.closest(self.editor.className).length > 0) {
                 return;
               }
@@ -6930,7 +6921,6 @@ $.fn.datagrid = function(options) {
       }
 
       this.editor = new col.editor(dataRowIndex, cell, cellValue, cellNode, col, event, this, rowData);
-      this.editingRow = dataRowIndex;
 
       if (this.settings.onEditCell) {
         this.settings.onEditCell(this.editor);
@@ -6972,7 +6962,6 @@ $.fn.datagrid = function(options) {
       //Editor.destroy
       this.editor.destroy();
       this.editor = null;
-      this.editingRow = null;
 
       var rowIndex;
       if (this.settings.source !== null && isUseActiveRow) {
