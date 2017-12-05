@@ -7016,7 +7016,7 @@ $.fn.datagrid = function(options) {
       //Add and show tooltip
       if (node.find('.icon-' + type).length === 0) {
         node.find('.datagrid-cell-wrapper').append(icon);
-        icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error'), content: message});
+        icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: message});
         icon.data('tooltip').show();
       }
 
@@ -7085,7 +7085,7 @@ $.fn.datagrid = function(options) {
         this.toolbar.children('.title').append(tableerrors);
       }
 
-      icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error'), content: messages});
+      icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: messages});
     },
 
     clearCellError: function (row, cell, type) {
@@ -7129,6 +7129,7 @@ $.fn.datagrid = function(options) {
       this.tableBody.find('td.error').each(function () {
         var node = $(this);
         self.clearNodeErrors(node, 'error');
+        self.clearNodeErrors(node, 'dirtyerror');
       });
 
       this.tableBody.find('td.alert').each(function () {
@@ -7269,7 +7270,7 @@ $.fn.datagrid = function(options) {
       if (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip) {
         cellNode.attr('title', rowData.rowStatus.tooltip);
         cellNode.tooltip({placement: 'right',
-          isErrorColor: rowData.rowStatus.icon === 'error'
+          isErrorColor: rowData.rowStatus.icon === 'error' || rowData.rowStatus.icon === 'dirtyerror'
         });
       }
 
