@@ -10,11 +10,12 @@ module.exports = function(grunt) {
     usebanner = require('./build/configs/usebanner.js'),
     compress = require('./build/configs/compress.js'),
     meta = require('./build/configs/meta.js'),
-    revision = require('./build/configs/revision.js'),
+    //revision = require('./build/configs/revision.js'),
     //stripCode = require('./build/configs/strip_code.js'),
     clean = require('./build/configs/clean.js'),
     jshint = require('./build/configs/jshint.js'),
-    uglify = require('./build/configs/uglify.js'),
+    //eslint = require('./build/configs/eslint.js'),
+    //uglify = require('./build/configs/uglify.js'),
     dependencyBuilder = require('./build/dependencybuilder.js'),
     strBanner = require('./build/strbanner.js'),
     controls = require('./build/controls.js'),
@@ -72,9 +73,9 @@ module.exports = function(grunt) {
     amdHeader,
     copy,
     cssmin,
-    revision,
+    //revision,
     //stripCode,
-    uglify,
+    //uglify,
     usebanner,
     compress,
     run
@@ -91,14 +92,14 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'clean:dist',
     'clean:public',
-    'revision',
+    //'revision',
     'jshint',
     'sass',
     //'copy:amd',
     //'strip_code',
     'run:build',
-    'clean:amd',
-    'uglify',
+    //'clean:amd',
+    //'uglify',
     'cssmin',
     'copy:main',
     'compress',
@@ -106,7 +107,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('js', [
-    'revision',
+    //'revision',
     //'copy:amd',
     //'strip_code',
     //'concat:basic'
@@ -114,25 +115,25 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('js-uglify', [
-    'revision',
+    //'revision',
     //'copy:amd',
     //'strip_code',
     //'concat:basic',
     'run:build',
-    'uglify'
+    //'uglify'
   ]);
 
   grunt.registerTask('publish', [
     'clean:dist',
     'clean:public',
-    'revision',
+    //'revision',
     'jshint',
     'sass',
     //'copy:amd',
     //'strip_code',
     'run:build',
-    'clean:amd',
-    'uglify',
+    //'clean:amd',
+    //'uglify',
     'cssmin',
     'copy:main',
     'compress',
@@ -142,7 +143,9 @@ module.exports = function(grunt) {
   ]);
 
   // Swap "watch" for "chokidar"
-  grunt.registerTask('watch', ['chokidar']);
+  grunt.registerTask('watch', [
+    'chokidar'
+  ]);
 
   // Run the event to regen docs
   grunt.event.on('chokidar', function(action, filepath) {
@@ -159,6 +162,12 @@ module.exports = function(grunt) {
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
-    'revision', 'sass', /*'copy:amd',*/ /*'strip_code',*/ 'run:build', 'clean:amd', 'copy:main', 'usebanner'
+    'sass',
+    /*'copy:amd',*/
+    /*'strip_code',*/
+    'run:build',
+    /*'clean:amd',*/
+    'copy:main',
+    'usebanner'
   ]);
 };

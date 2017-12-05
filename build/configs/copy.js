@@ -27,9 +27,6 @@ module.exports = {
       files: [
         {expand: true, flatten: true, src: ['dist/svg/*.*'], dest: 'publish/dist/svg/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['dist/css/*theme*.*'], dest: 'publish/dist/css/', filter: 'isFile'},
-        {expand: true, flatten: true, src: ['dist/js/*.*'], dest: 'publish/dist/js/', filter: 'isFile'},
-        {expand: true, flatten: true, src: ['dist/js/all/*.*'], dest: 'publish/dist/js/all', filter: 'isFile'},
-        {expand: true, flatten: true, src: ['dist/js/cultures/*.*'], dest: 'publish/dist/js/cultures', filter: 'isFile'},
         {expand: true, flatten: true, src: ['sass/**/*.scss', 'components/**/*.scss'], dest: 'publish/sass/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['LICENSE.MD'], dest: 'publish', filter: 'isFile'}
       ]

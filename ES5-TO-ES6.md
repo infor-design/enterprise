@@ -28,8 +28,8 @@ See the file `<project root>/components/index.js` to see which Soho components a
   - the demoapp's `app.js` has been modified to no-longer duplicate files to the `/public` folder in this project, and will instead serve compiled JS/CSS files directly from `/dist`.  Because of this, if you have JS/CSS files in `/public`, they will be served instead of the compiled JS/CSS files from `/dist`, and you'll never see any changes.  You must manually remove any JS/CSS/map files from `/public` before starting the server.
 - `$ grunt` will now run `rollup -c` instead of the old build process.
 - `$ grunt` no longer attempts to clean the `/public` folder.
-- `$ grunt watch` currently does not perform the rollup process, so CI doesn't currently work.
 - Rollup is completely managing the addition of the software license and any build meta-data to the final `sohoxi.js` bundle.  This code cut is no longer using any of the grunt revision, banner, etc stuff.  There's an additional file being used in `<project root>/build/generate-build-banner.js` that is grabbing all the necessary stuff and spitting out the text content that Rollup is using for the banner.
+- Began Switching to ESLint from JSHint.  In `.eslintrc.js`, truly "extended" airbnb eslint configs per Hook & Loop guidelines.  This requires some crazy commands to be run per your environment (possible upset to build server?).  See the new `<project root>/.eslintrc.js` file for more information.
 
 #### TODO for the Dev environment:
 
