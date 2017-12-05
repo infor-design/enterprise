@@ -14,6 +14,7 @@ export { Icon } from './icons/icons';
 
 // Molecules
 export { Modal } from './modal/modal';
+export { About } from './about/about';
 export { Message } from './message/message';
 export { PopupMenu } from './popupmenu/popupmenu';
 // -- ex: dropdown/multiselect

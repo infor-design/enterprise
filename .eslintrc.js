@@ -10,9 +10,9 @@ module.exports = {
    * Base Rules
    */
 
-  "root": true,
+  //"root": true,
 
-  "extends": "airbnb"//,
+  //"extends": "airbnb"//,
 
   /*
   // ============================================
