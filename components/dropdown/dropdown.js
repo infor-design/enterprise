@@ -768,6 +768,10 @@
           return;
         }
 
+        if (e.ctrlKey  || e.metaKey) {
+          return false;
+        }
+
         return true;
       },
 
@@ -935,7 +939,9 @@
         //Down arrow, Up arrow, or Spacebar to open
         if (!self.isOpen() && (key === 38 || key === 40 || key === 32)) {
           self.toggleList();
-          return;
+          e.stopPropagation();
+          e.preventDefault();
+          return e;
         }
 
         if (e.metaKey) {
@@ -1416,7 +1422,8 @@
         // Triggered when the user scrolls the page.
         // Ignores Scrolling on Mobile, and will not close the list if accessing an item within the list
         function scrollDocument(e) {
-          if (touchPrevented || isDropdownElement($(e.target))) {
+          var focus = $('*:focus'); //dont close on timepicker arrow down and up
+          if (touchPrevented || isDropdownElement($(e.target)) || focus.is('.timepicker')) {
             return;
           }
           self.closeList('cancel');
@@ -2210,13 +2217,19 @@
         var self = this;
 
         this.pseudoElem.on('keydown.dropdown', function(e) {
-          self.ignoreKeys($(this), e);
+          if (!self.ignoreKeys($(this), e)) {
+            return;
+          }
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
+
           if (e.keyCode === 9) {
             return;
           }
-          self.ignoreKeys($(this), e);
+
+          if (!self.ignoreKeys($(this), e)) {
+            return;
+          }
 
           if (!self.settings.noSearch && e.keyCode !== 27) {
             self.toggleList();

@@ -277,6 +277,7 @@
         if (this.hasCategories()) {
           this.categoryButton.on('selected.searchfield', function(e, anchor) {
             self.handleCategorySelected(e, anchor);
+            self.element.trigger('selected', [anchor]);
           }).on('focus.searchfield', function(e) {
             self.handleCategoryFocus(e);
           }).on('blur.searchfield', function(e) {
