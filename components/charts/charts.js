@@ -2697,14 +2697,16 @@ window.Chart = function(container) {
       });
 
     //Add Legend
-    if (isSingular && chartData[0].name) {
-      charts.addLegend(chartData);
-    } else if (isPositiveNegative) {
-      charts.addLegend(pnSeries);
-    } else if (isStacked && isSingular) {
-      charts.addLegend(series);
-    } else if (!isSingular) {
-      charts.addLegend(isStacked ? seriesStacked : series);
+    if (charts.showLegend) {
+      if (isSingular && chartData[0].name) {
+        charts.addLegend(chartData);
+      } else if (isPositiveNegative) {
+        charts.addLegend(pnSeries);
+      } else if (isStacked && isSingular) {
+        charts.addLegend(series);
+      } else if (!isSingular) {
+        charts.addLegend(isStacked ? seriesStacked : series);
+      }
     }
 
     if (charts.isRTL && charts.isIE) {
@@ -4496,6 +4498,12 @@ window.Chart = function(container) {
     this.isRTL = Locale.isRTL();
     this.isIE = $('html').hasClass('ie');
 
+    var defaultShowLegend = function(opt) {
+      if (typeof opt !== 'undefined') {
+        charts.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : opt;
+      }
+    };
+
     /**
     * Set Animation Type
     * @param {Boolean} animate  &nbsp;-&nbsp; true|false - will do or not do the animation.
@@ -4531,21 +4539,23 @@ window.Chart = function(container) {
       this.Pie(options.dataset, false, options);
     }
     if (options.type === 'bar' || options.type === 'bar-stacked') {
-      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
+      defaultShowLegend(true);
       this.HorizontalBar(options.dataset);
     }
     if (options.type === 'bar-normalized') {
-      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
+      defaultShowLegend(true);
       this.HorizontalBar(options.dataset, true);
     }
     if (options.type === 'bar-grouped') {
-      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
+      defaultShowLegend(true);
       this.HorizontalBar(options.dataset, true, false); //dataset, isNormalized, isStacked
     }
     if (options.type === 'column-stacked') {
+      defaultShowLegend(true);
       this.Column(options.dataset, true);
     }
     if (['column', 'column-grouped', 'column-positive-negative'].indexOf(options.type) > -1) {
+      defaultShowLegend(true);
       this.Column(options.dataset);
     }
     if (options.type === 'donut') {
