@@ -1,44 +1,5 @@
-
-window.Soho.masks = window.Soho.masks || {
-  EMPTY_STRING: '',
-  PLACEHOLDER_CHAR: '_',
-  CARET_TRAP: '[]',
-  NON_DIGITS_REGEX: /\D+/g,
-  DIGITS_REGEX: /\d/,
-  ALPHAS_REGEX: /[\u00C0-\u017Fa-zA-Z]/,
-  ANY_REGEX: /[\u00C0-\u017Fa-zA-Z0-9]/,
-  DEFAULT_API_OPTIONS: {
-    locale: 'en-US',
-    pattern: undefined,
-    pipe: undefined
-  }
-};
-
-window.Soho.masks.LEGACY_DEFS = {
-  '#': /[0-9]/,
-  '0': /[0-9]/,
-  'x': Soho.masks.ALPHAS_REGEX,
-  '*': Soho.masks.ANY_REGEX,
-  '?': /./,
-  '~': /[-0-9]/,
-  'a': /[APap]/,
-  'm': /[Mm]/
-};
-
-/**
- * Options that get passed for the _conformToMask()_ method.
- */
-window.Soho.masks.DEFAULT_CONFORM_OPTIONS = {
-  caretTrapIndexes: [],
-  guide: true,
-  previousMaskResult: Soho.masks.EMPTY_STRING,
-  placeholderChar: Soho.masks.PLACEHOLDER_CHAR,
-  placeholder: Soho.masks.EMPTY_STRING,
-  selection: {
-    start: 0
-  },
-  keepCharacterPositions: true
-};
+import { utils } from '../utils/utils';
+import { masks } from './masks';
 
 
 /**
@@ -80,7 +41,7 @@ SohoMaskAPI.prototype = {
       if (Array.isArray(options.pattern) || typeof options.pattern === 'function') {
         this.pattern = options.pattern;
       } else if (typeof options.pattern === 'string') {
-        var defs = Soho.utils.extend({}, Soho.masks.LEGACY_DEFS, (options.definitions || {}));
+        var defs = utils.mergeSettings(undefined, (options.definitions || {}), masks.LEGACY_DEFS);
         this.pattern = this._convertPatternFromString(options.pattern, defs);
       } else {
         // TODO: fail somehow?
@@ -116,7 +77,7 @@ SohoMaskAPI.prototype = {
       }
 
       // Merge incom
-      var maskOpts = Soho.utils.extend({}, this.patternOptions, opts.patternOptions, {
+      var maskOpts = utils.extend({}, this.patternOptions, opts.patternOptions, {
         caretPos: opts.selection.start,
         previousMaskResult: opts.previousMaskResult
       });
@@ -167,12 +128,12 @@ SohoMaskAPI.prototype = {
         // If the `pipe` rejects `conformedValue`, we use the `previousConformedValue`, and set `rejected` to `true`.
         processResult.pipeResult = false;
         processResult.pipedValue = opts.previousMaskResult;
-      } else if (Soho.utils.isString(pipeResult)) {
+      } else if (utils.isString(pipeResult)) {
         processResult.pipeResult = true;
         processResult.pipedValue = pipeResult;
         processResult.pipedCharIndexes = [];
       } else {
-        processResult = Soho.utils.extend({}, processResult, {
+        processResult = utils.extend({}, processResult, {
           pipeResult: pipeResult.result,
           pipedValue: pipeResult.value,
           pipedCharIndexes: pipeResult.characterIndexes
@@ -192,7 +153,7 @@ SohoMaskAPI.prototype = {
   _conformToMask: function(rawValue, mask, options) {
 
     // Set default options
-    options = Soho.utils.extend({}, Soho.masks.DEFAULT_CONFORM_OPTIONS, options);
+    options = utils.mergeSettings(undefined, options, masks.DEFAULT_CONFORM_OPTIONS);
 
     // Setup the placeholder version of the mask
     options.placeholder = this._convertMaskToPlaceholder(mask, options.placeholderChar);
@@ -206,7 +167,7 @@ SohoMaskAPI.prototype = {
       placeholderLength = options.placeholder.length || 0,
       placeholderChar = options.placeholderChar,
       caretPos = options.selection.start,
-      resultStr = Soho.masks.EMPTY_STRING;
+      resultStr = masks.EMPTY_STRING;
 
     var editDistance = rawValueLength - prevMaskResultLength,
       isAddition = editDistance > 0,
@@ -224,7 +185,7 @@ SohoMaskAPI.prototype = {
     // To do this, we want to compensate for all characters that were deleted
     if (options.keepCharacterPositions === true && !isAddition) {
       // We will be storing the new placeholder characters in this variable.
-      var compensatingPlaceholderChars = Soho.masks.EMPTY_STRING;
+      var compensatingPlaceholderChars = masks.EMPTY_STRING;
 
       // For every character that was deleted from a placeholder position, we add a placeholder char
       for (var i = indexOfFirstChange; i < indexOfLastChange; i++) {
@@ -252,7 +213,7 @@ SohoMaskAPI.prototype = {
         isNew: j >= indexOfFirstChange && j < indexOfLastChange
       };
     }
-    var rawValueArr = rawValue.split(Soho.masks.EMPTY_STRING).map(markAddedChars);
+    var rawValueArr = rawValue.split(masks.EMPTY_STRING).map(markAddedChars);
 
     // The loop below removes masking characters from user input. For example, for mask
     // `00 (111)`, the placeholder would be `00 (___)`. If user input is `00 (234)`, the loop below
@@ -307,7 +268,7 @@ SohoMaskAPI.prototype = {
               if (
                 options.keepCharacterPositions !== true ||
                 rawValueChar.isNew === false ||
-                options.previousMaskResult === Soho.masks.EMPTY_STRING ||
+                options.previousMaskResult === masks.EMPTY_STRING ||
                 options.guide === false ||
                 !isAddition
               ) {
@@ -404,7 +365,7 @@ SohoMaskAPI.prototype = {
       } else {
         // If we couldn't find `indexOfLastFilledPlaceholderChar` that means the user deleted
         // the first character in the mask. So we return an empty string.
-        resultStr = Soho.masks.EMPTY_STRING;
+        resultStr = masks.EMPTY_STRING;
       }
     }
 
@@ -426,12 +387,12 @@ SohoMaskAPI.prototype = {
    */
   _processCaretTraps: function(mask) {
     var indexes = [],
-      indexOfCaretTrap = mask.indexOf(Soho.masks.CARET_TRAP);
+      indexOfCaretTrap = mask.indexOf(masks.CARET_TRAP);
 
     while(indexOfCaretTrap !== -1) {
       indexes.push(indexOfCaretTrap);
       mask.splice(indexOfCaretTrap, 1);
-      indexOfCaretTrap = mask.indexOf(Soho.masks.CARET_TRAP);
+      indexOfCaretTrap = mask.indexOf(masks.CARET_TRAP);
     }
 
     return {
@@ -453,7 +414,7 @@ SohoMaskAPI.prototype = {
       mask = [];
     }
     if (!placeholderChar) {
-      placeholderChar = Soho.masks.PLACEHOLDER_CHAR;
+      placeholderChar = masks.PLACEHOLDER_CHAR;
     }
 
     if (mask.indexOf(placeholderChar) !== -1) {
@@ -467,7 +428,7 @@ SohoMaskAPI.prototype = {
 
     var ret = mask.map(function(char) {
       return (char instanceof RegExp) ? placeholderChar : char;
-    }).join(Soho.masks.EMPTY_STRING);
+    }).join(masks.EMPTY_STRING);
 
     return ret;
   },
@@ -545,7 +506,7 @@ SohoMaskAPI.prototype = {
       var normalizedRawValue = opts.rawValue.toLowerCase();
 
       // Then we take all characters that come before where the caret currently is.
-      var leftHalfChars = normalizedRawValue.substr(0, opts.caretPos).split(Soho.masks.EMPTY_STRING);
+      var leftHalfChars = normalizedRawValue.substr(0, opts.caretPos).split(masks.EMPTY_STRING);
 
       // Now we find all the characters in the left half that exist in the conformed input
       // This step ensures that we don't look for a character that was filtered out or rejected by `conformToMask`.
@@ -561,7 +522,7 @@ SohoMaskAPI.prototype = {
       // from the start of the string up to the place where the caret is
       var previousLeftMaskChars = opts.previousPlaceholder
         .substr(0, intersection.length)
-        .split(Soho.masks.EMPTY_STRING)
+        .split(masks.EMPTY_STRING)
         .filter(nonPlaceholderFilter)
         .length;
 
@@ -569,7 +530,7 @@ SohoMaskAPI.prototype = {
       // from the start of the string up to the place where the caret is
       var leftMaskChars = opts.placeholder
         .substr(0, intersection.length)
-        .split(Soho.masks.EMPTY_STRING)
+        .split(masks.EMPTY_STRING)
         .filter(nonPlaceholderFilter)
         .length;
 
@@ -628,7 +589,7 @@ SohoMaskAPI.prototype = {
       // our `targetChar`, so we don't select one of those by mistake.
       var countTargetCharInPlaceholder = opts.placeholder
         .substr(0, opts.placeholder.indexOf(opts.placeholderChar))
-        .split(Soho.masks.EMPTY_STRING)
+        .split(masks.EMPTY_STRING)
         .filter(function(char, index) {
           // Check if `char` is the same as our `targetChar`, so we account for it
           return char === targetChar &&
@@ -789,4 +750,5 @@ SohoMaskAPI.prototype = {
 
 };
 
-window.Soho.Mask = SohoMaskAPI;
+
+export { SohoMaskAPI };

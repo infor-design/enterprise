@@ -13,6 +13,7 @@ export { breakpoints } from './utils/breakpoints';
 export { Locale } from './locale/locale';
 export { Environment as env } from './utils/environment';
 export { theme } from './utils/theme';
+export { masks } from './mask/masks';
 
 // Behaviors ================================== /
 export { behaviors };

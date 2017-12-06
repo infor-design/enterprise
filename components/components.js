@@ -16,7 +16,9 @@ export { Icon } from './icons/icons';
 export { Dropdown } from './dropdown/dropdown';
 export { Modal } from './modal/modal';
 export { About } from './about/about';
+export { SohoMaskedInput as MaskedInput } from './mask/masked-input';
 export { Message } from './message/message';
+export { MultiSelect } from './multiselect/multiselect';
 export { PopupMenu } from './popupmenu/popupmenu';
 export { Tooltip } from './tooltip/tooltip';
 // -- ex: dropdown/multiselect

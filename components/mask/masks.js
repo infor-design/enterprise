@@ -1,9 +1,74 @@
+import { utils } from '../utils/utils';
+import { stringUtils as str } from '../utils/string';
+import { Locale } from '../locale/locale';
+
+
+/**
+ * Contents of the `Soho.masks` object
+ */
+let masks = {
+
+  EMPTY_STRING: '',
+
+  PLACEHOLDER_CHAR: '_',
+
+  CARET_TRAP: '[]',
+
+  NON_DIGITS_REGEX: /\D+/g,
+
+  DIGITS_REGEX: /\d/,
+
+  ALPHAS_REGEX: /[\u00C0-\u017Fa-zA-Z]/,
+
+  ANY_REGEX: /[\u00C0-\u017Fa-zA-Z0-9]/,
+
+  DEFAULT_API_OPTIONS: {
+    locale: 'en-US',
+    pattern: undefined,
+    pipe: undefined
+  }
+
+};
+
+
+/**
+ * Legacy Mask pattern definitions.
+ * The New Mask works based on an array of RegExps and Strings.
+ */
+masks.LEGACY_DEFS = {
+  '#': /[0-9]/,
+  '0': /[0-9]/,
+  'x': masks.ALPHAS_REGEX,
+  '*': masks.ANY_REGEX,
+  '?': /./,
+  '~': /[-0-9]/,
+  'a': /[APap]/,
+  'm': /[Mm]/
+};
+
+
+/**
+ * Options that get passed for the _conformToMask()_ method.
+ */
+masks.DEFAULT_CONFORM_OPTIONS = {
+  caretTrapIndexes: [],
+  guide: true,
+  previousMaskResult: masks.EMPTY_STRING,
+  placeholderChar: masks.PLACEHOLDER_CHAR,
+  placeholder: masks.EMPTY_STRING,
+  selection: {
+    start: 0
+  },
+  keepCharacterPositions: true
+};
+
+
 /**
  * Default Number Mask Options
  */
-var DEFAULT_NUMBER_MASK_OPTIONS = {
-  prefix: Soho.masks.EMPTY_STRING,
-  suffix: Soho.masks.EMPTY_STRING,
+let DEFAULT_NUMBER_MASK_OPTIONS = {
+  prefix: masks.EMPTY_STRING,
+  suffix: masks.EMPTY_STRING,
   allowThousandsSeparator: true,
   symbols: {
     currency: '$',
@@ -19,6 +84,7 @@ var DEFAULT_NUMBER_MASK_OPTIONS = {
   integerLimit: null
 };
 
+
 /**
  * Converts a string representing a formatted number into a Number Mask.
  * @param {String} strNumber
@@ -26,11 +92,12 @@ var DEFAULT_NUMBER_MASK_OPTIONS = {
  */
 function convertToMask(strNumber) {
   return strNumber
-    .split(Soho.masks.EMPTY_STRING)
+    .split(masks.EMPTY_STRING)
     .map(function(char) {
-      return Soho.masks.DIGITS_REGEX.test(char) ? Soho.masks.DIGITS_REGEX : char;
+      return masks.DIGITS_REGEX.test(char) ? masks.DIGITS_REGEX : char;
     });
 }
+
 
 /**
  * Adds thousands separators to the correct spot in a formatted number string.
@@ -52,9 +119,9 @@ function addThousandsSeparator(n, thousands) {
  */
 function getRegexForPart(part, type) {
   var types = {
-    'any': Soho.masks.ANY_REGEX,
-    'digits': Soho.masks.DIGITS_REGEX,
-    'alphas': Soho.masks.ALPHAS_REGEX
+    'any': masks.ANY_REGEX,
+    'digits': masks.DIGITS_REGEX,
+    'alphas': masks.ALPHAS_REGEX
   };
 
   if (!types[type]) {
@@ -78,10 +145,8 @@ function getRegexForPart(part, type) {
  * @param {Object} options
  * @returns {Array}
  */
-window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
-
-  // Handle default options
-  options = Soho.utils.extend({}, DEFAULT_NUMBER_MASK_OPTIONS, options);
+masks.numberMask = function sohoNumberMask(rawValue, options) {
+  options = utils.mergeSettings(undefined, options, DEFAULT_NUMBER_MASK_OPTIONS);
 
   var PREFIX = options.prefix,
     SUFFIX = options.suffix,
@@ -93,20 +158,20 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 
   function numberMask(rawValue) {
     if (typeof rawValue !== 'string') {
-      rawValue = Soho.masks.EMPTY_STRING;
+      rawValue = masks.EMPTY_STRING;
     }
 
     var rawValueLength = rawValue.length;
 
     if (
-      rawValue === Soho.masks.EMPTY_STRING ||
+      rawValue === masks.EMPTY_STRING ||
       (rawValue[0] === PREFIX[0] && rawValueLength === 1)
     ) {
-      return PREFIX.split(Soho.masks.EMPTY_STRING).concat([Soho.masks.DIGITS_REGEX]).concat(SUFFIX.split(Soho.masks.EMPTY_STRING));
+      return PREFIX.split(masks.EMPTY_STRING).concat([masks.DIGITS_REGEX]).concat(SUFFIX.split(masks.EMPTY_STRING));
     } else if(
       rawValue === DECIMAL && options.allowDecimal
     ) {
-      return PREFIX.split(Soho.masks.EMPTY_STRING).concat(['0', DECIMAL, Soho.masks.DIGITS_REGEX]).concat(SUFFIX.split(Soho.masks.EMPTY_STRING));
+      return PREFIX.split(masks.EMPTY_STRING).concat(['0', DECIMAL, masks.DIGITS_REGEX]).concat(SUFFIX.split(masks.EMPTY_STRING));
     }
 
     var indexOfLastDecimal = rawValue.lastIndexOf(DECIMAL),
@@ -125,7 +190,7 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
       integer = rawValue.slice(rawValue.slice(0, prefixLength) === PREFIX ? prefixLength : 0, indexOfLastDecimal);
 
       fraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength);
-      fraction = convertToMask(fraction.replace(Soho.masks.NON_DIGITS_REGEX, Soho.masks.EMPTY_STRING));
+      fraction = convertToMask(fraction.replace(masks.NON_DIGITS_REGEX, masks.EMPTY_STRING));
     } else {
       if (rawValue.slice(0, prefixLength) === PREFIX) {
         integer = rawValue.slice(prefixLength);
@@ -141,7 +206,7 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
       integer = integer.slice(0, options.integerLimit + (isNegative ? 1 : 0) + (numberOfThousandSeparators * thousandsSeparatorSymbolLength));
     }
 
-    integer = integer.replace(Soho.masks.NON_DIGITS_REGEX, Soho.masks.EMPTY_STRING);
+    integer = integer.replace(masks.NON_DIGITS_REGEX, masks.EMPTY_STRING);
 
     if (!options.allowLeadingZeroes) {
       integer = integer.replace(/^0+(0$|[^0])/, '$1');
@@ -153,10 +218,10 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 
     if ((hasDecimal && options.allowDecimal) || options.requireDecimal === true) {
       if (rawValue[indexOfLastDecimal - 1] !== DECIMAL) {
-        mask.push(Soho.masks.CARET_TRAP);
+        mask.push(masks.CARET_TRAP);
       }
 
-      mask.push(DECIMAL, Soho.masks.CARET_TRAP);
+      mask.push(DECIMAL, masks.CARET_TRAP);
 
       if (fraction) {
         if (typeof options.decimalLimit === 'number') {
@@ -167,26 +232,26 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
       }
 
       if (options.requireDecimal === true && rawValue[indexOfLastDecimal - 1] === DECIMAL) {
-        mask.push(Soho.masks.DIGITS_REGEX);
+        mask.push(masks.DIGITS_REGEX);
       }
     }
 
     if (prefixLength > 0) {
-      mask = PREFIX.split(Soho.masks.EMPTY_STRING).concat(mask);
+      mask = PREFIX.split(masks.EMPTY_STRING).concat(mask);
     }
 
     if (isNegative) {
       // If user is entering a negative number, add a mask placeholder spot to attract the caret to it.
       // TODO: Allow the negative symbol as the suffix as well (SOHO-3259)
       if (mask.length === prefixLength) {
-        mask.push(Soho.masks.DIGITS_REGEX);
+        mask.push(masks.DIGITS_REGEX);
       }
 
       mask = [/-/].concat(mask);
     }
 
     if (SUFFIX.length > 0) {
-      mask = mask.concat(SUFFIX.split(Soho.masks.EMPTY_STRING));
+      mask = mask.concat(SUFFIX.split(masks.EMPTY_STRING));
     }
 
     return mask;
@@ -197,10 +262,11 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
   return numberMask(rawValue);
 };
 
+
 /**
  * Default Date Mask Options
  */
-var DEFAULT_DATETIME_MASK_OPTIONS = {
+let DEFAULT_DATETIME_MASK_OPTIONS = {
   format: 'M/d/yyyy',
   symbols: {
     timeSeparator: ':',
@@ -209,10 +275,11 @@ var DEFAULT_DATETIME_MASK_OPTIONS = {
   }
 };
 
+
 /**
  * Maximum Values for various section maps of date strings.
  */
-var DATE_MAX_VALUES = {
+let DATE_MAX_VALUES = {
   'dd': 31,
   'd': 31,
   'MMM': undefined,
@@ -230,13 +297,16 @@ var DATE_MAX_VALUES = {
 };
 
 
-window.Soho.masks.dateMask = function dateMask(rawValue, options) {
-  options = Soho.utils.extend({}, DEFAULT_DATETIME_MASK_OPTIONS, options);
+/**
+ *
+ */
+masks.dateMask = function dateMask(rawValue, options) {
+  options = utils.mergeSettings(undefined, options, DEFAULT_DATETIME_MASK_OPTIONS);
 
   var mask = [],
-    digitRegex = Soho.masks.DIGITS_REGEX,
+    digitRegex = masks.DIGITS_REGEX,
     format = options.format,
-    splitterStr = Soho.string.removeDuplicates(format.replace(/[dMyHhmsa]+/g, '')),
+    splitterStr = str.removeDuplicates(format.replace(/[dMyHhmsa]+/g, '')),
     splitterRegex = new RegExp('['+ splitterStr +']+'),
     formatArray = format.split(/[^dMyHhmsa]+/),
     rawValueArray = rawValue.split(splitterRegex),
@@ -283,7 +353,7 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
       var thisPartSize = part.toString().length,
         start = format.indexOf(part) + thisPartSize,
         end = format.indexOf(nextPart),
-        literals = format.substring(start, end).split(Soho.masks.EMPTY_STRING);
+        literals = format.substring(start, end).split(masks.EMPTY_STRING);
 
       mask = mask.concat(literals);
     }
@@ -299,7 +369,7 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
  * NOTE: DOES NOT WORK FOR DATES WITH ALPHABETIC CONTENT. Do not use this if your
  * dates contain "MMM" or the full month name.
  */
-window.Soho.masks.autocorrectedDatePipe = function autoCorrectedDatePipe(processResult, options) {
+masks.autocorrectedDatePipe = function autoCorrectedDatePipe(processResult, options) {
   if (!options.dateFormat) {
     options.dateFormat = Locale.calendar().dateFormat.short;
   }
@@ -344,3 +414,6 @@ window.Soho.masks.autocorrectedDatePipe = function autoCorrectedDatePipe(process
     characterIndexes: indexesOfPipedChars
   };
 };
+
+
+export { masks };

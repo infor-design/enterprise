@@ -3,6 +3,13 @@
  */
 let stringUtils = {};
 
+
+/**
+ * Re-usable Empty String that can be referenced everywhere to save small amounts of space.
+ */
+stringUtils.EMPTY = '';
+
+
 /**
  * The splice() method changes the content of a string by removing a range of
  * characters and/or adding new characters.
