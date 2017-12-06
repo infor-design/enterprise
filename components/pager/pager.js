@@ -494,6 +494,10 @@
           elements = elements.children();
         }
 
+        if (elements.is('table')) {
+          elements = elements.find('tr');
+        }
+
         return elements;
       },
 
