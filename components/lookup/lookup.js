@@ -197,6 +197,11 @@
             if (grid) {
               self.createGrid(grid);
             }
+
+            if (typeof grid === 'boolean' && grid === false) {
+              return false;
+            }
+
             self.createModal();
             self.element.triggerHandler('complete'); // for Busy Indicator
             self.element.trigger('open', [self.modal, self.grid]);
