@@ -23,6 +23,7 @@
     -   [uniqueIdCount](#uniqueidcount)
     -   [focusable](#focusable)
     -   [extend](#extend)
+    -   [parseSettings](#parsesettings)
     -   [parseOptions](#parseoptions-1)
     -   [actualChar](#actualchar-1)
     -   [equals](#equals)
@@ -35,6 +36,7 @@
     -   [isString](#isstring)
     -   [isNumber](#isnumber)
     -   [safeSetSelection](#safesetselection)
+    -   [mergeSettings](#mergesettings)
     -   [getAttributes](#getattributes)
     -   [classNameExists](#classnameexists)
     -   [classNameHas](#classnamehas)
@@ -220,7 +222,7 @@ Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 ## extend
 
-## parseOptions
+## parseSettings
 
 Grabs an attribute from an HTMLElement containing stringified JSON syntax, and interprets it into options.
 
@@ -230,6 +232,11 @@ Grabs an attribute from an HTMLElement containing stringified JSON syntax, and i
 -   `attr` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## parseOptions
+
+Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
+TODO: Remove in 4.4.1 ?
 
 ## actualChar
 
@@ -335,6 +342,19 @@ cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
 -   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
 -   `startPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `endPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## mergeSettings
+
+Merges various sets of options into a single object,
+whose intention is to be set as options on a Soho component.
+
+**Parameters**
+
+-   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
+-   `incomingOptions` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))** 
+-   `defaultOptions` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))?** 
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## getAttributes
 

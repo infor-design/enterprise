@@ -1027,7 +1027,10 @@ utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOp
   }
 
   // Actually get ready to merge incoming options if we get to this point.
-  return utils.extend(true, {}, resolveFunction(defaultOptions || {}), resolveFunction(incomingOptions), utils.parseSettings(element));
+  return utils.extend(true, {},
+    resolveFunction(defaultOptions || {}),
+    resolveFunction(incomingOptions),
+    (element !== undefined ? utils.parseSettings(element) : {}) ); // possible to run this without an element present -- will simply skip this part
 };
 
 

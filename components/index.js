@@ -14,12 +14,13 @@ export { Locale } from './locale/locale';
 export { Environment as env } from './utils/environment';
 export { theme } from './utils/theme';
 
-// Behaviors ======================== /
+// Behaviors ================================== /
 export { behaviors };
 export { Personalize } from './personalize/personalize';
 export { Place } from './place/place';
 export { Initialize } from './initialize/initialize';
+export { ListFilter } from './listfilter/listfilter';
 
-// Components ======================= /
+// Components ================================= /
 import * as components from './components';
 export { components };
