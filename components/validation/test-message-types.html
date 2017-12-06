@@ -16,7 +16,6 @@
   <div class="full-width">
     <div class="field">
       <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
-      <button class="btn-primary" type="button" onClick="addTooltip()">Add Tooltip Error Message</button>
       <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
       <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
     </div>
@@ -50,15 +49,6 @@
       type       : currentValidationType,
       showTooltip: false,
       inline     : true
-    });
-  }
-
-  function addTooltip() {
-    $('#text-field, #date-field').addMessage({
-      message    : message + 'error',
-      type       : 'error',
-      showTooltip: true,
-      inline     : false
     });
   }
 
