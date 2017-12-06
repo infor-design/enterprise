@@ -11,9 +11,11 @@ import './hyperlinks/hyperlinks.jquery';
 import './icons/icons.jquery';
 
 // Molecules
+import './dropdown/dropdown.jquery';
 import './modal/modal.jquery';
 import './about/about.jquery';
 import './message/message.jquery';
 import './popupmenu/popupmenu.jquery';
+import './tooltip/tooltip.jquery';
 
 // Organisms

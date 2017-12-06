@@ -4,6 +4,7 @@ module.exports = {
     main: {
       files: [
         {expand: true, flatten: true, src: ['components/angular/sohoxi-angular.js'], dest: 'dist/js/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['components/sohoxi-migrate-4.4.0.js'], dest: 'dist/js/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['js/*.js'], dest: 'dist/js/all/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['components/vendor/jquery-3*.js'], dest: 'dist/js/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['components/vendor/jquery-3*.min.js'], dest: 'dist/js/', filter: 'isFile'},

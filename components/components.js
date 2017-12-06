@@ -13,10 +13,12 @@ export { Hyperlink } from './hyperlinks/hyperlinks';
 export { Icon } from './icons/icons';
 
 // Molecules
+export { Dropdown } from './dropdown/dropdown';
 export { Modal } from './modal/modal';
 export { About } from './about/about';
 export { Message } from './message/message';
 export { PopupMenu } from './popupmenu/popupmenu';
+export { Tooltip } from './tooltip/tooltip';
 // -- ex: dropdown/multiselect
 
 // Oraganisms

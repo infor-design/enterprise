@@ -11,8 +11,8 @@
     -   [logTimeStart](#logtimestart)
     -   [logTimeEnd](#logtimeend)
     -   [bindFirst](#bindfirst)
--   [SOHO Utils](#soho-utils)
     -   [bindFirst](#bindfirst-1)
+-   [SOHO Utils](#soho-utils)
     -   [uniqueId](#uniqueid)
     -   [cssPropSupport](#csspropsupport)
     -   [transitionEndName](#transitionendname)
@@ -101,9 +101,8 @@ Easy flag for determining whether or not time will be logged to the console.
 
 ## bindFirst
 
-============================================
-
-# SOHO Utils
+Used for changing the stacking order of jQuery events.  This is needed to override certain
+Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 **Parameters**
 
@@ -112,8 +111,9 @@ Easy flag for determining whether or not time will be logged to the console.
 
 ## bindFirst
 
-Used for changing the stacking order of jQuery events.  This is needed to override certain
-Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
+============================================
+
+# SOHO Utils
 
 **Parameters**
 

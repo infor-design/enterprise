@@ -1,4 +1,5 @@
 import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
 // jQuery components
@@ -24,7 +25,14 @@ let INITIALIZE_DEFAULTS = {
  * @param {Object} element
  */
 function Initialize(element, settings) {
-  this.settings = $.extend({}, INITIALIZE_DEFAULTS, settings);
+  // Settings and Options
+  if (typeof settings === 'string') {
+    settings = {
+      locale: settings
+    };
+  }
+
+  this.settings = utils.mergeSettings({}, settings, INITIALIZE_DEFAULTS);
   this.element = $(element);
   debug.logTimeStart(PLUGIN_NAME);
   this.init();
@@ -418,25 +426,4 @@ Initialize.prototype = {
 };
 
 
-/**
- * jQuery Component Wrapper for Initialize
- */
-$.fn.initialize = function(options) {
-  // Settings and Options
-  var settings;
-
-  if (typeof options === 'string') {
-    settings = {};
-    settings.locale = options;
-  } else {
-    settings = $.extend({}, INITIALIZE_DEFAULTS, options);
-  }
-
-  // Initialize the plugin (Once)
-  return this.each(function() {
-    var instance = new Initialize(this, settings); // jshint ignore:line
-  });
-};
-
-
-export { Initialize };
+export { Initialize, PLUGIN_NAME };

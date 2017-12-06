@@ -163,8 +163,9 @@ ListFilter.prototype = {
     return items;
   },
 
-  updated: function(settingsObj) {
-    this.settings = $.extend({}, this.settings, settingsObj);
+  updated: function(settings) {
+    this.settings = utils.mergeSettings(undefined, settings, this.settings);
+
     return this
       .teardown()
       .init();

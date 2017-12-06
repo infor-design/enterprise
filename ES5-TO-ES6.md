@@ -64,6 +64,10 @@ See the file `<project root>/components/index.js` to see which Soho components a
   - Still invoke the jQuery wrappers within each `<component>.js` file, but allow the Vanilla JS constructors to stand on their own.
   - (eventually) figure out a Vanilla-JS, stand-alone replacement for `$.data()` for element-level Soho component access.
 
+## Additions to 4.4.x/5.x related to the upgrade
+
+- A `sohoxi.migrate-x.x.x.js` file has been introduced in the `/dist/js` folder.  Its purpose is to help alleviate breakage when upgrading to this major version.  It should only be used as a temporary means of keeping your application working.  It's preferable to upgrade your application code and remove this file as quickly as possible.
+
 # How to migrate a Soho Xi component from ES5 to ES6:
 
 - Remove the AMD scaffolding from the component.
