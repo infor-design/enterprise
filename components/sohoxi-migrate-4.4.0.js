@@ -21,6 +21,7 @@ window.Locale = Soho.Locale;
 /**
  * TODO: Are people using ListFilter externally?  If so, create a redirect of `Soho.ListFilter` to `window.Listfilter`
  */
+window.ListFilter = Soho.ListFilter;
 
 
 /**
