@@ -412,7 +412,7 @@
         });
 
         // Setup these next events no matter what trigger type is
-        this.element.not('.autocomplete')
+        this.element.not('.autocomplete, ul')
           .on('keydown.popupmenu', function (e) {
             switch(e.which) {
               case 13:
