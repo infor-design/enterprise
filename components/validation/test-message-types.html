@@ -1,0 +1,87 @@
+<div class="row">
+  <div class="full-width">
+    <label>Type of Alert</label>
+    <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" onChange="onChange(event)"
+      checked/>
+    <label for="option1" class="radio-label">Error</label>
+    <input type="radio" class="radio" name="optionsGroupVWO" id="option2" value="alert" onChange="onChange(event)"/>
+    <label for="option2" class="radio-label">Alert</label>
+    <input type="radio" class="radio" name="optionsGroupVWO" id="option3" value="confirm" onChange="onChange(event)"/>
+    <label for="option3" class="radio-label">Confirm</label>
+    <input type="radio" class="radio" name="optionsGroupVWO" id="option4" value="info" onChange="onChange(event)"/>
+    <label for="option4" class="radio-label">Info</label>
+  </div>
+</div>
+<div class="row">
+  <div class="full-width">
+    <div class="field">
+      <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
+      <button class="btn-primary" type="button" onClick="addTooltip()">Add Tooltip Error Message</button>
+      <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
+      <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="two columns">
+    <div class="field">
+      <label for="text-field">Text Field</label>
+      <input alignRight="true" name="text-field" id="text-field"/>
+    </div>
+    <div class="field">
+      <label for="date-field">Date Field</label>
+      <input id="date-field" data-options="{'placeholder': false}" class="datepicker" name="date-field" type="text">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var currentValidationType = 'error';
+  var message = 'Message is ';
+
+  function onChange(evt) {
+    currentValidationType = evt.currentTarget.value;
+  }
+
+  function addMessage() {
+    $('#text-field, #date-field').addMessage({
+      message    : message + currentValidationType,
+      type       : currentValidationType,
+      showTooltip: false,
+      inline     : true
+    });
+  }
+
+  function addTooltip() {
+    $('#text-field, #date-field').addMessage({
+      message    : message + 'error',
+      type       : 'error',
+      showTooltip: true,
+      inline     : false
+    });
+  }
+
+  function removeMessage() {
+    $('#text-field, #date-field').removeMessage({
+      message: '',
+      type   : currentValidationType
+    });
+  }
+
+  function clearAllMessages() {
+    $('#text-field, #date-field').removeMessage({
+      type   : 'error'
+    });
+    $('#text-field, #date-field').removeMessage({
+      type   : 'alert'
+    });
+    $('#text-field, #date-field').removeMessage({
+      type   : 'confirm'
+    });
+    $('#text-field, #date-field').removeMessage({
+      type   : 'info'
+    });
+  }
+
+</script>
