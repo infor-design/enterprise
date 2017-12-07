@@ -31,11 +31,11 @@ Switch between source and editing toolbar.
 
 ### createURLModal
 
-Function that creates the Url Modal Dialog. This can be customized by making a modal with ID `#editor-modal-url`
+Function that creates the Url Modal Dialog. This can be customized by making a modal with ID `#modal-url-{this.id}`
 
 ### createImageModal
 
-Function that creates the Image Dialog. This can be customized by making a modal with ID `#editor-modal-image`
+Function that creates the Image Dialog. This can be customized by making a modal with ID `#modal-image-{this.id}`
 
 ### disable
 

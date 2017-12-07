@@ -91,7 +91,7 @@
         settings.anchor.defaultTargetText = settings.anchor.target;
         settings.anchor.defaultIsClickable = settings.anchor.isClickable;
 
-        settings.anchor.targets = {
+        settings.anchor.targets = settings.anchor.targets || {
           'Same window': '',
           'New window': '_blank'
         };
