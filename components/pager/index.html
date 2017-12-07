@@ -60,15 +60,15 @@
 <li><code>label</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong></li>
 </ul>
 <h2 id="bindfirst">bindFirst</h2>
-<p>Used for changing the stacking order of jQuery events. This is needed to override certain<br />Events invoked by other plugins <a href="http://stackoverflow.com/questions/2360655">http://stackoverflow.com/questions/2360655</a></p>
+<p>============================================</p>
+<h1 id="soho-utils">SOHO Utils</h1>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>name</code><br /></li>
 <li><code>fn</code></li>
 </ul>
 <h2 id="bindfirst-1">bindFirst</h2>
-<p>============================================</p>
-<h1 id="soho-utils">SOHO Utils</h1>
+<p>Used for changing the stacking order of jQuery events. This is needed to override certain<br />Events invoked by other plugins <a href="http://stackoverflow.com/questions/2360655">http://stackoverflow.com/questions/2360655</a></p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>name</code><br /></li>
@@ -165,12 +165,6 @@
 <ul>
 <li><code>settings</code></li>
 </ul>
-<h2 id="place">place</h2>
-<p>jQuery Component Wrapper</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>settings</code></li>
-</ul>
 <h2 id="tooltip">tooltip</h2>
 <p>jQuery Component Wrapper for Tooltip/Popover</p>
 <p><strong>Parameters</strong></p>
@@ -211,6 +205,12 @@
 <ul>
 <li><code>settings</code></li>
 </ul>
+<h2 id="listview">listview</h2>
+<p>jQuery Component Wrapper for Listview</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
 <h2 id="maskedinput">maskedinput</h2>
 <p>Wrap as a jQuery component, and attach the factory function to $.fn</p>
 <p><strong>Parameters</strong></p>
@@ -234,8 +234,20 @@
 <ul>
 <li><code>settings</code></li>
 </ul>
+<h2 id="pager">pager</h2>
+<p>jQuery Component Wrapper for pager</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
 <h2 id="textarea">textarea</h2>
 <p>jQuery Component wrapper for Textarea</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h2 id="place">place</h2>
+<p>jQuery Component Wrapper</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
@@ -408,9 +420,11 @@
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong> represents all values normally contained by a DOMRect or ClientRect</p>
 <h2 id="locale">Locale</h2>
-<p>TODO: Re-implement this with proper scope.</p>
-<p>// If there already exists a Locale object with a culturesPath use that path<br />// This allows manually setting the directory for the culture files to be retrieved from<br />var existingCulturePath = '';</p>
-<p>if (window.Locale &amp;&amp; window.Locale.hasOwnProperty('culturesPath')) {<br />existingCulturePath = window.Locale.culturesPath;<br />}</p>
+<p>The Locale component handles i18n</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>currentLocale</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The Currently Set Locale</li>
+</ul>
 <h4 id="set">set</h4>
 <p>Set the currently used colors.</p>
 <p><strong>Parameters</strong></p>
@@ -487,11 +501,9 @@
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong></p>
 <h2 id="locale-1">Locale</h2>
-<p>The Locale component handles i18n</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>currentLocale</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The Currently Set Locale</li>
-</ul>
+<p>TODO: Re-implement this with proper scope.</p>
+<p>// If there already exists a Locale object with a culturesPath use that path<br />// This allows manually setting the directory for the culture files to be retrieved from<br />var existingCulturePath = '';</p>
+<p>if (window.Locale &amp;&amp; window.Locale.hasOwnProperty('culturesPath')) {<br />existingCulturePath = window.Locale.culturesPath;<br />}</p>
 <h4 id="set-1">set</h4>
 <p>Set the currently used colors.</p>
 <p><strong>Parameters</strong></p>
@@ -792,27 +804,6 @@
 <li><code>change</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires after the value in the input is changed by any means.<br /></li>
 <li><code>input</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires after the value in the input is changed by user interaction.</li>
 </ul>
-<h2 id="listfilter_defaults">LISTFILTER_DEFAULTS</h2>
-<h2 id="filtermodes">filterModes</h2>
-<h2 id="listfilter">ListFilter</h2>
-<p>Abstracted search/filter for use in other controls</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>settings</code><br /></li>
-<li><code>caseSensitive</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Set to true if searches ARE case sensitive<br /></li>
-<li><code>filterMode</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Type of search can current be either 'startsWith' or 'contains'<br /></li>
-<li><code>highlightMatchedText</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Inserts markup that appears to highlight text<br /></li>
-<li><code>highlightCallback</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong>  -  If defined, will execute this code for highlighting text instead of the built-in highlighting code<br /></li>
-<li><code>searchableTextCallback</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong>  -  If defined, will take each filterable item passed and return user-defined, searchable text content</li>
-</ul>
-<h4 id="filter">filter</h4>
-<p>Run the filter on the list for the given sreach term.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>list</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  The array to search.<br /></li>
-<li><code>term</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The term to look for.</li>
-</ul>
-<p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong></p>
 <h2 id="modal_defaults">MODAL_DEFAULTS</h2>
 <p>Modal Defaults</p>
 <h2 id="modal-1">Modal</h2>
@@ -851,6 +842,158 @@
 <p>Progamatically Close the About Dialog.</p>
 <h4 id="destroy-4">destroy</h4>
 <p>Teardown and remove any added markup and events.</p>
+<h2 id="options">options</h2>
+<p>NOTE: Much of this is here for backwards-compatibility reasons. In the future we need to<br />make sure these enhancements make it to the components.</p>
+<h2 id="listview_defaults">LISTVIEW_DEFAULTS</h2>
+<h2 id="listview-1">ListView</h2>
+<p>The About Dialog Component is displays information regarding the application.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code><br /></li>
+<li><code>settings</code><br /></li>
+<li><code>dataset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  Array of data to feed the template<br /></li>
+<li><code>content</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Html Template String<br /></li>
+<li><code>description</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Audible Label (or use parent title)<br /></li>
+<li><code>paging</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true, activates paging<br /></li>
+<li><code>pagesize</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong>  -  If paging is activated, sets the number of listview items available per page<br /></li>
+<li><code>searchable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered<br /></li>
+<li><code>selectable</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>)</strong>  -  selection mode, can be false, 'single' or 'multiple' or 'mixed'<br /></li>
+<li><code>selectOnFocus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true the first item in the list will be selected as it is focused.<br /></li>
+<li><code>showCheckboxes</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If false will not show checkboxes used with multiple selection mode only<br /></li>
+<li><code>hoverable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true the list element will show a hover action to indicate its actionable.<br /></li>
+<li><code>source</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</strong>  -  If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.<br /></li>
+<li><code>disableItemDeactivation</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.</li>
+</ul>
+<h4 id="render">render</h4>
+<p>Render the template against the dataset.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>dataset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  The dataset to use<br /></li>
+<li><code>pagerInfo</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Pager instructions</li>
+</ul>
+<h4 id="refresh">refresh</h4>
+<p>Get the Data Source. Can be an array, Object or Url and render the list.</p>
+<h4 id="loaddata">loadData</h4>
+<p>Load Data from an external API</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>ds</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The dataset to use or will use settings.dataset.<br /></li>
+<li><code>pagerInfo</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The pager settings to use (see pager api)</li>
+</ul>
+<h4 id="toggleall">toggleAll</h4>
+<p>Toggle all items from selected to deselected, useful for multi/mixed selection</p>
+<h4 id="resetsearch">resetSearch</h4>
+<p>Reset the current search parameters and highlight.</p>
+<h4 id="focus">focus</h4>
+<p>Focus the provided list item with the keyboard</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>item</code> <strong>jQuery</strong>  -  The list item (as jQuery) to focus</li>
+</ul>
+<h4 id="remove">remove</h4>
+<p>Remove the given list item.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  Either the actually jQuery list element or a zero based index</li>
+</ul>
+<h4 id="clear">clear</h4>
+<p>Remove all list items.</p>
+<h4 id="removeallselected">removeAllSelected</h4>
+<p>Remove all selected items entirely from the list..</p>
+<h4 id="clearallselected">clearAllSelected</h4>
+<p>Deselect all selected items.</p>
+<h4 id="sortfunction">sortFunction</h4>
+<p>Overridable function to conduct sorting</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>field</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The field in the dataset to sort on.<br /></li>
+<li><code>reverse</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If true sort descending.<br /></li>
+<li><code>primer</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></strong>  -  A sorting primer function.</li>
+</ul>
+<h4 id="deselect">deselect</h4>
+<p>Deselect the given list item.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  Either the actually jQuery list element or a zero based index</li>
+</ul>
+<h4 id="unselect">unselect</h4>
+<p>Deprivated - use deselect</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code></li>
+</ul>
+<p><strong>Meta</strong></p>
+<ul>
+<li><strong>deprecated</strong>: This is deprecated.</li>
+</ul>
+<h4 id="select">select</h4>
+<p>Select the given list item.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  Either the actually jQuery list element or a zero based index<br /></li>
+<li><code>noTrigger</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Do not trigger the selected event.</li>
+</ul>
+<h4 id="toggleitemactivation">toggleItemActivation</h4>
+<p>Toggle acivation state on the list item</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code> <strong>jQuery</strong>  -  The jQuery list element.</li>
+</ul>
+<h4 id="activateitem">activateItem</h4>
+<p>Set item to activated, unactivate others and fire an event.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  The jQuery list element or the index.</li>
+</ul>
+<h4 id="activateditem">activatedItem</h4>
+<p>Return an object containing info about the currently activated item.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> An object containing the active row's index, dom element and data.</p>
+<h4 id="deactivateitem">deactivateItem</h4>
+<p>Set item to deactivated, uand fire an event.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.</li>
+</ul>
+<h4 id="updated-3">updated</h4>
+<p>Refresh the list with any optioned options that might have been set.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h4 id="teardown">teardown</h4>
+<p>Detatch all bound events.</p>
+<h4 id="destroy-5">destroy</h4>
+<p>Detatch all events and tear down data object</p>
+<h4 id="handleevents">handleEvents</h4>
+<p>This component fires the following events.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>selected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a item is selected<br /></li>
+<li><code>unselected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a item is deselected (deprecated)<br /></li>
+<li><code>deselected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a item is deselected<br /></li>
+<li><code>rendered</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires after the listbox is fully rendered</li>
+</ul>
+<h2 id="listfilter_defaults">LISTFILTER_DEFAULTS</h2>
+<h2 id="filtermodes">filterModes</h2>
+<h2 id="listfilter">ListFilter</h2>
+<p>Abstracted search/filter for use in other controls</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code><br /></li>
+<li><code>caseSensitive</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Set to true if searches ARE case sensitive<br /></li>
+<li><code>filterMode</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Type of search can current be either 'startsWith' or 'contains'<br /></li>
+<li><code>highlightMatchedText</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Inserts markup that appears to highlight text<br /></li>
+<li><code>highlightCallback</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong>  -  If defined, will execute this code for highlighting text instead of the built-in highlighting code<br /></li>
+<li><code>searchableTextCallback</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong>  -  If defined, will take each filterable item passed and return user-defined, searchable text content</li>
+</ul>
+<h4 id="filter">filter</h4>
+<p>Run the filter on the list for the given sreach term.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>list</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  The array to search.<br /></li>
+<li><code>term</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The term to look for.</li>
+</ul>
+<p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong></p>
 <h2 id="default_masked_input_options">DEFAULT_MASKED_INPUT_OPTIONS</h2>
 <p>Default Masked Input field options</p>
 <h2 id="sohomaskedinput">SohoMaskedInput</h2>
@@ -860,18 +1003,18 @@
 <li><code>settings</code> <strong>SohoMaskedInputOptions</strong></li>
 </ul>
 <p>Returns <strong><a href="#sohomaskedinput">SohoMaskedInput</a></strong></p>
-<h4 id="handleevents">handleEvents</h4>
+<h4 id="handleevents-1">handleEvents</h4>
 <p>Sets up events</p>
 <h4 id="process">process</h4>
 <p>Main Process for conforming a mask against the API.</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
-<h4 id="updated-3">updated</h4>
+<h4 id="updated-4">updated</h4>
 <p>Updates the component instance with new settings.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>options</code></li>
 </ul>
-<h4 id="teardown">teardown</h4>
+<h4 id="teardown-1">teardown</h4>
 <p>Tears down the current component instance</p>
 <h2 id="environment">Environment</h2>
 <p>Type: <a href="#environment">Environment</a></p>
@@ -1035,7 +1178,7 @@
 <li><code>cssClass</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Extra Class to add to the dialog for customization.<br /></li>
 <li><code>returnFocus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  JQuery Element selector to focus on return</li>
 </ul>
-<h4 id="destroy-5">destroy</h4>
+<h4 id="destroy-6">destroy</h4>
 <p>Tear Down and destroy events. However the message will destroy itself on close.</p>
 <h2 id="multiselect_defaults">MULTISELECT_DEFAULTS</h2>
 <h2 id="multiselect-1">MultiSelect</h2>
@@ -1055,14 +1198,120 @@
 <p>Enable the multiselect input</p>
 <h4 id="disable-1">disable</h4>
 <p>Disable the multiselect input</p>
-<h4 id="updated-4">updated</h4>
+<h4 id="updated-5">updated</h4>
 <p>Trigger a rebuild due to settings change</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
 </ul>
-<h4 id="destroy-6">destroy</h4>
+<h4 id="destroy-7">destroy</h4>
 <p>Remove added markup and events</p>
+<h2 id="searchfield_defaults">SEARCHFIELD_DEFAULTS</h2>
+<h2 id="searchfield">SearchField</h2>
+<p>Searchfield Control</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong><br /></li>
+<li><code>settings</code></li>
+</ul>
+<h4 id="init">init</h4>
+<p>Initialization Kickoff</p>
+<p>Returns <strong>this</strong></p>
+<h4 id="hascategories">hasCategories</h4>
+<p>Reveals whether or not categories are active on this searchfield</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="hasgobutton">hasGoButton</h4>
+<p>Detects the existence of a &quot;Go&quot; button added to the main searchfield API</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="hasfocus">hasFocus</h4>
+<p>Detects whether or not the Searchfield has focus.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="handlegobuttonclick">handleGoButtonClick</h4>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong></li>
+</ul>
+<h4 id="setcategorybuttontext">setCategoryButtonText</h4>
+<p>Sets the text content on the category button. Will either display a single category name, or a translated &quot;[x] Selected.&quot; string.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>textContent</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</strong> Optional incoming text that will be subtituted for the selected element count.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="calculatesearchfieldwidth">calculateSearchfieldWidth</h4>
+<p>Ensures that the size of the Searchfield Wrapper does not change whenever a category<br />is chosen from a category searchfield.<br />NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.</p>
+<h4 id="istoolbarsearchfield">isToolbarSearchfield</h4>
+<p>Detects whether or not this component is a Toolbar Searchfield</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="getcategories">getCategories</h4>
+<p>Gets a complete list of categories in jQuery-collection form.</p>
+<p>Returns <strong>jQuery</strong> categories</p>
+<h4 id="getselectedcategories">getSelectedCategories</h4>
+<p>Gets the currently selected list of categories in jQuery-collection form.</p>
+<p>Returns <strong>jQuery</strong> selectedCategories</p>
+<h4 id="getcategorydata">getCategoryData</h4>
+<p>Gets the currently selected categories as data.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>onlyReturnSelected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> If set to true, will only return checked list items. (optional, default <code>false</code>)</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>&gt;</strong> data -</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> name - Category name</p>
+<p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</strong> id - Category element's ID (if applicable)</p>
+<p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</strong> value - Category element's value (if applicable)</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> [checked=true] - Category's selection status</p>
+<h4 id="updatecategories">updateCategories</h4>
+<p>Updates just the categories setting and rerenders the category list.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><p><code>categories</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>&gt;</strong> Array of category object definitions.</p>
+<ul>
+<li><code>categories[].name</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> Category name.<br /></li>
+</ul></li>
+<li><code>id</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)?</strong> Category element's ID (if applicable).<br /></li>
+<li><code>value</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)?</strong> Category element's value (if applicable).<br /></li>
+<li><p><code>checked</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> Category's selection status (optional, default <code>true</code>)</p></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="setcategories">setCategories</h4>
+<p>Creates a new set of categories on the Searchfield and rerenders it.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><p><code>categories</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>&gt;</strong> Array of category object definitions.</p>
+<ul>
+<li><code>categories[].name</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> Category name.<br /></li>
+</ul></li>
+<li><code>id</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)?</strong> Category element's ID (if applicable).<br /></li>
+<li><code>value</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)?</strong> Category element's value (if applicable).<br /></li>
+<li><p><code>checked</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> Category's selection status (optional, default <code>true</code>)</p></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="hascategorybutton">hasCategoryButton</h4>
+<p>Determines whether or not a Category Trigger exists.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="clear-1">clear</h4>
+<p>Clears the contents of the searchfield</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="updated-6">updated</h4>
+<p>Tears down and rebuilds the Searchfield.<br />Can be called directly, but is also triggered by calling the &quot;updated.searchfield&quot; event on the searchfield element.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="enable-2">enable</h4>
+<p>Enables the Searchfield</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="disable-2">disable</h4>
+<p>Disables the Searchfield</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="destroy-8">destroy</h4>
+<p>Destroys the Searchfield and removes all jQuery component instancing.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>dontDestroyToolbarSearchfield</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
 <h2 id="textarea_defaults">TEXTAREA_DEFAULTS</h2>
 <h2 id="textarea-1">Textarea</h2>
 <p>The Textarea Component wraps a standard HTML Textarea element and provides additional features.</p>
@@ -1092,23 +1341,23 @@
 <li><code>s</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></p>
-<h4 id="enable-2">enable</h4>
+<h4 id="enable-3">enable</h4>
 <p>Enables this component instance.</p>
-<h4 id="disable-2">disable</h4>
+<h4 id="disable-3">disable</h4>
 <p>Disables this component instance.</p>
 <h4 id="isdisabled-1">isDisabled</h4>
 <p>Returns true if the texarea is disabled.</p>
 <h4 id="readonly-1">readonly</h4>
 <p>Sets this component instance to &quot;readonly&quot;</p>
-<h4 id="updated-5">updated</h4>
+<h4 id="updated-7">updated</h4>
 <p>Call whenever the plugin's settings are changed</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
 </ul>
-<h4 id="destroy-7">destroy</h4>
+<h4 id="destroy-9">destroy</h4>
 <p>Destroys this component instance and unlinks it from its element.</p>
-<h4 id="handleevents-1">handleEvents</h4>
+<h4 id="handleevents-2">handleEvents</h4>
 <p>This component fires the following events.</p>
 <p><strong>Parameters</strong></p>
 <ul>

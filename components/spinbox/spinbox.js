@@ -19,9 +19,9 @@
     // Settings and Options
     var pluginName = 'spinbox',
         defaults = {
-          min: null,
-          max: null,
-          step: null
+          min: 0,
+          max: 9999999,
+          step: 1
         },
         settings = $.extend({}, defaults, options);
 
@@ -105,8 +105,15 @@
           this.element.attr('min', this.settings.min);
         }
 
-
         return this;
+      },
+
+      /**
+       * Check if given value is 'undefined'.
+       * @returns {booelan}
+       */
+      isUndefined: function(value) {
+        return typeof value === 'undefined';
       },
 
       /**
@@ -167,28 +174,33 @@
           i = 0;
 
         // Define a default Max value if none of these attributes exist, to ensure the mask plugin will
-        // work correctly.  Cannot define a Min value here because the plugin must be able to invoke itself
-        // with a NULL value.
-        if (!min && !max && !mask) {
+        // work correctly.
+        if (!max && !mask) {
           max = '9999999';
+        }
+
+        if (!min) {
+          min = '0';
         }
 
         // If a mask doesn't exist, but min and max values do exist, create a mask that reflects those min/max values
         if ((min || max) && !mask) {
           var newMask = '',
-            tempMin = min ? min : '',
-            tempMax = max ? max : '',
-            longerVal = tempMin.length > tempMax.length ? tempMin : tempMax;
-          i = 0;
+            tempMin = min || '',
+            tempMax = max || '',
+            lengthMin = min.replace(/-/g, '').length,
+            lengthMax = max.replace(/-/g, '').length,
+            longerVal = lengthMin > lengthMax ? lengthMin : lengthMax;
 
-          while (i <= longerVal.length) {
+          i = 0;
+          while (i < longerVal) {
             newMask += '#';
             i++;
           }
 
           // Add a negative symbol to the mask if it exists within the longer value.
           if (tempMin.indexOf('-') !== -1 || tempMax.indexOf('-') !== -1) {
-            newMask = '-' + newMask.substring(0, (newMask.length - 1));
+            newMask = '-' + newMask;
           }
 
           attributes['data-mask'] = newMask;
@@ -197,41 +209,42 @@
 
         // If a "data-mask" attribute is already defined, use it to determine missing values for min/max, if they
         // don't already exist.
-        maskSize = mask.length;
+        maskSize = mask.replace(/-/g, '').length;
         i = 0;
-        while (i <= maskSize) {
+        while (i < maskSize) {
           maskValue += '9';
           i++;
         }
 
         // If no negative symbol exists in the mask, the minimum value must be zero.
-        if (mask.indexOf('-') === -1) {
-          attributes.min = min ? min : 0;
-          attributes.max = max ? max : maskValue;
-        } else {
-          attributes.min = min ? min : maskValue;
-          attributes.max = max ? max : maskValue.substring(0, (maskValue.length - 1));
-        }
+        attributes.min = !self.isUndefined(min) ? min :
+          ((mask.indexOf('-') === -1) ? 0 : ('-' + maskValue));
+        attributes.max = !self.isUndefined(max) ? max : maskValue;
 
-        if (!this.element.attr('data-mask-mode') || this.element.attr('data-mask-mode') !== 'number') {
+        if (this.element.attr('data-mask-mode') !== 'number') {
           attributes['data-mask-mode'] = 'number';
         }
 
         // Destroy the Mask Plugin if it's already been invoked.  We will reinvoke it later on during
         // initialization.  Check to make sure its the actual Mask plugin object, and not the "data-mask"
         // pattern string.
-        if (this.element.data('mask') && typeof this.element.data('mask') === 'object') {
-          this.element.data('mask').destroy();
+        var apiMask = this.element.data('mask');
+        if (apiMask && apiMask.destroy) {
+          apiMask.destroy();
         }
 
         // Add Aria Properties for valuemin/valuemax
-        if (min) {
+        if (!self.isUndefined(min)) {
           attributes['aria-valuemin'] = min;
         }
-        if (max) {
+        if (!self.isUndefined(max)) {
           attributes['aria-valuemax'] = max;
         }
         this.element.attr(attributes);
+
+        // Add steps
+        attributes.step = Number(this.element.attr('step') || 1);
+        this.attributes = attributes;
 
         // Set an initial "aria-valuenow" value.
         this.updateAria(self.element.val());
@@ -301,7 +314,8 @@
        */
       handleKeyDown: function(e, self) {
         var key = e.which,
-          validKeycodes = [35, 36, 37, 38, 39, 40];
+          validKeycodes = [35, 36, 37, 38, 39, 40],
+          a = self.attributes;
 
         if ($.inArray(key, validKeycodes) === -1) {
           return;
@@ -310,13 +324,13 @@
         // If the keycode got this far, it's an arrow key, HOME, or END.
         switch(key) {
           case 35: // End key sets the spinbox to its minimum value
-            if (self.element.attr('min')) { self.element.val(self.element.attr('min')); }
+            if (!self.isUndefined(a.min)) { self.element.val(a.min); }
             break;
           case 36: // Home key sets the spinbox to its maximum value
-            if (self.element.attr('max')) { self.element.val(self.element.attr('max')); }
+            if (!self.isUndefined(a.max)) { self.element.val(a.max); }
             break;
-          case 38: case 39: // Right and Up increase the spinbox value
-            if (Locale.isRTL() && key === 39) {
+          case 38: // Right and Up increase the spinbox value
+            if (Locale.isRTL()) {
               self.addButtonStyle(self.buttons.down);
               self.decreaseValue();
             } else {
@@ -324,7 +338,7 @@
               self.increaseValue();
             }
             break;
-          case 37: case 40: // Left and Down decrease the spinbox value
+          case 40: // Left and Down decrease the spinbox value
             if (Locale.isRTL() && key === 37) {
               self.addButtonStyle(self.buttons.up);
               self.increaseValue();
@@ -356,16 +370,14 @@
         // greater than the maximum, or less than the minimum.  If it's fine, let it through.
         // Doing this check here prevents visual jitter.
         var num = Number(this.checkForNumeric(this.element.val())), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
-          min = self.element.attr('min'),
-          max = self.element.attr('max');
-
-        if (num < min) {
+          a = self.attributes;
+        if (num < a.min) {
           e.preventDefault();
-          return self.updateVal(min);
+          return self.updateVal(a.min);
         }
-        if (num > max) {
+        if (num > a.max) {
           e.preventDefault();
-          return self.updateVal(max);
+          return self.updateVal(a.max);
         }
       },
 
@@ -398,7 +410,12 @@
             break;
         }
 
-        self.updateAria(self.element.val());
+        var val = Number(this.checkForNumeric(this.element.val()));
+        if (val) {
+          self.handleAfterPaste(self);
+        } else {
+          self.updateAria(val);
+        }
       },
 
       /**
@@ -408,11 +425,10 @@
        * @param {Spinbox} self
        */
       handleAfterPaste: function(self) {
-        var min = Number(self.element.attr('min')),
-          max = Number(self.element.attr('max')),
-          val = Number(self.element.val());
+        var val = Number(self.checkForNumeric(self.element.val())),
+          a = self.attributes;
 
-        val = (val < min ? min : (val > max ? max : val));
+        val = (val < a.min ? a.min : (val > a.max ? a.max : val));
         self.updateVal(val);
       },
 
@@ -420,8 +436,10 @@
        * Increases the value of the Spinbox field, constrained by the step interval and maximum limit.
        */
       increaseValue: function() {
-        var val = this.checkForNumeric(this.element.val()) + Number(this.element.attr('step') || 1);
-        if (this.element.attr('max') && val > this.element.attr('max')) {
+        var a = this.attributes,
+          val = this.checkForNumeric(this.element.val()) + a.step;
+
+        if (!this.isUndefined(a.max) && val > a.max) {
           return;
         }
         this.updateVal(val);
@@ -431,8 +449,10 @@
        * Decreases the value of the Spinbox field, constrained by the step interval and minimum limit.
        */
       decreaseValue: function() {
-        var val = this.checkForNumeric(this.element.val()) - Number(this.element.attr('step') || 1);
-        if (this.element.attr('min') && val < this.element.attr('min')) {
+        var a = this.attributes,
+          val = this.checkForNumeric(this.element.val()) - a.step;
+
+        if (!this.isUndefined(a.min) && val < a.min) {
           return;
         }
         this.updateVal(val);
@@ -473,8 +493,8 @@
        * Updates the "aria-valuenow" property on the spinbox element if the value is currently set
        */
       updateAria: function(val) {
-        var min = this.element.attr('min'),
-          max = this.element.attr('max');
+        var min = this.attributes.min,
+          max = this.attributes.max;
 
         val = this.checkForNumeric(val);
         this.element.attr('aria-valuenow', (val !== '' ? val : ''));

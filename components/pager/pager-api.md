@@ -18,6 +18,8 @@
     -   [PLUGIN_NAME](#plugin_name-13)
     -   [PLUGIN_NAME](#plugin_name-14)
     -   [PLUGIN_NAME](#plugin_name-15)
+    -   [PLUGIN_NAME](#plugin_name-16)
+    -   [PLUGIN_NAME](#plugin_name-17)
     -   [PAGER_DEFAULTS](#pager_defaults)
     -   [Pager](#pager)
         -   [updated](#updated)
@@ -27,8 +29,8 @@
     -   [logTimeStart](#logtimestart)
     -   [logTimeEnd](#logtimeend)
     -   [bindFirst](#bindfirst)
-    -   [bindFirst](#bindfirst-1)
 -   [SOHO Utils](#soho-utils)
+    -   [bindFirst](#bindfirst-1)
     -   [uniqueId](#uniqueid)
     -   [cssPropSupport](#csspropsupport)
     -   [transitionEndName](#transitionendname)
@@ -43,7 +45,6 @@
     -   [button](#button)
     -   [icon](#icon)
     -   [popupmenu](#popupmenu)
-    -   [place](#place)
     -   [tooltip](#tooltip)
     -   [initialize](#initialize)
     -   [hyperlink](#hyperlink)
@@ -51,12 +52,15 @@
     -   [smoothScroll](#smoothscroll)
     -   [dropdown](#dropdown)
     -   [modal](#modal)
+    -   [listview](#listview)
     -   [maskedinput](#maskedinput)
     -   [mask](#mask)
     -   [isHiddenAtBreakpoint](#ishiddenatbreakpoint)
     -   [message](#message)
     -   [multiselect](#multiselect)
+    -   [pager](#pager-1)
     -   [textarea](#textarea)
+    -   [place](#place)
     -   [copyToClipboard](#copytoclipboard)
     -   [escapeHTML](#escapehtml)
     -   [sanitizeHTML](#sanitizehtml)
@@ -148,10 +152,6 @@
         -   [readonly](#readonly)
         -   [destroy](#destroy-3)
         -   [handleEvents](#handleevents-1)
-    -   [LISTFILTER_DEFAULTS](#listfilter_defaults)
-    -   [filterModes](#filtermodes)
-    -   [ListFilter](#listfilter)
-        -   [filter](#filter)
     -   [MODAL_DEFAULTS](#modal_defaults)
     -   [Modal](#modal-1)
     -   [ABOUT_DEFAULTS](#about_defaults)
@@ -160,12 +160,41 @@
         -   [updated](#updated-2)
         -   [close](#close-1)
         -   [destroy](#destroy-4)
-    -   [DEFAULT_MASKED_INPUT_OPTIONS](#default_masked_input_options)
-    -   [SohoMaskedInput](#sohomaskedinput)
-        -   [handleEvents](#handleevents-2)
-        -   [process](#process)
+    -   [options](#options)
+    -   [LISTVIEW_DEFAULTS](#listview_defaults)
+    -   [ListView](#listview-1)
+        -   [render](#render)
+        -   [refresh](#refresh)
+        -   [loadData](#loaddata)
+        -   [toggleAll](#toggleall)
+        -   [resetSearch](#resetsearch)
+        -   [focus](#focus)
+        -   [remove](#remove)
+        -   [clear](#clear)
+        -   [removeAllSelected](#removeallselected)
+        -   [clearAllSelected](#clearallselected)
+        -   [sortFunction](#sortfunction)
+        -   [deselect](#deselect)
+        -   [unselect](#unselect)
+        -   [select](#select)
+        -   [toggleItemActivation](#toggleitemactivation)
+        -   [activateItem](#activateitem)
+        -   [activatedItem](#activateditem)
+        -   [deactivateItem](#deactivateitem)
         -   [updated](#updated-3)
         -   [teardown](#teardown)
+        -   [destroy](#destroy-5)
+        -   [handleEvents](#handleevents-2)
+    -   [LISTFILTER_DEFAULTS](#listfilter_defaults)
+    -   [filterModes](#filtermodes)
+    -   [ListFilter](#listfilter)
+        -   [filter](#filter)
+    -   [DEFAULT_MASKED_INPUT_OPTIONS](#default_masked_input_options)
+    -   [SohoMaskedInput](#sohomaskedinput)
+        -   [handleEvents](#handleevents-3)
+        -   [process](#process)
+        -   [updated](#updated-4)
+        -   [teardown](#teardown-1)
     -   [Environment](#environment)
         -   [set](#set-2)
         -   [addBrowserClasses](#addbrowserclasses)
@@ -200,24 +229,45 @@
         -   [\_convertPatternFromString](#_convertpatternfromstring)
     -   [MESSAGE_DEFAULTS](#message_defaults)
     -   [Message](#message-1)
-        -   [destroy](#destroy-5)
+        -   [destroy](#destroy-6)
     -   [MULTISELECT_DEFAULTS](#multiselect_defaults)
     -   [MultiSelect](#multiselect-1)
         -   [enable](#enable-1)
         -   [disable](#disable-1)
-        -   [updated](#updated-4)
-        -   [destroy](#destroy-6)
+        -   [updated](#updated-5)
+        -   [destroy](#destroy-7)
+    -   [SEARCHFIELD_DEFAULTS](#searchfield_defaults)
+    -   [SearchField](#searchfield)
+        -   [init](#init)
+        -   [hasCategories](#hascategories)
+        -   [hasGoButton](#hasgobutton)
+        -   [hasFocus](#hasfocus)
+        -   [handleGoButtonClick](#handlegobuttonclick)
+        -   [setCategoryButtonText](#setcategorybuttontext)
+        -   [calculateSearchfieldWidth](#calculatesearchfieldwidth)
+        -   [isToolbarSearchfield](#istoolbarsearchfield)
+        -   [getCategories](#getcategories)
+        -   [getSelectedCategories](#getselectedcategories)
+        -   [getCategoryData](#getcategorydata)
+        -   [updateCategories](#updatecategories)
+        -   [setCategories](#setcategories)
+        -   [hasCategoryButton](#hascategorybutton)
+        -   [clear](#clear-1)
+        -   [updated](#updated-6)
+        -   [enable](#enable-2)
+        -   [disable](#disable-2)
+        -   [destroy](#destroy-8)
     -   [TEXTAREA_DEFAULTS](#textarea_defaults)
     -   [Textarea](#textarea-1)
         -   [isPrintable](#isprintable)
         -   [countLinebreaks](#countlinebreaks)
-        -   [enable](#enable-2)
-        -   [disable](#disable-2)
+        -   [enable](#enable-3)
+        -   [disable](#disable-3)
         -   [isDisabled](#isdisabled-1)
         -   [readonly](#readonly-1)
-        -   [updated](#updated-5)
-        -   [destroy](#destroy-7)
-        -   [handleEvents](#handleevents-3)
+        -   [updated](#updated-7)
+        -   [destroy](#destroy-9)
+        -   [handleEvents](#handleevents-4)
 
 ## PLUGIN_NAME
 
@@ -253,9 +303,13 @@ Component Name
 
 ## PLUGIN_NAME
 
+Plugin Name
+
 ## PLUGIN_NAME
 
-Plugin Name
+## PLUGIN_NAME
+
+## PLUGIN_NAME
 
 ## PLUGIN_NAME
 
@@ -330,8 +384,9 @@ Easy flag for determining whether or not time will be logged to the console.
 
 ## bindFirst
 
-Used for changing the stacking order of jQuery events.  This is needed to override certain
-Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
+============================================
+
+# SOHO Utils
 
 **Parameters**
 
@@ -340,9 +395,8 @@ Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 ## bindFirst
 
-============================================
-
-# SOHO Utils
+Used for changing the stacking order of jQuery events.  This is needed to override certain
+Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 **Parameters**
 
@@ -476,14 +530,6 @@ jQuery component wrapper for Popupmenu
 
 -   `settings`  
 
-## place
-
-jQuery Component Wrapper
-
-**Parameters**
-
--   `settings`  
-
 ## tooltip
 
 jQuery Component Wrapper for Tooltip/Popover
@@ -539,6 +585,14 @@ jQuery Component Wrapper for Modal
 
 -   `settings`  
 
+## listview
+
+jQuery Component Wrapper for Listview
+
+**Parameters**
+
+-   `settings`  
+
 ## maskedinput
 
 Wrap as a jQuery component, and attach the factory function to $.fn
@@ -575,9 +629,25 @@ jQuery Components
 
 -   `settings`  
 
+## pager
+
+jQuery Component Wrapper for pager
+
+**Parameters**
+
+-   `settings`  
+
 ## textarea
 
 jQuery Component wrapper for Textarea
+
+**Parameters**
+
+-   `settings`  
+
+## place
+
+jQuery Component Wrapper
 
 **Parameters**
 
@@ -830,15 +900,11 @@ Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 ## Locale
 
-TODO: Re-implement this with proper scope.
+The Locale component handles i18n
 
-// If there already exists a Locale object with a culturesPath use that path
-// This allows manually setting the directory for the culture files to be retrieved from
-var existingCulturePath = '';
+**Parameters**
 
-if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
-existingCulturePath = window.Locale.culturesPath;
-}
+-   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
 
 ### set
 
@@ -947,11 +1013,15 @@ Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 ## Locale
 
-The Locale component handles i18n
+TODO: Re-implement this with proper scope.
 
-**Parameters**
+// If there already exists a Locale object with a culturesPath use that path
+// This allows manually setting the directory for the culture files to be retrieved from
+var existingCulturePath = '';
 
--   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
+if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
+existingCulturePath = window.Locale.culturesPath;
+}
 
 ### set
 
@@ -1370,34 +1440,6 @@ This component fires the following events.
 -   `change` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by any means.
 -   `input` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction.
 
-## LISTFILTER_DEFAULTS
-
-## filterModes
-
-## ListFilter
-
-Abstracted search/filter for use in other controls
-
-**Parameters**
-
--   `settings`  
--   `caseSensitive` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Set to true if searches ARE case sensitive
--   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Type of search can current be either 'startsWith' or 'contains'
--   `highlightMatchedText` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Inserts markup that appears to highlight text
--   `highlightCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, will execute this code for highlighting text instead of the built-in highlighting code
--   `searchableTextCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, will take each filterable item passed and return user-defined, searchable text content
-
-### filter
-
-Run the filter on the list for the given sreach term.
-
-**Parameters**
-
--   `list` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The array to search.
--   `term` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The term to look for.
-
-Returns **([boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
-
 ## MODAL_DEFAULTS
 
 Modal Defaults
@@ -1452,6 +1494,217 @@ Progamatically Close the About Dialog.
 ### destroy
 
 Teardown and remove any added markup and events.
+
+## options
+
+NOTE: Much of this is here for backwards-compatibility reasons.  In the future we need to
+make sure these enhancements make it to the components.
+
+## LISTVIEW_DEFAULTS
+
+## ListView
+
+The About Dialog Component is displays information regarding the application.
+
+**Parameters**
+
+-   `element`  
+-   `settings`  
+-   `dataset` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Array of data to feed the template
+-   `content` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Html Template String
+-   `description` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Audible Label (or use parent title)
+-   `paging` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, activates paging
+-   `pagesize` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  If paging is activated, sets the number of listview items available per page
+-   `searchable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+-   `selectable` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean))**  -   selection mode, can be false, 'single' or 'multiple' or 'mixed'
+-   `selectOnFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the first item in the list will be selected as it is focused.
+-   `showCheckboxes` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If false will not show checkboxes used with multiple selection mode only
+-   `hoverable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the list element will show a hover action to indicate its actionable.
+-   `source` **([Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+-   `disableItemDeactivation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
+
+### render
+
+Render the template against the dataset.
+
+**Parameters**
+
+-   `dataset` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The dataset to use
+-   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Pager instructions
+
+### refresh
+
+Get the Data Source. Can be an array, Object or Url and render the list.
+
+### loadData
+
+Load Data from an external API
+
+**Parameters**
+
+-   `ds` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The dataset to use or will use settings.dataset.
+-   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The pager settings to use (see pager api)
+
+### toggleAll
+
+Toggle all items from selected to deselected, useful for multi/mixed selection
+
+### resetSearch
+
+Reset the current search parameters and highlight.
+
+### focus
+
+Focus the provided list item with the keyboard
+
+**Parameters**
+
+-   `item` **jQuery**  -  The list item (as jQuery) to focus
+
+### remove
+
+Remove the given list item.
+
+**Parameters**
+
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
+
+### clear
+
+Remove all list items.
+
+### removeAllSelected
+
+Remove all selected items entirely from the list..
+
+### clearAllSelected
+
+Deselect all selected items.
+
+### sortFunction
+
+Overridable function to conduct sorting
+
+**Parameters**
+
+-   `field` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The field in the dataset to sort on.
+-   `reverse` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true sort descending.
+-   `primer` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  A sorting primer function.
+
+### deselect
+
+Deselect the given list item.
+
+**Parameters**
+
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
+
+### unselect
+
+Deprivated - use deselect
+
+**Parameters**
+
+-   `li`  
+
+**Meta**
+
+-   **deprecated**: This is deprecated.
+
+
+### select
+
+Select the given list item.
+
+**Parameters**
+
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
+-   `noTrigger` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Do not trigger the selected event.
+
+### toggleItemActivation
+
+Toggle acivation state on the list item
+
+**Parameters**
+
+-   `li` **jQuery**  -  The jQuery list element.
+
+### activateItem
+
+Set item to activated, unactivate others and fire an event.
+
+**Parameters**
+
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element or the index.
+
+### activatedItem
+
+Return an object containing info about the currently activated item.
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** An object containing the active row's index, dom element and data.
+
+### deactivateItem
+
+Set item to deactivated, uand fire an event.
+
+**Parameters**
+
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
+
+### updated
+
+Refresh the list with any optioned options that might have been set.
+
+**Parameters**
+
+-   `settings`  
+
+### teardown
+
+Detatch all bound events.
+
+### destroy
+
+Detatch all events and tear down data object
+
+### handleEvents
+
+This component fires the following events.
+
+**Parameters**
+
+-   `selected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is selected
+-   `unselected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is deselected (deprecated)
+-   `deselected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is deselected
+-   `rendered` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the listbox is fully rendered
+
+## LISTFILTER_DEFAULTS
+
+## filterModes
+
+## ListFilter
+
+Abstracted search/filter for use in other controls
+
+**Parameters**
+
+-   `settings`  
+-   `caseSensitive` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Set to true if searches ARE case sensitive
+-   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Type of search can current be either 'startsWith' or 'contains'
+-   `highlightMatchedText` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Inserts markup that appears to highlight text
+-   `highlightCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, will execute this code for highlighting text instead of the built-in highlighting code
+-   `searchableTextCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, will take each filterable item passed and return user-defined, searchable text content
+
+### filter
+
+Run the filter on the list for the given sreach term.
+
+**Parameters**
+
+-   `list` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The array to search.
+-   `term` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The term to look for.
+
+Returns **([boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
 
 ## DEFAULT_MASKED_INPUT_OPTIONS
 
@@ -1779,6 +2032,172 @@ Trigger a rebuild due to settings change
 ### destroy
 
 Remove added markup and events
+
+## SEARCHFIELD_DEFAULTS
+
+## SearchField
+
+Searchfield Control
+
+**Parameters**
+
+-   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `settings`  
+
+### init
+
+Initialization Kickoff
+
+Returns **this** 
+
+### hasCategories
+
+Reveals whether or not categories are active on this searchfield
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasGoButton
+
+Detects the existence of a "Go" button added to the main searchfield API
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasFocus
+
+Detects whether or not the Searchfield has focus.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleGoButtonClick
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+
+### setCategoryButtonText
+
+Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.
+
+**Parameters**
+
+-   `textContent` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** Optional incoming text that will be subtituted for the selected element count.
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### calculateSearchfieldWidth
+
+Ensures that the size of the Searchfield Wrapper does not change whenever a category
+is chosen from a category searchfield.
+NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
+
+### isToolbarSearchfield
+
+Detects whether or not this component is a Toolbar Searchfield
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### getCategories
+
+Gets a complete list of categories in jQuery-collection form.
+
+Returns **jQuery** categories
+
+### getSelectedCategories
+
+Gets the currently selected list of categories in jQuery-collection form.
+
+Returns **jQuery** selectedCategories
+
+### getCategoryData
+
+Gets the currently selected categories as data.
+
+**Parameters**
+
+-   `onlyReturnSelected` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If set to true, will only return checked list items. (optional, default `false`)
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** data -
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** name - Category name
+
+Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** id - Category element's ID (if applicable)
+
+Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** value - Category element's value (if applicable)
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** [checked=true] - Category's selection status
+
+### updateCategories
+
+Updates just the categories setting and rerenders the category list.
+
+**Parameters**
+
+-   `categories` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
+    -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
+-   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
+-   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
+-   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** Category's selection status (optional, default `true`)
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### setCategories
+
+Creates a new set of categories on the Searchfield and rerenders it.
+
+**Parameters**
+
+-   `categories` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
+    -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
+-   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
+-   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
+-   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** Category's selection status (optional, default `true`)
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### hasCategoryButton
+
+Determines whether or not a Category Trigger exists.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### clear
+
+Clears the contents of the searchfield
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### updated
+
+Tears down and rebuilds the Searchfield.
+Can be called directly, but is also triggered by calling the "updated.searchfield" event on the searchfield element.
+
+**Parameters**
+
+-   `settings`  
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### enable
+
+Enables the Searchfield
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### disable
+
+Disables the Searchfield
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### destroy
+
+Destroys the Searchfield and removes all jQuery component instancing.
+
+**Parameters**
+
+-   `dontDestroyToolbarSearchfield` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
 ## TEXTAREA_DEFAULTS
 

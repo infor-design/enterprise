@@ -1,4 +1,4 @@
-## <a name="version-4.3.4">4.3.5</a>
+## <a name="version-4.3.4">4.3.4</a>
 
 Release Date: TBD
 
@@ -23,7 +23,7 @@ http://usalvlhlpool1.infor.com/4.3.4-rc/components/
 - Datagrid - The dynamic mask example now uses the new mask options (example components/mask/test-number-mask-gauntlet.html). Please refactor to pass an object back with the options like the sample page http://git.infor.com/projects/SOHO/repos/controls/browse/components/datagrid/test-dynamic-mask.html
 
 ### <a name="version-4.3.3-behavior-changes">Behavior Changes</a>
--
+- In Listview the click and dblick and contextmenu events showed the data of next item in the dataset. If your code was working around this by adding a -1 you should note that its now correctly showing the data of the array index.
 
 ### <a name="version-4.3.3-improvements">Improvements</a>
 -
