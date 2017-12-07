@@ -19,9 +19,9 @@
     // Settings and Options
     var pluginName = 'spinbox',
         defaults = {
-          min: null,
-          max: null,
-          step: null
+          min: 0,
+          max: 9999999,
+          step: 1
         },
         settings = $.extend({}, defaults, options);
 
@@ -174,10 +174,13 @@
           i = 0;
 
         // Define a default Max value if none of these attributes exist, to ensure the mask plugin will
-        // work correctly.  Cannot define a Min value here because the plugin must be able to invoke itself
-        // with a NULL value.
-        if (!min && !max && !mask) {
+        // work correctly.
+        if (!max && !mask) {
           max = '9999999';
+        }
+
+        if (!min) {
+          min = '0';
         }
 
         // If a mask doesn't exist, but min and max values do exist, create a mask that reflects those min/max values
@@ -326,8 +329,8 @@
           case 36: // Home key sets the spinbox to its maximum value
             if (!self.isUndefined(a.max)) { self.element.val(a.max); }
             break;
-          case 38: case 39: // Right and Up increase the spinbox value
-            if (Locale.isRTL() && key === 39) {
+          case 38: // Right and Up increase the spinbox value
+            if (Locale.isRTL()) {
               self.addButtonStyle(self.buttons.down);
               self.decreaseValue();
             } else {
@@ -335,7 +338,7 @@
               self.increaseValue();
             }
             break;
-          case 37: case 40: // Left and Down decrease the spinbox value
+          case 40: // Left and Down decrease the spinbox value
             if (Locale.isRTL() && key === 37) {
               self.addButtonStyle(self.buttons.up);
               self.increaseValue();
