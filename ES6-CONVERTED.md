@@ -7,6 +7,7 @@ All the following Soho Components have been converted to ES6:
 * Dropdown
 * Hyperlink
 * Icons
+* Listview
 * Mask
 * Message
 * Modal
@@ -14,8 +15,10 @@ All the following Soho Components have been converted to ES6:
 * Personalize
 * Place
 * Popover
+* Tmpl
 * Tooltip
 * (utils)
+  - animations
   - Base
   - behaviors
   - breakpoints
@@ -55,7 +58,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Hierarchy
 * Homepage
 * Listbuilder
-* Listview
 * Lookup
 * Pager
 * Popdown
@@ -74,13 +76,11 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Tag
 * Textarea
 * Timepicker
-* Tmpl
 * Toast
 * Toolbar
 * ToolbarSearchfield
 * Tree
 * (utils)
-  - animations
   - highlight
   - lifecycle
   - template

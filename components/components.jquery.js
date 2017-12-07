@@ -14,10 +14,14 @@ import './icons/icons.jquery';
 import './dropdown/dropdown.jquery';
 import './modal/modal.jquery';
 import './about/about.jquery';
+import './listview/listview.jquery';
 import './mask/masked-input.jquery';
 import './message/message.jquery';
 import './multiselect/multiselect.jquery';
+import './pager/pager.jquery';
 import './popupmenu/popupmenu.jquery';
+import './searchfield/searchfield.jquery';
+import './textarea/textarea.jquery';
 import './tooltip/tooltip.jquery';
 
 // Organisms

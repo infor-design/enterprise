@@ -21,6 +21,7 @@ export { Personalize } from './personalize/personalize';
 export { Place } from './place/place';
 export { Initialize } from './initialize/initialize';
 export { ListFilter } from './listfilter/listfilter';
+export { Tmpl } from './tmpl/tmpl';
 
 // Components ================================= /
 import * as components from './components';

@@ -16,10 +16,14 @@ export { Icon } from './icons/icons';
 export { Dropdown } from './dropdown/dropdown';
 export { Modal } from './modal/modal';
 export { About } from './about/about';
+export { ListView } from './listview/listview';
 export { SohoMaskedInput as MaskedInput } from './mask/masked-input';
 export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
+export { Pager } from './pager/pager';
 export { PopupMenu } from './popupmenu/popupmenu';
+export { SearchField } from './searchfield/searchfield';
+export { Textarea } from './textarea/textarea';
 export { Tooltip } from './tooltip/tooltip';
 // -- ex: dropdown/multiselect
 

@@ -258,7 +258,9 @@ Initialize.prototype = {
 
         ['popdown', '[data-popdown]'],
 
-        ['stepchart', '.step-chart']
+        ['stepchart', '.step-chart'],
+
+        ['listview']
       ];
 
       //Do initialization for all the simple controls
@@ -330,26 +332,13 @@ Initialize.prototype = {
       }
 
       //Cardstack
+      /*
       if ($.fn.listview) {
         matchedItems('.listview:not('+ noinitExcludes +')').each(function () {
-          var cs = $(this),
-            attr = cs.attr('data-dataset'),
-            tmpl = cs.attr('data-tmpl'),
-            options = Soho.utils.parseOptions(this) || {};
-
-          options.dataset = options.dataset || attr;
-          options.template = options.template || tmpl;
-
-          if (window[options.dataset]) {
-            options.dataset = window[options.dataset];
-          }
-          if (options.template && options.template.length) {
-            options.template = $('#' + options.template).html();
-          }
-
-          cs.listview(options);
+          $(this).listview();
         });
       }
+      */
 
       // Searchfield
       // NOTE:  The Toolbar Control itself understands how to invoke internal searchfields, so they

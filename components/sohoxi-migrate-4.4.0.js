@@ -19,6 +19,12 @@ window.Locale = Soho.Locale;
 
 
 /**
+ * Templating System
+ */
+window.Tmpl = Soho.Tmpl;
+
+
+/**
  * TODO: Are people using ListFilter externally?  If so, create a redirect of `Soho.ListFilter` to `window.Listfilter`
  */
 window.ListFilter = Soho.ListFilter;
