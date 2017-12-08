@@ -188,6 +188,7 @@
   }
 
   .hyperlink {
+    @include font-size(14);
     cursor: auto;
     position: static;
     text-decoration: none;
