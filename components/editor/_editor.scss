@@ -188,6 +188,7 @@
   }
 
   .hyperlink {
+    @include font-size(14);
     cursor: auto;
     position: static;
     text-decoration: none;
@@ -195,6 +196,10 @@
     &[contenteditable="false"] {
       cursor: pointer;
       text-decoration: underline;
+    }
+
+    &::after {
+      content: none;
     }
   }
 }
