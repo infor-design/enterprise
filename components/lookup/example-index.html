@@ -49,12 +49,13 @@
       options: {
         columns: columns,
         dataset: data,
-        selectable: 'single', //multiselect or single
+        selectable: 'single',
+        rowNavigation: true,
         toolbar: {
           results: true,
           keywordFilter: true,
-          advancedFilter: true,
-          actions: true,
+          advancedFilter: false,
+          actions: false,
           selectable: 'single',
           filterable: true,
           views: true,

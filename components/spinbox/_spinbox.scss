@@ -9,6 +9,11 @@
   padding: 9px;
   text-align: center;
   width: 84px;
+
+  &:focus {
+    box-shadow: none;
+  }
+
 }
 
 input[type='number'] {
@@ -100,12 +105,14 @@ input::-webkit-inner-spin-button {
   }
 
   &.is-focused {
+    box-shadow: $focus-box-shadow;
 
     > .spinbox-control {
       border-color: $input-focus-border-color;
 
       &.is-active {
         border-color: $input-focus-border-color;
+        box-shadow: $focus-box-shadow;
       }
 
       &.is-disabled {
@@ -148,7 +155,6 @@ input::-webkit-inner-spin-button {
     padding: 4px 10px;
   }
 }
-
 
 //RTL Styles
 html[dir='rtl'] {

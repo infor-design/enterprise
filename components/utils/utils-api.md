@@ -4,7 +4,6 @@
 
 -   [parseOptions](#parseoptions)
 -   [getHiddenSize](#gethiddensize)
--   [smoothScroll](#smoothscroll)
 -   [parseOptions](#parseoptions-1)
 -   [extend](#extend)
 -   [fixSVGIcons](#fixsvgicons)
@@ -18,11 +17,6 @@
 -   [getDimensions](#getdimensions)
 -   [splice](#splice)
 -   [removeDuplicates](#removeduplicates)
--   [smoothScrollTo](#smoothscrollto)
--   [defer](#defer)
--   [isAbove](#isabove)
--   [isBelow](#isbelow)
--   [HideFocus](#hidefocus)
 
 ## parseOptions
 
@@ -50,17 +44,6 @@ Binds the Soho Util _getHiddenSize()_ to a jQuery selector
 -   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-## smoothScroll
-
-Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
-
-**Parameters**
-
--   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance to scroll the element
--   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
-
-Returns **$.Deferred** 
 
 ## parseOptions
 
@@ -114,7 +97,7 @@ Takes an element that is currently hidden by some means (FX: "display: none;") a
 
 -   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
 -   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
--   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
+-   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
@@ -194,53 +177,3 @@ with characters from an input field, etc.
 **Parameters**
 
 -   `str`  
-
-## smoothScrollTo
-
-Allows for the smooth scrolling of an element's content area.
-
-**Parameters**
-
--   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
--   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance.
--   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
-
-Returns **$.Deferred** 
-
-## defer
-
-Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
-
-**Parameters**
-
--   `callback`  
--   `timer`  
-
-Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout))** 
-
-## isAbove
-
-**Parameters**
-
--   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-## isBelow
-
-**Parameters**
-
--   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-## HideFocus
-
-HideFocus Behavior
-Only shows the focus state on key entry (tabs or arrows).
-
-**Parameters**
-
--   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate))** 
-
-Returns **[HideFocus](#hidefocus)** 

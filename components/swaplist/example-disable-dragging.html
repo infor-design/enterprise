@@ -1,6 +1,6 @@
 
 <div class="page-container top-padding scrollable" role="main">
-        
+
 <!--This is only needed because it renders first on the server on the first one-->
 {{={{{ }}}=}}
 
@@ -32,7 +32,7 @@
 <div class="row">
   <div class="columns nine">
 
-    <div class="swaplist one-third" id="example-swaplist-1">
+    <div class="swaplist one-third" id="example-swaplist-1" data-init="false">
       <div class="card available">
         <div class="card-header">
           <h2 class="card-title">Basic</h2>
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="card-content">
-          <div class="listview" permission="basic"></div>
+          <div class="listview"></div>
         </div>
       </div>
       <div class="card selected">
@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="card-content">
-          <div class="listview" permission="moderate"></div>
+          <div class="listview"></div>
         </div>
       </div>
       <div class="card full-access">
@@ -84,7 +84,7 @@
           </div>
         </div>
         <div class="card-content">
-          <div class="listview" permission="advanced"></div>
+          <div class="listview"></div>
         </div>
       </div>
     </div>
@@ -124,13 +124,15 @@
       available: dsAvailable,
       selected: dsSelected,
       additional: dsAdditional,
-      template: $('#swaplist-tmpl').html()
+      template: $('#swaplist-tmpl').html(),
+      draggable: {
+        additional: false
+      }
     });
 
 
-    // On swap update ==========================================================
+    // On swap-update ==========================================================
     var api1 = $('#example-swaplist-1').data('swaplist');
-    api1.updated();
     api1.element.on('swapupdate', function (e, items) {
       console.log(api1.dataset);
       console.log(api1.getAvailable());
@@ -139,4 +141,3 @@
 
   });
 </script>
-        

@@ -427,7 +427,6 @@ body.no-scroll {
     margin-top: 60px;
   }
 
-
   // Searchfield primary action (Large)
   &.has-searchfield-xl {
     height: 200px;
@@ -436,7 +435,7 @@ body.no-scroll {
       input {
         @include font-size(20);
         height: 60px;
-        padding: 20px 40px;
+        padding: 18px 40px;
 
         &::-webkit-input-placeholder {
           @include font-size(16);
@@ -467,7 +466,6 @@ body.no-scroll {
       height: calc(100% - 200px);
     }
   }
-
 
   + .subheader + .page-container,
   + .subheader + .application-menu + .page-container {

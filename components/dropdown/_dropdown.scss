@@ -101,12 +101,14 @@ div.multiselect {
     @include list-icon-colors();
     fill: $popupmenu-icon-color;
     height: 16px;
-    left: 16px;
+    left: 14px;
     position: absolute;
     top: 9px;
+    vertical-align: middle;
+    width: 16px;
 
     + span {
-      padding-left: 33px;
+      padding-left: 29px;
     }
   }
 
@@ -183,7 +185,7 @@ div.multiselect {
   background-color: transparent;
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
-  box-shadow: $dropdown-box-shadow;
+  box-shadow: $dropdown-box-shadow, $focus-box-shadow;
   font-size: 1.4rem;
   max-height: 300px;
   min-height: 30px;
@@ -229,9 +231,7 @@ div.multiselect {
   }
 
   li {
-    min-height: 32px;
-    padding-left: 4px;
-    padding-right: 5px;
+    //min-height: 32px;
     position: relative;
 
     i {
@@ -321,27 +321,22 @@ div.multiselect {
     }
   }
 
-  .has-groups li.dropdown-option {
-    padding-left: 9px;
-    padding-right: 9px;
-  }
-
   > .listoption-icon {
     @include list-icon-colors();
     fill: $popupmenu-icon-color;
     height: 16px;
-    left: 15px;
+    left: 10px;
     position: absolute;
     top: 8px;
 
     + span {
-      padding-left: 43px;
+      padding-left: 39px;
     }
   }
 
   &.has-icons {
     .dropdown-search {
-      padding-left: 43px;
+      padding-left: 39px;
     }
   }
 
@@ -353,8 +348,8 @@ div.multiselect {
     overflow: hidden;
     text-decoration: none;
     text-overflow: ellipsis;
-    width: inherit;
     white-space: nowrap;
+    width: inherit;
   }
 
   // Added to the dropdown list when doing a search
@@ -390,8 +385,8 @@ div.multiselect {
 
     li::before {
       @include checkbox-unchecked-before-style;
-      margin-left: -27px;
-      top: 4px;
+      margin-left: 10px;
+      margin-top: 8px;
     }
 
     li.is-disabled::before {
@@ -414,7 +409,7 @@ div.multiselect {
       @include checkbox-checked-after-style;
       left: 15px;
       margin-top: 0;
-      top: 9px;
+      top: 8px;
     }
 
     li.is-disabled.is-selected::before {
@@ -558,6 +553,7 @@ div.multiselect {
 
 input.dropdown.error:focus {
   border-color: $error-color;
+  box-shadow: $error-focus-box-shadow;
   color: $input-color;
 }
 
@@ -578,7 +574,7 @@ input.dropdown.error:focus {
 
     > .listoption-icon {
       height: 14px;
-      left: 3px;
+      left: 6px;
       top: 6px;
 
       + span {
@@ -601,11 +597,6 @@ input.dropdown.error:focus {
       right: auto;
     }
 
-    /*
-    > span {
-      min-height: 14px;
-    }
-    */
   }
 
 }
@@ -640,8 +631,6 @@ div.dropdown-xs,
 
 // Shorter Drop Down Lists
 
-
-
 .dropdown-list.dropdown-short {
   .dropdown-search {
     @include font-size(12);
@@ -660,16 +649,13 @@ div.dropdown-xs,
   }
 
   li {
-    padding-right: 21px;
-
     > a {
-      line-height: 25px;
+      line-height: 24px;
     }
 
     .listoption-icon {
       height: 14px;
-      left: -7px;
-      margin-right: -5px;
+      width: 14px;
     }
   }
 
@@ -707,28 +693,16 @@ div.dropdown-xs,
   &.multiple {
     li {
       &::before {
-        margin-left: 0;
-        top: 4px;
+        margin-left: 5px;
       }
 
       &::after {
         margin-top: 0;
       }
 
-      &.is-focused {
-        &::before {
-          margin-left: 0;
-        }
-
-        &::after {
-          margin-top: 0;
-        }
-      }
-
       a {
-        display: inline-block;
-        padding-left: 18px;
-        padding-top: 1px;
+        display: inline;
+        padding-left: 26px;
       }
     }
   }
@@ -775,11 +749,23 @@ div.dropdown-xs,
       }
     }
 
+    .dropdown-search {
+      padding-bottom: 6px;
+      padding-top: 9px;
+    }
+
     &.dropdown-short {
       .dropdown-search {
         @include font-size(12);
         padding: 5px 21px 5px 5px;
       }
+    }
+  }
+
+  div.dropdown,
+  div.multiselect {
+    > span {
+      padding-top: 1px;
     }
   }
 }
@@ -829,11 +815,11 @@ html[dir='rtl'] {
   div.dropdown {
     > .listoption-icon {
       left: auto;
-      right: 16px;
+      right: 14px;
 
       + span {
         padding-left: inherit;
-        padding-right: 33px;
+        padding-right: 29px;
       }
     }
   }
@@ -845,7 +831,7 @@ html[dir='rtl'] {
 
       li::before {
         margin-left: inherit;
-        margin-right: -27px;
+        margin-right: 5px;
       }
 
       li.is-selected::after {
@@ -869,11 +855,12 @@ html[dir='rtl'] {
       }
     }
 
-    >.trigger {
+    > .trigger {
       .icon {
-        margin-right: -15px;
+        margin-right: -22px;
       }
     }
+
 
     li {
       .listoption-icon {
@@ -886,18 +873,18 @@ html[dir='rtl'] {
 
     > .listoption-icon {
       left: auto;
-      right: 41px;
+      right: 36px;
 
       + span {
         padding-left: inherit;
-        padding-right: 43px;
+        padding-right: 39px;
       }
     }
 
     &.has-icons {
       .dropdown-search {
         padding-left: inherit;
-        padding-right: 43px;
+        padding-right: 39px;
       }
     }
   }
@@ -915,21 +902,8 @@ html[dir='rtl'] {
   }
 
   .dropdown-list.dropdown-short {
-
     .dropdown-search {
       padding: 5px 5px 5px 32px;
-    }
-
-    li {
-      padding-left: 21px;
-      padding-right: 4px;
-
-      .listoption-icon {
-        left: auto;
-        margin-left: -5px;
-        margin-right: inherit;
-        right: -7px;
-      }
     }
 
     &.has-icons {
@@ -942,6 +916,15 @@ html[dir='rtl'] {
     > .listoption-icon {
       left: auto;
       right: 31px;
+    }
+
+    &.multiple {
+      li {
+        a {
+          padding-left: 0;
+          padding-right: 27px;
+        }
+      }
     }
   }
 
@@ -974,41 +957,13 @@ html[dir='rtl'] {
     div.dropdown {
       > .listoption-icon {
         left: auto;
-        right: 3px;
+        right: 6px;
 
         + span {
           padding-left: inherit;
           padding-right: 20px;
         }
       }
-    }
-  }
-
-  .trigger .icon {
-    left: 6px;
-  }
-
-  .dropdown-short {
-    &.multiple {
-      li {
-        a {
-          padding-left: 0;
-          padding-right: 18px;
-        }
-
-        &::before {
-          margin-left: inherit;
-          margin-right: inherit;
-        }
-
-        &.is-selected::after {
-          left: inherit;
-        }
-      }
-    }
-
-    .trigger .icon {
-      right: auto;
     }
   }
 }

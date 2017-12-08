@@ -16,6 +16,10 @@ $subheader-height: 60px;
 
   .searchfield {
     border: 1px solid transparent;
+
+    &.has-focus {
+      box-shadow: none;
+    }
   }
 
   .row {
@@ -66,7 +70,7 @@ $subheader-height: 60px;
     }
 
     &:focus:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $azure07, 0 0 0 3px $white;
+      box-shadow: 0 0 0 2px $azure07, 0 0 0 3px $white, $header-focus-box-shadow;
 
       &:active {
         box-shadow: none;
@@ -203,6 +207,20 @@ $subheader-height: 60px;
     background-color: $subhead-bg-color;
   }
 
+  .go-button {
+    background-color: $header-primary-btn-background-color;
+    border-color: $header-primary-btn-background-color;
+    color: $header-text-color;
+
+    &:hover,
+    &:active,
+    &:focus,
+    &:focus:active {
+      background-color: $header-primary-btn-background-hover-color;
+      border-color: $header-primary-btn-background-hover-color;
+    }
+  }
+
 }
 
 // Application Subheaders
@@ -217,6 +235,28 @@ $subheader-height: 60px;
   .searchfield-wrapper {
     height: inherit;
     margin-bottom: 0;
+
+    &.has-focus {
+      box-shadow: none;
+    }
+  }
+
+  .go-button {
+    background-color: $header-primary-btn-background-color;
+    border-color: $header-primary-btn-background-color;
+    color: $header-text-color;
+
+    &:hover,
+    &:active,
+    &:focus,
+    &:focus:active {
+      background-color: $header-primary-btn-background-hover-color;
+      border-color: $header-primary-btn-background-hover-color;
+    }
+
+    &:not(.hide-focus) {
+      box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $btn-focus-border-color, $focus-box-shadow;
+    }
   }
 }
 
@@ -261,7 +301,7 @@ $subheader-height: 60px;
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-focus-color, $header-focus-box-shadow;
         color: $header-button-focus-color;
 
         .icon {

@@ -22,7 +22,7 @@
         return;
       }
 
-      if (value.disable) {
+      if (value && value.disable) {
         value.disable();
       }
     });
@@ -39,7 +39,7 @@
         return;
       }
 
-      if (value.enable) {
+      if (value && value.enable) {
         value.enable();
       }
     });
@@ -56,7 +56,7 @@
         return;
       }
 
-      if (value.readonly) {
+      if (value && value.readonly) {
         value.readonly();
       }
     });
@@ -102,7 +102,7 @@
         })
         .on('change.dirty doresetdirty.dirty', function (e) {
           var el = input,
-            field = input.closest('.field'),
+            field = input.closest('.field, .radio-group'),
             label = $('label:visible', field),
             d = {class: '', style: ''};
 
@@ -147,8 +147,13 @@
             d.msg = '<span class="audible msg-dirty">'+ d.msg +'</span>';
 
             // Add icon and msg
-            el.before(d.icon);
-            label.append(d.msg);
+            var firstInput = $($(el[0].parentElement).find('input')[0]);
+            el = input.is('[type="radio"]') ? firstInput : el;
+
+            if ($(el[0].parentElement).find('.icon-dirty').length === 0) {
+              el.before(d.icon);
+              label.append(d.msg);
+            }
 
             // Cache icon and msg
             d.icon = el.prev();

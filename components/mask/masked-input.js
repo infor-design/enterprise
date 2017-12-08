@@ -472,8 +472,9 @@
         // derive the location of the symbol
         var detectableSymbol = (symbolSetting === 'currency' ? '¤' : symbol.char),
           symbolRegex = new RegExp(detectableSymbol, 'g'),
-          symbolWhitespaceRegex = new RegExp('[\s' + detectableSymbol + ']', 'g'),
-          match = symbolWhitespaceRegex.exec(symbol.format),
+          match = symbolRegex.exec(symbol.format),
+          replacementRegex,
+          symbolWithWhitespace,
           index = -1,
           placementType;
 
@@ -481,10 +482,22 @@
           index = symbol.format.indexOf(match[0]);
           if (index === 0) {
             placementType = 'prefix';
+            replacementRegex = new RegExp('[^'+ detectableSymbol +']\\S', 'g');
+            symbolWithWhitespace = symbol.format.replace(replacementRegex, '');
           } else if (index > 0) {
             placementType = 'suffix';
+            replacementRegex = new RegExp('\\S[^'+ detectableSymbol +']', 'g');
+
+            while(/\s/.test(symbol.format.charAt(index - 1))) {
+              --index;
+            }
+            symbolWithWhitespace = symbol.format.substr(index).replace(replacementRegex, '');
           }
-          this.settings.patternOptions[placementType] = match[0].replace(symbolRegex, symbol.char);
+
+          if (symbolSetting === 'currency') {
+            symbolWithWhitespace = symbolWithWhitespace.replace('¤', symbol.char);
+          }
+          this.settings.patternOptions[placementType] = symbolWithWhitespace;
         }
       }
     },

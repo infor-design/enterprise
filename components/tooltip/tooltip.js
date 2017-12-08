@@ -33,7 +33,7 @@
         parentElement: null,
         keepOpen: false,
         extraClass: null,
-        placementOpts: undefined,
+        placementOpts: {},
         maxWidth: null
       };
 
@@ -369,6 +369,8 @@
 
         this.tooltip[0].setAttribute('class', classes);
 
+        var popoverWidth;
+
         if (typeof content === 'string') {
           content = $(content);
           contentArea.html(content);
@@ -377,10 +379,19 @@
           contentArea.html(content);
         }
 
+        popoverWidth = contentArea.width();
+
+        if (!this.settings.placementOpts) {
+          this.settings.placementOpts = {};
+        }
+
+        if (!this.settings.placementOpts.parent) {
+          this.settings.placementOpts.parent = this.element;
+        }
+
         content[0].classList.remove('hidden');
         contentArea[0].firstElementChild.classList.remove('hidden');
 
-        var popoverWidth = this.settings.content.width();
         var parentWidth = this.settings.placementOpts.parent.width();
 
         if (Locale.isRTL()) {
@@ -594,7 +605,13 @@
           self.handleAfterPlace(e, placementObj);
         });
 
-        this.tooltip.data('place').place(opts);
+        //Tool tip may be cleaned up on a modal or CAP
+        if (this.tooltip.data('place')) {
+          this.tooltip.data('place').place(opts);
+        } else {
+          this.tooltip.place(opts);
+          this.tooltip.data('place').place(opts);
+        }
         return this;
       },
 

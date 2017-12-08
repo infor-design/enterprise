@@ -53,7 +53,7 @@
     }
   }
 
-  &.is-active {
+  &.is-open {
     border-color: $input-focus-border-color;
 
     + .icon {
@@ -176,10 +176,6 @@
     //Today
     &.is-today,
     &.is-today:focus {
-      //border-color: $datepicker-today-color;
-      // color: $datepicker-today-color;
-      // font-weight: bold;
-
       span {
         color: $datepicker-today-color;
         font-weight: bold;
@@ -227,13 +223,10 @@
 
     &:focus {
       border-color: $datepicker-focus-border-color;
+      box-shadow: $focus-box-shadow;
       outline: none;
       -moz-outline-style: none;
     }
-
-    // &:focus:not(.is-selected) {
-    //   box-shadow: 0 0 0 2px $popover-bg-color inset;
-    // }
 
     &:active span {
       background-color: $datepicker-selected-bg-color;
@@ -467,7 +460,7 @@ html[dir='rtl'] {
   // Short fields
   .field-short {
     .datepicker {
-      padding-left: 18px;
+      padding-left: 24px;
       padding-right: 2px;
 
       + .icon {

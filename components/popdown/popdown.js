@@ -21,7 +21,10 @@
 
     // Settings and Options
     var pluginName = 'popdown',
-        defaults = {},
+        defaults = {
+          keepOpen: false, // If true, will keep the Popdown open after clicking out until the Trigger element is clicked, or until another pop-open element is opened.
+          trigger: undefined // If defined, provides a way to place the popdown against an alternate element.
+        },
         settings = $.extend({}, defaults, options);
 
     /**
@@ -52,6 +55,10 @@
 
         // Setup the proper trigger element to use
         this.trigger = this.element;
+        if (this.settings.trigger instanceof $ || Soho.DOM.isElement(this.settings.trigger)) {
+          this.trigger = $(this.settings.trigger);
+        }
+        // Force-change the trigger element in some specific scenarios
         if (this.trigger.is('.dropdown, .multiselect')) {
           this.trigger = $('#' + this.element.attr('id') + '-shdo');
         }
@@ -135,6 +142,26 @@
         return this;
       },
 
+      hasValidTriggerSetting: function() {
+        return (this.settings.trigger instanceof $ || Soho.DOM.isElement(this.settings.trigger));
+      },
+
+      /**
+       * Detects whether or not the Popdown has focus.
+       * @returns {boolean}
+       */
+      hasFocus: function() {
+        var active = document.activeElement;
+        if (this.trigger.is(active)) {
+          return true;
+        }
+        if ($.contains(this.popdown[0], active)) {
+          return true;
+        }
+
+        return false;
+      },
+
       isOpen: function() {
         return this.trigger.attr('aria-expanded') === 'true';
       },
@@ -155,31 +182,32 @@
         // Setup events that happen on open
         // Needs to be on a timer to prevent automatic closing of popdown.
         setTimeout(function() {
-          self.popdown.one('focusin.popdown', function() {
-            if (!setFocusinEvent) {
-              setFocusinEvent = true;
-              $(document).on('focusin.popdown', function(e) {
-                var target = e.target;
-                if (!$.contains(self.popdown[0], target)) {
-                  self.close();
-                }
-              });
-            }
-          });
+
+          // When focusing in on other important page elements, this Popdown instance will check to
+          // see if it contains those elements, and will close if it doesn't.
+          if (!setFocusinEvent) {
+            setFocusinEvent = true;
+            $(document).on('focusin.popdown', function() {
+              if (!self.hasFocus()) {
+                self.close();
+              }
+            });
+          }
 
           $('body').on('resize.popdown', function() {
-            if (!$(document.activeElement).closest('.popdown').length) {
+            if (!self.hasFocus()) {
               self.close();
             }
           });
 
-          $(document).on('click.popdown', function(e) {
-            var target = $(e.target);
-
-            if (!target.is('.popdown') && !target.closest('.popdown').length) {
-              self.close();
-            }
-          });
+          // Only allow $(document).click() to close the Popdown if `keepOpen` isn't set.
+          if (!self.settings.keepOpen) {
+            $(document).on('click.popdown', function() {
+              if (!self.hasFocus()) {
+                self.close();
+              }
+            });
+          }
 
           self.isAnimating = false;
         }, 400);
@@ -334,6 +362,10 @@
       },
 
       updated: function() {
+        if (this.hasValidTriggerSetting()) {
+          this.trigger = $(this.settings.trigger);
+        }
+
         return this;
       },
 

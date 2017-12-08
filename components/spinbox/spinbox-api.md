@@ -5,6 +5,7 @@
 -   [Spinbox](#spinbox)
     -   [setWidth](#setwidth)
     -   [setInitialValue](#setinitialvalue)
+    -   [isUndefined](#isundefined)
     -   [addMarkup](#addmarkup)
     -   [enableLongPress](#enablelongpress)
     -   [disableLongPress](#disablelongpress)
@@ -48,6 +49,16 @@ Returns **this**
 Sanitize the initial value of the input field.
 
 Returns **this** 
+
+### isUndefined
+
+Check if given value is 'undefined'.
+
+**Parameters**
+
+-   `value`  
+
+Returns **booelan** 
 
 ### addMarkup
 

@@ -20,7 +20,7 @@ button {
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
   @include font-size($button-font-size);
-  @include transition(color 300ms cubic-bezier(.17, .04, .03, .94), background-color 300ms cubic-bezier(.17, .04, .03, .94));
+  @include transition(color 300ms cubic-bezier(.17, .04, .03, .94), background-color 300ms cubic-bezier(.17, .04, .03, .94), border 300ms cubic-bezier(.17, .04, .03, .94), box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
   @include antialiased();
   color: inherit;
   font-weight: 700;
@@ -123,9 +123,18 @@ button {
     fill: $primary-btn-color;
   }
 
+  // In case both are specified
+  &.btn {
+    color: $primary-btn-color;
+  }
+
   &:hover {
     background-color: $primary-btn-hover-bg-color;
     border: 1px solid $primary-btn-hover-bg-color;
+
+    &.btn {
+      color: $primary-btn-color;
+    }
   }
 
   &:active {
@@ -138,7 +147,7 @@ button {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
+      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color, $focus-box-shadow;
     }
 
     &:active {
@@ -228,10 +237,6 @@ a.btn-menu {
     }
   }
 
-  &:focus + .separator {
-    opacity: 0;
-  }
-
   &.btn {
     margin-right: -8px;
   }
@@ -272,7 +277,7 @@ a.btn-menu {
     border: 1px solid transparent;
 
     &:not(.hide-focus) {
-      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
+      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color, $focus-box-shadow;
     }
 
     &:active {
@@ -340,7 +345,7 @@ a.btn-menu {
   }
 
   &:focus:not(.hide-focus) {
-    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $btn-focus-bg-color;
+    box-shadow: 0 0 0 2px transparent, 0 0 0 1px $btn-focus-bg-color, $focus-box-shadow;
 
     &:active {
       box-shadow: none;
@@ -560,6 +565,7 @@ a.btn-menu {
 
     &:not(.hide-focus) {
       border-color: $accordion-selected-bg-color;
+      box-shadow: $focus-box-shadow;
     }
 
     &:active {
@@ -677,7 +683,7 @@ html[dir='rtl'] {
   [class^="btn"] {
     > .icon {
 
-      + span:not(.audible) {
+      + span:not(.audible):not(:empty) {
         padding-right: 10px;
       }
 
@@ -728,7 +734,7 @@ html[lang^='fr-'] {
   }
 
   &:focus {
-    box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $primary-color;
+    box-shadow: 0 0 0 1px $body-bg-color, 0 0 0 2px $primary-color, $focus-box-shadow;
   }
 
   &:disabled {

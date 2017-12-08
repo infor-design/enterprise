@@ -36,7 +36,6 @@
     -webkit-text-fill-color: $input-readonly-color;
   }
 
-
   &.is-placeholder {
     color: $input-placeholder-color;
 
@@ -53,7 +52,8 @@
     }
     }
 
-  &:focus {
+  &:focus,
+  &.is-focused {
     @include focus-state();
   }
 
@@ -64,6 +64,7 @@
       // Needed for printing
       // scss-lint:disable ImportantRule
       border-color: $error-color !important;
+      box-shadow: $error-focus-box-shadow !important;
       color: $input-color !important;
     }
   }
@@ -145,7 +146,6 @@
 
 }
 
-
 // Field Style
 .field .checkbox-label,
 .field .checkbox > label {
@@ -201,6 +201,14 @@
   margin-top: -10px;
 }
 
+.attach-up-relative {
+  top: -15px;
+}
+
+.attach-up-relative-x2 {
+  top: -35px;
+}
+
 .field {
   margin-bottom: 20px;
   position: relative;
@@ -235,6 +243,10 @@
 
   &.field-radio {
     margin-bottom: 10px;
+
+    .icon-dirty {
+      left: -2px;
+    }
   }
 
   &.field-checkbox {
@@ -280,7 +292,16 @@
   &.top-padding {
     margin-top: 3rem;
   }
+}
 
+.field-pane {
+  height: 0;
+  overflow: hidden;
+  padding: 0 0 0 25px;
+
+  .field-content {
+    padding: 20px 0;
+  }
 }
 
 //Clearable input fx on search or input/clearable
@@ -304,8 +325,8 @@
   padding-right: 32px;
 
   & + .icon.close {
-    right: auto;
     margin-left: -30px;
+    right: auto;
 
     &:hover {
       fill: $trigger-hover-color;
@@ -324,6 +345,40 @@
 input,
 textarea {
   @include input-style();
+}
+
+// Element with input "like" style borders
+.input-style {
+  background-color: $input-bg-color;
+  border: 1px solid $input-border-color;
+  border-collapse: separate;
+
+  &:hover,
+  &.is-hovered {
+    border-color: $input-hover-border-color;
+  }
+
+  &[disabled],
+  &.is-disabled {
+    background-color: $input-disabled-bg-color;
+    border: solid 1px $input-disabled-border-color;
+    -webkit-text-fill-color: $input-disabled-color;
+  }
+
+  &[readonly],
+  &.is-readonly {
+    background-color: $input-readonly-bg-color;
+    border-color: $input-readonly-border-color;
+    -webkit-text-fill-color: $input-readonly-color;
+  }
+
+  &.is-placeholder {
+    color: $input-placeholder-color;
+  }
+
+  &.is-focused {
+    @include focus-state();
+  }
 }
 
 // Text Area

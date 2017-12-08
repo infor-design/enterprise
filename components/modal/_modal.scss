@@ -6,7 +6,7 @@
   display: table;
   height: 100%;
   margin: 0 auto;
-  overflow: hidden;
+  //overflow: hidden;
 }
 
 .modal-page-container {
@@ -303,6 +303,7 @@
 
     &:focus:not(.hide-focus) {
       border: 1px solid $input-focus-border-color;
+      box-shadow: $focus-box-shadow;
       outline: none;
       outline-color: transparent;
     }

@@ -44,6 +44,7 @@
         this.inputs = $().add(this.element);
       }
 
+      this.element.addClass('validation-active');
       this.timeout = null;
     },
 
@@ -117,21 +118,40 @@
         var field = $(this),
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate keyup.validate');
-
-        if (field.is('[readonly]') && !field.parent().is('.field-fileupload')) {
-          return;
-        }
-
         events = self.extractEvents(events);
 
-        field.on(events, function (e) {
+        //Custom enter event
+        if (events.indexOf('enter.validate') > -1) {
+          field.off('keypress.enter.validate').on('keypress.enter.validate', function (e) {
+            var field = $(this);
+            if (e.which === 13) {
+              self.validate(field, true, e);
+            }
+          });
+        }
+
+        field.off(events).on(events, function (e) {
+          var field = $(this),
+            handleEventData = field.data('handleEvent' +[(e.type || '')]);
+
+
+          if (field.is('[readonly]') && !field.parent().is('.field-fileupload')) {
+            return;
+          }
+
+          if (handleEventData &&
+              handleEventData.type === e.type &&
+              e.handleObj.namespace === 'validate') {
+            return;
+          } else {
+            field.data('handleEvent' +[(e.type || '')], e.handleObj);
+          }
 
           //Skip on Tab
           if (e.type === 'keyup' && e.keyCode === 9) {
             return;
           }
 
-          var field = $(this);
           setTimeout(function () {
             if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field[0].style.visibility === 'is-hidden' || !field.is(':visible')) {
               return;
@@ -201,7 +221,7 @@
           e.preventDefault();
           self.validateForm(function (isValid) {
             self.element.off('submit.validate');
-            self.element.trigger('validated', isValid);
+            self.element.triggerHandler('validated', isValid);
             self.element.data('isValid', isValid);
             self.element.on('submit.validate', submitHandler);
           });
@@ -247,7 +267,7 @@
      * Set disable/enable primary button in modal
      * @private
      */
-    setModalPrimaryBtn: function(field, modalBtn, isValid) {
+    setModalPrimaryBtn: function(field, modalBtn) {
       var modal = field.closest('.modal'),
         modalFields = modal.find('[data-validate]:visible, select[data-validate], :checkbox[data-validate]'),
         allValid = true;
@@ -255,7 +275,7 @@
       if (modalFields.length > 0) {
         modalFields.each(function () {
           var modalField = $(this);
-          modalField.data('isValid', isValid);
+
           if (modalField.closest('.datagrid-filter-wrapper').length > 0) {
             return;
           }
@@ -264,10 +284,9 @@
             if ((isVisible || modalField.is('select, :checkbox'))  && !modalField.val()) {
               allValid = false;
             }
-          } else {
-            if ((isVisible  || modalField.is('select, :checkbox')) && !modalField.isValid()) {
-              allValid = false;
-            }
+          }
+          if ((isVisible  || modalField.is('select, :checkbox')) && !modalField.isValid()) {
+            allValid = false;
           }
         });
       }
@@ -431,6 +450,8 @@
      * @param {jQuery.Event} e
      */
     validate: function (field, showTooltip, e) {
+      field.data('handleEvent' +[(e.type || '')], null);
+
       //call the validation function inline on the element
       var self = this,
         types = self.getTypes(field, e) || [],
@@ -441,7 +462,7 @@
         value = self.value(field),
         placeholder = field.attr('placeholder'),
 
-        manageResult = function (result, showTooltip) {
+        manageResult = function (result, showTooltip, type) {
           // Only remove if "false", not any other value ie.. undefined
           if (rule.positive === false) {
             self.removePositive(field);
@@ -481,17 +502,25 @@
           }
 
           self.setIconOnParent(field, rule.type);
+          self.validationStatus[type] = result;
+
+          if (self.eventsStatus(types) && type !== 'required' && !self.validationStatus.triggerValid) {
+            self.validationStatus.triggerValid = true;
+            field.triggerHandler('valid', {field: field, message: ''});
+          }
           field.triggerHandler('isvalid', [result]);
 
         };
 
       for (var props in $.fn.validation.ValidationTypes) {
         validationType = $.fn.validation.ValidationTypes[props];
-        self.removeMessage(field, (validationType.type));
-        field.removeData('data-' + (validationType.type) + 'message');
+        self.removeMessage(field, validationType.type, true);
+        field.removeData('data-' + validationType.type + 'message');
       }
 
+      self.validationStatus = {};
       for (i = 0, l = types.length; i < l; i++) {
+        self.validationStatus[types[i]] = false;
         rule = $.fn.validation.rules[types[i]];
         dfd = $.Deferred();
 
@@ -506,7 +535,7 @@
         if (rule.async) {
           rule.check(value, field, manageResult);
         } else {
-          manageResult(rule.check(value, field), showTooltip);
+          manageResult(rule.check(value, field), showTooltip, types[i]);
         }
         dfds.push(dfd);
       }
@@ -547,6 +576,9 @@
      * @param {boolean} showTooltip
      */
     addMessage: function(field, message, type, inline, showTooltip) {
+      if (message === '') {
+        return;
+      }
       var loc = this.getField(field).addClass(type),
          dataMsg = loc.data('data-' + type + 'message'),
          appendedMsg = message,
@@ -569,10 +601,12 @@
         return;
       }
 
+      field.data('isValid', false);
+
       // Disable primary button in modal
       var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
       if (modalBtn.length) {
-        this.setModalPrimaryBtn(field, modalBtn, false);
+        this.setModalPrimaryBtn(field, modalBtn);
       }
 
       this.showInlineMessage(field, message, validationType.type);
@@ -765,8 +799,8 @@
         field.parent().find('.icon-confirm').remove();
       }
       // Trigger an event
-      field.trigger(validationType.type, {field: field, message: message});
-      field.closest('form').trigger(validationType.type, {field: field, message: message});
+      field.triggerHandler(validationType.type, {field: field, message: message});
+      field.closest('form').triggerHandler(validationType.type, {field: field, message: message});
     },
 
     /**
@@ -789,7 +823,7 @@
      * @private
      * @param {jQuery[]} field
      */
-    removeMessage: function(field, type) {
+    removeMessage: function(field, type, noTrigger) {
       var loc = this.getField(field),
         isRadio = field.is(':radio'),
         errorIcon = field.closest('.field, .field-short').find('.icon-error'),
@@ -852,20 +886,50 @@
         field.closest('.field-fileupload').find('input.' + type).removeClass(type);
       }
 
-      // Enable primary button in modal
-      var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
-      if (modalBtn.length) {
-        this.setModalPrimaryBtn(field, modalBtn, true);
-      }
-
       //Stuff for the inline error
       field.closest('.field, .field-short').find('.' + type + '-message').remove();
       field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(type);
 
-      if (type === 'error') {
-        field.trigger('valid', {field: field, message: ''});
-        field.closest('form').trigger('valid', {field: field, message: ''});
+      if (type === 'error' && !noTrigger && this.eventsStatus()) {
+        field.triggerHandler('valid', {field: field, message: ''});
+        field.closest('form').triggerHandler('valid', {field: field, message: ''});
       }
+
+      field.data('isValid', true);
+
+      // Test Enabling primary button in modal
+      var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
+      if (modalBtn.length) {
+        this.setModalPrimaryBtn(field, modalBtn);
+      }
+    },
+
+    // Check if all given events are true/valid
+    eventsStatus: function(types) {
+      var r, status = this.validationStatus;
+      if (status) {
+        r = true;
+
+        if (types) {
+          for (var i=0,l=types.length; i<l; i++) {
+            if(!status[types[i]]) {
+              r = false;
+            }
+          }
+        } else {
+          for (var key in status) {
+            if (status.hasOwnProperty(key)) {
+              if(!status[key]) {
+                r = false;
+              }
+            }
+          }
+        }
+
+      } else {
+        r = false;
+      }
+      return r;
     },
 
     /**
@@ -950,8 +1014,11 @@
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
-      var instance = new Validator(this, settings);
-      instance.removeMessage($(this), 'error');
+      var instance = new Validator(this, settings),
+        field = $(this);
+
+      instance.removeMessage(field, 'error');
+      instance.setIconOnParent(field, 'error');
     });
   };
 
@@ -966,6 +1033,7 @@
     // Initializing the Control Once or Call Methods.
     return this.each(function() {
       var instance = $.data(this, pluginName);
+
       if (instance) {
         if (typeof instance[options] === 'function') {
           instance[options](args);
@@ -977,7 +1045,6 @@
       }
     });
   };
-
 
   //The validation rules object
   var Validation = function () {
@@ -1084,41 +1151,47 @@
             return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
           }
 
-          if(value !== '' && self.rules.date.check(value, field)) { //if valid date
-            var d, i, l, min, max,
-              d2 = createDateAsUTC(new Date(value)),
-              options = field.data('datepicker').settings;
+          if (value !== '') {
+            if (self.rules.date.check(value, field)) { //if valid date
+              var d, i, l, min, max,
+                d2 = createDateAsUTC(new Date(value)),
+                options = field.data('datepicker').settings;
 
-            if (options) {
+              if (options) {
 
-              min = (createDateAsUTC(new Date(options.disable.minDate))).setHours(0,0,0,0);
-              max = (createDateAsUTC(new Date(options.disable.maxDate))).setHours(0,0,0,0);
+                min = (createDateAsUTC(new Date(options.disable.minDate))).setHours(0,0,0,0);
+                max = (createDateAsUTC(new Date(options.disable.maxDate))).setHours(0,0,0,0);
 
-              //dayOfWeek
-              if(options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
-                check = false;
-              }
-
-              d2 = d2.setHours(0,0,0,0);
-
-              //min and max
-              if((d2 <= min) || (d2 >= max)) {
-                check = false;
-              }
-
-              //dates
-              if (options.disable.dates.length && typeof options.disable.dates === 'string') {
-                options.disable.dates = [options.disable.dates];
-              }
-              for (i=0, l=options.disable.dates.length; i<l; i++) {
-                d = new Date(options.disable.dates[i]);
-                if(d2 === d.setHours(0,0,0,0)) {
+                //dayOfWeek
+                if(options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
                   check = false;
-                  break;
+                }
+
+                d2 = d2.setHours(0,0,0,0);
+
+                //min and max
+                if((d2 <= min) || (d2 >= max)) {
+                  check = false;
+                }
+
+                //dates
+                if (options.disable.dates.length && typeof options.disable.dates === 'string') {
+                  options.disable.dates = [options.disable.dates];
+                }
+                for (i=0, l=options.disable.dates.length; i<l; i++) {
+                  d = new Date(options.disable.dates[i]);
+                  if(d2 === d.setHours(0,0,0,0)) {
+                    check = false;
+                    break;
+                  }
                 }
               }
+              check = ((check && !options.disable.isEnable) || (!check && options.disable.isEnable)) ? true : false;
             }
-            check = ((check && !options.disable.isEnable) || (!check && options.disable.isEnable)) ? true : false;
+            else {// Invalid date
+              check = false;
+              this.message = '';
+            }
           }
 
           return check;

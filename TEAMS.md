@@ -66,6 +66,7 @@
 | PCM | Knockout App | Tim Dunham | 3x |
 | Requisitions | Has specific design | Todd Dooner and Brent Dahlen | 4x |
 | Rhythm Widgets | Dropdown, Date Picker, Text Area, Spinbox foldeed into | Eric Martensson | 4x |
+| Rhythm Promote | ??? | Leoandro | 4x |
 | Sales Portal |   | Matt Defina  | 3x |
 | Self Portal - Cloudsuite | Using XI js and css directly, actively implementing | Hal Walters | 4x |
 | Sky Vault | Ana Laura Martinez <AnaLaura.Martinez@infor.com> | Wim Denayer | 4x |

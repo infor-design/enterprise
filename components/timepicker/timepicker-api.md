@@ -32,12 +32,14 @@ The Timepicker Component provides a click/touch user interface for setting a tim
 
 **Parameters**
 
+-   `element`  
 -   `timeFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The time format
 -   `minuteInterval` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
 -   `secondInterval` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  Integer from 1 to 60.
 -   `mode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  can be set to 'standard', 'range',
 -   `roundToInterval` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  if `false`, does not automatically round user-entered values from the pickers to their nearest interval.
 -   `parentElement` **(null | [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)?**  -   if defined as a jQuery-wrapped element, will be used as the target element.
+-   `returnFocus` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
 
 ### handleKeys
 

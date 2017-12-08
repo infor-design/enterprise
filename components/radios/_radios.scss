@@ -6,6 +6,7 @@
   opacity: 0;
   position: absolute;
   width: 0;
+  z-index: 1;
 }
 
 .inline-radio {
@@ -51,6 +52,7 @@
 .radio-label {
   display: inline-block;
   line-height: 20px;
+  z-index: 5;
 
   &.radio-label:first-of-type {
     margin-top: 4px;
@@ -157,6 +159,7 @@
 .radio-group {
   margin-bottom: 10px;
   margin-top: 0;
+  position: relative;
 
   legend {
     @include font-size(12);
@@ -182,6 +185,10 @@
 
   + .field-short {
     margin-top: 10px;
+  }
+
+  .icon-dirty {
+    left: -2px;
   }
 }
 

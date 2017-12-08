@@ -720,6 +720,11 @@ window.Chart = function(container) {
       });
     }
 
+    // Set x-axix tick css class
+    svg.selectAll('.x.axis .tick').attr('class', function(d) {
+      return 'tick' + (d === 0 ? ' tick0' : '');
+    });
+
     //Animate the Bars In
     svg.selectAll('.bar')
       .transition().duration(charts.animate ? 1000 : 0)
@@ -1684,7 +1689,7 @@ window.Chart = function(container) {
         }
         cont.empty();
         api.initChartType(api.settings);
-      }, 100);
+      }, 200);
     }
 
     if (this.redrawOnResize) {
@@ -2692,14 +2697,16 @@ window.Chart = function(container) {
       });
 
     //Add Legend
-    if (isSingular && chartData[0].name) {
-      charts.addLegend(chartData);
-    } else if (isPositiveNegative) {
-      charts.addLegend(pnSeries);
-    } else if (isStacked && isSingular) {
-      charts.addLegend(series);
-    } else if (!isSingular) {
-      charts.addLegend(isStacked ? seriesStacked : series);
+    if (charts.showLegend) {
+      if (isSingular && chartData[0].name) {
+        charts.addLegend(chartData);
+      } else if (isPositiveNegative) {
+        charts.addLegend(pnSeries);
+      } else if (isStacked && isSingular) {
+        charts.addLegend(series);
+      } else if (!isSingular) {
+        charts.addLegend(isStacked ? seriesStacked : series);
+      }
     }
 
     if (charts.isRTL && charts.isIE) {
@@ -2711,6 +2718,11 @@ window.Chart = function(container) {
       }
 
     }
+
+    // Set y-axix tick css class
+    svg.selectAll('.y.axis .tick').attr('class', function(d) {
+      return 'tick' + (d === 0 ? ' tick0' : '');
+    });
 
     //Add Tooltips
     charts.appendTooltip();
@@ -3182,7 +3194,7 @@ window.Chart = function(container) {
 
     if (charts.isRTL) {
       svg.selectAll('text').attr('transform', 'scale(-1, 1)');
-      svg.selectAll('.y.axis text').style('text-anchor', 'start');
+      svg.selectAll('.y.axis text').style('text-anchor', 'end');
     }
 
     if (isAxisXRotate) {
@@ -3376,6 +3388,11 @@ window.Chart = function(container) {
         }
       }
 
+    });
+
+    // Set y-axix tick css class
+    svg.selectAll('.y.axis .tick').attr('class', function(d) {
+      return 'tick' + (d === 0 ? ' tick0' : '');
     });
 
     var series = dataset.map(function (d) {
@@ -4481,6 +4498,12 @@ window.Chart = function(container) {
     this.isRTL = Locale.isRTL();
     this.isIE = $('html').hasClass('ie');
 
+    var defaultShowLegend = function(opt) {
+      if (typeof opt !== 'undefined') {
+        charts.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : opt;
+      }
+    };
+
     /**
     * Set Animation Type
     * @param {Boolean} animate  &nbsp;-&nbsp; true|false - will do or not do the animation.
@@ -4516,21 +4539,23 @@ window.Chart = function(container) {
       this.Pie(options.dataset, false, options);
     }
     if (options.type === 'bar' || options.type === 'bar-stacked') {
-      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
+      defaultShowLegend(true);
       this.HorizontalBar(options.dataset);
     }
     if (options.type === 'bar-normalized') {
-      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
+      defaultShowLegend(true);
       this.HorizontalBar(options.dataset, true);
     }
     if (options.type === 'bar-grouped') {
-      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
+      defaultShowLegend(true);
       this.HorizontalBar(options.dataset, true, false); //dataset, isNormalized, isStacked
     }
     if (options.type === 'column-stacked') {
+      defaultShowLegend(true);
       this.Column(options.dataset, true);
     }
     if (['column', 'column-grouped', 'column-positive-negative'].indexOf(options.type) > -1) {
+      defaultShowLegend(true);
       this.Column(options.dataset);
     }
     if (options.type === 'donut') {

@@ -175,7 +175,7 @@
       }
 
       &:focus:not(.hide-focus) {
-        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-color;
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-color, $header-focus-box-shadow;
 
         &:active {
           box-shadow: none;
@@ -218,6 +218,7 @@
 
       &:focus:not(.hide-focus) {
         outline-color: $header-button-color;
+        box-shadow: $header-focus-box-shadow;
       }
     }
   }
@@ -294,11 +295,19 @@
 @media only screen and (max-width: 1120px) {
   .hero-widget {
     .hero-content {
-      max-width: 400px;
+      max-width: calc(100% - 200px);
     }
 
     .hero-bottom {
       display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 549px) {
+  .hero-widget {
+    .hero-content {
+      max-width: 100%;
     }
   }
 }

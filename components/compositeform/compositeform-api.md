@@ -17,6 +17,9 @@ The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
+-   `element`  
+-   `settings`  
+-   `breakpoint` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Defines the breakpoint at which the composite form will change into its responsive mode
 -   `trigger` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Expandable area trigger selector. Passed to expandable area.
 -   `expandedText` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Text to use for the expand button (Default localized)
 -   `collapsedText` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Text to use for the collapse button (Default localized)

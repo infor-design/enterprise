@@ -3,7 +3,7 @@
 
 .popover,
 .tooltip {
-  @include font-size(15);
+  @include font-size(12);
   background-color: $tooltip-bg-color;
   border: 1px solid $tooltip-border-color;
   border-radius: 2px;
@@ -52,6 +52,14 @@
     border-left-color: $tooltip-bg-color;
   }
 
+  .hyperlink {
+    color: $tooltip-color;
+
+    &:hover {
+      color: $tooltip-color;
+    }
+  }
+
   &.is-error {
     background-color: $tooltip-error-bg-color;
     border-color: $tooltip-error-border-color;
@@ -91,6 +99,10 @@
     color: $tooltip-color;
     word-break: normal;
     word-wrap: break-word;
+  }
+
+  span {
+    @include font-size(12);
   }
 
   .icon {
@@ -250,6 +262,7 @@
     p {
       color: $popover-alternate-color;
       font-size: 1.4rem;
+      text-align: left;
     }
   }
 
@@ -288,6 +301,7 @@
 
   p {
     margin-left: 0;
+    text-align: center;
   }
 }
 

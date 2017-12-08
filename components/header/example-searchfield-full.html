@@ -1,0 +1,45 @@
+<header class="header is-sticky is-personalizable">
+  <div class="toolbar">
+    <div class="title">
+      <button class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Application Menu</span>
+        <span class="icon app-header">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+
+      <h1>My Infor Application</h1>
+    </div>
+
+    <div class="buttonset">
+    </div>
+
+    {{> includes/header-actionbutton}}
+  </div>
+</header>
+
+<header class="subheader is-personalizable ">
+  <div class="full-searchfield-container">
+    <label class="audible" for="maincontent"></label>
+    <input id="maincontent" data-init="false" class="searchfield context" placeholder="Search for a customer"/>
+    <button type="button" id="searchfield-go-button" class="btn-secondary is-personalizable go-button">
+      <span>Go</span>
+    </button>
+  </div>
+  <script>
+    //Init category search
+    var   categoryData = [
+        {name: 'Product: Sales', id: 'sales', value: 'sales', checked: true},
+        {name: 'Product: Supplies', id: 'sup', value: 'sup', checked: false},
+        {name: 'Product: References', id: 'ref', value: 'ref', checked: true},
+      ];
+
+    $('#maincontent').searchfield({
+      categories: categoryData,
+      showCategoryText: true
+    });
+  </script>
+
+</header>

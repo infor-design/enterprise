@@ -38,7 +38,9 @@
         folderIconOpen: 'open-folder',
         folderIconClosed: 'closed-folder',
         sortable: false, // Allow nodes to be sortable
-        onBeforeSelect: null
+        onBeforeSelect: null,
+        onExpand: null,
+        onCollapse: null
       },
       settings = $.extend({}, defaults, options);
 
@@ -66,7 +68,7 @@
         this.initTree();
         this.handleKeys();
         this.setupEvents();
-
+        
         if (this.loadData(this.settings.dataset) === -1) {
           this.syncDataset(this.element);
           this.initSelected();
@@ -125,7 +127,7 @@
        * @param {jQuery[]} node
        */
       setFocus: function (node) {
-        node.focus();
+        node.focus().removeClass('hide-focus');
       },
 
       /**
@@ -209,11 +211,21 @@
               badge.elem.addClass('round');
             }
           }
+
+          var badgeStyle = '';
           if (/info|good|error|alert|pending/i.test(badgeData.type)) {
             badge.elem.addClass(badgeData.type);
           } else if (badgeData.type && badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
-              badge.elem.css('background-color', badgeData.type);
+            badgeStyle = 'background-color: ' + badgeData.type + ' !important;';
           }
+          if (badgeData.backColor) {
+            badgeStyle = 'background-color: ' + badgeData.backColor + ' !important;';
+          }
+          if (badgeData.foreColor) {
+            badgeStyle += 'color: ' + badgeData.foreColor + ' !important;';
+          }
+
+          badge.elem.attr('style', badgeStyle);
 
           if (badge.elem.text() !== '') {
             a.append(badge.elem);
@@ -384,10 +396,8 @@
         // Possibly Call the onBeforeSelect
         var result;
         if (typeof self.settings.onBeforeSelect === 'function') {
-
           result = self.settings.onBeforeSelect(node);
-
-          if (result.done && typeof result.done === 'function') { // A promise is returned
+          if (result && result.done && typeof result.done === 'function') { // A promise is returned
             result.done(function(continueSelectNode) {
               if (continueSelectNode) {
                 self.selectNodeFinish(node, focus);
@@ -525,10 +535,26 @@
       toggleNode: function(node) {
         var next = node.next(),
           self = this;
-
+        var result;
         if (next.is('ul[role="group"]')) {
           if (next.hasClass('is-open')) {
 
+            if (typeof self.settings.onCollapse === 'function') {
+              result = self.settings.onCollapse(node);
+              if (result && result.done && typeof result.done === 'function') { // A promise is returned
+                result.done(function(continueSelectNode) {
+                  if (continueSelectNode) {
+                    self.selectNodeFinish(node, focus);
+                  }
+                });
+              } else if (result) { // Boolean is returned instead of a promise
+                self.selectNodeFinish(node, focus);
+              }
+            } else { // No Callback specified
+              self.selectNodeFinish(node, focus);
+            }
+
+            
             self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
 
             if (node.closest('.folder a').is('[class^="icon"]')) {
@@ -550,9 +576,22 @@
 
             node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
 
-
-
           } else {
+            if (typeof self.settings.onExpand === 'function') {
+              result = self.settings.onExpand(node);
+              if (result && result.done && typeof result.done === 'function') { // A promise is returned
+                result.done(function(continueSelectNode) {
+                  if (continueSelectNode) {
+                    self.selectNodeFinish(node, focus);
+                  }
+                });
+              } else if (result) { // Boolean is returned instead of a promise
+                self.selectNodeFinish(node, focus);
+              }
+            } else { // No Callback specified
+              self.selectNodeFinish(node, focus);
+            }
+  
             var nodeData = node.data('jsonData');
 
             if (self.settings.source && nodeData.children && nodeData.children.length === 0) {

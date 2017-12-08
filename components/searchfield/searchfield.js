@@ -277,6 +277,7 @@
         if (this.hasCategories()) {
           this.categoryButton.on('selected.searchfield', function(e, anchor) {
             self.handleCategorySelected(e, anchor);
+            self.element.trigger('selected', [anchor]);
           }).on('focus.searchfield', function(e) {
             self.handleCategoryFocus(e);
           }).on('blur.searchfield', function(e) {
@@ -631,12 +632,18 @@
        * @returns {undefined}
        */
       handleCategoryBlur: function() {
+        var self = this;
+
         // if Toolbar Searchfield, allow that control to handle adding this class
         if (this.isToolbarSearchfield()) {
           return;
         }
 
-        this.wrapper.removeClass('has-focus');
+        setTimeout(function () {
+          if (!self.hasFocus()) {
+            self.wrapper.removeClass('has-focus');
+          }
+        }, 1);
       },
 
       /**

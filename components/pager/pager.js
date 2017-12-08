@@ -494,6 +494,10 @@
           elements = elements.children();
         }
 
+        if (elements.is('table')) {
+          elements = elements.find('tr');
+        }
+
         return elements;
       },
 
@@ -588,13 +592,7 @@
           }
         }
 
-        // Hide the entire pager bar if we're only showing one page, if applicable
-        if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
-          this.pagerBar[0].classList.add('hidden');
-        }
-
-        // Hide the entire pager bar if both sides are disabled, if applicable
-        if ((pagingInfo.firstPage === true && pagingInfo.lastPage === true) && pagingInfo.hideDisabledPagers) {
+        if (this.hidePagerBar(pagingInfo)) {
           this.pagerBar[0].classList.add('hidden');
         }
 
@@ -684,7 +682,7 @@
 
             self.updatePagingInfo(request);
 
-            if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function') {
+            if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function' && request.type && request.type !=='initial') {
               self.settings.componentAPI.renderRows();
             }
 
@@ -748,6 +746,19 @@
         }
 
         this.renderBar(pagingInfo);
+      },
+
+      // to reclaim the pager height so that datagrid can use it's full container
+      hidePagerBar: function(pagingInfo) {
+        if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
+          return true;
+        }
+
+        if ((pagingInfo.firstPage === true && pagingInfo.lastPage === true) && pagingInfo.hideDisabledPagers) {
+          return true;
+        }
+
+        return false;
       },
 
       /**

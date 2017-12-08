@@ -13,8 +13,8 @@
     border: 1px solid transparent;
     border-radius: 2px;
     color: $tree-link-color;
-    line-height: 29px;
-    padding: 4px 5px;
+    line-height: 28px;
+    padding: 6px 5px 3px;
     text-decoration: none;
     white-space: nowrap;
 
@@ -58,6 +58,7 @@
     &:not(.hide-focus):focus {
       border: 1px solid $tree-focus-border-color;
       border-radius: 2px;
+      box-shadow: $focus-box-shadow;
       color: $tree-link-color;
 
       svg {

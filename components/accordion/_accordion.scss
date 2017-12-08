@@ -236,11 +236,19 @@
       &.has-filtered-children,
       &.has-filtered-children.is-focused,
       &.has-filtered-children.is-selected {
+        background-color: $accordion-header-filtered-children-background-color;
+
         > a {
-          color: $accordion-disabled-text-color !important;
+          color: $accordion-filtered-text-color !important;
         }
         > .icon {
-          fill: $accordion-disabled-text-color !important;
+          fill: $accordion-filtered-text-color !important;
+        }
+        > .btn > .icon {
+          &::before,
+          &::after {
+            background-color: $accordion-filtered-text-color !important;
+          }
         }
       }
 
@@ -295,12 +303,19 @@
 
           &.is-focused:not(.hide-focus) {
             border-bottom-color: $accordion-focused-border-color;
+            box-shadow: $focus-box-shadow;
           }
 
           &.is-selected,
           &.is-selected:hover,
           &.is-focused.is-selected {
             border-bottom-color: $accordion-selected-bg-color;
+          }
+
+          &.has-filtered-children,
+          &.has-filtered-children.is-focused,
+          &.has-filtered-children.is-selected {
+            background-color: transparent;
           }
         }
 
@@ -334,6 +349,7 @@
         > [class^="btn"] {
           &:focus:not(.hide-focus) {
             border-color: $accordion-inverse-focus-state-color;
+            box-shadow: $focus-box-shadow;
           }
         }
 
@@ -372,6 +388,7 @@
           > [class^="btn"] {
             &:focus:not(.hide-focus) {
               border-color: $accordion-selected-text-color;
+              box-shadow: $focus-box-shadow;
             }
           }
         }
@@ -412,6 +429,7 @@
 
           &.is-focused:not(.hide-focus) {
             border-bottom-color: $accordion-selected-bg-color;
+            box-shadow: $focus-box-shadow;
           }
 
           &.is-selected,
@@ -422,6 +440,12 @@
             .icon {
               fill: $accordion-selected-text-color;
             }
+          }
+
+          &.has-filtered-children,
+          &.has-filtered-children.is-focused,
+          &.has-filtered-children.is-selected {
+            background-color: transparent;
           }
         }
 
@@ -537,6 +561,7 @@
   // Selected color scheme
   &.is-focused:not(.hide-focus) {
     border-color: $accordion-focused-border-color;
+    box-shadow: $focus-box-shadow;
   }
 
   &.has-chevron {
@@ -606,10 +631,10 @@
   }
 
   &.filtered {
-    color: $accordion-disabled-text-color;
+    color: $accordion-filtered-text-color;
 
     &.icon {
-      fill: $accordion-disabled-text-color;
+      fill: $accordion-filtered-text-color;
     }
 
     &:not(.has-filtered-children) {

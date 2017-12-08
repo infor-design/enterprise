@@ -139,7 +139,7 @@
     padding: 12px 4px 11px 14px;
 
     &::before {
-      background-color: rgba($header-tab-separator, .8);
+      background-color: $header-tab-separator;
       content: '';
       display: inline-block;
       height: 30px;
@@ -227,6 +227,7 @@
 
     .tab-focus-indicator.is-visible {
       border-color: $header-tab-alt-selected-color;
+      box-shadow: $header-focus-box-shadow;
     }
 
     .tab-more {

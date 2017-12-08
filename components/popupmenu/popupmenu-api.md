@@ -3,6 +3,7 @@
 ### Table of Contents
 
 -   [PopupMenu](#popupmenu)
+    -   [markupItems](#markupitems)
     -   [close](#close)
     -   [destroy](#destroy)
 
@@ -16,11 +17,18 @@ Responsive Popup Menu Control aka Context Menu when doing a right click action.
 -   `trigger` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Action on which to trigger a menu can be: click, rightClick, immediate ect
 -   `autoFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If false the focus will not focus the first list element. (At the cost of accessibility)
 -   `attachToBody` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the menu will be moved out to the body. To be used in certin overflow situations.
+-   `beforeOpen` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  Callback that can be used for populating the contents of the menu.
 -   `ariaListbox` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   Switches aria to use listbox construct instead of menu construct (internal)
 -   `eventObj` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can pass in the event object so you can do a right click with immediate
 -   `returnFocus` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
 -   `placementOpts` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Gets passed to this control's Place behavior
 -   `offset` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
+
+### markupItems
+
+**Parameters**
+
+-   `contextElement`  
 
 ### close
 

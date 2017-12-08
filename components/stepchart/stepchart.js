@@ -74,7 +74,7 @@
     render: function() {
       var container = $('<div class="step-chart-steps"></div>'),
         icon = '<svg class="icon {icon-name}" focusable="false" aria-hidden="true" role="presentation">'+
-                '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-confirm"></use>'+
+                '<use xlink:href="#icon-confirm"></use>'+
                 '</svg>';
 
       if (this.element.attr('data-options')) {

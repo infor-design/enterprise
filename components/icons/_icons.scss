@@ -104,6 +104,7 @@ svg.icon-dirty,
 
 // scss-lint:disable ImportantRule
 
+.icon-dirtyerror,
 .icon-error {
   fill: $alert-red !important;
 }
@@ -601,18 +602,20 @@ html[dir='rtl'] {
 
 .icon-empty-state {
   display: inline-block;
+  fill: $azure06; // Themable Empty Icons
   height: 65px;
   position: relative;
   width: 65px;
 }
 
-// color defs
-.icon-empty-main-color {
-  fill: $azure06;
+.datagrid-empty-message .icon-empty-state {
+  fill: $icon-empty-bg-color; // Themable Empty Icons
 }
 
+// color defs
+
 .icon-empty-offset-color {
-  fill: $azure03;
+  opacity: .4;
 }
 
 .icon-empty-center-color {

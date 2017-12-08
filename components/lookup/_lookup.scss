@@ -63,6 +63,9 @@
     }
   }
 
+  .lookup-autowidth {
+    width: auto;
+  }
 }
 
 .field,
@@ -99,7 +102,18 @@
     padding: 0;
 
     .buttonset {
+      width: calc(100%);
+    }
+
+    &.has-more-button .buttonset {
+      margin-bottom: 10px;
+      overflow: visible;
+      padding-top: 7px;
       width: calc(100% - 44px);
+
+      + .more {
+        padding-top: 10px;
+      }
     }
   }
 
@@ -205,10 +219,8 @@ html[dir="rtl"] {
     margin-right: -33px;
 
     .icon {
-      height: 14px;
-      left: 0;
+      left: -6px;
       right: auto;
-      top: 6px;
       width: 18px;
     }
 

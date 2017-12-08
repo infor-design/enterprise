@@ -13,6 +13,12 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="two-thirds column">
+      <button class="btn-secondary" type="button" id="btn-toggle-legend">Toggle Legend</button>
+  </div>
+</div>
+
 <script>
 $('body').on('initialized', function () {
 
@@ -64,7 +70,38 @@ $('body').on('initialized', function () {
           , color: '#317C73'
         }];
 
-    $('#column-bar-example').chart({type: 'column', dataset: dataset});
+    // Set variables
+    var api,
+      elem = $('#column-bar-example'),
+      btnToggle = $('#btn-toggle-legend'),
+      options = {type: 'column', dataset: dataset, showLegend: false},
+
+      // Toggle api option "showLegend"
+      showLegendToggle = function() {
+        options.showLegend = !options.showLegend;
+      },
+
+      // Initialize charts
+      init = function() {
+        api = elem.chart(options).data('chart');
+      },
+
+      // Destroy charts
+      destroy = function() {
+        if (api && api.destroy) {
+          api.destroy();
+        }
+      };
+
+    // Bind toggle button
+    btnToggle.on('click', function() {
+      showLegendToggle();
+      destroy();
+      init();
+    });
+
+    // Initialize charts first time
+    init();
 
 });
 </script>

@@ -148,9 +148,27 @@
         }
       }
 
-      this.adjustHeight();
+      // Sync with application menus that have an 'is-open' CSS class.
+      // Otherwise, just adjust the height.
+      if (this.isOpen()) {
+        this.openMenu(false, false, true);
+      } else {
+        this.adjustHeight();
+      }
 
       return this;
+    },
+
+    /**
+     * Gets a reference to this Application Menu's adjacent container element.
+     * @returns {jQuery[]}
+     */
+    getAdjacentContainerElement: function() {
+      var container = this.element.next('.page-container');
+      if (!container.length) {
+        container = $('body');
+      }
+      return container;
     },
 
     // Setup click events on this.element if it's not the menu itself
@@ -283,7 +301,9 @@
           return;
         }
 
-        this.closeMenu();
+        if (!this.userOpened) {
+          this.closeMenu();
+        }
         return;
       }
 
@@ -301,9 +321,10 @@
     /**
      * Opens the Application Menu
      * @param {boolean} noFocus - If true, sets focus on the first item in the application menu.
-     * @param {boolean} userOpened - If true, notifies the component that the menu was manually opened by the user.
+     * @param {boolean} [userOpened] - If true, notifies the component that the menu was manually opened by the user.
+     * @param {boolean} [openedByClass] - If true, only adjusts bare-miniumum requirements for the application menu to appear open (should be used in cases where the application menu has the `is-open` CSS appended to it via markup).  This skips events, animation, etc.
      */
-    openMenu: function(noFocus, userOpened) {
+    openMenu: function(noFocus, userOpened, openedByClass) {
       if (this.isAnimating === true) {
         return;
       }
@@ -311,7 +332,9 @@
       var self = this,
         transitionEnd = $.fn.transitonEndName;
 
-      this.isAnimating = true;
+      if (!openedByClass) {
+        this.isAnimating = true;
+      }
       this.adjustHeight();
 
       function isOpen() {
@@ -320,13 +343,15 @@
           self.timeout = null;
         }
 
-        self.isAnimating = false;
-        self.element.trigger('applicationmenuopen');
-        $('body').triggerHandler('resize');
-
         if (userOpened) {
           self.userOpened = true;
           self.userClosed = undefined;
+        }
+
+        if (!openedByClass) {
+          self.isAnimating = false;
+          self.element.trigger('applicationmenuopen');
+          $('body').triggerHandler('resize');
         }
 
         self.menu.removeClass('no-transition');
@@ -346,11 +371,15 @@
         }
       });
 
-      this.menu.off(transitionEnd + '.applicationmenu');
-      this.menu[0].style.display = '';
-      // next line forces a repaint
-      this.menu[0].offsetHeight; //jshint ignore:line
-      this.menu.addClass('is-open');
+      // Animate the application menu open.
+      // If opened by class, `is-open` is already applied to the app menu at this point in the render cycle, and should not be re-applied.
+      if (!openedByClass) {
+        this.menu.off(transitionEnd + '.applicationmenu');
+        this.menu[0].style.display = '';
+        // next line forces a repaint
+        this.menu[0].offsetHeight; //jshint ignore:line
+        this.menu.addClass('is-open');
+      }
 
       if (Soho.breakpoints.isBelow(this.settings.breakpoint)) {
         this.menu.addClass('show-shadow');
@@ -360,8 +389,17 @@
         this.menu.find('.is-selected > a').focus();
       }
 
-      this.menu.one(transitionEnd + '.applicationmenu', isOpen);
-      this.timeout = setTimeout(isOpen, 300);
+      if (Soho.env.os.name === 'ios') {
+        var container = this.getAdjacentContainerElement();
+        container.addClass('ios-click-target');
+      }
+
+      if (!openedByClass) {
+        this.menu.one(transitionEnd + '.applicationmenu', isOpen);
+        this.timeout = setTimeout(isOpen, 300);
+      } else {
+        isOpen();
+      }
 
       // Events that will close the nav menu
       // On a timer to prevent conflicts with the Trigger button's click events
@@ -414,6 +452,11 @@
           trig.trigger('icon-change');
         }
       });
+
+      if (Soho.env.os.name === 'ios') {
+        var container = this.getAdjacentContainerElement();
+        container.removeClass('ios-click-target');
+      }
 
       this.menu.one(transitionEnd + '.applicationmenu', close);
       this.timeout = setTimeout(close, 300);

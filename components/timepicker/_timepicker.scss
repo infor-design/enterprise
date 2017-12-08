@@ -29,7 +29,7 @@
     right: auto !important;
   }
 
-  &.is-active {
+  &.is-open {
     border-color: $input-focus-border-color;
 
     + .icon {

@@ -584,9 +584,48 @@ window.Editors = {
       if (column.mask && typeof column.mask === 'function') {
         var mask = column.mask(row, cell, value, column, item);
         this.input.mask({pattern: mask, mode: column.maskMode});
+      } else if (column.maskOptions && typeof column.maskOptions === 'function') {
+        var maskOptions = column.maskOptions(row, cell, value, column, item);
+        this.input.mask(maskOptions);
       } else if (column.mask) {
         this.input.mask({pattern: column.mask, mode: column.maskMode});
       }
+
+      var defaults = {
+        patternOptions: {allowNegative: true, allowDecimal: true,
+        integerLimit: 4, decimalLimit: 2,
+        symbols: {
+          thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
+          decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal  : '.',
+          negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign  : '-'
+        }},
+        process: 'number'
+      };
+
+      var useMask = false;
+
+      if (column.maskOptions) {
+        useMask = true;
+      }
+
+      if (column.numberFormat) {
+        useMask = true;
+        defaults = {patternOptions : {decimalLimit: column.numberFormat.maximumFractionDigits }};
+      }
+
+      if (column.maskOptions && typeof column.maskOptions === 'function') {
+        useMask = false;
+      }
+
+      if (useMask) {
+        column.maskOptions = Soho.utils.extend(true, {}, defaults, column.maskOptions);
+        this.input.mask(column.maskOptions);
+      }
+
+      if (!column.align || column.align !== 'right') {
+        this.input.removeClass('is-number-mask');
+      }
+
     };
 
     this.val = function (value) {
@@ -749,6 +788,7 @@ window.Editors = {
     this.name = 'checkbox';
     this.originalValue = value;
     this.useValue = true; //use the data set value not cell value
+    this.container = container;
 
     this.init = function () {
 
@@ -786,6 +826,7 @@ window.Editors = {
 
     this.focus = function () {
       this.input.trigger('focusout');
+      this.container.parent().focus();
     };
 
     this.destroy = function () {
@@ -1529,17 +1570,22 @@ $.fn.datagrid = function(options) {
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
         resultsText: null,  // Can provide a custom function to adjust results text
+        showFilterTotal : true, // Paging results show filtered count, false to not show.
         virtualized: false, // Prevent Unused rows from being added to the DOM
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
         showDirty: false,
+        showSelectAllCheckBox: true, // Allow to hide the checkbox header (true to show, false to hide)
         allowOneExpandedRow: true, //Only allows one expandable row at a time
         enableTooltips: false,  //Process tooltip logic at a cost of performance
         disableRowDeactivation: false, // If a row is activated the user should not be able to deactivate it by clicking on the activated row
         sizeColumnsEqually: false, //If true make all the columns equal width
         expandableRow: false, // Supply an empty expandable row template
         redrawOnResize: true, //Run column redraw logic on resize
-        exportConvertNegative: false // Export data with trailing negative signs moved in front
+        exportConvertNegative: false, // Export data with trailing negative signs moved in front
+        onPostRenderCell: null, //A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
+        onDestroyCell: null, //A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need notification of that.
+        emptyMessage: {title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data'}
       },
       settings = $.extend({}, defaults, options);
 
@@ -1581,8 +1627,10 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} disableClientFilter &nbsp;-&nbsp Disable Filter Logic client side and let your server do it
   * @param {Boolean} disableClientSort &nbsp;-&nbsp Disable Sort Logic client side and let your server do it
   * @param {String} resultsText &nbsp;-&nbsp Can provide a custom function to adjust results text on the toolbar
+  * @param {Boolean} showFilterTotal &nbsp;-&nbsp Paging results display filter count, change to false to not show filtered count
   * @param {Boolean} rowReorder &nbsp;-&nbsp If set you can reorder rows. Requires rowReorder formatter
   * @param {Boolean} showDirty &nbsp;-&nbsp  If true the dirty indicator will be shown on the rows
+  * @param {Boolean} showSelectAllCheckBox &nbsp;-&nbsp Allow to hide the checkbox header (true to show, false to hide)
   * @param {Boolean} allowOneExpandedRow  &nbsp;-&nbsp Controls if you cna expand more than one expandable row.
   * @param {Boolean} enableTooltips &nbsp;-&nbsp Process tooltip logic at a cost of performance
   * @param {Boolean} disableRowDeactivation &nbsp;-&nbsp if a row is activated the user should not be able to deactivate it by clicking on the activated row
@@ -1590,6 +1638,9 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
   * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
+  * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
+  * @param {Boolean} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+  * @param {Boolean} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -1714,6 +1765,31 @@ $.fn.datagrid = function(options) {
       self.element.append(self.contentContainer);
       self.renderHeader();
       self.container = self.element.closest('.datagrid-container');
+
+      if (this.settings.emptyMessage) {
+        var opts = this.settings.emptyMessage;
+        //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
+
+        self.emptyMessageContainer = $('<div class="datagrid-empty-message">'+
+          (!opts.icon ? '' : '<div class="empty-icon">'+
+            '<svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">'+
+            '<use xlink:href="#'+opts.icon+'"></use>'+
+            '</svg>'+
+          '</div>')+
+          '<div class="empty-title">'+
+            opts.title +
+          '</div>'+
+          (!opts.info ? '' : '<div class="empty-info">'+
+            opts.info +
+          '</div>')+
+          (!opts.button ? '' : '<div class="empty-actions">'+
+            '<button type="button" class="btn-secondary hide-focus '+ opts.button.cssClass +'" id="'+ opts.button.id +'">'+
+              '<span>'+ opts.button.text +'</span>'+
+            '</button>'+
+          '</div>')+
+        '</div>');
+        self.contentContainer.prepend(self.emptyMessageContainer);
+      }
 
       self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
       $(self.settings.buttonSelector, self.table).button();
@@ -1909,6 +1985,14 @@ $.fn.datagrid = function(options) {
       });
     },
 
+    /**
+    * Send in a new data set to display in the datagrid. Use better named updateDataset
+    * @deprecated
+    * @private
+    * @param {Object} dataset &nbsp;-&nbsp The array of objects to show in the grid. Should match the column definitions.
+    * @param {Object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
+    * @param {Object} isResponse &nbsp;-&nbsp Called internally if the load data is response
+    */
     loadData: function (dataset, pagerInfo, isResponse) {
       this.settings.dataset = dataset;
 
@@ -1954,6 +2038,12 @@ $.fn.datagrid = function(options) {
 
     },
 
+    /**
+    * Generate a unique id based on the page and grid count. Add a suffix.
+    * @deprecated
+    * @private
+    * @param {Object} suffix &nbsp;-&nbsp Add this string to make the id more unique
+    */
     uniqueId: function (suffix) {
       var uniqueid = this.settings.uniqueId ?
         this.settings.uniqueId + '-' + suffix :
@@ -1968,6 +2058,10 @@ $.fn.datagrid = function(options) {
       return uniqueid.replace(/--/g, '-');
     },
 
+    /**
+    * Returns an array with all visible columns.
+    * @param {Object} skipBuiltIn &nbsp;-&nbsp If true then built in columns like selectionCheckbox are skipped.
+    */
     visibleColumns: function (skipBuiltIn) {
       var visible = [];
       for (var j = 0; j < this.settings.columns.length; j++) {
@@ -1985,6 +2079,10 @@ $.fn.datagrid = function(options) {
       return visible;
     },
 
+    /**
+    * Returns the index of the last column.
+    * @private
+    */
     lastColumnIdx: function () {
       var last = 0;
 
@@ -2006,6 +2104,10 @@ $.fn.datagrid = function(options) {
       return last;
     },
 
+    /**
+    * Gets an If for the column group used for grouped headers.
+    * @param {Object} idx &nbsp;-&nbsp The index of the column group
+    */
     getColumnGroup: function(idx) {
       var total = 0,
         colGroups = this.settings.columnGroups;
@@ -2019,6 +2121,11 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    /**
+    * Returns the text for a header adding built in defaults
+    * @private
+    * @param {Object} col &nbsp;-&nbsp The column id.
+    */
     headerText: function (col) {
       var text = col.name ? col.name : '';
 
@@ -2030,7 +2137,10 @@ $.fn.datagrid = function(options) {
       return text;
     },
 
-    //Render the Header
+    /**
+    * Render the header area.
+    * @private
+    */
     renderHeader: function() {
       var self = this,
         headerRow = '',
@@ -2042,6 +2152,7 @@ $.fn.datagrid = function(options) {
       // Handle Nested Headers
       var colGroups = this.settings.columnGroups;
       if (colGroups) {
+        this.element.addClass('has-group-headers');
 
         var total = 0;
 
@@ -2086,7 +2197,11 @@ $.fn.datagrid = function(options) {
         }
 
         if (isSelection) {
-          headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          if (self.settings.showSelectAllCheckBox) {
+            headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
+          } else {
+            headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox" style="display:none"></span>';
+          }
         }
 
         if (isSortable) {
@@ -2145,8 +2260,17 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    /**
+    * Flag used to determine if the header is rendered or not.
+    */
     filterRowRendered: false,
 
+    /**
+    * Returns the markup for a specific filter row area.
+    * @private
+    * @param {Object} columnDef &nbsp;-&nbsp The column object for the header
+    * @param {Object} idx &nbsp;-&nbsp The column idx for the header
+    */
     filterRowHtml: function (columnDef, idx) {
       var self = this,
         filterMarkup = '';
@@ -2235,7 +2359,10 @@ $.fn.datagrid = function(options) {
       return filterMarkup;
     },
 
-    //Render the Filter Row
+    /**
+    * Attach Events and initialize plugins for the filter row.
+    * @private
+    */
     attachFilterRowEvents: function () {
       var self = this;
 
@@ -2247,17 +2374,27 @@ $.fn.datagrid = function(options) {
 
       //Attach Keyboard support
       this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
+        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}},
+          popupmenu = $(this).data('popupmenu');
 
-        $(this).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
-          self.applyFilter();
-        }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
-          var data = $(this).data('popupmenu');
-          if (data) {
-            data.destroy();
-          }
-        });
+        if (popupmenu) {
+          popupmenu.close(true, true);
+        }
+        else {
 
+          $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
+            var menu = $(this).next('.popupmenu-wrapper');
+            Soho.utils.fixSVGIcons(menu);
+          }).popupmenu(popupOpts).off('selected.datagrid-filter').on('selected.datagrid-filter', function () {
+            self.applyFilter();
+          }).off('close.datagrid-filter').on('close.datagrid-filter', function () {
+            var data = $(this).data('popupmenu');
+            if (data) {
+              data.destroy();
+            }
+          });
+
+        }
         return false;
       });
 
@@ -2276,6 +2413,10 @@ $.fn.datagrid = function(options) {
       this.headerRow.find('tr:last th').each(function () {
         var col = self.columnById($(this).attr('data-column-id'))[0],
           elem = $(this);
+
+        if (!col) { //No ID found
+          return true;
+        }
 
         elem.find('select.dropdown').dropdown(col.editorOptions).on('selected.datagrid', function () {
           self.applyFilter();
@@ -2305,13 +2446,23 @@ $.fn.datagrid = function(options) {
       self.filterRowRendered = true;
     },
 
-    //Render one filter item as used in renderFilterButton
+    /**
+    * Render one filter item as used in renderFilterButton
+    * @private
+    * @param {Object} icon &nbsp;-&nbsp The icon for the menu item
+    * @param {Object} text &nbsp;-&nbsp The text for the menu item
+    * @param {Object} checked &nbsp;-&nbsp If the menu item is selected
+    */
     filterItemHtml: function (icon, text, checked) {
       var iconMarkup = $.createIcon({ classes: 'icon icon-filter', icon: 'filter-' + icon });
       return '<li '+ (checked ? 'class="is-checked"' : '') +'><a href="#">'+ iconMarkup +'<span>'+ Locale.translate(text) +'</span></a></li>';
     },
 
-    //Render the Filter Button and Menu based on filterType - which determines the options
+    /**
+    * Render the Filter Button and Menu based on filterType - which determines the options
+    * @private
+    * @param {Object} col &nbsp;-&nbsp The column object
+    */
     filterButtonHtml: function (col) {
 
       if (!col.filterType) {
@@ -2332,7 +2483,7 @@ $.fn.datagrid = function(options) {
         },
         renderButton = function(defaultValue) {
           return '<button type="button" class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + (defaultValue ? ' data-default="' + defaultValue+ '"' : '') + ' type="button"><span class="audible">Filter</span>' +
-          '<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter-{{icon}}"></use></svg>' +
+          '<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-{{icon}}"></use></svg>' +
           $.createIcon({icon: 'dropdown' , classes: 'icon-dropdown'}) +
           '</button>' + '<ul class="popupmenu has-icons is-translatable is-selectable">';
         }, btnMarkup = '';
@@ -2393,6 +2544,9 @@ $.fn.datagrid = function(options) {
       return btnMarkup ;
     },
 
+    /**
+    * Toggle the visibility of the filter row.
+    */
     toggleFilterRow: function () {
 
       if (this.settings.filterable) {
@@ -2417,6 +2571,10 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    /**
+    * Apply the Filter with the currently selected conditions, or the ones passed in.
+    * @param {Object} conditions &nbsp;-&nbsp An array of objects with the filter conditions.
+    */
     applyFilter: function (conditions) {
       var self = this;
       this.filteredDataset = null;
@@ -2464,7 +2622,8 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
-          if (typeof rowValue === 'number' || !isNaN(rowValue)) {
+          if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '')) &&
+              columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
             rowValue =  parseFloat(rowValue);
             conditionValue = Locale.parseNumber(conditionValue);
           }
@@ -2640,6 +2799,10 @@ $.fn.datagrid = function(options) {
       this.element.trigger('filtered', {op: 'clear', conditions: []});
     },
 
+    /**
+    * Set the Filter Conditions on the UI Only.
+    * @param {Object} conditions &nbsp;-&nbsp An array of objects with the filter conditions.
+    */
     setFilterConditions: function (conditions) {
       for (var i = 0; i < conditions.length; i++) {
         //Find the filter row
@@ -2734,16 +2897,24 @@ $.fn.datagrid = function(options) {
       return self.filterExpr;
     },
 
-    // Create draggable columns
+    // Get height for current target in header
+    getTargetHeight: function () {
+      var h = this.settings.filterable ?
+        {short: 48, medium: 51, normal: 56} : {short: 20, medium: 28, normal: 35};
+      return h[this.settings.rowHeight];
+    },
+
+    /**
+    * Create draggable columns
+    * @private
+    */
     createDraggableColumns: function () {
       var self = this,
         headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]'),
         showTarget = $('.drag-target-arrows', self.element);
 
       if (!showTarget.length) {
-        var headerHeight = this.settings.rowHeight === 'normal' ? 56 : 48;
-
-        self.element.prepend('<span class="drag-target-arrows" style="height: '+ headerHeight +'px;"></span>');
+        self.element.prepend('<span class="drag-target-arrows" style="height: '+ self.getTargetHeight() +'px;"></span>');
         showTarget = $('.drag-target-arrows', self.element);
       }
 
@@ -2858,7 +3029,10 @@ $.fn.datagrid = function(options) {
       });
     },
 
-    // Set draggable columns target
+    /**
+    * Set draggable columns target elements
+    * @private
+    */
     setDraggableColumnTargets: function () {
       var self = this,
         headers = self.headerNodes()
@@ -2894,7 +3068,11 @@ $.fn.datagrid = function(options) {
       });
     },
 
-    // Get column index
+    /**
+    * Get column index for dragging columns
+    * @private
+    * @param {Object} pos &nbsp;-&nbsp The position index
+    */
     targetColumn: function (pos) {
       var self = this,
         index = -1,
@@ -2910,12 +3088,21 @@ $.fn.datagrid = function(options) {
       return index;
     },
 
-    // Move an array element position
+    /**
+    * Move an array element to a different position. May be dups of this function.
+    * @private
+    * @param {Array} arr &nbsp;-&nbsp The array
+    * @param {Array} from &nbsp;-&nbsp The from position
+    * @param {Array} to &nbsp;-&nbsp The to position
+    */
     arrayIndexMove: function(arr, from, to) {
       arr.splice(to, 0, arr.splice(from, 1)[0]);
     },
 
-    // Attach Drag Events to Rows
+    /**
+    * Attach Drag Events to Rows
+    * @private
+    */
     createDraggableRows: function () {
       var self = this;
 
@@ -2928,12 +3115,12 @@ $.fn.datagrid = function(options) {
           placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
           handle: '.datagrid-reorder-icon'
         })
-        .on('beforearrange.datagrid', function(e, status) {
+        .off('beforearrange.datagrid').on('beforearrange.datagrid', function(e, status) {
           if (self.isSafari) {
             status.start.css({'display': 'inline-block'});
           }
         })
-        .on('arrangeupdate.datagrid', function(e, status) {
+        .off('arrangeupdate.datagrid').on('arrangeupdate.datagrid', function(e, status) {
           if (self.isSafari) {
             status.end.css({'display': ''});
           }
@@ -2945,7 +3132,11 @@ $.fn.datagrid = function(options) {
 
     },
 
-    //Return Value from the Object handling dotted notation
+    /**
+    * Return the value in a field, taking into account nested objects. Fx obj.field.id
+    * @param {Object} obj &nbsp;-&nbsp The object to use
+    * @param {String} field &nbsp;-&nbsp The field as a string fx 'field' or 'obj.field.id'
+    */
     fieldValue: function (obj, field) {
       if (!field || !obj) {
         return '';
@@ -2964,7 +3155,10 @@ $.fn.datagrid = function(options) {
       return value;
     },
 
-    // Set tree root nodes
+    /**
+    * Setup internal tree root nodes array.
+    * @private
+    */
     setTreeRootNodes: function() {
       this.settings.treeRootNodes = this.settings.treeDepth
         .filter(function(node) {
@@ -2972,7 +3166,10 @@ $.fn.datagrid = function(options) {
         });
     },
 
-    // Set tree depth
+    /**
+    * Setup internal tree depth array.
+    * @private
+    */
     setTreeDepth: function(dataset) {
       var self = this,
         idx = 0,
@@ -2993,6 +3190,10 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    /**
+    * Setup internal row grouping
+    * @private
+    */
     setRowGrouping: function () {
       var groupSettings = this.settings.groupable;
       if (!groupSettings) {
@@ -3038,6 +3239,12 @@ $.fn.datagrid = function(options) {
 
       var body = self.table.find('tbody');
       self.bodyColGroupHtml = '<colgroup>';
+      self.triggerDestroyCell();  // Trigger Destroy on previous cells
+
+      // Prevent flashing message area on filter / reload
+      if (this.settings.emptyMessage && self.emptyMessageContainer) {
+        self.emptyMessageContainer.hide();
+      }
 
       if (body.length === 0) {
         self.tableBody = $('<tbody></tbody>');
@@ -3066,6 +3273,8 @@ $.fn.datagrid = function(options) {
           if (activePage === 1 && (i - this.filteredCount) >= pagesize){
             if (!dataset[i].isFiltered) {
               this.recordCount++;
+            } else {
+              this.filteredCount++;
             }
             continue;
           }
@@ -3162,8 +3371,36 @@ $.fn.datagrid = function(options) {
 
     },
 
+    /**
+    * Fire events and do steps needed after a full render.
+    * @private
+    */
     afterRender: function() {
       var self = this;
+
+      // Column column postRender functions
+      if (this.settings.onPostRenderCell) {
+        for (var i = 0; i < this.settings.columns.length; i++) {
+          var col = this.settings.columns[i];
+
+          if (col.component) {
+            self.tableBody.find('tr').each(function () {
+              var row = $(this),
+                rowIdx = row.attr('data-index'),
+                colIdx = self.columnIdxById(col.id),
+                args = {
+                  row: rowIdx,
+                  cell: colIdx,
+                  value: self.settings.dataset[rowIdx],
+                  col: col,
+                  api: self
+                };
+
+                self.settings.onPostRenderCell(row.find('td').eq(colIdx).find('.datagrid-cell-wrapper .content')[0], args);
+            });
+          }
+        }
+      }
 
       //Init Inline Elements
       self.tableBody.find('select.dropdown').dropdown();
@@ -3185,6 +3422,8 @@ $.fn.datagrid = function(options) {
 
         if (!self.settings.source) {
           self.displayCounts();
+        } else {
+          self.checkEmptyMessage();
         }
 
         self.setAlternateRowShading();
@@ -3205,6 +3444,49 @@ $.fn.datagrid = function(options) {
 
         self.element.trigger('afterrender', {body: self.tableBody, header: self.headerRow, pager: self.pagerBar});
       }, 0);
+
+    },
+
+    /**
+    * Trigger the onDestroyCell for each cell
+    * @private
+    */
+    triggerDestroyCell: function () {
+      var self = this;
+
+      if (!self.tableBody) {
+        return;
+      }
+
+      // Call onDestroyCell
+      if (this.settings.onPostRenderCell && this.settings.onDestroyCell) {
+        var rows = self.tableBody.find('tr');
+
+        if (rows.length === 0) {
+          return;
+        }
+
+        for (var i = 0; i < this.settings.columns.length; i++) {
+          var col = this.settings.columns[i];
+
+          if (col.component) {
+            rows.each(function () {
+              var row = $(this),
+                rowIdx = row.index(),
+                colIdx = self.columnIdxById(col.id),
+                args = {
+                  row: row.index(),
+                  cell: colIdx,
+                  value: self.settings.dataset[rowIdx],
+                  col: col,
+                  api: self
+                };
+
+                self.settings.onDestroyCell(row.find('td').eq(colIdx).find('.datagrid-cell-wrapper .content')[0], args);
+            });
+          }
+        }
+      }
 
     },
 
@@ -3506,6 +3788,11 @@ $.fn.datagrid = function(options) {
           }
         }
 
+        if (self.settings.onPostRenderCell && col.component) {
+          rowHtml += '<div class="content"></div>';
+          formatted = '';
+        }
+
         rowHtml += formatted + '</div></td>';
       }
 
@@ -3589,8 +3876,24 @@ $.fn.datagrid = function(options) {
       this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
       var context = this.canvas.getContext('2d');
       context.font = '14px arial';
-      var metrics = context.measureText(maxText);
-      return Math.round(metrics.width + (chooseHeader ? 60 : 52));  //Add padding and borders
+
+      var metrics = context.measureText(maxText),
+        hasImages = columnDef.formatter ?
+          columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false,
+        padding = (chooseHeader ? 60 + (hasImages ? 36 : 0) : 40 + (hasImages ? 36 : 0));
+
+      if (columnDef.filterType) {
+        var minWidth = columnDef.filterType === 'date' ? 170 : 100;
+
+        if (columnDef.filterType === 'checkbox') {
+          minWidth = 40;
+          padding = 40;
+        }
+
+        return Math.round(Math.max(metrics.width + padding, minWidth));
+      }
+
+      return Math.round(metrics.width + padding);  //Add padding and borders
     },
 
     headerWidths: [], //Cache
@@ -4290,7 +4593,7 @@ $.fn.datagrid = function(options) {
 
           //CHECK EXPORTABLE
           var nonExportables = [];
-          $.each($('th'), function(index, item) {
+          $.each($('th').not('.is-hidden'), function(index, item) {
             if ($(item)[0].getAttribute('data-exportable') && $(item)[0].getAttribute('data-exportable') === 'no') {
               nonExportables.push(index);
             }
@@ -4299,9 +4602,10 @@ $.fn.datagrid = function(options) {
           for (var i = 0, l = rows.length; i < l; i++) {
             row = [];
             cols = $(rows[i]).find('td, th');
-            for (var i2 = 0, l2 = cols.length; i2 < l2; i2++) {
+            for (var i2 = 0; i2 < cols.length; i2++) {
               if (nonExportables.indexOf(i2) <= -1) {
                 content = cols[i2].innerText.replace('"', '""');
+
                 // Exporting data with trailing negative signs moved in front
                 if (self.settings.exportConvertNegative) {
                   content = content.replace(/^(.+)(\-$)/, '$2$1');
@@ -4662,7 +4966,7 @@ $.fn.datagrid = function(options) {
           columnStartWidth = self.currentHeader[0].offsetWidth;
         })
         .on('drag.datagrid', function (e, ui) {
-          if (!self.currentHeader) {
+          if (!self.currentHeader || !columnDef) {
             return;
           }
 
@@ -4690,8 +4994,8 @@ $.fn.datagrid = function(options) {
         count = self.tableBody.find('tr:visible').length,
         isClientSide = self.settings.paging && !(self.settings.source);
 
-      if (isClientSide || (!totals && !self.settings.paging)) {
-        count = self.recordCount;
+      if (isClientSide || (!totals)) {
+        this.recordCount = count = self.settings.dataset.length;
       }
 
       //Update Selected
@@ -4699,15 +5003,25 @@ $.fn.datagrid = function(options) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
+      if (self.settings.source && !totals) {
+        self.checkEmptyMessage();
+        return;
+      }
+
       if (totals && totals !== -1) {
         count = totals;
       }
 
-      var countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
+      var countText;
+      if (self.settings.showFilterTotal && self.filteredCount > 0) {
+        countText = '(' + Locale.formatNumber(count - self.filteredCount, {style: 'integer'}) + ' of ' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
+      } else {
+        countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
+      }
 
       if (self.settings.resultsText) {
         if (typeof self.settings.resultsText === 'function') {
-          countText = self.settings.resultsText(self, count);
+          countText = self.settings.resultsText(self, count, count - self.filteredCount);
         } else {
           countText = self.settings.resultsText;
         }
@@ -4720,8 +5034,20 @@ $.fn.datagrid = function(options) {
       }
       self.element.closest('.modal').find('.datagrid-result-count').html(countText);
 
+      this.checkEmptyMessage();
     },
 
+    checkEmptyMessage: function () {
+      if (this.settings.emptyMessage && this.emptyMessageContainer) {
+        if (this.filteredCount ===  this.recordCount || this.recordCount === 0) {
+          this.emptyMessageContainer.show();
+          this.element.addClass('is-empty');
+        } else {
+          this.emptyMessageContainer.hide();
+          this.element.removeClass('is-empty');
+        }
+      }
+    },
     //Trigger event on parent and compose the args
     triggerRowEvent: function (eventName, e, stopPropagation) {
       var self = this,
@@ -4840,7 +5166,7 @@ $.fn.datagrid = function(options) {
 
       // Handle Resize - Re do the columns
       if (self.settings.redrawOnResize) {
-        var oldWidth = 0;
+        var oldWidth = $('body')[0].offsetWidth;
 
         $('body').on('resize.datagrid', function () {
           var width = this.offsetWidth;
@@ -4918,7 +5244,6 @@ $.fn.datagrid = function(options) {
           self.toggleRowSelection(target.closest('tr'));
         }
 
-        self.lastClicked = target;
         var isEditable = self.makeCellEditable(self.activeCell.dataRow, self.activeCell.cell, e);
 
         //Handle Cell Click Event
@@ -4996,7 +5321,9 @@ $.fn.datagrid = function(options) {
             beforeOpen: self.settings.menuBeforeOpen,
             trigger: 'immediate'})
           .off('selected').on('selected', function (e, args) {
-            self.settings.menuSelected(e, args);
+            if (self.settings.menuSelected) {
+              self.settings.menuSelected(e, args);
+            }
           });
         }
 
@@ -5095,12 +5422,28 @@ $.fn.datagrid = function(options) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {
-            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
-                !!self.editor && self.editor.input.is(target)) {
 
-              if ($('*:focus').is('.spinbox')) {
+            var focusElem = $('*:focus');
+
+            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
+                self.editor) {
+
+              if (focusElem.is('.spinbox')) {
                 return;
               }
+
+              if (focusElem.is('.trigger')) {
+                return;
+              }
+
+              if (!$(target).is(':visible')) {
+                return;
+              }
+
+              if (focusElem && self.editor.className && focusElem.closest(self.editor.className).length > 0) {
+                return;
+              }
+
               self.commitCellEdit(self.editor.input);
             }
 
@@ -5115,7 +5458,6 @@ $.fn.datagrid = function(options) {
         }
 
         if (self.editor && self.editor.input) {
-          self.lastClicked = null;
           self.commitCellEdit(self.editor.input);
         }
 
@@ -5143,24 +5485,26 @@ $.fn.datagrid = function(options) {
         med = toolbar.find('[data-option="row-medium"]'),
         normal = toolbar.find('[data-option="row-normal"]');
 
-        if (this.settings.rowHeight === 'short') {
-          short.parent().addClass('is-checked');
-          med.parent().removeClass('is-checked');
-          normal.parent().removeClass('is-checked');
-        }
+      if (this.settings.rowHeight === 'short') {
+        short.parent().addClass('is-checked');
+        med.parent().removeClass('is-checked');
+        normal.parent().removeClass('is-checked');
+      }
 
-        if (this.settings.rowHeight === 'medium') {
-          short.parent().removeClass('is-checked');
-          med.parent().addClass('is-checked');
-          normal.parent().removeClass('is-checked');
-        }
+      if (this.settings.rowHeight === 'medium') {
+        short.parent().removeClass('is-checked');
+        med.parent().addClass('is-checked');
+        normal.parent().removeClass('is-checked');
+      }
 
-        if (this.settings.rowHeight === 'normal') {
-          short.parent().removeClass('is-checked');
-          med.parent().removeClass('is-checked');
-          normal.parent().addClass('is-checked');
-        }
+      if (this.settings.rowHeight === 'normal') {
+        short.parent().removeClass('is-checked');
+        med.parent().removeClass('is-checked');
+        normal.parent().addClass('is-checked');
+      }
 
+      // Set draggable targets arrow height
+      $('.drag-target-arrows', this.element).css('height', this.getTargetHeight() +'px');
     },
 
     appendToolbar: function () {
@@ -5646,23 +5990,30 @@ $.fn.datagrid = function(options) {
 
     syncHeaderCheckbox: function (rows) {
       var headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
-        selectedRows = this.selectedRows();
+        selectedRows = this.selectedRows(),
+        status = headerCheckbox.data('selected');
 
-      if (this.headerRow) {
+      // Do not run if checkbox in same state
+      if ((selectedRows.length > 0 && status === 'partial') ||
+        (selectedRows.length === rows.length && status === 'all') ||
+        (selectedRows.length === 0 && status === 'none')) {
         return;
       }
 
       //Sync the header checkbox
       if (selectedRows.length > 0) {
-        headerCheckbox.addClass('is-checked is-partial');
+        headerCheckbox.data('selected', 'partial')
+          .addClass('is-checked is-partial');
       }
 
       if (selectedRows.length === rows.length) {
-        headerCheckbox.addClass('is-checked').removeClass('is-partial');
+        headerCheckbox.data('selected', 'all')
+          .addClass('is-checked').removeClass('is-partial');
       }
 
       if (selectedRows.length === 0) {
-        headerCheckbox.removeClass('is-checked is-partial');
+        headerCheckbox.data('selected', 'none')
+          .removeClass('is-checked is-partial');
       }
     },
 
@@ -5862,10 +6213,10 @@ $.fn.datagrid = function(options) {
             }
           }
         } else {
-          var selIdx = self.actualArrayIndex(elem),
+          var selIdx = elem.length ? self.actualArrayIndex(elem) : index,
             rowData;
 
-          if (rowData === undefined) {
+          if (selIdx !== undefined && selIdx > -1) {
             rowData = self.settings.dataset[selIdx];
           }
           if (s.groupable) {
@@ -5894,7 +6245,7 @@ $.fn.datagrid = function(options) {
         self.setNodeStatus(rowNode);
       }
       else {
-        unselectNode(rowNode);
+        unselectNode(rowNode, idx);
       }
 
       if (!nosync) {
@@ -6512,10 +6863,17 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      //Already in edit mode
+      var cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
+        cellParent = cellNode.parent('td');
+
+      if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
+        return false;
+      }
+
+      //Commit Previous Edit
       if (this.editor && this.editor.input) {
-        if (this.editor.input.is('.timepicker, .datepicker, .lookup, .spinbox, #colorpicker-menu') && !$(event.target).prev().is(this.editor.input)) {
-          this.commitCellEdit(this.editor.input);
-        }
+        this.commitCellEdit(this.editor.input);
       }
 
       //Locate the Editor
@@ -6533,8 +6891,6 @@ $.fn.datagrid = function(options) {
         rowData = this.settings.treeGrid ?
           this.settings.treeDepth[dataRowIndex].node :
           this.settings.dataset[dataRowIndex],
-        cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
-        cellParent = cellNode.parent('td'),
         cellWidth = cellParent.outerWidth(),
         isEditor = $('.is-editor', cellParent).length > 0,
         cellValue = (cellNode.text() ?
@@ -6548,19 +6904,13 @@ $.fn.datagrid = function(options) {
         return false;
       }
 
-      if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
-        //Already in edit mode
-        cellNode.find('input').focus();
-        return false;
-      }
-
       // In Show Ediitor mode the editor is on form already
       if (!col.inlineEditor) {
 
         if (isEditor) {
           cellNode.css({'position': 'static', 'height': cellNode.outerHeight()});
         }
-        //Editor.init
+        // initialis Editor
         cellParent
           .addClass('is-editing')
           .css({'max-width': cellWidth, 'min-width': cellWidth, 'width': cellWidth});
@@ -6571,6 +6921,10 @@ $.fn.datagrid = function(options) {
       }
 
       this.editor = new col.editor(dataRowIndex, cell, cellValue, cellNode, col, event, this, rowData);
+
+      if (this.settings.onEditCell) {
+        this.settings.onEditCell(this.editor);
+      }
 
       if (this.editor.useValue) {
         cellValue = this.fieldValue(rowData, col.field);
@@ -6705,7 +7059,7 @@ $.fn.datagrid = function(options) {
       //Add and show tooltip
       if (node.find('.icon-' + type).length === 0) {
         node.find('.datagrid-cell-wrapper').append(icon);
-        icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error'), content: message});
+        icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: message});
         icon.data('tooltip').show();
       }
 
@@ -6774,7 +7128,7 @@ $.fn.datagrid = function(options) {
         this.toolbar.children('.title').append(tableerrors);
       }
 
-      icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error'), content: messages});
+      icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: messages});
     },
 
     clearCellError: function (row, cell, type) {
@@ -6818,6 +7172,7 @@ $.fn.datagrid = function(options) {
       this.tableBody.find('td.error').each(function () {
         var node = $(this);
         self.clearNodeErrors(node, 'error');
+        self.clearNodeErrors(node, 'dirtyerror');
       });
 
       this.tableBody.find('td.alert').each(function () {
@@ -6905,6 +7260,8 @@ $.fn.datagrid = function(options) {
       if (col.serialize) {
         newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
         return newVal;
+      } else if (typeof oldVal === 'number' && value) {
+        newVal = Locale.parseNumber(value); //remove thousands sep , keep a number a number
       }
 
       return newVal;
@@ -6956,7 +7313,7 @@ $.fn.datagrid = function(options) {
       if (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip) {
         cellNode.attr('title', rowData.rowStatus.tooltip);
         cellNode.tooltip({placement: 'right',
-          isErrorColor: rowData.rowStatus.icon === 'error'
+          isErrorColor: rowData.rowStatus.icon === 'error' || rowData.rowStatus.icon === 'dirtyerror'
         });
       }
 
@@ -7081,7 +7438,9 @@ $.fn.datagrid = function(options) {
 
       //Remove previous tab index
       if (prevCell.node && prevCell.node.length ===1) {
-        self.activeCell.node.removeAttr('tabindex');
+        self.activeCell.node
+          .removeAttr('tabindex')
+          .removeClass('is-active');
       }
 
       //Hide any cell tooltips (Primarily for validation)
@@ -7157,17 +7516,25 @@ $.fn.datagrid = function(options) {
       }
       this.activeCell.isFocused = true;
 
+      // Expand On Activate Feature
+      var col = this.settings.columns[cell];
+      if (col && col.expandOnActivate && this.activeCell && this.activeCell.node) {
+        self.activeCell.node.addClass('is-active');
+      }
+
       self.element.trigger('activecellchange', [{node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell}]);
     },
 
     setNextActiveCell: function (e) {
+      var self = this;
       if (e.type === 'keydown') {
         if (this.settings.actionableMode) {
-          var evt = $.Event('keydown.datagrid');
-          evt.keyCode = 40; // move down
-          this.activeCell.node.trigger(evt);
-        }
-        else {
+          setTimeout(function() {
+            var evt = $.Event('keydown.datagrid');
+            evt.keyCode = 40; // move down
+            self.activeCell.node.trigger(evt);
+          }, 0);
+        } else {
           this.setActiveCell(this.activeCell.row, this.activeCell.cell);
         }
       }
@@ -7538,13 +7905,21 @@ $.fn.datagrid = function(options) {
 
       this.pager = pagerElem.data('pager');
 
-      pagerElem
+      pagerElem.off('afterpaging')
       .on('afterpaging', function (e, args) {
 
+        // Hide the entire pager bar if we're only showing one page, if applicable
+        if (self.pager.hidePagerBar(args)) {
+          self.element.removeClass('paginated');
+        } else {
+          self.element.addClass('paginated');
+        }
+
+        self.recordCount = args.total;
         self.displayCounts(args.total);
 
         //Handle row selection across pages
-      self.syncSelectedUI();
+        self.syncSelectedUI();
 
         if (self.filterExpr && self.filterExpr[0] && self.filterExpr[0].column === 'all') {
           self.highlightSearchRows(self.filterExpr[0].value);
@@ -7601,6 +7976,8 @@ $.fn.datagrid = function(options) {
       this.element.off().empty().removeClass('datagrid-container');
       var toolbar = this.element.prev('.toolbar');
 
+      this.triggerDestroyCell();
+
       if (this.removeToolbarOnDestroy && settings.toolbar && settings.toolbar.keywordFilter) {
         var searchfield = toolbar.find('.searchfield');
         if (searchfield.data('searchfield')) {
@@ -7626,6 +8003,7 @@ $.fn.datagrid = function(options) {
       $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
       this.contentContainer.off().remove();
       $('body').off('resize.vtable resize.datagrid');
+
     }
 
   };

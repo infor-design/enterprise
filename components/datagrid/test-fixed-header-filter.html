@@ -18,7 +18,7 @@
 
         //Define Columns for the Grid.
         columns.push({id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text, filterType: 'text'});
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
         columns.push({ hidden: true, name: 'Activity', field: 'activity'});
         columns.push({ id: 'quantity', hidden: true, name: 'Quantity', field: 'quantity'});
         columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
@@ -31,7 +31,7 @@
           columns: columns,
           dataset: data,
           paging: true,
-          pagesize: 100,
+          pagesize: 50,
           filterable: true,
           toolbar: {title: 'Compressors', actions: true, rowHeight: true, results: true }
         });
