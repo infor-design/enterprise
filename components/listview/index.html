@@ -154,15 +154,15 @@
 <li><code>label</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong></li>
 </ul>
 <h2 id="bindfirst">bindFirst</h2>
-<p>Used for changing the stacking order of jQuery events. This is needed to override certain<br />Events invoked by other plugins <a href="http://stackoverflow.com/questions/2360655">http://stackoverflow.com/questions/2360655</a></p>
+<p>============================================</p>
+<h1 id="soho-utils">SOHO Utils</h1>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>name</code><br /></li>
 <li><code>fn</code></li>
 </ul>
 <h2 id="bindfirst-1">bindFirst</h2>
-<p>============================================</p>
-<h1 id="soho-utils">SOHO Utils</h1>
+<p>Used for changing the stacking order of jQuery events. This is needed to override certain<br />Events invoked by other plugins <a href="http://stackoverflow.com/questions/2360655">http://stackoverflow.com/questions/2360655</a></p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>name</code><br /></li>
@@ -513,6 +513,34 @@
 <li><code>el</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> The element being manipulated</li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong> represents all values normally contained by a DOMRect or ClientRect</p>
+<h2 id="stringutils">stringUtils</h2>
+<p>string utils</p>
+<h4 id="empty">EMPTY</h4>
+<p>Re-usable Empty String that can be referenced everywhere to save small amounts of space.</p>
+<h4 id="splice">splice</h4>
+<p>The splice() method changes the content of a string by removing a range of<br />characters and/or adding new characters.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The string that will be manipulated.<br /></li>
+<li><code>start</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong> Index at which to start changing the string.<br /></li>
+<li><code>delCount</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong> An integer indicating the number of old chars to remove.<br /></li>
+<li><code>newSubStr</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> The String that is spliced in.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> A new string with the spliced substring.</p>
+<h4 id="removeduplicates">removeDuplicates</h4>
+<p>Takes a string with possible duplicate characters and returns a string<br />containing ALL unique characters. Useful for construction of REGEX objects<br />with characters from an input field, etc.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
+<h4 id="containshtml">containsHTML</h4>
+<p>Takes a string and uses a regex test to detect the presence of HTML elements.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
 <h2 id="listfilter_defaults">LISTFILTER_DEFAULTS</h2>
 <h2 id="filtermodes">filterModes</h2>
 <h2 id="listfilter">ListFilter</h2>
@@ -961,26 +989,6 @@
 <p>Default Date Mask Options</p>
 <h2 id="date_max_values">DATE_MAX_VALUES</h2>
 <p>Maximum Values for various section maps of date strings.</p>
-<h2 id="stringutils">stringUtils</h2>
-<p>string utils</p>
-<h4 id="empty">EMPTY</h4>
-<p>Re-usable Empty String that can be referenced everywhere to save small amounts of space.</p>
-<h4 id="splice">splice</h4>
-<p>The splice() method changes the content of a string by removing a range of<br />characters and/or adding new characters.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The string that will be manipulated.<br /></li>
-<li><code>start</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong> Index at which to start changing the string.<br /></li>
-<li><code>delCount</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong> An integer indicating the number of old chars to remove.<br /></li>
-<li><code>newSubStr</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> The String that is spliced in.</li>
-</ul>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> A new string with the spliced substring.</p>
-<h4 id="removeduplicates">removeDuplicates</h4>
-<p>Takes a string with possible duplicate characters and returns a string<br />containing ALL unique characters. Useful for construction of REGEX objects<br />with characters from an input field, etc.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>str</code></li>
-</ul>
 <h2 id="sohomaskapi">SohoMaskAPI</h2>
 <p>Type: <a href="#sohomaskapi">SohoMaskAPI</a></p>
 <p><strong>Parameters</strong></p>

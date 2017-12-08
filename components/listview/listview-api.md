@@ -48,8 +48,8 @@
     -   [logTimeStart](#logtimestart)
     -   [logTimeEnd](#logtimeend)
     -   [bindFirst](#bindfirst)
-    -   [bindFirst](#bindfirst-1)
 -   [SOHO Utils](#soho-utils)
+    -   [bindFirst](#bindfirst-1)
     -   [uniqueId](#uniqueid)
     -   [cssPropSupport](#csspropsupport)
     -   [transitionEndName](#transitionendname)
@@ -108,6 +108,11 @@
     -   [addClass](#addclass)
     -   [isElement](#iselement)
     -   [getDimensions](#getdimensions)
+    -   [stringUtils](#stringutils)
+        -   [EMPTY](#empty)
+        -   [splice](#splice)
+        -   [removeDuplicates](#removeduplicates)
+        -   [containsHTML](#containshtml)
     -   [LISTFILTER_DEFAULTS](#listfilter_defaults)
     -   [filterModes](#filtermodes)
     -   [ListFilter](#listfilter)
@@ -194,10 +199,6 @@
     -   [getRegexForPart](#getregexforpart)
     -   [DEFAULT_DATETIME_MASK_OPTIONS](#default_datetime_mask_options)
     -   [DATE_MAX_VALUES](#date_max_values)
-    -   [stringUtils](#stringutils)
-        -   [EMPTY](#empty)
-        -   [splice](#splice)
-        -   [removeDuplicates](#removeduplicates)
     -   [SohoMaskAPI](#sohomaskapi)
         -   [configure](#configure)
         -   [process](#process-1)
@@ -515,8 +516,9 @@ Easy flag for determining whether or not time will be logged to the console.
 
 ## bindFirst
 
-Used for changing the stacking order of jQuery events.  This is needed to override certain
-Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
+============================================
+
+# SOHO Utils
 
 **Parameters**
 
@@ -525,9 +527,8 @@ Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 ## bindFirst
 
-============================================
-
-# SOHO Utils
+Used for changing the stacking order of jQuery events.  This is needed to override certain
+Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 **Parameters**
 
@@ -1028,6 +1029,50 @@ as a plain object instead of a ClientRect
 -   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
+
+## stringUtils
+
+string utils
+
+### EMPTY
+
+Re-usable Empty String that can be referenced everywhere to save small amounts of space.
+
+### splice
+
+The splice() method changes the content of a string by removing a range of
+characters and/or adding new characters.
+
+**Parameters**
+
+-   `str` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The string that will be manipulated.
+-   `start` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Index at which to start changing the string.
+-   `delCount` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** An integer indicating the number of old chars to remove.
+-   `newSubStr` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The String that is spliced in.
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A new string with the spliced substring.
+
+### removeDuplicates
+
+Takes a string with possible duplicate characters and returns a string
+containing ALL unique characters.  Useful for construction of REGEX objects
+with characters from an input field, etc.
+
+**Parameters**
+
+-   `str` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### containsHTML
+
+Takes a string and uses a regex test to detect the presence of HTML elements.
+
+**Parameters**
+
+-   `str` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## LISTFILTER_DEFAULTS
 
@@ -1693,38 +1738,6 @@ Default Date Mask Options
 ## DATE_MAX_VALUES
 
 Maximum Values for various section maps of date strings.
-
-## stringUtils
-
-string utils
-
-### EMPTY
-
-Re-usable Empty String that can be referenced everywhere to save small amounts of space.
-
-### splice
-
-The splice() method changes the content of a string by removing a range of
-characters and/or adding new characters.
-
-**Parameters**
-
--   `str` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The string that will be manipulated.
--   `start` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Index at which to start changing the string.
--   `delCount` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** An integer indicating the number of old chars to remove.
--   `newSubStr` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The String that is spliced in.
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A new string with the spliced substring.
-
-### removeDuplicates
-
-Takes a string with possible duplicate characters and returns a string
-containing ALL unique characters.  Useful for construction of REGEX objects
-with characters from an input field, etc.
-
-**Parameters**
-
--   `str`  
 
 ## SohoMaskAPI
 

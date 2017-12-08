@@ -1,5 +1,6 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
+import { stringUtils as str } from '../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
 import { ListFilter } from '../listfilter/listfilter';
 import { Locale } from '../locale/locale';
@@ -196,8 +197,12 @@ ListView.prototype = {
       // create a copy of an inlined template
       if (this.settings.template instanceof $) {
         this.settings.template = '' + this.settings.template.html();
-      } else if (this.settings.template && this.settings.template.length) {
-        this.settings.template = $('#' + this.settings.template).html();
+      } else if (typeof this.settings.template === 'string') {
+        // If a string doesn't contain HTML elments,
+        // assume it's an element ID string and attempt to select with jQuery
+        if (!str.containsHTML(this.settings.template)) {
+          this.settings.template = $('#' + this.settings.template).html();
+        }
       }
 
       if (this.settings.template.indexOf('{{#totals}}') > -1) {

@@ -29,6 +29,8 @@ stringUtils.splice = function splice(str, start, delCount, newSubStr) {
  * Takes a string with possible duplicate characters and returns a string
  * containing ALL unique characters.  Useful for construction of REGEX objects
  * with characters from an input field, etc.
+ * @param {String} str
+ * @returns {String}
  */
 stringUtils.removeDuplicates = function removeDuplicates(str) {
   return str
@@ -37,6 +39,16 @@ stringUtils.removeDuplicates = function removeDuplicates(str) {
       return self.indexOf(item) === pos;
     })
     .join('');
+};
+
+
+/**
+ * Takes a string and uses a regex test to detect the presence of HTML elements.
+ * @param {String} str
+ * @returns {boolean}
+ */
+stringUtils.containsHTML = function containsHTML(str) {
+  return /<[a-z][\s\S]*>/i.test(str);
 };
 
 
