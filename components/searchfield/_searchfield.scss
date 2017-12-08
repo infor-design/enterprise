@@ -64,7 +64,6 @@
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
   &.context {
-    overflow: hidden;
     white-space: nowrap;
     width: 100%;
 
@@ -136,7 +135,7 @@
 
     &.is-hovered {
       .btn {
-        border-color: $input-hover-border-color;
+        border-color: $searchfield-context-border-color;
         color: $input-hover-border-color;
 
         .icon {
@@ -144,7 +143,7 @@
         }
       }
 
-      .searchfield {
+      &.has-categories.show-category .searchfield {
         border-color: $searchfield-context-border-color;
       }
     }
@@ -179,12 +178,6 @@
     &.has-categories {
       .searchfield {
         border-left-color: transparent;
-      }
-
-      &.show-category {
-        .searchfield {
-          border-left-color: $input-hover-border-color;
-        }
       }
     }
   }
@@ -340,7 +333,7 @@ html[dir='rtl'] {
         }
 
         .searchfield {
-          border-left: none;
+          border-left: 0;
           border-right: 1px solid $input-border-color;
         }
       }
@@ -371,7 +364,10 @@ html[dir='rtl'] {
     height: 34px;
   }
 
-  .searchfield-wrapper.context .btn {
-    height: 32px;
+  .searchfield-wrapper.context {
+    .btn,
+    input {
+      height: 32px;
+    }
   }
 }

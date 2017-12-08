@@ -148,12 +148,14 @@
         // (Color)09 for the horizontal border - 134D71
         // (Color)10 for the hover state on module tab - 133C59
         var defaultColors = {header: '2578A9',
-                             subheader: '368AC0',
+                             subheader: '1d5f8a',
                              text: 'ffffff',
                              verticalBorder: '133C59',
                              horizontalBorder: '134D71',
                              inactive: '1d5f8a',
-                             hover: '133C59'};
+                             hover: '133C59',
+                             btnColorHeader: '368AC0',
+                             btnColorSubheader: '54a1d3'};
 
         // If an event sends a blank string through instead of a hex,
         // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
@@ -164,6 +166,8 @@
         Soho.colors.verticalBorder = this.validateHex(Soho.colors.verticalBorder || this.getLuminousColorShade(Soho.colors.header, 0.1));
         Soho.colors.horizontalBorder = this.validateHex(Soho.colors.horizontalBorder || this.getLuminousColorShade(Soho.colors.header, -0.4));
         Soho.colors.hover = this.validateHex(Soho.colors.hover || this.getLuminousColorShade(Soho.colors.header, -0.5));
+        Soho.colors.btnColorHeader = this.validateHex(Soho.colors.btnColorHeader || this.getLuminousColorShade(Soho.colors.subheader, -0.025));
+        Soho.colors.btnColorSubheader = this.validateHex(Soho.colors.btnColorSubheader || this.getLuminousColorShade(Soho.colors.header, -0.025));
 
         //not that the sheet is appended in backwards
         var cssRules = '.tab-container.module-tabs.is-personalizable { border-top: 1px solid '+ Soho.colors.horizontalBorder +' !important; border-bottom: 1px solid ' + Soho.colors.horizontalBorder + ' !important}' +
@@ -175,6 +179,8 @@
         ' .header.is-personalizable { background-color: '+ Soho.colors.header +'}' +
         ' .header.is-personalizable .title { color: '+ Soho.colors.text +'}' +
         ' .header.is-personalizable h1 { color: '+ Soho.colors.text +'}' +
+        ' .header.is-personalizable .go-button.is-personalizable { background-color: '+ Soho.colors.btnColorHeader +'; border-color:' + Soho.colors.btnColorHeader + ';color: '+ Soho.colors.text +'}' +
+        ' .subheader.is-personalizable .go-button.is-personalizable { background-color: '+ Soho.colors.btnColorSubheader +'; border-color:' + Soho.colors.btnColorSubheader + ';color: '+ Soho.colors.text +'}' +
         ' .module-tabs.is-personalizable .tab-more { border-left: '+ Soho.colors.verticalBorder +' !important}' +
         ' .module-tabs.is-personalizable .tab-more:hover { background-color: '+ Soho.colors.hover +' !important}' +
         ' .module-tabs.is-personalizable .tab-more.is-open { background-color: '+ Soho.colors.hover +' !important}' +
