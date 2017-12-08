@@ -57,7 +57,8 @@
     * @param {Boolean} secondHeader  &nbsp;-&nbsp; Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
     * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
     * @param {String} pasteAsPlainText  &nbsp;-&nbsp; If true, when you paste into the editor the element will be unformatted to plain text.
-    * @param {String} anchor  &nbsp;-&nbsp; Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
+    * @param {String} anchor  &nbsp;-&nbsp; An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
+    * the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
     * @param {String} image  &nbsp;-&nbsp; Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
     */
     function Editor(element) {
