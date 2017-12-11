@@ -19,9 +19,9 @@
     // Settings and Options
     var pluginName = 'spinbox',
         defaults = {
-          min: 0,
-          max: 9999999,
-          step: 1
+          min: undefined,
+          max: undefined,
+          step: undefined
         },
         settings = $.extend({}, defaults, options);
 
@@ -179,17 +179,13 @@
           max = '9999999';
         }
 
-        if (!min) {
-          min = '0';
-        }
-
         // If a mask doesn't exist, but min and max values do exist, create a mask that reflects those min/max values
         if ((min || max) && !mask) {
           var newMask = '',
             tempMin = min || '',
             tempMax = max || '',
-            lengthMin = min.replace(/-/g, '').length,
-            lengthMax = max.replace(/-/g, '').length,
+            lengthMin = tempMin.replace(/-/g, '').length,
+            lengthMax = tempMax.replace(/-/g, '').length,
             longerVal = lengthMin > lengthMax ? lengthMin : lengthMax;
 
           i = 0;
