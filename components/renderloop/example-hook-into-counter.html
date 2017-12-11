@@ -50,10 +50,8 @@
   }
 
   $('body').on('initialized', function() {
-    Soho.renderLoop.start();
-
     registerBtn.on('click.test', function() {
-      Soho.renderLoop.register(updateCount, 'test-timer-count');
+      Soho.renderLoop.register(updateCount, undefined, 'test-timer-count');
       registerBtn.prop('disabled', true);
       unregisterBtn.prop('disabled', false);
     });
