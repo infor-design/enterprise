@@ -241,6 +241,10 @@
       * @param {String} hex  &nbsp;-&nbsp; The hex to search for in the color set.
       */
       getLabelFromHex: function(hex) {
+        if (!hex) {
+          return '';
+        }
+
         for (var i = 0; i < this.settings.colors.length; i++) {
           var data = this.settings.colors[i];
 
