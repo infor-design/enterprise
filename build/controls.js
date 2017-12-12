@@ -5,6 +5,7 @@ module.exports = [
   'temp/amd/utils.js',
   'temp/amd/behaviors.js',
   'temp/amd/breakpoints.js',
+  'temp/amd/renderloop.js',
   'temp/amd/environment.js',
   'temp/amd/animations.js',
   'temp/amd/locale.js',

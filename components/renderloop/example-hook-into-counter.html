@@ -1,0 +1,65 @@
+<div class="row">
+  <div class="six columns">
+    <h2>RenderLoop Test: Hook in Callback</h2>
+    <p>Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7005" target="_blank">SOHO-7005</a></p>
+  </div>
+</div>
+
+<style>
+  #timercounts {
+    font-weight: bold;
+    font-family: monospace;
+  }
+</style>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <span>Count: </span>
+      <span id="timercounts">0</span>
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <div class="field">
+      <button id="register" class="btn-secondary">
+        <span>Register Callback to RenderLoop</span>
+      </button>
+
+      <button id="unregister" class="btn-secondary" disabled>
+        <span>Unregister Callback from RenderLoop</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  var TIMER_COUNT = 0,
+    span = $('#timercounts'),
+    registerBtn = $('#register'),
+    unregisterBtn = $('#unregister');
+
+  function updateCount() {
+    TIMER_COUNT++;
+    span.text(TIMER_COUNT);
+  }
+
+  $('body').on('initialized', function() {
+    registerBtn.on('click.test', function() {
+      Soho.renderLoop.register(updateCount, undefined, 'test-timer-count');
+      registerBtn.prop('disabled', true);
+      unregisterBtn.prop('disabled', false);
+    });
+
+    unregisterBtn.on('click.test', function() {
+      Soho.renderLoop.unregister('test-timer-count');
+      unregisterBtn.prop('disabled', true);
+      registerBtn.prop('disabled', false);
+    });
+  });
+</script>

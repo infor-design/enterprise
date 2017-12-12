@@ -353,6 +353,7 @@
   // then can be listen events as [ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]
   // or can access as [ timer.cancel(); -or- timer.pause(); -or- timer.resume(); ]
   $.fn.timer = function(callback, delay) {
+
     var self = $(this),
       interval,
       speed = 10,
@@ -384,7 +385,13 @@
       };
 
       update();
-    return { event: this, cancel: cancel, pause: pause, resume: resume };
+
+    return {
+      event: this,
+      cancel: cancel,
+      pause: pause,
+      resume: resume
+    };
   };
 
   // Copies a string to the clipboard. Must be called from within an event handler such as click.
@@ -923,6 +930,9 @@
       }
     }
   };
+
+
+
 
 /* start-amd-strip-block */
 }));
