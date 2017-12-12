@@ -5,13 +5,13 @@
 -   [Spinbox](#spinbox)
     -   [setWidth](#setwidth)
     -   [setInitialValue](#setinitialvalue)
-    -   [isUndefined](#isundefined)
     -   [addMarkup](#addmarkup)
     -   [enableLongPress](#enablelongpress)
     -   [disableLongPress](#disablelongpress)
     -   [handleClick](#handleclick)
     -   [handleKeyDown](#handlekeydown)
     -   [handleKeyPress](#handlekeypress)
+    -   [handleInput](#handleinput)
     -   [handleKeyup](#handlekeyup)
     -   [handleAfterPaste](#handleafterpaste)
     -   [increaseValue](#increasevalue)
@@ -49,16 +49,6 @@ Returns **this**
 Sanitize the initial value of the input field.
 
 Returns **this** 
-
-### isUndefined
-
-Check if given value is 'undefined'.
-
-**Parameters**
-
--   `value`  
-
-Returns **booelan** 
 
 ### addMarkup
 
@@ -104,6 +94,16 @@ Event handler for 'keydown' events
 ### handleKeyPress
 
 Event handler for 'keypress' events
+TODO: Deprecate in 4.4.0
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+-   `self` **[Spinbox](#spinbox)** 
+
+### handleInput
+
+Event handler for the 'input' event
 
 **Parameters**
 
