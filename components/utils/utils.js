@@ -924,9 +924,6 @@
     }
   };
 
-
-
-
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */

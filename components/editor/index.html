@@ -17,16 +17,16 @@
 <li><code>secondHeader</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility<br /></li>
 <li><code>productName</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Additional product name information to display<br /></li>
 <li><code>pasteAsPlainText</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If true, when you paste into the editor the element will be unformatted to plain text.<br /></li>
-<li><code>anchor</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Info object to populate the link dialog defaulting to <code>{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},</code><br /></li>
+<li><code>anchor</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  An object with settings related to controlling link behavior when inserted example: <code>{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},</code><br />the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.<br /></li>
 <li><code>image</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Info object to populate the image dialog defaulting to <code>{url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}</code></li>
 </ul>
 <h3 id="functions">Functions</h3>
 <h4 id="switchtoolbars">switchToolbars</h4>
 <p>Switch between source and editing toolbar.</p>
 <h4 id="createurlmodal">createURLModal</h4>
-<p>Function that creates the Url Modal Dialog. This can be customized by making a modal with ID <code>#editor-modal-url</code></p>
+<p>Function that creates the Url Modal Dialog. This can be customized by making a modal with ID <code>#modal-url-{this.id}</code></p>
 <h4 id="createimagemodal">createImageModal</h4>
-<p>Function that creates the Image Dialog. This can be customized by making a modal with ID <code>#editor-modal-image</code></p>
+<p>Function that creates the Image Dialog. This can be customized by making a modal with ID <code>#modal-image-{this.id}</code></p>
 <h4 id="disable">disable</h4>
 <p>Disable the editable area.</p>
 <h4 id="enable">enable</h4>

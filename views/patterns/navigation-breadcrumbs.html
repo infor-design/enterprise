@@ -4,7 +4,7 @@
   {{> includes/masthead}}
 
   <div class="page-container no-scroll">
-    <header class="header is-personalizable has-breadcrumb">
+    <header class="header is-personalizable">
       <div class="toolbar">
         <div class="title">
           <h1>Level Two Detail View</h1>
@@ -16,17 +16,23 @@
 
         {{> includes/header-actionbutton}}
       </div>
-
-      <div class="breadcrumb">
-        <ol aria-label="breadcrumb">
-          <li><a href="#" class="hyperlink">SoHo Xi&nbsp;&nbsp;|&nbsp;&nbsp;Style</a></li>
-          <li><a href="#" class="hyperlink">Level One Detail View</a></li>
-          <li><a href="#" class="hyperlink current">Level Two Detail View</a></li>
-        </ol>
-      </div>
     </header>
 
-    <div id="maincontent" class="page-container scrollable" role="main">
+    <div id="maincontent" class="page-container scrollable-flex" role="main">
+      <section class="scrollable-flex-header has-breadcrumb">
+        <div class="breadcrumb">
+          <ol aria-label="breadcrumb">
+            <li><a href="#" class="hyperlink">SoHo Xi&nbsp;&nbsp;|&nbsp;&nbsp;Style</a></li>
+            <li><a href="#" class="hyperlink">Level One Detail View</a></li>
+            <li><a href="#" class="hyperlink current">Level Two Detail View</a></li>
+          </ol>
+        </div>
+      </section>
+      <section class="scrollable-flex-content">
+        <div class="content">
+
+        </div>
+      </section>
 
     </div>
   </div>

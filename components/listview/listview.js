@@ -979,7 +979,7 @@
             e.preventDefault();
             e.stopPropagation();
 
-            self.element.trigger('click', [{elem: item, data: self.settings.dataset[item.attr('aria-posinset')], index: item.index(), originalEvent: e}]);
+            self.element.trigger('click', [{elem: item, data: self.settings.dataset[item.attr('aria-posinset')-1], index: item.index(), originalEvent: e}]);
             return false;
           });
 
@@ -990,7 +990,7 @@
 
             e.preventDefault();
             e.stopPropagation();
-            self.element.trigger('dblclick', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')], index: item.index(), originalEvent: e}]);
+            self.element.trigger('dblclick', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')-1], index: item.index(), originalEvent: e}]);
             return false;
           });
 
@@ -1001,7 +1001,7 @@
 
             e.preventDefault();
             e.stopPropagation();
-            self.element.trigger('contextmenu', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')], index: item.index(), originalEvent: e}]);
+            self.element.trigger('contextmenu', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')-1], index: item.index(), originalEvent: e}]);
             return false;
           });
         }

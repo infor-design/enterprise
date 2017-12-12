@@ -71,5 +71,61 @@
     "manager": "Arluene Danielczyk",
     "reports": 69,
     "email": "adanielczyk7@nbcnews.com"
+  },
+  {
+    "id": 9,
+    "photo": "https://randomuser.me/api/portraits/med/women/23.jpg",
+    "firstName": "Karese",
+    "lastName": "Duncan",
+    "title": "Senior Developer",
+    "initials": "MT",
+    "favorite": true,
+    "phone": "425-764-3291",
+    "country": "SE",
+    "manager": "Myrtie Till",
+    "reports": 80,
+    "email": "mtillb@multiply.com"
+  },
+  {
+    "id": 10,
+    "photo": "https://randomuser.me/api/portraits/med/women/24.jpg",
+    "firstName": "Catie",
+    "lastName": "Culp",
+    "title": "Senior Developer",
+    "initials": "MT",
+    "favorite": true,
+    "phone": "425-764-3291",
+    "country": "SE",
+    "manager": "Myrtie Till",
+    "reports": 80,
+    "email": "mtillb@multiply.com"
+  },
+  {
+    "id": 11,
+    "photo": "https://randomuser.me/api/portraits/med/women/25.jpg",
+    "firstName": "Oprah",
+    "lastName": "Smitherson",
+    "title": "Senior Developer",
+    "initials": "MT",
+    "favorite": true,
+    "phone": "425-764-3291",
+    "country": "SE",
+    "manager": "Myrtie Till",
+    "reports": 80,
+    "email": "mtillb@multiply.com"
+  },
+  {
+    "id": 12,
+    "photo": "https://randomuser.me/api/portraits/med/women/26.jpg",
+    "firstName": "Andie",
+    "lastName": "Andrewsen",
+    "title": "Senior Developer",
+    "initials": "MT",
+    "favorite": true,
+    "phone": "425-764-3291",
+    "country": "SE",
+    "manager": "Myrtie Till",
+    "reports": 80,
+    "email": "mtillb@multiply.com"
   }
 ]
