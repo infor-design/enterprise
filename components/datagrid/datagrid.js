@@ -2374,13 +2374,12 @@ $.fn.datagrid = function(options) {
 
       //Attach Keyboard support
       this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}},
+        var popupOpts = {trigger: 'immediate', offset: {y: 15}, attachToBody: $('html').hasClass('ios'), placementOpts: {strategies: ['flip', 'nudge']}},
           popupmenu = $(this).data('popupmenu');
 
         if (popupmenu) {
           popupmenu.close(true, true);
-        }
-        else {
+        } else {
 
           $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
             var menu = $(this).next('.popupmenu-wrapper');
