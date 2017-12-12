@@ -68,7 +68,7 @@
         this.initTree();
         this.handleKeys();
         this.setupEvents();
-        
+
         if (this.loadData(this.settings.dataset) === -1) {
           this.syncDataset(this.element);
           this.initSelected();
@@ -554,7 +554,7 @@
               self.selectNodeFinish(node, focus);
             }
 
-            
+
             self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
 
             if (node.closest('.folder a').is('[class^="icon"]')) {
@@ -597,7 +597,7 @@
             if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
               var response = function (nodes) {
                 var id = nodeData.id,
-                elem = self.findById(id);
+                  elem = self.findById(id);
 
                 //Add DB and UI nodes
                 elem.children = nodes;
@@ -648,27 +648,27 @@
       openNode: function(nextTarget, nodeTarget) {
         var self = this;
         var nodeData = nodeTarget.data('jsonData');
-        
+
         if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
             var response = function (nodes) {
-            var id = nodeData.id,
-            elem = self.findById(id);
-            
-            //Add DB and UI nodes
-            elem.children = nodes;
-            self.addChildNodes(elem, nodeTarget.parent());
-            nodeTarget.removeClass('is-loading');
-            self.loading = false;
+              var id = nodeData.id,
+              elem = self.findById(id);
 
-            //open
-            self.accessNode(nextTarget, nodeTarget);
+              //Add DB and UI nodes
+              elem.children = nodes;
+              self.addChildNodes(elem, nodeTarget.parent());
+              nodeTarget.removeClass('is-loading');
+              self.loading = false;
 
-            //sync data on node
-            nodeData.children = nodes;
-            nodeTarget.data('jsonData', nodeData);
-            self.selectNode(node, true);
-            self.initSelected();
-          };
+              //open
+              self.accessNode(nextTarget, nodeTarget);
+
+              //sync data on node
+              nodeData.children = nodes;
+              nodeTarget.data('jsonData', nodeData);
+              self.selectNode(nodeTarget, true);
+              self.initSelected();
+            };
 
           var args = {node: nodeTarget, data: nodeTarget.data('jsonData')};
           self.settings.source(args, response);
@@ -683,7 +683,7 @@
       closeNode: function(nextTarget, nodeTarget) {
         var self = this;
         self.setTreeIcon(nodeTarget.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
-        
+
         if (nodeTarget.closest('.folder a').is('[class^="icon"]')) {
           self.setTreeIcon(nodeTarget.closest('.folder a').find('svg.icon-tree'),
           nodeTarget.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', ''));
@@ -702,7 +702,7 @@
         }).animateClosed();
 
         nodeTarget.attr('aria-expanded', nodeTarget.attr('aria-expanded')!=='true');
-        
+
       },
 
       //Setup event handlers

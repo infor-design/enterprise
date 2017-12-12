@@ -1,12 +1,12 @@
 <div class="row top-padding">
     <div class="six columns">
       <h3>Tree Control: Open and Close Function</h3>
-      <p>This example shows how to use a function to allow/deny access to tree nodes.</p>
-      <p><button type="button" id='openclose' class="btn-primary">Open & Close Node</button></p>
+      <p>This example shows use afunction to expand and collapse tree nodes.</p>
+      <p><button type="button" id="openclose" class="btn-primary">Open & Close Node</button></p>
       <br />
     </div>
   </div>
-  
+
   <div class="row">
     <div class="twelve columns">
       <ul role="tree" id="the-tree" aria-label="Asset Types" class="tree" data-init="false">
@@ -22,9 +22,9 @@
       </ul>
     </div>
   </div>
-  
+
   <script>
-  
+
     // Mock permissions data
     var canViewNode = {
       'home': true,
@@ -32,7 +32,7 @@
       'leadership': false,
       'secrets': false
     }
-  
+
     // Mock ajax call to get permissions and returns a promise
     var hasNodePermission = function (node) {
       var hasPermission = canViewNode[node.attr('id')] || {};
@@ -43,17 +43,17 @@
     };
 
     var onExpand = function (node) {
-        // Do Something with the onExpand CallBack
-        console.log('expand callback');
-        return node;
+      // Do Something with the onExpand CallBack
+      console.log('expand callback');
+      return node;
     };
 
     var onCollapse = function (node) {
-        // Do Something with the OnCollapse CallBack
-        console.log('collapse callback');
-        return node;
+      // Do Something with the OnCollapse CallBack
+      console.log('collapse callback');
+      return node;
     };
-  
+
     // Show error dialog
     var showPermissionDenied = function () {
       $('body').message({
@@ -70,30 +70,45 @@
         }]
       });
     };
-  
+
     // Init the tree
     $('#the-tree').tree({
       onBeforeSelect: null,
       onExpand: null,
-      onCollapse: null
+      onCollapse: null,
+      source: function (req, response) {
+
+        setTimeout(function () {
+
+          var nodes = [{
+            "id": "node2.1",
+            "text": "Node 2.1"
+          },{
+            "id": "node2.2",
+            "text": "Node 2.2",
+            "children": []
+          }];
+
+          response(nodes);
+        }, 1000);
+
+      }
     });
   </script>
 
-<script type="text/javascript">
+<script>
     var elem = $('#the-tree').tree();
-  
+
     $('#openclose').on('click', function () {
-  
-      var api = elem.data('tree');
-      var nodeTarget = $('#public');
-      var nextTarget = nodeTarget.next();
-    if (nextTarget.hasClass('is-open')) {
-        api.closeNode(nextTarget, nodeTarget);
-    } else {
-        api.openNode(nextTarget, nodeTarget);
-    }
-  
+      var api = elem.data('tree'),
+        nodeTarget = $('#public'),
+        nextTarget = nodeTarget.next();
+
+      if (nextTarget.hasClass('is-open')) {
+          api.closeNode(nextTarget, nodeTarget);
+      } else {
+          api.openNode(nextTarget, nodeTarget);
+      }
+
     });
   </script>
-  
-  
