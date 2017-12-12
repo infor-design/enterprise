@@ -25,7 +25,8 @@
           side: 'left', // or right
           resize: 'immediate',
           containment: null, //document or parent
-          save: true
+          save: true,
+          rightSplitterWidth: 'auto'
         },
         settings = $.extend({}, defaults, options);
 
@@ -243,9 +244,13 @@
 
       splitTo: function (split, parentHeight) {
         var self = this,
-          splitter = this.element;
+          splitter = this.element,
+          s = this.settings;
 
         if (this.isSplitterRightSide) {
+          if (split > s.rightSplitterWidth) {
+            split = s.rightSplitterWidth;
+          }
           this.resizeRight(splitter, split);
         } else if (this.isSplitterHorizontal) {
           this.resizeTop(splitter, split, parentHeight);
