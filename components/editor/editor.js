@@ -1232,51 +1232,7 @@
             return this;
           }
           var types, clipboardData, pastedData,
-            paste, p, paragraphs,
-            getCleanedHtml = function(pastedData) {
-              var i, l, attributeStripper,
-                s = pastedData || '',
-                badAttributes = [
-                  'start','xmlns','xmlns:o','xmlns:w','xmlns:x','xmlns:m',
-                  'onmouseover','onmouseout','onmouseenter','onmouseleave',
-                  'onmousemove','onload','onfocus','onblur','onclick',
-                  'style'
-                ];
-
-              // Remove extra word formating
-              if (self.isWordFormat(s)) {
-                s = self.cleanWordHtml(s);
-              }
-
-              // Remove bad attributes
-              for (i = 0, l = badAttributes.length; i < l; i++) {
-                attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
-                s = self.stripAttribute(s, badAttributes[i], attributeStripper);
-
-                attributeStripper = new RegExp(' ' + badAttributes[i] + '=\'(.*?)\'','gi');
-                s = self.stripAttribute(s, badAttributes[i], attributeStripper);
-              }
-
-              // Remove "ng-" directives and "ng-" classes
-              s = s.replace(/(ng-\w+-\w+="(.|\n)*?"|ng-\w+="(.|\n)*?"|ng-(\w+-\w+)|ng-(\w+))/g, '');
-
-              // Remove comments
-              s = s.replace(/<!--(.*?)-->/gm, '');
-
-              // Remove extra spaces
-              s = s.replace(/\s\s+/g, ' ').replace(/\s>+/g, '>');
-
-              // Remove extra attributes from list elements
-              s = s.replace(/<(ul|ol)(.*?)>/gi, '<$1>');
-
-              // Remove html and body tags
-              s = s.replace(/<\/?(html|body)(.*?)>/gi, '');
-
-              // Remove header tag and content
-              s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
-
-              return s;
-            };
+            paste, p, paragraphs;
 
           if (e.clipboardData || e.originalEvent) {
             if (e.clipboardData && e.clipboardData.types) {
@@ -1318,23 +1274,28 @@
             }
           }
 
-          self.pastedData = getCleanedHtml(pastedData);
+          self.pastedData = self.isIe11 ?
+            pastedData : self.getCleanedHtml(pastedData);
 
           $.when(self.element.triggerHandler('beforepaste', [{pastedData: self.pastedData}])).done(function() {
             if (self.pastedData && !e.defaultPrevented) {
-              e.preventDefault();
+              if (!self.isIe11) {
+                e.preventDefault();
+              }
 
               if (document.queryCommandSupported('insertText')) {
                   document.execCommand('insertHTML', false, self.pastedData);
                   return false;
-              } else { // IE > 7
+              } else {
                 self.pasteHtmlAtCaret(self.pastedData);
               }
             }
             self.element.triggerHandler('afterpaste', [{pastedData: self.pastedData}]);
             self.pastedData = null;
           });
-          return false;
+          if (!self.isIe11) {
+            return false;
+          }
         };
 
         currentElement.on(self.pasteEvent, (self.settings.pasteAsPlainText ? self.pasteWrapper : self.pasteWrapperHtml));
@@ -1343,17 +1304,22 @@
       },
 
       pasteHtmlAtCaret: function(html) {
-        var sel, range;
+        var self = this,
+          templIE11 = 'x-text-content-templ-x',
+          sel, range;
         if (window.getSelection) {
-          // IE9 and non-IE
           sel = window.getSelection();
           if (sel.getRangeAt && sel.rangeCount) {
             range = sel.getRangeAt(0);
             range.deleteContents();
 
+            if (self.isIe11) {
+              html = templIE11;
+            }
+
             // Range.createContextualFragment() would be useful here but is
             // only relatively recently standardized and is not supported in
-            // some browsers (IE9, for one)
+            // some browsers
             var el = document.createElement('div');
 
             el.innerHTML = html;
@@ -1371,11 +1337,180 @@
               sel.removeAllRanges();
               sel.addRange(range);
             }
+
+            // IE 11
+            if (self.isIe11) {
+              var maxRun = 50,
+                deferredIE11 = $.Deferred();
+
+              var waitForPastedData = function(elem, savedContent) {
+                maxRun--;
+                if (maxRun < 0) {
+                  deferredIE11.reject();
+                  return;
+                }
+            		// If data has been processes by browser, process it
+                if (elem.childNodes && elem.childNodes.length > 0) {
+              		// Retrieve pasted content via innerHTML
+                  // (Alternatively loop through elem.childNodes or elem.getElementsByTagName here)
+                  html = elem.innerHTML;
+                  // self.pastedData = getCleanedHtml(elem.innerHTML);
+                  // Restore saved content
+                  elem.innerHTML = '';
+                  elem.appendChild(savedContent);
+                  deferredIE11.resolve();
+                }
+                // Else wait 5ms and try again
+                else {
+                  setTimeout(function () {
+                    waitForPastedData(elem, savedContent);
+                  }, 5);
+                }
+              };
+
+              // Everything else: Move existing element contents to a DocumentFragment for safekeeping
+              var savedContent = document.createDocumentFragment();
+              while(self.element[0].childNodes.length > 0) {
+              	savedContent.appendChild(self.element[0].childNodes[0]);
+              }
+              // Then wait for browser to paste content into it and cleanup
+              waitForPastedData(self.element[0], savedContent);
+
+              $.when(deferredIE11).done(function() {
+                var str = '',
+                  node = self.element
+                    .find(':contains('+ templIE11 +')')
+                    .filter(function() {
+                      return (this.textContent === templIE11);
+                    });
+
+                if (!node.length) {
+                  node = self.element
+                    .find(':contains('+ templIE11 +')')
+                    .filter(function() {
+                      return (this.textContent.indexOf(templIE11) > -1 && this.tagName !== 'UL');
+                    });
+                }
+
+                html = self.getCleanedHtml(html);
+
+                // Working with list
+                // Start with "<li"
+                if (/(^(\s+?)?<li)/ig.test(html)) {
+
+                  // Pasted data starts and ends with "li" tag
+                  if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) { //ends with "</li>"
+
+                    // Do not add "ul" if pasting on "li" node
+                    if (!node.is('li')) {
+                      html = '<ul>'+ html +'</ul>';
+                    }
+                    node.replaceWith(html);
+                  }
+                  // Missing at the end "</li>" tag
+                  else {
+                    // Pasting on "li" node
+                    if (node.is('li')) {
+                      node.replaceWith(html +'</li>');
+                    }
+
+                    // Not pasting on "li" node
+                    else {
+                      // If ul was closed and have extra nodes after list close
+                      str = (html.match(/<\/ul|<\/ol/gi) || []);
+                      // Pasted data contains "ul or ol" tags
+                      if (str.length) {
+                        node.replaceWith(html);
+                      } else {
+                        node.replaceWith(html +'</li></ul>');
+                      }
+                    }
+
+                  }
+                }
+
+                // Ends with "</li>" tag, but not started with "li" tag
+                else if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) {
+                  // Pasting on "li" node
+                  if (node.is('li')) {
+                    node.replaceWith('<li>'+ html);
+                  } else {
+                    str = (html.match(/<ul|<ol/gi) || []);
+                    // Pasted data contains "ul or ol" tags
+                    if (str.length) {
+                      html += (str[str.length-1]).replace(/<(ul|ol)/gi, '<$1>');
+                    }
+                    else {
+                      html = '<ul>'+ html +'</ul>';
+                    }
+                    node.replaceWith(html);
+                  }
+                }
+
+                // Default case
+                str = self.element[0].innerHTML;
+                if (str.indexOf(templIE11) > -1) {
+                  str = str.replace(templIE11, html);
+                }
+                self.element[0].innerHTML = self.getCleanedHtml(str);
+
+              });
+            }
           }
         } else if (document.selection && document.selection.type !== 'Control') {
-          // IE < 9
           document.selection.createRange().pasteHTML(html);
         }
+      },
+
+      // Get cleaned extra from html
+      getCleanedHtml: function(pastedData) {
+        var i, l, attributeStripper,
+          self = this,
+          s = pastedData || '',
+          badAttributes = [
+            'start','xmlns','xmlns:o','xmlns:w','xmlns:x','xmlns:m',
+            'onmouseover','onmouseout','onmouseenter','onmouseleave',
+            'onmousemove','onload','onfocus','onblur','onclick',
+            'style'
+          ];
+
+        // Remove extra word formating
+        if (self.isWordFormat(s)) {
+          s = self.cleanWordHtml(s);
+        }
+
+        // Remove bad attributes
+        for (i = 0, l = badAttributes.length; i < l; i++) {
+          attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
+          s = self.stripAttribute(s, badAttributes[i], attributeStripper);
+
+          attributeStripper = new RegExp(' ' + badAttributes[i] + '=\'(.*?)\'','gi');
+          s = self.stripAttribute(s, badAttributes[i], attributeStripper);
+        }
+
+        // Remove "ng-" directives and "ng-" classes
+        s = s.replace(/(ng-\w+-\w+="(.|\n)*?"|ng-\w+="(.|\n)*?"|ng-(\w+-\w+)|ng-(\w+))/g, '');
+
+        // Remove comments
+        s = s.replace(/<!--(.*?)-->/gm, '');
+
+        // Remove extra spaces
+        s = s.replace(/\s\s+/g, ' ').replace(/\s>+/g, '>');
+
+        // Remove extra attributes from list elements
+        s = s.replace(/<(ul|ol)(.*?)>/gi, '<$1>');
+
+        // Remove empty list
+        s = s.replace(/<li><\/li>/gi, '');
+        s = s.replace(/<(ul|ol)><\/(ul|ol)>/gi, '');
+
+        // Remove html and body tags
+        s = s.replace(/<\/?(html|body)(.*?)>/gi, '');
+
+        // Remove header tag and content
+        s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
+
+        return s;
       },
 
       htmlEntities: function (str) {
