@@ -83,7 +83,7 @@
         this.isFirefox = Soho.env.browser.name === 'firefox';
 
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
-        this.id = this.element.uniqueId('editor') + 'Unique';
+        this.id = this.element.uniqueId('editor') + '-id';
         this.container = this.element.parent('.field, .field-short').addClass('editor-container');
 
         this.settings.anchor = $.extend({}, defaults.anchor, this.settings.anchor);
@@ -750,7 +750,7 @@
           image: self.createImageModal()
         };
 
-        $('[name="em-target"]').dropdown();
+        $('[name="em-target-'+ self.id +'"]').dropdown();
 
         $('#modal-url-'+ self.id +', #modal-image-'+ self.id).modal()
           .on('beforeopen', function () {
@@ -770,10 +770,10 @@
               input = $('input:first', this),
               button = $('.modal-buttonset .btn-modal-primary', this);
 
-            $('[name="em-url"]').val(self.settings.anchor.url);
-            $('[name="em-class"]').val(self.settings.anchor.class);
-            $('[name="em-target"]').val(self.settings.anchor.target).trigger('updated');
-            $('[name="em-isclickable"]').prop('checked', self.settings.anchor.isClickable);
+            $('[name="em-url-'+ self.id +'"]').val(self.settings.anchor.url);
+            $('[name="em-class-'+ self.id +'"]').val(self.settings.anchor.class);
+            $('[name="em-target-'+ self.id +'"]').val(self.settings.anchor.target).trigger('updated');
+            $('[name="em-isclickable-'+ this.id +'"]').prop('checked', self.settings.anchor.isClickable);
 
             setTimeout(function () {
               if (isTouch && id === 'modal-image-'+ self.id) {
@@ -798,7 +798,7 @@
               if (currentLink.length) {
                 self.updateCurrentLink(currentLink);
               } else {
-                self.createLink($('[name="em-url"]', this));
+                self.createLink($('[name="em-url-'+ self.id +'"]', this));
               }
             } else {
               self.insertImage($('#image').val());
@@ -831,6 +831,7 @@
           targetOptions += '<option value="'+ self.settings.anchor.target +'">'+ self.settings.anchor.target +'</option>';
         }
 
+
         return $('<div class="modal editor-modal-url" id="modal-url-'+ this.id +'"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
@@ -838,20 +839,20 @@
             '</div>' +
             '<div class="modal-body">' +
               '<div class="field">' +
-                '<label for="em-url">' + Locale.translate('Url') + '</label>' +
-                '<input id="em-url" name="em-url" type="text" value="'+ self.settings.anchor.url +'">' +
+                '<label for="em-url-'+ self.id +'">' + Locale.translate('Url') + '</label>' +
+                '<input id="em-url-'+ self.id +'" name="em-url-'+ self.id +'" type="text" value="'+ self.settings.anchor.url +'">' +
               '</div>' +
               (self.settings.anchor.showIsClickable ?('<div class="field">' +
-                '<input type="checkbox" class="checkbox" id="em-isclickable" name="em-isclickable" checked="'+ self.settings.anchor.isClickable +'">' +
-                '<label for="em-isclickable" class="checkbox-label">' + Locale.translate('Clickable') + '</label>' +
+                '<input type="checkbox" class="checkbox" id="em-isclickable-'+ this.id +'" name="em-isclickable-'+ this.id +'" checked="'+ self.settings.anchor.isClickable +'">' +
+                '<label for="em-isclickable-'+ this.id +'" class="checkbox-label">' + Locale.translate('Clickable') + '</label>' +
               '</div>') : '') +
               '<div class="field">' +
-                '<label for="em-class">' + Locale.translate('CssClass') + '</label>' +
-                '<input id="em-class" name="em-class" type="text" value="'+ self.settings.anchor.class +'">' +
+                '<label for="em-class-'+ self.id +'">' + Locale.translate('CssClass') + '</label>' +
+                '<input id="em-class-'+ self.id +'" name="em-class-'+ self.id +'" type="text" value="'+ self.settings.anchor.class +'">' +
               '</div>' +
               '<div class="field">' +
-                '<label for="em-target" class="label">' + Locale.translate('Target') + '</label>' +
-                '<select id="em-target" name="em-target" class="dropdown">' +
+                '<label for="em-target-'+ self.id +'" class="label">' + Locale.translate('Target') + '</label>' +
+                '<select id="em-target-'+ self.id +'" name="em-target-'+ self.id +'" class="dropdown">' +
                   targetOptions +
                 '</select>' +
               '</div>' +
@@ -902,10 +903,10 @@
 
       updateCurrentLink: function (alink) {
         var self = this,
-          emUrl = $('[name="em-url"]').val(),
-          emClass = $('[name="em-class"]').val(),
-          emTarget = $('[name="em-target"]').val(),
-          emIsClickable = $('[name="em-isclickable"]').is(':checked');
+          emUrl = $('[name="em-url'+ this.id +'"]').val(),
+          emClass = $('[name="em-class'+ this.id +'"]').val(),
+          emTarget = $('[name="em-target'+ this.id +'"]').val(),
+          emIsClickable = self.settings.anchor.showIsClickable ? $('[name="em-isclickable'+ this.id +'"]').is(':checked') : self.settings.anchor.isClickable;
 
         alink.attr('href', (emUrl && $.trim(emUrl).length ? emUrl : self.settings.anchor.defaultUrl));
         alink.attr('class', (emClass && $.trim(emClass).length ? emClass : self.settings.anchor.defaultClass));
@@ -934,9 +935,10 @@
 
         // Set selection url/class/target for Link
         this.settings.anchor.url = input.val();
-        this.settings.anchor.class = $('[name="em-class"]').val();
-        this.settings.anchor.target = $('[name="em-target"]').val();
-        this.settings.anchor.isClickable = $('[name="em-isclickable"]').is(':checked');
+        this.settings.anchor.class = $('[name="em-class-'+ this.id +'"]').val();
+        this.settings.anchor.target = $('[name="em-target-'+ this.id +'"]').val();
+        this.settings.anchor.isClickable = this.settings.anchor.showIsClickable ?
+            $('[name="em-isclickable-'+ this.id +'"]').is(':checked') : this.settings.anchor.isClickable;
 
         alink = $('<a href="'+ input.val() +'">' + input.val() + '</a>');
 
@@ -954,12 +956,10 @@
 
         if (this.sourceViewActive()) {
           this.insertTextAreaContent(input.val(), 'anchor');
-        }
-        else {
+        } else {
           var sel, range, rangeStr;
 
           if (!this.selection.isCollapsed || this.isIe11) {
-            //document.execCommand('createLink', false, input.val());
 
             //get example from: http://jsfiddle.net/jwvha/1/
             //and info: http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div
@@ -996,9 +996,9 @@
                 }
               }
             }
-          }
-          else {
+          } else {
             var self = this;
+
             document.execCommand('insertHtml', null, alink[0].outerHTML);
             setTimeout(function () {
               self.getCurrentElement().focus();
@@ -1842,9 +1842,11 @@
         $('html').off('mouseup.editor');
 
         this.destroyToolbar();
-        this.sourceView.off('.editor');
-        this.sourceView.remove();
-        this.sourceView = null;
+        if (this.sourceView) {
+          this.sourceView.off('.editor');
+          this.sourceView.remove();
+          this.sourceView = null;
+        }
 
         if ($('[data-editor="true"]').length === 1) {
           $('#modal-url-'+ this.id +', #modal-image-'+ this.id).remove();
