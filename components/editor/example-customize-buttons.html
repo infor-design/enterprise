@@ -15,8 +15,12 @@
 </div>
 
 <script>
-  $('.editor').editor({buttons: {
-      editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist', 'unorderedlist', 'separator'],
-      source: []
-    }});
+  $('body').one('initialized', function () {
+
+    $('.editor').editor({buttons: {
+        editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist', 'unorderedlist', 'separator'],
+        source: []
+      }});
+
+  });
 </script>
