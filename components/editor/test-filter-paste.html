@@ -19,30 +19,27 @@
 
 
 <script>
-$('body').one('initialized', function () {
-  $(function () {
-    var elem = $('#editor1');
+  $('body').one('initialized', function () {
 
-    // On before paste ==========================================================
-    elem.on('beforepaste', function (e, args) {
-      var deferred = $.Deferred(),
-        api = elem.data('editor'),
-        pastedData = args.pastedData,
-        editedContent = function(content) {
-          var str = '<p style="background-color: yellow;">Some added content</p>';
-          return str + '\n\n' + content;
-        };
-      setTimeout(function () {
-        if (api) {
-          api.pastedData = editedContent(pastedData);
-          console.log(api);
-        }
-        deferred.resolve();
-      }, 100);
-      return deferred.promise();
-    });
+      var elem = $('#editor1');
+
+      elem.on('beforepaste', function (e, args) {
+        var deferred = $.Deferred(),
+          api = elem.data('editor'),
+          pastedData = args.pastedData,
+          editedContent = function(content) {
+            var str = '<p style="background-color: yellow;">Some added content</p>';
+            return str + '\n\n' + content;
+          };
+        setTimeout(function () {
+          if (api) {
+            api.pastedData = editedContent(pastedData);
+            console.log(api);
+          }
+          deferred.resolve();
+        }, 100);
+        return deferred.promise();
+      });
 
   });
-
-});
 </script>
