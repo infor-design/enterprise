@@ -2531,6 +2531,7 @@
           }
 
           sizeableTabs[i].style.width = visibleTabSize + 'px';
+          sizeableTabs[i].style.paddingRight = '50px';
           a[0].style.width = visibleTabSize + 'px';
         }
 
