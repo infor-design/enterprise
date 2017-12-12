@@ -6,6 +6,7 @@
     -   [hasError](#haserror)
     -   [addMessage](#addmessage)
 -   [getErrorMessage](#geterrormessage)
+-   [getMessage](#getmessage)
 -   [scrollIntoView](#scrollintoview)
 
 ## Validator
@@ -39,6 +40,14 @@ Adds a message/icon to a form field.
 ## getErrorMessage
 
 Returns the errormessage data object for a Field
+
+**Parameters**
+
+-   `options`  (object) optional
+
+## getMessage
+
+Returns the specific type message data object for a Field
 
 **Parameters**
 
