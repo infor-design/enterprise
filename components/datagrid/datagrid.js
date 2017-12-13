@@ -7694,7 +7694,7 @@ $.fn.datagrid = function(options) {
         }
 
         detail.animateClosed().on('animateclosedcomplete', function () {
-          expandRow.css('display', 'none');
+        //  expandRow.css('display', 'none');
           self.element.triggerHandler('collapserow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
         });
 
@@ -7712,8 +7712,23 @@ $.fn.datagrid = function(options) {
           rowElement.addClass('is-rowactivated');
         }
 
-        detail.animateOpen();
-        self.element.triggerHandler('expandrow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
+        var eventData = [{grid: self, row: dataRowIndex, detail: detail, item: item}];
+
+        if (self.settings.onExpandRow) {
+          var response;
+          response = function(markup) {
+            if (markup) {
+              detail.find('.datagrid-row-detail-padding').empty().append(markup);
+            }
+            detail.animateOpen();
+          };
+
+          self.settings.onExpandRow(eventData[0], response);
+        } else {
+          detail.animateOpen();
+        }
+
+        self.element.triggerHandler('expandrow', eventData);
       }
     },
 
