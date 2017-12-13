@@ -1583,8 +1583,11 @@ $.fn.datagrid = function(options) {
         expandableRow: false, // Supply an empty expandable row template
         redrawOnResize: true, //Run column redraw logic on resize
         exportConvertNegative: false, // Export data with trailing negative signs moved in front
+        columnGroups: null, // The columns to use for grouped column headings
+        treeGrid: false, // If true a tree grid is expected so addition calculations will be used to calculate of the row children
         onPostRenderCell: null, //A callback function that will fire and send you the cell container and related information for any cells with postRender: true.
         onDestroyCell: null, //A callback that goes along with onPostRenderCell and will fire when this cell is destroyed and you need notification of that.
+        onEditCell: null, //A callback that fires when a cell is edited, the editor object is passed in to the function
         onExpandRow: null, //A callback function that fires when expanding rows. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
         emptyMessage: {title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data'}
       },
@@ -1639,10 +1642,13 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
   * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
-  * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
-  * @param {Boolean} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
-  * @param {Boolean} onExpandRow &nbsp;-&nbsp A callback function that fires when expanding rows. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
-  * @param {Boolean} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
+  * @param {Array} columnGroups &nbsp;-&nbsp An array of columns to use for grouped column headers.
+  * @param {Boolean} treeGrid: &nbsp;-&nbsp If true a tree grid is expected so addition calculations will be used to calculate of the row children
+  * @param {Function} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
+  * @param {Function} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+  * @param {Function} onEditCell  &nbsp;-&nbsp A callback that fires when a cell is edited, the editor object is passed in to the function
+  * @param {Function} onExpandRow &nbsp;-&nbsp A callback function that fires when expanding rows. To be used when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+  * @param {Object} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
   */
   function Datagrid(element) {
     this.element = $(element);
