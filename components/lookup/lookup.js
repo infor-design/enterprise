@@ -383,11 +383,10 @@
         if (hasKeywordSearch && self.grid) {
           if (!self.grid.filterExpr || (
             self.grid.filterExpr &&
-            self.grid.filterExpr[0] && 
+            self.grid.filterExpr[0] &&
             self.grid.filterExpr[0].value !== '')) {
             self.grid.keywordSearch('');
           }
-          // self.grid.keywordSearch('');
         }
 
         //Mark selected rows
