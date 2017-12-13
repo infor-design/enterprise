@@ -65,6 +65,7 @@ module.exports = [
   'temp/amd/swaplist.js',
   'temp/amd/toast.js',
   'temp/amd/tabs.js',
+  'temp/amd/multi-tabs.js',
   'temp/amd/tag.js',
   'temp/amd/textarea.js',
   'temp/amd/timepicker.js',

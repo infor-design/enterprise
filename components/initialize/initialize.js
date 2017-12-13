@@ -154,6 +154,9 @@
             //Vertical Tabs
             ['verticaltabs', '.tab-container.vertical'],
 
+            //MultiTabs Containers
+            ['multitabs', '.multitabs-container'],
+
             //Select / DropDowns
             ['dropdown', 'select.dropdown:not(.multiselect)'],
             ['dropdown', 'select.dropdown-xs:not(.multiselect)'],
