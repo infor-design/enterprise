@@ -1,28 +1,47 @@
-<div class="page-container top-padding scrollable" id="maincontent" role="main" initialize>
+<div class="row top-padding">
+  <div class="twelve columns">
 
-   <div class="row top-padding">
-      <div class="twelve columns">
+    <h3 class="fieldset-title">Contextual Action Panel (with full markup loaded via iframe)</h3>
+    <p>This is similar to how an expanded Ming.le context app would be shown. Note: there is currently no way to close this once open due to iframe limitations.</p>
+    <br>
 
-         <h3>Contextual Action Panel (with full markup loaded via iframe)</h3>
-         <h4>This is similar to how an expanded Ming.le context app would be shown. Note: there is currently no way to close this once open due to iframe limitations.</h4>
-         <br/><br/>
+    <button class="btn-secondary" type="button" id="show">Show</button>
 
-         <button class="btn-secondary" type="button" id="show">Show</button>
-
-      </div>
-   </div>
-
-   <script>
-      $('#show').on('click', function () {
-         var content = $('<iframe src="./partial-example-content" style="width: 488px; height: 278px; overflow:hidden;"></iframe>');
-
-         $('body').contextualactionpanel({
-            title: null,
-            content: content,
-            trigger: 'immediate'
-         });
-
-      });
-   </script>
-
+  </div>
 </div>
+
+<script type="text/javascript">
+  $('#show').on('click', function() {
+    $('body').contextualactionpanel({
+      content: '\
+        <div class="contextual-action-panel">\
+        <div class="modal-content">\
+          <div class="modal-header">\
+            <div class="toolbar">\
+              <div class="title">Company Information</div>\
+              <div class="buttonset">\
+                <button class="btn" type="button">\
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">\
+                    <use xlink:href="#icon-save"></use>\
+                  </svg>\
+                </button>\
+                <div class="separator"></div>\
+                <button class="btn-close" type="button">\
+                  <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">\
+                    <use xlink:href="#icon-close"></use>\
+                  </svg>\
+                </button>\
+              </div>\
+            </div>\
+          </div>\
+          <div class="modal-body-wrapper">\
+            <div class="modal-body">\
+              <iframe src="./partial-example-content" style="overflow:hidden; width:767px; height:225px;"></iframe>\
+            </div>\
+          </div>\
+        </div>\
+        </div>',
+      trigger: 'immediate'
+    });
+  });
+</script>
