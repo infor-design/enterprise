@@ -381,7 +381,13 @@
 
         // Reset keyword search from previous loads
         if (hasKeywordSearch && self.grid) {
-          self.grid.keywordSearch('');
+          if (!self.grid.filterExpr || (
+            self.grid.filterExpr &&
+            self.grid.filterExpr[0] && 
+            self.grid.filterExpr[0].value !== '')) {
+            self.grid.keywordSearch('');
+          }
+          // self.grid.keywordSearch('');
         }
 
         //Mark selected rows
