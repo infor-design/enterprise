@@ -1583,8 +1583,9 @@ $.fn.datagrid = function(options) {
         expandableRow: false, // Supply an empty expandable row template
         redrawOnResize: true, //Run column redraw logic on resize
         exportConvertNegative: false, // Export data with trailing negative signs moved in front
-        onPostRenderCell: null, //A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
-        onDestroyCell: null, //A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need notification of that.
+        onPostRenderCell: null, //A callback function that will fire and send you the cell container and related information for any cells with postRender: true.
+        onDestroyCell: null, //A callback that goes along with onPostRenderCell and will fire when this cell is destroyed and you need notification of that.
+        onExpandRow: null, //A callback function that fires when expanding rows. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
         emptyMessage: {title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data'}
       },
       settings = $.extend({}, defaults, options);
@@ -1640,6 +1641,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
   * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
   * @param {Boolean} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+  * @param {Boolean} onExpandRow &nbsp;-&nbsp A callback function that fires when expanding rows. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
   * @param {Boolean} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
   */
   function Datagrid(element) {
