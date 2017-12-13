@@ -144,14 +144,21 @@
   // Split Button with Icon and Label
   // ------------------------------------------------
   (function() {
-    var $splitButtonSortAction = $('#split-button-sort-icon-label-action');
+    var $splitButtonSortAction = $('#split-button-sort-icon-action');
+    var $splitButtonSortLabelAction = $('#split-button-sort-icon-label-action');
     var $splitButtonSortMenuTrigger = $('#split-button-sort-icon-label-menu-trigger');
     var isAscending = true;
+    var isAscending2 = true;
 
     // Action Button fires the action
     $splitButtonSortAction.on('click', function (e) {
       isAscending = !isAscending;
       $(this).find('use').attr('xlink:href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
+    });
+
+    $splitButtonSortLabelAction.on('click', function (e) {
+      isAscending2 = !isAscending2;
+      $(this).find('use').attr('xlink:href', isAscending2 ? '#icon-sort-up' : '#icon-sort-down');
     });
 
     // MenuButton selection changes the default action
