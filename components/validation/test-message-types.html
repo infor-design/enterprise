@@ -18,6 +18,7 @@
       <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
       <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
       <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
+      <button class="btn-primary" type="button" onClick="getMessage()">Get Message</button>
     </div>
   </div>
 </div>
@@ -31,7 +32,16 @@
       <label for="date-field">Date Field</label>
       <input id="date-field" data-options="{'placeholder': false}" class="datepicker" name="date-field" type="text">
     </div>
-
+  </div>
+  <div class="two columns">
+    <div class="field">
+      <label for="output-text-field">Text Field Result of Get Message</label>
+      <input id="output-text-field" readonly class="input-lg"/>
+    </div>
+    <div class="field">
+      <label for="output-date-field">Date Field Result of Get Message</label>
+      <input id="output-date-field" readonly class="input-lg" />
+    </div>
   </div>
 </div>
 
@@ -57,6 +67,15 @@
       message: '',
       type   : currentValidationType
     });
+  }
+
+  function getMessage() {
+    var options = {
+      type   : currentValidationType
+    };
+
+    $('#output-text-field').val($('#text-field').getMessage(options));
+    $('#output-date-field').val($('#date-field').getMessage(options));
   }
 
   function clearAllMessages() {

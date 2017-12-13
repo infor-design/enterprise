@@ -832,7 +832,7 @@
 
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass(type);
-      field.removeData(type +'-errormessage dataErrormessage');
+      field.removeData('data-' + type + 'message');
 
       if (hasTooltip) {
         tooltipAPI = field.find('.icon.' + type).data('tooltip') || tooltipAPI;
@@ -954,6 +954,19 @@
 
     var instance = new Validator(this, settings);
     return instance.getField($(this)).data('data-errormessage');
+  };
+
+  /**
+   * Returns the specific type message data object for a Field
+   *
+   * @param options (object) optional
+   */
+  $.fn.getMessage = function(options) {
+    var defaults = {type: 'error'},
+      settings = $.extend({}, defaults, options);
+
+    var instance = new Validator(this, settings);
+    return instance.getField($(this)).data('data-' + settings.type + 'message');
   };
 
   /**
