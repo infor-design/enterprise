@@ -5035,7 +5035,7 @@ $.fn.datagrid = function(options) {
           if (self.grandTotal) {
             countText = self.settings.resultsText(self, self.grandTotal, count);
           } else {
-            countText = self.settings.resultsText(self, count, self.filteredCount || 0);
+            countText = self.settings.resultsText(self, count, (count - self.filteredCount) || 0);
           }
 
         } else {
