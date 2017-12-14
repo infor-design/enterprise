@@ -3195,28 +3195,37 @@ html[dir='rtl'] {
 
 .ie {
   .datagrid-body {
-    tbody tr.is-active-row {
-      outline: 0;
-
+    tbody tr {
       td {
         .datagrid-cell-wrapper {
-          border-color: $primary-color;
-          border-style: solid;
-          border-width: 1px 0;
+          @include css3(transition, none);
         }
+      }
+      // scss-lint:disable NestingDepth
+      &.is-active-row {
+        outline: 0;
 
-        &:first-child {
+        td {
           .datagrid-cell-wrapper {
-            border-width: 1px 0 1px 1px;
+            border-color: $primary-color;
+            border-style: solid;
+            border-width: 1px 0;
           }
-        }
 
-        &:last-child {
-          .datagrid-cell-wrapper {
-            border-width: 1px 1px 1px 0;
+          &:first-child {
+            .datagrid-cell-wrapper {
+              border-width: 1px 0 1px 1px;
+            }
+          }
+
+          &:last-child {
+            .datagrid-cell-wrapper {
+              border-width: 1px 1px 1px 0;
+            }
           }
         }
       }
+      // scss-lint:enable NestingDepth
     }
   }
 }
