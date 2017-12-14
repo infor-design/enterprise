@@ -1,0 +1,61 @@
+<div class="page-container two-column fixed splitter-container">
+
+  <nav class="sidebar scrollable">
+    <div class="content">
+      <div class="splitter splitter-right" data-options="{width: {'right': 710}}"></div>
+    </div>
+  </nav>
+  <section class="main">
+    <div class="content scrollable">
+      <div class="row">
+        <div class="twelve columns">
+          <h2 class="fieldset-title">Header Test: Splitter with Configurable Width</h2>
+          <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7101" target="_blank">Related JIRA Ticket</a>. This test demonstrates right splitter with a fixed width of 710px. This means splitter cannot be push beyond 710px.</p>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="one-half column">
+          <div class="field">
+            <label for="example-stacked-name">Name</label>
+            <input type="text" id="example-stacked-name" name="example-stacked-name">
+          </div>
+          <div class="field">
+            <label for="example-stacked-address">Address</label>
+            <input type="text" id="example-stacked-address" name="example-stacked-address">
+          </div>
+          <div class="field">
+            <label for="example-stacked-state" class="label">State</label>
+            <select id="example-stacked-state" name="example-stacked-state" class="dropdown">
+              <option value="AL">Alabama</option>
+              <option value="NJ" selected>New Jersey</option>
+              <option value="NY">New York</option>
+              <option value="WY">Wyoming</option>
+            </select>
+          </div>
+          <div class="field">
+            <input type="checkbox" class="checkbox" id="example-stacked-remember">
+            <label for="example-stacked-remember" class="checkbox-label">Remember Me</label>
+          </div>
+
+        </div>
+        <div class="one-half column">
+          <div class="field">
+            <label for="example-stacked-email">Email</label>
+            <input type="text" id="example-stacked-email" name="example-stacked-email">
+          </div>
+          <div class="field">
+            <label for="example-stacked-password">Password</label>
+            <input type="password" id="example-stacked-password" name="example-stacked-password">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script type="text/javascript">
+  $('.tree').on('selected', function (e, args, x) {
+      console.log(args, x);
+  });
+</script>

@@ -713,6 +713,14 @@ div.dropdown-xs,
     margin-top: 1px;
   }
 
+  .dropdown-list {
+    &.multiple li {
+      &::before {
+        margin-left: -23px;
+      }
+    }
+  }
+
   &.ie11 {
     .is-ontop {
       margin-top: 2px;
@@ -741,7 +749,6 @@ div.dropdown-xs,
     &.multiple li {
       &::before {
         margin-left: -23px;
-        top: 0;
       }
 
       &.is-selected::after {
