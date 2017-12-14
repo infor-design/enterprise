@@ -136,6 +136,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus {
+        background-color: $datagrid-list-header-bg-color;
         box-shadow: $datagrid-list-header-box-shadow;
         // scss-lint:disable ImportantRule
         outline: 1px solid $datagrid-list-header-focus-border-color !important;
