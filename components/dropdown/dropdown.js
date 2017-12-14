@@ -777,7 +777,7 @@
 
       //handle events while search is focus'd
       handleSearchEvents: function () {
-        var self = this, timer;
+        var self = this, timer, timerDelay;
 
         if (this.settings.noSearch) {
           this.searchInput.prop('readonly', true);
@@ -800,6 +800,7 @@
 
           if (self.settings.noSearch === false && !self.settings.source) {
             clearTimeout(timer);
+            clearTimeout(timerDelay);
             timer = setTimeout(function () {
               if (searchInput.val() === '') {
                 self.resetList();
@@ -807,6 +808,10 @@
                 self.filterList(searchInput.val().toLowerCase());
               }
             }, 100);
+
+            timerDelay = setTimeout(function () {
+              searchInput.val('');
+            }, 600);
           }
         }).on('keypress.dropdown', function (e) {
           self.isFiltering = true;
@@ -829,13 +834,13 @@
         if (!term) {
           term = '';
         }
-
+        
         if (term && term.length) {
           results = this.listfilter.filter(list, term);
         }
 
         this.list.addClass('search-mode');
-        this.list.find('.icon').attr('class', 'icon search').changeIcon('search');
+        this.list.find('.icon').attr('class', 'icon search').changeIcon('close');
         this.searchInput.removeAttr('aria-activedescendant');
 
         this.unhighlightOptions();
