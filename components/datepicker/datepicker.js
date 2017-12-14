@@ -950,6 +950,7 @@
           this.header.find('.year').text(' ' + year);
 
           if (this.yearFist) {
+            elementDate.setFullYear(year);
             var translation = Locale.formatDate(elementDate, {date: 'year'}),
               justYear = translation.split(' ')[0];
 
