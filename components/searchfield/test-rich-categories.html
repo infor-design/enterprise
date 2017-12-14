@@ -8,6 +8,12 @@
   </div>
 </div>
 
+<style id="category-tests-style">
+  #output-area {
+    padding: 20px;
+  }
+</style>
+
 <div class="row">
   <div class="six columns">
 
@@ -79,7 +85,7 @@
     // Fill the console with information about currently selected categories.
     function getSelectionData(type, api) {
       var data = api.getCategoryData(true),
-        outputHTML = '<h3>'+ type +' Selected Elements</h3>';
+        outputHTML = '<h3>'+ type +' Selected Elements</h3><br />';
 
       for (var i = 0; i < data.length; i++) {
         outputHTML += '<b>' + data[i].name + '</b><br />';
@@ -87,7 +93,7 @@
           outputHTML += '<em>id:</em> #' + data[i].id + '<br />';
         }
         if (data[i].value) {
-          outputHTML += '<em>value:</em>' + data[i].value + '<br />';
+          outputHTML += '<em>value:</em> ' + data[i].value + '<br />';
         }
         outputHTML += '<br />';
       }
@@ -99,8 +105,8 @@
     buttonClear.on('click.test', clear);
 
     // Get pseudo markup for categories button
-    singleCategoriesButton = singleAPI.button;
-    multiCategoriesButton = multiAPI.button;
+    singleCategoriesButton = singleAPI.categoryButton;
+    multiCategoriesButton = multiAPI.categoryButton;
 
     // Clear the console whenever category selection on the searchfield changes.
     singleCategoriesButton.on('selected.test', function() {
