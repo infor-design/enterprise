@@ -1,4 +1,10 @@
 <div class="row">
+  <div class="six columns">
+    <h3>Example of validation types with example processing for Landmark</h3>
+  </div>
+</div>
+
+<div class="row">
   <div class="full-width">
     <label>Type of Alert</label>
     <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" onChange="onChange(event)"
@@ -105,4 +111,24 @@
       type: 'info'
     });
   }
+
+  $("#text-field, #date-field").on('valid error', function (event, validation) {
+    console.log([ event.currentTarget.id, event.type, validation.field.prop('tagName') ]);
+
+    var isAlert = $('#is-alert').prop('checked');
+    var alertText = (isAlert) ? ' is alert,' : '';
+
+    if (event.type === 'valid' && isAlert) {
+      setTimeout(function () {
+        $('#' + event.currentTarget.id).addMessage({
+          message    : message + alertText + ' type is ' + currentValidationType,
+          type       : currentValidationType,
+          showTooltip: false,
+          inline     : true,
+          isAlert    : isAlert
+        });
+      }, 10);
+    }
+  });
+
 </script>
