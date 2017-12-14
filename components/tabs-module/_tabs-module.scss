@@ -70,6 +70,10 @@
     height: 34px;
     overflow: hidden;
     width: 100%;
+
+    li {
+      padding-right: 50px;
+    }
   }
 
   &.has-toolbar {
