@@ -777,7 +777,7 @@
 
       //handle events while search is focus'd
       handleSearchEvents: function () {
-        var self = this, timer, tmrDelay;
+        var self = this, timer, timerDelay;
 
         if (this.settings.noSearch) {
           this.searchInput.prop('readonly', true);
@@ -800,7 +800,7 @@
 
           if (self.settings.noSearch === false && !self.settings.source) {
             clearTimeout(timer);
-            clearTimeout(tmrDelay);
+            clearTimeout(timerDelay);
             timer = setTimeout(function () {
               if (searchInput.val() === '') {
                 self.resetList();
@@ -809,7 +809,7 @@
               }
             }, 100);
 
-            tmrDelay = setTimeout(function () {
+            timerDelay = setTimeout(function () {
               searchInput.val('');
             }, 600);
           }
