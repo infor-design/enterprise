@@ -210,8 +210,8 @@ svg.icon-logo {
 }
 
 .img-placeholder {
-  background-color: #ececec;
-  border: 1px solid #e1e1e1;
+  background-color: $image-background-color;
+  border: 1px solid $image-border-color;
   border-radius: 2px;
   display: table-cell;
   height: 100px;
