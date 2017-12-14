@@ -569,10 +569,6 @@ window.Editors = {
           .appendTo(container);
       }
 
-      if (column.align) {
-        this.input.addClass('l-'+ column.align +'-text');
-      }
-
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
       }
