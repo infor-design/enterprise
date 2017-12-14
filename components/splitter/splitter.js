@@ -26,7 +26,10 @@
           resize: 'immediate',
           containment: null, //document or parent
           save: true,
-          rightSplitterWidth: 'auto'
+          width: {
+            left: 'auto',
+            right: 'auto'
+          }
         },
         settings = $.extend({}, defaults, options);
 
@@ -248,13 +251,16 @@
           s = this.settings;
 
         if (this.isSplitterRightSide) {
-          if (split > s.rightSplitterWidth) {
-            split = s.rightSplitterWidth;
+          if (split > s.width.right) {
+            split = s.width.right;
           }
           this.resizeRight(splitter, split);
         } else if (this.isSplitterHorizontal) {
           this.resizeTop(splitter, split, parentHeight);
         } else {
+          if (split > s.width.left) {
+            split = s.width.left;
+          }
           this.resizeLeft(splitter, split);
         }
 
