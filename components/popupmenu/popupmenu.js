@@ -1546,7 +1546,9 @@
             insertTarget = searchfield.first();
           }
 
-          this.menu.insertAfter(insertTarget);
+          if (this.menu && insertTarget) {
+            this.menu.insertAfter(insertTarget);
+          }
         }
 
         this.menu.find('.submenu').children('a').each(function(i, item) {
