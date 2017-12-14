@@ -5844,7 +5844,7 @@ $.fn.datagrid = function(options) {
           // Hide non matching rows
           if (!found) {
             row.addClass('is-filtered').hide();
-          } else if (found && row.is('.datagrid-expandable-row')) {
+          } else if (found && row.is('.datagrid-expandable-row') && term !== '') {
             row.prev().show();
             row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
             row.prev().find('.plus-minus').addClass('active');
