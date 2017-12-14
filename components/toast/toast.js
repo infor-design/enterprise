@@ -24,7 +24,7 @@
           position: 'top right',  //top left, bottom left, bottom right (center??)
           audibleOnly: false,
           progressBar: true,
-          timeout: 6000
+          timeout: 350 // "60" === 1 second
         },
         settings = $.extend({}, defaults, options);
 
@@ -71,26 +71,29 @@
 
         settings.timeout = settings.audibleOnly ? 100 : settings.timeout;
 
-        // Start timer
-        timer = new $.fn.timer(function() {
-          self.remove(toast);
-        }, settings.timeout);
-
         if (settings.progressBar) {
           toast.append(progress);
         }
 
-        $(timer.event).on('update', function(e, data) {
-          percentage = ((maxHideTime - data.counter) / maxHideTime) * 100;
+        // Build the RenderLoop integration
+        timer = new Soho.RenderLoopItem({
+          duration: settings.timeout,
+          timeoutCallback: function() {
+            self.remove(toast);
+          },
+          updateCallback: function(data) {
+            percentage = ((data.duration - data.elapsedTime) / maxHideTime) * 100;
 
-          if (Locale.isRTL()) {
-            percentage = 100 - percentage;
-          }
+            if (Locale.isRTL()) {
+              percentage = 100 - percentage;
+            }
 
-          if (settings.progressBar) {
-            progress[0].style.width = percentage + '%';
+            if (settings.progressBar) {
+              progress[0].style.width = percentage + '%';
+            }
           }
         });
+        Soho.renderLoop.register(timer);
 
         container.append(toast);
         toast.addClass((settings.audibleOnly ? 'audible' : 'effect-scale'));
@@ -110,7 +113,7 @@
         });
 
         closeBtn.on('click', function () {
-          timer.cancel();
+          timer.destroy();
           self.remove(toast);
         });
       },
@@ -123,9 +126,17 @@
         }
 
         toast.addClass('effect-scale-hide');
-        setTimeout(function () {
-          toast.remove();
-        }, 500);
+
+        var closeTimer = new Soho.RenderLoopItem({
+          duration: 20,
+          updateCallback: function() {}, // TODO: make this work without an empty function
+          timeoutCallback: function() {
+            toast.remove();
+          }
+        });
+        Soho.renderLoop.register(closeTimer);
+
+        return closeTimer;
       },
 
       // Teardown

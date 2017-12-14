@@ -17,11 +17,14 @@
   </div>
 </div>
 
-
 <script>
-  $('#editor1').editor({
-    excludeButtons: {
-      editor: []
-    }
+  $('body').one('initialized', function () {
+
+    $('#editor1').editor({
+      excludeButtons: {
+        editor: []
+      }
+    });
+
   });
 </script>

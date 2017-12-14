@@ -174,6 +174,12 @@
 
       window.Soho.theme = 'light';
 
+      // Soho RenderLoop integration
+      // Added in v4.3.4-rc (SOHO-7005)
+      if (Soho.renderLoop && typeof Soho.renderLoop.start === 'function') {
+        Soho.renderLoop.start();
+      }
+
       return this;
     }
 

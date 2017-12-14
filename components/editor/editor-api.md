@@ -6,11 +6,12 @@
     -   [switchToolbars](#switchtoolbars)
     -   [createURLModal](#createurlmodal)
     -   [createImageModal](#createimagemodal)
+    -   [updated](#updated)
+    -   [destroy](#destroy)
+    -   [destroy](#destroy-1)
     -   [disable](#disable)
     -   [enable](#enable)
     -   [readonly](#readonly)
-    -   [destroy](#destroy)
-    -   [handleEvents](#handleevents)
 
 ## Editor
 
@@ -38,6 +39,20 @@ Function that creates the Url Modal Dialog. This can be customized by making a m
 
 Function that creates the Image Dialog. This can be customized by making a modal with ID `#modal-image-{this.id}`
 
+### updated
+
+Updates the component instance.  Can be used after being passed new settings.
+
+Returns **this** 
+
+### destroy
+
+Remove all events and reset back to default.
+
+### destroy
+
+Detach Events and tear back additions.
+
 ### disable
 
 Disable the editable area.
@@ -49,16 +64,3 @@ Enable the editable area.
 ### readonly
 
 Make the editable area readonly.
-
-### destroy
-
-Detach Events and tear back additions.
-
-### handleEvents
-
-This component fires the following events.
-
-**Parameters**
-
--   `input` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction.
--   `keydown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after as keys are pressed.

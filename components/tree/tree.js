@@ -68,7 +68,7 @@
         this.initTree();
         this.handleKeys();
         this.setupEvents();
-        
+
         if (this.loadData(this.settings.dataset) === -1) {
           this.syncDataset(this.element);
           this.initSelected();
@@ -554,7 +554,7 @@
               self.selectNodeFinish(node, focus);
             }
 
-            
+
             self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
 
             if (node.closest('.folder a').is('[class^="icon"]')) {
@@ -591,13 +591,13 @@
             } else { // No Callback specified
               self.selectNodeFinish(node, focus);
             }
-  
+
             var nodeData = node.data('jsonData');
 
             if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
               var response = function (nodes) {
                 var id = nodeData.id,
-                elem = self.findById(id);
+                  elem = self.findById(id);
 
                 //Add DB and UI nodes
                 elem.children = nodes;
@@ -606,7 +606,7 @@
                 self.loading = false;
 
                 //open
-                self.openNode(next, node);
+                self.accessNode(next, node);
 
                 //sync data on node
                 nodeData.children = nodes;
@@ -622,13 +622,13 @@
 
               return;
             }
-            self.openNode(next, node);
+            self.accessNode(next, node);
           }
         }
       },
 
-      //Open the node
-      openNode: function(next, node) {
+      //Access the node
+      accessNode: function(next, node) {
         var self = this;
 
         self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconOpen);
@@ -643,6 +643,66 @@
           self.isAnimating = false;
         }).addClass('is-open').css('height', 0).animateOpen();
         node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
+      },
+
+      openNode: function(nextTarget, nodeTarget) {
+        var self = this;
+        var nodeData = nodeTarget.data('jsonData');
+
+        if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
+            var response = function (nodes) {
+              var id = nodeData.id,
+              elem = self.findById(id);
+
+              //Add DB and UI nodes
+              elem.children = nodes;
+              self.addChildNodes(elem, nodeTarget.parent());
+              nodeTarget.removeClass('is-loading');
+              self.loading = false;
+
+              //open
+              self.accessNode(nextTarget, nodeTarget);
+
+              //sync data on node
+              nodeData.children = nodes;
+              nodeTarget.data('jsonData', nodeData);
+              self.selectNode(nodeTarget, true);
+              self.initSelected();
+            };
+
+          var args = {node: nodeTarget, data: nodeTarget.data('jsonData')};
+          self.settings.source(args, response);
+          nodeTarget.addClass('is-loading');
+          self.loading = true;
+
+          return;
+        }
+        self.accessNode(nextTarget, nodeTarget);
+      },
+
+      closeNode: function(nextTarget, nodeTarget) {
+        var self = this;
+        self.setTreeIcon(nodeTarget.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
+
+        if (nodeTarget.closest('.folder a').is('[class^="icon"]')) {
+          self.setTreeIcon(nodeTarget.closest('.folder a').find('svg.icon-tree'),
+          nodeTarget.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', ''));
+        }
+
+        self.isAnimating = true;
+
+        if (!self.isMultiselect) {
+          self.unSelectedNode(nodeTarget.parent().find('li.is-selected'), false);
+          nodeTarget.removeClass('is-selected');
+        }
+
+        nextTarget.one('animateclosedcomplete', function() {
+          nextTarget.removeClass('is-open');
+          self.isAnimating = false;
+        }).animateClosed();
+
+        nodeTarget.attr('aria-expanded', nodeTarget.attr('aria-expanded')!=='true');
+
       },
 
       //Setup event handlers

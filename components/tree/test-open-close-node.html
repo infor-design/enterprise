@@ -1,0 +1,114 @@
+<div class="row top-padding">
+    <div class="six columns">
+      <h3>Tree Control: Open and Close Function</h3>
+      <p>This example shows use afunction to expand and collapse tree nodes.</p>
+      <p><button type="button" id="openclose" class="btn-primary">Open & Close Node</button></p>
+      <br />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="twelve columns">
+      <ul role="tree" id="the-tree" aria-label="Asset Types" class="tree" data-init="false">
+        <li><a href="#" id="home">Home</a></li>
+        <li><a href="#" id="about">About Us</a></li>
+        <li class="is-open">
+          <a href="#" id="public">Admin Folder</a>
+          <ul class="is-open root">
+            <li><a href="#" id="leadership">Leadership</a></li>
+            <li><a href="#" id="secrets">Secrets</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+
+    // Mock permissions data
+    var canViewNode = {
+      'home': true,
+      'about': true,
+      'leadership': false,
+      'secrets': false
+    }
+
+    // Mock ajax call to get permissions and returns a promise
+    var hasNodePermission = function (node) {
+      var hasPermission = canViewNode[node.attr('id')] || {};
+      if (!hasPermission) {
+        showPermissionDenied();
+      }
+      return hasPermission;
+    };
+
+    var onExpand = function (node) {
+      // Do Something with the onExpand CallBack
+      console.log('expand callback');
+      return node;
+    };
+
+    var onCollapse = function (node) {
+      // Do Something with the OnCollapse CallBack
+      console.log('collapse callback');
+      return node;
+    };
+
+    // Show error dialog
+    var showPermissionDenied = function () {
+      $('body').message({
+        title: 'Permission Denied',
+        isError: true,
+        returnFocus: $(this),
+        message: 'You do not have permission to access this node.',
+        buttons: [{
+          text: 'Ok',
+          click: function () {
+            $(this).modal('close');
+          },
+          isDefault: true
+        }]
+      });
+    };
+
+    // Init the tree
+    $('#the-tree').tree({
+      onBeforeSelect: null,
+      onExpand: null,
+      onCollapse: null,
+      source: function (req, response) {
+
+        setTimeout(function () {
+
+          var nodes = [{
+            "id": "node2.1",
+            "text": "Node 2.1"
+          },{
+            "id": "node2.2",
+            "text": "Node 2.2",
+            "children": []
+          }];
+
+          response(nodes);
+        }, 1000);
+
+      }
+    });
+  </script>
+
+<script>
+    var elem = $('#the-tree').tree();
+
+    $('#openclose').on('click', function () {
+      var api = elem.data('tree'),
+        nodeTarget = $('#public'),
+        nextTarget = nodeTarget.next();
+
+      if (nextTarget.hasClass('is-open')) {
+          api.closeNode(nextTarget, nodeTarget);
+      } else {
+          api.openNode(nextTarget, nodeTarget);
+      }
+
+    });
+  </script>
