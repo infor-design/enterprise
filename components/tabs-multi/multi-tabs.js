@@ -293,7 +293,7 @@
 
 
     /**
-     *
+     * Tears down a Multitabs instance
      */
     teardown: function() {
       for (var container in this.tabContainers) {
@@ -307,7 +307,7 @@
 
 
     /**
-     *
+     * Destroys a Multitabs instance
      */
     destroy: function() {
       this.teardown();
