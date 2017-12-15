@@ -141,7 +141,8 @@
 
           if (handleEventData &&
               handleEventData.type === e.type &&
-              e.handleObj.namespace === 'validate') {
+              e.handleObj.namespace === 'validate' &&
+              !field.closest('.modal:visible').length) {
             return;
           } else {
             field.data('handleEvent' +[(e.type || '')], e.handleObj);
