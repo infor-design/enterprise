@@ -204,7 +204,7 @@
             totals = this.getTotals(dataset);
           }
 
-          var compiledTmpl = Tmpl.compile(this.settings.template);
+          var compiledTmpl = Tmpl.compile(this.settings.template),
             renderedTmpl = compiledTmpl.render({dataset: dataset, totals: totals});
 
           if (dataset.length > 0) {
