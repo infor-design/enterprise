@@ -2015,6 +2015,12 @@ $.fn.datagrid = function(options) {
         pagerInfo.type = 'initial';
       }
 
+      if (this.settings.source && pagerInfo.grandTotal) {
+        this.grandTotal = pagerInfo.grandTotal;
+      } else {
+        this.grandTotal = null;
+      }
+
       if (this.pager) {
         if (pagerInfo.activePage > -1) {
           this.pager.activePage = pagerInfo.activePage;
@@ -2503,7 +2509,7 @@ $.fn.datagrid = function(options) {
 
       if (filterType === 'text') {
         btnMarkup = renderButton('contains') +
-          render('contains', 'Contains') +
+          render('contains', 'Contains', true) +
           render('does-not-contain', 'DoesNotContain') +
           render('equals', 'Equals') +
           render('does-not-equal', 'DoesNotEqual') +
@@ -2774,7 +2780,9 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      this.renderRows();
+      if (!this.settings.source) {
+        this.renderRows();
+      }
       this.setSearchActivePage();
       this.element.trigger('filtered', {op: 'apply', conditions: conditions});
       this.resetPager('filtered');
@@ -5023,7 +5031,13 @@ $.fn.datagrid = function(options) {
 
       if (self.settings.resultsText) {
         if (typeof self.settings.resultsText === 'function') {
-          countText = self.settings.resultsText(self, count, count - self.filteredCount);
+
+          if (self.grandTotal) {
+            countText = self.settings.resultsText(self, self.grandTotal, count);
+          } else {
+            countText = self.settings.resultsText(self, count, (count - self.filteredCount) || 0);
+          }
+
         } else {
           countText = self.settings.resultsText;
         }

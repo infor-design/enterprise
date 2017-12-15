@@ -411,7 +411,7 @@
           //Should be one of the last items to invoke
           if ($.fn.validate) {
             matchedItems('[data-validate-on="submit"]').validate();
-            matchedItems('[data-validate]').validate();
+            matchedItems('[data-validate]').parentsUntil('form, html').validate();
           }
 
           matchedItems('.breadcrumb ol').attr('aria-label', Locale.translate('Breadcrumb'));

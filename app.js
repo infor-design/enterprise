@@ -1218,7 +1218,6 @@ var express = require('express'),
       total = 1000, i = 0, j = 0, filteredTotal = 0, seed = 1,
       statuses = ['OK', 'On Hold', 'Inactive', 'Active', 'Late' ,'Complete'];
 
-    //TODO: if (req.query.filter) {
     for (j = 0; j < total; j++) {
       var filteredOut = false;
 
@@ -1305,7 +1304,7 @@ var express = require('express'),
     }
 
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify({total: filteredTotal, data: products}));
+    res.end(JSON.stringify({total: filteredTotal, grandTotal: 1000, data: products}));
     next();
   });
 
