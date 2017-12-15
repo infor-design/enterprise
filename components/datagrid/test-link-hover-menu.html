@@ -35,7 +35,8 @@
       columns.push({ id: 'price2', name: 'Price', field: 'price', formatter: Formatters.Integer });
 
     //Init and get the api for the grid
-      var grid;
+      var grid,
+        delay = 400;
 
       grid = $('#datagrid').datagrid({
           columns: columns,
@@ -50,28 +51,31 @@
           cellNavigation: false,
           clickToSelect: true,
           toolbar: { title: '&nbsp;', results: true, actions: true, exportToExcel: true, filterRow: true, personalize: true, resetLayout: true, collapsibleFilter: true }
-      }).on('mouseenter', 'a', function (e) {
+      }).on('mouseenter.tooltip', '.hyperlink', function(e) {
+        var link = $(e.target);
 
-          var cell = $(e.target).closest('td').index(),
-            columnId = grid.data('datagrid').settings.columns[cell].id,
-            row = $(e.target).closest('tr').index();
+        timer = setTimeout(function() {
 
-          $(this).popupmenu({
-            menu: 'linkMenuOptions',
-            trigger: 'immediate',
-            event: e,
-            eventObj: $(grid.data('datagrid').cellNode(row, cell))
-          }).on('selected.test', function (e, anchor) {
-            alert('clicked -> ' + anchor.attr('data-cmd'));
-          });
+            link.popupmenu({
+              menu: 'linkMenuOptions',
+              trigger: 'immediate',
+              event: e,
+              eventObj: link
+            }).off('selected.test').on('selected.test', function (e, anchor) {
+              alert('clicked -> ' + anchor.attr('data-cmd'));
+            });
 
+        }, delay);
+      })
+      .on('mouseleave.tooltip mousedown.tooltip mouseup.tooltip', '.hyperlink', function() {
+        clearTimeout(timer);
       });
 
   });
 </script>
 
 <ul id="linkMenuOptions" class="popupmenu is-hidden" >
-  <li role="presentation"><b><a href="#" data-cmd="add">add</a></b></li>
+  <li role="presentation"><a href="#" data-cmd="add">add</a></li>
   <li role="presentation"><a href="#" data-cmd="update" tabindex="-1" role="menuitem">update</a></li>
   <li role="presentation"><a href="#" data-cmd="delete" tabindex="-1" role="menuitem">delete</a></li>
 </ul>
