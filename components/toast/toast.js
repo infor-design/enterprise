@@ -24,7 +24,7 @@
           position: 'top right',  //top left, bottom left, bottom right (center??)
           audibleOnly: false,
           progressBar: true,
-          timeout: 350 // "60" === 1 second
+          timeout: 6000
         },
         settings = $.extend({}, defaults, options);
 
@@ -51,7 +51,7 @@
       show: function() {
         var self = this,
           settings = self.settings,
-          maxHideTime = parseFloat(settings.timeout),
+          maxHideTime = parseFloat(Soho.math.convertDelayToFPS(settings.timeout)),
           isPausePlay = false,
           percentage = 100,
           timer,
@@ -77,7 +77,7 @@
 
         // Build the RenderLoop integration
         timer = new Soho.RenderLoopItem({
-          duration: settings.timeout,
+          duration: Soho.math.convertDelayToFPS(settings.timeout),
           timeoutCallback: function() {
             self.remove(toast);
           },
