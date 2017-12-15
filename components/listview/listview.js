@@ -144,7 +144,6 @@
         if (this.settings.emptyMessage) {
           //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
           self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
-          this.emptyMessageContainer.appendTo(self.element);
         }
 
         if (this.settings.dataset) {
@@ -210,6 +209,8 @@
 
           if (dataset.length > 0) {
             this.element.html(renderedTmpl);
+          } else {
+            this.element.empty().append(this.emptyMessageContainer);
           }
 
           if (this.settings.emptyMessage && this.emptyMessageContainer && dataset) {

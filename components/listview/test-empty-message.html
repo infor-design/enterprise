@@ -1,6 +1,10 @@
 <div class="row">
   <div class="twelve columns">
     <h1 class="fieldset-title">List View Examples - Tests</h1>
+    <p>
+      <button class="btn-secondary" type="button" id="btn1">Show Empty Message</button>
+      <button class="btn-secondary" type="button" id="btn2">Show Data</button>
+    </p>
   </div>
 </div>
 
@@ -26,16 +30,28 @@
       <div class="card-content">
         <div class="listview" data-init="false" data-tmpl="employee-tmpl" id="list-one"></div>
       </div>
-  </div>
+    </div>
 </div>
 
 <script>
   $('body').on('initialized', function() {
-    data = [];
-    $('#list-one').listview({
-      dataset: data,
+    var self = this, listview, data = [];
+
+    data.push({firstName: 'Item', lastName: 'One'});
+    data.push({firstName: 'Item', lastName: 'Two'});
+
+    this.listview = $('#list-one').listview({
+      dataset: [],
       emptyMessage: {title: 'No Stock Found', icon: 'icon-empty-generic'},
       template: $('#employee-tmpl').html()
+    }).data('listview');
+
+    $('#btn1').on('click', function() {
+        self.listview.loadData([]);
+    });
+
+    $('#btn2').on('click', function() {
+      self.listview.loadData(data);
     });
   });
 </script>
