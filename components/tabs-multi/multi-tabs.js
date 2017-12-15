@@ -21,12 +21,10 @@
    * Tabs.jquery
    */
 
-
   /**
    * Component Name
    */
   var PLUGIN_NAME = 'multitabs';
-
 
   /**
    * Default Settings for MultiTabs
@@ -36,12 +34,10 @@
     tabContainers: []
   };
 
-
   /**
    * Pre-defined names used internally for tab containers
    */
   var TAB_CONTAINER_NAMES = ['primary', 'secondary', 'tertiary'];
-
 
   /**
    * @class MultiTabs
@@ -61,9 +57,7 @@
     return this.init();
   }
 
-
   MultiTabs.prototype = {
-
     /**
      * @private
      * Extra initializing steps
@@ -84,7 +78,6 @@
         self.setupTabsInstance($(this));
       });
     },
-
 
     /**
      * Builds and stores an instance of a Tabs component.
@@ -120,7 +113,6 @@
       }
     },
 
-
     /**
      * Pass-through method for adding tabs that takes the container into account.
      * @param {String} tabContainerName
@@ -138,7 +130,6 @@
       return api.add(tabId, options, atIndex);
     },
 
-
     /**
      * Pass-through method for removing tabs that takes the container into account.
      * @param {String} tabContainerName
@@ -154,7 +145,6 @@
       var api = this.tabContainers[tabContainerName].data('tabs');
       return api.remove(tabId, disableBeforeClose);
     },
-
 
     /**
      * Finds an existing Tab Panel in any of the tab containers, and moves it to a designated target tab container.
@@ -205,7 +195,6 @@
       }); // TODO: test atIndex
     },
 
-
     /**
      * @private
      * Uses the internal name of the tab container to either get a reference to an existing Tab container, or a null reference.
@@ -228,7 +217,6 @@
 
       return ref;
     },
-
 
     /**
      * @private
@@ -280,7 +268,6 @@
       }
     },
 
-
     /**
      * Update this multi-tabs instance with new settings
      * @param {Object} settings
@@ -290,7 +277,6 @@
         this.settings = $.extend({}, this.settings, settings);
       }
     },
-
 
     /**
      * Tears down a Multitabs instance
@@ -305,7 +291,6 @@
       return this;
     },
 
-
     /**
      * Destroys a Multitabs instance
      */
@@ -315,7 +300,6 @@
     }
 
   };
-
 
   /**
    * jQuery Component Wrapper for MultiTabs
@@ -331,14 +315,12 @@
     });
   };
 
-
   /**
    * Store instance against Soho object.
    */
   window.Soho = window.Soho || {};
   window.Soho.components = window.Soho.components || {};
   window.Soho.components.MultiTabs = MultiTabs;
-
 
 /* start-amd-strip-block */
 }));
