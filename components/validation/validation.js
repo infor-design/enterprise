@@ -574,15 +574,23 @@
      * @param {String} type
      * @param {boolean} inline
      * @param {boolean} showTooltip
+     * @param {boolean} isAlert
      */
-    addMessage: function(field, message, type, inline, showTooltip) {
+    addMessage: function(field, message, type, inline, showTooltip, isAlert) {
       if (message === '') {
         return;
       }
-      var loc = this.getField(field).addClass(type),
+
+      isAlert = isAlert || false;
+
+      var loc = this.getField(field),
          dataMsg = loc.data('data-' + type + 'message'),
          appendedMsg = message,
          validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error;
+
+      if (!isAlert) {
+        loc.addClass(type);
+      }
 
       if (dataMsg) {
         appendedMsg = (/^\u2022/.test(dataMsg)) ? '' : '\u2022 ';
@@ -609,7 +617,7 @@
         this.setModalPrimaryBtn(field, modalBtn);
       }
 
-      this.showInlineMessage(field, message, validationType.type);
+      this.showInlineMessage(field, message, validationType.type, isAlert);
     },
 
     /**
@@ -776,15 +784,22 @@
      *
      * @param {jQuery[]} field
      * @param {string} message
+     * @param {boolean} isAlert
      */
-    showInlineMessage: function (field, message, type) {
-      var loc = this.getField(field).addClass(type),
+    showInlineMessage: function (field, message, type, isAlert) {
+      isAlert = isAlert || false;
+
+      var loc = this.getField(field),
         validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error,
         markup = '<div class="' + validationType.type + '-message">' +
           $.createIcon({ classes: ['icon-' + validationType.type], icon: validationType.type }) +
           '<pre class="audible">'+ Locale.translate(validationType.titleMessageID) +'</pre>' +
           '<p class="message-text">' + message +'</p>' +
           '</div>';
+
+      if (!isAlert) {
+        loc.addClass(type);
+      }
 
       if (field.is(':radio')) { // Radio button handler
         this.toggleRadioMessage(field, message, validationType.type, markup, true);
@@ -990,12 +1005,12 @@
 
   //Add a Message to a Field
   $.fn.addMessage = function(options) {
-    var defaults = {message: '', type: 'error', showTooltip: false, inline: true},
+    var defaults = {message: '', type: 'error', showTooltip: false, inline: true, isAlert: false},
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
       var instance = new Validator(this, settings);
-      instance.addMessage($(this), settings.message, settings.type, settings.inline, settings.showTooltip);
+      instance.addMessage($(this), settings.message, settings.type, settings.inline, settings.showTooltip, settings.isAlert);
     });
   };
 
