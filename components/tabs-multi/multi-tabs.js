@@ -123,36 +123,128 @@
 
     /**
      * Pass-through method for adding tabs that takes the container into account.
-     * @param {String} tabContainer
+     * @param {String} tabContainerName
      * @param {String} tabId - (directly passed into the Tabs `add` method)
      * @param {Object} options - (directly passed into the Tabs `add` method)
      * @param {Number} [atIndex] - (directly passed into the Tabs `add` method)
      * @returns {Tabs}
      */
-    add: function(tabContainer, tabId, options, atIndex) {
-      if (!this.tabContainers[tabContainer]) {
-        throw new Error('cannot add any tabs to tabContainer "'+ tabContainer +'" because it doesn\'t exist.');
+    add: function(tabContainerName, tabId, options, atIndex) {
+      if (!this.tabContainers[tabContainerName]) {
+        throw new Error('cannot add any tabs to tabContainer "'+ tabContainerName +'" because it doesn\'t exist.');
       }
 
-      var api = this.tabContainers[tabContainer].data('tabs');
+      var api = this.tabContainers[tabContainerName].data('tabs');
       return api.add(tabId, options, atIndex);
     },
 
 
     /**
      * Pass-through method for removing tabs that takes the container into account.
-     * @param {String} tabContainer
+     * @param {String} tabContainerName
      * @param {String} tabId - (directly passed into the Tabs `add` method)
      * @param {boolean} [disableBeforeClose] - (directly passed into the Tabs `add` method)
      * @returns {Tabs}
      */
-    remove: function(tabContainer, tabId, disableBeforeClose) {
-      if (!this.tabContainers[tabContainer]) {
-        throw new Error('cannot remove any tabs from tabContainer "'+ tabContainer +'" because it doesn\'t exist.');
+    remove: function(tabContainerName, tabId, disableBeforeClose) {
+      if (!this.tabContainers[tabContainerName]) {
+        throw new Error('cannot remove any tabs from tabContainer "'+ tabContainerName +'" because it doesn\'t exist.');
       }
 
-      var api = this.tabContainers[tabContainer].data('tabs');
+      var api = this.tabContainers[tabContainerName].data('tabs');
       return api.remove(tabId, disableBeforeClose);
+    },
+
+
+    /**
+     * Finds an existing Tab Panel in any of the tab containers, and moves it to a designated target tab container.
+     * @param {String} tabId
+     * @param {String} targetTabContainerName
+     * @param {boolean} [doActivate]
+     */
+    move: function(tabId, targetTabContainerName, doActivate) {
+      if (!tabId || !targetTabContainerName) {
+        throw new Error('can\'t move a tab without both a tabId and a targetTabContainerName');
+      }
+
+      var tabMarkup,
+        panelMarkup,
+        allTabContainers = this._getFilterableTabContainers(),
+        originalTabContainer,
+        originalTabContainerName,
+        targetTabContainer = this._getTabContainer(targetTabContainerName);
+
+      if (!targetTabContainer) {
+        throw new Error('No tab containers currently exist against targetTabContainerName "'+ targetTabContainerName +'"');
+      }
+
+      allTabContainers.each(function() {
+        var api = $(this).data('tabs'),
+          tab = api.getTab(null, tabId);
+
+        // No tabs exist by this id
+        if (tab === null) {
+          return;
+        }
+
+        originalTabContainer = $(this);
+        originalTabContainerName = api.multitabsID;
+        tabMarkup = tab.clone();
+        panelMarkup = api.getPanel(tabId).children();
+      });
+
+      if (!tabMarkup) {
+        throw new Error('No tab markup was found in any Multitabs container for href "'+ tabId +'"');
+      }
+
+      this.remove(originalTabContainerName, tabId);
+      this.add(targetTabContainerName, tabId, {
+        name: tabMarkup.children('a').text().trim(),
+        content: panelMarkup,
+        doActivate: doActivate
+      }); // TODO: test atIndex
+    },
+
+
+    /**
+     * @private
+     * Uses the internal name of the tab container to either get a reference to an existing Tab container, or a null reference.
+     * @param {String} name - the internal name used for this tabs instance
+     * @returns {jQuery[]|undefined}
+     */
+    _getTabContainer: function(name) {
+      var self = this,
+        ref;
+
+      TAB_CONTAINER_NAMES.forEach(function(propname) {
+        if (ref || !self.tabContainers[propname]) {
+          return;
+        }
+
+        if (name === propname) {
+          ref = self.tabContainers[propname];
+        }
+      });
+
+      return ref;
+    },
+
+
+    /**
+     * @private
+     * Gets all currently-setup tab containers in a jQuery selector.
+     * @returns {jQuery[]}
+     */
+    _getFilterableTabContainers: function() {
+      var self = this,
+        ret = $();
+      TAB_CONTAINER_NAMES.forEach(function(propname) {
+        var container = self.tabContainers[propname];
+        if (container) {
+          ret = ret.add(container);
+        }
+      });
+      return ret;
     },
 
 

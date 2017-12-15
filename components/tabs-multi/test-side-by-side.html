@@ -16,22 +16,42 @@
       </div> <!-- #tab-list-one -->
       <div id="tab-container-one" class="tab-panel-container">
         <div id="tabs-one-contracts" class="tab-panel">
-          <h3>Contracts</h3>
-          <p>
-            currentTabset: #<span id="tabset-name"></span>
-          </p>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Contracts</h3>
+              <p>
+                currentTabset: #<span id="tabset-name"></span>
+              </p>
+            </div>
+          </div>
         </div> <!-- #tabs-one-contracts -->
         <div id="tabs-one-opportunities" class="tab-panel">
-          <h3>Opportunities</h3>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Opportunities</h3>
+            </div>
+          </div>
         </div> <!-- #tabs-one-opportunities -->
         <div id="tabs-one-attachments" class="tab-panel">
-          <h3>Attachments</h3>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Attachments</h3>
+            </div>
+          </div>
         </div> <!-- #tabs-one-attachments -->
         <div id="tabs-one-contacts" class="tab-panel">
-          <h3>Contacts</h3>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Contacts</h3>
+            </div>
+          </div>
         </div> <!-- #tabs-one-contacts -->
         <div id="tabs-one-notes" class="tab-panel">
-          <h3>Notes</h3>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Notes</h3>
+            </div>
+          </div>
         </div> <!-- #tabs-one-notes -->
       </div> <!-- #tab-container-one -->
     </div> <!-- .six-columns -->
@@ -48,19 +68,39 @@
       </div> <!-- #tab-list-two -->
       <div id="tab-container-two" class="tab-panel-container">
         <div id="tabs-two-contracts" class="tab-panel">
-          <h3>Contracts</h3>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Contracts</h3>
+            </div>
+          </div>
         </div> <!-- #tabs-two-contracts -->
         <div id="tabs-two-opportunities" class="tab-panel">
-          <h3>Opportunities</h3>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Opportunities</h3>
+            </div>
+          </div>
         </div> <!-- #tabs-two-opportunities -->
         <div id="tabs-two-attachments" class="tab-panel">
-          <h3>Attachments</h3>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Attachments</h3>
+            </div>
+          </div>
         </div> <!-- #tabs-two-attachments -->
         <div id="tabs-two-contacts" class="tab-panel">
-          <h3>Contacts</h3>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Contacts</h3>
+            </div>
+          </div>
         </div> <!-- #tabs-two-contacts -->
         <div id="tabs-two-notes" class="tab-panel">
-          <h3>Notes</h3>
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Notes</h3>
+            </div>
+          </div>
         </div> <!-- #tabs-two-notes -->
       </div> <!-- #tab-container-two -->
     </div> <!-- .six-columns -->
@@ -69,8 +109,9 @@
 
   <!-- Popupmenu -->
   <ul id="action-popupmenu" class="popupmenu">
-    <li><a id="add-new-tab" href="#">Add New Tab...</a></li>
-    <li><a id="remove-this-tab" href="#">Remove This Tab</a></li>
+    <li><a id="add-new-tab" href="#">Add new tab...</a></li>
+    <li><a id="remove-this-tab" href="#">Remove this tab</a></li>
+    <li><a id="move-this-tab" href="#">Move this tab to the other side</a></li>
   </ul>
 
 
@@ -98,10 +139,17 @@
   <script type="text/javascript">
     var currentTabset,
       multitabs = $('#test-multitabs'),
+      multiAPI = multitabs.data('multitabs'),
       configModal = $('#modal-add-tab'),
       menu = $('#action-popupmenu'),
       menuAddTabOption = $('#add-new-tab'),
-      menuRemoveTabOption = $('#remove-this-tab');
+      menuRemoveTabOption = $('#remove-this-tab'),
+      menuMoveTabOption = $('#move-this-tab');
+
+    // Grab a reference to the Multitabs API after the initializer runs
+    $('body').on('initialized', function() {
+      multiAPI = multitabs.data('multitabs');
+    });
 
     // Use mouseover/click to store reference to the target tabset
     multitabs.on('click.test, mouseover.test', function(e) {
@@ -116,12 +164,22 @@
 
     // Simple Tab Removal
     function removeTab() {
-      var multiAPI = multitabs.data('multitabs'),
-        currentAPI = currentTabset.children('.tab-container').data('tabs'),
+      var currentAPI = currentTabset.children('.tab-container').data('tabs'),
         selectedTab = currentAPI.getActiveTab(),
         href = selectedTab.attr('href').replace('#', '');
 
       multiAPI.remove(currentTabset.children('.tab-container').attr('data-multitabs'), href);
+    }
+
+
+    // Move tab from one side to the other
+    function moveTab() {
+      var currentAPI = currentTabset.children('.tab-container').data('tabs'),
+        selectedTab = currentAPI.getActiveTab(),
+        href = selectedTab.attr('href').replace('#', ''),
+        targetTabsetName = currentTabset.children('.tab-container').attr('data-multitabs') === 'primary' ? 'secondary' : 'primary';
+
+      multiAPI.move(href, targetTabsetName, true);
     }
 
 
@@ -192,14 +250,17 @@
     function completeTab(tabsAPI, name, content) {
       content = wrapInPageMarkup(name, content);
 
-      var id = makeId(name);
-      tabsAPI.add(id, {
+      var tabId = makeId(name),
+        targetTabsetName = tabsAPI.multitabsID;
+
+      multiAPI.add(targetTabsetName, tabId, {
         name: name,
         content: content,
-        isDismissible: true
+        isDismissible: true,
+        doActivate: true
       });
 
-      console.log('new ID: ' + id);
+      console.log('new ID: ' + tabId);
     }
 
     function paragraph(text) {
@@ -209,8 +270,7 @@
 
     // Modal with "add tab" options
     function addTab() {
-      var multiAPI = multitabs.data('multitabs'),
-        currentAPI = currentTabset.children('.tab-container').data('tabs');
+      var currentAPI = currentTabset.children('.tab-container').data('tabs');
 
       // Get a baseline for tab content.
       var name = '' + $('#add-tab-create-tab-name').val(),
@@ -258,6 +318,12 @@
     function openAddTabModal() {
       $('body').modal({
         buttons: [{
+          text: 'Cancel',
+          id: 'add-tab-cancel',
+          click: function(e, modal) {
+            modal.close();
+          }
+        }, {
           text: 'Reset',
           id: 'add-tab-reset',
           click: function(e, modal) {
@@ -266,6 +332,7 @@
         }, {
           text: 'Add Tab',
           id: 'add-tab-submit',
+          isDefault: true,
           click: function(e, modal) {
             $('#form-add-tab').trigger('submit');
             modal.close();
@@ -278,15 +345,30 @@
 
 
     // Menu items
-    multitabs.on('selected.test', function(e, anchor) {
-      if (anchor.is(menuAddTabOption)) {
-        openAddTabModal();
+    multitabs
+    .on('beforeopen.test', function(e, menu) {
+      var currentAPI = currentTabset.children('.tab-container').data('tabs'),
+        anchors = currentAPI.anchors;
+
+      if (!anchors.length) {
+        menuRemoveTabOption.parent().addClass('is-disabled');
+        menuMoveTabOption.parent().addClass('is-disabled');
         return;
+      }
+      menuRemoveTabOption.parent().removeClass('is-disabled');
+      menuMoveTabOption.parent().removeClass('is-disabled');
+    })
+    .on('selected.test', function(e, anchor) {
+      if (anchor.is(menuAddTabOption)) {
+        return openAddTabModal();
       }
 
       if (anchor.is(menuRemoveTabOption)) {
-        removeTab();
-        return;
+        return removeTab();
+      }
+
+      if (anchor.is(menuMoveTabOption)) {
+        return moveTab();
       }
     });
 
