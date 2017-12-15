@@ -3229,19 +3229,3 @@ html[dir='rtl'] {
     }
   }
 }
-
-.datagrid-empty-message {
-  background-color: $body-bg-color;
-  display: none;
-  min-height: 60px;
-  padding-bottom: 5px;
-
-  .empty-title {
-    padding: 0 0 15px;
-  }
-
-  .empty-icon {
-    padding: 25px 0;
-  }
-
-}

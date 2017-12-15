@@ -1775,27 +1775,8 @@ $.fn.datagrid = function(options) {
       self.container = self.element.closest('.datagrid-container');
 
       if (this.settings.emptyMessage) {
-        var opts = this.settings.emptyMessage;
         //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
-
-        self.emptyMessageContainer = $('<div class="datagrid-empty-message">'+
-          (!opts.icon ? '' : '<div class="empty-icon">'+
-            '<svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">'+
-            '<use xlink:href="#'+opts.icon+'"></use>'+
-            '</svg>'+
-          '</div>')+
-          '<div class="empty-title">'+
-            opts.title +
-          '</div>'+
-          (!opts.info ? '' : '<div class="empty-info">'+
-            opts.info +
-          '</div>')+
-          (!opts.button ? '' : '<div class="empty-actions">'+
-            '<button type="button" class="btn-secondary hide-focus '+ opts.button.cssClass +'" id="'+ opts.button.id +'">'+
-              '<span>'+ opts.button.text +'</span>'+
-            '</button>'+
-          '</div>')+
-        '</div>');
+        self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
         self.contentContainer.prepend(self.emptyMessageContainer);
       }
 

@@ -1,0 +1,16 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-data-message">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    $('#no-data-message').emptymessage({
+      title: 'No Data Available',
+      icon: 'icon-empty-no-data'
+    });
+  });
+</script>

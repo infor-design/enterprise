@@ -28,6 +28,7 @@
         selectOnFocus: true,
         showCheckboxes: true,
         hoverable: true,
+        emptyMessage: null,
         source: null,
         disableItemDeactivation: false
       },
@@ -140,6 +141,12 @@
           });
         }
 
+        if (this.settings.emptyMessage) {
+          //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
+          self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
+          this.emptyMessageContainer.appendTo(self.element);
+        }
+
         if (this.settings.dataset) {
           // Search the global variable space for a dataset variable name, if provided.
           if (typeof this.settings.dataset === 'string') {
@@ -198,10 +205,22 @@
             totals = this.getTotals(dataset);
           }
 
-          var compiledTmpl = Tmpl.compile(this.settings.template),
+          var compiledTmpl = Tmpl.compile(this.settings.template);
             renderedTmpl = compiledTmpl.render({dataset: dataset, totals: totals});
 
-          this.element.html(renderedTmpl);
+          if (dataset.length > 0) {
+            this.element.html(renderedTmpl);
+          }
+
+          if (this.settings.emptyMessage && this.emptyMessageContainer && dataset) {
+            if (dataset.length === 0) {
+              this.emptyMessageContainer.show();
+              this.element.addClass('is-empty');
+            } else {
+              this.emptyMessageContainer.hide();
+              this.element.removeClass('is-empty');
+            }
+          }
         }
 
         // Render Pager
