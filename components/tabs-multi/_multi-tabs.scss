@@ -1,0 +1,40 @@
+// ================================================= //
+// Multitabs Container
+// ================================================= //
+
+.multitabs-container {
+  display: flex;
+  height: 100%;
+}
+
+.multitabs-section {
+  flex: 1;
+  height: 100%;
+
+  + .multitabs-section {
+    border-left: 1px solid $mutlitabs-section-border-color;
+  }
+
+  &.alternate {
+    background-color: $mutlitabs-section-alt-bg-color;
+
+    + .multitabs-section {
+      border-left: 1px solid $mutlitabs-section-alt-border-color;
+    }
+  }
+
+  // Special Adjustments for Module Tabs Panels
+  .tab-container.module-tabs + .tab-panel-container {
+    height: calc(100% - 36px);
+
+    .page-container {
+      margin-top: 0;
+      padding: 15px;
+    }
+
+    .tab-panel {
+      height: 100%;
+      padding-top: 0;
+    }
+  }
+}
