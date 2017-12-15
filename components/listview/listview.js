@@ -209,18 +209,8 @@
 
           if (dataset.length > 0) {
             this.element.html(renderedTmpl);
-          } else {
+          } else if (self.emptyMessageContainer) {
             this.element.empty().append(this.emptyMessageContainer);
-          }
-
-          if (this.settings.emptyMessage && this.emptyMessageContainer && dataset) {
-            if (dataset.length === 0) {
-              this.emptyMessageContainer.show();
-              this.element.addClass('is-empty');
-            } else {
-              this.emptyMessageContainer.hide();
-              this.element.removeClass('is-empty');
-            }
           }
         }
 
