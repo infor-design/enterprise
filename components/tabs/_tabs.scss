@@ -149,9 +149,11 @@
   &.can-show {
     display: block;
 
+    /*
     > .page-container {
       position: absolute;
     }
+    */
   }
 
   &.is-visible {
@@ -614,6 +616,7 @@
 @import '../tabs-vertical/tabs-vertical';
 @import '../tabs-header/tabs-header';
 @import '../tabs-module/tabs-module';
+@import '../tabs-multi/multi-tabs';
 
 //RTL Styles
 html[dir='rtl'] {

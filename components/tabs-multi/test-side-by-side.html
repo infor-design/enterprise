@@ -2,8 +2,9 @@
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
 
-  <section class="multitabs-container">
-    <div class="six columns">
+
+  <section id="test-multitabs" class="multitabs-container side-by-side" data-options="{trigger: 'rightClick'}" data-popupmenu="action-popupmenu">
+    <div class="multitabs-section">
       <div id="tab-list-one" class="tab-container module-tabs">
         <ul class="tab-list">
           <li class="tab is-selected"><a href="#tabs-one-contracts">Contracts (and then a few more Contracts)</a></li>
@@ -16,6 +17,9 @@
       <div id="tab-container-one" class="tab-panel-container">
         <div id="tabs-one-contracts" class="tab-panel">
           <h3>Contracts</h3>
+          <p>
+            currentTabset: #<span id="tabset-name"></span>
+          </p>
         </div> <!-- #tabs-one-contracts -->
         <div id="tabs-one-opportunities" class="tab-panel">
           <h3>Opportunities</h3>
@@ -31,7 +35,8 @@
         </div> <!-- #tabs-one-notes -->
       </div> <!-- #tab-container-one -->
     </div> <!-- .six-columns -->
-    <div class="six columns">
+
+    <div class="multitabs-section alternate">
       <div id="tab-list-two" class="tab-container module-tabs">
         <ul class="tab-list">
           <li class="tab"><a href="#tabs-two-contracts">Contracts (and then a few more Contracts)</a></li>
@@ -60,3 +65,241 @@
       </div> <!-- #tab-container-two -->
     </div> <!-- .six-columns -->
   </section>
+
+
+  <!-- Popupmenu -->
+  <ul id="action-popupmenu" class="popupmenu">
+    <li><a id="add-new-tab" href="#">Add New Tab...</a></li>
+    <li><a id="remove-this-tab" href="#">Remove This Tab</a></li>
+  </ul>
+
+
+  <!-- Modals -->
+  <div id="modal-add-tab" style="display: none;">
+    <form id="form-add-tab" action="#" method="post">
+      <div class="field">
+        <label for="add-tab-create-tab-name">Tab Name:</label>
+        <input id="add-tab-create-tab-name" name="create-tab-name" disabled/>
+      </div>
+
+      <div class="field">
+        <label for="add-tab-create-tab-content">Content:</label>
+        <textarea id="add-tab-create-tab-content" name="create-tab-content" disabled></textarea>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="add-tab-use-garbage" checked>
+        <label for="add-tab-use-garbage" class="checkbox-label" >Fill with Garbage</label>
+      </div>
+    </form>
+  </div>
+
+
+  <script type="text/javascript">
+    var currentTabset,
+      multitabs = $('#test-multitabs'),
+      configModal = $('#modal-add-tab'),
+      menu = $('#action-popupmenu'),
+      menuAddTabOption = $('#add-new-tab'),
+      menuRemoveTabOption = $('#remove-this-tab');
+
+    // Use mouseover/click to store reference to the target tabset
+    multitabs.on('click.test, mouseover.test', function(e) {
+      currentTabset = $(e.target);
+      if (!currentTabset.is('.multitabs-section')) {
+        currentTabset = currentTabset.closest('.multitabs-section');
+      }
+
+      $('#tabset-name').text(currentTabset.children('.tab-container').attr('id'));
+    });
+
+
+    // Simple Tab Removal
+    function removeTab() {
+      var multiAPI = multitabs.data('multitabs'),
+        currentAPI = currentTabset.children('.tab-container').data('tabs'),
+        selectedTab = currentAPI.getActiveTab(),
+        href = selectedTab.attr('href').replace('#', '');
+
+      multiAPI.remove(currentTabset.children('.tab-container').attr('data-multitabs'), href);
+    }
+
+
+    // Form reset function
+    function resetAddTabForm() {
+      $('#add-tab-create-tab-name').val('').prop('disabled', true);
+      $('#add-tab-create-tab-content').val('').prop('disabled', true);
+      $('#add-tab-use-garbage').prop('checked', true);
+    }
+
+
+    // Building New Tabs
+    function toggleFields(fillAutomatically) {
+      if (fillAutomatically) {
+        $('#add-tab-create-tab-name, #add-tab-create-tab-content').disable();
+        return;
+      }
+      $('#add-tab-create-tab-name, #add-tab-create-tab-content').enable();
+      return;
+    }
+
+
+    // Setup a Tab ID
+    function makeId(name) {
+      if (!name) {
+        console.warn('No name for a new tab was provided.')
+        name = '';
+      }
+
+      var stringName = name.toLowerCase().split(' ').join('-');
+
+      var existing = $('[id^="'+ stringName +'"]');
+      if (!existing.length) {
+        return stringName + '-0';
+      }
+
+      return stringName + '-' + existing.length;
+    }
+
+
+    // Setup new Module Tab page markup
+    function wrapInPageMarkup(name, content) {
+      return '<header class="header is-personalizable">' +
+        '<div class="toolbar">' +
+          '<div class="title">' +
+            '<h1>' + name + '</h1>' +
+          '</div>' +
+          '<div class="buttonset"></div>' +
+        '</div>' +
+      '</header>' +
+      '<div class="page-container scrollable"><div class="row"><div class="twelve columns">' + content + '</div></div></div>';
+    }
+
+    // Build paragraphs from the Soho Demoapp API
+    function buildRandomParagraphs(numberOfParagraphs) {
+      if (!buildRandomParagraphs || typeof numberOfParagraphs !== 'number') {
+        buildRandomParagraphs = 1;
+      }
+
+      var ret = '';
+      for (var i = 0; i < buildRandomParagraphs; i++) {
+        ret += '<p>' + $.get('{{basepath}}api/garbage?size=120') + '</p>';
+      }
+      return ret;
+    }
+
+    // Wrap the content in a page-wrapper and header
+    function completeTab(tabsAPI, name, content) {
+      content = wrapInPageMarkup(name, content);
+
+      var id = makeId(name);
+      tabsAPI.add(id, {
+        name: name,
+        content: content,
+        isDismissible: true
+      });
+
+      console.log('new ID: ' + id);
+    }
+
+    function paragraph(text) {
+      return '<p>' + text + '</p>';
+    }
+
+
+    // Modal with "add tab" options
+    function addTab() {
+      var multiAPI = multitabs.data('multitabs'),
+        currentAPI = currentTabset.children('.tab-container').data('tabs');
+
+      // Get a baseline for tab content.
+      var name = '' + $('#add-tab-create-tab-name').val(),
+        content = '' + $('#add-tab-create-tab-content').val(),
+        garbageFillIsChecked = $('#add-tab-use-garbage').prop('checked');
+
+      if (!name || !name.length) {
+        name = 'New Tab';
+      }
+
+      // Do different things depending on the checkbox
+      if (garbageFillIsChecked) {
+        var title = $.get('{{basepath}}api/garbage?size=1'),
+          body1 = $.get('{{basepath}}api/garbage?size=120'),
+          body2 = $.get('{{basepath}}api/garbage?size=120'),
+          body3 = $.get('{{basepath}}api/garbage?size=120'),
+          body4 = $.get('{{basepath}}api/garbage?size=120'),
+          body5 = $.get('{{basepath}}api/garbage?size=120');
+
+        $.when(title, body1, body2, body3, body4, body5).done(function completed(title, body1, body2, body3, body4, body5) {
+
+          // Unwrap quotes from response
+          function unwrap(content) {
+            return content = content.substring(1, (content.length - 1));
+          }
+
+          name = '' + unwrap(title[0]);
+          content += '<h3>'+ name +'</h3>' +
+            paragraph(unwrap(body1[0])) +
+            paragraph(unwrap(body2[0])) +
+            paragraph(unwrap(body3[0])) +
+            paragraph(unwrap(body4[0])) +
+            paragraph(unwrap(body5[0]));
+
+          completeTab(currentAPI, name, content);
+        });
+
+      } else {
+        completeTab(currentAPI, name, content);
+      }
+    }
+
+
+    // Opening the Add Tab Modal
+    function openAddTabModal() {
+      $('body').modal({
+        buttons: [{
+          text: 'Reset',
+          id: 'add-tab-reset',
+          click: function(e, modal) {
+            $('#form-add-tab').trigger('reset');
+          }
+        }, {
+          text: 'Add Tab',
+          id: 'add-tab-submit',
+          click: function(e, modal) {
+            $('#form-add-tab').trigger('submit');
+            modal.close();
+          }
+        }],
+        content: configModal,
+        title: 'Add Tab'
+      });
+    }
+
+
+    // Menu items
+    multitabs.on('selected.test', function(e, anchor) {
+      if (anchor.is(menuAddTabOption)) {
+        openAddTabModal();
+        return;
+      }
+
+      if (anchor.is(menuRemoveTabOption)) {
+        removeTab();
+        return;
+      }
+    });
+
+
+    // Events for the Add Tab Form
+    $('#add-tab-use-garbage').on('change.test', function() {
+      var checked = $(this).prop('checked');
+      toggleFields(checked);
+    });
+    $('#form-add-tab').on('reset.test', function() {
+      resetAddTabForm();
+    }).on('submit.test', function(e) {
+      e.preventDefault();
+      addTab();
+    });
+  </script>

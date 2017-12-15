@@ -14,10 +14,10 @@
 /* end-amd-strip-block */
 
   /**
+   * Notes for v4.4.0:
    * DEPENDENCIES:
    *
    * utils
-   *
    * Tabs.jquery
    */
 
@@ -38,7 +38,7 @@
 
 
   /**
-   *
+   * Pre-defined names used internally for tab containers
    */
   var TAB_CONTAINER_NAMES = ['primary', 'secondary', 'tertiary'];
 
@@ -65,7 +65,8 @@
   MultiTabs.prototype = {
 
     /**
-     *
+     * @private
+     * Extra initializing steps
      */
     init: function() {
       var self = this,
@@ -86,6 +87,7 @@
 
 
     /**
+     * Builds and stores an instance of a Tabs component.
      * @param {jQuery[]} tabContainer
      */
     setupTabsInstance: function(tabContainer) {
@@ -101,10 +103,14 @@
           return;
         }
 
-        if (!tabContainer.data('tabs')) {
+        var api = tabContainer.data('tabs');
+        if (!api) {
           tabContainer.tabs();
+          api = tabContainer.data('tabs');
         }
+        api.multitabsID = propname;
 
+        tabContainer.attr('data-multitabs', propname);
         self.tabContainers[propname] = tabContainer;
         didAdd = true;
       });
@@ -116,17 +122,75 @@
 
 
     /**
-     * @param {jQuery[]} tabContainer
+     * Pass-through method for adding tabs that takes the container into account.
+     * @param {String} tabContainer
+     * @param {String} tabId - (directly passed into the Tabs `add` method)
+     * @param {Object} options - (directly passed into the Tabs `add` method)
+     * @param {Number} [atIndex] - (directly passed into the Tabs `add` method)
+     * @returns {Tabs}
      */
-    destroyTabsInstance: function(tabContainer) {
-      if (!(tabContainer instanceof $) || !tabContainer.data('tabs') || typeof tabContainer.data('tabs').destroy === 'function') {
-        return;
+    add: function(tabContainer, tabId, options, atIndex) {
+      if (!this.tabContainers[tabContainer]) {
+        throw new Error('cannot add any tabs to tabContainer "'+ tabContainer +'" because it doesn\'t exist.');
       }
-      tabContainer.data('tabs').destroy();
+
+      var api = this.tabContainers[tabContainer].data('tabs');
+      return api.add(tabId, options, atIndex);
     },
 
 
     /**
+     * Pass-through method for removing tabs that takes the container into account.
+     * @param {String} tabContainer
+     * @param {String} tabId - (directly passed into the Tabs `add` method)
+     * @param {boolean} [disableBeforeClose] - (directly passed into the Tabs `add` method)
+     * @returns {Tabs}
+     */
+    remove: function(tabContainer, tabId, disableBeforeClose) {
+      if (!this.tabContainers[tabContainer]) {
+        throw new Error('cannot remove any tabs from tabContainer "'+ tabContainer +'" because it doesn\'t exist.');
+      }
+
+      var api = this.tabContainers[tabContainer].data('tabs');
+      return api.remove(tabId, disableBeforeClose);
+    },
+
+
+    /**
+     * Destroys a tabs instance and removes it from the queue.
+     * NOTE: This only happens if the tabContainer is a part of this instance of Multitabs.
+     * @param {jQuery[]} tabContainer
+     */
+    destroyTabsInstance: function(tabContainer) {
+      if (!(tabContainer instanceof $) || !tabContainer.data('tabs') || typeof tabContainer.data('tabs').destroy !== 'function') {
+        return;
+      }
+
+      var self = this,
+        doRemove = false;
+      TAB_CONTAINER_NAMES.forEach(function(propname) {
+        if (doRemove || !self.tabContainers[propname].is(tabContainer)) {
+          return;
+        }
+
+        var api = tabContainer.data('tabs');
+
+        delete api.multitabsID;
+        tabContainer.removeAttr('data-multitabs');
+
+        api.destroy();
+        delete self.tabContainers[propname];
+        doRemove = true;
+      });
+
+      if (!doRemove) {
+        throw new Error('could not destroy a tabContainer because it was not associated with this Multitabs instance');
+      }
+    },
+
+
+    /**
+     * Update this multi-tabs instance with new settings
      * @param {Object} settings
      */
     updated: function(settings) {
@@ -143,7 +207,6 @@
       for (var container in this.tabContainers) {
         if (this.tabContainers.hasOwnProperty(container)) {
           this.destroyTabsInstance(container);
-          delete this.tabContainers[container];
         }
       }
 
