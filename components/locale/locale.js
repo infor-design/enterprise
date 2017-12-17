@@ -856,6 +856,21 @@
       return {dateFormat: 'yyyy-MM-dd', timeFormat: 'HH:mm:ss'};
     },
 
+    // Access the calendar array
+    getCalendar: function(name) {
+      if (this.currentLocale.data.calendars) {
+        for (var i = 0; i < this.currentLocale.data.calendars.length; i++) {
+          var calendar = this.currentLocale.data.calendars[i];
+          if (calendar.name === name) {
+            return calendar;
+          }
+        }
+      }
+
+      //Defaults to ISO 8601
+      return [{dateFormat: 'yyyy-MM-dd', timeFormat: 'HH:mm:ss'}];
+    },
+
     // Short cut function to get numbers
     numbers: function() {
       return this.currentLocale.data.numbers ? this.currentLocale.data.numbers : {

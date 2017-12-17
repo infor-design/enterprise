@@ -597,6 +597,11 @@ $vertical-tab-panel-bg-color: $panel-bg-color;
 $vertical-tab-sidebar-bg-color: $body-bg-color;
 $vertical-tab-sidebar-border-color: $graphite02;
 
+//Multi-tabs
+$mutlitabs-section-border-color: $graphite04;
+$mutlitabs-section-alt-bg-color: $white;
+$mutlitabs-section-alt-border-color: $graphite02;
+
 //Charts
 $chart-line-color: $graphite02;
 $chart-line-color-axis: $graphite04;
@@ -762,6 +767,7 @@ $searchfield-moduletabs-disabled-border-color: $slate08;
 
 //Image Border Color
 $image-border-color: $graphite02;
+$image-background-color: $graphite02;
 
 //Toast
 $toast-bg-color: $white;

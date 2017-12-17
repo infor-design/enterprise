@@ -144,18 +144,26 @@
   // Split Button with Icon and Label
   // ------------------------------------------------
   (function() {
-    var $splitButtonSortAction = $('#split-button-sort-icon-label-action');
-    var $splitButtonSortMenuTrigger = $('#split-button-sort-icon-label-menu-trigger');
-    var isAscending = true;
+    var splitButtonSortAction = $('#split-button-sort-icon-action');
+    var splitButtonSortLabelAction = $('#split-button-sort-icon-label-action');
+    var splitButtonSortMenuTrigger = $('#split-button-sort-icon-label-menu-trigger');
+    var isButtonSortAscending = true; // Icon state for sort icon without label
+    var isButtonSortLabelAscending = true; // Icon state for sort icon with label
 
-    // Action Button fires the action
-    $splitButtonSortAction.on('click', function (e) {
-      isAscending = !isAscending;
-      $(this).find('use').attr('xlink:href', isAscending ? '#icon-sort-up' : '#icon-sort-down');
+    // Action Button fires the action - icon without label
+    splitButtonSortAction.on('click', function (e) {
+      isButtonSortAscending = !isButtonSortAscending;
+      $(this).find('use').attr('xlink:href', isButtonSortAscending ? '#icon-sort-up' : '#icon-sort-down');
+    });
+
+    // Action Button fires the action - icon with label
+    splitButtonSortLabelAction.on('click', function (e) {
+      isButtonSortLabelAscending = !isButtonSortLabelAscending;
+      $(this).find('use').attr('xlink:href', isButtonSortLabelAscending ? '#icon-sort-up' : '#icon-sort-down');
     });
 
     // MenuButton selection changes the default action
-    $splitButtonSortMenuTrigger.on('selected', function (e, args) {
+    splitButtonSortMenuTrigger.on('selected', function (e, args) {
       setTimeout(function() {
         alert(args.text() + ' selected');
       }, 50);

@@ -91,9 +91,11 @@
     menu = $('#menu');
 
   trigger.on('click.test', function() {
-    target.popupmenu({
+    target.on('selected', function(args, a) {
+      console.log(args, a);
+    }).popupmenu({
       menu: menu,
-      trigger: 'immediate',
+      trigger: 'immediate'
     });
   });
 </script>

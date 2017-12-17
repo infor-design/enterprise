@@ -136,6 +136,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus {
+        background-color: $datagrid-list-header-bg-color;
         box-shadow: $datagrid-list-header-box-shadow;
         // scss-lint:disable ImportantRule
         outline: 1px solid $datagrid-list-header-focus-border-color !important;
@@ -249,6 +250,10 @@ $datagrid-short-row-height: 23px;
 
   //Short and Medium Row height
   &.short-rowheight {
+
+    .datagrid-cell-wrapper {
+      min-height: $datagrid-short-row-height + 6;
+    }
 
     //Set Container Heights for scrolling
     .datagrid-body {
@@ -369,6 +374,11 @@ $datagrid-short-row-height: 23px;
   }
 
   &.medium-rowheight {
+
+    .datagrid-cell-wrapper {
+      min-height: $datagrid-short-row-height + 6;
+    }
+
     //Set Container Heights for scrolling
     .datagrid-body {
       height: calc(100% - 30px);
@@ -469,7 +479,6 @@ $datagrid-short-row-height: 23px;
   &.medium-rowheight {
     tbody tr {
       line-height: $datagrid-medium-row-height;
-      min-height: $datagrid-medium-row-height;
 
       td {
 
@@ -687,7 +696,6 @@ $datagrid-short-row-height: 23px;
 
     tbody tr {
       line-height: $datagrid-short-row-height;
-      min-height: $datagrid-short-row-height + 6;
 
       &:last-child td {
         height: $datagrid-short-row-height + 1;
@@ -993,7 +1001,6 @@ $datagrid-short-row-height: 23px;
   // Table Rows
   tbody tr {
     line-height: $datagrid-row-height;
-    min-height: $datagrid-row-height + 6;
 
     &.is-active-row {
       outline: 1px solid $primary-color;
@@ -1234,7 +1241,7 @@ $datagrid-short-row-height: 23px;
       @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
       border: 1px solid transparent;
       display: block;
-      min-height: inherit;
+      min-height: $datagrid-row-height + 6;
       overflow: hidden;
       padding: 4px 20px 0;
 
@@ -2207,10 +2214,23 @@ td .btn-actions {
   height: inherit;
   line-height: 22px;
   margin: 0 -20px;
+  min-height: $datagrid-row-height + 6;
   overflow: auto;
   padding: 5px 20px;
   white-space: pre-line;
   word-wrap: break-word;
+}
+
+.medium-rowheight {
+  .datagrid-multiline-text {
+    min-height: $datagrid-medium-row-height + 6;
+  }
+}
+
+.short-rowheight {
+  .datagrid-multiline-text {
+    min-height: $datagrid-short-row-height + 6;
+  }
 }
 
 //Grid Checkboxes
@@ -3175,28 +3195,37 @@ html[dir='rtl'] {
 
 .ie {
   .datagrid-body {
-    tbody tr.is-active-row {
-      outline: 0;
-
+    tbody tr {
       td {
         .datagrid-cell-wrapper {
-          border-color: $primary-color;
-          border-style: solid;
-          border-width: 1px 0;
+          @include css3(transition, none);
         }
+      }
+      // scss-lint:disable NestingDepth
+      &.is-active-row {
+        outline: 0;
 
-        &:first-child {
+        td {
           .datagrid-cell-wrapper {
-            border-width: 1px 0 1px 1px;
+            border-color: $primary-color;
+            border-style: solid;
+            border-width: 1px 0;
           }
-        }
 
-        &:last-child {
-          .datagrid-cell-wrapper {
-            border-width: 1px 1px 1px 0;
+          &:first-child {
+            .datagrid-cell-wrapper {
+              border-width: 1px 0 1px 1px;
+            }
+          }
+
+          &:last-child {
+            .datagrid-cell-wrapper {
+              border-width: 1px 1px 1px 0;
+            }
           }
         }
       }
+      // scss-lint:enable NestingDepth
     }
   }
 }
