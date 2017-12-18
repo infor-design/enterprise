@@ -1,4 +1,4 @@
-# Message  [Learn More](#)
+# Modal  [Learn More](#)
 
 
 ## Configuration Options
