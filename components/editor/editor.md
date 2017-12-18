@@ -58,6 +58,10 @@ To save and get the data from the content editable, you should simply save and r
 -   **Ctrl + Shift + L** – Insert unordered (bullet) list
 -   **Ctrl + Shift + N** – Insert ordered (number) list
 -   **Ctrl + \~ (Tilde)** – Toggle source or visual
+-   **Shift + Click** – (Mac FF) Opens a link in a new window
+-   **Command + Click** – (Mac Chrome) Opens a link in a new window
+-   **Ctrl + Click** – (PC) Opens a link in a new window
+
 
 ## States and Variations
 

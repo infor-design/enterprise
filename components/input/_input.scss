@@ -600,12 +600,14 @@ label,
 ::selection {
   background: $primary-color;
   color: $inverse-color;
+  fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 
 ::-moz-selection {
   background: $primary-color;
   color: $inverse-color;
+  fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 
