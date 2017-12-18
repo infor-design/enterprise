@@ -211,6 +211,7 @@ $selected-bg-color: rgba($azure07, .3);
 // Autocomplete
 $autocomplete-light-text: $graphite05;
 $autocomplete-active-bg-color: $body-bg-color;
+$autocomplete-box-shadow: 0 3px 4px 4px $focus-box-shadow-color;
 $trigger-icon-fill-color: $graphite09;
 $trigger-icon-fill-light-color: $graphite08;
 $trigger-hover-color: $graphite06;
