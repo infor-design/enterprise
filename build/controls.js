@@ -28,6 +28,7 @@ module.exports = [
   'temp/amd/dropdown.js',
   'temp/amd/drag.js',
   'temp/amd/editor.js',
+  'temp/amd/emptymessage.js',
   'temp/amd/expandablearea.js',
   'temp/amd/form.js',
   'temp/amd/fileupload.js',

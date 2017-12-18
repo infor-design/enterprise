@@ -1,0 +1,68 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1 class="fieldset-title">List View Examples - Tests</h1>
+    <p>
+      <button class="btn-secondary" type="button" id="btn1">Show Empty Message</button>
+      <button class="btn-secondary" type="button" id="btn2">Show Data</button>
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Empty List View Message</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Add new action item</a></li>
+          <li><a href="#">Regular action</a></li>
+          <li><a href="#">Individual Action</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" data-init="false" data-tmpl="employee-tmpl" id="list-one"></div>
+      </div>
+    </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    var self = this, listview, data = [];
+
+    data.push({firstName: 'Item', lastName: 'One'});
+    data.push({firstName: 'Item', lastName: 'Two'});
+
+    this.listview = $('#list-one').listview({
+      dataset: [],
+      emptyMessage: {title: 'No Stock Found', icon: 'icon-empty-generic'},
+      template: $('#employee-tmpl').html()
+    }).data('listview');
+
+    $('#btn1').on('click', function() {
+        self.listview.loadData([]);
+    });
+
+    $('#btn2').on('click', function() {
+      self.listview.loadData(data);
+    });
+  });
+</script>
+
+{{={{{ }}}=}}
+<script id="employee-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+       <li>
+        <p>{{firstName}} {{lastName}}, {{title}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
