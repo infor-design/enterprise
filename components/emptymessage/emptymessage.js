@@ -45,8 +45,7 @@
       init: function() {
         this
           .setup()
-          .build()
-          .handleEvents();
+          .build();
       },
 
       setup: function() {
@@ -81,16 +80,12 @@
         return this;
       },
 
-
-      handleEvents: function() {
-        return this;
-      },
-
       /**
        * Teardown - Remove added markup and events
        */
       destroy: function() {
         $.removeData(this.element[0], pluginName);
+        this.element.empty();
       }
     };
 
