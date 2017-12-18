@@ -31,12 +31,6 @@ $('body').on('initialized', function () {
     centerLabel: 'Donut Chart'
   }];
 
-/*
-  redrawOnResize: false,
-  labels: {
-    hideLabels: false
-  }
-*/
   $('#pie-donut-example').chart({type: 'donut', dataset: donutData}).on('selected', function (e, args) {
     console.log(args);
   });
