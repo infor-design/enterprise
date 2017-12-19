@@ -5,6 +5,7 @@
   @include animation(check .15s);
 }
 
+
 @mixin checkbox-transform-rules {
   @include css3(transform-origin, left top 0);
 }

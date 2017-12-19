@@ -4,6 +4,7 @@
 
 1. Default Checkbox Example [View Example]( ../components/checkboxes/example-index)
 2. Checkbox Groups [View Example]( ../components/checkboxes/example-checkbox-groups)
+2. Horizontal Checkbox Group [View Example]( ../components/checkboxes/example-horizontal)
 
 ## API Details
 

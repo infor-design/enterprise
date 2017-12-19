@@ -231,7 +231,7 @@
      * @param {jQuery[]|string} tabContainer
      * @returns {jQuery[]}
      */
-    _checkForValidTabContainer(tabContainer) {
+    _checkForValidTabContainer: function(tabContainer) {
       if (!tabContainer) {
         throw new Error('Need to have a tabContainer defined to hide a tabs instance');
       }
