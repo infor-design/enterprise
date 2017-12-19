@@ -1,6 +1,17 @@
 
 <div class="row">
   <div class="twelve columns">
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">0 Selected</div>
+      <div class="buttonset">
+        <button id="datagrid-remove-btn" class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span>Remove</span>
+        </button>
+      </div>
+    </div>
     <div id="datagrid">
     </div>
   </div>
@@ -14,9 +25,7 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'drilldown', name: '', field: '', width: 95, formatter: Formatters.Drilldown, click: function(e, args) {
-          console.log(args);
-        }, align: 'center', sortable: false});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' }),
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, filterType: 'text', formatter: Formatters.Hyperlink, editor: Editors.Input});
@@ -70,6 +79,10 @@
         toolbar: {title: 'Data Grid Header Title', personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
       }).on('selected', function (e, args) {
         console.log(args);
+      });
+
+      $('#datagrid-remove-btn').on('click', function() {
+        $('#datagrid').data('datagrid').removeSelected();
       });
 
   });
