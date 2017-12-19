@@ -22,6 +22,7 @@ import './pager/pager.jquery';
 import './popupmenu/popupmenu.jquery';
 import './searchfield/searchfield.jquery';
 import './textarea/textarea.jquery';
+import './toast/toast.jquery';
 import './tooltip/tooltip.jquery';
 
 // Organisms

@@ -24,6 +24,7 @@ export { Pager } from './pager/pager';
 export { PopupMenu } from './popupmenu/popupmenu';
 export { SearchField } from './searchfield/searchfield';
 export { Textarea } from './textarea/textarea';
+export { Toast } from './toast/toast';
 export { Tooltip } from './tooltip/tooltip';
 // -- ex: dropdown/multiselect
 

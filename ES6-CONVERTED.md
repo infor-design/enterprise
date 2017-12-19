@@ -16,6 +16,7 @@ All the following Soho Components have been converted to ES6:
 * Place
 * Popover
 * Tmpl
+* Toast
 * Tooltip
 * (utils)
   - animations
@@ -24,6 +25,7 @@ All the following Soho Components have been converted to ES6:
   - breakpoints
   - debug
   - environment
+  - renderloop
   - string
   - theme
   - utils
@@ -76,7 +78,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Tag
 * Textarea
 * Timepicker
-* Toast
 * Toolbar
 * ToolbarSearchfield
 * Tree
