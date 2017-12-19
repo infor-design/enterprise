@@ -1905,13 +1905,14 @@ $.fn.datagrid = function(options) {
           activePage = Math.floor(location / this.pager.settings.pagesize + 1);
         }
 
-        this.pager.pagingInfo = $.extend({}, this.pager.pagingInfo, {
-          activePage: activePage,
-          total: this.settings.dataset.length,
-          pagesize: this.settings.pagesize
-        });
-
-        this.renderPager(this.pager.pagingInfo);
+        if (!this.settings.source) {
+          this.pager.pagingInfo = $.extend({}, this.pager.pagingInfo, {
+            activePage: activePage,
+            total: this.settings.dataset.length,
+            pagesize: this.settings.pagesize
+          });
+        }
+        this.renderPager(this.pager.pagingInfo, true);
       }
     },
 
