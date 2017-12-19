@@ -1391,7 +1391,7 @@ window.Chart = function(container) {
             .html(centerLabel);
 
           // FIX: IE does not render .html
-          if (charts.isIE) {
+          if (charts.isIE && !charts.isIEEdge) {
             if (charts.isHTML(centerLabel)) {
               // http://stackoverflow.com/questions/13962294/dynamic-styling-of-svg-text
               var text  = arcs.select('.chart-donut-text'),
@@ -4501,6 +4501,7 @@ window.Chart = function(container) {
     this.redrawOnResize = true;
     this.isRTL = Locale.isRTL();
     this.isIE = $('html').hasClass('ie');
+    this.isIEEdge = $('html').hasClass('ie-edge');
 
     var defaultShowLegend = function(opt) {
       if (typeof opt !== 'undefined') {
