@@ -538,6 +538,7 @@
             parentXAlignment: placementParentXAlignment,
             strategies: ['flip', 'nudge', 'shrink']
           },
+          offset: {x: 100, y: 100},
           placement : 'bottom',
           popover: true,
           trigger: 'immediate',
@@ -546,22 +547,27 @@
 
         this.trigger.popover(popoverOpts)
         .off('show.datepicker').on('show.datepicker', function () {
+
           if (Soho.env.os.name === 'ios') {
             $('head').triggerHandler('disable-zoom');
           }
+
           // Horizontal view on mobile
           if (window.innerHeight < 400) {
             self.popup.find('.arrow').hide();
             self.popup.css('min-height', (self.popupClosestScrollable[0].scrollHeight + 2) +'px');
             self.popupClosestScrollable.css('min-height', '375px');
           }
+
         })
         .off('hide.datepicker').on('hide.datepicker', function () {
+
           if (Soho.env.os.name === 'ios') {
             self.trigger.one('hide', function() {
               $('head').triggerHandler('enable-zoom');
             });
           }
+
           self.popupClosestScrollable.add(self.popup).css('min-height', 'inherit');
           self.closeCalendar();
         });
