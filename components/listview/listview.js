@@ -28,6 +28,7 @@
         selectOnFocus: true,
         showCheckboxes: true,
         hoverable: true,
+        emptyMessage: null,
         source: null,
         disableItemDeactivation: false
       },
@@ -140,6 +141,11 @@
           });
         }
 
+        if (this.settings.emptyMessage) {
+          //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
+          self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
+        }
+
         if (this.settings.dataset) {
           // Search the global variable space for a dataset variable name, if provided.
           if (typeof this.settings.dataset === 'string') {
@@ -201,7 +207,11 @@
           var compiledTmpl = Tmpl.compile(this.settings.template),
             renderedTmpl = compiledTmpl.render({dataset: dataset, totals: totals});
 
-          this.element.html(renderedTmpl);
+          if (dataset.length > 0) {
+            this.element.html(renderedTmpl);
+          } else if (self.emptyMessageContainer) {
+            this.element.empty().append(this.emptyMessageContainer);
+          }
         }
 
         // Render Pager

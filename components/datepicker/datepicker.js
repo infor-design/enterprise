@@ -54,7 +54,8 @@
             //Color in level 6 - http://usmvvwdev53:424/controls/colors
             {name: 'Public Holiday', color: '#76B051', dates: []},
             {name: 'Weekends', color: '#EFA836', dayOfWeek: []}
-          ]
+          ],
+          calendarName: null
         },
         settings = $.extend({}, defaults, options);
 
@@ -80,7 +81,7 @@
     * @param {Boolean} advanceMonths  &nbsp;-&nbsp; The number of months in each direction to show in the dropdown for months (when initially opening)
     * @param {Boolean} showLegend  &nbsp;-&nbsp; If true a legend is show to associate dates.
     * @param {Array} legend  &nbsp;-&nbsp; Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
-    *
+    * @param {String} calendarName  &nbsp;-&nbsp; The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
     */
     function DatePicker(element) {
       this.element = $(element);
@@ -110,8 +111,20 @@
         this.trigger = $.createIconElement('calendar').insertAfter(this.element);
         this.addAria();
 
-        this.isIslamic = Locale.calendar().name === 'islamic-umalqura';
-        this.conversions = Locale.calendar().conversions;
+        //Set the current calendar
+        this.setCurrentCalendar();
+        this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
+        this.conversions = this.currentCalendar.conversions;
+      },
+
+      setCurrentCalendar: function () {
+
+        if (this.settings.calendarName) {
+          this.currentCalendar = Locale.getCalendar(this.settings.calendarName) || Locale.calendar();
+        } else {
+          this.currentCalendar = Locale.calendar();
+        }
+
       },
 
       addAria: function () {
@@ -345,8 +358,8 @@
 
       //Parse the Date Format Options
       setFormat: function () {
-        var localeDateFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat) ? Locale.calendar().dateFormat : null),
-          localeTimeFormat = ((typeof Locale === 'object' && Locale.calendar().timeFormat) ? Locale.calendar().timeFormat : null);
+        var localeDateFormat = ((typeof Locale === 'object' && this.currentCalendar.dateFormat) ? this.currentCalendar.dateFormat : null),
+          localeTimeFormat = ((typeof Locale === 'object' && this.currentCalendar.timeFormat) ? this.currentCalendar.timeFormat : null);
 
         if (this.settings.dateFormat === 'locale') {
           this.pattern = localeDateFormat.short + (this.settings.showTime ? ' ' + (this.settings.timeFormat || localeTimeFormat) : '');
@@ -533,22 +546,27 @@
 
         this.trigger.popover(popoverOpts)
         .off('show.datepicker').on('show.datepicker', function () {
+
           if (Soho.env.os.name === 'ios') {
             $('head').triggerHandler('disable-zoom');
           }
+
           // Horizontal view on mobile
           if (window.innerHeight < 400) {
             self.popup.find('.arrow').hide();
             self.popup.css('min-height', (self.popupClosestScrollable[0].scrollHeight + 2) +'px');
             self.popupClosestScrollable.css('min-height', '375px');
           }
+
         })
         .off('hide.datepicker').on('hide.datepicker', function () {
+
           if (Soho.env.os.name === 'ios') {
             self.trigger.one('hide', function() {
               $('head').triggerHandler('enable-zoom');
             });
           }
+
           self.popupClosestScrollable.add(self.popup).css('min-height', 'inherit');
           self.closeCalendar();
         });
@@ -909,6 +927,8 @@
         var elementDate = this.currentDate.getDate() ?
           this.currentDate : (new Date()).setHours(0,0,0,0);
 
+        this.setCurrentCalendar();
+
         if (this.isIslamic) {
           elementDate = this.currentDateIslamic;
         }
@@ -932,24 +952,24 @@
         }
 
         if (!skipYear) {
-          var days = Locale.calendar().days.narrow || Locale.calendar().days.narrow || Locale.calendar().days.abbreviated,
-            monthName = Locale.calendar().months.wide[month];
+          var days = this.currentCalendar.days.narrow || this.currentCalendar.days.narrow || this.currentCalendar.days.abbreviated,
+            monthName = this.currentCalendar.months.wide[month];
 
           this.currentMonth = month;
           this.currentYear = year;
 
           // Set the Days of the week
-          var firstDayofWeek = (Locale.calendar().firstDayofWeek || 0);
+          var firstDayofWeek = (this.currentCalendar.firstDayofWeek || 0);
           this.dayNames.find('th').each(function (i) {
             $(this).text(days[(i + firstDayofWeek) % 7]);
           });
 
           //Localize Month Name
-          this.yearFist = Locale.calendar().dateFormat.year && Locale.calendar().dateFormat.year.substr(1, 1) === 'y';
+          this.yearFist = this.currentCalendar.dateFormat.year && this.currentCalendar.dateFormat.year.substr(1, 1) === 'y';
           this.header.find('.month').attr('data-month', month).text(monthName + ' ');
           this.header.find('.year').text(' ' + year);
 
-          if (this.yearFist) {
+          if (this.yearFist && !this.isIslamic) {
             elementDate.setFullYear(year);
             var translation = Locale.formatDate(elementDate, {date: 'year'}),
               justYear = translation.split(' ')[0];
@@ -964,7 +984,7 @@
         //Adjust days of the week
         //lead days
         var firstDayOfMonth = this.firstDayOfMonth(year, month),
-          leadDays = (firstDayOfMonth - (Locale.calendar().firstDayofWeek || 0) + 7) % 7,
+          leadDays = (firstDayOfMonth - (this.currentCalendar.firstDayofWeek || 0) + 7) % 7,
           lastMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 1 : 0)),
           thisMonthDays = this.daysInMonth(year, month+ (this.isIslamic ? 0 : 1)),
           dayCnt = 1, nextMonthDayCnt = 1, exYear, exMonth, exDay;
@@ -1054,7 +1074,7 @@
         var monthDropdown = '<label for="month-dropdown" class="audible">'+ Locale.translate('Month') +'</label>'+
           '<select id="month-dropdown" class="dropdown">';
 
-        var wideMonths = Locale.calendar().months.wide;
+        var wideMonths = this.currentCalendar.months.wide;
         wideMonths.map(function (monthMap, i) {
           monthDropdown += '<option '+ (i===month ? ' selected ' : '') + ' value="'+ i +'">'+ monthMap +'</option>';
         });
@@ -1213,6 +1233,9 @@
 
       //Get the value from the field and set the internal variables or use current date
       setValueFromField: function() {
+
+        this.setCurrentCalendar();
+
         var self = this,
           fieldValue = this.element.val(),
           gregorianValue = fieldValue;

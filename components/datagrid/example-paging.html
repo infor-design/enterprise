@@ -1,6 +1,17 @@
 
 <div class="row">
   <div class="twelve columns">
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">0 Selected</div>
+      <div class="buttonset">
+        <button id="datagrid-remove-btn" class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span>Remove</span>
+        </button>
+      </div>
+    </div>
     <div id="datagrid">
     </div>
   </div>
@@ -14,16 +25,14 @@
         data = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'drilldown', name: '', field: '', width: 95, formatter: Formatters.Drilldown, click: function(e, args) {
-          console.log(args);
-        }, align: 'center', sortable: false});
-      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'Text'});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly, filterType: 'Text'});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, filterType: 'Text', formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, filterType: 'Integer', editor: Editors.Input});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'Integer', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, filterType: 'Decimal', formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'Date', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' }),
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, filterType: 'text', formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, filterType: 'integer', editor: Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer', width: 125});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, filterType: 'decimal', formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'date', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -33,6 +42,15 @@
         editable: true,
         filterable: true,
         pagesize: 10,
+        resultsText: function (grid, count, filterCount) {
+          console.log(grid, count, filterCount);
+          if (filterCount > 0 ) {
+            return '(' + filterCount + ' of '+ count + ')';
+          }
+          else {
+            return '(' + 'all '+ count + ')';
+          }
+        },
         source: function(req, response) {
           var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
@@ -41,18 +59,30 @@
           }
 
           if (req.filterExpr && req.filterExpr[0]) {
-            url += '&filter=' + req.filterExpr[0].value;
+            url += '&filterValue=' + req.filterExpr[0].value;
+            url += '&filterOp=' + req.filterExpr[0].operator;
+            url += '&filterColumn=' + req.filterExpr[0].columnId;
           }
 
           //Get Page Based on info in Req, return results into response;
           $.getJSON(url, function(res) {
+            // This is the total going into the grid so the pager works (filtered total or total)
             req.total = res.total;
+
+            if ((req.filterExpr && req.filterExpr[0])) {
+              req.total = res.total
+              req.grandTotal = res.grandTotal; // This is the total amount on the server
+            }
             response(res.data, req);
           });
         },
         toolbar: {title: 'Data Grid Header Title', personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
       }).on('selected', function (e, args) {
         console.log(args);
+      });
+
+      $('#datagrid-remove-btn').on('click', function() {
+        $('#datagrid').data('datagrid').removeSelected();
       });
 
   });

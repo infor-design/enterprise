@@ -171,7 +171,7 @@
     margin-right: 15px;
 
     &.field-checkbox label {
-      line-height: 20px;
+      line-height: 17px;
       margin-bottom: -1px;
     }
 
@@ -600,12 +600,14 @@ label,
 ::selection {
   background: $primary-color;
   color: $inverse-color;
+  fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 
 ::-moz-selection {
   background: $primary-color;
   color: $inverse-color;
+  fill: $inverse-color;
   -webkit-text-fill-color: $inverse-color;
 }
 

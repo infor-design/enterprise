@@ -24,7 +24,8 @@
     nativeName: 'العربية (المملكة العربية السعودية)',
     //layout/orientation/@characters
     direction: 'right-to-left',
-    calendars: [{
+    calendars: [
+    {
       name: 'islamic-umalqura',
       // Note the format here is sort of dd/MM/yyyy
       // but this file is ltr and we display this in rtl so its inverted
@@ -270,22 +271,21 @@
                    'year': 'MMMM yyyy',
                    'timestamp': 'h:mm:ss a',
                    'datetime': 'd/MM/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
-      //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
-      days: {
-        wide: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
-				abbreviated: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
-				narrow: ['ح','ن','ث','ر','خ','ج','س']
-      },
-      //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
-      months: {
-        wide: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
-        abbreviated: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']
-      },
-      //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
-      //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['ص', 'م']
-
+        //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
+        days: {
+          wide: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
+  				abbreviated: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
+  				narrow: ['ح','ن','ث','ر','خ','ج','س']
+        },
+        //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
+        months: {
+          wide: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+          abbreviated: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']
+        },
+        //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
+        timeFormat: 'h:mm a',
+        //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
+        dayPeriods: ['ص', 'م']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
     currencySign: '﷼', //(Replace Sign http://www.currencysymbols.in ?)
@@ -299,7 +299,7 @@
       group: '٬'
     },
     //Resx - Approved By Translation Team
-        messages: {
+    messages: {
       'AboutText': {id: 'AboutText', value: 'حقوق النشر &copy; {0} Infor. جميع الحقوق محفوظة. تعتبر الكلمات والعلامات المنصوص عليهما بهذه الوثيقة علامات تجارية و/أو علامات تجارية مسجلة لشركة Infor و/أو للشركات التابعة لها والفرعية. جميع الحقوق محفوظة. تعتبر كافة العلامات التجارية المدرجة هنا هي ملكية خاصة بأصحابها.'},
       'Actions': {id: 'Actions', value: 'إجراءات', comment: 'Tooltip text for the action button with additional in context actions'},
       'AdditionalItems': {id: 'AdditionalItems', value: 'عناصر إضافية', comment: 'Button tooltip used in a list of movable items'},

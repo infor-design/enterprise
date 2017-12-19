@@ -835,7 +835,7 @@
         }
 
         this.list.addClass('search-mode');
-        this.list.find('.icon').attr('class', 'icon search').changeIcon('search');
+        this.list.find('.icon').attr('class', 'icon search').changeIcon('close');
         this.searchInput.removeAttr('aria-activedescendant');
 
         this.unhighlightOptions();

@@ -83,7 +83,7 @@
     "node-pandoc": "^0.3.0",
     "phantomjs": "^2.1.7",
     "requirejs": "^2.2.0",
-    "selenium-standalone": "^6.0.0",
+    "selenium-standalone": "^6.12.0",
     "spec-xunit-file": "0.0.1-3"
   }
 }

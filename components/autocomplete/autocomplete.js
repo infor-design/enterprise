@@ -241,14 +241,6 @@
       handleListResults: function(term, items, filterResult) {
         var self = this;
 
-        function autocompletePlaceCallback(placementObj) {
-          // Nudge the autocomplete to the right by 1px in Chrome
-          if (Soho.env.browser.name === 'chrome') {
-            placementObj.setCoordinate('x', placementObj.x + 1);
-          }
-          return placementObj;
-        }
-
         var popupOpts = {
           menuId: 'autocomplete-list',
           ariaListbox: true,
@@ -258,7 +250,6 @@
           autoFocus: false,
           returnFocus: false,
           placementOpts: {
-            callback: autocompletePlaceCallback,
             parent: this.element
           }
         };
@@ -614,6 +605,18 @@
         return false;
       },
 
+      /*
+      * Handle after list open.
+      */
+      handleAfterListOpen: function() {
+        // Fix one pixel off list by element
+        if (this.element.offset().left > this.list.offset().left) {
+          this.list.width(this.list.width() + 1);
+        }
+        
+        return this;
+      },
+
       updated: function() {
         this.teardown().init();
         return this;
@@ -677,6 +680,8 @@
           self.handleAutocompleteFocus();
         }).off('focusout.autocomplete').on('focusout.autocomplete', function () {
           self.checkActiveElement();
+        }).off('listopen.autocomplete').on('listopen.autocomplete', function () {
+          self.handleAfterListOpen();
         });
       }
 
