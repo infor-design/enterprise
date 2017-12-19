@@ -538,7 +538,6 @@
             parentXAlignment: placementParentXAlignment,
             strategies: ['flip', 'nudge', 'shrink']
           },
-          offset: {x: 100, y: 100},
           placement : 'bottom',
           popover: true,
           trigger: 'immediate',
