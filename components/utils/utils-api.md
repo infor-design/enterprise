@@ -2,6 +2,7 @@
 
 ### Table of Contents
 
+<<<<<<< HEAD
 -   -   [bindFirst](#bindfirst)
 -   [SOHO Utils](#soho-utils)
     -   [bindFirst](#bindfirst-1)
@@ -125,6 +126,25 @@ Implements consistent support for the placeholder attribute in browsers that do 
 **Parameters**
 
 -   `options`  
+=======
+-   [parseOptions](#parseoptions)
+-   [getHiddenSize](#gethiddensize)
+-   [parseOptions](#parseoptions-1)
+-   [extend](#extend)
+-   [fixSVGIcons](#fixsvgicons)
+-   [getViewportSize](#getviewportsize)
+-   [getContainerScrollDistance](#getcontainerscrolldistance)
+-   [getHiddenSize](#gethiddensize-1)
+-   [isString](#isstring)
+-   [isNumber](#isnumber)
+-   [safeSetSelection](#safesetselection)
+-   [isElement](#iselement)
+-   [getDimensions](#getdimensions)
+-   [splice](#splice)
+-   [removeDuplicates](#removeduplicates)
+-   [convertDelayToFPS](#convertdelaytofps)
+-   [convertFPSToDelay](#convertfpstodelay)
+>>>>>>> 6a3760280001b23b3cd7e6e12af6ae05eefb9ec8
 
 ## parseOptions
 
@@ -390,6 +410,7 @@ Adding, removing, and testing for classes
 
 **Parameters**
 
+<<<<<<< HEAD
 -   `el`  
 -   `className`  
 
@@ -413,3 +434,27 @@ as a plain object instead of a ClientRect
 -   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
+=======
+-   `str`  
+
+## convertDelayToFPS
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+
+## convertFPSToDelay
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `fps`  
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+>>>>>>> 6a3760280001b23b3cd7e6e12af6ae05eefb9ec8

@@ -15,40 +15,63 @@
 <div class="row">
   <div class="full-width">
     <div class="field">
-      <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
-      <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
-      <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
+      <input type="checkbox" class="checkbox" id="is-alert">
+      <label for="is-alert" class="checkbox-label">Is Alert</label>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="two columns">
-    <div class="field">
-      <label for="text-field">Text Field</label>
-      <input alignRight="true" name="text-field" id="text-field"/>
+  <div class="row">
+    <div class="full-width">
+      <div class="field">
+        <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
+        <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
+        <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
+        <button class="btn-primary" type="button" onClick="getMessage()">Get Message</button>
+      </div>
     </div>
-    <div class="field">
-      <label for="date-field">Date Field</label>
-      <input id="date-field" data-options="{'placeholder': false}" class="datepicker" name="date-field" type="text">
+  </div>
+  <div class="row">
+    <div class="three columns">
+      <div class="field">
+        <label for="text-field">Text Field</label>
+        <input class="input-lg" alignRight="true" name="text-field" id="text-field" value="abcdef"/>
+      </div>
+      <div class="field">
+        <label for="date-field">Date Field</label>
+        <input class="datepicker input-lg" id="date-field" data-options="{'placeholder': false}" name="date-field"
+          type="text" value="12/14/2017"/>
+      </div>
     </div>
-
+    <div class="six columns">
+      <div class="field">
+        <label for="output-text-field">Text Field Result of Get Message</label>
+        <input class="input-full" id="output-text-field" readonly/>
+      </div>
+      <div class="field">
+        <label for="output-date-field">Date Field Result of Get Message</label>
+        <input class="input-full" id="output-date-field" readonly/>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
   var currentValidationType = 'error';
-  var message = 'Message is ';
+  var message = 'Message';
 
   function onChange(evt) {
     currentValidationType = evt.currentTarget.value;
   }
 
   function addMessage() {
+    var isAlert = $('#is-alert').prop('checked');
+    var alertText = (isAlert) ? ' is alert,' : '';
+
     $('#text-field, #date-field').addMessage({
-      message    : message + currentValidationType,
+      message    : message + alertText + ' type is ' + currentValidationType,
       type       : currentValidationType,
       showTooltip: false,
-      inline     : true
+      inline     : true,
+      isAlert    : isAlert
     });
   }
 
@@ -59,19 +82,27 @@
     });
   }
 
-  function clearAllMessages() {
-    $('#text-field, #date-field').removeMessage({
-      type   : 'error'
-    });
-    $('#text-field, #date-field').removeMessage({
-      type   : 'alert'
-    });
-    $('#text-field, #date-field').removeMessage({
-      type   : 'confirm'
-    });
-    $('#text-field, #date-field').removeMessage({
-      type   : 'info'
-    });
+  function getMessage() {
+    var options = {
+      type: currentValidationType
+    };
+
+    $('#output-text-field').val($('#text-field').getMessage(options));
+    $('#output-date-field').val($('#date-field').getMessage(options));
   }
 
+  function clearAllMessages() {
+    $('#text-field, #date-field').removeMessage({
+      type: 'error'
+    });
+    $('#text-field, #date-field').removeMessage({
+      type: 'alert'
+    });
+    $('#text-field, #date-field').removeMessage({
+      type: 'confirm'
+    });
+    $('#text-field, #date-field').removeMessage({
+      type: 'info'
+    });
+  }
 </script>

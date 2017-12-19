@@ -43,7 +43,7 @@
         value.enable();
       }
     });
-    this.prop('disabled', false);
+    this.prop({'disabled': false, 'readonly': false});
     return this;
   };
 

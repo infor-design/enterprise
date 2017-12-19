@@ -25,7 +25,11 @@
           side: 'left', // or right
           resize: 'immediate',
           containment: null, //document or parent
-          save: true
+          save: true,
+          width: {
+            left: 'auto',
+            right: 'auto'
+          }
         },
         settings = $.extend({}, defaults, options);
 
@@ -243,13 +247,20 @@
 
       splitTo: function (split, parentHeight) {
         var self = this,
-          splitter = this.element;
+          splitter = this.element,
+          s = this.settings;
 
         if (this.isSplitterRightSide) {
+          if (split > s.width.right) {
+            split = s.width.right;
+          }
           this.resizeRight(splitter, split);
         } else if (this.isSplitterHorizontal) {
           this.resizeTop(splitter, split, parentHeight);
         } else {
+          if (split > s.width.left) {
+            split = s.width.left;
+          }
           this.resizeLeft(splitter, split);
         }
 

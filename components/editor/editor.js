@@ -57,7 +57,8 @@
     * @param {Boolean} secondHeader  &nbsp;-&nbsp; Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
     * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
     * @param {String} pasteAsPlainText  &nbsp;-&nbsp; If true, when you paste into the editor the element will be unformatted to plain text.
-    * @param {String} anchor  &nbsp;-&nbsp; Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
+    * @param {String} anchor  &nbsp;-&nbsp; An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
+    * the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
     * @param {String} image  &nbsp;-&nbsp; Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
     */
     function Editor(element) {
@@ -73,6 +74,8 @@
     Editor.prototype = {
 
       init: function() {
+        var self = this;
+
         this.isIe = Soho.env.browser.name === 'ie';
         this.isIeEdge = Soho.env.browser.name === 'edge';
         this.isIe11 = this.isIe && Soho.env.browser.version === '11';
@@ -80,41 +83,45 @@
         this.isFirefox = Soho.env.browser.name === 'firefox';
 
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
-        this.id = this.element.uniqueId('editor') + 'Unique';
+        this.id = this.element.uniqueId('editor') + '-id';
         this.container = this.element.parent('.field, .field-short').addClass('editor-container');
 
-        settings.anchor = $.extend({}, defaults.anchor, settings.anchor);
-        settings.image = $.extend({}, defaults.image, settings.image);
+        this.settings.anchor = $.extend({}, defaults.anchor, this.settings.anchor);
+        this.settings.image = $.extend({}, defaults.image, this.settings.image);
 
-        settings.anchor.defaultUrl = settings.anchor.url;
-        settings.anchor.defaultClass = settings.anchor.class;
-        settings.anchor.defaultTargetText = settings.anchor.target;
-        settings.anchor.defaultIsClickable = settings.anchor.isClickable;
+        this.settings.anchor.defaultUrl = this.settings.anchor.url;
+        this.settings.anchor.defaultClass = this.settings.anchor.class;
+        this.settings.anchor.defaultTargetText = this.settings.anchor.target;
+        this.settings.anchor.defaultIsClickable = this.settings.anchor.isClickable;
 
-        settings.anchor.targets = settings.anchor.targets || {
+        this.settings.anchor.targets = this.settings.anchor.targets || {
           'Same window': '',
           'New window': '_blank'
         };
-        $.each(settings.anchor.targets, function(key, val) {
-          if ((settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
-            settings.anchor.target = val;
-            settings.anchor.defaultTarget = val;
+
+        $.each(self.settings.anchor.targets, function(key, val) {
+          if ((self.settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
+            self.settings.anchor.target = val;
+            self.settings.anchor.defaultTarget = val;
           }
         });
-        if (!settings.anchor.defaultTarget) {
-          if(settings.anchor.target && $.trim(settings.anchor.target).length) {
-            settings.anchor.defaultTarget = settings.anchor.target;
+
+        if (!this.settings.anchor.defaultTarget) {
+          if (this.settings.anchor.target && $.trim(this.settings.anchor.target).length) {
+            this.settings.anchor.defaultTarget = this.settings.anchor.target;
           } else {
-            settings.anchor.defaultTargetText = 'Same window';
-            settings.anchor.defaultTarget = settings.anchor.targets[settings.anchor.defaultTargetText];
+            this.settings.anchor.defaultTargetText = 'Same window';
+            this.settings.anchor.defaultTarget = this.settings.anchor.targets[this.settings.anchor.defaultTargetText];
           }
         }
+
         return this.setup();
       },
 
       setup: function () {
         this.isActive = true;
         this.modals = {};
+
         this.initElements()
           .bindSelect()
           .bindPaste()
@@ -156,7 +163,7 @@
 
         self.element.on('blur.editor', function () {
           self.togglePlaceHolder();
-        }).on('keypress', function () {
+        }).on('keypress.editor', function () {
           self.togglePlaceHolder();
         });
 
@@ -231,6 +238,7 @@
             }
           }
         });
+
         return this;
       },
 
@@ -245,11 +253,10 @@
 
       initToolbar: function () {
         if (this.toolbar) {
-            return this;
+          return this;
         }
-        this.toolbar = this.createToolbar();
-        this.toolbarActions = this.toolbar;
-        this.toolbar.toolbar();
+
+        this.createToolbar();
         return this;
       },
 
@@ -295,33 +302,34 @@
       },
 
       createToolbar: function () {
-        var toolbar = $('<div class="toolbar editor-toolbar formatter-toolbar"></div>').attr('id', 'editor-toolbar-' + this.id);
-        this.toolbarButtons(toolbar);
-        toolbar.insertBefore(this.sourceViewActive() ? this.element.prev() : this.element);
-        toolbar.find('button').tooltip();
-        return toolbar;
-      },
-
-      toolbarButtons: function (toolbar) {
-        var btns = this.setExcludedButtons(),
-            buttonset = toolbar.find('.buttonset'),
-            i, btn;
-
-        if (!buttonset.length) {
-          buttonset = $('<div class="buttonset"></div>').appendTo(toolbar);
-        }
+        var toolbar = '<div class="toolbar editor-toolbar formatter-toolbar" id="'+'editor-toolbar-' + this.id+ '">',
+          btns = this.setExcludedButtons(),
+          buttonset =  '<div class="buttonset">',
+          i, btn;
 
         for (i = 0; i < btns.length; i += 1) {
           btn = this.buttonTemplate(btns[i]);
 
           if (btn) {
-            buttonset.append(btn);
+            buttonset += btn;
           }
         }
+
+        buttonset += '</div>';
+        toolbar += buttonset+'</div>';
+
+        this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ? this.element.prev() : this.element);
+        this.toolbar.toolbar();
+
+        //Invoke Tooltips
+        this.toolbar.find('button[title]').tooltip();
+
         // Invoke colorpicker
-        var cpElements = $('[data-action="foreColor"], [data-action="backColor"]', buttonset);
+        var cpElements = this.toolbar.find('[data-action="foreColor"], [data-action="backColor"]');
         cpElements.colorpicker({placeIn: 'editor'});
         $('.trigger', cpElements).off('click.colorpicker');
+
+        return this;
       },
 
       /**
@@ -331,7 +339,9 @@
         this.destroyToolbar();
 
         // Rebind everything to the new element
-        this.setupTextareaEvents().initToolbar().bindButtons().bindModals().bindAnchorPreview();
+        this.setupTextareaEvents();
+        this.initToolbar();
+        this.bindButtons().bindModals().bindAnchorPreview();
         this.bindSelect().bindPaste().setupKeyboardEvents();
         this.toolbar.find('button').button();
       },
@@ -401,10 +411,10 @@
 
           switch (e.ctrlKey && keys.charCode) {
             case keys.h3:
-              self.triggerClick(e, 'append-' + settings.firstHeader);
+              self.triggerClick(e, 'append-' + self.settings.firstHeader);
               break;
             case keys.h4:
-              self.triggerClick(e, 'append-' + settings.secondHeader);
+              self.triggerClick(e, 'append-' + self.settings.secondHeader);
               break;
             case keys.b:
               self.triggerClick(e, 'bold');
@@ -465,13 +475,17 @@
           }
         });
 
+        self.element.on('updated.editor', function () {
+          self.updated();
+        });
+
         return self;
       },
 
       setupTextareaEvents: function() {
         var self = this;
         // Adjust line numbers on input
-        this.textarea.on('input.editor keyup.editor', function() {
+        this.textarea.off('.editor').on('input.editor keyup.editor', function() {
           if (!(self.sourceView.hasClass('hidden'))) {
             self.adjustSourceLineNumbers();
           }
@@ -562,13 +576,13 @@
         if (action === 'anchor') {
           var alink = $('<a href="'+ insertedText +'">' + selectedText + '</a>');
 
-          if(settings.anchor.class && $.trim(settings.anchor.class).length) {
-            alink.addClass(settings.anchor.class);
+          if (this.settings.anchor.class && $.trim(this.settings.anchor.class).length) {
+            alink.addClass(this.settings.anchor.class);
           }
-          if(settings.anchor.target && $.trim(settings.anchor.target).length) {
-            alink.attr('target', settings.anchor.target);
+          if (this.settings.anchor.target && $.trim(this.settings.anchor.target).length) {
+            alink.attr('target', this.settings.anchor.target);
           }
-          if(settings.anchor.isClickable) {
+          if (this.settings.anchor.isClickable) {
             alink.attr('contenteditable', false);
           } else {
             alink.removeAttr('contenteditable');
@@ -616,7 +630,7 @@
       },
 
       buttonTemplate: function (btnType) {
-        var buttonLabels = this.getButtonLabels(settings.buttonLabels),
+        var buttonLabels = this.getButtonLabels(this.settings.buttonLabels),
           buttonTemplates = {
             'bold': '<button type="button" class="btn" title="'+ Locale.translate('ToggleBold') + '" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
             'italic': '<button type="button" class="btn" title="'+ Locale.translate('ToggleItalic') + '" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
@@ -629,8 +643,8 @@
             'separator': '<div class="separator"></div>',
             'anchor': '<button type="button" class="btn" title="'+ Locale.translate('InsertAnchor') + '" data-action="anchor" data-modal="modal-url-'+ this.id +'" data-element="a">' + buttonLabels.anchor + '</button>',
             'image': '<button type="button" class="btn" title="'+ Locale.translate('InsertImage') + '" data-action="image" data-modal="modal-image-'+ this.id +'" data-element="img">' + buttonLabels.image + '</button>',
-            'header1': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH3') + '" data-action="append-' + settings.firstHeader + '" data-element="' + settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
-            'header2': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH4') + '" data-action="append-' + settings.secondHeader + '" data-element="' + settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
+            'header1': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH3') + '" data-action="append-' + this.settings.firstHeader + '" data-element="' + this.settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
+            'header2': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH4') + '" data-action="append-' + this.settings.secondHeader + '" data-element="' + this.settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
             'quote': '<button type="button" class="btn" title="'+ Locale.translate('Blockquote') + '" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
             'orderedlist': '<button type="button" class="btn" title="'+ Locale.translate('OrderedList') + '" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
             'unorderedlist': '<button type="button" class="btn" title="'+ Locale.translate('UnorderedList') + '" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
@@ -736,7 +750,7 @@
           image: self.createImageModal()
         };
 
-        $('[name="em-target"]').dropdown();
+        $('[name="em-target-'+ self.id +'"]').dropdown();
 
         $('#modal-url-'+ self.id +', #modal-image-'+ self.id).modal()
           .on('beforeopen', function () {
@@ -756,12 +770,10 @@
               input = $('input:first', this),
               button = $('.modal-buttonset .btn-modal-primary', this);
 
-            $('[name="em-url"]').val(settings.anchor.url);
-            $('[name="em-class"]').val(settings.anchor.class);
-            $('[name="em-target"]').val(settings.anchor.target).trigger('updated');
-            $('[name="em-isclickable"]').prop('checked', settings.anchor.isClickable);
-
-            // $('[id="em-target-shdo"]').val($('[name="em-target"] option:selected').text());
+            $('[name="em-url-'+ self.id +'"]').val(self.settings.anchor.url);
+            $('[name="em-class-'+ self.id +'"]').val(self.settings.anchor.class);
+            $('[name="em-target-'+ self.id +'"]').val(self.settings.anchor.target).trigger('updated');
+            $('[name="em-isclickable-'+ this.id +'"]').prop('checked', self.settings.anchor.isClickable);
 
             setTimeout(function () {
               if (isTouch && id === 'modal-image-'+ self.id) {
@@ -786,7 +798,7 @@
               if (currentLink.length) {
                 self.updateCurrentLink(currentLink);
               } else {
-                self.createLink($('[name="em-url"]', this));
+                self.createLink($('[name="em-url-'+ self.id +'"]', this));
               }
             } else {
               self.insertImage($('#image').val());
@@ -800,7 +812,8 @@
       * Function that creates the Url Modal Dialog. This can be customized by making a modal with ID `#modal-url-{this.id}`
       */
       createURLModal: function() {
-        var targetOptions = '',
+        var self = this,
+          targetOptions = '',
           isTargetCustom = true,
           urlModal = $('#modal-url-'+ this.id);
 
@@ -808,15 +821,16 @@
           return urlModal;
         }
 
-        $.each(settings.anchor.targets, function(key, val) {
+        $.each(self.settings.anchor.targets, function(key, val) {
           targetOptions += '<option value="'+ val +'">'+ key +'</option>';
-          if ((settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
+          if ((self.settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
             isTargetCustom = false;
           }
         });
         if (isTargetCustom) {
-          targetOptions += '<option value="'+ settings.anchor.target +'">'+ settings.anchor.target +'</option>';
+          targetOptions += '<option value="'+ self.settings.anchor.target +'">'+ self.settings.anchor.target +'</option>';
         }
+
 
         return $('<div class="modal editor-modal-url" id="modal-url-'+ this.id +'"></div>')
           .html('<div class="modal-content">' +
@@ -825,20 +839,20 @@
             '</div>' +
             '<div class="modal-body">' +
               '<div class="field">' +
-                '<label for="em-url">' + Locale.translate('Url') + '</label>' +
-                '<input id="em-url" name="em-url" type="text" value="'+ settings.anchor.url +'">' +
+                '<label for="em-url-'+ self.id +'">' + Locale.translate('Url') + '</label>' +
+                '<input id="em-url-'+ self.id +'" name="em-url-'+ self.id +'" type="text" value="'+ self.settings.anchor.url +'">' +
               '</div>' +
-              (settings.anchor.showIsClickable ?('<div class="field">' +
-                '<input type="checkbox" class="checkbox" id="em-isclickable" name="em-isclickable" checked="'+ settings.anchor.isClickable +'">' +
-                '<label for="em-isclickable" class="checkbox-label">' + Locale.translate('Clickable') + '</label>' +
+              (self.settings.anchor.showIsClickable ?('<div class="field">' +
+                '<input type="checkbox" class="checkbox" id="em-isclickable-'+ this.id +'" name="em-isclickable-'+ this.id +'" checked="'+ self.settings.anchor.isClickable +'">' +
+                '<label for="em-isclickable-'+ this.id +'" class="checkbox-label">' + Locale.translate('Clickable') + '</label>' +
               '</div>') : '') +
               '<div class="field">' +
-                '<label for="em-class">' + Locale.translate('CssClass') + '</label>' +
-                '<input id="em-class" name="em-class" type="text" value="'+ settings.anchor.class +'">' +
+                '<label for="em-class-'+ self.id +'">' + Locale.translate('CssClass') + '</label>' +
+                '<input id="em-class-'+ self.id +'" name="em-class-'+ self.id +'" type="text" value="'+ self.settings.anchor.class +'">' +
               '</div>' +
               '<div class="field">' +
-                '<label for="em-target" class="label">' + Locale.translate('Target') + '</label>' +
-                '<select id="em-target" name="em-target" class="dropdown">' +
+                '<label for="em-target-'+ self.id +'" class="label">' + Locale.translate('Target') + '</label>' +
+                '<select id="em-target-'+ self.id +'" name="em-target-'+ self.id +'" class="dropdown">' +
                   targetOptions +
                 '</select>' +
               '</div>' +
@@ -854,7 +868,9 @@
        * Function that creates the Image Dialog. This can be customized by making a modal with ID `#modal-image-{this.id}`
        */
       createImageModal: function() {
-        var imageModal = $('#modal-image-' + this.id);
+        var self = this,
+          imageModal = $('#modal-image-' + this.id);
+
         if (imageModal.length > 0) {
           return imageModal;
         }
@@ -866,7 +882,7 @@
             '<div class="modal-body">' +
               '<div class="field">' +
                 '<label for="image">' + Locale.translate('Url') + '</label>' +
-                '<input id="image" name="image" type="text" value="'+ settings.image.url +'">' +
+                '<input id="image" name="image" type="text" value="'+ self.settings.image.url +'">' +
               '</div>' +
               '<div class="modal-buttonset">' +
                 '<button type="button" class="btn-modal btn-cancel">' + Locale.translate('Cancel') + '</button>' +
@@ -877,20 +893,23 @@
       },
 
       bindAnchorPreview: function () {
+
         this.element.find('a').tooltip({content: function() {
           return $(this).attr('href');
         }});
+
         return;
       },
 
       updateCurrentLink: function (alink) {
-        var emUrl = $('[name="em-url"]').val(),
-          emClass = $('[name="em-class"]').val(),
-          emTarget = $('[name="em-target"]').val(),
-          emIsClickable = $('[name="em-isclickable"]').is(':checked');
+        var self = this,
+          emUrl = $('[name="em-url'+ this.id +'"]').val(),
+          emClass = $('[name="em-class'+ this.id +'"]').val(),
+          emTarget = $('[name="em-target'+ this.id +'"]').val(),
+          emIsClickable = self.settings.anchor.showIsClickable ? $('[name="em-isclickable'+ this.id +'"]').is(':checked') : self.settings.anchor.isClickable;
 
-        alink.attr('href', (emUrl && $.trim(emUrl).length ? emUrl : settings.anchor.defaultUrl));
-        alink.attr('class', (emClass && $.trim(emClass).length ? emClass : settings.anchor.defaultClass));
+        alink.attr('href', (emUrl && $.trim(emUrl).length ? emUrl : self.settings.anchor.defaultUrl));
+        alink.attr('class', (emClass && $.trim(emClass).length ? emClass : self.settings.anchor.defaultClass));
 
         if (emIsClickable) {
           alink.attr('contenteditable', false);
@@ -915,20 +934,21 @@
         input.val(this.fixLinkFormat(input.val()));
 
         // Set selection url/class/target for Link
-        settings.anchor.url = input.val();
-        settings.anchor.class = $('[name="em-class"]').val();
-        settings.anchor.target = $('[name="em-target"]').val();
-        settings.anchor.isClickable = $('[name="em-isclickable"]').is(':checked');
+        this.settings.anchor.url = input.val();
+        this.settings.anchor.class = $('[name="em-class-'+ this.id +'"]').val();
+        this.settings.anchor.target = $('[name="em-target-'+ this.id +'"]').val();
+        this.settings.anchor.isClickable = this.settings.anchor.showIsClickable ?
+            $('[name="em-isclickable-'+ this.id +'"]').is(':checked') : this.settings.anchor.isClickable;
 
         alink = $('<a href="'+ input.val() +'">' + input.val() + '</a>');
 
-        if(settings.anchor.class && $.trim(settings.anchor.class).length) {
+        if (this.settings.anchor.class && $.trim(this.settings.anchor.class).length) {
           alink.addClass(settings.anchor.class);
         }
-        if(settings.anchor.target && $.trim(settings.anchor.target).length) {
+        if (this.settings.anchor.target && $.trim(this.settings.anchor.target).length) {
           alink.attr('target', settings.anchor.target);
         }
-        if(settings.anchor.isClickable) {
+        if (this.settings.anchor.isClickable) {
           alink.attr('contenteditable', false);
         } else {
           alink.removeAttr('contenteditable');
@@ -936,12 +956,10 @@
 
         if (this.sourceViewActive()) {
           this.insertTextAreaContent(input.val(), 'anchor');
-        }
-        else {
+        } else {
           var sel, range, rangeStr;
 
           if (!this.selection.isCollapsed || this.isIe11) {
-            //document.execCommand('createLink', false, input.val());
 
             //get example from: http://jsfiddle.net/jwvha/1/
             //and info: http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div
@@ -978,9 +996,9 @@
                 }
               }
             }
-          }
-          else {
+          } else {
             var self = this;
+
             document.execCommand('insertHtml', null, alink[0].outerHTML);
             setTimeout(function () {
               self.getCurrentElement().focus();
@@ -1007,7 +1025,7 @@
           clearTimeout(selectionTimer);
           selectionTimer = setTimeout(function () {
             self.checkSelection();
-          }, settings.delay);
+          }, self.settings.delay);
         };
 
         var currentElement = self.getCurrentElement();
@@ -1024,7 +1042,7 @@
 
         if (this.selection === undefined) {
           if (this.sourceViewActive()) {
-            newSelection = this.textarea.val().substring( this.textarea[0].selectionStart, this.textarea[0].selectionEnd ).toString().trim();
+            newSelection = this.textarea.val().substring(this.textarea[0].selectionStart, this.textarea[0].selectionEnd ).toString().trim();
             this.hideToolbarActions();
             return;
           }
@@ -1089,7 +1107,7 @@
 
       //Set button states for toolbar buttons
       setToolbarButtonStates: function () {
-        var buttons = this.toolbarActions.find('button');
+        var buttons = this.toolbar.find('button');
 
         buttons.removeClass('is-active');
         this.checkActiveButtons();
@@ -1214,51 +1232,7 @@
             return this;
           }
           var types, clipboardData, pastedData,
-            paste, p, paragraphs,
-            getCleanedHtml = function(pastedData) {
-              var i, l, attributeStripper,
-                s = pastedData || '',
-                badAttributes = [
-                  'start','xmlns','xmlns:o','xmlns:w','xmlns:x','xmlns:m',
-                  'onmouseover','onmouseout','onmouseenter','onmouseleave',
-                  'onmousemove','onload','onfocus','onblur','onclick',
-                  'style'
-                ];
-
-              // Remove extra word formating
-              if (self.isWordFormat(s)) {
-                s = self.cleanWordHtml(s);
-              }
-
-              // Remove bad attributes
-              for (i = 0, l = badAttributes.length; i < l; i++) {
-                attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
-                s = self.stripAttribute(s, badAttributes[i], attributeStripper);
-
-                attributeStripper = new RegExp(' ' + badAttributes[i] + '=\'(.*?)\'','gi');
-                s = self.stripAttribute(s, badAttributes[i], attributeStripper);
-              }
-
-              // Remove "ng-" directives and "ng-" classes
-              s = s.replace(/(ng-\w+-\w+="(.|\n)*?"|ng-\w+="(.|\n)*?"|ng-(\w+-\w+)|ng-(\w+))/g, '');
-
-              // Remove comments
-              s = s.replace(/<!--(.*?)-->/gm, '');
-
-              // Remove extra spaces
-              s = s.replace(/\s\s+/g, ' ').replace(/\s>+/g, '>');
-
-              // Remove extra attributes from list elements
-              s = s.replace(/<(ul|ol)(.*?)>/gi, '<$1>');
-
-              // Remove html and body tags
-              s = s.replace(/<\/?(html|body)(.*?)>/gi, '');
-
-              // Remove header tag and content
-              s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
-
-              return s;
-            };
+            paste, p, paragraphs;
 
           if (e.clipboardData || e.originalEvent) {
             if (e.clipboardData && e.clipboardData.types) {
@@ -1300,23 +1274,28 @@
             }
           }
 
-          self.pastedData = getCleanedHtml(pastedData);
+          self.pastedData = self.isIe11 ?
+            pastedData : self.getCleanedHtml(pastedData);
 
           $.when(self.element.triggerHandler('beforepaste', [{pastedData: self.pastedData}])).done(function() {
             if (self.pastedData && !e.defaultPrevented) {
-              e.preventDefault();
+              if (!self.isIe11) {
+                e.preventDefault();
+              }
 
               if (document.queryCommandSupported('insertText')) {
                   document.execCommand('insertHTML', false, self.pastedData);
                   return false;
-              } else { // IE > 7
+              } else {
                 self.pasteHtmlAtCaret(self.pastedData);
               }
             }
             self.element.triggerHandler('afterpaste', [{pastedData: self.pastedData}]);
             self.pastedData = null;
           });
-          return false;
+          if (!self.isIe11) {
+            return false;
+          }
         };
 
         currentElement.on(self.pasteEvent, (self.settings.pasteAsPlainText ? self.pasteWrapper : self.pasteWrapperHtml));
@@ -1325,17 +1304,22 @@
       },
 
       pasteHtmlAtCaret: function(html) {
-        var sel, range;
+        var self = this,
+          templIE11 = 'x-text-content-templ-x',
+          sel, range;
         if (window.getSelection) {
-          // IE9 and non-IE
           sel = window.getSelection();
           if (sel.getRangeAt && sel.rangeCount) {
             range = sel.getRangeAt(0);
             range.deleteContents();
 
+            if (self.isIe11) {
+              html = templIE11;
+            }
+
             // Range.createContextualFragment() would be useful here but is
             // only relatively recently standardized and is not supported in
-            // some browsers (IE9, for one)
+            // some browsers
             var el = document.createElement('div');
 
             el.innerHTML = html;
@@ -1353,11 +1337,180 @@
               sel.removeAllRanges();
               sel.addRange(range);
             }
+
+            // IE 11
+            if (self.isIe11) {
+              var maxRun = 50,
+                deferredIE11 = $.Deferred();
+
+              var waitForPastedData = function(elem, savedContent) {
+                maxRun--;
+                if (maxRun < 0) {
+                  deferredIE11.reject();
+                  return;
+                }
+            		// If data has been processes by browser, process it
+                if (elem.childNodes && elem.childNodes.length > 0) {
+              		// Retrieve pasted content via innerHTML
+                  // (Alternatively loop through elem.childNodes or elem.getElementsByTagName here)
+                  html = elem.innerHTML;
+                  // self.pastedData = getCleanedHtml(elem.innerHTML);
+                  // Restore saved content
+                  elem.innerHTML = '';
+                  elem.appendChild(savedContent);
+                  deferredIE11.resolve();
+                }
+                // Else wait 5ms and try again
+                else {
+                  setTimeout(function () {
+                    waitForPastedData(elem, savedContent);
+                  }, 5);
+                }
+              };
+
+              // Everything else: Move existing element contents to a DocumentFragment for safekeeping
+              var savedContent = document.createDocumentFragment();
+              while(self.element[0].childNodes.length > 0) {
+              	savedContent.appendChild(self.element[0].childNodes[0]);
+              }
+              // Then wait for browser to paste content into it and cleanup
+              waitForPastedData(self.element[0], savedContent);
+
+              $.when(deferredIE11).done(function() {
+                var str = '',
+                  node = self.element
+                    .find(':contains('+ templIE11 +')')
+                    .filter(function() {
+                      return (this.textContent === templIE11);
+                    });
+
+                if (!node.length) {
+                  node = self.element
+                    .find(':contains('+ templIE11 +')')
+                    .filter(function() {
+                      return (this.textContent.indexOf(templIE11) > -1 && this.tagName !== 'UL');
+                    });
+                }
+
+                html = self.getCleanedHtml(html);
+
+                // Working with list
+                // Start with "<li"
+                if (/(^(\s+?)?<li)/ig.test(html)) {
+
+                  // Pasted data starts and ends with "li" tag
+                  if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) { //ends with "</li>"
+
+                    // Do not add "ul" if pasting on "li" node
+                    if (!node.is('li')) {
+                      html = '<ul>'+ html +'</ul>';
+                    }
+                    node.replaceWith(html);
+                  }
+                  // Missing at the end "</li>" tag
+                  else {
+                    // Pasting on "li" node
+                    if (node.is('li')) {
+                      node.replaceWith(html +'</li>');
+                    }
+
+                    // Not pasting on "li" node
+                    else {
+                      // If ul was closed and have extra nodes after list close
+                      str = (html.match(/<\/ul|<\/ol/gi) || []);
+                      // Pasted data contains "ul or ol" tags
+                      if (str.length) {
+                        node.replaceWith(html);
+                      } else {
+                        node.replaceWith(html +'</li></ul>');
+                      }
+                    }
+
+                  }
+                }
+
+                // Ends with "</li>" tag, but not started with "li" tag
+                else if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) {
+                  // Pasting on "li" node
+                  if (node.is('li')) {
+                    node.replaceWith('<li>'+ html);
+                  } else {
+                    str = (html.match(/<ul|<ol/gi) || []);
+                    // Pasted data contains "ul or ol" tags
+                    if (str.length) {
+                      html += (str[str.length-1]).replace(/<(ul|ol)/gi, '<$1>');
+                    }
+                    else {
+                      html = '<ul>'+ html +'</ul>';
+                    }
+                    node.replaceWith(html);
+                  }
+                }
+
+                // Default case
+                str = self.element[0].innerHTML;
+                if (str.indexOf(templIE11) > -1) {
+                  str = str.replace(templIE11, html);
+                }
+                self.element[0].innerHTML = self.getCleanedHtml(str);
+
+              });
+            }
           }
         } else if (document.selection && document.selection.type !== 'Control') {
-          // IE < 9
           document.selection.createRange().pasteHTML(html);
         }
+      },
+
+      // Get cleaned extra from html
+      getCleanedHtml: function(pastedData) {
+        var i, l, attributeStripper,
+          self = this,
+          s = pastedData || '',
+          badAttributes = [
+            'start','xmlns','xmlns:o','xmlns:w','xmlns:x','xmlns:m',
+            'onmouseover','onmouseout','onmouseenter','onmouseleave',
+            'onmousemove','onload','onfocus','onblur','onclick',
+            'style'
+          ];
+
+        // Remove extra word formating
+        if (self.isWordFormat(s)) {
+          s = self.cleanWordHtml(s);
+        }
+
+        // Remove bad attributes
+        for (i = 0, l = badAttributes.length; i < l; i++) {
+          attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
+          s = self.stripAttribute(s, badAttributes[i], attributeStripper);
+
+          attributeStripper = new RegExp(' ' + badAttributes[i] + '=\'(.*?)\'','gi');
+          s = self.stripAttribute(s, badAttributes[i], attributeStripper);
+        }
+
+        // Remove "ng-" directives and "ng-" classes
+        s = s.replace(/(ng-\w+-\w+="(.|\n)*?"|ng-\w+="(.|\n)*?"|ng-(\w+-\w+)|ng-(\w+))/g, '');
+
+        // Remove comments
+        s = s.replace(/<!--(.*?)-->/gm, '');
+
+        // Remove extra spaces
+        s = s.replace(/\s\s+/g, ' ').replace(/\s>+/g, '>');
+
+        // Remove extra attributes from list elements
+        s = s.replace(/<(ul|ol)(.*?)>/gi, '<$1>');
+
+        // Remove empty list
+        s = s.replace(/<li><\/li>/gi, '');
+        s = s.replace(/<(ul|ol)><\/(ul|ol)>/gi, '');
+
+        // Remove html and body tags
+        s = s.replace(/<\/?(html|body)(.*?)>/gi, '');
+
+        // Remove header tag and content
+        s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
+
+        return s;
       },
 
       htmlEntities: function (str) {
@@ -1517,25 +1670,24 @@
 
       // Restore if Selection is a Link
       restoreLinkSelection: function () {
-        var currentLink = $(this.findElementInSelection('a', this.element[0])),
+        var self = this,
+          currentLink = $(this.findElementInSelection('a', this.element[0])),
           contenteditable;
 
-        settings.anchor.url = settings.anchor.defaultUrl;
-        settings.anchor.class = settings.anchor.defaultClass;
-        settings.anchor.target = settings.anchor.defaultTarget;
-        settings.anchor.isClickable = settings.anchor.defaultIsClickable;
+        self.settings.anchor.url = self.settings.anchor.defaultUrl;
+        self.settings.anchor.class = self.settings.anchor.defaultClass;
+        self.settings.anchor.target = self.settings.anchor.defaultTarget;
+        self.settings.anchor.isClickable = self.settings.anchor.defaultIsClickable;
 
         if (currentLink.length) {
-          settings.anchor.url = currentLink.attr('href');
-          settings.anchor.class = currentLink.attr('class');
-          settings.anchor.target = currentLink.attr('target');
+          self.settings.anchor.url = currentLink.attr('href');
+          self.settings.anchor.class = currentLink.attr('class');
+          self.settings.anchor.target = currentLink.attr('target');
           contenteditable = currentLink.attr('contenteditable');
-          if (contenteditable === false || contenteditable === 'false') {
-            settings.anchor.isClickable = true;
-          }
 
-          // currentLink.removeAttr('class target');
-          // document.execCommand('unlink', false, null);
+          if (contenteditable === false || contenteditable === 'false') {
+            self.settings.anchor.isClickable = true;
+          }
         }
 
       },
@@ -1759,7 +1911,6 @@
       },
 
       destroyToolbar: function() {
-        var element = this.getCurrentElement();
         // Unbind all events attached to the old element that involve triggering the toolbar hide/show
 
         var toolbarApi = this.toolbar.data('toolbar');
@@ -1775,26 +1926,81 @@
           }
         });
 
-        this.toolbar.off('click.editor mousedown.editor');
+        $('[data-action="foreColor"], [data-action="backColor"]', this.element).each(function() {
+          var colorpicker = $(this).data('colorpicker');
+            if (colorpicker && typeof colorpicker.destroy === 'function') {
+            colorpicker.destroy();
+          }
+        });
+
+        this.toolbar.off('touchstart.editor click.editor click.editor mousedown.editor');
         this.toolbar.remove();
         this.toolbar = undefined;
-        this.element.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
-        this.textarea.off('mouseup.editor keyup.editor focus.editor blur.editor ' + this.pasteEvent);
-        element.off('keydown.editor');
+        this.element.off('mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor ' + this.pasteEvent);
+        this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
         this.element.prev('.label').off('click.editor');
+
+        var editorContainer = this.element.closest('.editor-container');
+        editorContainer.off('focus.editor blur.editor');
+
+        var state = this.colorpickerButtonState('foreColor'),
+          cpBtn = state.cpBtn;
+        cpBtn.off('selected.editor');
+
+        state = this.colorpickerButtonState('backColor');
+        cpBtn = state.cpBtn;
+        cpBtn.off('selected.editor');
+
         $(window).off('resize.editor');
         $.each(this.modals, function(i, modal) {
-          modal.off('beforeclose close open');
+          modal.off('beforeclose.editor close.editor open.editor beforeopen.editor');
+          if (modal.data('modal')) {
+            modal.destroy();
+          }
         });
         this.modals = {};
 
         this.element.trigger('destroy.toolbar.editor');
       },
 
+      /**
+       * Updates the component instance.  Can be used after being passed new settings.
+       * @returns {this}
+       */
       updated: function() {
-        // TODO: Updated Method
+        return this
+          .teardown()
+          .init();
+      },
+
+      teardown: function() {
+        $('html').off('mouseup.editor');
+
+        this.destroyToolbar();
+        if (this.sourceView) {
+          this.sourceView.off('.editor');
+          this.sourceView.remove();
+          this.sourceView = null;
+        }
+
+        if ($('[data-editor="true"]').length === 1) {
+          $('#modal-url-'+ this.id +', #modal-image-'+ this.id).remove();
+        }
+
         return this;
       },
+
+      /**
+      * Remove all events and reset back to default.
+      */
+      /**
+      * Detach Events and tear back additions.
+      */
+      destroy: function () {
+        this.teardown();
+        $.removeData(this.element[0], pluginName);
+      },
+
 
      /**
      * Disable the editable area.
@@ -1983,31 +2189,6 @@
           }
         }
         return result.trim();
-      },
-
-      /**
-      * Detach Events and tear back additions.
-      */
-      destroy: function () {
-        $('html').off('mouseup.editor');
-        this.destroyToolbar();
-        this.sourceView.remove();
-        if ($('[data-editor="true"]').length === 1) {
-          $('#modal-url-'+ this.id +', #modal-image-'+ this.id).remove();
-        }
-        $.removeData(this.element[0], pluginName);
-      },
-
-      /**
-       *  This component fires the following events.
-       *
-       * @fires Editor#events
-       * @param {Object} input  &nbsp;-&nbsp; Fires after the value in the input is changed by user interaction.
-       * @param {Object} keydown  &nbsp;-&nbsp; Fires after as keys are pressed.
-       *
-       */
-      handleEvents: function () {
-
       }
 
     };

@@ -457,7 +457,8 @@ $editor-btn-color: $graphite06;
 $editor-btn-hover-color: $graphite10;
 $editor-btn-active-color: $primary-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color, $focus-box-shadow;
-$editor-top-focus-box-shadow: -2px -2px 3px 0px rgba(54, 138, 192, .3);
+$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(54, 138, 192, .3);
+$editor-blockquote-color: $graphite06;
 
 // Radio Buttons
 $radio-bg-color: transparent;
@@ -595,6 +596,11 @@ $vertical-tab-active-bg-color: $primary-color;
 $vertical-tab-panel-bg-color: $panel-bg-color;
 $vertical-tab-sidebar-bg-color: $body-bg-color;
 $vertical-tab-sidebar-border-color: $graphite02;
+
+//Multi-tabs
+$mutlitabs-section-border-color: $graphite04;
+$mutlitabs-section-alt-bg-color: $white;
+$mutlitabs-section-alt-border-color: $graphite02;
 
 //Charts
 $chart-line-color: $graphite02;
@@ -761,6 +767,7 @@ $searchfield-moduletabs-disabled-border-color: $slate08;
 
 //Image Border Color
 $image-border-color: $graphite02;
+$image-background-color: $graphite02;
 
 //Toast
 $toast-bg-color: $white;
@@ -794,6 +801,7 @@ $header-tab-alt-selected-color: $primary-color;
 $header-breadcrumb-color: $white;
 $header-breadcrumb-alt-bg-color: $white;
 $header-breadcrumb-alt-color: $font-color-highcontrast;
+$header-breadcrumb-border-color: $graphite03;
 
 // Module Tabs
 $module-tabs-bg-color: $azure08;

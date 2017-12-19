@@ -13,7 +13,39 @@
     //layout/orientation/@characters
     direction: 'right-to-left',
     //ca-gregorian
-    calendars: [{
+    calendars: [
+    {
+      name: 'gregorian',
+      // Note the format here is sort of dd/MM/yyyy
+      // but this file is ltr and we display this in rtl so its inverted
+      //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
+      dateFormat: {'separator': '/', //Infered
+                   'timeSeparator': ':',
+                   'short': 'yyyy/M/d', //use four digit year
+                   'medium': 'yyyy/MM/dd',
+                   'long': 'yyyy MMMM، d',
+                   'full': 'EEEE، yyyy MMMM، d',
+                   'month': 'MMMM dd',
+                   'year': 'yyyy MMMM',
+                   'timestamp': 'h:mm:ss a',
+                   'datetime': 'yyyy/MM/d h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+      //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
+      days: {
+         wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'لسبت'],
+         abbreviated: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
+         narrow: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
+      },
+      //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
+      months: {
+        wide: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+        abbreviated: ['ي', 'ف', 'م', 'أ', 'و', 'ن', 'ل', 'غ', 'س', 'ك', 'ب', 'د']
+      },
+      //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
+      timeFormat: 'h:mm a',
+      //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
+      dayPeriods: ['ص', 'م']
+    },
+    {
       name: 'islamic-umalqura',
       // Note the format here is sort of dd/MM/yyyy
       // but this file is ltr and we display this in rtl so its inverted
@@ -243,62 +275,7 @@
           return [hyear, hmonth - 1, days + 1];
         }
       }
-    },
-    {
-      name: 'gregorian',
-      // Note the format here is sort of dd/MM/yyyy
-      // but this file is ltr and we display this in rtl so its inverted
-      //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      dateFormat: {'separator': '/', //Infered
-                   'timeSeparator': ':',
-                   'short': 'yyyy/M/d', //use four digit year
-                   'medium': 'yyyy/MM/dd',
-                   'long': 'yyyy MMMM، d',
-                   'full': 'EEEE، yyyy MMMM، d',
-                   'month': 'MMMM dd',
-                   'year': 'yyyy MMMM',
-                   'timestamp': 'h:mm:ss a',
-                   'datetime': 'yyyy/MM/d h:mm a'}, //Infered short + short gregorian/dateTimeFormats
-      //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
-      days: {
-         wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'لسبت'],
-         abbreviated: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
-         narrow: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
-      },
-      //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
-      months: {
-        wide: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
-        abbreviated: ['ي', 'ف', 'م', 'أ', 'و', 'ن', 'ل', 'غ', 'س', 'ك', 'ب', 'د']
-      },
-      //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
-      //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['ص', 'م']
-    }, { name: 'islamic-umalqura',
-      //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-      dateFormat: {'separator': '/', //Infered
-                   'short': 'd/M/yyyy', //use four digit year
-                   'medium': 'd MMM، yyyy',
-                   'long': 'd MMM، yyyy G',
-                   'full': 'EEEE، d MMMM، y G',
-                   'datetime': 'd/M/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
-      //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
-      days: {
-         wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
-         abbreviated: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
-      },
-      //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
-      months: {
-        wide: ['محرم', 'صفر', 'ربيع الأول', 'ربيع الآخر', 'جمادى الأولى', 'جمادى الآخرة', 'رجب', 'شعبان', 'رمضان', 'شوال', 'ذو القعدة', 'ذو الحجة'],
-        abbreviated: ['١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩', '١٠', '١١', '١٢']
-      },
-      //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-      timeFormat: 'h:mm a',
-      //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['ص', 'م']
-    }
-
-    ],
+    }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
     currencySign: '£', //(Replace Sign http://www.currencysymbols.in ?)
     currencyFormat: '¤ #,##0.00',

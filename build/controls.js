@@ -27,6 +27,7 @@ module.exports = [
   'components/dropdown/dropdown.js',
   'components/drag/drag.js', //behavior?
   'components/editor/editor.js',
+  'components/emptymessage/emptymessage.js',
   'components/expandablearea/expandablearea.js',
   'components/field-options/field-options.js',
   'components/fileupload/fileupload.js',

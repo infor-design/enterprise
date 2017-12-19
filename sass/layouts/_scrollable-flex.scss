@@ -25,7 +25,7 @@
     padding: 1px 20px 0;
 
     ol {
-      padding: 15px 0;;
+      padding: 15px 0;
     }
 
     .hyperlink {
@@ -56,7 +56,7 @@
 
     &.alternate {
       background-color: $header-breadcrumb-alt-bg-color;
-      border-bottom: 1px solid $header-breadcrumb-alt-color;
+      border-bottom: 1px solid $header-breadcrumb-border-color;
 
       &:hidden {
         border-bottom: 0;

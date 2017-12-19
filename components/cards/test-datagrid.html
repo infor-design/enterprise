@@ -6,13 +6,12 @@
   </div>
 </div>
 
-
 <div class="row">
   <div class="full-width column">
     <div class="card">
       <div class="card-header">
           <h2 class="widget-title">Chart Title</h2>
-          <button type="button" class="btn-actions" type="button">
+          <button type="button" class="btn-actions">
             <span class="audible">Actions</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-more"></use>
@@ -51,7 +50,7 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 175, formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 175, formatter: Formatters.Hyperlink, href:'javascript:void(0);'});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});

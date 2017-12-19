@@ -6,6 +6,7 @@
     -   [hasError](#haserror)
     -   [addMessage](#addmessage)
 -   [getErrorMessage](#geterrormessage)
+-   [getMessage](#getmessage)
 -   [scrollIntoView](#scrollintoview)
 
 ## Validator
@@ -35,10 +36,19 @@ Adds a message/icon to a form field.
 -   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `inline` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `showTooltip` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   `isAlert` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## getErrorMessage
 
 Returns the errormessage data object for a Field
+
+**Parameters**
+
+-   `options`  (object) optional
+
+## getMessage
+
+Returns the specific type message data object for a Field
 
 **Parameters**
 

@@ -208,7 +208,14 @@
 // Legend Styling
 .chart-legend {
   margin-left: 55px;
-  margin-top: -7px;
+  margin-top: -13px;
+
+  &.is-below {
+    border-top: 1px solid $panel-border-color;
+    margin: 0 auto;
+    padding-bottom: 1em;
+    padding-top: 1em;
+  }
 
   .chart-legend-item {
     border: 1px solid transparent;
@@ -223,6 +230,15 @@
       box-shadow: $focus-box-shadow;
       outline: none;
     }
+
+    &.is-two-column {
+      display: inline-block;
+      float: none;
+      margin: 0;
+      padding: 0 30px;
+      width: 50%;
+    }
+
   }
 
   .chart-legend-color {
@@ -266,10 +282,6 @@
     stroke-width: 2px;
   }
 
-  svg {
-    // position: absolute;
-  }
-
   .bar-rect {
     fill: transparent;
     stroke-width: 0;
@@ -286,7 +298,6 @@
 
 // Pie Charts
 .chart-pie {
-  padding: 20px 0 0 2px;
   width: inherit;
 
   .tspan {

@@ -423,12 +423,15 @@ $.fn.timer = function(callback, delay) {
     resume = function() {
       self.triggerHandler('resume');
       update();
+
+    return {
+      event: this,
+      cancel: cancel,
+      pause: pause,
+      resume: resume
     };
-
-    update();
-  return { event: this, cancel: cancel, pause: pause, resume: resume };
+  };
 };
-
 
 /**
  * Copies a string to the clipboard. Must be called from within an event handler such as click.
@@ -1022,10 +1025,6 @@ utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOp
     }
   }
 
-  if (element instanceof $) {
-    element = element[0];
-  }
-
   // Actually get ready to merge incoming options if we get to this point.
   return utils.extend(true, {},
     resolveFunction(defaultOptions || {}),
@@ -1034,4 +1033,31 @@ utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOp
 };
 
 
-export { utils, DOM };
+let math = {};
+
+/**
+ * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+ * @param {Number} delay
+ * @returns {Number} - fps
+ */
+math.convertDelayToFPS = function convertDelayToFPS(delay) {
+  if (isNaN(delay)) {
+    throw new Error('provided delay value is not a number');
+  }
+  return delay / 16.7;
+};
+
+/**
+ * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+ * @param {Number} delay
+ * @returns {Number} - fps
+ */
+math.convertFPSToDelay = function convertFPSToDelay(fps) {
+  if (isNaN(fps)) {
+    throw new Error('provided delay value is not a number');
+  }
+  return fps * 16.7;
+};
+
+
+export { utils, DOM, math };

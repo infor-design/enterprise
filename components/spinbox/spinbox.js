@@ -19,9 +19,10 @@
     // Settings and Options
     var pluginName = 'spinbox',
         defaults = {
-          min: 0,
-          max: 9999999,
-          step: 1
+          autocorrectOnBlur: false,
+          min: null,
+          max: null,
+          step: null
         },
         settings = $.extend({}, defaults, options);
 
@@ -32,6 +33,7 @@
     * @param {null|Number} min &nbsp;-&nbsp; if defined, provides a minimum numeric limit
     * @param {null|Number} max  &nbsp;-&nbsp; if defined, provides a maximum numeric limit
     * @param {null|Number} step  &nbsp;-&nbsp; if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.
+    * @param {boolean} validateOnInput  &nbsp;-&nbsp; If set to false, will only automatically correct the spinbox value after the spinbox has lost focus.
     */
     function Spinbox(element) {
       this.element = $(element);
@@ -105,15 +107,8 @@
           this.element.attr('min', this.settings.min);
         }
 
-        return this;
-      },
 
-      /**
-       * Check if given value is 'undefined'.
-       * @returns {booelan}
-       */
-      isUndefined: function(value) {
-        return typeof value === 'undefined';
+        return this;
       },
 
       /**
@@ -174,33 +169,28 @@
           i = 0;
 
         // Define a default Max value if none of these attributes exist, to ensure the mask plugin will
-        // work correctly.
-        if (!max && !mask) {
+        // work correctly.  Cannot define a Min value here because the plugin must be able to invoke itself
+        // with a NULL value.
+        if (!min && !max && !mask) {
           max = '9999999';
-        }
-
-        if (!min) {
-          min = '0';
         }
 
         // If a mask doesn't exist, but min and max values do exist, create a mask that reflects those min/max values
         if ((min || max) && !mask) {
           var newMask = '',
-            tempMin = min || '',
-            tempMax = max || '',
-            lengthMin = min.replace(/-/g, '').length,
-            lengthMax = max.replace(/-/g, '').length,
-            longerVal = lengthMin > lengthMax ? lengthMin : lengthMax;
-
+            tempMin = min ? min : '',
+            tempMax = max ? max : '',
+            longerVal = tempMin.length > tempMax.length ? tempMin : tempMax;
           i = 0;
-          while (i < longerVal) {
+
+          while (i <= longerVal.length) {
             newMask += '#';
             i++;
           }
 
           // Add a negative symbol to the mask if it exists within the longer value.
           if (tempMin.indexOf('-') !== -1 || tempMax.indexOf('-') !== -1) {
-            newMask = '-' + newMask;
+            newMask = '-' + newMask.substring(0, (newMask.length - 1));
           }
 
           attributes['data-mask'] = newMask;
@@ -209,42 +199,41 @@
 
         // If a "data-mask" attribute is already defined, use it to determine missing values for min/max, if they
         // don't already exist.
-        maskSize = mask.replace(/-/g, '').length;
+        maskSize = mask.length;
         i = 0;
-        while (i < maskSize) {
+        while (i <= maskSize) {
           maskValue += '9';
           i++;
         }
 
         // If no negative symbol exists in the mask, the minimum value must be zero.
-        attributes.min = !self.isUndefined(min) ? min :
-          ((mask.indexOf('-') === -1) ? 0 : ('-' + maskValue));
-        attributes.max = !self.isUndefined(max) ? max : maskValue;
+        if (mask.indexOf('-') === -1) {
+          attributes.min = min ? min : 0;
+          attributes.max = max ? max : maskValue;
+        } else {
+          attributes.min = min ? min : maskValue;
+          attributes.max = max ? max : maskValue.substring(0, (maskValue.length - 1));
+        }
 
-        if (this.element.attr('data-mask-mode') !== 'number') {
+        if (!this.element.attr('data-mask-mode') || this.element.attr('data-mask-mode') !== 'number') {
           attributes['data-mask-mode'] = 'number';
         }
 
         // Destroy the Mask Plugin if it's already been invoked.  We will reinvoke it later on during
         // initialization.  Check to make sure its the actual Mask plugin object, and not the "data-mask"
         // pattern string.
-        var apiMask = this.element.data('mask');
-        if (apiMask && apiMask.destroy) {
-          apiMask.destroy();
+        if (this.element.data('mask') && typeof this.element.data('mask') === 'object') {
+          this.element.data('mask').destroy();
         }
 
         // Add Aria Properties for valuemin/valuemax
-        if (!self.isUndefined(min)) {
+        if (min) {
           attributes['aria-valuemin'] = min;
         }
-        if (!self.isUndefined(max)) {
+        if (max) {
           attributes['aria-valuemax'] = max;
         }
         this.element.attr(attributes);
-
-        // Add steps
-        attributes.step = Number(this.element.attr('step') || 1);
-        this.attributes = attributes;
 
         // Set an initial "aria-valuenow" value.
         this.updateAria(self.element.val());
@@ -314,8 +303,7 @@
        */
       handleKeyDown: function(e, self) {
         var key = e.which,
-          validKeycodes = [35, 36, 37, 38, 39, 40],
-          a = self.attributes;
+          validKeycodes = [35, 36, 37, 38, 39, 40];
 
         if ($.inArray(key, validKeycodes) === -1) {
           return;
@@ -324,41 +312,30 @@
         // If the keycode got this far, it's an arrow key, HOME, or END.
         switch(key) {
           case 35: // End key sets the spinbox to its minimum value
-            if (!self.isUndefined(a.min)) { self.element.val(a.min); }
+            if (self.element.attr('min')) { self.element.val(self.element.attr('min')); }
             break;
           case 36: // Home key sets the spinbox to its maximum value
-            if (!self.isUndefined(a.max)) { self.element.val(a.max); }
+            if (self.element.attr('max')) { self.element.val(self.element.attr('max')); }
             break;
-          case 38: // Right and Up increase the spinbox value
-            if (Locale.isRTL()) {
-              self.addButtonStyle(self.buttons.down);
-              self.decreaseValue();
-            } else {
-              self.addButtonStyle(self.buttons.up);
-              self.increaseValue();
-            }
+          case 38: // Up increases the spinbox value
+            self.addButtonStyle(self.buttons.up);
+            self.increaseValue();
             break;
-          case 40: // Left and Down decrease the spinbox value
-            if (Locale.isRTL() && key === 37) {
-              self.addButtonStyle(self.buttons.up);
-              self.increaseValue();
-            } else {
-              self.addButtonStyle(self.buttons.down);
-              self.decreaseValue();
-            }
+          case 40: // Down decreases the spinbox value
+            self.addButtonStyle(self.buttons.down);
+            self.decreaseValue();
             break;
         }
       },
 
+
       /**
        * Event handler for 'keypress' events
+       * TODO: Deprecate in 4.4.0
        * @param {jQuery.Event} e
        * @param {Spinbox} self
        */
       handleKeyPress: function(e, self) {
-        if (self.isDisabled()) {
-          return;
-        }
         var key = e.which;
 
         // NOTE:
@@ -366,19 +343,26 @@
           return;
         }
 
-        // If the key is a number, pre-calculate the value of the number to see if it would be
-        // greater than the maximum, or less than the minimum.  If it's fine, let it through.
-        // Doing this check here prevents visual jitter.
-        var num = Number(this.checkForNumeric(this.element.val())), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
-          a = self.attributes;
-        if (num < a.min) {
-          e.preventDefault();
-          return self.updateVal(a.min);
+        return this.handleInput(e, self);
+      },
+
+
+      /**
+       * Event handler for the 'input' event
+       * @param {jQuery.Event} e
+       * @param {Spinbox} self
+       */
+      handleInput: function(e, self) {
+        if (self.isDisabled()) {
+          return;
         }
-        if (num > a.max) {
-          e.preventDefault();
-          return self.updateVal(a.max);
+
+        // If we're only auto-correcting on blur, don't continue.
+        if (this.settings.autocorrectOnBlur) {
+          return;
         }
+
+        return this.correctValue(e);
       },
 
       /**
@@ -410,12 +394,7 @@
             break;
         }
 
-        var val = Number(this.checkForNumeric(this.element.val()));
-        if (val) {
-          self.handleAfterPaste(self);
-        } else {
-          self.updateAria(val);
-        }
+        self.updateAria(self.element.val());
       },
 
       /**
@@ -425,22 +404,45 @@
        * @param {Spinbox} self
        */
       handleAfterPaste: function(self) {
-        var val = Number(self.checkForNumeric(self.element.val())),
-          a = self.attributes;
+        var min = Number(self.element.attr('min')),
+          max = Number(self.element.attr('max')),
+          val = Number(self.element.val());
 
-        val = (val < a.min ? a.min : (val > a.max ? a.max : val));
+        val = (val < min ? min : (val > max ? max : val));
         self.updateVal(val);
       },
+
+      /**
+       *
+       */
+      correctValue: function(e) {
+        var num = Number(this.element.val()),
+          min = this.element.attr('min'),
+          max = this.element.attr('max');
+
+        if (num < min) {
+          if (e) {
+            e.preventDefault();
+          }
+          return this.updateVal(min);
+        }
+        if (num > max) {
+          if (e) {
+            e.preventDefault();
+          }
+          return this.updateVal(max);
+        }
+      },
+
 
       /**
        * Increases the value of the Spinbox field, constrained by the step interval and maximum limit.
        */
       increaseValue: function() {
-        var a = this.attributes,
-          val = this.checkForNumeric(this.element.val()) + a.step;
-
-        if (!this.isUndefined(a.max) && val > a.max) {
-          return;
+        var max = this.element.attr('max'),
+          val = this.checkForNumeric(this.element.val()) + Number(this.element.attr('step') || 1);
+        if (max && val > max) {
+          return this.updateVal(max);
         }
         this.updateVal(val);
       },
@@ -449,11 +451,10 @@
        * Decreases the value of the Spinbox field, constrained by the step interval and minimum limit.
        */
       decreaseValue: function() {
-        var a = this.attributes,
-          val = this.checkForNumeric(this.element.val()) - a.step;
-
-        if (!this.isUndefined(a.min) && val < a.min) {
-          return;
+        var min = this.element.attr('min'),
+          val = this.checkForNumeric(this.element.val()) - Number(this.element.attr('step') || 1);
+        if (min && val < min) {
+          return this.updateVal(min);
         }
         this.updateVal(val);
       },
@@ -493,8 +494,8 @@
        * Updates the "aria-valuenow" property on the spinbox element if the value is currently set
        */
       updateAria: function(val) {
-        var min = this.attributes.min,
-          max = this.attributes.max;
+        var min = this.element.attr('min'),
+          max = this.element.attr('max');
 
         val = this.checkForNumeric(val);
         this.element.attr('aria-valuenow', (val !== '' ? val : ''));
@@ -614,13 +615,13 @@
           self.element.parent('.spinbox-wrapper').addClass('is-focused');
         }).on('blur.spinbox', function() {
           self.element.parent('.spinbox-wrapper').removeClass('is-focused');
-          // Explicitly trigger the change event if the "original" value is different from its current value.
-          // Prevents an issue where changing the value with arrow keys doesn't trigger the "change" event on blur.
-          self.element.trigger('change');
+          if (self.settings.autocorrectOnBlur) {
+            self.correctValue();
+          }
         }).on('keydown.spinbox', function(e) {
           self.handleKeyDown(e, self);
-        }).on('keypress.spinbox', function(e) {
-          self.handleKeyPress(e, self);
+        }).on('input.spinbox', function(e) {
+          self.handleInput(e, self);
         }).on('keyup.spinbox', function(e) {
           self.handleKeyup(e, self);
         }).on('afterpaste.mask', function() {

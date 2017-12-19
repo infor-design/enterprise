@@ -385,6 +385,7 @@ $editor-btn-hover-color: $white;
 $editor-btn-active-color: $primary-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(141, 201, 230, .3);
+$editor-blockquote-color: $slate04;
 
 // Radio Buttons
 $radio-border-color: $slate04;
@@ -504,6 +505,11 @@ $vertical-tab-bg-hover-color: $slate06;
 $vertical-tab-panel-bg-color: $slate08;
 $vertical-tab-sidebar-bg-color: $slate07;
 $vertical-tab-sidebar-border-color: $slate05;
+
+//Multi-tabs
+$mutlitabs-section-border-color: $slate07;
+$mutlitabs-section-alt-bg-color: $black;
+$mutlitabs-section-alt-border-color: $slate09;
 
 //Charts
 $chart-line-color: $slate04;
@@ -654,6 +660,7 @@ $searchfield-header-icon-color: $header-button-color;
 
 //Image Border Color
 $image-border-color: $slate04;
+$image-background-color: $slate04;
 
 //Toast
 $toast-bg-color: $slate07;
@@ -689,6 +696,7 @@ $header-tab-alt-selected-color: $inverse-color;
 $header-breadcrumb-color: $slate01;
 $header-breadcrumb-alt-bg-color: $slate10;
 $header-breadcrumb-alt-color: $white;
+$header-breadcrumb-border-color: $slate05;
 
 // Module Tabs
 $module-tabs-bg-color: $header-bg-color;

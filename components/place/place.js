@@ -108,7 +108,7 @@ PlacementObject.prototype = {
       value = 0;
     }
 
-    this[coordinate] = parseInt(value, 10);
+    this[coordinate] = Math.round(value);
   }
 };
 

@@ -17,7 +17,7 @@
 <li><code>secondHeader</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility<br /></li>
 <li><code>productName</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Additional product name information to display<br /></li>
 <li><code>pasteAsPlainText</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If true, when you paste into the editor the element will be unformatted to plain text.<br /></li>
-<li><code>anchor</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Info object to populate the link dialog defaulting to <code>{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},</code><br /></li>
+<li><code>anchor</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  An object with settings related to controlling link behavior when inserted example: <code>{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},</code><br />the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.<br /></li>
 <li><code>image</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Info object to populate the image dialog defaulting to <code>{url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}</code></li>
 </ul>
 <h3 id="functions">Functions</h3>
@@ -27,21 +27,19 @@
 <p>Function that creates the Url Modal Dialog. This can be customized by making a modal with ID <code>#modal-url-{this.id}</code></p>
 <h4 id="createimagemodal">createImageModal</h4>
 <p>Function that creates the Image Dialog. This can be customized by making a modal with ID <code>#modal-image-{this.id}</code></p>
+<h4 id="updated">updated</h4>
+<p>Updates the component instance. Can be used after being passed new settings.</p>
+<p>Returns <strong>this</strong></p>
+<h4 id="destroy">destroy</h4>
+<p>Remove all events and reset back to default.</p>
+<h4 id="destroy-1">destroy</h4>
+<p>Detach Events and tear back additions.</p>
 <h4 id="disable">disable</h4>
 <p>Disable the editable area.</p>
 <h4 id="enable">enable</h4>
 <p>Enable the editable area.</p>
 <h4 id="readonly">readonly</h4>
 <p>Make the editable area readonly.</p>
-<h4 id="destroy">destroy</h4>
-<p>Detach Events and tear back additions.</p>
-<h3 id="events">Events</h3>
-<p>This component fires the following events.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>input</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires after the value in the input is changed by user interaction.<br /></li>
-<li><code>keydown</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires after as keys are pressed.</li>
-</ul>
 <h2 id="code-example">Code Example</h2>
 <h3 id="rich-text-editor">Rich Text Editor</h3>
 <p>A Rich Text Editor is implemented using a content editable element with several polyfills. To make an editor all you need to do is add a field element, a label, and a div with class=&quot;editor&quot;. You should also add aria-label for better accessibility.</p>
@@ -79,7 +77,10 @@
 <li><strong>Ctrl + O</strong> – Insert ordered list<br /></li>
 <li><strong>Ctrl + Shift + L</strong> – Insert unordered (bullet) list<br /></li>
 <li><strong>Ctrl + Shift + N</strong> – Insert ordered (number) list<br /></li>
-<li><strong>Ctrl + ~ (Tilde)</strong> – Toggle source or visual</li>
+<li><strong>Ctrl + ~ (Tilde)</strong> – Toggle source or visual<br /></li>
+<li><strong>Shift + Click</strong> – (Mac FF) Opens a link in a new window<br /></li>
+<li><strong>Command + Click</strong> – (Mac Chrome) Opens a link in a new window<br /></li>
+<li><strong>Ctrl + Click</strong> – (PC) Opens a link in a new window</li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
 <ul>

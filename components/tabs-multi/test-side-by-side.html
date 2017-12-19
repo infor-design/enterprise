@@ -1,0 +1,387 @@
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+
+  <section id="test-multitabs" class="multitabs-container side-by-side" data-options="{trigger: 'rightClick'}" data-popupmenu="action-popupmenu">
+    <div class="multitabs-section">
+      <div id="tab-list-one" class="tab-container module-tabs">
+        <ul class="tab-list">
+          <li class="tab is-selected"><a href="#tabs-one-contracts">Contracts (and then a few more Contracts)</a></li>
+          <li class="tab"><a href="#tabs-one-opportunities">Opportunites</a></li>
+          <li class="tab"><a href="#tabs-one-attachments">Attachments</a></li>
+          <li class="tab"><a href="#tabs-one-contacts">Contacts</a></li>
+          <li class="tab"><a href="#tabs-one-notes">Notes</a></li>
+        </ul>
+      </div> <!-- #tab-list-one -->
+      <div id="tab-container-one" class="tab-panel-container">
+        <div id="tabs-one-contracts" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Contracts</h3>
+              <p>
+                currentTabset: #<span id="tabset-name"></span>
+              </p>
+            </div>
+          </div>
+        </div> <!-- #tabs-one-contracts -->
+        <div id="tabs-one-opportunities" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Opportunities</h3>
+            </div>
+          </div>
+        </div> <!-- #tabs-one-opportunities -->
+        <div id="tabs-one-attachments" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Attachments</h3>
+            </div>
+          </div>
+        </div> <!-- #tabs-one-attachments -->
+        <div id="tabs-one-contacts" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Contacts</h3>
+            </div>
+          </div>
+        </div> <!-- #tabs-one-contacts -->
+        <div id="tabs-one-notes" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Notes</h3>
+            </div>
+          </div>
+        </div> <!-- #tabs-one-notes -->
+      </div> <!-- #tab-container-one -->
+    </div> <!-- .six-columns -->
+
+    <div class="multitabs-section alternate">
+      <div id="tab-list-two" class="tab-container module-tabs">
+        <ul class="tab-list">
+          <li class="tab"><a href="#tabs-two-contracts">Contracts (and then a few more Contracts)</a></li>
+          <li class="tab"><a href="#tabs-two-opportunities">Opportunites</a></li>
+          <li class="tab is-selected"><a href="#tabs-two-attachments">Attachments</a></li>
+          <li class="tab"><a href="#tabs-two-contacts">Contacts</a></li>
+          <li class="tab"><a href="#tabs-two-notes">Notes</a></li>
+        </ul>
+      </div> <!-- #tab-list-two -->
+      <div id="tab-container-two" class="tab-panel-container">
+        <div id="tabs-two-contracts" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Contracts</h3>
+            </div>
+          </div>
+        </div> <!-- #tabs-two-contracts -->
+        <div id="tabs-two-opportunities" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Opportunities</h3>
+            </div>
+          </div>
+        </div> <!-- #tabs-two-opportunities -->
+        <div id="tabs-two-attachments" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Attachments</h3>
+            </div>
+          </div>
+        </div> <!-- #tabs-two-attachments -->
+        <div id="tabs-two-contacts" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Contacts</h3>
+            </div>
+          </div>
+        </div> <!-- #tabs-two-contacts -->
+        <div id="tabs-two-notes" class="tab-panel">
+          <div class="row top-padding">
+            <div class="twelve columns">
+              <h3>Notes</h3>
+            </div>
+          </div>
+        </div> <!-- #tabs-two-notes -->
+      </div> <!-- #tab-container-two -->
+    </div> <!-- .six-columns -->
+  </section>
+
+
+  <!-- Popupmenu -->
+  <ul id="action-popupmenu" class="popupmenu">
+    <li><a id="add-new-tab" href="#">Add new tab...</a></li>
+    <li><a id="remove-this-tab" href="#">Remove this tab</a></li>
+    <li><a id="move-this-tab" href="#">Move this tab to the other side</a></li>
+  </ul>
+
+
+  <!-- Modals -->
+  <div id="modal-add-tab" style="display: none;">
+    <form id="form-add-tab" action="#" method="post">
+      <div class="field">
+        <label for="add-tab-create-tab-name">Tab Name:</label>
+        <input id="add-tab-create-tab-name" name="create-tab-name" disabled/>
+      </div>
+
+      <div class="field">
+        <label for="add-tab-create-tab-content">Content:</label>
+        <textarea id="add-tab-create-tab-content" name="create-tab-content" disabled></textarea>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="add-tab-use-garbage" checked>
+        <label for="add-tab-use-garbage" class="checkbox-label" >Fill with Garbage</label>
+      </div>
+    </form>
+  </div>
+
+
+  <script type="text/javascript">
+    var currentTabset,
+      multitabs = $('#test-multitabs'),
+      multiAPI = multitabs.data('multitabs'),
+      configModal = $('#modal-add-tab'),
+      menu = $('#action-popupmenu'),
+      menuAddTabOption = $('#add-new-tab'),
+      menuRemoveTabOption = $('#remove-this-tab'),
+      menuMoveTabOption = $('#move-this-tab');
+
+    // Grab a reference to the Multitabs API after the initializer runs
+    $('body').on('initialized', function() {
+      multiAPI = multitabs.data('multitabs');
+    });
+
+    // Use mouseover/click to store reference to the target tabset
+    multitabs.on('click.test, mouseover.test', function(e) {
+      currentTabset = $(e.target);
+      if (!currentTabset.is('.multitabs-section')) {
+        currentTabset = currentTabset.closest('.multitabs-section');
+      }
+
+      $('#tabset-name').text(currentTabset.children('.tab-container').attr('id'));
+    });
+
+
+    // Simple Tab Removal
+    function removeTab() {
+      var currentAPI = currentTabset.children('.tab-container').data('tabs'),
+        selectedTab = currentAPI.getActiveTab(),
+        href = selectedTab.attr('href').replace('#', '');
+
+      multiAPI.remove(currentTabset.children('.tab-container').attr('data-multitabs'), href);
+    }
+
+
+    // Move tab from one side to the other
+    function moveTab() {
+      var currentAPI = currentTabset.children('.tab-container').data('tabs'),
+        selectedTab = currentAPI.getActiveTab(),
+        href = selectedTab.attr('href').replace('#', ''),
+        targetTabsetName = currentTabset.children('.tab-container').attr('data-multitabs') === 'primary' ? 'secondary' : 'primary';
+
+      multiAPI.move(href, targetTabsetName, true);
+    }
+
+
+    // Form reset function
+    function resetAddTabForm() {
+      $('#add-tab-create-tab-name').val('').prop('disabled', true);
+      $('#add-tab-create-tab-content').val('').prop('disabled', true);
+      $('#add-tab-use-garbage').prop('checked', true);
+    }
+
+
+    // Building New Tabs
+    function toggleFields(fillAutomatically) {
+      if (fillAutomatically) {
+        $('#add-tab-create-tab-name, #add-tab-create-tab-content').disable();
+        return;
+      }
+      $('#add-tab-create-tab-name, #add-tab-create-tab-content').enable();
+      return;
+    }
+
+
+    // Setup a Tab ID
+    function makeId(name) {
+      if (!name) {
+        console.warn('No name for a new tab was provided.')
+        name = '';
+      }
+
+      var stringName = name.toLowerCase().split(' ').join('-');
+
+      var existing = $('[id^="'+ stringName +'"]');
+      if (!existing.length) {
+        return stringName + '-0';
+      }
+
+      return stringName + '-' + existing.length;
+    }
+
+
+    // Setup new Module Tab page markup
+    function wrapInPageMarkup(name, content) {
+      return '<header class="header is-personalizable">' +
+        '<div class="toolbar">' +
+          '<div class="title">' +
+            '<h1>' + name + '</h1>' +
+          '</div>' +
+          '<div class="buttonset"></div>' +
+        '</div>' +
+      '</header>' +
+      '<div class="page-container scrollable"><div class="row"><div class="twelve columns">' + content + '</div></div></div>';
+    }
+
+    // Build paragraphs from the Soho Demoapp API
+    function buildRandomParagraphs(numberOfParagraphs) {
+      if (!buildRandomParagraphs || typeof numberOfParagraphs !== 'number') {
+        buildRandomParagraphs = 1;
+      }
+
+      var ret = '';
+      for (var i = 0; i < buildRandomParagraphs; i++) {
+        ret += '<p>' + $.get('{{basepath}}api/garbage?size=120') + '</p>';
+      }
+      return ret;
+    }
+
+    // Wrap the content in a page-wrapper and header
+    function completeTab(tabsAPI, name, content) {
+      content = wrapInPageMarkup(name, content);
+
+      var tabId = makeId(name),
+        targetTabsetName = tabsAPI.multitabsID;
+
+      multiAPI.add(targetTabsetName, tabId, {
+        name: name,
+        content: content,
+        isDismissible: true,
+        doActivate: true
+      });
+
+      console.log('new ID: ' + tabId);
+    }
+
+    function paragraph(text) {
+      return '<p>' + text + '</p>';
+    }
+
+
+    // Modal with "add tab" options
+    function addTab() {
+      var currentAPI = currentTabset.children('.tab-container').data('tabs');
+
+      // Get a baseline for tab content.
+      var name = '' + $('#add-tab-create-tab-name').val(),
+        content = '' + $('#add-tab-create-tab-content').val(),
+        garbageFillIsChecked = $('#add-tab-use-garbage').prop('checked');
+
+      if (!name || !name.length) {
+        name = 'New Tab';
+      }
+
+      // Do different things depending on the checkbox
+      if (garbageFillIsChecked) {
+        var title = $.get('{{basepath}}api/garbage?size=1'),
+          body1 = $.get('{{basepath}}api/garbage?size=120'),
+          body2 = $.get('{{basepath}}api/garbage?size=120'),
+          body3 = $.get('{{basepath}}api/garbage?size=120'),
+          body4 = $.get('{{basepath}}api/garbage?size=120'),
+          body5 = $.get('{{basepath}}api/garbage?size=120');
+
+        $.when(title, body1, body2, body3, body4, body5).done(function completed(title, body1, body2, body3, body4, body5) {
+
+          // Unwrap quotes from response
+          function unwrap(content) {
+            return content = content.substring(1, (content.length - 1));
+          }
+
+          name = '' + unwrap(title[0]);
+          content += '<h3>'+ name +'</h3>' +
+            paragraph(unwrap(body1[0])) +
+            paragraph(unwrap(body2[0])) +
+            paragraph(unwrap(body3[0])) +
+            paragraph(unwrap(body4[0])) +
+            paragraph(unwrap(body5[0]));
+
+          completeTab(currentAPI, name, content);
+        });
+
+      } else {
+        completeTab(currentAPI, name, content);
+      }
+    }
+
+
+    // Opening the Add Tab Modal
+    function openAddTabModal() {
+      $('body').modal({
+        buttons: [{
+          text: 'Cancel',
+          id: 'add-tab-cancel',
+          click: function(e, modal) {
+            modal.close();
+          }
+        }, {
+          text: 'Reset',
+          id: 'add-tab-reset',
+          click: function(e, modal) {
+            $('#form-add-tab').trigger('reset');
+          }
+        }, {
+          text: 'Add Tab',
+          id: 'add-tab-submit',
+          isDefault: true,
+          click: function(e, modal) {
+            $('#form-add-tab').trigger('submit');
+            modal.close();
+          }
+        }],
+        content: configModal,
+        title: 'Add Tab'
+      });
+    }
+
+
+    // Menu items
+    multitabs
+    .on('beforeopen.test', function(e, menu) {
+      var currentAPI = currentTabset.children('.tab-container').data('tabs'),
+        anchors = currentAPI.anchors;
+
+      if (!anchors.length) {
+        menuRemoveTabOption.parent().addClass('is-disabled');
+        menuMoveTabOption.parent().addClass('is-disabled');
+        return;
+      }
+      menuRemoveTabOption.parent().removeClass('is-disabled');
+      menuMoveTabOption.parent().removeClass('is-disabled');
+    })
+    .on('selected.test', function(e, anchor) {
+      if (anchor.is(menuAddTabOption)) {
+        return openAddTabModal();
+      }
+
+      if (anchor.is(menuRemoveTabOption)) {
+        return removeTab();
+      }
+
+      if (anchor.is(menuMoveTabOption)) {
+        return moveTab();
+      }
+    });
+
+
+    // Events for the Add Tab Form
+    $('#add-tab-use-garbage').on('change.test', function() {
+      var checked = $(this).prop('checked');
+      toggleFields(checked);
+    });
+    $('#form-add-tab').on('reset.test', function() {
+      resetAddTabForm();
+    }).on('submit.test', function(e) {
+      e.preventDefault();
+      addTab();
+    });
+  </script>

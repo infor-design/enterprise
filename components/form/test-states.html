@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar" role="toolbar" data-options="{maxVisibleButtons: 10}">
+      <div class="title">Field States Test</div>
+      <div class="buttonset">
+
+        <button class="btn-secondary" id="btn-enable">
+          <span>Enable</span>
+        </button>
+        <button class="btn-secondary" id="btn-readonly">
+          <span>Readonly</span>
+        </button>
+        <button class="btn-secondary" id="btn-disable">
+          <span>Disable</span>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="required" for="test-states-name">Full Name</label>
+      <input type="text" id="test-states-name" aria-required="true" name="test-states-name" data-validate="required">
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+
+    // Cache Field
+    var field = $('#test-states-name');
+
+    // Enable
+    $('#btn-enable').on('click', function () {
+      field.enable();
+    });
+
+    // Readonly
+    $('#btn-readonly').on('click', function () {
+      field.readonly();
+    });
+
+    // Disable
+    $('#btn-disable').on('click', function () {
+      field.disable();
+    });
+
+  });
+</script>

@@ -21,24 +21,27 @@
   </div>
 </div>
 
-
 <script>
-  $('#editor1').editor({
-    excludeButtons: {
-      editor: []
-    }
-  }).on('change.editor', function(e) {
-    console.log('change detected');
-    $('#changeEventDetected').css('color','red');
-  }).on('input.editor', function(e) {
-    console.log('input detected');
-    $('#inputEventDetected').css('color','red');
-  }).on('focus.editor', function(e) {
-    console.log('focus detected');
-    $('#focusEventDetected').css('color','red');
-  }).on('blur.editor', function(e) {
-    console.log('blur detected');
-    $('#blurEventDetected').css('color','red');
-  });
 
+  $('body').one('initialized', function () {
+
+    $('#editor1').editor({
+      excludeButtons: {
+        editor: []
+      }
+    }).on('change.editor', function(e) {
+      console.log('change detected');
+      $('#changeEventDetected').css('color','red');
+    }).on('input.editor', function(e) {
+      console.log('input detected');
+      $('#inputEventDetected').css('color','red');
+    }).on('focus.editor', function(e) {
+      console.log('focus detected');
+      $('#focusEventDetected').css('color','red');
+    }).on('blur.editor', function(e) {
+      console.log('blur detected');
+      $('#blurEventDetected').css('color','red');
+    });
+
+  });
 </script>
