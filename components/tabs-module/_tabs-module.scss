@@ -69,7 +69,7 @@
   .tab-list {
     height: 34px;
     overflow: hidden;
-    width: 100%;
+    width: calc(100% - 1px); // 1px for the vertical centerer
   }
 
   &.has-toolbar {
