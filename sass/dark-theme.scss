@@ -198,7 +198,8 @@ $selected-bg-color: rgba($primary-color, .3);
 // Autocomplete
 $autocomplete-light-text: $slate04;
 $autocomplete-active-bg-color: $body-bg-color;
-$autocomplete-box-shadow: 0 3px 4px 4px $focus-box-shadow-color;
+$autocomplete-box-shadow: 0 2px 5px 1px $focus-box-shadow-color;
+$autocomplete-box-shadow-flipped: 0 -2px 5px 1px $focus-box-shadow-color;
 $trigger-icon-fill-color: $slate03;
 $trigger-icon-fill-light-color: $slate04;
 $trigger-hover-color: $white;
