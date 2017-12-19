@@ -70,7 +70,7 @@ $hyperlink-hover-color: $azure07;
 
 // Alert Colors
 $alert-info: $azure09;
-$alert-green: #80ce4d;
+$alert-green: #397514;
 $alert-yellow: #ffd726;
 $alert-red: $ruby09;
 
@@ -202,6 +202,9 @@ $input-readonly-color: $black;
 //States
 $error-color: $alert-red;
 $error-icon-fill: $alert-red;
+$alert-color: #d66221;
+$confirm-color: $alert-green;
+$info-color: $primary-color;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, .3);
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
