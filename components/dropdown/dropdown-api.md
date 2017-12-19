@@ -20,18 +20,18 @@ The Dropdown allows users to select from a list. Like an Html Select.
 
 **Parameters**
 
--   `closeOnSelect` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  When an option is selected, the list will close if set to "true".  List stays open if "false".
--   `cssClass` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Append an optional css class to dropdown-list
--   `filterMode` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
--   `noSearch` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, disables the ability of the user to enter text in the Search Input field in the open combo box
--   `showEmptyGroupHeaders` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
--   `source` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A function that can do an ajax call.
--   `sourceArguments` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
--   `sourceArguments` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
--   `reloadSourceOnOpen` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
--   `empty` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Initialize Empty Value
--   `delay` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Typing Buffer Delay in ms
--   `maxWidth` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
+-   `closeOnSelect` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  When an option is selected, the list will close if set to "true".  List stays open if "false".
+-   `cssClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Append an optional css class to dropdown-list
+-   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
+-   `noSearch` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, disables the ability of the user to enter text in the Search Input field in the open combo box
+-   `showEmptyGroupHeaders` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
+-   `source` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A function that can do an ajax call.
+-   `sourceArguments` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+-   `sourceArguments` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+-   `reloadSourceOnOpen` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
+-   `empty` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Initialize Empty Value
+-   `delay` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Typing Buffer Delay in ms
+-   `maxWidth` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
 
 ### activate
 
@@ -56,10 +56,10 @@ Get data attributes from passed list of attributes
 
 **Parameters**
 
--   `attr` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of all attributes.
--   `attrToExclude` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of attributes to be excluded from passed list.
+-   `attr` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of all attributes.
+-   `attrToExclude` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of attributes to be excluded from passed list.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** It will return an object containing two keys
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** It will return an object containing two keys
 str - string of attributes
 obj - object of attributes
 
@@ -69,7 +69,7 @@ External Facing function to set value by code - Depricated set on select and tri
 
 **Parameters**
 
--   `code` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The value to match and set on the value element.
+-   `code` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The value to match and set on the value element.
 
 ### disable
 
@@ -97,7 +97,7 @@ This component fires the following events.
 
 **Parameters**
 
--   `listopened` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is opened
--   `listclosed` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is closed
--   `change` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by any means.
--   `input` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction.
+-   `listopened` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is opened
+-   `listclosed` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is closed
+-   `change` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by any means.
+-   `input` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction.
