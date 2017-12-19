@@ -137,6 +137,12 @@
 <li><code>button</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong><br /></li>
 <li><code>isDisabled</code> <strong>booelan</strong></li>
 </ul>
+<h4 id="updated">updated</h4>
+<p>Updated</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
 <h4 id="destroy">destroy</h4>
 <p>Teardown</p>
 <h4 id="bindevents">bindEvents</h4>
@@ -150,6 +156,682 @@
 <li><code>keyup</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  - <br /></li>
 <li><code>afterpaste</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  - </li>
 </ul>
+<h2 id="enabletimelogging">enableTimeLogging</h2>
+<p>Easy flag for determining whether or not time will be logged to the console.</p>
+<h2 id="logtimestart">logTimeStart</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>label</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong></li>
+</ul>
+<h2 id="logtimeend">logTimeEnd</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>label</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong></li>
+</ul>
+<h2 id="bindfirst">bindFirst</h2>
+<p>Used for changing the stacking order of jQuery events. This is needed to override certain<br />Events invoked by other plugins <a href="http://stackoverflow.com/questions/2360655">http://stackoverflow.com/questions/2360655</a></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>name</code><br /></li>
+<li><code>fn</code></li>
+</ul>
+<h2 id="bindfirst-1">bindFirst</h2>
+<p>============================================</p>
+<h1 id="soho-utils">SOHO Utils</h1>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>name</code><br /></li>
+<li><code>fn</code></li>
+</ul>
+<h2 id="uniqueid">uniqueId</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>className</code><br /></li>
+<li><code>prefix</code><br /></li>
+<li><code>suffix</code></li>
+</ul>
+<h2 id="csspropsupport">cssPropSupport</h2>
+<p>Check for CSS Property Support in a cross browser way</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>prop</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
+<h2 id="transitionendname">transitionEndName</h2>
+<p>Returns the name of the TransitionEnd event.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong></p>
+<h2 id="ontouchclick">onTouchClick</h2>
+<p>Custom Touch Event Handler that simply passes Touch Event Handlers onto a Click Event Handler.<br />Used for avoiding the 300ms wait time that click events have in most mobile environments<br />if 'one' is defined, it only listens once.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>eventNamespace</code><br /></li>
+<li><code>filter</code><br /></li>
+<li><code>one</code></li>
+</ul>
+<h2 id="offtouchclick">offTouchClick</h2>
+<p>Reverses the .onTouchClick() method and turns off a matching event listener.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>eventNamespace</code><br /></li>
+<li><code>filter</code></li>
+</ul>
+<h2 id="listevents">listEvents</h2>
+<p>Returns a key/value list of currently attached event listeners</p>
+<h2 id="placeholderpolyfill">placeholderPolyfill</h2>
+<p>Implements consistent support for the placeholder attribute in browsers that do not handle it</p>
+<ul>
+<li>Supports any kind of input (no issues with password) and textarea<br /></li>
+<li>does nothing if native support exists</li>
+</ul>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code></li>
+</ul>
+<h2 id="parseoptions">parseOptions</h2>
+<p>jQuery Behavior Wrapper for <code>utils.parseOptions</code>.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>attr</code><br /></li>
+<li><code>attrName</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong></li>
+</ul>
+<p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>&gt;)</strong></p>
+<p><strong>Meta</strong></p>
+<ul>
+<li><strong>deprecated</strong>: This is deprecated.</li>
+</ul>
+<h2 id="timer">timer</h2>
+<p>Timer - can be use for play/pause or stop for given time<br />use as new instance [ var timer = new $.fn.timer(function() {}, 6000); ]<br />then can be listen events as [ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]<br />or can access as [ timer.cancel(); -or- timer.pause(); -or- timer.resume(); ]</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>callback</code><br /></li>
+<li><code>delay</code></li>
+</ul>
+<h2 id="clearable">clearable</h2>
+<p>Clearable (Shows an X to clear)</p>
+<h2 id="gethiddensize">getHiddenSize</h2>
+<p>Binds the Soho Util <em>getHiddenSize()</em> to a jQuery selector</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong> incoming options</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong></p>
+<h2 id="button">button</h2>
+<p>jQuery Component Wrapper for the Soho Button Element</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h2 id="icon">icon</h2>
+<p>jQuery component wrappers</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h2 id="maskedinput">maskedinput</h2>
+<p>Wrap as a jQuery component, and attach the factory function to $.fn</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code></li>
+</ul>
+<h2 id="mask">mask</h2>
+<p>Backwards Compatibility with the old Mask</p>
+<h2 id="ishiddenatbreakpoint">isHiddenAtBreakpoint</h2>
+<p>jQuery wrapper for <code>Soho.breakpoints.isHidden()</code><br />NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.<br />This method is NOT chainable.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="copytoclipboard">copyToClipboard</h2>
+<p>Copies a string to the clipboard. Must be called from within an event handler such as click.<br />May return false if it failed, but this is not always<br />possible. Browser support for Chrome 43+, Firefox 42+, Edge and IE 10+.<br />No Safari support, as of (Nov. 2015). Returns false.<br />IE: The clipboard feature may be disabled by an adminstrator. By default a prompt is<br />shown the first time the clipboard is used (per session).</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>text</code></li>
+</ul>
+<h2 id="escapehtml">escapeHTML</h2>
+<p>Functions For Sanitising and Escaping Html</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>value</code></li>
+</ul>
+<h2 id="sanitizehtml">sanitizeHTML</h2>
+<p>Remove Script tags and all onXXX functions</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>html</code></li>
+</ul>
+<h2 id="actualchar">actualChar</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code></li>
+</ul>
+<h2 id="uniqueidcount">uniqueIdCount</h2>
+<p><code>uniqueIdCount</code></p>
+<h2 id="focusable">focusable</h2>
+<p>From jQueryUI Core: <a href="https://github.com/jquery/jquery-ui/blob/24756a978a977d7abbef5e5bce403837a01d964f/ui/jquery.ui.core.js#L93">https://github.com/jquery/jquery-ui/blob/24756a978a977d7abbef5e5bce403837a01d964f/ui/jquery.ui.core.js#L93</a><br />Adapted from: <a href="http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus">http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus</a><br />Adds the ':focusable' selector to Sizzle to allow for the selection of elements that can currently be focused.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="extend">extend</h2>
+<h2 id="parsesettings">parseSettings</h2>
+<p>Grabs an attribute from an HTMLElement containing stringified JSON syntax, and interprets it into options.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a></strong><br /></li>
+<li><code>attr</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
+<h2 id="parseoptions-1">parseOptions</h2>
+<p>Deprecate <code>utils.parseOptions</code> in favor of <code>utils.parseSettings</code><br />TODO: Remove in 4.4.1 ?</p>
+<h2 id="actualchar-1">actualChar</h2>
+<p>Replacement for String.fromCharCode() that takes meta keys into account when determining which<br />character key was pressed.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code></li>
+</ul>
+<h2 id="equals">equals</h2>
+<p>Truthy equals</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>a</code><br /></li>
+<li><code>b</code></li>
+</ul>
+<h2 id="debounce">debounce</h2>
+<p>Debounce method</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>func</code><br /></li>
+<li><code>threshold</code><br /></li>
+<li><code>execAsap</code></li>
+</ul>
+<h2 id="extend-1">extend</h2>
+<p>Object deep copy<br />For now, alias jQuery.extend<br />Eventually we'll replace this with a non-jQuery extend method.</p>
+<h2 id="fixsvgicons">fixSVGIcons</h2>
+<p>Hack for IE11 and SVGs that get moved around/appended at inconvenient times.<br />The action of changing the xlink:href attribute to something else and back will fix the problem.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>rootElement</code></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h2 id="getviewportsize">getViewportSize</h2>
+<p>Gets the current size of the viewport</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong></p>
+<h2 id="getcontainerscrolldistance">getContainerScrollDistance</h2>
+<p>Gets the various scrollable containers that an element is nested inside of, and returns their scrollHeight and scrollLeft values.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>&gt;</strong></p>
+<h2 id="gethiddensize-1">getHiddenSize</h2>
+<p>Takes an element that is currently hidden by some means (FX: &quot;display: none;&quot;) and gets its potential dimensions by checking a clone of the element that is NOT hidden.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>el</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> The element being manipulated.<br /></li>
+<li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong> incoming options.<br /></li>
+<li><code>parentElement</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the parent element where a clone of this hidden element will be attached. (optional, default <code>undefined</code>)</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong></p>
+<h2 id="isstring">isString</h2>
+<p>Checks if a specific input is a String</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>value</code> <strong>?</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="isnumber">isNumber</h2>
+<p>Checks if a specific input is a Number</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>value</code> <strong>?</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="safesetselection">safeSetSelection</h2>
+<p>Safely changes the position of a text caret inside of an editable element.<br />In most cases, will call &quot;setSelectionRange&quot; on an editable element immediately, but in some<br />cases, will be deferred with <code>requestAnimationFrame</code> or <code>setTimeout</code>.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a></strong><br /></li>
+<li><code>startPos</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong><br /></li>
+<li><code>endPos</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></li>
+</ul>
+<h2 id="mergesettings">mergeSettings</h2>
+<p>Merges various sets of options into a single object,<br />whose intention is to be set as options on a Soho component.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong><br /></li>
+<li><code>incomingOptions</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</strong><br /></li>
+<li><code>defaultOptions</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)?</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
+<h2 id="getattributes">getAttributes</h2>
+<p>Returns an array containing an element's attributes.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code></li>
+</ul>
+<h2 id="classnameexists">classNameExists</h2>
+<p>Adding, removing, and testing for classes</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code></li>
+</ul>
+<h2 id="classnamehas">classNameHas</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>classNameString</code><br /></li>
+<li><code>targetContents</code></li>
+</ul>
+<h2 id="hasclass">hasClass</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>el</code><br /></li>
+<li><code>className</code></li>
+</ul>
+<h2 id="addclass">addClass</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>el</code><br /></li>
+<li><code>className</code></li>
+</ul>
+<h2 id="iselement">isElement</h2>
+<p>Checks if an element is valid</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>el</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> The element being checked</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> represents all values normally contained by a DOMRect or ClientRect</p>
+<h2 id="getdimensions">getDimensions</h2>
+<p>Runs the generic <em>getBoundingClientRect()</em> method on an element, but returns its results<br />as a plain object instead of a ClientRect</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>el</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> The element being manipulated</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong> represents all values normally contained by a DOMRect or ClientRect</p>
+<h2 id="convertdelaytofps">convertDelayToFPS</h2>
+<p>Convert <code>setTimeout/Interval</code> delay values (CPU ticks) into frames-per-second (FPS) numeric values.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>delay</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> fps</p>
+<h2 id="convertfpstodelay">convertFPSToDelay</h2>
+<p>Convert <code>setTimeout/Interval</code> delay values (CPU ticks) into frames-per-second (FPS) numeric values.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>fps</code><br /></li>
+<li><code>delay</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> fps</p>
+<h2 id="button_defaults">BUTTON_DEFAULTS</h2>
+<p>Component Defaults</p>
+<h2 id="button-1">Button</h2>
+<p>Soho Button Element</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>toggleOnIcon</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The icon to use for on state on toggle buttons<br /></li>
+<li><code>toggleOffIcon</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The icon to use for off state on toggle buttons<br /></li>
+<li><code>replaceText</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If true the selection will be used to replace the content in the button.</li>
+</ul>
+<h4 id="updated-1">updated</h4>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h4 id="destroy-1">destroy</h4>
+<p>Teardown and remove any added markup and events.</p>
+<h3 id="events">Events</h3>
+<p>This component fires the following events.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>click</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the button is clicked (if enabled).<br /></li>
+<li><code>focus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the menu is focused.</li>
+</ul>
+<h2 id="geticonname">getIconName</h2>
+<p>Factory Function for instantly building icons.<br />Use this for building icons that don't exist yet.<br />Scoped Privately on purpose...</p>
+<h2 id="icon_defaults">ICON_DEFAULTS</h2>
+<p>Default Options</p>
+<h2 id="icon-1">Icon</h2>
+<p>Icon Control<br />Wraps SVG Icons with a Javascript control that can change the icon type, reference<br />relative or absolute URLs, and clean up after itself. Works with the Base tag.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong><br /></li>
+<li><code>settings</code></li>
+</ul>
+<h2 id="default_masked_input_options">DEFAULT_MASKED_INPUT_OPTIONS</h2>
+<p>Default Masked Input field options</p>
+<h2 id="sohomaskedinput">SohoMaskedInput</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement">HTMLInputElement</a></strong> regular HTML Input Element (not wrapped with jQuery)<br /></li>
+<li><code>settings</code> <strong>SohoMaskedInputOptions</strong></li>
+</ul>
+<p>Returns <strong><a href="#sohomaskedinput">SohoMaskedInput</a></strong></p>
+<h4 id="events-1">Events</h4>
+<p>Sets up events</p>
+<h4 id="process">process</h4>
+<p>Main Process for conforming a mask against the API.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="updated-2">updated</h4>
+<p>Updates the component instance with new settings.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code></li>
+</ul>
+<h4 id="teardown">teardown</h4>
+<p>Tears down the current component instance</p>
+<h2 id="environment">Environment</h2>
+<p>Type: <a href="#environment">Environment</a></p>
+<h4 id="set">set</h4>
+<p>Builds run-time environment settings</p>
+<h4 id="addbrowserclasses">addBrowserClasses</h4>
+<p>Global Classes for browser, version and device as needed.</p>
+<h4 id="addglobalresize">addGlobalResize</h4>
+<p>Setup a global resize event trigger for controls to listen to</p>
+<h4 id="pasteevent">pasteEvent</h4>
+<h2 id="set-1">set</h2>
+<p>Automatically set up the environment by virtue of including this script</p>
+<h2 id="current">current</h2>
+<p>Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the</p>
+<body> 
+<p>tag's <code>::after</code> pseudo-element. These names should be reflected in the breakpoints object<br />above.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
+<h2 id="isabove">isAbove</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> matches one of the entries in the &quot;Soho.breakpoints&quot; object.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="isbelow">isBelow</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> matches one of the entries in the &quot;Soho.breakpoints&quot; object.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="compare">compare</h2>
+<p>Compares the last-stored breakpoint with a check on the &quot;current&quot; breakpoint to see if the<br />breakpoint has changed.</p>
+<h2 id="ishidden">isHidden</h2>
+<p>Checks an element for Soho visibility classes and determines whether or not<br />should be hidden based on those values at the current breakpoint.<br />NOTE: this method does NOT determine if the element is ACTUALLY hidden with a<br /><code>display: none;</code> or <code>visibility: hidden;</code> rule. It determines whether or not a CSS<br />visibility rule alone would hide the element.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="locale">Locale</h2>
+<p>The Locale component handles i18n</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>currentLocale</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The Currently Set Locale</li>
+</ul>
+<h4 id="set-2">set</h4>
+<p>Set the currently used colors.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>locale</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The locale to fetch and set.</li>
+</ul>
+<h4 id="formatdate">formatDate</h4>
+<p>Format a Date Object and return it parsed in the current locale.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>value</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a></strong>  -  The date to show in the current locale.<br /></li>
+<li><code>attribs</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Additional formatting settings.</li>
+</ul>
+<h4 id="isvaliddate">isValidDate</h4>
+<p>Check if the date is valid using the current locale to do so.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>date</code><br /></li>
+<li><code>value</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a></strong>  -  The date to show in the current locale.</li>
+</ul>
+<h4 id="parsedate">parseDate</h4>
+<p>Take a date string written in the current locale and parse it into a Date Object</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>dateString</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The string to parse in the current format<br /></li>
+<li><code>dateFormat</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The source format fx yyyy-MM-dd<br /></li>
+<li><code>isStrict</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true missing date parts will be considered invalid. If false the current month/day.</li>
+</ul>
+<h4 id="formatnumber">formatNumber</h4>
+<p>Format a decimal with thousands and padding in the current locale.<br /><a href="http://mzl.la/1MUOEWm">http://mzl.la/1MUOEWm</a></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>number</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong>  -  The source number.<br /></li>
+<li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)</li>
+</ul>
+<h4 id="parsenumber">parseNumber</h4>
+<p>Take a Formatted Number and return a real number</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>input</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The source number (as a string).</li>
+</ul>
+<h4 id="translate">translate</h4>
+<p>Overridable culture messages</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>key</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The key to search for on the string.<br /></li>
+<li><code>showAsUndefined</code></li>
+</ul>
+<h4 id="touppercase">toUpperCase</h4>
+<p>Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.<br />In most cases this method will simply pipe the string to <code>String.prototype.toUpperCase()</code></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the incoming string</li>
+</ul>
+<h4 id="tolowercase">toLowerCase</h4>
+<p>Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.<br />In most cases this method will simply pipe the string to <code>String.prototype.toLowerCase()</code></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the incoming string</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong></p>
+<h4 id="capitalize">capitalize</h4>
+<p>Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.<br />In most cases this method will simply use a simple algorithm for captializing the first letter of the string.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the incoming string</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong></p>
+<h4 id="capitalizewords">capitalizeWords</h4>
+<p>Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.<br />In most cases this method will simply use a simple algorithm for captializing the first letter of the string.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the incoming string</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong></p>
+<h2 id="locale-1">Locale</h2>
+<p>TODO: Re-implement this with proper scope.</p>
+<p>// If there already exists a Locale object with a culturesPath use that path<br />// This allows manually setting the directory for the culture files to be retrieved from<br />var existingCulturePath = '';</p>
+<p>if (window.Locale &amp;&amp; window.Locale.hasOwnProperty('culturesPath')) {<br />existingCulturePath = window.Locale.culturesPath;<br />}</p>
+<h4 id="set-3">set</h4>
+<p>Set the currently used colors.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>locale</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The locale to fetch and set.</li>
+</ul>
+<h4 id="formatdate-1">formatDate</h4>
+<p>Format a Date Object and return it parsed in the current locale.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>value</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a></strong>  -  The date to show in the current locale.<br /></li>
+<li><code>attribs</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Additional formatting settings.</li>
+</ul>
+<h4 id="isvaliddate-1">isValidDate</h4>
+<p>Check if the date is valid using the current locale to do so.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>date</code><br /></li>
+<li><code>value</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date">Date</a></strong>  -  The date to show in the current locale.</li>
+</ul>
+<h4 id="parsedate-1">parseDate</h4>
+<p>Take a date string written in the current locale and parse it into a Date Object</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>dateString</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The string to parse in the current format<br /></li>
+<li><code>dateFormat</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The source format fx yyyy-MM-dd<br /></li>
+<li><code>isStrict</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true missing date parts will be considered invalid. If false the current month/day.</li>
+</ul>
+<h4 id="formatnumber-1">formatNumber</h4>
+<p>Format a decimal with thousands and padding in the current locale.<br /><a href="http://mzl.la/1MUOEWm">http://mzl.la/1MUOEWm</a></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>number</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong>  -  The source number.<br /></li>
+<li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)</li>
+</ul>
+<h4 id="parsenumber-1">parseNumber</h4>
+<p>Take a Formatted Number and return a real number</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>input</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The source number (as a string).</li>
+</ul>
+<h4 id="translate-1">translate</h4>
+<p>Overridable culture messages</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>key</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The key to search for on the string.<br /></li>
+<li><code>showAsUndefined</code></li>
+</ul>
+<h4 id="touppercase-1">toUpperCase</h4>
+<p>Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.<br />In most cases this method will simply pipe the string to <code>String.prototype.toUpperCase()</code></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the incoming string</li>
+</ul>
+<h4 id="tolowercase-1">toLowerCase</h4>
+<p>Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.<br />In most cases this method will simply pipe the string to <code>String.prototype.toLowerCase()</code></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the incoming string</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong></p>
+<h4 id="capitalize-1">capitalize</h4>
+<p>Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.<br />In most cases this method will simply use a simple algorithm for captializing the first letter of the string.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the incoming string</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong></p>
+<h4 id="capitalizewords-1">capitalizeWords</h4>
+<p>Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.<br />In most cases this method will simply use a simple algorithm for captializing the first letter of the string.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the incoming string</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong></p>
+<h2 id="masks">masks</h2>
+<p>Contents of the <code>Soho.masks</code> object</p>
+<h4 id="legacy_defs">LEGACY_DEFS</h4>
+<p>Legacy Mask pattern definitions.<br />The New Mask works based on an array of RegExps and Strings.</p>
+<h4 id="default_conform_options">DEFAULT_CONFORM_OPTIONS</h4>
+<p>Options that get passed for the <em>conformToMask()</em> method.</p>
+<h4 id="numbermask">numberMask</h4>
+<p>Soho Number Mask Function</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>rawValue</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong><br /></li>
+<li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong></p>
+<h4 id="datemask">dateMask</h4>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>rawValue</code><br /></li>
+<li><code>options</code></li>
+</ul>
+<h4 id="autocorrecteddatepipe">autocorrectedDatePipe</h4>
+<p>Generates a pipe function that can be applied to a Mask API that will correct<br />shorthand numeric dates.<br />NOTE: DOES NOT WORK FOR DATES WITH ALPHABETIC CONTENT. Do not use this if your<br />dates contain &quot;MMM&quot; or the full month name.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>processResult</code><br /></li>
+<li><code>options</code></li>
+</ul>
+<h2 id="default_number_mask_options">DEFAULT_NUMBER_MASK_OPTIONS</h2>
+<p>Default Number Mask Options</p>
+<h2 id="converttomask">convertToMask</h2>
+<p>Converts a string representing a formatted number into a Number Mask.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>strNumber</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong> contains strings representing character literals and regex patterns.</p>
+<h2 id="addthousandsseparator">addThousandsSeparator</h2>
+<p>Adds thousands separators to the correct spot in a formatted number string.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>n</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> the string<br /></li>
+<li><code>thousands</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> the thousands separator.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> the incoming string formatted with a thousands separator.</p>
+<h2 id="getregexforpart">getRegexForPart</h2>
+<p>Gets an array of Regex objects matching the number of digits present in a source string</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>part</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> string representing the mark part.<br /></li>
+<li><code>type</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> 'any', 'digits', or 'alphas'</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong></p>
+<h2 id="default_datetime_mask_options">DEFAULT_DATETIME_MASK_OPTIONS</h2>
+<p>Default Date Mask Options</p>
+<h2 id="date_max_values">DATE_MAX_VALUES</h2>
+<p>Maximum Values for various section maps of date strings.</p>
+<h2 id="stringutils">stringUtils</h2>
+<p>string utils</p>
+<h4 id="empty">EMPTY</h4>
+<p>Re-usable Empty String that can be referenced everywhere to save small amounts of space.</p>
+<h4 id="splice">splice</h4>
+<p>The splice() method changes the content of a string by removing a range of<br />characters and/or adding new characters.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The string that will be manipulated.<br /></li>
+<li><code>start</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong> Index at which to start changing the string.<br /></li>
+<li><code>delCount</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong> An integer indicating the number of old chars to remove.<br /></li>
+<li><code>newSubStr</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> The String that is spliced in.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> A new string with the spliced substring.</p>
+<h4 id="removeduplicates">removeDuplicates</h4>
+<p>Takes a string with possible duplicate characters and returns a string<br />containing ALL unique characters. Useful for construction of REGEX objects<br />with characters from an input field, etc.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
+<h4 id="containshtml">containsHTML</h4>
+<p>Takes a string and uses a regex test to detect the presence of HTML elements.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>str</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="sohomaskapi">SohoMaskAPI</h2>
+<p>Type: <a href="#sohomaskapi">SohoMaskAPI</a></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code></li>
+</ul>
+<p>Returns <strong><a href="#sohomaskapi">SohoMaskAPI</a></strong></p>
+<h4 id="configure">configure</h4>
+<p>Configure the API for an incoming mask request - set up patterns, change locale, basically 'pre-render'</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code></li>
+</ul>
+<h4 id="process-1">process</h4>
+<p>Process a string against the masking algorithm</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>rawValue</code><br /></li>
+<li><code>opts</code></li>
+</ul>
+<h4 id="adjustcaretposition">adjustCaretPosition</h4>
+<p>Takes an index representing a caret and changes it based on mask modifications</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>opts</code></li>
+</ul>
+<h4 id="convertpatternfromstring">_convertPatternFromString</h4>
+<p>Converts the legacy Soho Mask pattern format from a string into an array.<br />If character is a defined pattern matcher, the corresponding item at the array index is converted to<br />its regex form.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>pattern</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> a legacy Soho Mask Pattern<br /></li>
+<li><code>defs</code></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong> contains string &quot;literal&quot; characters and Regex matchers</p>
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <p>Using the arrows, the user can move through the range of values. Depending on the exact use case, users can also type one of the supported values directly in the field.</p>
 <h2 id="code-example">Code Example</h2>

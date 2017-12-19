@@ -15,6 +15,7 @@ All the following Soho Components have been converted to ES6:
 * Personalize
 * Place
 * Popover
+* Spinbox
 * Tmpl
 * Toast
 * Tooltip
@@ -69,7 +70,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Searchfield
 * Signin
 * Slider
-* Spinbox
 * Splitter
 * Stepchart
 * Step Process
