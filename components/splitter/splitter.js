@@ -26,7 +26,7 @@
           resize: 'immediate',
           containment: null, //document or parent
           save: true,
-          width: {
+          maxWidth: {
             left: 'auto',
             right: 'auto'
           }
@@ -251,15 +251,15 @@
           s = this.settings;
 
         if (this.isSplitterRightSide) {
-          if (split > s.width.right) {
-            split = s.width.right;
+          if (split > s.maxWidth.right) {
+            split = s.maxWidth.right;
           }
           this.resizeRight(splitter, split);
         } else if (this.isSplitterHorizontal) {
           this.resizeTop(splitter, split, parentHeight);
         } else {
-          if (split > s.width.left) {
-            split = s.width.left;
+          if (split > s.maxWidth.left) {
+            split = s.maxWidth.left;
           }
           this.resizeLeft(splitter, split);
         }
