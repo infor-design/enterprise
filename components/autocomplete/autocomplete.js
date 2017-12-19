@@ -605,6 +605,18 @@
         return false;
       },
 
+      /*
+      * Handle after list open.
+      */
+      handleAfterListOpen: function() {
+        // Fix one pixel off list by element
+        if (this.element.offset().left > this.list.offset().left) {
+          this.list.width(this.list.width() + 1);
+        }
+        
+        return this;
+      },
+
       updated: function() {
         this.teardown().init();
         return this;
@@ -668,6 +680,8 @@
           self.handleAutocompleteFocus();
         }).off('focusout.autocomplete').on('focusout.autocomplete', function () {
           self.checkActiveElement();
+        }).off('listopen.autocomplete').on('listopen.autocomplete', function () {
+          self.handleAfterListOpen();
         });
       }
 
