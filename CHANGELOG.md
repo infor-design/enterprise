@@ -1,23 +1,22 @@
 ## <a name="version-4.3.4">4.3.4</a>
 
-Release Date: TBD
+Release Date: 2017-12-20
 
-Full Jira Release Notes: TBD
+Full Jira Release Notes: http://bit.ly/2D6PShK
 
 ### <a name="version-4.3.4-download-build-assets">Download Build Assets:</a>
 
-Build Server: TBD
+Build Server: http://bamboo.infor.com/browse/label/release-434
 Npm: http://npm.infor.com
 
 ### <a name="version-4.3.4-download-build-assets">Demo Site</a>
 
-http://usalvlhlpool1.infor.com/4.3.4-rc/components/
+http://usalvlhlpool1.infor.com/4.3.4/components/
 
 ### <a name="version-4.3.4-key-new-features">Key New Features</a>
--
+- Side By Side Module Tabs - http://bit.ly/2D5GbAc
+- Field Options -  http://bit.ly/2BzyqCb
 
-### <a name="version-4.3.3-breaking-changes">Breaking Changes</a>
--
 
 ### <a name="version-4.3.4-breaking-changes">Corrections to Your Code</a>
 - Datagrid - The dynamic mask example now uses the new mask options (example components/mask/test-number-mask-gauntlet.html). Please refactor to pass an object back with the options like the sample page http://git.infor.com/projects/SOHO/repos/controls/browse/components/datagrid/test-dynamic-mask.html
@@ -26,12 +25,74 @@ http://usalvlhlpool1.infor.com/4.3.4-rc/components/
 - In Listview the click and dblick and contextmenu events showed the data of next item in the dataset. If your code was working around this by adding a -1 you should note that its now correctly showing the data of the array index.
 
 ### <a name="version-4.3.3-improvements">Improvements</a>
--
+- Datagrid - Added an example with a hover menu
+- Donut - Added an improved legend example http://bit.ly/2D2t9mR
+- Examples - Added paging to the Search Page example http://bit.ly/2AY5OBl
+- Validation - Added getMessage api call to get the message type.
+- General - Added support to use yarn and npm 5
+- Splitter - Added maxWidth option so dragging can be restricted
+- Toast - Major performance improvements
+- Popupmenu - Added ajax call for submenus
+- Datepicker - Added ability to set current calendar (umalqura vs gregorian)
+- Validation - Added for message types (info, warning, error, alert)
+- Tree - added api calls to close and open a node
 
 ### <a name="version-4.3.3-bug-fixes">Bug Fixes</a>
--
+- Angular - Popupmenu - Added ajax callback
+- Angular - Popupmenu - Fixed bug causing menus to not work with keyboard
+- Angular - Colorpicker - Fixed missing changed event
+- Angular - Editor - Added ability to toggle link options
+- Angular - Popover - This example was broken, now is fixed
+- Angular - Popover - Added missing keepOpen option
+- Angular - Tooltip - Fixed periodic error in SPA with tooltips
+- Angular - Colorpicker - Added showLabel and editable inputs
+- Accordion - Made chevron centered
+- Applictaion Menu - Fixed bug that caused the incorrect cursor to show
+- Autocomplete - Fixed bugs causing the browser autocomplete to show incorrectly
+- Bar chart - Fixed wrong number formatting on tooltip
+- Breadcurmb - Fixed layout on mobile / small screen
+- Column Chart - Added missing showLegend option to hide legend
+- Charts (All) - Fixed bug causing double animation
+- Datagrid - Fixed bug when using paging with removeSelected
+- Datagrid - Fixed bug making filter menus unusable on IOS
+- Datagrid - Fixed bug showing wrong data with paging + click events
+- Datagrid - Fixed bug with empty filter
+- Datagrid - Fixed bug where reorder events fire several times
+- Datagrid - Fixed more column alignment issues
+- Datagrid - Fixed wrong count when all items are filtered out
+- Datagrid - Fixed bug on ie causing icons to not show in menus
+- Datagrid - Fixed default column size to take into account filter area
+- Datagrid - Fixed bug that made expandable fields expand when filtering
+- Datagrid - Fixed glitches editing in RTL mode
+- Datepicker - Fixed invalid years when moving across year on ja-JP
+- Datepicker - Fixed alignment on the minutes picker
+- Dropdown - Ctrl key is now ignored if pressed in combinations
+- Dropdown - Fixed bug in short field styles
+- Editor - Fixed bugs with multiple editors on a page
+- Editor - Improved rendering performance by 10 times
+- Editor - Improved bullet list pasting on IE
+- Hyperlinks - Fixed high contrast style
+- Expandable Area - Smoothed animation on IE
+- File upload - Fixed incorrext X position
+- Listview - Fixed bug where click event showed wrong data
+- Lookup - Restored broken keyboard functionality
+- Org Chart - Fixed line alignment issues and lazy loading
+- Place - Fixed invalid rounding causing some elements to be incorrectly placed
+- Radios - Improved dirty indication support
+- Search - Fixed a bug where menu position was slighly off
+- Sass - Fixed compilation errors
+- Spinbox - Fixed a bug where a value of range could be added
+- Spinbox - Fixed a bug where ranges could not be typed
+- Spinbox - Fixed issues with 24 times.
+- Tabs - Changed disableTab to select a valid tab
+- Tabs - Fixed icon alignment issue
+- Timepicker - Fixed keyboard behavior on scrolling pages
+- Fixed - Issue using keyboard to close tabs
+- Validation - Fixed text area validtion on keypress
+- Validation - Allow readonly fields to be enabled and validate when enabled
+- Validation - Fixed bug on modal validation with email addresses
 
-(TBD Jira Issues Solved this release, Backlog Dev TBD, Design TBD, Unresolved TBD)
+(91 Jira Issues Solved this release, Backlog Dev 326, Design 226, Unresolved 632)
 
 ## <a name="version-4.3.3">4.3.3</a>
 
