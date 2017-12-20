@@ -303,7 +303,7 @@ html[dir='rtl'] {
   input.checkbox:checked + input[type="hidden"] + label::after,
   span.checkbox > input:checked + label::after {
     left: auto;
-    right: 14px;
+    right: 13px;
   }
 
   label.inline .checkbox ~ .label-text,

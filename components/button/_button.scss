@@ -550,7 +550,7 @@ a.btn-menu {
       @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94));
       height: 28px;
       padding-right: 0;
-      top: 0;
+      top: 2px;
       width: 28px;
 
       &.active {

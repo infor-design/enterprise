@@ -5317,10 +5317,16 @@ $.fn.datagrid = function(options) {
             menuId: self.settings.menuId,
             eventObj: e,
             beforeOpen: self.settings.menuBeforeOpen,
+            attachToBody: true,
             trigger: 'immediate'})
           .off('selected').on('selected', function (e, args) {
             if (self.settings.menuSelected) {
               self.settings.menuSelected(e, args);
+            }
+          }).off('close').on('close', function () {
+            var elem = $(this);
+            if (elem.data('popupmenu')) {
+              elem.data('popupmenu').destroy();
             }
           });
         }
