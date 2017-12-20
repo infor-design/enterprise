@@ -3,6 +3,7 @@ import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
 // jQuery Components
+import '../autocomplete/autocomplete.jquery';
 import '../button/button.jquery';
 import '../popupmenu/popupmenu.jquery';
 

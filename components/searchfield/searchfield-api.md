@@ -7,6 +7,8 @@
     -   [PLUGIN_NAME](#plugin_name-2)
     -   [PLUGIN_NAME](#plugin_name-3)
     -   [PLUGIN_NAME](#plugin_name-4)
+    -   [PLUGIN_NAME](#plugin_name-5)
+    -   [PLUGIN_NAME](#plugin_name-6)
     -   [SEARCHFIELD_DEFAULTS](#searchfield_defaults)
     -   [SearchField](#searchfield)
         -   [init](#init)
@@ -45,6 +47,7 @@
     -   [timer](#timer)
     -   [clearable](#clearable)
     -   [getHiddenSize](#gethiddensize)
+    -   [autocomplete](#autocomplete)
     -   [button](#button)
     -   [icon](#icon)
     -   [popupmenu](#popupmenu)
@@ -77,6 +80,8 @@
     -   [addClass](#addclass)
     -   [isElement](#iselement)
     -   [getDimensions](#getdimensions)
+    -   [convertDelayToFPS](#convertdelaytofps)
+    -   [convertFPSToDelay](#convertfpstodelay)
     -   [Locale](#locale)
         -   [set](#set)
         -   [formatDate](#formatdate)
@@ -101,11 +106,26 @@
         -   [toLowerCase](#tolowercase-1)
         -   [capitalize](#capitalize-1)
         -   [capitalizeWords](#capitalizewords-1)
-    -   [BUTTON_DEFAULTS](#button_defaults)
-    -   [Button](#button-1)
+    -   [DEFAULT_AUTOCOMPLETE_TEMPLATE](#default_autocomplete_template)
+    -   [DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK](#default_autocomplete_searchable_text_callback)
+    -   [DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK](#default_autocomplete_result_iterator_callback)
+    -   [DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK](#default_autocomplete_highlight_callback)
+    -   [AUTOCOMPLETE_DEFAULTS](#autocomplete_defaults)
+    -   [Autocomplete](#autocomplete-1)
         -   [updated](#updated-1)
+        -   [enable](#enable-1)
+        -   [disable](#disable-1)
         -   [destroy](#destroy-1)
         -   [handleEvents](#handleevents)
+    -   [LISTFILTER_DEFAULTS](#listfilter_defaults)
+    -   [filterModes](#filtermodes)
+    -   [ListFilter](#listfilter)
+        -   [filter](#filter)
+    -   [BUTTON_DEFAULTS](#button_defaults)
+    -   [Button](#button-1)
+        -   [updated](#updated-2)
+        -   [destroy](#destroy-2)
+        -   [handleEvents](#handleevents-1)
     -   [getIconName](#geticonname)
     -   [ICON_DEFAULTS](#icon_defaults)
     -   [Icon](#icon-1)
@@ -113,11 +133,17 @@
     -   [PopupMenu](#popupmenu-1)
         -   [markupItems](#markupitems)
         -   [close](#close)
-        -   [destroy](#destroy-2)
+        -   [destroy](#destroy-3)
     -   [DEFAULT_PLACE_SETTINGS](#default_place_settings)
     -   [PLACE_STRATEGIES](#place_strategies)
     -   [PlacementObject](#placementobject)
     -   [Place](#place-1)
+
+## PLUGIN_NAME
+
+## PLUGIN_NAME
+
+Component Name
 
 ## PLUGIN_NAME
 
@@ -214,7 +240,7 @@ Gets the currently selected categories as data.
 
 **Parameters**
 
--   `onlyReturnSelected` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If set to true, will only return checked list items. (optional, default `false`)
+-   `onlyReturnSelected` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true, will only return checked list items. (optional, default `false`)
 
 Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** data -
 
@@ -236,7 +262,7 @@ Updates just the categories setting and rerenders the category list.
     -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
 -   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
 -   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
--   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** Category's selection status (optional, default `true`)
+-   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
 
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
@@ -250,7 +276,7 @@ Creates a new set of categories on the Searchfield and rerenders it.
     -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
 -   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
 -   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
--   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** Category's selection status (optional, default `true`)
+-   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
 
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
@@ -439,6 +465,14 @@ Binds the Soho Util _getHiddenSize()_ to a jQuery selector
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
+## autocomplete
+
+jQuery Component Wrapper for Autocomplete
+
+**Parameters**
+
+-   `settings`  
+
 ## button
 
 jQuery Component Wrapper for the Soho Button Element
@@ -609,7 +643,7 @@ Takes an element that is currently hidden by some means (FX: "display: none;") a
 
 -   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
 -   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
--   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
+-   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
@@ -716,118 +750,26 @@ as a plain object instead of a ClientRect
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
 
-## Locale
+## convertDelayToFPS
 
-The Locale component handles i18n
-
-**Parameters**
-
--   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
-
-### set
-
-Set the currently used colors.
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
 
 **Parameters**
 
--   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
-### formatDate
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
 
-Format a Date Object and return it parsed in the current locale.
+## convertFPSToDelay
 
-**Parameters**
-
--   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
--   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
-
-### isValidDate
-
-Check if the date is valid using the current locale to do so.
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
 
 **Parameters**
 
--   `date`  
--   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `fps`  
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
-### parseDate
-
-Take a date string written in the current locale and parse it into a Date Object
-
-**Parameters**
-
--   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
--   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
--   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
-
-### formatNumber
-
-Format a decimal with thousands and padding in the current locale.
-<http://mzl.la/1MUOEWm>
-
-**Parameters**
-
--   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
--   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
-
-### parseNumber
-
-Take a Formatted Number and return a real number
-
-**Parameters**
-
--   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
-
-### translate
-
-Overridable culture messages
-
-**Parameters**
-
--   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
--   `showAsUndefined`  
-
-### toUpperCase
-
-Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
-In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
-
-**Parameters**
-
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
-
-### toLowerCase
-
-Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
-In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
-
-**Parameters**
-
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### capitalize
-
-Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
-In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
-
-**Parameters**
-
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### capitalizeWords
-
-Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
-In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
-
-**Parameters**
-
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
 
 ## Locale
 
@@ -946,6 +888,237 @@ In most cases this method will simply use a simple algorithm for captializing th
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
+## Locale
+
+The Locale component handles i18n
+
+**Parameters**
+
+-   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
+
+### set
+
+Set the currently used colors.
+
+**Parameters**
+
+-   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+
+### formatDate
+
+Format a Date Object and return it parsed in the current locale.
+
+**Parameters**
+
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
+
+### isValidDate
+
+Check if the date is valid using the current locale to do so.
+
+**Parameters**
+
+-   `date`  
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+
+### parseDate
+
+Take a date string written in the current locale and parse it into a Date Object
+
+**Parameters**
+
+-   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
+-   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
+-   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+
+### formatNumber
+
+Format a decimal with thousands and padding in the current locale.
+<http://mzl.la/1MUOEWm>
+
+**Parameters**
+
+-   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
+-   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+
+### parseNumber
+
+Take a Formatted Number and return a real number
+
+**Parameters**
+
+-   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+
+### translate
+
+Overridable culture messages
+
+**Parameters**
+
+-   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `showAsUndefined`  
+
+### toUpperCase
+
+Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+### toLowerCase
+
+Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalize
+
+Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalizeWords
+
+Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## DEFAULT_AUTOCOMPLETE_TEMPLATE
+
+Default Autocomplete Result Item Template.  This can be modified to add data points that will be populated
+by adding properties to the object created in `DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK`.
+
+## DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK
+
+Autocomplete's method for obtaining the string that will be tested against a provided search term for a match.
+This is configurable in the event that the component you attach this to needs a specific part of it searched (instead of the whole thing).
+
+**Parameters**
+
+-   `item` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object))** text string, or an object containing a 'label'.
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK
+
+Autocomplete provides a method that will be run on every result that is passed back from the filtering API.
+This method can be replaced, allowing developers to customize the output of the returned dataset to add
+values that can also be displayed on each list item with a modified `DEFAULT_AUTOCOMPLETE_TEMPLATE`.
+
+**Parameters**
+
+-   `item`  
+-   `index`  
+
+## DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK
+
+**Parameters**
+
+-   `item` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `options.alias` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+    -   `options.filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `options.term` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## AUTOCOMPLETE_DEFAULTS
+
+Autocomplete Default Settings
+
+## Autocomplete
+
+The Autocomplete control provides an easier means of searching through a large amount of data by filtering down the results based on keyboard input from the user.
+
+**Parameters**
+
+-   `source` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Defines the data to use, must be specified.
+-   `sourceArguments` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+-   `template` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If defined, use this to draw the contents of each search result instead of the default draw routine.
+-   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The matching algorithm, startsWith and contains are supported - false will not filter client side
+-   `delay` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  The delay between key strokes on the keypad before it thinks you stopped typing
+-   `width` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Width of the open auto complete menu
+-   `offset` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  For the open menu, the left or top offset
+-   `autoSelectFirstItem` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Whether or not to select he first item in the list to be selected
+-   `resultsCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, does not produce the results of the Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback function.
+
+### updated
+
+**Parameters**
+
+-   `settings` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
+
+### enable
+
+Enable the input from readonly or disabled state.
+
+### disable
+
+Disable the input from editing
+
+### destroy
+
+Teardown and remove any added markup and events.
+
+### handleEvents
+
+This component fires the following events.
+
+**Parameters**
+
+-   `listopen` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is opened.
+-   `listclosed` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is closed.
+-   `populated` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the menu is populated with its contents.
+-   `input` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the input is edited.
+-   `safe-blur` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the input (and menu) both loose focus
+-   `requestend` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the ajax request (source option) is completed
+-   `requeststart` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the ajax request (source option) is initiated
+
+## LISTFILTER_DEFAULTS
+
+## filterModes
+
+## ListFilter
+
+Abstracted search/filter for use in other controls
+
+**Parameters**
+
+-   `caseSensitive` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Set to true if searches ARE case sensitive
+-   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Type of search can current be either 'startsWith' or 'contains'
+-   `highlightMatchedText` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Inserts markup that appears to highlight text
+-   `highlightCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, will execute this code for highlighting text instead of the built-in highlighting code
+-   `searchableTextCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, will take each filterable item passed and return user-defined, searchable text content
+
+### filter
+
+Run the filter on the list for the given sreach term.
+
+**Parameters**
+
+-   `list` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The array to search.
+-   `term` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The term to look for.
+
+Returns **([boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
+
 ## BUTTON_DEFAULTS
 
 Component Defaults
@@ -956,8 +1129,6 @@ Soho Button Element
 
 **Parameters**
 
--   `element`  
--   `settings`  
 -   `toggleOnIcon` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The icon to use for on state on toggle buttons
 -   `toggleOffIcon` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The icon to use for off state on toggle buttons
 -   `replaceText` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true the selection will be used to replace the content in the button.
@@ -1012,8 +1183,6 @@ Responsive Popup Menu Control aka Context Menu when doing a right click action.
 
 **Parameters**
 
--   `element`  
--   `settings`  
 -   `menu` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Menu's ID Selector, or a jQuery object representing a menu
 -   `trigger` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Action on which to trigger a menu can be: click, rightClick, immediate ect
 -   `autoFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If false the focus will not focus the first list element. (At the cost of accessibility)

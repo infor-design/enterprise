@@ -3,27 +3,43 @@
 ### Table of Contents
 
 -   [Locale](#locale)
--   [set](#set)
--   [formatDate](#formatdate)
--   [isValidDate](#isvaliddate)
--   [parseDate](#parsedate)
--   [formatNumber](#formatnumber)
--   [parseNumber](#parsenumber)
--   [translate](#translate)
--   [toUpperCase](#touppercase)
--   [toLowerCase](#tolowercase)
--   [capitalize](#capitalize)
--   [capitalizeWords](#capitalizewords)
+    -   [set](#set)
+    -   [formatDate](#formatdate)
+    -   [isValidDate](#isvaliddate)
+    -   [parseDate](#parsedate)
+    -   [formatNumber](#formatnumber)
+    -   [parseNumber](#parsenumber)
+    -   [translate](#translate)
+    -   [toUpperCase](#touppercase)
+    -   [toLowerCase](#tolowercase)
+    -   [capitalize](#capitalize)
+    -   [capitalizeWords](#capitalizewords)
+-   [Locale](#locale-1)
+    -   [set](#set-1)
+    -   [formatDate](#formatdate-1)
+    -   [isValidDate](#isvaliddate-1)
+    -   [parseDate](#parsedate-1)
+    -   [formatNumber](#formatnumber-1)
+    -   [parseNumber](#parsenumber-1)
+    -   [translate](#translate-1)
+    -   [toUpperCase](#touppercase-1)
+    -   [toLowerCase](#tolowercase-1)
+    -   [capitalize](#capitalize-1)
+    -   [capitalizeWords](#capitalizewords-1)
 
 ## Locale
 
-The Locale component handles i18n
+TODO: Re-implement this with proper scope.
 
-**Parameters**
+// If there already exists a Locale object with a culturesPath use that path
+// This allows manually setting the directory for the culture files to be retrieved from
+var existingCulturePath = '';
 
--   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
+if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
+existingCulturePath = window.Locale.culturesPath;
+}
 
-## set
+### set
 
 Set the currently used colors.
 
@@ -31,7 +47,7 @@ Set the currently used colors.
 
 -   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
 
-## formatDate
+### formatDate
 
 Format a Date Object and return it parsed in the current locale.
 
@@ -40,7 +56,7 @@ Format a Date Object and return it parsed in the current locale.
 -   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
 -   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
 
-## isValidDate
+### isValidDate
 
 Check if the date is valid using the current locale to do so.
 
@@ -49,7 +65,7 @@ Check if the date is valid using the current locale to do so.
 -   `date`  
 -   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
 
-## parseDate
+### parseDate
 
 Take a date string written in the current locale and parse it into a Date Object
 
@@ -59,7 +75,7 @@ Take a date string written in the current locale and parse it into a Date Object
 -   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
 -   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
 
-## formatNumber
+### formatNumber
 
 Format a decimal with thousands and padding in the current locale.
 <http://mzl.la/1MUOEWm>
@@ -69,7 +85,7 @@ Format a decimal with thousands and padding in the current locale.
 -   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
 -   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
 
-## parseNumber
+### parseNumber
 
 Take a Formatted Number and return a real number
 
@@ -77,7 +93,7 @@ Take a Formatted Number and return a real number
 
 -   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
 
-## translate
+### translate
 
 Overridable culture messages
 
@@ -86,7 +102,7 @@ Overridable culture messages
 -   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
 -   `showAsUndefined`  
 
-## toUpperCase
+### toUpperCase
 
 Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
 In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
@@ -95,7 +111,7 @@ In most cases this method will simply pipe the string to `String.prototype.toUpp
 
 -   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
-## toLowerCase
+### toLowerCase
 
 Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
 In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
@@ -106,7 +122,7 @@ In most cases this method will simply pipe the string to `String.prototype.toLow
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-## capitalize
+### capitalize
 
 Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
 In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
@@ -117,7 +133,120 @@ In most cases this method will simply use a simple algorithm for captializing th
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-## capitalizeWords
+### capitalizeWords
+
+Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## Locale
+
+The Locale component handles i18n
+
+**Parameters**
+
+-   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
+
+### set
+
+Set the currently used colors.
+
+**Parameters**
+
+-   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+
+### formatDate
+
+Format a Date Object and return it parsed in the current locale.
+
+**Parameters**
+
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
+
+### isValidDate
+
+Check if the date is valid using the current locale to do so.
+
+**Parameters**
+
+-   `date`  
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+
+### parseDate
+
+Take a date string written in the current locale and parse it into a Date Object
+
+**Parameters**
+
+-   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
+-   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
+-   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+
+### formatNumber
+
+Format a decimal with thousands and padding in the current locale.
+<http://mzl.la/1MUOEWm>
+
+**Parameters**
+
+-   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
+-   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+
+### parseNumber
+
+Take a Formatted Number and return a real number
+
+**Parameters**
+
+-   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+
+### translate
+
+Overridable culture messages
+
+**Parameters**
+
+-   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `showAsUndefined`  
+
+### toUpperCase
+
+Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+### toLowerCase
+
+Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalize
+
+Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalizeWords
 
 Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
 In most cases this method will simply use a simple algorithm for captializing the first letter of the string.

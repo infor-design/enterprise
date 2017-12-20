@@ -1,7 +1,8 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
-import { Tmpl } from '../tmpl/tmpl';
 import { ListFilter } from '../listfilter/listfilter';
+import { Locale } from '../locale/locale';
+import { Tmpl } from '../tmpl/tmpl';
 
 // jQuery Components
 import '../utils/highlight';
