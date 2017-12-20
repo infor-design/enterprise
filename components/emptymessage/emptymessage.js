@@ -80,6 +80,11 @@
         return this;
       },
 
+      updated: function() {
+        this.element.empty();
+        this.build();
+      },
+
       /**
        * Teardown - Remove added markup and events
        */
