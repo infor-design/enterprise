@@ -13,6 +13,7 @@ export { Hyperlink } from './hyperlinks/hyperlinks';
 export { Icon } from './icons/icons';
 
 // Molecules
+export { Autocomplete } from './autocomplete/autocomplete';
 export { Dropdown } from './dropdown/dropdown';
 export { Modal } from './modal/modal';
 export { About } from './about/about';

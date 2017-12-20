@@ -3,6 +3,7 @@
 
 // behaviors
 // TODO: separate this more logically?
+import './utils/highlight';
 import './place/place.jquery';
 
 // Atoms

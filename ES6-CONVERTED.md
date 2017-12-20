@@ -3,6 +3,7 @@
 All the following Soho Components have been converted to ES6:
 
 * About
+* Autocomplete
 * Button
 * Dropdown
 * Hyperlink
@@ -25,6 +26,7 @@ All the following Soho Components have been converted to ES6:
   - behaviors
   - breakpoints
   - debug
+  - highlight
   - environment
   - renderloop
   - string
@@ -41,7 +43,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Angular (?)
 * ApplicationMenu
 * Arrange (behavior)
-* Autocomplete
 * Busy Indicator
 * Charts
 * Circle Pager
@@ -52,6 +53,7 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Datepicker
 * Drag (behavior)
 * Editor
+* EmptyMessage
 * Expandable area
 * Field Options
 * File Upload
@@ -82,7 +84,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * ToolbarSearchfield
 * Tree
 * (utils)
-  - highlight
   - lifecycle
   - template
 * Validation (lots of jQuery)
