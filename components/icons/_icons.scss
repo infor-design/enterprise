@@ -57,12 +57,17 @@ svg.icon-dirty,
     width: 18px;
   }
 
-  .icon-confirm,
+  .icon-confirm {
+    position: relative;
+    right: auto;
+    top: auto;
+  }
+
   [data-error-type="tooltip"] ~ .icon-error,
   [data-error-type="tooltip"] ~ .icon-confirm {
     position: relative;
     right: auto;
-    top: auto;
+    top: -5px;
   }
 
   .dropdown-wrapper {
@@ -82,6 +87,16 @@ svg.icon-dirty,
       top: 55px;
     }
   }
+
+  textarea {
+    &[data-error-type="tooltip"] ~ .icon-error,
+    &[data-error-type="tooltip"] ~ .icon-confirm {
+      position: absolute;
+      top: 20px;
+    }
+  }
+
+
 
   .lookup-wrapper {
     .icon-error,
