@@ -1531,11 +1531,11 @@ $.fn.datagrid = function(options) {
   var pluginName = 'datagrid',
       defaults = {
         // F2 - toggles actionableMode "true" and "false"
-        // If actionableMode is "true”, tab and shift tab behave like left and right arrow key,
+        // If actionableMode is "true, tab and shift tab behave like left and right arrow key,
         // if the cell is editable it goes in and out of edit mode
         actionableMode: false,
-        cellNavigation: true, // If cellNavigation is "false”, will show border around whole row on focus
-        rowNavigation: true, // If rowNavigation is "false”, will NOT show border around the row
+        cellNavigation: true, // If cellNavigation is "false, will show border around whole row on focus
+        rowNavigation: true, // If rowNavigation is "false, will NOT show border around the row
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
@@ -1597,9 +1597,9 @@ $.fn.datagrid = function(options) {
   * The Datagrid Component displays and process data in tabular format.
   *
   * @class Datagrid
-  * @param {Boolean} actionableMode &nbsp;-&nbsp If actionableMode is "true”, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
-  * @param {Boolean} cellNavigation &nbsp;-&nbsp If cellNavigation is "false”, will show border around whole row on focus
-  * @param {Boolean} rowNavigation  &nbsp;-&nbsp If rowNavigation is "false”, will NOT show border around the row
+  * @param {Boolean} actionableMode &nbsp;-&nbsp If actionableMode is "true, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+  * @param {Boolean} cellNavigation &nbsp;-&nbsp If cellNavigation is "false, will show border around whole row on focus
+  * @param {Boolean} rowNavigation  &nbsp;-&nbsp If rowNavigation is "false, will NOT show border around the row
   * @param {Boolean} alternateRowShading  &nbsp;-&nbsp Sets shading for readonly grids
   * @param {Array} columns  &nbsp;-&nbsp an array of columns (see column options)
   * @param {Array} dataset  &nbsp;-&nbsp an array of data objects
