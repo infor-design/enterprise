@@ -16,7 +16,8 @@
 <ul>
 <li><code>min</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  if defined, provides a minimum numeric limit<br /></li>
 <li><code>max</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  if defined, provides a maximum numeric limit<br /></li>
-<li><code>step</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.</li>
+<li><code>step</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.<br /></li>
+<li><code>validateOnInput</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If set to false, will only automatically correct the spinbox value after the spinbox has lost focus.</li>
 </ul>
 <h3 id="functions">Functions</h3>
 <h4 id="setwidth">setWidth</h4>
@@ -56,7 +57,14 @@
 <li><code>self</code> <strong><a href="#spinbox">Spinbox</a></strong></li>
 </ul>
 <h4 id="handlekeypress">handleKeyPress</h4>
-<p>Event handler for 'keypress' events</p>
+<p>Event handler for 'keypress' events<br />TODO: Deprecate in 4.4.0</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong><br /></li>
+<li><code>self</code> <strong><a href="#spinbox">Spinbox</a></strong></li>
+</ul>
+<h4 id="handleinput">handleInput</h4>
+<p>Event handler for the 'input' event</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>e</code> <strong>jQuery.Event</strong><br /></li>
@@ -74,6 +82,11 @@
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>self</code> <strong><a href="#spinbox">Spinbox</a></strong></li>
+</ul>
+<h4 id="correctvalue">correctValue</h4>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code></li>
 </ul>
 <h4 id="increasevalue">increaseValue</h4>
 <p>Increases the value of the Spinbox field, constrained by the step interval and maximum limit.</p>

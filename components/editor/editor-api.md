@@ -6,11 +6,12 @@
     -   [switchToolbars](#switchtoolbars)
     -   [createURLModal](#createurlmodal)
     -   [createImageModal](#createimagemodal)
+    -   [updated](#updated)
+    -   [destroy](#destroy)
+    -   [destroy](#destroy-1)
     -   [disable](#disable)
     -   [enable](#enable)
     -   [readonly](#readonly)
-    -   [destroy](#destroy)
-    -   [handleEvents](#handleevents)
 
 ## Editor
 
@@ -22,7 +23,8 @@ The Editor Component is displays and edits markdown.
 -   `secondHeader` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
 -   `productName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Additional product name information to display
 -   `pasteAsPlainText` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true, when you paste into the editor the element will be unformatted to plain text.
--   `anchor` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
+-   `anchor` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
+    the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
 -   `image` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Info object to populate the image dialog defaulting to `{url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
 
 ### switchToolbars
@@ -31,11 +33,25 @@ Switch between source and editing toolbar.
 
 ### createURLModal
 
-Function that creates the Url Modal Dialog. This can be customized by making a modal with ID `#editor-modal-url`
+Function that creates the Url Modal Dialog. This can be customized by making a modal with ID `#modal-url-{this.id}`
 
 ### createImageModal
 
-Function that creates the Image Dialog. This can be customized by making a modal with ID `#editor-modal-image`
+Function that creates the Image Dialog. This can be customized by making a modal with ID `#modal-image-{this.id}`
+
+### updated
+
+Updates the component instance.  Can be used after being passed new settings.
+
+Returns **this** 
+
+### destroy
+
+Remove all events and reset back to default.
+
+### destroy
+
+Detach Events and tear back additions.
 
 ### disable
 
@@ -48,16 +64,3 @@ Enable the editable area.
 ### readonly
 
 Make the editable area readonly.
-
-### destroy
-
-Detach Events and tear back additions.
-
-### handleEvents
-
-This component fires the following events.
-
-**Parameters**
-
--   `input` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction.
--   `keydown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after as keys are pressed.

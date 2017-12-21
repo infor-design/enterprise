@@ -3,7 +3,7 @@
 
 .popover,
 .tooltip {
-  @include font-size(15);
+  @include font-size(12);
   background-color: $tooltip-bg-color;
   border: 1px solid $tooltip-border-color;
   border-radius: 2px;
@@ -53,7 +53,6 @@
   }
 
   .hyperlink {
-    @include font-size(12);
     color: $tooltip-color;
 
     &:hover {
@@ -100,6 +99,10 @@
     color: $tooltip-color;
     word-break: normal;
     word-wrap: break-word;
+  }
+
+  span {
+    @include font-size(12);
   }
 
   .icon {
@@ -259,6 +262,7 @@
     p {
       color: $popover-alternate-color;
       font-size: 1.4rem;
+      text-align: left;
     }
   }
 

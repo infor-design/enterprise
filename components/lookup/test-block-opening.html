@@ -21,7 +21,10 @@
         field: 'productId',
         beforeShow: function (api, response) {
           if (isBlocked) {
-            return false;
+            setTimeout(function () {
+              response(false);
+            }, 100);
+            return;
           }
 
           var url = '{{basepath}}api/lookupInfo';

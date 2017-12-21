@@ -1517,9 +1517,10 @@
         var tab = this.getTab(null, tabId),
           filter = 'li:not(.separator):not(:hidden):not(.is-disabled)',
           tabs = this.tablist.find(filter),
-          target = tabs.eq(tabs.index(tab) - 1);
+          idx = tabs.index(tab),
+          target = tabs.eq(idx === 0 ? 1 :  idx - 1);
 
-        while(target.length && !target.is(filter)) {
+        while (target.length && !target.is(filter)) {
           target = tabs.eq(tabs.index(target) - 1);
         }
 
@@ -2009,6 +2010,11 @@
           });
         }
 
+        // Recalc tab width before detection of overflow
+        if (this.isModuleTabs()) {
+          this.adjustModuleTabs();
+        }
+
         // Adjust tablist height
         this.setOverflow();
 
@@ -2020,6 +2026,10 @@
             return this;
           }
           anchorMarkup.focus();
+        }
+
+        if (options.doActivate) {
+          this.activate(anchorMarkup.attr('href'));
         }
 
         return this;
@@ -2117,6 +2127,11 @@
         // Close dropdown tab's menu
         if (trigger && trigger.length) {
           trigger.data('popupmenu').close();
+        }
+
+        // Recalc tab width before detection of overflow
+        if (this.isModuleTabs()) {
+          this.adjustModuleTabs();
         }
 
         // Adjust tablist height
@@ -2306,6 +2321,9 @@
         var tab = this.doGetTab(e, tabId);
 
         if (tab.is('.is-selected')) {
+          if (typeof e === 'string') {
+            tabId = e;
+          }
           this.activatePreviousTab(tabId);
         }
         tab.addClass('is-disabled');
@@ -2423,16 +2441,21 @@
       },
 
       setOverflow: function () {
-        var elem = this.element[0],
+        var self = this,
+          elem = this.element[0],
           tablist = this.tablist[0],
           HAS_MORE = 'has-more-button',
           hasMoreIndex = this.hasMoreButton(),
           isScrollableTabs = this.isScrollableTabs();
 
-        // Recalc tab width before detection of overflow
-        if (this.isModuleTabs()) {
-          this.adjustModuleTabs();
+        function checkModuleTabs() {
+          if (self.isModuleTabs()) {
+            self.adjustModuleTabs();
+          }
         }
+
+        // Recalc tab width before detection of overflow
+        checkModuleTabs();
 
         var tablistStyle, tablistHeight,
           tablistContainerScrollWidth, tablistContainerWidth,
@@ -2453,9 +2476,11 @@
         if (overflowCondition) {
           if (!hasMoreIndex) {
             elem.classList.add(HAS_MORE);
+            checkModuleTabs();
           }
         } else if (hasMoreIndex) {
           elem.classList.remove(HAS_MORE);
+          checkModuleTabs();
         }
 
         this.adjustSpilloverNumber();

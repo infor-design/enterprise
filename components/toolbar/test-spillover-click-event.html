@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Toolbar Test: Click Event on Spillover Menu Sub-Items</h2>
+    <p>
+      Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7170" target="_blank">SOHO-7170</a>.
+    </p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <div class="toolbar" data-options="{ 'maxVisibleButtons': 1 }">
+      <div class="title">
+        Check the Spillover Menu &rarr;
+      </div>
+      <div class="buttonset">
+
+        <button id="first-button" class="btn">
+          <span>First Button (has click event)</span>
+        </button>
+
+        <button id="spilled-over-button" class="btn-menu">
+          <span>Spilled-Over Button</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a id="sub-option-1" href="#">Sub-option #1</a></li>
+          <li><a id="sub-option-2" href="#">Sub-option #2</a></li>
+          <li><a id="sub-option-3" href="#">Sub-option #3 (has click event)</a></li>
+        </ul>
+
+      </div>
+      <div class="more">
+        <button id="test-more" class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a id="pre-defined-option" href="#">Pre-defined Option (has click event)</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  function generateToast(e) {
+    var elemID = this.getAttribute('id');
+    $('body').toast({
+      title: 'Click Event Fired',
+      message: 'Element ID: "'+ elemID +'".'
+    });
+  }
+
+  $('#first-button, #pre-defined-option, #sub-option-3').on('click.test', generateToast);
+</script>

@@ -134,13 +134,15 @@
           var field = $(this),
             handleEventData = field.data('handleEvent' +[(e.type || '')]);
 
+
           if (field.is('[readonly]') && !field.parent().is('.field-fileupload')) {
             return;
           }
 
           if (handleEventData &&
               handleEventData.type === e.type &&
-              e.handleObj.namespace === 'validate') {
+              e.handleObj.namespace === 'validate' &&
+              !field.closest('.modal:visible').length) {
             return;
           } else {
             field.data('handleEvent' +[(e.type || '')], e.handleObj);
@@ -266,7 +268,7 @@
      * Set disable/enable primary button in modal
      * @private
      */
-    setModalPrimaryBtn: function(field, modalBtn, isValid) {
+    setModalPrimaryBtn: function(field, modalBtn) {
       var modal = field.closest('.modal'),
         modalFields = modal.find('[data-validate]:visible, select[data-validate], :checkbox[data-validate]'),
         allValid = true;
@@ -274,7 +276,7 @@
       if (modalFields.length > 0) {
         modalFields.each(function () {
           var modalField = $(this);
-          modalField.data('isValid', isValid);
+
           if (modalField.closest('.datagrid-filter-wrapper').length > 0) {
             return;
           }
@@ -283,10 +285,9 @@
             if ((isVisible || modalField.is('select, :checkbox'))  && !modalField.val()) {
               allValid = false;
             }
-          } else {
-            if ((isVisible  || modalField.is('select, :checkbox')) && !modalField.isValid()) {
-              allValid = false;
-            }
+          }
+          if ((isVisible  || modalField.is('select, :checkbox')) && !modalField.isValid()) {
+            allValid = false;
           }
         });
       }
@@ -574,15 +575,23 @@
      * @param {String} type
      * @param {boolean} inline
      * @param {boolean} showTooltip
+     * @param {boolean} isAlert
      */
-    addMessage: function(field, message, type, inline, showTooltip) {
+    addMessage: function(field, message, type, inline, showTooltip, isAlert) {
       if (message === '') {
         return;
       }
-      var loc = this.getField(field).addClass(type),
+
+      isAlert = isAlert || false;
+
+      var loc = this.getField(field),
          dataMsg = loc.data('data-' + type + 'message'),
          appendedMsg = message,
          validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error;
+
+      if (!isAlert) {
+        loc.addClass(type);
+      }
 
       if (dataMsg) {
         appendedMsg = (/^\u2022/.test(dataMsg)) ? '' : '\u2022 ';
@@ -601,13 +610,15 @@
         return;
       }
 
+      field.data('isValid', false);
+
       // Disable primary button in modal
       var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
       if (modalBtn.length) {
-        this.setModalPrimaryBtn(field, modalBtn, false);
+        this.setModalPrimaryBtn(field, modalBtn);
       }
 
-      this.showInlineMessage(field, message, validationType.type);
+      this.showInlineMessage(field, message, validationType.type, isAlert);
     },
 
     /**
@@ -774,15 +785,22 @@
      *
      * @param {jQuery[]} field
      * @param {string} message
+     * @param {boolean} isAlert
      */
-    showInlineMessage: function (field, message, type) {
-      var loc = this.getField(field).addClass(type),
+    showInlineMessage: function (field, message, type, isAlert) {
+      isAlert = isAlert || false;
+
+      var loc = this.getField(field),
         validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error,
         markup = '<div class="' + validationType.type + '-message">' +
           $.createIcon({ classes: ['icon-' + validationType.type], icon: validationType.type }) +
           '<pre class="audible">'+ Locale.translate(validationType.titleMessageID) +'</pre>' +
           '<p class="message-text">' + message +'</p>' +
           '</div>';
+
+      if (!isAlert) {
+        loc.addClass(type);
+      }
 
       if (field.is(':radio')) { // Radio button handler
         this.toggleRadioMessage(field, message, validationType.type, markup, true);
@@ -830,7 +848,7 @@
 
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass(type);
-      field.removeData(type +'-errormessage dataErrormessage');
+      field.removeData('data-' + type + 'message');
 
       if (hasTooltip) {
         tooltipAPI = field.find('.icon.' + type).data('tooltip') || tooltipAPI;
@@ -884,12 +902,6 @@
         field.closest('.field-fileupload').find('input.' + type).removeClass(type);
       }
 
-      // Enable primary button in modal
-      var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
-      if (modalBtn.length) {
-        this.setModalPrimaryBtn(field, modalBtn, true);
-      }
-
       //Stuff for the inline error
       field.closest('.field, .field-short').find('.' + type + '-message').remove();
       field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(type);
@@ -897,6 +909,14 @@
       if (type === 'error' && !noTrigger && this.eventsStatus()) {
         field.triggerHandler('valid', {field: field, message: ''});
         field.closest('form').triggerHandler('valid', {field: field, message: ''});
+      }
+
+      field.data('isValid', true);
+
+      // Test Enabling primary button in modal
+      var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
+      if (modalBtn.length) {
+        this.setModalPrimaryBtn(field, modalBtn);
       }
     },
 
@@ -953,6 +973,19 @@
   };
 
   /**
+   * Returns the specific type message data object for a Field
+   *
+   * @param options (object) optional
+   */
+  $.fn.getMessage = function(options) {
+    var defaults = {type: 'error'},
+      settings = $.extend({}, defaults, options);
+
+    var instance = new Validator(this, settings);
+    return instance.getField($(this)).data('data-' + settings.type + 'message');
+  };
+
+  /**
    * ScrollIntoView and sets focus on an element
    *
    * @param alignToTop (boolean) optional - true (default) element will be aligned to the top of the visible area of the scrollable ancestor
@@ -973,12 +1006,12 @@
 
   //Add a Message to a Field
   $.fn.addMessage = function(options) {
-    var defaults = {message: '', type: 'error', showTooltip: false, inline: true},
+    var defaults = {message: '', type: 'error', showTooltip: false, inline: true, isAlert: false},
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
       var instance = new Validator(this, settings);
-      instance.addMessage($(this), settings.message, settings.type, settings.inline, settings.showTooltip);
+      instance.addMessage($(this), settings.message, settings.type, settings.inline, settings.showTooltip, settings.isAlert);
     });
   };
 
@@ -1010,8 +1043,11 @@
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
-      var instance = new Validator(this, settings);
-      instance.removeMessage($(this), 'error');
+      var instance = new Validator(this, settings),
+        field = $(this);
+
+      instance.removeMessage(field, 'error');
+      instance.setIconOnParent(field, 'error');
     });
   };
 

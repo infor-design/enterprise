@@ -725,7 +725,6 @@
           isRTL = Locale.isRTL();
 
         if ((key === 37 && target.is(':not(input)')) ||
-          (key === 37 && target.is('input') && e.shiftKey) || // Shift + Left Arrow should be able to navigate away from Searchfields
           (key === 38 && target.is(':not(input.is-open)'))) { // Don't navigate away if Up Arrow in autocomplete field that is open
           e.preventDefault();
 
@@ -737,7 +736,6 @@
         }
 
         if ((key === 39 && target.is(':not(input)')) ||
-          (key === 39 && target.is('input') && e.shiftKey) || // Shift + Right Arrow should be able to navigate away from Searchfields
           (key === 40 && target.is(':not(input.is-open)'))) { // Don't navigate away if Down Arrow in autocomplete field that is open
           e.preventDefault();
 

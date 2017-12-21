@@ -584,6 +584,9 @@ window.Editors = {
       if (column.mask && typeof column.mask === 'function') {
         var mask = column.mask(row, cell, value, column, item);
         this.input.mask({pattern: mask, mode: column.maskMode});
+      } else if (column.maskOptions && typeof column.maskOptions === 'function') {
+        var maskOptions = column.maskOptions(row, cell, value, column, item);
+        this.input.mask(maskOptions);
       } else if (column.mask) {
         this.input.mask({pattern: column.mask, mode: column.maskMode});
       }
@@ -608,6 +611,10 @@ window.Editors = {
       if (column.numberFormat) {
         useMask = true;
         defaults = {patternOptions : {decimalLimit: column.numberFormat.maximumFractionDigits }};
+      }
+
+      if (column.maskOptions && typeof column.maskOptions === 'function') {
+        useMask = false;
       }
 
       if (useMask) {
@@ -781,6 +788,7 @@ window.Editors = {
     this.name = 'checkbox';
     this.originalValue = value;
     this.useValue = true; //use the data set value not cell value
+    this.container = container;
 
     this.init = function () {
 
@@ -818,6 +826,7 @@ window.Editors = {
 
     this.focus = function () {
       this.input.trigger('focusout');
+      this.container.parent().focus();
     };
 
     this.destroy = function () {
@@ -1522,11 +1531,11 @@ $.fn.datagrid = function(options) {
   var pluginName = 'datagrid',
       defaults = {
         // F2 - toggles actionableMode "true" and "false"
-        // If actionableMode is "true”, tab and shift tab behave like left and right arrow key,
+        // If actionableMode is "trueâ€, tab and shift tab behave like left and right arrow key,
         // if the cell is editable it goes in and out of edit mode
         actionableMode: false,
-        cellNavigation: true, // If cellNavigation is "false”, will show border around whole row on focus
-        rowNavigation: true, // If rowNavigation is "false”, will NOT show border around the row
+        cellNavigation: true, // If cellNavigation is "falseâ€, will show border around whole row on focus
+        rowNavigation: true, // If rowNavigation is "falseâ€, will NOT show border around the row
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
@@ -1574,8 +1583,12 @@ $.fn.datagrid = function(options) {
         expandableRow: false, // Supply an empty expandable row template
         redrawOnResize: true, //Run column redraw logic on resize
         exportConvertNegative: false, // Export data with trailing negative signs moved in front
-        onPostRenderCell: null, //A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
-        onDestroyCell: null, //A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need notification of that.
+        columnGroups: null, // The columns to use for grouped column headings
+        treeGrid: false, // If true a tree grid is expected so addition calculations will be used to calculate of the row children
+        onPostRenderCell: null, //A callback function that will fire and send you the cell container and related information for any cells with postRender: true.
+        onDestroyCell: null, //A callback that goes along with onPostRenderCell and will fire when this cell is destroyed and you need notification of that.
+        onEditCell: null, //A callback that fires when a cell is edited, the editor object is passed in to the function
+        onExpandRow: null, //A callback function that fires when expanding rows. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
         emptyMessage: {title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data'}
       },
       settings = $.extend({}, defaults, options);
@@ -1584,9 +1597,9 @@ $.fn.datagrid = function(options) {
   * The Datagrid Component displays and process data in tabular format.
   *
   * @class Datagrid
-  * @param {Boolean} actionableMode &nbsp;-&nbsp If actionableMode is "true”, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
-  * @param {Boolean} cellNavigation &nbsp;-&nbsp If cellNavigation is "false”, will show border around whole row on focus
-  * @param {Boolean} rowNavigation  &nbsp;-&nbsp If rowNavigation is "false”, will NOT show border around the row
+  * @param {Boolean} actionableMode &nbsp;-&nbsp If actionableMode is "trueâ€, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+  * @param {Boolean} cellNavigation &nbsp;-&nbsp If cellNavigation is "falseâ€, will show border around whole row on focus
+  * @param {Boolean} rowNavigation  &nbsp;-&nbsp If rowNavigation is "falseâ€, will NOT show border around the row
   * @param {Boolean} alternateRowShading  &nbsp;-&nbsp Sets shading for readonly grids
   * @param {Array} columns  &nbsp;-&nbsp an array of columns (see column options)
   * @param {Array} dataset  &nbsp;-&nbsp an array of data objects
@@ -1629,9 +1642,13 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
   * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
-  * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
-  * @param {Boolean} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
-  * @param {Boolean} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
+  * @param {Array} columnGroups &nbsp;-&nbsp An array of columns to use for grouped column headers.
+  * @param {Boolean} treeGrid: &nbsp;-&nbsp If true a tree grid is expected so addition calculations will be used to calculate of the row children
+  * @param {Function} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
+  * @param {Function} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+  * @param {Function} onEditCell  &nbsp;-&nbsp A callback that fires when a cell is edited, the editor object is passed in to the function
+  * @param {Function} onExpandRow &nbsp;-&nbsp A callback function that fires when expanding rows. To be used when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+  * @param {Object} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -1758,27 +1775,8 @@ $.fn.datagrid = function(options) {
       self.container = self.element.closest('.datagrid-container');
 
       if (this.settings.emptyMessage) {
-        var opts = this.settings.emptyMessage;
         //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
-
-        self.emptyMessageContainer = $('<div class="datagrid-empty-message">'+
-          (!opts.icon ? '' : '<div class="empty-icon">'+
-            '<svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">'+
-            '<use xlink:href="#'+opts.icon+'"></use>'+
-            '</svg>'+
-          '</div>')+
-          '<div class="empty-title">'+
-            opts.title +
-          '</div>'+
-          (!opts.info ? '' : '<div class="empty-info">'+
-            opts.info +
-          '</div>')+
-          (!opts.button ? '' : '<div class="empty-actions">'+
-            '<button type="button" class="btn-secondary hide-focus '+ opts.button.cssClass +'" id="'+ opts.button.id +'">'+
-              '<span>'+ opts.button.text +'</span>'+
-            '</button>'+
-          '</div>')+
-        '</div>');
+        self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
         self.contentContainer.prepend(self.emptyMessageContainer);
       }
 
@@ -1907,13 +1905,14 @@ $.fn.datagrid = function(options) {
           activePage = Math.floor(location / this.pager.settings.pagesize + 1);
         }
 
-        this.pager.pagingInfo = $.extend({}, this.pager.pagingInfo, {
-          activePage: activePage,
-          total: this.settings.dataset.length,
-          pagesize: this.settings.pagesize
-        });
-
-        this.renderPager(this.pager.pagingInfo);
+        if (!this.settings.source) {
+          this.pager.pagingInfo = $.extend({}, this.pager.pagingInfo, {
+            activePage: activePage,
+            total: this.settings.dataset.length,
+            pagesize: this.settings.pagesize
+          });
+        }
+        this.renderPager(this.pager.pagingInfo, true);
       }
     },
 
@@ -1996,6 +1995,12 @@ $.fn.datagrid = function(options) {
         pagerInfo.pagesize = this.settings.pagesize;
         pagerInfo.total = -1;
         pagerInfo.type = 'initial';
+      }
+
+      if (this.settings.source && pagerInfo.grandTotal) {
+        this.grandTotal = pagerInfo.grandTotal;
+      } else {
+        this.grandTotal = null;
       }
 
       if (this.pager) {
@@ -2365,13 +2370,12 @@ $.fn.datagrid = function(options) {
 
       //Attach Keyboard support
       this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-        var popupOpts = {trigger: 'immediate', attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}},
+        var popupOpts = {trigger: 'immediate', offset: {y: 15}, attachToBody: $('html').hasClass('ios'), placementOpts: {strategies: ['flip', 'nudge']}},
           popupmenu = $(this).data('popupmenu');
 
         if (popupmenu) {
           popupmenu.close(true, true);
-        }
-        else {
+        } else {
 
           $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
             var menu = $(this).next('.popupmenu-wrapper');
@@ -2487,7 +2491,7 @@ $.fn.datagrid = function(options) {
 
       if (filterType === 'text') {
         btnMarkup = renderButton('contains') +
-          render('contains', 'Contains') +
+          render('contains', 'Contains', true) +
           render('does-not-contain', 'DoesNotContain') +
           render('equals', 'Equals') +
           render('does-not-equal', 'DoesNotEqual') +
@@ -2613,7 +2617,7 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
-          if ((typeof rowValue === 'number' || !isNaN(rowValue)) &&
+          if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '')) &&
               columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
             rowValue =  parseFloat(rowValue);
             conditionValue = Locale.parseNumber(conditionValue);
@@ -2758,7 +2762,9 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      this.renderRows();
+      if (!this.settings.source) {
+        this.renderRows();
+      }
       this.setSearchActivePage();
       this.element.trigger('filtered', {op: 'apply', conditions: conditions});
       this.resetPager('filtered');
@@ -3867,8 +3873,24 @@ $.fn.datagrid = function(options) {
       this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
       var context = this.canvas.getContext('2d');
       context.font = '14px arial';
-      var metrics = context.measureText(maxText);
-      return Math.round(metrics.width + (chooseHeader ? 60 : 52));  //Add padding and borders
+
+      var metrics = context.measureText(maxText),
+        hasImages = columnDef.formatter ?
+          columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false,
+        padding = (chooseHeader ? 60 + (hasImages ? 36 : 0) : 40 + (hasImages ? 36 : 0));
+
+      if (columnDef.filterType) {
+        var minWidth = columnDef.filterType === 'date' ? 170 : 100;
+
+        if (columnDef.filterType === 'checkbox') {
+          minWidth = 40;
+          padding = 40;
+        }
+
+        return Math.round(Math.max(metrics.width + padding, minWidth));
+      }
+
+      return Math.round(metrics.width + padding);  //Add padding and borders
     },
 
     headerWidths: [], //Cache
@@ -4978,11 +5000,6 @@ $.fn.datagrid = function(options) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
-      if (self.settings.source && !totals) {
-        self.checkEmptyMessage();
-        return;
-      }
-
       if (totals && totals !== -1) {
         count = totals;
       }
@@ -4996,7 +5013,13 @@ $.fn.datagrid = function(options) {
 
       if (self.settings.resultsText) {
         if (typeof self.settings.resultsText === 'function') {
-          countText = self.settings.resultsText(self, count, count - self.filteredCount);
+
+          if (self.grandTotal) {
+            countText = self.settings.resultsText(self, self.grandTotal, count);
+          } else {
+            countText = self.settings.resultsText(self, count, (count - self.filteredCount) || 0);
+          }
+
         } else {
           countText = self.settings.resultsText;
         }
@@ -5219,7 +5242,6 @@ $.fn.datagrid = function(options) {
           self.toggleRowSelection(target.closest('tr'));
         }
 
-        self.lastClicked = target;
         var isEditable = self.makeCellEditable(self.activeCell.dataRow, self.activeCell.cell, e);
 
         //Handle Cell Click Event
@@ -5295,10 +5317,16 @@ $.fn.datagrid = function(options) {
             menuId: self.settings.menuId,
             eventObj: e,
             beforeOpen: self.settings.menuBeforeOpen,
+            attachToBody: true,
             trigger: 'immediate'})
           .off('selected').on('selected', function (e, args) {
             if (self.settings.menuSelected) {
               self.settings.menuSelected(e, args);
+            }
+          }).off('close').on('close', function () {
+            var elem = $(this);
+            if (elem.data('popupmenu')) {
+              elem.data('popupmenu').destroy();
             }
           });
         }
@@ -5398,12 +5426,28 @@ $.fn.datagrid = function(options) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {
-            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
-                !!self.editor && self.editor.input.is(target)) {
 
-              if ($('*:focus').is('.spinbox')) {
+            var focusElem = $('*:focus');
+
+            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
+                self.editor) {
+
+              if (focusElem.is('.spinbox')) {
                 return;
               }
+
+              if (focusElem.is('.trigger')) {
+                return;
+              }
+
+              if (!$(target).is(':visible')) {
+                return;
+              }
+
+              if (focusElem && self.editor.className && focusElem.closest(self.editor.className).length > 0) {
+                return;
+              }
+
               self.commitCellEdit(self.editor.input);
             }
 
@@ -5418,7 +5462,6 @@ $.fn.datagrid = function(options) {
         }
 
         if (self.editor && self.editor.input) {
-          self.lastClicked = null;
           self.commitCellEdit(self.editor.input);
         }
 
@@ -5803,7 +5846,7 @@ $.fn.datagrid = function(options) {
           // Hide non matching rows
           if (!found) {
             row.addClass('is-filtered').hide();
-          } else if (found && row.is('.datagrid-expandable-row')) {
+          } else if (found && row.is('.datagrid-expandable-row') && term !== '') {
             row.prev().show();
             row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
             row.prev().find('.plus-minus').addClass('active');
@@ -6824,10 +6867,17 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      //Already in edit mode
+      var cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
+        cellParent = cellNode.parent('td');
+
+      if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
+        return false;
+      }
+
+      //Commit Previous Edit
       if (this.editor && this.editor.input) {
-        if (this.editor.input.is('.timepicker, .datepicker, .lookup, .spinbox, #colorpicker-menu') && !$(event.target).prev().is(this.editor.input)) {
-          this.commitCellEdit(this.editor.input);
-        }
+        this.commitCellEdit(this.editor.input);
       }
 
       //Locate the Editor
@@ -6845,8 +6895,6 @@ $.fn.datagrid = function(options) {
         rowData = this.settings.treeGrid ?
           this.settings.treeDepth[dataRowIndex].node :
           this.settings.dataset[dataRowIndex],
-        cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
-        cellParent = cellNode.parent('td'),
         cellWidth = cellParent.outerWidth(),
         isEditor = $('.is-editor', cellParent).length > 0,
         cellValue = (cellNode.text() ?
@@ -6857,12 +6905,6 @@ $.fn.datagrid = function(options) {
       }
 
       if (!this.isCellEditable(dataRowIndex, cell)) {
-        return false;
-      }
-
-      if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
-        //Already in edit mode
-        cellNode.find('input').focus();
         return false;
       }
 
@@ -7021,7 +7063,7 @@ $.fn.datagrid = function(options) {
       //Add and show tooltip
       if (node.find('.icon-' + type).length === 0) {
         node.find('.datagrid-cell-wrapper').append(icon);
-        icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error'), content: message});
+        icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: message});
         icon.data('tooltip').show();
       }
 
@@ -7090,7 +7132,7 @@ $.fn.datagrid = function(options) {
         this.toolbar.children('.title').append(tableerrors);
       }
 
-      icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error'), content: messages});
+      icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error' || type === 'dirtyerror'), content: messages});
     },
 
     clearCellError: function (row, cell, type) {
@@ -7134,6 +7176,7 @@ $.fn.datagrid = function(options) {
       this.tableBody.find('td.error').each(function () {
         var node = $(this);
         self.clearNodeErrors(node, 'error');
+        self.clearNodeErrors(node, 'dirtyerror');
       });
 
       this.tableBody.find('td.alert').each(function () {
@@ -7274,7 +7317,7 @@ $.fn.datagrid = function(options) {
       if (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip) {
         cellNode.attr('title', rowData.rowStatus.tooltip);
         cellNode.tooltip({placement: 'right',
-          isErrorColor: rowData.rowStatus.icon === 'error'
+          isErrorColor: rowData.rowStatus.icon === 'error' || rowData.rowStatus.icon === 'dirtyerror'
         });
       }
 
@@ -7487,13 +7530,15 @@ $.fn.datagrid = function(options) {
     },
 
     setNextActiveCell: function (e) {
+      var self = this;
       if (e.type === 'keydown') {
         if (this.settings.actionableMode) {
-          var evt = $.Event('keydown.datagrid');
-          evt.keyCode = 40; // move down
-          this.activeCell.node.trigger(evt);
-        }
-        else {
+          setTimeout(function() {
+            var evt = $.Event('keydown.datagrid');
+            evt.keyCode = 40; // move down
+            self.activeCell.node.trigger(evt);
+          }, 0);
+        } else {
           this.setActiveCell(this.activeCell.row, this.activeCell.cell);
         }
       }
@@ -7654,7 +7699,7 @@ $.fn.datagrid = function(options) {
         }
 
         detail.animateClosed().on('animateclosedcomplete', function () {
-          expandRow.css('display', 'none');
+        //  expandRow.css('display', 'none');
           self.element.triggerHandler('collapserow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
         });
 
@@ -7672,8 +7717,23 @@ $.fn.datagrid = function(options) {
           rowElement.addClass('is-rowactivated');
         }
 
-        detail.animateOpen();
-        self.element.triggerHandler('expandrow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
+        var eventData = [{grid: self, row: dataRowIndex, detail: detail, item: item}];
+
+        if (self.settings.onExpandRow) {
+          var response;
+          response = function(markup) {
+            if (markup) {
+              detail.find('.datagrid-row-detail-padding').empty().append(markup);
+            }
+            detail.animateOpen();
+          };
+
+          self.settings.onExpandRow(eventData[0], response);
+        } else {
+          detail.animateOpen();
+        }
+
+        self.element.triggerHandler('expandrow', eventData);
       }
     },
 

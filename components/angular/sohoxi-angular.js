@@ -137,9 +137,9 @@
         replace: true,
         scope: false,
         link: function(scope, elem) {
-          elem.popupmenu();
+          $(elem).popupmenu();
           if (elem.is(':button')) {
-            elem.button();
+            $(elem).button();
           }
         }
       };

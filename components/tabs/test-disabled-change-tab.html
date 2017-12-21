@@ -1,0 +1,43 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button class="btn" id="disable">Disable Tab 1</button>
+    <button class="btn" id="disable2">Disable Tab 2</button>
+    <div id="tabs-normal" class="tab-container">
+      <ul class="tab-list">
+        <li class="tab"><a href="#tabs-normal-contracts">Contracts Contracts Contracts Contracts Contracts Contracts Contracts Contracts 11212</a></li>
+        <li class="tab"><a href="#tabs-normal-opportunities">Opportunites</a></li>
+        <li class="tab"><a href="#tabs-normal-attachments">Attachments</a></li>
+        <li class="tab"><a href="#tabs-normal-contacts">Contacts</a></li>
+        <li class="tab"><a href="#tabs-normal-notes">Notes</a></li>
+      </ul>
+    </div>
+    <div class="tab-panel-container">
+      <div id="tabs-normal-contracts" class="tab-panel">
+        <p>tab 1</p>
+      </div>
+      <div id="tabs-normal-opportunities" class="tab-panel">
+        <p>tab 2</p>
+      </div>
+      <div id="tabs-normal-attachments" class="tab-panel">
+        <p>tab 3</p>
+      </div>
+      <div id="tabs-normal-contacts" class="tab-panel top-padding">
+        <p>tab 4</p>
+      </div>
+      <div id="tabs-normal-notes" class="tab-panel">
+        <p>tab 5</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+  $('#disable').on('click', function() {
+    $('#tabs-normal').data('tabs').disableTab('tabs-normal-contracts');
+  })
+
+  $('#disable2').on('click', function() {
+    $('#tabs-normal').data('tabs').disableTab('tabs-normal-opportunities');
+  })
+</script>

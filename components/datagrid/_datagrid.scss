@@ -136,6 +136,7 @@ $datagrid-short-row-height: 23px;
       }
 
       &:focus {
+        background-color: $datagrid-list-header-bg-color;
         box-shadow: $datagrid-list-header-box-shadow;
         // scss-lint:disable ImportantRule
         outline: 1px solid $datagrid-list-header-focus-border-color !important;
@@ -249,6 +250,10 @@ $datagrid-short-row-height: 23px;
 
   //Short and Medium Row height
   &.short-rowheight {
+
+    .datagrid-cell-wrapper {
+      min-height: $datagrid-short-row-height + 6;
+    }
 
     //Set Container Heights for scrolling
     .datagrid-body {
@@ -369,6 +374,11 @@ $datagrid-short-row-height: 23px;
   }
 
   &.medium-rowheight {
+
+    .datagrid-cell-wrapper {
+      min-height: $datagrid-short-row-height + 6;
+    }
+
     //Set Container Heights for scrolling
     .datagrid-body {
       height: calc(100% - 30px);
@@ -469,7 +479,6 @@ $datagrid-short-row-height: 23px;
   &.medium-rowheight {
     tbody tr {
       line-height: $datagrid-medium-row-height;
-      min-height: $datagrid-medium-row-height;
 
       td {
 
@@ -687,7 +696,6 @@ $datagrid-short-row-height: 23px;
 
     tbody tr {
       line-height: $datagrid-short-row-height;
-      min-height: $datagrid-short-row-height + 6;
 
       &:last-child td {
         height: $datagrid-short-row-height + 1;
@@ -993,7 +1001,6 @@ $datagrid-short-row-height: 23px;
   // Table Rows
   tbody tr {
     line-height: $datagrid-row-height;
-    min-height: $datagrid-row-height + 6;
 
     &.is-active-row {
       outline: 1px solid $primary-color;
@@ -1234,7 +1241,7 @@ $datagrid-short-row-height: 23px;
       @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
       border: 1px solid transparent;
       display: block;
-      min-height: inherit;
+      min-height: $datagrid-row-height + 6;
       overflow: hidden;
       padding: 4px 20px 0;
 
@@ -1528,12 +1535,15 @@ $datagrid-short-row-height: 23px;
 
         .trigger {
           margin-left: -21px;
-          margin-top: -1px;
+          margin-top: 1px;
         }
       }
 
       .checkbox-label::before {
-        margin-left: -25px;
+        top: 50%;
+        left: 50%;
+        margin-left: -8px;
+        margin-top: 4px;
       }
 
       .checkbox-label::after {
@@ -1615,8 +1625,9 @@ $datagrid-short-row-height: 23px;
 
         ~ .icon {
           left: auto;
-          margin-left: 3px;
+          margin-left: -6px;
           top: calc(50% - 15px);
+          width: 34px;
         }
 
         &:disabled .icon {
@@ -2204,10 +2215,23 @@ td .btn-actions {
   height: inherit;
   line-height: 22px;
   margin: 0 -20px;
+  min-height: $datagrid-row-height + 6;
   overflow: auto;
   padding: 5px 20px;
   white-space: pre-line;
   word-wrap: break-word;
+}
+
+.medium-rowheight {
+  .datagrid-multiline-text {
+    min-height: $datagrid-medium-row-height + 6;
+  }
+}
+
+.short-rowheight {
+  .datagrid-multiline-text {
+    min-height: $datagrid-short-row-height + 6;
+  }
 }
 
 //Grid Checkboxes
@@ -2276,6 +2300,7 @@ td .btn-actions {
 
     &.icon-search-list {
       left: -2px;
+      top: 4px;
     }
   }
 
@@ -2509,10 +2534,9 @@ td .btn-actions {
       td.is-editing {
         // scss-lint:disable NestingDepth
         .lookup-wrapper {
-          margin-top: 4px;
 
           .lookup ~ .trigger .icon {
-            top: calc(50% - 7px);
+            top: calc(50% - 5px);
           }
         }
         // scss-lint:enable NestingDepth
@@ -2551,6 +2575,18 @@ td .btn-actions {
 
   &.is-editing {
     margin-top: -2.5px;
+
+    ul {
+      text-indent: 20px;
+    }
+
+    &.medium-rowheight ul {
+      text-indent: 15px;
+    }
+
+    &.short-rowheight ul {
+      text-indent: 10px;
+    }
   }
 
   input {
@@ -2624,11 +2660,6 @@ html[dir='rtl'] {
       border-right: 1px solid $datagrid-cell-border-color;
     }
 
-    //Push sort indicator over
-    .sort-indicator {
-      margin: 6px 3px 0;
-    }
-
     .datagrid-rowgroup-header {
       .datagrid-expand-btn {
         left: auto;
@@ -2661,6 +2692,13 @@ html[dir='rtl'] {
     }
     // scss-lint:enable NestingDepth
 
+    td.l-right-text .datagrid-cell-wrapper {
+      text-align: left;
+    }
+
+    td.is-editing .datepicker ~ .icon {
+      margin-right: -8px;
+    }
   }
 
   //Datagrid Dropdown Formatter
@@ -2693,6 +2731,7 @@ html[dir='rtl'] {
     &.is-partial::after {
       margin-left: inherit;
       margin-right: -3px;
+      right: 6px;
     }
   }
 
@@ -2736,13 +2775,45 @@ html[dir='rtl'] {
     right: 9px;
   }
 
+  // Right aligned header
+  th .datagrid-column-wrapper.l-right-text {
+    float: left;
+    top: 11px;
+
+    .datagrid-header-text {
+      float: left;
+    }
+
+    .sort-indicator {
+      float: right;
+      margin: -20px 1px 0;
+      position: relative;
+      top: 0;
+    }
+  }
+
   tr .datagrid-alert-text {
     padding-left: 0;
     padding-right: 10px;
   }
 
-  .datagrid-header th .datagrid-header-text {
-    direction: rtl;
+  .datagrid-header {
+    //Push sort indicator over
+    .sort-indicator {
+      margin: 3px 3px 0;
+    }
+
+    .required::after {
+      content: '';
+    }
+
+    .required::before {
+      @include required-indicator();
+      color: $datagrid-required-icon-color;
+      left: -2px;
+      top: 0;
+    }
+
   }
 
   //Contextual toolbar
@@ -3160,44 +3231,37 @@ html[dir='rtl'] {
 
 .ie {
   .datagrid-body {
-    tbody tr.is-active-row {
-      outline: 0;
-
+    tbody tr {
       td {
         .datagrid-cell-wrapper {
-          border-color: $primary-color;
-          border-style: solid;
-          border-width: 1px 0;
+          @include css3(transition, none);
         }
+      }
+      // scss-lint:disable NestingDepth
+      &.is-active-row {
+        outline: 0;
 
-        &:first-child {
+        td {
           .datagrid-cell-wrapper {
-            border-width: 1px 0 1px 1px;
+            border-color: $primary-color;
+            border-style: solid;
+            border-width: 1px 0;
           }
-        }
 
-        &:last-child {
-          .datagrid-cell-wrapper {
-            border-width: 1px 1px 1px 0;
+          &:first-child {
+            .datagrid-cell-wrapper {
+              border-width: 1px 0 1px 1px;
+            }
+          }
+
+          &:last-child {
+            .datagrid-cell-wrapper {
+              border-width: 1px 1px 1px 0;
+            }
           }
         }
       }
+      // scss-lint:enable NestingDepth
     }
   }
-}
-
-.datagrid-empty-message {
-  background-color: $body-bg-color;
-  display: none;
-  min-height: 60px;
-  padding-bottom: 5px;
-
-  .empty-title {
-    padding: 0 0 15px;
-  }
-
-  .empty-icon {
-    padding: 25px 0;
-  }
-
 }

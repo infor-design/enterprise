@@ -25,8 +25,8 @@
           </div>
 
           <div class="field">
-            <label for="context-name" class="required">Name</label>
-            <input name="context-name" class="required" id="context-name" type="text" data-validate="required email">
+            <label for="context-name" class="required">Email</label>
+            <input name="context-name" class="required" id="context-name" type="text" data-validate="required email" data-validation-events="{'required': 'keydown', 'email': 'change blur'}">
           </div>
 
           <div class="field">
@@ -37,22 +37,6 @@
           <div class="field hidden">
            <label for="context-desc2" class="required">Description (Hidden)</label>
            <textarea id="context-desc2" data-validate="required" name="context-desc2"></textarea>
-          </div>
-
-          <div>
-            <fieldset class="radio-group">
-              <legend>So, yes or no?</legend>
-              <input runat="server" type="radio" class="radio" name="rbModalLogons" id="rbModalLogonsYes" />
-              <label id="lblModalLogonsYes" runat="server" for="rbModalLogonsYes" class="radio-label">Yes</label>
-              <br>
-              <input runat="server" type="radio" class="radio" name="rbModalLogons" id="rbModalLogonsNo" />
-            	<label id="lblModalLogonsNo" runat="server" for="rbModalLogonsNo"  class="radio-label">No</label>
-            </fieldset>
-          </div>
-
-          <div class="field">
-            <label for="yyyy-date" class="label">Year</label>
-            <input id="yyyy-date" data-init="false" class="datepicker" name="yyyy-date" type="text">
           </div>
 
           <div class="modal-buttonset">

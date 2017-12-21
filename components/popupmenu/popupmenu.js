@@ -155,7 +155,7 @@
         // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
         // to prevent containment issues. (Now a Preference)
         if (this.settings.attachToBody && this.menu.parent().not('body').length > 0) {
-          this.originalParent = this.menu.parent();
+          this.originalLocation = this.menu.prev();
           this.menu.detach().appendTo('body');
         }
 
@@ -412,7 +412,7 @@
         });
 
         // Setup these next events no matter what trigger type is
-        this.element.not('.autocomplete')
+        this.element.not('.autocomplete, ul')
           .on('keydown.popupmenu', function (e) {
             switch(e.which) {
               case 13:
@@ -1535,17 +1535,20 @@
 
         this.menu.off('dragstart.popupmenu');
 
-        if (this.originalParent) {
-          this.menu.appendTo(this.originalParent);
+        if (this.originalLocation) {
+          this.originalLocation.after(this.menu);
         } else {
           // TODO: Fix when we have time - shouldn't be referencing other controls here
           var insertTarget = this.element,
             searchfield = this.element.parent().children('.searchfield');
+
           if (searchfield.length) {
             insertTarget = searchfield.first();
           }
 
-          this.menu.insertAfter(insertTarget);
+          if (this.menu && insertTarget) {
+            this.menu.insertAfter(insertTarget);
+          }
         }
 
         this.menu.find('.submenu').children('a').each(function(i, item) {

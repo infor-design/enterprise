@@ -1,0 +1,80 @@
+<div class="row top-padding">
+    <div class="six columns">
+      <h3>Tree Control: Collapse and Expand Callback as a Function</h3>
+      <p>This example shows how to use a function to allow/deny access to tree nodes.</p>
+      <br />
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="twelve columns">
+      <ul role="tree" id="the-tree" aria-label="Asset Types" class="tree" data-init="false">
+        <li><a href="#" id="home">Home</a></li>
+        <li><a href="#" id="about">About Us</a></li>
+        <li class="is-open">
+          <a href="#" id="public">Admin Folder</a>
+          <ul class="is-open root">
+            <li><a href="#" id="leadership">Leadership</a></li>
+            <li><a href="#" id="secrets">Secrets</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <script>
+  
+    // Mock permissions data
+    var canViewNode = {
+      'home': true,
+      'about': true,
+      'leadership': false,
+      'secrets': false
+    }
+  
+    // Mock ajax call to get permissions and returns a promise
+    var hasNodePermission = function (node) {
+      var hasPermission = canViewNode[node.attr('id')] || {};
+      if (!hasPermission) {
+        showPermissionDenied();
+      }
+      return hasPermission;
+    };
+
+    var onExpand = function (node) {
+        // Do Something with the onExpand CallBack
+        console.log('expand callback');
+        return node;
+    };
+
+    var onCollapse = function (node) {
+        // Do Something with the OnCollapse CallBack
+        console.log('collapse callback');
+        return node;
+    };
+  
+    // Show error dialog
+    var showPermissionDenied = function () {
+      $('body').message({
+        title: 'Permission Denied',
+        isError: true,
+        returnFocus: $(this),
+        message: 'You do not have permission to access this node.',
+        buttons: [{
+          text: 'Ok',
+          click: function () {
+            $(this).modal('close');
+          },
+          isDefault: true
+        }]
+      });
+    };
+  
+    // Init the tree
+    $('#the-tree').tree({
+      onBeforeSelect: hasNodePermission,
+      onExpand: onExpand,
+      onCollapse: onCollapse
+    });
+  </script>
+  

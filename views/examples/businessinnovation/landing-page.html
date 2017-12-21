@@ -37,8 +37,7 @@
 
     </header>
 
-
-    <div id="maincontent" class="page-container scrollable" role="main">
+    <div class="page-container scrollable" role="main">
 
       <div class="row reduced">
         <div class="twelve columns">
@@ -57,8 +56,7 @@
           </div>
 
           <div class="card">
-            <div class="listview" id="colleagues-listview"
-              data-options="{'selectable': 'single', 'source': '{{basepath}}api/colleagues?favorites=true', 'template': 'colleagues-tmpl'}">
+            <div class="listview paginated" id="colleagues-listview" data-init="false">
             </div>
           </div>
 
@@ -77,8 +75,7 @@
           </div>
 
           <div class="card">
-            <div class="listview" id="colleagues-recent-listview"
-              data-options="{'selectable': 'single',  'source': '{{basepath}}api/colleagues', 'template': 'colleagues-tmpl'}">
+            <div class="listview paginated" id="colleagues-recent-listview"  data-init="false">
             </div>
           </div>
 
@@ -88,6 +85,30 @@
     </div>
 
   </div>
+
+  <script>
+
+    var req = $.get({url: '{{basepath}}api/colleagues?favorites=true'});
+    $.when(req).then(function() {
+      $('#colleagues-listview').listview({
+        dataset: req.responseJSON,
+        paging: true,
+        pagesize: 5,
+        template:  $('#colleagues-tmpl').html()
+      });
+    });
+
+    var req2 = $.get({url: '{{basepath}}api/colleagues'});
+    $.when(req).then(function() {
+      $('#colleagues-recent-listview').listview({
+        dataset: req2.responseJSON,
+        paging: true,
+        pagesize: 5,
+        template:  $('#colleagues-tmpl').html()
+      });
+    });
+
+  </script>
 
   {{={{{ }}}=}}
   <script id="colleagues-tmpl" type="text/html">

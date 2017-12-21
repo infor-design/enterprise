@@ -79,6 +79,11 @@
     }
   }
 
+  //Respect min height with pager
+  &.paginated {
+    min-height: 400px;
+  }
+
   .listview-micro {
     @include font-size(12);
     color: $listview-tertiary-color;
@@ -283,7 +288,7 @@
         top: initial;
       }
     }
-}
+ }
 
   .field {
     float: left;
@@ -402,7 +407,6 @@
     }
   }
 
-
   &.is-muliselect li {
     padding-left: 45px;
     position: relative;
@@ -471,6 +475,13 @@
     color: inherit;
     font-weight: bold;
   }
+
+  // Empty message area
+  .empty-message {
+    @include vertical-align();
+    margin-top: -20px;
+  }
+
 }
 
 .listview-table {

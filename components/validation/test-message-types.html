@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="full-width">
+    <label>Type of Alert</label>
+    <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" onChange="onChange(event)"
+      checked/>
+    <label for="option1" class="radio-label">Error</label>
+    <input type="radio" class="radio" name="optionsGroupVWO" id="option2" value="alert" onChange="onChange(event)"/>
+    <label for="option2" class="radio-label">Alert</label>
+    <input type="radio" class="radio" name="optionsGroupVWO" id="option3" value="confirm" onChange="onChange(event)"/>
+    <label for="option3" class="radio-label">Confirm</label>
+    <input type="radio" class="radio" name="optionsGroupVWO" id="option4" value="info" onChange="onChange(event)"/>
+    <label for="option4" class="radio-label">Info</label>
+  </div>
+</div>
+<div class="row">
+  <div class="full-width">
+    <div class="field">
+      <input type="checkbox" class="checkbox" id="is-alert">
+      <label for="is-alert" class="checkbox-label">Is Alert</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="full-width">
+      <div class="field">
+        <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
+        <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
+        <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
+        <button class="btn-primary" type="button" onClick="getMessage()">Get Message</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="three columns">
+      <div class="field">
+        <label for="text-field">Text Field</label>
+        <input class="input-lg" alignRight="true" name="text-field" id="text-field" value="abcdef"/>
+      </div>
+      <div class="field">
+        <label for="date-field">Date Field</label>
+        <input class="datepicker input-lg" id="date-field" data-options="{'placeholder': false}" name="date-field"
+          type="text" value="12/14/2017"/>
+      </div>
+    </div>
+    <div class="six columns">
+      <div class="field">
+        <label for="output-text-field">Text Field Result of Get Message</label>
+        <input class="input-full" id="output-text-field" readonly/>
+      </div>
+      <div class="field">
+        <label for="output-date-field">Date Field Result of Get Message</label>
+        <input class="input-full" id="output-date-field" readonly/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var currentValidationType = 'error';
+  var message = 'Message';
+
+  function onChange(evt) {
+    currentValidationType = evt.currentTarget.value;
+  }
+
+  function addMessage() {
+    var isAlert = $('#is-alert').prop('checked');
+    var alertText = (isAlert) ? ' is alert,' : '';
+
+    $('#text-field, #date-field').addMessage({
+      message    : message + alertText + ' type is ' + currentValidationType,
+      type       : currentValidationType,
+      showTooltip: false,
+      inline     : true,
+      isAlert    : isAlert
+    });
+  }
+
+  function removeMessage() {
+    $('#text-field, #date-field').removeMessage({
+      message: '',
+      type   : currentValidationType
+    });
+  }
+
+  function getMessage() {
+    var options = {
+      type: currentValidationType
+    };
+
+    $('#output-text-field').val($('#text-field').getMessage(options));
+    $('#output-date-field').val($('#date-field').getMessage(options));
+  }
+
+  function clearAllMessages() {
+    $('#text-field, #date-field').removeMessage({
+      type: 'error'
+    });
+    $('#text-field, #date-field').removeMessage({
+      type: 'alert'
+    });
+    $('#text-field, #date-field').removeMessage({
+      type: 'confirm'
+    });
+    $('#text-field, #date-field').removeMessage({
+      type: 'info'
+    });
+  }
+</script>

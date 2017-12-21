@@ -55,7 +55,6 @@
 
   &.is-open {
     border-color: $input-focus-border-color;
-    box-shadow: $focus-box-shadow;
 
     + .icon {
       fill: $datepicker-icon-active-color;
@@ -399,6 +398,7 @@ html[dir='rtl'] {
 
     .month {
       padding-left: 5px;
+      padding-right: 15px;
     }
 
     #year-dropdown + .dropdown-wrapper {

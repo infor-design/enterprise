@@ -66,7 +66,7 @@
     },
     //Resx - Approved By Translation Team
    messages: {
-      'AboutText': {id: 'AboutText', value: 'Авторські права &copy; Infor, {0}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі права збережено. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників. www.infor.com.'},
+      'AboutText': {id: 'AboutText', value: 'Авторські права &copy; Infor, {0}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі права збережено. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників.'},
       'Actions': {id: 'Actions', value: 'Дії', comment: 'Tooltip text for the action button with additional in context actions'},
       'AdditionalItems': {id: 'AdditionalItems', value: 'Додаткові елементи', comment: 'Button tooltip used in a list of movable items'},
       'Add': {id: 'Add', value: 'Додати', comment: 'Add'},

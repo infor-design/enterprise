@@ -69,7 +69,7 @@
   .tab-list {
     height: 34px;
     overflow: hidden;
-    width: 100%;
+    width: calc(100% - 1px); // 1px for the vertical centerer
   }
 
   &.has-toolbar {
@@ -173,8 +173,9 @@
       }
 
       a {
-        padding: 10px 32px 10px 10px;
+        padding: 10px 35px 10px 10px;
       }
+
     }
 
     &.application-menu-trigger {
@@ -676,7 +677,7 @@ html[dir='rtl'] {
 
     .tab.dismissible {
       a {
-        padding: 10px 0 10px 32px;
+        padding: 10px 10px 10px 34px;
       }
 
       .icon {
@@ -684,6 +685,7 @@ html[dir='rtl'] {
         right: auto;
       }
     }
+
   }
 }
 
@@ -697,16 +699,6 @@ html[dir='rtl'] {
 // Firefox has weird padding on the Add Tabs Button and Application Menu Triggers without this bit of code
 .is-firefox {
   .tab-container.module-tabs {
-    .tab {
-      a {
-        height: 34px;
-        padding: 11px 10px 9px;
-      }
-
-      &.dismissible a {
-        padding: 11px 32px 9px 0;
-      }
-    }
 
     .add-tab-button {
       span:first-child {

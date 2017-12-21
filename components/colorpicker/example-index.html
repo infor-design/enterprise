@@ -15,6 +15,11 @@
 <script>
   // Example of setting the value, trigger change to update the swatch
   $(function() {
+      $('#background-color').on('change', function () {
+        console.log('Change Fired');
+      });
+
       $('#background-color').val('#19BF65').trigger('change');
+
   });
 </script>

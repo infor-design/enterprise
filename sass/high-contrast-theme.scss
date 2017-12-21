@@ -70,7 +70,7 @@ $hyperlink-hover-color: $azure07;
 
 // Alert Colors
 $alert-info: $azure09;
-$alert-green: #80ce4d;
+$alert-green: #397514;
 $alert-yellow: #ffd726;
 $alert-red: $ruby09;
 
@@ -202,6 +202,9 @@ $input-readonly-color: $black;
 //States
 $error-color: $alert-red;
 $error-icon-fill: $alert-red;
+$alert-color: #d66221;
+$confirm-color: $alert-green;
+$info-color: $primary-color;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, .3);
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
@@ -211,6 +214,8 @@ $selected-bg-color: rgba($azure07, .3);
 // Autocomplete
 $autocomplete-light-text: $graphite05;
 $autocomplete-active-bg-color: $body-bg-color;
+$autocomplete-box-shadow: 0 2px 5px 2px $focus-box-shadow-color;
+$autocomplete-box-shadow-flipped: 0 -2px 5px 2px $focus-box-shadow-color;
 $trigger-icon-fill-color: $graphite09;
 $trigger-icon-fill-light-color: $graphite08;
 $trigger-hover-color: $graphite06;
@@ -401,6 +406,7 @@ $editor-btn-hover-color: $graphite05;
 $editor-btn-active-color: $primary-color;
 $editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color, $focus-box-shadow;
 $editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, .3);
+$editor-blockquote-color: $graphite07;
 
 // Radio Buttons
 $radio-bg-color: $white;
@@ -526,6 +532,11 @@ $vertical-tab-active-bg-color: $primary-color;
 $vertical-tab-panel-bg-color: $panel-bg-color;
 $vertical-tab-sidebar-bg-color: $body-bg-color;
 $vertical-tab-sidebar-border-color: $graphite06;
+
+//Multi-tabs
+$mutlitabs-section-border-color: $graphite06;
+$mutlitabs-section-alt-bg-color: $white;
+$mutlitabs-section-alt-border-color: $graphite03;
 
 //Charts
 $chart-line-color: $graphite03;
@@ -676,6 +687,7 @@ $searchfield-header-icon-color: $header-button-color;
 
 //Image Border Color
 $image-border-color: $graphite03;
+$image-background-color: $graphite03;
 
 //Toast
 $toast-bg-color: $white;
@@ -710,6 +722,7 @@ $header-tab-alt-selected-color: $inverse-color;
 $header-breadcrumb-color: $white;
 $header-breadcrumb-alt-bg-color: $white;
 $header-breadcrumb-alt-color: $font-color-highcontrast;
+$header-breadcrumb-border-color: $graphite06;
 
 // Module Tabs
 $module-tabs-bg-color: $azure09;

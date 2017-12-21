@@ -5,6 +5,7 @@
   @include animation(check .15s);
 }
 
+
 @mixin checkbox-transform-rules {
   @include css3(transform-origin, left top 0);
 }
@@ -302,7 +303,7 @@ html[dir='rtl'] {
   input.checkbox:checked + input[type="hidden"] + label::after,
   span.checkbox > input:checked + label::after {
     left: auto;
-    right: 14px;
+    right: 13px;
   }
 
   label.inline .checkbox ~ .label-text,

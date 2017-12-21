@@ -376,7 +376,7 @@
           contentArea.html(content);
           contentArea.find('.hidden').removeClass('hidden');
         } else {
-          contentArea.html(content);
+          contentArea.html(content && content.html ? content.html() : content);
         }
 
         popoverWidth = contentArea.width();
@@ -612,7 +612,6 @@
           this.tooltip.place(opts);
           this.tooltip.data('place').place(opts);
         }
-
         return this;
       },
 

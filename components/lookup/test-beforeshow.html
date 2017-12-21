@@ -22,6 +22,9 @@
           $.getJSON(url, function(data) {
             api.settings.options.columns = data[0].columns;
             api.settings.options.dataset = data[0].dataset;
+            //If no rows and you dont want to open
+            //return false;
+            //if some rows
             response();
           });
         },

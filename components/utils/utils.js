@@ -274,8 +274,14 @@
    */
   window.Soho.utils.parseOptions = function parseOptions(element, attr) {
     var options = {};
-    if (!element || !(element instanceof HTMLElement)) {
+    if (!element ||
+      (!(element instanceof HTMLElement) && !(element instanceof $)) ||
+      (element instanceof $ && !element.length)) {
       return options;
+    }
+
+    if (element instanceof $) {
+      element = element[0];
     }
 
     // Use `data-options` as a default.
@@ -347,6 +353,7 @@
   // then can be listen events as [ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]
   // or can access as [ timer.cancel(); -or- timer.pause(); -or- timer.resume(); ]
   $.fn.timer = function(callback, delay) {
+
     var self = $(this),
       interval,
       speed = 10,
@@ -378,7 +385,13 @@
       };
 
       update();
-    return { event: this, cancel: cancel, pause: pause, resume: resume };
+
+    return {
+      event: this,
+      cancel: cancel,
+      pause: pause,
+      resume: resume
+    };
   };
 
   // Copies a string to the clipboard. Must be called from within an event handler such as click.
@@ -918,6 +931,31 @@
     }
   };
 
+  window.Soho.math = window.Soho.math || {};
+
+  /**
+   * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+   * @param {Number} delay
+   * @returns {Number} - fps
+   */
+  window.Soho.math.convertDelayToFPS = function convertDelayToFPS(delay) {
+    if (isNaN(delay)) {
+      throw new Error('provided delay value is not a number');
+    }
+    return delay / 16.7;
+  };
+
+  /**
+   * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+   * @param {Number} delay
+   * @returns {Number} - fps
+   */
+  window.Soho.math.convertFPSToDelay = function convertFPSToDelay(fps) {
+    if (isNaN(fps)) {
+      throw new Error('provided delay value is not a number');
+    }
+    return fps * 16.7;
+  };
 
 
 

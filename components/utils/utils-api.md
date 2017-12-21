@@ -17,6 +17,8 @@
 -   [getDimensions](#getdimensions)
 -   [splice](#splice)
 -   [removeDuplicates](#removeduplicates)
+-   [convertDelayToFPS](#convertdelaytofps)
+-   [convertFPSToDelay](#convertfpstodelay)
 
 ## parseOptions
 
@@ -177,3 +179,24 @@ with characters from an input field, etc.
 **Parameters**
 
 -   `str`  
+
+## convertDelayToFPS
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+
+## convertFPSToDelay
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `fps`  
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps

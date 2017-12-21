@@ -154,6 +154,9 @@
             //Vertical Tabs
             ['verticaltabs', '.tab-container.vertical'],
 
+            //MultiTabs Containers
+            ['multitabs', '.multitabs-container'],
+
             //Select / DropDowns
             ['dropdown', 'select.dropdown:not(.multiselect)'],
             ['dropdown', 'select.dropdown-xs:not(.multiselect)'],
@@ -411,6 +414,7 @@
           //Should be one of the last items to invoke
           if ($.fn.validate) {
             matchedItems('[data-validate-on="submit"]').validate();
+            matchedItems('[data-validate]').parentsUntil('form, html').validate();
           }
 
           matchedItems('.breadcrumb ol').attr('aria-label', Locale.translate('Breadcrumb'));
@@ -420,10 +424,6 @@
         // "initialized" event from bubbling up the DOM.  It should be possible to initialize just the contents
         // of an element on the page without causing the entire page to re-initialize.
         this.element.triggerHandler('initialized');
-
-        if ($.fn.validate) {
-          self.element.validate();
-        }
 
         return this;
       }

@@ -23,6 +23,10 @@
     max-width: 100%;
     width: 100%;
   }
+
+  + .full-width {
+    margin-top: -30px;
+  }
 }
 
 .full-height {

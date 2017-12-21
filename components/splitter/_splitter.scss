@@ -138,10 +138,10 @@
 @include respond-to(phone) {
   .splitter {
     display: none;
-  }
 
-  &.splitter-horizontal {
-    display: block;
+    &.splitter-horizontal {
+      display: block;
+    }
   }
 }
 

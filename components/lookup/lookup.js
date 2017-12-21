@@ -197,6 +197,11 @@
             if (grid) {
               self.createGrid(grid);
             }
+
+            if (typeof grid === 'boolean' && grid === false) {
+              return false;
+            }
+
             self.createModal();
             self.element.triggerHandler('complete'); // for Busy Indicator
             self.element.trigger('open', [self.modal, self.grid]);
@@ -376,7 +381,12 @@
 
         // Reset keyword search from previous loads
         if (hasKeywordSearch && self.grid) {
-          self.grid.keywordSearch('');
+          if (!self.grid.filterExpr || (
+            self.grid.filterExpr &&
+            self.grid.filterExpr[0] &&
+            self.grid.filterExpr[0].value !== '')) {
+            self.grid.keywordSearch('');
+          }
         }
 
         //Mark selected rows

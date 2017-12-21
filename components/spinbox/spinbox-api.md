@@ -11,8 +11,10 @@
     -   [handleClick](#handleclick)
     -   [handleKeyDown](#handlekeydown)
     -   [handleKeyPress](#handlekeypress)
+    -   [handleInput](#handleinput)
     -   [handleKeyup](#handlekeyup)
     -   [handleAfterPaste](#handleafterpaste)
+    -   [correctValue](#correctvalue)
     -   [increaseValue](#increasevalue)
     -   [decreaseValue](#decreasevalue)
     -   [updateVal](#updateval)
@@ -33,10 +35,10 @@ The Spinbox component provides easy access to modification of a numeric input fi
 
 **Parameters**
 
--   `element`  
 -   `min` **(null | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  if defined, provides a minimum numeric limit
 -   `max` **(null | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  if defined, provides a maximum numeric limit
 -   `step` **(null | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.
+-   `validateOnInput` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to false, will only automatically correct the spinbox value after the spinbox has lost focus.
 
 ### setWidth
 
@@ -94,6 +96,16 @@ Event handler for 'keydown' events
 ### handleKeyPress
 
 Event handler for 'keypress' events
+TODO: Deprecate in 4.4.0
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+-   `self` **[Spinbox](#spinbox)** 
+
+### handleInput
+
+Event handler for the 'input' event
 
 **Parameters**
 
@@ -118,6 +130,12 @@ is handled.
 **Parameters**
 
 -   `self` **[Spinbox](#spinbox)** 
+
+### correctValue
+
+**Parameters**
+
+-   `e`  
 
 ### increaseValue
 

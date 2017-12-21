@@ -19,6 +19,7 @@
     // Settings and Options
     var pluginName = 'spinbox',
         defaults = {
+          autocorrectOnBlur: false,
           min: null,
           max: null,
           step: null
@@ -32,6 +33,7 @@
     * @param {null|Number} min &nbsp;-&nbsp; if defined, provides a minimum numeric limit
     * @param {null|Number} max  &nbsp;-&nbsp; if defined, provides a maximum numeric limit
     * @param {null|Number} step  &nbsp;-&nbsp; if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.
+    * @param {boolean} validateOnInput  &nbsp;-&nbsp; If set to false, will only automatically correct the spinbox value after the spinbox has lost focus.
     */
     function Spinbox(element) {
       this.element = $(element);
@@ -315,36 +317,25 @@
           case 36: // Home key sets the spinbox to its maximum value
             if (self.element.attr('max')) { self.element.val(self.element.attr('max')); }
             break;
-          case 38: case 39: // Right and Up increase the spinbox value
-            if (Locale.isRTL() && key === 39) {
-              self.addButtonStyle(self.buttons.down);
-              self.decreaseValue();
-            } else {
-              self.addButtonStyle(self.buttons.up);
-              self.increaseValue();
-            }
+          case 38: // Up increases the spinbox value
+            self.addButtonStyle(self.buttons.up);
+            self.increaseValue();
             break;
-          case 37: case 40: // Left and Down decrease the spinbox value
-            if (Locale.isRTL() && key === 37) {
-              self.addButtonStyle(self.buttons.up);
-              self.increaseValue();
-            } else {
-              self.addButtonStyle(self.buttons.down);
-              self.decreaseValue();
-            }
+          case 40: // Down decreases the spinbox value
+            self.addButtonStyle(self.buttons.down);
+            self.decreaseValue();
             break;
         }
       },
 
+
       /**
        * Event handler for 'keypress' events
+       * TODO: Deprecate in 4.4.0
        * @param {jQuery.Event} e
        * @param {Spinbox} self
        */
       handleKeyPress: function(e, self) {
-        if (self.isDisabled()) {
-          return;
-        }
         var key = e.which;
 
         // NOTE:
@@ -352,21 +343,26 @@
           return;
         }
 
-        // If the key is a number, pre-calculate the value of the number to see if it would be
-        // greater than the maximum, or less than the minimum.  If it's fine, let it through.
-        // Doing this check here prevents visual jitter.
-        var num = Number(this.checkForNumeric(this.element.val())), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
-          min = self.element.attr('min'),
-          max = self.element.attr('max');
+        return this.handleInput(e, self);
+      },
 
-        if (num < min) {
-          e.preventDefault();
-          return self.updateVal(min);
+
+      /**
+       * Event handler for the 'input' event
+       * @param {jQuery.Event} e
+       * @param {Spinbox} self
+       */
+      handleInput: function(e, self) {
+        if (self.isDisabled()) {
+          return;
         }
-        if (num > max) {
-          e.preventDefault();
-          return self.updateVal(max);
+
+        // If we're only auto-correcting on blur, don't continue.
+        if (this.settings.autocorrectOnBlur) {
+          return;
         }
+
+        return this.correctValue(e);
       },
 
       /**
@@ -417,12 +413,36 @@
       },
 
       /**
+       *
+       */
+      correctValue: function(e) {
+        var num = Number(this.element.val()),
+          min = this.element.attr('min'),
+          max = this.element.attr('max');
+
+        if (num < min) {
+          if (e) {
+            e.preventDefault();
+          }
+          return this.updateVal(min);
+        }
+        if (num > max) {
+          if (e) {
+            e.preventDefault();
+          }
+          return this.updateVal(max);
+        }
+      },
+
+
+      /**
        * Increases the value of the Spinbox field, constrained by the step interval and maximum limit.
        */
       increaseValue: function() {
-        var val = this.checkForNumeric(this.element.val()) + Number(this.element.attr('step') || 1);
-        if (this.element.attr('max') && val > this.element.attr('max')) {
-          return;
+        var max = this.element.attr('max'),
+          val = this.checkForNumeric(this.element.val()) + Number(this.element.attr('step') || 1);
+        if (max && val > max) {
+          return this.updateVal(max);
         }
         this.updateVal(val);
       },
@@ -431,9 +451,10 @@
        * Decreases the value of the Spinbox field, constrained by the step interval and minimum limit.
        */
       decreaseValue: function() {
-        var val = this.checkForNumeric(this.element.val()) - Number(this.element.attr('step') || 1);
-        if (this.element.attr('min') && val < this.element.attr('min')) {
-          return;
+        var min = this.element.attr('min'),
+          val = this.checkForNumeric(this.element.val()) - Number(this.element.attr('step') || 1);
+        if (min && val < min) {
+          return this.updateVal(min);
         }
         this.updateVal(val);
       },
@@ -594,13 +615,13 @@
           self.element.parent('.spinbox-wrapper').addClass('is-focused');
         }).on('blur.spinbox', function() {
           self.element.parent('.spinbox-wrapper').removeClass('is-focused');
-          // Explicitly trigger the change event if the "original" value is different from its current value.
-          // Prevents an issue where changing the value with arrow keys doesn't trigger the "change" event on blur.
-          self.element.trigger('change');
+          if (self.settings.autocorrectOnBlur) {
+            self.correctValue();
+          }
         }).on('keydown.spinbox', function(e) {
           self.handleKeyDown(e, self);
-        }).on('keypress.spinbox', function(e) {
-          self.handleKeyPress(e, self);
+        }).on('input.spinbox', function(e) {
+          self.handleInput(e, self);
         }).on('keyup.spinbox', function(e) {
           self.handleKeyup(e, self);
         }).on('afterpaste.mask', function() {

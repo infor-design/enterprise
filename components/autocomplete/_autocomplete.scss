@@ -6,11 +6,16 @@
   border: 1px solid $input-focus-border-color;
   border-radius: 0 0 3px 3px;
   border-top: 1px solid $dropdown-menu-separator-color;
-  box-shadow: $dropdown-box-shadow;
+  box-shadow: $autocomplete-box-shadow;
   line-height: 30px;
   margin-top: -1px;
   overflow: auto;
   padding: 5px 0;
+
+  &.is-ontop {
+    border-radius: 3px 3px 0 0;
+    box-shadow: $autocomplete-box-shadow-flipped;
+  }
 
   li {
     color: $popupmenu-color;
@@ -70,4 +75,11 @@ input.autocomplete.is-open {
   border: 1px solid $dropdown-menu-border-color;
   border-bottom: 1px solid $dropdown-menu-separator-color;
   border-radius: 3px 3px 0 0;
+
+  &.is-ontop {
+    border: 1px solid $dropdown-menu-border-color;
+    border-radius: 0 0 3px 3px;
+    border-top: 1px solid $dropdown-menu-separator-color;
+    box-shadow: $autocomplete-box-shadow-flipped;
+  }
 }

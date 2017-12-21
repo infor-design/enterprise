@@ -22,7 +22,7 @@
         return;
       }
 
-      if (value.disable) {
+      if (value && value.disable) {
         value.disable();
       }
     });
@@ -39,11 +39,11 @@
         return;
       }
 
-      if (value.enable) {
+      if (value && value.enable) {
         value.enable();
       }
     });
-    this.prop('disabled', false);
+    this.prop({'disabled': false, 'readonly': false});
     return this;
   };
 
@@ -56,7 +56,7 @@
         return;
       }
 
-      if (value.readonly) {
+      if (value && value.readonly) {
         value.readonly();
       }
     });
