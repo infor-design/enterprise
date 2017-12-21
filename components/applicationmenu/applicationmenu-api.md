@@ -2,21 +2,238 @@
 
 ### Table of Contents
 
--   [ApplicationMenu](#applicationmenu)
-    -   [getAdjacentContainerElement](#getadjacentcontainerelement)
-    -   [isOpen](#isopen)
-    -   [testWidth](#testwidth)
-    -   [openMenu](#openmenu)
-    -   [closeMenu](#closemenu)
-    -   [hasTriggers](#hastriggers)
-    -   [modifyTriggers](#modifytriggers)
-    -   [filterResultsCallback](#filterresultscallback)
-    -   [handleSearchfieldInputEvent](#handlesearchfieldinputevent)
-    -   [teardown](#teardown)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-    -   [handleEvents](#handleevents)
--   [applicationmenu](#applicationmenu-1)
+-   -   [PLUGIN_NAME](#plugin_name)
+    -   [PLUGIN_NAME](#plugin_name-1)
+    -   [PLUGIN_NAME](#plugin_name-2)
+    -   [PLUGIN_NAME](#plugin_name-3)
+    -   [PLUGIN_NAME](#plugin_name-4)
+    -   [PLUGIN_NAME](#plugin_name-5)
+    -   [PLUGIN_NAME](#plugin_name-6)
+    -   [PLUGIN_NAME](#plugin_name-7)
+    -   [PLUGIN_NAME](#plugin_name-8)
+    -   [APPLICATIONMENU_DEFAULTS](#applicationmenu_defaults)
+    -   [ApplicationMenu](#applicationmenu)
+        -   [getAdjacentContainerElement](#getadjacentcontainerelement)
+        -   [isOpen](#isopen)
+        -   [testWidth](#testwidth)
+        -   [openMenu](#openmenu)
+        -   [closeMenu](#closemenu)
+        -   [hasTriggers](#hastriggers)
+        -   [modifyTriggers](#modifytriggers)
+        -   [filterResultsCallback](#filterresultscallback)
+        -   [handleSearchfieldInputEvent](#handlesearchfieldinputevent)
+        -   [teardown](#teardown)
+        -   [updated](#updated)
+        -   [destroy](#destroy)
+        -   [handleEvents](#handleevents)
+    -   [enableTimeLogging](#enabletimelogging)
+    -   [logTimeStart](#logtimestart)
+    -   [logTimeEnd](#logtimeend)
+    -   [bindFirst](#bindfirst)
+    -   [bindFirst](#bindfirst-1)
+-   [SOHO Utils](#soho-utils)
+    -   [uniqueId](#uniqueid)
+    -   [cssPropSupport](#csspropsupport)
+    -   [transitionEndName](#transitionendname)
+    -   [onTouchClick](#ontouchclick)
+    -   [offTouchClick](#offtouchclick)
+    -   [listEvents](#listevents)
+    -   [placeholderPolyfill](#placeholderpolyfill)
+    -   [parseOptions](#parseoptions)
+    -   [timer](#timer)
+    -   [clearable](#clearable)
+    -   [getHiddenSize](#gethiddensize)
+    -   [isHiddenAtBreakpoint](#ishiddenatbreakpoint)
+    -   [accordion](#accordion)
+    -   [hideFocus](#hidefocus)
+    -   [smoothScroll](#smoothscroll)
+    -   [autocomplete](#autocomplete)
+    -   [button](#button)
+    -   [icon](#icon)
+    -   [popupmenu](#popupmenu)
+    -   [place](#place)
+    -   [copyToClipboard](#copytoclipboard)
+    -   [escapeHTML](#escapehtml)
+    -   [sanitizeHTML](#sanitizehtml)
+    -   [actualChar](#actualchar)
+    -   [uniqueIdCount](#uniqueidcount)
+    -   [focusable](#focusable)
+    -   [extend](#extend)
+    -   [parseSettings](#parsesettings)
+    -   [parseOptions](#parseoptions-1)
+    -   [actualChar](#actualchar-1)
+    -   [equals](#equals)
+    -   [debounce](#debounce)
+    -   [extend](#extend-1)
+    -   [fixSVGIcons](#fixsvgicons)
+    -   [getViewportSize](#getviewportsize)
+    -   [getContainerScrollDistance](#getcontainerscrolldistance)
+    -   [getHiddenSize](#gethiddensize-1)
+    -   [isString](#isstring)
+    -   [isNumber](#isnumber)
+    -   [safeSetSelection](#safesetselection)
+    -   [mergeSettings](#mergesettings)
+    -   [getAttributes](#getattributes)
+    -   [classNameExists](#classnameexists)
+    -   [classNameHas](#classnamehas)
+    -   [hasClass](#hasclass)
+    -   [addClass](#addclass)
+    -   [isElement](#iselement)
+    -   [getDimensions](#getdimensions)
+    -   [convertDelayToFPS](#convertdelaytofps)
+    -   [convertFPSToDelay](#convertfpstodelay)
+    -   [Environment](#environment)
+        -   [set](#set)
+        -   [addBrowserClasses](#addbrowserclasses)
+        -   [addGlobalResize](#addglobalresize)
+        -   [pasteEvent](#pasteevent)
+    -   [set](#set-1)
+    -   [current](#current)
+    -   [isAbove](#isabove)
+    -   [isBelow](#isbelow)
+    -   [compare](#compare)
+    -   [isHidden](#ishidden)
+    -   [ACCORDION_DEFAULTS](#accordion_defaults)
+    -   [Accordion](#accordion-1)
+        -   [handleHeaderClick](#handleheaderclick)
+        -   [handleAnchorClick](#handleanchorclick)
+        -   [handleExpanderClick](#handleexpanderclick)
+        -   [handleKeys](#handlekeys)
+        -   [toData](#todata)
+        -   [select](#select)
+        -   [isDisabled](#isdisabled)
+        -   [isFiltered](#isfiltered)
+        -   [isExpanded](#isexpanded)
+        -   [toggle](#toggle)
+        -   [expand](#expand)
+        -   [expandAll](#expandall)
+        -   [collapse](#collapse)
+        -   [collapseAll](#collapseall)
+        -   [callSource](#callsource)
+        -   [getElements](#getelements)
+        -   [prevHeader](#prevheader)
+        -   [nextHeader](#nextheader)
+        -   [ascend](#ascend)
+        -   [descend](#descend)
+        -   [focusOriginalType](#focusoriginaltype)
+        -   [disable](#disable)
+        -   [enable](#enable)
+        -   [updated](#updated-1)
+        -   [teardown](#teardown-1)
+        -   [destroy](#destroy-1)
+        -   [handleEvents](#handleevents-1)
+    -   [ICON_DEFAULTS](#icon_defaults)
+    -   [Icon](#icon-1)
+    -   [HideFocus](#hidefocus-1)
+    -   [smoothScrollTo](#smoothscrollto)
+    -   [defer](#defer)
+    -   [SEARCHFIELD_DEFAULTS](#searchfield_defaults)
+    -   [SearchField](#searchfield)
+        -   [init](#init)
+        -   [hasCategories](#hascategories)
+        -   [hasGoButton](#hasgobutton)
+        -   [hasFocus](#hasfocus)
+        -   [handleGoButtonClick](#handlegobuttonclick)
+        -   [setCategoryButtonText](#setcategorybuttontext)
+        -   [calculateSearchfieldWidth](#calculatesearchfieldwidth)
+        -   [isToolbarSearchfield](#istoolbarsearchfield)
+        -   [getCategories](#getcategories)
+        -   [getSelectedCategories](#getselectedcategories)
+        -   [getCategoryData](#getcategorydata)
+        -   [updateCategories](#updatecategories)
+        -   [setCategories](#setcategories)
+        -   [hasCategoryButton](#hascategorybutton)
+        -   [clear](#clear)
+        -   [updated](#updated-2)
+        -   [enable](#enable-1)
+        -   [disable](#disable-1)
+        -   [destroy](#destroy-2)
+    -   [Locale](#locale)
+        -   [set](#set-2)
+        -   [formatDate](#formatdate)
+        -   [isValidDate](#isvaliddate)
+        -   [parseDate](#parsedate)
+        -   [formatNumber](#formatnumber)
+        -   [parseNumber](#parsenumber)
+        -   [translate](#translate)
+        -   [toUpperCase](#touppercase)
+        -   [toLowerCase](#tolowercase)
+        -   [capitalize](#capitalize)
+        -   [capitalizeWords](#capitalizewords)
+    -   [Locale](#locale-1)
+        -   [set](#set-3)
+        -   [formatDate](#formatdate-1)
+        -   [isValidDate](#isvaliddate-1)
+        -   [parseDate](#parsedate-1)
+        -   [formatNumber](#formatnumber-1)
+        -   [parseNumber](#parsenumber-1)
+        -   [translate](#translate-1)
+        -   [toUpperCase](#touppercase-1)
+        -   [toLowerCase](#tolowercase-1)
+        -   [capitalize](#capitalize-1)
+        -   [capitalizeWords](#capitalizewords-1)
+    -   [DEFAULT_AUTOCOMPLETE_TEMPLATE](#default_autocomplete_template)
+    -   [DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK](#default_autocomplete_searchable_text_callback)
+    -   [DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK](#default_autocomplete_result_iterator_callback)
+    -   [DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK](#default_autocomplete_highlight_callback)
+    -   [AUTOCOMPLETE_DEFAULTS](#autocomplete_defaults)
+    -   [Autocomplete](#autocomplete-1)
+        -   [updated](#updated-3)
+        -   [enable](#enable-2)
+        -   [disable](#disable-2)
+        -   [destroy](#destroy-3)
+        -   [handleEvents](#handleevents-2)
+    -   [LISTFILTER_DEFAULTS](#listfilter_defaults)
+    -   [filterModes](#filtermodes)
+    -   [ListFilter](#listfilter)
+        -   [filter](#filter)
+    -   [BUTTON_DEFAULTS](#button_defaults)
+    -   [Button](#button-1)
+        -   [updated](#updated-4)
+        -   [destroy](#destroy-4)
+        -   [handleEvents](#handleevents-3)
+    -   [getIconName](#geticonname)
+    -   [POPUPMENU_DEFAULTS](#popupmenu_defaults)
+    -   [PopupMenu](#popupmenu-1)
+        -   [markupItems](#markupitems)
+        -   [close](#close)
+        -   [destroy](#destroy-5)
+    -   [DEFAULT_PLACE_SETTINGS](#default_place_settings)
+    -   [PLACE_STRATEGIES](#place_strategies)
+    -   [PlacementObject](#placementobject)
+    -   [Place](#place-1)
+
+## PLUGIN_NAME
+
+Component Name
+
+## PLUGIN_NAME
+
+Component Name
+
+## PLUGIN_NAME
+
+## PLUGIN_NAME
+
+## PLUGIN_NAME
+
+Component Name
+
+## PLUGIN_NAME
+
+## PLUGIN_NAME
+
+Component name as referenced by jQuery/event namespace/etc
+
+## PLUGIN_NAME
+
+Component Name
+
+## PLUGIN_NAME
+
+## APPLICATIONMENU_DEFAULTS
+
+Default Application Menu Options
 
 ## ApplicationMenu
 
@@ -24,8 +241,6 @@ The Application Menu provides access to all the functions, pages, and forms in a
 
 **Parameters**
 
--   `element`  
--   `options`  
 -   `breakpoint` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
 -   `filterable` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `openOnLarge` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
@@ -106,6 +321,10 @@ Returns **this**
 
 Triggers a UI Resync.
 
+**Parameters**
+
+-   `settings`  
+
 ### destroy
 
 Teardown - Remove added markup and events
@@ -119,12 +338,1465 @@ This component fires the following events.
 -   `applicationmenuopen` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is opened.
 -   `applicationmenuclose` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the menu is closed.
 
-## applicationmenu
+## enableTimeLogging
 
-jQuery component wrapper for the Application Menu
+Easy flag for determining whether or not time will be logged to the console.
+
+## logTimeStart
 
 **Parameters**
 
--   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
-Returns **[ApplicationMenu](#applicationmenu)** 
+## logTimeEnd
+
+**Parameters**
+
+-   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
+## bindFirst
+
+Used for changing the stacking order of jQuery events.  This is needed to override certain
+Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
+
+**Parameters**
+
+-   `name`  
+-   `fn`  
+
+## bindFirst
+
+============================================
+
+# SOHO Utils
+
+**Parameters**
+
+-   `name`  
+-   `fn`  
+
+## uniqueId
+
+**Parameters**
+
+-   `className`  
+-   `prefix`  
+-   `suffix`  
+
+## cssPropSupport
+
+Check for CSS Property Support in a cross browser way
+
+**Parameters**
+
+-   `prop` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## transitionEndName
+
+Returns the name of the TransitionEnd event.
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## onTouchClick
+
+Custom Touch Event Handler that simply passes Touch Event Handlers onto a Click Event Handler.
+Used for avoiding the 300ms wait time that click events have in most mobile environments
+if 'one' is defined, it only listens once.
+
+**Parameters**
+
+-   `eventNamespace`  
+-   `filter`  
+-   `one`  
+
+## offTouchClick
+
+Reverses the .onTouchClick() method and turns off a matching event listener.
+
+**Parameters**
+
+-   `eventNamespace`  
+-   `filter`  
+
+## listEvents
+
+Returns a key/value list of currently attached event listeners
+
+## placeholderPolyfill
+
+Implements consistent support for the placeholder attribute in browsers that do not handle it
+
+-   Supports any kind of input (no issues with password) and textarea
+-   does nothing if native support exists
+
+**Parameters**
+
+-   `options`  
+
+## parseOptions
+
+jQuery Behavior Wrapper for `utils.parseOptions`.
+
+**Parameters**
+
+-   `element`  
+-   `attr`  
+-   `attrName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
+Returns **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** 
+
+**Meta**
+
+-   **deprecated**: This is deprecated.
+
+
+## timer
+
+Timer - can be use for play/pause or stop for given time
+use as new instance [ var timer = new $.fn.timer(function() {}, 6000); ]
+then can be listen events as [ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]
+or can access as [ timer.cancel(); -or- timer.pause(); -or- timer.resume(); ]
+
+**Parameters**
+
+-   `callback`  
+-   `delay`  
+
+## clearable
+
+Clearable (Shows an X to clear)
+
+## getHiddenSize
+
+Binds the Soho Util _getHiddenSize()_ to a jQuery selector
+
+**Parameters**
+
+-   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options
+
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## isHiddenAtBreakpoint
+
+jQuery wrapper for `Soho.breakpoints.isHidden()`
+NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.
+This method is NOT chainable.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## accordion
+
+jQuery Component Wrapper for Accordion
+
+**Parameters**
+
+-   `settings`  
+
+## hideFocus
+
+jQuery component wrapper for the HideFocus behavior
+
+## smoothScroll
+
+Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
+
+**Parameters**
+
+-   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance to scroll the element
+-   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
+
+Returns **$.Deferred** 
+
+## autocomplete
+
+jQuery Component Wrapper for Autocomplete
+
+**Parameters**
+
+-   `settings`  
+
+## button
+
+jQuery Component Wrapper for the Soho Button Element
+
+**Parameters**
+
+-   `settings`  
+
+## icon
+
+jQuery component wrappers
+
+**Parameters**
+
+-   `settings`  
+
+## popupmenu
+
+jQuery component wrapper for Popupmenu
+
+**Parameters**
+
+-   `settings`  
+
+## place
+
+jQuery Component Wrapper
+
+**Parameters**
+
+-   `settings`  
+
+## copyToClipboard
+
+Copies a string to the clipboard. Must be called from within an event handler such as click.
+May return false if it failed, but this is not always
+possible. Browser support for Chrome 43+, Firefox 42+, Edge and IE 10+.
+No Safari support, as of (Nov. 2015). Returns false.
+IE: The clipboard feature may be disabled by an adminstrator. By default a prompt is
+shown the first time the clipboard is used (per session).
+
+**Parameters**
+
+-   `text`  
+
+## escapeHTML
+
+Functions For Sanitising and Escaping Html
+
+**Parameters**
+
+-   `value`  
+
+## sanitizeHTML
+
+Remove Script tags and all onXXX functions
+
+**Parameters**
+
+-   `html`  
+
+## actualChar
+
+**Parameters**
+
+-   `e`  
+
+## uniqueIdCount
+
+`uniqueIdCount`
+
+## focusable
+
+From jQueryUI Core: <https://github.com/jquery/jquery-ui/blob/24756a978a977d7abbef5e5bce403837a01d964f/ui/jquery.ui.core.js#L93>
+Adapted from:  <http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus>
+Adds the ':focusable' selector to Sizzle to allow for the selection of elements that can currently be focused.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## extend
+
+## parseSettings
+
+Grabs an attribute from an HTMLElement containing stringified JSON syntax, and interprets it into options.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `attr` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## parseOptions
+
+Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
+TODO: Remove in 4.4.1 ?
+
+## actualChar
+
+Replacement for String.fromCharCode() that takes meta keys into account when determining which
+character key was pressed.
+
+**Parameters**
+
+-   `e`  
+
+## equals
+
+Truthy equals
+
+**Parameters**
+
+-   `a`  
+-   `b`  
+
+## debounce
+
+Debounce method
+
+**Parameters**
+
+-   `func`  
+-   `threshold`  
+-   `execAsap`  
+
+## extend
+
+Object deep copy
+For now, alias jQuery.extend
+Eventually we'll replace this with a non-jQuery extend method.
+
+## fixSVGIcons
+
+Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
+The action of changing the xlink:href attribute to something else and back will fix the problem.
+
+**Parameters**
+
+-   `rootElement`  
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+## getViewportSize
+
+Gets the current size of the viewport
+
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## getContainerScrollDistance
+
+Gets the various scrollable containers that an element is nested inside of, and returns their scrollHeight and scrollLeft values.
+
+**Parameters**
+
+-   `element`  
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+
+## getHiddenSize
+
+Takes an element that is currently hidden by some means (FX: "display: none;") and gets its potential dimensions by checking a clone of the element that is NOT hidden.
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
+-   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
+-   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
+
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## isString
+
+Checks if a specific input is a String
+
+**Parameters**
+
+-   `value` **?** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## isNumber
+
+Checks if a specific input is a Number
+
+**Parameters**
+
+-   `value` **?** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## safeSetSelection
+
+Safely changes the position of a text caret inside of an editable element.
+In most cases, will call "setSelectionRange" on an editable element immediately, but in some
+cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `startPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `endPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## mergeSettings
+
+Merges various sets of options into a single object,
+whose intention is to be set as options on a Soho component.
+
+**Parameters**
+
+-   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
+-   `incomingOptions` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))** 
+-   `defaultOptions` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))?** 
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## getAttributes
+
+Returns an array containing an element's attributes.
+
+**Parameters**
+
+-   `element`  
+
+## classNameExists
+
+Adding, removing, and testing for classes
+
+**Parameters**
+
+-   `element`  
+
+## classNameHas
+
+**Parameters**
+
+-   `classNameString`  
+-   `targetContents`  
+
+## hasClass
+
+**Parameters**
+
+-   `el`  
+-   `className`  
+
+## addClass
+
+**Parameters**
+
+-   `el`  
+-   `className`  
+
+## isElement
+
+Checks if an element is valid
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being checked
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** represents all values normally contained by a DOMRect or ClientRect
+
+## getDimensions
+
+Runs the generic _getBoundingClientRect()_ method on an element, but returns its results
+as a plain object instead of a ClientRect
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated
+
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
+
+## convertDelayToFPS
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+
+## convertFPSToDelay
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `fps`  
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+
+## Environment
+
+Type: [Environment](#environment)
+
+### set
+
+Builds run-time environment settings
+
+### addBrowserClasses
+
+Global Classes for browser, version and device as needed.
+
+### addGlobalResize
+
+Setup a global resize event trigger for controls to listen to
+
+### pasteEvent
+
+## set
+
+Automatically set up the environment by virtue of including this script
+
+## current
+
+Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the
+
+<body> tag's `::after` pseudo-element.  These names should be reflected in the breakpoints object
+above.
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## isAbove
+
+**Parameters**
+
+-   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## isBelow
+
+**Parameters**
+
+-   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## compare
+
+Compares the last-stored breakpoint with a check on the "current" breakpoint to see if the
+breakpoint has changed.
+
+## isHidden
+
+Checks an element for Soho visibility classes and determines whether or not
+should be hidden based on those values at the current breakpoint.
+NOTE: this method does NOT determine if the element is ACTUALLY hidden with a
+`display: none;` or `visibility: hidden;` rule.  It determines whether or not a CSS
+visibility rule alone would hide the element.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## ACCORDION_DEFAULTS
+
+Default Accordion Options
+
+## Accordion
+
+The Accordion is a grouped set of collapsible panels used to navigate sections of
+related content. Each panel consists of two levels: the top level identifies the
+category or section header, and the second level provides the associated options.
+
+**Parameters**
+
+-   `allowOnePane` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If set to true, allows only one pane of the Accordion to be open at a time.  If an Accordion pane is open, and that pane contains sub-headers, only one of the pane's sub-headers can be open at a time. (default true)
+-   `displayChevron` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Displays a "Chevron" icon that sits off to the right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
+-   `rerouteOnLinkClick` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can be set to false if routing is externally handled
+-   `source` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
+
+### handleHeaderClick
+
+Header Click Handler
+
+**Parameters**
+
+-   `e` **jQuery.Event** ,
+-   `header` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleAnchorClick
+
+Anchor Click Handler
+
+**Parameters**
+
+-   `e` **jQuery.Event** ,
+-   `anchor` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleExpanderClick
+
+Expander-Button Click Handler
+
+**Parameters**
+
+-   `e` **jQuery.Event** ,
+-   `expander` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleKeys
+
+Keypress Event Handler for expanders and anchors
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### toData
+
+Translates all existing markup inside the accordion to a JSON-compatible object structure.
+
+**Parameters**
+
+-   `flatten` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, places all accordion headers in the root array.
+-   `addElementReference` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, includes a reference to the original header element inside the structure (NOT valid JSON).
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### select
+
+Makes a header "selected" if its expander button or anchor tag is focused.
+
+**Parameters**
+
+-   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** a jQuery Object containing either an expander button or an anchor tag.
+
+### isDisabled
+
+Checks if a particular header is disabled, or if the entire accordion is disabled..
+
+**Parameters**
+
+-   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  the jquery header element
+
+Returns **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### isFiltered
+
+**Parameters**
+
+-   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### isExpanded
+
+Checks if an Accordion Section is currently expanded
+
+**Parameters**
+
+-   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  the jquery header element
+
+Returns **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### toggle
+
+Toggle the given Panel on the Accordion between expanded and collapsed
+
+**Parameters**
+
+-   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  the jquery header element
+
+### expand
+
+Expand the given Panel on the Accordion.
+
+**Parameters**
+
+-   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  the jquery header element
+
+### expandAll
+
+Expands all accordion headers, if possible.
+
+### collapse
+
+Collapse the given Panel on the Accordion.
+
+**Parameters**
+
+-   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  the jquery header element
+
+### collapseAll
+
+Collapses all accordion headers.
+
+### callSource
+
+Uses a function (this.settings.source()) to call out to an external API to fill the
+inside of an accordion pane.
+
+**Parameters**
+
+-   `anchor` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+-   `animationCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### getElements
+
+Prepares a handful of references for dealing with a specific accordion header
+
+**Parameters**
+
+-   `eventTarget` **Event.target** 
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### prevHeader
+
+Selects an adjacent Accordion Header that sits directly before the currently selected Accordion Header.
+
+**Parameters**
+
+-   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** a jQuery Object containing either an expander button or an anchor tag.
+-   `noDescend` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if it's normally possible to descend into a sub-accordion, prevent against descending.
+
+### nextHeader
+
+Selects an adjacent Accordion Header that sits directly after the currently selected Accordion Header.
+
+**Parameters**
+
+-   `element` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** a jQuery Object containing either an expander button or an anchor tag.
+-   `noDescend` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if it's normally possible to descend into a sub-accordion, prevent against descending.
+
+### ascend
+
+Selects the first Accordion Header in the parent container of the current Accordion Pane.
+If we're at the top level, jump out of the accordion to the last focusable element.
+
+**Parameters**
+
+-   `header` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** a jQuery Object containing an Accordion header.
+-   `direction` **integer** if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+
+### descend
+
+Selects the first Accordion Header in the child container of the current Accordion Header.
+
+**Parameters**
+
+-   `header` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** a jQuery Object containing an Accordion header.
+-   `direction` **integer** if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+
+### focusOriginalType
+
+Selects an Accordion Header, then focuses either an expander button or an anchor.
+Governed by the property "this.originalSelection".
+
+**Parameters**
+
+-   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** a jQuery Object containing an Accordion header.
+
+### disable
+
+Disable an accordion from events
+
+### enable
+
+Enable a disabled accordion.
+
+### updated
+
+Updates an entire accordion, or specific portion(s).
+
+**Parameters**
+
+-   `headers` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** optional jQuery object containing accordion headers whose contents need to be torndown/rebound
+-   `settings` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
+
+Returns **this** 
+
+### teardown
+
+Teardown process for accordion elements
+
+**Parameters**
+
+-   `headers` **jQuery?** \-
+
+### destroy
+
+Teardown and remove any added markup and events.
+
+### handleEvents
+
+This component fires the following events.
+
+**Parameters**
+
+-   `headers`  
+-   `selected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a panel is opened.
+-   `followlink` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  If the anchor is a real link, follow the link and die here. This indicates the link has been followed.
+-   `expand` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when expanding a pane is initiated.
+-   `afterexpand` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after a pane is expanded.
+-   `collapse` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when collapsed a pane is initiated.
+-   `aftercollapse` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after a pane is collapsed.
+
+## ICON_DEFAULTS
+
+Default Options
+
+## Icon
+
+Icon Control
+Wraps SVG Icons with a Javascript control that can change the icon type, reference
+relative or absolute URLs, and clean up after itself.  Works with the Base tag.
+
+**Parameters**
+
+-   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `settings`  
+
+## HideFocus
+
+HideFocus Behavior
+Only shows the focus state on key entry (tabs or arrows).
+
+**Parameters**
+
+-   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate))** 
+
+Returns **[HideFocus](#hidefocus)** 
+
+## smoothScrollTo
+
+Allows for the smooth scrolling of an element's content area.
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
+-   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance.
+-   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
+
+Returns **$.Deferred** 
+
+## defer
+
+Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
+
+**Parameters**
+
+-   `callback`  
+-   `timer`  
+
+Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout))** 
+
+## SEARCHFIELD_DEFAULTS
+
+## SearchField
+
+Searchfield Control
+
+**Parameters**
+
+-   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `settings`  
+
+### init
+
+Initialization Kickoff
+
+Returns **this** 
+
+### hasCategories
+
+Reveals whether or not categories are active on this searchfield
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasGoButton
+
+Detects the existence of a "Go" button added to the main searchfield API
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasFocus
+
+Detects whether or not the Searchfield has focus.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleGoButtonClick
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+
+### setCategoryButtonText
+
+Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.
+
+**Parameters**
+
+-   `textContent` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** Optional incoming text that will be subtituted for the selected element count.
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### calculateSearchfieldWidth
+
+Ensures that the size of the Searchfield Wrapper does not change whenever a category
+is chosen from a category searchfield.
+NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
+
+### isToolbarSearchfield
+
+Detects whether or not this component is a Toolbar Searchfield
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### getCategories
+
+Gets a complete list of categories in jQuery-collection form.
+
+Returns **jQuery** categories
+
+### getSelectedCategories
+
+Gets the currently selected list of categories in jQuery-collection form.
+
+Returns **jQuery** selectedCategories
+
+### getCategoryData
+
+Gets the currently selected categories as data.
+
+**Parameters**
+
+-   `onlyReturnSelected` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true, will only return checked list items. (optional, default `false`)
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** data -
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** name - Category name
+
+Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** id - Category element's ID (if applicable)
+
+Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** value - Category element's value (if applicable)
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** [checked=true] - Category's selection status
+
+### updateCategories
+
+Updates just the categories setting and rerenders the category list.
+
+**Parameters**
+
+-   `categories` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
+    -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
+-   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
+-   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
+-   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### setCategories
+
+Creates a new set of categories on the Searchfield and rerenders it.
+
+**Parameters**
+
+-   `categories` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
+    -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
+-   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
+-   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
+-   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### hasCategoryButton
+
+Determines whether or not a Category Trigger exists.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### clear
+
+Clears the contents of the searchfield
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### updated
+
+Tears down and rebuilds the Searchfield.
+Can be called directly, but is also triggered by calling the "updated.searchfield" event on the searchfield element.
+
+**Parameters**
+
+-   `settings`  
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### enable
+
+Enables the Searchfield
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### disable
+
+Disables the Searchfield
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### destroy
+
+Destroys the Searchfield and removes all jQuery component instancing.
+
+**Parameters**
+
+-   `dontDestroyToolbarSearchfield` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+## Locale
+
+TODO: Re-implement this with proper scope.
+
+// If there already exists a Locale object with a culturesPath use that path
+// This allows manually setting the directory for the culture files to be retrieved from
+var existingCulturePath = '';
+
+if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
+existingCulturePath = window.Locale.culturesPath;
+}
+
+### set
+
+Set the currently used colors.
+
+**Parameters**
+
+-   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+
+### formatDate
+
+Format a Date Object and return it parsed in the current locale.
+
+**Parameters**
+
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
+
+### isValidDate
+
+Check if the date is valid using the current locale to do so.
+
+**Parameters**
+
+-   `date`  
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+
+### parseDate
+
+Take a date string written in the current locale and parse it into a Date Object
+
+**Parameters**
+
+-   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
+-   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
+-   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+
+### formatNumber
+
+Format a decimal with thousands and padding in the current locale.
+<http://mzl.la/1MUOEWm>
+
+**Parameters**
+
+-   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
+-   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+
+### parseNumber
+
+Take a Formatted Number and return a real number
+
+**Parameters**
+
+-   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+
+### translate
+
+Overridable culture messages
+
+**Parameters**
+
+-   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `showAsUndefined`  
+
+### toUpperCase
+
+Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+### toLowerCase
+
+Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalize
+
+Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalizeWords
+
+Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## Locale
+
+The Locale component handles i18n
+
+**Parameters**
+
+-   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
+
+### set
+
+Set the currently used colors.
+
+**Parameters**
+
+-   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+
+### formatDate
+
+Format a Date Object and return it parsed in the current locale.
+
+**Parameters**
+
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
+
+### isValidDate
+
+Check if the date is valid using the current locale to do so.
+
+**Parameters**
+
+-   `date`  
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+
+### parseDate
+
+Take a date string written in the current locale and parse it into a Date Object
+
+**Parameters**
+
+-   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
+-   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
+-   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+
+### formatNumber
+
+Format a decimal with thousands and padding in the current locale.
+<http://mzl.la/1MUOEWm>
+
+**Parameters**
+
+-   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
+-   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+
+### parseNumber
+
+Take a Formatted Number and return a real number
+
+**Parameters**
+
+-   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+
+### translate
+
+Overridable culture messages
+
+**Parameters**
+
+-   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `showAsUndefined`  
+
+### toUpperCase
+
+Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+### toLowerCase
+
+Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalize
+
+Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalizeWords
+
+Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## DEFAULT_AUTOCOMPLETE_TEMPLATE
+
+Default Autocomplete Result Item Template.  This can be modified to add data points that will be populated
+by adding properties to the object created in `DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK`.
+
+## DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK
+
+Autocomplete's method for obtaining the string that will be tested against a provided search term for a match.
+This is configurable in the event that the component you attach this to needs a specific part of it searched (instead of the whole thing).
+
+**Parameters**
+
+-   `item` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object))** text string, or an object containing a 'label'.
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK
+
+Autocomplete provides a method that will be run on every result that is passed back from the filtering API.
+This method can be replaced, allowing developers to customize the output of the returned dataset to add
+values that can also be displayed on each list item with a modified `DEFAULT_AUTOCOMPLETE_TEMPLATE`.
+
+**Parameters**
+
+-   `item`  
+-   `index`  
+
+## DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK
+
+**Parameters**
+
+-   `item` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `options` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+    -   `options.alias` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+    -   `options.filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+    -   `options.term` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## AUTOCOMPLETE_DEFAULTS
+
+Autocomplete Default Settings
+
+## Autocomplete
+
+The Autocomplete control provides an easier means of searching through a large amount of data by filtering down the results based on keyboard input from the user.
+
+**Parameters**
+
+-   `source` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Defines the data to use, must be specified.
+-   `sourceArguments` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+-   `template` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If defined, use this to draw the contents of each search result instead of the default draw routine.
+-   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The matching algorithm, startsWith and contains are supported - false will not filter client side
+-   `delay` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  The delay between key strokes on the keypad before it thinks you stopped typing
+-   `width` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Width of the open auto complete menu
+-   `offset` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  For the open menu, the left or top offset
+-   `autoSelectFirstItem` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Whether or not to select he first item in the list to be selected
+-   `resultsCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, does not produce the results of the Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback function.
+
+### updated
+
+**Parameters**
+
+-   `settings` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
+
+### enable
+
+Enable the input from readonly or disabled state.
+
+### disable
+
+Disable the input from editing
+
+### destroy
+
+Teardown and remove any added markup and events.
+
+### handleEvents
+
+This component fires the following events.
+
+**Parameters**
+
+-   `listopen` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is opened.
+-   `listclosed` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is closed.
+-   `populated` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the menu is populated with its contents.
+-   `input` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the input is edited.
+-   `safe-blur` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the input (and menu) both loose focus
+-   `requestend` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the ajax request (source option) is completed
+-   `requeststart` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the ajax request (source option) is initiated
+
+## LISTFILTER_DEFAULTS
+
+## filterModes
+
+## ListFilter
+
+Abstracted search/filter for use in other controls
+
+**Parameters**
+
+-   `caseSensitive` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Set to true if searches ARE case sensitive
+-   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Type of search can current be either 'startsWith' or 'contains'
+-   `highlightMatchedText` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Inserts markup that appears to highlight text
+-   `highlightCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, will execute this code for highlighting text instead of the built-in highlighting code
+-   `searchableTextCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  If defined, will take each filterable item passed and return user-defined, searchable text content
+
+### filter
+
+Run the filter on the list for the given sreach term.
+
+**Parameters**
+
+-   `list` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The array to search.
+-   `term` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The term to look for.
+
+Returns **([boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
+
+## BUTTON_DEFAULTS
+
+Component Defaults
+
+## Button
+
+Soho Button Element
+
+**Parameters**
+
+-   `toggleOnIcon` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The icon to use for on state on toggle buttons
+-   `toggleOffIcon` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The icon to use for off state on toggle buttons
+-   `replaceText` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true the selection will be used to replace the content in the button.
+
+### updated
+
+**Parameters**
+
+-   `settings`  
+
+### destroy
+
+Teardown and remove any added markup and events.
+
+### handleEvents
+
+This component fires the following events.
+
+**Parameters**
+
+-   `click` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the button is clicked (if enabled).
+-   `focus` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is focused.
+
+## getIconName
+
+Factory Function for instantly building icons.
+Use this for building icons that don't exist yet.
+Scoped Privately on purpose...
+
+## POPUPMENU_DEFAULTS
+
+Default Popupmenu Settings
+
+## PopupMenu
+
+Responsive Popup Menu Control aka Context Menu when doing a right click action.
+
+**Parameters**
+
+-   `menu` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Menu's ID Selector, or a jQuery object representing a menu
+-   `trigger` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Action on which to trigger a menu can be: click, rightClick, immediate ect
+-   `autoFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If false the focus will not focus the first list element. (At the cost of accessibility)
+-   `attachToBody` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the menu will be moved out to the body. To be used in certin overflow situations.
+-   `beforeOpen` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  Callback that can be used for populating the contents of the menu.
+-   `ariaListbox` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   Switches aria to use listbox construct instead of menu construct (internal)
+-   `eventObj` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can pass in the event object so you can do a right click with immediate
+-   `returnFocus` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
+-   `placementOpts` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Gets passed to this control's Place behavior
+-   `offset` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
+
+### markupItems
+
+**Parameters**
+
+-   `contextElement`  
+
+### close
+
+Close the open menu
+
+**Parameters**
+
+-   `isCancelled` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Internally set option used if the operation is a cancel. Wont matter for manual api call.
+-   `noFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Do not return focus to the calling element (fx a button)
+
+### destroy
+
+Teardown markup and detach all events.
+
+## DEFAULT_PLACE_SETTINGS
+
+## PLACE_STRATEGIES
+
+Constants used throughout
+
+## PlacementObject
+
+Object that contains coordinates along with temporary, changeable properties.
+This object gets passed around the Place Behavior and modified during each phase of positioning.
+This object is also passed to all callbacks and event listeners for further modification.
+
+**Parameters**
+
+-   `placementOptions` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## Place
+
+Place Behavior Constructor
+This is the actual "thing" that is tied to a Placeable Element.
+
+**Parameters**
+
+-   `element`  
+-   `settings`  

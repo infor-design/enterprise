@@ -4,6 +4,7 @@ All the following Soho Components have been converted to ES6:
 
 * About
 * Accordion
+* ApplicationMenu
 * Autocomplete
 * Button
 * Dropdown
@@ -17,7 +18,9 @@ All the following Soho Components have been converted to ES6:
 * Personalize
 * Place
 * Popover
+* Searchfield
 * Spinbox
+* Textarea
 * Tmpl
 * Toast
 * Tooltip
@@ -27,8 +30,9 @@ All the following Soho Components have been converted to ES6:
   - behaviors
   - breakpoints
   - debug
-  - highlight
   - environment
+  - highlight
+  - lifecycle
   - renderloop
   - string
   - theme
@@ -39,9 +43,7 @@ All the following Soho Components have been converted to ES6:
 
 The components listed below are still UMD-wrapped as ES5 jQuery components.  They need to be transitioned following the [How to migrate a Soho Xi component from ES5 to ES6](./ES5-TO-ES6.md) section of the ES6 Guide.
 
-* Alerts
 * Angular (?)
-* ApplicationMenu
 * Arrange (behavior)
 * Busy Indicator
 * Charts
@@ -69,7 +71,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Progress
 * Rating
 * Scrollaction
-* Searchfield
 * Signin
 * Slider
 * Splitter
@@ -78,13 +79,11 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Swaplist
 * Tabs
 * Tag
-* Textarea
 * Timepicker
 * Toolbar
 * ToolbarSearchfield
 * Tree
 * (utils)
-  - lifecycle
   - template
 * Validation (lots of jQuery)
 * Wizard

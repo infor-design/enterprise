@@ -12,13 +12,14 @@ import './hyperlinks/hyperlinks.jquery';
 import './icons/icons.jquery';
 
 // Molecules
-import './accordion/accordion.jquery';
-import './dropdown/dropdown.jquery';
-import './modal/modal.jquery';
 import './about/about.jquery';
+import './accordion/accordion.jquery';
+import './applicationmenu/applicationmenu.jquery';
+import './dropdown/dropdown.jquery';
 import './listview/listview.jquery';
 import './mask/masked-input.jquery';
 import './message/message.jquery';
+import './modal/modal.jquery';
 import './multiselect/multiselect.jquery';
 import './pager/pager.jquery';
 import './popupmenu/popupmenu.jquery';

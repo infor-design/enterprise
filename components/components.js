@@ -14,6 +14,7 @@ export { Icon } from './icons/icons';
 
 // Molecules
 export { Accordion } from './accordion/accordion';
+export { ApplicationMenu } from './applicationmenu/applicationmenu';
 export { Autocomplete } from './autocomplete/autocomplete';
 export { Dropdown } from './dropdown/dropdown';
 export { Modal } from './modal/modal';

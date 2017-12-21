@@ -1,37 +1,43 @@
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
+import { Environment as env } from '../utils/environment';
+import { breakpoints } from '../utils/breakpoints';
 
-  var DEFAULT_APPLICATIONMENU_OPTIONS = {
-    breakpoint: 'phone-to-tablet',
-    filterable: false,
-    openOnLarge: false,
-    triggers: []
-  };
+// jQuery Components
+import '../utils/lifecycle';
+import '../accordion/accordion.jquery';
+import '../searchfield/searchfield.jquery';
+
+
+/**
+ * Component Name
+ */
+let PLUGIN_NAME = 'applicationmenu';
+
+
+/**
+ * Default Application Menu Options
+ */
+let APPLICATIONMENU_DEFAULTS = {
+  breakpoint: 'phone-to-tablet',
+  filterable: false,
+  openOnLarge: false,
+  triggers: []
+};
+
 
   /**
-  * The Application Menu provides access to all the functions, pages, and forms in an application.
-  *
-  * @class ApplicationMenu
-  * @param {String} breakpoint  &nbsp;-&nbsp; Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
-  * @param {String} filterable
-  * @param {String} openOnLarge  &nbsp;-&nbsp; If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
-  * @param {String} triggers  &nbsp;-&nbsp; An Array of jQuery-wrapped elements that are able to open/close this nav menu.
-  */
-  function ApplicationMenu(element, options) {
+   * The Application Menu provides access to all the functions, pages, and forms in an application.
+   *
+   * @class ApplicationMenu
+   * @param {String} breakpoint  &nbsp;-&nbsp; Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
+   * @param {String} filterable
+   * @param {String} openOnLarge  &nbsp;-&nbsp; If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
+   * @param {String} triggers  &nbsp;-&nbsp; An Array of jQuery-wrapped elements that are able to open/close this nav menu.
+   */
+  function ApplicationMenu(element, settings) {
     this.element = $(element);
-    this.settings = $.extend({}, DEFAULT_APPLICATIONMENU_OPTIONS, this.getInlineOptions(element[0]), options);
+    this.settings = utils.mergeSettings(this.element[0], settings, APPLICATIONMENU_DEFAULTS);
 
     return this.init();
   }
@@ -47,15 +53,6 @@
       this
         .setup()
         .handleEvents();
-    },
-
-    /**
-     * Handles the access of HTML-inlined `data-options`
-     * @private
-     * @returns {Object}
-     */
-    getInlineOptions: function() {
-      return Soho.utils.parseOptions(this.element[0]);
     },
 
     /**
@@ -75,8 +72,7 @@
       var openOnLarge = this.element.attr('data-open-on-large');
       this.settings.openOnLarge = openOnLarge !== undefined ? openOnLarge === 'true' : this.settings.openOnLarge;
 
-      var breakpoints = Soho.breakpoints,
-      dataBreakpoint = this.element.attr('data-breakpoint');
+      var dataBreakpoint = this.element.attr('data-breakpoint');
       this.settings.breakpoint = breakpoints[dataBreakpoint] !== undefined ? dataBreakpoint : this.settings.breakpoint;
 
       // Pull in the list of Nav Menu trigger elements and store them internally.
@@ -100,8 +96,7 @@
       // Check to make sure that the internal Accordion Control is invoked
       var accordion = this.accordion.data('accordion');
       if (!accordion) {
-        var accOpts = this.accordion.parseOptions();
-        this.accordion.accordion(accOpts);
+        this.accordion.accordion();
         accordion = this.accordion.data('accordion');
       }
       this.accordionAPI = accordion;
@@ -271,7 +266,7 @@
      * @private
      */
     isLargerThanBreakpoint: function() {
-      return Soho.breakpoints.isAbove(this.settings.breakpoint);
+      return breakpoints.isAbove(this.settings.breakpoint);
     },
 
     /**
@@ -287,7 +282,7 @@
      */
     testWidth: function() {
       if (this.isOpen()) {
-        if (Soho.breakpoints.isAbove(this.settings.breakpoint)) {
+        if (breakpoints.isAbove(this.settings.breakpoint)) {
           this.element[0].classList.remove('show-shadow');
           return;
         }
@@ -304,7 +299,7 @@
         return;
       }
 
-      if (Soho.breakpoints.isBelow(this.settings.breakpoint)) {
+      if (breakpoints.isBelow(this.settings.breakpoint)) {
         return;
       }
 
@@ -378,7 +373,7 @@
         this.menu.addClass('is-open');
       }
 
-      if (Soho.breakpoints.isBelow(this.settings.breakpoint)) {
+      if (breakpoints.isBelow(this.settings.breakpoint)) {
         this.menu.addClass('show-shadow');
       }
 
@@ -386,7 +381,7 @@
         this.menu.find('.is-selected > a').focus();
       }
 
-      if (Soho.env.os.name === 'ios') {
+      if (env.os.name === 'ios') {
         var container = this.getAdjacentContainerElement();
         container.addClass('ios-click-target');
       }
@@ -450,7 +445,7 @@
         }
       });
 
-      if (Soho.env.os.name === 'ios') {
+      if (env.os.name === 'ios') {
         var container = this.getAdjacentContainerElement();
         container.removeClass('ios-click-target');
       }
@@ -597,7 +592,11 @@
     /**
     * Triggers a UI Resync.
     */
-    updated: function() {
+    updated: function(settings) {
+      if (settings) {
+        this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      }
+
       return this
         .teardown()
         .init();
@@ -608,7 +607,7 @@
     */
     destroy: function() {
       this.teardown();
-      $.removeData(this.element[0], 'applicationmenu');
+      $.removeData(this.element[0], PLUGIN_NAME);
     },
 
     /**
@@ -673,28 +672,4 @@
   };
 
 
-  // Add to the Soho Components object
-  window.Soho.components.ApplicationMenu = ApplicationMenu;
-
-
-  /**
-   * jQuery component wrapper for the Application Menu
-   * @param {Object} options
-   * @returns {ApplicationMenu}
-   */
-  $.fn.applicationmenu = function(options) {
-    return this.each(function() {
-      var instance = $.data(this, 'applicationmenu');
-      if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
-        instance.updated();
-      } else {
-        instance = $.data(this, 'applicationmenu', new ApplicationMenu(this, options));
-      }
-      return instance;
-    });
-  };
-
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+export { ApplicationMenu, PLUGIN_NAME };
