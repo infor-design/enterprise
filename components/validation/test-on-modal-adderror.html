@@ -1,0 +1,94 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="trigger-modal">Some value (click text box to open modal)</label>
+      <input type="text" id="trigger-modal" name="trigger-modal">
+    </div>
+
+    <div class="modal" id="modal-1">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title">Add Context</h1>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type" name="type">
+              <option></option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-name">Name</label>
+            <input type="text" id="context-name" name="context-name" placeholder="Example: Name One">
+          </div>
+
+          <div class="field">
+          	<label for="start-date">Date</label>
+            <input id="start-date" class="datepicker" type="text">
+          </div>
+
+          <div class="field">
+           <label for="context-desc">Description</label>
+           <textarea id="context-desc" placeholder="Example: A description goes here"></textarea>
+          </div>
+          <button id="trigger-toggle-error" class="btn-primary" type="button">Add Error</button>
+
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal" style="width: 50%;">Cancel</button>
+            <button type="button" id="submit" class="btn-modal-primary" style="width: 50%;">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function() {
+
+    var elem = $('#start-date'),
+      isError = elem.is('.error'),
+      triggerToggleError = $('#trigger-toggle-error'),
+      triggerModal = $('#trigger-modal');
+
+    // Trigger Modal
+    triggerModal.on('click', function() {
+      $('body').modal({content: $('#modal-1')})
+        .on('afterclose', function() {
+          triggerModal.focus();
+        });
+    });
+
+    // Toggle Error
+    triggerToggleError.on('click', function() {
+      if (isError) {
+        elem.removeError();
+        triggerToggleError.text('Add Error');
+      }
+      else {
+        elem.addError({
+          message: 'Error message',
+          inline: false,
+          showTooltip: true
+        });
+        triggerToggleError.text('Remove Error');
+      }
+
+      isError = !isError;
+    });
+
+
+  });
+</script>
