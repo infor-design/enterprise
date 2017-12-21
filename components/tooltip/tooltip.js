@@ -376,7 +376,7 @@
           contentArea.html(content);
           contentArea.find('.hidden').removeClass('hidden');
         } else {
-          contentArea.html(content && content.html ? content.html() : content);
+          contentArea.html(content);
         }
 
         popoverWidth = contentArea.width();
