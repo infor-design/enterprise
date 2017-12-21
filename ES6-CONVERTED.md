@@ -7,6 +7,7 @@ All the following Soho Components have been converted to ES6:
 * ApplicationMenu
 * Autocomplete
 * Button
+* Drag (behavior)
 * Dropdown
 * Hyperlink
 * Icons
@@ -19,6 +20,7 @@ All the following Soho Components have been converted to ES6:
 * Place
 * Popover
 * Searchfield
+* Slider
 * Spinbox
 * Textarea
 * Tmpl
@@ -53,7 +55,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Contextual Action Panel
 * Datagrid
 * Datepicker
-* Drag (behavior)
 * Editor
 * EmptyMessage
 * Expandable area
@@ -72,7 +73,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Rating
 * Scrollaction
 * Signin
-* Slider
 * Splitter
 * Stepchart
 * Step Process

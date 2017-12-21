@@ -4,6 +4,7 @@
 // behaviors
 // TODO: separate this more logically?
 import './utils/highlight';
+import './drag/drag.jquery';
 import './place/place.jquery';
 
 // Atoms
@@ -24,6 +25,7 @@ import './multiselect/multiselect.jquery';
 import './pager/pager.jquery';
 import './popupmenu/popupmenu.jquery';
 import './searchfield/searchfield.jquery';
+import './slider/slider.jquery';
 import './spinbox/spinbox.jquery';
 import './textarea/textarea.jquery';
 import './toast/toast.jquery';
