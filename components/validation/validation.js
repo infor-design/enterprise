@@ -745,6 +745,7 @@
       });
 
       if (showTooltip && tooltipAPI) {
+        field.attr('data-error-type', 'tooltip');
         tooltipAPI.show();
       }
     },
