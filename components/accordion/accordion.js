@@ -1,26 +1,29 @@
-// NOTE:  There are AMD Blocks available
+import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+// jQuery components
+import '../icons/icons';
+import '../utils/animations';
+import '../utils/behaviors';
 
-  var DEFAULT_ACCORDION_OPTIONS = {
-    allowOnePane: true,
-    displayChevron: true,
-    rerouteOnLinkClick: true,
-    source: null
-  };
+
+/**
+ * Component Name
+ */
+let PLUGIN_NAME = 'accordion';
+
+
+/**
+ * Default Accordion Options
+ */
+let ACCORDION_DEFAULTS = {
+  allowOnePane: true,
+  displayChevron: true,
+  rerouteOnLinkClick: true,
+  source: null
+};
+
 
   /**
    * The Accordion is a grouped set of collapsible panels used to navigate sections of
@@ -32,13 +35,14 @@
    * @param {String} displayChevron  &nbsp;-&nbsp; Displays a "Chevron" icon that sits off to the right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
    * @param {String} rerouteOnLinkClick  &nbsp;-&nbsp; Can be set to false if routing is externally handled
    * @param {Boolean} source  &nbsp;-&nbsp; A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
-   *
    */
-  function Accordion(element, options) {
+  function Accordion(element, settings) {
     this.element = $(element);
-    this.settings = $.extend({}, DEFAULT_ACCORDION_OPTIONS, this.getInlineOptions(element[0]), options);
+    this.settings = utils.mergeSettings(this.element[0], settings, ACCORDION_DEFAULTS);
 
+    debug.logTimeStart(PLUGIN_NAME);
     this.init();
+    debug.logTimeEnd(PLUGIN_NAME);
   }
 
   // Plugin Methods
@@ -54,15 +58,6 @@
       this
         .build(headers)
         .handleEvents(headers);
-    },
-
-    /**
-     * Handles the access of HTML-inlined `data-options`
-     * @private
-     * @returns {Object}
-     */
-    getInlineOptions: function() {
-      return Soho.utils.parseOptions(this.element[0]);
     },
 
     /**
@@ -999,10 +994,15 @@
     /**
      * Updates an entire accordion, or specific portion(s).
      * @param {jQuery[]} [headers] - optional jQuery object containing accordion headers whose contents need to be torndown/rebound
+     * @param {Object} [settings]
      * @returns {this}
      */
-    updated: function(headers) {
+    updated: function(headers, settings) {
       this.element.data('updating', true);
+
+      if (settings) {
+        this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      }
 
       var currentFocus = $(document.activeElement);
       if (!$.contains(this.element[0], currentFocus[0])) {
@@ -1170,10 +1170,10 @@
         this.element.on('selected.accordion', function(e) {
           // Don't propagate this event above the accordion element
           e.stopPropagation();
-        }).on('updated.accordion', function(e) {
+        }).on('updated.accordion', function(e, settings) {
           // Don't propagate just in case this is contained by an Application Menu
           e.stopPropagation();
-          self.updated();
+          self.updated(settings);
         });
       }
 
@@ -1182,24 +1182,5 @@
 
   };
 
-  // Add Accoridon to the Soho Components lib
-  window.Soho.components.Accordion = Accordion;
 
-  $.fn.accordion = function(options) {
-    var pluginName = 'accordion';
-
-    // Initialize the plugin (Once)
-    return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
-        instance.updated();
-      } else {
-        instance = $.data(this, pluginName, new Accordion(this, options));
-      }
-    });
-  };
-
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+export { Accordion, PLUGIN_NAME };

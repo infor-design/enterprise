@@ -12,6 +12,7 @@ import './hyperlinks/hyperlinks.jquery';
 import './icons/icons.jquery';
 
 // Molecules
+import './accordion/accordion.jquery';
 import './dropdown/dropdown.jquery';
 import './modal/modal.jquery';
 import './about/about.jquery';

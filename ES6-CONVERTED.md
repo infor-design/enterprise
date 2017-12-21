@@ -3,6 +3,7 @@
 All the following Soho Components have been converted to ES6:
 
 * About
+* Accordion
 * Autocomplete
 * Button
 * Dropdown
@@ -38,7 +39,6 @@ All the following Soho Components have been converted to ES6:
 
 The components listed below are still UMD-wrapped as ES5 jQuery components.  They need to be transitioned following the [How to migrate a Soho Xi component from ES5 to ES6](./ES5-TO-ES6.md) section of the ES6 Guide.
 
-* Accordion
 * Alerts
 * Angular (?)
 * ApplicationMenu
