@@ -119,6 +119,10 @@ button {
   border: 1px solid $primary-btn-bg-color;
   color: $primary-btn-color;
 
+  &.btn {
+    color: $primary-btn-color;
+  }
+
   .icon {
     fill: $primary-btn-color;
   }

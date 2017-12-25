@@ -88,7 +88,7 @@ Only needed for debugging/publishing versions.
 - Once installed run aws configure to enter the keys in the right spot http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 
 
-# How To Make Release (4.3.3)
+# How To Make Release (4.3.4)
 
 ## Info
 * Check ChangeLog.md is updated this info is distributed by email
@@ -97,43 +97,43 @@ Only needed for debugging/publishing versions.
 * Add version to board
 
 ## Git Operations
-* Edit version in package.json and publish package.json (from 4.3.3-rc to 4.3.3 as an example)
+* Edit version in package.json and publish package.json (from 4.3.4-rc to 4.3.4 as an example)
 * Push a PR
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests and make sure all merged
-* Merge  4.3.3-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
+* Merge  4.3.4-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
 * Git Tag the release from the 4.3.x branch
 ```bash
- git tag 4.3.3
+ git tag 4.3.4
  git push origin --tags
 ```
-* Make the new branch off 4.3.x for the new version (4.3.4-rc)
-  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.4-rc branch as the default
+* Make the new branch off 4.3.x for the new version (4.4.0-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.4.0-rc branch as the default
   * set branch permissions
-* Delete the 4.3.3-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
+* Delete the 4.3.4-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
 
 ## Build Operations
 * Change the v-Next build http://bamboo.infor.com/chain/admin/config/editChainDetails.action?buildKey=SOHO-NEXT
-  * change the name to 4.3.4-RC (Version Next)
+  * change the name to 4.4.0-RC (Version Next)
   * change the repo it points to
-  * checkout 4.3.4-rc and bump the versions in package.json and publish/package.json
+  * checkout 4.4.0-rc and bump the versions in package.json and publish/package.json
 * Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
   * change the versions in the build config
-  * Label the build release-433 for example http://bamboo.infor.com/browse/label/release-433
+  * Label the build release-434 for example http://bamboo.infor.com/browse/label/release-434
 
 ## Update version in @infor/sohoxi-angular
 * Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
 * Edit version in package.json and publish package.json (2) places
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and merge
-* Merge  4.3.3-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
+* Merge  4.3.4-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
 * Git Tag the release from the 4.3.x branch
 ```bash
- git tag 4.3.3
+ git tag 4.3.4
  git push origin --tags
 ```
-* Make the new branch off 4.3.x for the new version (4.3.4-rc)
-  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.4-rc branch as the default
+* Make the new branch off 4.3.x for the new version (4.4.0-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.4.0-rc branch as the default
   * set branch permissions
-* Delete the 4.3.3-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
+* Delete the 4.3.4-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
 * Update the build to the next release
 * Test
 ```bash
@@ -147,8 +147,8 @@ npm info @infor/sohoxi dist-tags
 npm view @infor/sohoxi versions
 ```
 * Test New and old links for example:
-http://usalvlhlpool1.infor.com/4.3.3/components/
-http://usalvlhlpool1.infor.com/4.3.4-rc/components/
+http://usalvlhlpool1.infor.com/4.3.4/components/
+http://usalvlhlpool1.infor.com/4.4.0-rc/components/
 
 ## Deploy Site Operations
 
@@ -164,7 +164,8 @@ docker rm 6410bbcfd5e2
 docker images | grep <name>
 docker rmi PID
 ```
-* Deploy to AWS
+
+## Deploy to AWS
 
 ```bash
 AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.3.3 -v
