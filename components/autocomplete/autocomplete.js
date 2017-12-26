@@ -241,6 +241,14 @@
       handleListResults: function(term, items, filterResult) {
         var self = this;
 
+        var afterPlaceCallback = function(placementObj) {
+          if (placementObj.wasFlipped === true) {
+            self.list.add(self.element).addClass('is-ontop');
+            placementObj.y += 1;
+          }
+          return placementObj;
+        };
+
         var popupOpts = {
           menuId: 'autocomplete-list',
           ariaListbox: true,
@@ -250,7 +258,8 @@
           autoFocus: false,
           returnFocus: false,
           placementOpts: {
-            parent: this.element
+            parent: this.element,
+            callback: afterPlaceCallback
           }
         };
 
@@ -337,7 +346,7 @@
         this.element.trigger('listclose');
         $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
         $('#autocomplete-list').remove();
-        this.element.removeClass('is-open');
+        this.element.add(this.list).removeClass('is-open is-ontop');
       },
 
       listIsOpen: function() {
@@ -605,6 +614,18 @@
         return false;
       },
 
+      /*
+      * Handle after list open.
+      */
+      handleAfterListOpen: function() {
+        // Fix one pixel off list by element
+        if (this.element.offset().left > this.list.offset().left) {
+          this.list.width(this.list.width() + 1);
+        }
+
+        return this;
+      },
+
       updated: function() {
         this.teardown().init();
         return this;
@@ -668,6 +689,8 @@
           self.handleAutocompleteFocus();
         }).off('focusout.autocomplete').on('focusout.autocomplete', function () {
           self.checkActiveElement();
+        }).off('listopen.autocomplete').on('listopen.autocomplete', function () {
+          self.handleAfterListOpen();
         });
       }
 

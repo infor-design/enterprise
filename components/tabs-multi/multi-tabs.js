@@ -49,7 +49,7 @@
    */
   function MultiTabs(element, settings) {
     this.element = $(element);
-    this.settings = $.extend({}, MULTITABS_DEFAULTS, settings);
+    this.settings = Soho.utils.extend({}, MULTITABS_DEFAULTS, settings);
 
     // internal stuff
     this.tabContainers = {};
@@ -115,34 +115,30 @@
 
     /**
      * Pass-through method for adding tabs that takes the container into account.
-     * @param {String} tabContainerName
+     * @param {jQuery[]|String} tabContainer
      * @param {String} tabId - (directly passed into the Tabs `add` method)
      * @param {Object} options - (directly passed into the Tabs `add` method)
      * @param {Number} [atIndex] - (directly passed into the Tabs `add` method)
      * @returns {Tabs}
      */
-    add: function(tabContainerName, tabId, options, atIndex) {
-      if (!this.tabContainers[tabContainerName]) {
-        throw new Error('cannot add any tabs to tabContainer "'+ tabContainerName +'" because it doesn\'t exist.');
-      }
+    add: function(tabContainer, tabId, options, atIndex) {
+      tabContainer = this._checkForValidTabContainer(tabContainer);
 
-      var api = this.tabContainers[tabContainerName].data('tabs');
+      var api = tabContainer.data('tabs');
       return api.add(tabId, options, atIndex);
     },
 
     /**
      * Pass-through method for removing tabs that takes the container into account.
-     * @param {String} tabContainerName
+     * @param {jQuery[]|String} tabContainer
      * @param {String} tabId - (directly passed into the Tabs `add` method)
      * @param {boolean} [disableBeforeClose] - (directly passed into the Tabs `add` method)
      * @returns {Tabs}
      */
-    remove: function(tabContainerName, tabId, disableBeforeClose) {
-      if (!this.tabContainers[tabContainerName]) {
-        throw new Error('cannot remove any tabs from tabContainer "'+ tabContainerName +'" because it doesn\'t exist.');
-      }
+    remove: function(tabContainer, tabId, disableBeforeClose) {
+      tabContainer = this._checkForValidTabContainer(tabContainer);
 
-      var api = this.tabContainers[tabContainerName].data('tabs');
+      var api = tabContainer.data('tabs');
       return api.remove(tabId, disableBeforeClose);
     },
 
@@ -161,12 +157,7 @@
         panelMarkup,
         allTabContainers = this._getFilterableTabContainers(),
         originalTabContainer,
-        originalTabContainerName,
-        targetTabContainer = this._getTabContainer(targetTabContainerName);
-
-      if (!targetTabContainer) {
-        throw new Error('No tab containers currently exist against targetTabContainerName "'+ targetTabContainerName +'"');
-      }
+        originalTabContainerName;
 
       allTabContainers.each(function() {
         var api = $(this).data('tabs'),
@@ -224,17 +215,91 @@
      * @returns {jQuery[]}
      */
     _getFilterableTabContainers: function() {
-      var self = this,
-        ret = $();
-      TAB_CONTAINER_NAMES.forEach(function(propname) {
-        var container = self.tabContainers[propname];
-        if (container) {
-          ret = ret.add(container);
-        }
+      var ret = $();
+
+      this.performOnAllContainers(function(propname, container) {
+        ret = ret.add(container);
       });
+
       return ret;
     },
 
+
+    /**
+     * Validates an incoming tabContainer name, or jQuery-wrapped Tab Container instance, and returns.
+     * @private
+     * @param {jQuery[]|string} tabContainer
+     * @returns {jQuery[]}
+     */
+    _checkForValidTabContainer: function(tabContainer) {
+      if (!tabContainer) {
+        throw new Error('Need to have a tabContainer defined to hide a tabs instance');
+      }
+      if (typeof tabContainer === 'string') {
+        tabContainer = this._getTabContainer(tabContainer);
+      }
+      if (!(tabContainer instanceof $) || !tabContainer.length) {
+        throw new Error('No matching tabContainer could be found and hidden.');
+      }
+
+      return tabContainer;
+    },
+
+
+    /**
+     * Runs a callback function on all available tab containers.
+     * @param {function} callback
+     * @param {Array} [additionalArgs]
+     */
+    performOnAllContainers: function(callback, additionalArgs) {
+      var self = this;
+      additionalArgs = Array.isArray(additionalArgs) ? additionalArgs :
+        !additionalArgs ? [] : [additionalArgs];
+
+      TAB_CONTAINER_NAMES.forEach(function(propname) {
+        var container = self.tabContainers[propname],
+          args = [];
+
+        if (container) {
+          args.push(propname, container);
+          args = args.concat(additionalArgs);
+          callback.apply(this, args);
+        }
+      });
+    },
+
+    /**
+     * @private
+     */
+    _adjustModuleTabContainers: function() {
+      // Re-adjust Module-tab containers so everything lines up.
+      this.performOnAllContainers(function(propname, container) {
+        var api = container.data('tabs');
+        if (api.isModuleTabs()) {
+          api.adjustModuleTabs();
+        }
+      });
+    },
+
+    /**
+     * Temporarily removes a tabset from view without destroying it.
+     * @param {jQuery[]|string} tabContainer
+     */
+    hideTabsInstance: function(tabContainer) {
+      tabContainer = this._checkForValidTabContainer(tabContainer);
+      tabContainer.parent('.multitabs-section').addClass('hidden');
+      this._adjustModuleTabContainers();
+    },
+
+    /**
+     * Re-displays a tabset that has temporarily been removed from view.
+    * @param {jQuery[]|string} tabContainer
+     */
+    showTabsInstance: function(tabContainer) {
+      tabContainer = this._checkForValidTabContainer(tabContainer);
+      tabContainer.parent('.multitabs-section').removeClass('hidden');
+      this._adjustModuleTabContainers();
+    },
 
     /**
      * Destroys a tabs instance and removes it from the queue.
@@ -269,12 +334,22 @@
     },
 
     /**
+     * Detects whether or not a Tab Container is currently hidden
+     * @param {jQuery[]|string} tabContainer
+     * @returns {boolean}
+     */
+    isHidden: function(tabContainer) {
+      tabContainer = this._checkForValidTabContainer(tabContainer);
+      return tabContainer.parent('.multitabs-section').is('.hidden');
+    },
+
+    /**
      * Update this multi-tabs instance with new settings
      * @param {Object} settings
      */
     updated: function(settings) {
       if (settings) {
-        this.settings = $.extend({}, this.settings, settings);
+        this.settings = Soho.utils.extend({}, this.settings, settings);
       }
     },
 

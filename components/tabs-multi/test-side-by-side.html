@@ -112,6 +112,8 @@
     <li><a id="add-new-tab" href="#">Add new tab...</a></li>
     <li><a id="remove-this-tab" href="#">Remove this tab</a></li>
     <li><a id="move-this-tab" href="#">Move this tab to the other side</a></li>
+    <li><a id="toggle-primary-container" href="#">Hide "primary" (left) container</a></li>
+    <li><a id="toggle-secondary-container" href="#">Hide "secondary" (right) container</a></li>
   </ul>
 
 
@@ -144,7 +146,9 @@
       menu = $('#action-popupmenu'),
       menuAddTabOption = $('#add-new-tab'),
       menuRemoveTabOption = $('#remove-this-tab'),
-      menuMoveTabOption = $('#move-this-tab');
+      menuMoveTabOption = $('#move-this-tab'),
+      menuTogglePrimaryContainerOption = $('#toggle-primary-container'),
+      menuToggleSecondaryContainerOption = $('#toggle-secondary-container');
 
     // Grab a reference to the Multitabs API after the initializer runs
     $('body').on('initialized', function() {
@@ -180,6 +184,23 @@
         targetTabsetName = currentTabset.children('.tab-container').attr('data-multitabs') === 'primary' ? 'secondary' : 'primary';
 
       multiAPI.move(href, targetTabsetName, true);
+    }
+
+
+    // Hide/Show a Tab Container
+    // NOTE: Only configured for left/right at this point.
+    function toggleContainer(containerName) {
+      var dir = containerName === 'primary' ? 'left' : 'right';
+
+      if (multiAPI.isHidden(containerName)) {
+        multiAPI.showTabsInstance(containerName);
+        $('#toggle-'+ containerName +'-container').text('Hide "'+ containerName +'" ('+ dir +') container');
+        return;
+      }
+
+      multiAPI.hideTabsInstance(containerName);
+      $('#toggle-'+ containerName +'-container').text('Show "'+ containerName +'" ('+ dir +') container');
+
     }
 
 
@@ -369,6 +390,14 @@
 
       if (anchor.is(menuMoveTabOption)) {
         return moveTab();
+      }
+
+      if (anchor.is(menuTogglePrimaryContainerOption)) {
+        return toggleContainer('primary');
+      }
+
+      if (anchor.is(menuToggleSecondaryContainerOption)) {
+        return toggleContainer('secondary');
       }
     });
 

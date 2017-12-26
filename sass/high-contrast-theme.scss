@@ -70,7 +70,7 @@ $hyperlink-hover-color: $azure07;
 
 // Alert Colors
 $alert-info: $azure09;
-$alert-green: #80ce4d;
+$alert-green: #397514;
 $alert-yellow: #ffd726;
 $alert-red: $ruby09;
 
@@ -202,6 +202,9 @@ $input-readonly-color: $black;
 //States
 $error-color: $alert-red;
 $error-icon-fill: $alert-red;
+$alert-color: #d66221;
+$confirm-color: $alert-green;
+$info-color: $primary-color;
 $error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, .3);
 $dirty-icon-fill: $alert-yellow;
 $confirm-icon-fill: $alert-green;
@@ -211,6 +214,8 @@ $selected-bg-color: rgba($azure07, .3);
 // Autocomplete
 $autocomplete-light-text: $graphite05;
 $autocomplete-active-bg-color: $body-bg-color;
+$autocomplete-box-shadow: 0 2px 5px 2px $focus-box-shadow-color;
+$autocomplete-box-shadow-flipped: 0 -2px 5px 2px $focus-box-shadow-color;
 $trigger-icon-fill-color: $graphite09;
 $trigger-icon-fill-light-color: $graphite08;
 $trigger-hover-color: $graphite06;

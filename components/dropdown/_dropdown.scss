@@ -34,6 +34,7 @@ select.dropdown,
 select.multiselect,
 select.dropdown-lg,
 select.dropdown-md,
+select.dropdown-mm,
 select.dropdown-sm,
 select.dropdown-xs {
   display: none;
@@ -615,6 +616,12 @@ div.dropdown-lg {
 div.dropdown-md,
 .field-short .dropdown-md {
   width: 300px;
+}
+
+.dropdown-mm,
+div.dropdown-mm,
+.field-short .dropdown-mm {
+  width: 225px;
 }
 
 .dropdown-sm,

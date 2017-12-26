@@ -1625,8 +1625,9 @@ $datagrid-short-row-height: 23px;
 
         ~ .icon {
           left: auto;
-          margin-left: 3px;
+          margin-left: -6px;
           top: calc(50% - 15px);
+          width: 34px;
         }
 
         &:disabled .icon {
@@ -2659,11 +2660,6 @@ html[dir='rtl'] {
       border-right: 1px solid $datagrid-cell-border-color;
     }
 
-    //Push sort indicator over
-    .sort-indicator {
-      margin: 6px 3px 0;
-    }
-
     .datagrid-rowgroup-header {
       .datagrid-expand-btn {
         left: auto;
@@ -2696,6 +2692,13 @@ html[dir='rtl'] {
     }
     // scss-lint:enable NestingDepth
 
+    td.l-right-text .datagrid-cell-wrapper {
+      text-align: left;
+    }
+
+    td.is-editing .datepicker ~ .icon {
+      margin-right: -8px;
+    }
   }
 
   //Datagrid Dropdown Formatter
@@ -2728,6 +2731,7 @@ html[dir='rtl'] {
     &.is-partial::after {
       margin-left: inherit;
       margin-right: -3px;
+      right: 6px;
     }
   }
 
@@ -2771,13 +2775,45 @@ html[dir='rtl'] {
     right: 9px;
   }
 
+  // Right aligned header
+  th .datagrid-column-wrapper.l-right-text {
+    float: left;
+    top: 11px;
+
+    .datagrid-header-text {
+      float: left;
+    }
+
+    .sort-indicator {
+      float: right;
+      margin: -20px 1px 0;
+      position: relative;
+      top: 0;
+    }
+  }
+
   tr .datagrid-alert-text {
     padding-left: 0;
     padding-right: 10px;
   }
 
-  .datagrid-header th .datagrid-header-text {
-    direction: rtl;
+  .datagrid-header {
+    //Push sort indicator over
+    .sort-indicator {
+      margin: 3px 3px 0;
+    }
+
+    .required::after {
+      content: '';
+    }
+
+    .required::before {
+      @include required-indicator();
+      color: $datagrid-required-icon-color;
+      left: -2px;
+      top: 0;
+    }
+
   }
 
   //Contextual toolbar
@@ -3228,20 +3264,4 @@ html[dir='rtl'] {
       // scss-lint:enable NestingDepth
     }
   }
-}
-
-.datagrid-empty-message {
-  background-color: $body-bg-color;
-  display: none;
-  min-height: 60px;
-  padding-bottom: 5px;
-
-  .empty-title {
-    padding: 0 0 15px;
-  }
-
-  .empty-icon {
-    padding: 25px 0;
-  }
-
 }

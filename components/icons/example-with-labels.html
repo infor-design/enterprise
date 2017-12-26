@@ -2,46 +2,27 @@
   <div class="six columns">
     <h2>Icons Example - Inside Labels</h2>
     <p>
-      Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7051" target="_blank">SOHO-7051</a>
-    </p>
-    <p>Various examples of SVG icons aligned around or inside label elements.  See the source code of this test for more details.</p>
+      Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7051" target="_blank">SOHO-7051</a> Examples of SVG icons aligned with a label.  See the source code of this test for more details.</p>
   </div>
 </div>
 
 <div class="row">
   <div class="twelve columns">
 
-    <!-- Original Example -->
-    <div class="compound field">
-      <div class="field">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-confirm"/>
-        </svg>
-      </div>
-      <div class="field">
-        <label>#HTTP GET Diagnostic was successful. UTF-8 data is being received correctly</label>
-      </div>
-    </div>
-
-
     <!-- SVG outside of label -->
     <div class="field">
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-confirm"/>
       </svg>
-
-      <label>#HTTP GET Diagnostic was successful. UTF-8 data is being received correctly</label>
+      <span>#HTTP GET Diagnostic was successful. UTF-8 data is being received correctly</span>
     </div>
-
 
     <!-- SVG inside label -->
     <div class="field">
-      <label>
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-confirm"/>
-        </svg>
-        <span>#HTTP GET Diagnostic was successful. UTF-8 data is being received correctly</span>
-      </label>
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-confirm"/>
+      </svg>
+      <span>#HTTP GET Diagnostic was successful. UTF-8 data is being received correctly</span>
     </div>
 
   </div>

@@ -106,7 +106,7 @@ window.Chart = function(container) {
       return;
     }
     var isTwoColumn = series[0].display && series[0].display === 'twocolumn',
-      legend = isTwoColumn ? $('<div class="chart-legend" style="margin: 2em auto auto; border-top: 1px solid #ccc;  padding-bottom: 1em; padding-top: 1em;"></div>') : $('<div class="chart-legend"></div>');
+      legend = isTwoColumn ? $('<div class="chart-legend is-below"></div>') : $('<div class="chart-legend"></div>');
 
     // Legend width
     var width = 0,
@@ -154,14 +154,15 @@ window.Chart = function(container) {
       }
 
       if (isTwoColumn) {
-        if(widthPercent > 45) {
+        if (widthPercent > 45) {
           seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0" style="float: none; display: block; margin: 0 auto; width: '+ width +'px;"></span>';
         } else {
-          seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0" style="float: none; display: inline-block; width: 45%;"></span>';
+          seriesLine = '<span class="chart-legend-item'+ extraClass +' is-two-column" tabindex="0" ></span>';
         }
       }
       seriesLine = $(seriesLine);
       seriesLine.append(color, textBlock);
+
       legend.append(seriesLine);
     }
 
@@ -912,12 +913,12 @@ window.Chart = function(container) {
     return $(container);
   };
 
-
   this.Pie = function(initialData, isDonut, options) {
     var defaults = {
       labels: {
         // true|false
         hideLabels: true,
+        hideCenterLabel: false,
         isTwoline: true,
 
         // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
@@ -1000,7 +1001,7 @@ window.Chart = function(container) {
     dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 40);
     dims.innerRadius = isDonut ? dims.outerRadius - (donutWidth + 5) : 0;
     dims.labelRadius = dims.outerRadius + (donutWidth - 10);
-    dims.center = { x: (dims.width / 2) + 7, y: dims.height / 2 };
+    dims.center = { x: (dims.width / 2), y: dims.height / 2 };
 
     svg.attr({
       'width': '100%',
@@ -1053,8 +1054,7 @@ window.Chart = function(container) {
             i: i
           });
           $(container).triggerHandler('selected', [d3.select(this)[0], {}, i]);
-        }
-        else {
+        }  else {
           // Make selected
           charts.setSelectedElement({
             task: 'selected',
@@ -1380,37 +1380,37 @@ window.Chart = function(container) {
 
         if (lb.hideLabels) {
           drawTextlabels();
+        }
 
-          // Add center label only if its donut chart
-          if (isDonut) {
-            arcs.append('text')
-              .attr('dy', '.35em')
-              .style('text-anchor', 'middle')
-              .attr('class', 'chart-donut-text')
-              .html(centerLabel);
+        // Add center label only if its donut chart
+        if (isDonut && !lb.hideCenterLabel) {
+          arcs.append('text')
+            .attr('dy', '.35em')
+            .style('text-anchor', 'middle')
+            .attr('class', 'chart-donut-text')
+            .html(centerLabel);
 
-            // FIX: IE does not render .html
-            if (charts.isIE) {
-              if (charts.isHTML(centerLabel)) {
-                // http://stackoverflow.com/questions/13962294/dynamic-styling-of-svg-text
-                var text  = arcs.select('.chart-donut-text'),
-                  tmp = document.createElement('text');
-                tmp.innerHTML = centerLabel;
-                var nodes = Array.prototype.slice.call(tmp.childNodes);
-                nodes.forEach(function(node) {
-                  text.append('tspan')
-                    .attr('style', node.getAttribute && node.getAttribute('style'))
-                    .attr('x', node.getAttribute && node.getAttribute('x'))
-                    .attr('dy', node.getAttribute && node.getAttribute('dy'))
-                    .text(node.textContent);
-                });
-              }
-              else {
-                arcs.select('.chart-donut-text').text(centerLabel);
-              }
+          // FIX: IE does not render .html
+          if (charts.isIE && !charts.isIEEdge) {
+            if (charts.isHTML(centerLabel)) {
+              // http://stackoverflow.com/questions/13962294/dynamic-styling-of-svg-text
+              var text  = arcs.select('.chart-donut-text'),
+                tmp = document.createElement('text');
+              tmp.innerHTML = centerLabel;
+              var nodes = Array.prototype.slice.call(tmp.childNodes);
+              nodes.forEach(function(node) {
+                text.append('tspan')
+                  .attr('style', node.getAttribute && node.getAttribute('style'))
+                  .attr('x', node.getAttribute && node.getAttribute('x'))
+                  .attr('dy', node.getAttribute && node.getAttribute('dy'))
+                  .text(node.textContent);
+              });
+            } else {
+              arcs.select('.chart-donut-text').text(centerLabel);
             }
           }
         }
+
       };
       addLabels();
 
@@ -1555,6 +1555,10 @@ window.Chart = function(container) {
     //Get the Legend Series'
     var series = chartData.map(function (d) {
       var name = d.name +' ('+ (isNaN(d.percent) ? 0 : d.percent) +'%)';
+
+      if (settings.legendFormatter) {
+       name = d.name +' ('+ d3.format(settings.legendFormatter)(d.value) + ')';
+      }
 
       if (d.name === 'Empty-Pie') {
         name= '';
@@ -4497,6 +4501,7 @@ window.Chart = function(container) {
     this.redrawOnResize = true;
     this.isRTL = Locale.isRTL();
     this.isIE = $('html').hasClass('ie');
+    this.isIEEdge = $('html').hasClass('ie-edge');
 
     var defaultShowLegend = function(opt) {
       if (typeof opt !== 'undefined') {

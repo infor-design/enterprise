@@ -1,8 +1,6 @@
 <div class="row">
   <div class="six columns">
-
     <h2>Card Test: Paging Datagrid</h2>
-
   </div>
 </div>
 
@@ -11,7 +9,7 @@
     <div class="card">
       <div class="card-header">
           <h2 class="widget-title">Chart Title</h2>
-          <button type="button" class="btn-actions" type="button">
+          <button type="button" class="btn-actions">
             <span class="audible">Actions</span>
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-more"></use>
@@ -26,14 +24,6 @@
         <div id="datagrid"></div>
       </div>
     </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="twelve columns">
-
-
-
   </div>
 </div>
 
@@ -77,14 +67,14 @@
       data.push({ id: 30, productId: 2642230, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 175, formatter: Formatters.Hyperlink});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 125});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId',formatter: Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', ormatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
-      columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -94,12 +84,7 @@
         selectable: 'single',
         paging: true,
         pagesize: 10
-      }).data('datagrid');
-
-      grid.setColumnWidth('productId', '15%', true);
-      grid.setColumnWidth('status', 150, true);
-      grid.setColumnWidth('productName', '20%', true);
-      grid.setColumnWidth('activity', '15%', true);
+      });
     });
  });
 </script>

@@ -119,6 +119,10 @@ button {
   border: 1px solid $primary-btn-bg-color;
   color: $primary-btn-color;
 
+  &.btn {
+    color: $primary-btn-color;
+  }
+
   .icon {
     fill: $primary-btn-color;
   }
@@ -550,7 +554,7 @@ a.btn-menu {
       @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94));
       height: 28px;
       padding-right: 0;
-      top: 0;
+      top: 2px;
       width: 28px;
 
       &.active {

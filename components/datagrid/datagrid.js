@@ -1531,11 +1531,11 @@ $.fn.datagrid = function(options) {
   var pluginName = 'datagrid',
       defaults = {
         // F2 - toggles actionableMode "true" and "false"
-        // If actionableMode is "true”, tab and shift tab behave like left and right arrow key,
+        // If actionableMode is "true, tab and shift tab behave like left and right arrow key,
         // if the cell is editable it goes in and out of edit mode
         actionableMode: false,
-        cellNavigation: true, // If cellNavigation is "false”, will show border around whole row on focus
-        rowNavigation: true, // If rowNavigation is "false”, will NOT show border around the row
+        cellNavigation: true, // If cellNavigation is "false, will show border around whole row on focus
+        rowNavigation: true, // If rowNavigation is "false, will NOT show border around the row
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
@@ -1597,9 +1597,9 @@ $.fn.datagrid = function(options) {
   * The Datagrid Component displays and process data in tabular format.
   *
   * @class Datagrid
-  * @param {Boolean} actionableMode &nbsp;-&nbsp If actionableMode is "true”, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
-  * @param {Boolean} cellNavigation &nbsp;-&nbsp If cellNavigation is "false”, will show border around whole row on focus
-  * @param {Boolean} rowNavigation  &nbsp;-&nbsp If rowNavigation is "false”, will NOT show border around the row
+  * @param {Boolean} actionableMode &nbsp;-&nbsp If actionableMode is "true, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+  * @param {Boolean} cellNavigation &nbsp;-&nbsp If cellNavigation is "false, will show border around whole row on focus
+  * @param {Boolean} rowNavigation  &nbsp;-&nbsp If rowNavigation is "false, will NOT show border around the row
   * @param {Boolean} alternateRowShading  &nbsp;-&nbsp Sets shading for readonly grids
   * @param {Array} columns  &nbsp;-&nbsp an array of columns (see column options)
   * @param {Array} dataset  &nbsp;-&nbsp an array of data objects
@@ -1775,27 +1775,8 @@ $.fn.datagrid = function(options) {
       self.container = self.element.closest('.datagrid-container');
 
       if (this.settings.emptyMessage) {
-        var opts = this.settings.emptyMessage;
         //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
-
-        self.emptyMessageContainer = $('<div class="datagrid-empty-message">'+
-          (!opts.icon ? '' : '<div class="empty-icon">'+
-            '<svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">'+
-            '<use xlink:href="#'+opts.icon+'"></use>'+
-            '</svg>'+
-          '</div>')+
-          '<div class="empty-title">'+
-            opts.title +
-          '</div>'+
-          (!opts.info ? '' : '<div class="empty-info">'+
-            opts.info +
-          '</div>')+
-          (!opts.button ? '' : '<div class="empty-actions">'+
-            '<button type="button" class="btn-secondary hide-focus '+ opts.button.cssClass +'" id="'+ opts.button.id +'">'+
-              '<span>'+ opts.button.text +'</span>'+
-            '</button>'+
-          '</div>')+
-        '</div>');
+        self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
         self.contentContainer.prepend(self.emptyMessageContainer);
       }
 
@@ -1924,13 +1905,14 @@ $.fn.datagrid = function(options) {
           activePage = Math.floor(location / this.pager.settings.pagesize + 1);
         }
 
-        this.pager.pagingInfo = $.extend({}, this.pager.pagingInfo, {
-          activePage: activePage,
-          total: this.settings.dataset.length,
-          pagesize: this.settings.pagesize
-        });
-
-        this.renderPager(this.pager.pagingInfo);
+        if (!this.settings.source) {
+          this.pager.pagingInfo = $.extend({}, this.pager.pagingInfo, {
+            activePage: activePage,
+            total: this.settings.dataset.length,
+            pagesize: this.settings.pagesize
+          });
+        }
+        this.renderPager(this.pager.pagingInfo, true);
       }
     },
 
@@ -5335,10 +5317,16 @@ $.fn.datagrid = function(options) {
             menuId: self.settings.menuId,
             eventObj: e,
             beforeOpen: self.settings.menuBeforeOpen,
+            attachToBody: true,
             trigger: 'immediate'})
           .off('selected').on('selected', function (e, args) {
             if (self.settings.menuSelected) {
               self.settings.menuSelected(e, args);
+            }
+          }).off('close').on('close', function () {
+            var elem = $(this);
+            if (elem.data('popupmenu')) {
+              elem.data('popupmenu').destroy();
             }
           });
         }
