@@ -16,19 +16,19 @@ The SwapList Component creates a list of options that can be picked and organize
 
 **Parameters**
 
--   `searchable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
--   `available` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  An array containing items for the available bucket.
--   `selected` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -   An array containing items for the selected bucket.
--   `additional` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -   An array containing items for the additional bucket.
--   `availableClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A class name linking the available root element.
--   `selectedClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A class name linking the selected root element.
--   `additionalClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A class name linking the additional root element.
--   `availableBtn` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A class name linking the available button element.
--   `selectedBtnLeft` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the move left button element.
--   `selectedBtnRight` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the move right button element.
--   `additionalBtn` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the additional button element.
--   `template` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An Html String with the mustache template for the view.
--   `draggable` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
+-   `searchable` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+-   `available` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  An array containing items for the available bucket.
+-   `selected` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -   An array containing items for the selected bucket.
+-   `additional` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -   An array containing items for the additional bucket.
+-   `availableClass` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A class name linking the available root element.
+-   `selectedClass` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A class name linking the selected root element.
+-   `additionalClass` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A class name linking the additional root element.
+-   `availableBtn` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A class name linking the available button element.
+-   `selectedBtnLeft` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the move left button element.
+-   `selectedBtnRight` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the move right button element.
+-   `additionalBtn` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the additional button element.
+-   `template` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An Html String with the mustache template for the view.
+-   `draggable` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
 
 ### getAvailable
 
@@ -48,7 +48,7 @@ Updates the internal datasets and refresh the ui.
 
 **Parameters**
 
--   `ds` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The updated dataset(s) of the form `{available: [], selected: [], additional: []}`
+-   `ds` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The updated dataset(s) of the form `{available: [], selected: [], additional: []}`
 
 ### destroy
 
@@ -60,4 +60,4 @@ Sets up event handlers for this control and its sub-elements
 
 **Parameters**
 
--   `swapupdate` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when any bucket has its content changed.
+-   `swapupdate` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when any bucket has its content changed.

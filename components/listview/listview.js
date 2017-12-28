@@ -209,8 +209,12 @@
 
           if (dataset.length > 0) {
             this.element.html(renderedTmpl);
-          } else if (self.emptyMessageContainer) {
-            this.element.empty().append(this.emptyMessageContainer);
+          } else {
+            if (self.emptyMessageContainer) {
+              this.element.empty().append(this.emptyMessageContainer);
+            } else if (dataset.length === 0) {
+              this.element.html(renderedTmpl || '<ul></ul>');
+            }
           }
         }
 
