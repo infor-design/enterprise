@@ -4135,7 +4135,7 @@ $.fn.datagrid = function(options) {
 
       var self = this;
       // Implement Tooltip on cells with title attribute
-      this.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
+      this.tableBody.find('td[title]').tooltip();
       this.tableBody.find('a[title]').tooltip();
 
       // Implement Tooltip on cells with ellipsis
