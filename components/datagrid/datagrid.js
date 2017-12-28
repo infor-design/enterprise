@@ -2631,12 +2631,6 @@ $.fn.datagrid = function(options) {
                 conditionValue.setDate(1);
                 conditionValue.setMonth(0);
                 conditionValue.setYear(0);
-              } else if (!(columnDef.editorOptions && columnDef.editorOptions.showTime)) {
-                // Drop any time component of the row data for the filter as it is a date only field
-                rowValue.setHours(0);
-                rowValue.setMinutes(0);
-                rowValue.setSeconds(0);
-                rowValue.setMilliseconds(0);
               }
 
               conditionValue = conditionValue.getTime();
@@ -2658,6 +2652,12 @@ $.fn.datagrid = function(options) {
                   rowValue.setDate(1);
                   rowValue.setMonth(0);
                   rowValue.setYear(0);
+                } else if (!(columnDef.editorOptions && columnDef.editorOptions.showTime)) {
+                  // Drop any time component of the row data for the filter as it is a date only field
+                  rowValue.setHours(0);
+                  rowValue.setMinutes(0);
+                  rowValue.setSeconds(0);
+                  rowValue.setMilliseconds(0);
                 }
                 rowValue = rowValue.getTime();
               }
