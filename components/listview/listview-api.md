@@ -43,7 +43,6 @@ The About Dialog Component is displays information regarding the application.
 -   `showCheckboxes` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If false will not show checkboxes used with multiple selection mode only
 -   `hoverable` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the list element will show a hover action to indicate its actionable.
 -   `source` **([Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function) \| [String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
--   `forceToRenderOnEmptyDs` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true list will render as an empty list with ul tag, but not any li tags in it.
 -   `disableItemDeactivation` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
 
 ### render
