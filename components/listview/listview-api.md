@@ -32,18 +32,19 @@ The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
--   `dataset` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Array of data to feed the template
--   `content` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Html Template String
--   `description` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Audible Label (or use parent title)
--   `paging` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, activates paging
--   `pagesize` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  If paging is activated, sets the number of listview items available per page
--   `searchable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
--   `selectable` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean))**  -   selection mode, can be false, 'single' or 'multiple' or 'mixed'
--   `selectOnFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the first item in the list will be selected as it is focused.
--   `showCheckboxes` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If false will not show checkboxes used with multiple selection mode only
--   `hoverable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the list element will show a hover action to indicate its actionable.
--   `source` **([Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
--   `disableItemDeactivation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
+-   `dataset` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Array of data to feed the template
+-   `content` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Html Template String
+-   `description` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Audible Label (or use parent title)
+-   `paging` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, activates paging
+-   `pagesize` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  If paging is activated, sets the number of listview items available per page
+-   `searchable` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+-   `selectable` **([String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean))**  -   selection mode, can be false, 'single' or 'multiple' or 'mixed'
+-   `selectOnFocus` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the first item in the list will be selected as it is focused.
+-   `showCheckboxes` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If false will not show checkboxes used with multiple selection mode only
+-   `hoverable` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the list element will show a hover action to indicate its actionable.
+-   `source` **([Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function) \| [String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+-   `forceToRenderOnEmptyDs` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true list will render as an empty list with ul tag, but not any li tags in it.
+-   `disableItemDeactivation` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
 
 ### render
 
@@ -51,8 +52,8 @@ Render the template against the dataset.
 
 **Parameters**
 
--   `dataset` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The dataset to use
--   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Pager instructions
+-   `dataset` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The dataset to use
+-   `pagerInfo` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Pager instructions
 
 ### refresh
 
@@ -64,8 +65,8 @@ Load Data from an external API
 
 **Parameters**
 
--   `ds` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The dataset to use or will use settings.dataset.
--   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The pager settings to use (see pager api)
+-   `ds` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The dataset to use or will use settings.dataset.
+-   `pagerInfo` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The pager settings to use (see pager api)
 
 ### toggleAll
 
@@ -89,7 +90,7 @@ Remove the given list item.
 
 **Parameters**
 
--   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
 
 ### clear
 
@@ -109,9 +110,9 @@ Overridable function to conduct sorting
 
 **Parameters**
 
--   `field` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The field in the dataset to sort on.
--   `reverse` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true sort descending.
--   `primer` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  A sorting primer function.
+-   `field` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The field in the dataset to sort on.
+-   `reverse` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true sort descending.
+-   `primer` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)**  -  A sorting primer function.
 
 ### deselect
 
@@ -119,7 +120,7 @@ Deselect the given list item.
 
 **Parameters**
 
--   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
 
 ### unselect
 
@@ -140,8 +141,8 @@ Select the given list item.
 
 **Parameters**
 
--   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
--   `noTrigger` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Do not trigger the selected event.
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
+-   `noTrigger` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Do not trigger the selected event.
 
 ### toggleItemActivation
 
@@ -157,13 +158,13 @@ Set item to activated, unactivate others and fire an event.
 
 **Parameters**
 
--   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element or the index.
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element or the index.
 
 ### activatedItem
 
 Return an object containing info about the currently activated item.
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** An object containing the active row's index, dom element and data.
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An object containing the active row's index, dom element and data.
 
 ### deactivateItem
 
@@ -171,7 +172,7 @@ Set item to deactivated, uand fire an event.
 
 **Parameters**
 
--   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
 
 ### updated
 
@@ -191,7 +192,7 @@ This component fires the following events.
 
 **Parameters**
 
--   `selected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is selected
--   `unselected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is deselected (deprecated)
--   `deselected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is deselected
--   `rendered` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the listbox is fully rendered
+-   `selected` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is selected
+-   `unselected` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is deselected (deprecated)
+-   `deselected` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is deselected
+-   `rendered` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the listbox is fully rendered

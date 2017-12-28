@@ -30,6 +30,7 @@
         hoverable: true,
         emptyMessage: null,
         source: null,
+        forceToRenderOnEmptyDs: false,
         disableItemDeactivation: false
       },
       settings = $.extend({}, defaults, options);
@@ -49,6 +50,7 @@
     * @param {Boolean} showCheckboxes  &nbsp;-&nbsp;  If false will not show checkboxes used with multiple selection mode only
     * @param {Boolean} hoverable  &nbsp;-&nbsp;  If true the list element will show a hover action to indicate its actionable.
     * @param {Function|String} source  &nbsp;-&nbsp; If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+    * @param {Boolean} forceToRenderOnEmptyDs  &nbsp;-&nbsp; If true list will render as an empty list with ul tag, but not any li tags in it.
     * @param {Boolean} disableItemDeactivation  &nbsp;-&nbsp; If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
     *
     */
@@ -207,7 +209,7 @@
           var compiledTmpl = Tmpl.compile(this.settings.template),
             renderedTmpl = compiledTmpl.render({dataset: dataset, totals: totals});
 
-          if (dataset.length > 0) {
+          if (dataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
             this.element.html(renderedTmpl);
           } else if (self.emptyMessageContainer) {
             this.element.empty().append(this.emptyMessageContainer);

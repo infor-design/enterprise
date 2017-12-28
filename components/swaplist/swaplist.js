@@ -152,6 +152,10 @@
             }
             options.template = s.template;
             options.dataset = c.dataset || [];
+
+            if (options.dataset.length === 0) {
+              options.forceToRenderOnEmptyDs = true;
+            }
             lv.listview(options);
           }
 
