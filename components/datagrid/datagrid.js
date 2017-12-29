@@ -1552,7 +1552,7 @@ $.fn.datagrid = function(options) {
         headerMenuBeforeOpen: null, //Call back for the header level before open menu event
         uniqueId: null, //Unique ID for local storage reference and variable names
         rowHeight: 'normal', //(short, medium or normal)
-        selectable: false, //false, 'single' or 'multiple'
+        selectable: false, //false, 'single' or 'multiple' or 'siblings'
         groupable: null, //Use Data grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}
         clickToSelect: true,
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
@@ -1616,7 +1616,7 @@ $.fn.datagrid = function(options) {
   * @param {String} headerMenuBeforeOpen  &nbsp;-&nbsp Callback for the header level beforeopen menu event
   * @param {String} uniqueId &nbsp;-&nbsp Unique ID to use as local storage reference and internal variable names
   * @param {String} rowHeight &nbsp;-&nbsp Controls the height of the rows / number visible rows. May be (short, medium or normal)
-  * @param {String} selectable &nbsp;-&nbsp Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed'
+  * @param {String} selectable &nbsp;-&nbsp Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
   * @param {Object} groupable &nbsp;-&nbsp  Controls fields to use for data grouping Use Data grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}
   * @param {Boolean} clickToSelect &nbsp;-&nbsp Controls if using a selection mode if you can click the rows to select
   * @param {Object} toolbar  &nbsp;-&nbsp Toggles and appends toolbar features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
@@ -5960,15 +5960,32 @@ $.fn.datagrid = function(options) {
                 data = s.treeDepth[index].node;
               selectNode(elem, index, data);
             });
-          }
-          // Single element selection
-          else {
+          } else if (s.selectable === 'siblings') {
+            this.unSelectAllRows();
+
+            // Select node and node-siblings
+            var level = rowNode.attr('aria-level'),
+              nexts = rowNode.nextUntil('[aria-level!="'+ level +'"]'),
+              prevs = rowNode.prevUntil('[aria-level!="'+ level +'"]');
+
+            if (level === '1') {
+              nexts = rowNode.parent().find('[aria-level="1"]');
+              prevs = null;
+            }
+
+            rowNode.add(nexts).add(prevs).each(function() {
+              var elem = $(this),
+                index = elem.attr('aria-rowindex') -1,
+                data = s.treeDepth[index].node;
+              selectNode(elem, index, data);
+            });
+
+          } else { // Default to Single element selection
             rowData = s.treeDepth[self.pager && s.source ? rowNode.index() : dataRowIndex].node;
             selectNode(rowNode, dataRowIndex, rowData);
           }
           self.setNodeStatus(rowNode);
-        }
-        else {
+        } else {
           dataRowIndex = self.pager && s.source ? rowNode.index() : dataRowIndex;
           rowData = s.dataset[dataRowIndex];
           if (s.groupable) {
@@ -6212,6 +6229,7 @@ $.fn.datagrid = function(options) {
           .removeClass('is-checked no-animate').attr('aria-checked', 'false');
 
         if (s.treeGrid) {
+
           for (var i = 0; i < s.treeDepth.length; i++) {
             if (self.isNodeSelected(s.treeDepth[i].node)) {
               if (typeof index !== 'undefined') {
@@ -6223,6 +6241,7 @@ $.fn.datagrid = function(options) {
               }
             }
           }
+
         } else {
           var selIdx = elem.length ? self.actualArrayIndex(elem) : index,
             rowData;
@@ -6248,9 +6267,13 @@ $.fn.datagrid = function(options) {
               index = elem.attr('aria-rowindex') -1;
             unselectNode(elem, index);
           });
-        }
-        // Single element unselection
-        else {
+        } else if (s.selectable === 'siblings') {
+          rowNode.parent().find('.is-selected').each(function() {
+            var elem = $(this),
+              index = elem.attr('aria-rowindex') -1;
+            unselectNode(elem, index);
+          });
+        } else { // Single element unselection
           unselectNode(rowNode, idx);
         }
         self.setNodeStatus(rowNode);
