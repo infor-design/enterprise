@@ -99,6 +99,11 @@ window.Formatters = {
       if (value2) {
         formatted = value2.slice(value2.indexOf(' '));
       }
+    } else if (value) {
+      value2 = Locale.formatDate(value, { pattern: (localeDateFormat +' '+ (col.sourceFormat || col.timeFormat || localeTimeFormat)) });
+      if (value2) {
+        formatted = value2.slice(value2.indexOf(' '));
+      }
     }
 
     // Remove extra space in begining
@@ -2637,6 +2642,20 @@ $.fn.datagrid = function(options) {
             }
 
             if (rowValue instanceof Date) {
+              // Copy date
+              rowValue = new Date(rowValue.getTime());
+              if (columnDef.filterType === 'time') {
+                // drop the day, month and year
+                rowValue.setDate(1);
+                rowValue.setMonth(0);
+                rowValue.setYear(0);
+              } else if (!(columnDef.editorOptions && columnDef.editorOptions.showTime)) {
+                // Drop any time component of the row data for the filter as it is a date only field
+                rowValue.setHours(0);
+                rowValue.setMinutes(0);
+                rowValue.setSeconds(0);
+                rowValue.setMilliseconds(0);
+              }
               rowValue = rowValue.getTime();
             }
             else if (typeof rowValue === 'string' && rowValue) {
