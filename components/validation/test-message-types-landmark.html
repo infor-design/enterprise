@@ -1,7 +1,7 @@
 <form>
-  <div class="row">
+  <div class="row top-padding">
     <div class="six columns">
-      <h3>Example of validation types with example processing for Landmark</h3>
+      <h3>Example of validation types introduced by the Landmark team</h3>
     </div>
   </div>
 
@@ -17,49 +17,47 @@
       <label for="option3" class="radio-label">Confirm</label>
       <input type="radio" class="radio" name="optionsGroupVWO" id="option4" value="info" onChange="onChange(event)"/>
       <label for="option4" class="radio-label">Info</label>
-    </div>
-  </div>
-  <div class="row">
-    <div class="full-width">
+
+      <div class="field">
+      </div>
       <div class="field">
         <input type="checkbox" class="checkbox" id="is-alert">
         <label for="is-alert" class="checkbox-label">Is Alert</label>
       </div>
+
+      <div class="field">
+        <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
+        <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
+        <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
+        <button class="btn-primary" type="button" onClick="getMessage()">Get Message</button>
+      </div>
+
     </div>
-    <div class="row">
-      <div class="full-width">
-        <div class="field">
-          <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
-          <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
-          <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
-          <button class="btn-primary" type="button" onClick="getMessage()">Get Message</button>
-        </div>
+  </div>
+  <div class="row">
+    <div class="three columns">
+      <div class="field">
+        <label for="text-field">Text Field</label>
+        <input class="input-lg" alignRight="true" name="text-field" id="text-field" value="abcdef"/>
+      </div>
+      <div class="field">
+        <label for="date-field">Date Field</label>
+        <input class="datepicker input-lg" id="date-field" data-options="{'placeholder': false}" name="date-field"
+          type="text" value="12/14/2017"/>
       </div>
     </div>
-    <div class="row">
-      <div class="three columns">
-        <div class="field">
-          <label for="text-field">Text Field</label>
-          <input class="input-lg" alignRight="true" name="text-field" id="text-field" value="abcdef"/>
-        </div>
-        <div class="field">
-          <label for="date-field">Date Field</label>
-          <input class="datepicker input-lg" id="date-field" data-options="{'placeholder': false}" name="date-field"
-            type="text" value="12/14/2017"/>
-        </div>
+    <div class="six columns">
+      <div class="field">
+        <label for="output-text-field">Text Field Result of Get Message</label>
+        <input class="input-full" id="output-text-field" readonly/>
       </div>
-      <div class="six columns">
-        <div class="field">
-          <label for="output-text-field">Text Field Result of Get Message</label>
-          <input class="input-full" id="output-text-field" readonly/>
-        </div>
-        <div class="field">
-          <label for="output-date-field">Date Field Result of Get Message</label>
-          <input class="input-full" id="output-date-field" readonly/>
-        </div>
+      <div class="field">
+        <label for="output-date-field">Date Field Result of Get Message</label>
+        <input class="input-full" id="output-date-field" readonly/>
       </div>
     </div>
   </div>
+
 </form>
 
 <script>
@@ -114,8 +112,16 @@
     });
   }
 
-  $("form").on('valid error', function (event, validation) {
-    console.log([ event.currentTarget.id, event.type, validation.field.prop('tagName') ]);
+  $('form').on('valid', function (e, args) {
+    console.log('valid', e, args);
+  });
+
+  $('form').on('error', function (e, args) {
+    console.log('error', e, args);
+  });
+
+  /** Not sure what this does as event.currentTarget.id is always null
+  $('form').on('valid error', function (event, validation) {
 
     var isAlert = $('#is-alert').prop('checked');
     var alertText = (isAlert) ? ' is alert,' : '';
@@ -132,5 +138,6 @@
       }, 10);
     }
   });
+  **/
 
 </script>
