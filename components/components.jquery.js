@@ -30,5 +30,6 @@ import './spinbox/spinbox.jquery';
 import './textarea/textarea.jquery';
 import './toast/toast.jquery';
 import './tooltip/tooltip.jquery';
+import './zoom/zoom.jquery';
 
 // Organisms

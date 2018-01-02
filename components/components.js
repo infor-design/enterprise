@@ -32,6 +32,7 @@ export { Spinbox } from './spinbox/spinbox';
 export { Textarea } from './textarea/textarea';
 export { Toast } from './toast/toast';
 export { Tooltip } from './tooltip/tooltip';
+export { Zoom } from './zoom/zoom';
 // -- ex: dropdown/multiselect
 
 // Oraganisms
