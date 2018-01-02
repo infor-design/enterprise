@@ -152,6 +152,7 @@
             }
             options.template = s.template;
             options.dataset = c.dataset || [];
+
             lv.listview(options);
           }
 

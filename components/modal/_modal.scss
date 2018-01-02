@@ -37,8 +37,32 @@
   }
 
   .field {
+    [data-error-type="tooltip"] ~ .icon-error,
+    [data-error-type="tooltip"] ~ .icon-confirm {
+      top: -7px;
+    }
+
+    .dropdown-wrapper {
+      [data-error-type="tooltip"] ~ .icon-error,
+      [data-error-type="tooltip"] ~ .icon-confirm {
+        top: 1px;
+      }
+    }
+
+    &.editor-container {
+      [data-error-type="tooltip"] ~ .icon-error,
+      [data-error-type="tooltip"] ~ .icon-confirm {
+        top: 55px;
+      }
+    }
+
     textarea {
       width: 300px;
+
+      &[data-error-type="tooltip"] ~ .icon-error,
+      &[data-error-type="tooltip"] ~ .icon-confirm {
+        top: 20px;
+      }
 
       &.input-lg {
         min-height: inherit;
