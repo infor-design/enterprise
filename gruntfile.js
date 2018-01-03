@@ -173,5 +173,5 @@ module.exports = function (grunt) {
     'usebanner'
   ]);
 };
-/* eslint-disable global-require, no-param-reassign,
+/* eslint-enable global-require, no-param-reassign,
   no-useless-concat, import/no-extraneous-dependencies */

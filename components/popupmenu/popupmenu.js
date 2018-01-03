@@ -1,3 +1,4 @@
+
 import * as debug from '../utils/debug';
 import { utils, DOM } from '../utils/utils';
 import { PlacementObject, Place } from '../place/place';
@@ -5,17 +6,15 @@ import { PlacementObject, Place } from '../place/place';
 // jQuery Components
 import '../place/place.jquery';
 
-
 /**
  * Component Name
  */
-let PLUGIN_NAME = 'popupmenu';
-
+const PLUGIN_NAME = 'popupmenu';
 
 /**
  * Default Popupmenu Settings
  */
-let POPUPMENU_DEFAULTS = {
+const POPUPMENU_DEFAULTS = {
   menu: null,
   trigger: 'click',
   autoFocus: true,
@@ -35,7 +34,6 @@ let POPUPMENU_DEFAULTS = {
     y: 0
   }
 };
-
 
 /**
 * Responsive Popup Menu Control aka Context Menu when doing a right click action.
@@ -742,7 +740,8 @@ PopupMenu.prototype = {
       this.element.triggerHandler('selected', selectionResult);
     }
 
-    // MultiSelect Lists should act like other "multiselect" items and not close the menu when options are chosen.
+    // MultiSelect Lists should act like other "multiselect" items and not
+    // close the menu when options are chosen.
     if (this.menu.hasClass('is-multiselectable') || this.isInMultiselectSection(anchor)) {
       return;
     }
@@ -1607,6 +1606,5 @@ PopupMenu.prototype = {
     $.removeData(this.element[0], PLUGIN_NAME);
   }
 };
-
 
 export { PopupMenu, PLUGIN_NAME };

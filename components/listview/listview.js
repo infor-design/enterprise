@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { stringUtils as str } from '../utils/string';
@@ -12,17 +13,9 @@ import '../pager/pager.jquery';
 import '../popupmenu/popupmenu.jquery';
 import '../searchfield/searchfield.jquery';
 
+const COMPONENT_NAME = 'listview';
 
-/**
- *
- */
-let PLUGIN_NAME = 'listview';
-
-
-/**
- *
- */
-let LISTVIEW_DEFAULTS = {
+const LISTVIEW_DEFAULTS = {
   dataset: [],
   template: null,
   description: null,
@@ -60,9 +53,9 @@ let LISTVIEW_DEFAULTS = {
 function ListView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, LISTVIEW_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 
@@ -805,6 +798,31 @@ ListView.prototype = {
   },
 
   /**
+  * Set item to activated, unactivate others and fire an event.
+  * @param {jQuery|Number} li &nbsp;-&nbsp; The jQuery list element or the index.
+  */
+  activateItem: function(li) {
+    var idx = li.index(),
+      active = this.element.find('li.is-activated'),
+      elemCanActivate = true;
+
+    this.deactivateItem(active);
+
+    elemCanActivate = this.element.triggerHandler('beforeactivate', [{index: idx, elem: li, data: this.settings.dataset[idx]}]);
+
+    if (elemCanActivate === false) {
+      return false;
+    }
+
+    if (typeof li === 'number') {
+      li = this.element.find('ul').children().eq(li);
+    }
+    li.addClass('is-activated');
+
+    this.element.triggerHandler('itemactivated', [{index: idx, elem: li, data: this.settings.dataset[idx]}]);
+  },
+
+  /**
   * Return an object containing info about the currently activated item.
   * @returns {Object} An object containing the active row's index, dom element and data.
   */
@@ -865,7 +883,7 @@ ListView.prototype = {
   */
   destroy: function() {
     this.teardown();
-    this.element.removeData(PLUGIN_NAME);
+    this.element.removeData(COMPONENT_NAME);
   },
 
   /**
@@ -1099,5 +1117,4 @@ ListView.prototype = {
   }
 };
 
-
-export { ListView, PLUGIN_NAME };
+export { ListView, COMPONENT_NAME };

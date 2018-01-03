@@ -1,10 +1,6 @@
 import { utils } from '../utils/utils';
-import { ListView, PLUGIN_NAME } from './listview';
+import { ListView, COMPONENT_NAME } from './listview';
 
-
-/**
- * jQuery Component Wrapper for Listview
- */
 $.fn.listview = function(settings) {
 
   /**
@@ -22,6 +18,7 @@ $.fn.listview = function(settings) {
   if (window[options.dataset]) {
     options.dataset = window[options.dataset];
   }
+
   if (options.template && options.template.length) {
     options.template = $('#' + options.template).html();
   }
@@ -29,11 +26,11 @@ $.fn.listview = function(settings) {
   settings = utils.extend({}, settings, options);
 
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    const instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new ListView(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new ListView(this, settings));
     }
   });
 };
