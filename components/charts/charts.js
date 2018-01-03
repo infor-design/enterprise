@@ -2676,13 +2676,13 @@ window.Chart = function(container) {
           thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
 
         // Set isSelected to false if even 1 bar is selected
-        if(isTargetBar) {
-          var allBars = d3.selectAll('.bar')[0];
-          var len = allBars.length;
-          for(var i = 0; i < len; i++) {
+        if (isTargetBar) {
+          var allBars = d3.selectAll('.bar')[0],
+            len = allBars.length;
+          for (var i = 0; i < len; i++) {
             var bar = allBars[i];
 
-            if(d3.select(bar).classed('is-selected')) {
+            if (d3.select(bar).classed('is-selected')) {
               isSelected = false;
               break;
             }
@@ -4376,7 +4376,7 @@ window.Chart = function(container) {
       // By legends only
       if (s.isByLegends && !isTypePie) {
         if (isPositiveNegative) {
-          if(o.isTargetBar) {
+          if (o.isTargetBar) {
             s.svg.selectAll('.target-bar').classed('is-selected', true).style('opacity', 1);
 
             pnTargetText.style('font-weight', 'bolder');
