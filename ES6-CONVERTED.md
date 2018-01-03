@@ -40,7 +40,9 @@ All the following Soho Components have been converted to ES6:
   - string
   - theme
   - utils
-
+* Validation (lots of jQuery)
+* Wizard
+* Zoom
 
 # TODO: Convert These: (Alphabetized)
 
@@ -88,6 +90,3 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Tree
 * (utils)
   - template
-* Validation (lots of jQuery)
-* Wizard
-* Zoom

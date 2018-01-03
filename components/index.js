@@ -19,6 +19,7 @@ export { renderLoop, RenderLoopItem };
 
 export { theme } from './utils/theme';
 export { masks } from './mask/masks';
+export { Validation } from './validation/validation';
 
 // Behaviors ================================== /
 export { behaviors };

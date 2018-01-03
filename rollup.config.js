@@ -13,9 +13,9 @@ module.exports = {
   output: {
     file: 'dist/js/sohoxi.js',
     format: 'iife',
+    sourcemap: true,
+    sourcemapFile: 'dist/js/sohoxi.js.map'
   },
-  sourcemap: true,
-  sourcemapFile: 'dist/js/sohoxi.js.map',
   name: 'Soho',
   plugins: [
     resolve(),
