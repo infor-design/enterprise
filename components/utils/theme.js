@@ -1,4 +1,9 @@
+
 /**
- * defines the current "theme"
+ * Exports the current "theme" from Personalize.js
  */
-export let theme = 'light';
+
+export const theme = Soho ? Soho.theme : 'light';
+export default theme;
+
+// export let theme = 'light';

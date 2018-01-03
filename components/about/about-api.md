@@ -2,13 +2,14 @@
 
 ### Table of Contents
 
--   -   [PLUGIN_NAME](#plugin_name)
-    -   [ABOUT_DEFAULTS](#about_defaults)
-    -   [About](#about)
+-   -   [About](#about)
         -   [getDeviceSpecs](#getdevicespecs)
         -   [updated](#updated)
         -   [close](#close)
         -   [destroy](#destroy)
+    -   [afterclose](#afterclose)
+    -   [close](#close-1)
+    -   [beforeclose](#beforeclose)
     -   [enableTimeLogging](#enabletimelogging)
     -   [logTimeStart](#logtimestart)
     -   [logTimeEnd](#logtimeend)
@@ -21,7 +22,6 @@
     -   [onTouchClick](#ontouchclick)
     -   [offTouchClick](#offtouchclick)
     -   [listEvents](#listevents)
-    -   [placeholderPolyfill](#placeholderpolyfill)
     -   [parseOptions](#parseoptions)
     -   [timer](#timer)
     -   [clearable](#clearable)
@@ -54,6 +54,8 @@
     -   [addClass](#addclass)
     -   [isElement](#iselement)
     -   [getDimensions](#getdimensions)
+    -   [convertDelayToFPS](#convertdelaytofps)
+    -   [convertFPSToDelay](#convertfpstodelay)
     -   [Locale](#locale)
         -   [set](#set)
         -   [formatDate](#formatdate)
@@ -79,39 +81,30 @@
         -   [capitalize](#capitalize-1)
         -   [capitalizeWords](#capitalizewords-1)
 
-## PLUGIN_NAME
-
-Plugin Name
-
-## ABOUT_DEFAULTS
-
-Default Settings
-
 ## About
 
 The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
--   `element`  
--   `settings`  
--   `appName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Main Application Name to display in the header.
--   `content` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional Text content to display at the top.
--   `copyrightYear` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The year displayed in the copyright, defaults to current year.
--   `deviceSpecs` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
--   `productName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional product name information to display.
--   `useDefaultCopyright` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Add the Legal Approved Infor Copy Right Text.
--   `version` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Semantic Version Number for example (4.0.0).
+-   `appName` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The Main Application Name to display in the header.
+-   `content` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional Text content to display at the top.
+-   `copyrightYear` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The year displayed in the copyright, defaults to current year.
+-   `deviceSpecs` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Determines whether or not to display device
+    information (Browser, Platform, Locale, Cookies Enabled)
+-   `productName` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional product name information to display.
+-   `useDefaultCopyright` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Add the Legal Approved Infor Copy Right Text.
+-   `version` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Semantic Version Number for example (4.0.0).
 
 ### getDeviceSpecs
 
 Return the browser specs. Currently returns browse, os, cookiesEnabled and locale
 
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### updated
 
-updated
+Update the component and reapply current settings
 
 **Parameters**
 
@@ -119,11 +112,38 @@ updated
 
 ### close
 
-Progamatically Close the About Dialog.
+Progamatically close the About dialog.
 
 ### destroy
 
 Teardown and remove any added markup and events.
+
+## afterclose
+
+Fires after the dialog has closed in the DOM entirely.
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
+-   `ui` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+
+## close
+
+Fires as the dialog is closing
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
+-   `ui` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+
+## beforeclose
+
+Fires before the dialog is closing. You can return false syncronously to delay closing.
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
+-   `ui` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
 
 ## enableTimeLogging
 
@@ -133,13 +153,13 @@ Easy flag for determining whether or not time will be logged to the console.
 
 **Parameters**
 
--   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `label` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
 ## logTimeEnd
 
 **Parameters**
 
--   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `label` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
 ## bindFirst
 
@@ -176,15 +196,15 @@ Check for CSS Property Support in a cross browser way
 
 **Parameters**
 
--   `prop` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `prop` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ## transitionEndName
 
 Returns the name of the TransitionEnd event.
 
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ## onTouchClick
 
@@ -211,17 +231,6 @@ Reverses the .onTouchClick() method and turns off a matching event listener.
 
 Returns a key/value list of currently attached event listeners
 
-## placeholderPolyfill
-
-Implements consistent support for the placeholder attribute in browsers that do not handle it
-
--   Supports any kind of input (no issues with password) and textarea
--   does nothing if native support exists
-
-**Parameters**
-
--   `options`  
-
 ## parseOptions
 
 jQuery Behavior Wrapper for `utils.parseOptions`.
@@ -230,9 +239,9 @@ jQuery Behavior Wrapper for `utils.parseOptions`.
 
 -   `element`  
 -   `attr`  
--   `attrName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `attrName` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
-Returns **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** 
+Returns **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** 
 
 **Meta**
 
@@ -261,9 +270,9 @@ Binds the Soho Util _getHiddenSize()_ to a jQuery selector
 
 **Parameters**
 
--   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options
+-   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options
 
-Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## copyToClipboard
 
@@ -312,22 +321,23 @@ Adds the ':focusable' selector to Sizzle to allow for the selection of elements 
 
 **Parameters**
 
--   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** 
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## extend
 
 ## parseSettings
 
-Grabs an attribute from an HTMLElement containing stringified JSON syntax, and interprets it into options.
+Grabs an attribute from an HTMLElement containing stringified JSON syntax,
+and interprets it into options.
 
 **Parameters**
 
--   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
--   `attr` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** 
+-   `attr` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## parseOptions
 
@@ -377,13 +387,13 @@ The action of changing the xlink:href attribute to something else and back will 
 
 -   `rootElement`  
 
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
 ## getViewportSize
 
 Gets the current size of the viewport
 
-Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## getContainerScrollDistance
 
@@ -393,7 +403,7 @@ Gets the various scrollable containers that an element is nested inside of, and 
 
 -   `element`  
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 
 ## getHiddenSize
 
@@ -401,11 +411,11 @@ Takes an element that is currently hidden by some means (FX: "display: none;") a
 
 **Parameters**
 
--   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
--   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
--   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
+-   `el` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
+-   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
+-   `parentElement` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
 
-Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## isString
 
@@ -415,7 +425,7 @@ Checks if a specific input is a String
 
 -   `value` **?** 
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## isNumber
 
@@ -425,7 +435,7 @@ Checks if a specific input is a Number
 
 -   `value` **?** 
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## safeSetSelection
 
@@ -435,9 +445,9 @@ cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
 
 **Parameters**
 
--   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
--   `startPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `endPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** 
+-   `startPos` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `endPos` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
 ## mergeSettings
 
@@ -446,11 +456,11 @@ whose intention is to be set as options on a Soho component.
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
--   `incomingOptions` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))** 
--   `defaultOptions` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))?** 
+-   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
+-   `incomingOptions` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** 
+-   `defaultOptions` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))?** 
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## getAttributes
 
@@ -495,9 +505,9 @@ Checks if an element is valid
 
 **Parameters**
 
--   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being checked
+-   `el` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being checked
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** represents all values normally contained by a DOMRect or ClientRect
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** represents all values normally contained by a DOMRect or ClientRect
 
 ## getDimensions
 
@@ -506,9 +516,30 @@ as a plain object instead of a ClientRect
 
 **Parameters**
 
--   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated
+-   `el` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated
 
-Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
+
+## convertDelayToFPS
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `delay` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+
+## convertFPSToDelay
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `fps`  
+-   `delay` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
 
 ## Locale
 
@@ -516,7 +547,7 @@ The Locale component handles i18n
 
 **Parameters**
 
--   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
+-   `currentLocale` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
 
 ### set
 
@@ -524,7 +555,7 @@ Set the currently used colors.
 
 **Parameters**
 
--   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+-   `locale` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
 
 ### formatDate
 
@@ -532,8 +563,8 @@ Format a Date Object and return it parsed in the current locale.
 
 **Parameters**
 
--   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
--   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
+-   `value` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `attribs` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
 
 ### isValidDate
 
@@ -542,7 +573,7 @@ Check if the date is valid using the current locale to do so.
 **Parameters**
 
 -   `date`  
--   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `value` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
 
 ### parseDate
 
@@ -550,9 +581,9 @@ Take a date string written in the current locale and parse it into a Date Object
 
 **Parameters**
 
--   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
--   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
--   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+-   `dateString` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
+-   `dateFormat` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
+-   `isStrict` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
 
 ### formatNumber
 
@@ -561,8 +592,8 @@ Format a decimal with thousands and padding in the current locale.
 
 **Parameters**
 
--   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
--   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+-   `number` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
+-   `options` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
 
 ### parseNumber
 
@@ -570,7 +601,7 @@ Take a Formatted Number and return a real number
 
 **Parameters**
 
--   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+-   `input` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
 
 ### translate
 
@@ -578,7 +609,7 @@ Overridable culture messages
 
 **Parameters**
 
--   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `key` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
 -   `showAsUndefined`  
 
 ### toUpperCase
@@ -588,7 +619,7 @@ In most cases this method will simply pipe the string to `String.prototype.toUpp
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
 ### toLowerCase
 
@@ -597,9 +628,9 @@ In most cases this method will simply pipe the string to `String.prototype.toLow
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### capitalize
 
@@ -608,9 +639,9 @@ In most cases this method will simply use a simple algorithm for captializing th
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### capitalizeWords
 
@@ -619,9 +650,9 @@ In most cases this method will simply use a simple algorithm for captializing th
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ## Locale
 
@@ -641,7 +672,7 @@ Set the currently used colors.
 
 **Parameters**
 
--   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+-   `locale` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
 
 ### formatDate
 
@@ -649,8 +680,8 @@ Format a Date Object and return it parsed in the current locale.
 
 **Parameters**
 
--   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
--   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
+-   `value` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `attribs` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
 
 ### isValidDate
 
@@ -659,7 +690,7 @@ Check if the date is valid using the current locale to do so.
 **Parameters**
 
 -   `date`  
--   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `value` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
 
 ### parseDate
 
@@ -667,9 +698,9 @@ Take a date string written in the current locale and parse it into a Date Object
 
 **Parameters**
 
--   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
--   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
--   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+-   `dateString` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
+-   `dateFormat` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
+-   `isStrict` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
 
 ### formatNumber
 
@@ -678,8 +709,8 @@ Format a decimal with thousands and padding in the current locale.
 
 **Parameters**
 
--   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
--   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+-   `number` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
+-   `options` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
 
 ### parseNumber
 
@@ -687,7 +718,7 @@ Take a Formatted Number and return a real number
 
 **Parameters**
 
--   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+-   `input` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
 
 ### translate
 
@@ -695,7 +726,7 @@ Overridable culture messages
 
 **Parameters**
 
--   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `key` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
 -   `showAsUndefined`  
 
 ### toUpperCase
@@ -705,7 +736,7 @@ In most cases this method will simply pipe the string to `String.prototype.toUpp
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
 ### toLowerCase
 
@@ -714,9 +745,9 @@ In most cases this method will simply pipe the string to `String.prototype.toLow
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### capitalize
 
@@ -725,9 +756,9 @@ In most cases this method will simply use a simple algorithm for captializing th
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### capitalizeWords
 
@@ -736,6 +767,6 @@ In most cases this method will simply use a simple algorithm for captializing th
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 

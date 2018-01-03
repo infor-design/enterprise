@@ -2,10 +2,26 @@
 
 ### Table of Contents
 
+-   [PLUGIN_NAME](#plugin_name)
+-   [PERSONALIZE_DEFAULTS](#personalize_defaults)
 -   [Personalize](#personalize)
     -   [setColors](#setcolors)
     -   [getLuminousColorShade](#getluminouscolorshade)
     -   [setTheme](#settheme)
+-   [personalize](#personalize-1)
+-   [enableTimeLogging](#enabletimelogging)
+-   [logTimeStart](#logtimestart)
+-   [logTimeEnd](#logtimeend)
+
+## PLUGIN_NAME
+
+Component name as referenced by jQuery/event namespace/etc
+
+Type: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## PERSONALIZE_DEFAULTS
+
+Component Defaults
 
 ## Personalize
 
@@ -22,7 +38,7 @@ Sets the personalization color(s)
 
 **Parameters**
 
--   `colors` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The original hex color as a string or an object with all the Colors
+-   `colors` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The original hex color as a string or an object with all the Colors
 
 ### getLuminousColorShade
 
@@ -31,7 +47,8 @@ Takes a color and performs a change in luminosity of that color programatically.
 **Parameters**
 
 -   `hex` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The original Hexadecimal base color.
--   `lum` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A percentage used to set luminosity change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
+-   `lum` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A percentage used to set luminosity
+    change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
 
 Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** hexadecimal color.
 
@@ -41,4 +58,29 @@ Sets the current theme, blocking the ui during the change.
 
 **Parameters**
 
--   `theme` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Represents the file name of a color scheme (can be dark, light or high-contrast)
+-   `theme` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Represents the file name of a color
+    scheme (can be dark, light or high-contrast)
+
+## personalize
+
+jQuery Component Wrapper for Personalize
+
+**Parameters**
+
+-   `options`  
+
+## enableTimeLogging
+
+Easy flag for determining whether or not time will be logged to the console.
+
+## logTimeStart
+
+**Parameters**
+
+-   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
+## logTimeEnd
+
+**Parameters**
+
+-   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 

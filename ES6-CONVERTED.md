@@ -7,6 +7,7 @@ All the following Soho Components have been converted to ES6:
 * ApplicationMenu
 * Autocomplete
 * Button
+* Colorpicker
 * Drag (behavior)
 * Dropdown
 * Hyperlink
@@ -45,16 +46,18 @@ All the following Soho Components have been converted to ES6:
 
 The components listed below are still UMD-wrapped as ES5 jQuery components.  They need to be transitioned following the [How to migrate a Soho Xi component from ES5 to ES6](./ES5-TO-ES6.md) section of the ES6 Guide.
 
-* Angular (?)
+* Angular 1.0 Directives (?)
+* Area Chart (Separate it from charts.js?)
 * Arrange (behavior)
 * Busy Indicator
+* Bar Charts (Separate it from charts.js?)
 * Charts
 * Circle Pager
-* Colorpicker
 * Composite Form
 * Contextual Action Panel
 * Datagrid
 * Datepicker
+* Dirty Tracking (Util to Convert to component)
 * Editor
 * EmptyMessage
 * Expandable area

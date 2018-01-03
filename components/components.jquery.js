@@ -17,6 +17,7 @@ import './about/about.jquery';
 import './accordion/accordion.jquery';
 import './applicationmenu/applicationmenu.jquery';
 import './dropdown/dropdown.jquery';
+import './colorpicker/colorpicker.jquery';
 import './listview/listview.jquery';
 import './mask/masked-input.jquery';
 import './message/message.jquery';
