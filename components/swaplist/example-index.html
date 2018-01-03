@@ -32,7 +32,7 @@
 <div class="row top-padding">
   <div class="columns six">
 
-    <div class="swaplist" id="example-swaplist-1">
+    <div class="swaplist" id="example-swaplist-1" data-init="false">
       <div class="card available">
         <div class="card-header">
           <h2 class="card-title">Available</h2>
@@ -73,7 +73,7 @@
 <div class="row">
   <div class="columns nine">
 
-    <div class="swaplist one-third" id="example-swaplist-2">
+    <div class="swaplist one-third" id="example-swaplist-2" data-init="false">
       <div class="card available">
         <div class="card-header">
           <h2 class="card-title">Available</h2>
@@ -142,7 +142,9 @@
     var ds1 = [],
       dsAvailable = [];
       dsSelected = [];
-      dsAdditional = [];
+      dsAdditional = [],
+      elem1 = $('#example-swaplist-1'),
+      elem2 = $('#example-swaplist-2');
 
     ds1.push({id: 1, value: 'opt-1', text: 'Option A'});
     ds1.push({id: 2, value: 'opt-2', text: 'Option B'});
@@ -173,14 +175,14 @@
 
 
     // Single Dataset Example ==================================================
-    $('#example-swaplist-1').swaplist({
+    elem1.swaplist({
       available: ds1,
       template: $('#swaplist-tmpl').html()
     });
 
 
     // Additional Dataset Example ==============================================
-    $('#example-swaplist-2').swaplist({
+    elem2.swaplist({
       available: dsAvailable,
       selected: dsSelected,
       additional: dsAdditional,
@@ -189,12 +191,12 @@
 
 
     // On swap update ==========================================================
-    var api1 = $('#example-swaplist-1').data('swaplist');
-    api1.updated();
-    api1.element.on('swapupdate', function (e, items) {
-      console.log(api1.dataset);
-      console.log(api1.getAvailable());
-      console.log(api1.getSelected());
+    elem1.on('swapupdate', function (e, items) {
+      var api = elem1.data('swaplist');
+
+      console.log(api.dataset);
+      console.log(api.getAvailable());
+      console.log(api.getSelected());
     });
 
   });

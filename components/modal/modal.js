@@ -183,11 +183,10 @@ Modal.prototype = {
             allValid = false;
           }
         } else {
-          field.checkValidation();
+          field.validateField();
           if (isVisible && !field.isValid()) {
             allValid = false;
           }
-
         }
 
         if (allValid) {

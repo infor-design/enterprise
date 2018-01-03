@@ -358,16 +358,3 @@ html[dir='rtl'] {
     }
   }
 }
-
-.is-firefox.is-mac {
-  .searchfield-wrapper .btn {
-    height: 34px;
-  }
-
-  .searchfield-wrapper.context {
-    .btn,
-    input {
-      height: 32px;
-    }
-  }
-}
