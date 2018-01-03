@@ -772,12 +772,13 @@
       * @param {jQuery|Number} li &nbsp;-&nbsp; The jQuery list element or the index.
       */
       activateItem: function(li) {
-        var active = this.element.find('li.is-activated'),
+        var idx = li.index(),
+          active = this.element.find('li.is-activated'),
           elemCanActivate = true;
 
         this.deactivateItem(active);
 
-        elemCanActivate = this.element.triggerHandler('beforeactivate');
+        elemCanActivate = this.element.triggerHandler('beforeactivate', [{index: idx, elem: li, data: this.settings.dataset[idx]}]);
 
         if (elemCanActivate === false) {
           return false;
@@ -788,7 +789,6 @@
         }
         li.addClass('is-activated');
 
-        var idx = li.index();
         this.element.triggerHandler('itemactivated', [{index: idx, elem: li, data: this.settings.dataset[idx]}]);
       },
 
