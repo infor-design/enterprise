@@ -19,7 +19,6 @@
         -   [select](#select)
         -   [toggleItemActivation](#toggleitemactivation)
         -   [activateItem](#activateitem)
-        -   [activateItem](#activateitem-1)
         -   [activatedItem](#activateditem)
         -   [deactivateItem](#deactivateitem)
         -   [updated](#updated)
@@ -51,7 +50,6 @@
     -   [applicationmenu](#applicationmenu)
     -   [isHiddenAtBreakpoint](#ishiddenatbreakpoint)
     -   [dropdown](#dropdown)
-    -   [listview](#listview-1)
     -   [maskedinput](#maskedinput)
     -   [mask](#mask)
     -   [message](#message)
@@ -173,8 +171,8 @@
         -   [close](#close)
         -   [destroy](#destroy-2)
     -   [beforeclose](#beforeclose)
-    -   [close](#close-1)
     -   [afterclose](#afterclose)
+    -   [close](#close-1)
     -   [ACCORDION_DEFAULTS](#accordion_defaults)
     -   [Accordion](#accordion-1)
         -   [handleHeaderClick](#handleheaderclick)
@@ -255,7 +253,7 @@
         -   [updated](#updated-5)
         -   [destroy](#destroy-6)
         -   [handleEvents](#handleevents-5)
-    -   [options](#options)
+    -   [cs](#cs)
     -   [DEFAULT_MASKED_INPUT_OPTIONS](#default_masked_input_options)
     -   [SohoMaskedInput](#sohomaskedinput)
         -   [handleEvents](#handleevents-6)
@@ -559,14 +557,6 @@ Set item to activated, unactivate others and fire an event.
 
 -   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element or the index.
 
-### activateItem
-
-Set item to activated, unactivate others and fire an event.
-
-**Parameters**
-
--   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element or the index.
-
 ### activatedItem
 
 Return an object containing info about the currently activated item.
@@ -806,14 +796,6 @@ Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 ## dropdown
 
 jQuery Component Wrapper for the Dropdown
-
-**Parameters**
-
--   `settings`  
-
-## listview
-
-jQuery Component Wrapper for Listview
 
 **Parameters**
 
@@ -1744,18 +1726,18 @@ Fires before the dialog is closing. You can return false syncronously to delay c
 -   `event` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
 -   `ui` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
 
-## close
+## afterclose
 
-Fires as the dialog is closing
+Fires after the dialog has closed in the DOM entirely.
 
 **Properties**
 
 -   `event` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
 -   `ui` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
 
-## afterclose
+## close
 
-Fires after the dialog has closed in the DOM entirely.
+Fires as the dialog is closing
 
 **Properties**
 
@@ -2380,7 +2362,7 @@ Detach events and restore DOM to default.
 
 Returns **void** 
 
-## options
+## cs
 
 NOTE: Much of this is here for backwards-compatibility reasons.  In the future we need to
 make sure these enhancements make it to the components.

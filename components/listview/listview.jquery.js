@@ -1,36 +1,35 @@
 import { utils } from '../utils/utils';
 import { ListView, COMPONENT_NAME } from './listview';
 
-$.fn.listview = function(settings) {
-
+$.fn.listview = function (settings) {
   /**
    * NOTE: Much of this is here for backwards-compatibility reasons.  In the future we need to
    * make sure these enhancements make it to the components.
    */
-  var cs = $(this),
-    attr = cs.attr('data-dataset'),
-    tmpl = cs.attr('data-tmpl'),
-    options = Soho.utils.parseOptions(this) || {};
+  const cs = $(this);
+  const attr = cs.attr('data-dataset');
+  const tmpl = cs.attr('data-tmpl');
+  const inlineOpts = Soho.utils.parseOptions(this) || {};
 
-  options.dataset = options.dataset || attr;
-  options.template = options.template || tmpl;
+  inlineOpts.dataset = inlineOpts.dataset || attr;
+  inlineOpts.template = inlineOpts.template || tmpl;
 
-  if (window[options.dataset]) {
-    options.dataset = window[options.dataset];
+  if (window[inlineOpts.dataset]) {
+    inlineOpts.dataset = window[inlineOpts.dataset];
   }
 
-  if (options.template && options.template.length) {
-    options.template = $('#' + options.template).html();
+  if (inlineOpts.template && inlineOpts.template.length) {
+    inlineOpts.template = $(`#${inlineOpts.template}`).html();
   }
 
-  settings = utils.extend({}, settings, options);
+  const combinedSettings = utils.extend({}, settings, inlineOpts);
 
-  return this.each(function() {
-    const instance = $.data(this, COMPONENT_NAME);
+  return this.each(function () {
+    let instance = $.data(this, COMPONENT_NAME);
     if (instance) {
-      instance.updated(settings);
+      instance.updated(combinedSettings);
     } else {
-      instance = $.data(this, COMPONENT_NAME, new ListView(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new ListView(this, combinedSettings));
     }
   });
 };
