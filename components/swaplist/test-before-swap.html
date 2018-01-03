@@ -1,0 +1,150 @@
+﻿
+<div class="page-container top-padding scrollable" role="main">
+
+<!--This is only needed because it renders first on the server on the first one-->
+{{={{{ }}}=}}
+
+<script id="swaplist-tmpl" type="text/html">
+  <ul data-swap-handle=".handle">
+    {{#dataset}}
+    {{#text}}
+      <li
+      {{#value}}
+        data-value="{{value}}"
+      {{/value}}
+      {{#selected}}
+        selected="selected"
+      {{/selected}}
+      {{#disabled}}
+        class="is-disabled"
+      {{/disabled}}
+      >
+        <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+        <div class="swaplist-item-content">
+          <p>{{text}}</p>
+        </div>
+      </li>
+    {{/text}}
+    {{/dataset}}
+  </ul>
+</script>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <button type="button" class="btn-menu" id='btn-validation-results'>
+      <span>Validation Results: <span class="results">false</span></span>
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-dropdown"></use>
+      </svg>
+    </button>
+    <ul class="popupmenu is-selectable">
+      <li><a href="#true" data-result="true">true</a></li>
+      <li class="is-checked"><a href="#false" data-result="false">false</a></li>
+  </ul>
+  </div>
+</div>
+
+
+<div class="row top-padding">
+  <div class="columns six">
+
+    <div class="swaplist" id="example-swaplist-1" data-init="false">
+      <div class="card available">
+        <div class="card-header">
+          <h2 class="card-title">Available</h2>
+          <div class="buttons">
+            <button class="btn btn-moveto-selected" type="button">
+              <span class="audible">Select</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-right-arrow"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="listview"></div>
+        </div>
+      </div>
+      <div class="card selected">
+        <div class="card-header">
+          <h2 class="card-title">Selected</h2>
+          <div class="buttons">
+            <button class="btn btn-moveto-left" type="button">
+              <span class="audible">Move to left</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-left-arrow"></use>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="card-content">
+          <div class="listview"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+
+
+<script>
+  $(function () {
+
+    // Custom validation results
+    var getRsults = function(el) {
+      return (el.attr('data-result') === 'true');
+    },
+    btn = $('#btn-validation-results'),
+    resultsText = btn.find('.results'),
+    validationResults = getRsults(btn.data('popupmenu').menu.find('.is-checked a'));
+
+    // Button text =============================================================
+    resultsText.text(validationResults);
+
+    // Set validation results ==================================================
+    btn.on('selected', function (e, args) {
+      validationResults = getRsults(args);
+      resultsText.text(validationResults);
+    });
+
+
+    var ds = [],
+      elem = $('#example-swaplist-1');
+
+    ds.push({id: 1, value: 'opt-1', text: 'Option A'});
+    ds.push({id: 2, value: 'opt-2', text: 'Option B'});
+    ds.push({id: 3, value: 'opt-3', text: 'Option C'});
+    ds.push({id: 4, value: 'opt-4', text: 'Option D'});
+    ds.push({id: 5, value: 'opt-5', text: 'Option E'});
+    ds.push({id: 6, value: 'opt-6', text: 'Option F'});
+    ds.push({id: 7, value: 'opt-7', text: 'Option G'});
+    ds.push({id: 8, value: 'opt-8', text: 'Option H'});
+    ds.push({id: 9, value: 'opt-9', text: 'Option I'});
+
+
+    // Single Dataset Example ==================================================
+    elem.swaplist({
+      available: ds,
+      template: $('#swaplist-tmpl').html()
+    });
+
+    // Before swap ==============================================================
+    elem.on('beforeswap', function (e, items) {
+      if (!validationResults) {
+        console.log('No swap, validation fail');
+      }
+      return validationResults;
+    });
+
+    // On swap update ==========================================================
+    elem.on('swapupdate', function (e, items) {
+      console.log('Swap done');
+    });
+
+
+
+  });
+</script>
