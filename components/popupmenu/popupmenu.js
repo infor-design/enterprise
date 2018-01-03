@@ -775,7 +775,7 @@
       iconFilteringSetup: function(alink) {
         if (this.element.hasClass('btn-filter')) {
           var svg = this.element.find('svg.icon-dropdown'),
-            link = alink || $('li:first a', this.menu),
+            link = alink || $('li.is-checked a', this.menu) || $('li:first a', this.menu),
             audibleText = link.find('span').text();
 
           if (svg.length === 1) {
