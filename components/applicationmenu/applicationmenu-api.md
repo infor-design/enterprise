@@ -26,12 +26,9 @@
         -   [updated](#updated)
         -   [destroy](#destroy)
         -   [handleEvents](#handleevents)
-    -   [enableTimeLogging](#enabletimelogging)
-    -   [logTimeStart](#logtimestart)
-    -   [logTimeEnd](#logtimeend)
     -   [bindFirst](#bindfirst)
-    -   [bindFirst](#bindfirst-1)
 -   [SOHO Utils](#soho-utils)
+    -   [bindFirst](#bindfirst-1)
     -   [uniqueId](#uniqueid)
     -   [cssPropSupport](#csspropsupport)
     -   [transitionEndName](#transitionendname)
@@ -122,6 +119,33 @@
         -   [teardown](#teardown-1)
         -   [destroy](#destroy-1)
         -   [handleEvents](#handleevents-1)
+    -   [enableTimeLogging](#enabletimelogging)
+    -   [logTimeStart](#logtimestart)
+    -   [logTimeEnd](#logtimeend)
+    -   [Locale](#locale)
+        -   [set](#set-2)
+        -   [formatDate](#formatdate)
+        -   [isValidDate](#isvaliddate)
+        -   [parseDate](#parsedate)
+        -   [formatNumber](#formatnumber)
+        -   [parseNumber](#parsenumber)
+        -   [translate](#translate)
+        -   [toUpperCase](#touppercase)
+        -   [toLowerCase](#tolowercase)
+        -   [capitalize](#capitalize)
+        -   [capitalizeWords](#capitalizewords)
+    -   [Locale](#locale-1)
+        -   [set](#set-3)
+        -   [formatDate](#formatdate-1)
+        -   [isValidDate](#isvaliddate-1)
+        -   [parseDate](#parsedate-1)
+        -   [formatNumber](#formatnumber-1)
+        -   [parseNumber](#parsenumber-1)
+        -   [translate](#translate-1)
+        -   [toUpperCase](#touppercase-1)
+        -   [toLowerCase](#tolowercase-1)
+        -   [capitalize](#capitalize-1)
+        -   [capitalizeWords](#capitalizewords-1)
     -   [ICON_DEFAULTS](#icon_defaults)
     -   [Icon](#icon-1)
     -   [HideFocus](#hidefocus-1)
@@ -148,30 +172,6 @@
         -   [enable](#enable-1)
         -   [disable](#disable-1)
         -   [destroy](#destroy-2)
-    -   [Locale](#locale)
-        -   [set](#set-2)
-        -   [formatDate](#formatdate)
-        -   [isValidDate](#isvaliddate)
-        -   [parseDate](#parsedate)
-        -   [formatNumber](#formatnumber)
-        -   [parseNumber](#parsenumber)
-        -   [translate](#translate)
-        -   [toUpperCase](#touppercase)
-        -   [toLowerCase](#tolowercase)
-        -   [capitalize](#capitalize)
-        -   [capitalizeWords](#capitalizewords)
-    -   [Locale](#locale-1)
-        -   [set](#set-3)
-        -   [formatDate](#formatdate-1)
-        -   [isValidDate](#isvaliddate-1)
-        -   [parseDate](#parsedate-1)
-        -   [formatNumber](#formatnumber-1)
-        -   [parseNumber](#parsenumber-1)
-        -   [translate](#translate-1)
-        -   [toUpperCase](#touppercase-1)
-        -   [toLowerCase](#tolowercase-1)
-        -   [capitalize](#capitalize-1)
-        -   [capitalizeWords](#capitalizewords-1)
     -   [DEFAULT_AUTOCOMPLETE_TEMPLATE](#default_autocomplete_template)
     -   [DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK](#default_autocomplete_searchable_text_callback)
     -   [DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK](#default_autocomplete_result_iterator_callback)
@@ -338,26 +338,11 @@ This component fires the following events.
 -   `applicationmenuopen` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is opened.
 -   `applicationmenuclose` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the menu is closed.
 
-## enableTimeLogging
-
-Easy flag for determining whether or not time will be logged to the console.
-
-## logTimeStart
-
-**Parameters**
-
--   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
-
-## logTimeEnd
-
-**Parameters**
-
--   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
-
 ## bindFirst
 
-Used for changing the stacking order of jQuery events.  This is needed to override certain
-Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
+============================================
+
+# SOHO Utils
 
 **Parameters**
 
@@ -366,9 +351,8 @@ Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 ## bindFirst
 
-============================================
-
-# SOHO Utils
+Used for changing the stacking order of jQuery events.  This is needed to override certain
+Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 **Parameters**
 
@@ -1133,220 +1117,21 @@ This component fires the following events.
 -   `collapse` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when collapsed a pane is initiated.
 -   `aftercollapse` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after a pane is collapsed.
 
-## ICON_DEFAULTS
+## enableTimeLogging
 
-Default Options
+Easy flag for determining whether or not time will be logged to the console.
 
-## Icon
-
-Icon Control
-Wraps SVG Icons with a Javascript control that can change the icon type, reference
-relative or absolute URLs, and clean up after itself.  Works with the Base tag.
+## logTimeStart
 
 **Parameters**
 
--   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
--   `settings`  
+-   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
-## HideFocus
-
-HideFocus Behavior
-Only shows the focus state on key entry (tabs or arrows).
+## logTimeEnd
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate))** 
-
-Returns **[HideFocus](#hidefocus)** 
-
-## smoothScrollTo
-
-Allows for the smooth scrolling of an element's content area.
-
-**Parameters**
-
--   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
--   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance.
--   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
-
-Returns **$.Deferred** 
-
-## defer
-
-Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
-
-**Parameters**
-
--   `callback`  
--   `timer`  
-
-Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout))** 
-
-## SEARCHFIELD_DEFAULTS
-
-## SearchField
-
-Searchfield Control
-
-**Parameters**
-
--   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
--   `settings`  
-
-### init
-
-Initialization Kickoff
-
-Returns **this** 
-
-### hasCategories
-
-Reveals whether or not categories are active on this searchfield
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-### hasGoButton
-
-Detects the existence of a "Go" button added to the main searchfield API
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-### hasFocus
-
-Detects whether or not the Searchfield has focus.
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-### handleGoButtonClick
-
-**Parameters**
-
--   `e` **jQuery.Event** 
-
-### setCategoryButtonText
-
-Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.
-
-**Parameters**
-
--   `textContent` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** Optional incoming text that will be subtituted for the selected element count.
-
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
-
-### calculateSearchfieldWidth
-
-Ensures that the size of the Searchfield Wrapper does not change whenever a category
-is chosen from a category searchfield.
-NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
-
-### isToolbarSearchfield
-
-Detects whether or not this component is a Toolbar Searchfield
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-### getCategories
-
-Gets a complete list of categories in jQuery-collection form.
-
-Returns **jQuery** categories
-
-### getSelectedCategories
-
-Gets the currently selected list of categories in jQuery-collection form.
-
-Returns **jQuery** selectedCategories
-
-### getCategoryData
-
-Gets the currently selected categories as data.
-
-**Parameters**
-
--   `onlyReturnSelected` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true, will only return checked list items. (optional, default `false`)
-
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** data -
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** name - Category name
-
-Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** id - Category element's ID (if applicable)
-
-Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** value - Category element's value (if applicable)
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** [checked=true] - Category's selection status
-
-### updateCategories
-
-Updates just the categories setting and rerenders the category list.
-
-**Parameters**
-
--   `categories` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
-    -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
--   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
--   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
--   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
-
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
-
-### setCategories
-
-Creates a new set of categories on the Searchfield and rerenders it.
-
-**Parameters**
-
--   `categories` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
-    -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
--   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
--   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
--   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
-
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
-
-### hasCategoryButton
-
-Determines whether or not a Category Trigger exists.
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-### clear
-
-Clears the contents of the searchfield
-
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
-
-### updated
-
-Tears down and rebuilds the Searchfield.
-Can be called directly, but is also triggered by calling the "updated.searchfield" event on the searchfield element.
-
-**Parameters**
-
--   `settings`  
-
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
-
-### enable
-
-Enables the Searchfield
-
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
-
-### disable
-
-Disables the Searchfield
-
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
-
-### destroy
-
-Destroys the Searchfield and removes all jQuery component instancing.
-
-**Parameters**
-
--   `dontDestroyToolbarSearchfield` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
-
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+-   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
 ## Locale
 
@@ -1577,6 +1362,221 @@ In most cases this method will simply use a simple algorithm for captializing th
 -   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## ICON_DEFAULTS
+
+Default Options
+
+## Icon
+
+Icon Control
+Wraps SVG Icons with a Javascript control that can change the icon type, reference
+relative or absolute URLs, and clean up after itself.  Works with the Base tag.
+
+**Parameters**
+
+-   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `settings`  
+
+## HideFocus
+
+HideFocus Behavior
+Only shows the focus state on key entry (tabs or arrows).
+
+**Parameters**
+
+-   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate))** 
+
+Returns **[HideFocus](#hidefocus)** 
+
+## smoothScrollTo
+
+Allows for the smooth scrolling of an element's content area.
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
+-   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance.
+-   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
+
+Returns **$.Deferred** 
+
+## defer
+
+Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
+
+**Parameters**
+
+-   `callback`  
+-   `timer`  
+
+Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout))** 
+
+## SEARCHFIELD_DEFAULTS
+
+## SearchField
+
+Searchfield Control
+
+**Parameters**
+
+-   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `settings`  
+
+### init
+
+Initialization Kickoff
+
+Returns **this** 
+
+### hasCategories
+
+Reveals whether or not categories are active on this searchfield
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasGoButton
+
+Detects the existence of a "Go" button added to the main searchfield API
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasFocus
+
+Detects whether or not the Searchfield has focus.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleGoButtonClick
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+
+### setCategoryButtonText
+
+Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.
+
+**Parameters**
+
+-   `textContent` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** Optional incoming text that will be subtituted for the selected element count.
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### calculateSearchfieldWidth
+
+Ensures that the size of the Searchfield Wrapper does not change whenever a category
+is chosen from a category searchfield.
+NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
+
+### isToolbarSearchfield
+
+Detects whether or not this component is a Toolbar Searchfield
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### getCategories
+
+Gets a complete list of categories in jQuery-collection form.
+
+Returns **jQuery** categories
+
+### getSelectedCategories
+
+Gets the currently selected list of categories in jQuery-collection form.
+
+Returns **jQuery** selectedCategories
+
+### getCategoryData
+
+Gets the currently selected categories as data.
+
+**Parameters**
+
+-   `onlyReturnSelected` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true, will only return checked list items. (optional, default `false`)
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** data -
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** name - Category name
+
+Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** id - Category element's ID (if applicable)
+
+Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** value - Category element's value (if applicable)
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** [checked=true] - Category's selection status
+
+### updateCategories
+
+Updates just the categories setting and rerenders the category list.
+
+**Parameters**
+
+-   `categories` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
+    -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
+-   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
+-   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
+-   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### setCategories
+
+Creates a new set of categories on the Searchfield and rerenders it.
+
+**Parameters**
+
+-   `categories` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
+    -   `categories[].name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
+-   `id` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
+-   `value` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
+-   `checked` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### hasCategoryButton
+
+Determines whether or not a Category Trigger exists.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### clear
+
+Clears the contents of the searchfield
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### updated
+
+Tears down and rebuilds the Searchfield.
+Can be called directly, but is also triggered by calling the "updated.searchfield" event on the searchfield element.
+
+**Parameters**
+
+-   `settings`  
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### enable
+
+Enables the Searchfield
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### disable
+
+Disables the Searchfield
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### destroy
+
+Destroys the Searchfield and removes all jQuery component instancing.
+
+**Parameters**
+
+-   `dontDestroyToolbarSearchfield` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
 ## DEFAULT_AUTOCOMPLETE_TEMPLATE
 

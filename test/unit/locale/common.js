@@ -125,7 +125,7 @@ define([
       expect(Locale.formatDate(new Date(2000, 10, 8, 13, 0), {date: 'datetime'})).to.equal('11/8/2000 1:00 PM');
       Locale.set('de-DE');
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'datetime'})).to.equal('01.12.2000 13:40');
-      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {pattern: 'M.dd.yyyy HH:mm'})).to.equal('12.01.2000 13:05');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 5), {pattern: 'M.dd.yyyy HH:mm'})).to.equal('12.01.2000 13:05');
 
       var date = new Date(2017, 01, 01, 17, 27, 40),
         opts = {pattern: 'yyyy-MM-dd HH:mm' , date: 'datetime'};

@@ -1,8 +1,8 @@
 import { About, PLUGIN_NAME } from './about';
 
-$.fn.about = function(settings) {
-  return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+$.fn.about = function (settings) {
+  return this.each(function () {
+    let instance = $.data(this, PLUGIN_NAME);
     if (instance) {
       instance.updated(settings);
     } else {

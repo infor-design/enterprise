@@ -1,126 +1,57 @@
 // ======================================================
-// NOTE: Depends on airbnb's eslint settings, which need to be installed with
+// NOTE: Depends on airbnb's basic eslint settings, which need to be installed
+// via npm install. To install specific versions and update the package.json
+// se
 // some pretty specific commands per your environment.
 // See: https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb
 // ======================================================
 
 module.exports = {
+  // Only import some air bnb rules
+  // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
+  'extends': 'airbnb-base',
+  'parserOptions': {
+    'ecmaVersion': 6,
+    'sourceType': 'module'
+  },
+  'rules': {
+    // require function expressions to have a name
+    // https://eslint.org/docs/rules/func-names
+    'func-names': 'off',
 
-  /**
-   * Base Rules
-   */
+    // require trailing commas in multiline object literals
+    'comma-dangle': ['off', {
+      'arrays': 'never',
+      'objects': 'never',
+      'imports': 'never',
+      'exports': 'never',
+      'functions': 'never'
+    }],
 
-  //"root": true,
+    // enforce line breaks between braces
+    // https://eslint.org/docs/rules/object-curly-newline
+    'object-curly-newline': ['error', {
+      ObjectExpression: { minProperties: 8, multiline: true, consistent: true },
+      ObjectPattern: { minProperties: 8, multiline: true, consistent: true }
+    }],
 
-  //"extends": "airbnb"//,
+    // disallow use of unary operators, ++ and --
+    // https://eslint.org/docs/rules/no-plusplus
+    'no-plusplus': 'off',
 
-  /*
-  // ============================================
-  // Environments
-  // ============================================
+    // disallow multiple empty lines and only one newline at the end
+    'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 1 }],
 
-  // Define globals exposed by modern browsers.
-  "browser": true,
-
-  // Define globals exposed by jQuery.
-  "jquery": true,
-
-  // Define globals exposed by Node.js.
-  "node": false,
-
-
-  // ============================================
-  // ENFORCING OPTIONS
-  // ============================================
-
-  // Force all variable names to use either camelCase style or UPPER_CASE
-  // with underscores.
-  "camelcase": true,
-
-  // Prohibit use of == and != in favor of === and !==.
-  "eqeqeq": true,
-
-  // Enforce tab width of 2 spaces.
-  "indent": 2,
-
-  // Prohibit use of a variable before it is defined.
-  "latedef": true,
-
-  // TODO: Enforce line length to 80 characters
-  //"maxlen": 80,
-
-  // Require capitalized names for constructor functions.
-  "newcap": true,
-
-  // Enforce use of single quotation marks for strings.
-  "quotmark": "single",
-
-  // TODO: Enforce placing "use strict" at the top function scope
-  "strict": false,
-
-  // Prohibit use of explicitly undeclared variables.
-  "undef": true,
-
-  // Warn when variables are defined but never used.
-  "unused": true,
-
-  //conditional statements must use {}
-  "curly": true,
-
-  // prohibits overwriting prototypes of native objects such as Array, Date ect
-  "freeze": true,
-
-
-  // ============================================
-  // RELAXING OPTIONS
-  // ============================================
-
-  // Suppress warnings about == null comparisons.
-  "eqnull": true,
-
-  // allow functions in a loop since d3 does this all over.
-  "loopfunc": true,
-
-  // Allow Some Globals used in tests and packages
-  "predef": [
-    "Tmpl",
-    "Aggregators",
-    "GroupBy",
-    "Range",
-    "define",
-    "d3",
-    "describe",
-    "it",
-    "before",
-    "after",
-    "beforeEach",
-    "Modernizr",
-    "Locale",
-    "chai",
-    "assert",
-    "expect",
-    "should",
-    "Editors",
-    "Formatters",
-    "Chart",
-    "angular",
-    "Soho",
-    "jquery",
-    "module",
-    "__dirname",
-    "Buffer",
-    "require",
-    "ko",
-    "ListFilter",
-    "unescape"
-  ],
-
-  "globals": {
-    "globals": true,
-    "chai": true,
-    "should": true,
-    "test" : true
+      // ensure JSDoc comments are valid
+    // https://eslint.org/docs/rules/valid-jsdoc
+    'valid-jsdoc': 'warn'
+  },
+  'globals': {
+    '$': false,
+    'navigator': false,
+    'document': false,
+    'window': false,
+    'Soho': false,
+    'grunt': false
   }
-  */
-
 };

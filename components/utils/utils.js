@@ -4,7 +4,6 @@
  * ============================================
  */
 
-
 /**
  * Used for changing the stacking order of jQuery events.  This is needed to override certain
  * Events invoked by other plugins http://stackoverflow.com/questions/2360655
@@ -20,25 +19,22 @@ $.fn.bindFirst = function(name, fn) {
   });
 };
 
-
 /**
  * @private
  * @param {HTMLElement} element
  * @returns {boolean}
  */
 function visible(element) {
-  return $.expr.filters.visible( element ) &&
-    !$(element).parents().addBack().filter(function() {
+  return $.expr.filters.visible(element) &&
+    !$(element).parents().addBack().filter(function () {
       return $.css(this, 'visibility') === 'hidden';
     }).length;
 }
-
 
 /**
  * `uniqueIdCount`
  */
 export let uniqueIdCount = 0;
-
 
 /**
  *
@@ -59,14 +55,12 @@ $.fn.uniqueId = function(className, prefix, suffix) {
   return str;
 };
 
-
 /**
  * Check for CSS Property Support in a cross browser way
  * @param {String} prop
  * @return {String}
  */
 $.fn.cssPropSupport = function(prop) {
-  'use strict';
 
   if (!prop) {
     return null;
@@ -112,7 +106,6 @@ $.fn.transitionEndName = function() {
   return eventNames[prop] || null;
 };
 
-
 /**
  * From jQueryUI Core: https://github.com/jquery/jquery-ui/blob/24756a978a977d7abbef5e5bce403837a01d964f/ui/jquery.ui.core.js#L93
  * Adapted from:  http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus
@@ -144,7 +137,6 @@ function focusable(element) {
     visible( element );
 }
 
-
 /**
  *
  */
@@ -153,7 +145,6 @@ $.extend($.expr[':'], {
     return focusable(element, !isNaN($.attr(element, 'tabindex')));
   }
 });
-
 
 /**
  * Custom Touch Event Handler that simply passes Touch Event Handlers onto a Click Event Handler.
@@ -243,67 +234,17 @@ $.fn.listEvents = function() {
   return data;
 };
 
+const utils = {};
 
 /**
- * Implements consistent support for the placeholder attribute in browsers that do not handle it
- * * Supports any kind of input (no issues with password) and textarea
- * * does nothing if native support exists
- */
-$.fn.placeholderPolyfill = function(options) {
-  if (!('placeholder' in document.createElement('input'))) {
-    var settings = $.extend({className: 'is-placeholder'}, options),
-      setInputType = function (input, type, opt) {
-        if(opt) {
-          input.attr('type', type);
-        }
-      };
-    $('[placeholder]').each(function() {
-      var input = $(this),
-      isPassword = input.is('input[type="password"]');
-      input.removeClass(settings.className).on('focus.placeholderPolyfill, click.placeholderPolyfill', function() {
-        if (input.val() === input.attr('placeholder') && input.data('placeholder')) {
-          input.get(0).setSelectionRange(0, 0);
-        }
-      }).on('keydown.placeholderPolyfill', function() {
-        setInputType(input, 'password', isPassword);
-        if (input.val() === input.attr('placeholder') && input.data('placeholder')) {
-          input.val('');
-          input.removeClass(settings.className);
-        }
-      }).on('blur.placeholderPolyfill', function() {
-        if (input.val() === '') {
-          setInputType(input, 'text', isPassword);
-          input.addClass(settings.className);
-          input.val(input.attr('placeholder'));
-          input.data('placeholder', true);
-        } else {
-          input.data('placeholder', false);
-        }
-      }).trigger('blur.placeholderPolyfill').parents('form').on('submit', function() {
-        $('[placeholder]', this).each(function () {
-          var field = $(this);
-          if (field.val() === field.attr('placeholder') && field.data('placeholder')) {
-            field.val('');
-          }
-        });
-      });
-    });
-  }
- return this;
-};
-
-
-let utils = {};
-
-
-/**
- * Grabs an attribute from an HTMLElement containing stringified JSON syntax, and interprets it into options.
+ * Grabs an attribute from an HTMLElement containing stringified JSON syntax,
+ * and interprets it into options.
  * @param {HTMLElement} element
  * @param {String} [attr]
  * @returns {Object}
  */
 utils.parseSettings = function parseSettings(element, attr) {
-  var options = {};
+  let options = {};
   if (!element ||
     (!(element instanceof HTMLElement) && !(element instanceof $)) ||
     (element instanceof $ && !element.length)) {
@@ -1058,6 +999,5 @@ math.convertFPSToDelay = function convertFPSToDelay(fps) {
   }
   return fps * 16.7;
 };
-
 
 export { utils, DOM, math };

@@ -2,7 +2,6 @@
 // Atomic Design: http://bradfrost.com/blog/post/atomic-web-design/
 // TODO: Make this file auto-generated for custom builds?
 
-
 // NOTE: this one just needs to be here until we get things in order
 // TODO: make placement/storage on Soho object more logical?
 export { Base } from './utils/base';
@@ -16,6 +15,7 @@ export { Icon } from './icons/icons';
 export { Accordion } from './accordion/accordion';
 export { ApplicationMenu } from './applicationmenu/applicationmenu';
 export { Autocomplete } from './autocomplete/autocomplete';
+export { ColorPicker } from './colorpicker/colorpicker';
 export { Drag } from './drag/drag';
 export { Dropdown } from './dropdown/dropdown';
 export { Modal } from './modal/modal';

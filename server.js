@@ -1,13 +1,16 @@
 /* jshint node:true */
 
-var app = require('./app');
-var chalk = require('chalk');
+const app = require('./app');
+/* eslint-disable import/no-extraneous-dependencies */
+const chalk = require('chalk');
+/* eslint-enable import/no-extraneous-dependencies */
 
 // With the express server and routes defined, we can start to listen for requests.
-var port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 app.listen(port);
 
-//Show Awesome Image Of Soho
+// Show Awesome Image Of Soho
+/* eslint-disable no-console */
 console.log(chalk.gray('         .        .            ') + chalk.blue('|') + chalk.gray('       .        .        . '));
 console.log(chalk.gray('              *        .       ') + chalk.blue('|') + chalk.gray('   .        .              '));
 console.log(chalk.gray('        .                     ') + chalk.blue('/-\\') + chalk.gray('     .           .   .    '));
@@ -22,3 +25,4 @@ console.log(chalk.blue(' |""""|_|  |""|""""|:::::| |') + chalk.yellow('# # # #')
 console.log(chalk.blue(' |""""|::::|""|""""|:::::| |') + chalk.yellow('# # # #') + chalk.blue('||"""|||::|"""|""""""""|'));
 
 console.log('Soho server is running at http://localhost:%s/. Press Ctrl+C to stop.', port);
+/* eslint-enable no-console */
