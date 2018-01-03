@@ -366,7 +366,7 @@
         }
 
         &.is-focused:not(.hide-focus) {
-          border-bottom-color: $accordion-selected-bg-color;
+          border-color: $accordion-selected-bg-color;
         }
 
         &.is-selected,

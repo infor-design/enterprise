@@ -30,7 +30,6 @@
 
     /**
      * @private
-     * @returns {undefined}
      */
     init: function() {
       this.fields = 'input, textarea, select, div[data-validate], div[data-validation]';
@@ -162,6 +161,9 @@
               return;
             }
 
+            if (field.data('isValid') === false && e.type === 'blur') {
+              return;
+            }
             self.validate(field, true, e);
           }, 300);
         });
@@ -515,7 +517,7 @@
 
       for (var props in $.fn.validation.ValidationTypes) {
         validationType = $.fn.validation.ValidationTypes[props];
-        self.removeMessage(field, validationType.type, true);
+        self.removeMessage(field, validationType.type);
         field.removeData('data-' + validationType.type + 'message');
       }
 
@@ -835,17 +837,19 @@
     },
 
     /**
-     * remove the message form the field
+     * Remove the message form the field if there is
+     * one and mark the field valid.
      *
      * @private
      * @param {jQuery[]} field
      */
-    removeMessage: function(field, type, noTrigger) {
+    removeMessage: function(field, type) {
       var loc = this.getField(field),
         isRadio = field.is(':radio'),
         errorIcon = field.closest('.field, .field-short').find('.icon-error'),
         tooltipAPI = errorIcon.data('tooltip'),
-        hasTooltip = field.attr('data-' + type + '-type') || !!tooltipAPI;
+        hasTooltip = field.attr('data-' + type + '-type') || !!tooltipAPI,
+        hasError = field.getErrorMessage();
 
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass(type);
@@ -907,7 +911,7 @@
       field.closest('.field, .field-short').find('.' + type + '-message').remove();
       field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(type);
 
-      if (type === 'error' && !noTrigger && this.eventsStatus()) {
+      if (type === 'error' && hasError) {
         field.triggerHandler('valid', {field: field, message: ''});
         field.closest('form').triggerHandler('valid', {field: field, message: ''});
       }
@@ -1389,26 +1393,12 @@
   };
 
  //Check validation manually
-  $.fn.checkValidation = function() {
+  $.fn.validateField = function() {
     var field = $(this),
-      api = field.data('validate'),
-      doAction = function(isValid) {
-        field.data('isValid', isValid);
-        field.triggerHandler('isvalid', [isValid]);
-      };
+      api = field.data('validate');
 
     if (api && api.validate) {
-      var fx = api.validate(field, false, 0);
-      $.when.apply($, fx).always(function() {
-        // [fail] returns the first fail, so we have to loop deferred objects
-        $.each(fx, function() {
-          this.done(function() {
-            doAction(true);
-          }).fail(function() {
-            doAction(false);
-          });
-        });
-      });
+      api.validate(field, false, 0);
     }
   };
 

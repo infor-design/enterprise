@@ -1267,12 +1267,10 @@
         }
 
         // Check and fix two digit year for main input element
-        self.element.checkValidation();
-        self.element.one('isvalid.datepicker', function (e, isValid) {
-          if (isValid && self.element.val().trim() !== '') {
-            self.setValue(Locale.parseDate(self.element.val().trim(), self.pattern, false));
-          }
-        });
+        self.element.validateField();
+        if (self.element.isValid() && self.element.val().trim() !== '') {
+          self.setValue(Locale.parseDate(self.element.val().trim(), self.pattern, false));
+        }
 
       },
 

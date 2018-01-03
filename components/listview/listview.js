@@ -209,8 +209,12 @@
 
           if (dataset.length > 0) {
             this.element.html(renderedTmpl);
-          } else if (self.emptyMessageContainer) {
-            this.element.empty().append(this.emptyMessageContainer);
+          } else {
+            if (self.emptyMessageContainer) {
+              this.element.empty().append(this.emptyMessageContainer);
+            } else if (dataset.length === 0) {
+              this.element.html(renderedTmpl || '<ul></ul>');
+            }
           }
         }
 
@@ -768,8 +772,16 @@
       * @param {jQuery|Number} li &nbsp;-&nbsp; The jQuery list element or the index.
       */
       activateItem: function(li) {
-        var active = this.element.find('li.is-activated');
+        var active = this.element.find('li.is-activated'),
+          elemCanActivate = true;
+
         this.deactivateItem(active);
+
+        elemCanActivate = this.element.triggerHandler('beforeactivate');
+
+        if (elemCanActivate === false) {
+          return false;
+        }
 
         if (typeof li === 'number') {
           li = this.element.find('ul').children().eq(li);
@@ -944,7 +956,7 @@
           var trigger = $('.list-detail-back-button, .list-detail-button').find('.app-header'),
             pattern = $(this.element).closest('.list-detail, .builder');
 
-          trigger.parent().onTouchClick('listview').on('click.listview', function (e) {
+          trigger.parent().on('click.listview', function (e) {
             if (trigger.hasClass('go-back')) {
               trigger.removeClass('go-back');
               pattern.removeClass('show-detail');
@@ -960,7 +972,13 @@
           .on('click.listview', 'li, tr, input[checkbox]', function (e) {
             var item = $(this),
               isCheckbox = $(e.target).closest('.listview-selection-checkbox').length > 0,
-              isMixed = self.settings.selectable === 'mixed';
+              isMixed = self.settings.selectable === 'mixed',
+              target = $(e.target);
+
+            // ignore clicking favorites element
+            if (target.hasClass('icon-favorite')) {
+              return;
+            }
 
             if (!isFocused && !item.hasClass('is-disabled') && (!isMixed || isCheckbox)) {
               isSelect = true;
@@ -1052,7 +1070,7 @@
         });
 
         //Animate open and Closed from the header
-        self.element.prev('.listview-header').onTouchClick().on('click', function () {
+        self.element.prev('.listview-header').on('click', function () {
           var icon = $(this).find('.plus-minus');
           if (icon.hasClass('active')) {
             icon.removeClass('active');
