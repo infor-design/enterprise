@@ -32,7 +32,7 @@ export { Spinbox } from './spinbox/spinbox';
 export { Textarea } from './textarea/textarea';
 export { Toast } from './toast/toast';
 export { Tooltip } from './tooltip/tooltip';
-//export { Validation } from './validation/validation';
+export { Tree } from './tree/tree';
 export { Validator } from './validation/validator';
 export { Wizard } from './wizard/wizard';
 export { Zoom } from './zoom/zoom';

@@ -31,6 +31,7 @@ import './spinbox/spinbox.jquery';
 import './textarea/textarea.jquery';
 import './toast/toast.jquery';
 import './tooltip/tooltip.jquery';
+import './tree/tree.jquery';
 import './validation/validation.jquery';
 import './validation/validation.utils';
 import './wizard/wizard.jquery';
