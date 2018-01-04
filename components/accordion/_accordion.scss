@@ -121,7 +121,7 @@
 
       // Level 2
       .accordion-header {
-        @include left-align-cascade-styles-header(36px, 30px, 56px, 37px);
+        @include left-align-cascade-styles-header(36px, 30px, 86px, 37px);
 
         &.no-icon {
           > a {
