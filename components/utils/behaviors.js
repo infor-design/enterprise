@@ -1,3 +1,4 @@
+import { DOM } from '../utils/utils';
 
   /**
    * HideFocus Behavior
@@ -134,7 +135,7 @@
   function smoothScrollTo(el, target, duration) {
     var dfd = $.Deferred();
 
-    if (!Soho.DOM.isElement(el)) {
+    if (!DOM.isElement(el)) {
       // Not a workable element
       return dfd.reject();
     }

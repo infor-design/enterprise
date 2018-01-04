@@ -29,7 +29,6 @@
     -   [parseOptions](#parseoptions-1)
     -   [actualChar](#actualchar-1)
     -   [equals](#equals)
-    -   [debounce](#debounce)
     -   [extend](#extend-1)
     -   [fixSVGIcons](#fixsvgicons)
     -   [getViewportSize](#getviewportsize)
@@ -286,16 +285,6 @@ Truthy equals
 
 -   `a`  
 -   `b`  
-
-## debounce
-
-Debounce method
-
-**Parameters**
-
--   `func`  
--   `threshold`  
--   `execAsap`  
 
 ## extend
 

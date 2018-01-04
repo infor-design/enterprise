@@ -1,4 +1,4 @@
-import { behaviors } from './behaviors';
+import { defer } from './behaviors';
 import { Environment as env } from './environment';
 
 /**
@@ -668,40 +668,6 @@ DOM.getDimensions = function getDimensions(el) {
 
 
 /**
- * Debounce method
- */
-utils.debounce = function(func, threshold, execAsap) {
-  var timeout;
-
-  return function debounced () {
-    var obj = this, args = arguments;
-    function delayed () {
-      if (!execAsap) {
-        func.apply(obj, args);
-      }
-      timeout = null;
-    }
-
-    if (timeout) {
-      clearTimeout(timeout);
-    } else if (execAsap) {
-      func.apply(obj, args);
-    }
-
-    timeout = setTimeout(delayed, threshold || 250);
-  };
-};
-
-
-// Debounced Resize method
-// https://www.paulirish.com/2009/throttled-smartresize-jquery-event-handler/
-(function($,sr){
-  // smartresize
-  $.fn[sr] = function(fn){  return fn ? this.bind('resize', utils.debounce(fn)) : this.trigger(sr); };
-})($, 'debouncedResize');
-
-
-/**
  * Object deep copy
  * For now, alias jQuery.extend
  * Eventually we'll replace this with a non-jQuery extend method.
@@ -923,7 +889,7 @@ utils.safeSetSelection = function safeSetSelection(element, startPos, endPos) {
 
   if (document.activeElement === element) {
     if (env.os.name === 'android') {
-      behaviors.defer(function() {
+      defer(function() {
         element.setSelectionRange(startPos, endPos, 'none');
       }, 0);
     } else {
