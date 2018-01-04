@@ -2,33 +2,123 @@
 
 ### Table of Contents
 
--   [settings](#settings)
--   [Tree](#tree)
-    -   [initTree](#inittree)
-    -   [initSelected](#initselected)
-    -   [focusFirst](#focusfirst)
-    -   [setFocus](#setfocus)
-    -   [decorateNode](#decoratenode)
-    -   [setTreeIcon](#settreeicon)
-    -   [expandAll](#expandall)
-    -   [collapseAll](#collapseall)
-    -   [isjQuery](#isjquery)
-    -   [selectNodeById](#selectnodebyid)
-    -   [selectNodeByJquerySelector](#selectnodebyjqueryselector)
-    -   [unSelectedNode](#unselectednode)
-    -   [selectNode](#selectnode)
-    -   [selectNodeFinish](#selectnodefinish)
-    -   [setNodeStatus](#setnodestatus)
-    -   [getSelectedStatus](#getselectedstatus)
-    -   [toggleNode](#togglenode)
+-   -   [COMPONENT_NAME](#component_name)
+    -   [TREE_DEFAULTS](#tree_defaults)
+    -   [Tree](#tree)
+        -   [initTree](#inittree)
+        -   [initSelected](#initselected)
+        -   [focusFirst](#focusfirst)
+        -   [setFocus](#setfocus)
+        -   [decorateNode](#decoratenode)
+        -   [setTreeIcon](#settreeicon)
+        -   [expandAll](#expandall)
+        -   [collapseAll](#collapseall)
+        -   [isjQuery](#isjquery)
+        -   [selectNodeById](#selectnodebyid)
+        -   [selectNodeByJquerySelector](#selectnodebyjqueryselector)
+        -   [unSelectedNode](#unselectednode)
+        -   [selectNode](#selectnode)
+        -   [selectNodeFinish](#selectnodefinish)
+        -   [setNodeStatus](#setnodestatus)
+        -   [getSelectedStatus](#getselectedstatus)
+        -   [toggleNode](#togglenode)
+        -   [updated](#updated)
+    -   [enableTimeLogging](#enabletimelogging)
+    -   [logTimeStart](#logtimestart)
+    -   [logTimeEnd](#logtimeend)
+    -   [bindFirst](#bindfirst)
+-   [SOHO Utils](#soho-utils)
+    -   [bindFirst](#bindfirst-1)
+    -   [uniqueId](#uniqueid)
+    -   [cssPropSupport](#csspropsupport)
+    -   [transitionEndName](#transitionendname)
+    -   [onTouchClick](#ontouchclick)
+    -   [offTouchClick](#offtouchclick)
+    -   [listEvents](#listevents)
+    -   [parseOptions](#parseoptions)
+    -   [timer](#timer)
+    -   [clearable](#clearable)
+    -   [getHiddenSize](#gethiddensize)
+    -   [isHiddenAtBreakpoint](#ishiddenatbreakpoint)
+    -   [copyToClipboard](#copytoclipboard)
+    -   [escapeHTML](#escapehtml)
+    -   [sanitizeHTML](#sanitizehtml)
+    -   [actualChar](#actualchar)
+    -   [uniqueIdCount](#uniqueidcount)
+    -   [focusable](#focusable)
+    -   [extend](#extend)
+    -   [parseSettings](#parsesettings)
+    -   [parseOptions](#parseoptions-1)
+    -   [actualChar](#actualchar-1)
+    -   [equals](#equals)
+    -   [debounce](#debounce)
+    -   [extend](#extend-1)
+    -   [fixSVGIcons](#fixsvgicons)
+    -   [getViewportSize](#getviewportsize)
+    -   [getContainerScrollDistance](#getcontainerscrolldistance)
+    -   [getHiddenSize](#gethiddensize-1)
+    -   [isString](#isstring)
+    -   [isNumber](#isnumber)
+    -   [safeSetSelection](#safesetselection)
+    -   [mergeSettings](#mergesettings)
+    -   [getAttributes](#getattributes)
+    -   [classNameExists](#classnameexists)
+    -   [classNameHas](#classnamehas)
+    -   [hasClass](#hasclass)
+    -   [addClass](#addclass)
+    -   [isElement](#iselement)
+    -   [getDimensions](#getdimensions)
+    -   [convertDelayToFPS](#convertdelaytofps)
+    -   [convertFPSToDelay](#convertfpstodelay)
+    -   [Environment](#environment)
+        -   [set](#set)
+        -   [addBrowserClasses](#addbrowserclasses)
+        -   [addGlobalResize](#addglobalresize)
+        -   [pasteEvent](#pasteevent)
+    -   [set](#set-1)
+    -   [current](#current)
+    -   [isAbove](#isabove)
+    -   [isBelow](#isbelow)
+    -   [compare](#compare)
+    -   [isHidden](#ishidden)
+    -   [Locale](#locale)
+        -   [set](#set-2)
+        -   [formatDate](#formatdate)
+        -   [isValidDate](#isvaliddate)
+        -   [parseDate](#parsedate)
+        -   [formatNumber](#formatnumber)
+        -   [parseNumber](#parsenumber)
+        -   [translate](#translate)
+        -   [toUpperCase](#touppercase)
+        -   [toLowerCase](#tolowercase)
+        -   [capitalize](#capitalize)
+        -   [capitalizeWords](#capitalizewords)
+    -   [Locale](#locale-1)
+        -   [set](#set-3)
+        -   [formatDate](#formatdate-1)
+        -   [isValidDate](#isvaliddate-1)
+        -   [parseDate](#parsedate-1)
+        -   [formatNumber](#formatnumber-1)
+        -   [parseNumber](#parsenumber-1)
+        -   [translate](#translate-1)
+        -   [toUpperCase](#touppercase-1)
+        -   [toLowerCase](#tolowercase-1)
+        -   [capitalize](#capitalize-1)
+        -   [capitalizeWords](#capitalizewords-1)
 
-## settings
+## COMPONENT_NAME
 
-Type: [Tree](#tree)
+Component Name
+
+Type: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## TREE_DEFAULTS
+
+Default Settings for Tree
 
 **Parameters**
 
--   `selectable` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  'single' or 'multiple'
+-   `selectable` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  'single' or 'multiple'.
 -   `hideCheckboxes` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Only applies when `selectable` is set to 'multiple'.
 -   `menuId` **(null | [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
 -   `useStepUI` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  if `true`, turns this tree instance into a "Stepped" tree.
@@ -39,9 +129,12 @@ Type: [Tree](#tree)
 
 ## Tree
 
+Type: [Tree](#tree)
+
 **Parameters**
 
 -   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `settings`  
 
 ### initTree
 
@@ -173,3 +266,709 @@ Changes a node's selected status to its opposite form.
 **Parameters**
 
 -   `node` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** a jQuery-wrapped element reference to a tree node.
+
+### updated
+
+**Parameters**
+
+-   `settings` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## enableTimeLogging
+
+Easy flag for determining whether or not time will be logged to the console.
+
+## logTimeStart
+
+**Parameters**
+
+-   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
+## logTimeEnd
+
+**Parameters**
+
+-   `label` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
+## bindFirst
+
+============================================
+
+# SOHO Utils
+
+**Parameters**
+
+-   `name`  
+-   `fn`  
+
+## bindFirst
+
+Used for changing the stacking order of jQuery events.  This is needed to override certain
+Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
+
+**Parameters**
+
+-   `name`  
+-   `fn`  
+
+## uniqueId
+
+**Parameters**
+
+-   `className`  
+-   `prefix`  
+-   `suffix`  
+
+## cssPropSupport
+
+Check for CSS Property Support in a cross browser way
+
+**Parameters**
+
+-   `prop` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## transitionEndName
+
+Returns the name of the TransitionEnd event.
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## onTouchClick
+
+Custom Touch Event Handler that simply passes Touch Event Handlers onto a Click Event Handler.
+Used for avoiding the 300ms wait time that click events have in most mobile environments
+if 'one' is defined, it only listens once.
+
+**Parameters**
+
+-   `eventNamespace`  
+-   `filter`  
+-   `one`  
+
+## offTouchClick
+
+Reverses the .onTouchClick() method and turns off a matching event listener.
+
+**Parameters**
+
+-   `eventNamespace`  
+-   `filter`  
+
+## listEvents
+
+Returns a key/value list of currently attached event listeners
+
+## parseOptions
+
+jQuery Behavior Wrapper for `utils.parseOptions`.
+
+**Parameters**
+
+-   `element`  
+-   `attr`  
+-   `attrName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
+Returns **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** 
+
+**Meta**
+
+-   **deprecated**: This is deprecated.
+
+
+## timer
+
+Timer - can be use for play/pause or stop for given time
+use as new instance [ var timer = new $.fn.timer(function() {}, 6000); ]
+then can be listen events as [ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]
+or can access as [ timer.cancel(); -or- timer.pause(); -or- timer.resume(); ]
+
+**Parameters**
+
+-   `callback`  
+-   `delay`  
+
+## clearable
+
+Clearable (Shows an X to clear)
+
+## getHiddenSize
+
+Binds the Soho Util _getHiddenSize()_ to a jQuery selector
+
+**Parameters**
+
+-   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options
+
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## isHiddenAtBreakpoint
+
+jQuery wrapper for `Soho.breakpoints.isHidden()`
+NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.
+This method is NOT chainable.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## copyToClipboard
+
+Copies a string to the clipboard. Must be called from within an event handler such as click.
+May return false if it failed, but this is not always
+possible. Browser support for Chrome 43+, Firefox 42+, Edge and IE 10+.
+No Safari support, as of (Nov. 2015). Returns false.
+IE: The clipboard feature may be disabled by an adminstrator. By default a prompt is
+shown the first time the clipboard is used (per session).
+
+**Parameters**
+
+-   `text`  
+
+## escapeHTML
+
+Functions For Sanitising and Escaping Html
+
+**Parameters**
+
+-   `value`  
+
+## sanitizeHTML
+
+Remove Script tags and all onXXX functions
+
+**Parameters**
+
+-   `html`  
+
+## actualChar
+
+**Parameters**
+
+-   `e`  
+
+## uniqueIdCount
+
+`uniqueIdCount`
+
+## focusable
+
+From jQueryUI Core: <https://github.com/jquery/jquery-ui/blob/24756a978a977d7abbef5e5bce403837a01d964f/ui/jquery.ui.core.js#L93>
+Adapted from:  <http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus>
+Adds the ':focusable' selector to Sizzle to allow for the selection of elements that can currently be focused.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## extend
+
+## parseSettings
+
+Grabs an attribute from an HTMLElement containing stringified JSON syntax,
+and interprets it into options.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `attr` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## parseOptions
+
+Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
+TODO: Remove in 4.4.1 ?
+
+## actualChar
+
+Replacement for String.fromCharCode() that takes meta keys into account when determining which
+character key was pressed.
+
+**Parameters**
+
+-   `e`  
+
+## equals
+
+Truthy equals
+
+**Parameters**
+
+-   `a`  
+-   `b`  
+
+## debounce
+
+Debounce method
+
+**Parameters**
+
+-   `func`  
+-   `threshold`  
+-   `execAsap`  
+
+## extend
+
+Object deep copy
+For now, alias jQuery.extend
+Eventually we'll replace this with a non-jQuery extend method.
+
+## fixSVGIcons
+
+Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
+The action of changing the xlink:href attribute to something else and back will fix the problem.
+
+**Parameters**
+
+-   `rootElement`  
+
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+## getViewportSize
+
+Gets the current size of the viewport
+
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## getContainerScrollDistance
+
+Gets the various scrollable containers that an element is nested inside of, and returns their scrollHeight and scrollLeft values.
+
+**Parameters**
+
+-   `element`  
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+
+## getHiddenSize
+
+Takes an element that is currently hidden by some means (FX: "display: none;") and gets its potential dimensions by checking a clone of the element that is NOT hidden.
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
+-   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
+-   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
+
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## isString
+
+Checks if a specific input is a String
+
+**Parameters**
+
+-   `value` **?** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## isNumber
+
+Checks if a specific input is a Number
+
+**Parameters**
+
+-   `value` **?** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## safeSetSelection
+
+Safely changes the position of a text caret inside of an editable element.
+In most cases, will call "setSelectionRange" on an editable element immediately, but in some
+cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `startPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `endPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## mergeSettings
+
+Merges various sets of options into a single object,
+whose intention is to be set as options on a Soho component.
+
+**Parameters**
+
+-   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
+-   `incomingOptions` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))** 
+-   `defaultOptions` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function))?** 
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## getAttributes
+
+Returns an array containing an element's attributes.
+
+**Parameters**
+
+-   `element`  
+
+## classNameExists
+
+Adding, removing, and testing for classes
+
+**Parameters**
+
+-   `element`  
+
+## classNameHas
+
+**Parameters**
+
+-   `classNameString`  
+-   `targetContents`  
+
+## hasClass
+
+**Parameters**
+
+-   `el`  
+-   `className`  
+
+## addClass
+
+**Parameters**
+
+-   `el`  
+-   `className`  
+
+## isElement
+
+Checks if an element is valid
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being checked
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** represents all values normally contained by a DOMRect or ClientRect
+
+## getDimensions
+
+Runs the generic _getBoundingClientRect()_ method on an element, but returns its results
+as a plain object instead of a ClientRect
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated
+
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
+
+## convertDelayToFPS
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+
+## convertFPSToDelay
+
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+
+**Parameters**
+
+-   `fps`  
+-   `delay` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+
+## Environment
+
+Type: [Environment](#environment)
+
+### set
+
+Builds run-time environment settings
+
+### addBrowserClasses
+
+Global Classes for browser, version and device as needed.
+
+### addGlobalResize
+
+Setup a global resize event trigger for controls to listen to
+
+### pasteEvent
+
+## set
+
+Automatically set up the environment by virtue of including this script
+
+## current
+
+Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the
+
+<body> tag's `::after` pseudo-element.  These names should be reflected in the breakpoints object
+above.
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## isAbove
+
+**Parameters**
+
+-   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## isBelow
+
+**Parameters**
+
+-   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## compare
+
+Compares the last-stored breakpoint with a check on the "current" breakpoint to see if the
+breakpoint has changed.
+
+## isHidden
+
+Checks an element for Soho visibility classes and determines whether or not
+should be hidden based on those values at the current breakpoint.
+NOTE: this method does NOT determine if the element is ACTUALLY hidden with a
+`display: none;` or `visibility: hidden;` rule.  It determines whether or not a CSS
+visibility rule alone would hide the element.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## Locale
+
+The Locale component handles i18n
+
+**Parameters**
+
+-   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
+
+### set
+
+Set the currently used colors.
+
+**Parameters**
+
+-   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+
+### formatDate
+
+Format a Date Object and return it parsed in the current locale.
+
+**Parameters**
+
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
+
+### isValidDate
+
+Check if the date is valid using the current locale to do so.
+
+**Parameters**
+
+-   `date`  
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+
+### parseDate
+
+Take a date string written in the current locale and parse it into a Date Object
+
+**Parameters**
+
+-   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
+-   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
+-   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+
+### formatNumber
+
+Format a decimal with thousands and padding in the current locale.
+<http://mzl.la/1MUOEWm>
+
+**Parameters**
+
+-   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
+-   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+
+### parseNumber
+
+Take a Formatted Number and return a real number
+
+**Parameters**
+
+-   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+
+### translate
+
+Overridable culture messages
+
+**Parameters**
+
+-   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `showAsUndefined`  
+
+### toUpperCase
+
+Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+### toLowerCase
+
+Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalize
+
+Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalizeWords
+
+Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## Locale
+
+TODO: Re-implement this with proper scope.
+
+// If there already exists a Locale object with a culturesPath use that path
+// This allows manually setting the directory for the culture files to be retrieved from
+var existingCulturePath = '';
+
+if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
+existingCulturePath = window.Locale.culturesPath;
+}
+
+### set
+
+Set the currently used colors.
+
+**Parameters**
+
+-   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+
+### formatDate
+
+Format a Date Object and return it parsed in the current locale.
+
+**Parameters**
+
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
+
+### isValidDate
+
+Check if the date is valid using the current locale to do so.
+
+**Parameters**
+
+-   `date`  
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+
+### parseDate
+
+Take a date string written in the current locale and parse it into a Date Object
+
+**Parameters**
+
+-   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
+-   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
+-   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+
+### formatNumber
+
+Format a decimal with thousands and padding in the current locale.
+<http://mzl.la/1MUOEWm>
+
+**Parameters**
+
+-   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
+-   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+
+### parseNumber
+
+Take a Formatted Number and return a real number
+
+**Parameters**
+
+-   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+
+### translate
+
+Overridable culture messages
+
+**Parameters**
+
+-   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `showAsUndefined`  
+
+### toUpperCase
+
+Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+### toLowerCase
+
+Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalize
+
+Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalizeWords
+
+Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 

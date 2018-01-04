@@ -6,8 +6,7 @@ import { Locale } from '../locale/locale';
 /**
  * Component Name
  */
-let COMPONENT_NAME = 'tree';
-
+const COMPONENT_NAME = 'tree';
 
 /**
  * Default Settings for Tree
@@ -20,7 +19,7 @@ let COMPONENT_NAME = 'tree';
  * @param {boolean} sortable &nbsp;-&nbsp; if `true`, allows nodes to become sortable.
  * @param {null|function} onBeforeSelect &nbsp;-&nbsp; if defined as a function, fires that function as a callback before the selection on a node occurs.
  */
-let TREE_DEFAULTS = {
+const TREE_DEFAULTS = {
   selectable: 'single', // ['single'|'multiple']
   hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
   menuId: null, //Context Menu to add to nodes
@@ -32,7 +31,6 @@ let TREE_DEFAULTS = {
   onExpand: null,
   onCollapse: null
 };
-
 
 /**
  * @class {Tree}
@@ -1727,6 +1725,5 @@ Tree.prototype = {
     this.element.off('contextmenu.tree updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
   }
 };
-
 
 export { Tree, COMPONENT_NAME };
