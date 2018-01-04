@@ -73,9 +73,10 @@ window.Chart = function(container) {
     }
     else if (s.type === 'column-positive-negative') {
       if (!elem.option || (elem.option && elem.option === 'target')) {
-        return;
+        selector = s.svg.select('.target-bar');
+      } else {
+        selector = s.svg.select('.bar.'+ elem.option);
       }
-      selector = s.svg.select('.bar.'+ elem.option);
     }
     else if (['Column', 'HorizontalBar'].indexOf(s.chartType) !== -1) {
       // Grouped or singlular
@@ -2670,20 +2671,30 @@ window.Chart = function(container) {
       // Click
       .on('click', function (d, i) {
         var selector, isTargetBar = this && d3.select(this).classed('target-bar');
-        if (isTargetBar) {
-          selector = svg.select('.bar.series-'+ i);
-          selector.on('click').call(selector.node(), selector.datum(), i);
-          return;
-        }
 
         var isSelected = this && d3.select(this).classed('is-selected'),
           thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
+
+        // Set isSelected to false if even 1 bar is selected
+        if (isTargetBar) {
+          var allBars = d3.selectAll('.bar')[0],
+            len = allBars.length;
+          for (var i = 0; i < len; i++) {
+            var bar = allBars[i];
+
+            if (d3.select(bar).classed('is-selected')) {
+              isSelected = false;
+              break;
+            }
+          }
+        }
 
         charts.setSelectedElement({
           task: (isSelected ? 'unselected' : 'selected'),
           container: container,
           selector: this,
           isTrigger: !isSelected,
+          isTargetBar: isTargetBar,
           triggerGroup: isGrouped,
           d: d,
           i: i
@@ -4339,6 +4350,7 @@ window.Chart = function(container) {
       ticksY = svg.selectAll('.axis.y .tick'),
       pnPositiveText = svg.selectAll('.bartext.positive, .target-bartext.positive'),
       pnNegativeText = svg.selectAll('.bartext.negative, .target-bartext.negative'),
+      pnTargetText = svg.selectAll('.target-bartext.positive, .target-bartext.negative'),
       thisGroup = d3.select(o.selector.parentNode),
       thisGroupId = parseInt((thisGroup.node() ? thisGroup.attr('data-group-id') : 0), 10),
       triggerData = [],
@@ -4364,11 +4376,17 @@ window.Chart = function(container) {
       // By legends only
       if (s.isByLegends && !isTypePie) {
         if (isPositiveNegative) {
-          s.svg.selectAll(isPositive ?
-            '.bar.positive, .target-bar.positive': '.bar.negative, .target-bar.negative')
-              .classed('is-selected', true).style('opacity', 1);
+          if (o.isTargetBar) {
+            s.svg.selectAll('.target-bar').classed('is-selected', true).style('opacity', 1);
 
-          (isPositive ? pnPositiveText : pnNegativeText).style('font-weight', 'bolder');
+            pnTargetText.style('font-weight', 'bolder');
+          } else {
+            s.svg.selectAll(isPositive ?
+              '.bar.positive, .target-bar.positive': '.bar.negative, .target-bar.negative')
+                .classed('is-selected', true).style('opacity', 1);
+
+            (isPositive ? pnPositiveText : pnNegativeText).style('font-weight', 'bolder');
+          }
 
           svg.selectAll('.bar').each(function(d, i) {
             var bar = d3.select(this);
