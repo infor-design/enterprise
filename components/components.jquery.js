@@ -30,6 +30,8 @@ import './slider/slider.jquery';
 import './spinbox/spinbox.jquery';
 import './textarea/textarea.jquery';
 import './toast/toast.jquery';
+import './toolbar/toolbar.jquery';
+import './toolbarsearchfield/toolbarsearchfield.jquery';
 import './tooltip/tooltip.jquery';
 import './tree/tree.jquery';
 import './validation/validation.jquery';
@@ -38,3 +40,4 @@ import './wizard/wizard.jquery';
 import './zoom/zoom.jquery';
 
 // Organisms
+import './header/header.jquery';

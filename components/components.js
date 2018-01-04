@@ -31,6 +31,8 @@ export { Slider } from './slider/slider';
 export { Spinbox } from './spinbox/spinbox';
 export { Textarea } from './textarea/textarea';
 export { Toast } from './toast/toast';
+export { Toolbar } from './toolbar/toolbar';
+export { ToolbarSearchfield } from './toolbarsearchfield/toolbarsearchfield';
 export { Tooltip } from './tooltip/tooltip';
 export { Tree } from './tree/tree';
 export { Validator } from './validation/validator';
@@ -39,6 +41,7 @@ export { Zoom } from './zoom/zoom';
 // -- ex: dropdown/multiselect
 
 // Oraganisms
+export { Header } from './header/header';
 // -- ex: datagrid
 // -- ex: lookup
 // -- ex: composite form
