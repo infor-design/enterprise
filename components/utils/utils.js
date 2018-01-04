@@ -1,3 +1,6 @@
+import { behaviors } from './behaviors';
+import { Environment as env } from './environment';
+
 /**
  * ============================================
  * SOHO Utils
@@ -50,8 +53,8 @@ $.fn.uniqueId = function(className, prefix, suffix) {
   suffix = (!suffix ? '' : '-' + suffix);
   className = (!className ? $(this).attr('class') : className);
 
-  var str = prefix + className + Soho.uniqueIdCount + suffix;
-  Soho.uniqueIdCount = Soho.uniqueIdCount + 1;
+  var str = prefix + className + uniqueIdCount + suffix;
+  uniqueIdCount = uniqueIdCount + 1;
   return str;
 };
 
@@ -641,7 +644,7 @@ DOM.isElement = function isElement(el) {
  * @returns {object} - represents all values normally contained by a DOMRect or ClientRect
  */
 DOM.getDimensions = function getDimensions(el) {
-  if (!Soho.DOM.isElement(el)) {
+  if (!DOM.isElement(el)) {
     return {};
   }
 
@@ -712,7 +715,7 @@ utils.extend = $.extend;
  * @return {undefined}
  */
 utils.fixSVGIcons = function fixSVGIcons(rootElement) {
-  if (Soho.env.browser.name !== 'ie' && Soho.env.browser.version !== '11') {
+  if (env.browser.name !== 'ie' && env.browser.version !== '11') {
     return;
   }
 
@@ -756,7 +759,7 @@ utils.getViewportSize = function getViewportSize() {
  * @returns {object[]}
  */
 utils.getContainerScrollDistance = function getContainerScrollDistance(element) {
-  if (!Soho.DOM.isElement(element)) {
+  if (!DOM.isElement(element)) {
     return [];
   }
 
@@ -804,7 +807,7 @@ utils.getHiddenSize = function getHiddenSize(el, options) {
     includeMargin: false
   };
 
-  if (!Soho.DOM.isElement(el)) {
+  if (!DOM.isElement(el)) {
     return defaults.dims;
   }
 
@@ -812,7 +815,7 @@ utils.getHiddenSize = function getHiddenSize(el, options) {
   options = $.extend({}, defaults, options);
 
   // element becomes clone and appended to a parentElement, if defined
-  var hasDefinedParentElement = Soho.DOM.isElement(options.parentElement);
+  var hasDefinedParentElement = DOM.isElement(options.parentElement);
   if (hasDefinedParentElement) {
     el = el.clone().appendTo(options.parentElement);
   }
@@ -919,8 +922,8 @@ utils.safeSetSelection = function safeSetSelection(element, startPos, endPos) {
   }
 
   if (document.activeElement === element) {
-    if (Soho.env.os.name === 'android') {
-      Soho.behaviors.defer(function() {
+    if (env.os.name === 'android') {
+      behaviors.defer(function() {
         element.setSelectionRange(startPos, endPos, 'none');
       }, 0);
     } else {
