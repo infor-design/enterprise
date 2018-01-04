@@ -31,7 +31,7 @@
 
 <div class="row top-padding">
   <div class="twelve columns">
-    <button type="button" class="btn-menu" id='btn-validation-results'>
+    <button type="button" class="btn-menu" id="btn-validation-results">
       <span>Validation Results: <span class="results">false</span></span>
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-dropdown"></use>
@@ -94,19 +94,19 @@
   $(function () {
 
     // Custom validation results
-    var getRsults = function(el) {
+    var getResults = function(el) {
       return (el.attr('data-result') === 'true');
     },
     btn = $('#btn-validation-results'),
     resultsText = btn.find('.results'),
-    validationResults = getRsults(btn.data('popupmenu').menu.find('.is-checked a'));
+    validationResults = getResults(btn.data('popupmenu').menu.find('.is-checked a'));
 
     // Button text =============================================================
     resultsText.text(validationResults);
 
     // Set validation results ==================================================
     btn.on('selected', function (e, args) {
-      validationResults = getRsults(args);
+      validationResults = getResults(args);
       resultsText.text(validationResults);
     });
 
