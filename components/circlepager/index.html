@@ -44,15 +44,15 @@
 <li><code>label</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong></li>
 </ul>
 <h2 id="bindfirst">bindFirst</h2>
-<p>Used for changing the stacking order of jQuery events. This is needed to override certain<br />Events invoked by other plugins <a href="http://stackoverflow.com/questions/2360655">http://stackoverflow.com/questions/2360655</a></p>
+<p>============================================</p>
+<h1 id="soho-utils">SOHO Utils</h1>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>name</code><br /></li>
 <li><code>fn</code></li>
 </ul>
 <h2 id="bindfirst-1">bindFirst</h2>
-<p>============================================</p>
-<h1 id="soho-utils">SOHO Utils</h1>
+<p>Used for changing the stacking order of jQuery events. This is needed to override certain<br />Events invoked by other plugins <a href="http://stackoverflow.com/questions/2360655">http://stackoverflow.com/questions/2360655</a></p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>name</code><br /></li>
@@ -120,6 +120,19 @@
 <li><code>options</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong> incoming options</li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong></p>
+<h2 id="hidefocus">hideFocus</h2>
+<p>jQuery component wrapper for the HideFocus behavior</p>
+<h2 id="smoothscroll">smoothScroll</h2>
+<p>Binds the Soho Behavior <em>smoothScrollTo()</em> to a jQuery selector</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>target</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> target distance to scroll the element<br /></li>
+<li><code>duration</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> the time that will be needed for the scrolling to complete.</li>
+</ul>
+<p>Returns <strong>$.Deferred</strong></p>
+<h2 id="ishiddenatbreakpoint">isHiddenAtBreakpoint</h2>
+<p>jQuery wrapper for <code>Soho.breakpoints.isHidden()</code><br />NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.<br />This method is NOT chainable.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
 <h2 id="copytoclipboard">copyToClipboard</h2>
 <p>Copies a string to the clipboard. Must be called from within an event handler such as click.<br />May return false if it failed, but this is not always<br />possible. Browser support for Chrome 43+, Firefox 42+, Edge and IE 10+.<br />No Safari support, as of (Nov. 2015). Returns false.<br />IE: The clipboard feature may be disabled by an adminstrator. By default a prompt is<br />shown the first time the clipboard is used (per session).</p>
 <p><strong>Parameters</strong></p>
@@ -302,11 +315,72 @@
 <li><code>delay</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> fps</p>
+<h2 id="hidefocus-1">HideFocus</h2>
+<p>HideFocus Behavior<br />Only shows the focus state on key entry (tabs or arrows).</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/docs/Web/SVG/Element/animate">SVGElement</a>)</strong></li>
+</ul>
+<p>Returns <strong><a href="#hidefocus">HideFocus</a></strong></p>
+<h2 id="smoothscrollto">smoothScrollTo</h2>
+<p>Allows for the smooth scrolling of an element's content area.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>el</code> <strong>(<a href="https://developer.mozilla.org/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> The element being manipulated.<br /></li>
+<li><code>target</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> target distance.<br /></li>
+<li><code>duration</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> the time that will be needed for the scrolling to complete.</li>
+</ul>
+<p>Returns <strong>$.Deferred</strong></p>
+<h2 id="defer">defer</h2>
+<p>Uses 'requestAnimationFrame' or 'setTimeout' to defer a function</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>callback</code><br /></li>
+<li><code>timer</code></li>
+</ul>
+<p>Returns <strong>(<a href="https://developer.mozilla.org/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a> \| <a href="https://developer.mozilla.org/docs/Web/API/WindowTimers/setTimeout">setTimeout</a>)</strong></p>
+<h2 id="environment">Environment</h2>
+<p>Type: <a href="#environment">Environment</a></p>
+<h4 id="set">set</h4>
+<p>Builds run-time environment settings</p>
+<h4 id="addbrowserclasses">addBrowserClasses</h4>
+<p>Global Classes for browser, version and device as needed.</p>
+<h4 id="addglobalresize">addGlobalResize</h4>
+<p>Setup a global resize event trigger for controls to listen to</p>
+<h4 id="pasteevent">pasteEvent</h4>
+<h2 id="set-1">set</h2>
+<p>Automatically set up the environment by virtue of including this script</p>
+<h2 id="current">current</h2>
+<p>Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the</p>
+<body> 
+<p>tag's <code>::after</code> pseudo-element. These names should be reflected in the breakpoints object<br />above.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
+<h2 id="isabove">isAbove</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> matches one of the entries in the &quot;Soho.breakpoints&quot; object.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="isbelow">isBelow</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> matches one of the entries in the &quot;Soho.breakpoints&quot; object.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="compare">compare</h2>
+<p>Compares the last-stored breakpoint with a check on the &quot;current&quot; breakpoint to see if the<br />breakpoint has changed.</p>
+<h2 id="ishidden">isHidden</h2>
+<p>Checks an element for Soho visibility classes and determines whether or not<br />should be hidden based on those values at the current breakpoint.<br />NOTE: this method does NOT determine if the element is ACTUALLY hidden with a<br /><code>display: none;</code> or <code>visibility: hidden;</code> rule. It determines whether or not a CSS<br />visibility rule alone would hide the element.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/docs/Web/HTML/Element">HTMLElement</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
 <h2 id="locale">Locale</h2>
 <p>TODO: Re-implement this with proper scope.</p>
 <p>// If there already exists a Locale object with a culturesPath use that path<br />// This allows manually setting the directory for the culture files to be retrieved from<br />var existingCulturePath = '';</p>
 <p>if (window.Locale &amp;&amp; window.Locale.hasOwnProperty('culturesPath')) {<br />existingCulturePath = window.Locale.culturesPath;<br />}</p>
-<h4 id="set">set</h4>
+<h4 id="set-2">set</h4>
 <p>Set the currently used colors.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -387,7 +461,7 @@
 <ul>
 <li><code>currentLocale</code> <strong><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The Currently Set Locale</li>
 </ul>
-<h4 id="set-1">set</h4>
+<h4 id="set-3">set</h4>
 <p>Set the currently used colors.</p>
 <p><strong>Parameters</strong></p>
 <ul>

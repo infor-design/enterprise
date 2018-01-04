@@ -315,7 +315,10 @@ CirclePager.prototype = {
     return this;
   },
 
-  updated() {
+  updated(settings) {
+    if (typeof settings !== 'undefined') {
+      this.settings = utils.mergeSettings(this.element, settings, CIRCLEPAGER_DEFAULTS);
+    }
     return this
       .unbind()
       .init();
@@ -336,7 +339,6 @@ CirclePager.prototype = {
       .onTouchClick('circlepager')
       .on('click.circlepager', (e) => {
         this.prev();
-        // self.prev();
         e.stopImmediatePropagation();
       });
 
@@ -345,7 +347,6 @@ CirclePager.prototype = {
       .onTouchClick('circlepager')
       .on('click.circlepager', (e) => {
         this.next();
-        // self.next();
         e.stopImmediatePropagation();
       });
 
@@ -358,29 +359,13 @@ CirclePager.prototype = {
       // Handle clicks for bottom bullet links
       btn.on('click.circlepager', (e) => {
         e.preventDefault();
-        // if (self.slides[i].isDisabled) {
         if (this.slides[i].isDisabled) {
           return;
         }
         this.show(i);
-        // self.show(i);
       });
     }
 
-    // this.controlButtons.each(function(index) {
-    //   var btn = $(this);
-    //   btn.hideFocus();
-    //
-    //   // Handle clicks for bottom bullet links
-    //   btn.on('click.circlepager', function(e) {
-    //     e.preventDefault();
-    //     if (self.slides[index].isDisabled) {
-    //       return;
-    //     }
-    //     self.show(index);
-    //   });
-    //
-    // });
 
     // Handle keyboard events
 
