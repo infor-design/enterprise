@@ -2670,7 +2670,7 @@ window.Chart = function(container) {
 
       // Click
       .on('click', function (d, i) {
-        var selector, isTargetBar = this && d3.select(this).classed('target-bar');
+        var isTargetBar = this && d3.select(this).classed('target-bar');
 
         var isSelected = this && d3.select(this).classed('is-selected'),
           thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
@@ -2679,8 +2679,9 @@ window.Chart = function(container) {
         if (isTargetBar) {
           var allBars = d3.selectAll('.bar')[0],
             len = allBars.length;
-          for (var i = 0; i < len; i++) {
-            var bar = allBars[i];
+
+          for (var j = 0; j < len; i++) {
+            var bar = allBars[j];
 
             if (d3.select(bar).classed('is-selected')) {
               isSelected = false;
