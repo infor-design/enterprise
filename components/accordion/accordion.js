@@ -127,7 +127,7 @@
           headersHaveIcons = true;
         }
 
-        if (header.is('.list-item') || (!isTopLevel && header.find('button').length)) {
+        if (header.is('.list-item') || (!isTopLevel && header.find('button').length) || (!isTopLevel && header.find('svg').length)) {
           hasIcons = true;
         }
 
