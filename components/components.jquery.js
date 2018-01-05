@@ -19,6 +19,7 @@ import './applicationmenu/applicationmenu.jquery';
 import './dropdown/dropdown.jquery';
 import './circlepager/circlepager.jquery';
 import './colorpicker/colorpicker.jquery';
+import './homepage/homepage.jquery';
 import './listview/listview.jquery';
 import './mask/masked-input.jquery';
 import './message/message.jquery';
