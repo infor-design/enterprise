@@ -20,6 +20,7 @@ export { renderLoop, RenderLoopItem };
 
 // Theme/Personalization need single instances of themselves
 export { theme } from './personalize/personalize';
+export { personalization } from './personalize/personalize.bootstrap';
 export * from './personalize/personalize.hooks';
 
 export { masks } from './mask/masks';

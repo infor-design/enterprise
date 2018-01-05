@@ -57,6 +57,9 @@ See the file [`<project root>/components/index.js`](./components/index.js) to se
 - Standard, Vanilla-JS Constructors for Soho components are (generally) being separated away from the jQuery component wrappers, into their own files.  This allows:
   - Clear isolation of jQuery-specific code from Vanilla-JS code (not currently perfect, but in-progress and with the goal of eventually 100% separating them).
   - Inclusion of jQuery components only by larger components that need them.
+- The "Personalize" component, which contains everything responsible for swapping colors on personalizable elements, as well as the overall theme, has had some changes:
+  - There is ALWAYS a single instance of Personalize invoked against the HTML element.
+  - Whenever Personalize is accessed from jQuery on any element, the settings on the HTML element for Personalize are updated.
 
 #### TODO for the JS deliverable:
 
