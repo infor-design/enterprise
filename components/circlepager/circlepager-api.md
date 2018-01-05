@@ -12,8 +12,8 @@
     -   [logTimeStart](#logtimestart)
     -   [logTimeEnd](#logtimeend)
     -   [bindFirst](#bindfirst)
-    -   [bindFirst](#bindfirst-1)
 -   [SOHO Utils](#soho-utils)
+    -   [bindFirst](#bindfirst-1)
     -   [uniqueId](#uniqueid)
     -   [cssPropSupport](#csspropsupport)
     -   [transitionEndName](#transitionendname)
@@ -24,6 +24,9 @@
     -   [timer](#timer)
     -   [clearable](#clearable)
     -   [getHiddenSize](#gethiddensize)
+    -   [hideFocus](#hidefocus)
+    -   [smoothScroll](#smoothscroll)
+    -   [isHiddenAtBreakpoint](#ishiddenatbreakpoint)
     -   [copyToClipboard](#copytoclipboard)
     -   [escapeHTML](#escapehtml)
     -   [sanitizeHTML](#sanitizehtml)
@@ -54,8 +57,22 @@
     -   [getDimensions](#getdimensions)
     -   [convertDelayToFPS](#convertdelaytofps)
     -   [convertFPSToDelay](#convertfpstodelay)
-    -   [Locale](#locale)
+    -   [HideFocus](#hidefocus-1)
+    -   [smoothScrollTo](#smoothscrollto)
+    -   [defer](#defer)
+    -   [Environment](#environment)
         -   [set](#set)
+        -   [addBrowserClasses](#addbrowserclasses)
+        -   [addGlobalResize](#addglobalresize)
+        -   [pasteEvent](#pasteevent)
+    -   [set](#set-1)
+    -   [current](#current)
+    -   [isAbove](#isabove)
+    -   [isBelow](#isbelow)
+    -   [compare](#compare)
+    -   [isHidden](#ishidden)
+    -   [Locale](#locale)
+        -   [set](#set-2)
         -   [formatDate](#formatdate)
         -   [isValidDate](#isvaliddate)
         -   [parseDate](#parsedate)
@@ -67,7 +84,7 @@
         -   [capitalize](#capitalize)
         -   [capitalizeWords](#capitalizewords)
     -   [Locale](#locale-1)
-        -   [set](#set-1)
+        -   [set](#set-3)
         -   [formatDate](#formatdate-1)
         -   [isValidDate](#isvaliddate-1)
         -   [parseDate](#parsedate-1)
@@ -131,8 +148,9 @@ Easy flag for determining whether or not time will be logged to the console.
 
 ## bindFirst
 
-Used for changing the stacking order of jQuery events.  This is needed to override certain
-Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
+============================================
+
+# SOHO Utils
 
 **Parameters**
 
@@ -141,9 +159,8 @@ Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 ## bindFirst
 
-============================================
-
-# SOHO Utils
+Used for changing the stacking order of jQuery events.  This is needed to override certain
+Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 **Parameters**
 
@@ -241,6 +258,29 @@ Binds the Soho Util _getHiddenSize()_ to a jQuery selector
 -   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options
 
 Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+## hideFocus
+
+jQuery component wrapper for the HideFocus behavior
+
+## smoothScroll
+
+Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
+
+**Parameters**
+
+-   `target` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance to scroll the element
+-   `duration` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
+
+Returns **$.Deferred** 
+
+## isHiddenAtBreakpoint
+
+jQuery wrapper for `Soho.breakpoints.isHidden()`
+NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.
+This method is NOT chainable.
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## copyToClipboard
 
@@ -508,6 +548,106 @@ Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (F
 -   `delay` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
 Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+
+## HideFocus
+
+HideFocus Behavior
+Only shows the focus state on key entry (tabs or arrows).
+
+**Parameters**
+
+-   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate))** 
+
+Returns **[HideFocus](#hidefocus)** 
+
+## smoothScrollTo
+
+Allows for the smooth scrolling of an element's content area.
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
+-   `target` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance.
+-   `duration` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
+
+Returns **$.Deferred** 
+
+## defer
+
+Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
+
+**Parameters**
+
+-   `callback`  
+-   `timer`  
+
+Returns **([requestAnimationFrame](https://developer.mozilla.org/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/docs/Web/API/WindowTimers/setTimeout))** 
+
+## Environment
+
+Type: [Environment](#environment)
+
+### set
+
+Builds run-time environment settings
+
+### addBrowserClasses
+
+Global Classes for browser, version and device as needed.
+
+### addGlobalResize
+
+Setup a global resize event trigger for controls to listen to
+
+### pasteEvent
+
+## set
+
+Automatically set up the environment by virtue of including this script
+
+## current
+
+Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the
+
+<body> tag's `::after` pseudo-element.  These names should be reflected in the breakpoints object
+above.
+
+Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## isAbove
+
+**Parameters**
+
+-   `breakpoint` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## isBelow
+
+**Parameters**
+
+-   `breakpoint` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## compare
+
+Compares the last-stored breakpoint with a check on the "current" breakpoint to see if the
+breakpoint has changed.
+
+## isHidden
+
+Checks an element for Soho visibility classes and determines whether or not
+should be hidden based on those values at the current breakpoint.
+NOTE: this method does NOT determine if the element is ACTUALLY hidden with a
+`display: none;` or `visibility: hidden;` rule.  It determines whether or not a CSS
+visibility rule alone would hide the element.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** 
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## Locale
 

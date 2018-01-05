@@ -7,10 +7,12 @@ All the following Soho Components have been converted to ES6:
 * ApplicationMenu
 * Autocomplete
 * Button
+* Circlepager
 * Colorpicker
 * Drag (behavior)
 * Dropdown
 * Header
+* Homepage
 * Hyperlink
 * Icons
 * Listview
