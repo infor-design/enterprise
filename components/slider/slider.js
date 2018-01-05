@@ -1,5 +1,5 @@
 import * as debug from '../utils/debug';
-import { theme } from '../utils/theme';
+import { theme } from '../personalize/personalize';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 

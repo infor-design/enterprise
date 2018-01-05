@@ -1,74 +1,56 @@
 import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
+
+/**
+ * Current "theme" string
+ */
+let theme = 'light';
 
 /**
  * Component name as referenced by jQuery/event namespace/etc
  */
-const PLUGIN_NAME = 'personalize';
+const COMPONENT_NAME = 'personalize';
 
 /**
  * Component Defaults
+ * @param {String} colors  &nbsp;-&nbsp; The list of colors
+ * @param {String} theme  &nbsp;-&nbsp; The theme name (light, dark or high-contrast)
  */
 const PERSONALIZE_DEFAULTS = {
   colors: '',
-  theme: ''
+  theme: theme
 };
 
 /**
-* The personalization routines for setting custom company colors.
-*
-* @class Personalize
-* @param {String} colors  &nbsp;-&nbsp; The list of colors
-* @param {String} theme  &nbsp;-&nbsp; The theme name (light, dark or high-contrast)
-*
-*/
-function Personalize(element, options) {
-  this.settings = $.extend({}, PERSONALIZE_DEFAULTS, options);
+ * The personalization routines for setting custom company colors.
+ *
+ * @class Personalize
+ * @param {HTMLElement|jQuery[]} element
+ * @param {Object} [settings]
+ */
+function Personalize(element, settings) {
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  this.settings = utils.mergeSettings(this.element[0], settings, PERSONALIZE_DEFAULTS);
+
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Plugin Methods
 Personalize.prototype = {
   init() {
-    this.makeSohoObject()
-      .handleEvents();
+
+    // Set the default theme, or grab the theme from an external CSS stylesheet.
+    const cssTheme = this.getThemeFromStylesheet();
+    this.currentTheme = cssTheme ? cssTheme : this.settings.theme;
+    this.setTheme(this.currentTheme);
 
     if (this.settings.colors) {
       this.setColors(this.settings.colors);
     }
 
-    if (this.settings.theme) {
-      this.setTheme(this.settings.theme);
-    }
-    return this;
-  },
-
-  makeSohoObject() {
-    const self = this;
-
-    // Set the default theme or take it from the css sheet
-    window.Soho.theme = 'light';
-    const cssTheme = this.getThemeFromStylesheet();
-    if (cssTheme) {
-      window.Soho.theme = cssTheme;
-    }
-
-    // Add Classes of current theme to the html root for use and debugging.
-    $('html').removeClass('light-theme dark-theme high-contrast-theme').addClass(`${window.Soho.theme}-theme`);
-
-    window.Soho.setTheme = function (theme) { // jshint ignore:line
-      self.setTheme(theme);
-    };
-
-    window.Soho.setColors = function (colors) { // jshint ignore:line
-      self.setColors(colors);
-    };
-
-    window.Soho.getColorStyleSheet = function (colors) { // jshint ignore:line
-      return self.getColorStyleSheet(colors);
-    };
+    this.handleEvents();
 
     return this;
   },
@@ -77,11 +59,11 @@ Personalize.prototype = {
   handleEvents() {
     const self = this;
 
-    this.element.on(`updated.${PLUGIN_NAME}`, () => {
+    this.element.on(`updated.${COMPONENT_NAME}`, () => {
       self.updated();
-    }).on(`changecolors.${PLUGIN_NAME}`, (e, newColor, noAnimate) => {
+    }).on(`changecolors.${COMPONENT_NAME}`, (e, newColor, noAnimate) => {
       self.setColors(newColor, noAnimate);
-    }).on(`changetheme.${PLUGIN_NAME}`, (e, theme) => {
+    }).on(`changetheme.${COMPONENT_NAME}`, (e, theme) => {
       self.setTheme(theme);
     });
 
@@ -117,11 +99,15 @@ Personalize.prototype = {
   },
 
   getColorStyleSheet(colors) {
-    Soho.colors = colors;
+    if (!colors) {
+      colors = {};
+    }
 
+    // Use an incoming `colors` param defined as a string, as the desired "header" color (backwards compatibility)
     if (typeof colors === 'string') {
-      Soho.colors = {};
-      Soho.colors.header = colors;
+      colors = {
+        header: colors
+      };
     }
 
     if (!colors || colors === '') {
@@ -152,45 +138,45 @@ Personalize.prototype = {
 
     // If an event sends a blank string through instead of a hex,
     // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
-    Soho.colors.header = this.validateHex(Soho.colors.header || defaultColors.header);
-    Soho.colors.text = this.validateHex(Soho.colors.text || defaultColors.text);
-    Soho.colors.subheader = this.validateHex(Soho.colors.subheader || this.getLuminousColorShade(Soho.colors.header, 0.2));
-    Soho.colors.inactive = this.validateHex(Soho.colors.inactive || this.getLuminousColorShade(Soho.colors.header, -0.22));
-    Soho.colors.verticalBorder = this.validateHex(Soho.colors.verticalBorder || this.getLuminousColorShade(Soho.colors.header, 0.1));
-    Soho.colors.horizontalBorder = this.validateHex(Soho.colors.horizontalBorder || this.getLuminousColorShade(Soho.colors.header, -0.4));
-    Soho.colors.hover = this.validateHex(Soho.colors.hover || this.getLuminousColorShade(Soho.colors.header, -0.5));
-    Soho.colors.btnColorHeader = this.validateHex(Soho.colors.btnColorHeader || this.getLuminousColorShade(Soho.colors.subheader, -0.025));
-    Soho.colors.btnColorSubheader = this.validateHex(Soho.colors.btnColorSubheader || this.getLuminousColorShade(Soho.colors.header, -0.025));
+    colors.header = this.validateHex(colors.header || defaultColors.header);
+    colors.text = this.validateHex(colors.text || defaultColors.text);
+    colors.subheader = this.validateHex(colors.subheader || this.getLuminousColorShade(colors.header, 0.2));
+    colors.inactive = this.validateHex(colors.inactive || this.getLuminousColorShade(colors.header, -0.22));
+    colors.verticalBorder = this.validateHex(colors.verticalBorder || this.getLuminousColorShade(colors.header, 0.1));
+    colors.horizontalBorder = this.validateHex(colors.horizontalBorder || this.getLuminousColorShade(colors.header, -0.4));
+    colors.hover = this.validateHex(colors.hover || this.getLuminousColorShade(colors.header, -0.5));
+    colors.btnColorHeader = this.validateHex(colors.btnColorHeader || this.getLuminousColorShade(colors.subheader, -0.025));
+    colors.btnColorSubheader = this.validateHex(colors.btnColorSubheader || this.getLuminousColorShade(colors.header, -0.025));
 
     // not that the sheet is appended in backwards
-    const cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${Soho.colors.horizontalBorder} !important; border-bottom: 1px solid ${Soho.colors.horizontalBorder} !important}` +
-    ` .module-tabs.is-personalizable .tab:not(:first-child) { border-left: 1px solid ${Soho.colors.verticalBorder} !important}` +
-    ` .module-tabs.is-personalizable { background-color: ${Soho.colors.inactive} !important}` +
-    ` .module-tabs.is-personalizable .tab.is-selected { background-color: ${Soho.colors.header} !important}` +
-    ` .accordion.panel .accordion-header.is-selected { background-color: ${Soho.colors.subheader} !important; color: ${Soho.colors.text} !important}` +
-    ` .builder-header.is-personalizable{ background-color: ${Soho.colors.subheader}}` +
-    ` .header.is-personalizable { background-color: ${Soho.colors.header}}` +
-    ` .header.is-personalizable .title { color: ${Soho.colors.text}}` +
-    ` .header.is-personalizable h1 { color: ${Soho.colors.text}}` +
-    ` .header.is-personalizable .go-button.is-personalizable { background-color: ${Soho.colors.btnColorHeader}; border-color:${Soho.colors.btnColorHeader};color: ${Soho.colors.text}}` +
-    ` .subheader.is-personalizable .go-button.is-personalizable { background-color: ${Soho.colors.btnColorSubheader}; border-color:${Soho.colors.btnColorSubheader};color: ${Soho.colors.text}}` +
-    ` .module-tabs.is-personalizable .tab-more { border-left: ${Soho.colors.verticalBorder} !important}` +
-    ` .module-tabs.is-personalizable .tab-more:hover { background-color: ${Soho.colors.hover} !important}` +
-    ` .module-tabs.is-personalizable .tab-more.is-open { background-color: ${Soho.colors.hover} !important}` +
-    ` .module-tabs.is-personalizable .tab-more.is-selected { background-color: ${Soho.colors.header} !important}` +
-    ` .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield { background-color: ${Soho.colors.hover} !important; border-bottom-color: ${Soho.colors.hover} !important}` +
-    ` .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield-category-button { background-color: ${Soho.colors.hover} !important; border-bottom-color: ${Soho.colors.hover} !important}` +
-    ` .subheader.is-personalizable { background-color: ${Soho.colors.subheader} !important}` +
-    ` .builder .sidebar .header {border-right: 1px solid ${Soho.colors.hover} !important}` +
-    ` .module-tabs.is-personalizable .tab:hover { background-color: ${Soho.colors.hover} !important}` +
-    ` .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar { border-left: ${Soho.colors.verticalBorder} !important}` +
-    ` .module-tabs.is-personalizable [class^="btn"] { background-color: ${Soho.colors.inactive} !important}` +
-    ` .hero-widget.is-personalizable { background-color: ${Soho.colors.subheader} }` +
-    ` .hero-widget.is-personalizable .hero-bottom { background-color: ${Soho.colors.header} }` +
-    ` .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before { color: ${Soho.colors.verticalBorder} }` +
-    ` .hero-widget.is-personalizable .chart-container .arc { stroke: ${Soho.colors.subheader} }` +
-    ` .hero-widget.is-personalizable .chart-container .bar { stroke: ${Soho.colors.subheader} }` +
-    ` .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: ${Soho.colors.subheader} }` +
+    const cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${colors.horizontalBorder} !important; border-bottom: 1px solid ${colors.horizontalBorder} !important}` +
+    ` .module-tabs.is-personalizable .tab:not(:first-child) { border-left: 1px solid ${colors.verticalBorder} !important}` +
+    ` .module-tabs.is-personalizable { background-color: ${colors.inactive} !important}` +
+    ` .module-tabs.is-personalizable .tab.is-selected { background-color: ${colors.header} !important}` +
+    ` .accordion.panel .accordion-header.is-selected { background-color: ${colors.subheader} !important; color: ${colors.text} !important}` +
+    ` .builder-header.is-personalizable{ background-color: ${colors.subheader}}` +
+    ` .header.is-personalizable { background-color: ${colors.header}}` +
+    ` .header.is-personalizable .title { color: ${colors.text}}` +
+    ` .header.is-personalizable h1 { color: ${colors.text}}` +
+    ` .header.is-personalizable .go-button.is-personalizable { background-color: ${colors.btnColorHeader}; border-color:${colors.btnColorHeader};color: ${colors.text}}` +
+    ` .subheader.is-personalizable .go-button.is-personalizable { background-color: ${colors.btnColorSubheader}; border-color:${colors.btnColorSubheader};color: ${colors.text}}` +
+    ` .module-tabs.is-personalizable .tab-more { border-left: ${colors.verticalBorder} !important}` +
+    ` .module-tabs.is-personalizable .tab-more:hover { background-color: ${colors.hover} !important}` +
+    ` .module-tabs.is-personalizable .tab-more.is-open { background-color: ${colors.hover} !important}` +
+    ` .module-tabs.is-personalizable .tab-more.is-selected { background-color: ${colors.header} !important}` +
+    ` .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield { background-color: ${colors.hover} !important; border-bottom-color: ${colors.hover} !important}` +
+    ` .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield-category-button { background-color: ${colors.hover} !important; border-bottom-color: ${colors.hover} !important}` +
+    ` .subheader.is-personalizable { background-color: ${colors.subheader} !important}` +
+    ` .builder .sidebar .header {border-right: 1px solid ${colors.hover} !important}` +
+    ` .module-tabs.is-personalizable .tab:hover { background-color: ${colors.hover} !important}` +
+    ` .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar { border-left: ${colors.verticalBorder} !important}` +
+    ` .module-tabs.is-personalizable [class^="btn"] { background-color: ${colors.inactive} !important}` +
+    ` .hero-widget.is-personalizable { background-color: ${colors.subheader} }` +
+    ` .hero-widget.is-personalizable .hero-bottom { background-color: ${colors.header} }` +
+    ` .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before { color: ${colors.verticalBorder} }` +
+    ` .hero-widget.is-personalizable .chart-container .arc { stroke: ${colors.subheader} }` +
+    ` .hero-widget.is-personalizable .chart-container .bar { stroke: ${colors.subheader} }` +
+    ` .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: ${colors.subheader} }` +
     '';
 
     return cssRules;
@@ -255,15 +241,16 @@ Personalize.prototype = {
   /**
   * Sets the current theme, blocking the ui during the change.
   *
-  * @param {String} theme  &nbsp;-&nbsp; Represents the file name of a color
+  * @param {String} incomingTheme  &nbsp;-&nbsp; Represents the file name of a color
   * scheme (can be dark, light or high-contrast)
   */
-  setTheme(theme) {
-    if (Soho.theme === theme) {
+  setTheme(incomingTheme) {
+    if (theme === incomingTheme) {
       return;
     }
 
-    Soho.theme = theme;
+    theme = incomingTheme;
+
     // validate theme
     if (this.availableThemes.indexOf(theme) === -1) {
       return;
@@ -294,7 +281,7 @@ Personalize.prototype = {
   // Block the ui from FOUC
   blockUi() {
     this.pageOverlay = this.pageOverlay || $(`${'<div style="' +
-      'background: '}${Soho.theme === 'light' ? '#f0f0f0;' : (Soho.theme === 'dark' ? '#313236;' : '#bdbdbd;')
+      'background: '}${theme === 'light' ? '#f0f0f0;' : (theme === 'dark' ? '#313236;' : '#bdbdbd;')
     }display: block;` +
       'height: 100%;' +
       'left: 0;' +
@@ -317,8 +304,15 @@ Personalize.prototype = {
     });
   },
 
-  // Handle Updating Settings
-  updated() {
+  /**
+   * Handle Updating Settings
+   * @param {Object} [settings]
+   */
+  updated(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
+
     return this
       .teardown()
       .init();
@@ -327,34 +321,16 @@ Personalize.prototype = {
   // Simple Teardown - remove events & rebuildable markup.
   // Ideally this will do non-destructive things that make it possible to easily rebuild
   teardown() {
-    this.element.off(`updated.${PLUGIN_NAME}`);
+    this.element.off(`updated.${COMPONENT_NAME}`);
     return this;
   },
 
   // Teardown - Remove added markup and events
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
-/**
- * jQuery Component Wrapper for Personalize
- */
-$.fn.personalize = function (options) {
-  // Settings and Options
-  const settings = $.extend({}, PERSONALIZE_DEFAULTS, options);
 
-  // Initialize the plugin (Once)
-  return this.each(function () {
-    let instance = $.data(this, PLUGIN_NAME);
-    if (instance) {
-      instance.settings = $.extend({}, instance.settings, options);
-      instance.updated();
-    } else {
-      instance = $.data(this, PLUGIN_NAME, new Personalize(this, settings));
-    }
-  });
-};
-
-export { Personalize };
+export { theme, Personalize, COMPONENT_NAME };

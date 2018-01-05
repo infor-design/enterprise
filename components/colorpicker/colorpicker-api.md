@@ -18,8 +18,8 @@
     -   [logTimeStart](#logtimestart)
     -   [logTimeEnd](#logtimeend)
     -   [bindFirst](#bindfirst)
--   [SOHO Utils](#soho-utils)
     -   [bindFirst](#bindfirst-1)
+-   [SOHO Utils](#soho-utils)
     -   [uniqueId](#uniqueid)
     -   [cssPropSupport](#csspropsupport)
     -   [transitionEndName](#transitionendname)
@@ -30,10 +30,14 @@
     -   [timer](#timer)
     -   [clearable](#clearable)
     -   [getHiddenSize](#gethiddensize)
-    -   [copyToClipboard](#copytoclipboard)
-    -   [escapeHTML](#escapehtml)
-    -   [sanitizeHTML](#sanitizehtml)
-    -   [actualChar](#actualchar)
+    -   [hideFocus](#hidefocus)
+    -   [smoothScroll](#smoothscroll)
+    -   [isHiddenAtBreakpoint](#ishiddenatbreakpoint)
+    -   [$](#)
+        -   [copyToClipboard](#copytoclipboard)
+        -   [escapeHTML](#escapehtml)
+        -   [sanitizeHTML](#sanitizehtml)
+        -   [actualChar](#actualchar)
     -   [uniqueIdCount](#uniqueidcount)
     -   [focusable](#focusable)
     -   [extend](#extend)
@@ -41,7 +45,6 @@
     -   [parseOptions](#parseoptions-1)
     -   [actualChar](#actualchar-1)
     -   [equals](#equals)
-    -   [debounce](#debounce)
     -   [extend](#extend-1)
     -   [fixSVGIcons](#fixsvgicons)
     -   [getViewportSize](#getviewportsize)
@@ -60,8 +63,23 @@
     -   [getDimensions](#getdimensions)
     -   [convertDelayToFPS](#convertdelaytofps)
     -   [convertFPSToDelay](#convertfpstodelay)
-    -   [Locale](#locale)
+    -   [HideFocus](#hidefocus-1)
+    -   [smoothScrollTo](#smoothscrollto)
+    -   [defer](#defer)
+    -   [Environment](#environment)
         -   [set](#set)
+        -   [addBrowserClasses](#addbrowserclasses)
+        -   [addGlobalResize](#addglobalresize)
+        -   [pasteEvent](#pasteevent)
+    -   [set](#set-1)
+    -   [current](#current)
+    -   [isAbove](#isabove)
+    -   [isBelow](#isbelow)
+    -   [compare](#compare)
+    -   [isHidden](#ishidden)
+    -   [debounce](#debounce)
+    -   [Locale](#locale)
+        -   [set](#set-2)
         -   [formatDate](#formatdate)
         -   [isValidDate](#isvaliddate)
         -   [parseDate](#parsedate)
@@ -73,7 +91,7 @@
         -   [capitalize](#capitalize)
         -   [capitalizeWords](#capitalizewords)
     -   [Locale](#locale-1)
-        -   [set](#set-1)
+        -   [set](#set-3)
         -   [formatDate](#formatdate-1)
         -   [isValidDate](#isvaliddate-1)
         -   [parseDate](#parsedate-1)
@@ -84,6 +102,15 @@
         -   [toLowerCase](#tolowercase-1)
         -   [capitalize](#capitalize-1)
         -   [capitalizeWords](#capitalizewords-1)
+    -   [personalization](#personalization)
+    -   [theme](#theme)
+    -   [COMPONENT_NAME](#component_name)
+    -   [PERSONALIZE_DEFAULTS](#personalize_defaults)
+    -   [Personalize](#personalize)
+        -   [setColors](#setcolors)
+        -   [getLuminousColorShade](#getluminouscolorshade)
+        -   [setTheme](#settheme)
+        -   [updated](#updated-1)
 
 ## ColorPicker
 
@@ -200,9 +227,8 @@ Easy flag for determining whether or not time will be logged to the console.
 
 ## bindFirst
 
-============================================
-
-# SOHO Utils
+Used for changing the stacking order of jQuery events.  This is needed to override certain
+Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 **Parameters**
 
@@ -211,8 +237,9 @@ Easy flag for determining whether or not time will be logged to the console.
 
 ## bindFirst
 
-Used for changing the stacking order of jQuery events.  This is needed to override certain
-Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
+============================================
+
+# SOHO Utils
 
 **Parameters**
 
@@ -311,7 +338,34 @@ Binds the Soho Util _getHiddenSize()_ to a jQuery selector
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
-## copyToClipboard
+## hideFocus
+
+jQuery component wrapper for the HideFocus behavior
+
+## smoothScroll
+
+Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
+
+**Parameters**
+
+-   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance to scroll the element
+-   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
+
+Returns **$.Deferred** 
+
+## isHiddenAtBreakpoint
+
+jQuery wrapper for `Soho.breakpoints.isHidden()`
+NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.
+This method is NOT chainable.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## $
+
+Bind the smartResize method to $.fn()
+
+### copyToClipboard
 
 Copies a string to the clipboard. Must be called from within an event handler such as click.
 May return false if it failed, but this is not always
@@ -324,7 +378,7 @@ shown the first time the clipboard is used (per session).
 
 -   `text`  
 
-## escapeHTML
+### escapeHTML
 
 Functions For Sanitising and Escaping Html
 
@@ -332,7 +386,7 @@ Functions For Sanitising and Escaping Html
 
 -   `value`  
 
-## sanitizeHTML
+### sanitizeHTML
 
 Remove Script tags and all onXXX functions
 
@@ -340,7 +394,7 @@ Remove Script tags and all onXXX functions
 
 -   `html`  
 
-## actualChar
+### actualChar
 
 **Parameters**
 
@@ -398,16 +452,6 @@ Truthy equals
 
 -   `a`  
 -   `b`  
-
-## debounce
-
-Debounce method
-
-**Parameters**
-
--   `func`  
--   `threshold`  
--   `execAsap`  
 
 ## extend
 
@@ -578,118 +622,115 @@ Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (F
 
 Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
 
-## Locale
+## HideFocus
 
-The Locale component handles i18n
+HideFocus Behavior
+Only shows the focus state on key entry (tabs or arrows).
 
 **Parameters**
 
--   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
+-   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate))** 
+
+Returns **[HideFocus](#hidefocus)** 
+
+## smoothScrollTo
+
+Allows for the smooth scrolling of an element's content area.
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
+-   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance.
+-   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
+
+Returns **$.Deferred** 
+
+## defer
+
+Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
+
+**Parameters**
+
+-   `callback`  
+-   `timer`  
+
+Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout))** 
+
+## Environment
+
+Type: [Environment](#environment)
 
 ### set
 
-Set the currently used colors.
+Builds run-time environment settings
+
+### addBrowserClasses
+
+Global Classes for browser, version and device as needed.
+
+### addGlobalResize
+
+Setup a global resize event trigger for controls to listen to
+
+### pasteEvent
+
+## set
+
+Automatically set up the environment by virtue of including this script
+
+## current
+
+Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the
+
+<body> tag's `::after` pseudo-element.  These names should be reflected in the breakpoints object
+above.
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## isAbove
 
 **Parameters**
 
--   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+-   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
 
-### formatDate
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
-Format a Date Object and return it parsed in the current locale.
-
-**Parameters**
-
--   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
--   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
-
-### isValidDate
-
-Check if the date is valid using the current locale to do so.
+## isBelow
 
 **Parameters**
 
--   `date`  
--   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
 
-### parseDate
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
-Take a date string written in the current locale and parse it into a Date Object
+## compare
 
-**Parameters**
+Compares the last-stored breakpoint with a check on the "current" breakpoint to see if the
+breakpoint has changed.
 
--   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
--   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
--   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+## isHidden
 
-### formatNumber
-
-Format a decimal with thousands and padding in the current locale.
-<http://mzl.la/1MUOEWm>
-
-**Parameters**
-
--   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
--   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
-
-### parseNumber
-
-Take a Formatted Number and return a real number
+Checks an element for Soho visibility classes and determines whether or not
+should be hidden based on those values at the current breakpoint.
+NOTE: this method does NOT determine if the element is ACTUALLY hidden with a
+`display: none;` or `visibility: hidden;` rule.  It determines whether or not a CSS
+visibility rule alone would hide the element.
 
 **Parameters**
 
--   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
 
-### translate
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
-Overridable culture messages
+## debounce
 
-**Parameters**
-
--   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
--   `showAsUndefined`  
-
-### toUpperCase
-
-Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
-In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+Debounce method
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
-
-### toLowerCase
-
-Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
-In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
-
-**Parameters**
-
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### capitalize
-
-Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
-In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
-
-**Parameters**
-
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### capitalizeWords
-
-Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
-In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
-
-**Parameters**
-
--   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `func`  
+-   `threshold`  
+-   `execAsap`  
 
 ## Locale
 
@@ -807,3 +848,185 @@ In most cases this method will simply use a simple algorithm for captializing th
 -   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## Locale
+
+The Locale component handles i18n
+
+**Parameters**
+
+-   `currentLocale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Currently Set Locale
+
+### set
+
+Set the currently used colors.
+
+**Parameters**
+
+-   `locale` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The locale to fetch and set.
+
+### formatDate
+
+Format a Date Object and return it parsed in the current locale.
+
+**Parameters**
+
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+-   `attribs` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Additional formatting settings.
+
+### isValidDate
+
+Check if the date is valid using the current locale to do so.
+
+**Parameters**
+
+-   `date`  
+-   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
+
+### parseDate
+
+Take a date string written in the current locale and parse it into a Date Object
+
+**Parameters**
+
+-   `dateString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The string to parse in the current format
+-   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source format fx yyyy-MM-dd
+-   `isStrict` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true missing date parts will be considered invalid. If false the current month/day.
+
+### formatNumber
+
+Format a decimal with thousands and padding in the current locale.
+<http://mzl.la/1MUOEWm>
+
+**Parameters**
+
+-   `number` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The source number.
+-   `options` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+
+### parseNumber
+
+Take a Formatted Number and return a real number
+
+**Parameters**
+
+-   `input` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The source number (as a string).
+
+### translate
+
+Overridable culture messages
+
+**Parameters**
+
+-   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `showAsUndefined`  
+
+### toUpperCase
+
+Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+### toLowerCase
+
+Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
+In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalize
+
+Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### capitalizeWords
+
+Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
+In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+
+**Parameters**
+
+-   `str` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+## personalization
+
+Setup a single instance of the Personalization system on the body.
+
+## theme
+
+Current "theme" string
+
+## COMPONENT_NAME
+
+Component name as referenced by jQuery/event namespace/etc
+
+Type: [string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+## PERSONALIZE_DEFAULTS
+
+Component Defaults
+
+**Parameters**
+
+-   `colors` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The list of colors
+-   `theme` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The theme name (light, dark or high-contrast)
+
+## Personalize
+
+The personalization routines for setting custom company colors.
+
+**Parameters**
+
+-   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
+-   `settings` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 
+
+### setColors
+
+Sets the personalization color(s)
+
+**Parameters**
+
+-   `colors` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The original hex color as a string or an object with all the Colors
+
+### getLuminousColorShade
+
+Takes a color and performs a change in luminosity of that color programatically.
+
+**Parameters**
+
+-   `hex` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The original Hexadecimal base color.
+-   `lum` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A percentage used to set luminosity
+    change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** hexadecimal color.
+
+### setTheme
+
+Sets the current theme, blocking the ui during the change.
+
+**Parameters**
+
+-   `incomingTheme` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Represents the file name of a color
+    scheme (can be dark, light or high-contrast)
+
+### updated
+
+Handle Updating Settings
+
+**Parameters**
+
+-   `settings` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)?** 

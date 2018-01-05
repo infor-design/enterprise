@@ -2,8 +2,7 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
-// Does not work
-// import { theme } from '../utils/theme';
+import { personalization } from '../personalize/personalize.bootstrap';
 
 // Default Settings
 const COMPONENT_NAME = 'colorpicker';
@@ -388,7 +387,7 @@ ColorPicker.prototype = {
   updateColorMenu() {
     const isMenu = !!($('#colorpicker-menu').length);
     const menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
-    const currentTheme = Soho.theme;
+    const currentTheme = personalization.currentTheme;
     const isBorderAll = (this.settings.themes[currentTheme].border === 'all');
     const isChecked = this.settings.themes[currentTheme].checkmark;
     let checkmarkClass = '';

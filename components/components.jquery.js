@@ -6,6 +6,7 @@
 import './utils/highlight';
 import './drag/drag.jquery';
 import './place/place.jquery';
+import './personalize/personalize.jquery';
 
 // Atoms
 import './button/button.jquery';

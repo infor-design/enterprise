@@ -175,7 +175,64 @@
 <li><code>label</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong></li>
 </ul>
 <h2 id="theme">theme</h2>
-<p>defines the current &quot;theme&quot;</p>
+<p>Current &quot;theme&quot; string</p>
+<h2 id="component_name">COMPONENT_NAME</h2>
+<p>Component name as referenced by jQuery/event namespace/etc</p>
+<p>Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></p>
+<h2 id="component_name-1">COMPONENT_NAME</h2>
+<p>Component Names</p>
+<p>Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></p>
+<h2 id="component_name-2">COMPONENT_NAME</h2>
+<p>Component Name</p>
+<p>Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></p>
+<h2 id="component_name-3">COMPONENT_NAME</h2>
+<p>Component Name</p>
+<p>Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></p>
+<h2 id="component_name-4">COMPONENT_NAME</h2>
+<p>Component Name</p>
+<h2 id="component_name-5">COMPONENT_NAME</h2>
+<p>Component Name</p>
+<p>Type: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></p>
+<h2 id="personalize_defaults">PERSONALIZE_DEFAULTS</h2>
+<p>Component Defaults</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>colors</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The list of colors<br /></li>
+<li><code>theme</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The theme name (light, dark or high-contrast)</li>
+</ul>
+<h2 id="personalize">Personalize</h2>
+<p>The personalization routines for setting custom company colors.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong><br /></li>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong></li>
+</ul>
+<h4 id="setcolors">setColors</h4>
+<p>Sets the personalization color(s)</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>colors</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong> The original hex color as a string or an object with all the Colors</li>
+</ul>
+<h4 id="getluminouscolorshade">getLuminousColorShade</h4>
+<p>Takes a color and performs a change in luminosity of that color programatically.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>hex</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The original Hexadecimal base color.<br /></li>
+<li><code>lum</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A percentage used to set luminosity<br />change on the base color: -0.1 would be 10% darker, 0.2 would be 20% brighter</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> hexadecimal color.</p>
+<h4 id="settheme">setTheme</h4>
+<p>Sets the current theme, blocking the ui during the change.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>incomingTheme</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Represents the file name of a color<br />scheme (can be dark, light or high-contrast)</li>
+</ul>
+<h4 id="updated-1">updated</h4>
+<p>Handle Updating Settings</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong></li>
+</ul>
 <h2 id="bindfirst">bindFirst</h2>
 <p>============================================</p>
 <h1 id="soho-utils">SOHO Utils</h1>
@@ -225,16 +282,6 @@
 </ul>
 <h2 id="listevents">listEvents</h2>
 <p>Returns a key/value list of currently attached event listeners</p>
-<h2 id="placeholderpolyfill">placeholderPolyfill</h2>
-<p>Implements consistent support for the placeholder attribute in browsers that do not handle it</p>
-<ul>
-<li>Supports any kind of input (no issues with password) and textarea<br /></li>
-<li>does nothing if native support exists</li>
-</ul>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>options</code></li>
-</ul>
 <h2 id="parseoptions">parseOptions</h2>
 <p>jQuery Behavior Wrapper for <code>utils.parseOptions</code>.</p>
 <p><strong>Parameters</strong></p>
@@ -264,6 +311,19 @@
 <li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong> incoming options</li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></strong></p>
+<h2 id="hidefocus">hideFocus</h2>
+<p>jQuery component wrapper for the HideFocus behavior</p>
+<h2 id="smoothscroll">smoothScroll</h2>
+<p>Binds the Soho Behavior <em>smoothScrollTo()</em> to a jQuery selector</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>target</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> target distance to scroll the element<br /></li>
+<li><code>duration</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> the time that will be needed for the scrolling to complete.</li>
+</ul>
+<p>Returns <strong>$.Deferred</strong></p>
+<h2 id="ishiddenatbreakpoint">isHiddenAtBreakpoint</h2>
+<p>jQuery wrapper for <code>Soho.breakpoints.isHidden()</code><br />NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.<br />This method is NOT chainable.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
 <h2 id="drag">drag</h2>
 <p>jQuery Component Wrapper for Drag</p>
 <p><strong>Parameters</strong></p>
@@ -282,6 +342,12 @@
 <ul>
 <li><code>options</code></li>
 </ul>
+<h2 id="personalize-1">personalize</h2>
+<p>jQuery Component Wrapper for Personalize<br />NOTE: One instance of the Personalzation system can exist at any time, and is applied to the <body> tag.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
 <h2 id="button">button</h2>
 <p>jQuery Component Wrapper for the Soho Button Element</p>
 <p><strong>Parameters</strong></p>
@@ -294,16 +360,6 @@
 <ul>
 <li><code>settings</code></li>
 </ul>
-<h2 id="hidefocus">hideFocus</h2>
-<p>jQuery component wrapper for the HideFocus behavior</p>
-<h2 id="smoothscroll">smoothScroll</h2>
-<p>Binds the Soho Behavior <em>smoothScrollTo()</em> to a jQuery selector</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>target</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> target distance to scroll the element<br /></li>
-<li><code>duration</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> the time that will be needed for the scrolling to complete.</li>
-</ul>
-<p>Returns <strong>$.Deferred</strong></p>
 <h2 id="icon">icon</h2>
 <p>jQuery component wrappers</p>
 <p><strong>Parameters</strong></p>
@@ -324,17 +380,8 @@
 <li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
 </ul>
 <p>Returns <strong><a href="#applicationmenu">ApplicationMenu</a></strong></p>
-<h2 id="ishiddenatbreakpoint">isHiddenAtBreakpoint</h2>
-<p>jQuery wrapper for <code>Soho.breakpoints.isHidden()</code><br />NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.<br />This method is NOT chainable.</p>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
 <h2 id="dropdown">dropdown</h2>
 <p>jQuery Component Wrapper for the Dropdown</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>settings</code></li>
-</ul>
-<h2 id="listview">listview</h2>
-<p>jQuery Component Wrapper for Listview</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
@@ -407,31 +454,130 @@
 <ul>
 <li><code>settings</code></li>
 </ul>
+<h2 id="toolbar">toolbar</h2>
+<p>jQuery Component Wrapper for Toolbar</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h2 id="toolbarsearchfield">toolbarsearchfield</h2>
+<p>jQuery Component Wrapper for Toolbar Searchfield</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h2 id="tree">tree</h2>
+<p>jQuery Component Wrapper for Tree<br />TODO: - Context Menus<br /> - Search</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h2 id="validation">validation</h2>
+<p>jQuery Component Wrapper for the Validation Component</p>
+<h2 id="geterrormessage">getErrorMessage</h2>
+<p>Returns the errormessage data object for a Field</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code> (object) optional</li>
+</ul>
+<h2 id="getmessage">getMessage</h2>
+<p>Returns the specific type message data object for a Field</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code> (object) optional</li>
+</ul>
+<h2 id="scrollintoview">scrollIntoView</h2>
+<p>ScrollIntoView and sets focus on an element</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>alignToTop</code> (boolean) optional - true (default) element will be aligned to the top of the visible area of the scrollable ancestor<br /></li>
+<li><code>options</code> (object) optional</li>
+</ul>
+<h2 id="addmessage">addMessage</h2>
+<p>Add a Message to a Field</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code></li>
+</ul>
+<h2 id="adderror">addError</h2>
+<p>Add an error Message to a Field</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code></li>
+</ul>
+<h2 id="removemessage">removeMessage</h2>
+<p>Remove a Message from a Field</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code></li>
+</ul>
+<h2 id="removeerror">removeError</h2>
+<p>Remove an error Message from a Field</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code></li>
+</ul>
+<h2 id="validate">validate</h2>
+<p>The Actual Validate Component</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>options</code><br /></li>
+<li><code>args</code></li>
+</ul>
+<h2 id="isvalid">isValid</h2>
+<p>jQuery Utility function wrapper for checking whether or not a field passes validation.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="isvalid-1">isValid</h2>
+<h1 id="soho-validation-utilities">Soho Validation Utilities</h1>
+<h2 id="validatefield">validateField</h2>
+<p>Check validation manually.</p>
+<h2 id="resetform">resetForm</h2>
+<p>Clear out the stuff on the Form</p>
+<h2 id="wizard">wizard</h2>
+<p>jQuery Component Wrapper for Wizard</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h2 id="zoom">zoom</h2>
+<p>jQuery Component Wrapper for Zoom</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h2 id="header">header</h2>
+<p>jQuery Component Wrapper for Header</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
 <h2 id="place">place</h2>
 <p>jQuery Component Wrapper</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
 </ul>
-<h2 id="copytoclipboard">copyToClipboard</h2>
+<h2 id="section">$</h2>
+<p>Bind the smartResize method to $.fn()</p>
+<h4 id="copytoclipboard">copyToClipboard</h4>
 <p>Copies a string to the clipboard. Must be called from within an event handler such as click.<br />May return false if it failed, but this is not always<br />possible. Browser support for Chrome 43+, Firefox 42+, Edge and IE 10+.<br />No Safari support, as of (Nov. 2015). Returns false.<br />IE: The clipboard feature may be disabled by an adminstrator. By default a prompt is<br />shown the first time the clipboard is used (per session).</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>text</code></li>
 </ul>
-<h2 id="escapehtml">escapeHTML</h2>
+<h4 id="escapehtml">escapeHTML</h4>
 <p>Functions For Sanitising and Escaping Html</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>value</code></li>
 </ul>
-<h2 id="sanitizehtml">sanitizeHTML</h2>
+<h4 id="sanitizehtml">sanitizeHTML</h4>
 <p>Remove Script tags and all onXXX functions</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>html</code></li>
 </ul>
-<h2 id="actualchar">actualChar</h2>
+<h4 id="actualchar">actualChar</h4>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>e</code></li>
@@ -447,7 +593,7 @@
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
 <h2 id="extend">extend</h2>
 <h2 id="parsesettings">parseSettings</h2>
-<p>Grabs an attribute from an HTMLElement containing stringified JSON syntax, and interprets it into options.</p>
+<p>Grabs an attribute from an HTMLElement containing stringified JSON syntax,<br />and interprets it into options.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a></strong><br /></li>
@@ -468,14 +614,6 @@
 <ul>
 <li><code>a</code><br /></li>
 <li><code>b</code></li>
-</ul>
-<h2 id="debounce">debounce</h2>
-<p>Debounce method</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>func</code><br /></li>
-<li><code>threshold</code><br /></li>
-<li><code>execAsap</code></li>
 </ul>
 <h2 id="extend-1">extend</h2>
 <p>Object deep copy<br />For now, alias jQuery.extend<br />Eventually we'll replace this with a non-jQuery extend method.</p>
@@ -595,11 +733,82 @@
 <li><code>delay</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> fps</p>
-<h2 id="locale">Locale</h2>
-<p>TODO: Re-implement this with proper scope.</p>
-<p>// If there already exists a Locale object with a culturesPath use that path<br />// This allows manually setting the directory for the culture files to be retrieved from<br />var existingCulturePath = '';</p>
-<p>if (window.Locale &amp;&amp; window.Locale.hasOwnProperty('culturesPath')) {<br />existingCulturePath = window.Locale.culturesPath;<br />}</p>
+<h2 id="hidefocus-1">HideFocus</h2>
+<p>HideFocus Behavior<br />Only shows the focus state on key entry (tabs or arrows).</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a>)</strong></li>
+</ul>
+<p>Returns <strong><a href="#hidefocus">HideFocus</a></strong></p>
+<h2 id="smoothscrollto">smoothScrollTo</h2>
+<p>Allows for the smooth scrolling of an element's content area.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>el</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> The element being manipulated.<br /></li>
+<li><code>target</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> target distance.<br /></li>
+<li><code>duration</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> the time that will be needed for the scrolling to complete.</li>
+</ul>
+<p>Returns <strong>$.Deferred</strong></p>
+<h2 id="defer">defer</h2>
+<p>Uses 'requestAnimationFrame' or 'setTimeout' to defer a function</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>callback</code><br /></li>
+<li><code>timer</code></li>
+</ul>
+<p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout">setTimeout</a>)</strong></p>
+<h2 id="environment">Environment</h2>
+<p>Type: <a href="#environment">Environment</a></p>
 <h4 id="set">set</h4>
+<p>Builds run-time environment settings</p>
+<h4 id="addbrowserclasses">addBrowserClasses</h4>
+<p>Global Classes for browser, version and device as needed.</p>
+<h4 id="addglobalresize">addGlobalResize</h4>
+<p>Setup a global resize event trigger for controls to listen to</p>
+<h4 id="pasteevent">pasteEvent</h4>
+<h2 id="set-1">set</h2>
+<p>Automatically set up the environment by virtue of including this script</p>
+<h2 id="current">current</h2>
+<p>Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the</p>
+<body> 
+<p>tag's <code>::after</code> pseudo-element. These names should be reflected in the breakpoints object<br />above.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
+<h2 id="isabove">isAbove</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> matches one of the entries in the &quot;Soho.breakpoints&quot; object.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="isbelow">isBelow</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> matches one of the entries in the &quot;Soho.breakpoints&quot; object.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="compare">compare</h2>
+<p>Compares the last-stored breakpoint with a check on the &quot;current&quot; breakpoint to see if the<br />breakpoint has changed.</p>
+<h2 id="ishidden">isHidden</h2>
+<p>Checks an element for Soho visibility classes and determines whether or not<br />should be hidden based on those values at the current breakpoint.<br />NOTE: this method does NOT determine if the element is ACTUALLY hidden with a<br /><code>display: none;</code> or <code>visibility: hidden;</code> rule. It determines whether or not a CSS<br />visibility rule alone would hide the element.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h2 id="debounce">debounce</h2>
+<p>Debounce method</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>func</code><br /></li>
+<li><code>threshold</code><br /></li>
+<li><code>execAsap</code></li>
+</ul>
+<h2 id="locale">Locale</h2>
+<p>The Locale component handles i18n</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>currentLocale</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The Currently Set Locale</li>
+</ul>
+<h4 id="set-2">set</h4>
 <p>Set the currently used colors.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -675,12 +884,10 @@
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong></p>
 <h2 id="locale-1">Locale</h2>
-<p>The Locale component handles i18n</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>currentLocale</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The Currently Set Locale</li>
-</ul>
-<h4 id="set-1">set</h4>
+<p>TODO: Re-implement this with proper scope.</p>
+<p>// If there already exists a Locale object with a culturesPath use that path<br />// This allows manually setting the directory for the culture files to be retrieved from<br />var existingCulturePath = '';</p>
+<p>if (window.Locale &amp;&amp; window.Locale.hasOwnProperty('culturesPath')) {<br />existingCulturePath = window.Locale.culturesPath;<br />}</p>
+<h4 id="set-3">set</h4>
 <p>Set the currently used colors.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -779,7 +986,7 @@
 <li><code>y</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong>  -  The y-coordinate of the Point.</li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong> List of all elements at the given point.</p>
-<h4 id="updated-1">updated</h4>
+<h4 id="updated-2">updated</h4>
 <p>Updated</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -831,6 +1038,8 @@
 <li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong><br /></li>
 <li><code>settings</code></li>
 </ul>
+<h2 id="personalization">personalization</h2>
+<p>Setup a single instance of the Personalization system on the body.</p>
 <h2 id="button_defaults">BUTTON_DEFAULTS</h2>
 <p>Component Defaults</p>
 <h2 id="button-1">Button</h2>
@@ -841,7 +1050,7 @@
 <li><code>toggleOffIcon</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The icon to use for off state on toggle buttons<br /></li>
 <li><code>replaceText</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If true the selection will be used to replace the content in the button.</li>
 </ul>
-<h4 id="updated-2">updated</h4>
+<h4 id="updated-3">updated</h4>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
@@ -864,30 +1073,6 @@
 <li><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
 </ul>
 <p>Returns <strong><a href="#hyperlink">Hyperlink</a></strong></p>
-<h2 id="hidefocus-1">HideFocus</h2>
-<p>HideFocus Behavior<br />Only shows the focus state on key entry (tabs or arrows).</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a>)</strong></li>
-</ul>
-<p>Returns <strong><a href="#hidefocus">HideFocus</a></strong></p>
-<h2 id="smoothscrollto">smoothScrollTo</h2>
-<p>Allows for the smooth scrolling of an element's content area.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>el</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> The element being manipulated.<br /></li>
-<li><code>target</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> target distance.<br /></li>
-<li><code>duration</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> the time that will be needed for the scrolling to complete.</li>
-</ul>
-<p>Returns <strong>$.Deferred</strong></p>
-<h2 id="defer">defer</h2>
-<p>Uses 'requestAnimationFrame' or 'setTimeout' to defer a function</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>callback</code><br /></li>
-<li><code>timer</code></li>
-</ul>
-<p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout">setTimeout</a>)</strong></p>
 <h2 id="geticonname">getIconName</h2>
 <p>Factory Function for instantly building icons.<br />Use this for building icons that don't exist yet.<br />Scoped Privately on purpose...</p>
 <h2 id="icon_defaults">ICON_DEFAULTS</h2>
@@ -899,8 +1084,6 @@
 <li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong><br /></li>
 <li><code>settings</code></li>
 </ul>
-<h2 id="about_defaults">ABOUT_DEFAULTS</h2>
-<p>Default Settings</p>
 <h2 id="about">About</h2>
 <p>The About Dialog Component is displays information regarding the application.</p>
 <p><strong>Parameters</strong></p>
@@ -908,7 +1091,7 @@
 <li><code>appName</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The Main Application Name to display in the header.<br /></li>
 <li><code>content</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> Additional Text content to display at the top.<br /></li>
 <li><code>copyrightYear</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The year displayed in the copyright, defaults to current year.<br /></li>
-<li><code>deviceSpecs</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)<br /></li>
+<li><code>deviceSpecs</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> Determines whether or not to display device<br />information (Browser, Platform, Locale, Cookies Enabled)<br /></li>
 <li><code>productName</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> Additional product name information to display.<br /></li>
 <li><code>useDefaultCopyright</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> Add the Legal Approved Infor Copy Right Text.<br /></li>
 <li><code>version</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> Semantic Version Number for example (4.0.0).</li>
@@ -916,18 +1099,18 @@
 <h4 id="getdevicespecs">getDeviceSpecs</h4>
 <p>Return the browser specs. Currently returns browse, os, cookiesEnabled and locale</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
-<h4 id="updated-3">updated</h4>
-<p>updated</p>
+<h4 id="updated-4">updated</h4>
+<p>Update the component and reapply current settings</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
 </ul>
 <h4 id="close">close</h4>
-<p>Progamatically Close the About Dialog.</p>
+<p>Progamatically close the About dialog.</p>
 <h4 id="destroy-3">destroy</h4>
 <p>Teardown and remove any added markup and events.</p>
-<h2 id="beforeclose">beforeclose</h2>
-<p>Fires before the dialog is closing. You can return false syncronously to delay closing.</p>
+<h2 id="close-1">close</h2>
+<p>Fires as the dialog is closing</p>
 <p><strong>Properties</strong></p>
 <ul>
 <li><code>event</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The jquery event object.<br /></li>
@@ -940,8 +1123,8 @@
 <li><code>event</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The jquery event object.<br /></li>
 <li><code>ui</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The dialog object</li>
 </ul>
-<h2 id="close-1">close</h2>
-<p>Fires as the dialog is closing</p>
+<h2 id="beforeclose">beforeclose</h2>
+<p>Fires before the dialog is closing. You can return false syncronously to delay closing.</p>
 <p><strong>Properties</strong></p>
 <ul>
 <li><code>event</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The jquery event object.<br /></li>
@@ -1098,7 +1281,7 @@
 <p>Disable an accordion from events</p>
 <h4 id="enable-1">enable</h4>
 <p>Enable a disabled accordion.</p>
-<h4 id="updated-4">updated</h4>
+<h4 id="updated-5">updated</h4>
 <p>Updates an entire accordion, or specific portion(s).</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1185,7 +1368,7 @@
 <h4 id="teardown-2">teardown</h4>
 <p>Unbinds event listeners and removes extraneous markup from the Application Menu.</p>
 <p>Returns <strong>this</strong></p>
-<h4 id="updated-5">updated</h4>
+<h4 id="updated-6">updated</h4>
 <p>Triggers a UI Resync.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1200,43 +1383,6 @@
 <li><code>applicationmenuopen</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the menu is opened.<br /></li>
 <li><code>applicationmenuclose</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires as the menu is closed.</li>
 </ul>
-<h2 id="environment">Environment</h2>
-<p>Type: <a href="#environment">Environment</a></p>
-<h4 id="set-2">set</h4>
-<p>Builds run-time environment settings</p>
-<h4 id="addbrowserclasses">addBrowserClasses</h4>
-<p>Global Classes for browser, version and device as needed.</p>
-<h4 id="addglobalresize">addGlobalResize</h4>
-<p>Setup a global resize event trigger for controls to listen to</p>
-<h4 id="pasteevent">pasteEvent</h4>
-<h2 id="set-3">set</h2>
-<p>Automatically set up the environment by virtue of including this script</p>
-<h2 id="current">current</h2>
-<p>Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the</p>
-<body> 
-<p>tag's <code>::after</code> pseudo-element. These names should be reflected in the breakpoints object<br />above.</p>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
-<h2 id="isabove">isAbove</h2>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> matches one of the entries in the &quot;Soho.breakpoints&quot; object.</li>
-</ul>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
-<h2 id="isbelow">isBelow</h2>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> matches one of the entries in the &quot;Soho.breakpoints&quot; object.</li>
-</ul>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
-<h2 id="compare">compare</h2>
-<p>Compares the last-stored breakpoint with a check on the &quot;current&quot; breakpoint to see if the<br />breakpoint has changed.</p>
-<h2 id="ishidden">isHidden</h2>
-<p>Checks an element for Soho visibility classes and determines whether or not<br />should be hidden based on those values at the current breakpoint.<br />NOTE: this method does NOT determine if the element is ACTUALLY hidden with a<br /><code>display: none;</code> or <code>visibility: hidden;</code> rule. It determines whether or not a CSS<br />visibility rule alone would hide the element.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a></strong></li>
-</ul>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
 <h2 id="dropdown_defaults">DROPDOWN_DEFAULTS</h2>
 <p>Dropdown Component Default Settings</p>
 <h2 id="moveselectedopts">moveSelectedOpts</h2>
@@ -1304,10 +1450,89 @@
 <li><code>change</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires after the value in the input is changed by any means.<br /></li>
 <li><code>input</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires after the value in the input is changed by user interaction.</li>
 </ul>
-<h2 id="options">options</h2>
+<h2 id="circlepager">CirclePager</h2>
+<p>The Circle Pager Displays content in a sliding carousel and has paging buttons.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>slidesToShow</code> <strong>Integer</strong>  -  The number of slides to show in one view / pane<br /></li>
+<li><code>startingSlide</code> <strong>Integer</strong>  -  First showing slide/group, an 0-based integer<br /></li>
+<li><code>loop</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Setting loop: true will loop back after next/previous reached to end</li>
+</ul>
+<h4 id="show">show</h4>
+<p>Show a slide to First Slide</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>index</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The index of the slide to show (0 based)</li>
+</ul>
+<h4 id="first">first</h4>
+<p>Move to First Slide</p>
+<h4 id="last">last</h4>
+<p>Move to Last Slide</p>
+<h4 id="prev">prev</h4>
+<p>Move to Previous Slide</p>
+<h4 id="next">next</h4>
+<p>Move to Next Slide</p>
+<h2 id="colorpicker">ColorPicker</h2>
+<p>The ColorPicker Component is a trigger field with a listing colors that can be selected.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The plugin element for the constuctor<br /></li>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The settings element.<br /></li>
+<li><code>colors</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> An array of objects of the form<br />{label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.<br /></li>
+<li><code>showLabel</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> Show the label if true vs the hex value if false.<br /></li>
+<li><code>editable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> If false, the field is readonly and transparent.<br />I.E. The value cannot be typed only editable by selecting.<br /></li>
+<li><code>uppercase</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> If false, lower case hex is allowed.<br />If true upper case hex is allowed. If showLabel is true this setting is ignored.<br /></li>
+<li><code>colorOnly</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> If true the field will be shrunk to only show the color portion.</li>
+</ul>
+<h4 id="gethexfromlabel">getHexFromLabel</h4>
+<p>Get the hex value based on a label. Does not handle duplicates.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>label</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The label to search for in the color labels.</li>
+</ul>
+<p>Returns <strong>void</strong></p>
+<h4 id="getlabelfromhex">getLabelFromHex</h4>
+<p>Get the label value based on a hex. Does not handle duplicates.<br />Can pass with or without the #</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>hex</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The hex to search for in the color set.</li>
+</ul>
+<p>Returns <strong>void</strong></p>
+<h4 id="togglelist">toggleList</h4>
+<p>Toggle / Open the List of Colors</p>
+<p>Returns <strong>void</strong></p>
+<h4 id="setcolor">setColor</h4>
+<p>Set the visible color in the field</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>hex</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The hex value to use (can have the # or not).<br /></li>
+<li><code>label</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> The text to display</li>
+</ul>
+<p>Returns <strong>void</strong></p>
+<h4 id="enable-3">enable</h4>
+<p>Change the color picker from enabled to disabled.</p>
+<p>Returns <strong>void</strong></p>
+<h4 id="disable-3">disable</h4>
+<p>Make the color picker disabled</p>
+<p>Returns <strong>void</strong></p>
+<h4 id="readonly-1">readonly</h4>
+<p>Make the color picker readonly</p>
+<p>Returns <strong>void</strong></p>
+<h4 id="isdisabled-3">isDisabled</h4>
+<p>Returns true if the color picker is disabled.</p>
+<p>Returns <strong>void</strong></p>
+<h4 id="updated-7">updated</h4>
+<p>Updates the component instance. Can be used after being passed new settings.</p>
+<p>Returns <strong>void</strong></p>
+<h4 id="destroy-7">destroy</h4>
+<p>Detach events and restore DOM to default.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> The plugin api (this).</p>
+<h4 id="handleevents-3">handleEvents</h4>
+<p>Detach events and restore DOM to default.</p>
+<p>Returns <strong>void</strong></p>
+<h2 id="cs">cs</h2>
 <p>NOTE: Much of this is here for backwards-compatibility reasons. In the future we need to<br />make sure these enhancements make it to the components.</p>
-<h2 id="listview_defaults">LISTVIEW_DEFAULTS</h2>
-<h2 id="listview-1">ListView</h2>
+<h2 id="listview">ListView</h2>
 <p>The About Dialog Component is displays information regarding the application.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1414,7 +1639,7 @@
 <ul>
 <li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.</li>
 </ul>
-<h4 id="updated-6">updated</h4>
+<h4 id="updated-8">updated</h4>
 <p>Refresh the list with any optioned options that might have been set.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1422,9 +1647,9 @@
 </ul>
 <h4 id="teardown-3">teardown</h4>
 <p>Detatch all bound events.</p>
-<h4 id="destroy-7">destroy</h4>
+<h4 id="destroy-8">destroy</h4>
 <p>Detatch all events and tear down data object</p>
-<h4 id="handleevents-3">handleEvents</h4>
+<h4 id="handleevents-4">handleEvents</h4>
 <p>This component fires the following events.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1490,12 +1715,12 @@
 <li><code>settings</code> <strong>SohoMaskedInputOptions</strong></li>
 </ul>
 <p>Returns <strong><a href="#sohomaskedinput">SohoMaskedInput</a></strong></p>
-<h4 id="handleevents-4">handleEvents</h4>
+<h4 id="handleevents-5">handleEvents</h4>
 <p>Sets up events</p>
 <h4 id="process">process</h4>
 <p>Main Process for conforming a mask against the API.</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
-<h4 id="updated-7">updated</h4>
+<h4 id="updated-9">updated</h4>
 <p>Updates the component instance with new settings.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1606,7 +1831,7 @@
 <li><code>cssClass</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Extra Class to add to the dialog for customization.<br /></li>
 <li><code>returnFocus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  JQuery Element selector to focus on return</li>
 </ul>
-<h4 id="destroy-8">destroy</h4>
+<h4 id="destroy-9">destroy</h4>
 <p>Tear Down and destroy events. However the message will destroy itself on close.</p>
 <h2 id="modal_defaults">MODAL_DEFAULTS</h2>
 <p>Modal Defaults</p>
@@ -1629,17 +1854,17 @@
 <li><code>showSelectAll</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Show the select all text/option.<br /></li>
 <li><code>source</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></strong>  -  The calback for ajax.</li>
 </ul>
-<h4 id="enable-3">enable</h4>
+<h4 id="enable-4">enable</h4>
 <p>Enable the multiselect input</p>
-<h4 id="disable-3">disable</h4>
+<h4 id="disable-4">disable</h4>
 <p>Disable the multiselect input</p>
-<h4 id="updated-8">updated</h4>
+<h4 id="updated-10">updated</h4>
 <p>Trigger a rebuild due to settings change</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
 </ul>
-<h4 id="destroy-9">destroy</h4>
+<h4 id="destroy-10">destroy</h4>
 <p>Remove added markup and events</p>
 <h2 id="pager_defaults">PAGER_DEFAULTS</h2>
 <h2 id="pager-1">Pager</h2>
@@ -1657,7 +1882,7 @@
 <li><code>showPageSizeSelector</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If false will not show page size selector<br /></li>
 <li><code>indeterminate</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true will not show anything that lets you go to a specific page</li>
 </ul>
-<h4 id="updated-9">updated</h4>
+<h4 id="updated-11">updated</h4>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong></li>
@@ -1677,7 +1902,7 @@
 <li><code>pagingInfo.hideDisabledPagers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> causes the pager to become completely hidden if all buttons are disabled (optional, default <code>false</code>)</li>
 </ul></li>
 </ul>
-<h4 id="destroy-10">destroy</h4>
+<h4 id="destroy-11">destroy</h4>
 <p>Tear down and detatch all events</p>
 <h2 id="popupmenu_defaults">POPUPMENU_DEFAULTS</h2>
 <p>Default Popupmenu Settings</p>
@@ -1708,7 +1933,7 @@
 <li><code>isCancelled</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Internally set option used if the operation is a cancel. Wont matter for manual api call.<br /></li>
 <li><code>noFocus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Do not return focus to the calling element (fx a button)</li>
 </ul>
-<h4 id="destroy-11">destroy</h4>
+<h4 id="destroy-12">destroy</h4>
 <p>Teardown markup and detach all events.</p>
 <h2 id="searchfield_defaults">SEARCHFIELD_DEFAULTS</h2>
 <h2 id="searchfield">SearchField</h2>
@@ -1796,20 +2021,20 @@
 <h4 id="clear-1">clear</h4>
 <p>Clears the contents of the searchfield</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
-<h4 id="updated-10">updated</h4>
+<h4 id="updated-12">updated</h4>
 <p>Tears down and rebuilds the Searchfield.<br />Can be called directly, but is also triggered by calling the &quot;updated.searchfield&quot; event on the searchfield element.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
-<h4 id="enable-4">enable</h4>
+<h4 id="enable-5">enable</h4>
 <p>Enables the Searchfield</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
-<h4 id="disable-4">disable</h4>
+<h4 id="disable-5">disable</h4>
 <p>Disables the Searchfield</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
-<h4 id="destroy-12">destroy</h4>
+<h4 id="destroy-13">destroy</h4>
 <p>Destroys the Searchfield and removes all jQuery component instancing.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1860,18 +2085,18 @@
 <li><code>autoSelectFirstItem</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Whether or not to select he first item in the list to be selected<br /></li>
 <li><code>resultsCallback</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong>  -  If defined, does not produce the results of the Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback function.</li>
 </ul>
-<h4 id="updated-11">updated</h4>
+<h4 id="updated-13">updated</h4>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong></li>
 </ul>
-<h4 id="enable-5">enable</h4>
+<h4 id="enable-6">enable</h4>
 <p>Enable the input from readonly or disabled state.</p>
-<h4 id="disable-5">disable</h4>
+<h4 id="disable-6">disable</h4>
 <p>Disable the input from editing</p>
-<h4 id="destroy-13">destroy</h4>
+<h4 id="destroy-14">destroy</h4>
 <p>Teardown and remove any added markup and events.</p>
-<h4 id="handleevents-5">handleEvents</h4>
+<h4 id="handleevents-6">handleEvents</h4>
 <p>This component fires the following events.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -1996,11 +2221,11 @@
 <ul>
 <li><code>e</code></li>
 </ul>
-<h4 id="enable-6">enable</h4>
+<h4 id="enable-7">enable</h4>
 <p>Enables the Spinbox</p>
-<h4 id="disable-6">disable</h4>
+<h4 id="disable-7">disable</h4>
 <p>Disables the Spinbox</p>
-<h4 id="isdisabled-3">isDisabled</h4>
+<h4 id="isdisabled-4">isDisabled</h4>
 <p>Determines whether or not the spinbox is disabled.</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
 <h4 id="setisdisabled">setIsDisabled</h4>
@@ -2010,13 +2235,13 @@
 <li><code>button</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong><br /></li>
 <li><code>isDisabled</code> <strong>booelan</strong></li>
 </ul>
-<h4 id="updated-12">updated</h4>
+<h4 id="updated-14">updated</h4>
 <p>Updated</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
 </ul>
-<h4 id="destroy-14">destroy</h4>
+<h4 id="destroy-15">destroy</h4>
 <p>Teardown</p>
 <h4 id="bindevents-1">bindEvents</h4>
 <p>Sets up event handlers for this control and its sub-elements</p>
@@ -2056,23 +2281,23 @@
 <li><code>s</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></p>
-<h4 id="enable-7">enable</h4>
+<h4 id="enable-8">enable</h4>
 <p>Enables this component instance.</p>
-<h4 id="disable-7">disable</h4>
+<h4 id="disable-8">disable</h4>
 <p>Disables this component instance.</p>
-<h4 id="isdisabled-4">isDisabled</h4>
+<h4 id="isdisabled-5">isDisabled</h4>
 <p>Returns true if the texarea is disabled.</p>
-<h4 id="readonly-1">readonly</h4>
+<h4 id="readonly-2">readonly</h4>
 <p>Sets this component instance to &quot;readonly&quot;</p>
-<h4 id="updated-13">updated</h4>
+<h4 id="updated-15">updated</h4>
 <p>Call whenever the plugin's settings are changed</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>settings</code></li>
 </ul>
-<h4 id="destroy-15">destroy</h4>
+<h4 id="destroy-16">destroy</h4>
 <p>Destroys this component instance and unlinks it from its element.</p>
-<h4 id="handleevents-6">handleEvents</h4>
+<h4 id="handleevents-7">handleEvents</h4>
 <p>This component fires the following events.</p>
 <p><strong>Parameters</strong></p>
 <ul>
@@ -2138,6 +2363,474 @@
 <li><code>namespace</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong></li>
 </ul>
 <p>Returns <strong><a href="#renderloopitem">RenderLoopItem</a></strong></p>
+<h2 id="toolbar_defaults">TOOLBAR_DEFAULTS</h2>
+<p>Component Default Settings</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>rightAligned</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  Will always attempt to right-align the contents of the toolbar. By default if there is no title it will left align. This forces right alignment.<br /></li>
+<li><code>maxVisibleButtons</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong>  -  Total amount of buttons that can be present, not including the More button.<br /></li>
+<li><code>resizeContainers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.<br /></li>
+<li><code>favorButtonset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If &quot;resizeContainers&quot; is true, setting this to true will try to display as many buttons as possible while resizing the toolbar. Setting to false attempts to show the entire title instead.<br /></li>
+<li><code>noSearchfieldReinvoke</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If true, does not manage the lifecycle of an internal toolbarsearchfield automatically. Allows an external controller to do it instead.</li>
+</ul>
+<h2 id="toolbar-1">Toolbar</h2>
+<p>The Toolbar Component manages various levels of application navigation. It contains a group of buttons that functionally<br />related content. Each panel consists of two levels: the top level identifies the<br />category or section header, and the second level provides the associated options.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong><br /></li>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong></li>
+</ul>
+<h4 id="buildmoreactionsmenuitem">buildMoreActionsMenuItem</h4>
+<p>Builds a single &quot;More Actions Menu&quot; item from a source toolbar item.<br />Also sets up linkage between the menu item and the original toolbar item to allow events/properties<br />to propagate when the More Actions item is acted upon.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>item</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the source item from the toolbar.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped <li> representing a More Actions menu implementation of the toolbar item.</p>
+<h4 id="refreshmoreactionsmenu">refreshMoreActionsMenu</h4>
+<p>Refreshes the More Actions Menu items' text content, icons, states, and submenu content<br />based on changes made directly to their counterpart elements in the Toolbar. Can also<br />optionally refresh only part of the menu.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>menu</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the menu/submenu to be refreshed.</li>
+</ul>
+<h4 id="getitemtext">getItemText</h4>
+<p>Gets the complete text contnts of a Toolbar Item, in order to create its corresponding &quot;more actions&quot; menu item.</p>
+<p>Order of operations for populating the List Item text:<br />1. span contents (.audible), then<br />2. button title attribute, then<br />3. tooltip text (if applicable)</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>item</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the item being evaluated.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the complete text representation.</p>
+<h4 id="handletransfertomenubuttonitem">handleTransferToMenuButtonItem</h4>
+<p>Event Handler for the Soho Popupmenu's custom 'show-submenu' event, specifically for<br />the case of a menu button that's been spilled over into this Toolbar's More Actions menu.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong><br /></li>
+<li><code>li</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the <code>li.submenu</code> element.</li>
+</ul>
+<h4 id="handleresize">handleResize</h4>
+<p>Re-renders the toolbar element and adjusts all internal parts to account for the new size.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><p><code>containerDims</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong> an object containing dimensions that can be set on the Toolbar's title and buttonset elements.</p>
+<ul>
+<li><code>containerDims.title</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</strong> represents the width that will be applied to the title element<br /></li>
+<li><code>containerDims.buttonset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>?</strong> represents the width that will be applied to the buttonset element</li>
+</ul></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="navigate">navigate</h4>
+<p>Changes the &quot;active&quot; button on the toolbar.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>direction</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong> can be <code>-1</code> (previous), <code>1</code> (next), or <code>0</code> (remain on current).</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></p>
+<h4 id="getlastvisiblebutton">getLastVisibleButton</h4>
+<p>Gets a reference to the last visible (not overflowed) button inside of the buttonset.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></p>
+<h4 id="getfirstvisiblebutton">getFirstVisibleButton</h4>
+<p>Gets a reference to the first visible (not overflowed) button inside of the buttonset.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></p>
+<h4 id="setactivebutton">setActiveButton</h4>
+<p>Sets the currently &quot;active&quot; (focused) Toolbar item</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>activeButton</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the preferred target element to make active.<br /></li>
+<li><code>noFocus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> if defined, prevents this method from giving focus to the new active button.</li>
+</ul>
+<h4 id="triggerselect">triggerSelect</h4>
+<p>Triggers a &quot;selected&quot; event on the base Toolbar element using a common element as an argument.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> a jQuery Object containing an anchor tag, button, or input field.</li>
+</ul>
+<h4 id="getbuttonsetbuttons">_getButtonsetButtons</h4>
+<p>Assembles and returns a list of all buttons inside the Buttonset element.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong></p>
+<h4 id="getvisiblebuttons">getVisibleButtons</h4>
+<p>Gets and Iterates through a list of toolbar items and determines which are currently overflowed, and which are visible.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>buttons</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong> an Array of jQuery-wrapped elements that represents toolbar items.</li>
+</ul>
+<p>Returns <strong>VisibilitySortedToolbarItems</strong></p>
+<p>Returns <strong>VisibilitySortedToolbarItems.Array</strong> visible - An array containing all visible items.</p>
+<p>Returns <strong>VisibilitySortedToolbarItems.Array</strong> hidden - An array containing all hidden (overflowed) items.</p>
+<h4 id="adjustmenuitemvisibility">adjustMenuItemVisibility</h4>
+<p>Gets and Iterates through the full list of Toolbar Items and determines which ones should currently be present in the More Actions menu.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>items</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> an object (normally generated by <code>_.getVisibleButtons()</code>) containing arrays of currently visible and hidden buttons, along with some meta-data.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="isitemoverflowed">isItemOverflowed</h4>
+<p>Detects whether or not a toolbar item is currently overflowed. In general, toolbar items are considered overflow if their right-most edge sits past the right-most edge of the buttonset border. There are some edge-cases.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>item</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the Toolbar item being tested.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="hasnomorebutton">hasNoMoreButton</h4>
+<p>Detection for this toolbar to have a More Button</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="updated-16">updated</h4>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong></li>
+</ul>
+<h4 id="enable-9">enable</h4>
+<p>Enables the entire Toolbar component</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="disable-9">disable</h4>
+<p>Disables the entire Toolbar component</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h4 id="teardown-5">teardown</h4>
+<p>Returns the Toolbar's internal markup to its original state.</p>
+<p>Returns <strong>this</strong></p>
+<h4 id="teardownmoreactionsmenuitem">teardownMoreActionsMenuItem</h4>
+<p>Tears down a More Actions Menu item.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>item</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the existing <li> from inside the More Actions menu.<br /></li>
+<li><code>doRemove</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if defined, causes the list item to be removed from the more actions menu.</li>
+</ul>
+<h4 id="destroy-17">destroy</h4>
+<p>Destroys this Toolbar Component instance and completely disassociates it from its corresponding DOM Element.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
+<h2 id="tbsf_defaults">TBSF_DEFAULTS</h2>
+<p>Component Default Settings</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>clearable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If &quot;true&quot;, provides an &quot;x&quot; button on the right edge that clears the field<br /></li>
+<li><code>collapsible</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If &quot;true&quot;, allows the field to expand/collapse on larger breakpoints when focused/blurred respectively<br /></li>
+<li><code>collapsibleOnMobile</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If true, overrides <code>collapsible</code> only on mobile settings.</li>
+</ul>
+<h2 id="toolbarsearchfield-1">ToolbarSearchfield</h2>
+<p>Searchfield Component Wrapper that extends normal Searchfield functionality and provides collapse/expand behavior. For use inside of Toolbars.</p>
+<p>Type: <a href="#toolbarsearchfield">ToolbarSearchfield</a></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong><br /></li>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong></li>
+</ul>
+<h4 id="build">build</h4>
+<p>Creates and manages any markup the control needs to function.</p>
+<p>Returns <strong>this</strong></p>
+<h4 id="hasfocus-1">hasFocus</h4>
+<p>Detects whether or not the Toolbar Searchfield has focus.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="hascategories-1">hasCategories</h4>
+<p>Detects the existence of a &quot;Categories&quot; button added to the searchfield</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="hasgobutton-1">hasGoButton</h4>
+<p>Detects the existence of a &quot;Go&quot; button added to the main searchfield API</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="handlefocus">handleFocus</h4>
+<p>Handles the focus of the searchfield.</p>
+<h4 id="handlefakeblur">handleFakeBlur</h4>
+<p>Triggers an artificial &quot;blur&quot; of the searchfield, resulting in a time-delayed collapse.<br />TODO: Deprecate in 4.4.0</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code></li>
+</ul>
+<h4 id="handlefocusout">handleFocusOut</h4>
+<p>Handles the &quot;focusout&quot; event</p>
+<h4 id="issearchfieldelement">isSearchfieldElement</h4>
+<p>Detects whether or not an element is part of this instance of the Searchfield component</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a></strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="handleoutsideclick">handleOutsideClick</h4>
+<p>Event Handler for dealing with global (document) level clicks.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code></li>
+</ul>
+<h4 id="handlekeydown-1">handleKeydown</h4>
+<p>Handles Keydown Events</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong> jQuery-wrapped Keydown event.</li>
+</ul>
+<h4 id="handleoutsidekeydown">handleOutsideKeydown</h4>
+<p>Handles global (document) level keydown events that are established to help<br />collapse/de-highlight searchfields on a timer.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong> jQuery-wrapped Keydown event</li>
+</ul>
+<h4 id="handlepopupbeforeopen">handlePopupBeforeOpen</h4>
+<p>Event Handler for the Popupmenu Component's custom <code>beforeopen</code> event.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong> jQuery-wrapped <code>beforeopen</code> Event<br /></li>
+<li><code>menu</code></li>
+</ul>
+<h4 id="getfillsize">getFillSize</h4>
+<p>Retrieves the distance between a left and right boundary.<br />Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>leftBoundary</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong><br /></li>
+<li><code>rightBoundary</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></p>
+<h4 id="isactive">isActive</h4>
+<p>Detects whether or not one of the components inside of this searchfield is the document's &quot;active&quot; element.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="isopen-1">isOpen</h4>
+<p>Detects whether or not this searchfield instance is currently expanded.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="adjustonbreakpoint">adjustOnBreakpoint</h4>
+<p>Makes necessary adjustments to the DOM surrounding the Searchfield element to accommodate<br />breakpoint changes.</p>
+<h4 id="expand-1">expand</h4>
+<p>Expands the Searchfield</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>noFocus</code></li>
+</ul>
+<h4 id="collapse-1">collapse</h4>
+<p>Collapses the Searchfield</p>
+<h4 id="updated-17">updated</h4>
+<p>Used when the control has its settings or structural markup changed. Rebuilds key parts of the control that<br />otherwise wouldn't automatically update.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong></li>
+</ul>
+<p>Returns <strong>this</strong></p>
+<h4 id="enable-10">enable</h4>
+<p>Enables the Searchfield</p>
+<h4 id="disable-10">disable</h4>
+<p>Disables the Searchfield</p>
+<h4 id="teardown-6">teardown</h4>
+<p>Tears down events, properties, etc. and resets the control to &quot;factory&quot; state</p>
+<p>Returns <strong>this</strong></p>
+<h4 id="destroy-18">destroy</h4>
+<p>Removes the entire control from the DOM and from this element's internal data</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>dontDestroySearchfield</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if true, will not pass through and destroy a linked instance of the Searchfield component.</li>
+</ul>
+<h4 id="handleevents-8">handleEvents</h4>
+<p>This component fires the following events.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>mousedown</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the searchfield is clicked (if enabled).<br /></li>
+<li><code>focusin</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the searchfield is focused.<br /></li>
+<li><code>keydown</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a key is pressed inside of the searchfield.<br /></li>
+<li><code>collapse</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a <code>collapse</code> event is triggered externally on the searchfield.<br /></li>
+<li><code>beforeopen</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a <code>beforeopen</code> event is triggered on the searchfield's optional categories menubutton.<br /></li>
+<li><code>navigate</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a <code>navigate</code> event is triggered on the searchfield's parent toolbar.<br /></li>
+<li><code>keydown</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a <code>keydown</code> event is triggered at the <code>document</code> level.<br /></li>
+<li><code>resize</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a <code>resize</code> event is triggered at the <code>body</code> level.</li>
+</ul>
+<h2 id="tree_defaults">TREE_DEFAULTS</h2>
+<p>Default Settings for Tree</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>selectable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong>  -  'single' or 'multiple'.<br /></li>
+<li><code>hideCheckboxes</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  Only applies when <code>selectable</code> is set to 'multiple'.<br /></li>
+<li><code>menuId</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</strong>  -  if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.<br /></li>
+<li><code>useStepUI</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  if <code>true</code>, turns this tree instance into a &quot;Stepped&quot; tree.<br /></li>
+<li><code>folderIconOpen</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong>  -  the icon used when a tree folder node is open.<br /></li>
+<li><code>folderIconClosed</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong>  -  the icon used when a tree folder node is closed.<br /></li>
+<li><code>sortable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  if <code>true</code>, allows nodes to become sortable.<br /></li>
+<li><code>onBeforeSelect</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</strong>  -  if defined as a function, fires that function as a callback before the selection on a node occurs.</li>
+</ul>
+<h2 id="tree-1">Tree</h2>
+<p>Type: <a href="#tree">Tree</a></p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong><br /></li>
+<li><code>settings</code></li>
+</ul>
+<h4 id="inittree">initTree</h4>
+<p>Init Tree from ul, li, a markup structure in DOM</p>
+<h4 id="initselected">initSelected</h4>
+<p>Init selected notes</p>
+<h4 id="focusfirst">focusFirst</h4>
+<p>Focus the first tree node</p>
+<h4 id="setfocus">setFocus</h4>
+<p>Set focus</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>node</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
+</ul>
+<h4 id="decoratenode">decorateNode</h4>
+<p>From the LI, Read props and add stuff</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>a</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> an anchor tag reference wrapped in a jQuery object.</li>
+</ul>
+<h4 id="settreeicon">setTreeIcon</h4>
+<p>Sets the correct icon to use on a particular SVG element.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>svg</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> an SVG element reference wrapped in a jQuery object<br /></li>
+<li><code>icon</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the ID of a Soho Icon type.</li>
+</ul>
+<h4 id="expandall-1">expandAll</h4>
+<p>Expands a collection of tree nodes.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>nodes</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped collection of tree node elements. If left undefined, this will automatically use all <code>ul[role=group]</code> elements.</li>
+</ul>
+<h4 id="collapseall-1">collapseAll</h4>
+<p>Collapses a collection of tree nodes.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>nodes</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped collection of tree node elements. If left undefined, this will automatically use all <code>ul[role=group]</code> elements.</li>
+</ul>
+<h4 id="isjquery">isjQuery</h4>
+<p>Check if an object is an instance of a jQuery object</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>obj</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> the object being tested.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="selectnodebyid">selectNodeById</h4>
+<p>Selects a tree node specifically using it's ID attribute.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>id</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the ID string to use.</li>
+</ul>
+<h4 id="selectnodebyjqueryselector">selectNodeByJquerySelector</h4>
+<p>Selects a tree node by [jquery selector] -or- [jquery object]</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>selector</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong> uses a string that represents a jQuery-wrapped element's ID attribute, or a jQuery-wrapped reference to the element itself.</li>
+</ul>
+<h4 id="unselectednode">unSelectedNode</h4>
+<p>Deselects a tree node</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>node</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped element reference to a tree node.<br /></li>
+<li><code>focus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if defined, causes the node to become focused.</li>
+</ul>
+<h4 id="selectnode">selectNode</h4>
+<p>Selects a tree node</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>node</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped element reference to a tree node.<br /></li>
+<li><code>focus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if defined, causes the node to become focused.</li>
+</ul>
+<h4 id="selectnodefinish">selectNodeFinish</h4>
+<p>?</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>node</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped element reference to a tree node.<br /></li>
+<li><code>focus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if defined, causes the node to become focused.</li>
+</ul>
+<h4 id="setnodestatus">setNodeStatus</h4>
+<p>Deselects a tree node</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>node</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped element reference to a tree node.</li>
+</ul>
+<h4 id="getselectedstatus">getSelectedStatus</h4>
+<p>Get's a tree node's current 'selected' status</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>node</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped element reference to a tree node.<br /></li>
+<li><code>isFirstSkipped</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> ?</li>
+</ul>
+<h4 id="togglenode">toggleNode</h4>
+<p>Changes a node's selected status to its opposite form.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>node</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped element reference to a tree node.</li>
+</ul>
+<h4 id="updated-18">updated</h4>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
+</ul>
+<h2 id="validationrules">ValidationRules</h2>
+<p>The validation rules object.<br />This contains all base rules for validation that come bundled as part of Soho.<br />These rules can be extended.</p>
+<h2 id="validator">Validator</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
+</ul>
+<h4 id="haserror">hasError</h4>
+<p>Returns true if the given object has an error</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>field</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="addmessage-1">addMessage</h4>
+<p>Adds a message/icon to a form field.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>field</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong><br /></li>
+<li><code>message</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong><br /></li>
+<li><code>type</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong><br /></li>
+<li><code>inline</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong><br /></li>
+<li><code>showTooltip</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong><br /></li>
+<li><code>isAlert</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></li>
+</ul>
+<h2 id="wizard_defaults">WIZARD_DEFAULTS</h2>
+<p>Component Default Settings</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>ticks</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong>  -  Defines the data to use, must be specified.</li>
+</ul>
+<h2 id="wizard-1">Wizard</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
+</ul>
+<h4 id="handleevents-9">handleEvents</h4>
+<p>This component listens to the following events:</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>module:Wizard~event</code> :updated<br /></li>
+<li><code>module:Wizard~event</code> :click</li>
+</ul>
+<h2 id="zoom-1">Zoom</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong><br /></li>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
+</ul>
+<h4 id="updated-19">updated</h4>
+<p>Handle Updating Settings</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
+</ul>
+<h2 id="header_defaults">HEADER_DEFAULTS</h2>
+<p>Component Default Settings</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>demoOptions</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Used to enable/disable default SoHo Xi options for demo purposes<br /></li>
+<li><code>useBackButton</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true, displays a back button next to the title in the header toolbar<br /></li>
+<li><code>useBreadcrumb</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true, displays a breadcrumb on drilldown<br /></li>
+<li><code>usePopupmenu</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  f true, changes the Header Title into a popupmenu that can change the current page<br /></li>
+<li><code>tabs</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  If defined as an array of Tab objects, displays a series of tabs that represent application sections<br /></li>
+<li><code>wizardTicks</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process<br /></li>
+<li><code>useAlternate</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true, use alternate background/text color for sub-navigation areas<br /></li>
+<li><code>addScrollClass</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true a class will be added as the page scrolls up and down to the header for manipulation. Eg: Docs Page.</li>
+</ul>
+<h2 id="header-1">Header</h2>
+<p>Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong><br /></li>
+<li><code>settings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</strong></li>
+</ul>
+<h4 id="reset">reset</h4>
+<p>Reset the toolbar to its default removing the drilled in patterns.</p>
+<h4 id="updated-20">updated</h4>
+<p>Sync up the ui with settings.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>settings</code></li>
+</ul>
+<h4 id="destroy-19">destroy</h4>
+<p>Tear down and destroy the menu and events.</p>
 <h2 id="default_place_settings">DEFAULT_PLACE_SETTINGS</h2>
 <h2 id="place_strategies">PLACE_STRATEGIES</h2>
 <p>Constants used throughout</p>

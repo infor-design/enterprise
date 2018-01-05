@@ -13,17 +13,20 @@ export { breakpoints } from './utils/breakpoints';
 export { Locale } from './locale/locale';
 export { Environment as env } from './utils/environment';
 
+// Renderloop needs a single instance of itself
 import { renderLoop, RenderLoopItem } from './utils/renderloop';
 renderLoop.start();
 export { renderLoop, RenderLoopItem };
 
-export { theme } from './utils/theme';
+// Theme/Personalization need single instances of themselves
+export { theme } from './personalize/personalize';
+export * from './personalize/personalize.hooks';
+
 export { masks } from './mask/masks';
 export { Validation } from './validation/validation';
 
 // Behaviors ================================== /
 export { behaviors };
-export { Personalize } from './personalize/personalize';
 export { Place } from './place/place';
 export { Initialize } from './initialize/initialize';
 export { ListFilter } from './listfilter/listfilter';
