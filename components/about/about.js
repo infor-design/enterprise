@@ -1,4 +1,3 @@
-/* jshint esversion:6 */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -21,11 +20,13 @@ const ABOUT_DEFAULTS = {
  * The About Dialog Component is displays information regarding the application.
  *
  * @class About
+ * @param {String} element The component element.
+ * @param {String} settings The component settings.
  * @param {String} appName The Main Application Name to display in the header.
- * @param {String} content Additional Text content to display at the top.
+ * @param {String} content Additional text content to display at the top.
  * @param {String} copyrightYear The year displayed in the copyright, defaults to current year.
  * @param {Boolean} deviceSpecs Determines whether or not to display device
- * information (Browser, Platform, Locale, Cookies Enabled)
+ * information. This information includes Browser, Platform, Locale and if Cookies are Enabled.
  * @param {String} productName Additional product name information to display.
  * @param {Boolean} useDefaultCopyright Add the Legal Approved Infor Copy Right Text.
  * @param {String} version Semantic Version Number for example (4.0.0).
@@ -144,7 +145,7 @@ About.prototype = {
 
   /**
    * Return the browser specs. Currently returns browse, os, cookiesEnabled and locale
-   * @returns {String}
+   * @returns {String} The specs of the browser.
    */
   getDeviceSpecs() {
     const locale = navigator.appName === 'Microsoft Internet Explorer' ? navigator.userLanguage : navigator.language;
@@ -183,22 +184,43 @@ About.prototype = {
   },
 
   /**
-  * Update the component and reapply current settings
-  */
+   * Update the component and apply current settings.
+   *
+   * @param  {Object} settings the settings to update to.
+   * @return {Object} The plugin api for chaining.
+   */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
     return this;
   },
 
   /**
-  * Progamatically close the About dialog.
-  */
+   * Progamatically close the About dialog.
+   * @return {void}
+   */
   close() {
     const modalApi = this.modal.data('modal');
 
+    /**
+    * Fires when the dialog is closing.
+    *
+    * @event close
+    * @type {Object}
+    * @property {Object} event - The jquery event object
+    * @property {Object} ui - The dialog object
+    */
     if (modalApi) {
       modalApi.close();
     }
+
+    /**
+    * Fires after the dialog is done closing and removed.
+    *
+    * @event afterclose
+    * @type {Object}
+    * @property {Object} event - The jquery event object
+    * @property {Object} ui - The dialog object
+    */
 
     if (this.isBody) {
       this.destroy();
@@ -206,8 +228,9 @@ About.prototype = {
   },
 
   /**
-  * Teardown and remove any added markup and events.
-  */
+   * Teardown and remove any added markup and events.
+   * @return {void}
+   */
   destroy() {
     const modalApi = this.modal.data('modal');
 
@@ -222,32 +245,11 @@ About.prototype = {
   },
 
   /**
-   * Fires before the dialog is closing. You can return false syncronously to delay closing.
+   * Add component event handlers.
    *
-   * @event beforeclose
-   * @type {object} fires
-   * @property {Object} event - The jquery event object.
-   * @property {Object} ui - The dialog object
+   * @private
+   * @return {void}
    */
-
-  /**
-  * Fires as the dialog is closing
-  *
-  * @event close
-  * @type {object} fires
-  * @property {Object} event - The jquery event object.
-  * @property {Object} ui - The dialog object
-  */
-
-  /**
-  *Fires after the dialog has closed in the DOM entirely.
-  *
-  * @event afterclose
-  * @type {object} fires
-  * @property {Object} event - The jquery event object.
-  * @property {Object} ui - The dialog object
-  */
-
   handleEvents() {
     this.element.on('open.about', (e) => {
       e.stopPropagation();
@@ -258,6 +260,14 @@ About.prototype = {
       this.close();
     });
 
+    /**
+    * Fires when the about dialog is opening, allowing you to veto by returning false.
+    *
+    * @event beforeopen
+    * @type {Object}
+    * @property {Object} event - The jquery event object.
+    * @property {Object} ui - The dialog object
+    */
     this.modal.data('modal').element.on('beforeopen.about', () => {
       this.modal.find('.modal-body').scrollTop(0);
     });

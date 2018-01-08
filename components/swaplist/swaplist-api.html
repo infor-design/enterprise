@@ -1,0 +1,314 @@
+  <section>
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          searchable
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          available
+        </td>
+        <td>
+          Array
+        </td>
+        <td>
+           
+-
+ 
+ An array containing items for the available bucket.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          selected
+        </td>
+        <td>
+          Array
+        </td>
+        <td>
+           
+-
+ 
+  An array containing items for the selected bucket.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          additional
+        </td>
+        <td>
+          Array
+        </td>
+        <td>
+           
+-
+ 
+  An array containing items for the additional bucket.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          availableClass
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ A class name linking the available root element.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          selectedClass
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ A class name linking the selected root element.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          additionalClass
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ A class name linking the additional root element.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          availableBtn
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ A class name linking the available button element.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          selectedBtnLeft
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+  A class name linking the move left button element.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          selectedBtnRight
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+  A class name linking the move right button element.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          additionalBtn
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+  A class name linking the additional button element.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          template
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ An Html String with the mustache template for the view.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          draggable
+        </td>
+        <td>
+          Object
+        </td>
+        <td>
+           
+-
+ 
+ An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>getAvailable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get the current representative dataset with only the available elements in it.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>getSelected</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get the current representative dataset with only the selected elements in it.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>getAdditional</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get the current representative dataset with only the additional elements in it.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>updateDataset</td>
+        <td>
+          
+                
+                  <span>ds (Object) =  
+-
+ 
+ The updated dataset(s) of the form 
+<code>{available: [], selected: [], additional: []}</code>
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Updates the internal datasets and refresh the ui.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Destroys this instance of the swaplist component and removes its link to its base element.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+                
+                  <span>swapupdate (Object) =  
+-
+ 
+ Fires when any bucket has its content changed.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Sets up event handlers for this control and its sub-elements</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

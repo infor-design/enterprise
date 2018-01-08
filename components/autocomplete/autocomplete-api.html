@@ -1,0 +1,326 @@
+  <section>
+  
+    
+
+
+  
+    
+
+
+  
+    
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+
+  
+    
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+
+  
+    
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+
+  
+    
+
+
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          source
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Defines the data to use, must be specified.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          sourceArguments
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          template
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If defined, use this to draw the contents of each search result instead of the default draw routine.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          filterMode
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ The matching algorithm, startsWith and contains are supported - false will not filter client side
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          delay
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ The delay between key strokes on the keypad before it thinks you stopped typing
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          width
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Width of the open auto complete menu
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          offset
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ For the open menu, the left or top offset
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          autoSelectFirstItem
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Whether or not to select he first item in the list to be selected
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          resultsCallback
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+           
+-
+ 
+ If defined, does not produce the results of the Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback function.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () =  </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Enable the input from readonly or disabled state.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Disable the input from editing</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown and remove any added markup and events.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+                
+                  <span>listopen (Object) =  
+-
+ 
+ Fires when the menu is opened.
+ </span>
+                
+                  <span>listclosed (Object) =  
+-
+ 
+ Fires when the menu is closed.
+ </span>
+                
+                  <span>populated (Object) =  
+-
+ 
+ Fires after the menu is populated with its contents.
+ </span>
+                
+                  <span>input (Object) =  
+-
+ 
+ Fires after the input is edited.
+ </span>
+                
+                  <span>safe-blur (Object) =  
+-
+ 
+ Fires after the input (and menu) both loose focus
+ </span>
+                
+                  <span>requestend (Object) =  
+-
+ 
+ Fires when the ajax request (source option) is completed
+ </span>
+                
+                  <span>requeststart (Object) =  
+-
+ 
+ Fires when the ajax request (source option) is initiated
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>This component fires the following events.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

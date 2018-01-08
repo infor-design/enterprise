@@ -1,0 +1,829 @@
+  <section>
+  
+    
+
+
+  
+    
+
+
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          allowOnePane
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ If set to true, allows only one pane of the
+Accordion to be open at a time.  If an Accordion pane is open, and that pane
+contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          displayChevron
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Displays a "Chevron" icon that sits off to the
+right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          rerouteOnLinkClick
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Can be set to false if routing
+is externally handled
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          source
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ A callback function that when implemented
+provided a call back for "ajax loading" of tab contents on open.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>handleHeaderClick</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = The click event object
+ </span>
+                
+                  <span>header () = The header query object
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Header Click Handler</p>
+
+        </td>
+        <td>
+          Returns false is the event should be ignored.
+Boolean
+        </td>
+      </tr>
+      <tr>
+        <td>handleAnchorClick</td>
+        <td>
+          
+                
+                  <span>e (Object) = The click event object.
+ </span>
+                
+                  <span>anchor (Object) = The anchor jQuery object.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Anchor Click Handler</p>
+
+        </td>
+        <td>
+          Returns false is the event should be ignored.
+Boolean
+        </td>
+      </tr>
+      <tr>
+        <td>handleExpanderClick</td>
+        <td>
+          
+                
+                  <span>e (Object) = The click event object.
+ </span>
+                
+                  <span>expander (Object) = The jquery expander DOM element.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Expander-Button Click Handler</p>
+
+        </td>
+        <td>
+          Returns false in some cases if the event should stop propagating.
+Boolean
+        </td>
+      </tr>
+      <tr>
+        <td>handleKeys</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = The click event object.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Keypress Event Handler for expanders and anchors</p>
+
+        </td>
+        <td>
+          Returns false in some cases if the event should stop propagating.
+Boolean
+        </td>
+      </tr>
+      <tr>
+        <td>toData</td>
+        <td>
+          
+                
+                  <span>flatten (Bboolean) = If true, places all accordion headers in the root array.
+ </span>
+                
+                  <span>addElementReference (boolean) = if true, includes a reference to the original
+header element inside the structure (NOT valid JSON).
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Translates all existing markup inside the accordion to a JSON-compatible object structure.</p>
+
+        </td>
+        <td>
+          The data the represents the accodion structure
+Object
+        </td>
+      </tr>
+      <tr>
+        <td>select</td>
+        <td>
+          
+                
+                  <span>element (Object) = a jQuery Object containing either an expander button or an anchor tag.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Makes a header "selected" if its expander button or anchor tag is focused.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>isDisabled</td>
+        <td>
+          
+                
+                  <span>header (Object) = The jquery header element
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Checks if a particular header is disabled, or if the entire accordion is disabled..</p>
+
+        </td>
+        <td>
+          Whether or not the element is enabled.
+Boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isFiltered</td>
+        <td>
+          
+                
+                  <span>header (Object) = The jquery header element
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Checks if the header is filtered out or not</p>
+
+        </td>
+        <td>
+          Whether or not the element is filtered.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isExpanded</td>
+        <td>
+          
+                
+                  <span>header (Object) = The jquery header element
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Checks if an Accordion Section is currently expanded.</p>
+
+        </td>
+        <td>
+          Whether or not the element is expanded.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>toggle</td>
+        <td>
+          
+                
+                  <span>header (Object) = The jquery header element.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Toggle the given Panel on the Accordion between expanded and collapsed.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>expand</td>
+        <td>
+          
+                
+                  <span>header (Object) = The jquery header element.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Expand the given Panel on the Accordion.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>expandAll</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Expands all accordion headers, if possible.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>collapse</td>
+        <td>
+          
+                
+                  <span>header (Object) = The jquery header element.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Collapse the given Panel on the Accordion.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>collapseAll</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Collapses all accordion headers.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>callSource</td>
+        <td>
+          
+                
+                  <span>anchor () = The anchor element
+ </span>
+                
+                  <span>animationCallback (Function) = The call back function
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Uses a function (this.settings.source()) to call out to an external API to fill the
+inside of an accordion pane.</p>
+
+        </td>
+        <td>
+          The call back function
+Function
+        </td>
+      </tr>
+      <tr>
+        <td>getElements</td>
+        <td>
+          
+                
+                  <span>eventTarget (Object) = The event we are working with.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Prepares a handful of references for dealing with a specific accordion header</p>
+
+        </td>
+        <td>
+          An object with the accordion dom elements in it.
+Object
+        </td>
+      </tr>
+      <tr>
+        <td>prevHeader</td>
+        <td>
+          
+                
+                  <span>element (Object) = a jQuery Object containing either an expander button or an anchor tag.
+ </span>
+                
+                  <span>noDescend (boolean) = if it's normally possible to descend into a sub-accordion, prevent
+against descending.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Selects an adjacent Accordion Header that sits directly before the currently selected
+Accordion Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>nextHeader</td>
+        <td>
+          
+                
+                  <span>element () = a jQuery Object containing either an expander button
+or an anchor tag.
+ </span>
+                
+                  <span>noDescend (boolean) = if it's normally possible to descend into a sub-accordion,
+prevent against descending.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Selects an adjacent Accordion Header that sits directly after the currently selected
+Accordion Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>ascend</td>
+        <td>
+          
+                
+                  <span>header (Object) = A jQuery Object containing an Accordion header.
+ </span>
+                
+                  <span>direction (Number) = If -1, sets the position to be at the end of this set of
+headers instead of at the beginning.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Selects the first Accordion Header in the parent container of the current Accordion Pane.
+If we're at the top level, jump out of the accordion to the last focusable element.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>descend</td>
+        <td>
+          
+                
+                  <span>header () = a jQuery Object containing an Accordion header.
+ </span>
+                
+                  <span>direction (integer) = if -1, sets the position to be at the end of this set of
+headers instead of at the beginning.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Selects the first Accordion Header in the child container of the current Accordion Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>focusOriginalType</td>
+        <td>
+          
+                
+                  <span>header (Object) = a jQuery Object containing an Accordion header.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Selects an Accordion Header, then focuses either an expander button or an anchor.
+Governed by the property "this.originalSelection".</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Disable an accordion from events</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Enable a disabled accordion.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>headers () = Optional jQuery object containing accordion headers whose
+contents need to be torndown/rebound
+ </span>
+                
+                  <span>settings (Object) = The current settings.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Updates an entire accordion, or specific portion(s).</p>
+
+        </td>
+        <td>
+          The api object
+this
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+                
+                  <span>headers () = The header elements to tear down (optional).
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Teardown process for accordion elements</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown and remove any added markup and events.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+                
+                  <span>headers (Object) = The headers to destroy
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Teardown and remove any events.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  
+  
+  
+  
+  
+  
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>selected
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>header (Object)
+        
+        = The header object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a panel is opened.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>followlink
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>anchor (Array)
+        
+        = The anchor in an array
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>If the anchor is a real link, follow the link and die here.
+This indicates the link has been followed.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>expand
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>anchor (Array)
+        
+        = The anchor tag in an array.
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when expanding a pane is initiated.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afterexpand
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>anchor (Array)
+        
+        = The anchor tag in an array.
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a pane is expanded.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>collapse
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>anchor (Array)
+        
+        = The anchor tag in an array.
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when collapsed a pane is initiated.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>aftercollapse
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>anchor (Array)
+        
+        = The anchor tag in an array.
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a pane is collapsed.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

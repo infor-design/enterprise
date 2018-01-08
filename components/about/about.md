@@ -21,7 +21,6 @@ $('body').about({
   content: '<p>Fashionable application for fashionable customers.</p>'
 });
 
-
 ```
 
 ## Accessibility

@@ -1,0 +1,401 @@
+  <section>
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          showTime
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true the time selector will be shown.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          timeFormat
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ The format to use on the time section fx HH:mm, defaults to current locale's settings.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          mode
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Time picker mode: options: 'standard', 'range', this controls the avilable selections in the time picker.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          roundToInterval
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ In time picker mode, if a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          dateFormat
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Defaults to current locale but can be overriden to a specific format
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          disable
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Disabled Dates Build up. 
+<code>{ 'dates' : [], 'minDate' : '', 'maxDate' : '', 'dayOfWeek' : [], 'isEnable' : false }</code>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showMonthYearPicker
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true the month and year will render as dropdowns.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          hideDays
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          customValidation
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true the internal validation is disabled.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          advanceMonths
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ The number of months in each direction to show in the dropdown for months (when initially opening)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showLegend
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true a legend is show to associate dates.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          legend
+        </td>
+        <td>
+          Array
+        </td>
+        <td>
+           
+-
+ 
+ Legend Build up for example 
+<code>[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]</code>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          calendarName
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>isOpen</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Return whether or not the calendar div is open.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>open</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Open the Calendar Popup.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>close</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Close the calendar popup.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>setValue</td>
+        <td>
+          
+                
+                  <span>date (Date) =  
+-
+ 
+ The date to set in date format.
+ </span>
+                
+                  <span>trigger (Boolean) =  
+-
+ 
+ If true will trigger the change event.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Set the Formatted value in the input</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Set input to enabled.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Set input to disabled.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>readonly</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Set input to readonly.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>setToday</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Set to todays date in current format.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Updates the component instance.  Can be used after being passed new settings.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Remove all events and reset back to default.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+                
+                  <span>listopened (Object) =  
+-
+ 
+ Fires as the calendar popup is opened
+ </span>
+                
+                  <span>listclosed (Object) =  
+-
+ 
+ Fires as the calendar popup is closed
+ </span>
+                
+                  <span>change (Object) =  
+-
+ 
+ Fires after the value in the input is changed by any means.
+ </span>
+                
+                  <span>input (Object) =  
+-
+ 
+ Fires after the value in the input is changed by user interaction.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>This component fires the following events.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

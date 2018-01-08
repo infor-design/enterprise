@@ -1,29 +1,23 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset='utf-8' />
-  <title><%- options.name %> <%- options.version %> | Documentation</title>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/style.css' type='text/css' rel='stylesheet' />
-</head>
-<body class='docs'>
+  <section><% docs.forEach(function(s) { %>
+  <% if (s.kind !== 'event') { %>
+    <%= renderSection({
+      section: s,
+      renderSection: renderSection
+    }) %><% } %><% })%>
+  </section>
 
-    <% docs.forEach(function(s) { %>
-
-      <section id="<%- s.name.toLowerCase() %>">
-        <h2 id="api-details">API</h2>
-        <% if (s.kind !== 'note') { %>
-          <%= renderSection({
-            section: s,
-            renderSection: renderSection,
-            renderSectionList: renderSectionList
-          }) %>
-        <% } else { %>
-          <%=renderNote({ note: s })%>
-        <% } %>
-      </section>
-
-    <% }) %>
-
-</body>
-</html>
+  <% if (events.length > 0) { %><section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      <% events.forEach(function(s) { %>
+        <%=renderEvent({event: s})%>
+      <% })%>
+      </tbody>
+    </table>
+  </section><% }%>

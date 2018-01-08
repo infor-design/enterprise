@@ -42,9 +42,31 @@ module.exports = {
     // disallow multiple empty lines and only one newline at the end
     'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 1 }],
 
-      // ensure JSDoc comments are valid
+    // ensure JSDoc comments are valid
     // https://eslint.org/docs/rules/valid-jsdoc
-    'valid-jsdoc': 'warn'
+    'valid-jsdoc': 'warn',
+
+    // disallow use of chained assignment expressions
+    // https://eslint.org/docs/rules/no-multi-assign
+    'no-multi-assign': ['warn'],
+
+    // disallow reassignment of function parameters
+    // disallow parameter object manipulation except for specific exclusions
+    // rule: https://eslint.org/docs/rules/no-param-reassign.html
+    'no-param-reassign': ['off', {
+      props: true,
+      ignorePropertyModificationsFor: [
+        'acc', // for reduce accumulators
+        'e', // for e.returnvalue
+        'ctx', // for Koa routing
+        'req', // for Express requests
+        'request', // for Express requests
+        'res', // for Express responses
+        'response', // for Express responses
+        '$scope', // for Angular 1 scopes
+      ]
+    }],
+
   },
   'globals': {
     '$': false,
@@ -52,6 +74,7 @@ module.exports = {
     'document': false,
     'window': false,
     'Soho': false,
-    'grunt': false
+    'grunt': false,
+    'jQuery': false
   }
 };

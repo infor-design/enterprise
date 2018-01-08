@@ -1,0 +1,316 @@
+  <section>
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          isStandalone
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ On page(true) -or- on modal (false) , this is used for some visual style only.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          allowedTypes
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Restrict file types(ie. 'jpg|png|gif') 
+[
+'*' all types
+]
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          maxFilesInProcess
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Max number of files can be uploaded
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          maxFileSize
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Max file size in bytes, -1 for unlimited
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          fileName
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Variable name to read from server
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isDisabled
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Make control disabled
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showBrowseButton
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Add way to browse files to upload
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          send
+        </td>
+        <td>
+          Function
+        </td>
+        <td>
+           
+-
+ 
+ Method for send file to upload
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textDropArea
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Text to show in drop area
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textDropAreaWithBrowse
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Text to show in drop area when browse option true
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textBtnCancel
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Hidden text for cancel button
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textBtnCloseError
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Hidden text for error close button
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textBtnRemove
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Hidden text for remove button
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>handleFileUpload</td>
+        <td>
+          
+                
+                  <span>files (Object) =  
+-
+ 
+ File object containing uploaded files.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Read the file contents using HTML5 FormData()</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>sendFileToServer</td>
+        <td>
+          
+                
+                  <span>formData (Object) = Contains the form data / file data.
+ </span>
+                
+                  <span>status (Object) = Status of the upload operation
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Function you can implement to send data to the server.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Set input to enabled.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Set input to disabled.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown - Remove added events</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Destroy - Remove added markup and events</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

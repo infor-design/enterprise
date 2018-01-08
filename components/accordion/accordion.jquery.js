@@ -1,16 +1,15 @@
-import { Accordion, PLUGIN_NAME } from './accordion';
+import { Accordion, COMPONENT_NAME } from './accordion';
 
-
-/**
+/*
  * jQuery Component Wrapper for Accordion
  */
-$.fn.accordion = function(settings) {
-  return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+$.fn.accordion = function (settings) {
+  return this.each(function () {
+    let instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Accordion(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Accordion(this, settings));
     }
   });
 };

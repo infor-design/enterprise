@@ -1,0 +1,234 @@
+  <section>
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          firstHeader
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Allows you to set if the first header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          secondHeader
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          productName
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Additional product name information to display
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          pasteAsPlainText
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ If true, when you paste into the editor the element will be unformatted to plain text.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          anchor
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ An object with settings related to controlling link behavior when inserted example: 
+<code>{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},</code>
+
+the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          image
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Info object to populate the image dialog defaulting to 
+<code>{url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}</code>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>switchToolbars</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Switch between source and editing toolbar.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>createURLModal</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Function that creates the Url Modal Dialog. This can be customized by making a modal with ID <code>#modal-url-{this.id}</code></p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>createImageModal</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Function that creates the Image Dialog. This can be customized by making a modal with ID <code>#modal-image-{this.id}</code></p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Updates the component instance.  Can be used after being passed new settings.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Remove all events and reset back to default.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Detach Events and tear back additions.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Disable the editable area.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Enable the editable area.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>readonly</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Make the editable area readonly.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

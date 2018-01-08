@@ -9,7 +9,9 @@
 @import 'components/blockgrid/blockgrid';
 
 // Variables for this page
-$color-font-lighter: #484a51;
+$color-font-lighter: #606060;
+$color-font-lighter2: rgba(96, 96, 96, .3);
+$color-font-darker: #606060;
 
 $color-accent-green: #007567;
 $color-accent-blue: #007567;
@@ -46,7 +48,7 @@ html {
     background-color: $white;
     color: $color-font-lighter;
     font-family: $font-family;
-    font-size: 1rem;
+    font-size: 100%;
     margin: 20px 0;
   }
 }
@@ -90,13 +92,13 @@ html {
 // Typography
 h1 {
   @include font-size(50);
-  color: $color-main-blue;
+  color: $black;
   font-weight: lighter;
   line-height: 60px;
 }
 
 h2 {
-  @include font-size(28);
+  @include font-size(26);
   color: $black;
   font-weight: lighter;
   line-height: 42px;
@@ -368,12 +370,53 @@ code.sourceCode span.er {
 
 // scss-lint:disable MergeableSelector
 code {
+  @include font-size(16);
   background-color: $color-code-bg;
   border-radius: 2px;
-  font-size: 16px;
   letter-spacing: 1.17px;
   line-height: 24px;
 }
 // scss-lint:enable MergeableSelector
-
 // scss-lint:enable SelectorFormat, ColorVariable
+
+// Tables
+
+.section-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: $color-font-lighter;
+  width: 100%;
+
+  thead {
+    text-align: left;
+
+    th {
+      @include font-size(14);
+      font-weight: normal;
+      padding: 16px 30px 16px 0;
+    }
+
+    tr {
+      border-bottom: 1px solid $color-font-lighter;
+    }
+  }
+
+  tr {
+    border-bottom: 1px solid $color-font-lighter2;
+  }
+
+  td {
+    @include font-size(14);
+    padding-right: 30px;
+    vertical-align: middle;
+
+    &:first-child {
+      line-height: 1.5rem;
+      padding: 24px 30px 24px 0;
+    }
+
+    p {
+      @include font-size(14);
+    }
+  }
+}
