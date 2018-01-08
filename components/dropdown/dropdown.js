@@ -1241,6 +1241,8 @@
         // Persist the "short" input field
         var isShort = (this.element.closest('.field-short').length === 1);
 
+        this.list.addClass(isShort ? 'dropdown-short' : '');
+
         this.pseudoElem
           .attr('aria-expanded', 'true')
           .addClass('is-open');
@@ -1390,7 +1392,6 @@
 
         self.list
           .removeClass('dropdown-tall')
-          .addClass(isShort ? 'dropdown-short' : '')
           .onTouchClick('list', 'li')
           .on('click.list', 'li', listItemClickHandler)
           .on('mouseenter.list', 'li', function() {
