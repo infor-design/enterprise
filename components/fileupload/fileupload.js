@@ -24,7 +24,7 @@
     * A trigger field for uploading a single file.
     *
     * @class FileUpload
-    * @param {Boolean} none  &nbsp;-&nbsp; No options
+    * @param {Boolean} none  No options
     */
     function FileUpload(element) {
       this.element = $(element);

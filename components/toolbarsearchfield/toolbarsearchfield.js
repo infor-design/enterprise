@@ -13,9 +13,9 @@ const COMPONENT_NAME = 'toolbarsearchfield';
 
 /**
  * Component Default Settings
- * @param {boolean} clearable  &nbsp;-&nbsp;  If "true", provides an "x" button on the right edge that clears the field
- * @param {boolean} collapsible  &nbsp;-&nbsp;  If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
- * @param {boolean} collapsibleOnMobile &nbsp;-&nbsp;  If true, overrides `collapsible` only on mobile settings.
+ * @param {boolean} clearable   If "true", provides an "x" button on the right edge that clears the field
+ * @param {boolean} collapsible   If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
+ * @param {boolean} collapsibleOnMobile  If true, overrides `collapsible` only on mobile settings.
  */
 const TBSF_DEFAULTS = {
   clearable: true,
@@ -892,17 +892,17 @@ ToolbarSearchfield.prototype = {
    *  This component fires the following events.
    *
    * @fires ToolbarSearchfield#events
-   * @param {Object} mousedown  &nbsp;-&nbsp; Fires when the searchfield is clicked (if enabled).
-   * @param {Object} focusin  &nbsp;-&nbsp; Fires when the searchfield is focused.
-   * @param {Object} keydown  &nbsp;-&nbsp; Fires when a key is pressed inside of the searchfield.
-   * @param {Object} collapse  &nbsp;-&nbsp; Fires when a `collapse` event is triggered externally on the searchfield.
+   * @param {Object} mousedown  Fires when the searchfield is clicked (if enabled).
+   * @param {Object} focusin  Fires when the searchfield is focused.
+   * @param {Object} keydown  Fires when a key is pressed inside of the searchfield.
+   * @param {Object} collapse  Fires when a `collapse` event is triggered externally on the searchfield.
    *
-   * @param {Object} beforeopen  &nbsp;-&nbsp; Fires when a `beforeopen` event is triggered on the searchfield's optional categories menubutton.
+   * @param {Object} beforeopen  Fires when a `beforeopen` event is triggered on the searchfield's optional categories menubutton.
    *
-   * @param {Object} navigate  &nbsp;-&nbsp; Fires when a `navigate` event is triggered on the searchfield's parent toolbar.
+   * @param {Object} navigate  Fires when a `navigate` event is triggered on the searchfield's parent toolbar.
    *
-   * @param {Object} keydown  &nbsp;-&nbsp; Fires when a `keydown` event is triggered at the `document` level.
-   * @param {Object} resize  &nbsp;-&nbsp; Fires when a `resize` event is triggered at the `body` level.
+   * @param {Object} keydown  Fires when a `keydown` event is triggered at the `document` level.
+   * @param {Object} resize  Fires when a `resize` event is triggered at the `body` level.
    */
   handleEvents: function() {
     var self = this;

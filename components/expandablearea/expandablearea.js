@@ -29,8 +29,8 @@
     * The About Dialog Component is displays information regarding the application.
     *
     * @class ExpandableArea
-    * @param {String} trigger  &nbsp;-&nbsp; Id of some other button to use as a trigger
-    * @param {String} bottomBorder  &nbsp;-&nbsp; Change the border to bottom vs top (for some cases)
+    * @param {String} trigger  Id of some other button to use as a trigger
+    * @param {String} bottomBorder  Change the border to bottom vs top (for some cases)
     *
     */
     function ExpandableArea(element) {

@@ -299,8 +299,8 @@
        * Sets up event handlers for this control and its sub-elements
        *
        * @fires Splitter#events
-       * @param {Object} updated  &nbsp;-&nbsp; Fires when the component updates.
-       * @param {Object} keydown  &nbsp;-&nbsp; Fires when a key is pressed while the component is focused.
+       * @param {Object} updated  Fires when the component updates.
+       * @param {Object} keydown  Fires when a key is pressed while the component is focused.
        */
       handleEvents: function() {
         var self = this;

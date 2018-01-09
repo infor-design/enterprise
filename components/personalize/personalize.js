@@ -13,8 +13,8 @@ const COMPONENT_NAME = 'personalize';
 
 /**
  * Component Defaults
- * @param {String} colors  &nbsp;-&nbsp; The list of colors
- * @param {String} theme  &nbsp;-&nbsp; The theme name (light, dark or high-contrast)
+ * @param {String} colors  The list of colors
+ * @param {String} theme  The theme name (light, dark or high-contrast)
  */
 const PERSONALIZE_DEFAULTS = {
   colors: '',
@@ -198,8 +198,8 @@ Personalize.prototype = {
 
   /**
   * Takes a color and performs a change in luminosity of that color programatically.
-  * @param {String} hex  &nbsp;-&nbsp; The original Hexadecimal base color.
-  * @param {String} lum  &nbsp;-&nbsp; A percentage used to set luminosity
+  * @param {String} hex  The original Hexadecimal base color.
+  * @param {String} lum  A percentage used to set luminosity
   * change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
   * @returns {String} hexadecimal color.
   */
@@ -241,7 +241,7 @@ Personalize.prototype = {
   /**
   * Sets the current theme, blocking the ui during the change.
   *
-  * @param {String} incomingTheme  &nbsp;-&nbsp; Represents the file name of a color
+  * @param {String} incomingTheme  Represents the file name of a color
   * scheme (can be dark, light or high-contrast)
   */
   setTheme(incomingTheme) {

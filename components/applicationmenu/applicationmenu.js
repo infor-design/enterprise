@@ -26,10 +26,10 @@ let APPLICATIONMENU_DEFAULTS = {
  * The Application Menu provides access to all the functions, pages, and forms in an application.
  *
  * @class ApplicationMenu
- * @param {String} breakpoint  &nbsp;-&nbsp; Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
+ * @param {String} breakpoint  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
  * @param {String} filterable
- * @param {String} openOnLarge  &nbsp;-&nbsp; If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
- * @param {String} triggers  &nbsp;-&nbsp; An Array of jQuery-wrapped elements that are able to open/close this nav menu.
+ * @param {String} openOnLarge  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
+ * @param {String} triggers  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
  */
 function ApplicationMenu(element, settings) {
   this.element = $(element);
@@ -610,8 +610,8 @@ ApplicationMenu.prototype = {
    *  This component fires the following events.
    *
    * @fires Applicationmenu#events
-   * @param {Object} applicationmenuopen  &nbsp;-&nbsp; Fires when the menu is opened.
-   * @param {Object} applicationmenuclose  &nbsp;-&nbsp; Fires as the menu is closed.
+   * @param {Object} applicationmenuopen  Fires when the menu is opened.
+   * @param {Object} applicationmenuclose  Fires as the menu is closed.
     *
    */
   handleEvents: function() {

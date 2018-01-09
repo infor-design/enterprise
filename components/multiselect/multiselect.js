@@ -28,12 +28,12 @@ let MULTISELECT_DEFAULTS = {
  * The MultiSelect Component allows selecting multiple items from a list
  *
  * @class MultiSelect
- * @param {String} filterMode  &nbsp;-&nbsp; The search mode to use, can be 'contains' or 'startsWith'
- * @param {Number} maxSelected  &nbsp;-&nbsp; The max number of items which can be selected
- * @param {String} moveSelected  &nbsp;-&nbsp;  Move selected options in each group to just underneath their corresponding group headers.
- * @param {Boolean} showEmptyGroupHeaders  &nbsp;-&nbsp; If true groups with no items will still show the empty group header.
- * @param {Boolean} showSelectAll  &nbsp;-&nbsp; Show the select all text/option.
- * @param {Function} source  &nbsp;-&nbsp; The calback for ajax.
+ * @param {String} filterMode  The search mode to use, can be 'contains' or 'startsWith'
+ * @param {Number} maxSelected  The max number of items which can be selected
+ * @param {String} moveSelected   Move selected options in each group to just underneath their corresponding group headers.
+ * @param {Boolean} showEmptyGroupHeaders  If true groups with no items will still show the empty group header.
+ * @param {Boolean} showSelectAll  Show the select all text/option.
+ * @param {Function} source  The calback for ajax.
  *
  */
 function MultiSelect(element, settings) {

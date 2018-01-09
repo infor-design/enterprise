@@ -213,7 +213,7 @@ ColorPicker.prototype = {
 
   /**
   * Get the hex value based on a label. Does not handle duplicates.
-  * @param {String} label  &nbsp;-&nbsp; The label to search for in the color labels.
+  * @param {String} label  The label to search for in the color labels.
   * @return {void}
   */
   getHexFromLabel(label) {

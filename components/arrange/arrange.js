@@ -32,11 +32,11 @@
     * The Arrange Component allows touch and drag support to sort UI items.
     *
     * @class Arrange
-    * @param {String} handle  &nbsp;-&nbsp; The class name of the handle element to connect
-    * @param {String} itemsSelector  &nbsp;-&nbsp; The selector to match all the sortable elements.
-    * @param {String} connectWith  &nbsp;-&nbsp; The optional element to connect with when using two lists
-    * @param {String} placeholder  &nbsp;-&nbsp; The html for the element that appears while dragging
-    * @param {String} placeholderCssClass  &nbsp;-&nbsp; The class to add to the ghost element that is being dragged.
+    * @param {String} handle  The class name of the handle element to connect
+    * @param {String} itemsSelector  The selector to match all the sortable elements.
+    * @param {String} connectWith  The optional element to connect with when using two lists
+    * @param {String} placeholder  The html for the element that appears while dragging
+    * @param {String} placeholderCssClass  The class to add to the ghost element that is being dragged.
     *
     */
     function Arrange(element) {
@@ -111,8 +111,8 @@
        *  This component fires the following events.
        *
        * @fires Arrange#events
-       * @param {Object} beforearrange  &nbsp;-&nbsp; Fires before moving an element allowing you to access the ui to customize the draggable item
-       * @param {Object} afterearrange  &nbsp;-&nbsp; Fires after moving an element allowing you do any follow up updating.
+       * @param {Object} beforearrange  Fires before moving an element allowing you to access the ui to customize the draggable item
+       * @param {Object} afterearrange  Fires after moving an element allowing you do any follow up updating.
        *
        */
       handleEvents: function() {

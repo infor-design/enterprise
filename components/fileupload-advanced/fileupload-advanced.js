@@ -47,19 +47,19 @@
     * A trigger field for uploading a single file.
     *
     * @class FileUploadAdvanced
-    * @param {Boolean} isStandalone  &nbsp;-&nbsp; On page(true) -or- on modal (false) , this is used for some visual style only.
-    * @param {Boolean} allowedTypes  &nbsp;-&nbsp; Restrict file types(ie. 'jpg|png|gif') ['*' all types]
-    * @param {Boolean} maxFilesInProcess  &nbsp;-&nbsp; Max number of files can be uploaded
-    * @param {Boolean} maxFileSize  &nbsp;-&nbsp; Max file size in bytes, -1 for unlimited
-    * @param {Boolean} fileName  &nbsp;-&nbsp; Variable name to read from server
-    * @param {Boolean} isDisabled  &nbsp;-&nbsp; Make control disabled
-    * @param {Boolean} showBrowseButton  &nbsp;-&nbsp; Add way to browse files to upload
-    * @param {Function} send  &nbsp;-&nbsp; Method for send file to upload
-    * @param {String} textDropArea  &nbsp;-&nbsp; Text to show in drop area
-    * @param {String} textDropAreaWithBrowse  &nbsp;-&nbsp; Text to show in drop area when browse option true
-    * @param {String} textBtnCancel  &nbsp;-&nbsp; Hidden text for cancel button
-    * @param {String} textBtnCloseError  &nbsp;-&nbsp; Hidden text for error close button
-    * @param {String} textBtnRemove  &nbsp;-&nbsp; Hidden text for remove button
+    * @param {Boolean} isStandalone  On page(true) -or- on modal (false) , this is used for some visual style only.
+    * @param {Boolean} allowedTypes  Restrict file types(ie. 'jpg|png|gif') ['*' all types]
+    * @param {Boolean} maxFilesInProcess  Max number of files can be uploaded
+    * @param {Boolean} maxFileSize  Max file size in bytes, -1 for unlimited
+    * @param {Boolean} fileName  Variable name to read from server
+    * @param {Boolean} isDisabled  Make control disabled
+    * @param {Boolean} showBrowseButton  Add way to browse files to upload
+    * @param {Function} send  Method for send file to upload
+    * @param {String} textDropArea  Text to show in drop area
+    * @param {String} textDropAreaWithBrowse  Text to show in drop area when browse option true
+    * @param {String} textBtnCancel  Hidden text for cancel button
+    * @param {String} textBtnCloseError  Hidden text for error close button
+    * @param {String} textBtnRemove  Hidden text for remove button
     *
     */
     function FileUploadAdvanced(element) {
@@ -227,7 +227,7 @@
 
       /**
       * Read the file contents using HTML5 FormData()
-      * @param {Object} files &nbsp;-&nbsp; File object containing uploaded files.
+      * @param {Object} files File object containing uploaded files.
       */
       handleFileUpload: function (files) {
         var s = this.settings,

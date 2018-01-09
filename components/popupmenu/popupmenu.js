@@ -39,16 +39,16 @@ const POPUPMENU_DEFAULTS = {
 * Responsive Popup Menu Control aka Context Menu when doing a right click action.
 *
 * @class PopupMenu
-* @param {String} menu  &nbsp;-&nbsp; Menu's ID Selector, or a jQuery object representing a menu
-* @param {String} trigger  &nbsp;-&nbsp; Action on which to trigger a menu can be: click, rightClick, immediate ect
-* @param {Boolean} autoFocus  &nbsp;-&nbsp; If false the focus will not focus the first list element. (At the cost of accessibility)
-* @param {Boolean} attachToBody  &nbsp;-&nbsp; If true the menu will be moved out to the body. To be used in certin overflow situations.
-* @param {function} beforeOpen  &nbsp;-&nbsp; Callback that can be used for populating the contents of the menu.
-* @param {String} ariaListbox  &nbsp;-&nbsp;  Switches aria to use listbox construct instead of menu construct (internal)
-* @param {String} eventObj  &nbsp;-&nbsp; Can pass in the event object so you can do a right click with immediate
-* @param {String} returnFocus  &nbsp;-&nbsp; If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
-* @param {Object} placementOpts  &nbsp;-&nbsp; Gets passed to this control's Place behavior
-* @param {Object} offset  &nbsp;-&nbsp; Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
+* @param {String} menu  Menu's ID Selector, or a jQuery object representing a menu
+* @param {String} trigger  Action on which to trigger a menu can be: click, rightClick, immediate ect
+* @param {Boolean} autoFocus  If false the focus will not focus the first list element. (At the cost of accessibility)
+* @param {Boolean} attachToBody  If true the menu will be moved out to the body. To be used in certin overflow situations.
+* @param {function} beforeOpen  Callback that can be used for populating the contents of the menu.
+* @param {String} ariaListbox   Switches aria to use listbox construct instead of menu construct (internal)
+* @param {String} eventObj  Can pass in the event object so you can do a right click with immediate
+* @param {String} returnFocus  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
+* @param {Object} placementOpts  Gets passed to this control's Place behavior
+* @param {Object} offset  Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
 *
 */
 function PopupMenu(element, settings) {
@@ -1459,8 +1459,8 @@ PopupMenu.prototype = {
 
   /**
    * Close the open menu
-   * @param {Boolean} isCancelled  &nbsp;-&nbsp; Internally set option used if the operation is a cancel. Wont matter for manual api call.
-   * @param {Boolean} noFocus  &nbsp;-&nbsp; Do not return focus to the calling element (fx a button)
+   * @param {Boolean} isCancelled  Internally set option used if the operation is a cancel. Wont matter for manual api call.
+   * @param {Boolean} noFocus  Do not return focus to the calling element (fx a button)
    */
   close: function (isCancelled, noFocus) {
     if (!isCancelled || isCancelled === undefined) {

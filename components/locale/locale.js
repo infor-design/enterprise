@@ -18,7 +18,7 @@
   * The Locale component handles i18n
   *
   * @class Locale
-  * @param {String} currentLocale  &nbsp;-&nbsp; The Currently Set Locale
+  * @param {String} currentLocale  The Currently Set Locale
   *
   */
   let Locale = { //jshint ignore:line
@@ -96,7 +96,7 @@
     /**
     * Set the currently used colors.
     *
-    * @param {String} locale  &nbsp;-&nbsp; The locale to fetch and set.
+    * @param {String} locale  The locale to fetch and set.
     */
     set: function (locale) {
       var self = this;
@@ -166,8 +166,8 @@
     /**
     * Format a Date Object and return it parsed in the current locale.
     *
-    * @param {Date} value  &nbsp;-&nbsp; The date to show in the current locale.
-    * @param {Object} attribs  &nbsp;-&nbsp; Additional formatting settings.
+    * @param {Date} value  The date to show in the current locale.
+    * @param {Object} attribs  Additional formatting settings.
     */
     formatDate: function(value, attribs) {
 
@@ -271,7 +271,7 @@
     /**
     * Check if the date is valid using the current locale to do so.
     *
-    * @param {Date} value  &nbsp;-&nbsp; The date to show in the current locale.
+    * @param {Date} value  The date to show in the current locale.
     */
     isValidDate: function (date) {
       if (Object.prototype.toString.call(date) === '[object Date]') {
@@ -289,9 +289,9 @@
     /**
     * Take a date string written in the current locale and parse it into a Date Object
     *
-    * @param {String} dateString  &nbsp;-&nbsp; The string to parse in the current format
-    * @param {String} dateFormat  &nbsp;-&nbsp; The source format fx yyyy-MM-dd
-    * @param {Boolean} isStrict  &nbsp;-&nbsp; If true missing date parts will be considered invalid. If false the current month/day.
+    * @param {String} dateString  The string to parse in the current format
+    * @param {String} dateFormat  The source format fx yyyy-MM-dd
+    * @param {Boolean} isStrict  If true missing date parts will be considered invalid. If false the current month/day.
     */
     parseDate: function(dateString, dateFormat, isStrict) {
       var thisLocaleCalendar = this.calendar(),
@@ -648,8 +648,8 @@
     * Format a decimal with thousands and padding in the current locale.
     * http://mzl.la/1MUOEWm
     *
-    * @param {Number} number  &nbsp;-&nbsp; The source number.
-    * @param {Boolean} options  &nbsp;-&nbsp; Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+    * @param {Number} number  The source number.
+    * @param {Boolean} options  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
     */
     formatNumber: function(number, options) {
       //Lookup , decimals, decimalSep, thousandsSep
@@ -778,7 +778,7 @@
     /**
     * Take a Formatted Number and return a real number
     *
-    * @param {String} input  &nbsp;-&nbsp; The source number (as a string).
+    * @param {String} input  The source number (as a string).
     *
     */
     parseNumber: function(input) {
@@ -808,7 +808,7 @@
     /**
     * Overridable culture messages
     *
-    * @param {String} key  &nbsp;-&nbsp; The key to search for on the string.
+    * @param {String} key  The key to search for on the string.
     *
     */
     translate: function(key, showAsUndefined) {

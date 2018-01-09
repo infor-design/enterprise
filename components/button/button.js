@@ -25,9 +25,9 @@ let BUTTON_DEFAULTS = {
  *
  * @class Button
  *
- * @param {String} toggleOnIcon  &nbsp;-&nbsp; The icon to use for on state on toggle buttons
- * @param {String} toggleOffIcon  &nbsp;-&nbsp; The icon to use for off state on toggle buttons
- * @param {String} replaceText  &nbsp;-&nbsp; If true the selection will be used to replace the content in the button.
+ * @param {String} toggleOnIcon  The icon to use for on state on toggle buttons
+ * @param {String} toggleOffIcon  The icon to use for off state on toggle buttons
+ * @param {String} replaceText  If true the selection will be used to replace the content in the button.
  */
 function Button(element, settings) {
   this.element = $(element);
@@ -207,8 +207,8 @@ Button.prototype = {
    *  This component fires the following events.
    *
    * @fires Autocomplete#events
-   * @param {Object} click  &nbsp;-&nbsp; Fires when the button is clicked (if enabled).
-   * @param {Object} focus  &nbsp;-&nbsp; Fires when the menu is focused.
+   * @param {Object} click  Fires when the button is clicked (if enabled).
+   * @param {Object} focus  Fires when the menu is focused.
    */
   handleEvents: function () {
 

@@ -4511,8 +4511,8 @@ window.Chart = function(container) {
 
     /**
     * Set Animation Type
-    * @param {Boolean} animate  &nbsp;-&nbsp; true|false - will do or not do the animation.
-    * @param {String} animate  &nbsp;-&nbsp; 'initial' will do only first time the animation.
+    * @param {Boolean} animate  true|false - will do or not do the animation.
+    * @param {String} animate  'initial' will do only first time the animation.
     */
     if (options.animate !== undefined) {
       this.animate = (options.animate === 'initial') ?

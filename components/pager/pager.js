@@ -38,16 +38,16 @@ let PAGER_NON_NUMBER_BUTTON_SELECTOR = 'li:not(.pager-prev):not(.pager-next):not
 * The Pager Component supports paging on lists.
 *
 * @class Pager
-* @param {String} componentAPI  &nbsp;-&nbsp; If defined, becomes the definitive way to call methods on parent component.
-* @param {String} type  &nbsp;-&nbsp; Different types of pagers: list, table and more
-* @param {String} position  &nbsp;-&nbsp; Can be on 'bottom' or 'top'.
-* @param {Number} activePage  &nbsp;-&nbsp; Start on this page
-* @param {Boolean} hideOnOnePage  &nbsp;-&nbsp; If true, hides the pager if there is only one page worth of results.
-* @param {Function} source  &nbsp;-&nbsp; Call Back Function for Pager Data Source
-* @param {Number} pagesize  &nbsp;-&nbsp; Can be calculated or a specific number
-* @param {Array} pagesizes  &nbsp;-&nbsp; Array of numbers of the page size selector
-* @param {Boolean} showPageSizeSelector  &nbsp;-&nbsp; If false will not show page size selector
-* @param {Boolean} indeterminate  &nbsp;-&nbsp; If true will not show anything that lets you go to a specific page
+* @param {String} componentAPI  If defined, becomes the definitive way to call methods on parent component.
+* @param {String} type  Different types of pagers: list, table and more
+* @param {String} position  Can be on 'bottom' or 'top'.
+* @param {Number} activePage  Start on this page
+* @param {Boolean} hideOnOnePage  If true, hides the pager if there is only one page worth of results.
+* @param {Function} source  Call Back Function for Pager Data Source
+* @param {Number} pagesize  Can be calculated or a specific number
+* @param {Array} pagesizes  Array of numbers of the page size selector
+* @param {Boolean} showPageSizeSelector  If false will not show page size selector
+* @param {Boolean} indeterminate  If true will not show anything that lets you go to a specific page
 *
 */
 function Pager(element, settings) {

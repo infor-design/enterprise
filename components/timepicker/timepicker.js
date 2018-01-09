@@ -33,13 +33,13 @@
     * The Timepicker Component provides a click/touch user interface for setting a time.
     *
     * @class TimePicker
-    * @param {String} timeFormat &nbsp;-&nbsp; The time format
-    * @param {Number} minuteInterval  &nbsp;-&nbsp; Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
-    * @param {Number} secondInterval  &nbsp;-&nbsp; Integer from 1 to 60.
-    * @param {String} mode  &nbsp;-&nbsp; can be set to 'standard', 'range',
-    * @param {boolean} roundToInterval  &nbsp;-&nbsp; if `false`, does not automatically round user-entered values from the pickers to their nearest interval.
-    * @param {null|jQuery[]} [parentElement] &nbsp;-&nbsp;  if defined as a jQuery-wrapped element, will be used as the target element.
-    * @param {String} returnFocus  &nbsp;-&nbsp; If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
+    * @param {String} timeFormat The time format
+    * @param {Number} minuteInterval  Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
+    * @param {Number} secondInterval  Integer from 1 to 60.
+    * @param {String} mode  can be set to 'standard', 'range',
+    * @param {boolean} roundToInterval  if `false`, does not automatically round user-entered values from the pickers to their nearest interval.
+    * @param {null|jQuery[]} [parentElement]  if defined as a jQuery-wrapped element, will be used as the target element.
+    * @param {String} returnFocus  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
     */
     function TimePicker(element) {
       this.settings = $.extend({}, settings);

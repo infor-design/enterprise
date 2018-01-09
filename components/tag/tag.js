@@ -70,8 +70,8 @@
        *  This component fires the following events.
        *
        * @fires Tag#events
-       * @param {Object} click  &nbsp;-&nbsp; Fires when the tag is clicked (if enabled).
-       * @param {Object} keydown  &nbsp;-&nbsp; Fires when the tag is focused.
+       * @param {Object} click  Fires when the tag is clicked (if enabled).
+       * @param {Object} keydown  Fires when the tag is focused.
        */
       handleEvents: function() {
         var self = this,

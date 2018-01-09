@@ -29,13 +29,13 @@ let MESSAGE_DEFAULTS = {
  * The Message Component is used to show warning / error messages.
  *
  * @class Message
- * @param {String} title  &nbsp;-&nbsp; Title text or content shown in the message
- * @param {Boolean} isError  &nbsp;-&nbsp; If true, will show title styled as an error with an error icon
- * @param {String} message  &nbsp;-&nbsp; The message content or text
- * @param {Number} width  &nbsp;-&nbsp; Pass a specific with or defaults to auto
- * @param {Object} buttons  &nbsp;-&nbsp; Array of buttons to add to the message (see modal examples as well)
- * @param {String} cssClass  &nbsp;-&nbsp; Extra Class to add to the dialog for customization.
- * @param {String} returnFocus  &nbsp;-&nbsp; JQuery Element selector to focus on return
+ * @param {String} title  Title text or content shown in the message
+ * @param {Boolean} isError  If true, will show title styled as an error with an error icon
+ * @param {String} message  The message content or text
+ * @param {Number} width  Pass a specific with or defaults to auto
+ * @param {Object} buttons  Array of buttons to add to the message (see modal examples as well)
+ * @param {String} cssClass  Extra Class to add to the dialog for customization.
+ * @param {String} returnFocus  JQuery Element selector to focus on return
  *
  */
 function Message(element, settings) {

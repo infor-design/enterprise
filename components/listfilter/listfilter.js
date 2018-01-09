@@ -30,11 +30,11 @@ const filterModes = ['startsWith', 'contains'];
 * Abstracted search/filter for use in other controls
 *
 * @class ListFilter
-* @param {Boolean} caseSensitive  &nbsp;-&nbsp; Set to true if searches ARE case sensitive
-* @param {String} filterMode  &nbsp;-&nbsp; Type of search can current be either 'startsWith' or 'contains'
-* @param {Boolean} highlightMatchedText  &nbsp;-&nbsp; Inserts markup that appears to highlight text
-* @param {function} highlightCallback  &nbsp;-&nbsp; If defined, will execute this code for highlighting text instead of the built-in highlighting code
-* @param {function} searchableTextCallback  &nbsp;-&nbsp; If defined, will take each filterable item passed and return user-defined, searchable text content
+* @param {Boolean} caseSensitive  Set to true if searches ARE case sensitive
+* @param {String} filterMode  Type of search can current be either 'startsWith' or 'contains'
+* @param {Boolean} highlightMatchedText  Inserts markup that appears to highlight text
+* @param {function} highlightCallback  If defined, will execute this code for highlighting text instead of the built-in highlighting code
+* @param {function} searchableTextCallback  If defined, will take each filterable item passed and return user-defined, searchable text content
 *
 */
 function ListFilter(settings) {
@@ -67,8 +67,8 @@ ListFilter.prototype = {
 
   /**
   * Run the filter on the list for the given sreach term.
-  * @param {Array} list  &nbsp;-&nbsp; The array to search.
-  * @param {String} term  &nbsp;-&nbsp; The term to look for.
+  * @param {Array} list  The array to search.
+  * @param {String} term  The term to look for.
   * @returns {boolean|Array|jQuery[]}
   */
   filter: function(list, term) {

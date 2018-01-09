@@ -38,17 +38,17 @@
     * Input element that opens a dialog with a list for selection.
     *
     * @class Lookup
-    * @param {Function} click  &nbsp;-&nbsp; Provide a special function to run when the dialog opens to customize the interaction entirely.
-    * @param {String} field  &nbsp;-&nbsp; Field name to return from the dataset or can be a function which returns a string on logic
-    * @param {String} title  &nbsp;-&nbsp;  Dialog title to show, or befault shows  field label + "Lookup"
-    * @param {Array} buttons  &nbsp;-&nbsp; Pass dialog buttons or Cancel / Apply
-    * @param {Object} options  &nbsp;-&nbsp; Options to pass to the datagrid
-    * @param {Function} beforeShow  &nbsp;-&nbsp; Call back that executes async before the lookup is opened.
-    * @param {String} modalContent  &nbsp;-&nbsp; Custom modal markup can be sent in here
-    * @param {Boolean} editable  &nbsp;-&nbsp; Can the user type text in the field
-    * @param {String} autoApply  &nbsp;-&nbsp; If set to false the dialog wont apply the value on clicking a value.
-    * @param {Function} validator  &nbsp;-&nbsp; A function that fires to let you validate form items on open and select
-    * @param {Boolean} autoWidth  &nbsp;-&nbsp; If true the field will grow/change in size based on the content selected.
+    * @param {Function} click  Provide a special function to run when the dialog opens to customize the interaction entirely.
+    * @param {String} field  Field name to return from the dataset or can be a function which returns a string on logic
+    * @param {String} title   Dialog title to show, or befault shows  field label + "Lookup"
+    * @param {Array} buttons  Pass dialog buttons or Cancel / Apply
+    * @param {Object} options  Options to pass to the datagrid
+    * @param {Function} beforeShow  Call back that executes async before the lookup is opened.
+    * @param {String} modalContent  Custom modal markup can be sent in here
+    * @param {Boolean} editable  Can the user type text in the field
+    * @param {String} autoApply  If set to false the dialog wont apply the value on clicking a value.
+    * @param {Function} validator  A function that fires to let you validate form items on open and select
+    * @param {Boolean} autoWidth  If true the field will grow/change in size based on the content selected.
     *
     */
     function Lookup(element) {

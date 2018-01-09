@@ -15,9 +15,9 @@ const CIRCLEPAGER_DEFAULTS = {
 * The Circle Pager Displays content in a sliding carousel and has paging buttons.
 *
 * @class CirclePager
-* @param {Integer} slidesToShow  &nbsp;-&nbsp; The number of slides to show in one view / pane
-* @param {Integer} startingSlide  &nbsp;-&nbsp; First showing slide/group, an 0-based integer
-* @param {Boolean} loop  &nbsp;-&nbsp;  Setting loop: true will loop back after next/previous reached to end
+* @param {Integer} slidesToShow  The number of slides to show in one view / pane
+* @param {Integer} startingSlide  First showing slide/group, an 0-based integer
+* @param {Boolean} loop   Setting loop: true will loop back after next/previous reached to end
 *
 */
 function CirclePager(element, settings) {
@@ -194,7 +194,7 @@ CirclePager.prototype = {
 
   /**
   * Show a slide to First Slide
-  * @param {String} index  &nbsp;-&nbsp; The index of the slide to show (0 based)
+  * @param {String} index  The index of the slide to show (0 based)
   */
   show(index) {
     if (!this.isActive) {

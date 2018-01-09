@@ -12,7 +12,7 @@ let PLUGIN_NAME = 'wizard';
 
 /**
  * Component Default Settings
- * @param {jQuery[]} ticks  &nbsp;-&nbsp; Defines the data to use, must be specified.
+ * @param {jQuery[]} ticks  Defines the data to use, must be specified.
  */
 let WIZARD_DEFAULTS = {
   ticks: null

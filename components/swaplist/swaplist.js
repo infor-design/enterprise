@@ -67,19 +67,19 @@
     * The SwapList Component creates a list of options that can be picked and organized.
     *
     * @class SwapList
-    * @param {Boolean} searchable  &nbsp;-&nbsp; If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
-    * @param {Array} available &nbsp;-&nbsp; An array containing items for the available bucket.
-    * @param {Array} selected  &nbsp;-&nbsp;  An array containing items for the selected bucket.
-    * @param {Array} additional  &nbsp;-&nbsp;  An array containing items for the additional bucket.
-    * @param {String} availableClass  &nbsp;-&nbsp; A class name linking the available root element.
-    * @param {String} selectedClass  &nbsp;-&nbsp; A class name linking the selected root element.
-    * @param {String} additionalClass &nbsp;-&nbsp; A class name linking the additional root element.
-    * @param {String} availableBtn &nbsp;-&nbsp; A class name linking the available button element.
-    * @param {String} selectedBtnLeft &nbsp;-&nbsp;  A class name linking the move left button element.
-    * @param {String} selectedBtnRight &nbsp;-&nbsp;  A class name linking the move right button element.
-    * @param {String} additionalBtn &nbsp;-&nbsp;  A class name linking the additional button element.
-    * @param {String} template &nbsp;-&nbsp; An Html String with the mustache template for the view.
-    * @param {Object} draggable &nbsp;-&nbsp; An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
+    * @param {Boolean} searchable  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+    * @param {Array} available An array containing items for the available bucket.
+    * @param {Array} selected   An array containing items for the selected bucket.
+    * @param {Array} additional   An array containing items for the additional bucket.
+    * @param {String} availableClass  A class name linking the available root element.
+    * @param {String} selectedClass  A class name linking the selected root element.
+    * @param {String} additionalClass A class name linking the additional root element.
+    * @param {String} availableBtn A class name linking the available button element.
+    * @param {String} selectedBtnLeft  A class name linking the move left button element.
+    * @param {String} selectedBtnRight  A class name linking the move right button element.
+    * @param {String} additionalBtn  A class name linking the additional button element.
+    * @param {String} template An Html String with the mustache template for the view.
+    * @param {Object} draggable An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
     */
     function SwapList(element) {
       this.settings = $.extend({}, settings);
@@ -722,7 +722,7 @@
 
       /**
        * Updates the internal datasets and refresh the ui.
-       * @param {Object} ds &nbsp;-&nbsp; The updated dataset(s) of the form `{available: [], selected: [], additional: []}`
+       * @param {Object} ds The updated dataset(s) of the form `{available: [], selected: [], additional: []}`
        */
       updateDataset: function(ds) {
         var i, l, lv, c, api,
@@ -790,7 +790,7 @@
        * Sets up event handlers for this control and its sub-elements
        *
        * @fires Swaplist#events
-      * @param {Object} swapupdate &nbsp;-&nbsp; Fires when any bucket has its content changed.
+      * @param {Object} swapupdate Fires when any bucket has its content changed.
        */
       handleEvents: function() {
         var self = this,

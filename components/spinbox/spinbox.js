@@ -27,10 +27,10 @@ let SPINBOX_DEFAULTS = {
 * The Spinbox component provides easy access to modification of a numeric input field.
 *
 * @class Spinbox
-* @param {null|Number} min &nbsp;-&nbsp; if defined, provides a minimum numeric limit
-* @param {null|Number} max  &nbsp;-&nbsp; if defined, provides a maximum numeric limit
-* @param {null|Number} step  &nbsp;-&nbsp; if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.
-* @param {boolean} validateOnInput  &nbsp;-&nbsp; If set to false, will only automatically correct the spinbox value after the spinbox has lost focus.
+* @param {null|Number} min if defined, provides a minimum numeric limit
+* @param {null|Number} max  if defined, provides a maximum numeric limit
+* @param {null|Number} step  if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.
+* @param {boolean} validateOnInput  If set to false, will only automatically correct the spinbox value after the spinbox has lost focus.
 */
 function Spinbox(element, settings) {
   this.element = $(element);

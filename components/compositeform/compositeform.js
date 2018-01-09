@@ -32,10 +32,10 @@
     * The About Dialog Component is displays information regarding the application.
     *
     * @class CompositeForm
-    * @param {String} breakpoint  &nbsp;-&nbsp; Defines the breakpoint at which the composite form will change into its responsive mode
-    * @param {String} trigger  &nbsp;-&nbsp; Expandable area trigger selector. Passed to expandable area.
-    * @param {String} expandedText  &nbsp;-&nbsp; Text to use for the expand button (Default localized)
-    * @param {String} collapsedText  &nbsp;-&nbsp; Text to use for the collapse button (Default localized)
+    * @param {String} breakpoint  Defines the breakpoint at which the composite form will change into its responsive mode
+    * @param {String} trigger  Expandable area trigger selector. Passed to expandable area.
+    * @param {String} expandedText  Text to use for the expand button (Default localized)
+    * @param {String} collapsedText  Text to use for the collapse button (Default localized)
     *
     */
     function CompositeForm(element, settings) {

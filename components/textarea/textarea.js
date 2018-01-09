@@ -28,13 +28,13 @@ let TEXTAREA_DEFAULTS = {
 * The Textarea Component wraps a standard HTML Textarea element and provides additional features.
 *
 * @class Textarea
-* @param {boolean} autoGrow &nbsp;-&nbsp; Will automatically expand the text area to fit the contents.
-* @param {boolean} autoGrowAnimate &nbsp;-&nbsp; Will animate the text area growing.
-* @param {integer} autoGrowAnimateSpeed &nbsp;-&nbsp; The speed of the animation.
-* @param {boolean} characterCounter &nbsp;-&nbsp; Displays a counter that counts down from the maximum length allowed.
-* @param {boolean} printable &nbsp;-&nbsp; Determines whether or not the text area can be displayed on a printed page.
-* @param {null|String} charRemainingText  &nbsp;-&nbsp; Text that will be used in place of the "remaining" text.
-* @param {null|String} charMaxText  &nbsp;-&nbsp; Text that will be used in place of the "Max" text.
+* @param {boolean} autoGrow Will automatically expand the text area to fit the contents.
+* @param {boolean} autoGrowAnimate Will animate the text area growing.
+* @param {integer} autoGrowAnimateSpeed The speed of the animation.
+* @param {boolean} characterCounter Displays a counter that counts down from the maximum length allowed.
+* @param {boolean} printable Determines whether or not the text area can be displayed on a printed page.
+* @param {null|String} charRemainingText  Text that will be used in place of the "remaining" text.
+* @param {null|String} charMaxText  Text that will be used in place of the "Max" text.
 */
 function Textarea(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TEXTAREA_DEFAULTS);
@@ -262,8 +262,8 @@ Textarea.prototype = {
    *  This component fires the following events.
    *
    * @fires Textarea#events
-   * @param {Object} keyup  &nbsp;-&nbsp; Fires when the button is clicked (if enabled).
-   * @param {Object} focus  &nbsp;-&nbsp; Fires when the menu is focused.
+   * @param {Object} keyup  Fires when the button is clicked (if enabled).
+   * @param {Object} focus  Fires when the menu is focused.
    * @param {Object} keypress  &nbsp;-&nbsp;
    * @param {Object} blur  &nbsp;-&nbsp;
    */

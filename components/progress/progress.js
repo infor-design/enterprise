@@ -62,7 +62,7 @@
       /**
       * Update the progress bar.
       *
-      * @param {String} value  &nbsp;-&nbsp; The percent value to use to fill. 0-100
+      * @param {String} value  The percent value to use to fill. 0-100
       */
       update: function (value) {
 

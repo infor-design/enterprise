@@ -32,11 +32,11 @@
     * A Busy Indicator notifies the user that the system is processing a request, and that they must wait for that request to be processed before continuing with the current task.
     *
     * @class BusyIndicator
-    * @param {String} blockUI  &nbsp;-&nbsp; makes the element that Busy Indicator is invoked on unusable while it's displayed.
-    * @param {String} text  &nbsp;-&nbsp; Custom Text To Show or Will Show Localized Loading....
-    * @param {String} displayDelay  &nbsp;-&nbsp; umber in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
-    * @param {Boolean} timeToComplete  &nbsp;-&nbsp; fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
-    * @param {String} transparentOverlay  &nbsp;-&nbsp; If true, allows the "blockUI" setting to display an overlay that prevents interaction, but appears transparent instead of gray.
+    * @param {String} blockUI  makes the element that Busy Indicator is invoked on unusable while it's displayed.
+    * @param {String} text  Custom Text To Show or Will Show Localized Loading....
+    * @param {String} displayDelay  umber in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
+    * @param {Boolean} timeToComplete  fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
+    * @param {String} transparentOverlay  If true, allows the "blockUI" setting to display an overlay that prevents interaction, but appears transparent instead of gray.
     *
     */
     function BusyIndicator(element) {
@@ -335,9 +335,9 @@
        *  This component listens to the following events.
        *
        * @fires Busyindicator#events
-       * @param {Object} start  &nbsp;-&nbsp; Starts / shows the indictor.
-       * @param {Object} complete  &nbsp;-&nbsp; Hides / Ends the indictaor
-       * @param {Object} updated  &nbsp;-&nbsp; Sync the UI/Settings. Fx chnaging the text in the DOM.
+       * @param {Object} start  Starts / shows the indictor.
+       * @param {Object} complete  Hides / Ends the indictaor
+       * @param {Object} updated  Sync the UI/Settings. Fx chnaging the text in the DOM.
        *
        */
       handleEvents: function() {

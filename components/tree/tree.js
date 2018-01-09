@@ -10,14 +10,14 @@ const COMPONENT_NAME = 'tree';
 
 /**
  * Default Settings for Tree
- * @param {string} selectable &nbsp;-&nbsp; 'single' or 'multiple'.
- * @param {boolean} hideCheckboxes &nbsp;-&nbsp; Only applies when `selectable` is set to 'multiple'.
- * @param {null|string} menuId &nbsp;-&nbsp; if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
- * @param {boolean} useStepUI &nbsp;-&nbsp; if `true`, turns this tree instance into a "Stepped" tree.
- * @param {string} folderIconOpen &nbsp;-&nbsp; the icon used when a tree folder node is open.
- * @param {string} folderIconClosed &nbsp;-&nbsp; the icon used when a tree folder node is closed.
- * @param {boolean} sortable &nbsp;-&nbsp; if `true`, allows nodes to become sortable.
- * @param {null|function} onBeforeSelect &nbsp;-&nbsp; if defined as a function, fires that function as a callback before the selection on a node occurs.
+ * @param {string} selectable 'single' or 'multiple'.
+ * @param {boolean} hideCheckboxes Only applies when `selectable` is set to 'multiple'.
+ * @param {null|string} menuId if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
+ * @param {boolean} useStepUI if `true`, turns this tree instance into a "Stepped" tree.
+ * @param {string} folderIconOpen the icon used when a tree folder node is open.
+ * @param {string} folderIconClosed the icon used when a tree folder node is closed.
+ * @param {boolean} sortable if `true`, allows nodes to become sortable.
+ * @param {null|function} onBeforeSelect if defined as a function, fires that function as a callback before the selection on a node occurs.
  */
 const TREE_DEFAULTS = {
   selectable: 'single', // ['single'|'multiple']

@@ -15,14 +15,14 @@ const COMPONENT_NAME = 'header';
 
 /**
  * Component Default Settings
- * @param {Boolean} demoOptions  &nbsp;-&nbsp; Used to enable/disable default SoHo Xi options for demo purposes
- * @param {Boolean} useBackButton  &nbsp;-&nbsp; If true, displays a back button next to the title in the header toolbar
- * @param {Boolean} useBreadcrumb  &nbsp;-&nbsp; If true, displays a breadcrumb on drilldown
- * @param {Boolean} usePopupmenu  &nbsp;-&nbsp; f true, changes the Header Title into a popupmenu that can change the current page
- * @param {Array} tabs  &nbsp;-&nbsp; If defined as an array of Tab objects, displays a series of tabs that represent application sections
- * @param {Array} wizardTicks  &nbsp;-&nbsp; If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
- * @param {Boolean} useAlternate  &nbsp;-&nbsp; If true, use alternate background/text color for sub-navigation areas
- * @param {Boolean} addScrollClass  &nbsp;-&nbsp; If true a class will be added as the page scrolls up and down to the header for manipulation. Eg: Docs Page.
+ * @param {Boolean} demoOptions  Used to enable/disable default SoHo Xi options for demo purposes
+ * @param {Boolean} useBackButton  If true, displays a back button next to the title in the header toolbar
+ * @param {Boolean} useBreadcrumb  If true, displays a breadcrumb on drilldown
+ * @param {Boolean} usePopupmenu  f true, changes the Header Title into a popupmenu that can change the current page
+ * @param {Array} tabs  If defined as an array of Tab objects, displays a series of tabs that represent application sections
+ * @param {Array} wizardTicks  If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
+ * @param {Boolean} useAlternate  If true, use alternate background/text color for sub-navigation areas
+ * @param {Boolean} addScrollClass  If true a class will be added as the page scrolls up and down to the header for manipulation. Eg: Docs Page.
  */
 const HEADER_DEFAULTS = {
   demoOptions: true,

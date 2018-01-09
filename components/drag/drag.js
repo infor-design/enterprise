@@ -32,15 +32,15 @@ let DRAG_DEFAULTS = {
 * Similar: https://github.com/desandro/draggabilly
 *
 * @class Drag
-* @param {String} axis  &nbsp;-&nbsp; Constrains dragging to either axis. Possible values: null, 'x', 'y'
-* @param {Boolean} clone  &nbsp;-&nbsp;  Set to true to clone the object to drag. In many situations this is needed to break out of layout.
-* @param {String} cloneCssClass  &nbsp;-&nbsp; Css class added to clone element (defaults to is-clone)
-* @param {Boolean} clonePosIsFixed  &nbsp;-&nbsp; if true cloned object will use css style "position: fixed"
-* @param {String} cloneAppendTo  &nbsp;-&nbsp; Selector to append to for the clone ['body'|'parent'|'jquery object'] default:'body'
-* @param {Boolean} containment  &nbsp;-&nbsp; Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
-* @param {String} obstacle  &nbsp;-&nbsp; jQuery Selector of object(s) that you cannot drag into,
-* @param {Boolean} underElements  &nbsp;-&nbsp; If set to true will return list of elements that are "underneath" the drag element
-* @param {String} containmentOffset  &nbsp;-&nbsp; How close to the containment object should we be allowed to drag in position form. `{left: 0, top: 0}`
+* @param {String} axis  Constrains dragging to either axis. Possible values: null, 'x', 'y'
+* @param {Boolean} clone   Set to true to clone the object to drag. In many situations this is needed to break out of layout.
+* @param {String} cloneCssClass  Css class added to clone element (defaults to is-clone)
+* @param {Boolean} clonePosIsFixed  if true cloned object will use css style "position: fixed"
+* @param {String} cloneAppendTo  Selector to append to for the clone ['body'|'parent'|'jquery object'] default:'body'
+* @param {Boolean} containment  Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
+* @param {String} obstacle  jQuery Selector of object(s) that you cannot drag into,
+* @param {Boolean} underElements  If set to true will return list of elements that are "underneath" the drag element
+* @param {String} containmentOffset  How close to the containment object should we be allowed to drag in position form. `{left: 0, top: 0}`
 *
 */
 function Drag(element, settings) {
@@ -201,8 +201,8 @@ Drag.prototype = {
 
   /**
   * Get elements from given point.
-  * @param {number} x &nbsp;-&nbsp; The x-coordinate of the Point.
-  * @param {number} y &nbsp;-&nbsp; The y-coordinate of the Point.
+  * @param {number} x The x-coordinate of the Point.
+  * @param {number} y The y-coordinate of the Point.
   * @return {Array} List of all elements at the given point.
   */
   getElementsFromPoint: function(x, y) {
@@ -260,9 +260,9 @@ Drag.prototype = {
    *  This component fires the following events.
    *
    * @fires Drag#events
-   * @param {Object} dragstart  &nbsp;-&nbsp; When the dragging is initiated. Use this to customize/style the drag/drop objects in the DOM.
-   * @param {Object} drag  &nbsp;-&nbsp; Fires (many times) while dragging is occuring. Use this for DOM feedback but be careful about what you do in here for performance.
-   * @param {Object} dragend  &nbsp;-&nbsp; Fires after the drag is completed. Use this to remove / set drag feedback off.
+   * @param {Object} dragstart  When the dragging is initiated. Use this to customize/style the drag/drop objects in the DOM.
+   * @param {Object} drag  Fires (many times) while dragging is occuring. Use this for DOM feedback but be careful about what you do in here for performance.
+   * @param {Object} dragend  Fires after the drag is completed. Use this to remove / set drag feedback off.
    *
    */
   handleEvents: function() {

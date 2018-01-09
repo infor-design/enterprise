@@ -49,18 +49,18 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * The Dropdown allows users to select from a list. Like an Html Select.
 *
 * @class Dropdown
-* @param {Boolean} closeOnSelect  &nbsp;-&nbsp; When an option is selected, the list will close if set to "true".  List stays open if "false".
-* @param {String} cssClass  &nbsp;-&nbsp; Append an optional css class to dropdown-list
-* @param {String} filterMode  &nbsp;-&nbsp; Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
-* @param {Boolean} noSearch  &nbsp;-&nbsp; If true, disables the ability of the user to enter text in the Search Input field in the open combo box
-* @param {Boolean} showEmptyGroupHeaders  &nbsp;-&nbsp; If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
-* @param {Boolean} source  &nbsp;-&nbsp; A function that can do an ajax call.
-* @param {Boolean} sourceArguments  &nbsp;-&nbsp; If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
-* @param {Boolean} sourceArguments  &nbsp;-&nbsp; If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
-* @param {Boolean} reloadSourceOnOpen  &nbsp;-&nbsp; If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
-* @param {Boolean} empty  &nbsp;-&nbsp; Initialize Empty Value
-* @param {Boolean} delay  &nbsp;-&nbsp; Typing Buffer Delay in ms
-* @param {Number} maxWidth &nbsp;-&nbsp; If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
+* @param {Boolean} closeOnSelect  When an option is selected, the list will close if set to "true".  List stays open if "false".
+* @param {String} cssClass  Append an optional css class to dropdown-list
+* @param {String} filterMode  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
+* @param {Boolean} noSearch  If true, disables the ability of the user to enter text in the Search Input field in the open combo box
+* @param {Boolean} showEmptyGroupHeaders  If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
+* @param {Boolean} source  A function that can do an ajax call.
+* @param {Boolean} sourceArguments  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+* @param {Boolean} sourceArguments  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+* @param {Boolean} reloadSourceOnOpen  If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
+* @param {Boolean} empty  Initialize Empty Value
+* @param {Boolean} delay  Typing Buffer Delay in ms
+* @param {Number} maxWidth If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
 *
 */
 function Dropdown(element, settings) {
@@ -2218,10 +2218,10 @@ Dropdown.prototype = {
    *  This component fires the following events.
    *
    * @fires Dropdown#events
-   * @param {Object} listopened  &nbsp;-&nbsp; Fires as the calendar popup is opened
-   * @param {Object} listclosed  &nbsp;-&nbsp; Fires as the calendar popup is closed
-   * @param {Object} change  &nbsp;-&nbsp; Fires after the value in the input is changed by any means.
-   * @param {Object} input  &nbsp;-&nbsp; Fires after the value in the input is changed by user interaction.
+   * @param {Object} listopened  Fires as the calendar popup is opened
+   * @param {Object} listclosed  Fires as the calendar popup is closed
+   * @param {Object} change  Fires after the value in the input is changed by any means.
+   * @param {Object} input  Fires after the value in the input is changed by user interaction.
    *
    */
   handleEvents: function() {
