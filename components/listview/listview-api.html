@@ -1,0 +1,620 @@
+  <section>
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          dataset
+        </td>
+        <td>
+          Array
+        </td>
+        <td>
+           
+-
+ 
+ Array of data to feed the template
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          content
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Html Template String
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          description
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Audible Label (or use parent title)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          paging
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true, activates paging
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          pagesize
+        </td>
+        <td>
+          Number
+        </td>
+        <td>
+           
+-
+ 
+ If paging is activated, sets the number of listview items available per page
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          searchable
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          selectable
+        </td>
+        <td>
+          
+        </td>
+        <td>
+           
+-
+ 
+  selection mode, can be false, 'single' or 'multiple' or 'mixed'
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          selectOnFocus
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+  If true the first item in the list will be selected as it is focused.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showCheckboxes
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+  If false will not show checkboxes used with multiple selection mode only
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          hoverable
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+  If true the list element will show a hover action to indicate its actionable.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          source
+        </td>
+        <td>
+          
+        </td>
+        <td>
+           
+-
+ 
+ If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          disableItemDeactivation
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>render</td>
+        <td>
+          
+                
+                  <span>dataset (Array) =  
+-
+ 
+ The dataset to use
+ </span>
+                
+                  <span>pagerInfo (Object) =  
+-
+ 
+ Pager instructions
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Render the template against the dataset.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>refresh</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get the Data Source. Can be an array, Object or Url and render the list.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>loadData</td>
+        <td>
+          
+                
+                  <span>ds (Object) =  
+-
+ 
+ The dataset to use or will use settings.dataset.
+ </span>
+                
+                  <span>pagerInfo (Object) =  
+-
+ 
+ The pager settings to use (see pager api)
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Load Data from an external API</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>toggleAll</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Toggle all items from selected to deselected, useful for multi/mixed selection</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>resetSearch</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Reset the current search parameters and highlight.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>focus</td>
+        <td>
+          
+                
+                  <span>item (jQuery) =  
+-
+ 
+ The list item (as jQuery) to focus
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Focus the provided list item with the keyboard</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>remove</td>
+        <td>
+          
+                
+                  <span>li () =  
+-
+ 
+ Either the actually jQuery list element or a zero based index
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Remove the given list item.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>clear</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Remove all list items.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>removeAllSelected</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Remove all selected items entirely from the list..</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>clearAllSelected</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Deselect all selected items.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>sortFunction</td>
+        <td>
+          
+                
+                  <span>field (String) =  
+-
+ 
+ The field in the dataset to sort on.
+ </span>
+                
+                  <span>reverse (String) =  
+-
+ 
+ If true sort descending.
+ </span>
+                
+                  <span>primer (Function) =  
+-
+ 
+ A sorting primer function.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Overridable function to conduct sorting</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>deselect</td>
+        <td>
+          
+                
+                  <span>li () =  
+-
+ 
+ Either the actually jQuery list element or a zero based index
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Deselect the given list item.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>unselect</td>
+        <td>
+          
+                
+                  <span>li () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Deprivated - use deselect</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>select</td>
+        <td>
+          
+                
+                  <span>li () =  
+-
+ 
+ Either the actually jQuery list element or a zero based index
+ </span>
+                
+                  <span>noTrigger (Boolean) =  
+-
+ 
+ Do not trigger the selected event.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Select the given list item.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>toggleItemActivation</td>
+        <td>
+          
+                
+                  <span>li (jQuery) =  
+-
+ 
+ The jQuery list element.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Toggle acivation state on the list item</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>activateItem</td>
+        <td>
+          
+                
+                  <span>li () =  
+-
+ 
+ The jQuery list element or the index.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Set item to activated, unactivate others and fire an event.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>activatedItem</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Return an object containing info about the currently activated item.</p>
+
+        </td>
+        <td>
+          An object containing the active row's index, dom element and data.
+Object
+        </td>
+      </tr>
+      <tr>
+        <td>deactivateItem</td>
+        <td>
+          
+                
+                  <span>li () =  
+-
+ 
+ The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Set item to deactivated, uand fire an event.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Refresh the list with any optioned options that might have been set.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Detatch all bound events.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Detatch all events and tear down data object</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+                
+                  <span>selected (Object) =  
+-
+ 
+ Fires when a item is selected
+ </span>
+                
+                  <span>unselected (Object) =  
+-
+ 
+ Fires when a item is deselected (deprecated)
+ </span>
+                
+                  <span>deselected (Object) =  
+-
+ 
+ Fires when a item is deselected
+ </span>
+                
+                  <span>rendered (Object) =  
+-
+ 
+ Fires after the listbox is fully rendered
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>This component fires the following events.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

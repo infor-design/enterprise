@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * SoHo XI Angular Directives
  * @private

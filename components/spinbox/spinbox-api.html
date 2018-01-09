@@ -1,0 +1,533 @@
+  <section>
+  
+    
+
+
+  
+    
+
+
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          min
+        </td>
+        <td>
+          
+        </td>
+        <td>
+           
+-
+ 
+ if defined, provides a minimum numeric limit
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          max
+        </td>
+        <td>
+          
+        </td>
+        <td>
+           
+-
+ 
+ if defined, provides a maximum numeric limit
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          step
+        </td>
+        <td>
+          
+        </td>
+        <td>
+           
+-
+ 
+ if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          validateOnInput
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+           
+-
+ 
+ If set to false, will only automatically correct the spinbox value after the spinbox has lost focus.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>setWidth</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Sets the width of the spinbox input field.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>setInitialValue</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Sanitize the initial value of the input field.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>addMarkup</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Appends extra control markup to a Spinbox field.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>enableLongPress</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) =  </span>
+                
+                  <span>self (Spinbox) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Enables Long Pressing one of the Spinbox control buttons.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>disableLongPress</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) =  </span>
+                
+                  <span>self (Spinbox) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Disables Long Pressing one of the Spinbox control buttons.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleClick</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Event handler for 'click' events</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleKeyDown</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) =  </span>
+                
+                  <span>self (Spinbox) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Event handler for 'keydown' events</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleKeyPress</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) =  </span>
+                
+                  <span>self (Spinbox) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Event handler for 'keypress' events
+TODO: Deprecate in 4.4.0</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleInput</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) =  </span>
+                
+                  <span>self (Spinbox) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Event handler for the 'input' event</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleKeyup</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) =  </span>
+                
+                  <span>self (Spinbox) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Event handler for 'keyup' events</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleAfterPaste</td>
+        <td>
+          
+                
+                  <span>self (Spinbox) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Change a newly pasted value to this element's min or max values, if the pasted value goes
+beyond either of those limits.  Listens to an event emitted by the Mask plugin after pasted content
+is handled.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>correctValue</td>
+        <td>
+          
+                
+                  <span>e () =  </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>increaseValue</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Increases the value of the Spinbox field, constrained by the step interval and maximum limit.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>decreaseValue</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Decreases the value of the Spinbox field, constrained by the step interval and minimum limit.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>updateVal</td>
+        <td>
+          
+                
+                  <span>newVal () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Sets a new spinbox value and focuses the spinbox.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>checkForNumeric</td>
+        <td>
+          
+                
+                  <span>val () = will be converted to a number if it's a string.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Sanitizes the value of the input field to an integer if it isn't already established.</p>
+
+        </td>
+        <td>
+          
+Number
+        </td>
+      </tr>
+      <tr>
+        <td>updateAria</td>
+        <td>
+          
+                
+                  <span>val () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Updates the "aria-valuenow" property on the spinbox element if the value is currently set</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>addButtonStyle</td>
+        <td>
+          
+                
+                  <span>e () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>adds a "pressed-in" styling for one of the spinner buttons</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>removeButtonStyle</td>
+        <td>
+          
+                
+                  <span>e () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Removes "pressed-in" styling for one of the spinner buttons</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Enables the Spinbox</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Disables the Spinbox</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>isDisabled</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not the spinbox is disabled.</p>
+
+        </td>
+        <td>
+          
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>setIsDisabled</td>
+        <td>
+          
+                
+                  <span>button () =  </span>
+                
+                  <span>isDisabled (booelan) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Toggle whther or not the component is disabled.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Updated</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>bindEvents</td>
+        <td>
+          
+                
+                  <span>focus (Object) =  
+-
+ 
+ </span>
+                
+                  <span>blur (Object) =  
+-
+ 
+ </span>
+                
+                  <span>keydown (Object) =  
+-
+ 
+ </span>
+                
+                  <span>keypress (Object) =  
+-
+ 
+ </span>
+                
+                  <span>keyup (Object) =  
+-
+ 
+ </span>
+                
+                  <span>afterpaste (Object) =  
+-
+ 
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Sets up event handlers for this control and its sub-elements</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

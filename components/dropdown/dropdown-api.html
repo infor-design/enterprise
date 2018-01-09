@@ -1,0 +1,398 @@
+  <section>
+  
+    
+
+
+  
+    
+
+
+  
+    
+
+
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          closeOnSelect
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ When an option is selected, the list will close if set to "true".  List stays open if "false".
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          cssClass
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Append an optional css class to dropdown-list
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          filterMode
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          noSearch
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true, disables the ability of the user to enter text in the Search Input field in the open combo box
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showEmptyGroupHeaders
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true, displays 
+<optgroup>
+ headers in the list even if no selectable options are present underneath.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          source
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ A function that can do an ajax call.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          sourceArguments
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          sourceArguments
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          reloadSourceOnOpen
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          empty
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Initialize Empty Value
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          delay
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Typing Buffer Delay in ms
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          maxWidth
+        </td>
+        <td>
+          Number
+        </td>
+        <td>
+           
+-
+ 
+ If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>activate</td>
+        <td>
+          
+                
+                  <span>useSearchInput () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Focus the input Element</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>selectValue</td>
+        <td>
+          
+                
+                  <span>value () =  </span>
+                
+                  <span>option (value) = A string containing the value to look for. (Case insensitive)
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Select an option by the value.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>getDataAttributes</td>
+        <td>
+          
+                
+                  <span>attr (Array) = List of all attributes.
+ </span>
+                
+                  <span>attrToExclude (Array) = List of attributes to be excluded from passed list.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Get data attributes from passed list of attributes</p>
+
+        </td>
+        <td>
+          It will return an object containing two keys
+str - string of attributes
+obj - object of attributes
+Object
+        </td>
+      </tr>
+      <tr>
+        <td>setCode</td>
+        <td>
+          
+                
+                  <span>code (String) = The value to match and set on the value element.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>External Facing function to set value by code - Depricated set on select and trigger updated.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Disable the input element.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>isDisabled</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Returns true if the dropdown is disabled.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Enable the input element.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>readonly</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Make the input element readonly.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Tear down events and restore to default.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+                
+                  <span>listopened (Object) =  
+-
+ 
+ Fires as the calendar popup is opened
+ </span>
+                
+                  <span>listclosed (Object) =  
+-
+ 
+ Fires as the calendar popup is closed
+ </span>
+                
+                  <span>change (Object) =  
+-
+ 
+ Fires after the value in the input is changed by any means.
+ </span>
+                
+                  <span>input (Object) =  
+-
+ 
+ Fires after the value in the input is changed by user interaction.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>This component fires the following events.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

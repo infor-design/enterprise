@@ -1,0 +1,1322 @@
+  <section>
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          actionableMode
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If actionableMode is "true, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          cellNavigation
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If cellNavigation is "false, will show border around whole row on focus
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          rowNavigation
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If rowNavigation is "false, will NOT show border around the row
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          alternateRowShading
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Sets shading for readonly grids
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          columns
+        </td>
+        <td>
+          Array
+        </td>
+        <td>
+           
+-
+ 
+ an array of columns (see column options)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          dataset
+        </td>
+        <td>
+          Array
+        </td>
+        <td>
+           
+-
+ 
+ an array of data objects
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          columnReorder
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Allow Column reorder
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          saveColumns
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Save Column Reorder and resize
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          saveUserSettings
+        </td>
+        <td>
+          Object
+        </td>
+        <td>
+           
+-
+ 
+ Save one or all of the following to local storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          editable
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Enable editing in the grid, requires column editors.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isList
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Makes the grid have readonly "list" styling
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          menuId
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+Id of the menu to use for a row level right click context menu
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          menuSelected
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Callback for the grid level context menu
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          menuBeforeOpen
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Callback for the grid level beforeopen menu event
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          headerMenuId
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Id of the menu to use for a header right click context menu
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          headerMenuSelected
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Callback for the header level context menu
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          headerMenuBeforeOpen
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Callback for the header level beforeopen menu event
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          uniqueId
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Unique ID to use as local storage reference and internal variable names
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          rowHeight
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Controls the height of the rows / number visible rows. May be (short, medium or normal)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          selectable
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          groupable
+        </td>
+        <td>
+          Object
+        </td>
+        <td>
+           
+-
+ 
+  Controls fields to use for data grouping Use Data grouping fx. {fields: 
+[
+'incidentId'
+]
+, supressRow: true, aggregator: 'list', aggregatorOptions: 
+[
+'unitName1'
+]
+}
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          clickToSelect
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Controls if using a selection mode if you can click the rows to select
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          toolbar
+        </td>
+        <td>
+          Object
+        </td>
+        <td>
+           
+-
+ 
+ Toggles and appends toolbar features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          initializeToolbar
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Set to false if you will initialize the toolbar yourself
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          paging
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Enable paging mode
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          pagesize
+        </td>
+        <td>
+          Number
+        </td>
+        <td>
+           
+-
+ 
+ Number of rows per page
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          pagesizes
+        </td>
+        <td>
+          Array
+        </td>
+        <td>
+           
+-
+ 
+ Array of page sizes to show in the page size dropdown.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          indeterminate
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Disable the ability to go to a specific page when paging.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          source
+        </td>
+        <td>
+          Function
+        </td>
+        <td>
+           
+-
+ 
+ Callback function for paging
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          hidePagerOnOnePage
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true, hides the pager if there's only one page worth of results.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          filterable
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Enable Column Filtering, This will require column filterTypes as well.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          disableClientFilter
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Disable Filter Logic client side and let your server do it
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          disableClientSort
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Disable Sort Logic client side and let your server do it
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          resultsText
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Can provide a custom function to adjust results text on the toolbar
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showFilterTotal
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Paging results display filter count, change to false to not show filtered count
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          rowReorder
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If set you can reorder rows. Requires rowReorder formatter
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showDirty
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+  If true the dirty indicator will be shown on the rows
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showSelectAllCheckBox
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Allow to hide the checkbox header (true to show, false to hide)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          allowOneExpandedRow
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Controls if you cna expand more than one expandable row.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          enableTooltips
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ Process tooltip logic at a cost of performance
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          disableRowDeactivation
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ if a row is activated the user should not be able to deactivate it by clicking on the activated row
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          sizeColumnsEqually
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true make all the columns equal width
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          expandableRow
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If true we append an expandable row area without the rowTemplate feature being needed.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          redrawOnResize
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If set to false we skip redraw logic on the resize of the page.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          exportConvertNegative
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ If set to true export data with trailing negative signs moved in front.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          columnGroups
+        </td>
+        <td>
+          Array
+        </td>
+        <td>
+           
+-
+ 
+ An array of columns to use for grouped column headers.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          treeGrid
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+          : 
+ 
+-
+ 
+ If true a tree grid is expected so addition calculations will be used to calculate of the row children
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          onPostRenderCell
+        </td>
+        <td>
+          Function
+        </td>
+        <td>
+           
+-
+ 
+ A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          onDestroyCell
+        </td>
+        <td>
+          Function
+        </td>
+        <td>
+           
+-
+ 
+ A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          onEditCell
+        </td>
+        <td>
+          Function
+        </td>
+        <td>
+           
+-
+ 
+ A callback that fires when a cell is edited, the editor object is passed in to the function
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          onExpandRow
+        </td>
+        <td>
+          Function
+        </td>
+        <td>
+           
+-
+ 
+ A callback function that fires when expanding rows. To be used when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          emptyMessage
+        </td>
+        <td>
+          Object
+        </td>
+        <td>
+           
+-
+ 
+ An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: 
+<function>
+}} set this to null for no message or will default to 'No Data Found with an icon.'
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>render</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Render or render both header and row area.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>addRow</td>
+        <td>
+          
+                
+                  <span>data (Object) =  
+-
+ 
+ An data row object
+ </span>
+                
+                  <span>location (String) =  
+-
+ 
+ Where to add the row. This can be 'top' or leave off for 'bottom'
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Add a row of data to the grid and dataset.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>pagerRefresh</td>
+        <td>
+          
+                
+                  <span>location (Object) =  
+-
+ 
+ Deprecated - Can be set to 'top' or left off for bottom pager.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Refresh the pager based on the current page and dataset.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>removeRow</td>
+        <td>
+          
+                
+                  <span>row (Number) =  
+-
+ 
+ The row index
+ </span>
+                
+                  <span>nosync (Boolean) =  
+-
+ 
+ Dont sync the selected rows.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Remove a row of data to the grid and dataset.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>removeSelected</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Remove all selected rows from the grid and dataset.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>updateDataset</td>
+        <td>
+          
+                
+                  <span>dataset (Object) =  
+-
+ 
+ The array of objects to show in the grid. Should match the column definitions.
+ </span>
+                
+                  <span>pagerInfo (Object) =  
+-
+ 
+ The pager info object with information like activePage ect.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Send in a new data set to display in the datagrid.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>triggerSource</td>
+        <td>
+          
+                
+                  <span>pagerType () =  </span>
+                
+                  <span>callback () =  </span>
+                
+                  <span>pagerInfo (Object) =  
+-
+ 
+ The pager info object with information like activePage ect.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Trigger the source method to call to the backend on demand.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>visibleColumns</td>
+        <td>
+          
+                
+                  <span>skipBuiltIn (Object) =  
+-
+ 
+ If true then built in columns like selectionCheckbox are skipped.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Returns an array with all visible columns.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>getColumnGroup</td>
+        <td>
+          
+                
+                  <span>idx (Object) =  
+-
+ 
+ The index of the column group
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Gets an If for the column group used for grouped headers.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>filterRowRendered</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Flag used to determine if the header is rendered or not.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>toggleFilterRow</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Toggle the visibility of the filter row.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>applyFilter</td>
+        <td>
+          
+                
+                  <span>conditions (Object) =  
+-
+ 
+ An array of objects with the filter conditions.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Apply the Filter with the currently selected conditions, or the ones passed in.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>clearFilter</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Clear the Filter row Conditions and Reset the Data.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>setFilterConditions</td>
+        <td>
+          
+                
+                  <span>conditions (Object) =  
+-
+ 
+ An array of objects with the filter conditions.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Set the Filter Conditions on the UI Only.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>filterConditions</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get filter conditions in array from whats set in the UI.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>fieldValue</td>
+        <td>
+          
+                
+                  <span>obj (Object) =  
+-
+ 
+ The object to use
+ </span>
+                
+                  <span>field (String) =  
+-
+ 
+ The field as a string fx 'field' or 'obj.field.id'
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Return the value in a field, taking into account nested objects. Fx obj.field.id</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>restoreColumns</td>
+        <td>
+          
+                
+                  <span>cols (Array) = The columns list to restore, if you saved the settings manually.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Restore the columns from a provided list or local storage</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>hideColumn</td>
+        <td>
+          
+                
+                  <span>id (String) =  
+-
+ 
+ The id of the column to hide.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Hide a column.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>showColumn</td>
+        <td>
+          
+                
+                  <span>id (String) =  
+-
+ 
+ The id of the column to show.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Show a hidden column.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>exportToCsv</td>
+        <td>
+          
+                
+                  <span>fileName (String) =  
+-
+ 
+ The desired export filename in the download.
+ </span>
+                
+                  <span>customDs (String) =  
+-
+ 
+ An optional customized version of the data to use.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Export the grid contents to csv</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>exportToExcel</td>
+        <td>
+          
+                
+                  <span>fileName (String) =  
+-
+ 
+ The desired export filename in the download.
+ </span>
+                
+                  <span>worksheetName (String) =  
+-
+ 
+ A name to give the excel worksheet tab.
+ </span>
+                
+                  <span>customDs (String) =  
+-
+ 
+ An optional customized version of the data to use.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Export the grid contents to xls format. This may give a warning when opening the file. exportToCsv may be prefered.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>sortFunction</td>
+        <td>
+          
+                
+                  <span>id (String) =  
+-
+ 
+ The matching field/id in the array to sort on
+ </span>
+                
+                  <span>ascending (Boolean) =  
+-
+ 
+ Determines direction of the sort.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Overridable function to conduct array sorting</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>renderPager</td>
+        <td>
+          
+                
+                  <span>pagingInfo (String) =  
+-
+ 
+ The paging object with activePage ect used by pager.js
+ </span>
+                
+                  <span>isResponse (Boolean) =  
+-
+ 
+ Internal flag used to prevent callbacks from rexecuting.
+ </span>
+                
+                  <span>callback () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Add the pager and paging functionality.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>resetPager</td>
+        <td>
+          
+                
+                  <span>type (String) =  
+-
+ 
+ The action type, which gets sent to the source callback.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Reset the pager to the first page.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Unwrap the grid back to a simple div, and destory all events and pointers.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

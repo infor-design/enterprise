@@ -1,0 +1,314 @@
+  <section>
+  
+    
+
+
+  
+    
+
+
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          breakpoint
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          filterable
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          openOnLarge
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          triggers
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ An Array of jQuery-wrapped elements that are able to open/close this nav menu.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>getAdjacentContainerElement</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Gets a reference to this Application Menu's adjacent container element.</p>
+
+        </td>
+        <td>
+          
+
+        </td>
+      </tr>
+      <tr>
+        <td>isOpen</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Detects whether or not the application menu is open</p>
+
+        </td>
+        <td>
+          
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>testWidth</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Detects a change in breakpoint size that can cause the Application Menu's state to change.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>openMenu</td>
+        <td>
+          
+                
+                  <span>noFocus (boolean) = If true, sets focus on the first item in the application menu.
+ </span>
+                
+                  <span>userOpened () = If true, notifies the component that the menu was manually opened by the user.
+ </span>
+                
+                  <span>openedByClass () = If true, only adjusts bare-miniumum requirements for the application menu to appear open (should be used in cases where the application menu has the 
+<code>is-open</code>
+ CSS appended to it via markup).  This skips events, animation, etc.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Opens the Application Menu</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>closeMenu</td>
+        <td>
+          
+                
+                  <span>userClosed (boolean) = if true, sets a flag notifying the component that the user was responsible for closing.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Closes the Application Menu</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>hasTriggers</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Detects whether or not the Application Menu has external trigger buttons setup to control it.</p>
+
+        </td>
+        <td>
+          
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>modifyTriggers</td>
+        <td>
+          
+                
+                  <span>triggers () = an array of HTMLElements or jQuery-wrapped elements that will be used as triggers.
+ </span>
+                
+                  <span>remove () = if defined, triggers that are defined will be removed internally instead of added.
+ </span>
+                
+                  <span>norebuild () = if defined, this control's events won't automatically be rebound to include the new triggers.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Externally Facing function that can be used to add/remove application nav menu triggers.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>filterResultsCallback</td>
+        <td>
+          
+                
+                  <span>results (Array) =  </span>
+                
+                  <span>done (function) =  </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleSearchfieldInputEvent</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) =  </span>
+                
+          
+        </td>
+        <td>
+          <p>handles the Searchfield Input event</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Unbinds event listeners and removes extraneous markup from the Application Menu.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Triggers a UI Resync.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown - Remove added markup and events</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+                
+                  <span>applicationmenuopen (Object) =  
+-
+ 
+ Fires when the menu is opened.
+ </span>
+                
+                  <span>applicationmenuclose (Object) =  
+-
+ 
+ Fires as the menu is closed.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>This component fires the following events.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

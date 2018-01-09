@@ -52,7 +52,6 @@ This example shows how to invoke a simple bar chart with a dataset controlling t
 
   $('#bar-example').chart({type: 'bar', dataset: dataset});
 
-
 ```
 
 ## Accessibility
@@ -64,7 +63,6 @@ This example shows how to invoke a simple bar chart with a dataset controlling t
 color: '#1a1a1a'
 name: 'Component C'
 
-
 ```
 
 ## Code Tips
@@ -74,7 +72,6 @@ You can override the tooltip by passing in a specific tooltip text value.
 ```javascript
 
 {type: 'bar-grouped', dataset: dataset, tooltip: 'Tooltip by attribute'}
-
 
 ```
 
@@ -90,7 +87,6 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
     }, 400);
   }
 });
-
 
 ```
 

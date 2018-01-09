@@ -1,40 +1,42 @@
 <h1 id="popover-component-learn-more">Popover Component <a href="https://soho.infor.com/index.php?p=component/popover">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol>
-<li><a href="../components/popover/example-index">Common Configuration</a><br /></li>
-<li><a href="../components/popover/example-simple">Simple Popover Content</a><br /></li>
-<li><a href="../components/popover/example-complex-content">Complex Form Layout Inside Popover</a><br /></li>
-<li><a href="../components/popover/example-attached-to-textbox">Attached To Textbox's Info Icon</a><br /></li>
-<li><a href="../components/popover/example-alternate-positions">Alternate (Flipped) Positioning</a><br /></li>
+<li><a href="../components/popover/example-index">Common Configuration</a></li>
+<li><a href="../components/popover/example-simple">Simple Popover Content</a></li>
+<li><a href="../components/popover/example-complex-content">Complex Form Layout Inside Popover</a></li>
+<li><a href="../components/popover/example-attached-to-textbox">Attached To Textbox's Info Icon</a></li>
+<li><a href="../components/popover/example-alternate-positions">Alternate (Flipped) Positioning</a></li>
 <li><a href="../components/popover/example-extra-css-class">Demo of <code>extraCssClass</code> Setting</a></li>
 </ol>
 <h2 id="api-details">API Details</h2>
 <p>This component shares a common API with the <a href="../components/tooltip">Tooltip</a> Component. When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover. For more details on this component's API, please see the <a href="../components/tooltip">Tooltip Documentation</a>.</p>
 <h2 id="code-example">Code Example</h2>
 <p>Popover Components are generally created with a combination of a &quot;trigger&quot; element and a container element which will be used inside of the popover. Consider the following HTML:</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="co">&lt;!-- This is the trigger element --&gt;</span>
-<span class="kw">&lt;button</span><span class="ot"> id=</span><span class="st">&quot;popover-trigger&quot;</span><span class="ot"> class=</span><span class="st">&quot;btn-primary&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-duplicate&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
-  <span class="kw">&lt;/svg&gt;</span>
-  <span class="kw">&lt;span&gt;</span>Hover Me To Show Popover<span class="kw">&lt;/span&gt;</span>
-<span class="kw">&lt;/button&gt;</span>
-
-<span class="co">&lt;!-- This is the actual template to be used for content --&gt;</span>
-<span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;popover-contents&quot;</span><span class="ot"> class=</span><span class="st">&quot;hidden&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;p&gt;</span>This is a popover<span class="kw">&lt;/p&gt;</span>
-<span class="kw">&lt;/div&gt;</span></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">&lt;!-- This is the trigger element --&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;button</span><span class="ot"> id=</span><span class="st">&quot;popover-trigger&quot;</span><span class="ot"> class=</span><span class="st">&quot;btn-primary&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-duplicate&quot;</span><span class="kw">&gt;&lt;/use&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="kw">&lt;/svg&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="kw">&lt;span&gt;</span>Hover Me To Show Popover<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">&lt;/button&gt;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co">&lt;!-- This is the actual template to be used for content --&gt;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;popover-contents&quot;</span><span class="ot"> class=</span><span class="st">&quot;hidden&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  <span class="kw">&lt;p&gt;</span>This is a popover<span class="kw">&lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"></a></code></pre></div>
 <p>The above HTML snippets will then be associated by the following Javascript code:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="fu">$</span>(<span class="st">&#39;#popover-trigger&#39;</span>).<span class="fu">popover</span>({
-  <span class="dt">content</span>: <span class="fu">$</span>(<span class="st">&#39;#popover-contents&#39;</span>),
-  <span class="dt">placement</span>: <span class="st">&#39;bottom&#39;</span>,
-  <span class="dt">offset</span>: {
-    <span class="dt">y</span>: <span class="dv">10</span>
-  }
-});
-</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="at">$</span>(<span class="st">&#39;#popover-trigger&#39;</span>).<span class="at">popover</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">content</span><span class="op">:</span> <span class="at">$</span>(<span class="st">&#39;#popover-contents&#39;</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="dt">placement</span><span class="op">:</span> <span class="st">&#39;bottom&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="dt">offset</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dt">y</span><span class="op">:</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Focus should always return to the object on which the popover is called from once the popover closes.</li>
@@ -43,8 +45,8 @@
 <p>See Details on the respective Code pages in the related links section.</p>
 <h2 id="states-and-variations">States and Variations</h2>
 <ul>
-<li>Normal<br /></li>
-<li>Hover<br /></li>
-<li>Pressed<br /></li>
+<li>Normal</li>
+<li>Hover</li>
+<li>Pressed</li>
 <li>Active</li>
 </ul>

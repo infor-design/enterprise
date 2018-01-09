@@ -1,50 +1,77 @@
 <h1 id="icons-learn-more">Icons <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol>
-<li>Basic Icons <a href="../components/icons/example-index">View Example</a><br /></li>
-<li>Extended Icon Set <a href="../components/icons/example-extended">View Example</a><br /></li>
-<li>Alert Icons <a href="../components/alerts/example-index">View Example</a><br /></li>
-<li>Tree Folder Icons <a href="../components/icons/example-tree">View Example</a><br /></li>
-<li>Tree Icons <a href="../components/tree/example-index">View Example</a><br /></li>
-<li>Empty Widget Icons <a href="../components/icons/example-empty-widgets">View Example</a><br /></li>
-<li>Grid Filter Drop Down Menu Icons <a href="../components/icons/example-filter-dropdown">View Example</a><br /></li>
-<li>Infor / SoHo Logos <a href="../components/icons/example-logos">View Example</a><br /></li>
-<li>Animated Pseudo Elements (Hamburger / Back) / SoHo Logos <a href="../components/icons/example-pseudo-elements">View Example</a><br /></li>
-<li>Icons Indicating Contents <a href="../components/icons/example-full-style">View Example</a><br /></li>
-<li>Caret Icons <a href="../components/icons/example-caret">View Example</a><br /></li>
-<li>Checkmarks <a href="../components/icons/example-checks">View Example</a><br /></li>
+<li>Basic Icons <a href="../components/icons/example-index">View Example</a></li>
+<li>Extended Icon Set <a href="../components/icons/example-extended">View Example</a></li>
+<li>Alert Icons <a href="../components/alerts/example-index">View Example</a></li>
+<li>Tree Folder Icons <a href="../components/icons/example-tree">View Example</a></li>
+<li>Tree Icons <a href="../components/tree/example-index">View Example</a></li>
+<li>Empty Widget Icons <a href="../components/icons/example-empty-widgets">View Example</a></li>
+<li>Grid Filter Drop Down Menu Icons <a href="../components/icons/example-filter-dropdown">View Example</a></li>
+<li>Infor / SoHo Logos <a href="../components/icons/example-logos">View Example</a></li>
+<li>Animated Pseudo Elements (Hamburger / Back) / SoHo Logos <a href="../components/icons/example-pseudo-elements">View Example</a></li>
+<li>Icons Indicating Contents <a href="../components/icons/example-full-style">View Example</a></li>
+<li>Caret Icons <a href="../components/icons/example-caret">View Example</a></li>
+<li>Checkmarks <a href="../components/icons/example-checks">View Example</a></li>
 <li>User Status <a href="../components/icons/example-user-status">View Example</a></li>
 </ol>
-<h3 id="functions">Functions</h3>
+  <section>
+  
+    
+
+
+  
+    
+
+
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
 <h2 id="code-example">Code Example</h2>
 <h3 id="svg-icons-support">SVG Icons Support</h3>
 <p>It is required to inline the svg icons in html markup in order to be able to change dimensions and colors with css. To achieve this, follow the following steps:</p>
 <ol>
-<li>Add a div containing all icons (referred to as the svg block) as per <a href="http://git.infor.com/projects/SOHO/repos/controls/browse/views/controls/svg.html"><a href="http://git.infor.com/projects/SOHO/repos/controls/">http://git.infor.com/projects/SOHO/repos/controls/</a>...</a>, then click the raw element for the exact html. This should be at the top of the page for wider support (Safari needs this at the top).<br /></li>
-<li><p>Add markup as per the <a href="../components/icons/example-index">example page</a>, for example:</p>
+<li>Add a div containing all icons (referred to as the svg block) as per <a href="http://git.infor.com/projects/SOHO/repos/controls/browse/views/controls/svg.html">http://git.infor.com/projects/SOHO/repos/controls/...</a>, then click the raw element for the exact html. This should be at the top of the page for wider support (Safari needs this at the top).</li>
+<li>Add markup as per the <a href="../components/icons/example-index">example page</a>, for example:
 <ol>
-<li>focusable=&quot;false&quot; is added so that the element does not get a tab stop in some browsers<br /></li>
-<li>role=&quot;presentation&quot; is added to stop duplicate control feedback when using down arrows while using assistive technology<br /></li>
+<li>focusable=&quot;false&quot; is added so that the element does not get a tab stop in some browsers</li>
+<li>role=&quot;presentation&quot; is added to stop duplicate control feedback when using down arrows while using assistive technology</li>
 <li>aria-hidden=&quot;true&quot; causes the icon to be hidden for assistive technologies</li>
 </ol></li>
 </ol>
-<pre class="sourceCode html"><code class="sourceCode html">
-// As Button
-<span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-icon&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;svg</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="kw">&gt;</span>
-     <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-calendar&quot;</span><span class="kw">/&gt;</span>
-   <span class="kw">&lt;/svg&gt;</span>
-   <span class="kw">&lt;span&gt;</span>Calendar<span class="kw">&lt;/span&gt;</span>
- <span class="kw">&lt;/button&gt;</span>
-
-// With Button - Just Icon
-<span class="kw">&lt;svg</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span> <span class="kw">&gt;</span>
-   <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-calendar&quot;</span><span class="kw">/&gt;</span>
-<span class="kw">&lt;/svg&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">// As Button</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-icon&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;svg</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">     <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-calendar&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">   <span class="kw">&lt;/svg&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">   <span class="kw">&lt;span&gt;</span>Calendar<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"> <span class="kw">&lt;/button&gt;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">// With Button - Just Icon</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">&lt;svg</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span> <span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">   <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-calendar&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">&lt;/svg&gt;</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>When used alone (icon with out text) an audible span should be used for screen readers to now what the button does.<br /></li>
+<li>When used alone (icon with out text) an audible span should be used for screen readers to now what the button does.</li>
 <li>Tooltips should be shown on icons (but not on icons with text as it is redundant)</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
@@ -57,12 +84,12 @@
 </ul>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <ul>
-<li>At large breakpoints on the toolbar icon + text or just text is shown<br /></li>
+<li>At large breakpoints on the toolbar icon + text or just text is shown</li>
 <li>At smaller breakpoints just icon is shown. (This is handled by the soho toolbar control)</li>
 </ul>
-<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
 <ul>
-<li>Icons nows use svg<br /></li>
-<li>Need to add the SVG document containing all icons/symbals at the head of the document<br /></li>
+<li>Icons nows use svg</li>
+<li>Need to add the SVG document containing all icons/symbals at the head of the document</li>
 <li>svg elements should be added to the page to replace the iconButton classes</li>
 </ul>

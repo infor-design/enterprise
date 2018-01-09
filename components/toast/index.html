@@ -1,23 +1,50 @@
 <h1 id="toast-component-learn-more">Toast Component <a href="https://soho.infor.com/index.php?p=component/toast-messages">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol>
-<li><a href="../components/toast/example-index">Common Configuration</a><br /></li>
+<li><a href="../components/toast/example-index">Common Configuration</a></li>
 <li><a href="../components/toast/example-positions">Demo of all Positions</a></li>
 </ol>
-<h3 id="functions">Functions</h3>
+  <section>
+  
+    
+
+
+  
+    
+
+
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <ul>
 <li>This component is used to read out the error messages for validation as well</li>
 </ul>
 <h2 id="code-example">Code Example</h2>
 <p>The Toast component is a JS-based component that lets you send a quick feedback message to the user. The message will display and timeout after 6s, showing a progress bar with an option to immediately dismiss. To show a test message, call the toast function on the body element passing in the title and message content.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="co">//Show a Visual Toast Message</span>
-<span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">toast</span>({
-  <span class="dt">title</span>: <span class="st">&#39;Application Offline&#39;</span>,
-  <span class="dt">message</span>: <span class="st">&#39;This is a Toast message&#39;</span>
-});
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">//Show a Visual Toast Message</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="at">$</span>(<span class="st">&#39;body&#39;</span>).<span class="at">toast</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Application Offline&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;This is a Toast message&#39;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>The Toast Component is made accessible by making an aria live region which means the attribute <code>aria-live=&quot;polite&quot;</code> is added. Because of this, the control can actually be used to announce/read out something to a screen reader. You can do this by passing the <code>audible: true</code> setting. Because the message is polite, it will be read after the user is done with the current actions.</li>
@@ -30,10 +57,10 @@
 <ul>
 <li>Will be placed in the top corner by default.</li>
 </ul>
-<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
 <ul>
-<li>Replaced <code>inforSlideInMessage()</code> so rename that to <code>toast()</code>.<br /></li>
-<li>Change option <code>messageTitle</code> to <code>title</code>.<br /></li>
-<li><code>MessageType</code> is not used.<br /></li>
+<li>Replaced <code>inforSlideInMessage()</code> so rename that to <code>toast()</code>.</li>
+<li>Change option <code>messageTitle</code> to <code>title</code>.</li>
+<li><code>MessageType</code> is not used.</li>
 <li><code>scr-errors</code> is not required to be added to the DOM.</li>
 </ul>

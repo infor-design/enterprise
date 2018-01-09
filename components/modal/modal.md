@@ -1,6 +1,5 @@
 # Modal  [Learn More](#)
 
-
 ## Configuration Options
 
 1. Modal Example [View Example]( ../components/modal/example-index)
@@ -21,7 +20,7 @@
 
 To create an Input Dialog, use the modal plugin. To provide content for the modal dialog you can either append it directly in the page and access it by ID, or pass it as a string to the modal plugin. This example demonstrates both ways. You can also invoke the modal in a few ways: a) by linking it to a button or trigger action b) immediately on demand.
 
-When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding.\
+When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding.
 
 ```html
 

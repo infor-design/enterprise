@@ -1,0 +1,130 @@
+  <section>
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>renderHelperMarkup</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Adds/removes helper buttons and accessibility-centric markup, based on Tabs' configuration
+Designed to be run at any point in the Tabs lifecycle.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>handleAddFocusData</td>
+        <td>
+          
+                
+                  <span>e ($.Event) =  </span>
+                
+                  <span>elem () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
+a change in focus, or a click.  Keystroke focus changes cause different visual situations</p>
+
+        </td>
+        <td>
+          
+
+        </td>
+      </tr>
+      <tr>
+        <td>renderEdgeFading</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Shows/Hides some tabsets' faded edges based on scrolling position, if applicable.</p>
+
+        </td>
+        <td>
+          
+
+        </td>
+      </tr>
+      <tr>
+        <td>callSource</td>
+        <td>
+          
+                
+                  <span>href (string) = string representing the target tab to load content under.
+ </span>
+                
+                  <span>isURL () =  </span>
+                
+                  <span>callback (function) = method that fires after a successful source call.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Calls an options-provided source method to fetch content that will be displayed inside a tab.</p>
+
+        </td>
+        <td>
+          true if source call was successful, false for failure/ignore, or a promise object that will fire callbacks in either "success" or "failure" scenarios.
+
+        </td>
+      </tr>
+      <tr>
+        <td>scrollTabList</td>
+        <td>
+          
+                
+                  <span>target () = the target 
+<li>
+ or 
+<a>
+ tag
+ </span>
+                
+                  <span>duration (Number) = the time it will take to scroll
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Wrapper for the Soho behavior <em>smoothScrollTo()</em> that will determine scroll distance.</p>
+
+        </td>
+        <td>
+          
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

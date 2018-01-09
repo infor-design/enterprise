@@ -12,12 +12,14 @@
 Use an empty message when no data is present.
 
 ```javascript
-  
+
 $('.empty-message').emptymessage({
   title: 'No Records Available',
   icon: 'icon-empty-no-data',
 });
+
 ```
 
 ## Responsive Guidelines
 
+- The empty message should be centered in the container.

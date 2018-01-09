@@ -1,0 +1,288 @@
+  <section>
+  
+    <h2>Settings</h2>
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          dataset
+        </td>
+        <td>
+          Object
+        </td>
+        <td>
+           
+-
+ 
+ The array of data
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          btnAdd
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ The attribute to match the add button in the toolbar (ie. data-action="add")
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          btnEdit
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ The attribute to match the edit button in the toolbar (ie. data-action="edit")
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          btnDelete
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ The attribute to match the delete button in the toolbar (ie. data-action="delete")
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          btnGoUp
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ The attribute to match the move up button in the toolbar (ie. data-action="goup")
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          btnGoDown
+        </td>
+        <td>
+          Boolean
+        </td>
+        <td>
+           
+-
+ 
+ The attribute to match the move up button in the toolbar (ie. data-action="dodown")
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          template
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ The list view markdown / template.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          templateItemContent
+        </td>
+        <td>
+          String
+        </td>
+        <td>
+           
+-
+ 
+ The markdown for editing an item
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>addItem</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Add an item into edit node.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>moveItemUp</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Move the currently selected item up.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>moveItemDown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Move the currently selected item down.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>editItem</td>
+        <td>
+          
+                
+                  <span>isNewItem (Boolean) =  
+-
+ 
+ Is it a new item?
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Edit the selected item</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>makeEditable</td>
+        <td>
+          
+                
+                  <span>node (jQuery) =  
+-
+ 
+ The node to edit
+ </span>
+                
+                  <span>isNewItem (Boolean) =  
+-
+ 
+ Is it a new item?
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Make the node editable</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>commitEdit</td>
+        <td>
+          
+                
+                  <span>node (jQuery) =  
+-
+ 
+ The node to delete
+ </span>
+                
+                  <span>isNewItem (Boolean) =  
+-
+ 
+ Is it a new item?
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Delete the selected item.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>deleteItem</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Delete the selected item.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>getDataByNode</td>
+        <td>
+          
+                
+                  <span>node () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Get data from dataset by node</p>
+
+        </td>
+        <td>
+          
+Object
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

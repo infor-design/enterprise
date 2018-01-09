@@ -205,7 +205,6 @@ About.prototype = {
     * Fires when the dialog is closing.
     *
     * @event close
-    * @type {Object}
     * @property {Object} event - The jquery event object
     * @property {Object} ui - The dialog object
     */
@@ -217,7 +216,6 @@ About.prototype = {
     * Fires after the dialog is done closing and removed.
     *
     * @event afterclose
-    * @type {Object}
     * @property {Object} event - The jquery event object
     * @property {Object} ui - The dialog object
     */
@@ -264,7 +262,6 @@ About.prototype = {
     * Fires when the about dialog is opening, allowing you to veto by returning false.
     *
     * @event beforeopen
-    * @type {Object}
     * @property {Object} event - The jquery event object.
     * @property {Object} ui - The dialog object
     */

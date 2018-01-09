@@ -21,7 +21,7 @@ function runPandoc(data, apiHtml, componentPath) {
       console.log(stderr);
     }
 
-    if (stdout) {
+    if (stdout && apiHtml) {
       fs.readFile(componentPath + 'index.html', 'utf8', (readError, htmlData) => {
         if (readError) {
           throw readError;
@@ -74,7 +74,7 @@ glob('components/*/', (err, components) => {
           });
         });
       } else {
-        runPandoc(mdData, componentPath);
+        runPandoc(mdData, null, componentPath);
       }
     }
   }
