@@ -1,14 +1,14 @@
 <h1 id="toolbar-learn-more">Toolbar <a href="https://soho.infor.com/index.php?p=component/toolbar">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li><a href="../components/toolbar/example-index">Common Configuration</a></li>
 <li><a href="../components/toolbar/example-all-icon-buttons">Title + All Icon Buttons</a></li>
 <li><a href="../components/toolbar/example-all-text-buttons">Title + All Text-Only Buttons</a></li>
 <li><a href="../components/toolbar/example-no-title-icon-buttons">No Title + Searchfield + Icon/Text Buttons</a></li>
 <li><a href="../components/toolbar/example-no-title-text-buttons">No title + Text-Only Buttons</a></li>
 <li><a href="../components/toolbar/example-standalone-style">Standalone Toolbar Style</a></li>
-<li><a href="../components/toolbar/example-no-action-button">No &quot;More Actions&quot; Button</a></li>
-<li><a href="../components/toolbar/example-more-than-three-buttons"><code>MaxVisibleButtons</code> Defined as &quot;6&quot; Instead of &quot;3&quot;</a></li>
+<li><a href="../components/toolbar/example-no-action-button">No “More Actions” Button</a></li>
+<li><a href="../components/toolbar/example-more-than-three-buttons"><code>MaxVisibleButtons</code> Defined as “6” Instead of “3”</a></li>
 <li><a href="../components/toolbar/example-overflow">Additional Examples of <code>MaxVisibleButtons</code> Behavior</a></li>
 <li><a href="../components/toolbar/example-selected-event"><code>selected</code> Event Behavior</a></li>
 </ol>
@@ -473,15 +473,14 @@ this
 <a class="sourceLine" id="cb1-29" data-line-number="29">      <span class="kw">&lt;/ul&gt;</span></a>
 <a class="sourceLine" id="cb1-30" data-line-number="30">    <span class="kw">&lt;/div&gt;</span></a>
 <a class="sourceLine" id="cb1-31" data-line-number="31">  <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-32" data-line-number="32"></a>
-<a class="sourceLine" id="cb1-33" data-line-number="33"></a></code></pre></div>
+<a class="sourceLine" id="cb1-32" data-line-number="32"></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
-<li>The best way to force items to always exist inside of the &quot;more actions&quot; menu is to create those items inside of a pre-defined &quot;more actions&quot; menu in your application's HTML markup. While it's possible to create extra buttons inside of the &quot;buttonset&quot; container that sit beyond the <code>maxVisibleButtons</code> setting, a change of settings on the Toolbar element can cause those buttons to appear/disappear unexpectedly.</li>
+<li>The best way to force items to always exist inside of the “more actions” menu is to create those items inside of a pre-defined “more actions” menu in your application’s HTML markup. While it’s possible to create extra buttons inside of the “buttonset” container that sit beyond the <code>maxVisibleButtons</code> setting, a change of settings on the Toolbar element can cause those buttons to appear/disappear unexpectedly.</li>
 </ul>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>The Soho Toolbar automatically appends the WAI-ARIA role &quot;toolbar&quot; to its base element.</li>
+<li>The Soho Toolbar automatically appends the WAI-ARIA role “toolbar” to its base element.</li>
 <li>There is only ever one element inside of a Toolbar at a time that can receive focus. The Soho Toolbar allows for navigation among all of its buttons with the arrow keys.</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
@@ -495,6 +494,6 @@ this
 <h3 id="enabledisable">Enable/Disable</h3>
 <p>The Toolbar Component itself can be completely enabled or disabled by using the API-level methods <a href="#enable"><code>enable()</code></a> or <a href="#disable"><code>disable()</code></a>.</p>
 <h3 id="right-to-left">Right-To-Left</h3>
-<p>The Toolbar Component will automatically flip the orientation of its title, buttonset, and &quot;more actions&quot; button horizontally when switched to RTL mode.</p>
+<p>The Toolbar Component will automatically flip the orientation of its title, buttonset, and “more actions” button horizontally when switched to RTL mode.</p>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <p>When there are too many buttons, inputs, or other items present on the toolbar to fit on one line, items that would normally wrap to a second line are hidden. The hidden items will move to an overflow <a href="https://soho.infor.com/index.php?p=component/actions-menu-button">action button.</a></p>

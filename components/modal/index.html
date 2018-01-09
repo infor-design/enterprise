@@ -1,6 +1,6 @@
 <h1 id="modal-learn-more">Modal <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Modal Example <a href="../components/modal/example-index">View Example</a></li>
 <li>Modal Event Handlers <a href="../components/modal/example-events">View Example</a></li>
 <li>Supplying Full Modal content <a href="../components/modal/example-full-content">View Example</a></li>
@@ -79,20 +79,19 @@
 <a class="sourceLine" id="cb1-35" data-line-number="35">      <span class="kw">&lt;/div&gt;</span></a>
 <a class="sourceLine" id="cb1-36" data-line-number="36">    <span class="kw">&lt;/div&gt;</span></a>
 <a class="sourceLine" id="cb1-37" data-line-number="37"></a>
-<a class="sourceLine" id="cb1-38" data-line-number="38">    <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> id=</span><span class="st">&quot;btn-add-comment&quot;</span><span class="kw">&gt;</span>Add Comment<span class="kw">&lt;/button&gt;</span></a>
-<a class="sourceLine" id="cb1-39" data-line-number="39"></a></code></pre></div>
+<a class="sourceLine" id="cb1-38" data-line-number="38">    <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> id=</span><span class="st">&quot;btn-add-comment&quot;</span><span class="kw">&gt;</span>Add Comment<span class="kw">&lt;/button&gt;</span></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>SoHo Xi uses the concept of a default button being on the right most button. There is a <a href="http://uxmovement.com/buttons/why-ok-buttons-in-di...%20">good article</a> discussing this issue and we agree with the conclusions.</li>
 <li>In general the action button text should be verbs for example; Cancel/Delete or Logout/Cancel vs Yes, No, Ok. Using this technique allows the button to stand on its own without the rest of the context of the dialog. However, there may be a case where some forms could use Yes/No actions to answer questions.</li>
-<li>The default action in a dialog should be whatever the user intended as the action that led to the dialog. So if the user clicked &quot;Delete&quot;, and then got a message dialog that said &quot;Are you sure?&quot; the default button would be &quot;Delete&quot; and the secondary button would be &quot;Cancel&quot;. The modal itself is the protection against unintended actions with high consequence. They don't need the additional protection of having &quot;Cancel&quot; as the primary action.</li>
+<li>The default action in a dialog should be whatever the user intended as the action that led to the dialog. So if the user clicked “Delete”, and then got a message dialog that said “Are you sure?” the default button would be “Delete” and the secondary button would be “Cancel”. The modal itself is the protection against unintended actions with high consequence. They don’t need the additional protection of having “Cancel” as the primary action.</li>
 </ul>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Ensure that aria-labeled by is used to point the dialog to the title of the page, this way you can get away with focusing the first field</li>
 <li>Use aria-hidden and display:none when the dialog is not visible.</li>
 <li>The user should not be able to tab out of the dialog back into the page.</li>
-<li>aria-modal can be added but this is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet.</li>
+<li>aria-modal can be added but this is a forward thinking approach, since aria-modal isn’t actually supported by browsers or ATs yet.</li>
 <li>When the dialog is closed or cancelled focus should return to the element in the application which had focus before the dialog is invoked. This is usually the control which opened the dialog.</li>
 <li>When a modal dialog opens focus goes to the first focusable item in the dialog. Determining the first focusable item must take into account elements which receive focus by default (form fields and links) as well as items which may have a tabindex attribute with a positive value. If there is no focusable item in the dialog, focus is placed on the dialog container element.</li>
 </ul>
@@ -113,7 +112,7 @@
 <ul>
 <li>Modal will resize to fit the visible area with some padding.</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>This control was added version 3.5. However the infor prefix is now removed in 4.0.</li>
 <li>inforMessageDialog initialization is no longer supported you need to use either the modal plugin or the message plugin. The message plugin is for small alert application type errors and the modal is for custom content.</li>

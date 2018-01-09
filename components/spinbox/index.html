@@ -1,6 +1,6 @@
 <h1 id="spinbox-component-learn-more">Spinbox Component <a href="https://soho.infor.com/index.php?p=component/spin-box">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Main <a href="../components/spinbox/example-index">View Example</a></li>
 <li>Configured with Range Limits <a href="../components/spinbox/example-range-limits">View Example</a></li>
 <li>Configured with Step Intervals of 3 <a href="../components/spinbox/example-stepped-intervals">View Example</a></li>
@@ -545,7 +545,7 @@ boolean
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <p>Using the arrows, the user can move through the range of values. Depending on the exact use case, users can also type one of the supported values directly in the field.</p>
 <h2 id="code-example">Code Example</h2>
-<p>A Spinbox is created from a standard type=&quot;text&quot; input field by adding the class=&quot;spinbox&quot;. The initializer will initialize this control using the attributes of a spinbox.</p>
+<p>A Spinbox is created from a standard type=“text” input field by adding the class=“spinbox”. The initializer will initialize this control using the attributes of a spinbox.</p>
 <ul>
 <li>Attribute min - Determines the lowest value this can be set to</li>
 <li>Attribute max - Determines the highest value this can be set to</li>
@@ -558,8 +558,7 @@ boolean
 <a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="kw">&gt;</span>Spinbox (init 0, min -99, max 99, step 3)<span class="kw">&lt;/label&gt;</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="ot"> name=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> class=</span><span class="st">&quot;spinbox&quot;</span><span class="ot"> min=</span><span class="st">&quot;-99&quot;</span><span class="ot"> max=</span><span class="st">&quot;99&quot;</span><span class="ot"> value=</span><span class="st">&quot;0&quot;</span><span class="ot"> step=</span><span class="st">&quot;3&quot;</span><span class="kw">/&gt;</span></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a></code></pre></div>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>Localization for right to left languages may wish to reverse the left and right arrows.</li>
@@ -582,7 +581,7 @@ boolean
 <ul>
 <li>Its size is always less than mobile (150px) small size. From guidelines apply</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Replaces inforSpinner</li>
 <li>Label class inforLabel should now be label</li>

@@ -1,6 +1,6 @@
 <h1 id="listview-learn-more">Listview <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Default Listview Example <a href="../components/listview/example-index">View Example</a></li>
 <li>Alternate Row Colors <a href="../components/listview/example-alternate-row-color">View Example</a></li>
 <li>Multiple Selection <a href="../components/listview/example-multiselect">View Example</a></li>
@@ -645,10 +645,9 @@ Object
 <p>The template shows the use of an if/else to show a is-disabled class. And also shows the use of the three text sizes available. Note that <code>dataset</code>}}` is required to loop over teh dataset option passed into the control.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;listview&quot;</span><span class="ot"> id=</span><span class="st">&quot;id-to-list&quot;</span><span class="ot"> data-tmpl=</span><span class="st">&quot;id-to-task-tmpl&quot;</span><span class="ot"> data-dataset=</span><span class="st">&quot;array or url&quot;</span><span class="kw">&gt;&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a></code></pre></div>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a></code></pre></div>
 <h3 id="listview---multiselect">Listview - Multiselect</h3>
-<p>Creating a Multiselect Listview also uses the listview component. API guidelines are listed on the basic list page. The only special option to create a multiselect list is to add data-selectable=&quot;multiple&quot;. When doing this, a checkbox is added. You can also create a listview-toolbar which will show buttons upon selection of one or more rows.</p>
+<p>Creating a Multiselect Listview also uses the listview component. API guidelines are listed on the basic list page. The only special option to create a multiselect list is to add data-selectable=“multiple”. When doing this, a checkbox is added. You can also create a listview-toolbar which will show buttons upon selection of one or more rows.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card&quot;</span><span class="kw">&gt;</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card-header&quot;</span><span class="kw">&gt;</span></a>
@@ -674,8 +673,7 @@ Object
 <a class="sourceLine" id="cb2-23" data-line-number="23">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;listview&quot;</span><span class="ot"> id=</span><span class="st">&quot;multiselect-listview&quot;</span><span class="ot"> data-options=</span><span class="st">&quot;{ template: &#39;multiselect-tmpl&#39;, selectable: &#39;multiple&#39;, dataset: &#39;demoTasks&#39; }&quot;</span><span class="kw">&gt;&lt;/div&gt;</span></a>
 <a class="sourceLine" id="cb2-24" data-line-number="24">  <span class="kw">&lt;/div&gt;</span></a>
 <a class="sourceLine" id="cb2-25" data-line-number="25"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27"></a></code></pre></div>
+<a class="sourceLine" id="cb2-26" data-line-number="26"></a></code></pre></div>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
 <li><strong>Tab:</strong> When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.</li>
@@ -693,13 +691,13 @@ Object
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Lists must have keyboard support</li>
-<li>Lists should have role=&quot;listbox&quot;</li>
-<li>The aria tag aria-activedescendant should point to the active item's id</li>
+<li>Lists should have role=“listbox”</li>
+<li>The aria tag aria-activedescendant should point to the active item’s id</li>
 <li>The attribute aria-posinset should point to the position index for each item starting at 1</li>
 <li>The attribute aria-setsize - should be the list count</li>
 <li>The attribute aria-disabled should be added to any disabled items</li>
 <li>The aria-selcted tag should be added to any selected entries</li>
-<li>For multiselect note that aria-selected = &quot;true&quot; will set on the selected elements.</li>
+<li>For multiselect note that aria-selected = “true” will set on the selected elements.</li>
 </ul>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <ul>
@@ -707,7 +705,7 @@ Object
 <li>The list body will expand vertically and horizontally to fill it the size of its parent container.</li>
 <li>When used in <a href="../components/homepage">homepages</a>, special rules apply with sizes.</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Single select roughly replaces the inforListBox component.</li>
 <li>Multiselect is a new construct, however it replaces the listbox with checkboxes construct.</li>

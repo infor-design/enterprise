@@ -1,6 +1,6 @@
 <h1 id="pie-chart-learn-more">Pie Chart <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Pie Chart Main Example <a href="../components/pie/example-index">View Example</a></li>
 <li>Hcm Example <a href="../components/pie/example-hcm">View Example</a></li>
 <li>Tooltips <a href="../components/pie/example-tooltip">View Example</a></li>
@@ -19,8 +19,8 @@
 <li><code>labels: {isTwoline}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> - Show the labels on two different lines</li>
 <li><code>labels: {contentsTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Customize the top of two the labels, can be <code>'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'</code>. If only one label this setting will be used.</li>
 <li><code>labels: {contentsBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Customize the bottom of the two labels, can be <code>'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'</code></li>
-<li><code>labels: {formatterTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see <a href="http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html" class="uri">http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html</a> (percentage)'`</li>
-<li><code>labels: {formatterBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see <a href="http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html" class="uri">http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html</a> (percentage)'`</li>
+<li><code>labels: {formatterTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html (percentage)’`</li>
+<li><code>labels: {formatterBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html (percentage)’`</li>
 <li><code>labels: {colorTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How to colorize the top label it can be one of <code>'default'|'color-as-arc'|'#000000'|'black'</code></li>
 <li><code>labels: {colorBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How to colorize the bottom label it can be one of <code>'default'|'color-as-arc'|'#000000'|'black'</code></li>
 <li><code>labels: {lineColor}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How to colorize the line links can be one of <code>'default'|'color-as-arc'|'#000000'|'black'</code></li>
@@ -49,8 +49,7 @@
 <a class="sourceLine" id="cb1-18" data-line-number="18">      <span class="op">}</span>]</a>
 <a class="sourceLine" id="cb1-19" data-line-number="19">    <span class="op">}</span>]<span class="op">;</span></a>
 <a class="sourceLine" id="cb1-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">  <span class="at">$</span>(<span class="st">&#39;#pie-chart-example&#39;</span>).<span class="at">chart</span>(<span class="op">{</span><span class="dt">type</span><span class="op">:</span> <span class="st">&#39;pie&#39;</span><span class="op">,</span> <span class="dt">dataset</span><span class="op">:</span> pieData<span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"></a></code></pre></div>
+<a class="sourceLine" id="cb1-21" data-line-number="21">  <span class="at">$</span>(<span class="st">&#39;#pie-chart-example&#39;</span>).<span class="at">chart</span>(<span class="op">{</span><span class="dt">type</span><span class="op">:</span> <span class="st">&#39;pie&#39;</span><span class="op">,</span> <span class="dt">dataset</span><span class="op">:</span> pieData<span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing different contrast colors.</li>
@@ -62,7 +61,7 @@
 <ul>
 <li>None</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>The pie chart and dount chart was added in 3.6; so 3.6 the api is mostly compatible.</li>
 </ul>

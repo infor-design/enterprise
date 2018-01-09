@@ -1,6 +1,6 @@
 <h1 id="dropdown-learn-more">Dropdown <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Default Dropdown Example <a href="../components/dropdown/example-index">View Example</a></li>
 <li>Clearable Dropdown <a href="../components/dropdown/example-clearable.html">View Example</a></li>
 <li>Updating the Contents <a href="../components/dropdown/example-updating.html">View Example</a></li>
@@ -421,7 +421,7 @@ Object
 <h3 id="single-select-dropdown">Single Select Dropdown</h3>
 <p>The basic drop down works similar to a standard Html select element, because of styling and functionality requirements we use a stylized shadow widget which implements the drop down behavior and updates in sync with a hidden select element. This allows the select element to be serialized with the DOM like normal. The simplest way to use the drop down is to create markup containing: a field (for field and responsive form alignment), a label and a select. For accessibility and implementation reasons the label is required.<br />
 Create a select element with similar markup:</p>
-<p>The control is initialized through the page initializer $('body').initialize('en-US'); or manually with <code>$('.dropdown').dropdown();</code></p>
+<p>The control is initialized through the page initializer $(‘body’).initialize(‘en-US’); or manually with <code>$('.dropdown').dropdown();</code></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;states&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>States<span class="kw">&lt;/label&gt;</span></a>
@@ -433,19 +433,18 @@ Create a select element with similar markup:</p>
 <a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;WY&quot;</span><span class="kw">&gt;</span>Wyoming<span class="kw">&lt;/option&gt;</span></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="kw">&lt;/select&gt;</span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"></a></code></pre></div>
+<a class="sourceLine" id="cb1-12" data-line-number="12"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <p>The Dropdown list is fairly complex to make accessible. But generally this can be accomplished in three steps:</p>
-<ol>
+<ol type="1">
 <li>Make sure the above keyboard shortcuts are used</li>
 <li>Make sure that there is a label which matches both the input and any shadow element inputs, and identifies the field and is correctly matched using the label for the input id</li>
 <li>Use the following aria tags:
 <ul>
-<li>role=&quot;combobox&quot; - must be set on the input</li>
+<li>role=“combobox” - must be set on the input</li>
 <li>aria-expanded - set to true when the list is expanded, set to false when closed</li>
-<li>role=&quot;listbox&quot; on the open list</li>
-<li>role=&quot;option&quot; on each list item</li>
+<li>role=“listbox” on the open list</li>
+<li>role=“option” on each list item</li>
 <li>aria-activedescendant - associates the input to the active list item. Must be removed if no options are selected.</li>
 <li>aria-controls on the input field, containing the ID of the matching Dropdown list.</li>
 </ul></li>
@@ -470,11 +469,11 @@ Create a select element with similar markup:</p>
 <p>When a Dropdown field is read-only or disabled, the trigger icon is not shown.</p>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <p>The Dropdown container (the input element) should size to the parent container and the label should remain on the top.</p>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Include the svg icons in the page</li>
-<li>Change the markup on the select to use class=&quot;dropdown&quot;</li>
-<li>Ensure the select is attached to a label with class=&quot;label&quot; via the label's for to select's id</li>
-<li>Ensure the select and input are wrapped in a div with class=&quot;field&quot;</li>
+<li>Change the markup on the select to use class=“dropdown”</li>
+<li>Ensure the select is attached to a label with class=“label” via the label’s for to select’s id</li>
+<li>Ensure the select and input are wrapped in a div with class=“field”</li>
 <li>You can remove any calls to .dropdown() or .inforDropDown() as it will now auto initialize to default options</li>
 </ul>

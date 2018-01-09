@@ -1,6 +1,6 @@
 <h1 id="file-upload-learn-more">File Upload <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Default File Upload Example <a href="../components/fileupload/example-index">View Example</a></li>
 <li>Advanced File Upload Example <a href="../components/fileupload-advanced/example-index">View Example</a></li>
 <li>Limit File Types <a href="../components/fileupload/example-limit-types">View Example</a></li>
@@ -100,7 +100,7 @@
   
 
 <h2 id="code-example">Code Example</h2>
-<p>The file upload control is based on a standard html input with type = &quot;file&quot;. When the control initializer runs the file input gets enhanced styling with a icon button and acts similar to other input fields. File upload can be disabled, you can serialize the normal file input element as normal with the form element.</p>
+<p>The file upload control is based on a standard html input with type = “file”. When the control initializer runs the file input gets enhanced styling with a icon button and acts similar to other input fields. File upload can be disabled, you can serialize the normal file input element as normal with the form element.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
@@ -116,8 +116,7 @@
 <a class="sourceLine" id="cb1-13" data-line-number="13">          <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;file&quot;</span><span class="ot">  name=</span><span class="st">&quot;file-name-disabled&quot;</span><span class="ot"> disabled</span><span class="kw">/&gt;</span></a>
 <a class="sourceLine" id="cb1-14" data-line-number="14">      <span class="kw">&lt;/label&gt;</span></a>
 <a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"></a></code></pre></div>
+<a class="sourceLine" id="cb1-16" data-line-number="16"></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>This is done by making the File Upload element go offscreen since it cannot be styled. The element works by having the label element wrap it so that clicking functions on the label activates the file input element. This can pose issues for testing tools or certain layouts.</li>
@@ -143,7 +142,7 @@
 <ul>
 <li>Uses form guidelines</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Replace any calls to inforFileField() with .fileupload()</li>
 <li>Replace class inforLabel with label</li>

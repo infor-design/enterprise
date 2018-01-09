@@ -1,6 +1,6 @@
 <h1 id="icons-learn-more">Icons <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Basic Icons <a href="../components/icons/example-index">View Example</a></li>
 <li>Extended Icon Set <a href="../components/icons/example-extended">View Example</a></li>
 <li>Alert Icons <a href="../components/alerts/example-index">View Example</a></li>
@@ -45,13 +45,13 @@
 <h2 id="code-example">Code Example</h2>
 <h3 id="svg-icons-support">SVG Icons Support</h3>
 <p>It is required to inline the svg icons in html markup in order to be able to change dimensions and colors with css. To achieve this, follow the following steps:</p>
-<ol>
-<li>Add a div containing all icons (referred to as the svg block) as per <a href="http://git.infor.com/projects/SOHO/repos/controls/browse/views/controls/svg.html">http://git.infor.com/projects/SOHO/repos/controls/...</a>, then click the raw element for the exact html. This should be at the top of the page for wider support (Safari needs this at the top).</li>
+<ol type="1">
+<li>Add a div containing all icons (referred to as the svg block) as per <a href="http://git.infor.com/projects/SOHO/repos/controls/browse/views/controls/svg.html">http://git.infor.com/projects/SOHO/repos/controls/…</a>, then click the raw element for the exact html. This should be at the top of the page for wider support (Safari needs this at the top).</li>
 <li>Add markup as per the <a href="../components/icons/example-index">example page</a>, for example:
-<ol>
-<li>focusable=&quot;false&quot; is added so that the element does not get a tab stop in some browsers</li>
-<li>role=&quot;presentation&quot; is added to stop duplicate control feedback when using down arrows while using assistive technology</li>
-<li>aria-hidden=&quot;true&quot; causes the icon to be hidden for assistive technologies</li>
+<ol type="1">
+<li>focusable=“false” is added so that the element does not get a tab stop in some browsers</li>
+<li>role=“presentation” is added to stop duplicate control feedback when using down arrows while using assistive technology</li>
+<li>aria-hidden=“true” causes the icon to be hidden for assistive technologies</li>
 </ol></li>
 </ol>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
@@ -67,8 +67,7 @@
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">&lt;svg</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span> <span class="kw">&gt;</span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12">   <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-calendar&quot;</span><span class="kw">/&gt;</span></a>
 <a class="sourceLine" id="cb1-13" data-line-number="13"><span class="kw">&lt;/svg&gt;</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"></a></code></pre></div>
+<a class="sourceLine" id="cb1-14" data-line-number="14"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>When used alone (icon with out text) an audible span should be used for screen readers to now what the button does.</li>
@@ -87,7 +86,7 @@
 <li>At large breakpoints on the toolbar icon + text or just text is shown</li>
 <li>At smaller breakpoints just icon is shown. (This is handled by the soho toolbar control)</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Icons nows use svg</li>
 <li>Need to add the SVG document containing all icons/symbals at the head of the document</li>

@@ -1,6 +1,6 @@
 <h1 id="swaplist-component-learn-more">Swaplist Component <a href="https://soho.infor.com/index.php?p=component/swaplist">Learn More</a></h1>
 <h2 id="configuration-options">Configuration options</h2>
-<ol>
+<ol type="1">
 <li>Main Swaplist Example <a href="../components/swaplist/example-index.html">View Example</a></li>
 <li>Swaplist with Selected Items <a href="../components/swaplist/example-selected.html">View Example</a></li>
 <li>Swaplist with Filter/Search <a href="../components/swaplist/example-search.html">View Example</a></li>
@@ -346,8 +346,7 @@
 <a class="sourceLine" id="cb1-15" data-line-number="15"><span class="va">selected</span>.<span class="at">push</span>(<span class="op">{</span><span class="dt">id</span><span class="op">:</span> <span class="dv">11</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="st">&#39;opt-11&#39;</span><span class="op">,</span> <span class="dt">text</span><span class="op">:</span> <span class="st">&#39;Option K&#39;</span><span class="op">}</span>)<span class="op">;</span></a>
 <a class="sourceLine" id="cb1-16" data-line-number="16"></a>
 <a class="sourceLine" id="cb1-17" data-line-number="17"><span class="at">$</span>(<span class="st">&#39;#example-swaplist-1&#39;</span>).<span class="at">swaplist</span>(<span class="op">{</span><span class="dt">available</span><span class="op">:</span> available<span class="op">,</span> <span class="dt">selected</span><span class="op">:</span> selected<span class="op">,</span> <span class="dt">template</span><span class="op">:</span> <span class="at">$</span>(<span class="st">&#39;#swaplist-tmpl&#39;</span>).<span class="at">html</span>()<span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"></a></code></pre></div>
+<a class="sourceLine" id="cb1-18" data-line-number="18"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>This component is keyboard accessible but not entirely tested for WAI-ARIA and Screen reader support.</li>
@@ -371,7 +370,7 @@
 <ul>
 <li>The swap list will be 50/50 size of the parent. On smaller break points the two lists (or 3) will stack to 100%</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Replace <code>.inforSwapList()</code> with <code>.swaplist()</code> in the js</li>
 <li>The available and selected options are the same</li>

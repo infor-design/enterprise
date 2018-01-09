@@ -2,12 +2,12 @@
 <h2 id="important-notes">Important Notes</h2>
 <p>The <a href="../components/popover">Popover</a> component shares a common API with the Tooltip Component. When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover.</p>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li><a href="../components/tooltip/example-index">Default Tooltip Example</a></li>
 <li><a href="../components/tooltip/example-icon-in-tooltip">Tooltip with an Icon</a></li>
 <li><a href="../components/tooltip/example-url-in-tooltip">Functioning URL inside of a Tooltip</a></li>
-<li><a href="../components/tooltip/example-trigger-focus">Example of triggering by &quot;focus&quot;</a></li>
-<li><a href="../components/tooltip/example-trigger-immediate">Example of triggering with &quot;immediate&quot;</a></li>
+<li><a href="../components/tooltip/example-trigger-focus">Example of triggering by “focus”</a></li>
+<li><a href="../components/tooltip/example-trigger-immediate">Example of triggering with “immediate”</a></li>
 <li><a href="../components/tooltip/example-extra-css-class">Using the <code>extraCssClass</code> setting</a></li>
 <li><a href="../components/tooltip/example-setcontent-api">Demo of the <code>setContent()</code> API method</a></li>
 <li><a href="../components/tooltip/example-ajax-tooltip">Demo of AJAX-powered Tooltip Content</a></li>
@@ -62,17 +62,15 @@
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> title=</span><span class="st">&quot;Tooltips Provide Additional Information&quot;</span><span class="kw">&gt;</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">  Tootltip Button</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">&lt;/button&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a></code></pre></div>
 <p>The code above is demoed in the <a href="../components/tooltip/example-index">Common Tooltip Example</a>.</p>
 <h3 id="custom-html-tooltips">Custom HTML Tooltips</h3>
-<p>It's also possible to use inline HTML inside of the <code>title</code> atribute:</p>
+<p>It’s also possible to use inline HTML inside of the <code>title</code> atribute:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-secondary&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> title=</span><span class="st">&quot;</span><span class="er">&lt;</span><span class="st">span style=&#39;text-align: right; display: inline-block;&#39;&gt;</span><span class="er">&lt;</span><span class="st">b style=&#39;line-height: 1.7em;&#39;&gt;Connected order</span><span class="er">&lt;</span><span class="st">/b&gt;</span><span class="er">&lt;</span><span class="st">br&gt;Tooltips Provide </span><span class="er">&lt;</span><span class="st">br&gt; </span><span class="er">&lt;</span><span class="st">span style=&quot;</span><span class="er">color:</span><span class="ot"> #AFDC91</span><span class="er">;&quot;</span><span class="kw">&gt;</span>Additional Information<span class="kw">&lt;/span&gt;</span>.<span class="kw">&lt;/span&gt;</span>&quot;&gt;</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">  Custom HTML Tooltip</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">&lt;/button&gt;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a></code></pre></div>
 <p>The code above is demoed in the <a href="../components/tooltip/example-html-tooltip">HTML Tooltip Example</a>.</p>
 <p>Another possible method of defining custom tooltips is to create a hidden HTML element that will be referenced by its ID attribute. When defining your <code>title</code> attribute on your trigger element, simply place use ID selector instead of the actual content, and the initializer will pick it up:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
@@ -86,8 +84,7 @@
 <a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="kw">&lt;/svg&gt;</span></a>
 <a class="sourceLine" id="cb3-10" data-line-number="10">  <span class="kw">&lt;p&gt;</span>Add Comment<span class="kw">&lt;/p&gt;</span></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"></a></code></pre></div>
+<a class="sourceLine" id="cb3-12" data-line-number="12"></a></code></pre></div>
 <p>The code above is demoed in the <a href="../components/tooltip/example-icon-in-tooltip">Icons in Tooltips Example</a>.</p>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
@@ -108,7 +105,7 @@
 <ul>
 <li>Will be showin in the direction it fits</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Remove calls to <code>inforTooltip()</code> and use <code>tooltip()</code> instead. Can use the initializer if possible.</li>
 <li>Specific content may need re-styling.</li>

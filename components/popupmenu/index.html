@@ -1,6 +1,6 @@
 <h1 id="popupmenu-component-learn-more">Popupmenu Component <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Popupmenu as a Menu Button <a href="../components/popupmenu/example-menubutton">View Example</a></li>
 <li>Popupmenu with multiselect <a href="../components/popupmenu/example-selectable-multiple">View Example</a></li>
 <li>Popupmenu with single select <a href="../components/popupmenu/example-selectable">View Example</a></li>
@@ -251,7 +251,7 @@
   
 
 <h2 id="code-example">Code Example</h2>
-<p>Popupmenu can be invoked in several ways. As a right click action menu fx on an input field or grid or list row (also known as a <a href="../components/contextmenu"> Context Menu</a>). Via a click action menu for example on a menu or actions button. Or manually <code>trigger='immediate'</code> as needed via the popupmenu api.</p>
+<p>Popupmenu can be invoked in several ways. As a right click action menu fx on an input field or grid or list row (also known as a <a href="../components/contextmenu">Context Menu</a>). Via a click action menu for example on a menu or actions button. Or manually <code>trigger='immediate'</code> as needed via the popupmenu api.</p>
 <p>The structure of the menu is a ul element with li elements containing links for each of the rows in the menu. An other ul element can be added to create a submenu. But try to only one level of submenus for accessibility and usability reasons.</p>
 <p>The class popupmenu should be added to the ul elements at the top and submenu level. You can create rows as space separators for grouping with the tag with the class <code>separator</code>. You can create rows as groups with titles as well with the class group.</p>
 <p>Here is an example of a menu button using a popupmenu. This is also described on the menu button page as the components are linked.</p>
@@ -267,8 +267,7 @@
 <a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #3<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">&lt;/ul&gt;</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"></a></code></pre></div>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Make sure to always focus the triggering element when closing</li>
@@ -287,7 +286,7 @@
 <ul>
 <li>Posts the Popup Menu Widget When it is used as a <a href="http://en.wikipedia.org/wiki/Context_menu">Contextual Menu</a></li>
 <li>Place input focus on the first available menuitem in the Popup Menu</li>
-<li><strong>Note:</strong> The Browser's Contextual Menu pops up if the element with input focus does not have a Popup Menu attached</li>
+<li><strong>Note:</strong> The Browser’s Contextual Menu pops up if the element with input focus does not have a Popup Menu attached</li>
 </ul></li>
 <li><strong>ESC</strong>
 <ul>
@@ -320,7 +319,7 @@
 <ul>
 <li>Should always fit on the screen and scroll inside if necessary.</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Is relatively backwards compatible except inforContextMenu should be replaced with popupmenu in the api call and class name</li>
 <li>Remove class divider it is deprecated</li>

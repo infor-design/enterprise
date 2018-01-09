@@ -1,7 +1,7 @@
 <h1 id="validation-learn-more">Validation <a href="https://soho.infor.com/index.php?p=component/about-dialog">Learn More</a></h1>
 <h3 id="functions-and-utilities">Functions and Utilities</h3>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Validation Example <a href="../components/validation/example-index">View Example</a></li>
 <li>Disabled Form <a href="../components/validation/example-form-disabled">View Example</a></li>
 <li>Multiple Validation Errors on a Field <a href="../components/validation/example-multiple-errors">View Example</a></li>
@@ -17,8 +17,7 @@
 <a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address-ok&quot;</span><span class="kw">&gt;</span>Email Address <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Required<span class="kw">&lt;/span&gt;&lt;/label&gt;</span></a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> name=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required customRule&quot;</span> <span class="kw">&gt;</span></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a></code></pre></div>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
 <h2 id="code-example---manual">Code Example - Manual</h2>
 <p>This example shows how to manually invoke an error message on a field. The function is chainable so you can add several errors.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
@@ -28,8 +27,7 @@
 <a class="sourceLine" id="cb2-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">//Later on</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7"><span class="at">$</span>(<span class="st">&#39;#username-field&#39;</span>).<span class="at">removeError</span>()</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"></a></code></pre></div>
+<a class="sourceLine" id="cb2-8" data-line-number="8"></a></code></pre></div>
 <h2 id="validation-types">Validation Types</h2>
 <p>There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule, but error is used if it is not defined.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="va">$</span>.<span class="va">fn</span>.<span class="va">validation</span>.<span class="va">rules</span>.<span class="at">customWarningRule</span> <span class="op">=</span> <span class="op">{</span></a>
@@ -49,12 +47,11 @@
 <div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address-ok&quot;</span><span class="kw">&gt;</span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">  Email Address <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Required<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"></a></code></pre></div>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">&lt;/label&gt;</span></a></code></pre></div>
 <ul>
 <li>Errors will be read audibly by the API using an aria-alert (polite)</li>
 </ul>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>This api is backwards compatible.</li>
 </ul>

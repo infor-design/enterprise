@@ -1,6 +1,6 @@
 <h1 id="accordion-learn-more">Accordion <a href="https://soho.infor.com/index.php?p=component/accordion">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Basic Accordion <a href="../components/accordion/example-index">View Example</a></li>
 <li>Accordion Panels <a href="../components/accordion/example-accordion-panels">View Example</a></li>
 </ol>
@@ -836,8 +836,8 @@ This indicates the link has been followed.
 
 <h2 id="code-example">Code Example</h2>
 <h3 id="accordion">Accordion</h3>
-<p>This example shows a simple accordion with a single accordion header that contains one pane and three sub-headers. All accordion contents should be wrapped by a div element with the &quot;accordion&quot; class.</p>
-<p>Create accordion headers by using a block-level element with the &quot;accordion-header&quot; class. Place any number of these elements underneath the accordion element. Accordion headers require an a tag underneath with a blank href attribute. Optionally, use an icon svg tag with the &quot;icon&quot; CSS class, placed before the title element. Create accordion panes by using a block-level element with the &quot;accordion-pane&quot; CSS class. Place any number of these elements underneath and next to the &quot;accordion-header&quot; element that should open the pane. Place any number of block-level elements with the &quot;accordion-header&quot; CSS class underneath this &quot;accordion-header&quot;. Optionally, place any number of block-level elements with the &quot;accordion-content&quot; CSS class underneath this &quot;accordion-header&quot;. Inside this &quot;accordion-content&quot; element can be any HTML markup, including other controls.</p>
+<p>This example shows a simple accordion with a single accordion header that contains one pane and three sub-headers. All accordion contents should be wrapped by a div element with the “accordion” class.</p>
+<p>Create accordion headers by using a block-level element with the “accordion-header” class. Place any number of these elements underneath the accordion element. Accordion headers require an a tag underneath with a blank href attribute. Optionally, use an icon svg tag with the “icon” CSS class, placed before the title element. Create accordion panes by using a block-level element with the “accordion-pane” CSS class. Place any number of these elements underneath and next to the “accordion-header” element that should open the pane. Place any number of block-level elements with the “accordion-header” CSS class underneath this “accordion-header”. Optionally, place any number of block-level elements with the “accordion-content” CSS class underneath this “accordion-header”. Inside this “accordion-content” element can be any HTML markup, including other controls.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;accordion&quot;</span><span class="ot"> data-demo-set-links=</span><span class="st">&quot;true&quot;</span><span class="kw">&gt;</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;accordion-header&quot;</span><span class="kw">&gt;</span></a>
@@ -931,25 +931,24 @@ This indicates the link has been followed.
 <a class="sourceLine" id="cb1-91" data-line-number="91">      <span class="kw">&lt;/div&gt;</span></a>
 <a class="sourceLine" id="cb1-92" data-line-number="92">    <span class="kw">&lt;/div&gt;</span></a>
 <a class="sourceLine" id="cb1-93" data-line-number="93">  <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-94" data-line-number="94"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-95" data-line-number="95"></a></code></pre></div>
+<a class="sourceLine" id="cb1-94" data-line-number="94"><span class="kw">&lt;/div&gt;</span></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <p>On the SoHo Xi Components Accordion, top-level Accordion Headers have support for using SVG icons. However, Accordion sub-headers are only text-based.</p>
 <h2 id="accessibility">Accessibility</h2>
-<p>The SoHo Xi Components' Accordion Plugin will manage the accessibility of an Accordion automatically. However, if customization is necessary, accordions can make use of the following:</p>
+<p>The SoHo Xi Components’ Accordion Plugin will manage the accessibility of an Accordion automatically. However, if customization is necessary, accordions can make use of the following:</p>
 <ul>
-<li>If multiple Accordion panes can be open at once, the main Accordion element should have <strong>aria-multiselectable=&quot;true&quot;</strong>. If only one pane should be open at any given time, it should be set to <strong>false</strong>.</li>
-<li>Accordion headers built similar to the SoHo Xi Components Accordion Plugin should have <strong>role=&quot;presentation&quot;.</strong> Each Accordion header has an &lt;a&gt; tag that acts as its trigger element for itself and its corresponding pane.</li>
-<li>Accordion header &lt;a&gt; tags that currently have keyboard focus should have <strong>aria-selected=&quot;true&quot;</strong>. All other accordion header &lt;a&gt; tags should have this attribute set to <strong>false</strong>.</li>
-<li>Accordion panes that are collapsed should have <strong>aria-expanded=&quot;false&quot;</strong>. Panes that are expanded should have <strong>aria-expanded=&quot;true&quot;</strong>.</li>
-<li>Collapsed Accordion panes should have a <strong>&quot;display: none;&quot;</strong> CSS property on them, to prevent any of the elements inside of the pane that are focusable from receiving keyboard focus.</li>
+<li>If multiple Accordion panes can be open at once, the main Accordion element should have <strong>aria-multiselectable=“true”</strong>. If only one pane should be open at any given time, it should be set to <strong>false</strong>.</li>
+<li>Accordion headers built similar to the SoHo Xi Components Accordion Plugin should have <strong>role=“presentation”.</strong> Each Accordion header has an &lt;a&gt; tag that acts as its trigger element for itself and its corresponding pane.</li>
+<li>Accordion header &lt;a&gt; tags that currently have keyboard focus should have <strong>aria-selected=“true”</strong>. All other accordion header &lt;a&gt; tags should have this attribute set to <strong>false</strong>.</li>
+<li>Accordion panes that are collapsed should have <strong>aria-expanded=“false”</strong>. Panes that are expanded should have <strong>aria-expanded=“true”</strong>.</li>
+<li>Collapsed Accordion panes should have a <strong>“display: none;”</strong> CSS property on them, to prevent any of the elements inside of the pane that are focusable from receiving keyboard focus.</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li><p><strong>Tab -</strong> When focus is on an accordion header a TAB keystroke will move focus in the following manner:</p>
-<ol>
-<li>When the corresponding Accordion pane is expanded (its aria-expanded state is 'true'), then focus moves to the first focusable element in the pane.</li>
-<li>If the Accordion pane is collapsed (its aria-expanded state is 'false', or missing), OR, when the last interactive element of an expanded Tab or Accordion panel is reached, the next TAB keystroke will move focus as follows:</li>
+<li><strong>Tab -</strong> When focus is on an accordion header a TAB keystroke will move focus in the following manner:
+<ol type="1">
+<li>When the corresponding Accordion pane is expanded (its aria-expanded state is ‘true’), then focus moves to the first focusable element in the pane.</li>
+<li>If the Accordion pane is collapsed (its aria-expanded state is ‘false’, or missing), OR, when the last interactive element of an expanded Tab or Accordion panel is reached, the next TAB keystroke will move focus as follows:</li>
 </ol>
 <ul>
 <li>If [aria-multiselectable] is true and a subsequent Accordion panel is already expanded, focus will move to the first focusable element in this subsequent panel.</li>
@@ -973,8 +972,8 @@ This indicates the link has been followed.
 <ul>
 <li>When focus is on an Accordion Header, this keystroke toggles the expansion of the corresponding panel.
 <ul>
-<li>If collapsed, the panel is expanded, and its aria-expanded state is set to 'true'.</li>
-<li>If expanded, the panel is collapsed and its aria-expanded state is set to 'false'.</li>
+<li>If collapsed, the panel is expanded, and its aria-expanded state is set to ‘true’.</li>
+<li>If expanded, the panel is collapsed and its aria-expanded state is set to ‘false’.</li>
 </ul></li>
 <li>When focus is on a Tab in a Tab Panel, this keystroke has no effect.
 <ul>
@@ -986,17 +985,17 @@ This indicates the link has been followed.
 </ul></li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
-<p>The Accordion's headers support the following states:</p>
+<p>The Accordion’s headers support the following states:</p>
 <ul>
 <li>Normal</li>
 <li>Selected</li>
 <li>Hover</li>
 </ul>
-<p>When an Accordion header is &quot;focused&quot; (meaning the &lt;a&gt; tag inside the header is focused), the header will contain an .is-focused CSS class.</p>
-<p>When an Accordion header is currently selected (meaning that keyboard focus was previously left on the atag inside the header, or that the control's keyboard focus is currently on this header's a tag), it will contain a .is-selected CSS class. If this accordion header is a child element of another accordion header, the parent accordion header will contain a .child-selected CSS Class.</p>
+<p>When an Accordion header is “focused” (meaning the &lt;a&gt; tag inside the header is focused), the header will contain an .is-focused CSS class.</p>
+<p>When an Accordion header is currently selected (meaning that keyboard focus was previously left on the atag inside the header, or that the control’s keyboard focus is currently on this header’s a tag), it will contain a .is-selected CSS class. If this accordion header is a child element of another accordion header, the parent accordion header will contain a .child-selected CSS Class.</p>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <p>The Accordion container (the element with the .accordion CSS class) will size to fill its parent container.</p>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>The initial markup is changed considerably from the previous version. Sync the markup using the markup above</li>
 <li>Initialize the accordion plugin with .accordion() as opposed to .inforAccordion() or by using the page initializer</li>

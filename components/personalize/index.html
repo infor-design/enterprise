@@ -1,6 +1,6 @@
 <h1 id="personalize-learn-more">Personalize <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Themes Example <a href="../components/personalize/example-index?colors=800000">View Example</a></li>
 <li>Module Tabs <a href="../patterns/module-tabs?colors=800000">View Example</a></li>
 <li>Sub Headers/Header <a href="../patterns/builder?colors=800000">View Example</a></li>
@@ -154,16 +154,14 @@ scheme (can be dark, light or high-contrast)
 <a class="sourceLine" id="cb1-8" data-line-number="8">         <span class="dt">hover</span><span class="op">:</span> colors[<span class="dv">6</span>]<span class="op">};</span></a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="at">$</span>(<span class="st">&#39;html&#39;</span>).<span class="at">personalize</span>(<span class="op">{</span><span class="dt">colors</span><span class="op">:</span> colors<span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a></code></pre></div>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a></code></pre></div>
 <p>For reduction of FOUC (flash of unstyled content) run the personalize logic before inserting the theme stylesheet.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;script&gt;</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"> <span class="co">//Call personalize here</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">&lt;/script&gt;</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> id=</span><span class="st">&quot;sohoxi-stylesheet&quot;</span><span class="ot"> href=</span><span class="st">&quot;../../stylesheets/{{theme}}-theme.css&quot;</span><span class="ot"> type=</span><span class="st">&quot;text/css&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a></code></pre></div>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a></code></pre></div>
 <h2 id="code-tips">Code Tips</h2>
 <ul>
 <li>Add the class is-personalizable so that this element will get the personalization color when set.</li>

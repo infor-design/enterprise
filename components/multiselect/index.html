@@ -1,6 +1,6 @@
 <h1 id="about-learn-more">About <a href="https://soho.infor.com/index.php?p=component/about-dialog">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Multiselect <a href="../components/multiselect/example-index">View Example</a></li>
 <li>Clear All <a href="../components/multiselect/example-clear-all">View Example</a></li>
 <li>Ajax <a href="../components/multiselect/example-ajax">View Example</a></li>
@@ -188,7 +188,7 @@
   
 
 <h2 id="code-example">Code Example</h2>
-<p>The Multi-select Drop Down works similar to a standard HTML select element using the &quot;multiple&quot; attribute. Because of styling and functionality requirements, we use a stylized shadow widget which implements the drop down behavior and updates in sync with a hidden select element. This allows the select element to be serialized with the DOM like normal. The simplest way to use the drop down is to create markup containing: a field (for field and responsive form alignment), a label and a select. For accessibility and implementation reasons the label is required.</p>
+<p>The Multi-select Drop Down works similar to a standard HTML select element using the “multiple” attribute. Because of styling and functionality requirements, we use a stylized shadow widget which implements the drop down behavior and updates in sync with a hidden select element. This allows the select element to be serialized with the DOM like normal. The simplest way to use the drop down is to create markup containing: a field (for field and responsive form alignment), a label and a select. For accessibility and implementation reasons the label is required.</p>
 <p>Create a select element with similar markup:</p>
 <p>The control is initialized through the page initializer <code>$('body').initialize('en-US');</code> or manually with <code>$('.multiselect').multiselect()</code>;</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
@@ -202,8 +202,7 @@
 <a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;WY&quot;</span><span class="kw">&gt;</span>Wyoming<span class="kw">&lt;/option&gt;</span></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="kw">&lt;/select&gt;</span></a>
 <a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"></a></code></pre></div>
+<a class="sourceLine" id="cb1-12" data-line-number="12"></a></code></pre></div>
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <ul>
 <li>Multi-Select Dropdowns should have Checkboxes, to distinguish them from <a href="https://soho.infor.com/index.php?p=component/single-select-dropdown">Single-Select Drop Downs</a>.</li>
@@ -211,15 +210,15 @@
 </ul>
 <h2 id="accessibility">Accessibility</h2>
 <p>The Multi-Select List is fairly complex to make accessible. But generally this can be accomplished in three steps:</p>
-<ol>
+<ol type="1">
 <li>Make sure the above keyboard shortcuts are used.</li>
 <li>Make sure that there is a label which matches both the input and any shadow element inputs and identifies the field and is correctly matched using the label for to the input id.</li>
 <li>Use the following aria tags:
 <ul>
-<li>role=&quot;combobox&quot; - must be set on the input</li>
+<li>role=“combobox” - must be set on the input</li>
 <li>aria-expanded - set to true when the list is expanded, set to false when closed</li>
-<li>role=&quot;listbox&quot; on the open list</li>
-<li>role=&quot;option&quot; on each list item</li>
+<li>role=“listbox” on the open list</li>
+<li>role=“option” on each list item</li>
 <li>aria-activedescendant - associates the input to the active list item. Must be removed if no options are selected</li>
 <li>aria-controls on the input field, containing the ID of the matching drop down list</li>
 </ul></li>
@@ -244,5 +243,5 @@
 <p>When a Multi-Select Dropdown is read-only or disabled, the trigger icon is not shown.</p>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <p>The Multi-Select Dropdown should always be preceded by a label element.</p>
-<h2 id="upgrading-from-3x">Upgrading from 3.X</h2>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <p>In 3.x there was no separate Multi-Select element.</p>

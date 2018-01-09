@@ -1,6 +1,6 @@
 <h1 id="context-menu-learn-more">Context Menu <a href="https://soho.infor.com/index.php?p=component/about-dialog">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Context Menu on an Input <a href="../components/contextmenu/example-index">View Example</a></li>
 </ol>
 <h2 id="api-details">API Details</h2>
@@ -9,7 +9,7 @@
 <p>The context menu control is also referred to as a popmenu. It can be invoked in several ways. As a right click menu fx on an input field or grid or list row. As a click menu for example on a menu or actions button. Or manually on demand via the api.</p>
 <p>The structure of the menu is a ul element with li elements containing links for each of the rows in the menu. An other ul element can be added to create a submenu. Use only one level of submenus for accessibility and usability reasons.</p>
 <p>The class popmenu should be added to the ul elements at the top and submenu level. You can create rows as space separators for grouping with the tag with the class separator. You can create rows as groups with titles as well with the class group.</p>
-<p>The popupmenu can be linked as a right click menu item by adding the attribute data-popupmenu=&quot;action-popupmenu&quot; to any element that should get the menu, this should point to the id of the menu.</p>
+<p>The popupmenu can be linked as a right click menu item by adding the attribute data-popupmenu=“action-popupmenu” to any element that should get the menu, this should point to the id of the menu.</p>
 <p>This page focus on the right click popup menu (Context Menu).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"></a>
@@ -38,8 +38,7 @@
 <a class="sourceLine" id="cb1-25" data-line-number="25">  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;is-selectable is-checked&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Conditional formatting<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
 <a class="sourceLine" id="cb1-26" data-line-number="26">  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;is-selectable&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Data validation<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
 <a class="sourceLine" id="cb1-27" data-line-number="27"><span class="kw">&lt;/ul&gt;</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29"></a></code></pre></div>
+<a class="sourceLine" id="cb1-28" data-line-number="28"></a></code></pre></div>
 <h2 id="coding-tips">Coding Tips</h2>
 <ul>
 <li>If necessary, the options can be broken up into categories</li>
