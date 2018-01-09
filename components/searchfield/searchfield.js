@@ -356,6 +356,13 @@
 
         });
 
+        // Setup a listener for the Clearable behavior, if applicable
+        if (this.settings.clearable) {
+          this.element.on('cleared.searchfield', function() {
+            self.element.triggerHandler('resetfilter');
+          });
+        }
+
         return this;
       },
 
@@ -874,7 +881,7 @@
        * @returns {this}
        */
       teardown: function() {
-        this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield listclose.searchfield safe-blur.searchfield');
+        this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield listclose.searchfield safe-blur.searchfield cleared.searchfield');
 
         if (this.autocomplete) {
           this.autocomplete.destroy();

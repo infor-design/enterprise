@@ -209,23 +209,25 @@
 
         // Modify filtered results for a specific template with a `resultIteratorCallback`, if applicable.
         // Each of these results is deep-copied.
-        filterResult.forEach(function(val, index) {
-          var result = Soho.utils.extend(true, {}, val);
-          result = self.settings.resultIteratorCallback(result, index);
+        if (filterResult !== false) {
+          filterResult.forEach(function(val, index) {
+            var result = Soho.utils.extend(true, {}, val);
+            result = self.settings.resultIteratorCallback(result, index);
 
-          if (self.settings.highlightMatchedText) {
-            var filterOpts = {
-              filterMode: self.settings.filterMode,
-              term: term
-            };
-            if (result._highlightTarget) {
-              filterOpts.alias = result._highlightTarget;
+            if (self.settings.highlightMatchedText) {
+              var filterOpts = {
+                filterMode: self.settings.filterMode,
+                term: term
+              };
+              if (result._highlightTarget) {
+                filterOpts.alias = result._highlightTarget;
+              }
+              result = self.settings.highlightCallback(result, filterOpts);
             }
-            result = self.settings.highlightCallback(result, filterOpts);
-          }
 
-          modifiedFilterResults.push(result);
-        });
+            modifiedFilterResults.push(result);
+          });
+        }
 
         // If a "resultsCallback" method is defined, pipe the filtered items to that method and skip
         // building a popupmenu.
@@ -527,6 +529,14 @@
         return dfd;
       },
 
+      /**
+       * Resets a filtered autocomplete back to its original state.
+       * @returns {void}
+       */
+      resetFilters: function() {
+        this.openList('', this.currentDataSet);
+      },
+
       // Handles the Autocomplete's "focus" event
       handleAutocompleteFocus: function() {
         var self = this;
@@ -670,6 +680,7 @@
        * @param {Object} listopen  &nbsp;-&nbsp; Fires when the menu is opened.
        * @param {Object} listclosed  &nbsp;-&nbsp; Fires when the menu is closed.
        * @param {Object} populated  &nbsp;-&nbsp; Fires after the menu is populated with its contents.
+       * @param {Object} resetfilter  &nbsp;-&nbsp; Comes from Searchfields wrapping an autocomplete - resets a filtered autocomplete back to normal.
        * @param {Object} input  &nbsp;-&nbsp; Fires after the input is edited.
        * @param {Object} safe-blur  &nbsp;-&nbsp; Fires after the input (and menu) both loose focus
        * @param {Object} requestend  &nbsp;-&nbsp; Fires when the ajax request (source option) is completed
@@ -691,6 +702,8 @@
           self.checkActiveElement();
         }).off('listopen.autocomplete').on('listopen.autocomplete', function () {
           self.handleAfterListOpen();
+        }).off('resetfilter.autocomplete').on('resetfilter.autocomplete', function() {
+          self.resetFilters();
         });
       }
 
