@@ -130,7 +130,7 @@ Initialize.prototype = {
 
       // Personalization
       if ($.fn.personalize) {
-        matchedItems('body').personalize();
+        matchedItems('html').personalize();
       }
 
       //Array of plugin names and selectors (optional) for no-configuration initializations

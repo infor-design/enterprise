@@ -6,6 +6,7 @@
 import './utils/highlight';
 import './drag/drag.jquery';
 import './place/place.jquery';
+import './personalize/personalize.jquery';
 
 // Atoms
 import './button/button.jquery';
@@ -19,6 +20,7 @@ import './applicationmenu/applicationmenu.jquery';
 import './dropdown/dropdown.jquery';
 import './circlepager/circlepager.jquery';
 import './colorpicker/colorpicker.jquery';
+import './editor/editor.jquery';
 import './homepage/homepage.jquery';
 import './listview/listview.jquery';
 import './mask/masked-input.jquery';
