@@ -1,91 +1,17 @@
   <section>
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          handle
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The class name of the handle element to connect
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          itemsSelector
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The selector to match all the sortable elements.
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          connectWith
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The optional element to connect with when using two lists
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          placeholder
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The html for the element that appears while dragging
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          placeholderCssClass
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The class to add to the ghost element that is being dragged.
 
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -100,12 +26,19 @@
         <td>updated</td>
         <td>
           
+                
+                  <span>settings (Object) = The settings to apply.
+ </span>
+                
+          
         </td>
         <td>
           <p>Resync the UI and Settings.</p>
 
         </td>
         <td>
+          The api
+Object
         </td>
       </tr>
       <tr>
@@ -114,42 +47,94 @@
           
         </td>
         <td>
-          <p>Teardown and remove any added markup and events.</p>
+          <p>Teardown process for this plugin</p>
 
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
           
-                
-                  <span>beforearrange (Object) =  
--
- 
- Fires before moving an element allowing you to access the ui to customize the draggable item
- </span>
-                
-                  <span>afterearrange (Object) =  
--
- 
- Fires after moving an element allowing you do any follow up updating.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>This component fires the following events.</p>
-
-        </td>
-        <td>
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>beforearrange
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>status (Object)
+        
+        = Status for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before moving an element allowing you to access the ui to customize the draggable item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>arrangeupdate
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>status (Object)
+        
+        = Status for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after moving an element allowing you do any follow up updating.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

@@ -5,9 +5,10 @@ All the following Soho Components have been converted to ES6:
 * About
 * Accordion
 * ApplicationMenu
+* Arrange (behavior)
 * Autocomplete
 * Button
-* Circlepager
+* Circle Pager
 * Colorpicker
 * Drag (behavior)
 * Dropdown
@@ -16,6 +17,7 @@ All the following Soho Components have been converted to ES6:
 * Homepage
 * Hyperlink
 * Icons
+* Listbuilder
 * Listview
 * Mask
 * Message
@@ -56,17 +58,14 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 
 * Angular 1.0 Directives (?)
 * Area Chart (Separate it from charts.js?)
-* Arrange (behavior)
 * Busy Indicator
 * Bar Charts (Separate it from charts.js?)
 * Charts
-* Circle Pager
 * Composite Form
 * Contextual Action Panel
 * Datagrid
 * Datepicker
 * Dirty Tracking (Util to Convert to component)
-* Editor
 * EmptyMessage
 * Expandable area
 * Field Options
@@ -74,8 +73,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * File Upload Advanced
 * Form (basically all jQuery stuff)
 * Hierarchy
-* Homepage
-* Listbuilder
 * Lookup
 * Pager
 * Popdown

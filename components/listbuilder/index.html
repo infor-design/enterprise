@@ -5,137 +5,18 @@
 </ol>
   <section>
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          dataset
-        </td>
-        <td>
-          Object
-        </td>
-        <td>
-           
--
- 
- The array of data
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnAdd
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The attribute to match the add button in the toolbar (ie. data-action="add")
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnEdit
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The attribute to match the edit button in the toolbar (ie. data-action="edit")
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnDelete
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- The attribute to match the delete button in the toolbar (ie. data-action="delete")
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnGoUp
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The attribute to match the move up button in the toolbar (ie. data-action="goup")
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnGoDown
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- The attribute to match the move up button in the toolbar (ie. data-action="dodown")
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          template
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The list view markdown / template.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          templateItemContent
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The markdown for editing an item
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -156,6 +37,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -168,6 +51,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -180,6 +65,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -187,10 +74,7 @@
         <td>
           
                 
-                  <span>isNewItem (Boolean) =  
--
- 
- Is it a new item?
+                  <span>isNewItem (Boolean) = Is it a newly added item?
  </span>
                 
           
@@ -200,6 +84,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -207,16 +93,10 @@
         <td>
           
                 
-                  <span>node (jQuery) =  
--
- 
- The node to edit
+                  <span>node (Object) = The HTML element to edit
  </span>
                 
-                  <span>isNewItem (Boolean) =  
--
- 
- Is it a new item?
+                  <span>isNewItem (Boolean) = Is it a newly added item?
  </span>
                 
           
@@ -226,6 +106,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -233,25 +115,21 @@
         <td>
           
                 
-                  <span>node (jQuery) =  
--
- 
- The node to delete
+                  <span>node (Object) = The HTML element to commit changes
  </span>
                 
-                  <span>isNewItem (Boolean) =  
--
- 
- Is it a new item?
+                  <span>isNewItem (Boolean) = Is it a newly added item?
  </span>
                 
           
         </td>
         <td>
-          <p>Delete the selected item.</p>
+          <p>Commit the changes to item.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -264,6 +142,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -271,7 +151,8 @@
         <td>
           
                 
-                  <span>node () =  </span>
+                  <span>node (Object) = The HTML element to get data
+ </span>
                 
           
         </td>
@@ -284,27 +165,507 @@
 Object
         </td>
       </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Make enable.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Make disable.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (Object) = The settings to apply.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Resync the UI and Settings.</p>
+
+        </td>
+        <td>
+          The api
+Object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown process for this plugin</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
     </tbody>
   </table>
 
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>selected
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this selected item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a item is selected.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>updated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a item is updated.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforeadd
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before add new item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afteradd
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this new item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after add new item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforegoup
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before move up item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>aftergoup
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after move up item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforegodown
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before move down item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>aftergodown
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after move down item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforeedit
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before edit item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>entereditmode
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when enter to edit mode.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>exiteditmode
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when exited to edit mode.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforedelete
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before delete item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afterdelete
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after delete item.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
 
 <h2 id="code-example">Code Example</h2>
 <p>The list builder is structured as a listbuilder element that contains a <a href="../components/toolbar">standard toolbar</a> structure followed by a listbuilder-content section that contains a standard <a href="../components/listview">listview</a>.</p>
 <p>When initialized with the <code>$elem.listbuilder()</code> plugin you pass in a data set that ineracts with the list view template. The toolbar buttons are automatically mapped to add, edit , delete , up , down functions via the option settings.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;listbuilder&quot;</span> <span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;toolbar formatter-toolbar&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">      ...</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    &lt;/div<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;listbuilder-content&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">      <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;listview&quot;</span><span class="op">&gt;</span>&lt;/div<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    &lt;/div<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">  &lt;/div<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+  &lt;div <span class="kw">class</span>=<span class="st">&quot;listbuilder&quot;</span> &gt;
+    &lt;div <span class="kw">class</span>=<span class="st">&quot;toolbar formatter-toolbar&quot;</span>&gt;
+      ...
+    &lt;<span class="ot">/div&gt;</span>
+<span class="ot">    &lt;div class=&quot;listbuilder-content&quot;&gt;</span>
+<span class="ot">      &lt;div class=&quot;listview&quot;&gt;&lt;/div</span>&gt;
+    &lt;<span class="ot">/div&gt;</span>
+<span class="ot">  &lt;/div</span>&gt;
+</code></pre>
 <h2 id="accessibility-keyboard-shortcuts">Accessibility / Keyboard Shortcuts</h2>
 <ul>
 <li><a href="../components/listview">ListView</a> guidelines apply as this is conatains a listview.</li>
