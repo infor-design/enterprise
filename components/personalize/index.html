@@ -7,15 +7,29 @@
 <li>Property Page <a href="../components/personalize/example-settings-page">View Example</a></li>
 </ol>
   <section>
+  
+    
 
 
+  
+    
 
 
+  
+    
+
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 
 
-
-
-
+  
     <h2>Settings</h2>
 
   <table class="section-table">
@@ -25,36 +39,6 @@
       <th>Description</th>
     </thead>
     <tbody>
-      <tr>
-        <td>
-          colors
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The list of colors
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          theme
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The theme name (light, dark or high-contrast)
-
-        </td>
-      </tr>
     </tbody>
   </table>
 
@@ -70,12 +54,12 @@
       <tr>
         <td>setColors</td>
         <td>
-
-
+          
+                
                   <span>colors (Array) = The original hex color as a string or an object with all the Colors
  </span>
-
-
+                
+          
         </td>
         <td>
           <p>Sets the personalization color(s)</p>
@@ -87,22 +71,22 @@
       <tr>
         <td>getLuminousColorShade</td>
         <td>
-
-
+          
+                
                   <span>hex (String) =  
 -
  
  The original Hexadecimal base color.
  </span>
-
+                
                   <span>lum (String) =  
 -
  
  A percentage used to set luminosity
 change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
  </span>
-
-
+                
+          
         </td>
         <td>
           <p>Takes a color and performs a change in luminosity of that color programatically.</p>
@@ -116,19 +100,35 @@ String
       <tr>
         <td>setTheme</td>
         <td>
-
-
-                  <span>theme (String) =  
+          
+                
+                  <span>incomingTheme (String) =  
 -
  
  Represents the file name of a color
 scheme (can be dark, light or high-contrast)
  </span>
-
-
+                
+          
         </td>
         <td>
           <p>Sets the current theme, blocking the ui during the change.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Handle Updating Settings</p>
 
         </td>
         <td>
@@ -138,23 +138,9 @@ scheme (can be dark, light or high-contrast)
   </table>
 
 
-
-
-
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-
-
   </section>
 
-
+  
 
 <h2 id="code-example">Code Example</h2>
 <p>Pass in a primary (header) color to the personalize function. This is the minimum needed. The rest of the colors will be calculated as percents of the source color. (For example sub header is 20%).</p>
