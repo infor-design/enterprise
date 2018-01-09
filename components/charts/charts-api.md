@@ -17,5 +17,5 @@ Set Animation Type
 
 **Parameters**
 
--   `animate` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  true|false - will do or not do the animation.
--   `animate` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  'initial' will do only first time the animation.
+-   `animate` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  true|false - will do or not do the animation.
+-   `animate` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  'initial' will do only first time the animation.

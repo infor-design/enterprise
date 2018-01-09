@@ -1,0 +1,39 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var columns = [];
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+    columns.push({ id: 'time', name: 'Time', field: 'time'});
+
+    //Get some data via ajax
+    var url = '{{basepath}}api/tree-tasks';
+
+    $.getJSON(url, function(data) {
+
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        selectable: 'siblings',
+        rowHeight: 'short',
+        treeGrid: true,
+        toolbar: {title: 'Tasks (Hierarchical)', results: true, actions: true, rowHeight: true, personalize: true, rowHeight: true}
+      })
+      .on('selected', function (e, args, action) {
+        console.log(args, action);
+      });
+
+    });
+
+  });
+</script>

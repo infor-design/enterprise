@@ -2670,7 +2670,7 @@ window.Chart = function(container) {
 
       // Click
       .on('click', function (d, i) {
-        var selector, isTargetBar = this && d3.select(this).classed('target-bar');
+        var isTargetBar = this && d3.select(this).classed('target-bar');
 
         var isSelected = this && d3.select(this).classed('is-selected'),
           thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);

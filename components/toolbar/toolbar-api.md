@@ -17,7 +17,8 @@
     -   [getVisibleButtons](#getvisiblebuttons)
     -   [adjustMenuItemVisibility](#adjustmenuitemvisibility)
     -   [isItemOverflowed](#isitemoverflowed)
-    -   [hasNoMoreButton](#hasnomorebutton)
+    -   [moreButtonIsDisabled](#morebuttonisdisabled)
+    -   [moreButtonIsVisible](#morebuttonisvisible)
     -   [enable](#enable)
     -   [disable](#disable)
     -   [teardown](#teardown)
@@ -32,7 +33,6 @@ category or section header, and the second level provides the associated options
 
 **Parameters**
 
--   `element`  
 -   `rightAligned` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Will always attempt to right-align the contents of the toolbar. By default if there is no title it will left align. This forces right alignment.
 -   `maxVisibleButtons` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  Total amount of buttons that can be present, not including the More button.
 -   `resizeContainers` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
@@ -177,9 +177,15 @@ Detects whether or not a toolbar item is currently overflowed.  In general, tool
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
-### hasNoMoreButton
+### moreButtonIsDisabled
 
-Detection for this toolbar to have a More Button
+Detection for whether or not this toolbar is able to have a More Button
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### moreButtonIsVisible
+
+Detection for whether or not More Actions menu is currently visible.
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
