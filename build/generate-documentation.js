@@ -12,7 +12,7 @@ const nodePandoc = require('node-pandoc');
 // Generate a Doc file with buffered content
 function runPandoc(data, apiHtml, componentPath) {
   // Note that im using gfm vs markdown for h level support
-  nodePandoc(data, ['-f', 'gfm', '-t', 'html5', '-o', componentPath + 'index.html'], (error, stdout, stderr) => {
+  nodePandoc(data, ['-f', 'markdown', '-t', 'html5', '-o', componentPath + 'index.html'], (error, stdout, stderr) => {
     if (error) {
       console.log(error);
     }
