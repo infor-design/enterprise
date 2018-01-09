@@ -2679,8 +2679,8 @@ window.Chart = function(container) {
         if (isTargetBar) {
           var allBars = d3.selectAll('.bar')[0],
             len = allBars.length;
-          for (var i = 0; i < len; i++) {
-            var bar = allBars[i];
+          for (var j = 0; j < len; j++) {
+            var bar = allBars[j];
 
             if (d3.select(bar).classed('is-selected')) {
               isSelected = false;
