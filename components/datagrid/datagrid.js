@@ -1602,58 +1602,58 @@ $.fn.datagrid = function(options) {
   * The Datagrid Component displays and process data in tabular format.
   *
   * @class Datagrid
-  * @param {Boolean} actionableMode &nbsp;-&nbsp If actionableMode is "true, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
-  * @param {Boolean} cellNavigation &nbsp;-&nbsp If cellNavigation is "false, will show border around whole row on focus
-  * @param {Boolean} rowNavigation  &nbsp;-&nbsp If rowNavigation is "false, will NOT show border around the row
-  * @param {Boolean} alternateRowShading  &nbsp;-&nbsp Sets shading for readonly grids
-  * @param {Array} columns  &nbsp;-&nbsp an array of columns (see column options)
-  * @param {Array} dataset  &nbsp;-&nbsp an array of data objects
-  * @param {Boolean} columnReorder  &nbsp;-&nbsp Allow Column reorder
-  * @param {Boolean} saveColumns  &nbsp;-&nbsp Save Column Reorder and resize
-  * @param {Object} saveUserSettings  &nbsp;-&nbsp Save one or all of the following to local storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true
-  * @param {Boolean} editable &nbsp;-&nbsp Enable editing in the grid, requires column editors.
-  * @param {Boolean} isList  &nbsp;-&nbsp Makes the grid have readonly "list" styling
-  * @param {String} menuId  &nbsp;-&nbspId of the menu to use for a row level right click context menu
-  * @param {String} menuSelected  &nbsp;-&nbsp Callback for the grid level context menu
-  * @param {String} menuBeforeOpen  &nbsp;-&nbsp Callback for the grid level beforeopen menu event
-  * @param {String} headerMenuId  &nbsp;-&nbsp Id of the menu to use for a header right click context menu
-  * @param {String} headerMenuSelected  &nbsp;-&nbsp Callback for the header level context menu
-  * @param {String} headerMenuBeforeOpen  &nbsp;-&nbsp Callback for the header level beforeopen menu event
-  * @param {String} uniqueId &nbsp;-&nbsp Unique ID to use as local storage reference and internal variable names
-  * @param {String} rowHeight &nbsp;-&nbsp Controls the height of the rows / number visible rows. May be (short, medium or normal)
-  * @param {String} selectable &nbsp;-&nbsp Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
-  * @param {Object} groupable &nbsp;-&nbsp  Controls fields to use for data grouping Use Data grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}
-  * @param {Boolean} clickToSelect &nbsp;-&nbsp Controls if using a selection mode if you can click the rows to select
-  * @param {Object} toolbar  &nbsp;-&nbsp Toggles and appends toolbar features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
-  * @param {Boolean} initializeToolbar &nbsp;-&nbsp Set to false if you will initialize the toolbar yourself
-  * @param {Boolean} paging &nbsp;-&nbsp Enable paging mode
-  * @param {Number} pagesize &nbsp;-&nbsp Number of rows per page
-  * @param {Array} pagesizes &nbsp;-&nbsp Array of page sizes to show in the page size dropdown.
-  * @param {Boolean} indeterminate &nbsp;-&nbsp Disable the ability to go to a specific page when paging.
+  * @param {boolean} actionableMode &nbsp;-&nbsp If actionableMode is "true, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+  * @param {boolean} cellNavigation &nbsp;-&nbsp If cellNavigation is "false, will show border around whole row on focus
+  * @param {boolean} rowNavigation  &nbsp;-&nbsp If rowNavigation is "false, will NOT show border around the row
+  * @param {boolean} alternateRowShading  &nbsp;-&nbsp Sets shading for readonly grids
+  * @param {array} columns  &nbsp;-&nbsp an array of columns (see column options)
+  * @param {array} dataset  &nbsp;-&nbsp an array of data objects
+  * @param {boolean} columnReorder  &nbsp;-&nbsp Allow Column reorder
+  * @param {boolean} saveColumns  &nbsp;-&nbsp Save Column Reorder and resize
+  * @param {object} saveUserSettings  &nbsp;-&nbsp Save one or all of the following to local storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true
+  * @param {boolean} editable &nbsp;-&nbsp Enable editing in the grid, requires column editors.
+  * @param {boolean} isList  &nbsp;-&nbsp Makes the grid have readonly "list" styling
+  * @param {string} menuId  &nbsp;-&nbspId of the menu to use for a row level right click context menu
+  * @param {string} menuSelected  &nbsp;-&nbsp Callback for the grid level context menu
+  * @param {string} menuBeforeOpen  &nbsp;-&nbsp Callback for the grid level beforeopen menu event
+  * @param {string} headerMenuId  &nbsp;-&nbsp Id of the menu to use for a header right click context menu
+  * @param {string} headerMenuSelected  &nbsp;-&nbsp Callback for the header level context menu
+  * @param {string} headerMenuBeforeOpen  &nbsp;-&nbsp Callback for the header level beforeopen menu event
+  * @param {string} uniqueId &nbsp;-&nbsp Unique ID to use as local storage reference and internal variable names
+  * @param {string} rowHeight &nbsp;-&nbsp Controls the height of the rows / number visible rows. May be (short, medium or normal)
+  * @param {string} selectable &nbsp;-&nbsp Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
+  * @param {object} groupable &nbsp;-&nbsp  Controls fields to use for data grouping Use Data grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}
+  * @param {boolean} clickToSelect &nbsp;-&nbsp Controls if using a selection mode if you can click the rows to select
+  * @param {object} toolbar  &nbsp;-&nbsp Toggles and appends toolbar features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
+  * @param {boolean} initializeToolbar &nbsp;-&nbsp Set to false if you will initialize the toolbar yourself
+  * @param {boolean} paging &nbsp;-&nbsp Enable paging mode
+  * @param {number} pagesize &nbsp;-&nbsp Number of rows per page
+  * @param {array} pagesizes &nbsp;-&nbsp Array of page sizes to show in the page size dropdown.
+  * @param {boolean} indeterminate &nbsp;-&nbsp Disable the ability to go to a specific page when paging.
   * @param {Function} source  &nbsp;-&nbsp Callback function for paging
-  * @param {Boolean} hidePagerOnOnePage  &nbsp;-&nbsp If true, hides the pager if there's only one page worth of results.
-  * @param {Boolean} filterable &nbsp;-&nbsp Enable Column Filtering, This will require column filterTypes as well.
-  * @param {Boolean} disableClientFilter &nbsp;-&nbsp Disable Filter Logic client side and let your server do it
-  * @param {Boolean} disableClientSort &nbsp;-&nbsp Disable Sort Logic client side and let your server do it
-  * @param {String} resultsText &nbsp;-&nbsp Can provide a custom function to adjust results text on the toolbar
-  * @param {Boolean} showFilterTotal &nbsp;-&nbsp Paging results display filter count, change to false to not show filtered count
-  * @param {Boolean} rowReorder &nbsp;-&nbsp If set you can reorder rows. Requires rowReorder formatter
-  * @param {Boolean} showDirty &nbsp;-&nbsp  If true the dirty indicator will be shown on the rows
-  * @param {Boolean} showSelectAllCheckBox &nbsp;-&nbsp Allow to hide the checkbox header (true to show, false to hide)
-  * @param {Boolean} allowOneExpandedRow  &nbsp;-&nbsp Controls if you cna expand more than one expandable row.
-  * @param {Boolean} enableTooltips &nbsp;-&nbsp Process tooltip logic at a cost of performance
-  * @param {Boolean} disableRowDeactivation &nbsp;-&nbsp if a row is activated the user should not be able to deactivate it by clicking on the activated row
-  * @param {Boolean} sizeColumnsEqually &nbsp;-&nbsp If true make all the columns equal width
-  * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
-  * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
-  * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
-  * @param {Array} columnGroups &nbsp;-&nbsp An array of columns to use for grouped column headers.
-  * @param {Boolean} treeGrid: &nbsp;-&nbsp If true a tree grid is expected so addition calculations will be used to calculate of the row children
+  * @param {boolean} hidePagerOnOnePage  &nbsp;-&nbsp If true, hides the pager if there's only one page worth of results.
+  * @param {boolean} filterable &nbsp;-&nbsp Enable Column Filtering, This will require column filterTypes as well.
+  * @param {boolean} disableClientFilter &nbsp;-&nbsp Disable Filter Logic client side and let your server do it
+  * @param {boolean} disableClientSort &nbsp;-&nbsp Disable Sort Logic client side and let your server do it
+  * @param {string} resultsText &nbsp;-&nbsp Can provide a custom function to adjust results text on the toolbar
+  * @param {boolean} showFilterTotal &nbsp;-&nbsp Paging results display filter count, change to false to not show filtered count
+  * @param {boolean} rowReorder &nbsp;-&nbsp If set you can reorder rows. Requires rowReorder formatter
+  * @param {boolean} showDirty &nbsp;-&nbsp  If true the dirty indicator will be shown on the rows
+  * @param {boolean} showSelectAllCheckBox &nbsp;-&nbsp Allow to hide the checkbox header (true to show, false to hide)
+  * @param {boolean} allowOneExpandedRow  &nbsp;-&nbsp Controls if you cna expand more than one expandable row.
+  * @param {boolean} enableTooltips &nbsp;-&nbsp Process tooltip logic at a cost of performance
+  * @param {boolean} disableRowDeactivation &nbsp;-&nbsp if a row is activated the user should not be able to deactivate it by clicking on the activated row
+  * @param {boolean} sizeColumnsEqually &nbsp;-&nbsp If true make all the columns equal width
+  * @param {boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
+  * @param {boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
+  * @param {boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
+  * @param {array} columnGroups &nbsp;-&nbsp An array of columns to use for grouped column headers.
+  * @param {boolean} treeGrid: &nbsp;-&nbsp If true a tree grid is expected so addition calculations will be used to calculate of the row children
   * @param {Function} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
   * @param {Function} onDestroyCell &nbsp;-&nbsp A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
   * @param {Function} onEditCell  &nbsp;-&nbsp A callback that fires when a cell is edited, the editor object is passed in to the function
   * @param {Function} onExpandRow &nbsp;-&nbsp A callback function that fires when expanding rows. To be used when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
-  * @param {Object} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
+  * @param {object} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -1851,8 +1851,8 @@ $.fn.datagrid = function(options) {
 
     /**
     * Add a row of data to the grid and dataset.
-    * @param {Object} data &nbsp;-&nbsp An data row object
-    * @param {String} location &nbsp;-&nbsp Where to add the row. This can be 'top' or leave off for 'bottom'
+    * @param {object} data &nbsp;-&nbsp An data row object
+    * @param {string} location &nbsp;-&nbsp Where to add the row. This can be 'top' or leave off for 'bottom'
     */
     addRow: function (data, location) {
       var self = this,
@@ -1898,7 +1898,7 @@ $.fn.datagrid = function(options) {
 
     /**
     * Refresh the pager based on the current page and dataset.
-    * @param {Object} location &nbsp;-&nbsp Deprecated - Can be set to 'top' or left off for bottom pager.
+    * @param {object} location &nbsp;-&nbsp Deprecated - Can be set to 'top' or left off for bottom pager.
     */
     pagerRefresh: function (location) {
       if (this.pager) {
@@ -1923,8 +1923,8 @@ $.fn.datagrid = function(options) {
 
     /**
     * Remove a row of data to the grid and dataset.
-    * @param {Number} row &nbsp;-&nbsp The row index
-    * @param {Boolean} nosync &nbsp;-&nbsp Dont sync the selected rows.
+    * @param {number} row &nbsp;-&nbsp The row index
+    * @param {boolean} nosync &nbsp;-&nbsp Dont sync the selected rows.
     */
     removeRow: function (row, nosync) {
       var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row + 1) +'"]'),
@@ -1953,8 +1953,8 @@ $.fn.datagrid = function(options) {
     /**
     * Send in a new data set to display in the datagrid.
     *
-    * @param {Object} dataset &nbsp;-&nbsp The array of objects to show in the grid. Should match the column definitions.
-    * @param {Object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
+    * @param {object} dataset &nbsp;-&nbsp The array of objects to show in the grid. Should match the column definitions.
+    * @param {object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
     */
     updateDataset: function (dataset, pagerInfo) {
       this.loadData(dataset, pagerInfo);
@@ -1963,7 +1963,7 @@ $.fn.datagrid = function(options) {
     /**
     * Trigger the source method to call to the backend on demand.
     *
-    * @param {Object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
+    * @param {object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
     */
     triggerSource: function(pagerType, callback) {
       this.pager.pagerInfo = this.pager.pagerInfo || {};
@@ -1984,9 +1984,9 @@ $.fn.datagrid = function(options) {
     * Send in a new data set to display in the datagrid. Use better named updateDataset
     * @deprecated
     * @private
-    * @param {Object} dataset &nbsp;-&nbsp The array of objects to show in the grid. Should match the column definitions.
-    * @param {Object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
-    * @param {Object} isResponse &nbsp;-&nbsp Called internally if the load data is response
+    * @param {object} dataset &nbsp;-&nbsp The array of objects to show in the grid. Should match the column definitions.
+    * @param {object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
+    * @param {object} isResponse &nbsp;-&nbsp Called internally if the load data is response
     */
     loadData: function (dataset, pagerInfo, isResponse) {
       this.settings.dataset = dataset;
@@ -2043,7 +2043,7 @@ $.fn.datagrid = function(options) {
     * Generate a unique id based on the page and grid count. Add a suffix.
     * @deprecated
     * @private
-    * @param {Object} suffix &nbsp;-&nbsp Add this string to make the id more unique
+    * @param {object} suffix &nbsp;-&nbsp Add this string to make the id more unique
     */
     uniqueId: function (suffix) {
       var uniqueid = this.settings.uniqueId ?
@@ -2061,7 +2061,7 @@ $.fn.datagrid = function(options) {
 
     /**
     * Returns an array with all visible columns.
-    * @param {Object} skipBuiltIn &nbsp;-&nbsp If true then built in columns like selectionCheckbox are skipped.
+    * @param {object} skipBuiltIn &nbsp;-&nbsp If true then built in columns like selectionCheckbox are skipped.
     */
     visibleColumns: function (skipBuiltIn) {
       var visible = [];
@@ -2107,7 +2107,7 @@ $.fn.datagrid = function(options) {
 
     /**
     * Gets an If for the column group used for grouped headers.
-    * @param {Object} idx &nbsp;-&nbsp The index of the column group
+    * @param {object} idx &nbsp;-&nbsp The index of the column group
     */
     getColumnGroup: function(idx) {
       var total = 0,
@@ -2125,7 +2125,7 @@ $.fn.datagrid = function(options) {
     /**
     * Returns the text for a header adding built in defaults
     * @private
-    * @param {Object} col &nbsp;-&nbsp The column id.
+    * @param {object} col &nbsp;-&nbsp The column id.
     */
     headerText: function (col) {
       var text = col.name ? col.name : '';
@@ -2269,8 +2269,8 @@ $.fn.datagrid = function(options) {
     /**
     * Returns the markup for a specific filter row area.
     * @private
-    * @param {Object} columnDef &nbsp;-&nbsp The column object for the header
-    * @param {Object} idx &nbsp;-&nbsp The column idx for the header
+    * @param {object} columnDef &nbsp;-&nbsp The column object for the header
+    * @param {object} idx &nbsp;-&nbsp The column idx for the header
     */
     filterRowHtml: function (columnDef, idx) {
       var self = this,
@@ -2449,9 +2449,9 @@ $.fn.datagrid = function(options) {
     /**
     * Render one filter item as used in renderFilterButton
     * @private
-    * @param {Object} icon &nbsp;-&nbsp The icon for the menu item
-    * @param {Object} text &nbsp;-&nbsp The text for the menu item
-    * @param {Object} checked &nbsp;-&nbsp If the menu item is selected
+    * @param {object} icon &nbsp;-&nbsp The icon for the menu item
+    * @param {object} text &nbsp;-&nbsp The text for the menu item
+    * @param {object} checked &nbsp;-&nbsp If the menu item is selected
     */
     filterItemHtml: function (icon, text, checked) {
       var iconMarkup = $.createIcon({ classes: 'icon icon-filter', icon: 'filter-' + icon });
@@ -2461,7 +2461,7 @@ $.fn.datagrid = function(options) {
     /**
     * Render the Filter Button and Menu based on filterType - which determines the options
     * @private
-    * @param {Object} col &nbsp;-&nbsp The column object
+    * @param {object} col &nbsp;-&nbsp The column object
     */
     filterButtonHtml: function (col) {
 
@@ -2573,7 +2573,7 @@ $.fn.datagrid = function(options) {
 
     /**
     * Apply the Filter with the currently selected conditions, or the ones passed in.
-    * @param {Object} conditions &nbsp;-&nbsp An array of objects with the filter conditions.
+    * @param {object} conditions &nbsp;-&nbsp An array of objects with the filter conditions.
     */
     applyFilter: function (conditions) {
       var self = this;
@@ -2824,7 +2824,7 @@ $.fn.datagrid = function(options) {
 
     /**
     * Set the Filter Conditions on the UI Only.
-    * @param {Object} conditions &nbsp;-&nbsp An array of objects with the filter conditions.
+    * @param {object} conditions &nbsp;-&nbsp An array of objects with the filter conditions.
     */
     setFilterConditions: function (conditions) {
       for (var i = 0; i < conditions.length; i++) {
@@ -3094,7 +3094,7 @@ $.fn.datagrid = function(options) {
     /**
     * Get column index for dragging columns
     * @private
-    * @param {Object} pos &nbsp;-&nbsp The position index
+    * @param {object} pos &nbsp;-&nbsp The position index
     */
     targetColumn: function (pos) {
       var self = this,
@@ -3114,9 +3114,9 @@ $.fn.datagrid = function(options) {
     /**
     * Move an array element to a different position. May be dups of this function.
     * @private
-    * @param {Array} arr &nbsp;-&nbsp The array
-    * @param {Array} from &nbsp;-&nbsp The from position
-    * @param {Array} to &nbsp;-&nbsp The to position
+    * @param {array} arr &nbsp;-&nbsp The array
+    * @param {array} from &nbsp;-&nbsp The from position
+    * @param {array} to &nbsp;-&nbsp The to position
     */
     arrayIndexMove: function(arr, from, to) {
       arr.splice(to, 0, arr.splice(from, 1)[0]);
@@ -3157,8 +3157,8 @@ $.fn.datagrid = function(options) {
 
     /**
     * Return the value in a field, taking into account nested objects. Fx obj.field.id
-    * @param {Object} obj &nbsp;-&nbsp The object to use
-    * @param {String} field &nbsp;-&nbsp The field as a string fx 'field' or 'obj.field.id'
+    * @param {object} obj &nbsp;-&nbsp The object to use
+    * @param {string} field &nbsp;-&nbsp The field as a string fx 'field' or 'obj.field.id'
     */
     fieldValue: function (obj, field) {
       if (!field || !obj) {
@@ -4338,7 +4338,7 @@ $.fn.datagrid = function(options) {
 
     /**
     * Restore the columns from a provided list or local storage
-    * @param {Array} cols - The columns list to restore, if you saved the settings manually.
+    * @param {array} cols - The columns list to restore, if you saved the settings manually.
     */
     restoreColumns: function (cols) {
       if (!this.settings.saveColumns || !this.canUseLocalStorage()) {
@@ -4481,7 +4481,7 @@ $.fn.datagrid = function(options) {
 
     /**
     * Hide a column.
-    * @param {String} id &nbsp;-&nbsp The id of the column to hide.
+    * @param {string} id &nbsp;-&nbsp The id of the column to hide.
     */
     hideColumn: function(id) {
       var idx = this.columnIdxById(id);
@@ -4518,7 +4518,7 @@ $.fn.datagrid = function(options) {
 
     /**
     * Show a hidden column.
-    * @param {String} id &nbsp;-&nbsp The id of the column to show.
+    * @param {string} id &nbsp;-&nbsp The id of the column to show.
     */
     showColumn: function(id) {
       var idx = this.columnIdxById(id);
@@ -4555,8 +4555,8 @@ $.fn.datagrid = function(options) {
 
     /**
     * Export the grid contents to csv
-    * @param {String} fileName &nbsp;-&nbsp The desired export filename in the download.
-    * @param {String} customDs &nbsp;-&nbsp An optional customized version of the data to use.
+    * @param {string} fileName &nbsp;-&nbsp The desired export filename in the download.
+    * @param {string} customDs &nbsp;-&nbsp An optional customized version of the data to use.
     */
     exportToCsv: function (fileName, customDs) {
       fileName = (fileName ||
@@ -4677,9 +4677,9 @@ $.fn.datagrid = function(options) {
 
     /**
     * Export the grid contents to xls format. This may give a warning when opening the file. exportToCsv may be prefered.
-    * @param {String} fileName &nbsp;-&nbsp The desired export filename in the download.
-    * @param {String} worksheetName &nbsp;-&nbsp A name to give the excel worksheet tab.
-    * @param {String} customDs &nbsp;-&nbsp An optional customized version of the data to use.
+    * @param {string} fileName &nbsp;-&nbsp The desired export filename in the download.
+    * @param {string} worksheetName &nbsp;-&nbsp A name to give the excel worksheet tab.
+    * @param {string} customDs &nbsp;-&nbsp An optional customized version of the data to use.
     */
     exportToExcel: function (fileName, worksheetName, customDs) {
       var self = this,
@@ -7882,8 +7882,8 @@ $.fn.datagrid = function(options) {
 
     /**
     * Overridable function to conduct array sorting
-    * @param {String} id &nbsp;-&nbsp The matching field/id in the array to sort on
-    * @param {Boolean} ascending &nbsp;-&nbsp Determines direction of the sort.
+    * @param {string} id &nbsp;-&nbsp The matching field/id in the array to sort on
+    * @param {boolean} ascending &nbsp;-&nbsp Determines direction of the sort.
     */
     sortFunction: function(id, ascending) {
       var column = this.columnById(id),
@@ -7998,8 +7998,8 @@ $.fn.datagrid = function(options) {
 
     /**
     * Add the pager and paging functionality.
-    * @param {String} pagingInfo &nbsp;-&nbsp The paging object with activePage ect used by pager.js
-    * @param {Boolean} isResponse &nbsp;-&nbsp Internal flag used to prevent callbacks from rexecuting.
+    * @param {string} pagingInfo &nbsp;-&nbsp The paging object with activePage ect used by pager.js
+    * @param {boolean} isResponse &nbsp;-&nbsp Internal flag used to prevent callbacks from rexecuting.
     */
     renderPager: function (pagingInfo, isResponse, callback) {
       var api = this.pager;
@@ -8020,7 +8020,7 @@ $.fn.datagrid = function(options) {
 
     /**
     * Reset the pager to the first page.
-    * @param {String} type &nbsp;-&nbsp The action type, which gets sent to the source callback.
+    * @param {string} type &nbsp;-&nbsp The action type, which gets sent to the source callback.
     */
     resetPager: function(type) {
       if (!this.pager) {

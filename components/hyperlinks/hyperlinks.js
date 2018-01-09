@@ -4,7 +4,7 @@ import { HideFocus } from '../utils/behaviors';
 /**
  * Plugin Name
  */
-let PLUGIN_NAME = 'hyperlink';
+let COMPONENT_NAME = 'hyperlink';
 
 /**
  *
@@ -16,7 +16,7 @@ var HYPERLINK_DEFAULTS = {};
  * @class Hyperlink
  *
  * @param {HTMLElement} element
- * @param {Object} options
+ * @param {object} options
  * @returns {Hyperlink}
  */
 function Hyperlink(element, settings) {
@@ -61,4 +61,4 @@ Hyperlink.prototype = {
 };
 
 
-export { Hyperlink, PLUGIN_NAME };
+export { Hyperlink, COMPONENT_NAME };

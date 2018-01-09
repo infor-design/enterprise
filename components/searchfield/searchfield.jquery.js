@@ -1,4 +1,4 @@
-import { SearchField, PLUGIN_NAME } from './searchfield';
+import { SearchField, COMPONENT_NAME } from './searchfield';
 
 
 $.fn.searchfield = function(settings) {
@@ -25,11 +25,11 @@ $.fn.searchfield = function(settings) {
     }
 
     // Normal invoke setup
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new SearchField(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new SearchField(this, settings));
     }
   });
 };

@@ -17,7 +17,7 @@ let breakpoints = {
  * Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the
  * <body> tag's `::after` pseudo-element.  These names should be reflected in the breakpoints object
  * above.
- * @returns {String}
+ * @returns {string}
  */
 breakpoints.current = function() {
   var afterElement = window.getComputedStyle ? window.getComputedStyle(document.body, ':after') : false;

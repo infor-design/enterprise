@@ -1,4 +1,4 @@
-import { Spinbox, PLUGIN_NAME } from './spinbox';
+import { Spinbox, COMPONENT_NAME } from './spinbox';
 
 
 /**
@@ -6,11 +6,11 @@ import { Spinbox, PLUGIN_NAME } from './spinbox';
  */
 $.fn.spinbox = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Spinbox(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Spinbox(this, settings));
     }
   });
 };

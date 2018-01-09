@@ -38,7 +38,7 @@
 
     /**
      * @constructor
-     * @param {Object} element
+     * @param {object} element
      */
     function Tabs(element) {
       this.settings = $.extend({}, settings);
@@ -3004,7 +3004,7 @@
       /**
        * Wrapper for the Soho behavior _smoothScrollTo()_ that will determine scroll distance.
        * @param {jQuery[]} target - the target <li> or <a> tag
-       * @param {Number} duration - the time it will take to scroll
+       * @param {number} duration - the time it will take to scroll
        * @returns {undefined}
        */
       scrollTabList: function(target) {

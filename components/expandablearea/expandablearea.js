@@ -29,8 +29,8 @@
     * The About Dialog Component is displays information regarding the application.
     *
     * @class ExpandableArea
-    * @param {String} trigger  Id of some other button to use as a trigger
-    * @param {String} bottomBorder  Change the border to bottom vs top (for some cases)
+    * @param {string} trigger  Id of some other button to use as a trigger
+    * @param {string} bottomBorder  Change the border to bottom vs top (for some cases)
     *
     */
     function ExpandableArea(element) {
@@ -146,7 +146,7 @@
 
       /**
       * Return if the expandable area is current disable or not.
-      * @returns {Boolean}
+      * @returns {boolean}
       */
       isDisabled: function() {
         return this.element.hasClass('is-disabled');

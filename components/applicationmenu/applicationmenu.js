@@ -7,15 +7,20 @@ import '../utils/lifecycle';
 import '../accordion/accordion.jquery';
 import '../searchfield/searchfield.jquery';
 
-/**
- * Component Name
- */
-let PLUGIN_NAME = 'applicationmenu';
+// Name of the component in this file.
+const COMPONENT_NAME = 'applicationmenu';
 
 /**
- * Default Application Menu Options
- */
-let APPLICATIONMENU_DEFAULTS = {
+* @namespace
+* @property {string} breakpoint  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024),
+* or 'large' (+1280). Default is phablet (968)
+* @property {string} filterable
+* @property {string} openOnLarge  If true, will automatically open the Application Menu when a
+* large screen-width breakpoint is met.
+* @property {string} triggers  An Array of jQuery-wrapped elements that are able to open/close
+* this nav menu.
+*/
+const APPLICATIONMENU_DEFAULTS = {
   breakpoint: 'phone-to-tablet',
   filterable: false,
   openOnLarge: false,
@@ -24,12 +29,9 @@ let APPLICATIONMENU_DEFAULTS = {
 
 /**
  * The Application Menu provides access to all the functions, pages, and forms in an application.
- *
  * @class ApplicationMenu
- * @param {String} breakpoint  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
- * @param {String} filterable
- * @param {String} openOnLarge  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
- * @param {String} triggers  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
+ * @param {[type]} element The element that gets the plugin established on it.
+ * @param {[type]} settings The settings to use on this instance.
  */
 function ApplicationMenu(element, settings) {
   this.element = $(element);
@@ -488,7 +490,7 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * @param {Array} results
+   * @param {array} results
    * @param {function} done
    */
   filterResultsCallback: function(results, done) {
@@ -603,15 +605,15 @@ ApplicationMenu.prototype = {
   */
   destroy: function() {
     this.teardown();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
    *  This component fires the following events.
    *
    * @fires Applicationmenu#events
-   * @param {Object} applicationmenuopen  Fires when the menu is opened.
-   * @param {Object} applicationmenuclose  Fires as the menu is closed.
+   * @param {object} applicationmenuopen  Fires when the menu is opened.
+   * @param {object} applicationmenuclose  Fires as the menu is closed.
     *
    */
   handleEvents: function() {
@@ -668,4 +670,4 @@ ApplicationMenu.prototype = {
 };
 
 
-export { ApplicationMenu, PLUGIN_NAME };
+export { ApplicationMenu, COMPONENT_NAME };

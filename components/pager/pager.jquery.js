@@ -1,4 +1,4 @@
-import { Pager, PLUGIN_NAME } from './pager';
+import { Pager, COMPONENT_NAME } from './pager';
 
 
 /**
@@ -6,9 +6,9 @@ import { Pager, PLUGIN_NAME } from './pager';
  */
 $.fn.pager = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (!instance) {
-      instance = $.data(this, PLUGIN_NAME, new Pager(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Pager(this, settings));
     } else {
       instance.updated(settings);
     }

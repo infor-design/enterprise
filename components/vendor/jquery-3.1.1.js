@@ -942,7 +942,7 @@ function assert( fn ) {
 
 /**
  * Adds the same handler for all of the specified attrs
- * @param {String} attrs Pipe-separated list of attributes
+ * @param {string} attrs Pipe-separated list of attributes
  * @param {Function} handler The method that will be applied
  */
 function addHandle( attrs, handler ) {
@@ -958,7 +958,7 @@ function addHandle( attrs, handler ) {
  * Checks document order of two siblings
  * @param {Element} a
  * @param {Element} b
- * @returns {Number} Returns less than 0 if a precedes b, greater than 0 if a follows b
+ * @returns {number} Returns less than 0 if a precedes b, greater than 0 if a follows b
  */
 function siblingCheck( a, b ) {
 	var cur = b && a,
@@ -984,7 +984,7 @@ function siblingCheck( a, b ) {
 
 /**
  * Returns a function to use in pseudos for input types
- * @param {String} type
+ * @param {string} type
  */
 function createInputPseudo( type ) {
 	return function( elem ) {
@@ -995,7 +995,7 @@ function createInputPseudo( type ) {
 
 /**
  * Returns a function to use in pseudos for buttons
- * @param {String} type
+ * @param {string} type
  */
 function createButtonPseudo( type ) {
 	return function( elem ) {
@@ -1006,7 +1006,7 @@ function createButtonPseudo( type ) {
 
 /**
  * Returns a function to use in pseudos for :enabled/:disabled
- * @param {Boolean} disabled true for :disabled; false for :enabled
+ * @param {boolean} disabled true for :disabled; false for :enabled
  */
 function createDisabledPseudo( disabled ) {
 
@@ -1097,7 +1097,7 @@ support = Sizzle.support = {};
 /**
  * Detects XML nodes
  * @param {Element|Object} elem An element or a document
- * @returns {Boolean} True iff elem is a non-HTML XML node
+ * @returns {boolean} True iff elem is a non-HTML XML node
  */
 isXML = Sizzle.isXML = function( elem ) {
 	// documentElement is verified for cases where it doesn't yet exist
@@ -1109,7 +1109,7 @@ isXML = Sizzle.isXML = function( elem ) {
 /**
  * Sets document-related variables once based on the current document
  * @param {Element|Object} [doc] An element or document object to use to set the document
- * @returns {Object} Returns the current document
+ * @returns {object} Returns the current document
  */
 setDocument = Sizzle.setDocument = function( node ) {
 	var hasCompare, subWindow,
@@ -2656,8 +2656,8 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
  * @param {String|Function} selector A selector or a pre-compiled
  *  selector function built with Sizzle.compile
  * @param {Element} context
- * @param {Array} [results]
- * @param {Array} [seed] A set of elements to match against
+ * @param {array} [results]
+ * @param {array} [seed] A set of elements to match against
  */
 select = Sizzle.select = function( selector, context, results, seed ) {
 	var i, tokens, token, type, find,

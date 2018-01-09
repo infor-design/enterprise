@@ -6,7 +6,7 @@ import { renderLoop, RenderLoopItem } from '../utils/renderloop';
 /**
  * Component Name
  */
-let PLUGIN_NAME = 'toast';
+let COMPONENT_NAME = 'toast';
 
 
 /**
@@ -30,9 +30,9 @@ let TOAST_DEFAULTS = {
 function Toast(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings, TOAST_DEFAULTS);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Toast Methods
@@ -144,9 +144,9 @@ Toast.prototype = {
   // Teardown
   destroy: function() {
     $('#toast-container').remove();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
 
-export { Toast, PLUGIN_NAME };
+export { Toast, COMPONENT_NAME };

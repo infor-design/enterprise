@@ -128,8 +128,8 @@ import { DOM } from '../utils/utils';
   /**
    * Allows for the smooth scrolling of an element's content area.
    * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated.
-   * @param {Number} target - target distance.
-   * @param {Number} duration - the time that will be needed for the scrolling to complete.
+   * @param {number} target - target distance.
+   * @param {number} duration - the time that will be needed for the scrolling to complete.
    * @returns {$.Deferred}
    */
   function smoothScrollTo(el, target, duration) {
@@ -226,8 +226,8 @@ import { DOM } from '../utils/utils';
 
   /**
    * Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
-   * @param {Number} target - target distance to scroll the element
-   * @param {Number} duration - the time that will be needed for the scrolling to complete.
+   * @param {number} target - target distance to scroll the element
+   * @param {number} duration - the time that will be needed for the scrolling to complete.
    * @returns {$.Deferred}
    */
   $.fn.smoothScroll = function(target, duration) {

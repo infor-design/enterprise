@@ -1,4 +1,4 @@
-import { Tooltip, PLUGIN_NAME } from './tooltip';
+import { Tooltip, COMPONENT_NAME } from './tooltip';
 
 
 /**
@@ -6,11 +6,11 @@ import { Tooltip, PLUGIN_NAME } from './tooltip';
  */
 $.fn.tooltip = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Tooltip(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Tooltip(this, settings));
     }
   });
 };

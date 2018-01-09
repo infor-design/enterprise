@@ -1,4 +1,4 @@
-import { Wizard, PLUGIN_NAME } from './wizard';
+import { Wizard, COMPONENT_NAME } from './wizard';
 
 
 /**
@@ -6,11 +6,11 @@ import { Wizard, PLUGIN_NAME } from './wizard';
  */
 $.fn.wizard = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Wizard(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Wizard(this, settings));
     }
   });
 };

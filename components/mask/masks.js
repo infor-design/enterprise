@@ -87,8 +87,8 @@ let DEFAULT_NUMBER_MASK_OPTIONS = {
 
 /**
  * Converts a string representing a formatted number into a Number Mask.
- * @param {String} strNumber
- * @returns {Array} - contains strings representing character literals and regex patterns.
+ * @param {string} strNumber
+ * @returns {array} - contains strings representing character literals and regex patterns.
  */
 function convertToMask(strNumber) {
   return strNumber
@@ -101,9 +101,9 @@ function convertToMask(strNumber) {
 
 /**
  * Adds thousands separators to the correct spot in a formatted number string.
- * @param {String} n - the string
- * @param {String} thousands - the thousands separator.
- * @returns {String} the incoming string formatted with a thousands separator.
+ * @param {string} n - the string
+ * @param {string} thousands - the thousands separator.
+ * @returns {string} the incoming string formatted with a thousands separator.
  */
 // http://stackoverflow.com/a/10899795/604296
 function addThousandsSeparator(n, thousands) {
@@ -113,9 +113,9 @@ function addThousandsSeparator(n, thousands) {
 
 /**
  * Gets an array of Regex objects matching the number of digits present in a source string
- * @param {String} part - string representing the mark part.
- * @param {String} type - 'any', 'digits', or 'alphas'
- * @returns {Array}
+ * @param {string} part - string representing the mark part.
+ * @param {string} type - 'any', 'digits', or 'alphas'
+ * @returns {array}
  */
 function getRegexForPart(part, type) {
   var types = {
@@ -141,9 +141,9 @@ function getRegexForPart(part, type) {
 
 /**
  * Soho Number Mask Function
- * @param {String} rawValue
- * @param {Object} options
- * @returns {Array}
+ * @param {string} rawValue
+ * @param {object} options
+ * @returns {array}
  */
 masks.numberMask = function sohoNumberMask(rawValue, options) {
   options = utils.mergeSettings(undefined, options, DEFAULT_NUMBER_MASK_OPTIONS);

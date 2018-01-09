@@ -227,8 +227,8 @@ function hasTrailingSlash(path) {
    * Filters an array of paths and detects if they actually exist
    * @private
    * @param {Object[]} pathDefs -
-   * @param {String} link -
-   * @param {String} directoryPrepender - prepends the "link" portion with a directory that is not processed by the filter
+   * @param {string} link -
+   * @param {string} directoryPrepender - prepends the "link" portion with a directory that is not processed by the filter
    */
 function filterUnusablePaths(pathDefs, excludes, directoryPrepender) {
   const truePaths = [];
@@ -264,7 +264,7 @@ function filterUnusablePaths(pathDefs, excludes, directoryPrepender) {
 
 /**
    * @private
-   * @param {String} text
+   * @param {string} text
    */
 function formatPath(text) {
   return text.replace(/-/g, ' ').replace(/\.html/, '');
@@ -272,10 +272,10 @@ function formatPath(text) {
 
 /**
    * @private
-   * @param {Object} pathDef
-   * @param {String} pathDef.link
-   * @param {String} pathDef.type
-   * @param {String} pathDef.labelColor
+   * @param {object} pathDef
+   * @param {string} pathDef.link
+   * @param {string} pathDef.type
+   * @param {string} pathDef.labelColor
    */
 function pathMapper(pathDef) {
   let href = pathDef.link.replace(/\\/g, '/').replace(/\/\//g, '/'),
@@ -328,7 +328,7 @@ const GENERAL_LISTING_EXCLUDES = [
 
   /**
    * @private
-   * @param {String} type
+   * @param {string} type
    */
 function getFolderContents(type, dir) { // type, dir, folderName
   let paths = [];
@@ -348,11 +348,11 @@ function getFolderContents(type, dir) { // type, dir, folderName
 
 /**
    * Returns a listing of both "examples" and "tests" for a particular type of component.
-   * @param {String} type - the component/layout/pattern type
-   * @param {Object} req
-   * @param {Object} res
+   * @param {string} type - the component/layout/pattern type
+   * @param {object} req
+   * @param {object} res
    * @param {function} next
-   * @param {Array} [extraExcludes]
+   * @param {array} [extraExcludes]
    * @returns {?}
    */
 function getFullListing(type, req, res, next, extraExcludes) {
@@ -419,11 +419,11 @@ function getFullListing(type, req, res, next, extraExcludes) {
 
 /**
    * Returns a directory listing as page content with working links
-   * @param {String} directory
-   * @param {Object} req
-   * @param {Object} res
+   * @param {string} directory
+   * @param {object} req
+   * @param {object} res
    * @param {function} next
-   * @param {Array} [extraExcludes] - List of files names to exclude
+   * @param {array} [extraExcludes] - List of files names to exclude
    */
 function getDirectoryListing(directory, req, res, next, extraExcludes) {
   if (!extraExcludes) {
@@ -544,9 +544,9 @@ const componentOpts = {
   /**
    * Detects the existence of a layout file inside of a subfolder that should be used
    * instead of the default layout file in the root.
-   * @param {Object} opts - Express's res.opts
+   * @param {object} opts - Express's res.opts
    * @param {string} component - the name of the component
-   * @returns {Object}
+   * @returns {object}
    */
 function addDefaultFolderLayout(opts, component) {
   let layoutFileNames = ['_layout.html', 'layout.html'],

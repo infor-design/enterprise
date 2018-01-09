@@ -8,7 +8,7 @@ import '../modal/modal';
 /**
  *
  */
-let PLUGIN_NAME = 'message';
+let COMPONENT_NAME = 'message';
 
 
 /**
@@ -29,21 +29,21 @@ let MESSAGE_DEFAULTS = {
  * The Message Component is used to show warning / error messages.
  *
  * @class Message
- * @param {String} title  Title text or content shown in the message
- * @param {Boolean} isError  If true, will show title styled as an error with an error icon
- * @param {String} message  The message content or text
- * @param {Number} width  Pass a specific with or defaults to auto
- * @param {Object} buttons  Array of buttons to add to the message (see modal examples as well)
- * @param {String} cssClass  Extra Class to add to the dialog for customization.
- * @param {String} returnFocus  JQuery Element selector to focus on return
+ * @param {string} title  Title text or content shown in the message
+ * @param {boolean} isError  If true, will show title styled as an error with an error icon
+ * @param {string} message  The message content or text
+ * @param {number} width  Pass a specific with or defaults to auto
+ * @param {object} buttons  Array of buttons to add to the message (see modal examples as well)
+ * @param {string} cssClass  Extra Class to add to the dialog for customization.
+ * @param {string} returnFocus  JQuery Element selector to focus on return
  *
  */
 function Message(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings, MESSAGE_DEFAULTS);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 
@@ -138,4 +138,4 @@ Message.prototype = {
 };
 
 
-export { Message, PLUGIN_NAME };
+export { Message, COMPONENT_NAME };

@@ -24,7 +24,7 @@
 
     /**
      * @constructor
-     * @param {Object} element
+     * @param {object} element
      */
     function Tag(element) {
       this.settings = $.extend({}, settings);
@@ -70,8 +70,8 @@
        *  This component fires the following events.
        *
        * @fires Tag#events
-       * @param {Object} click  Fires when the tag is clicked (if enabled).
-       * @param {Object} keydown  Fires when the tag is focused.
+       * @param {object} click  Fires when the tag is clicked (if enabled).
+       * @param {object} keydown  Fires when the tag is focused.
        */
       handleEvents: function() {
         var self = this,

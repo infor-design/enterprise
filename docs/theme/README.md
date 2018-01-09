@@ -1,28 +1,35 @@
 # The Sohoxi Theme
 
-This is the default theme for [documentationjs](https://github.com/documentationjs):
-it consists of underscore templates and a few assets: a [highlight.js](https://highlightjs.org/)
+Was created by modifying the default theme from [documentationjs](https://github.com/documentationjs).
+The default theme consists of underscore templates and a few assets: a [highlight.js](https://highlightjs.org/)
 theme and [basscss](http://www.basscss.com/) as a basic CSS framework.
 
-This was bundled in version 5.3.5 of documentationjs but was "modified" by taking the lib folder
-from https://github.com/documentationjs/documentation/issues/849
-
-And changing it a bit.
+The modified theme just uses the js and underscore templates and its own css. It was bundled
+from version 5.3.5 of documentationjs but was "modified" by taking the lib folder as described on https://github.com/documentationjs/documentation/issues/849
 
 The contents are the following:
 
 * `index._`, the main template that defines the document structure of the api part of our code
 * `section._`, a partial used to render each chunk of documentation
-* `assets/*`, any assets, including CSS & JS
 
-To run the docs for this code base on a file use the command
+To test run the template generator run this command.
 
 ```
 documentation build components/about/about.js --format html --theme docs/theme --o docs/api/about.html --shallow
 ```
 
-If the theme needs modification refer to the example theme on https://github.com/documentationjs/documentation/tree/master/src/default_theme to construct this we modified the files in the theme folder accordingly. Also another example of a theme https://github.com/mapbox/mapbox-gl-js/blob/master/docs/pages/api.js
+Other Theme Examples:
+https://github.com/documentationjs/documentation/tree/master/src/default_theme https://github.com/mapbox/mapbox-gl-js/blob/master/docs/pages/api.js
 
+## Entire build procedure
+
+- in package.json we have a command entered to run the docs on all files `npm run documentation`
+- when running grunt watch it runs the command `./build/generate-documentation.js "accordion"` which runs the docs on one file
+-
+
+## Types for Converting docs
+
+- See about.js and accordion.js for more complete examples in the code
 
 ## Trouble Shooting
 

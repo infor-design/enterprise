@@ -391,7 +391,7 @@ code {
     text-align: left;
 
     th {
-      @include font-size(14);
+      @include font-size(16);
       font-weight: normal;
       padding: 16px 30px 16px 0;
     }
@@ -406,7 +406,7 @@ code {
   }
 
   td {
-    @include font-size(14);
+    @include font-size(16);
     padding-right: 30px;
     vertical-align: middle;
 
@@ -416,7 +416,7 @@ code {
     }
 
     p {
-      @include font-size(14);
+      @include font-size(16);
     }
   }
 }

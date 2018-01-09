@@ -1,4 +1,4 @@
-import { Hyperlink, PLUGIN_NAME } from './hyperlinks';
+import { Hyperlink, COMPONENT_NAME } from './hyperlinks';
 
 
 /**
@@ -6,14 +6,14 @@ import { Hyperlink, PLUGIN_NAME } from './hyperlinks';
  */
 $.fn.hyperlink = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Hyperlink(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Hyperlink(this, settings));
       instance.destroy = function destroy() {
         this.teardown();
-        $.removeData(this, PLUGIN_NAME);
+        $.removeData(this, COMPONENT_NAME);
       };
     }
   });

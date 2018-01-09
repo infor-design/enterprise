@@ -8,14 +8,10 @@ import '../icons/icons';
 import '../utils/animations';
 import '../utils/behaviors';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'accordion';
 
-/**
- * Default Accordion Options
- */
+// Default Accordion Options
 const ACCORDION_DEFAULTS = {
   allowOnePane: true,
   displayChevron: true,
@@ -29,16 +25,16 @@ const ACCORDION_DEFAULTS = {
  * category or section header, and the second level provides the associated options.
  *
  * @class Accordion
- * @param {String} element The component element.
- * @param {String} settings The component settings.
- * @param {String} allowOnePane If set to true, allows only one pane of the
+ * @param {string} element The component element.
+ * @param {string} settings The component settings.
+ * @param {string} allowOnePane If set to true, allows only one pane of the
  *  Accordion to be open at a time.  If an Accordion pane is open, and that pane
  *  contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
- * @param {String} displayChevron  Displays a "Chevron" icon that sits off to the
+ * @param {string} displayChevron  Displays a "Chevron" icon that sits off to the
  * right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
- * @param {String} rerouteOnLinkClick  Can be set to false if routing
+ * @param {string} rerouteOnLinkClick  Can be set to false if routing
  * is externally handled
- * @param {Boolean} source  A callback function that when implemented
+ * @param {boolean} source  A callback function that when implemented
  * provided a call back for "ajax loading" of tab contents on open.
  */
 function Accordion(element, settings) {
@@ -58,7 +54,7 @@ Accordion.prototype = {
   * @private
   * @param {jQuery[]} [headers] - if provided, only attempts to build the specified headers and
   * their related anchors/panes
-  * @returns {Object} The component api for chaining.
+  * @returns {object} The component api for chaining.
   */
   init(headers) {
     this
@@ -72,7 +68,7 @@ Accordion.prototype = {
    * @private
    * @param {jQuery[]} [headers] - if provided, only attempts to build the specified headers and
    * their related anchors/panes
-   * @returns {Object} The component api for chaining.
+   * @returns {object} The component api for chaining.
    */
   build(headers) {
     let anchors;
@@ -245,9 +241,10 @@ Accordion.prototype = {
 
   /**
    * Header Click Handler
+   * @private
    * @param {jQuery.Event} e The click event object
    * @param {jQuery[]} header The header query object
-   * @returns {Boolean} Returns false is the event should be ignored.
+   * @returns {boolean} Returns false is the event should be ignored.
    */
   handleHeaderClick(e, header) {
     if (!header || !header.length || this.isDisabled(header) || this.isFiltered(header) || header.data('is-animating')) {
@@ -267,9 +264,10 @@ Accordion.prototype = {
 
   /**
    * Anchor Click Handler
-   * @param {Object} e The click event object.
-   * @param {Object} anchor The anchor jQuery object.
-   * @returns {Boolean} Returns false is the event should be ignored.
+   * @private
+   * @param {object} e The click event object.
+   * @param {object} anchor The anchor jQuery object.
+   * @returns {boolean} Returns false is the event should be ignored.
    */
   handleAnchorClick(e, anchor) {
     const self = this;
@@ -294,9 +292,9 @@ Accordion.prototype = {
     * Fires when a panel is opened.
     *
     * @event selected
-    * @type {Object}
-    * @property {Object} event - The jquery event object
-    * @property {Object} header - The header object
+    * @type {object}
+    * @property {object} event - The jquery event object
+    * @property {object} header - The header object
     */
     this.element.trigger('selected', header);
 
@@ -336,7 +334,7 @@ Accordion.prototype = {
     * This indicates the link has been followed.
     *
     * @event followlink
-    * @property {Array} anchor - The anchor in an array
+    * @property {array} anchor - The anchor in an array
     */
     if (followLink()) {
       this.element.trigger('followlink', [anchor]);
@@ -350,9 +348,10 @@ Accordion.prototype = {
 
   /**
   * Expander-Button Click Handler
-  * @param {Object} e The click event object.
-  * @param {Object} expander The jquery expander DOM element.
-  * @returns {Boolean} Returns false in some cases if the event should stop propagating.
+  * @private
+  * @param {object} e The click event object.
+  * @param {object} expander The jquery expander DOM element.
+  * @returns {boolean} Returns false in some cases if the event should stop propagating.
   */
   handleExpanderClick(e, expander) {
     const header = expander.parent('.accordion-header');
@@ -384,7 +383,7 @@ Accordion.prototype = {
   /**
   * Keypress Event Handler for expanders and anchors
   * @param {jQuery.Event} e The click event object.
-  * @returns {Boolean} Returns false in some cases if the event should stop propagating.
+  * @returns {boolean} Returns false in some cases if the event should stop propagating.
   */
   handleKeys(e) {
     const self = this;
@@ -459,10 +458,10 @@ Accordion.prototype = {
 
   /**
    * Translates all existing markup inside the accordion to a JSON-compatible object structure.
-   * @param {Bboolean} flatten If true, places all accordion headers in the root array.
+   * @param {boolean} flatten If true, places all accordion headers in the root array.
    * @param {boolean} addElementReference - if true, includes a reference to the original
    * header element inside the structure (NOT valid JSON).
-   * @returns {Object} The data the represents the accodion structure
+   * @returns {object} The data the represents the accodion structure
    */
   toData(flatten, addElementReference) {
     const data = [];
@@ -533,7 +532,7 @@ Accordion.prototype = {
 
   /**
   * Makes a header "selected" if its expander button or anchor tag is focused.
-  * @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
+  * @param {object} element - a jQuery object containing either an expander button or an anchor tag.
   * @returns {void}
   */
   select(element) {
@@ -570,8 +569,8 @@ Accordion.prototype = {
 
   /**
   * Checks if a particular header is disabled, or if the entire accordion is disabled..
-  * @param {Object} header The jquery header element
-  * @returns {Boolean} Whether or not the element is enabled.
+  * @param {object} header The jquery header element
+  * @returns {boolean} Whether or not the element is enabled.
   */
   isDisabled(header) {
     if (this.element.hasClass('is-disabled')) {
@@ -587,7 +586,7 @@ Accordion.prototype = {
 
   /**
    * Checks if the header is filtered out or not
-   * @param {Object} header  The jquery header element
+   * @param {object} header  The jquery header element
    * @returns {boolean} Whether or not the element is filtered.
    */
   isFiltered(header) {
@@ -600,7 +599,7 @@ Accordion.prototype = {
 
   /**
   * Checks if an Accordion Section is currently expanded.
-  * @param {Object} header The jquery header element
+  * @param {object} header The jquery header element
   * @returns {boolean} Whether or not the element is expanded.
   */
   isExpanded(header) {
@@ -613,7 +612,7 @@ Accordion.prototype = {
 
   /**
   * Toggle the given Panel on the Accordion between expanded and collapsed.
-  * @param {Object} header The jquery header element.
+  * @param {object} header The jquery header element.
   * @returns {void}
   */
   toggle(header) {
@@ -630,7 +629,7 @@ Accordion.prototype = {
 
   /**
   * Expand the given Panel on the Accordion.
-  * @param {Object} header The jquery header element.
+  * @param {object} header The jquery header element.
   * @returns {void}
   */
   expand(header) {
@@ -682,8 +681,8 @@ Accordion.prototype = {
       * Fires when expanding a pane is initiated.
       *
       * @event expand
-      * @property {Object} event - The jquery event object
-      * @property {Array} anchor - The anchor tag in an array.
+      * @property {object} event - The jquery event object
+      * @property {array} anchor - The anchor tag in an array.
       */
       self.element.trigger('expand', [a]);
 
@@ -691,8 +690,8 @@ Accordion.prototype = {
       * Fires after a pane is expanded.
       *
       * @event afterexpand
-      * @property {Object} event - The jquery event object
-      * @property {Array} anchor - The anchor tag in an array.
+      * @property {object} event - The jquery event object
+      * @property {array} anchor - The anchor tag in an array.
       */
       pane.one('animateopencomplete', (e) => {
         e.stopPropagation();
@@ -727,7 +726,7 @@ Accordion.prototype = {
 
   /**
   * Collapse the given Panel on the Accordion.
-  * @param {Object} header The jquery header element.
+  * @param {object} header The jquery header element.
   * @returns {void}
   */
   collapse(header) {
@@ -758,8 +757,8 @@ Accordion.prototype = {
     *  Fires when collapsed a pane is initiated.
     *
     * @event collapse
-    * @property {Object} event - The jquery event object
-    * @property {Array} anchor - The anchor tag in an array.
+    * @property {object} event - The jquery event object
+    * @property {array} anchor - The anchor tag in an array.
     */
     self.element.trigger('collapse', [a]);
 
@@ -767,8 +766,8 @@ Accordion.prototype = {
     *  Fires after a pane is collapsed.
     *
     * @event aftercollapse
-    * @property {Object} event - The jquery event object
-    * @property {Array} anchor - The anchor tag in an array.
+    * @property {object} event - The jquery event object
+    * @property {array} anchor - The anchor tag in an array.
     */
     pane.one('animateclosedcomplete', (e) => {
       e.stopPropagation();
@@ -825,8 +824,8 @@ Accordion.prototype = {
 
   /**
   * Prepares a handful of references for dealing with a specific accordion header
-  * @param {Object} eventTarget The event we are working with.
-  * @returns {Object} An object with the accordion dom elements in it.
+  * @param {object} eventTarget The event we are working with.
+  * @returns {object} An object with the accordion dom elements in it.
   */
   getElements(eventTarget) {
     const target = $(eventTarget);
@@ -866,7 +865,7 @@ Accordion.prototype = {
   /**
   * Selects an adjacent Accordion Header that sits directly before the currently selected
   * Accordion Header.
-  * @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
+  * @param {object} element - a jQuery object containing either an expander button or an anchor tag.
   * @param {boolean} noDescend - if it's normally possible to descend into a sub-accordion, prevent
   * against descending.
   * @returns {void}
@@ -920,7 +919,7 @@ Accordion.prototype = {
   /**
   * Selects an adjacent Accordion Header that sits directly after the currently selected
   * Accordion Header.
-  * @param {jQuery[]} element - a jQuery Object containing either an expander button
+  * @param {jQuery[]} element - a jQuery object containing either an expander button
   * or an anchor tag.
   * @param {boolean} noDescend - if it's normally possible to descend into a sub-accordion,
   * prevent against descending.
@@ -975,8 +974,8 @@ Accordion.prototype = {
   /**
   * Selects the first Accordion Header in the parent container of the current Accordion Pane.
   * If we're at the top level, jump out of the accordion to the last focusable element.
-  * @param {Object} header A jQuery Object containing an Accordion header.
-  * @param {Number} direction If -1, sets the position to be at the end of this set of
+  * @param {object} header A jQuery object containing an Accordion header.
+  * @param {number} direction If -1, sets the position to be at the end of this set of
   * headers instead of at the beginning.
   * @returns {void}
   */
@@ -1004,7 +1003,7 @@ Accordion.prototype = {
 
   /**
   * Selects the first Accordion Header in the child container of the current Accordion Header.
-  * @param {jQuery[]} header - a jQuery Object containing an Accordion header.
+  * @param {jQuery[]} header - a jQuery object containing an Accordion header.
   * @param {integer} direction - if -1, sets the position to be at the end of this set of
   * headers instead of at the beginning.
   * @returns {void}
@@ -1037,7 +1036,7 @@ Accordion.prototype = {
   /**
   * Selects an Accordion Header, then focuses either an expander button or an anchor.
   * Governed by the property "this.originalSelection".
-  * @param {Object} header - a jQuery Object containing an Accordion header.
+  * @param {object} header - a jQuery object containing an Accordion header.
   * @returns {void}
   */
   focusOriginalType(header) {
@@ -1076,7 +1075,7 @@ Accordion.prototype = {
      * Updates an entire accordion, or specific portion(s).
      * @param {jQuery[]} [headers] Optional jQuery object containing accordion headers whose
      * contents need to be torndown/rebound
-     * @param {Object} settings The current settings.
+     * @param {object} settings The current settings.
      * @returns {this} The api object
      */
   updated(headers, settings) {
@@ -1174,7 +1173,7 @@ Accordion.prototype = {
 
   /**
    * Teardown and remove any events.
-   * @param  {Object} headers The headers to destroy
+   * @param  {object} headers The headers to destroy
    * @return {void}
    */
   handleEvents(headers) {

@@ -1,4 +1,4 @@
-import { Autocomplete, PLUGIN_NAME } from './autocomplete';
+import { Autocomplete, COMPONENT_NAME } from './autocomplete';
 
 
 /**
@@ -6,9 +6,9 @@ import { Autocomplete, PLUGIN_NAME } from './autocomplete';
  */
 $.fn.autocomplete = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (!instance) {
-      instance = $.data(this, PLUGIN_NAME, new Autocomplete(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Autocomplete(this, settings));
     } else {
       instance.updated(settings);
     }

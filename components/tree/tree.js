@@ -35,7 +35,7 @@ const TREE_DEFAULTS = {
 /**
  * @class {Tree}
  * @constructor
- * @param {Object} element
+ * @param {object} element
  */
 function Tree(element, settings) {
   this.element = $(element);
@@ -307,7 +307,7 @@ Tree.prototype = {
 
   /**
    * Check if an object is an instance of a jQuery object
-   * @param {Object} obj - the object being tested.
+   * @param {object} obj - the object being tested.
    * @returns {boolean}
    */
   isjQuery: function (obj) {
@@ -1701,7 +1701,7 @@ Tree.prototype = {
   },
 
   /**
-   * @param {Object} settings
+   * @param {object} settings
    */
   updated: function(settings) {
     if (settings) {

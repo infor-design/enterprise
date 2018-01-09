@@ -20,8 +20,8 @@ const HOMEPAGE_DEFAULTS = {
 * The Homepage handles card layout at multiple breakpoints.
 *
 * @class Homepage
-* @param {Boolean} animate  Disable animation during resize
-* @param {Number} columns  Display in 3 (default) or 4 column layout
+* @param {boolean} animate  Disable animation during resize
+* @param {number} columns  Display in 3 (default) or 4 column layout
 *
 */
 function Homepage(element, settings) {
@@ -373,7 +373,7 @@ Homepage.prototype = {
    *  This component fires the following events.
    *
    * @fires Homepage#events
-   * @param {Object} resize  Fires after the page is resized and layout is set. Can be used for any special adjustments.
+   * @param {object} resize  Fires after the page is resized and layout is set. Can be used for any special adjustments.
    *
    */
   handleEvents() {

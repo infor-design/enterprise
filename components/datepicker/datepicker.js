@@ -63,25 +63,25 @@
     * A component to support date entry.
     *
     * @class DatePicker
-    * @param {Boolean} showTime  If true the time selector will be shown.
-    * @param {String} timeFormat  The format to use on the time section fx HH:mm, defaults to current locale's settings.
-    * @param {String} mode  Time picker mode: options: 'standard', 'range', this controls the avilable selections in the time picker.
-    * @param {Boolean} roundToInterval  In time picker mode, if a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
-    * @param {String} dateFormat  Defaults to current locale but can be overriden to a specific format
-    * @param {Boolean} disable  Disabled Dates Build up. `{
+    * @param {boolean} showTime  If true the time selector will be shown.
+    * @param {string} timeFormat  The format to use on the time section fx HH:mm, defaults to current locale's settings.
+    * @param {string} mode  Time picker mode: options: 'standard', 'range', this controls the avilable selections in the time picker.
+    * @param {boolean} roundToInterval  In time picker mode, if a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
+    * @param {string} dateFormat  Defaults to current locale but can be overriden to a specific format
+    * @param {boolean} disable  Disabled Dates Build up. `{
       'dates'     : [],
       'minDate'   : '',
       'maxDate'   : '',
       'dayOfWeek' : [],
       'isEnable' : false
     }`
-    * @param {Boolean} showMonthYearPicker  If true the month and year will render as dropdowns.
-    * @param {Boolean} hideDays  If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
-    * @param {Boolean} customValidation  If true the internal validation is disabled.
-    * @param {Boolean} advanceMonths  The number of months in each direction to show in the dropdown for months (when initially opening)
-    * @param {Boolean} showLegend  If true a legend is show to associate dates.
-    * @param {Array} legend  Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
-    * @param {String} calendarName  The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
+    * @param {boolean} showMonthYearPicker  If true the month and year will render as dropdowns.
+    * @param {boolean} hideDays  If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
+    * @param {boolean} customValidation  If true the internal validation is disabled.
+    * @param {boolean} advanceMonths  The number of months in each direction to show in the dropdown for months (when initially opening)
+    * @param {boolean} showLegend  If true a legend is show to associate dates.
+    * @param {array} legend  Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
+    * @param {string} calendarName  The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
     */
     function DatePicker(element) {
       this.element = $(element);
@@ -1211,7 +1211,7 @@
       /**
       * Set the Formatted value in the input
       * @param {Date} date  The date to set in date format.
-      * @param {Boolean} trigger  If true will trigger the change event.
+      * @param {boolean} trigger  If true will trigger the change event.
       */
       setValue: function(date, trigger) {
         //TODO Document this as the way to get the date
@@ -1426,10 +1426,10 @@
        *  This component fires the following events.
        *
        * @fires Datepicker#events
-       * @param {Object} listopened  Fires as the calendar popup is opened
-       * @param {Object} listclosed  Fires as the calendar popup is closed
-       * @param {Object} change  Fires after the value in the input is changed by any means.
-       * @param {Object} input  Fires after the value in the input is changed by user interaction.
+       * @param {object} listopened  Fires as the calendar popup is opened
+       * @param {object} listclosed  Fires as the calendar popup is closed
+       * @param {object} change  Fires after the value in the input is changed by any means.
+       * @param {object} input  Fires after the value in the input is changed by user interaction.
        *
        */
       handleEvents: function () {

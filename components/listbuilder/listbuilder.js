@@ -62,14 +62,14 @@
     * A list of items with add/remove/delete and sort functionality.
     *
     * @class ListBuilder
-    * @param {Object} dataset  The array of data
-    * @param {String} btnAdd  The attribute to match the add button in the toolbar (ie. data-action="add")
-    * @param {String} btnEdit  The attribute to match the edit button in the toolbar (ie. data-action="edit")
-    * @param {Boolean} btnDelete  The attribute to match the delete button in the toolbar (ie. data-action="delete")
-    * @param {String} btnGoUp  The attribute to match the move up button in the toolbar (ie. data-action="goup")
-    * @param {Boolean} btnGoDown  The attribute to match the move up button in the toolbar (ie. data-action="dodown")
-    * @param {String} template  The list view markdown / template.
-    * @param {String} templateItemContent  The markdown for editing an item
+    * @param {object} dataset  The array of data
+    * @param {string} btnAdd  The attribute to match the add button in the toolbar (ie. data-action="add")
+    * @param {string} btnEdit  The attribute to match the edit button in the toolbar (ie. data-action="edit")
+    * @param {boolean} btnDelete  The attribute to match the delete button in the toolbar (ie. data-action="delete")
+    * @param {string} btnGoUp  The attribute to match the move up button in the toolbar (ie. data-action="goup")
+    * @param {boolean} btnGoDown  The attribute to match the move up button in the toolbar (ie. data-action="dodown")
+    * @param {string} template  The list view markdown / template.
+    * @param {string} templateItemContent  The markdown for editing an item
     */
     function ListBuilder(element) {
       this.settings = $.extend({}, settings);
@@ -314,7 +314,7 @@
 
       /**
       * Edit the selected item
-      * @param {Boolean} isNewItem  Is it a new item?
+      * @param {boolean} isNewItem  Is it a new item?
       */
       editItem: function(isNewItem) {
         var node = this.listApi.selectedItems[0];
@@ -330,7 +330,7 @@
       /**
       * Make the node editable
       * @param {jQuery} node  The node to edit
-      * @param {Boolean} isNewItem  Is it a new item?
+      * @param {boolean} isNewItem  Is it a new item?
       */
       makeEditable: function(node, isNewItem) {
         var self = this,
@@ -369,7 +369,7 @@
       /**
       * Delete the selected item.
       * @param {jQuery} node  The node to delete
-      * @param {Boolean} isNewItem  Is it a new item?
+      * @param {boolean} isNewItem  Is it a new item?
       */
       commitEdit: function(node, isNewItem) {
         var self = this,
@@ -409,7 +409,7 @@
 
       /**
       * Get data from dataset by node
-      * @returns {Object}
+      * @returns {object}
       */
       getDataByNode: function(node) {
         var data = {};

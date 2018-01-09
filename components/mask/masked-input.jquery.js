@@ -1,4 +1,4 @@
-import { SohoMaskedInput, PLUGIN_NAME } from './masked-input';
+import { SohoMaskedInput, COMPONENT_NAME } from './masked-input';
 
 
 /**
@@ -6,14 +6,14 @@ import { SohoMaskedInput, PLUGIN_NAME } from './masked-input';
  */
 $.fn.maskedinput = function(options) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(options);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new SohoMaskedInput(this, options));
+      instance = $.data(this, COMPONENT_NAME, new SohoMaskedInput(this, options));
       instance.destroy = function() {
         this.teardown();
-        $.removeData(this.element, PLUGIN_NAME);
+        $.removeData(this.element, COMPONENT_NAME);
       };
     }
   });

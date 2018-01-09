@@ -4,7 +4,7 @@ import { utils } from '../utils/utils';
 /**
  *
  */
-let PLUGIN_NAME = 'icon';
+let COMPONENT_NAME = 'icon';
 
 
 /**
@@ -21,14 +21,14 @@ let ICON_DEFAULTS = {
  * Wraps SVG Icons with a Javascript control that can change the icon type, reference
  * relative or absolute URLs, and clean up after itself.  Works with the Base tag.
  * @constructor
- * @param {Object} element
+ * @param {object} element
  */
 function Icon(element, settings) {
   this.settings = utils.mergeSettings(element, settings, ICON_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Plugin Methods
@@ -94,7 +94,7 @@ Icon.prototype = {
   handleEvents: function() {
     var self = this;
 
-    this.element.on('updated.' + PLUGIN_NAME, function() {
+    this.element.on('updated.' + COMPONENT_NAME, function() {
       self.updated();
     });
 
@@ -114,16 +114,16 @@ Icon.prototype = {
 
   // Simple Teardown - remove events & rebuildable markup.
   teardown: function() {
-    this.element.off('updated.' + PLUGIN_NAME);
+    this.element.off('updated.' + COMPONENT_NAME);
     return this;
   },
 
   // Teardown - Remove added markup and events
   destroy: function() {
     this.teardown();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
 
-export { Icon, PLUGIN_NAME };
+export { Icon, COMPONENT_NAME };

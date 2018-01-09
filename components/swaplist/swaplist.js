@@ -67,19 +67,19 @@
     * The SwapList Component creates a list of options that can be picked and organized.
     *
     * @class SwapList
-    * @param {Boolean} searchable  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
-    * @param {Array} available An array containing items for the available bucket.
-    * @param {Array} selected   An array containing items for the selected bucket.
-    * @param {Array} additional   An array containing items for the additional bucket.
-    * @param {String} availableClass  A class name linking the available root element.
-    * @param {String} selectedClass  A class name linking the selected root element.
-    * @param {String} additionalClass A class name linking the additional root element.
-    * @param {String} availableBtn A class name linking the available button element.
-    * @param {String} selectedBtnLeft  A class name linking the move left button element.
-    * @param {String} selectedBtnRight  A class name linking the move right button element.
-    * @param {String} additionalBtn  A class name linking the additional button element.
-    * @param {String} template An Html String with the mustache template for the view.
-    * @param {Object} draggable An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
+    * @param {boolean} searchable  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+    * @param {array} available An array containing items for the available bucket.
+    * @param {array} selected   An array containing items for the selected bucket.
+    * @param {array} additional   An array containing items for the additional bucket.
+    * @param {string} availableClass  A class name linking the available root element.
+    * @param {string} selectedClass  A class name linking the selected root element.
+    * @param {string} additionalClass A class name linking the additional root element.
+    * @param {string} availableBtn A class name linking the available button element.
+    * @param {string} selectedBtnLeft  A class name linking the move left button element.
+    * @param {string} selectedBtnRight  A class name linking the move right button element.
+    * @param {string} additionalBtn  A class name linking the additional button element.
+    * @param {string} template An Html String with the mustache template for the view.
+    * @param {object} draggable An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
     */
     function SwapList(element) {
       this.settings = $.extend({}, settings);
@@ -363,7 +363,7 @@
       /**
        * Detect browser viewport
        * @private
-       * @returns {Object}
+       * @returns {object}
        */
       viewport: function() {
         var e = window, a = 'inner';
@@ -420,8 +420,8 @@
        * Get Element By Touch In List
        * @private
        * @param {jQuery|HTMLElement} list
-       * @param {Number} x
-       * @param {Number} y
+       * @param {number} x
+       * @param {number} y
        */
       getElementByTouchInList: function(list, x, y) {
         var returns = false;
@@ -563,7 +563,7 @@
        * Get data list
        * @private
        * @param {jQuery[]|HTMLElement} container
-       * @returns {Object}
+       * @returns {object}
        */
       getDataList: function(container) {
         var s = this.settings,
@@ -577,9 +577,9 @@
       /**
        * Move an array element position
        * @private
-       * @param {Array} arr
-       * @param {Number} from
-       * @param {Number} to
+       * @param {array} arr
+       * @param {number} from
+       * @param {number} to
        */
       arrayIndexMove: function(arr, from, to) {
         arr.splice(to, 0, arr.splice(from, 1)[0]);
@@ -617,7 +617,7 @@
       /**
        * Check if a object is jQuery object
        * @private
-       * @param {Object} obj - the object being checked
+       * @param {object} obj - the object being checked
        */
       isjQuery: function (obj) {
         return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
@@ -669,7 +669,7 @@
        * Get items from provided container
        * @private
        * @param {jQuery[]|HTMLElement} container
-       * @returns {Object}
+       * @returns {object}
        */
       getItems: function(container) {
         container = this.isjQuery(container) ? container : $(container, this.element);
@@ -700,7 +700,7 @@
       /**
        * Make selected if dragged element was not selected
        * @private
-       * @param {Object} list
+       * @param {object} list
        * @param {jQuery[]} target
        */
       draggedMakeSelected: function(list, target) {
@@ -722,7 +722,7 @@
 
       /**
        * Updates the internal datasets and refresh the ui.
-       * @param {Object} ds The updated dataset(s) of the form `{available: [], selected: [], additional: []}`
+       * @param {object} ds The updated dataset(s) of the form `{available: [], selected: [], additional: []}`
        */
       updateDataset: function(ds) {
         var i, l, lv, c, api,
@@ -790,7 +790,7 @@
        * Sets up event handlers for this control and its sub-elements
        *
        * @fires Swaplist#events
-      * @param {Object} swapupdate Fires when any bucket has its content changed.
+      * @param {object} swapupdate Fires when any bucket has its content changed.
        */
       handleEvents: function() {
         var self = this,

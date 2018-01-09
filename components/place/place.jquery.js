@@ -1,4 +1,4 @@
-import { Place, PLUGIN_NAME } from './place';
+import { Place, COMPONENT_NAME } from './place';
 
 
 /**
@@ -6,11 +6,11 @@ import { Place, PLUGIN_NAME } from './place';
  */
 $.fn.place = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Place(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Place(this, settings));
     }
   });
 };

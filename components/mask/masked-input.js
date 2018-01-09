@@ -8,7 +8,7 @@ import { SohoMaskAPI } from './mask-api';
 /**
  *
  */
-let PLUGIN_NAME = 'mask';
+let COMPONENT_NAME = 'mask';
 
 
 /**
@@ -312,7 +312,7 @@ SohoMaskedInput.prototype = {
    * Gets the safe raw value of an input field
    * @private
    * @param {?} inputValue
-   * @returns {String}
+   * @returns {string}
    */
   _getSafeRawValue: function getSafeRawValue(inputValue) {
     if (utils.isString(inputValue)) {
@@ -529,4 +529,4 @@ SohoMaskedInput.prototype = {
 };
 
 
-export { SohoMaskedInput, PLUGIN_NAME };
+export { SohoMaskedInput, COMPONENT_NAME };

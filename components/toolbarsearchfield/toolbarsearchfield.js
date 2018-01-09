@@ -32,7 +32,7 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  *
  * @class {ToolbarSearchfield}
  * @param {HTMLElement|jQuery[]} element
- * @param {Object} [settings]
+ * @param {object} [settings]
  */
 function ToolbarSearchfield(element, settings) {
   this.element = $(element);
@@ -301,7 +301,7 @@ ToolbarSearchfield.prototype = {
    * Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.
    * @param {Number|jQuery[]} leftBoundary
    * @param {Number|jQuery[]} rightBoundary
-   * @returns {Number}
+   * @returns {number}
    */
   getFillSize: function(leftBoundary, rightBoundary) {
     var leftBoundaryNum = 0,
@@ -821,7 +821,7 @@ ToolbarSearchfield.prototype = {
   /**
    * Used when the control has its settings or structural markup changed.  Rebuilds key parts of the control that
    * otherwise wouldn't automatically update.
-   * @param {Object} [settings]
+   * @param {object} [settings]
    * @returns {this}
    */
   updated: function(settings) {
@@ -892,17 +892,17 @@ ToolbarSearchfield.prototype = {
    *  This component fires the following events.
    *
    * @fires ToolbarSearchfield#events
-   * @param {Object} mousedown  Fires when the searchfield is clicked (if enabled).
-   * @param {Object} focusin  Fires when the searchfield is focused.
-   * @param {Object} keydown  Fires when a key is pressed inside of the searchfield.
-   * @param {Object} collapse  Fires when a `collapse` event is triggered externally on the searchfield.
+   * @param {object} mousedown  Fires when the searchfield is clicked (if enabled).
+   * @param {object} focusin  Fires when the searchfield is focused.
+   * @param {object} keydown  Fires when a key is pressed inside of the searchfield.
+   * @param {object} collapse  Fires when a `collapse` event is triggered externally on the searchfield.
    *
-   * @param {Object} beforeopen  Fires when a `beforeopen` event is triggered on the searchfield's optional categories menubutton.
+   * @param {object} beforeopen  Fires when a `beforeopen` event is triggered on the searchfield's optional categories menubutton.
    *
-   * @param {Object} navigate  Fires when a `navigate` event is triggered on the searchfield's parent toolbar.
+   * @param {object} navigate  Fires when a `navigate` event is triggered on the searchfield's parent toolbar.
    *
-   * @param {Object} keydown  Fires when a `keydown` event is triggered at the `document` level.
-   * @param {Object} resize  Fires when a `resize` event is triggered at the `body` level.
+   * @param {object} keydown  Fires when a `keydown` event is triggered at the `document` level.
+   * @param {object} resize  Fires when a `resize` event is triggered at the `body` level.
    */
   handleEvents: function() {
     var self = this;

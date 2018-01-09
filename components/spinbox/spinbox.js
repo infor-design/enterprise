@@ -9,7 +9,7 @@ import '../mask/masked-input.jquery';
 /**
  *
  */
-let PLUGIN_NAME = 'spinbox';
+let COMPONENT_NAME = 'spinbox';
 
 
 /**
@@ -35,9 +35,9 @@ let SPINBOX_DEFAULTS = {
 function Spinbox(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, SPINBOX_DEFAULTS);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Plugin Methods
@@ -469,7 +469,7 @@ Spinbox.prototype = {
   /**
    * Sanitizes the value of the input field to an integer if it isn't already established.
    * @param {Number|String} val - will be converted to a number if it's a string.
-   * @returns {Number}
+   * @returns {number}
    */
   checkForNumeric: function(val) {
     // Allow for NULL
@@ -599,19 +599,19 @@ Spinbox.prototype = {
     this.buttons.down.remove();
     this.element.off('focus.spinbox blur.spinbox keydown.spinbox keyup.spinbox');
     this.element.unwrap();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
    * Sets up event handlers for this control and its sub-elements
    *
    * @listens Spinbox#events
-   * @param {Object} focus  &nbsp;-&nbsp;
-   * @param {Object} blur  &nbsp;-&nbsp;
-   * @param {Object} keydown  &nbsp;-&nbsp;
-   * @param {Object} keypress  &nbsp;-&nbsp;
-   * @param {Object} keyup  &nbsp;-&nbsp;
-   * @param {Object} afterpaste  &nbsp;-&nbsp;
+   * @param {object} focus  &nbsp;-&nbsp;
+   * @param {object} blur  &nbsp;-&nbsp;
+   * @param {object} keydown  &nbsp;-&nbsp;
+   * @param {object} keypress  &nbsp;-&nbsp;
+   * @param {object} keyup  &nbsp;-&nbsp;
+   * @param {object} afterpaste  &nbsp;-&nbsp;
    */
   bindEvents: function() {
     var self = this,
@@ -670,4 +670,4 @@ Spinbox.prototype = {
 };
 
 
-export { Spinbox, PLUGIN_NAME };
+export { Spinbox, COMPONENT_NAME };

@@ -13,7 +13,7 @@ import '../popupmenu/popupmenu.jquery';
 /**
  * Component Name
  */
-const PLUGIN_NAME = 'autocomplete';
+const COMPONENT_NAME = 'autocomplete';
 
 /**
  * Default Autocomplete Result Item Template.  This can be modified to add data points that
@@ -31,7 +31,7 @@ const DEFAULT_AUTOCOMPLETE_TEMPLATE = `<li id="{{listItemId}}" data-index="{{ind
 * term for a match. This is configurable in the event that the component you attach this to
 * needs a specific part of it searched (instead of the whole thing).
 * @param {String|Object} item - text string, or an object containing a 'label'.
-* @returns {String} The item or item label.
+* @returns {string} The item or item label.
 */
 const DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK = function (item) {
   const isString = typeof item === 'string';
@@ -69,12 +69,12 @@ const DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK = function resultIterator(it
 };
 
 /*
-  * @param {String} item
-  * @param {Object} options
-  * @param {String} [options.alias]
-  * @param {String} options.filterMode
-  * @param {String} options.term
-  * @returns {String}
+  * @param {string} item
+  * @param {object} options
+  * @param {string} [options.alias]
+  * @param {string} options.filterMode
+  * @param {string} options.term
+  * @returns {string}
   */
 const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, options) {
   let targetProp = item;
@@ -137,21 +137,21 @@ const AUTOCOMPLETE_DEFAULTS = {
 *
 * @class Autocomplete
 *
-* @param {String} element The api element.
-* @param {String} settings The settingselement
-* @param {String} source Defines the data to use, must be specified.
-* @param {String} sourceArguments If a source method is defined, this flexible
+* @param {string} element The api element.
+* @param {string} settings The settingselement
+* @param {string} source Defines the data to use, must be specified.
+* @param {string} sourceArguments If a source method is defined, this flexible
 * object can be passed into the source method, and augmented with parameters specific to the
 * implementation.
-* @param {Boolean} template If defined, use this to draw the contents of each
+* @param {boolean} template If defined, use this to draw the contents of each
 * search result instead of the default draw routine.
-* @param {String} filterMode The matching algorithm, startsWith and contains
+* @param {string} filterMode The matching algorithm, startsWith and contains
 * are supported - false will not filter client side
-* @param {Boolean} delay The delay between key strokes on the keypad before it
+* @param {boolean} delay The delay between key strokes on the keypad before it
 * thinks you stopped typing
-* @param {String} width Width of the open auto complete menu
-* @param {String} offset For the open menu, the left or top offset
-* @param {String} autoSelectFirstItem Whether or not to select he first item in the
+* @param {string} width Width of the open auto complete menu
+* @param {string} offset For the open menu, the left or top offset
+* @param {string} autoSelectFirstItem Whether or not to select he first item in the
 * list to be selected
 * @param {function} resultsCallback If defined, does not produce the results of the
 * Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback
@@ -161,9 +161,9 @@ function Autocomplete(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, AUTOCOMPLETE_DEFAULTS);
 
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Plugin Object
@@ -326,8 +326,8 @@ Autocomplete.prototype = {
     * Fires after the menu is populated with its contents.
     *
     * @event populated
-    * @property {Object} event - The jquery event object
-    * @property {Object} filterResult - The results of the filtering
+    * @property {object} event - The jquery event object
+    * @property {object} filterResult - The results of the filtering
     */
     this.element.trigger('populated', [filterResult]).focus();
 
@@ -482,7 +482,7 @@ Autocomplete.prototype = {
    * the Autocomplete's field or list, and if not, fires a "safe-blur" event on the element.
    *
    * @private
-   * @param {Object} e The event object passed in from the jQuery `.on()` listener.
+   * @param {object} e The event object passed in from the jQuery `.on()` listener.
    * @returns {void}
    */
   checkActiveElement() {
@@ -499,7 +499,7 @@ Autocomplete.prototype = {
       *  Fires after the input (and menu) both loose focus
       *
       * @event safe-blur
-      * @property {Object} event The input event object
+      * @property {object} event The input event object
       */
       self.element.trigger('safe-blur');
     }, 0);
@@ -526,8 +526,8 @@ Autocomplete.prototype = {
       *  Fires when the ajax request (source option) is completed
       *
       * @event requestend
-      * @property {Object} event The input event object
-      * @property {Array} An array containing the searchTerm and call back function
+      * @property {object} event The input event object
+      * @property {array} An array containing the searchTerm and call back function
       */
       self.element.trigger('requestend', [searchTerm, response]);
 
@@ -557,8 +557,8 @@ Autocomplete.prototype = {
       * Fires when the ajax request (source option) is initiated
       *
       * @event requeststart
-      * @property {Object} event The input event object
-      * @property {Array} event An array with the buffer in it
+      * @property {object} event The input event object
+      * @property {array} event An array with the buffer in it
       */
       self.element.trigger('requeststart', [buffer]);
 
@@ -694,7 +694,7 @@ Autocomplete.prototype = {
 
   /**
    * Update the component with new settings.
-   * @param {Object} settings The new settings object to use.
+   * @param {object} settings The new settings object to use.
    * @returns {void}
    */
   updated(settings) {
@@ -738,7 +738,7 @@ Autocomplete.prototype = {
   */
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
@@ -771,9 +771,9 @@ Autocomplete.prototype = {
       * Fires when the menu is opened.
       *
       * @event listopen
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} ui - The dialog object
+      * @type {object}
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
       */
       .off('listopen.autocomplete')
       .on('listopen.autocomplete', () => {
@@ -783,5 +783,5 @@ Autocomplete.prototype = {
 
 };
 
-export { Autocomplete, PLUGIN_NAME };
+export { Autocomplete, COMPONENT_NAME };
 /* eslint-enable no-nested-ternary */

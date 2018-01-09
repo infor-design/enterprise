@@ -33,13 +33,13 @@
     * The Timepicker Component provides a click/touch user interface for setting a time.
     *
     * @class TimePicker
-    * @param {String} timeFormat The time format
-    * @param {Number} minuteInterval  Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
-    * @param {Number} secondInterval  Integer from 1 to 60.
-    * @param {String} mode  can be set to 'standard', 'range',
+    * @param {string} timeFormat The time format
+    * @param {number} minuteInterval  Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
+    * @param {number} secondInterval  Integer from 1 to 60.
+    * @param {string} mode  can be set to 'standard', 'range',
     * @param {boolean} roundToInterval  if `false`, does not automatically round user-entered values from the pickers to their nearest interval.
     * @param {null|jQuery[]} [parentElement]  if defined as a jQuery-wrapped element, will be used as the target element.
-    * @param {String} returnFocus  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
+    * @param {string} returnFocus  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
     */
     function TimePicker(element) {
       this.settings = $.extend({}, settings);
@@ -213,7 +213,7 @@
 
       /**
        * Checks a time format value to see if it is a Military (24-hour) format.
-       * @param {String} value - a string value representing a time format.
+       * @param {string} value - a string value representing a time format.
        * @returns {boolean}
        */
       is24HourFormat: function(value) {
@@ -227,7 +227,7 @@
 
       /**
        * Checks a time format value to see if it includes seconds.
-       * @param {String} value - a string value representing a time format.
+       * @param {string} value - a string value representing a time format.
        * @returns {boolean}
        */
       hasSeconds: function(value) {
@@ -237,7 +237,7 @@
 
       /**
        * Gets a Locale-defined version of the time separator.
-       * @returns {String}
+       * @returns {string}
        */
       getTimeSeparator: function() {
         return Locale.calendar().dateFormat.timeSeparator;
@@ -624,8 +624,8 @@
 
       /**
        * Gets the value of the Timepicker field as an object separated into hours, minutes, (optional) seconds, and (optional) day period.
-       * @param {String} [value] - this method can optionally be passed a string-based time value to calculate instead of the current field's value.
-       * @returns {Object}
+       * @param {string} [value] - this method can optionally be passed a string-based time value to calculate instead of the current field's value.
+       * @returns {object}
        * @returns {Object.hours}
        * @returns {Object.minutes}
        * @returns {Object.seconds}
@@ -847,7 +847,7 @@
       /**
        * Getter method for retrieving the value of the Timepicker.
        * @param {boolean} [removePunctuation] - Gets rid of all the value's punctatuion on return.
-       * @returns {String}
+       * @returns {string}
        */
       value: function(removePunctuation) {
         var val = this.element.val();
@@ -903,7 +903,7 @@
 
       /**
        * Convert a string to boolean
-       * @param {String} val - a text string ("true" or "false") that can be converted to a boolean.
+       * @param {string} val - a text string ("true" or "false") that can be converted to a boolean.
        * @returns {boolean}
        */
       // TODO: Move this to Soho.utils?
@@ -958,11 +958,11 @@
       /**
        * Add any markup
        * @fires TimePicker#events
-       * @param {Object} click  &nbsp;-&nbsp;
-       * @param {Object} touchstart  &nbsp;-&nbsp;
-       * @param {Object} touchmove  &nbsp;-&nbsp;
-       * @param {Object} touchend  &nbsp;-&nbsp;
-       * @param {Object} blur  &nbsp;-&nbsp;
+       * @param {object} click  &nbsp;-&nbsp;
+       * @param {object} touchstart  &nbsp;-&nbsp;
+       * @param {object} touchmove  &nbsp;-&nbsp;
+       * @param {object} touchend  &nbsp;-&nbsp;
+       * @param {object} blur  &nbsp;-&nbsp;
        */
       handleEvents: function () {
         var self = this;

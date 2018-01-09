@@ -29,7 +29,7 @@
 
     /**
      * @constructor
-     * @param {Object} element
+     * @param {object} element
      */
     function Popdown(element) {
       this.settings = $.extend({}, settings);

@@ -39,16 +39,16 @@
     *
     * @class Lookup
     * @param {Function} click  Provide a special function to run when the dialog opens to customize the interaction entirely.
-    * @param {String} field  Field name to return from the dataset or can be a function which returns a string on logic
-    * @param {String} title   Dialog title to show, or befault shows  field label + "Lookup"
-    * @param {Array} buttons  Pass dialog buttons or Cancel / Apply
-    * @param {Object} options  Options to pass to the datagrid
+    * @param {string} field  Field name to return from the dataset or can be a function which returns a string on logic
+    * @param {string} title   Dialog title to show, or befault shows  field label + "Lookup"
+    * @param {array} buttons  Pass dialog buttons or Cancel / Apply
+    * @param {object} options  Options to pass to the datagrid
     * @param {Function} beforeShow  Call back that executes async before the lookup is opened.
-    * @param {String} modalContent  Custom modal markup can be sent in here
-    * @param {Boolean} editable  Can the user type text in the field
-    * @param {String} autoApply  If set to false the dialog wont apply the value on clicking a value.
+    * @param {string} modalContent  Custom modal markup can be sent in here
+    * @param {boolean} editable  Can the user type text in the field
+    * @param {string} autoApply  If set to false the dialog wont apply the value on clicking a value.
     * @param {Function} validator  A function that fires to let you validate form items on open and select
-    * @param {Boolean} autoWidth  If true the field will grow/change in size based on the content selected.
+    * @param {boolean} autoWidth  If true the field will grow/change in size based on the content selected.
     *
     */
     function Lookup(element) {

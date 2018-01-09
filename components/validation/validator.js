@@ -16,7 +16,7 @@ let COMPONENT_NAME = 'Validator';
 /**
  * @class Validator
  * @constructor
- * @param {Object} element
+ * @param {object} element
  */
 function Validator(element) {
   this.element = $(element);
@@ -322,7 +322,7 @@ Validator.prototype = {
    * @private
    * @param {jQuery[]}
    * @param {jQuery.Event} e
-   * @returns {Array}
+   * @returns {array}
    */
   getTypes: function(field, e) {
     var filters = this.filterValidations(field.attr('data-validation-events'), e.type),
@@ -573,8 +573,8 @@ Validator.prototype = {
    * Adds a message/icon to a form field.
    *
    * @param {jQuery[]} field
-   * @param {String} message
-   * @param {String} type
+   * @param {string} message
+   * @param {string} type
    * @param {boolean} inline
    * @param {boolean} showTooltip
    * @param {boolean} isAlert

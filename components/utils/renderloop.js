@@ -173,7 +173,7 @@
 
 
     /**
-     * @return {Number}
+     * @return {number}
      */
     totalDuration: function() {
       return timestamp() - this.startTime;
@@ -182,7 +182,7 @@
 
     /**
      * External method for getting the callback queue contents
-     * @returns {Array}
+     * @returns {array}
      */
     queue: function() {
       return this.items;
@@ -229,8 +229,8 @@
     /**
      * @param {RenderLoopItem|function} loopItem - (can also be the "updateCallback" function)
      * @param {function} [timeoutCallback]
-     * @param {Number} [duration] = 0
-     * @param {String} [namespace]
+     * @param {number} [duration] = 0
+     * @param {string} [namespace]
      * @returns {RenderLoopItem}
      */
     register: function(loopItem, timeoutCallback, duration, namespace) {
@@ -249,7 +249,7 @@
 
     /**
      * @param {function} callback
-     * @param {String} [namespace]
+     * @param {string} [namespace]
      */
     unregister: function(callback, namespace) {
       if (typeof callback !== 'function' && typeof callback !== 'string' && typeof namespace !== 'string') {
@@ -273,7 +273,7 @@
      * @private
      * Uses a callback function, or a defined namespace, to grab a RenderLoop item from the queue.
      * @param {function} callback
-     * @param {String} [namespace]
+     * @param {string} [namespace]
      * @returns {RenderLoopItem}
      */
     _getFromQueue: function(updateCallback, namespace) {
@@ -358,7 +358,7 @@
 
     /**
      * @param {function} callback
-     * @param {String} [namespace]
+     * @param {string} [namespace]
      * @returns {RenderLoopItem}
      */
     pause: function(callback, namespace) {
@@ -376,7 +376,7 @@
 
     /**
      * @param {function} callback
-     * @param {String} [namespace]
+     * @param {string} [namespace]
      * @returns {RenderLoopItem}
      */
     resume: function(callback, namespace) {

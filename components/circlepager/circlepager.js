@@ -17,7 +17,7 @@ const CIRCLEPAGER_DEFAULTS = {
 * @class CirclePager
 * @param {Integer} slidesToShow  The number of slides to show in one view / pane
 * @param {Integer} startingSlide  First showing slide/group, an 0-based integer
-* @param {Boolean} loop   Setting loop: true will loop back after next/previous reached to end
+* @param {boolean} loop   Setting loop: true will loop back after next/previous reached to end
 *
 */
 function CirclePager(element, settings) {
@@ -194,7 +194,7 @@ CirclePager.prototype = {
 
   /**
   * Show a slide to First Slide
-  * @param {String} index  The index of the slide to show (0 based)
+  * @param {string} index  The index of the slide to show (0 based)
   */
   show(index) {
     if (!this.isActive) {

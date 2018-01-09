@@ -16,7 +16,7 @@
 
 ## Code Example
 
-Alerts are just specially classed icons. You can added alert icons by adding an svg element with the icons. You should also include an audible span for better accessibility.
+Alerts are just specially classed icons. You can added alert icons by adding an svg element with the icon xlink:href pointing to the icon's id. You should also include an audible span for better accessibility.
 
 ```html
 

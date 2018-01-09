@@ -112,16 +112,16 @@ const COLORPICKER_DEFAULTS = {
 * The ColorPicker Component is a trigger field with a listing colors that can be selected.
 *
 * @class ColorPicker
-* @param {String} element The plugin element for the constuctor
-* @param {String} settings The settings element.
-* @param {String} colors An array of objects of the form
+* @param {string} element The plugin element for the constuctor
+* @param {string} settings The settings element.
+* @param {string} colors An array of objects of the form
 * {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
-* @param {String} showLabel  Show the label if true vs the hex value if false.
-* @param {String} editable  If false, the field is readonly and transparent.
+* @param {string} showLabel  Show the label if true vs the hex value if false.
+* @param {string} editable  If false, the field is readonly and transparent.
 * I.E. The value cannot be typed only editable by selecting.
-* @param {String} uppercase  If false, lower case hex is allowed.
+* @param {string} uppercase  If false, lower case hex is allowed.
 * If true upper case hex is allowed. If showLabel is true this setting is ignored.
-* @param {String} colorOnly If true the field will be shrunk to only show the color portion.
+* @param {string} colorOnly If true the field will be shrunk to only show the color portion.
 */
 function ColorPicker(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COLORPICKER_DEFAULTS);
@@ -213,7 +213,7 @@ ColorPicker.prototype = {
 
   /**
   * Get the hex value based on a label. Does not handle duplicates.
-  * @param {String} label  The label to search for in the color labels.
+  * @param {string} label  The label to search for in the color labels.
   * @return {void}
   */
   getHexFromLabel(label) {
@@ -236,7 +236,7 @@ ColorPicker.prototype = {
   * Get the label value based on a hex. Does not handle duplicates.
   * Can pass with or without the #
   *
-  * @param {String} hex The hex to search for in the color set.
+  * @param {string} hex The hex to search for in the color set.
   * @return {void}
   */
   getLabelFromHex(hex) {
@@ -345,8 +345,8 @@ ColorPicker.prototype = {
 
   /**
   * Set the visible color in the field
-  * @param {String} hex The hex value to use (can have the # or not).
-  * @param {String} label The text to display
+  * @param {string} hex The hex value to use (can have the # or not).
+  * @param {string} label The text to display
   * @returns {void}
   */
   setColor(hex, label) {
@@ -551,7 +551,7 @@ ColorPicker.prototype = {
 
   /**
   * Detach events and restore DOM to default.
-  * @returns {Object} The plugin api (this).
+  * @returns {object} The plugin api (this).
   */
   destroy() {
     this.teardown();

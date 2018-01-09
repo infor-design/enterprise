@@ -8,7 +8,7 @@ import '../icons/icons.jquery';
 /**
  * Component name as referenced by jQuery/event namespace/etc
  */
-let PLUGIN_NAME = 'button';
+let COMPONENT_NAME = 'button';
 
 /**
  * Component Defaults
@@ -25,16 +25,16 @@ let BUTTON_DEFAULTS = {
  *
  * @class Button
  *
- * @param {String} toggleOnIcon  The icon to use for on state on toggle buttons
- * @param {String} toggleOffIcon  The icon to use for off state on toggle buttons
- * @param {String} replaceText  If true the selection will be used to replace the content in the button.
+ * @param {string} toggleOnIcon  The icon to use for on state on toggle buttons
+ * @param {string} toggleOffIcon  The icon to use for off state on toggle buttons
+ * @param {string} replaceText  If true the selection will be used to replace the content in the button.
  */
 function Button(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings, BUTTON_DEFAULTS);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 
@@ -200,15 +200,15 @@ Button.prototype = {
       moreTooltip.destroy();
     }
 
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
    *  This component fires the following events.
    *
    * @fires Autocomplete#events
-   * @param {Object} click  Fires when the button is clicked (if enabled).
-   * @param {Object} focus  Fires when the menu is focused.
+   * @param {object} click  Fires when the button is clicked (if enabled).
+   * @param {object} focus  Fires when the menu is focused.
    */
   handleEvents: function () {
 
@@ -216,4 +216,4 @@ Button.prototype = {
 };
 
 
-export { Button, PLUGIN_NAME };
+export { Button, COMPONENT_NAME };

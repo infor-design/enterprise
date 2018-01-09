@@ -29,15 +29,15 @@
   * The Step Chart Component is displays visual info on step completion.
   *
   * @class StepChart
-  * @param {Number} steps The number of steps to show.
-  * @param {Number} completed The number of steps complete (linear).
-  * @param {Number} inProgress The number of the in progress step (linear).
-  * @param {Boolean} iconType The icon to display fx. 'icon-error', 'icon-confirm'
-  * @param {String} completedText The completed text or uses a localized 'N of N Steps complete'. You can use {0} and {1} to replace n of n in the string.
-  * @param {Boolean} extraText The additional text to show on the right. Defaults to none. You can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
-  * @param {String} completedColor The color to show completed steps. Defaults to primary color.
-  * @param {String} allCompletedColor The color to steps when all are completed. Defaults to primary color.
-  * @param {String} inProgressColor The color to show in-progress steps. Defaults to ruby02.
+  * @param {number} steps The number of steps to show.
+  * @param {number} completed The number of steps complete (linear).
+  * @param {number} inProgress The number of the in progress step (linear).
+  * @param {boolean} iconType The icon to display fx. 'icon-error', 'icon-confirm'
+  * @param {string} completedText The completed text or uses a localized 'N of N Steps complete'. You can use {0} and {1} to replace n of n in the string.
+  * @param {boolean} extraText The additional text to show on the right. Defaults to none. You can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
+  * @param {string} completedColor The color to show completed steps. Defaults to primary color.
+  * @param {string} allCompletedColor The color to steps when all are completed. Defaults to primary color.
+  * @param {string} inProgressColor The color to show in-progress steps. Defaults to ruby02.
   *
   */
   function StepChart(element, options) {

@@ -1,4 +1,4 @@
-import { Textarea, PLUGIN_NAME } from './textarea';
+import { Textarea, COMPONENT_NAME } from './textarea';
 
 
 /**
@@ -6,11 +6,11 @@ import { Textarea, PLUGIN_NAME } from './textarea';
  */
 $.fn.textarea = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Textarea(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Textarea(this, settings));
     }
   });
 };

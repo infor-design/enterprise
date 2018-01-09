@@ -11,7 +11,7 @@ import '../tooltip/tooltip.jquery';
 /**
  *
  */
-let PLUGIN_NAME = 'pager';
+let COMPONENT_NAME = 'pager';
 
 
 /**
@@ -38,24 +38,24 @@ let PAGER_NON_NUMBER_BUTTON_SELECTOR = 'li:not(.pager-prev):not(.pager-next):not
 * The Pager Component supports paging on lists.
 *
 * @class Pager
-* @param {String} componentAPI  If defined, becomes the definitive way to call methods on parent component.
-* @param {String} type  Different types of pagers: list, table and more
-* @param {String} position  Can be on 'bottom' or 'top'.
-* @param {Number} activePage  Start on this page
-* @param {Boolean} hideOnOnePage  If true, hides the pager if there is only one page worth of results.
+* @param {string} componentAPI  If defined, becomes the definitive way to call methods on parent component.
+* @param {string} type  Different types of pagers: list, table and more
+* @param {string} position  Can be on 'bottom' or 'top'.
+* @param {number} activePage  Start on this page
+* @param {boolean} hideOnOnePage  If true, hides the pager if there is only one page worth of results.
 * @param {Function} source  Call Back Function for Pager Data Source
-* @param {Number} pagesize  Can be calculated or a specific number
-* @param {Array} pagesizes  Array of numbers of the page size selector
-* @param {Boolean} showPageSizeSelector  If false will not show page size selector
-* @param {Boolean} indeterminate  If true will not show anything that lets you go to a specific page
+* @param {number} pagesize  Can be calculated or a specific number
+* @param {array} pagesizes  Array of numbers of the page size selector
+* @param {boolean} showPageSizeSelector  If false will not show page size selector
+* @param {boolean} indeterminate  If true will not show anything that lets you go to a specific page
 *
 */
 function Pager(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PAGER_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 
@@ -712,7 +712,7 @@ Pager.prototype = {
 
 
   /**
-   * @param {Object} [settings]
+   * @param {object} [settings]
    * @returns {this}
    */
   updated: function(settings) {
@@ -726,7 +726,7 @@ Pager.prototype = {
 
   /**
    * Updates this instance of pager with externally-provided settings.
-   * @param {Object} pagingInfo - contains settings that will change buttons on the pager.
+   * @param {object} pagingInfo - contains settings that will change buttons on the pager.
    * @param {number} pagingInfo.pagesize - the number of items visible per page
    * @param {number} pagingInfo.total - the total number of pages
    * @param {number} pagingInfo.activePage - the currently visible page
@@ -780,9 +780,9 @@ Pager.prototype = {
    * Tear down and detatch all events
    */
   destroy: function() {
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
 
-export { Pager, PLUGIN_NAME };
+export { Pager, COMPONENT_NAME };

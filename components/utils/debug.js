@@ -12,7 +12,7 @@ export let enableTimeLogging = false;
 
 
 /**
- * @param {String} [label]
+ * @param {string} [label]
  */
 export function logTimeStart(label) {
   if (enableTimeLogging) {
@@ -22,7 +22,7 @@ export function logTimeStart(label) {
 
 
 /**
- * @param {String} [label]
+ * @param {string} [label]
  */
 export function logTimeEnd(label) {
   if (enableTimeLogging) {

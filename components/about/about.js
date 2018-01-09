@@ -2,10 +2,19 @@ import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
-// Plugin Name
-const PLUGIN_NAME = 'about';
+const COMPONENT_NAME = 'about';
 
-// Default Settings
+/**
+* @namespace
+* @property {string} appName The Main Application Name to display in the header.
+* @property {string} content Additional text content to display at the top.
+* @property {string} copyrightYear The year displayed in the copyright, defaults to current year.
+* @property {boolean} deviceSpecs Determines whether or not to display device
+* information. This information includes Browser, Platform, Locale and if Cookies are Enabled.
+* @property {string} productName Additional product name information to display.
+* @property {boolean} useDefaultCopyright Add the Legal Approved Infor Copy Right Text.
+* @property {string} version Semantic Version Number for example (4.0.0).
+*/
 const ABOUT_DEFAULTS = {
   appName: 'Infor Application Name',
   content: undefined,
@@ -20,24 +29,16 @@ const ABOUT_DEFAULTS = {
  * The About Dialog Component is displays information regarding the application.
  *
  * @class About
- * @param {String} element The component element.
- * @param {String} settings The component settings.
- * @param {String} appName The Main Application Name to display in the header.
- * @param {String} content Additional text content to display at the top.
- * @param {String} copyrightYear The year displayed in the copyright, defaults to current year.
- * @param {Boolean} deviceSpecs Determines whether or not to display device
- * information. This information includes Browser, Platform, Locale and if Cookies are Enabled.
- * @param {String} productName Additional product name information to display.
- * @param {Boolean} useDefaultCopyright Add the Legal Approved Infor Copy Right Text.
- * @param {String} version Semantic Version Number for example (4.0.0).
+ * @param {string} element The component element.
+ * @param {string} settings The component settings.
  *
  */
 function About(element, settings) {
   this.settings = utils.mergeSettings(element, settings, ABOUT_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 About.prototype = {
@@ -145,7 +146,7 @@ About.prototype = {
 
   /**
    * Return the browser specs. Currently returns browse, os, cookiesEnabled and locale
-   * @returns {String} The specs of the browser.
+   * @returns {string} The specs of the browser.
    */
   getDeviceSpecs() {
     const locale = navigator.appName === 'Microsoft Internet Explorer' ? navigator.userLanguage : navigator.language;
@@ -186,8 +187,8 @@ About.prototype = {
   /**
    * Update the component and apply current settings.
    *
-   * @param  {Object} settings the settings to update to.
-   * @return {Object} The plugin api for chaining.
+   * @param  {object} settings the settings to update to.
+   * @return {object} The plugin api for chaining.
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
@@ -205,8 +206,8 @@ About.prototype = {
     * Fires when the dialog is closing.
     *
     * @event close
-    * @property {Object} event - The jquery event object
-    * @property {Object} ui - The dialog object
+    * @property {object} event - The jquery event object
+    * @property {object} ui - The dialog object
     */
     if (modalApi) {
       modalApi.close();
@@ -216,8 +217,8 @@ About.prototype = {
     * Fires after the dialog is done closing and removed.
     *
     * @event afterclose
-    * @property {Object} event - The jquery event object
-    * @property {Object} ui - The dialog object
+    * @property {object} event - The jquery event object
+    * @property {object} ui - The dialog object
     */
 
     if (this.isBody) {
@@ -239,7 +240,7 @@ About.prototype = {
 
     this.buttons.off();
     this.element.off('open.about');
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
@@ -262,8 +263,8 @@ About.prototype = {
     * Fires when the about dialog is opening, allowing you to veto by returning false.
     *
     * @event beforeopen
-    * @property {Object} event - The jquery event object.
-    * @property {Object} ui - The dialog object
+    * @property {object} event - The jquery event object.
+    * @property {object} ui - The dialog object
     */
     this.modal.data('modal').element.on('beforeopen.about', () => {
       this.modal.find('.modal-body').scrollTop(0);
@@ -280,4 +281,4 @@ About.prototype = {
   }
 };
 
-export { About, PLUGIN_NAME };
+export { About, COMPONENT_NAME };

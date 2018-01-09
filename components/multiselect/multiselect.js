@@ -8,7 +8,7 @@ import '../dropdown/dropdown.jquery';
 /**
  *
  */
-let PLUGIN_NAME = 'multiselect';
+let COMPONENT_NAME = 'multiselect';
 
 
 /**
@@ -28,20 +28,20 @@ let MULTISELECT_DEFAULTS = {
  * The MultiSelect Component allows selecting multiple items from a list
  *
  * @class MultiSelect
- * @param {String} filterMode  The search mode to use, can be 'contains' or 'startsWith'
- * @param {Number} maxSelected  The max number of items which can be selected
- * @param {String} moveSelected   Move selected options in each group to just underneath their corresponding group headers.
- * @param {Boolean} showEmptyGroupHeaders  If true groups with no items will still show the empty group header.
- * @param {Boolean} showSelectAll  Show the select all text/option.
+ * @param {string} filterMode  The search mode to use, can be 'contains' or 'startsWith'
+ * @param {number} maxSelected  The max number of items which can be selected
+ * @param {string} moveSelected   Move selected options in each group to just underneath their corresponding group headers.
+ * @param {boolean} showEmptyGroupHeaders  If true groups with no items will still show the empty group header.
+ * @param {boolean} showSelectAll  Show the select all text/option.
  * @param {Function} source  The calback for ajax.
  *
  */
 function MultiSelect(element, settings) {
   this.settings = utils.mergeSettings(element, settings, MULTISELECT_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 
@@ -120,9 +120,9 @@ MultiSelect.prototype = {
   destroy: function() {
     this.dropdown.destroy();
     this.element.off();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
 
-export { MultiSelect, PLUGIN_NAME };
+export { MultiSelect, COMPONENT_NAME };

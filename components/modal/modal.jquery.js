@@ -1,4 +1,4 @@
-import { Modal, PLUGIN_NAME } from './modal';
+import { Modal, COMPONENT_NAME } from './modal';
 
 /**
  * jQuery Component Wrapper for Modal
@@ -7,11 +7,11 @@ $.fn.modal = function(settings) {
 
   // Support Chaining and Init the Control or Set Settings
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME),
+    var instance = $.data(this, COMPONENT_NAME),
       elem = $(this);
 
     if (!elem.is('.modal')) {
-      instance = elem.closest('.modal').data(PLUGIN_NAME);
+      instance = elem.closest('.modal').data(COMPONENT_NAME);
     }
 
     if (instance) {
@@ -23,6 +23,6 @@ $.fn.modal = function(settings) {
       return;
     }
 
-    instance = $.data(this, PLUGIN_NAME, new Modal(this, settings));
+    instance = $.data(this, COMPONENT_NAME, new Modal(this, settings));
   });
 };

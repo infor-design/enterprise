@@ -7,7 +7,7 @@ import { utils } from '../utils/utils';
 /**
  *
  */
-let PLUGIN_NAME = 'textarea';
+let COMPONENT_NAME = 'textarea';
 
 
 /**
@@ -39,9 +39,9 @@ let TEXTAREA_DEFAULTS = {
 function Textarea(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TEXTAREA_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 
@@ -96,7 +96,7 @@ Textarea.prototype = {
 
   /**
    * Checks a keycode value and determines if it belongs to a printable character.
-   * @param {Number} keycode - a number representing an ASCII keycode value
+   * @param {number} keycode - a number representing an ASCII keycode value
    * @returns {boolean}
    */
   isPrintable: function(keycode) {
@@ -164,8 +164,8 @@ Textarea.prototype = {
 
   /**
    * Counts the number of line breaks in a string
-   * @param {String} s
-   * @returns {Number}
+   * @param {string} s
+   * @returns {number}
    */
   countLinebreaks: function(s) {
     return (s.match(/\n/g) || []).length;
@@ -248,7 +248,7 @@ Textarea.prototype = {
    * Destroys this component instance and unlinks it from its element.
    */
   destroy: function() {
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
     if (this.printarea && this.printarea.length) {
       this.printarea.remove();
     }
@@ -262,10 +262,10 @@ Textarea.prototype = {
    *  This component fires the following events.
    *
    * @fires Textarea#events
-   * @param {Object} keyup  Fires when the button is clicked (if enabled).
-   * @param {Object} focus  Fires when the menu is focused.
-   * @param {Object} keypress  &nbsp;-&nbsp;
-   * @param {Object} blur  &nbsp;-&nbsp;
+   * @param {object} keyup  Fires when the button is clicked (if enabled).
+   * @param {object} focus  Fires when the menu is focused.
+   * @param {object} keypress  &nbsp;-&nbsp;
+   * @param {object} blur  &nbsp;-&nbsp;
    */
   handleEvents: function() {
     var self = this;
@@ -309,4 +309,4 @@ Textarea.prototype = {
 };
 
 
-export { Textarea, PLUGIN_NAME };
+export { Textarea, COMPONENT_NAME };

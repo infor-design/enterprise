@@ -13,7 +13,7 @@ import '../tooltip/tooltip.jquery';
 /**
  * Component Name
  */
-let PLUGIN_NAME = 'slider';
+let COMPONENT_NAME = 'slider';
 
 
 /**
@@ -34,12 +34,12 @@ let SLIDER_DEFAULTS = {
 /**
  * Touch Enabled/Responsive and Accessible Slider Control
  * @class {Slider}
- * @param {Array} value
- * @param {Number} min
- * @param {Number} max
+ * @param {array} value
+ * @param {number} min
+ * @param {number} max
  * @param {boolean} range
  * @param {undefined|Number} step
- * @param {Array} ticks
+ * @param {array} ticks
  * @param {undefined|Array} tooltipContent
  * @param {boolean} persistTooltip
  */
@@ -47,9 +47,9 @@ function Slider(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, SLIDER_DEFAULTS);
 
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Check if is an integer
@@ -549,8 +549,8 @@ Slider.prototype = {
 
   /**
    * @private
-   * @param {Number} value
-   * @returns {Number}
+   * @param {number} value
+   * @returns {number}
    */
   convertValueToPercentage: function(value) {
     return (((value - this.settings.min) / (this.settings.max - this.settings.min)) * 100);
@@ -558,8 +558,8 @@ Slider.prototype = {
 
   /**
    * @private
-   * @param {Number} percentage
-   * @returns {Number}
+   * @param {number} percentage
+   * @returns {number}
    */
   convertPercentageToValue: function(percentage) {
     var val = (percentage / 100) * (this.settings.max - this.settings.min) + this.settings.min;
@@ -568,7 +568,7 @@ Slider.prototype = {
 
   /**
    * Gets a 10% increment/decrement as a value within the range of minimum and maximum values.
-   * @returns {Number}
+   * @returns {number}
    */
   getIncrement: function() {
     var increment = 0.1 * (this.settings.max - this.settings.min);
@@ -629,8 +629,8 @@ Slider.prototype = {
    * Also visually updates the handle on the visual part of the slider.
    * @param {jQuery.Event} e
    * @param {jQuery[]} handle
-   * @param {Number} [value] - target value - will be automatically determined if not passed.
-   * @param {Number} [increment] - an integer that will be used as the amount to increment.
+   * @param {number} [value] - target value - will be automatically determined if not passed.
+   * @param {number} [increment] - an integer that will be used as the amount to increment.
    */
   increaseValue: function(e, handle, value, increment) {
     e.preventDefault();
@@ -666,8 +666,8 @@ Slider.prototype = {
    * Also visually updates the handle on the visual part of the slider.
    * @param {jQuery.Event} e
    * @param {jQuery[]} handle
-   * @param {Number} [value] - target value - will be automatically determined if not passed.
-   * @param {Number} [decrement] - an integer that will be used as the amount to decrement.
+   * @param {number} [value] - target value - will be automatically determined if not passed.
+   * @param {number} [decrement] - an integer that will be used as the amount to decrement.
    */
   decreaseValue: function(e, handle, value, decrement) {
     e.preventDefault();
@@ -794,8 +794,8 @@ Slider.prototype = {
   /**
    * Allows a handle to animate to a new position if the difference in value is greater than 3% of the size of the range.
    * @param {jQuery[]} handle
-   * @param {Number} originalVal
-   * @param {Number} updatedVal
+   * @param {number} originalVal
+   * @param {number} updatedVal
    */
   checkHandleDifference: function(handle, originalVal, updatedVal) {
     // IE9 doesn't support animation so return immediately.
@@ -911,9 +911,9 @@ Slider.prototype = {
   /**
    * External Facing Function to set the value. Works as percent for now but need it on ticks.
    * NOTE:  Does not visually update the range.  Use _setValue()_ to do both in one swoop.
-   * @param {Number} minVal
-   * @param {Number} [maxVal]
-   * @returns {Array}
+   * @param {number} minVal
+   * @param {number} [maxVal]
+   * @returns {array}
    */
   value: function(minVal, maxVal) {
     var self = this;
@@ -1025,9 +1025,9 @@ Slider.prototype = {
 
   /**
    * Externally-facing function that updates the current values and correctly animates the range handles, if applicable.
-   * @param {Number} lowVal
-   * @param {Number} [highVal]
-   * @returns {Array}
+   * @param {number} lowVal
+   * @param {number} [highVal]
+   * @returns {array}
    */
   setValue: function(lowVal, highVal) {
     var oldVals = this.value();
@@ -1048,7 +1048,7 @@ Slider.prototype = {
   // This method will be completely removed in v4.3 and v5.x.  Please update your code.
   /**
    * @private
-   * @returns {Array}
+   * @returns {array}
    */
   refresh: function(lowVal, highVal) {
     return this.setValue(lowVal, highVal);
@@ -1093,18 +1093,18 @@ Slider.prototype = {
    */
   destroy: function() {
     this.teardown();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
    * @fires Slider#events
-   * @param {Object} mousedown
-   * @param {Object} click
-   * @param {Object} keydown
-   * @param {Object} keyup
-   * @param {Object} touchend
-   * @param {Object} touchcancel
-   * @param {Object} updated
+   * @param {object} mousedown
+   * @param {object} click
+   * @param {object} keydown
+   * @param {object} keyup
+   * @param {object} touchend
+   * @param {object} touchcancel
+   * @param {object} updated
    * @returns {this}
    */
   bindEvents: function() {
@@ -1145,4 +1145,4 @@ Slider.prototype = {
 };
 
 
-export { Slider, PLUGIN_NAME };
+export { Slider, COMPONENT_NAME };

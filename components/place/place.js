@@ -4,7 +4,7 @@ import { utils, DOM } from '../utils/utils';
 /**
  *
  */
-let PLUGIN_NAME = 'place';
+let COMPONENT_NAME = 'place';
 
 
 /**
@@ -157,9 +157,9 @@ Place.prototype = {
   handleEvents: function() {
     var self = this;
 
-    this.element.on('place.' + PLUGIN_NAME, function placementEventHandler(e, x, y) {
+    this.element.on('place.' + COMPONENT_NAME, function placementEventHandler(e, x, y) {
       self.place(new PlacementObject({ x: x, y: y }));
-    }).on('updated.' + PLUGIN_NAME, function updatedEventHandler() {
+    }).on('updated.' + COMPONENT_NAME, function updatedEventHandler() {
       self.updated();
     });
 
@@ -903,7 +903,7 @@ Place.prototype = {
     this.clearOldStyles();
     this.element.removeClass('placeable');
 
-    this.element.off('updated.' + PLUGIN_NAME + ' place.' + PLUGIN_NAME);
+    this.element.off('updated.' + COMPONENT_NAME + ' place.' + COMPONENT_NAME);
 
     this.element.trigger('afterteardown');
     return this;
@@ -912,9 +912,9 @@ Place.prototype = {
   // Teardown - Remove added markup and events
   destroy: function() {
     this.teardown();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
 
-export { PlacementObject, Place, PLUGIN_NAME };
+export { PlacementObject, Place, COMPONENT_NAME };

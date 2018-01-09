@@ -18,7 +18,7 @@
   * The Locale component handles i18n
   *
   * @class Locale
-  * @param {String} currentLocale  The Currently Set Locale
+  * @param {string} currentLocale  The Currently Set Locale
   *
   */
   let Locale = { //jshint ignore:line
@@ -96,7 +96,7 @@
     /**
     * Set the currently used colors.
     *
-    * @param {String} locale  The locale to fetch and set.
+    * @param {string} locale  The locale to fetch and set.
     */
     set: function (locale) {
       var self = this;
@@ -167,7 +167,7 @@
     * Format a Date Object and return it parsed in the current locale.
     *
     * @param {Date} value  The date to show in the current locale.
-    * @param {Object} attribs  Additional formatting settings.
+    * @param {object} attribs  Additional formatting settings.
     */
     formatDate: function(value, attribs) {
 
@@ -289,9 +289,9 @@
     /**
     * Take a date string written in the current locale and parse it into a Date Object
     *
-    * @param {String} dateString  The string to parse in the current format
-    * @param {String} dateFormat  The source format fx yyyy-MM-dd
-    * @param {Boolean} isStrict  If true missing date parts will be considered invalid. If false the current month/day.
+    * @param {string} dateString  The string to parse in the current format
+    * @param {string} dateFormat  The source format fx yyyy-MM-dd
+    * @param {boolean} isStrict  If true missing date parts will be considered invalid. If false the current month/day.
     */
     parseDate: function(dateString, dateFormat, isStrict) {
       var thisLocaleCalendar = this.calendar(),
@@ -648,8 +648,8 @@
     * Format a decimal with thousands and padding in the current locale.
     * http://mzl.la/1MUOEWm
     *
-    * @param {Number} number  The source number.
-    * @param {Boolean} options  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+    * @param {number} number  The source number.
+    * @param {boolean} options  Additional options.style can be decimal, currency, percent and integer options.percentSign, options.minusSign, options.decimal, options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
     */
     formatNumber: function(number, options) {
       //Lookup , decimals, decimalSep, thousandsSep
@@ -778,7 +778,7 @@
     /**
     * Take a Formatted Number and return a real number
     *
-    * @param {String} input  The source number (as a string).
+    * @param {string} input  The source number (as a string).
     *
     */
     parseNumber: function(input) {
@@ -808,7 +808,7 @@
     /**
     * Overridable culture messages
     *
-    * @param {String} key  The key to search for on the string.
+    * @param {string} key  The key to search for on the string.
     *
     */
     translate: function(key, showAsUndefined) {

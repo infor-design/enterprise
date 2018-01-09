@@ -47,19 +47,19 @@
     * A trigger field for uploading a single file.
     *
     * @class FileUploadAdvanced
-    * @param {Boolean} isStandalone  On page(true) -or- on modal (false) , this is used for some visual style only.
-    * @param {Boolean} allowedTypes  Restrict file types(ie. 'jpg|png|gif') ['*' all types]
-    * @param {Boolean} maxFilesInProcess  Max number of files can be uploaded
-    * @param {Boolean} maxFileSize  Max file size in bytes, -1 for unlimited
-    * @param {Boolean} fileName  Variable name to read from server
-    * @param {Boolean} isDisabled  Make control disabled
-    * @param {Boolean} showBrowseButton  Add way to browse files to upload
+    * @param {boolean} isStandalone  On page(true) -or- on modal (false) , this is used for some visual style only.
+    * @param {boolean} allowedTypes  Restrict file types(ie. 'jpg|png|gif') ['*' all types]
+    * @param {boolean} maxFilesInProcess  Max number of files can be uploaded
+    * @param {boolean} maxFileSize  Max file size in bytes, -1 for unlimited
+    * @param {boolean} fileName  Variable name to read from server
+    * @param {boolean} isDisabled  Make control disabled
+    * @param {boolean} showBrowseButton  Add way to browse files to upload
     * @param {Function} send  Method for send file to upload
-    * @param {String} textDropArea  Text to show in drop area
-    * @param {String} textDropAreaWithBrowse  Text to show in drop area when browse option true
-    * @param {String} textBtnCancel  Hidden text for cancel button
-    * @param {String} textBtnCloseError  Hidden text for error close button
-    * @param {String} textBtnRemove  Hidden text for remove button
+    * @param {string} textDropArea  Text to show in drop area
+    * @param {string} textDropAreaWithBrowse  Text to show in drop area when browse option true
+    * @param {string} textBtnCancel  Hidden text for cancel button
+    * @param {string} textBtnCloseError  Hidden text for error close button
+    * @param {string} textBtnRemove  Hidden text for remove button
     *
     */
     function FileUploadAdvanced(element) {
@@ -227,7 +227,7 @@
 
       /**
       * Read the file contents using HTML5 FormData()
-      * @param {Object} files File object containing uploaded files.
+      * @param {object} files File object containing uploaded files.
       */
       handleFileUpload: function (files) {
         var s = this.settings,
@@ -356,8 +356,8 @@
 
       /**
       * Function you can implement to send data to the server.
-      * @param {Object} formData - Contains the form data / file data.
-      * @param {Object} status - Status of the upload operation
+      * @param {object} formData - Contains the form data / file data.
+      * @param {object} status - Status of the upload operation
       *
       */
       sendFileToServer: function (formData, status) {

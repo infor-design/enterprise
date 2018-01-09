@@ -7,15 +7,7 @@
   <section>
   
     
-
-
-  
-    
-
-
-  
-    <h2>Settings</h2>
-
+  <h2>Settings 0 </h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -28,13 +20,10 @@
           allowOnePane
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- If set to true, allows only one pane of the
+          If set to true, allows only one pane of the
 Accordion to be open at a time.  If an Accordion pane is open, and that pane
 contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
 
@@ -45,13 +34,10 @@ contains sub-headers only one of the pane's sub-headers can be open at a time. (
           displayChevron
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Displays a "Chevron" icon that sits off to the
+          Displays a "Chevron" icon that sits off to the
 right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
 
         </td>
@@ -61,13 +47,10 @@ right-most side of a top-level accordion header.  Used in place of an Expander (
           rerouteOnLinkClick
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Can be set to false if routing
+          Can be set to false if routing
 is externally handled
 
         </td>
@@ -77,19 +60,18 @@ is externally handled
           source
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- A callback function that when implemented
+          A callback function that when implemented
 provided a call back for "ajax loading" of tab contents on open.
 
         </td>
       </tr>
     </tbody>
   </table>
+
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -100,72 +82,6 @@ provided a call back for "ajax loading" of tab contents on open.
       <th>Returns</th>
     </thead>
     <tbody>
-      <tr>
-        <td>handleHeaderClick</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = The click event object
- </span>
-                
-                  <span>header () = The header query object
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Header Click Handler</p>
-
-        </td>
-        <td>
-          Returns false is the event should be ignored.
-Boolean
-        </td>
-      </tr>
-      <tr>
-        <td>handleAnchorClick</td>
-        <td>
-          
-                
-                  <span>e (Object) = The click event object.
- </span>
-                
-                  <span>anchor (Object) = The anchor jQuery object.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Anchor Click Handler</p>
-
-        </td>
-        <td>
-          Returns false is the event should be ignored.
-Boolean
-        </td>
-      </tr>
-      <tr>
-        <td>handleExpanderClick</td>
-        <td>
-          
-                
-                  <span>e (Object) = The click event object.
- </span>
-                
-                  <span>expander (Object) = The jquery expander DOM element.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Expander-Button Click Handler</p>
-
-        </td>
-        <td>
-          Returns false in some cases if the event should stop propagating.
-Boolean
-        </td>
-      </tr>
       <tr>
         <td>handleKeys</td>
         <td>
@@ -182,7 +98,7 @@ Boolean
         </td>
         <td>
           Returns false in some cases if the event should stop propagating.
-Boolean
+boolean
         </td>
       </tr>
       <tr>
@@ -190,7 +106,7 @@ Boolean
         <td>
           
                 
-                  <span>flatten (Bboolean) = If true, places all accordion headers in the root array.
+                  <span>flatten (boolean) = If true, places all accordion headers in the root array.
  </span>
                 
                   <span>addElementReference (boolean) = if true, includes a reference to the original
@@ -205,7 +121,7 @@ header element inside the structure (NOT valid JSON).
         </td>
         <td>
           The data the represents the accodion structure
-Object
+object
         </td>
       </tr>
       <tr>
@@ -213,7 +129,7 @@ Object
         <td>
           
                 
-                  <span>element (Object) = a jQuery Object containing either an expander button or an anchor tag.
+                  <span>element (object) = a jQuery object containing either an expander button or an anchor tag.
  </span>
                 
           
@@ -232,7 +148,7 @@ void
         <td>
           
                 
-                  <span>header (Object) = The jquery header element
+                  <span>header (object) = The jquery header element
  </span>
                 
           
@@ -243,7 +159,7 @@ void
         </td>
         <td>
           Whether or not the element is enabled.
-Boolean
+boolean
         </td>
       </tr>
       <tr>
@@ -251,7 +167,7 @@ Boolean
         <td>
           
                 
-                  <span>header (Object) = The jquery header element
+                  <span>header (object) = The jquery header element
  </span>
                 
           
@@ -270,7 +186,7 @@ boolean
         <td>
           
                 
-                  <span>header (Object) = The jquery header element
+                  <span>header (object) = The jquery header element
  </span>
                 
           
@@ -289,7 +205,7 @@ boolean
         <td>
           
                 
-                  <span>header (Object) = The jquery header element.
+                  <span>header (object) = The jquery header element.
  </span>
                 
           
@@ -308,7 +224,7 @@ void
         <td>
           
                 
-                  <span>header (Object) = The jquery header element.
+                  <span>header (object) = The jquery header element.
  </span>
                 
           
@@ -341,7 +257,7 @@ void
         <td>
           
                 
-                  <span>header (Object) = The jquery header element.
+                  <span>header (object) = The jquery header element.
  </span>
                 
           
@@ -397,7 +313,7 @@ Function
         <td>
           
                 
-                  <span>eventTarget (Object) = The event we are working with.
+                  <span>eventTarget (object) = The event we are working with.
  </span>
                 
           
@@ -408,7 +324,7 @@ Function
         </td>
         <td>
           An object with the accordion dom elements in it.
-Object
+object
         </td>
       </tr>
       <tr>
@@ -416,7 +332,7 @@ Object
         <td>
           
                 
-                  <span>element (Object) = a jQuery Object containing either an expander button or an anchor tag.
+                  <span>element (object) = a jQuery object containing either an expander button or an anchor tag.
  </span>
                 
                   <span>noDescend (boolean) = if it's normally possible to descend into a sub-accordion, prevent
@@ -440,7 +356,7 @@ void
         <td>
           
                 
-                  <span>element () = a jQuery Object containing either an expander button
+                  <span>element () = a jQuery object containing either an expander button
 or an anchor tag.
  </span>
                 
@@ -465,10 +381,10 @@ void
         <td>
           
                 
-                  <span>header (Object) = A jQuery Object containing an Accordion header.
+                  <span>header (object) = A jQuery object containing an Accordion header.
  </span>
                 
-                  <span>direction (Number) = If -1, sets the position to be at the end of this set of
+                  <span>direction (number) = If -1, sets the position to be at the end of this set of
 headers instead of at the beginning.
  </span>
                 
@@ -489,7 +405,7 @@ void
         <td>
           
                 
-                  <span>header () = a jQuery Object containing an Accordion header.
+                  <span>header () = a jQuery object containing an Accordion header.
  </span>
                 
                   <span>direction (integer) = if -1, sets the position to be at the end of this set of
@@ -512,7 +428,7 @@ void
         <td>
           
                 
-                  <span>header (Object) = a jQuery Object containing an Accordion header.
+                  <span>header (object) = a jQuery object containing an Accordion header.
  </span>
                 
           
@@ -564,7 +480,7 @@ void
 contents need to be torndown/rebound
  </span>
                 
-                  <span>settings (Object) = The current settings.
+                  <span>settings (object) = The current settings.
  </span>
                 
           
@@ -616,7 +532,7 @@ void
         <td>
           
                 
-                  <span>headers (Object) = The headers to destroy
+                  <span>headers (object) = The headers to destroy
  </span>
                 
           
@@ -659,7 +575,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -668,7 +584,7 @@ void
       </div>
     
       <div>
-        <span>header (Object)
+        <span>header (object)
         
         = The header object
 
@@ -690,7 +606,7 @@ void
   
     
       <div>
-        <span>anchor (Array)
+        <span>anchor (array)
         
         = The anchor in an array
 
@@ -713,7 +629,7 @@ This indicates the link has been followed.
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -722,7 +638,7 @@ This indicates the link has been followed.
       </div>
     
       <div>
-        <span>anchor (Array)
+        <span>anchor (array)
         
         = The anchor tag in an array.
 
@@ -744,7 +660,7 @@ This indicates the link has been followed.
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -753,7 +669,7 @@ This indicates the link has been followed.
       </div>
     
       <div>
-        <span>anchor (Array)
+        <span>anchor (array)
         
         = The anchor tag in an array.
 
@@ -775,7 +691,7 @@ This indicates the link has been followed.
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -784,7 +700,7 @@ This indicates the link has been followed.
       </div>
     
       <div>
-        <span>anchor (Array)
+        <span>anchor (array)
         
         = The anchor tag in an array.
 
@@ -806,7 +722,7 @@ This indicates the link has been followed.
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -815,7 +731,7 @@ This indicates the link has been followed.
       </div>
     
       <div>
-        <span>anchor (Array)
+        <span>anchor (array)
         
         = The anchor tag in an array.
 

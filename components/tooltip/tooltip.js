@@ -10,7 +10,7 @@ import '../place/place.jquery';
 /**
  * Component Name
  */
-let PLUGIN_NAME = 'tooltip';
+let COMPONENT_NAME = 'tooltip';
 
 
 /**
@@ -39,30 +39,30 @@ let TOOLTIP_DEFAULTS = {
 /**
  * Tooltip and Popover Control
  * @constructor
- * @param {Object} element
+ * @param {object} element
  * @param {Object|Function} options
  * @param {(string|Function)} [options.content] - Takes title attribute or feed content. Can be a string or jQuery markup
- * @param {Object} [options.offset={top: 10, left: 10}] - How much room to leave
+ * @param {object} [options.offset={top: 10, left: 10}] - How much room to leave
  * @param {string} [options.placement=top|bottom|right|offset]
  * @param {string} [options.trigger=hover] - supports click and immediate and hover (and maybe in future focus)
  * @param {string} [options.title] - Title for Infor Tips
  * @param {string} [options.beforeShow] - Call back for ajax tooltip
  * @param {string} [options.popover] - force it to be a popover (no content)
  * @param {string} [options.closebutton] - Show X close button next to title in popover
- * @param {Boolean} [options.isError=false] - Add error classes
- * @param {Boolean} [options.isErrorColor=false] - Add error color only not description
+ * @param {boolean} [options.isError=false] - Add error classes
+ * @param {boolean} [options.isErrorColor=false] - Add error color only not description
  * @param {string} [options.tooltipElement] - ID selector for an alternate element to use to contain the tooltip classes
- * @param {Object} [options.parentElement=this.element] - jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.
- * @param {Boolean} [options.keepOpen=false] - Forces the tooltip to stay open in situations where it would normally close.
+ * @param {object} [options.parentElement=this.element] - jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.
+ * @param {boolean} [options.keepOpen=false] - Forces the tooltip to stay open in situations where it would normally close.
  * @param {string} [options.extraClass] - Extra css class
  * @param {string} [options.maxWidth] - Toolip max width
  */
 function Tooltip(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TOOLTIP_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 
@@ -699,9 +699,9 @@ Tooltip.prototype = {
 
   destroy: function() {
     this.teardown();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
 
-export { Tooltip, PLUGIN_NAME };
+export { Tooltip, COMPONENT_NAME };

@@ -13,7 +13,7 @@ import '../tooltip/tooltip.jquery';
 /**
  * Component Name
  */
-let PLUGIN_NAME = 'dropdown';
+let COMPONENT_NAME = 'dropdown';
 
 
 /**
@@ -49,26 +49,26 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * The Dropdown allows users to select from a list. Like an Html Select.
 *
 * @class Dropdown
-* @param {Boolean} closeOnSelect  When an option is selected, the list will close if set to "true".  List stays open if "false".
-* @param {String} cssClass  Append an optional css class to dropdown-list
-* @param {String} filterMode  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
-* @param {Boolean} noSearch  If true, disables the ability of the user to enter text in the Search Input field in the open combo box
-* @param {Boolean} showEmptyGroupHeaders  If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
-* @param {Boolean} source  A function that can do an ajax call.
-* @param {Boolean} sourceArguments  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
-* @param {Boolean} sourceArguments  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
-* @param {Boolean} reloadSourceOnOpen  If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
-* @param {Boolean} empty  Initialize Empty Value
-* @param {Boolean} delay  Typing Buffer Delay in ms
-* @param {Number} maxWidth If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
+* @param {boolean} closeOnSelect  When an option is selected, the list will close if set to "true".  List stays open if "false".
+* @param {string} cssClass  Append an optional css class to dropdown-list
+* @param {string} filterMode  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
+* @param {boolean} noSearch  If true, disables the ability of the user to enter text in the Search Input field in the open combo box
+* @param {boolean} showEmptyGroupHeaders  If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
+* @param {boolean} source  A function that can do an ajax call.
+* @param {boolean} sourceArguments  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+* @param {boolean} sourceArguments  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+* @param {boolean} reloadSourceOnOpen  If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
+* @param {boolean} empty  Initialize Empty Value
+* @param {boolean} delay  Typing Buffer Delay in ms
+* @param {number} maxWidth If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
 *
 */
 function Dropdown(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DROPDOWN_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Actual DropDown Code
@@ -1741,7 +1741,7 @@ Dropdown.prototype = {
    * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
    * @private
    * @param {Array / jQuery[]} options - incoming options
-   * @param {Boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on each list item.
+   * @param {boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on each list item.
    */
   selectOptions: function(options, noTrigger) {
     // Use a jQuery selector if the incoming options are inside an array
@@ -2042,9 +2042,9 @@ Dropdown.prototype = {
 
   /**
    * Get data attributes from passed list of attributes
-   * @param {Array} attr - List of all attributes.
-   * @param {Array} attrToExclude - List of attributes to be excluded from passed list.
-   * @returns {Object} It will return an object containing two keys
+   * @param {array} attr - List of all attributes.
+   * @param {array} attrToExclude - List of attributes to be excluded from passed list.
+   * @returns {object} It will return an object containing two keys
    * str - string of attributes
    * obj - object of attributes
    */
@@ -2085,7 +2085,7 @@ Dropdown.prototype = {
   /**
    * External Facing function to set value by code - Depricated set on select and trigger updated.
    *
-   * @param {String} code - The value to match and set on the value element.
+   * @param {string} code - The value to match and set on the value element.
    */
   setCode: function(code) {
     var self = this,
@@ -2204,7 +2204,7 @@ Dropdown.prototype = {
    * Tear down events and restore to default.
    */
   destroy: function() {
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
     this.closeList('cancel');
     this.label.remove();
     this.pseudoElem.off().remove();
@@ -2218,10 +2218,10 @@ Dropdown.prototype = {
    *  This component fires the following events.
    *
    * @fires Dropdown#events
-   * @param {Object} listopened  Fires as the calendar popup is opened
-   * @param {Object} listclosed  Fires as the calendar popup is closed
-   * @param {Object} change  Fires after the value in the input is changed by any means.
-   * @param {Object} input  Fires after the value in the input is changed by user interaction.
+   * @param {object} listopened  Fires as the calendar popup is opened
+   * @param {object} listclosed  Fires as the calendar popup is closed
+   * @param {object} change  Fires after the value in the input is changed by any means.
+   * @param {object} input  Fires after the value in the input is changed by user interaction.
    *
    */
   handleEvents: function() {
@@ -2287,4 +2287,4 @@ Dropdown.prototype = {
 };
 
 
-export { Dropdown, PLUGIN_NAME };
+export { Dropdown, COMPONENT_NAME };

@@ -1,4 +1,4 @@
-import { PopupMenu, PLUGIN_NAME } from './popupmenu';
+import { PopupMenu, COMPONENT_NAME } from './popupmenu';
 
 
 /**
@@ -6,11 +6,11 @@ import { PopupMenu, PLUGIN_NAME } from './popupmenu';
  */
 $.fn.popupmenu = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new PopupMenu(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new PopupMenu(this, settings));
     }
   });
 };

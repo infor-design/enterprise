@@ -1,4 +1,4 @@
-import { Slider, PLUGIN_NAME } from './slider';
+import { Slider, COMPONENT_NAME } from './slider';
 
 
 /**
@@ -6,11 +6,11 @@ import { Slider, PLUGIN_NAME } from './slider';
  */
 $.fn.slider = function(settings) {
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Slider(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Slider(this, settings));
     }
   });
 };

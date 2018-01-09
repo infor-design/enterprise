@@ -7,7 +7,7 @@ import { utils } from '../utils/utils';
 /**
  * Component Name
  */
-let PLUGIN_NAME = 'wizard';
+let COMPONENT_NAME = 'wizard';
 
 
 /**
@@ -22,15 +22,15 @@ let WIZARD_DEFAULTS = {
 /**
  * @class Wizard
  * @constructor
- * @param {Object} element
+ * @param {object} element
  */
 function Wizard(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, WIZARD_DEFAULTS);
 
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Plugin Methods
@@ -244,7 +244,7 @@ Wizard.prototype = {
   // Teardown - Remove added markup and events
   destroy: function() {
     this.teardown();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
@@ -268,4 +268,4 @@ Wizard.prototype = {
 };
 
 
-export { Wizard, PLUGIN_NAME };
+export { Wizard, COMPONENT_NAME };

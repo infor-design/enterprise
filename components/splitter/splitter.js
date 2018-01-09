@@ -35,7 +35,7 @@
 
     /**
      * @constructor
-     * @param {Object} element
+     * @param {object} element
      */
     function Splitter(element) {
       this.settings = $.extend({}, settings);
@@ -299,8 +299,8 @@
        * Sets up event handlers for this control and its sub-elements
        *
        * @fires Splitter#events
-       * @param {Object} updated  Fires when the component updates.
-       * @param {Object} keydown  Fires when a key is pressed while the component is focused.
+       * @param {object} updated  Fires when the component updates.
+       * @param {object} keydown  Fires when a key is pressed while the component is focused.
        */
       handleEvents: function() {
         var self = this;

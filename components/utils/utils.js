@@ -60,8 +60,8 @@ $.fn.uniqueId = function(className, prefix, suffix) {
 
 /**
  * Check for CSS Property Support in a cross browser way
- * @param {String} prop
- * @return {String}
+ * @param {string} prop
+ * @return {string}
  */
 $.fn.cssPropSupport = function(prop) {
 
@@ -243,8 +243,8 @@ const utils = {};
  * Grabs an attribute from an HTMLElement containing stringified JSON syntax,
  * and interprets it into options.
  * @param {HTMLElement} element
- * @param {String} [attr]
- * @returns {Object}
+ * @param {string} [attr]
+ * @returns {object}
  */
 utils.parseSettings = function parseSettings(element, attr) {
   let options = {};
@@ -303,7 +303,7 @@ utils.parseOptions = utils.parseSettings;
 /**
  * jQuery Behavior Wrapper for `utils.parseOptions`.
  * @deprecated
- * @param {String} [attrName]
+ * @param {string} [attrName]
  * @return {Object|Object[]}
  */
 $.fn.parseOptions = function(element, attr) {
@@ -879,8 +879,8 @@ utils.isNumber = function isNumber(value) {
  * In most cases, will call "setSelectionRange" on an editable element immediately, but in some
  * cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
  * @param {HTMLElement} element
- * @param {Number} startPos
- * @param {Number} endPos
+ * @param {number} startPos
+ * @param {number} endPos
  */
 utils.safeSetSelection = function safeSetSelection(element, startPos, endPos) {
   if (startPos && endPos === undefined) {
@@ -924,7 +924,7 @@ function resolveFunction(o) {
  * @param {HTMLElement|SVGElement|jQuery[]} element
  * @param {Object|function} incomingOptions
  * @param {Object|function} [defaultOptions]
- * @returns {Object}
+ * @returns {object}
  */
 utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOptions) {
   if (!incomingOptions || !isValidOptions(incomingOptions)) {
@@ -947,8 +947,8 @@ let math = {};
 
 /**
  * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
- * @param {Number} delay
- * @returns {Number} - fps
+ * @param {number} delay
+ * @returns {number} - fps
  */
 math.convertDelayToFPS = function convertDelayToFPS(delay) {
   if (isNaN(delay)) {
@@ -959,8 +959,8 @@ math.convertDelayToFPS = function convertDelayToFPS(delay) {
 
 /**
  * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
- * @param {Number} delay
- * @returns {Number} - fps
+ * @param {number} delay
+ * @returns {number} - fps
  */
 math.convertFPSToDelay = function convertFPSToDelay(fps) {
   if (isNaN(fps)) {

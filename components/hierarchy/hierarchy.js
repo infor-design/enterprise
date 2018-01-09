@@ -42,13 +42,13 @@
     * The displays custimizable hierarchical data such as an org chart.
     *
     * @class Hierarchy
-    * @param {String} legend  Pass in custom markdown for the legend structure.
-    * @param {String} legendKey  Key to use for the legend matching
-    * @param {String} dataset  Hierarchical Data to display
-    * @param {Boolean} newData  New data to be appended into dataset
-    * @param {String} templateId  Additional product name information to display
-    * @param {Boolean} mobileView  If true will only show mobile view, by default using device info to determine.
-    * @param {String} beforeExpand  A callback that fires before node expansion of a node.
+    * @param {string} legend  Pass in custom markdown for the legend structure.
+    * @param {string} legendKey  Key to use for the legend matching
+    * @param {string} dataset  Hierarchical Data to display
+    * @param {boolean} newData  New data to be appended into dataset
+    * @param {string} templateId  Additional product name information to display
+    * @param {boolean} mobileView  If true will only show mobile view, by default using device info to determine.
+    * @param {string} beforeExpand  A callback that fires before node expansion of a node.
     *
     */
     function Hierarchy(element) {

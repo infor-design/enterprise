@@ -7,21 +7,21 @@ import { utils } from '../utils/utils';
 /**
  * Component Name
  */
-let PLUGIN_NAME = 'zoom';
+let COMPONENT_NAME = 'zoom';
 
 
 /**
  * @constructor
- * @param {Object} element
- * @param {Object} settings
+ * @param {object} element
+ * @param {object} settings
  */
 function Zoom(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings);
 
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 Zoom.prototype = {
@@ -46,7 +46,7 @@ Zoom.prototype = {
 
     // Allow the head to listen to events to globally deal with the zoom problem on
     // a per-control basis (for example, Dropdown/Multiselect need to handle this issue manually).
-    this.element.on('updated.' + PLUGIN_NAME, function() {
+    this.element.on('updated.' + COMPONENT_NAME, function() {
       self.updated();
     }).on('enable-zoom', function() {
       self.enableZoom();
@@ -92,7 +92,7 @@ Zoom.prototype = {
 
   /**
    * Handle Updating Settings
-   * @param {Object} settings
+   * @param {object} settings
    */
   updated: function(settings) {
     if (settings) {
@@ -106,7 +106,7 @@ Zoom.prototype = {
 
   // Simple Teardown - remove events & rebuildable markup.
   teardown: function() {
-    this.element.off('updated.' + PLUGIN_NAME + ' enable-zoom disable-zoom');
+    this.element.off('updated.' + COMPONENT_NAME + ' enable-zoom disable-zoom');
     this.body.off('touchstart.zoomdisabler touchend.zoomdisabler');
     return this;
   },
@@ -114,9 +114,9 @@ Zoom.prototype = {
   // Teardown - Remove added markup and events
   destroy: function() {
     this.teardown();
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
 
-export { Zoom, PLUGIN_NAME };
+export { Zoom, COMPONENT_NAME };

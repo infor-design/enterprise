@@ -147,8 +147,8 @@ SohoMaskAPI.prototype = {
   /**
    * Processes a raw string value against a masking algorithm and removes unfavorable chracters.
    * @private
-   * @param {String} string - incoming full text string to process
-   * @param {Object} options - options for parsing
+   * @param {string} string - incoming full text string to process
+   * @param {object} options - options for parsing
    */
   _conformToMask: function(rawValue, mask, options) {
 
@@ -405,9 +405,9 @@ SohoMaskAPI.prototype = {
   /**
    * Converts an array-based mask into a placeholder string.
    * @private
-   * @param {Array} mask - contains string "literal" characters and Regex matchers.
-   * @param {String} placeholderChar - a character that will be used as the placeholder.
-   * @returns {String}
+   * @param {array} mask - contains string "literal" characters and Regex matchers.
+   * @param {string} placeholderChar - a character that will be used as the placeholder.
+   * @returns {string}
    */
   _convertMaskToPlaceholder: function(mask, placeholderChar) {
     if (!Array.isArray(mask)) {
@@ -722,8 +722,8 @@ SohoMaskAPI.prototype = {
    * Converts the legacy Soho Mask pattern format from a string into an array.
    * If character is a defined pattern matcher, the corresponding item at the array index is converted to
    * its regex form.
-   * @param {String} pattern - a legacy Soho Mask Pattern
-   * @returns {Array} - contains string "literal" characters and Regex matchers
+   * @param {string} pattern - a legacy Soho Mask Pattern
+   * @returns {array} - contains string "literal" characters and Regex matchers
    */
   _convertPatternFromString: function(pattern, defs) {
     var arr = [],

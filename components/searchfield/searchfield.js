@@ -11,7 +11,7 @@ import '../popupmenu/popupmenu.jquery';
 /**
  *
  */
-let PLUGIN_NAME = 'searchfield';
+let COMPONENT_NAME = 'searchfield';
 
 
 /**
@@ -36,14 +36,14 @@ let SEARCHFIELD_DEFAULTS = {
 /**
  * Searchfield Control
  * @constructor
- * @param {Object} element
+ * @param {object} element
  */
 function SearchField(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SEARCHFIELD_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 SearchField.prototype = {
@@ -905,9 +905,9 @@ SearchField.prototype = {
       tbsf.destroy(true);
     }
 
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
 
-export { SearchField, PLUGIN_NAME };
+export { SearchField, COMPONENT_NAME };

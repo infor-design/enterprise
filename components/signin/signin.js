@@ -24,7 +24,7 @@
     /**
      * @class {SignIn}
      * @constructor
-     * @param {Object} element
+     * @param {object} element
      */
     function SignIn(element) {
       this.element = $(element);
@@ -73,9 +73,9 @@
 
       /**
        * @fires SignIn#events
-       * @param {Object} keypress
-       * @param {Object} blur
-       * @param {Object} change
+       * @param {object} keypress
+       * @param {object} blur
+       * @param {object} change
        *
        */
       handleKeys: function() {

@@ -1,4 +1,4 @@
-import { Dropdown, PLUGIN_NAME } from './dropdown';
+import { Dropdown, COMPONENT_NAME } from './dropdown';
 
 
 /**
@@ -7,11 +7,11 @@ import { Dropdown, PLUGIN_NAME } from './dropdown';
 $.fn.dropdown = function(settings) {
   // Keep the Chaining and Init the Controls or Settings
   return this.each(function() {
-    var instance = $.data(this, PLUGIN_NAME);
+    var instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, PLUGIN_NAME, new Dropdown(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Dropdown(this, settings));
     }
   });
 };

@@ -12,8 +12,8 @@ const COMPONENT_NAME_DEFAULTS = {
 /**
  * Component Name - Does this and that.
  * @class ComponentName
- * @param {String} element The plugin element for the constuctor
- * @param {String} settings The settings element.
+ * @param {string} element The plugin element for the constuctor
+ * @param {string} settings The settings element.
  */
 function ComponentName(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -28,7 +28,7 @@ ComponentName.prototype = {
 
   /**
    * Do initialization, build up and / or add events ect.
-   * @return {Object} The Component prototype, useful for chaining.
+   * @return {object} The Component prototype, useful for chaining.
    */
   init() {
     // Do initialization. Build or Events ect
@@ -39,7 +39,7 @@ ComponentName.prototype = {
 
   /**
    * Add any needed markup to the component.
-   * @return {Object} The Component prototype, useful for chaining.
+   * @return {object} The Component prototype, useful for chaining.
    * @private
    */
   build() {
@@ -48,7 +48,7 @@ ComponentName.prototype = {
 
   /**
    * Sets up event handlers for this component and its sub-elements.
-   * @return {Object} The Component prototype, useful for chaining.
+   * @return {object} The Component prototype, useful for chaining.
    * @private
    */
   handleEvents() {
@@ -81,7 +81,7 @@ ComponentName.prototype = {
 
   /**
    * Simple Teardown - remove events & rebuildable markup.
-   * @return {Object} The Component prototype, useful for chaining.
+   * @return {object} The Component prototype, useful for chaining.
    * @private
    */
   teardown() {
@@ -91,7 +91,7 @@ ComponentName.prototype = {
 
   /**
    * Teardown - Remove added markup and events.
-   * @return {Object} The Component prototype, useful for chaining.
+   * @return {object} The Component prototype, useful for chaining.
    * @private
    */
   destroy() {

@@ -9,7 +9,7 @@ import '../components.jquery';
 /**
  * Component name as referenced by jQuery/event namespace/etc
  */
-let PLUGIN_NAME = 'initialize';
+let COMPONENT_NAME = 'initialize';
 
 /**
  * Component Defaults
@@ -22,7 +22,7 @@ let INITIALIZE_DEFAULTS = {
 /**
  * Page Bootstrapper
  * @constructor
- * @param {Object} element
+ * @param {object} element
  */
 function Initialize(element, settings) {
   // Settings and Options
@@ -34,9 +34,9 @@ function Initialize(element, settings) {
 
   this.settings = utils.mergeSettings({}, settings, INITIALIZE_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 // Plugin Methods
@@ -418,4 +418,4 @@ Initialize.prototype = {
 };
 
 
-export { Initialize, PLUGIN_NAME };
+export { Initialize, COMPONENT_NAME };

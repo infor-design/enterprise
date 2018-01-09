@@ -24,7 +24,7 @@
   /**
    * Component Name
    */
-  var PLUGIN_NAME = 'multitabs';
+  var COMPONENT_NAME = 'multitabs';
 
   /**
    * Default Settings for MultiTabs
@@ -44,7 +44,7 @@
    *
    * Scaffolding for containment of multiple, associated tabs containers.
    * @param {jQuery[]|HTMLElement} element
-   * @param {Object} [settings]
+   * @param {object} [settings]
    * @return {MultiTabs}
    */
   function MultiTabs(element, settings) {
@@ -116,9 +116,9 @@
     /**
      * Pass-through method for adding tabs that takes the container into account.
      * @param {jQuery[]|String} tabContainer
-     * @param {String} tabId - (directly passed into the Tabs `add` method)
-     * @param {Object} options - (directly passed into the Tabs `add` method)
-     * @param {Number} [atIndex] - (directly passed into the Tabs `add` method)
+     * @param {string} tabId - (directly passed into the Tabs `add` method)
+     * @param {object} options - (directly passed into the Tabs `add` method)
+     * @param {number} [atIndex] - (directly passed into the Tabs `add` method)
      * @returns {Tabs}
      */
     add: function(tabContainer, tabId, options, atIndex) {
@@ -131,7 +131,7 @@
     /**
      * Pass-through method for removing tabs that takes the container into account.
      * @param {jQuery[]|String} tabContainer
-     * @param {String} tabId - (directly passed into the Tabs `add` method)
+     * @param {string} tabId - (directly passed into the Tabs `add` method)
      * @param {boolean} [disableBeforeClose] - (directly passed into the Tabs `add` method)
      * @returns {Tabs}
      */
@@ -144,8 +144,8 @@
 
     /**
      * Finds an existing Tab Panel in any of the tab containers, and moves it to a designated target tab container.
-     * @param {String} tabId
-     * @param {String} targetTabContainerName
+     * @param {string} tabId
+     * @param {string} targetTabContainerName
      * @param {boolean} [doActivate]
      */
     move: function(tabId, targetTabContainerName, doActivate) {
@@ -189,7 +189,7 @@
     /**
      * @private
      * Uses the internal name of the tab container to either get a reference to an existing Tab container, or a null reference.
-     * @param {String} name - the internal name used for this tabs instance
+     * @param {string} name - the internal name used for this tabs instance
      * @returns {jQuery[]|undefined}
      */
     _getTabContainer: function(name) {
@@ -249,7 +249,7 @@
     /**
      * Runs a callback function on all available tab containers.
      * @param {function} callback
-     * @param {Array} [additionalArgs]
+     * @param {array} [additionalArgs]
      */
     performOnAllContainers: function(callback, additionalArgs) {
       var self = this;
@@ -345,7 +345,7 @@
 
     /**
      * Update this multi-tabs instance with new settings
-     * @param {Object} settings
+     * @param {object} settings
      */
     updated: function(settings) {
       if (settings) {
@@ -371,7 +371,7 @@
      */
     destroy: function() {
       this.teardown();
-      $.removeData(this.element[0], PLUGIN_NAME);
+      $.removeData(this.element[0], COMPONENT_NAME);
     }
 
   };
@@ -381,11 +381,11 @@
    */
   $.fn.multitabs = function(settings) {
     return this.each(function() {
-      var instance = $.data(this, PLUGIN_NAME);
+      var instance = $.data(this, COMPONENT_NAME);
       if (instance) {
         instance.updated(settings);
       } else {
-        instance = $.data(this, PLUGIN_NAME, new MultiTabs(this, settings));
+        instance = $.data(this, COMPONENT_NAME, new MultiTabs(this, settings));
       }
     });
   };

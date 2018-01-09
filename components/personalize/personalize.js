@@ -13,8 +13,8 @@ const COMPONENT_NAME = 'personalize';
 
 /**
  * Component Defaults
- * @param {String} colors  The list of colors
- * @param {String} theme  The theme name (light, dark or high-contrast)
+ * @param {string} colors  The list of colors
+ * @param {string} theme  The theme name (light, dark or high-contrast)
  */
 const PERSONALIZE_DEFAULTS = {
   colors: '',
@@ -26,7 +26,7 @@ const PERSONALIZE_DEFAULTS = {
  *
  * @class Personalize
  * @param {HTMLElement|jQuery[]} element
- * @param {Object} [settings]
+ * @param {object} [settings]
  */
 function Personalize(element, settings) {
   this.element = $(element);
@@ -71,8 +71,8 @@ Personalize.prototype = {
   },
 
   // Validates a string containing a hexadecimal number
-  // @param {String} hex: A hex color.
-  // @returns {String} a validated hexadecimal string.
+  // @param {string} hex: A hex color.
+  // @returns {string} a validated hexadecimal string.
   validateHex(hex) {
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
 
@@ -185,7 +185,7 @@ Personalize.prototype = {
   /**
   * Sets the personalization color(s)
   *
-  * @param {Array} colors The original hex color as a string or an object with all the Colors
+  * @param {array} colors The original hex color as a string or an object with all the Colors
   */
   setColors(colors) {
     if (!colors) {
@@ -198,10 +198,10 @@ Personalize.prototype = {
 
   /**
   * Takes a color and performs a change in luminosity of that color programatically.
-  * @param {String} hex  The original Hexadecimal base color.
-  * @param {String} lum  A percentage used to set luminosity
+  * @param {string} hex  The original Hexadecimal base color.
+  * @param {string} lum  A percentage used to set luminosity
   * change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
-  * @returns {String} hexadecimal color.
+  * @returns {string} hexadecimal color.
   */
   getLuminousColorShade(hex, lum) {
     // validate hex string
@@ -241,7 +241,7 @@ Personalize.prototype = {
   /**
   * Sets the current theme, blocking the ui during the change.
   *
-  * @param {String} incomingTheme  Represents the file name of a color
+  * @param {string} incomingTheme  Represents the file name of a color
   * scheme (can be dark, light or high-contrast)
   */
   setTheme(incomingTheme) {
@@ -306,7 +306,7 @@ Personalize.prototype = {
 
   /**
    * Handle Updating Settings
-   * @param {Object} [settings]
+   * @param {object} [settings]
    */
   updated(settings) {
     if (settings) {

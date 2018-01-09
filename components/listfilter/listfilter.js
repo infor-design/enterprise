@@ -5,7 +5,7 @@ import { utils } from '../utils/utils';
 /**
  *
  */
-let PLUGIN_NAME = 'ListFilter';
+let COMPONENT_NAME = 'ListFilter';
 
 
 /**
@@ -30,18 +30,18 @@ const filterModes = ['startsWith', 'contains'];
 * Abstracted search/filter for use in other controls
 *
 * @class ListFilter
-* @param {Boolean} caseSensitive  Set to true if searches ARE case sensitive
-* @param {String} filterMode  Type of search can current be either 'startsWith' or 'contains'
-* @param {Boolean} highlightMatchedText  Inserts markup that appears to highlight text
+* @param {boolean} caseSensitive  Set to true if searches ARE case sensitive
+* @param {string} filterMode  Type of search can current be either 'startsWith' or 'contains'
+* @param {boolean} highlightMatchedText  Inserts markup that appears to highlight text
 * @param {function} highlightCallback  If defined, will execute this code for highlighting text instead of the built-in highlighting code
 * @param {function} searchableTextCallback  If defined, will take each filterable item passed and return user-defined, searchable text content
 *
 */
 function ListFilter(settings) {
   this.settings = utils.mergeSettings(undefined, settings, LISTFILTER_DEFAULTS);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 ListFilter.prototype = {
@@ -67,8 +67,8 @@ ListFilter.prototype = {
 
   /**
   * Run the filter on the list for the given sreach term.
-  * @param {Array} list  The array to search.
-  * @param {String} term  The term to look for.
+  * @param {array} list  The array to search.
+  * @param {string} term  The term to look for.
   * @returns {boolean|Array|jQuery[]}
   */
   filter: function(list, term) {
@@ -181,4 +181,4 @@ ListFilter.prototype = {
 };
 
 
-export { ListFilter, PLUGIN_NAME };
+export { ListFilter, COMPONENT_NAME };

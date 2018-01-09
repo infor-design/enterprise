@@ -9,7 +9,7 @@ import '../place/place.jquery';
 /**
  * Component Name
  */
-const PLUGIN_NAME = 'popupmenu';
+const COMPONENT_NAME = 'popupmenu';
 
 /**
  * Default Popupmenu Settings
@@ -39,25 +39,25 @@ const POPUPMENU_DEFAULTS = {
 * Responsive Popup Menu Control aka Context Menu when doing a right click action.
 *
 * @class PopupMenu
-* @param {String} menu  Menu's ID Selector, or a jQuery object representing a menu
-* @param {String} trigger  Action on which to trigger a menu can be: click, rightClick, immediate ect
-* @param {Boolean} autoFocus  If false the focus will not focus the first list element. (At the cost of accessibility)
-* @param {Boolean} attachToBody  If true the menu will be moved out to the body. To be used in certin overflow situations.
+* @param {string} menu  Menu's ID Selector, or a jQuery object representing a menu
+* @param {string} trigger  Action on which to trigger a menu can be: click, rightClick, immediate ect
+* @param {boolean} autoFocus  If false the focus will not focus the first list element. (At the cost of accessibility)
+* @param {boolean} attachToBody  If true the menu will be moved out to the body. To be used in certin overflow situations.
 * @param {function} beforeOpen  Callback that can be used for populating the contents of the menu.
-* @param {String} ariaListbox   Switches aria to use listbox construct instead of menu construct (internal)
-* @param {String} eventObj  Can pass in the event object so you can do a right click with immediate
-* @param {String} returnFocus  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
-* @param {Object} placementOpts  Gets passed to this control's Place behavior
-* @param {Object} offset  Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
+* @param {string} ariaListbox   Switches aria to use listbox construct instead of menu construct (internal)
+* @param {string} eventObj  Can pass in the event object so you can do a right click with immediate
+* @param {string} returnFocus  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
+* @param {object} placementOpts  Gets passed to this control's Place behavior
+* @param {object} offset  Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
 *
 */
 function PopupMenu(element, settings) {
   this.settings = utils.mergeSettings(element, settings, POPUPMENU_DEFAULTS);
   this.element = $(element);
   this.isOldIe  = $('html').is('.ie11, .ie10, .ie9');
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
 }
 
 
@@ -1459,8 +1459,8 @@ PopupMenu.prototype = {
 
   /**
    * Close the open menu
-   * @param {Boolean} isCancelled  Internally set option used if the operation is a cancel. Wont matter for manual api call.
-   * @param {Boolean} noFocus  Do not return focus to the calling element (fx a button)
+   * @param {boolean} isCancelled  Internally set option used if the operation is a cancel. Wont matter for manual api call.
+   * @param {boolean} noFocus  Do not return focus to the calling element (fx a button)
    */
   close: function (isCancelled, noFocus) {
     if (!isCancelled || isCancelled === undefined) {
@@ -1603,8 +1603,8 @@ PopupMenu.prototype = {
     this.close();
     this.teardown();
     this.menu.trigger('destroy');
-    $.removeData(this.element[0], PLUGIN_NAME);
+    $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
 
-export { PopupMenu, PLUGIN_NAME };
+export { PopupMenu, COMPONENT_NAME };

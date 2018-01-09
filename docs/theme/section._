@@ -1,5 +1,5 @@
-<% if (section.kind === 'class') { %><h2>Settings</h2><% } %>
-<% if (section.params.length) { %>
+<% if (section.params.length && section.index === '0') { %>
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -20,7 +20,31 @@
       </tr><% } %><% }) %>
     </tbody>
   </table>
-<% } %><% if (section.examples.length) { %>
+<% } %>
+<% if (section.properties.length && section.index === '0') { %>
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody><% section.properties.forEach(function(prop) { %>
+      <tr>
+        <td>
+          <%- prop.name %><% if (prop.default) { %><span><%- prop.default %></span><% } %>
+        </td>
+        <td>
+          <%= typeNoLink(prop.type) %>
+        </td>
+        <td>
+          <%= md(prop.description, true) %>
+        </td>
+      </tr><% }) %>
+    </tbody>
+  </table>
+<% } %>
+<% if (section.examples.length) { %>
   <h2>Example</h2><% section.examples.forEach(function(example) { %><% if (example.caption) { %><p><%= md(example.caption) %></p><% } %>
     <pre><%= highlight(example.description) %></pre><% }) %><% } %><% if (section.members.instance && section.members.instance.length) { %>
   <h2>Methods</h2>

@@ -12,7 +12,8 @@
 
 ## Code Example
 
-This example shows how to invoke the area chart option in the charts component. In this example we pass a dataset with x and y axis values for three lines.
+This example shows how to invoke the area chart option using the charts component. In this example
+we pass a dataset with x and y axis values to make three lines.
 
 ```javascript
 

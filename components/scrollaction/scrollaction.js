@@ -43,8 +43,8 @@
     /**
      * A component that applies a class based on scroll direction
      * @constructor
-     * @param {Object} [element=this] - The element to attach to (only when manually calling the constructor)
-     * @param {Object} [options]
+     * @param {object} [element=this] - The element to attach to (only when manually calling the constructor)
+     * @param {object} [options]
      * @param {string} [options.scrollActionTarget='.js-scroll-target'] - The selector of the element to add the class to
      * @param {string} [options.classToAdd='scrolled-down'] - The class name
      */

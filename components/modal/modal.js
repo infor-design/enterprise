@@ -8,7 +8,7 @@ import '../button/button.jquery';
 /**
  *
  */
-let PLUGIN_NAME = 'modal';
+let COMPONENT_NAME = 'modal';
 
 
 /**
@@ -30,14 +30,14 @@ let MODAL_DEFAULTS = {
 /**
  * Responsive and Accessible Modal Control
  * @constructor
- * @param {Object} element
+ * @param {object} element
  */
 function Modal(element, settings) {
   this.settings = utils.mergeSettings(element, settings, MODAL_DEFAULTS);
   this.element = $(element);
-  debug.logTimeStart(PLUGIN_NAME);
+  debug.logTimeStart(COMPONENT_NAME);
   this.init();
-  debug.logTimeEnd(PLUGIN_NAME);
+  debug.logTimeEnd(COMPONENT_NAME);
   this.reStructure();
 }
 
@@ -759,4 +759,4 @@ Modal.prototype = {
 };
 
 
-export { Modal, PLUGIN_NAME };
+export { Modal, COMPONENT_NAME };
