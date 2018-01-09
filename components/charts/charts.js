@@ -2679,6 +2679,7 @@ window.Chart = function(container) {
         if (isTargetBar) {
           var allBars = d3.selectAll('.bar')[0],
             len = allBars.length;
+
           for (var j = 0; j < len; j++) {
             var bar = allBars[j];
 
