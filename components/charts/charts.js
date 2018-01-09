@@ -2680,7 +2680,7 @@ window.Chart = function(container) {
           var allBars = d3.selectAll('.bar')[0],
             len = allBars.length;
 
-          for (var j = 0; j < len; i++) {
+          for (var j = 0; j < len; j++) {
             var bar = allBars[j];
 
             if (d3.select(bar).classed('is-selected')) {
