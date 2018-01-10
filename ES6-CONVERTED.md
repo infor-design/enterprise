@@ -36,6 +36,7 @@ All the following Soho Components have been converted to ES6:
 * Toolbar
 * ToolbarSearchfield
 * Tooltip
+* Tree
 * (utils)
   - animations
   - Base
@@ -87,6 +88,5 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Tabs
 * Tag
 * Timepicker
-* Tree
 * (utils)
   - template
