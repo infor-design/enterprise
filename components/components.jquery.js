@@ -23,6 +23,7 @@ import './dropdown/dropdown.jquery';
 import './circlepager/circlepager.jquery';
 import './colorpicker/colorpicker.jquery';
 import './editor/editor.jquery';
+import './fileupload/fileupload.jquery';
 import './homepage/homepage.jquery';
 import './listbuilder/listbuilder.jquery';
 import './listview/listview.jquery';
