@@ -13,6 +13,7 @@ All the following Soho Components have been converted to ES6:
 * Drag (behavior)
 * Dropdown
 * Editor
+* File Upload
 * Header
 * Homepage
 * Hyperlink
@@ -71,7 +72,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * EmptyMessage
 * Expandable area
 * Field Options
-* File Upload
 * File Upload Advanced
 * Form (basically all jQuery stuff)
 * Hierarchy
