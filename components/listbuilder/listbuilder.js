@@ -25,26 +25,26 @@ const LISTBUILDER_DEFAULTS = {
   btnGoDown: 'godown',
 
   // Template HTML
-  template: ''+
-    '<ul data-handle=".handle">'+
-      '{{#dataset}}'+
-        '{{#text}}'+
-          '<li'+
-            '{{#value}} data-value="{{value}}"{{/value}}'+
-            '{{#selected}} selected="selected"{{/selected}}'+
-            '{{#disabled}} class="is-disabled"{{/disabled}}'+
-          '>'+
-            '<span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>'+
-            '<div class="item-content"><p>{{text}}</p></div>'+
-          '</li>'+
-        '{{/text}}'+
-      '{{/dataset}}'+
+  template: '' +
+    '<ul data-handle=".handle">' +
+      '{{#dataset}}' +
+        '{{#text}}' +
+          '<li' +
+            '{{#value}} data-value="{{value}}"{{/value}}' +
+            '{{#selected}} selected="selected"{{/selected}}' +
+            '{{#disabled}} class="is-disabled"{{/disabled}}' +
+          '>' +
+            '<span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>' +
+            '<div class="item-content"><p>{{text}}</p></div>' +
+          '</li>' +
+        '{{/text}}' +
+      '{{/dataset}}' +
     '</ul>',
 
-  templateNewItem: ''+
-    '<li data-value="{{text}}" role="option">'+
-      '<span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>'+
-      '<div class="item-content"><p>{{text}}</p></div>'+
+  templateNewItem: '' +
+    '<li data-value="{{text}}" role="option">' +
+      '<span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>' +
+      '<div class="item-content"><p>{{text}}</p></div>' +
     '</li>',
 
   templateItemContent: '<p>{{text}}</p>'
@@ -57,11 +57,11 @@ const LISTBUILDER_DEFAULTS = {
 * @param {String} element The component element.
 * @param {String} settings The component settings.
 * @param {Object} dataset The array of data
-* @param {String} btnAdd The attribute to match the add button in the toolbar (ie. data-action="add")
-* @param {String} btnEdit The attribute to match the edit button in the toolbar (ie. data-action="edit")
-* @param {String} btnDelete The attribute to match the delete button in the toolbar (ie. data-action="delete")
-* @param {String} btnGoUp The attribute to match the move up button in the toolbar (ie. data-action="goup")
-* @param {String} btnGoDown The attribute to match the move up button in the toolbar (ie. data-action="dodown")
+* @param {String} btnAdd The attribute to match the add button (ie. data-action="add")
+* @param {String} btnEdit The attribute to match the edit button (ie. data-action="edit")
+* @param {String} btnDelete The attribute to match the delete button (ie. data-action="delete")
+* @param {String} btnGoUp The attribute to match the move up button (ie. data-action="goup")
+* @param {String} btnGoDown The attribute to match the move up button (ie. data-action="dodown")
 * @param {String} template The list view markdown / template.
 * @param {String} templateItemContent The markdown for editing an item
 */
@@ -91,21 +91,21 @@ ListBuilder.prototype = {
 
   // Load listview
   loadListview() {
-    const s = this.settings,
-      lv = $('.listview', this.element);
+    const s = this.settings;
+    const lv = $('.listview', this.element);
 
     if (!s.dataset.length && lv.length && $('li', lv).length) {
-      this.listApi = lv.listview({selectable: 'single'}).data('listview');
+      this.listApi = lv.listview({ selectable: 'single' }).data('listview');
     } else if (lv.length) {
-      this.listApi = lv.listview({dataset: s.dataset, template: s.template, selectable: 'single'}).data('listview');
+      this.listApi = lv.listview({ dataset: s.dataset, template: s.template, selectable: 'single' }).data('listview');
     }
     return this;
   },
 
   // Init dataset
   initDataset() {
-    const s = this.settings,
-      nodes = $('.listview li', this.element);
+    const s = this.settings;
+    const nodes = $('.listview li', this.element);
 
     this.dataset = [];
     for (let i = 0, l = nodes.length; i < l; i++) {
@@ -115,8 +115,7 @@ ListBuilder.prototype = {
         // Make sure it's not reference pointer to data object, make copy of data
         data = JSON.parse(JSON.stringify(s.dataset[i]));
         data.node = li;
-      }
-      else {
+      } else {
         data = this.extractNodeData(li);
       }
       this.dataset.push(data);
@@ -126,8 +125,8 @@ ListBuilder.prototype = {
 
   // Extract node data
   extractNodeData(node) {
-    const data = {node: node, text: $.trim($('.item-content', node).text())},
-      value = node.attr('data-value');
+    const data = { node, text: $.trim($('.item-content', node).text()) };
+    const value = node.attr('data-value');
     if (typeof value !== 'undefined') {
       data.value = value;
     }
@@ -140,9 +139,12 @@ ListBuilder.prototype = {
 
     // Action buttons
     const setAction = (selector) => {
-      return this.isjQuery(selector) ?
-        selector : (typeof selector === 'string' ?
-          $('[data-action="'+ selector +'"]', this.element) : null);
+      if (this.isjQuery(selector)) {
+        return selector;
+      } else if (typeof selector === 'string') {
+        return $(`[data-action="${selector}"]`, this.element);
+      }
+      return null;
     };
     s.btnAdd = setAction(s.btnAdd);
     s.btnGoUp = setAction(s.btnGoUp);
@@ -167,15 +169,15 @@ ListBuilder.prototype = {
   // Handle Events
   handleEvents() {
     let data;
-    const self = this,
-      s = self.settings;
+    const self = this;
+    const s = self.settings;
 
     // TOP BUTTONS =============================================================
     const topButtonsClick = (btn, method) => {
       btn.offTouchClick('listbuilder').off('click.listbuilder')
         .onTouchClick('listbuilder').on('click.listbuilder', () => {
-        self[method]();
-      });
+          self[method]();
+        });
     };
     topButtonsClick(s.btnAdd, 'addItem');
     topButtonsClick(s.btnGoUp, 'moveItemUp');
@@ -185,23 +187,23 @@ ListBuilder.prototype = {
 
     // DRAGGABLE ===============================================================
     this.arrangeApi.element
-    .on('beforearrange.listbuilder', (e, status) => {
-      const d = this.getDataByNode(status.start),
-        str = s.templateItemContent.replace(/{{text}}/g, d.data.text);
+      .on('beforearrange.listbuilder', (e, status) => {
+        const d = this.getDataByNode(status.start);
+        const str = s.templateItemContent.replace(/{{text}}/g, d.data.text);
 
-      this.arrangeApi.placeholders.attr('data-value', d.data.text)
-        .find('.item-content').html(str);
-    })
-    .on('arrangeupdate.listbuilder', (e, status) => {
-      this.updateAttributes();
-      this.arrayIndexMove(this.dataset, status.startIndex, status.endIndex);
-      data = this.getDataByNode(status.end);
-      data.indexBeforeMove = status.startIndex;
-      this.element.triggerHandler('arrangeupdate', [data]);
-    });
+        this.arrangeApi.placeholders.attr('data-value', d.data.text)
+          .find('.item-content').html(str);
+      })
+      .on('arrangeupdate.listbuilder', (e, status) => {
+        this.updateAttributes();
+        this.arrayIndexMove(this.dataset, status.startIndex, status.endIndex);
+        data = this.getDataByNode(status.end);
+        data.indexBeforeMove = status.startIndex;
+        this.element.triggerHandler('arrangeupdate', [data]);
+      });
 
-    $('li:not(.is-disabled) '+ this.arrangeApi.handle, this.ul)
-      .on('mousedown.listbuilder touchstart.listbuilder', function() {
+    $(`li:not(.is-disabled) ${this.arrangeApi.handle}`, this.ul)
+      .on('mousedown.listbuilder touchstart.listbuilder', function () {
         const li = $(this);
         if (!li.is('.is-selected')) {
           li.trigger('click');
@@ -227,7 +229,7 @@ ListBuilder.prototype = {
     this.updatedEventsStr = 'arrangeupdate.listbuilder aftergoup.listbuilder aftergodown.listbuilder exiteditmode.listbuilder';
     this.element
       .off(this.updatedEventsStr)
-      .on(this.updatedEventsStr, (e, data) => {
+      .on(this.updatedEventsStr, (e, updatedData) => {
         /**
         * Fires when a item is updated.
         *
@@ -236,7 +238,7 @@ ListBuilder.prototype = {
         * @property {Object} event - The jquery event object
         * @property {Object} data - Data for this item
         */
-        this.element.triggerHandler('updated', [data]);
+        this.element.triggerHandler('updated', [updatedData]);
       });
 
     return this;
@@ -247,8 +249,8 @@ ListBuilder.prototype = {
   * @returns {void}
   */
   addItem() {
-    const self = this,
-      s = this.settings;
+    const self = this;
+    const s = this.settings;
 
     /**
     * Fires before add new item.
@@ -257,20 +259,20 @@ ListBuilder.prototype = {
     * @type {Object}
     * @property {Object} event - The jquery event object
     */
-    $.when(this.element.triggerHandler('beforeadd')).done(function() {
-      let li, data,
-        index = 0;
+    $.when(this.element.triggerHandler('beforeadd')).done(() => {
+      let li;
+      let data;
+      let index = 0;
 
-      const node = self.listApi.selectedItems[0],
-        str = s.templateNewItem.replace(/{{text}}/g, Locale.translate('NewItem'));
+      const node = self.listApi.selectedItems[0];
+      const str = s.templateNewItem.replace(/{{text}}/g, Locale.translate('NewItem'));
 
       if (node && node.length > 0) {
         data = self.getDataByNode(node);
         index = data.index + 1;
         $(str).insertAfter(node);
         li = $('li', self.ul).eq(index);
-      }
-      else {
+      } else {
         self.ul.prepend(str);
         li = $('li:first-child', self.ul);
       }
@@ -282,7 +284,7 @@ ListBuilder.prototype = {
       self.arrangeApi.updated();
       self.editItem(true);
 
-      data = {index: index, data: self.dataset[index]};
+      data = { index, data: self.dataset[index] };
 
       /**
       * Fires after add new item.
@@ -301,8 +303,9 @@ ListBuilder.prototype = {
   * @returns {void}
   */
   moveItemUp() {
-    const self = this,
-      node = self.listApi.selectedItems[0];
+    const self = this;
+    const node = self.listApi.selectedItems[0];
+
     if (node && node.length > 0) {
       const data = self.getDataByNode(node);
       if (typeof data.index !== 'undefined' && data.index > 0) {
@@ -314,13 +317,13 @@ ListBuilder.prototype = {
         * @property {Object} event - The jquery event object
         * @property {Object} data - Data for this item
         */
-        $.when(self.element.triggerHandler('beforegoup', [data])).done(function() {
+        $.when(self.element.triggerHandler('beforegoup', [data])).done(() => {
           const prev = node.prev();
           node.insertBefore(prev);
           self.updateAttributes();
           self.arrayIndexMove(self.dataset, data.index, data.index - 1);
           data.indexBeforeMove = data.index;
-          data.index = data.index - 1;
+          data.index--;
 
           /**
           * Fires after move up item.
@@ -341,8 +344,8 @@ ListBuilder.prototype = {
   * @returns {void}
   */
   moveItemDown() {
-    const self = this,
-      node = self.listApi.selectedItems[0];
+    const self = this;
+    const node = self.listApi.selectedItems[0];
     if (node && node.length > 0) {
       const data = self.getDataByNode(node);
       if (typeof data.index !== 'undefined' && data.index < self.dataset.length - 1) {
@@ -354,13 +357,13 @@ ListBuilder.prototype = {
         * @property {Object} event - The jquery event object
         * @property {Object} data - Data for this item
         */
-        $.when(self.element.triggerHandler('beforegodown', [data])).done(function() {
+        $.when(self.element.triggerHandler('beforegodown', [data])).done(() => {
           const next = node.next();
           node.insertAfter(next);
           self.updateAttributes();
           self.arrayIndexMove(self.dataset, data.index, data.index + 1);
           data.indexBeforeMove = data.index;
-          data.index = data.index + 1;
+          data.index++;
 
           /**
           * Fires after move down item.
@@ -399,9 +402,9 @@ ListBuilder.prototype = {
   * @returns {void}
   */
   makeEditable(node, isNewItem) {
-    const self = this,
-      data = self.getDataByNode(node),
-      container = $('.item-content', node);
+    const self = this;
+    const data = self.getDataByNode(node);
+    const container = $('.item-content', node);
 
     if (typeof data.index !== 'undefined' && data.index < self.dataset.length) {
       /**
@@ -412,24 +415,24 @@ ListBuilder.prototype = {
       * @property {Object} event - The jquery event object
       * @property {Object} data - Data for this item
       */
-      $.when(self.element.triggerHandler('beforeedit', [data])).done(function() {
-        const origValue = container.text().trim(),
-          editInput = $('<input name="edit-input" class="edit-input" type="text" value="'+ origValue +'" />');
+      $.when(self.element.triggerHandler('beforeedit', [data])).done(() => {
+        const origValue = container.text().trim();
+        const editInput = $(`<input name="edit-input" class="edit-input" type="text" value="${origValue}" />`);
 
         node.addClass('is-editing');
         container.html(editInput);
         editInput.focus().select();
 
         editInput
-        .on('click.listbuilder', () => false)
-        .on('blur.listbuilder', () => self.commitEdit(node, isNewItem))
-        .on('keypress.listbuilder', (e) => {
-          const key = e.keyCode || e.charCode || 0;
-          if (key === 13) {
-            self.commitEdit(node, isNewItem);
-            node.focus();
-          }
-        });
+          .on('click.listbuilder', () => false)
+          .on('blur.listbuilder', () => self.commitEdit(node, isNewItem))
+          .on('keypress.listbuilder', (e) => {
+            const key = e.keyCode || e.charCode || 0;
+            if (key === 13) {
+              self.commitEdit(node, isNewItem);
+              node.focus();
+            }
+          });
 
         /**
         * Fires when enter to edit mode.
@@ -451,10 +454,10 @@ ListBuilder.prototype = {
   * @returns {void}
   */
   commitEdit(node, isNewItem) {
-    const s = this.settings,
-      data = this.getDataByNode(node),
-      container = $('.item-content', node),
-      editInput = $('.edit-input', container);
+    const s = this.settings;
+    const data = this.getDataByNode(node);
+    const container = $('.item-content', node);
+    const editInput = $('.edit-input', container);
 
     if (isNewItem) {
       data.data.value = editInput.val();
@@ -480,8 +483,8 @@ ListBuilder.prototype = {
   * @returns {void}
   */
   deleteItem() {
-    const self = this,
-      node = self.listApi.selectedItems[0];
+    const self = this;
+    const node = self.listApi.selectedItems[0];
     if (node && node.length > 0) {
       const data = self.getDataByNode(node);
       if (typeof data.index !== 'undefined') {
@@ -493,7 +496,7 @@ ListBuilder.prototype = {
         * @property {Object} event - The jquery event object
         * @property {Object} data - Data for this item
         */
-        $.when(self.element.triggerHandler('beforedelete', [data])).done(function() {
+        $.when(self.element.triggerHandler('beforedelete', [data])).done(() => {
           self.listApi.removeAllSelected();
           self.updateAttributes();
           self.dataset.splice(data.index, 1);
@@ -515,14 +518,14 @@ ListBuilder.prototype = {
   /**
   * Get data from dataset by node
   * @param {Object} node  The HTML element to get data
-  * @returns {Object}
+  * @return {Object} node data
   */
   getDataByNode(node) {
     let data = {};
     for (let i = 0, l = this.dataset.length; i < l; i++) {
       const d = this.dataset[i];
       if ($(d.node).is(node)) {
-        data = {index: i, data: d};
+        data = { index: i, data: d };
         break;
       }
     }
@@ -544,7 +547,8 @@ ListBuilder.prototype = {
   moveCursorToEnd(el) {
     setTimeout(() => {
       if (typeof el.selectionStart === 'number') {
-        el.selectionStart = el.selectionEnd = el.value.length;
+        el.selectionEnd = el.value.length;
+        el.selectionStart = el.value.length;
       } else if (typeof el.createTextRange !== 'undefined') {
         const range = el.createTextRange();
         range.collapse(false);
@@ -558,16 +562,16 @@ ListBuilder.prototype = {
     const nodes = $('li', this.ul);
 
     for (let i = 0, l = nodes.length; i < l; i++) {
-      $(nodes[i]).attr({'aria-posinset': i + 1, 'aria-setsize': l});
+      $(nodes[i]).attr({ 'aria-posinset': i + 1, 'aria-setsize': l });
     }
   },
 
   // Update dataset
   updateDataset(ds) {
-    const nodes = $('li', this.ul),
-      lv = $('.listview', this.element).data('listview');
+    const nodes = $('li', this.ul);
+    const lv = $('.listview', this.element).data('listview');
 
-    lv.deselectItemsBetweenIndexes([0, nodes.length-1]);
+    lv.deselectItemsBetweenIndexes([0, nodes.length - 1]);
     this.settings.dataset = ds;
     lv.loadData(this.settings.dataset);
 
@@ -619,22 +623,28 @@ ListBuilder.prototype = {
     if (this.isElement(selector) && $.contains(this.ul, selector)) {
       li = this.isjQuery(selector) ? selector : $(selector);
     } else {
-      const idx = parseInt(selector),
-        items = $('li', this.ul);
-      if (!isNaN(idx) && (idx > -1 && idx < items.length)) {
+      const idx = parseInt(selector, 10);
+      const items = $('li', this.ul);
+      if (!Number.isNaN(idx) && (idx > -1 && idx < items.length)) {
         li = items.eq(idx); // zero based index
-      } else if ((selector + '').toLowerCase() === 'first') {
+      } else if ((`${selector}`).toLowerCase() === 'first') {
         li = items.first(); // first
-      } else if ((selector + '').toLowerCase() === 'last') {
+      } else if ((`${selector}`).toLowerCase() === 'last') {
         li = items.last(); // last
       }
     }
     // Make sure to return only one item -or- null
-    return (li.length < 1) ? null : ((li.length > 1) ? li.eq(0) : li);
+    if (li.length < 1) {
+      return null;
+    } else if (li.length > 1) {
+      return li.eq(0);
+    }
+    return li;
   },
 
   // Check if given object is a DOM object
   isElement(obj) {
+    /* global Element */
     return (this.isjQuery(obj) && obj.get(0) instanceof Element) || obj instanceof Element;
   },
 
@@ -646,11 +656,14 @@ ListBuilder.prototype = {
     this.element.removeClass('is-disabled')
       .find('.toolbar .buttonset button').removeAttr('disabled').end()
       .find('.toolbar .buttonset button[data-original-disabled]')
-        .attr('disabled', 'disabled').removeAttr('data-original-disabled');
+      .attr('disabled', 'disabled')
+      .removeAttr('data-original-disabled');
 
     this.ul
       .find('li').removeClass('is-disabled').end()
-      .find('li[data-original-disabled]').addClass('is-disabled').removeAttr('data-original-disabled');
+      .find('li[data-original-disabled]')
+      .addClass('is-disabled')
+      .removeAttr('data-original-disabled');
   },
 
   /**
@@ -660,11 +673,13 @@ ListBuilder.prototype = {
   disable() {
     this.element.addClass('is-disabled')
       .find('.toolbar .buttonset button[disabled]').attr('data-original-disabled', 'disabled').end()
-      .find('.toolbar .buttonset button').attr('disabled', 'disabled');
+      .find('.toolbar .buttonset button')
+      .attr('disabled', 'disabled');
 
     this.ul
       .find('li.is-disabled').attr('data-original-disabled', 'is-disabled').end()
-      .find('li').addClass('is-disabled');
+      .find('li')
+      .addClass('is-disabled');
   },
 
   // Unbind all events
@@ -672,7 +687,7 @@ ListBuilder.prototype = {
     this.element.off(this.updatedEventsStr);
     $('.listview', this.element).off('selected.listbuilder');
 
-    $('li '+ this.arrangeApi.handle, this.ul)
+    $(`li ${this.arrangeApi.handle}`, this.ul)
       .off('mousedown.listbuilder touchstart.listbuilder');
 
     this.arrangeApi.element
