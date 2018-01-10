@@ -34,6 +34,7 @@ import './popupmenu/popupmenu.jquery';
 import './searchfield/searchfield.jquery';
 import './slider/slider.jquery';
 import './spinbox/spinbox.jquery';
+import './swaplist/swaplist.jquery';
 import './textarea/textarea.jquery';
 import './toast/toast.jquery';
 import './toolbar/toolbar.jquery';
