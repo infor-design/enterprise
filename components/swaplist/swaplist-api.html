@@ -9,165 +9,14 @@
       <th>Description</th>
     </thead>
     <tbody>
-      <tr>
-        <td>
-          searchable
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          available
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An array containing items for the available bucket.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          selected
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An array containing items for the selected bucket.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          additional
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An array containing items for the additional bucket.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          availableClass
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A class name linking the available root element.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          selectedClass
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A class name linking the selected root element.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          additionalClass
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A class name linking the additional root element.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          availableBtn
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A class name linking the available button element.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          selectedBtnLeft
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A class name linking the move left button element.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          selectedBtnRight
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A class name linking the move right button element.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          additionalBtn
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A class name linking the additional button element.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          template
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          An Html String with the mustache template for the view.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          draggable
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
-
-        </td>
-      </tr>
     </tbody>
   </table>
 
+
+
+
+  
+    
 
 
   <h2>Methods</h2>
@@ -189,6 +38,8 @@
 
         </td>
         <td>
+          
+Array
         </td>
       </tr>
       <tr>
@@ -201,6 +52,8 @@
 
         </td>
         <td>
+          
+Array
         </td>
       </tr>
       <tr>
@@ -213,6 +66,8 @@
 
         </td>
         <td>
+          
+Array
         </td>
       </tr>
       <tr>
@@ -231,6 +86,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -243,29 +100,90 @@
 
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
           
-                
-                  <span>swapupdate (object) = Fires when any bucket has its content changed.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Sets up event handlers for this control and its sub-elements</p>
-
-        </td>
-        <td>
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>swapupdate
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>items (Array)
+        
+        = List of items data
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when any bucket has its content changed.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforeswap
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>items (Array)
+        
+        = List of selected items data
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before moving an element allowing you to access the draggable item.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

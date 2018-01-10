@@ -1,136 +1,17 @@
   <section>
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          dataset
-        </td>
-        <td>
-          Object
-        </td>
-        <td>
-           
--
- 
- The array of data
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnAdd
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The attribute to match the add button in the toolbar (ie. data-action="add")
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnEdit
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The attribute to match the edit button in the toolbar (ie. data-action="edit")
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnDelete
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- The attribute to match the delete button in the toolbar (ie. data-action="delete")
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnGoUp
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The attribute to match the move up button in the toolbar (ie. data-action="goup")
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnGoDown
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- The attribute to match the move up button in the toolbar (ie. data-action="dodown")
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          template
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The list view markdown / template.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          templateItemContent
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The markdown for editing an item
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -151,6 +32,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -163,6 +46,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -175,6 +60,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -182,10 +69,7 @@
         <td>
           
                 
-                  <span>isNewItem (Boolean) =  
--
- 
- Is it a new item?
+                  <span>isNewItem (Boolean) = Is it a newly added item?
  </span>
                 
           
@@ -195,6 +79,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -202,16 +88,10 @@
         <td>
           
                 
-                  <span>node (jQuery) =  
--
- 
- The node to edit
+                  <span>node (Object) = The HTML element to edit
  </span>
                 
-                  <span>isNewItem (Boolean) =  
--
- 
- Is it a new item?
+                  <span>isNewItem (Boolean) = Is it a newly added item?
  </span>
                 
           
@@ -221,6 +101,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -228,25 +110,21 @@
         <td>
           
                 
-                  <span>node (jQuery) =  
--
- 
- The node to delete
+                  <span>node (Object) = The HTML element to commit changes
  </span>
                 
-                  <span>isNewItem (Boolean) =  
--
- 
- Is it a new item?
+                  <span>isNewItem (Boolean) = Is it a newly added item?
  </span>
                 
           
         </td>
         <td>
-          <p>Delete the selected item.</p>
+          <p>Commit the changes to item.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -259,6 +137,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -266,7 +146,8 @@
         <td>
           
                 
-                  <span>node () =  </span>
+                  <span>node (Object) = The HTML element to get data
+ </span>
                 
           
         </td>
@@ -279,10 +160,490 @@
 Object
         </td>
       </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Make enable.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Make disable.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (Object) = The settings to apply.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Resync the UI and Settings.</p>
+
+        </td>
+        <td>
+          The api
+Object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown process for this plugin</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
     </tbody>
   </table>
 
 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>selected
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this selected item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a item is selected.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>updated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a item is updated.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforeadd
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before add new item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afteradd
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this new item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after add new item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforegoup
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before move up item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>aftergoup
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after move up item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforegodown
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before move down item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>aftergodown
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after move down item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforeedit
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before edit item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>entereditmode
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when enter to edit mode.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>exiteditmode
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when exited to edit mode.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforedelete
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before delete item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afterdelete
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = Data for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after delete item.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

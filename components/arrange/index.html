@@ -5,92 +5,18 @@
 </ol>
   <section>
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          handle
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The class name of the handle element to connect
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          itemsSelector
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The selector to match all the sortable elements.
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          connectWith
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The optional element to connect with when using two lists
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          placeholder
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The html for the element that appears while dragging
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          placeholderCssClass
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- The class to add to the ghost element that is being dragged.
 
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -105,12 +31,19 @@
         <td>updated</td>
         <td>
           
+                
+                  <span>settings (Object) = The settings to apply.
+ </span>
+                
+          
         </td>
         <td>
           <p>Resync the UI and Settings.</p>
 
         </td>
         <td>
+          The api
+Object
         </td>
       </tr>
       <tr>
@@ -119,71 +52,123 @@
           
         </td>
         <td>
-          <p>Teardown and remove any added markup and events.</p>
+          <p>Teardown process for this plugin</p>
 
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
           
-                
-                  <span>beforearrange (Object) =  
--
- 
- Fires before moving an element allowing you to access the ui to customize the draggable item
- </span>
-                
-                  <span>afterearrange (Object) =  
--
- 
- Fires after moving an element allowing you do any follow up updating.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>This component fires the following events.</p>
-
-        </td>
-        <td>
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>beforearrange
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>status (Object)
+        
+        = Status for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before moving an element allowing you to access the ui to customize the draggable item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>arrangeupdate
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>status (Object)
+        
+        = Status for this item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after moving an element allowing you do any follow up updating.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
 
 <h2 id="code-example">Code Example</h2>
 <p>The arrange util is an internally used plugin thats used on components like the swaplist and datagrid row reorder. It is included and documented as it could be reused in certain situations.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  element.arrange({</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">      placeholder: &#39;<span class="kw">&lt;tr</span><span class="ot"> class=</span><span class="st">&quot;datagrid-reorder-placeholder&quot;</span><span class="kw">&gt;&lt;td</span><span class="ot"> colspan=</span><span class="st">&quot;&#39;+ this.visibleColumns().length +&#39;&quot;</span><span class="kw">&gt;&lt;/td&gt;&lt;/tr&gt;</span>&#39;,</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">      handle: &#39;.reorder-icon&#39;</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    })</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    .on(&#39;beforearrange.datagrid&#39;, function(e, status) {</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">      if (self.isSafari) {</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">        status.start.css({&#39;display&#39;: &#39;inline-block&#39;});</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">      }</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    })</a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    .on(&#39;arrangeupdate.datagrid&#39;, function(e, status) {</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">      if (self.isSafari) {</a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">        status.end.css({&#39;display&#39;: &#39;&#39;});</a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">      }</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">      // Move the elem in the data set</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">      self.settings.dataset.splice(status.endIndex, 0, self.settings.dataset.splice(status.startIndex, 1)[0]);</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">      // Fire an event</a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">      self.element.trigger(&#39;rowreorder&#39;, [status]);</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">    });</a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+  element.arrange({
+      placeholder: &#39;<span class="kw">&lt;tr</span><span class="ot"> class=</span><span class="st">&quot;datagrid-reorder-placeholder&quot;</span><span class="kw">&gt;&lt;td</span><span class="ot"> colspan=</span><span class="st">&quot;&#39;+ this.visibleColumns().length +&#39;&quot;</span><span class="kw">&gt;&lt;/td&gt;&lt;/tr&gt;</span>&#39;,
+      handle: &#39;.reorder-icon&#39;
+    })
+    .on(&#39;beforearrange.datagrid&#39;, function(e, status) {
+      if (self.isSafari) {
+        status.start.css({&#39;display&#39;: &#39;inline-block&#39;});
+      }
+    })
+    .on(&#39;arrangeupdate.datagrid&#39;, function(e, status) {
+      if (self.isSafari) {
+        status.end.css({&#39;display&#39;: &#39;&#39;});
+      }
+      // Move the elem in the data set
+      self.settings.dataset.splice(status.endIndex, 0, self.settings.dataset.splice(status.startIndex, 1)[0]);
+      // Fire an event
+      self.element.trigger(&#39;rowreorder&#39;, [status]);
+    });
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>Not implemented. This is not the most accessible functionality. Ideally you would provide a alternate method for doing the action. For example for the grid we would add an “order” column where the user can edit the order by typing not just dragging.</li>
+<li>Not implemented. This is not the most accessible functionality. Ideally you would provide a alternate method for doing the action. For example for the grid we would add an &quot;order&quot; column where the user can edit the order by typing not just dragging.</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>

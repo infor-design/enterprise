@@ -4,6 +4,7 @@
 // behaviors
 // TODO: separate this more logically?
 import './utils/highlight';
+import './arrange/arrange.jquery';
 import './drag/drag.jquery';
 import './place/place.jquery';
 import './personalize/personalize.jquery';
@@ -22,6 +23,7 @@ import './circlepager/circlepager.jquery';
 import './colorpicker/colorpicker.jquery';
 import './editor/editor.jquery';
 import './homepage/homepage.jquery';
+import './listbuilder/listbuilder.jquery';
 import './listview/listview.jquery';
 import './mask/masked-input.jquery';
 import './message/message.jquery';
@@ -32,6 +34,7 @@ import './popupmenu/popupmenu.jquery';
 import './searchfield/searchfield.jquery';
 import './slider/slider.jquery';
 import './spinbox/spinbox.jquery';
+import './swaplist/swaplist.jquery';
 import './textarea/textarea.jquery';
 import './toast/toast.jquery';
 import './toolbar/toolbar.jquery';
