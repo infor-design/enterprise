@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary */
+/* eslint-disable no-nested-ternary, no-underscore-dangle */
 
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';

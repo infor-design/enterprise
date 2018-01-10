@@ -1,5 +1,8 @@
 import { ColorPicker, COMPONENT_NAME } from './colorpicker';
 
+/*
+ * jQuery Component Wrapper for Colorpicker
+ */
 $.fn.colorpicker = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);

@@ -31,6 +31,26 @@ https://github.com/documentationjs/documentation/tree/master/src/default_theme h
 
 - See about.js and accordion.js for more complete examples in the code
 - If using jsdoc format docs, make sure to add `* @private ` to the method. Unless is going to be useful to outside teams.
+- This plugin is very help ful https://atom.io/packages/docblockr (need vscode version?)
+- Events should be removed from handleEvents to this example and they can be anyplace.
+```
+ /**
+    * Fires when the dialog is closing.
+    *
+    * @event close
+    * @property {Object} event - The jquery event object
+    * @property {Object} ui - The dialog object
+    */
+```
+-  I added a jsdoc linter it complains about somethings mainly the return type which should be
+- The main tyles should be lower case like this:
+```
+param {string}
+@param {boolean}
+@param {number}
+@param {array}
+@param {object}
+```
 
 ## Trouble Shooting
 

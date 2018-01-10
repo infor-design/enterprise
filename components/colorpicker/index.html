@@ -9,8 +9,8 @@
 </ol>
   <section>
   
-    <h2>Settings</h2>
-
+    
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -23,7 +23,7 @@
           colors
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           An array of objects of the form
@@ -36,7 +36,7 @@
           showLabel
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           Show the label if true vs the hex value if false.
@@ -48,7 +48,7 @@
           editable
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           If false, the field is readonly and transparent.
@@ -61,7 +61,7 @@ I.E. The value cannot be typed only editable by selecting.
           uppercase
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           If false, lower case hex is allowed.
@@ -74,7 +74,7 @@ If true upper case hex is allowed. If showLabel is true this setting is ignored.
           colorOnly
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           If true the field will be shrunk to only show the color portion.
@@ -83,6 +83,8 @@ If true upper case hex is allowed. If showLabel is true this setting is ignored.
       </tr>
     </tbody>
   </table>
+
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -98,10 +100,7 @@ If true upper case hex is allowed. If showLabel is true this setting is ignored.
         <td>
           
                 
-                  <span>label (String) =  
--
- 
- The label to search for in the color labels.
+                  <span>label (string) = The label to search for in the color labels.
  </span>
                 
           
@@ -120,7 +119,7 @@ void
         <td>
           
                 
-                  <span>hex (String) = The hex to search for in the color set.
+                  <span>hex (string) = The hex to search for in the color set.
  </span>
                 
           
@@ -154,10 +153,10 @@ void
         <td>
           
                 
-                  <span>hex (String) = The hex value to use (can have the # or not).
+                  <span>hex (string) = The hex value to use (can have the # or not).
  </span>
                 
-                  <span>label (String) = The text to display
+                  <span>label (string) = The text to display
  </span>
                 
           
@@ -231,14 +230,19 @@ void
         <td>updated</td>
         <td>
           
+                
+                  <span>settings (object) = the settings to update to.
+ </span>
+                
+          
         </td>
         <td>
-          <p>Updates the component instance.  Can be used after being passed new settings.</p>
+          <p>Update the component and optionally apply new settings.</p>
 
         </td>
         <td>
-          
-void
+          The plugin api for chaining.
+object
         </td>
       </tr>
       <tr>
@@ -252,21 +256,7 @@ void
         </td>
         <td>
           The plugin api (this).
-Object
-        </td>
-      </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Detach events and restore DOM to default.</p>
-
-        </td>
-        <td>
-          
-void
+object
         </td>
       </tr>
     </tbody>

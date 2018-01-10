@@ -39,6 +39,11 @@ select.dropdown-sm,
 select.dropdown-xs {
   display: none;
   font-size: 50px;
+
+  // Hide when busy indicator on
+  &.busy.is-loading + .dropdown-wrapper .icon {
+    visibility: hidden;
+  }
 }
 
 .dropdown-wrapper {
@@ -178,6 +183,7 @@ div.multiselect {
     border-color: $input-focus-border-color !important;
     // scss-lint:enable ImportantRule
   }
+
 }
 
 // The List
@@ -637,7 +643,6 @@ div.dropdown-xs,
 }
 
 // Shorter Drop Down Lists
-
 .dropdown-list.dropdown-short {
   .dropdown-search {
     @include font-size(12);

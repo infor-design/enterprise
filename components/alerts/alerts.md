@@ -7,9 +7,7 @@
 2. Alerts (Badges) [View Example]( ../components/badges/example-index)
 3. More Badge Examples [View Example]( ../components/badges/example-additional-badges)
 
-## API Details
-
-### Settings
+## Settings
 
 * Icon Types - icon-alert, icon-confirm, icon-dirty, icon-error, icon-info, icon-pending, icon-new, icon-in-progress, icon-info-field
 * Icon Colors - This is done automatically by the type (alert, error, info, confirm)
@@ -26,7 +24,6 @@ Alerts are just specially classed icons. You can added alert icons by adding an 
 </svg>
 <span class="audible">Alert</span>
 
-
 ```
 
 ## Accessibility
@@ -41,4 +38,4 @@ Alert icons and Badges do not have tab stops or keyboard interaction on their ow
 ## Upgrading from 3.X
 
 -   The old alerts where shown as div's, the new ones are displayed as spans. These could be used interchangeably, but span is easier to position in line so is usually a better fit.
--   Classes which were formerly inforAlertIcon shuld be changed to an svg element
+-   Classes which were formerly inforAlertIcon should be changed to an svg element

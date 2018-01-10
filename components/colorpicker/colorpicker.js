@@ -387,9 +387,9 @@ ColorPicker.prototype = {
   updateColorMenu() {
     const isMenu = !!($('#colorpicker-menu').length);
     const menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
-    const currentTheme = personalization.currentTheme;
-    const isBorderAll = (this.settings.themes[currentTheme].border === 'all');
-    const isChecked = this.settings.themes[currentTheme].checkmark;
+    const activeTheme = personalization.currentTheme;
+    const isBorderAll = (this.settings.themes[activeTheme].border === 'all');
+    const isChecked = this.settings.themes[activeTheme].checkmark;
     let checkmarkClass = '';
 
     for (let i = 0, l = this.settings.colors.length; i < l; i++) {
@@ -399,7 +399,7 @@ ColorPicker.prototype = {
       const colorValue = this.settings.colors[i].value;
       const colorNum = parseInt(this.settings.colors[i].number, 10);
       let isBorder = false;
-      const regexp = new RegExp(`\\b${currentTheme}\\b`);
+      const regexp = new RegExp(`\\b${activeTheme}\\b`);
       let elemValue = this.isEditor ? this.element.attr('data-value') : this.element.val();
 
       if (this.settings.showLabel && !this.isEditor) {
@@ -525,10 +525,13 @@ ColorPicker.prototype = {
   },
 
   /**
-  * Updates the component instance.  Can be used after being passed new settings.
-  * @returns {void}
+  * Update the component and optionally apply new settings.
+  *
+  * @param  {object} settings the settings to update to.
+  * @return {object} The plugin api for chaining.
   */
-  updated() {
+  updated(settings) {
+    this.settings = utils.mergeSettings(this.element, settings, this.settings);
     return this
       .destroy()
       .init();
@@ -561,6 +564,7 @@ ColorPicker.prototype = {
 
   /**
   * Detach events and restore DOM to default.
+  * @private
   * @returns {void}
   */
   handleEvents() {
