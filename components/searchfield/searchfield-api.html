@@ -2,14 +2,7 @@
   
     
 
-
-  
-    
-
-
-  
-    <h2>Settings</h2>
-
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -17,8 +10,161 @@
       <th>Description</th>
     </thead>
     <tbody>
+      <tr>
+        <td>
+          resultsCallback
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+          Callback function for getting typahead results on search.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          allResultsCallback
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+          Callback function for getting "all results".
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showAllResults
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true the show all results link is showin in the list.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showGoButton
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true a go button is associated.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          goButtonCopy
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          The text to use on the go button.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          goButtonAction
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+          If defined as a function, will fire this callback on
+the Go Button "click"
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          categories
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          If defined as an array, displays a dropdown containing
+categories that can be used to filter results.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          categoryMultiselect
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, creates a multiselectable categories list.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showCategoryText
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, will show any available categories that are
+selected to the left of the Dropdown field.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          source
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+          Callback function for getting type ahead results.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          template
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          The html template to use for the search list
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          clearable
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Add an X to clear.
+
+        </td>
+      </tr>
     </tbody>
   </table>
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -29,20 +175,6 @@
       <th>Returns</th>
     </thead>
     <tbody>
-      <tr>
-        <td>init</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Initialization Kickoff</p>
-
-        </td>
-        <td>
-          
-this
-        </td>
-      </tr>
       <tr>
         <td>hasCategories</td>
         <td>

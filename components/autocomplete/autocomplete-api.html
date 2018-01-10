@@ -2,32 +2,7 @@
   
     
 
-
-  
-    
-
-
-  
-    
-
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-
-
-  
-    
-
-
-  
-    <h2>Settings</h2>
-
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -40,7 +15,7 @@
           source
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           Defines the data to use, must be specified.
@@ -52,7 +27,7 @@
           sourceArguments
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           If a source method is defined, this flexible
@@ -66,7 +41,7 @@ implementation.
           template
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
           If defined, use this to draw the contents of each
@@ -79,7 +54,7 @@ search result instead of the default draw routine.
           filterMode
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           The matching algorithm, startsWith and contains
@@ -92,7 +67,7 @@ are supported - false will not filter client side
           delay
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
           The delay between key strokes on the keypad before it
@@ -105,7 +80,7 @@ thinks you stopped typing
           width
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           Width of the open auto complete menu
@@ -117,7 +92,7 @@ thinks you stopped typing
           offset
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           For the open menu, the left or top offset
@@ -129,7 +104,7 @@ thinks you stopped typing
           autoSelectFirstItem
         </td>
         <td>
-          String
+          string
         </td>
         <td>
           Whether or not to select he first item in the
@@ -154,6 +129,12 @@ function.
     </tbody>
   </table>
 
+
+
+  
+    
+
+
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -164,11 +145,25 @@ function.
     </thead>
     <tbody>
       <tr>
+        <td>resetFilters</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Resets a filtered autocomplete back to its original state.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
         <td>updated</td>
         <td>
           
                 
-                  <span>settings (Object) = The new settings object to use.
+                  <span>settings (object) = The new settings object to use.
  </span>
                 
           
@@ -233,6 +228,7 @@ void
   
   
   
+  
   </section>
 
   <section>
@@ -252,7 +248,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -261,7 +257,7 @@ void
       </div>
     
       <div>
-        <span>filterResult (Object)
+        <span>filterResult (object)
         
         = The results of the filtering
 
@@ -283,7 +279,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The input event object
 
@@ -305,7 +301,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The input event object
 
@@ -314,7 +310,7 @@ void
       </div>
     
       <div>
-        <span>An (Array)
+        <span>An (array)
         
         = array containing the searchTerm and call back function
 
@@ -336,7 +332,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The input event object
 
@@ -345,7 +341,7 @@ void
       </div>
     
       <div>
-        <span>event (Array)
+        <span>event (array)
         
         = An array with the buffer in it
 
@@ -367,7 +363,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -376,7 +372,7 @@ void
       </div>
     
       <div>
-        <span>ui (Object)
+        <span>ui (object)
         
         = The dialog object
 
@@ -387,6 +383,29 @@ void
   
   </td>
   <td>Fires when the menu is opened.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>listopen
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Comes from Searchfields wrapping an autocomplete - resets
+a filtered autocomplete back to normal.
 </td>
 </tr>
 

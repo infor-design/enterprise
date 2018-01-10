@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -7,29 +8,40 @@ import '../autocomplete/autocomplete.jquery';
 import '../button/button.jquery';
 import '../popupmenu/popupmenu.jquery';
 
-
-/**
- *
- */
+// Name of this component
 let COMPONENT_NAME = 'searchfield';
 
-
 /**
- *
- */
+* @namespace
+* @property {function} resultsCallback Callback function for getting typahead results on search.
+* @property {function} allResultsCallback Callback function for getting "all results".
+* @property {boolean} showAllResults If true the show all results link is showin in the list.
+* @property {boolean} showGoButton If true a go button is associated.
+* @property {string} goButtonCopy The text to use on the go button.
+* @property {function} goButtonAction If defined as a function, will fire this callback on
+* the Go Button "click"
+* @property {array} categories If defined as an array, displays a dropdown containing
+* categories that can be used to filter results.
+* @property {boolean} categoryMultiselect If true, creates a multiselectable categories list.
+* @property {boolean} showCategoryText If true, will show any available categories that are
+* selected to the left of the Dropdown field.
+* @property {function} source Callback function for getting type ahead results.
+* @property {string} template The html template to use for the search list
+* @property {boolean} clearable Add an X to clear.
+*/
 let SEARCHFIELD_DEFAULTS = {
   resultsCallback: undefined,
   allResultsCallback: undefined,
   showAllResults: true,
   showGoButton: false,
   goButtonCopy: Locale.translate('Go') || 'Go',
-  goButtonAction: undefined, // if defined as a function, will fire this callback on the Go Button "click"
-  categories: undefined, // If defined as an array, displays a dropdown containing categories that can be used to filter results.
-  categoryMultiselect: false, // If true, creates a multiselectable Categories list
-  showCategoryText: false, // If true, will show any available categories that are selected to the left of the Dropdown field.
+  goButtonAction: undefined,
+  categories: undefined,
+  categoryMultiselect: false,
+  showCategoryText: false,
   source: undefined,
-  template: undefined, // Template that can be passed
-  clearable: false //Has an X to clear
+  template: undefined,
+  clearable: false
 };
 
 
@@ -49,6 +61,7 @@ function SearchField(element, settings) {
 SearchField.prototype = {
   /**
    * Initialization Kickoff
+   * @private
    * @returns {this}
    */
   init: function() {
@@ -348,6 +361,13 @@ SearchField.prototype = {
         anchor.parent('li').addClass('is-selected');
         self.element.val('');
       });
+
+      // Setup a listener for the Clearable behavior, if applicable
+      if (this.settings.clearable) {
+        this.element.on('cleared.searchfield', function() {
+          self.element.triggerHandler('resetfilter');
+        });
+      }
 
     });
 
@@ -872,7 +892,7 @@ SearchField.prototype = {
    * @returns {this}
    */
   teardown: function() {
-    this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield listclose.searchfield safe-blur.searchfield');
+    this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield listclose.searchfield safe-blur.searchfield cleared.searchfield');
 
     if (this.autocomplete) {
       this.autocomplete.destroy();
@@ -908,6 +928,5 @@ SearchField.prototype = {
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
-
 
 export { SearchField, COMPONENT_NAME };

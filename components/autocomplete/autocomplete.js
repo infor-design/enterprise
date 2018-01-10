@@ -10,12 +10,10 @@ import { Tmpl } from '../tmpl/tmpl';
 import '../utils/highlight';
 import '../popupmenu/popupmenu.jquery';
 
-/**
- * Component Name
- */
+// The Name of this components
 const COMPONENT_NAME = 'autocomplete';
 
-/**
+/*
  * Default Autocomplete Result Item Template.  This can be modified to add data points that
  * will be populated by adding properties to the object created
  * in `DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK`.
@@ -26,7 +24,7 @@ const DEFAULT_AUTOCOMPLETE_TEMPLATE = `<li id="{{listItemId}}" data-index="{{ind
  </a>
 </li>`;
 
-/**
+/*
 * Autocomplete's method for obtaining the string that will be tested against a provided search
 * term for a match. This is configurable in the event that the component you attach this to
 * needs a specific part of it searched (instead of the whole thing).
@@ -113,8 +111,25 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
 };
 
 /**
- * Autocomplete Default Settings
- */
+* @namespace
+* @property {string} source Defines the data to use, must be specified.
+* @property {string} sourceArguments If a source method is defined, this flexible
+* object can be passed into the source method, and augmented with parameters specific to the
+* implementation.
+* @property {boolean} template If defined, use this to draw the contents of each
+* search result instead of the default draw routine.
+* @property {string} filterMode The matching algorithm, startsWith and contains
+* are supported - false will not filter client side
+* @property {boolean} delay The delay between key strokes on the keypad before it
+* thinks you stopped typing
+* @property {string} width Width of the open auto complete menu
+* @property {string} offset For the open menu, the left or top offset
+* @property {string} autoSelectFirstItem Whether or not to select he first item in the
+* list to be selected
+* @property {function} resultsCallback If defined, does not produce the results of the
+* Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback
+* function.
+*/
 const AUTOCOMPLETE_DEFAULTS = {
   source: [],
   sourceArguments: {},
@@ -136,26 +151,8 @@ const AUTOCOMPLETE_DEFAULTS = {
 * filtering down the results based on keyboard input from the user.
 *
 * @class Autocomplete
-*
 * @param {string} element The api element.
-* @param {string} settings The settingselement
-* @param {string} source Defines the data to use, must be specified.
-* @param {string} sourceArguments If a source method is defined, this flexible
-* object can be passed into the source method, and augmented with parameters specific to the
-* implementation.
-* @param {boolean} template If defined, use this to draw the contents of each
-* search result instead of the default draw routine.
-* @param {string} filterMode The matching algorithm, startsWith and contains
-* are supported - false will not filter client side
-* @param {boolean} delay The delay between key strokes on the keypad before it
-* thinks you stopped typing
-* @param {string} width Width of the open auto complete menu
-* @param {string} offset For the open menu, the left or top offset
-* @param {string} autoSelectFirstItem Whether or not to select he first item in the
-* list to be selected
-* @param {function} resultsCallback If defined, does not produce the results of the
-* Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback
-* function.
+* @param {string} settings The settings element.
 */
 function Autocomplete(element, settings) {
   this.element = $(element);
@@ -239,23 +236,25 @@ Autocomplete.prototype = {
 
     // Modify filtered results for a specific template with a `resultIteratorCallback`,
     // if applicable. Each of these results is deep-copied.
-    filterResult.forEach((val, index) => {
-      let result = utils.extend(true, {}, val);
-      result = self.settings.resultIteratorCallback(result, index);
+    if (filterResult !== false) {
+      filterResult.forEach((val, index) => {
+        let result = Soho.utils.extend(true, {}, val);
+        result = self.settings.resultIteratorCallback(result, index);
 
-      if (self.settings.highlightMatchedText) {
-        const filterOpts = {
-          filterMode: self.settings.filterMode,
-          term
-        };
-        if (result.highlightTarget) {
-          filterOpts.alias = result.highlightTarget;
+        if (self.settings.highlightMatchedText) {
+          const filterOpts = {
+            filterMode: self.settings.filterMode,
+            term
+          };
+          if (result._highlightTarget) {
+            filterOpts.alias = result._highlightTarget;
+          }
+          result = self.settings.highlightCallback(result, filterOpts);
         }
-        result = self.settings.highlightCallback(result, filterOpts);
-      }
 
-      modifiedFilterResults.push(result);
-    });
+        modifiedFilterResults.push(result);
+      });
+    }
 
     // If a "resultsCallback" method is defined, pipe the filtered items to that method and skip
     // building a popupmenu.
@@ -589,6 +588,14 @@ Autocomplete.prototype = {
     return dfd;
   },
 
+  /**
+  * Resets a filtered autocomplete back to its original state.
+  * @returns {void}
+  */
+  resetFilters() {
+    this.openList('', this.currentDataSet);
+  },
+
   // Handles the Autocomplete's "focus" event
   handleAutocompleteFocus() {
     const self = this;
@@ -769,15 +776,23 @@ Autocomplete.prototype = {
       })
       /**
       * Fires when the menu is opened.
-      *
       * @event listopen
-      * @type {object}
       * @property {object} event - The jquery event object
       * @property {object} ui - The dialog object
       */
       .off('listopen.autocomplete')
       .on('listopen.autocomplete', () => {
         self.handleAfterListOpen();
+      })
+      /**
+      * Comes from Searchfields wrapping an autocomplete - resets
+      * a filtered autocomplete back to normal.
+      * @event listopen
+      * @property {object} event - The jquery event object
+      */
+      .off('resetfilter.autocomplete')
+      .on('resetfilter.autocomplete', () => {
+        self.resetFilters();
       });
   }
 
