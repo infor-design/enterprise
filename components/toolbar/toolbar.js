@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -1160,7 +1161,8 @@ Toolbar.prototype = {
    * @returns {boolean}
    */
   isItemOverflowed: function(item) {
-    if (this.hasNoMoreButton()) {
+    // No items will be overflowed if the `More Actions` menu is purposefully disabled.
+    if (this.moreButtonIsDisabled()) {
       return false;
     }
 
@@ -1168,14 +1170,22 @@ Toolbar.prototype = {
       return true;
     }
 
-    // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed.
-    if (this.title.length && this.buttonsetItems.filter(':not(.hidden)').index(item) >= this.settings.maxVisibleButtons) { // Subtract one to account for the More Button
-      // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
-      // This prevents ONE item from being present in the menu by itself
-      //if (!this.buttonsetItems.last().is(item)) {
-        //return true;
-      //}
-      return true;
+    var itemIndexInButtonset = this.buttonsetItems.filter(':not(.hidden)').index(item),
+      maxVisibleButtons = this.settings.maxVisibleButtons;
+
+    // the `maxVisibleButtons` calculation should include a visible More Actions button.
+    // Subtract one from the `maxVisibleButtons` setting to account for the More Button, if it's visible.
+    // See SOHO-7237
+    if (this.moreButtonIsVisible()) {
+      maxVisibleButtons = maxVisibleButtons - 1;
+    }
+
+    // In cases where a Title is present and buttons are right-aligned,
+    // only show up to the maximum allowed.
+    if (this.title.length) {
+      if (itemIndexInButtonset >= maxVisibleButtons) {
+        return true;
+      }
     }
 
     if (this.buttonset.scrollTop() > 0) {
@@ -1210,11 +1220,29 @@ Toolbar.prototype = {
   },
 
   /**
-   * Detection for this toolbar to have a More Button
-   * @returns {boolean}
-   */
+  * Detection for whether or not this toolbar is able to have a More Button
+  * @returns {boolean}
+  */
+  moreButtonIsDisabled: function() {
+    return this.element[0].classList.contains('no-actions-button');
+  },
+
+  /**
+  * Detection for this toolbar to have a More Button
+  * TODO: Deprecate in 4.4.0 due to unclear nomenclature
+  * @private
+  * @returns {boolean}
+  */
   hasNoMoreButton: function() {
-    return this.element[0].classList.contains('no-more-button');
+    return this.moreButtonIsDisabled();
+  },
+
+  /**
+  * Detection for whether or not More Actions menu is currently visible.
+  * @returns {boolean}
+  */
+  moreButtonIsVisible: function() {
+    return this.element[0].classList.contains('has-more-button');
   },
 
   /**
@@ -1223,7 +1251,7 @@ Toolbar.prototype = {
    * @returns {undefined}
    */
   toggleMoreMenu: function() {
-    if (this.element.hasClass('no-actions-button')) {
+    if (this.moreButtonIsDisabled()) {
       return;
     }
 

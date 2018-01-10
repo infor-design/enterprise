@@ -3,173 +3,15 @@
     
 
 
+
   
     
 
 
+
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          menu
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- Menu's ID Selector, or a jQuery object representing a menu
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          trigger
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- Action on which to trigger a menu can be: click, rightClick, immediate ect
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          autoFocus
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- If false the focus will not focus the first list element. (At the cost of accessibility)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          attachToBody
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- If true the menu will be moved out to the body. To be used in certin overflow situations.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          beforeOpen
-        </td>
-        <td>
-          function
-        </td>
-        <td>
-           
--
- 
- Callback that can be used for populating the contents of the menu.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          ariaListbox
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
-  Switches aria to use listbox construct instead of menu construct (internal)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          eventObj
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- Can pass in the event object so you can do a right click with immediate
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          returnFocus
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          placementOpts
-        </td>
-        <td>
-          Object
-        </td>
-        <td>
-           
--
- 
- Gets passed to this control's Place behavior
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          offset
-        </td>
-        <td>
-          Object
-        </td>
-        <td>
-           
--
- 
- Can tweak the menu position in the x and y direction. Takes an object of form: 
-<code>{x: 0, y: 0}</code>
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -200,16 +42,10 @@
         <td>
           
                 
-                  <span>isCancelled (Boolean) =  
--
- 
- Internally set option used if the operation is a cancel. Wont matter for manual api call.
+                  <span>isCancelled (boolean) = Internally set option used if the operation is a cancel. Wont matter for manual api call.
  </span>
                 
-                  <span>noFocus (Boolean) =  
--
- 
- Do not return focus to the calling element (fx a button)
+                  <span>noFocus (boolean) = Do not return focus to the calling element (fx a button)
  </span>
                 
           

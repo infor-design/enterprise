@@ -24,8 +24,6 @@
 
 ## Code Example
 
-### Single Select Dropdown
-
 The basic drop down works similar to a standard Html select element, because of styling and functionality requirements we use a stylized shadow widget which implements the drop down behavior and updates in sync with a hidden select element. This allows the select element to be serialized with the DOM like normal. The simplest way to use the drop down is to create markup containing: a field (for field and responsive form alignment), a label and a select. For accessibility and implementation reasons the label is required.\
  Create a select element with similar markup:
 

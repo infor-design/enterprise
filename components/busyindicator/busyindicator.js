@@ -82,6 +82,10 @@
       activate: function() {
         var self = this;
 
+        if (self.isActive()) {
+          return; // safety, don't activate this code if already active
+        }
+
         // If the markup already exists don't do anything but clear
         if (this.container) {
           if (self.closeTimeout) {
@@ -217,6 +221,10 @@
       close: function(fromEvent) {
         var self = this;
 
+        if (!self.isActive()) {
+          return; // safety, don't try and close this if not already active
+        }
+
         // If closed from an event, fire the necessary event triggers
         // and removes the 'is-loading' CSS class.
         if (fromEvent) {
@@ -321,6 +329,13 @@
 
       updated: function() {
         return this.setup();
+      },
+
+      isActive: function() {
+        if (this.container) {
+          return this.container.children('.busy-indicator').is('.active');
+        }
+        return false;
       },
 
       /**

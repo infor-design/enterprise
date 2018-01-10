@@ -13,8 +13,8 @@
 </ol>
   <section>
   
-    <h2>Settings</h2>
-
+    
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -27,13 +27,10 @@
           dataset
         </td>
         <td>
-          Array
+          array
         </td>
         <td>
-           
--
- 
- Array of data to feed the template
+          Array of data to feed the template
 
         </td>
       </tr>
@@ -42,13 +39,10 @@
           content
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Html Template String
+          Html Template String
 
         </td>
       </tr>
@@ -57,13 +51,10 @@
           description
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Audible Label (or use parent title)
+          Audible Label (or use parent title)
 
         </td>
       </tr>
@@ -72,13 +63,10 @@
           paging
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If true, activates paging
+          If true, activates paging
 
         </td>
       </tr>
@@ -87,13 +75,10 @@
           pagesize
         </td>
         <td>
-          Number
+          number
         </td>
         <td>
-           
--
- 
- If paging is activated, sets the number of listview items available per page
+          If paging is activated, sets the number of listview items available per page
 
         </td>
       </tr>
@@ -102,13 +87,10 @@
           searchable
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+          If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
 
         </td>
       </tr>
@@ -120,10 +102,7 @@
           
         </td>
         <td>
-           
--
- 
-  selection mode, can be false, 'single' or 'multiple' or 'mixed'
+          selection mode, can be false, 'single' or 'multiple' or 'mixed'
 
         </td>
       </tr>
@@ -132,13 +111,10 @@
           selectOnFocus
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
-  If true the first item in the list will be selected as it is focused.
+          If true the first item in the list will be selected as it is focused.
 
         </td>
       </tr>
@@ -147,13 +123,10 @@
           showCheckboxes
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
-  If false will not show checkboxes used with multiple selection mode only
+          If false will not show checkboxes used with multiple selection mode only
 
         </td>
       </tr>
@@ -162,13 +135,10 @@
           hoverable
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
-  If true the list element will show a hover action to indicate its actionable.
+          If true the list element will show a hover action to indicate its actionable.
 
         </td>
       </tr>
@@ -180,10 +150,7 @@
           
         </td>
         <td>
-           
--
- 
- If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+          If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
 
         </td>
       </tr>
@@ -192,18 +159,17 @@
           disableItemDeactivation
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
+          If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
 
         </td>
       </tr>
     </tbody>
   </table>
+
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -219,16 +185,10 @@
         <td>
           
                 
-                  <span>dataset (Array) =  
--
- 
- The dataset to use
+                  <span>dataset (array) = The dataset to use
  </span>
                 
-                  <span>pagerInfo (Object) =  
--
- 
- Pager instructions
+                  <span>pagerInfo (object) = Pager instructions
  </span>
                 
           
@@ -257,16 +217,10 @@
         <td>
           
                 
-                  <span>ds (Object) =  
--
- 
- The dataset to use or will use settings.dataset.
+                  <span>ds (object) = The dataset to use or will use settings.dataset.
  </span>
                 
-                  <span>pagerInfo (Object) =  
--
- 
- The pager settings to use (see pager api)
+                  <span>pagerInfo (object) = The pager settings to use (see pager api)
  </span>
                 
           
@@ -307,10 +261,7 @@
         <td>
           
                 
-                  <span>item (jQuery) =  
--
- 
- The list item (as jQuery) to focus
+                  <span>item (jQuery) = The list item (as jQuery) to focus
  </span>
                 
           
@@ -327,10 +278,7 @@
         <td>
           
                 
-                  <span>li () =  
--
- 
- Either the actually jQuery list element or a zero based index
+                  <span>li () = Either the actually jQuery list element or a zero based index
  </span>
                 
           
@@ -383,22 +331,13 @@
         <td>
           
                 
-                  <span>field (String) =  
--
- 
- The field in the dataset to sort on.
+                  <span>field (string) = The field in the dataset to sort on.
  </span>
                 
-                  <span>reverse (String) =  
--
- 
- If true sort descending.
+                  <span>reverse (string) = If true sort descending.
  </span>
                 
-                  <span>primer (Function) =  
--
- 
- A sorting primer function.
+                  <span>primer (Function) = A sorting primer function.
  </span>
                 
           
@@ -415,10 +354,7 @@
         <td>
           
                 
-                  <span>li () =  
--
- 
- Either the actually jQuery list element or a zero based index
+                  <span>li () = Either the actually jQuery list element or a zero based index
  </span>
                 
           
@@ -451,16 +387,10 @@
         <td>
           
                 
-                  <span>li () =  
--
- 
- Either the actually jQuery list element or a zero based index
+                  <span>li () = Either the actually jQuery list element or a zero based index
  </span>
                 
-                  <span>noTrigger (Boolean) =  
--
- 
- Do not trigger the selected event.
+                  <span>noTrigger (boolean) = Do not trigger the selected event.
  </span>
                 
           
@@ -477,10 +407,7 @@
         <td>
           
                 
-                  <span>li (jQuery) =  
--
- 
- The jQuery list element.
+                  <span>li (jQuery) = The jQuery list element.
  </span>
                 
           
@@ -497,10 +424,7 @@
         <td>
           
                 
-                  <span>li () =  
--
- 
- The jQuery list element or the index.
+                  <span>li () = The jQuery list element or the index.
  </span>
                 
           
@@ -523,7 +447,7 @@
         </td>
         <td>
           An object containing the active row's index, dom element and data.
-Object
+object
         </td>
       </tr>
       <tr>
@@ -531,10 +455,7 @@ Object
         <td>
           
                 
-                  <span>li () =  
--
- 
- The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
+                  <span>li () = The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
  </span>
                 
           
@@ -591,28 +512,16 @@ Object
         <td>
           
                 
-                  <span>selected (Object) =  
--
- 
- Fires when a item is selected
+                  <span>selected (object) = Fires when a item is selected
  </span>
                 
-                  <span>unselected (Object) =  
--
- 
- Fires when a item is deselected (deprecated)
+                  <span>unselected (object) = Fires when a item is deselected (deprecated)
  </span>
                 
-                  <span>deselected (Object) =  
--
- 
- Fires when a item is deselected
+                  <span>deselected (object) = Fires when a item is deselected
  </span>
                 
-                  <span>rendered (Object) =  
--
- 
- Fires after the listbox is fully rendered
+                  <span>rendered (object) = Fires after the listbox is fully rendered
  </span>
                 
           

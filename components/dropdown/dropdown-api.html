@@ -2,18 +2,7 @@
   
     
 
-
-  
-    
-
-
-  
-    
-
-
-  
-    <h2>Settings</h2>
-
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -26,13 +15,11 @@
           closeOnSelect
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- When an option is selected, the list will close if set to "true".  List stays open if "false".
+          When an option is selected, the list will close if set to
+"true".  List stays open if "false".
 
         </td>
       </tr>
@@ -41,13 +28,10 @@
           cssClass
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Append an optional css class to dropdown-list
+          Append an optional css class to dropdown-list
 
         </td>
       </tr>
@@ -56,13 +40,11 @@
           filterMode
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
+          Search mode to use between 'startsWith' and 'contains', false
+will not allow client side filter
 
         </td>
       </tr>
@@ -71,13 +53,11 @@
           noSearch
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If true, disables the ability of the user to enter text in the Search Input field in the open combo box
+          If true, disables the ability of the user to enter text in the
+Search Input field in the open combo box
 
         </td>
       </tr>
@@ -86,15 +66,13 @@
           showEmptyGroupHeaders
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If true, displays 
+          If true, displays 
 <optgroup>
- headers in the list even if no selectable options are present underneath.
+ headers in the list even
+if no selectable options are present underneath.
 
         </td>
       </tr>
@@ -103,13 +81,10 @@
           source
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- A function that can do an ajax call.
+          A function that can do an ajax call.
 
         </td>
       </tr>
@@ -118,13 +93,11 @@
           sourceArguments
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+          If a source method is defined, this flexible object can be
+passed into the source method, and augmented with parameters specific to the implementation.
 
         </td>
       </tr>
@@ -133,13 +106,11 @@
           sourceArguments
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+          If a source method is defined, this flexible object can be
+passed into the source method, and augmented with parameters specific to the implementation.
 
         </td>
       </tr>
@@ -148,13 +119,11 @@
           reloadSourceOnOpen
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
+          If set to true, will always perform an ajax call whenever
+the list is opened.  If false, the first AJAX call's results are cached.
 
         </td>
       </tr>
@@ -163,13 +132,10 @@
           empty
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- Initialize Empty Value
+          Initialize Empty Value
 
         </td>
       </tr>
@@ -178,13 +144,10 @@
           delay
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- Typing Buffer Delay in ms
+          Typing Buffer Delay in ms
 
         </td>
       </tr>
@@ -193,18 +156,27 @@
           maxWidth
         </td>
         <td>
-          Number
+          number
         </td>
         <td>
-           
--
- 
- If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
+          If set the width of the dropdown is limited to this pixel width. Fx
+300 for the 300 px size fields. Default is size of the largest data.
 
         </td>
       </tr>
     </tbody>
   </table>
+
+
+
+  
+    
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -255,10 +227,10 @@
         <td>
           
                 
-                  <span>attr (Array) = List of all attributes.
+                  <span>attr (array) = List of all attributes.
  </span>
                 
-                  <span>attrToExclude (Array) = List of attributes to be excluded from passed list.
+                  <span>attrToExclude (array) = List of attributes to be excluded from passed list.
  </span>
                 
           
@@ -271,7 +243,7 @@
           It will return an object containing two keys
 str - string of attributes
 obj - object of attributes
-Object
+object
         </td>
       </tr>
       <tr>
@@ -279,7 +251,7 @@ Object
         <td>
           
                 
-                  <span>code (String) = The value to match and set on the value element.
+                  <span>code (string) = The value to match and set on the value element.
  </span>
                 
           
@@ -351,48 +323,132 @@ Object
         <td>
         </td>
       </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
-          
-                
-                  <span>listopened (Object) =  
--
- 
- Fires as the calendar popup is opened
- </span>
-                
-                  <span>listclosed (Object) =  
--
- 
- Fires as the calendar popup is closed
- </span>
-                
-                  <span>change (Object) =  
--
- 
- Fires after the value in the input is changed by any means.
- </span>
-                
-                  <span>input (Object) =  
--
- 
- Fires after the value in the input is changed by user interaction.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>This component fires the following events.</p>
-
-        </td>
-        <td>
-        </td>
-      </tr>
     </tbody>
   </table>
 
 
+  
+  
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>listopened
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires as the dropdown list is opened.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>listclosed
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires as the dropdown list is closed
+</td>
+</tr>
+
+      
+        <tr>
+  <td>change
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the value in the input is changed by any means.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>input
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the value in the input is changed by user interaction.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

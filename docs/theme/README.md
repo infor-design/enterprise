@@ -27,9 +27,10 @@ https://github.com/documentationjs/documentation/tree/master/src/default_theme h
 - when running grunt watch it runs the command `./build/generate-documentation.js "accordion"` which runs the docs on one file
 -
 
-## Types for Converting docs
+## Tips for Converting docs
 
 - See about.js and accordion.js for more complete examples in the code
+- If using jsdoc format docs, make sure to add `* @private ` to the method. Unless is going to be useful to outside teams.
 
 ## Trouble Shooting
 

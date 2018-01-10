@@ -311,7 +311,10 @@
         self.unselectElements(list);
 
         if (self.selections.items.length) {
-          self.element.triggerHandler('beforeswap', [self.selections.itemsData]);
+          var result = self.element.triggerHandler('beforeswap', [self.selections.itemsData]);
+          if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
+            return;
+          }
 
           ul = $('ul', to);
           currentSize = $('li', ul).length;
@@ -914,7 +917,11 @@
           self.setSelectionsItems(selections.owner);
 
           selections.items = list.selectedItems;
-          self.element.triggerHandler('beforeswap', [selections.itemsData]);
+          var result = self.element.triggerHandler('beforeswap', [selections.itemsData]);
+          if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
+            selections.dragged = null;
+            return;
+          }
 
           $('.'+ settings.numOfSelectionsClass, settings.itemContentTempl).html(selections.items.length);
           self.addDropeffects();

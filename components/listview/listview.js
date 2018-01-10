@@ -774,23 +774,22 @@ ListView.prototype = {
 
   /**
   * Set item to activated, unactivate others and fire an event.
-  * @param {jQuery|Number} li The jQuery list element or the index.
+  * @param {jQuery|number} li The jQuery list element or the index.
   */
   activateItem: function(li) {
-    var idx = li.index(),
+    var idx = (typeof li === 'number' ? li : li.index()),
       active = this.element.find('li.is-activated'),
       elemCanActivate = true;
 
+    if (typeof li === 'number') {
+      li = this.element.find('ul').children().eq(li);
+    }
     this.deactivateItem(active);
 
     elemCanActivate = this.element.triggerHandler('beforeactivate', [{index: idx, elem: li, data: this.settings.dataset[idx]}]);
 
     if (elemCanActivate === false) {
       return false;
-    }
-
-    if (typeof li === 'number') {
-      li = this.element.find('ul').children().eq(li);
     }
     li.addClass('is-activated');
 

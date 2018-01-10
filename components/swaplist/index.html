@@ -8,8 +8,8 @@
 </ol>
   <section>
   
-    <h2>Settings</h2>
-
+    
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -22,13 +22,10 @@
           searchable
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+          If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
 
         </td>
       </tr>
@@ -37,13 +34,10 @@
           available
         </td>
         <td>
-          Array
+          array
         </td>
         <td>
-           
--
- 
- An array containing items for the available bucket.
+          An array containing items for the available bucket.
 
         </td>
       </tr>
@@ -52,13 +46,10 @@
           selected
         </td>
         <td>
-          Array
+          array
         </td>
         <td>
-           
--
- 
-  An array containing items for the selected bucket.
+          An array containing items for the selected bucket.
 
         </td>
       </tr>
@@ -67,13 +58,10 @@
           additional
         </td>
         <td>
-          Array
+          array
         </td>
         <td>
-           
--
- 
-  An array containing items for the additional bucket.
+          An array containing items for the additional bucket.
 
         </td>
       </tr>
@@ -82,13 +70,10 @@
           availableClass
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- A class name linking the available root element.
+          A class name linking the available root element.
 
         </td>
       </tr>
@@ -97,13 +82,10 @@
           selectedClass
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- A class name linking the selected root element.
+          A class name linking the selected root element.
 
         </td>
       </tr>
@@ -112,13 +94,10 @@
           additionalClass
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- A class name linking the additional root element.
+          A class name linking the additional root element.
 
         </td>
       </tr>
@@ -127,13 +106,10 @@
           availableBtn
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- A class name linking the available button element.
+          A class name linking the available button element.
 
         </td>
       </tr>
@@ -142,13 +118,10 @@
           selectedBtnLeft
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
-  A class name linking the move left button element.
+          A class name linking the move left button element.
 
         </td>
       </tr>
@@ -157,13 +130,10 @@
           selectedBtnRight
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
-  A class name linking the move right button element.
+          A class name linking the move right button element.
 
         </td>
       </tr>
@@ -172,13 +142,10 @@
           additionalBtn
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
-  A class name linking the additional button element.
+          A class name linking the additional button element.
 
         </td>
       </tr>
@@ -187,13 +154,10 @@
           template
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- An Html String with the mustache template for the view.
+          An Html String with the mustache template for the view.
 
         </td>
       </tr>
@@ -202,18 +166,17 @@
           draggable
         </td>
         <td>
-          Object
+          object
         </td>
         <td>
-           
--
- 
- An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
+          An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
 
         </td>
       </tr>
     </tbody>
   </table>
+
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -265,10 +228,7 @@
         <td>
           
                 
-                  <span>ds (Object) =  
--
- 
- The updated dataset(s) of the form 
+                  <span>ds (object) = The updated dataset(s) of the form 
 <code>{available: [], selected: [], additional: []}</code>
  </span>
                 
@@ -298,10 +258,7 @@
         <td>
           
                 
-                  <span>swapupdate (Object) =  
--
- 
- Fires when any bucket has its content changed.
+                  <span>swapupdate (object) = Fires when any bucket has its content changed.
  </span>
                 
           
