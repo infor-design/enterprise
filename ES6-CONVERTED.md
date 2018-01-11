@@ -15,6 +15,7 @@ All the following Soho Components have been converted to ES6:
 * Dropdown
 * Editor
 * File Upload
+* File Upload Advanced
 * Header
 * Homepage
 * Hyperlink
@@ -28,6 +29,7 @@ All the following Soho Components have been converted to ES6:
 * Personalize
 * Place
 * Popover
+* Progress
 * Searchfield
 * Slider
 * Spinbox
@@ -72,13 +74,11 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * EmptyMessage
 * Expandable area
 * Field Options
-* File Upload Advanced
 * Form (basically all jQuery stuff)
 * Hierarchy
 * Lookup
 * Pager
 * Popdown
-* Progress
 * Rating
 * Scrollaction
 * Signin
