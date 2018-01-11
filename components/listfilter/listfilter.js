@@ -1,17 +1,10 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
+// The Name of this component.
+const COMPONENT_NAME = 'ListFilter';
 
-/**
- *
- */
-let COMPONENT_NAME = 'ListFilter';
-
-
-/**
- *
- */
-let LISTFILTER_DEFAULTS = {
+const LISTFILTER_DEFAULTS = {
   caseSensitive: false,
   filterMode: 'startsWith',
   highlightMatchedText: false,
@@ -19,12 +12,7 @@ let LISTFILTER_DEFAULTS = {
   searchableTextCallback: undefined
 };
 
-
-/**
- *
- */
 const filterModes = ['startsWith', 'contains'];
-
 
 /**
 * Abstracted search/filter for use in other controls
@@ -179,6 +167,5 @@ ListFilter.prototype = {
     return this.teardown();
   }
 };
-
 
 export { ListFilter, COMPONENT_NAME };

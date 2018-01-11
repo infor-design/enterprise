@@ -5,9 +5,7 @@
 1. Default Badge Example [View Example]( ../components/badges/example-index)
 2. Additional Badges [View Example]( ../components/badges/example-additional-badges)
 
-## API Details
-
-### Settings
+## Settings
 
 * Icon Types - error, info or alert associate the element with a status by color. In addition any of the classes from the color-pallette can be used.
 
@@ -18,6 +16,7 @@ A badge is a css only component that uses a span with the class badge. It is pos
 ```html
 
 <span class="round info badge ">5</span>
+
 
 ```
 

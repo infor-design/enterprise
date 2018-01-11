@@ -1,7 +1,8 @@
   <section>
   
-    <h2>Settings</h2>
+    
 
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -14,13 +15,10 @@
           trigger
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Id of some other button to use as a trigger
+          Id of some other button to use as a trigger
 
         </td>
       </tr>
@@ -29,18 +27,21 @@
           bottomBorder
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Change the border to bottom vs top (for some cases)
+          Change the border to bottom vs top (for some cases)
 
         </td>
       </tr>
     </tbody>
   </table>
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -61,8 +62,8 @@
 
         </td>
         <td>
-          
-Boolean
+          True or False depending on the disabled status.
+boolean
         </td>
       </tr>
       <tr>
@@ -71,11 +72,11 @@ Boolean
           
         </td>
         <td>
-          <p>Indicates whether or not this area is expanded.</p>
+          <p>Returns expanded status about the current expandable area</p>
 
         </td>
         <td>
-          
+          True of alse depending on current expanded status.
 boolean
         </td>
       </tr>
@@ -85,10 +86,12 @@ boolean
           
         </td>
         <td>
-          <p>Toggle Current Expansion State.</p>
+          <p>Toggle current expansion state.</p>
 
         </td>
         <td>
+          True of alse depending on current expanded status.
+boolean
         </td>
       </tr>
       <tr>
@@ -101,6 +104,8 @@ boolean
 
         </td>
         <td>
+          True of false depending on current expanded status.
+boolean
         </td>
       </tr>
       <tr>
@@ -113,6 +118,8 @@ boolean
 
         </td>
         <td>
+          True of false depending on current expanded status.
+boolean
         </td>
       </tr>
       <tr>
@@ -121,10 +128,12 @@ boolean
           
         </td>
         <td>
-          <p>Disable the Expandable Area from being closable.</p>
+          <p>Disable the expandable area from being closable.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -133,10 +142,12 @@ boolean
           
         </td>
         <td>
-          <p>Enable the Expandable Area to allow close.</p>
+          <p>Enable the expandable area to allow close.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -145,10 +156,31 @@ boolean
           
         </td>
         <td>
-          <p>Teardown - Remove added markup and events</p>
+          <p>Destroy by removing markup and canceling events.</p>
 
         </td>
         <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = the settings to update to.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Update the component and optionally apply new settings.</p>
+
+        </td>
+        <td>
+          The plugin api for chaining.
+object
         </td>
       </tr>
     </tbody>

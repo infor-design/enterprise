@@ -292,7 +292,6 @@ Accordion.prototype = {
     * Fires when a panel is opened.
     *
     * @event selected
-    * @type {object}
     * @property {object} event - The jquery event object
     * @property {object} header - The header object
     */
@@ -382,6 +381,7 @@ Accordion.prototype = {
 
   /**
   * Keypress Event Handler for expanders and anchors
+  * @private
   * @param {jQuery.Event} e The click event object.
   * @returns {boolean} Returns false in some cases if the event should stop propagating.
   */
@@ -1173,6 +1173,7 @@ Accordion.prototype = {
 
   /**
    * Teardown and remove any events.
+   * @private
    * @param  {object} headers The headers to destroy
    * @return {void}
    */

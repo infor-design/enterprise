@@ -2,14 +2,9 @@ import { defer } from './behaviors';
 import { Environment as env } from './environment';
 
 /**
- * ============================================
- * SOHO Utils
- * ============================================
- */
-
-/**
  * Used for changing the stacking order of jQuery events.  This is needed to override certain
  * Events invoked by other plugins http://stackoverflow.com/questions/2360655
+ * @returns {void}
  */
 $.fn.bindFirst = function(name, fn) {
   this.on(name, fn);
@@ -367,15 +362,18 @@ $.fn.timer = function(callback, delay) {
     resume = function() {
       self.triggerHandler('resume');
       update();
-
-    return {
-      event: this,
-      cancel: cancel,
-      pause: pause,
-      resume: resume
     };
+
+    update();
+
+  return {
+    event: this,
+    cancel: cancel,
+    pause: pause,
+    resume: resume
   };
 };
+
 
 /**
  * Copies a string to the clipboard. Must be called from within an event handler such as click.
@@ -539,7 +537,8 @@ utils.actualChar = function(e) {
   }
 
   // Handle Numpad keys
-  if (key >= 96 && key <= 105) {
+  if (key >= 96 && key <= 105 &&
+    ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'].indexOf(String.fromCharCode(key)) === -1) {
     key -= 48;
   }
 
@@ -555,14 +554,14 @@ utils.actualChar = function(e) {
   return character;
 };
 
-
 /**
- *
+ * Get the actualy typed key from the event.
+ * @param  {object} e The event to check for the key.
+ * @return {string} The actual key typed.
  */
 $.actualChar = function(e) {
   return utils.actualChar(e);
 };
-
 
 /**
  * Truthy equals
@@ -570,8 +569,6 @@ $.actualChar = function(e) {
 utils.equals = function equals(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 };
-
-
 
 var DOM = {};
 

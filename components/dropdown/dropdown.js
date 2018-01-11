@@ -1093,12 +1093,12 @@ Dropdown.prototype = {
     var isSearchInput = self.searchInput && self.searchInput.length;
 
     self.initialFilter = false;
-
     if (!self.isOpen() && !self.isControl(key) && !this.settings.source && !this.settings.noSearch) {
       //Make this into Auto Complete
       self.initialFilter = true;
       self.isFiltering = true;
       self.filterTerm = $.actualChar(e);
+
       if (isSearchInput) {
         self.searchInput.val($.actualChar(e));
       }

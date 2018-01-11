@@ -44,8 +44,9 @@ function ApplicationMenu(element, settings) {
 ApplicationMenu.prototype = {
 
   /**
+   * Initialize the plugin.
    * @private
-   * @returns {this}
+   * @return {this} The component API.
    */
   init: function() {
     this

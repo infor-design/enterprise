@@ -185,7 +185,7 @@ About.prototype = {
   },
 
   /**
-   * Update the component and apply current settings.
+   * Update the component and optionally apply new settings.
    *
    * @param  {object} settings the settings to update to.
    * @return {object} The plugin api for chaining.

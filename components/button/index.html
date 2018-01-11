@@ -12,14 +12,7 @@
   
     
 
-
-  
-    
-
-
-  
-    <h2>Settings</h2>
-
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -32,13 +25,10 @@
           toggleOnIcon
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- The icon to use for on state on toggle buttons
+          The icon to use for on state on toggle buttons
 
         </td>
       </tr>
@@ -47,13 +37,10 @@
           toggleOffIcon
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- The icon to use for off state on toggle buttons
+          The icon to use for off state on toggle buttons
 
         </td>
       </tr>
@@ -62,18 +49,22 @@
           replaceText
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- If true the selection will be used to replace the content in the button.
+          If true the selection will be used to replace the content
+in the button.
 
         </td>
       </tr>
     </tbody>
   </table>
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -89,14 +80,18 @@
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = The settings you would like to modify.
+ </span>
                 
           
         </td>
         <td>
-          
+          <p>Update the component with new settings.</p>
+
         </td>
         <td>
+          The api.
+object
         </td>
       </tr>
       <tr>
@@ -109,32 +104,8 @@
 
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
           
-                
-                  <span>click (Object) =  
--
- 
- Fires when the button is clicked (if enabled).
- </span>
-                
-                  <span>focus (Object) =  
--
- 
- Fires when the menu is focused.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>This component fires the following events.</p>
-
-        </td>
-        <td>
+void
         </td>
       </tr>
     </tbody>
@@ -146,7 +117,6 @@
   
 
 <h2 id="code-example">Code Example</h2>
-<h3 id="buttons">Buttons</h3>
 <p>A button object should always use a button element. Also make sure to add type+“button” or some browsers will treat this as a submit button and refresh the page.</p>
 <p>This example shows four types of buttons, all controlled by class.</p>
 <ul>
@@ -157,24 +127,23 @@
 </ul>
 <p>All buttons are assumed to be icon + text. To add the icon you add the svg icon element and use a span to hold the button text.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="op">&lt;</span>button <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-primary&quot;</span> type<span class="op">=</span><span class="st">&quot;button&quot;</span><span class="op">&gt;</span>Action&lt;/button<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="op">&lt;</span>button <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-primary&quot;</span> type<span class="op">=</span><span class="st">&quot;button&quot;</span><span class="op">&gt;</span>Action&lt;/button<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="op">&lt;</span>button <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-secondary&quot;</span> type<span class="op">=</span><span class="st">&quot;button&quot;</span><span class="op">&gt;</span>Action&lt;/button<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="op">&lt;</span>button <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-secondary&quot;</span> type<span class="op">=</span><span class="st">&quot;button&quot;</span><span class="op">&gt;</span>Action&lt;/button<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-tertiary&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="op">&lt;</span>svg role<span class="op">=</span><span class="st">&quot;presentation&quot;</span> aria<span class="op">-</span>hidden<span class="op">=</span><span class="st">&quot;true&quot;</span> focusable<span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;icon&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">      <span class="op">&lt;</span>use xlink<span class="op">:</span>href<span class="op">=</span><span class="st">&quot;#icon-filter&quot;</span>/&gt;</a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    &lt;/svg<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="op">&lt;</span>span<span class="op">&gt;</span>Action&lt;/span<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">  &lt;/button<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-tertiary&quot;</span><span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="op">&lt;</span>svg role<span class="op">=</span><span class="st">&quot;presentation&quot;</span> aria<span class="op">-</span>hidden<span class="op">=</span><span class="st">&quot;true&quot;</span> focusable<span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;icon&quot;</span><span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="op">&lt;</span>use xlink<span class="op">:</span>href<span class="op">=</span><span class="st">&quot;#icon-filter&quot;</span>/&gt;</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  &lt;/svg<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="op">&lt;</span>span<span class="op">&gt;</span>Action&lt;/span<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">&lt;/button<span class="op">&gt;</span></a>
 <a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">  <span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-icon&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="op">&lt;</span>svg role<span class="op">=</span><span class="st">&quot;presentation&quot;</span> aria<span class="op">-</span>hidden<span class="op">=</span><span class="st">&quot;true&quot;</span> focusable<span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;icon&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">      <span class="op">&lt;</span>use xlink<span class="op">:</span>href<span class="op">=</span><span class="st">&quot;#icon-calendar&quot;</span>/&gt;</a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">    &lt;/svg<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">    <span class="op">&lt;</span>span<span class="op">&gt;</span>Date&lt;/span<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">  &lt;/button<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"></a></code></pre></div>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-icon&quot;</span><span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">  <span class="op">&lt;</span>svg role<span class="op">=</span><span class="st">&quot;presentation&quot;</span> aria<span class="op">-</span>hidden<span class="op">=</span><span class="st">&quot;true&quot;</span> focusable<span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;icon&quot;</span><span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="op">&lt;</span>use xlink<span class="op">:</span>href<span class="op">=</span><span class="st">&quot;#icon-calendar&quot;</span>/&gt;</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">  &lt;/svg<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">  <span class="op">&lt;</span>span<span class="op">&gt;</span>Date&lt;/span<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">&lt;/button<span class="op">&gt;</span></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>Do not use any elements other than button attributes for buttons.</li>
@@ -188,9 +157,7 @@
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li><strong>Spacebar or Enter keys</strong> execute the action for that button.</li>
-<li>If the button activation closes the containing entity or launches another entity, then focus moves to the newly-opened entity.</li>
-<li>If the button activation does not close or dismiss the containing entity, then focus remains on the button. An example might be an Apply or Recalculate button.</li>
+<li><em>Spacebar or Enter keys</em> execute the action for that button. If the button activation closes the containing entity or launches another entity, then focus moves to the newly-opened entity. If the button activation does not close or dismiss the containing entity, then focus remains on the button. An example might be an Apply or Recalculate button.</li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
 <ul>
@@ -206,6 +173,6 @@
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Change class “inforFormButton default” to btn-primary</li>
-<li>Change class “inforFormButton” to btn</li>
-<li>Tertiary is new</li>
+<li>Change class “inforFormButton” to btn-secondary</li>
+<li>Tertiary is a new type we did not have that would be normally used that is the common toolbar / non form button type.</li>
 </ul>
