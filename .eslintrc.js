@@ -44,7 +44,7 @@ module.exports = {
 
     // ensure JSDoc comments are valid
     // https://eslint.org/docs/rules/valid-jsdoc
-    'valid-jsdoc': 'warn',
+    'valid-jsdoc': ['warn'],
 
     // disallow use of chained assignment expressions
     // https://eslint.org/docs/rules/no-multi-assign
@@ -65,7 +65,7 @@ module.exports = {
         'response', // for Express responses
         '$scope', // for Angular 1 scopes
       ]
-    }],
+    }]
 
   },
   'globals': {

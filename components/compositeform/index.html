@@ -6,8 +6,9 @@
 </ol>
   <section>
   
-    <h2>Settings</h2>
+    
 
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -20,13 +21,11 @@
           breakpoint
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Defines the breakpoint at which the composite form will change into its responsive mode
+          Defines the breakpoint at which the composite form will change
+into its responsive mode
 
         </td>
       </tr>
@@ -35,13 +34,10 @@
           trigger
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Expandable area trigger selector. Passed to expandable area.
+          Expandable area trigger selector. Passed to expandable area.
 
         </td>
       </tr>
@@ -50,13 +46,10 @@
           expandedText
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Text to use for the expand button (Default localized)
+          Text to use for the expand button (Default localized)
 
         </td>
       </tr>
@@ -65,18 +58,21 @@
           collapsedText
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Text to use for the collapse button (Default localized)
+          Text to use for the collapse button (Default localized)
 
         </td>
       </tr>
     </tbody>
   </table>
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -87,20 +83,6 @@
       <th>Returns</th>
     </thead>
     <tbody>
-      <tr>
-        <td>build</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Adds markup to the control and stores references to some sub-elements</p>
-
-        </td>
-        <td>
-          
-this
-        </td>
-      </tr>
       <tr>
         <td>handleEvents</td>
         <td>
@@ -154,6 +136,20 @@ this
         </td>
       </tr>
       <tr>
+        <td>isSideOriented</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines if this component is configured for "on-side" orientation of the Summary area.</p>
+
+        </td>
+        <td>
+          If the component is currently side oriented.
+boolean
+        </td>
+      </tr>
+      <tr>
         <td>updated</td>
         <td>
           
@@ -163,22 +159,8 @@ this
 
         </td>
         <td>
-          
-this
-        </td>
-      </tr>
-      <tr>
-        <td>teardown</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Simple Teardown - remove events &#x26; rebuildable markup.</p>
-
-        </td>
-        <td>
-          
-this
+          The component API for chaining.
+object
         </td>
       </tr>
       <tr>
@@ -191,8 +173,8 @@ this
 
         </td>
         <td>
-          
-this
+          The component API for chaining.
+object
         </td>
       </tr>
     </tbody>

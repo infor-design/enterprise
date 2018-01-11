@@ -11,18 +11,17 @@ For all api information [See the popup menu]( ../components/popupmenu) as this c
 
 ## Code Example
 
-The context menu control is also referred to as a popmenu. It can be invoked in several ways. As a right click menu fx on an input field or grid or list row. As a click menu for example on a menu or actions button. Or manually on demand via the api.
+The context menu control is also referred to as a popupmenu. It can be invoked in several ways. As a right click menu fx on an input field or grid or list row. As a click menu for example on a menu or actions button. Or manually on demand via the api.
 
 The structure of the menu is a ul element with li elements containing links for each of the rows in the menu. An other ul element can be added to create a submenu. Use only one level of submenus for accessibility and usability reasons.
 
-The class popmenu should be added to the ul elements at the top and submenu level. You can create rows as space separators for grouping with the tag with the class separator. You can create rows as groups with titles as well with the class group.
+The class popupmenu should be added to the ul elements at the top and submenu level. You can create rows as space separators for grouping with the tag with the class separator. You can create rows as groups with titles as well with the class group.
 
 The popupmenu can be linked as a right click menu item by adding the attribute data-popupmenu="action-popupmenu" to any element that should get the menu, this should point to the id of the menu.
 
 This page focus on the right click popup menu (Context Menu).
 
 ```html
-
 
 <div class="field">
   <label for="input-menu">Label</label>
