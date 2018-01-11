@@ -1,214 +1,17 @@
   <section>
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          isStandalone
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- On page(true) -or- on modal (false) , this is used for some visual style only.
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          allowedTypes
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- Restrict file types(ie. 'jpg|png|gif') 
-[
-'*' all types
-]
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          maxFilesInProcess
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- Max number of files can be uploaded
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          maxFileSize
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- Max file size in bytes, -1 for unlimited
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          fileName
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- Variable name to read from server
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          isDisabled
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- Make control disabled
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showBrowseButton
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-           
--
- 
- Add way to browse files to upload
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          send
-        </td>
-        <td>
-          Function
-        </td>
-        <td>
-           
--
- 
- Method for send file to upload
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textDropArea
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- Text to show in drop area
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textDropAreaWithBrowse
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- Text to show in drop area when browse option true
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textBtnCancel
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- Hidden text for cancel button
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textBtnCloseError
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- Hidden text for error close button
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textBtnRemove
-        </td>
-        <td>
-          String
-        </td>
-        <td>
-           
--
- 
- Hidden text for remove button
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -224,10 +27,7 @@
         <td>
           
                 
-                  <span>files (Object) =  
--
- 
- File object containing uploaded files.
+                  <span>files (object) = File object containing uploaded files.
  </span>
                 
           
@@ -237,6 +37,27 @@
 
         </td>
         <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>createStatus</td>
+        <td>
+          
+                
+                  <span>file (object) = to create progress status.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Create status object</p>
+
+        </td>
+        <td>
+          contains file and status methods to access.
+object
         </td>
       </tr>
       <tr>
@@ -244,10 +65,10 @@
         <td>
           
                 
-                  <span>formData (Object) = Contains the form data / file data.
+                  <span>formData (object) = Contains the form data / file data.
  </span>
                 
-                  <span>status (Object) = Status of the upload operation
+                  <span>status (object) = Status of the upload operation
  </span>
                 
           
@@ -257,6 +78,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -265,10 +88,12 @@
           
         </td>
         <td>
-          <p>Set input to enabled.</p>
+          <p>Set component to enabled.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -277,22 +102,31 @@
           
         </td>
         <td>
-          <p>Set input to disabled.</p>
+          <p>Set component to disabled.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
-        <td>teardown</td>
+        <td>updated</td>
         <td>
+          
+                
+                  <span>settings (Object) = The settings to apply.
+ </span>
+                
           
         </td>
         <td>
-          <p>Teardown - Remove added events</p>
+          <p>Resync the UI and Settings.</p>
 
         </td>
         <td>
+          The api
+Object
         </td>
       </tr>
       <tr>
@@ -301,16 +135,222 @@
           
         </td>
         <td>
-          <p>Destroy - Remove added markup and events</p>
+          <p>Destroy and remove added markup, all events</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
+  
+  
+  
+  
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>filesdroped
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>files (Array)
+        
+        = List of files droped
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when file/s drag and droped to drop area.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforecreatestatus
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>file (Object)
+        
+        = file to set the status
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before create the progress status object.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>aftercreatestatus
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>file (Object)
+        
+        = file to set the status
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after create the progress status object.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>fileprogress
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>status (Object)
+        
+        = <code>{ file, progress }</code>
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when file progress status changes.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>fileaborted
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>file (Object)
+        
+        = aborted
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when file aborted.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>filecompleteuploading
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>file (Object)
+        
+        = uploaded
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when file complete uploading.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
