@@ -1,18 +1,12 @@
-//=====================================================
-// Soho Debugging Utils
-//=====================================================
+/* eslint-disable no-console */
 
-//=====================================================
-// Timer-logging functions
-//=====================================================
-/**
- * Easy flag for determining whether or not time will be logged to the console.
- */
-export let enableTimeLogging = false;
-
+// Easy flag for determining whether or not time will be logged to the console.
+export const enableTimeLogging = false;
 
 /**
- * @param {string} [label]
+ * Start the logging timer
+ * @param  {string} label Provide a way to match a timing operation.
+ * @return {void}
  */
 export function logTimeStart(label) {
   if (enableTimeLogging) {
@@ -20,9 +14,10 @@ export function logTimeStart(label) {
   }
 }
 
-
 /**
- * @param {string} [label]
+ * End the logging timer and print the result
+ * @param  {string} label End this matching timing operation
+ * @return {void}
  */
 export function logTimeEnd(label) {
   if (enableTimeLogging) {

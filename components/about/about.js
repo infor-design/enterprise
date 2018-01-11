@@ -29,8 +29,8 @@ const ABOUT_DEFAULTS = {
  * The About Dialog Component is displays information regarding the application.
  *
  * @class About
- * @param {string} element The component element.
- * @param {string} settings The component settings.
+ * @param {object} element The component element.
+ * @param {object} settings The component settings.
  *
  */
 function About(element, settings) {
@@ -188,7 +188,7 @@ About.prototype = {
    * Update the component and optionally apply new settings.
    *
    * @param  {object} settings the settings to update to.
-   * @return {object} The plugin api for chaining.
+   * @returns {object} The plugin api for chaining.
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
@@ -197,7 +197,7 @@ About.prototype = {
 
   /**
    * Progamatically close the About dialog.
-   * @return {void}
+   * @returns {void}
    */
   close() {
     const modalApi = this.modal.data('modal');
@@ -228,7 +228,7 @@ About.prototype = {
 
   /**
    * Teardown and remove any added markup and events.
-   * @return {void}
+   * @returns {void}
    */
   destroy() {
     const modalApi = this.modal.data('modal');
@@ -245,9 +245,8 @@ About.prototype = {
 
   /**
    * Add component event handlers.
-   *
    * @private
-   * @return {void}
+   * @returns {void}
    */
   handleEvents() {
     this.element.on('open.about', (e) => {

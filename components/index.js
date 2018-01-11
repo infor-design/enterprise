@@ -1,3 +1,5 @@
+/* eslint-disable import/first */
+
 import * as debug from './utils/debug';
 import * as behaviors from './utils/behaviors';
 
@@ -15,6 +17,7 @@ export { Environment as env } from './utils/environment';
 
 // Renderloop needs a single instance of itself
 import { renderLoop, RenderLoopItem } from './utils/renderloop';
+
 renderLoop.start();
 export { renderLoop, RenderLoopItem };
 
@@ -33,6 +36,11 @@ export { Initialize } from './initialize/initialize';
 export { ListFilter } from './listfilter/listfilter';
 export { Tmpl } from './tmpl/tmpl';
 
+// Needed for Datagrid (Previous Globals) ====== /
+export { Formatters } from './datagrid/datagrid.formatters';
+export { Editors } from './datagrid/datagrid.editors';
+
 // Components ================================= /
 import * as components from './components';
+
 export { components };

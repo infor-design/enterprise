@@ -8,14 +8,7 @@
   
     
 
-
-  
-    
-
-
-  
-    <h2>Settings</h2>
-
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -28,13 +21,10 @@
           axis
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Constrains dragging to either axis. Possible values: null, 'x', 'y'
+          Constrains dragging to either axis. Possible values: null, 'x', 'y'
 
         </td>
       </tr>
@@ -43,13 +33,11 @@
           clone
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
-  Set to true to clone the object to drag. In many situations this is needed to break out of layout.
+          Set to true to clone the object to drag. In many situations this is
+needed to break out of layout.
 
         </td>
       </tr>
@@ -58,13 +46,10 @@
           cloneCssClass
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Css class added to clone element (defaults to is-clone)
+          Css class added to clone element (defaults is 'is-clone')
 
         </td>
       </tr>
@@ -73,13 +58,10 @@
           clonePosIsFixed
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- if true cloned object will use css style "position: fixed"
+          If true cloned object will use css style "position: fixed"
 
         </td>
       </tr>
@@ -88,13 +70,11 @@
           cloneAppendTo
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Selector to append to for the clone 
+          Selector to append to for the clone
+
 [
 'body'|'parent'|'jquery object'
 ]
@@ -107,13 +87,11 @@
           containment
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
+          Constrains dragging to within the bounds of the specified element
+or region. Possible values: "parent", "document", "window".
 
         </td>
       </tr>
@@ -122,13 +100,10 @@
           obstacle
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- jQuery Selector of object(s) that you cannot drag into,
+          jQuery Selector of object(s) that you cannot drag into,
 
         </td>
       </tr>
@@ -137,13 +112,11 @@
           underElements
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If set to true will return list of elements that are "underneath" the drag element
+          If set to true will return list of elements that are
+underneath the drag element
 
         </td>
       </tr>
@@ -152,19 +125,23 @@
           containmentOffset
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- How close to the containment object should we be allowed to drag in position form. 
+          How close to the containment object should we be allowed
+to drag in position form. 
 <code>{left: 0, top: 0}</code>
 
         </td>
       </tr>
     </tbody>
   </table>
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -180,16 +157,10 @@
         <td>
           
                 
-                  <span>x (number) =  
--
- 
- The x-coordinate of the Point.
+                  <span>x (number) = The x-coordinate of the Point.
  </span>
                 
-                  <span>y (number) =  
--
- 
- The y-coordinate of the Point.
+                  <span>y (number) = The y-coordinate of the Point.
  </span>
                 
           
@@ -199,8 +170,6 @@
 
         </td>
         <td>
-          List of all elements at the given point.
-Array
         </td>
       </tr>
       <tr>
@@ -208,12 +177,13 @@ Array
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings (object) = the settings to update to.
+ </span>
                 
           
         </td>
         <td>
-          <p>Updated</p>
+          <p>Update the component and optionally apply new settings.</p>
 
         </td>
         <td>
@@ -231,45 +201,123 @@ Array
         <td>
         </td>
       </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
-          
-                
-                  <span>dragstart (Object) =  
--
- 
- When the dragging is initiated. Use this to customize/style the drag/drop objects in the DOM.
- </span>
-                
-                  <span>drag (Object) =  
--
- 
- Fires (many times) while dragging is occuring. Use this for DOM feedback but be careful about what you do in here for performance.
- </span>
-                
-                  <span>dragend (Object) =  
--
- 
- Fires after the drag is completed. Use this to remove / set drag feedback off.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>This component fires the following events.</p>
-
-        </td>
-        <td>
-        </td>
-      </tr>
     </tbody>
   </table>
 
 
+  
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>dragend
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object.
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the drag is completed. Use this to remove / set drag feedback off.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>drag
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object.
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires (many times) while dragging is occuring. Use this for DOM feedback but
+be careful about what you do in here for performance.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>dragstart
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object.
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>When the dragging is initiated. Use this to customize/style
+the drag/drop objects in the DOM.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
 
 <h2 id="code-example-1">Code Example</h2>
 <p>The drag component is used internally in all components but its API my be useful for other situations. This basic example makes an element draggable and wont allow it to be dragged out of its direct parent.</p>

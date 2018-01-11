@@ -137,6 +137,14 @@
         border-color: $fieldset-border-top-color;
         width: 100%;
       }
+
+      &.has-focus {
+        box-shadow: none;
+
+        input {
+          box-shadow: none;
+        }
+      }
     }
   }
 

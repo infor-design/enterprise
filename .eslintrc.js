@@ -44,7 +44,15 @@ module.exports = {
 
     // ensure JSDoc comments are valid
     // https://eslint.org/docs/rules/valid-jsdoc
-    'valid-jsdoc': ['warn'],
+    'valid-jsdoc': ['warn', {
+      'prefer': {
+        'arg': 'param',
+        'argument': 'param',
+        'class': 'class',
+        'return': 'returns'
+      },
+      'requireReturn': false
+    }],
 
     // disallow use of chained assignment expressions
     // https://eslint.org/docs/rules/no-multi-assign

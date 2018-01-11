@@ -25,8 +25,8 @@ const ACCORDION_DEFAULTS = {
  * category or section header, and the second level provides the associated options.
  *
  * @class Accordion
- * @param {string} element The component element.
- * @param {string} settings The component settings.
+ * @param {object} element The component element.
+ * @param {object} settings The component settings.
  * @param {string} allowOnePane If set to true, allows only one pane of the
  *  Accordion to be open at a time.  If an Accordion pane is open, and that pane
  *  contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)

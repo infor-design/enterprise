@@ -326,7 +326,7 @@ Modal.prototype = {
   /**
   * Size the inner content on resize.
   * @private
-  * @return {void}
+  * @returns {void}
   */
   sizeInner() {
     const messageArea = this.element.find('.detailed-message');
@@ -339,7 +339,7 @@ Modal.prototype = {
 
   /**
   * Open the modal via the api.
-  * @return {void}
+  * @returns {void}
   */
   open() {
     let messageArea = null;
@@ -476,7 +476,7 @@ Modal.prototype = {
     function focusElement(self) {
       let focusElem = self.element.find(':focusable').not('.modal-header .searchfield').first();
       self.keepFocus();
-      self.element.trigger('open', [this]);
+      self.element.trigger('open', [self]);
 
       if (focusElem.length === 0) {
         focusElem = self.element.find('.btn-modal-primary');
@@ -648,7 +648,7 @@ Modal.prototype = {
   /**
    * Close the modal.
    * @param  {boolean} destroy Call the destroy method.
-   * @return {boolean} If the dialog was open returns false. If the dialog was closed is true.
+   * @returns {boolean} If the dialog was open returns false. If the dialog was closed is true.
    */
   close(destroy) {
     if (!this.isOpen()) {
