@@ -20,19 +20,21 @@
       data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', quantity: 4, price: 810.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold', status: 'Confirmed'});
       data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', quantity: 41, price: 1120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Error'});
       data.push({ id: 6, productId: null, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Confirmed'});
-      data.push({ id: 7, productId: null, productName: null, activity:  null, quantity: null, price: null, status: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+      data.push({ id: 7, productId: null, productName: null, activity:  '', quantity: null, price: null, status: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
+      data.push({ id: 8, productId: null, productName: null, activity:  null, quantity: null, price: null, status: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
 
       var statuses = [{id:'Confirmed', value:'Confirmed', label:'Confirmed'},
                          {id:'Error', value:'Error', label:'Error'}];
 
       var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
+                         {id: '', value: '', label: 'Default Activity'},
                          {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
 
       //Define Columns for the Grid.
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text'});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'contents', options: activities});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'contents', options: activities});
       columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
       columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
