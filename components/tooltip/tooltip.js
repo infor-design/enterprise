@@ -6,17 +6,29 @@ import { Locale } from '../locale/locale';
 import '../initialize/initialize.jquery';
 import '../place/place.jquery';
 
+// Component Name
+const COMPONENT_NAME = 'tooltip';
 
 /**
- * Component Name
+ * Tooltip Component Default Settings
+ * @namespace
+ * @property {string|function} [content] - Takes title attribute or feed content. Can be a string or jQuery markup
+ * @property {object} [offset={top: 10, left: 10}] - How much room to leave
+ * @property {string} [placement=top|bottom|right|offset]
+ * @property {string} [trigger=hover] - supports click and immediate and hover (and maybe in future focus)
+ * @property {string} [title] - Title for Infor Tips
+ * @property {string} [beforeShow] - Call back for ajax tooltip
+ * @property {string} [popover] - force it to be a popover (no content)
+ * @property {string} [closebutton] - Show X close button next to title in popover
+ * @property {boolean} [isError=false] - Add error classes
+ * @property {boolean} [isErrorColor=false] - Add error color only not description
+ * @property {string} [tooltipElement] - ID selector for an alternate element to use to contain the tooltip classes
+ * @property {object} [parentElement=this.element] - jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.
+ * @property {boolean} [keepOpen=false] - Forces the tooltip to stay open in situations where it would normally close.
+ * @property {string} [extraClass] - Extra css class
+ * @property {string} [maxWidth] - Toolip max width
  */
-let COMPONENT_NAME = 'tooltip';
-
-
-/**
- * Tooltip Component Defaults
- */
-let TOOLTIP_DEFAULTS = {
+const TOOLTIP_DEFAULTS = {
   content: null,
   offset: {top: 10, left: 10},
   placement: 'top',
@@ -35,27 +47,11 @@ let TOOLTIP_DEFAULTS = {
   maxWidth: null
 };
 
-
 /**
  * Tooltip and Popover Control
  * @constructor
- * @param {object} element
- * @param {Object|Function} options
- * @param {(string|Function)} [options.content] - Takes title attribute or feed content. Can be a string or jQuery markup
- * @param {object} [options.offset={top: 10, left: 10}] - How much room to leave
- * @param {string} [options.placement=top|bottom|right|offset]
- * @param {string} [options.trigger=hover] - supports click and immediate and hover (and maybe in future focus)
- * @param {string} [options.title] - Title for Infor Tips
- * @param {string} [options.beforeShow] - Call back for ajax tooltip
- * @param {string} [options.popover] - force it to be a popover (no content)
- * @param {string} [options.closebutton] - Show X close button next to title in popover
- * @param {boolean} [options.isError=false] - Add error classes
- * @param {boolean} [options.isErrorColor=false] - Add error color only not description
- * @param {string} [options.tooltipElement] - ID selector for an alternate element to use to contain the tooltip classes
- * @param {object} [options.parentElement=this.element] - jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.
- * @param {boolean} [options.keepOpen=false] - Forces the tooltip to stay open in situations where it would normally close.
- * @param {string} [options.extraClass] - Extra css class
- * @param {string} [options.maxWidth] - Toolip max width
+ * @param {HTMLElement|jQuery[]} element
+ * @param {object|function} settings
  */
 function Tooltip(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TOOLTIP_DEFAULTS);
@@ -65,8 +61,13 @@ function Tooltip(element, settings) {
   debug.logTimeEnd(COMPONENT_NAME);
 }
 
-
 Tooltip.prototype = {
+
+  /**
+   * Initializes the component
+   * @private
+   * @returns {void}
+   */
   init: function() {
     this.setup();
     this.appendTooltip();
@@ -82,7 +83,11 @@ Tooltip.prototype = {
     this.handleEvents();
   },
 
-
+  /**
+   * Builds internal references
+   * @private
+   * @returns {void}
+   */
   setup: function() {
     // "this.activeElement" is the target element that the Tooltip will display itself against
     this.activeElement = this.settings.parentElement instanceof $ && this.settings.parentElement.length ? this.settings.parentElement : this.element;
@@ -114,7 +119,11 @@ Tooltip.prototype = {
     this.isRTL = Locale.isRTL();
   },
 
-
+  /**
+   * Adds ARIA attributes on some elements for better accessiblity.
+   * @private
+   * @returns {void}
+   */
   addAria: function() {
     if (!this.content) {
       return;
@@ -132,7 +141,11 @@ Tooltip.prototype = {
     }
   },
 
-
+  /**
+   * @param {jQuery[]|string} content HTML or String-based content.
+   * @param {string} [thisClass] optional, additional CSS class that gets appeneded to any anchor tags inside of the content.
+   * @returns {string}
+   */
   addClassToLinks: function(content, thisClass) {
     var isjQuery = (content instanceof $ && content.length > 0);
     if (isjQuery) {
@@ -144,7 +157,11 @@ Tooltip.prototype = {
     return d.html();
   },
 
-
+  /**
+   * Gets a reference to the element being used for the tooltip and positions it in the correct spot on the page.
+   * @private
+   * @returns {void}
+   */
   appendTooltip: function() {
     this.tooltip = this.settings.tooltipElement ? $(this.settings.tooltipElement) : $('#tooltip');
     if (!this.tooltip.length) {
@@ -162,7 +179,11 @@ Tooltip.prototype = {
     this.setTargetContainer();
   },
 
-
+  /**
+   * Sets up all event listeners for this component
+   * @private
+   * @returns {void}
+   */
   handleEvents: function() {
     var self = this, timer, delay = 400;
 
@@ -229,335 +250,366 @@ Tooltip.prototype = {
 
   },
 
-   setContent: function(content, dontRender) {
-     var self = this,
-       specified,
-       settingsContent = this.settings.content,
-       noIncomingContent = (content === undefined || content === null),
-       noSettingsContent = (settingsContent === undefined || settingsContent === null);
+  /**
+   * Sets the content used inside the Tooltip element.
+   * @param {jQuery[]|string|function} content
+   * @param {boolean} dontRender causes the tooltip to prevent a visual refresh after changing its content, meaning it will keep the previous content visible until this tooltip is closed or manually re-drawn.
+   * @returns {boolean}
+   */
+  setContent: function(content, dontRender) {
+    var self = this,
+      specified,
+      settingsContent = this.settings.content,
+      noIncomingContent = (content === undefined || content === null),
+      noSettingsContent = (settingsContent === undefined || settingsContent === null);
 
-     function doRender() {
-       if (dontRender === true) {
-         return;
-       }
-       self.addAria();
-       self.render();
-     }
+    function doRender() {
+      if (dontRender === true) {
+        return;
+      }
+      self.addAria();
+      self.render();
+    }
 
-     // If all sources of content are undefined, just return false and don't show anything.
-     if (noIncomingContent && noSettingsContent) {
-       return false;
-     }
+    // If all sources of content are undefined, just return false and don't show anything.
+    if (noIncomingContent && noSettingsContent) {
+      return false;
+    }
 
-     // If the settingsContent type is a function, we need to re-run that function to update the content.
-     // NOTE: If you need to use a function to generate content, understand that the tooltip/popover will not
-     // cache your content for future reuse.  It will ALWAYS override incoming content.
-     if (typeof settingsContent === 'function') {
-       content = settingsContent;
-     }
+    // If the settingsContent type is a function, we need to re-run that function to update the content.
+    // NOTE: If you need to use a function to generate content, understand that the tooltip/popover will not
+    // cache your content for future reuse.  It will ALWAYS override incoming content.
+    if (typeof settingsContent === 'function') {
+      content = settingsContent;
+    }
 
-     // Use the pre-set content if we have no incoming content
-     if (noIncomingContent) {
-       content = settingsContent;
-     }
+    // Use the pre-set content if we have no incoming content
+    if (noIncomingContent) {
+      content = settingsContent;
+    }
 
-     // If the incoming/preset content is exactly the same as the stored content, don't continue with this step.
-     // Deep object comparison for jQuery objects is done further down the chain.
-     if (content === this.content) {
-       doRender();
-       return true;
-     }
+    // If the incoming/preset content is exactly the same as the stored content, don't continue with this step.
+    // Deep object comparison for jQuery objects is done further down the chain.
+    if (content === this.content) {
+      doRender();
+      return true;
+    }
 
-     // jQuery-wrapped elements don't get manipulated.
-     // Simply store the reference, render, and return.
-     if (content instanceof $ && content.length) {
-       this.content = content.addClass('hidden');
-       doRender();
-       return true;
-     }
+    // jQuery-wrapped elements don't get manipulated.
+    // Simply store the reference, render, and return.
+    if (content instanceof $ && content.length) {
+      this.content = content.addClass('hidden');
+      doRender();
+      return true;
+    }
 
-     // Handle setting of content based on its Object type.
-     // If type isn't handled, the tooltip will not display.
-     if (typeof content === 'string') {
-       if (!content.length) {
-         return false;
-       }
+    // Handle setting of content based on its Object type.
+    // If type isn't handled, the tooltip will not display.
+    if (typeof content === 'string') {
+      if (!content.length) {
+        return false;
+      }
 
-       // Could be a translation definition
-       content = Locale.translate(content, true) || content;
+      // Could be a translation definition
+      content = Locale.translate(content, true) || content;
 
-       // Could be an ID attribute
-       // If it matches an element already on the page, grab that element's content and store the reference only.
-       if (content.indexOf('#') === 0) {
-         var contentCheck = $('' + content);
-         if (contentCheck.length) {
-           this.content = contentCheck;
-           doRender();
-           return true;
-         }
-         return false;
-       }
+      // Could be an ID attribute
+      // If it matches an element already on the page, grab that element's content and store the reference only.
+      if (content.indexOf('#') === 0) {
+        var contentCheck = $('' + content);
+        if (contentCheck.length) {
+          this.content = contentCheck;
+          doRender();
+          return true;
+        }
+        return false;
+      }
 
-     // functions
-     } else if (typeof content === 'function') {
-       var callbackResult = content.call(this.element);
-       if (!callbackResult || typeof callbackResult !== 'string' || !callbackResult.length) {
-         return false;
-       }
-       content = callbackResult;
+    // functions
+    } else if (typeof content === 'function') {
+      var callbackResult = content.call(this.element);
+      if (!callbackResult || typeof callbackResult !== 'string' || !callbackResult.length) {
+        return false;
+      }
+      content = callbackResult;
 
-     // if type isn't handled, return false
-     } else {
-       return false;
-     }
+    // if type isn't handled, return false
+    } else {
+      return false;
+    }
 
-     // Store an internal copy of the processed content
-     this.content = $.sanitizeHTML(content);
+    // Store an internal copy of the processed content
+    this.content = $.sanitizeHTML(content);
 
      // Wrap tooltip content in <p> tags if there isn't already one present.
      // Only happens for non-jQuery markup.
-     if (!specified) {
-       this.content = '<p>' + this.content + '</p>';
-     }
+    if (!specified) {
+      this.content = '<p>' + this.content + '</p>';
+    }
 
-     doRender();
-     return true;
-   },
+    doRender();
+    return true;
+  },
 
-   render: function() {
-     if (this.isPopover) {
-       return this.renderPopover();
-     }
-     return this.renderTooltip();
-   },
+  /**
+   * Renders internal content either as a Tooltip or Popover.
+   * @returns {void}
+   */
+  render: function() {
+    if (this.isPopover) {
+      return this.renderPopover();
+    }
+    return this.renderTooltip();
+  },
 
-   renderTooltip: function() {
-     var titleArea = this.tooltip[0].querySelectorAll('.tooltip-title')[0],
-       contentArea = this.tooltip[0].querySelectorAll('.tooltip-content')[0],
-       extraClass = this.settings.extraClass,
-       content = this.content,
-       tooltip = this.tooltip[0],
-       classes = 'tooltip is-hidden';
+  /**
+   * Renders internal content as a Tooltip.
+   * @private
+   * @returns {void}
+   */
+  renderTooltip: function() {
+    var titleArea = this.tooltip[0].querySelectorAll('.tooltip-title')[0],
+      contentArea = this.tooltip[0].querySelectorAll('.tooltip-content')[0],
+      extraClass = this.settings.extraClass,
+      content = this.content,
+      tooltip = this.tooltip[0],
+      classes = 'tooltip is-hidden';
 
-     if (extraClass) {
-       classes += ' ' + extraClass;
-     }
-     tooltip.setAttribute('class', classes);
+    if (extraClass) {
+      classes += ' ' + extraClass;
+    }
+    tooltip.setAttribute('class', classes);
 
-     if (titleArea) {
-       titleArea.style.display = 'none';
-     }
+    if (titleArea) {
+      titleArea.style.display = 'none';
+    }
 
-     if (!contentArea.previousElementSibling.classList.contains('arrow')) {
-       contentArea.insertAdjacentHTML('beforebegin', '<div class="arrow"></div>');
-     }
+    if (!contentArea.previousElementSibling.classList.contains('arrow')) {
+      contentArea.insertAdjacentHTML('beforebegin', '<div class="arrow"></div>');
+    }
 
-     if (typeof this.content === 'string') {
-       contentArea.innerHTML = content;
-     } else {
-       contentArea.innerHTML = content[0].innerHTML;
-     }
-   },
+    if (typeof this.content === 'string') {
+      contentArea.innerHTML = content;
+    } else {
+      contentArea.innerHTML = content[0].innerHTML;
+    }
+  },
 
-   renderPopover: function() {
-     var self = this,
-       extraClass = this.settings.extraClass,
-       content = this.content,
-       contentArea = this.tooltip.find('.tooltip-content'),
-       title = this.tooltip[0].querySelector('.tooltip-title'),
-       classes = 'popover is-hidden';
+  /**
+   * Renders internal content as a Tooltip.
+   * @private
+   * @returns {void}
+   */
+  renderPopover: function() {
+    var self = this,
+      extraClass = this.settings.extraClass,
+      content = this.content,
+      contentArea = this.tooltip.find('.tooltip-content'),
+      title = this.tooltip[0].querySelector('.tooltip-title'),
+      classes = 'popover is-hidden';
 
-     if (extraClass) {
-       classes += ' ' + extraClass;
-     }
+    if (extraClass) {
+      classes += ' ' + extraClass;
+    }
 
-     this.tooltip[0].setAttribute('class', classes);
+    this.tooltip[0].setAttribute('class', classes);
 
-     var popoverWidth;
+    var popoverWidth;
 
-     if (typeof content === 'string') {
-       content = $(content);
-       contentArea.html(content);
-       contentArea.find('.hidden').removeClass('hidden');
-     } else {
-       contentArea.html(content);
-     }
+    if (typeof content === 'string') {
+      content = $(content);
+      contentArea.html(content);
+      contentArea.find('.hidden').removeClass('hidden');
+    } else {
+      contentArea.html(content);
+    }
 
-     popoverWidth = contentArea.width();
+    popoverWidth = contentArea.width();
 
-     if (!this.settings.placementOpts) {
-       this.settings.placementOpts = {};
-     }
+    if (!this.settings.placementOpts) {
+      this.settings.placementOpts = {};
+    }
 
-     if (!this.settings.placementOpts.parent) {
-       this.settings.placementOpts.parent = this.element;
-     }
+    if (!this.settings.placementOpts.parent) {
+      this.settings.placementOpts.parent = this.element;
+    }
 
-     content[0].classList.remove('hidden');
-     contentArea[0].firstElementChild.classList.remove('hidden');
+    content[0].classList.remove('hidden');
+    contentArea[0].firstElementChild.classList.remove('hidden');
 
-     var parentWidth = this.settings.placementOpts.parent.width();
+    var parentWidth = this.settings.placementOpts.parent.width();
 
-     if (Locale.isRTL()) {
-       this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'left' : 'right';
-     } else {
-       this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'right' : 'left';
-     }
+    if (Locale.isRTL()) {
+      this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'left' : 'right';
+    } else {
+      this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'right' : 'left';
+    }
 
-     if (this.settings.title !== null) {
-       if (!title) {
-         var titleFrag = document.createDocumentFragment();
-         title = document.createElement('div');
-         title.innerHTML = this.settings.title;
-         title.classList.add('tooltip-title');
-         titleFrag.appendChild(title);
-         this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);
-       } else {
-         title.style.display = '';
-         title.childNodes[0].nodeValue = this.settings.title;
-       }
-     } else {
-       if(title) {
-         title.style.display = 'none';
-       }
-     }
+    if (this.settings.title !== null) {
+      if (!title) {
+        var titleFrag = document.createDocumentFragment();
+        title = document.createElement('div');
+        title.innerHTML = this.settings.title;
+        title.classList.add('tooltip-title');
+        titleFrag.appendChild(title);
+        this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);
+      } else {
+        title.style.display = '';
+        title.childNodes[0].nodeValue = this.settings.title;
+      }
+    } else {
+      if (title) {
+        title.style.display = 'none';
+      }
+    }
 
-     if (this.settings.closebutton && title && !title.firstElementChild) {
-       var closeBtnX = $(
-         '<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">' +
-           $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
-           '<span>Close</span>' +
-         '</button>'
-       ).on('click', function() {
-         self.hide();
-       });
+    if (this.settings.closebutton && title && !title.firstElementChild) {
+      var closeBtnX = $(
+        '<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">' +
+          $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
+          '<span>Close</span>' +
+        '</button>'
+      ).on('click', function() {
+        self.hide();
+      });
 
-       title.appendChild(closeBtnX[0]);
-     }
+      title.appendChild(closeBtnX[0]);
+    }
 
-     content.initialize();
-   },
+    content.initialize();
+  },
 
-   // Alias for _show()_.
-   open: function() {
-     return this.show();
-   },
+  /**
+   * Alias for _show()_.
+   * @private
+   * @returns {void}
+   */
+  open: function() {
+    return this.show();
+  },
 
-   show: function(newSettings, ajaxReturn) {
-     var self = this;
-     this.isInPopup = false;
+  /**
+   * Causes the tooltip to become shown
+   * @param {object} newSettings an object containing changed settings that will be applied to the Tooltip/Popover before it's displayed.
+   * @param {boolean} ajaxReturn causes an AJAX-powered Tooltip/Popover not to refresh.
+   */
+  show: function(newSettings, ajaxReturn) {
+    var self = this;
+    this.isInPopup = false;
 
-     if (newSettings) {
-       this.settings = $.extend({}, this.settings, newSettings);
-     }
+    if (newSettings) {
+      this.settings = utils.mergeSettings(this.element[0], newSettings, this.settings);
+    }
 
-     if (this.settings.beforeShow && !ajaxReturn) {
-       var response = function (content) {
-         self.show({content: content}, true);
-       };
+    if (this.settings.beforeShow && !ajaxReturn) {
+      var response = function (content) {
+        self.show({content: content}, true);
+      };
 
-       if (typeof this.settings.beforeShow === 'string') {
-         window[this.settings.beforeShow](response);
-         return;
-       }
+      if (typeof this.settings.beforeShow === 'string') {
+        window[this.settings.beforeShow](response);
+        return;
+      }
 
-       this.settings.beforeShow(response);
-       return;
-     }
+      this.settings.beforeShow(response);
+      return;
+    }
 
-     var okToShow = true;
+    var okToShow = true;
 
-     okToShow = this.setContent(this.content);
-     if (okToShow === false) {
-       return;
-     }
+    okToShow = this.setContent(this.content);
+    if (okToShow === false) {
+      return;
+    }
 
-     okToShow = this.element.triggerHandler('beforeshow', [this.tooltip]);
-     if (okToShow === false) {
-       return;
-     }
+    okToShow = this.element.triggerHandler('beforeshow', [this.tooltip]);
+    if (okToShow === false) {
+      return;
+    }
 
-     this.tooltip[0].setAttribute('style', '');
-     this.tooltip[0].classList.add(this.settings.placement);
+    this.tooltip[0].setAttribute('style', '');
+    this.tooltip[0].classList.add(this.settings.placement);
 
+    if (this.settings.isError || this.settings.isErrorColor) {
+      this.tooltip[0].classList.add('is-error');
+    }
 
-     if (this.settings.isError || this.settings.isErrorColor) {
-       this.tooltip[0].classList.add('is-error');
-     }
+    this.position();
+    utils.fixSVGIcons(this.tooltip);
+    this.element.trigger('show', [this.tooltip]);
 
-     this.position();
-     utils.fixSVGIcons(this.tooltip);
-     this.element.trigger('show', [this.tooltip]);
+    setTimeout(function () {
+      $(document).on('mouseup.tooltip', function (e) {
+        var target = $(e.target);
 
-     setTimeout(function () {
-       $(document).on('mouseup.tooltip', function (e) {
-         var target = $(e.target);
-
-         if (self.settings.isError || self.settings.trigger === 'focus') {
+        if (self.settings.isError || self.settings.trigger === 'focus') {
           return;
-         }
+        }
 
-         if (target.is(self.element) && target.is('svg.icon')) {
-           return;
-         }
+        if (target.is(self.element) && target.is('svg.icon')) {
+          return;
+        }
 
-         if ($('#editor-popup').length && $('#colorpicker-menu').length) {
-           return;
-         }
+        if ($('#editor-popup').length && $('#colorpicker-menu').length) {
+          return;
+        }
 
-         if (target.closest('.popover').length === 0 &&
-             target.closest('.dropdown-list').length === 0) {
-           self.hide(e);
-         }
-       })
-       .on('keydown.tooltip', function (e) {
-         if (e.which === 27 || self.settings.isError) {
-           self.hide();
-         }
-       });
+        if (target.closest('.popover').length === 0 &&
+            target.closest('.dropdown-list').length === 0) {
+          self.hide(e);
+        }
+      })
+      .on('keydown.tooltip', function (e) {
+        if (e.which === 27 || self.settings.isError) {
+          self.hide();
+        }
+      });
 
-       if (self.settings.isError &&
-           !self.element.is(':visible, .dropdown') &&
-           self.element.is('[aria-describedby]')) {
-         self.hide();
-       }
+      if (self.settings.isError &&
+          !self.element.is(':visible, .dropdown') &&
+          self.element.is('[aria-describedby]')) {
+        self.hide();
+      }
 
-       if (window.orientation === undefined) {
-         $('body').on('resize.tooltip', function() {
-           self.hide();
-         });
-       }
+      if (window.orientation === undefined) {
+        $('body').on('resize.tooltip', function() {
+          self.hide();
+        });
+      }
 
-       // Hide on Page scroll
-       $('body').on('scroll.tooltip', function() {
-         self.hide();
-       });
+      // Hide on Page scroll
+      $('body').on('scroll.tooltip', function() {
+        self.hide();
+      });
 
-       self.element.closest('.modal-body-wrapper').on('scroll.tooltip', function() {
-         self.hide();
-       });
+      self.element.closest('.modal-body-wrapper').on('scroll.tooltip', function() {
+        self.hide();
+      });
 
-       self.element.closest('.scrollable').on('scroll.tooltip', function() {
-         self.hide();
-       });
+      self.element.closest('.scrollable').on('scroll.tooltip', function() {
+        self.hide();
+      });
 
-       self.element.closest('.datagrid-body').on('scroll.tooltip', function() {
-         self.hide();
-       });
+      self.element.closest('.datagrid-body').on('scroll.tooltip', function() {
+        self.hide();
+      });
 
-       // Click to close
-       if (self.settings.isError) {
-         self.tooltip.on('click.tooltip', function () {
-           self.hide();
-         });
-       }
-       self.element.trigger('aftershow', [self.tooltip]);
-     }, 400);
+      // Click to close
+      if (self.settings.isError) {
+        self.tooltip.on('click.tooltip', function () {
+          self.hide();
+        });
+      }
+      self.element.trigger('aftershow', [self.tooltip]);
+    }, 400);
 
   },
 
-  // Places the tooltip element itself in the correct DOM element.
-  // If the current element is inside a scrollable container, the tooltip element goes as high as possible in the DOM structure.
+  /**
+   * Places the tooltip element itself in the correct DOM element.
+   * If the current element is inside a scrollable container, the tooltip element goes as high as possible in the DOM structure.
+   * @returns {void}
+   */
   setTargetContainer: function() {
     var targetContainer = $('body');
 
@@ -575,13 +627,23 @@ Tooltip.prototype = {
     targetContainer[0].appendChild(this.tooltip[0]);
   },
 
-  // Placement behavior's "afterplace" handler.
-  // DO NOT USE FOR ADDITIONAL POSITIONING.
+  /**
+   * Placement behavior's "afterplace" handler.
+   * DO NOT USE FOR ADDITIONAL POSITIONING.
+   * @private
+   * @param {jQuery.Event} e
+   * @param {PlacementObject} placementObj
+   * @returns {void}
+   */
   handleAfterPlace: function(e, placementObj) {
     this.tooltip.data('place').setArrowPosition(e, placementObj, this.tooltip);
     this.tooltip.triggerHandler('tooltipafterplace', [placementObj]);
   },
 
+  /**
+   * Resets the current position of the tooltip.
+   * @returns {this}
+   */
   position: function () {
     this.setTargetContainer();
     this.tooltip[0].classList.remove('is-hidden');
@@ -619,11 +681,19 @@ Tooltip.prototype = {
     return this;
   },
 
-  // Alias for _hide()_ that works with the global _closeChildren()_ method.
+  /**
+   * Alias for _hide()_ that works with the global _closeChildren()_ method.
+   * @private
+   * @returns {void}
+   */
   close: function() {
     return this.hide();
   },
 
+  /**
+   * Hides the Tooltip/Popover
+   * @returns {void}
+   */
   hide: function() {
     if (this.settings.keepOpen) {
       return;
@@ -649,6 +719,11 @@ Tooltip.prototype = {
     this.element.trigger('hide', [this.tooltip]);
   },
 
+  /**
+   * Causes the tooltip to store updated settings and re-render itself.
+   * @param {object} [settings]
+   * @returns {this}
+   */
   updated: function(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
@@ -666,6 +741,11 @@ Tooltip.prototype = {
     return this;
   },
 
+  /**
+   * Removes any events which would cause the tooltip/popover to re-open.
+   * @private
+   * @returns {void}
+   */
   detachOpenEvents: function () {
     this.tooltip.off('click.tooltip');
     $(document).off('mouseup.tooltip');
@@ -675,6 +755,10 @@ Tooltip.prototype = {
     this.element.closest('.datagrid-body').off('scroll.tooltip');
   },
 
+  /**
+   * Tears down this component instance, removing all internal flags and unbinding events.
+   * @returns {this}
+   */
   teardown: function() {
     this.description.remove();
     this.descriptionId = undefined;
@@ -697,6 +781,10 @@ Tooltip.prototype = {
     return this;
   },
 
+  /**
+   * Destroys this component instance
+   * @returns {void}
+   */
   destroy: function() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);

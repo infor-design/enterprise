@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 import { utils } from '../utils/utils';
 import { masks } from './masks';
 

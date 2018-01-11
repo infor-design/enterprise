@@ -14,7 +14,3 @@ $.fn.tooltip = function(settings) {
     }
   });
 };
-
-
-// Popover & Tooltip are the same control, so export the Tooltip component.
-$.fn.popover = $.fn.tooltip;

@@ -31,6 +31,7 @@ All the following Soho Components have been converted to ES6:
 * Spinbox
 * Swaplist
 * Textarea
+* Timepicker
 * Tmpl
 * Toast
 * Toolbar
@@ -87,6 +88,5 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Step Process
 * Tabs
 * Tag
-* Timepicker
 * (utils)
   - template
