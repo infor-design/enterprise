@@ -362,15 +362,18 @@ $.fn.timer = function(callback, delay) {
     resume = function() {
       self.triggerHandler('resume');
       update();
-
-    return {
-      event: this,
-      cancel: cancel,
-      pause: pause,
-      resume: resume
     };
+
+    update();
+
+  return {
+    event: this,
+    cancel: cancel,
+    pause: pause,
+    resume: resume
   };
 };
+
 
 /**
  * Copies a string to the clipboard. Must be called from within an event handler such as click.
