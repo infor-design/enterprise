@@ -26,6 +26,7 @@ import './contextualactionpanel/contextualactionpanel.jquery';
 import './dropdown/dropdown.jquery';
 import './editor/editor.jquery';
 import './expandablearea/expandablearea.jquery';
+import './hierarchy/hierarchy.jquery';
 import './field-options/field-options.jquery';
 import './fileupload/fileupload.jquery';
 import './fileupload-advanced/fileupload-advanced.jquery';
