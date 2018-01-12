@@ -37,6 +37,7 @@ All the following Soho Components have been converted to ES6:
 * Place
 * Popover
 * Progress
+* Rating
 * Searchfield
 * Slider
 * Spinbox
@@ -80,7 +81,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Lookup
 * Pager
 * Popdown
-* Rating
 * Scrollaction
 * Signin
 * Splitter

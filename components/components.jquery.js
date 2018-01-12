@@ -42,6 +42,7 @@ import './multiselect/multiselect.jquery';
 import './pager/pager.jquery';
 import './progress/progress.jquery';
 import './popupmenu/popupmenu.jquery';
+import './rating/rating.jquery';
 import './searchfield/searchfield.jquery';
 import './slider/slider.jquery';
 import './spinbox/spinbox.jquery';

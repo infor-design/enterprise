@@ -5,6 +5,8 @@
 
 1. Rating Example [View Example]( ../components/rating/example-index)
 
+{{api-details}}
+
 ## Code Example
 
 The Rating component can be used to either display a rating or allow the end user to select a rating. Half start ratings can be displayed but not set. You can implement the Rating control by using the below markup consisting of a block element (div) with class="rating", then any number of inputs followed by labels for the stars. The label element should contain an svg image with the star. An audible label should also be added for accessibility.
