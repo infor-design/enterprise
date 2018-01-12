@@ -73,6 +73,21 @@ module.exports = {
         'response', // for Express responses
         '$scope', // for Angular 1 scopes
       ]
+    }],
+
+    // Prefer destructuring from arrays and objects
+    // https://eslint.org/docs/rules/prefer-destructuring
+    'prefer-destructuring': ['off', {
+      VariableDeclarator: {
+        array: false,
+        object: true,
+      },
+      AssignmentExpression: {
+        array: true,
+        object: true,
+      },
+    }, {
+      enforceForRenamedProperties: false,
     }]
 
   },
@@ -83,6 +98,8 @@ module.exports = {
     'window': false,
     'Soho': false,
     'grunt': false,
-    'jQuery': false
+    'jQuery': false,
+    'localStorage': false,
+    'Blob': false
   }
 };
