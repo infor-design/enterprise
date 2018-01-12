@@ -28,6 +28,8 @@ import './dropdown/dropdown.jquery';
 import './editor/editor.jquery';
 import './emptymessage/emptymessage.jquery';
 import './expandablearea/expandablearea.jquery';
+import './hierarchy/hierarchy.jquery';
+import './field-options/field-options.jquery';
 import './fileupload/fileupload.jquery';
 import './fileupload-advanced/fileupload-advanced.jquery';
 import './homepage/homepage.jquery';
