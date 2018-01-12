@@ -88,7 +88,11 @@ module.exports = {
       },
     }, {
       enforceForRenamedProperties: false,
-    }]
+    }],
+
+    // don't enforce arrow functions
+    // https://eslint.org/docs/rules/prefer-arrow-callback
+    'prefer-arrow-callback': ['warn', {}],
 
   },
   'globals': {
