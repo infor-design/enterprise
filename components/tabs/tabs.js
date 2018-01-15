@@ -1671,6 +1671,10 @@
             });
           }
 
+          // Automatically refresh all icons inside Tab panels on activation.
+          // See SOHO-7313
+          Soho.utils.fixSVGIcons(targetPanel[0]);
+
           return vetoResult || false;
         }
 
