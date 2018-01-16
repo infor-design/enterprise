@@ -34,6 +34,7 @@
     right: 0;
     @include transition(height 300ms cubic-bezier(.17, .04, .03, .94),
       margin 300ms cubic-bezier(.17, .04, .03, .94),
+      left 300ms cubic-bezier(.17, .04, .03, .94),
       width 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
@@ -329,6 +330,7 @@ html[dir='rtl'] {
   .application-menu {
 
     + .page-container {
+      left: 0;
       margin: 0 0 0 auto;
       width: 100%;
       //Effects menu calculation
@@ -340,6 +342,8 @@ html[dir='rtl'] {
       @include css3(box-shadow, none);
 
       + .page-container {
+        left: 300px;
+        margin: 0;
         width: calc(100% - 300px);
 
         &.scrollable {
