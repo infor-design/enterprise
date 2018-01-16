@@ -24,6 +24,7 @@ import './colorpicker/colorpicker.jquery';
 import './compositeform/compositeform.jquery';
 import './contextualactionpanel/contextualactionpanel.jquery';
 import './datagrid/datagrid.jquery';
+import './datepicker/datepicker.jquery';
 import './dropdown/dropdown.jquery';
 import './editor/editor.jquery';
 import './emptymessage/emptymessage.jquery';
