@@ -48,6 +48,7 @@ import './searchfield/searchfield.jquery';
 import './slider/slider.jquery';
 import './spinbox/spinbox.jquery';
 import './swaplist/swaplist.jquery';
+import './tag/tag.jquery';
 import './textarea/textarea.jquery';
 import './timepicker/timepicker.jquery';
 import './toast/toast.jquery';

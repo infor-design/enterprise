@@ -1,16 +1,17 @@
   <section>
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+
+
+  
+    
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -22,21 +23,22 @@
     </thead>
     <tbody>
       <tr>
-        <td>remove</td>
+        <td>updated</td>
         <td>
           
                 
-                  <span>event () =  </span>
-                
-                  <span>el () =  </span>
+                  <span>settings (Object) = The settings to apply.
+ </span>
                 
           
         </td>
         <td>
-          <p>Remove the tag from the DOM</p>
+          <p>Resync the UI and Settings.</p>
 
         </td>
         <td>
+          The api
+Object
         </td>
       </tr>
       <tr>
@@ -49,38 +51,136 @@
 
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
           
-                
-                  <span>click (Object) =  
--
- 
- Fires when the tag is clicked (if enabled).
- </span>
-                
-                  <span>keydown (Object) =  
--
- 
- Fires when the tag is focused.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>This component fires the following events.</p>
-
-        </td>
-        <td>
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
+  
+  
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>beforetagremove
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>The (Object)
+        
+        = event used for removing and element
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before tag remove.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>aftertagremove
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>The (Object)
+        
+        = event used for removing
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after tag remove.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>click
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the tag is clicked (if enabled).
+</td>
+</tr>
+
+      
+        <tr>
+  <td>keydown
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the tag is focused.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

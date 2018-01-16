@@ -5,17 +5,18 @@
 </ol>
   <section>
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+
+
+  
+    
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -27,21 +28,22 @@
     </thead>
     <tbody>
       <tr>
-        <td>remove</td>
+        <td>updated</td>
         <td>
           
                 
-                  <span>event () =  </span>
-                
-                  <span>el () =  </span>
+                  <span>settings (Object) = The settings to apply.
+ </span>
                 
           
         </td>
         <td>
-          <p>Remove the tag from the DOM</p>
+          <p>Resync the UI and Settings.</p>
 
         </td>
         <td>
+          The api
+Object
         </td>
       </tr>
       <tr>
@@ -54,54 +56,152 @@
 
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
           
-                
-                  <span>click (Object) =  
--
- 
- Fires when the tag is clicked (if enabled).
- </span>
-                
-                  <span>keydown (Object) =  
--
- 
- Fires when the tag is focused.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>This component fires the following events.</p>
-
-        </td>
-        <td>
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
+  
+  
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>beforetagremove
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>The (Object)
+        
+        = event used for removing and element
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before tag remove.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>aftertagremove
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>The (Object)
+        
+        = event used for removing
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after tag remove.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>click
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the tag is clicked (if enabled).
+</td>
+</tr>
+
+      
+        <tr>
+  <td>keydown
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the tag is focused.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
 
 <h2 id="code-example">Code Example</h2>
-<p>Tags are simple span elements with the class=“tag”. They can be mixed in with other elements like lists, grids and search fields. You can optionally add a few classes to add color/status such as error == red, good == green and alert == yellow/orange. Since you should not use color alone to indicate state, this should be either supplemented with off-screen labels or visual labels near the element explaining the state.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag&quot;</span><span class="kw">&gt;</span>#Tagged<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag secondary&quot;</span><span class="kw">&gt;</span>#Tagged<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag error&quot;</span><span class="kw">&gt;&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Error<span class="kw">&lt;/span&gt;</span>Delayed<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag good&quot;</span><span class="kw">&gt;</span>Open Order<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag alert&quot;</span><span class="kw">&gt;&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Alert<span class="kw">&lt;/span&gt;</span>Help Order<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> id=</span><span class="st">&quot;example-clickable&quot;</span><span class="ot"> class=</span><span class="st">&quot;tag is-clickable&quot;</span><span class="kw">&gt;</span>#Clickable<span class="kw">&lt;/a&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> id=</span><span class="st">&quot;example-dismissable&quot;</span><span class="ot"> class=</span><span class="st">&quot;tag is-dismissable&quot;</span><span class="kw">&gt;</span>#Dismissable<span class="kw">&lt;/a&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"></a></code></pre></div>
+<p>Tags are simple span elements with the class=&quot;tag&quot;. They can be mixed in with other elements like lists, grids and search fields. You can optionally add a few classes to add color/status such as error == red, good == green and alert == yellow/orange. Since you should not use color alone to indicate state, this should be either supplemented with off-screen labels or visual labels near the element explaining the state.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag&quot;</span><span class="kw">&gt;</span>#Tagged<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag secondary&quot;</span><span class="kw">&gt;</span>#Tagged<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag error&quot;</span><span class="kw">&gt;&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Error<span class="kw">&lt;/span&gt;</span>Delayed<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag good&quot;</span><span class="kw">&gt;</span>Open Order<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;tag alert&quot;</span><span class="kw">&gt;&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Alert<span class="kw">&lt;/span&gt;</span>Help Order<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</span>
+<span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> id=</span><span class="st">&quot;example-clickable&quot;</span><span class="ot"> class=</span><span class="st">&quot;tag is-clickable&quot;</span><span class="kw">&gt;</span>#Clickable<span class="kw">&lt;/a&gt;</span>
+<span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> id=</span><span class="st">&quot;example-dismissable&quot;</span><span class="ot"> class=</span><span class="st">&quot;tag is-dismissable&quot;</span><span class="kw">&gt;</span>#Dismissable<span class="kw">&lt;/a&gt;</span>
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Since you should not use color alone to indicate states, this should be either supplemented with offscreen or visual labels near the element explaining the state</li>
