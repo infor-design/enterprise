@@ -1783,7 +1783,7 @@ $.fn.datagrid = function(options) {
 
       if (this.settings.emptyMessage) {
         //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
-        // self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
+        self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
         self.contentContainer.prepend(self.emptyMessageContainer);
       }
 
@@ -5981,7 +5981,7 @@ $.fn.datagrid = function(options) {
                 data = s.treeDepth[index].node;
 
               // Allow select node if selectChildren is true or only first node if selectChildren is false
-              if(s.selectChildren || (!s.selectChildren && i === 0)) {
+              if (s.selectChildren || (!s.selectChildren && i === 0)) {
                 selectNode(elem, index, data);
               }
             });
@@ -6004,7 +6004,7 @@ $.fn.datagrid = function(options) {
                 data = s.treeDepth[index].node;
 
               // Allow select node if selectChildren is true or only first node if selectChildren is false
-              if(s.selectChildren || (!s.selectChildren && i === 0)) {
+              if (s.selectChildren || (!s.selectChildren && i === 0)) {
                 selectNode(elem, index, data);
               }
             });
@@ -6296,7 +6296,7 @@ $.fn.datagrid = function(options) {
               index = elem.attr('aria-rowindex') -1;
 
             // Allow unselect node if selectChildren is true or only first node if selectChildren is false
-            if(s.selectChildren || (!s.selectChildren && i === 0)) {
+            if (s.selectChildren || (!s.selectChildren && i === 0)) {
               unselectNode(elem, index);
             }
           });
@@ -6306,7 +6306,7 @@ $.fn.datagrid = function(options) {
               index = elem.attr('aria-rowindex') -1;
 
             // Allow unselect node if selectChildren is true or only first node if selectChildren is false
-            if(s.selectChildren || (!s.selectChildren && i === 0)) {
+            if (s.selectChildren || (!s.selectChildren && i === 0)) {
               unselectNode(elem, index);
             }
           });
