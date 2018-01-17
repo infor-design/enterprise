@@ -1,16 +1,17 @@
   <section>
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
+
+
+  
+    
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -22,35 +23,132 @@
     </thead>
     <tbody>
       <tr>
-        <td>handleEvents</td>
+        <td>updated</td>
         <td>
           
                 
-                  <span>updated (Object) =  
--
- 
- Fires when the component updates.
- </span>
-                
-                  <span>keydown (Object) =  
--
- 
- Fires when a key is pressed while the component is focused.
+                  <span>settings (Object) = The settings to apply.
  </span>
                 
           
         </td>
         <td>
-          <p>Sets up event handlers for this control and its sub-elements</p>
+          <p>Resync the UI and Settings.</p>
 
         </td>
         <td>
+          The api
+Object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Destroy and remove added markup, all events</p>
+
+        </td>
+        <td>
+          
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
+  
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>split
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>split (Number)
+        
+        = value
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when split.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>updated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the component updates.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>keydown
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a key is pressed while the component is focused.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

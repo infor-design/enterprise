@@ -14,6 +14,7 @@ All the following Soho Components have been converted to ES6:
 * Composite Form
 * Contextual Action Panel
 * Datagrid
+* Datepicker
 * Drag (behavior)
 * Dropdown
 * Editor
@@ -33,18 +34,24 @@ All the following Soho Components have been converted to ES6:
 * Message
 * Modal
 * Multiselect
+* Pager
 * Personalize
 * Place
 * Popover
 * Progress
 * Rating
 * Searchfield
+* Signin
 * Slider
 * Spinbox
+* Splitter
+* Stepchart
 * Swaplist
+* Tag
 * Textarea
 * Timepicker
 * Tmpl
+* Tabs
 * Toast
 * Toolbar
 * ToolbarSearchfield
@@ -66,27 +73,18 @@ All the following Soho Components have been converted to ES6:
 * Validation (lots of jQuery)
 * Wizard
 * Zoom
+* (utils)
+  - template
 
 # TODO: Convert These: (Alphabetized)
 
 The components listed below are still UMD-wrapped as ES5 jQuery components.  They need to be transitioned following the [How to migrate a Soho Xi component from ES5 to ES6](./ES5-TO-ES6.md) section of the ES6 Guide.
 
-* Angular 1.0 Directives (?)
-* Area Chart (Separate it from charts.js?)
-* Bar Charts (Separate it from charts.js?)
-* Charts
-* Datepicker
+* Angular 1.0 Directives (TJM tested should work)
+* Charts (TJM In Progress)
 * Dirty Tracking (Util to Convert to component)
 * Form (basically all jQuery stuff)
 * Lookup
-* Pager
 * Popdown
 * Scrollaction
-* Signin
-* Splitter
-* Stepchart
 * Step Process
-* Tabs
-* Tag
-* (utils)
-  - template
