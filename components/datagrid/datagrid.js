@@ -1780,9 +1780,7 @@ $.fn.datagrid = function(options) {
       self.container = self.element.closest('.datagrid-container');
 
       if (this.settings.emptyMessage) {
-        //Object { title: "No Data Available", info: "", icon: "icon-empty-no-data" }
-        self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
-        self.contentContainer.prepend(self.emptyMessageContainer);
+        self.setEmptyMessage(this.settings.emptyMessage);
       }
 
       self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
@@ -3265,7 +3263,7 @@ $.fn.datagrid = function(options) {
       self.triggerDestroyCell();  // Trigger Destroy on previous cells
 
       // Prevent flashing message area on filter / reload
-      if (this.settings.emptyMessage && self.emptyMessageContainer) {
+      if (self.emptyMessageContainer) {
         self.emptyMessageContainer.hide();
       }
 
@@ -5061,8 +5059,19 @@ $.fn.datagrid = function(options) {
       this.checkEmptyMessage();
     },
 
+    setEmptyMessage: function(emptyMessage) {
+      if (!this.emptyMessage) {
+        this.emptyMessageContainer = $('<div>');
+        this.contentContainer.prepend(this.emptyMessageContainer);
+        this.emptyMessage = this.emptyMessageContainer.emptymessage(emptyMessage).data('emptymessage');
+      } else {
+        this.emptyMessage.settings = emptyMessage;
+        this.emptyMessage.updated();
+      }
+    },
+
     checkEmptyMessage: function () {
-      if (this.settings.emptyMessage && this.emptyMessageContainer) {
+      if (this.emptyMessage && this.emptyMessageContainer) {
         if (this.filteredCount ===  this.recordCount || this.recordCount === 0) {
           this.emptyMessageContainer.show();
           this.element.addClass('is-empty');
