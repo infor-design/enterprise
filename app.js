@@ -1,4 +1,5 @@
 /* jshint node:true */
+/* eslint-disable */
 
 // set variables for environment
 let express = require('express'),
@@ -37,9 +38,9 @@ const router = express.Router({
   strict: true
 });
 
-  // ===========================================
-  // Default Options / Custom Middleware
-  // ===========================================
+// ===========================================
+// Default Options / Custom Middleware
+// ===========================================
 const defaults = {
   enableLiveReload: true,
   layout: 'layout',
@@ -322,6 +323,7 @@ const GENERAL_LISTING_EXCLUDES = [
   /footer\.html/,
   /_header\.html/,
   /(api.md$)/,
+  /(api.html$)/,
   /partial/,
   /\.DS_Store/
 ];
@@ -596,9 +598,9 @@ function docsRoute(req, res, next) {
   next();
 }
 
-/**
-   * Handles routing to the Components/Docs section.
-   */
+  /**
+  * Handles routing to the Components/Docs section.
+  */
 function componentRoute(req, res, next) {
   let componentName = '',
     exampleName = '',
@@ -640,6 +642,7 @@ function componentRoute(req, res, next) {
   if (exampleName === 'doc' || exampleName === 'docs') {
     return docsRoute(req, res, next);
   }
+
   if (exampleName === 'list') {
     return getFullListing(componentName, req, res, next);
   }

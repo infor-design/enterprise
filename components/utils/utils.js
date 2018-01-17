@@ -286,21 +286,18 @@ utils.parseSettings = function parseSettings(element, attr) {
   return options;
 };
 
-
 /**
  * Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
  * TODO: Remove in 4.4.1 ?
  */
 utils.parseOptions = utils.parseSettings;
 
-
-
 /**
- * jQuery Behavior Wrapper for `utils.parseOptions`.
- * @deprecated
- * @param {string} [attrName]
- * @return {Object|Object[]}
- */
+* jQuery Behavior Wrapper for `utils.parseOptions`.
+* @deprecated
+* @param {string} [attrName]
+* @return {Object|Object[]}
+*/
 $.fn.parseOptions = function(element, attr) {
   var results = [],
     isCalledDirectly = (element instanceof HTMLElement || element instanceof SVGElement || element instanceof $),
@@ -373,7 +370,6 @@ $.fn.timer = function(callback, delay) {
     resume: resume
   };
 };
-
 
 /**
  * Copies a string to the clipboard. Must be called from within an event handler such as click.

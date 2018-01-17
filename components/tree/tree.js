@@ -1,28 +1,29 @@
+/* eslint-disable */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Environment as env } from '../utils/environment';
 import { Locale } from '../locale/locale';
 
-/**
- * Component Name
- */
+// The name of this component.
 const COMPONENT_NAME = 'tree';
 
 /**
- * Default Settings for Tree
- * @param {string} selectable 'single' or 'multiple'.
- * @param {boolean} hideCheckboxes Only applies when `selectable` is set to 'multiple'.
- * @param {null|string} menuId if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
- * @param {boolean} useStepUI if `true`, turns this tree instance into a "Stepped" tree.
- * @param {string} folderIconOpen the icon used when a tree folder node is open.
- * @param {string} folderIconClosed the icon used when a tree folder node is closed.
- * @param {boolean} sortable if `true`, allows nodes to become sortable.
- * @param {null|function} onBeforeSelect if defined as a function, fires that function as a callback before the selection on a node occurs.
+ * @namespace
+ * @property {string} selectable 'single' or 'multiple'.
+ * @property {boolean} hideCheckboxes Only applies when `selectable` is set to 'multiple'.
+ * @property {null|string} menuId if defined, will be used to identify a Context Menu by ID
+ * attribute in which to add nodes.
+ * @property {boolean} useStepUI if `true`, turns this tree instance into a "Stepped" tree.
+ * @property {string} folderIconOpen the icon used when a tree folder node is open.
+ * @property {string} folderIconClosed the icon used when a tree folder node is closed.
+ * @property {boolean} sortable if `true`, allows nodes to become sortable.
+ * @property {null|function} onBeforeSelect if defined as a function, fires that function as a
+ * callback before the selection on a node occurs.
  */
 const TREE_DEFAULTS = {
   selectable: 'single', // ['single'|'multiple']
   hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
-  menuId: null, //Context Menu to add to nodes
+  menuId: null, // Context Menu to add to nodes
   useStepUI: false, // When using the UI as a stepped tree
   folderIconOpen: 'open-folder',
   folderIconClosed: 'closed-folder',
@@ -33,10 +34,11 @@ const TREE_DEFAULTS = {
 };
 
 /**
- * @class {Tree}
- * @constructor
- * @param {object} element
- */
+* Thetree Component displays a hierarchical list.
+* @param {string} element The component element.
+* @param {string} settings The component settings.
+* @class Datagrid
+*/
 function Tree(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, TREE_DEFAULTS);

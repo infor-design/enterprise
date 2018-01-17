@@ -20,7 +20,6 @@ function Base(element) {
   return this;
 }
 
-
 Base.prototype = {
   getCurrentURL: function() {
     return window.location.href

@@ -3,7 +3,7 @@ module.exports = [
   'components/initialize/initialize.js',
   'components/utils/base.js',
   'components/utils/utils.js',
-  'components/utils/behaviors.js', //behavior?
+  'components/utils/behaviors.js', // behavior?
   'components/utils/breakpoints.js',
   'components/utils/environment.js',
   'components/utils/animations.js',
@@ -20,12 +20,12 @@ module.exports = [
   'components/button/button.js',
   'components/charts/charts.js',
   'components/colorpicker/colorpicker.js',
-  'components/compositeform/compositeform.js', //pattern?
-  'components/contextualactionpanel/contextualactionpanel.js', //pattern?
+  'components/compositeform/compositeform.js', // pattern?
+  'components/contextualactionpanel/contextualactionpanel.js', // pattern?
   'components/datepicker/datepicker.js',
   'components/datagrid/datagrid.js',
   'components/dropdown/dropdown.js',
-  'components/drag/drag.js', //behavior?
+  'components/drag/drag.js', // behavior?
   'components/editor/editor.js',
   'components/emptymessage/emptymessage.js',
   'components/expandablearea/expandablearea.js',
@@ -45,7 +45,7 @@ module.exports = [
   'components/listbuilder/listbuilder.js',
   'components/circlepager/circlepager.js',
   'components/pager/pager.js',
-  'components/place/place.js', //behavior?
+  'components/place/place.js', // behavior?
   'components/popdown/popdown.js',
   'components/popupmenu/popupmenu.js',
   'components/progress/progress.js',
@@ -56,11 +56,11 @@ module.exports = [
   'components/searchfield/searchfield.js',
   'components/signin/signin.js',
   'components/slider/slider.js',
-  'componetns/arrange/arrange.js', //behavior?
-  'components/scrollaction/scrollaction.js', //behavior?
+  'componetns/arrange/arrange.js', // behavior?
+  'components/scrollaction/scrollaction.js', // behavior?
   'components/spinbox/spinbox.js',
   'components/splitter/splitter.js',
-  'components/stepprocess/stepprocess.js', //pattern?
+  'components/stepprocess/stepprocess.js', // pattern?
   'components/stepchart/stepchart.js',
   'components/swaplist/swaplist.js',
   'components/toast/toast.js',
@@ -74,6 +74,6 @@ module.exports = [
   'components/tooltip/tooltip.js',
   'components/tree/tree.js',
   'components/validation/validation.js',
-  'components/wizard/wizard.js', //pattern?
-  'components/zoom/zoom.js' //behavior or util?
+  'components/wizard/wizard.js', // pattern?
+  'components/zoom/zoom.js' // behavior or util?
 ];

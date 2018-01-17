@@ -363,7 +363,8 @@ Modal.prototype = {
       this.sizeInner();
     }
 
-    elemCanOpen = this.element.triggerHandler('beforeopen');
+    elemCanOpen = this.element.triggerHandler('beforeopen', [this]);
+    $('body').triggerHandler('beforeopen', [this]);
     this.isCancelled = false;
 
     if (elemCanOpen === false) {

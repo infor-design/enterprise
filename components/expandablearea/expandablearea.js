@@ -34,7 +34,6 @@ ExpandableArea.prototype = {
   /**
   * Initialize the Expandable area
   * @private
-  * @returns {object} The Api for chaining.
   */
   init() {
     this
@@ -211,7 +210,6 @@ ExpandableArea.prototype = {
 
   /**
   * Toggle current expansion state.
-  * @returns {boolean} True of alse depending on current expanded status.
   */
   toggleExpanded() {
     // if (this.header.attr('aria-expanded') === 'true') {
@@ -224,7 +222,6 @@ ExpandableArea.prototype = {
 
   /**
   * Open the pane if closed.
-  * @returns {boolean} True of false depending on current expanded status.
   */
   open() {
     const canExpand = this.element.triggerHandler('beforeexpand', [this.element]);
@@ -254,7 +251,6 @@ ExpandableArea.prototype = {
 
   /**
   * Close the pane if open.
-  * @returns {boolean} True of false depending on current expanded status.
   */
   close() {
     const canCollapse = this.element.triggerHandler('beforecollapse', [this.element]);

@@ -2,14 +2,19 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
-/**
- * Component Name
- */
+// The name of this component
 const COMPONENT_NAME = 'hierarchy';
 
 /**
- * Default Hierarchy Options
- */
+* @namespace
+* @property {string} legend  Pass in custom markdown for the legend structure.
+* @property {string} legendKey  Key to use for the legend matching
+* @property {string} dataset  Hierarchical Data to display
+* @property {boolean} newData  New data to be appended into dataset
+* @property {string} templateId  Additional product name information to display
+* @property {boolean} mobileView  If true will only show mobile view, default using device info.
+* @property {string} beforeExpand  A callback that fires before node expansion of a node.
+*/
 const HIERARCHY_DEFAULTS = {
   legend: [],
   legendKey: '',
@@ -24,18 +29,11 @@ const HIERARCHY_DEFAULTS = {
 };
 
 /**
-* The displays custimizable hierarchical data such as an org chart.
+* The displays customizable hierarchical data such as an org chart.
 *
 * @class Hierarchy
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-* @param {string} legend  Pass in custom markdown for the legend structure.
-* @param {string} legendKey  Key to use for the legend matching
-* @param {string} dataset  Hierarchical Data to display
-* @param {boolean} newData  New data to be appended into dataset
-* @param {string} templateId  Additional product name information to display
-* @param {boolean} mobileView  If true will only show mobile view, default using device info.
-* @param {string} beforeExpand  A callback that fires before node expansion of a node.
+* @param {string} element The component element.
+* @param {string} settings The component settings.
 */
 function Hierarchy(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HIERARCHY_DEFAULTS);
@@ -278,11 +276,11 @@ Hierarchy.prototype = {
         }
       });
       if (thisObj.children) {
-        processData(self, thisObj.children, thisNewDataObject);
+        processData(self, thisObj.children, thisNewDataObject); // eslint-disable-line
       }
     }
 
-    function processData(self, thisObj, thisNewDataObject) {
+    function processData(self, thisObj, thisNewDataObject) { // jshint ignore:line
       if (thisObj.length === undefined) {
         checkForChildren(self, thisObj, thisNewDataObject);
       } else {
@@ -483,7 +481,7 @@ Hierarchy.prototype = {
       if (subArray !== null && subArray !== undefined) {
         for (let i = 0, l = subArray.length; i < l; i++) {
           const obj = subArray[i];
-          subArrayChildren(self, obj, thisData);
+          subArrayChildren(self, obj, thisData);  // eslint-disable-line
         }
       }
     }

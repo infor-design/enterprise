@@ -99,7 +99,6 @@
         columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required'});  //maxLength: 2
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row, cell, value, col, item) {
-            console.log(row, cell, value, col, item);
             //For this fake logic just disable odd rows
             return (row % 2 === 0);
           }});
@@ -120,7 +119,7 @@
           toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
           paging: true,
           pagesize: 5,
-          pagesizes: [5, 10, 25, 50],
+          pagesizes: [2, 4, 6],
           source: function () {}
         }).on('cellchange', function (e, args) {
           console.log('cellchange', args);
@@ -133,7 +132,7 @@
         gridApi = $('#datagrid').data('datagrid');
 
         //Example row status
-        gridApi.setActiveCell(1,2, 0)
+        gridApi.setActiveCell(1,2, 0);
         gridApi.rowStatus(0, 'error', 'Error');
         gridApi.rowStatus(0, 'error', 'Error 2');
         gridApi.rowStatus(0, 'error', 'Error 3');

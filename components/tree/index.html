@@ -20,354 +20,216 @@
   
     
 
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          selectable
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          'single' or 'multiple'.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          hideCheckboxes
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Only applies when 
+<code>selectable</code>
+ is set to 'multiple'.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          menuId
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          if defined, will be used to identify a Context Menu by ID
+attribute in which to add nodes.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          useStepUI
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          if 
+<code>true</code>
+, turns this tree instance into a "Stepped" tree.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          folderIconOpen
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          the icon used when a tree folder node is open.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          folderIconClosed
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          the icon used when a tree folder node is closed.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          sortable
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          if 
+<code>true</code>
+, allows nodes to become sortable.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          onBeforeSelect
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          if defined as a function, fires that function as a
+callback before the selection on a node occurs.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
 
   
     
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
 
 
   
-    <h2>Settings</h2>
+    
 
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
 
-  <h2>Methods</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Parameters</th>
-      <th>Description</th>
-      <th>Returns</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>initTree</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Init Tree from ul, li, a markup structure in DOM</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>initSelected</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Init selected notes</p>
+  
+    
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>focusFirst</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Focus the first tree node</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>setFocus</td>
-        <td>
-          
-                
-                  <span>node () =  </span>
-                
-          
-        </td>
-        <td>
-          <p>Set focus</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>decorateNode</td>
-        <td>
-          
-                
-                  <span>a () = an anchor tag reference wrapped in a jQuery object.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>From the LI, Read props and add stuff</p>
+  
+    
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>setTreeIcon</td>
-        <td>
-          
-                
-                  <span>svg () = an SVG element reference wrapped in a jQuery object
- </span>
-                
-                  <span>icon (string) = the ID of a Soho Icon type.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Sets the correct icon to use on a particular SVG element.</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>expandAll</td>
-        <td>
-          
-                
-                  <span>nodes () = a jQuery-wrapped collection of tree node elements.  If left undefined, this will automatically use all 
-<code>ul[role=group]</code>
- elements.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Expands a collection of tree nodes.</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>collapseAll</td>
-        <td>
-          
-                
-                  <span>nodes () = a jQuery-wrapped collection of tree node elements.  If left undefined, this will automatically use all 
-<code>ul[role=group]</code>
- elements.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Collapses a collection of tree nodes.</p>
+  
+    
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>isjQuery</td>
-        <td>
-          
-                
-                  <span>obj (Object) = the object being tested.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Check if an object is an instance of a jQuery object</p>
 
-        </td>
-        <td>
-          
-boolean
-        </td>
-      </tr>
-      <tr>
-        <td>selectNodeById</td>
-        <td>
-          
-                
-                  <span>id (string) = the ID string to use.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Selects a tree node specifically using it's ID attribute.</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>selectNodeByJquerySelector</td>
-        <td>
-          
-                
-                  <span>selector () = uses a string that represents a jQuery-wrapped element's ID attribute, or a jQuery-wrapped reference to the element itself.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Selects a tree node by [jquery selector] -or- [jquery object]</p>
+  
+    
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>unSelectedNode</td>
-        <td>
-          
-                
-                  <span>node () = a jQuery-wrapped element reference to a tree node.
- </span>
-                
-                  <span>focus (boolean) = if defined, causes the node to become focused.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Deselects a tree node</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>selectNode</td>
-        <td>
-          
-                
-                  <span>node () = a jQuery-wrapped element reference to a tree node.
- </span>
-                
-                  <span>focus (boolean) = if defined, causes the node to become focused.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Selects a tree node</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>selectNodeFinish</td>
-        <td>
-          
-                
-                  <span>node () = a jQuery-wrapped element reference to a tree node.
- </span>
-                
-                  <span>focus (boolean) = if defined, causes the node to become focused.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>?</p>
+  
+    
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>setNodeStatus</td>
-        <td>
-          
-                
-                  <span>node () = a jQuery-wrapped element reference to a tree node.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Deselects a tree node</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>getSelectedStatus</td>
-        <td>
-          
-                
-                  <span>node () = a jQuery-wrapped element reference to a tree node.
- </span>
-                
-                  <span>isFirstSkipped (boolean) = ?
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Get's a tree node's current 'selected' status</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>toggleNode</td>
-        <td>
-          
-                
-                  <span>node () = a jQuery-wrapped element reference to a tree node.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Changes a node's selected status to its opposite form.</p>
+  
+    
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>updated</td>
-        <td>
-          
-                
-                  <span>settings (Object) =  </span>
-                
-          
-        </td>
-        <td>
-          
-        </td>
-        <td>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
 
 
   </section>

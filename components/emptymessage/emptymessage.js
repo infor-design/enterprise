@@ -71,7 +71,7 @@ EmptyMessage.prototype = {
    * Update the component and optionally apply new settings.
    *
    * @param  {object} settings the settings to update to.
-   * @return {object} The plugin api for chaining.
+   * @returns {void}
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);

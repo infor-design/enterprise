@@ -13,7 +13,6 @@ import '../tooltip/tooltip.jquery';
  */
 let COMPONENT_NAME = 'pager';
 
-
 /**
  *
  */
