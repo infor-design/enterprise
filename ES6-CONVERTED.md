@@ -35,9 +35,12 @@ All the following Soho Components have been converted to ES6:
 * Progress
 * Rating
 * Searchfield
+* Signin
 * Slider
 * Spinbox
+* Splitter
 * Swaplist
+* Tag
 * Textarea
 * Timepicker
 * Tmpl
@@ -82,11 +85,8 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Pager
 * Popdown
 * Scrollaction
-* Signin
-* Splitter
 * Stepchart
 * Step Process
 * Tabs
-* Tag
 * (utils)
   - template
