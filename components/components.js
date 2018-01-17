@@ -35,6 +35,8 @@ export { PopupMenu } from './popupmenu/popupmenu';
 export { SearchField } from './searchfield/searchfield';
 export { Slider } from './slider/slider';
 export { Spinbox } from './spinbox/spinbox';
+export { Tabs } from './tabs/tabs';
+export { Tag } from './tag/tag';
 export { Textarea } from './textarea/textarea';
 export { Toast } from './toast/toast';
 export { Toolbar } from './toolbar/toolbar';
