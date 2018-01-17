@@ -1562,6 +1562,7 @@ $.fn.datagrid = function(options) {
         clickToSelect: true,
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
         initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
+        selectChildren: true, // can prevent selecting of all child nodes on multiselect
         //Paging Options
         paging: false,
         pagesize: 25,
@@ -1654,6 +1655,7 @@ $.fn.datagrid = function(options) {
   * @param {Function} onEditCell  &nbsp;-&nbsp A callback that fires when a cell is edited, the editor object is passed in to the function
   * @param {Function} onExpandRow &nbsp;-&nbsp A callback function that fires when expanding rows. To be used when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
   * @param {Object} emptyMessage &nbsp;-&nbsp An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
+  * @param {Boolean} selectChildren &nbsp;-&nbsp Can prevent selecting of all child nodes on multiselect
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -5982,11 +5984,15 @@ $.fn.datagrid = function(options) {
         if (s.treeGrid) {
           if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
             // Select node and node-children
-            rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function() {
+            rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function(i) {
               var elem = $(this),
                 index = elem.attr('aria-rowindex') -1,
                 data = s.treeDepth[index].node;
-              selectNode(elem, index, data);
+
+              // Allow select node if selectChildren is true or only first node if selectChildren is false
+              if (s.selectChildren || (!s.selectChildren && i === 0)) {
+                selectNode(elem, index, data);
+              }
             });
           } else if (s.selectable === 'siblings') {
             this.unSelectAllRows();
@@ -6001,11 +6007,15 @@ $.fn.datagrid = function(options) {
               prevs = null;
             }
 
-            rowNode.add(nexts).add(prevs).each(function() {
+            rowNode.add(nexts).add(prevs).each(function(i) {
               var elem = $(this),
                 index = elem.attr('aria-rowindex') -1,
                 data = s.treeDepth[index].node;
-              selectNode(elem, index, data);
+
+              // Allow select node if selectChildren is true or only first node if selectChildren is false
+              if (s.selectChildren || (!s.selectChildren && i === 0)) {
+                selectNode(elem, index, data);
+              }
             });
 
           } else { // Default to Single element selection
@@ -6290,16 +6300,24 @@ $.fn.datagrid = function(options) {
       if (s.treeGrid) {
         if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
           // Select node and node-children
-          rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function() {
+          rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function(i) {
             var elem = $(this),
               index = elem.attr('aria-rowindex') -1;
-            unselectNode(elem, index);
+
+            // Allow unselect node if selectChildren is true or only first node if selectChildren is false
+            if (s.selectChildren || (!s.selectChildren && i === 0)) {
+              unselectNode(elem, index);
+            }
           });
         } else if (s.selectable === 'siblings') {
-          rowNode.parent().find('.is-selected').each(function() {
+          rowNode.parent().find('.is-selected').each(function(i) {
             var elem = $(this),
               index = elem.attr('aria-rowindex') -1;
-            unselectNode(elem, index);
+
+            // Allow unselect node if selectChildren is true or only first node if selectChildren is false
+            if (s.selectChildren || (!s.selectChildren && i === 0)) {
+              unselectNode(elem, index);
+            }
           });
         } else { // Single element unselection
           unselectNode(rowNode, idx);
@@ -6321,6 +6339,7 @@ $.fn.datagrid = function(options) {
 
     setNodeStatus: function(node) {
       var self = this,
+        s = self.settings,
         isMultiselect = self.settings.selectable === 'multiple',
         checkbox = self.cellNode(node, self.columnIdxById('selectionCheckbox')),
         nodes;
@@ -6359,7 +6378,11 @@ $.fn.datagrid = function(options) {
 
       // Multiselect
       nodes = node.add(node.nextUntil('[aria-level="1"]')).filter('.datagrid-tree-parent');
-      setStatus(nodes);
+
+      // Prevent selecting of parent element when selectChildren is false
+      if (s.selectChildren) {
+        setStatus(nodes);
+      }
 
       nodes = node;
       if (+node.attr('aria-level') > 1) {
@@ -6367,7 +6390,11 @@ $.fn.datagrid = function(options) {
         .add(node.prevAll('[aria-level="1"]:first'));
       }
       nodes = nodes.filter('.datagrid-tree-parent');
-      setStatus(nodes);
+
+      // Prevent selecting of parent element when selectChildren is false
+      if (s.selectChildren) {
+        setStatus(nodes);
+      }
     },
 
     getSelectedStatus: function(node) {
