@@ -5,7 +5,6 @@
 -   [disable](#disable)
 -   [enable](#enable)
 -   [readonly](#readonly)
--   [trackdirty](#trackdirty)
 
 ## disable
 
@@ -18,7 +17,3 @@ Make elements in the jQuery selector enabled if they support the prop disabled. 
 ## readonly
 
 Make elements in the jQuery selector readonly if they support the prop readonly. Or has a readonly method.
-
-## trackdirty
-
-Track changes on the inputs passed in the jQuery selector and show a dirty indicator.
