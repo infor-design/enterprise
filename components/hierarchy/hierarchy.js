@@ -242,6 +242,8 @@ Hierarchy.prototype = {
    * @returns {Object} data
    */
   data(nodeId, currentDataObject, newDataObject, params) {
+    /* eslint-disable no-use-before-define */
+    /* jshint latedef: nofunc */
     if (params === undefined) {
       params = {};
     }
@@ -299,6 +301,7 @@ Hierarchy.prototype = {
     }
 
     return nodeData[0];
+    /* eslint-enable no-use-before-define */
   },
 
   /**
@@ -414,6 +417,8 @@ Hierarchy.prototype = {
   * @returns {void}
   */
   render(data) {
+    /* eslint-disable no-use-before-define */
+    /* jshint latedef: nofunc */
     const s = this.settings;
     const thisLegend = s.legend;
     const thisChildren = data.children;
@@ -532,6 +537,7 @@ Hierarchy.prototype = {
     const windowWidth = $(window).width();
     const center = (containerWidth - windowWidth) / 2;
     this.element.scrollLeft(center);
+    /* eslint-enable no-use-before-define */
   },
 
   /**
