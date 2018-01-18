@@ -32,6 +32,7 @@ export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
 export { Pager } from './pager/pager';
 export { PopupMenu } from './popupmenu/popupmenu';
+export { Popdown } from './popdown/popdown';
 export { SearchField } from './searchfield/searchfield';
 export { Slider } from './slider/slider';
 export { Spinbox } from './spinbox/spinbox';

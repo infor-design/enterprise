@@ -37,6 +37,7 @@ All the following Soho Components have been converted to ES6:
 * Pager
 * Personalize
 * Place
+* Popdown
 * Popover
 * Progress
 * Rating
@@ -85,6 +86,5 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Dirty Tracking (Util to Convert to component)
 * Form (basically all jQuery stuff)
 * Lookup
-* Popdown
 * Scrollaction
 * Step Process
