@@ -87,6 +87,7 @@ The Datagrid Component displays and process data in tabular format.
 -   `onEditCell` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  A callback that fires when a cell is edited, the editor object is passed in to the function
 -   `onExpandRow` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  A callback function that fires when expanding rows. To be used when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
 -   `emptyMessage` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
+-   `selectChildren` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Can prevent selecting of all child nodes on multiselect
 
 ### render
 

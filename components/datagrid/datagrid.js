@@ -2036,7 +2036,7 @@ $.fn.datagrid = function(options) {
 
       this.renderPager(pagerInfo, isResponse);
       this.syncSelectedUI();
-
+      this.displayCounts();
     },
 
     /**
