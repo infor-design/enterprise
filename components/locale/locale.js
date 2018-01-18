@@ -1,4 +1,4 @@
-/* eslint-ignore */
+/* eslint-disable */
 
 /**
   TODO: Re-implement this with proper scope.
@@ -38,7 +38,7 @@ const Locale = { //jshint ignore:line
     }
   },
 
-  //Get the path to the directory with the cultures
+  // Get the path to the directory with the cultures
   getCulturesPath: function() {
     if (!this.culturesPath) {
       var scripts = document.getElementsByTagName('script'),
@@ -93,8 +93,7 @@ const Locale = { //jshint ignore:line
   },
 
   /**
-  * Set the currently used colors.
-  *
+  * Set the currently used locale.
   * @param {string} locale  The locale to fetch and set.
   */
   set: function (locale) {
@@ -897,14 +896,14 @@ const Locale = { //jshint ignore:line
    * Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
    * In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
    * @param {string} str - the incoming string
-   * @returns {string}
+   * @returns {string} The localized string
    */
   toLowerCase: function(str) {
     if (typeof this.currentLocale.data.toLowerCase === 'function') {
       return this.currentLocale.data.toLowerCase(str);
     }
 
-    return str.toLocaleLowerCase();
+    return str.toString().toLocaleLowerCase();
   },
 
   /**

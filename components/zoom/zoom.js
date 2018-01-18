@@ -1,20 +1,15 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
-// jQuery components
-
-
-/**
- * Component Name
- */
-let COMPONENT_NAME = 'zoom';
-
+// Name of this component
+const COMPONENT_NAME = 'zoom';
 
 /**
- * @constructor
- * @param {object} element
- * @param {object} settings
- */
+* The Zoom Component is used to manage zoom on mobile devices.
+* @class Accordion
+* @param {object} element The component element.
+* @param {object} settings The component settings.
+*/
 function Zoom(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings);
@@ -25,14 +20,18 @@ function Zoom(element, settings) {
 }
 
 Zoom.prototype = {
-  init: function() {
+  init() {
     return this
       .build()
       .handleEvents();
   },
 
-  // Add markup to the control
-  build: function() {
+  /**
+  * Add markup to the control
+  * @private
+  * @returns {object} The api prototype for chaining.
+  */
+  build() {
     // get references to elements
     this.viewport = this.element.find('meta[name=viewport]');
     this.body = $('body');
@@ -40,17 +39,21 @@ Zoom.prototype = {
     return this;
   },
 
-  // Sets up event handlers for this control and its sub-elements
-  handleEvents: function() {
-    var self = this;
+  /**
+  * Sets up event handlers for this control and its sub-elements
+  * @private
+  * @returns {object} The api prototype for chaining.
+  */
+  handleEvents() {
+    const self = this;
 
     // Allow the head to listen to events to globally deal with the zoom problem on
     // a per-control basis (for example, Dropdown/Multiselect need to handle this issue manually).
-    this.element.on('updated.' + COMPONENT_NAME, function() {
+    this.element.on(`updated.${COMPONENT_NAME}`, () => {
       self.updated();
-    }).on('enable-zoom', function() {
+    }).on('enable-zoom', () => {
       self.enableZoom();
-    }).on('disable-zoom', function() {
+    }).on('disable-zoom', () => {
       self.disableZoom();
     });
 
@@ -60,18 +63,18 @@ Zoom.prototype = {
     }
 
     // Setup conditional events for all elements that need it.
-    this.body.on('touchstart.zoomdisabler', 'input, label', function() {
+    this.body.on('touchstart.zoomdisabler', 'input, label', () => {
       if (self.noZoomTimeout) {
         return;
       }
 
       self.disableZoom();
-    }).on('touchend.zoomdisabler', 'input, label', function() {
+    }).on('touchend.zoomdisabler', 'input, label', () => {
       if (self.noZoomTimeout) {
         clearTimeout(self.noZoomTimeout);
         self.noZoomTimeout = null;
       }
-      self.noZoomTimeout = setTimeout(function() {
+      self.noZoomTimeout = setTimeout(() => {
         self.noZoomTimeout = null;
         self.enableZoom();
       }, 600);
@@ -80,21 +83,30 @@ Zoom.prototype = {
     return this;
   },
 
-  // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
-  enableZoom: function() {
+  /**
+  * Enable zoom by un-setting the meta tag.
+  * @returns {void}
+  */
+  enableZoom() {
+    // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
     this.viewport[0].setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=1');
   },
 
-  // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
-  disableZoom: function() {
+  /**
+  * Disable zoom by setting the meta tag.
+  * @returns {void}
+  */
+  disableZoom() {
+    // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
     this.viewport[0].setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=0');
   },
 
   /**
-   * Handle Updating Settings
-   * @param {object} settings
-   */
-  updated: function(settings) {
+  * Handle Updating Settings
+  * @param {object} settings The settings to update to.
+  * @returns {object} The api prototype for chaining.
+  */
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -104,19 +116,24 @@ Zoom.prototype = {
       .init();
   },
 
-  // Simple Teardown - remove events & rebuildable markup.
-  teardown: function() {
-    this.element.off('updated.' + COMPONENT_NAME + ' enable-zoom disable-zoom');
+  /**
+  * Simple Teardown - remove events & rebuildable markup.
+  * @private
+  * @returns {object} The api prototype for chaining.
+  */
+  teardown() {
+    this.element.off(`updated.${COMPONENT_NAME} enable-zoom disable-zoom`);
     this.body.off('touchstart.zoomdisabler touchend.zoomdisabler');
     return this;
   },
 
-  // Teardown - Remove added markup and events
-  destroy: function() {
+  /**
+  * Teardown - Remove added markup and events
+  */
+  destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
-
 
 export { Zoom, COMPONENT_NAME };

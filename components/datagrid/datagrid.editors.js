@@ -377,8 +377,11 @@ const editors = {
         editorOptions.cssClass += ' is-editing';
       }
 
+      this.input.dropdown(editorOptions);
+
       // Append the Dropdown's sourceArguments with some row/col meta-data
-      editorOptions.sourceArguments = $.extend({}, editorOptions.sourceArguments, {
+      var api = this.input.data('dropdown');
+      api.settings.sourceArguments = {
         column: column,
         container: container,
         grid: grid,
@@ -387,9 +390,8 @@ const editors = {
         row: row,
         rowData: rowData,
         value: value
-      });
+      };
 
-      this.input.dropdown(editorOptions);
     };
 
     this.val = function (value) {

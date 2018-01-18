@@ -259,7 +259,7 @@ SearchField.prototype = {
   setupEvents: function() {
     var self = this;
 
-    this.element.on('updated.searchfield', function() {
+    self.element.on('updated.searchfield', function() {
       self.updated();
     }).on('focus.searchfield', function(e) {
       self.handleFocus(e);
@@ -276,7 +276,7 @@ SearchField.prototype = {
       self.wrapper.removeClass('popup-is-open');
     });
 
-    this.wrapper.on('mouseenter.searchfield', function() {
+    self.wrapper.on('mouseenter.searchfield', function() {
       $(this).addClass('is-hovered');
     }).on('mouseleave.searchfield', function() {
       $(this).removeClass('is-hovered');
@@ -295,14 +295,14 @@ SearchField.prototype = {
       });
     }
 
-    if (this.hasGoButton()) {
-      this.goButton.on('click.searchfield', function(e) {
+    if (self.hasGoButton()) {
+      self.goButton.on('click.searchfield', function(e) {
         return self.handleGoButtonClick(e);
       });
     }
 
     // Insert the "view more results" link on the Autocomplete control's "populated" event
-    this.element.off('populated.searchfield').on('populated.searchfield', function(e, items) {
+    self.element.off('populated.searchfield').on('populated.searchfield', function(e, items) {
       if (items.length > 0) {
         if (self.settings.showAllResults) {
           self.addMoreLink();
@@ -314,7 +314,7 @@ SearchField.prototype = {
 
     // Override the 'click' listener created by Autocomplete (which overrides the default Popupmenu method)
     // to act differntly when the More Results link is activated.
-    this.element.on('listopen.searchfield', function(e, items) {
+    self.element.on('listopen.searchfield', function(e, items) {
       var list = $('#autocomplete-list');
 
       // Visual indicator class
@@ -363,8 +363,8 @@ SearchField.prototype = {
       });
 
       // Setup a listener for the Clearable behavior, if applicable
-      if (this.settings.clearable) {
-        this.element.on('cleared.searchfield', function() {
+      if (self.settings.clearable) {
+        self.element.on('cleared.searchfield', function() {
           self.element.triggerHandler('resetfilter');
         });
       }

@@ -27,8 +27,6 @@ const COMPONENT_NAME = 'dropdown';
 * @property {boolean} source  A function that can do an ajax call.
 * @property {boolean} sourceArguments  If a source method is defined, this flexible object can be
 *  passed into the source method, and augmented with parameters specific to the implementation.
-* @property {boolean} sourceArguments  If a source method is defined, this flexible object can be
-*  passed into the source method, and augmented with parameters specific to the implementation.
 * @property {boolean} reloadSourceOnOpen  If set to true, will always perform an ajax call whenever
 *  the list is opened.  If false, the first AJAX call's results are cached.
 * @property {boolean} empty  Initialize Empty Value
@@ -55,16 +53,12 @@ const DROPDOWN_DEFAULTS = {
   maxWidth: null
 };
 
-/**
- * Dropdown Settings and Options
- */
+// Dropdown Settings and Options
 const moveSelectedOpts = ['none', 'all', 'group'];
 
 /**
 * The Dropdown allows users to select from a list. Like an Html Select.
-*
 * @class Dropdown
-*
 */
 function Dropdown(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DROPDOWN_DEFAULTS);

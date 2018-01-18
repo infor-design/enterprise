@@ -3505,7 +3505,8 @@ Datagrid.prototype = {
         if (self.grandTotal) {
           countText = self.settings.resultsText(self, self.grandTotal, count);
         } else {
-          countText = self.settings.resultsText(self, count, (count - self.filteredCount) || 0);
+          const filteredCount = (self.filteredCount === 0 ? 0 : count - self.filteredCount);
+          countText = self.settings.resultsText(self, count, filteredCount);
         }
       } else {
         countText = self.settings.resultsText;

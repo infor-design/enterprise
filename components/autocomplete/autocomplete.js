@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary, no-underscore-dangle */
+/* eslint-disable no-nested-ternary, prefer-template */
 
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
@@ -87,16 +87,16 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
 
   // Easy match for 'contains'-style filterMode.
   if (options.filterMode === 'contains') {
-    targetProp = targetProp.replace(new RegExp(`(${options.term})`, 'ig'), '<i>$1</i>');
+    targetProp = targetProp.replace(new RegExp('(' + options.term + ')', 'ig'), '<i>$1</i>');
   } else {
     // Handle "startsWith" filterMode highlighting a bit differently.
     const originalItem = targetProp;
     const pos = Locale.toLowerCase(originalItem).indexOf(options.term);
 
     if (pos > 0) {
-      targetProp = `${originalItem.substr(0, pos)}<i>${originalItem.substr(pos, options.term.length)}</i>${originalItem.substr(options.term.length + pos)}`;
+      targetProp = originalItem.substr(0, pos) + '<i>' + originalItem.substr(pos, options.term.length) + '</i>' + originalItem.substr(options.term.length + pos);
     } else if (pos === 0) {
-      targetProp = `<i>${originalItem.substr(0, options.term.length)}</i>${originalItem.substr(options.term.length)}`;
+      targetProp = '<i>' + originalItem.substr(0, options.term.length) + '</i>' + originalItem.substr(options.term.length);
     }
   }
 
@@ -246,8 +246,8 @@ Autocomplete.prototype = {
             filterMode: self.settings.filterMode,
             term
           };
-          if (result._highlightTarget) {
-            filterOpts.alias = result._highlightTarget;
+          if (result.highlightTarget) {
+            filterOpts.alias = result.highlightTarget;
           }
           result = self.settings.highlightCallback(result, filterOpts);
         }

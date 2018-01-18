@@ -54,7 +54,6 @@ Accordion.prototype = {
   * @private
   * @param {jQuery[]} [headers] - if provided, only attempts to build the specified headers and
   * their related anchors/panes
-  * @returns {object} The component api for chaining.
   */
   init(headers) {
     this
