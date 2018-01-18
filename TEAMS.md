@@ -59,6 +59,7 @@
 | MUA (M3H5 Client) |   | Michael Quibin , Jack Rubillar | 3x |
 | NGCC - Content Creator HCM - LMS |   | Shakeeb Murtaza | 3x |
 | Optiva | Asp Based  | Bert Cushman | 4x |
+| Outbound marketing |  Omni-Channel Campaign management - JSF and template based HTML | Karthikeyan Alagarasamy <Karthikeyan.Alagarasamy@infor.com> | 3x to 4x |
 | Pathway | Public Sector Product sold in Australia and New Zealand, Highlight Rated App, MVC | Mark Nolan, Jesser Susi | 4x |
 | PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna | 4x |Peddibhotla || PMServerAdmin |   | Mike Campbell | 3x |
 | Product Certification Manger |   | Kishor Dhumal <Kishor.Dhumal@infor.com> | 3x to 4x|
