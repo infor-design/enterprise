@@ -15,6 +15,7 @@ All the following Soho Components have been converted to ES6:
 * Contextual Action Panel
 * Datagrid
 * Datepicker
+* Dirty Tracking (Util to Convert to component)
 * Drag (behavior)
 * Dropdown
 * Editor
@@ -83,7 +84,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 
 * Angular 1.0 Directives (TJM tested should work)
 * Charts (TJM In Progress)
-* Dirty Tracking (Util to Convert to component)
 * Form (basically all jQuery stuff)
 * Lookup
 * Scrollaction

@@ -59,6 +59,7 @@ import './toast/toast.jquery';
 import './toolbar/toolbar.jquery';
 import './toolbarsearchfield/toolbarsearchfield.jquery';
 import './tooltip/tooltip.jquery';
+import './trackdirty/trackdirty.jquery';
 import './popover/popover.jquery';
 import './tree/tree.jquery';
 import './validation/validation.jquery';
