@@ -50,6 +50,7 @@ import './slider/slider.jquery';
 import './spinbox/spinbox.jquery';
 import './splitter/splitter.jquery';
 import './swaplist/swaplist.jquery';
+import './tabs/tabs.jquery';
 import './tag/tag.jquery';
 import './textarea/textarea.jquery';
 import './timepicker/timepicker.jquery';

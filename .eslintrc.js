@@ -94,6 +94,11 @@ module.exports = {
     // https://eslint.org/docs/rules/prefer-arrow-callback
     'prefer-arrow-callback': ['warn', {}],
 
+    // don't enforce disallowing of mixed operators.
+    // We use lots of algebra for positioning/etc that gets flagged by this.
+    // https://eslint.org/docs/rules/no-mixed-operators
+    'no-mixed-operators': ['off'],
+
   },
   'globals': {
     '$': false,
