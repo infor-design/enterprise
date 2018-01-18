@@ -101,7 +101,7 @@ module.exports = function (grunt) {
     // 'strip_code',
     'run:build',
     // 'clean:amd',
-    'uglify',
+    //'uglify',
     'cssmin',
     'copy:main',
     'compress',
