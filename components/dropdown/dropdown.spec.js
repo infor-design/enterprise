@@ -37,4 +37,16 @@ describe('Dropdown', () => {
     expect(dropdownData.isOpen()).toBeTruthy();
     expect(document.body.querySelector('.dropdown.is-open')).toBeTruthy();
   });
+
+  it('Should destroy dropdown', () => {
+    $('.dropdown').destroy();
+    expect(dropdownData.isOpen()).toBeFalsy();
+    expect(document.body.querySelector('.dropdown.is-open')).toBeFalsy();
+  });
+
+  it('Should enable dropdown', () => {
+    dropdownData.enable();
+    expect(document.body.querySelector('.dropdown.is-disabled')).toBeFalsy();
+    expect(dropdownData.isDisabled()).toBeFalsy();
+  });
 });
