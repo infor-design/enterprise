@@ -143,6 +143,7 @@
         self.element.on('mousedown', '.leaf, .back button', function(event) {
           var hierarchy = $(this).closest('.hierarchy').data('hierarchy');
           var nodeData = $(this).data();
+          var nodeId = $(this).attr('id');
           var targetInfo = {target: event.target, pageX: event.pageX, pageY: event.pageY};
           var eventType = 'selected';
           var isButton = $(event.target).is('button');
@@ -153,7 +154,7 @@
           var isExpandButton = svgHref ? svgHref.baseVal === '#icon-caret-down' : false;
 
           $('.is-selected').removeClass('is-selected');
-          $('#' + nodeData.id).addClass('is-selected');
+          $('#' + nodeId).addClass('is-selected');
 
           // Is collapse event
           if (isButton && isCollapseButton && isNotBack) {
