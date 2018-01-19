@@ -2788,7 +2788,7 @@ html[dir='rtl'] {
   // Right aligned header
   th .datagrid-column-wrapper.l-right-text {
     float: left;
-    top: 11px;
+    vertical-align: baseline;
 
     .datagrid-header-text {
       float: left;

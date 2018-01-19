@@ -4,13 +4,15 @@ import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
 /**
- * Component Name
- */
+* Component Name
+* @private
+*/
 const COMPONENT_NAME = 'trackdirty';
 
 /**
- * Default Trackdirty Options
- */
+* Default Trackdirty Options
+* @namespace
+*/
 const TRACKDIRTY_DEFAULTS = {
 };
 

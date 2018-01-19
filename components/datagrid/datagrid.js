@@ -54,6 +54,7 @@ const COMPONENT_NAME = 'datagrid';
 * @property {boolean} clickToSelect Controls if using a selection mode if you can
 * click the rows to select
 * @property {object} toolbar  Toggles and appends toolbar features fx..
+* @property {Boolean} selectChildren Can prevent selecting of all child nodes on multiselect
 * {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true,
 * rowHeight: true, views: true}
 * @property {boolean} initializeToolbar Set to false if you will initialize the
@@ -136,6 +137,7 @@ const DATAGRID_DEFAULTS = {
   uniqueId: null, // Unique ID for local storage reference and variable names
   rowHeight: 'normal', // (short, medium or normal)
   selectable: false, // false, 'single' or 'multiple' or 'siblings'
+  selectChildren: true, // can prevent selecting of all child nodes on multiselect
   groupable: null,
   clickToSelect: true,
   toolbar: false,
@@ -312,12 +314,7 @@ Datagrid.prototype = {
     self.container = self.element.closest('.datagrid-container');
 
     if (this.settings.emptyMessage) {
-      // Re-evaluate the text
-      if (this.settings.emptyMessage.title === '[NoData]') {
-        this.settings.emptyMessage.title = (Locale ? Locale.translate('NoData') : 'No Data Available');
-      }
-      self.emptyMessageContainer = $('<div>').emptymessage(this.settings.emptyMessage);
-      self.contentContainer.prepend(self.emptyMessageContainer);
+      self.setEmptyMessage(this.settings.emptyMessage);
     }
 
     self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
@@ -571,6 +568,7 @@ Datagrid.prototype = {
 
     this.renderPager(pagerInfo, isResponse);
     this.syncSelectedUI();
+    this.displayCounts();
   },
 
   /**
@@ -1249,7 +1247,7 @@ Datagrid.prototype = {
               isMatch = false;
 
               for (let k = 0; k < conditions[i].value.length; k++) {
-                const match = conditions[i].value[k].toLowerCase().indexOf(rowValue) >= 0 && rowValue.toString() !== '';
+                const match = conditions[i].value[k].toLowerCase().indexOf(rowValue) >= 0 && (rowValue.toString() !== '' || conditions[i].value[k] === '');
                 if (match) {
                   isMatch = true;
                 }
@@ -1843,7 +1841,7 @@ Datagrid.prototype = {
     self.triggerDestroyCell(); // Trigger Destroy on previous cells
 
     // Prevent flashing message area on filter / reload
-    if (this.settings.emptyMessage && self.emptyMessageContainer) {
+    if (self.emptyMessageContainer) {
       self.emptyMessageContainer.hide();
     }
 
@@ -3523,8 +3521,32 @@ Datagrid.prototype = {
     this.checkEmptyMessage();
   },
 
+  /**
+  * Set the content dynamically on the empty message area.
+  * @param  {object} emptyMessage The update empty message config object.
+  */
+  setEmptyMessage(emptyMessage) {
+    // Re-evaluate the text
+    // TODO if (this.settings.emptyMessage.title === '[NoData]') {
+    // this.settings.emptyMessage.title = (Locale ? Locale.translate('NoData') : 'No Data Available');
+    // }
+
+    if (!this.emptyMessage) {
+      this.emptyMessageContainer = $('<div>');
+      this.contentContainer.prepend(this.emptyMessageContainer);
+      this.emptyMessage = this.emptyMessageContainer.emptymessage(emptyMessage).data('emptymessage');
+    } else {
+      this.emptyMessage.settings = emptyMessage;
+      this.emptyMessage.updated();
+    }
+  },
+
+  /**
+  * See if the empty message object should be shown.
+  * @private
+  */
   checkEmptyMessage() {
-    if (this.settings.emptyMessage && this.emptyMessageContainer) {
+    if (this.emptyMessage && this.emptyMessageContainer) {
       if (this.filteredCount === this.recordCount || this.recordCount === 0) {
         this.emptyMessageContainer.show();
         this.element.addClass('is-empty');
@@ -3534,7 +3556,15 @@ Datagrid.prototype = {
       }
     }
   },
-  // Trigger event on parent and compose the args
+
+  /**
+  * Trigger event on parent and compose the args
+  * @private
+  * @param  {strung} eventName Event to trigger
+  * @param  {object} e  Actual event
+  * @param  {boolean} stopPropagation If stopPropagation should be done
+  * @returns {boolean} False when the event should not propagte.
+  */
   triggerRowEvent(eventName, e, stopPropagation) {
     const self = this;
     const cell = $(e.target).closest('td').index();
@@ -4461,12 +4491,16 @@ Datagrid.prototype = {
       if (s.treeGrid) {
         if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
           // Select node and node-children
-          rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function () {
+          rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
             const data = s.treeDepth[index].node;
 
-            selectNode(elem, index, data);
+            // Allow select node if selectChildren is true or only first node
+            // if selectChildren is false
+            if (s.selectChildren || (!s.selectChildren && i === 0)) {
+              selectNode(elem, index, data);
+            }
           });
         } else if (s.selectable === 'siblings') {
           this.unSelectAllRows();
@@ -4481,12 +4515,16 @@ Datagrid.prototype = {
             prevs = null;
           }
 
-          rowNode.add(nexts).add(prevs).each(function () {
+          rowNode.add(nexts).add(prevs).each(function (i) {
             const elem = $(this);
             const index = elem.attr('aria-rowindex') - 1;
             const data = s.treeDepth[index].node;
 
-            selectNode(elem, index, data);
+            // Allow select node if selectChildren is true or only first node
+            // if selectChildren is false
+            if (s.selectChildren || (!s.selectChildren && i === 0)) {
+              selectNode(elem, index, data);
+            }
           });
         } else { // Default to Single element selection
           rowData = s.treeDepth[self.pager && s.source ? rowNode.index() : dataRowIndex].node;
@@ -4799,18 +4837,24 @@ Datagrid.prototype = {
     if (s.treeGrid) {
       if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
         // Select node and node-children
-        rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function () {
+        rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
 
-          unselectNode(elem, index);
+          // Allow unselect node if selectChildren is true or only first node
+          if (s.selectChildren || (!s.selectChildren && i === 0)) {
+            unselectNode(elem, index);
+          }
         });
       } else if (s.selectable === 'siblings') {
-        rowNode.parent().find('.is-selected').each(function () {
+        rowNode.parent().find('.is-selected').each(function (i) {
           const elem = $(this);
           const index = elem.attr('aria-rowindex') - 1;
 
-          unselectNode(elem, index);
+          // Allow unselect node if selectChildren is true or only first node
+          if (s.selectChildren || (!s.selectChildren && i === 0)) {
+            unselectNode(elem, index);
+          }
         });
       } else { // Single element unselection
         unselectNode(rowNode, idx);
@@ -4836,6 +4880,7 @@ Datagrid.prototype = {
   setNodeStatus(node) {
     const self = this;
     const isMultiselect = self.settings.selectable === 'multiple';
+    const s = self.settings;
     const checkbox = self.cellNode(node, self.columnIdxById('selectionCheckbox'));
     let nodes;
 
@@ -4872,7 +4917,11 @@ Datagrid.prototype = {
 
     // Multiselect
     nodes = node.add(node.nextUntil('[aria-level="1"]')).filter('.datagrid-tree-parent');
-    setStatus(nodes);
+
+    // Prevent selecting of parent element when selectChildren is false
+    if (s.selectChildren) {
+      setStatus(nodes);
+    }
 
     nodes = node;
     if (+node.attr('aria-level') > 1) {
@@ -4880,7 +4929,11 @@ Datagrid.prototype = {
         .add(node.prevAll('[aria-level="1"]:first'));
     }
     nodes = nodes.filter('.datagrid-tree-parent');
-    setStatus(nodes);
+
+    // Prevent selecting of parent element when selectChildren is false
+    if (s.selectChildren) {
+      setStatus(nodes);
+    }
   },
 
   /**
