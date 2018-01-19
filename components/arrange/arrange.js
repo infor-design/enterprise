@@ -51,35 +51,53 @@ Arrange.prototype = {
     this.handleEvents();
   },
 
-  // Get Element By Touch In List
+  /**
+   * Get Element By Touch In List
+   * @private
+   * @param {Object} list element.
+   * @param {Number} x value.
+   * @param {Number} y value.
+   * @returns {Object} item found in list
+   */
   getElementByTouchInList(list, x, y) {
     let returns = false;
     const listJq = $(list);
 
     for (let i = 0, l = listJq.length; i < l; i++) {
-      const item = $(listJq[i]),
-        offset = item.offset();
+      const item = $(listJq[i]);
+      const offset = item.offset();
 
       if (!(x <= offset.left || x >= offset.left + item.outerWidth() ||
-            y <= offset.top  || y >= offset.top + item.outerHeight())) {
+            y <= offset.top || y >= offset.top + item.outerHeight())) {
         returns = item;
       }
     }
     return returns;
   },
 
-  // Dragg touch element
+  /**
+   * Dragg touch element
+   * @private
+   * @param {Object} e as event.
+   * @param {Object} elm as element.
+   * @returns {void}
+   */
   dragTouchElement(e, elm) {
     const orig = e.originalEvent.changedTouches[0];
-    elm[0].style.top = (orig.pageY - this.offset.y) + 'px';
-    elm[0].style.left = (orig.pageX - this.offset.x) + 'px';
+    elm[0].style.top = `${(orig.pageY - this.offset.y)}px`;
+    elm[0].style.left = `${(orig.pageX - this.offset.x)}px`;
   },
 
+  /**
+   * Removes event bindings from the instance.
+   * @private
+   * @returns {Object} The api
+   */
   unbind() {
     this.items
       .removeClass('draggable')
       .removeAttr('draggable')
-      .off('selectstart.arrange '+ this.dragStart +' '+ this.dragEnd +' '+ this.dragWhileDragging);
+      .off(`selectstart.arrange ${this.dragStart} ${this.dragEnd} ${this.dragWhileDragging}`);
 
     $(this.handle, this.items)
       .removeClass('draggable')
@@ -111,19 +129,24 @@ Arrange.prototype = {
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 
-  // Handle events
+  /**
+   * Attach Events used by the Control
+   * @private
+   * @returns {void}
+   */
   handleEvents() {
-    const self = this,
-      s = this.settings;
+    const self = this;
+    const s = this.settings;
 
-    let index, isHandle,
-      status = {},
-      items = this.element.children().not('[data-arrange-exclude="true"]'),
-      placeholder = $('<' + (/^(ul|ol)$/i.test(this.element[0].tagName) ? 'li' : 'div') +'>');
+    let index;
+    let isHandle;
+    const status = {};
+    let items = this.element.children().not('[data-arrange-exclude="true"]');
+    let placeholder = $(`<${(/^(ul|ol)$/i.test(this.element[0].tagName) ? 'li' : 'div')}>`);
 
     if (s.itemsSelector) {
       items = $(s.itemsSelector, this.element).not('[data-arrange-exclude="true"]');
-      placeholder = $('<'+ items.first()[0].tagName +' />');
+      placeholder = $(`<${items.first()[0].tagName} />`);
     }
 
     if (s.placeholder) {
@@ -139,13 +162,17 @@ Arrange.prototype = {
     this.placeholders = placeholder;
 
     if (!this.isTouch) {
-      this.placeholders.addClass(s.placeholderCssClass +' draggable');
+      this.placeholders.addClass(`${s.placeholderCssClass} draggable`);
     }
 
     // Use Handle if available
     $(this.handle, items).addClass('draggable')
-      .on('mousedown.arrange touchstart.arrange', () => isHandle = true)
-      .on('mouseup.arrange touchend.arrange', () => isHandle = false);
+      .on('mousedown.arrange touchstart.arrange', () => {
+        isHandle = true;
+      })
+      .on('mouseup.arrange touchend.arrange', () => {
+        isHandle = false;
+      });
 
     // Add connect with
     if (this.connectWith) {
@@ -158,166 +185,164 @@ Arrange.prototype = {
 
     // Draggable Items
     this.items
-    .attr('draggable', true).addClass(this.handle ? '' : 'draggable')
-    .add([this, placeholder])
-    .not('a[href], img').on('selectstart.arrange', function() {
-      if (this.dragDrop) {
-        this.dragDrop();//ie9
-      }
-      return false;
-    }).end()
-
-    .each(function() {
-      $(this)
-      // Drag start --------------------------------------------------------------------------
-      .on(self.dragStart, function(e) {
-        if (self.handle && !isHandle) {
-          if (self.isTouch) {
-            return;
-          } else {
-            return false;
-          }
+      .attr('draggable', true).addClass(this.handle ? '' : 'draggable')
+      .add([this, placeholder])
+      .not('a[href], img')
+      .on('selectstart.arrange', function () {
+        if (this.dragDrop) {
+          this.dragDrop();// ie9
         }
-        isHandle = false;
-        self.dragging = $(this);
-
-        index = self.dragging.addClass('arrange-dragging').index();
-
-        $.extend(status, {start: self.dragging, startIndex: index});
-
-        /**
-        * Fires before moving an element allowing you to access the ui to customize the draggable item.
-        *
-        * @event beforearrange
-        * @type {Object}
-        * @property {Object} event - The jquery event object
-        * @property {Object} status - Status for this item
-        */
-        const result = self.element.triggerHandler('beforearrange', status);
-        if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
-          self.dragging = null;
-          return;
-        }
-
-        if (self.isTouch) {
-          const rect = self.dragging[0].getBoundingClientRect(),
-            touch = e.originalEvent.changedTouches[0];
-
-          //Save offset
-          self.offset = {
-            x: touch.pageX - rect.left,
-            y: touch.pageY - rect.top
-          };
-          self.placeholderTouch = self.dragging
-            .clone().addClass('is-touch').attr('id', 'arrange-placeholder-touch')
-            .insertBefore(self.dragging);
-
-          self.dragTouchElement(e, self.placeholderTouch);
-        } else {
-          const dt = e.originalEvent.dataTransfer;
-          dt.effectAllowed = 'move';
-          dt.setData('Text', 'dummy');
-        }
-
+        return false;
       })
+      .end()
 
-      // Drag end ----------------------------------------------------------
-      .on(self.dragEnd, function() {
-        if (!self.dragging) {
-          return;
-        }
+      .each(function () {
+        $(this)
+        // Drag start --------------------------------------------------------------------------
+          .on(self.dragStart, function (e) {
+            if (self.handle && !isHandle) {
+              if (self.isTouch) {
+                return;
+              }
+              return false;// eslint-disable-line
+            }
+            isHandle = false;
+            self.dragging = $(this);
 
-        if (self.isTouch) {
-          self.dragging.css('opacity', 1);
-          self.placeholderTouch.remove();
-        }
+            index = self.dragging.addClass('arrange-dragging').index();
 
-        self.placeholders.filter(':visible').after(self.dragging);
-        self.dragging.removeClass('arrange-dragging').show();
-        self.placeholders.detach();
+            $.extend(status, { start: self.dragging, startIndex: index });
 
-        if (index !== self.dragging.index()) {
-          $.extend(status, {end: self.dragging, endIndex: self.dragging.index()});
+            /**
+            * Fires before moving an element allowing you to access the ui to
+             customize the draggable item.
+            *
+            * @event beforearrange
+            * @type {Object}
+            * @property {Object} event - The jquery event object
+            * @property {Object} status - Status for this item
+            */
+            const result = self.element.triggerHandler('beforearrange', status);
+            if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
+              self.dragging = null;
+              return;
+            }
 
-          /**
-          * Fires after moving an element allowing you do any follow up updating.
-          *
-          * @event arrangeupdate
-          * @type {Object}
-          * @property {Object} event - The jquery event object
-          * @property {Object} status - Status for this item
-          */
-          self.element.triggerHandler('arrangeupdate', status);
-        }
-        self.dragging = null;
-        self.placeholderTouch = null;
-      })
+            if (self.isTouch) {
+              const rect = self.dragging[0].getBoundingClientRect();
+              const touch = e.originalEvent.changedTouches[0];
 
-      // While dragging ----------------------------------------------------
-      .on(self.dragWhileDragging, function(e) {
-        if (!self.dragging) {
-          return;
-        }
-        let overItem = this,
-          overIndex;
-        e.preventDefault();
+              // Save offset
+              self.offset = {
+                x: touch.pageX - rect.left,
+                y: touch.pageY - rect.top
+              };
+              self.placeholderTouch = self.dragging
+                .clone().addClass('is-touch').attr('id', 'arrange-placeholder-touch')
+                .insertBefore(self.dragging);
 
-        if (e.type==='drop') {
-          e.stopPropagation();
-          self.dragging.trigger('dragend.arrange');
-          return false;
-        }
+              self.dragTouchElement(e, self.placeholderTouch);
+            } else {
+              const dt = e.originalEvent.dataTransfer;
+              dt.effectAllowed = 'move';
+              dt.setData('Text', 'dummy');
+            }
+          })
 
-        if (self.isTouch) {
-          const touch = e.originalEvent.touches[0];
-          overItem = self.getElementByTouchInList(items, touch.pageX, touch.pageY) || overItem;
-        }
-        overItem = $(overItem);
+          // Drag end ----------------------------------------------------------
+          .on(self.dragEnd, () => {
+            if (!self.dragging) {
+              return;
+            }
 
-        if (!self.isTouch) {
-          e.originalEvent.dataTransfer.dropEffect = 'move';
-        }
+            if (self.isTouch) {
+              self.dragging.css('opacity', 1);
+              self.placeholderTouch.remove();
+            }
 
-        if (items.is(overItem) && placeholder.index() !== overItem.index()) {
-          if (self.isTouch) {
-            self.dragging.css('opacity', 0);
-          } else {
-            self.dragging.hide();
-          }
+            self.placeholders.filter(':visible').after(self.dragging);
+            self.dragging.removeClass('arrange-dragging').show();
+            self.placeholders.detach();
 
-          if (placeholder.index() < (overItem.index())) {
-            placeholder.insertAfter(overItem);
-            overIndex = overItem.index();
-          }
-          else {
-            placeholder.insertBefore(overItem);
-            overIndex = placeholder.index();
-          }
+            if (index !== self.dragging.index()) {
+              $.extend(status, { end: self.dragging, endIndex: self.dragging.index() });
 
-          $.extend(status, {over: overItem, overIndex: overIndex});
-          self.element.triggerHandler('draggingarrange', status);
+              /**
+              * Fires after moving an element allowing you do any follow up updating.
+              *
+              * @event arrangeupdate
+              * @type {Object}
+              * @property {Object} event - The jquery event object
+              * @property {Object} status - Status for this item
+              */
+              self.element.triggerHandler('arrangeupdate', status);
+            }
+            self.dragging = null;
+            self.placeholderTouch = null;
+          })
 
-          // Fix: IE-11 on windows-10 svg was disappering
-          const svg = $('svg', overItem);
-          if (self.isIe11 && svg.length) {
-            overItem.html(overItem.html());
-          }
+          // While dragging ----------------------------------------------------
+          .on(self.dragWhileDragging, function (e) {
+            if (!self.dragging) {
+              return;
+            }
+            let overItem = this;
+            let overIndex;
+            e.preventDefault();
 
-          self.placeholders.not(placeholder).detach();
-        }
-        else if (!self.placeholders.is(this)) {
-          self.placeholders.detach();
-          self.element.append(placeholder);
-        }
+            if (e.type === 'drop') {
+              e.stopPropagation();
+              self.dragging.trigger('dragend.arrange');
+              return false;// eslint-disable-line
+            }
 
-        if (self.isTouch) {
-          self.dragTouchElement(e, self.placeholderTouch);
-          return;
-        } else {
-          return false;
-        }
-      });//-----------------------------------------------------------------
-    });//end each items
+            if (self.isTouch) {
+              const touch = e.originalEvent.touches[0];
+              overItem = self.getElementByTouchInList(items, touch.pageX, touch.pageY) || overItem;
+            }
+            overItem = $(overItem);
+
+            if (!self.isTouch) {
+              e.originalEvent.dataTransfer.dropEffect = 'move';
+            }
+
+            if (items.is(overItem) && placeholder.index() !== overItem.index()) {
+              if (self.isTouch) {
+                self.dragging.css('opacity', 0);
+              } else {
+                self.dragging.hide();
+              }
+
+              if (placeholder.index() < (overItem.index())) {
+                placeholder.insertAfter(overItem);
+                overIndex = overItem.index();
+              } else {
+                placeholder.insertBefore(overItem);
+                overIndex = placeholder.index();
+              }
+
+              $.extend(status, { over: overItem, overIndex });
+              self.element.triggerHandler('draggingarrange', status);
+
+              // Fix: IE-11 on windows-10 svg was disappering
+              const svg = $('svg', overItem);
+              if (self.isIe11 && svg.length) {
+                overItem.html(overItem.html());
+              }
+
+              self.placeholders.not(placeholder).detach();
+            } else if (!self.placeholders.is(this)) {
+              self.placeholders.detach();
+              self.element.append(placeholder);
+            }
+
+            if (self.isTouch) {
+              self.dragTouchElement(e, self.placeholderTouch);
+              return;
+            }
+            return false;// eslint-disable-line
+          });//-----------------------------------------------------------------
+      });// end each items
   }
 
 };
