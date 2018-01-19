@@ -16,7 +16,9 @@ $.fn.modal = function (settings) {
 
     if (instance) {
       instance.updated(settings);
-
+      // This was added for backwards compatability when using:
+      // `$(this).modal('close');`
+      // Examples have been updated to not show this.
       if (typeof instance[settings] === 'function') {
         instance[settings]();
         return;

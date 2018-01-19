@@ -22,7 +22,7 @@
             text: 'Restart Now',
             click: function() {
               console.log('Restart Now');
-              $(this).modal('close');
+              $(this).data('modal').close();
             },
             isDefault: true
         }]
@@ -38,7 +38,7 @@
           text: 'Done',
           click: function() {
             console.log('Done');
-            $(this).modal('close');
+            $(this).data('modal').close();
           },
           isDefault: true
         }]

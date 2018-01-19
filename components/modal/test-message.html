@@ -16,7 +16,7 @@ $('#show-message').on('click.test', function () {
           text: 'Cancel',
           click: function() {
             console.log('You Cancelled');
-            $(this).modal('close');
+            $(this).data('modal').close();
           },
           isLink: true,
           isDefault: true
@@ -24,7 +24,7 @@ $('#show-message').on('click.test', function () {
           text: 'Remove',
           click: function() {
             console.log('Remove It');
-            $(this).modal('close');
+            $(this).data('modal').close();
           }
         }]
     };
