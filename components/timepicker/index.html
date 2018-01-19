@@ -529,23 +529,23 @@ void
 <h2 id="code-example">Code Example</h2>
 <h3 id="default-example">Default Example</h3>
 <p>A time field is created by adding an input field with <code>type=&quot;text&quot;</code> and a <code>.timepicker</code> CSS class. Also make sure to link to a label with an <code>id</code> attribute for accessibility.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;timepicker-main&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Timepicker<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;timepicker-main&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
-<p>It's also possible to configure the timepicker with a custom time format. This allows the timepicker to be configured in <a href="../components/timepicker/example-24-hour">Military Time</a>, and/or with a <a href="../components/timepicker/example-seconds-picker">Seconds Picker</a> for more accurate time.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;timepicker-24hrs&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Time Field (24-hour)<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;timepicker-24hrs&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-options=</span><span class="st">&#39;{ &quot;timeFormat&quot;: &quot;HH:mm&quot; };&#39;</span> <span class="kw">/&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
-<p>In <a href="../components/timepicker/example-intervals">another configuration</a>, it's also possible to pass the Timepicker settings that control the intervals of minutes and seconds available for picking, as well as if the Timepicker will allow &quot;off-timing&quot;-intervals to be entered manually with a keyboard.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;twentyfour-time-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Time Field (24-hour)<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;twentyfour-time-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> name=</span><span class="st">&quot;twentyfour-time-field&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-options=</span><span class="st">&#39;{ &quot;minuteInterval&quot;: &quot;10&quot;, &quot;roundToInterval&quot;: &quot;true&quot;}&#39;</span> <span class="kw">/&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;timepicker-main&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Timepicker<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;timepicker-main&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
+<p>It’s also possible to configure the timepicker with a custom time format. This allows the timepicker to be configured in <a href="../components/timepicker/example-24-hour">Military Time</a>, and/or with a <a href="../components/timepicker/example-seconds-picker">Seconds Picker</a> for more accurate time.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;timepicker-24hrs&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Time Field (24-hour)<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;timepicker-24hrs&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-options=</span><span class="st">&#39;{ &quot;timeFormat&quot;: &quot;HH:mm&quot; };&#39;</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a></code></pre></div>
+<p>In <a href="../components/timepicker/example-intervals">another configuration</a>, it’s also possible to pass the Timepicker settings that control the intervals of minutes and seconds available for picking, as well as if the Timepicker will allow “off-timing”-intervals to be entered manually with a keyboard.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;twentyfour-time-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Time Field (24-hour)<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;twentyfour-time-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> name=</span><span class="st">&quot;twentyfour-time-field&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-options=</span><span class="st">&#39;{ &quot;minuteInterval&quot;: &quot;10&quot;, &quot;roundToInterval&quot;: &quot;true&quot;}&#39;</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"></a></code></pre></div>
