@@ -19,4 +19,10 @@
     source: '{{basepath}}api/states?term=',
     showSelectAll: true
   });
+  $('#states-multi').on('change', function () {
+    console.log('change fired');
+  });
+  $('#states-multi').on('selected', function () {
+    console.log('selected fired');
+  });
 </script>
