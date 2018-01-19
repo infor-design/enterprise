@@ -1,7 +1,8 @@
   <section>
   
-    <h2>Settings</h2>
+    
 
+  <h2>Settings</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
@@ -14,13 +15,11 @@
           click
         </td>
         <td>
-          Function
+          function
         </td>
         <td>
-           
--
- 
- Provide a special function to run when the dialog opens to customize the interaction entirely.
+          Provide a special function to run when the dialog opens to
+customize the interaction entirely.
 
         </td>
       </tr>
@@ -29,13 +28,11 @@
           field
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Field name to return from the dataset or can be a function which returns a string on logic
+          Field name to return from the dataset or can be a function
+which returns a string on logic
 
         </td>
       </tr>
@@ -44,13 +41,10 @@
           title
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
-  Dialog title to show, or befault shows  field label + "Lookup"
+          Dialog title to show, or befault shows  field label + "Lookup"
 
         </td>
       </tr>
@@ -59,13 +53,10 @@
           buttons
         </td>
         <td>
-          Array
+          array
         </td>
         <td>
-           
--
- 
- Pass dialog buttons or Cancel / Apply
+          Pass dialog buttons or Cancel / Apply
 
         </td>
       </tr>
@@ -74,13 +65,10 @@
           options
         </td>
         <td>
-          Object
+          object
         </td>
         <td>
-           
--
- 
- Options to pass to the datagrid
+          Options to pass to the datagrid
 
         </td>
       </tr>
@@ -89,13 +77,10 @@
           beforeShow
         </td>
         <td>
-          Function
+          function
         </td>
         <td>
-           
--
- 
- Call back that executes async before the lookup is opened.
+          Call back that executes async before the lookup is opened.
 
         </td>
       </tr>
@@ -104,13 +89,10 @@
           modalContent
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- Custom modal markup can be sent in here
+          Custom modal markup can be sent in here
 
         </td>
       </tr>
@@ -119,13 +101,10 @@
           editable
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- Can the user type text in the field
+          Can the user type text in the field
 
         </td>
       </tr>
@@ -134,13 +113,11 @@
           autoApply
         </td>
         <td>
-          String
+          string
         </td>
         <td>
-           
--
- 
- If set to false the dialog wont apply the value on clicking a value.
+          If set to false the dialog wont apply the value on
+clicking a value.
 
         </td>
       </tr>
@@ -149,13 +126,11 @@
           validator
         </td>
         <td>
-          Function
+          function
         </td>
         <td>
-           
--
- 
- A function that fires to let you validate form items on open and select
+          A function that fires to let you validate form
+items on open and select
 
         </td>
       </tr>
@@ -164,18 +139,22 @@
           autoWidth
         </td>
         <td>
-          Boolean
+          boolean
         </td>
         <td>
-           
--
- 
- If true the field will grow/change in size based on the content selected.
+          If true the field will grow/change in size based
+on the content selected.
 
         </td>
       </tr>
     </tbody>
   </table>
+
+
+
+  
+    
+
 
   <h2>Methods</h2>
   <table class="section-table">
@@ -187,6 +166,113 @@
     </thead>
     <tbody>
       <tr>
+        <td>openDialog</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = click or keyup event
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Create and Open the Dialog</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>createModal</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Overidable function to create the modal dialog</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>createGrid</td>
+        <td>
+          
+                
+                  <span>grid () = jQuery wrapped element containing a pre-invoked datagrid instance
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Overridable Function in which we create the grid on the current UI dialog.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>selectGridRows</td>
+        <td>
+          
+                
+                  <span>val (object) = incoming value from the grid row
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Given a field value, select the row</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>selectRowByValue</td>
+        <td>
+          
+                
+                  <span>field (string) = the ID of the field whose value is to be returned.
+ </span>
+                
+                  <span>value (string) = the value to set.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Find the row and select it based on select value / function / field value</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>insertRows</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get the selected rows and return them to the UI</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
         <td>enable</td>
         <td>
           
@@ -196,6 +282,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -208,6 +296,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -220,6 +310,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -228,10 +320,11 @@
           
         </td>
         <td>
-          <p>Returns whether or not the Input is disabled</p>
-
+          
         </td>
         <td>
+          whether or not the Input is disabled
+boolean
         </td>
       </tr>
       <tr>
@@ -240,10 +333,30 @@
           
         </td>
         <td>
-          <p>Returns whether or not the Input is readonly</p>
+          
+        </td>
+        <td>
+          whether or not the Input is readonly
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Updates the lookup instance with new settings</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -256,6 +369,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
     </tbody>

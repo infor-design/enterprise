@@ -1,576 +1,646 @@
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+/* eslint no-continue: "off" */
+import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
-  $.fn.lookup = function(options) {
-    'use strict';
+// jQuery Components
+import '../datagrid/datagrid.jquery';
+import '../icons/icons.jquery';
+import '../modal/modal.jquery';
 
-    // Settings and Options
-    var pluginName = 'lookup',
-        defaults = {
-          click: null,
-          field: 'id',
-          title: null,
-          buttons: [],
-          options: null,
-          beforeShow: null,
-          modalContent: null,
-          editable: true,
-          typeahead: false, // Future TODO
-          autoApply: true,
-          validator: null,
-          autoWidth: false
-        },
-        settings = $.extend({}, defaults, options);
+// Component Name
+const COMPONENT_NAME = 'lookup';
 
-    /**
-    * Input element that opens a dialog with a list for selection.
-    *
-    * @class Lookup
-    * @param {Function} click  Provide a special function to run when the dialog opens to customize the interaction entirely.
-    * @param {string} field  Field name to return from the dataset or can be a function which returns a string on logic
-    * @param {string} title   Dialog title to show, or befault shows  field label + "Lookup"
-    * @param {array} buttons  Pass dialog buttons or Cancel / Apply
-    * @param {object} options  Options to pass to the datagrid
-    * @param {Function} beforeShow  Call back that executes async before the lookup is opened.
-    * @param {string} modalContent  Custom modal markup can be sent in here
-    * @param {boolean} editable  Can the user type text in the field
-    * @param {string} autoApply  If set to false the dialog wont apply the value on clicking a value.
-    * @param {Function} validator  A function that fires to let you validate form items on open and select
-    * @param {boolean} autoWidth  If true the field will grow/change in size based on the content selected.
-    *
-    */
-    function Lookup(element) {
-      this.element = $(element);
-      Soho.logTimeStart(pluginName);
-      this.init();
-      Soho.logTimeEnd(pluginName);
+/**
+ * Default Lookup Settings
+ * @namespace
+ * @property {function} click  Provide a special function to run when the dialog opens to
+ * customize the interaction entirely.
+ * @property {string} field  Field name to return from the dataset or can be a function
+ * which returns a string on logic
+ * @property {string} title   Dialog title to show, or befault shows  field label + "Lookup"
+ * @property {array} buttons  Pass dialog buttons or Cancel / Apply
+ * @property {object} options  Options to pass to the datagrid
+ * @property {function} beforeShow  Call back that executes async before the lookup is opened.
+ * @property {string} modalContent  Custom modal markup can be sent in here
+ * @property {boolean} editable  Can the user type text in the field
+ * @property {string} autoApply  If set to false the dialog wont apply the value on
+ * clicking a value.
+ * @property {function} validator  A function that fires to let you validate form
+ * items on open and select
+ * @property {boolean} autoWidth  If true the field will grow/change in size based
+ * on the content selected.
+ */
+const LOOKUP_DEFAULTS = {
+  click: null,
+  field: 'id',
+  title: null,
+  buttons: [],
+  options: null,
+  beforeShow: null,
+  modalContent: null,
+  editable: true,
+  typeahead: false, // Future TODO
+  autoApply: true,
+  validator: null,
+  autoWidth: false
+};
+
+// Lookup components are "modal" (one on-screen at any given time)
+let LOOKUP_GRID_ID = 'lookup-datagrid';
+
+/**
+ * Input element that opens a dialog with a list for selection.
+ * @class Lookup
+ * @param {jQuery[]|HTMLElement} element the base element
+ * @param {object} [settings] incoming settings
+ */
+function Lookup(element, settings) {
+  this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, LOOKUP_DEFAULTS);
+  debug.logTimeStart(COMPONENT_NAME);
+  this.init();
+  debug.logTimeEnd(COMPONENT_NAME);
+}
+
+Lookup.prototype = {
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  init() {
+    this.inlineLabel = this.element.closest('label');
+    this.inlineLabelText = this.inlineLabel.find('.label-text');
+    this.isInlineLabel = !!this.inlineLabelText.length;
+    this.build();
+    this.handleEvents();
+    this.grid = null;
+    this.selectedRows = null;
+  },
+
+  /**
+   * Build the UI for the Lookup
+   * @private
+   * @returns {void}
+   */
+  build() {
+    const lookup = this.element;
+
+    // appends a wrapper to the lookup field.
+    function getWrapperCSSClass() {
+      let str = 'lookup-wrapper';
+
+      if (lookup.is('.input-xs')) {
+        str += ' xs';
+      }
+      if (lookup.is('.input-sm')) {
+        str += ' sm';
+      }
+      if (lookup.is('.input-lg')) {
+        str += ' lg';
+      }
+
+      return str;
+    }
+    let cssClass = getWrapperCSSClass();
+
+    if (this.element.is('.has-actions')) {
+      cssClass += ' has-actions-wrapper';
     }
 
-    var lookupGridId = 'lookup-datagrid';
+    // Add Button
+    this.icon = $('<span class="trigger" tabindex="-1"></span>').append($.createIcon('search-list'));
+    if (this.isInlineLabel) {
+      this.inlineLabel.addClass(cssClass);
+    } else {
+      this.container = $(`<span class="${cssClass}"></span>`);
 
-    // Plugin Methods
-    Lookup.prototype = {
+      if (this.element.is('.field-options')) {
+        const field = this.element.closest('.field');
+        const fieldOptionsTrigger = field.find('.btn-actions');
 
-      init: function() {
-        this.settings = settings;
-        this.inlineLabel = this.element.closest('label');
-        this.inlineLabelText = this.inlineLabel.find('.label-text');
-        this.isInlineLabel = !!this.inlineLabelText.length;
-        this.build();
-        this.handleEvents();
-        this.grid = null;
-        this.selectedRows = null;
-      },
+        lookup
+          .add(fieldOptionsTrigger)
+          .add(fieldOptionsTrigger.next('.popupmenu'))
+          .wrapAll(this.container);
+      } else {
+        lookup.wrap(this.container);
+      }
+    }
 
-      // Build the Ui lookup
-      build: function() {
-         var lookup = this.element;
+    lookup.after(this.icon);
 
-        var cssClass = this.element.is('.input-xs') ? 'lookup-wrapper xs' :
-            this.element.is('.input-sm') ? 'lookup-wrapper sm' :
-            this.element.is('.input-lg') ? 'lookup-wrapper lg' : 'lookup-wrapper';
+    if (this.settings.autoWidth) {
+      this.applyAutoWidth();
+    }
 
-        if (this.element.is('.has-actions')) {
-         cssClass += ' has-actions-wrapper';
+    // Add Masking to show the #
+    if (lookup.attr('data-mask')) {
+      lookup.mask();
+    }
+
+    if (this.element.is(':disabled')) {
+      this.disable();
+    }
+
+    if (!this.settings.editable) {
+      this.element.attr('readonly', 'true').addClass('is-not-editable');
+    }
+
+    // Fix field options in case lookup is initialized after
+    const wrapper = this.element.parent('.lookup-wrapper');
+    if (wrapper.next().is('.btn-actions')) {
+      if (this.element.data('fieldoptions')) {
+        this.element.data('fieldoptions').destroy();
+      }
+      this.element.fieldoptions();
+    }
+
+    this.addAria();
+  },
+
+  /**
+   * Add/Update Aria
+   * @private
+   * @returns {void}
+   */
+  addAria() {
+    const self = this;
+
+    setTimeout(() => {
+      self.label = self.isInlineLabel ? self.inlineLabelText : $(`label[for="${self.element.attr('id')}"]`);
+
+      if (self.label) {
+        self.label.append(`<span class="audible">${Locale.translate('UseEnter')}</span>`);
+      }
+    }, 500);
+  },
+
+  /**
+   * Handle events on the field
+   * @private
+   * @returns {void}
+   */
+  handleEvents() {
+    const self = this;
+
+    this.icon.on('click.lookup', (e) => {
+      self.openDialog(e);
+    });
+
+    // Down Arrow opens the dialog in this field
+    this.element.on('keyup.lookup', (e) => {
+      // If autocomplete open dont open list
+      if ($('#autocomplete-list').length > 0) {
+        return;
+      }
+
+      if (e.which === 40) {
+        self.openDialog(e);
+      }
+    });
+  },
+
+  /**
+   * Create and Open the Dialog
+   * @param {jQuery.Event} e click or keyup event
+   * @returns {void}
+   */
+  openDialog(e) {
+    const self = this;
+    const canOpen = self.element.triggerHandler('beforeopen');
+
+    if (canOpen === false) {
+      return;
+    }
+
+    if (self.isDisabled() || (self.isReadonly() && !self.element.hasClass('is-not-editable'))) {
+      return;
+    }
+
+    if (self.settings.click) {
+      self.settings.click(e, this);
+      return;
+    }
+
+    if (this.settings.beforeShow) {
+      const response = function (grid) {
+        if (grid) {
+          self.createGrid(grid);
         }
 
-        //Add Button
-        this.icon = $('<span class="trigger" tabindex="-1"></span>').append($.createIcon('search-list'));
-        if (this.isInlineLabel) {
-          this.inlineLabel.addClass(cssClass);
-        } else {
-          this.container = $('<span class="'+ cssClass +'"></span>');
-
-          if (this.element.is('.field-options')) {
-            var field = this.element.closest('.field'),
-              fieldOptionsTrigger = field.find('.btn-actions');
-
-            lookup
-              .add(fieldOptionsTrigger)
-              .add(fieldOptionsTrigger.next('.popupmenu'))
-              .wrapAll(this.container);
-          } else {
-            lookup.wrap(this.container);
-          }
-        }
-
-        // this.container = $('<span class="lookup-wrapper"></span>');
-        // lookup.wrap(this.container);
-        lookup.after(this.icon);
-
-        if (this.settings.autoWidth) {
-          this.applyAutoWidth();
-        }
-
-        //Add Masking to show the #
-        if (lookup.attr('data-mask')) {
-          lookup.mask();
-        }
-
-        if (this.element.is(':disabled')) {
-          this.disable();
-        }
-
-        if (!this.settings.editable) {
-          this.element.attr('readonly', 'true').addClass('is-not-editable');
-        }
-
-        // Fix field options in case lookup is initialized after
-        var wrapper = this.element.parent('.lookup-wrapper');
-        if (wrapper.next().is('.btn-actions')) {
-          if (this.element.data('fieldoptions')) {
-            this.element.data('fieldoptions').destroy();
-          }
-          this.element.fieldoptions();
-        }
-
-        this.addAria();
-      },
-
-      // Add/Update Aria
-      addAria: function () {
-        var self = this;
-
-        setTimeout(function () {
-          self.label = self.isInlineLabel ? self.inlineLabelText : $('label[for="'+ self.element.attr('id') + '"]');
-
-          if (self.label) {
-            self.label.append('<span class="audible">' + Locale.translate('UseEnter') + '</span>');
-          }
-        }, 500);
-      },
-
-      //Handle events on the field
-      handleEvents: function () {
-        var self = this;
-
-        this.icon.on('click.lookup', function (e) {
-          self.openDialog(e);
-        });
-
-        //Down Arrow opens the dialog in this field
-        this.element.on('keyup.lookup', function (e) {
-          //If autocomplete open dont open list
-          if ($('#autocomplete-list').length > 0) {
-            return;
-          }
-
-          if (e.which === 40) {
-            self.openDialog(e);
-          }
-        });
-
-      },
-
-      //Create and Open the Dialog
-      openDialog: function (e) {
-        var self = this,
-          canOpen = self.element.triggerHandler('beforeopen');
-
-        if (canOpen === false) {
-          return;
-        }
-
-        if (self.isDisabled() || (self.isReadonly() && !self.element.hasClass('is-not-editable'))) {
-          return;
-        }
-
-        if (self.settings.click) {
-          self.settings.click(e, this);
-          return;
-        }
-
-        if (this.settings.beforeShow) {
-         var response = function (grid) {
-            if (grid) {
-              self.createGrid(grid);
-            }
-
-            if (typeof grid === 'boolean' && grid === false) {
-              return false;
-            }
-
-            self.createModal();
-            self.element.triggerHandler('complete'); // for Busy Indicator
-            self.element.trigger('open', [self.modal, self.grid]);
-
-            if (self.settings.validator) {
-              self.settings.validator(self.element, self.modal, self.grid);
-            }
-            return;
-          };
-
-          this.element.triggerHandler('start'); // for Busy Indicator
-          this.settings.beforeShow(this, response);
-          return;
-        }
-
-        if (!this.settings.options) {
-          return;
+        if (typeof grid === 'boolean' && grid === false) {
+          return false;
         }
 
         self.createModal();
+        self.element.triggerHandler('complete'); // for Busy Indicator
         self.element.trigger('open', [self.modal, self.grid]);
 
-        self.modal.element.find('.btn-actions').removeClass('is-selected');
-
-        // Fix: IE-11 more button was not showing
-        var thisMoreBtn = self.modal.element.find('.toolbar .more > .btn-actions');
-        if (thisMoreBtn.length) {
-          setTimeout(function() {
-            window.Soho.utils.fixSVGIcons(thisMoreBtn);
-          }, 600);
+        if (self.settings.validator) {
+          self.settings.validator(self.element, self.modal, self.grid);
         }
+        return true;
+      };
 
-        self.element.trigger('afteropen', [self.modal, self.grid]);
+      this.element.triggerHandler('start'); // for Busy Indicator
+      this.settings.beforeShow(this, response);
+      return;
+    }
+
+    if (!this.settings.options) {
+      return;
+    }
+
+    self.createModal();
+    self.element.trigger('open', [self.modal, self.grid]);
+
+    self.modal.element.find('.btn-actions').removeClass('is-selected');
+
+    // Fix: IE-11 more button was not showing
+    const thisMoreBtn = self.modal.element.find('.toolbar .more > .btn-actions');
+    if (thisMoreBtn.length) {
+      setTimeout(() => {
+        utils.fixSVGIcons(thisMoreBtn);
+      }, 600);
+    }
+
+    self.element.trigger('afteropen', [self.modal, self.grid]);
+
+    if (self.settings.validator) {
+      self.settings.validator(self.element, self.modal, self.grid);
+    }
+  },
+
+  /**
+   * Overidable function to create the modal dialog
+   * @returns {void}
+   */
+  createModal() {
+    const self = this;
+    let content = `<div id="${LOOKUP_GRID_ID}"></div>`;
+    const thisLabel = $(`label[for="${self.element.attr('id')}"]`);
+
+    function getLabelText() {
+      if (self.isInlineLabel) {
+        return self.inlineLabelText;
+      }
+      if (thisLabel.length) {
+        return thisLabel.clone().find('span').remove().end()
+          .text();
+      }
+      if (this.settings.title) {
+        return this.settings.title;
+      }
+      return '';
+    }
+    const labelText = getLabelText();
+
+    const settingContent = this.settings.modalContent;
+    if (settingContent && settingContent instanceof jQuery) {
+      content = settingContent;
+      settingContent.show();
+    }
+
+    if (settingContent && !(settingContent instanceof jQuery)) {
+      content = settingContent;
+    }
+
+    let buttons = this.settings.buttons;
+    if (this.settings.options && this.settings.options.selectable === 'multiple' && buttons.length === 0 || (!self.settings.autoApply && buttons.length === 0)) {
+      buttons = [{
+        text: Locale.translate('Cancel'),
+        click(e, modal) {
+          self.element.focus();
+          modal.close();
+        }
+      }, {
+        text: Locale.translate('Apply'),
+        click(e, modal) {
+          const selectedRows = self.grid.selectedRows();
+          modal.close();
+          self.insertRows(selectedRows);
+        },
+        isDefault: true
+      }];
+    }
+
+    if (this.settings.options && this.settings.options.selectable === 'single' && buttons.length === 0 && self.settings.autoApply) {
+      buttons = [{
+        text: Locale.translate('Cancel'),
+        click(e, modal) {
+          self.element.focus();
+          modal.close();
+        }
+      }];
+    }
+
+    const hasKeywordSearch = this.settings.options && this.settings.options.toolbar &&
+      this.settings.options.toolbar.keywordFilter;
+
+    $('body').modal({
+      title: labelText,
+      content,
+      buttons,
+      cssClass: `lookup-modal${!hasKeywordSearch ? ' lookup-no-search' : ''}`
+    }).off('open.lookup').on('open.lookup', () => {
+      self.createGrid();
+    })
+      .off('close.lookup')
+      .on('close.lookup', () => {
+        self.element.focus();
+        self.element.triggerHandler('close', [self.modal, self.grid]);
+      });
+
+    self.modal = $('body').data('modal');
+    if (!this.settings.title) {
+      self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count"></span>');
+    }
+
+    self.modal.element.off('beforeclose.lookup').on('beforeclose.lookup', () => {
+      self.closeTearDown();
+    });
+
+    // Wait until search field available
+    setTimeout(() => {
+      $('.modal.is-visible .searchfield').on('keypress.lookup', (e) => {
+        if (e.keyCode === 13) {
+          return false; // Prevent for closing modal
+        }
+        return true;
+      });
+    }, 300);
+  },
+
+  /**
+   * Tears down the modal/grid elements by removing events, markup, and component instances.
+   * @private
+   * @returns {void}
+   */
+  closeTearDown() {
+    let search = $('.modal.is-visible .searchfield').off('keypress.lookup');
+    if (search.data() && search.data('searchfield')) {
+      search.data('searchfield').destroy();
+    }
+
+    if (search.data() && search.data('toolbarsearchfield')) {
+      search.data('toolbarsearchfield').destroy();
+      search.removeData();
+    }
+    search = null;
+
+    if (!this.grid) {
+      this.grid.destroy();
+    }
+  },
+
+  /**
+   * Overridable Function in which we create the grid on the current UI dialog.
+   * @interface
+   * @param {jQuery[]} grid jQuery wrapped element containing a pre-invoked datagrid instance
+   * @returns {void}
+   */
+  createGrid(grid) {
+    const self = this;
+    let lookupGrid;
+
+    if (grid) {
+      lookupGrid = grid;
+      LOOKUP_GRID_ID = grid.attr('id');
+      self.settings.options = grid.data('datagrid').settings;
+    } else {
+      lookupGrid = self.modal.element.find(`#${LOOKUP_GRID_ID}`);
+    }
+
+    if (self.settings.options) {
+      if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
+        self.settings.options.cellNavigation = false;
+        lookupGrid.find('tr').addClass('is-clickable');
+      }
+
+      self.settings.options.isList = true;
+
+      // Create grid (unless already exists from passed in grid)
+      if (!lookupGrid.data('datagrid')) {
+        lookupGrid.datagrid(self.settings.options);
+      }
+    }
+
+    self.grid = lookupGrid.data('datagrid');
+    if (!this.settings.title && self.modal) {
+      self.modal.element.find('.title').remove();
+    }
+
+    const hasKeywordSearch = this.settings.options && this.settings.options.toolbar &&
+      this.settings.options.toolbar.keywordFilter;
+
+    if (!hasKeywordSearch && self.modal) {
+      self.modal.element.find('.toolbar').appendTo(self.modal.element.find('.modal-header'));
+    }
+
+    // Reset keyword search from previous loads
+    if (hasKeywordSearch && self.grid) {
+      if (!self.grid.filterExpr || (
+        self.grid.filterExpr &&
+        self.grid.filterExpr[0] &&
+        self.grid.filterExpr[0].value !== '')) {
+        self.grid.keywordSearch('');
+      }
+    }
+
+    // Mark selected rows
+    lookupGrid.off('selected.lookup');
+    const val = self.element.val();
+    if (val) {
+      self.selectGridRows(val);
+    }
+
+    if (this.settings.options) {
+      lookupGrid.on('selected.lookup', (e, selectedRows) => {
+        // Only proceed if a row is selected
+        if (!selectedRows || selectedRows.length === 0) {
+          return;
+        }
 
         if (self.settings.validator) {
           self.settings.validator(self.element, self.modal, self.grid);
         }
 
-      },
-
-      //Overidable function to create the modal dialog
-      createModal: function () {
-        var self = this,
-          content = '<div id="'+lookupGridId+'"></div>',
-          thisLabel = $('label[for="'+self.element.attr('id')+'"]'),
-          labelText = self.isInlineLabel ? self.inlineLabelText : (thisLabel.length ? thisLabel.clone().find('span').remove().end().text() : '');
-
-        if (this.settings.title) {
-          labelText = this.settings.title;
+        if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
+          setTimeout(() => {
+            self.modal.close();
+            self.insertRows();
+          }, 100);
         }
+      });
+    }
+  },
 
-        var settingContent = this.settings.modalContent;
-        if (settingContent && settingContent instanceof jQuery) {
-          content = settingContent;
-          settingContent.show();
-        }
+  /**
+   * Given a field value, select the row
+   * @param {object} val incoming value from the grid row
+   * @returns {void}
+   */
+  selectGridRows(val) {
+    const selectedId = val;
 
-        if (settingContent && !(settingContent instanceof jQuery)) {
-          content = settingContent;
-        }
+    if (!val) {
+      return;
+    }
 
-        var buttons = this.settings.buttons;
-        if (this.settings.options && this.settings.options.selectable === 'multiple' && buttons.length === 0 || (!self.settings.autoApply && buttons.length === 0)) {
-          buttons = [{
-            text: Locale.translate('Cancel'),
-            click: function(e, modal) {
-              self.element.focus();
-              modal.close();
-            }
-          }, {
-            text: Locale.translate('Apply'),
-            click: function(e, modal) {
-              var selectedRows = self.grid.selectedRows();
-              modal.close();
-              self.insertRows(selectedRows);
-            },
-            isDefault: true
-          }];
-        }
+    // Multi Select
+    if (selectedId.indexOf(',') > 1) {
+      const selectedIds = selectedId.split(',');
 
-        if (this.settings.options && this.settings.options.selectable === 'single' && buttons.length === 0 && self.settings.autoApply) {
-          buttons = [{
-            text: Locale.translate('Cancel'),
-            click: function(e, modal) {
-              self.element.focus();
-              modal.close();
-            }
-          }];
-        }
-
-        var hasKeywordSearch = this.settings.options && this.settings.options.toolbar && this.settings.options.toolbar.keywordFilter;
-
-        $('body').modal({
-          title: labelText,
-          content: content,
-          buttons: buttons,
-          cssClass: 'lookup-modal' + (!hasKeywordSearch ? ' lookup-no-search' : '')
-        }).off('open.lookup').on('open.lookup', function () {
-          self.createGrid();
-        }).off('close.lookup').on('close.lookup', function () {
-          self.element.focus();
-          self.element.triggerHandler('close', [self.modal, self.grid]);
-        });
-
-        self.modal = $('body').data('modal');
-        if (!this.settings.title) {
-          self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count"></span>');
-        }
-
-        self.modal.element.off('beforeclose.lookup').on('beforeclose.lookup', function () {
-          self.closeTearDown();
-        });
-
-        // Wait until search field available
-        setTimeout(function () {
-          $('.modal.is-visible .searchfield').on('keypress.lookup', function (e) {
-            if (e.keyCode === 13) {
-              return false; // Prevent for closing modal
-            }
-          });
-        }, 300);
-      },
-
-      closeTearDown: function () {
-        var search = $('.modal.is-visible .searchfield').off('keypress.lookup');
-        if (search.data() && search.data('searchfield')) {
-          search.data('searchfield').destroy();
-        }
-
-        if (search.data() && search.data('toolbarsearchfield')) {
-          search.data('toolbarsearchfield').destroy();
-          search.removeData();
-        }
-        search = null;
-
-        if (!this.grid) {
-          this.grid.destroy();
-        }
-      },
-
-      //Overridable Function in which we create the grid on the current ui dialog.
-      createGrid: function (grid) {
-        var self = this, lookupGrid;
-
-        if (grid) {
-          lookupGrid = grid;
-          lookupGridId = grid.attr('id');
-          self.settings.options = grid.data('datagrid').settings;
-        } else {
-          lookupGrid = self.modal.element.find('#' + lookupGridId);
-        }
-
-        if (self.settings.options) {
-
-          if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
-            self.settings.options.cellNavigation = false;
-            lookupGrid.find('tr').addClass('is-clickable');
-          }
-
-          self.settings.options.isList = true;
-
-          // Create grid (unless already exists from passed in grid)
-          if (!lookupGrid.data('datagrid')) {
-            lookupGrid.datagrid(self.settings.options);
-          }
-        }
-
-        self.grid = lookupGrid.data('datagrid');
-        if (!this.settings.title && self.modal) {
-          self.modal.element.find('.title').remove();
-        }
-
-        var hasKeywordSearch = this.settings.options && this.settings.options.toolbar && this.settings.options.toolbar.keywordFilter;
-        if (!hasKeywordSearch && self.modal) {
-          self.modal.element.find('.toolbar').appendTo(self.modal.element.find('.modal-header'));
-        }
-
-        // Reset keyword search from previous loads
-        if (hasKeywordSearch && self.grid) {
-          if (!self.grid.filterExpr || (
-            self.grid.filterExpr &&
-            self.grid.filterExpr[0] &&
-            self.grid.filterExpr[0].value !== '')) {
-            self.grid.keywordSearch('');
-          }
-        }
-
-        //Mark selected rows
-        lookupGrid.off('selected.lookup');
-        var val = self.element.val();
-        if (val) {
-          self.selectGridRows(val);
-        }
-
-        if (this.settings.options) {
-          lookupGrid.on('selected.lookup', function (e, selectedRows) {
-
-            // Only proceed if a row is selected
-            if (!selectedRows || selectedRows.length === 0) {
-              return;
-            }
-
-            if (self.settings.validator) {
-              self.settings.validator(self.element, self.modal, self.grid);
-            }
-
-            if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
-              setTimeout(function () {
-                self.modal.close();
-                self.insertRows();
-              }, 100);
-            }
-          });
-        }
-
-      },
-
-      //Given a field value, select the row
-      selectGridRows: function (val) {
-        var self = this,
-          selectedId = val;
-
-        if (!val) {
-          return;
-        }
-
-        //Multi Select
-        if (selectedId.indexOf(',') > 1) {
-          var selectedIds = selectedId.split(',');
-
-          for (var i = 0; i < selectedIds.length; i++) {
-            self.selectRowByValue(self.settings.field, selectedIds[i]);
-          }
-          return;
-        }
-
-        self.selectRowByValue(self.settings.field, selectedId);
-      },
-
-      //Find the row and select it based on select value / function / field value
-      selectRowByValue: function(field, value) {
-        if (!this.settings.options) {
-          return;
-        }
-
-        var self = this,
-          data = this.settings.options.dataset,
-          selectedRows = [];
-
-        for (var i = 0; i < data.length; i++) {
-          if (typeof self.settings.match === 'function') {
-            if (self.settings.match(value, data[i], self.element, self.grid)) {
-              selectedRows.push(i);
-            }
-
-            continue;
-          }
-
-          if (data[i][field] == value) {  // jshint ignore:line
-            selectedRows.push(i);
-          }
-        }
-
-        if (this.grid) {
-          this.grid.selectedRows(selectedRows);
-        }
-      },
-
-      //Get the selected rows and return them to the UI
-      insertRows: function () {
-        var self = this,
-          value = '';
-
-        self.selectedRows = self.grid.selectedRows();
-
-        for (var i = 0; i < self.selectedRows.length; i++) {
-          var currValue = '';
-
-          if (typeof self.settings.field === 'function') {
-            currValue = self.settings.field(self.selectedRows[i].data, self.element, self.grid);
-          } else {
-            currValue = self.selectedRows[i].data[self.settings.field];
-          }
-
-          value += (i !== 0 ? ',' : '') + currValue;
-        }
-
-        self.element.val(value).trigger('change', [self.selectedRows]);
-        self.applyAutoWidth();
-        self.element.focus();
-      },
-
-      /**
-      * Enable the input.
-      */
-      enable: function() {
-        this.element.prop('disabled', false).prop('readonly', false);
-        this.element.parent().removeClass('is-disabled');
-      },
-
-      /**
-      * Disable the input.
-      */
-      disable: function() {
-        this.element.prop('disabled', true);
-        this.element.parent().addClass('is-disabled');
-      },
-
-      /**
-      * Make the input readonly.
-      */
-      readonly: function() {
-        this.element.prop('readonly', true);
-      },
-
-      /**
-      * Make the input the size of the text.
-      * @private
-      */
-      applyAutoWidth: function() {
-        var value = this.element.val(),
-          length = value.length,
-          isUpperCase = (value === value.toUpperCase()),
-          isNumber = !isNaN(value);
-
-        this.element.attr('size', length + (isUpperCase && !isNumber ? 2 :1));
-      },
-
-      /**
-      * Returns whether or not the Input is disabled
-      */
-      isDisabled: function() {
-        return this.element.prop('disabled');
-      },
-
-      /**
-      * Returns whether or not the Input is readonly
-      */
-      isReadonly: function() {
-        return this.element.prop('readonly');
-      },
-
-      /**
-      * Teardown events and objects.
-      */
-      destroy: function() {
-        $.removeData(this.element[0], pluginName);
-        this.element.off('click.dropdown keypress.dropdown');
-
-        this.icon.remove();
-        this.element.unwrap();
-
-        if (this.label && this.label != null) {
-          this.label.find('.audible').remove();
-        }
+      for (let i = 0; i < selectedIds.length; i++) {
+        this.selectRowByValue(this.settings.field, selectedIds[i]);
       }
-    };
+      return;
+    }
 
-    // Initialize the plugin once
-    return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+    this.selectRowByValue(this.settings.field, selectedId);
+  },
+
+  /**
+   * Find the row and select it based on select value / function / field value
+   * @param {string} field the ID of the field whose value is to be returned.
+   * @param {string} value the value to set.
+   * @returns {void}
+   */
+  selectRowByValue(field, value) {
+    if (!this.settings.options) {
+      return;
+    }
+
+    const data = this.settings.options.dataset;
+    const selectedRows = [];
+
+    for (let i = 0; i < data.length; i++) {
+      if (typeof this.settings.match === 'function') {
+        if (this.settings.match(value, data[i], this.element, this.grid)) {
+          selectedRows.push(i);
+        }
+
+        continue;
+      }
+
+      if (data[i][field] === value) { // jshint ignore:line
+        selectedRows.push(i);
+      }
+    }
+
+    if (this.grid) {
+      this.grid.selectedRows(selectedRows);
+    }
+  },
+
+  /**
+   * Get the selected rows and return them to the UI
+   * @returns {void}
+   */
+  insertRows() {
+    let value = '';
+
+    this.selectedRows = this.grid.selectedRows();
+
+    for (let i = 0; i < this.selectedRows.length; i++) {
+      let currValue = '';
+
+      if (typeof this.settings.field === 'function') {
+        currValue = this.settings.field(this.selectedRows[i].data, this.element, this.grid);
       } else {
-        instance = $.data(this, pluginName, new Lookup(this, settings));
+        currValue = this.selectedRows[i].data[this.settings.field];
       }
-    });
-  };
 
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+      value += (i !== 0 ? ',' : '') + currValue;
+    }
+
+    this.element.val(value).trigger('change', [this.selectedRows]);
+    this.applyAutoWidth();
+    this.element.focus();
+  },
+
+  /**
+   * Enable the input.
+   * @returns {void}
+   */
+  enable() {
+    this.element.prop('disabled', false).prop('readonly', false);
+    this.element.parent().removeClass('is-disabled');
+  },
+
+  /**
+   * Disable the input.
+   * @returns {void}
+   */
+  disable() {
+    this.element.prop('disabled', true);
+    this.element.parent().addClass('is-disabled');
+  },
+
+  /**
+   * Make the input readonly.
+   * @returns {void}
+   */
+  readonly() {
+    this.element.prop('readonly', true);
+  },
+
+  /**
+   * Make the input the size of the text.
+   * @private
+   * @returns {void}
+   */
+  applyAutoWidth() {
+    const value = this.element.val();
+    const length = value.length;
+    const isUpperCase = (value === value.toUpperCase());
+    const isNumber = !Number.isNaN(Number(value));
+
+    this.element.attr('size', length + (isUpperCase && !isNumber ? 2 : 1));
+  },
+
+  /**
+   * @returns {boolean} whether or not the Input is disabled
+   */
+  isDisabled() {
+    return this.element.prop('disabled');
+  },
+
+  /**
+   * @returns {boolean} whether or not the Input is readonly
+   */
+  isReadonly() {
+    return this.element.prop('readonly');
+  },
+
+  /**
+   * Updates the lookup instance with new settings
+   * @param {object} settings incoming settings
+   * @returns {void}
+   */
+  updated(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
+  },
+
+  /**
+  * Teardown events and objects.
+  * @returns {void}
+  */
+  destroy() {
+    $.removeData(this.element[0], COMPONENT_NAME);
+    this.element.off('click.dropdown keypress.dropdown');
+
+    this.icon.remove();
+    this.element.unwrap();
+
+    if (this.label && this.label != null) {
+      this.label.find('.audible').remove();
+    }
+  }
+};
+
+export { Lookup, COMPONENT_NAME };

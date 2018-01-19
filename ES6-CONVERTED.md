@@ -24,6 +24,7 @@ All the following Soho Components have been converted to ES6:
 * Field Options
 * File Upload
 * File Upload Advanced
+* Form
 * Header
 * Hierarchy
 * Homepage
@@ -84,7 +85,6 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 
 * Angular 1.0 Directives (TJM tested should work)
 * Charts (TJM In Progress)
-* Form (basically all jQuery stuff)
 * Lookup
 * Scrollaction
 * Step Process

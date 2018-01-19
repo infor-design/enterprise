@@ -27,6 +27,7 @@ export { ExpandableArea } from './expandablearea/expandablearea';
 export { Modal } from './modal/modal';
 export { About } from './about/about';
 export { ListView } from './listview/listview';
+export { Lookup } from './lookup/lookup';
 export { SohoMaskedInput as MaskedInput } from './mask/masked-input';
 export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
