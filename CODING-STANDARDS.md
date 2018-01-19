@@ -751,7 +751,7 @@ function isSomething ( param1, param2 ){
     // based on the passed in tag name
     //
     // @param {string} tag
-    // @return {Element} element
+    // @returns {Element} element
     function make(tag) {
 
       // ...stuff...
@@ -765,7 +765,7 @@ function isSomething ( param1, param2 ){
      * based on the passed in tag name
      *
      * @param {string} tag
-     * @return {Element} element
+     * @returns {Element} element
      */
     function make(tag) {
 

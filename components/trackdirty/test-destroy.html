@@ -1,0 +1,28 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="destroy-test">Text box</label>
+      <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="destroy-test" name="destroy-test">
+    </div>
+
+    <button type="button" id="btn-destroy" class="btn-primary">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-delete"></use>
+      </svg>
+      <span>Destroy</span>
+    </button>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+
+    $('#btn-destroy').on('click.test', function() {
+      $('#destroy-test').destroy();
+    });
+
+  });
+</script>

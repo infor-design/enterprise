@@ -13,7 +13,7 @@ stringUtils.EMPTY = '';
 * @param {number} start Index at which to start changing the string.
 * @param {number} delCount An integer indicating the number of old chars to remove.
 * @param {string} newSubStr The String that is spliced in.
-* @return {string} A new string with the spliced substring.
+* @returns {string} A new string with the spliced substring.
 */
 stringUtils.splice = function splice(str, start, delCount, newSubStr) {
   return str.slice(0, start) + newSubStr + str.slice(start + Math.abs(delCount));

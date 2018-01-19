@@ -518,7 +518,7 @@ ListBuilder.prototype = {
   /**
   * Get data from dataset by node
   * @param {Object} node  The HTML element to get data
-  * @return {Object} node data
+  * @returns {Object} node data
   */
   getDataByNode(node) {
     let data = {};

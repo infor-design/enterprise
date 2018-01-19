@@ -120,7 +120,7 @@
             icon: '#icon-save',
             click: function() {
               if (saveContact()){
-                $(this).modal('close');
+                $(this).data('modal').close();
               }
             }
           }, {
@@ -130,7 +130,7 @@
             cssClass: 'btn',
             icon: '#icon-close',
             click: function() {
-              $(this).modal('close');
+              $(this).data('modal').close();
             }
           }
         ]

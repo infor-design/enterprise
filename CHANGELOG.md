@@ -8,6 +8,7 @@ Full Jira Release Notes: http://bit.ly/2D6PShK
 
 Build Server: http://bamboo.infor.com/browse/label/release-434
 Npm: http://npm.infor.com
+Angular Specific Change Log: http://git.infor.com/projects/SOHO/repos/angular-components/browse/CHANGELOG.md
 
 ### <a name="version-4.3.4-download-build-assets">Demo Site</a>
 

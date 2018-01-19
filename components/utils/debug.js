@@ -6,7 +6,7 @@ export const enableTimeLogging = false;
 /**
  * Start the logging timer
  * @param  {string} label Provide a way to match a timing operation.
- * @return {void}
+ * @returns {void}
  */
 export function logTimeStart(label) {
   if (enableTimeLogging) {
@@ -17,7 +17,7 @@ export function logTimeStart(label) {
 /**
  * End the logging timer and print the result
  * @param  {string} label End this matching timing operation
- * @return {void}
+ * @returns {void}
  */
 export function logTimeEnd(label) {
   if (enableTimeLogging) {

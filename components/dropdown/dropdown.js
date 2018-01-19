@@ -1358,10 +1358,10 @@ Dropdown.prototype = {
         var doSelectAll = !(target.is('.is-selected'));
         if (doSelectAll) {
           target.addClass('is-selected');
-          self.selectOptions(self.element.find('option:not(:selected)'), true);
+          self.selectOptions(self.element.find('option:not(:selected)'), false);
         } else {
           target.removeClass('is-selected');
-          self.selectOptions(self.element.find('option:selected'), true);
+          self.selectOptions(self.element.find('option:selected'), false);
         }
 
         return true;
@@ -2242,7 +2242,7 @@ Dropdown.prototype = {
   /**
    * Setup the internal event handlers.
    * @private
-   * @return {void}
+   * @returns {void}
    */
   handleEvents: function() {
     var self = this;

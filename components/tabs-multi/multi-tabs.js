@@ -45,7 +45,7 @@
    * Scaffolding for containment of multiple, associated tabs containers.
    * @param {jQuery[]|HTMLElement} element
    * @param {object} [settings]
-   * @return {MultiTabs}
+   * @returns {MultiTabs}
    */
   function MultiTabs(element, settings) {
     this.element = $(element);

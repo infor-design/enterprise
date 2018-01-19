@@ -214,7 +214,7 @@ ColorPicker.prototype = {
   /**
   * Get the hex value based on a label. Does not handle duplicates.
   * @param {string} label  The label to search for in the color labels.
-  * @return {void}
+  * @returns {void}
   */
   getHexFromLabel(label) {
     for (let i = 0; i < this.settings.colors.length; i++) {
@@ -237,7 +237,7 @@ ColorPicker.prototype = {
   * Can pass with or without the #
   *
   * @param {string} hex The hex to search for in the color set.
-  * @return {void}
+  * @returns {void}
   */
   getLabelFromHex(hex) {
     if (!hex) {
@@ -528,7 +528,7 @@ ColorPicker.prototype = {
   * Update the component and optionally apply new settings.
   *
   * @param  {object} settings the settings to update to.
-  * @return {object} The plugin api for chaining.
+  * @returns {object} The plugin api for chaining.
   */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);

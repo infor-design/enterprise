@@ -57,7 +57,7 @@
           text: 'Close',
           click: function() {
             console.log('You Cancelled');
-            $(this).modal('close');
+            $(this).data('modal').close();
           }
         }]
     });

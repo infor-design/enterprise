@@ -1,20 +1,21 @@
+/* eslint-disable */
 import { utils } from '../utils/utils';
 import { Environment as env } from '../utils/environment';
 import { Locale } from '../locale/locale';
 import { masks } from './masks';
 import { SohoMaskAPI } from './mask-api';
 
-
 /**
- *
+ * The name of this componnet
+ * @private
  */
-let COMPONENT_NAME = 'mask';
-
+const COMPONENT_NAME = 'mask';
 
 /**
  * Default Masked Input field options
+ * @private
  */
-var DEFAULT_MASKED_INPUT_OPTIONS = {
+const DEFAULT_MASKED_INPUT_OPTIONS = {
   autocorrect: false,
   definitions: undefined,
   guide: false,
@@ -28,7 +29,6 @@ var DEFAULT_MASKED_INPUT_OPTIONS = {
   processOnBlur: true,
   processOnInitialize: true
 };
-
 
 /**
  * @class SohoMaskedInput
@@ -48,7 +48,6 @@ function SohoMaskedInput(element, settings) {
 
   return this.init(settings);
 }
-
 
 SohoMaskedInput.prototype = {
 
@@ -279,7 +278,6 @@ SohoMaskedInput.prototype = {
     return os === 'android';
   },
 
-
   /**
    * Same as the Android method, but for IE 11 on Windows 7
    * TODO: deprecate eventually (v4.4.0?)
@@ -287,12 +285,12 @@ SohoMaskedInput.prototype = {
    * @returns {boolean}
    */
   _isWin7IE11: function() {
-    var browser = env && env.browser && env.browser.name ? env.browser.name : '',
-      version = env.browser.version ? env.browser.version : '';
+    let browser = env && env.browser && env.browser.name ? env.browser.name : '';
+    let version = env.browser.version ? env.browser.version : '';
+    let isWin7 = window.navigator.userAgent.indexOf('Windows NT 6.1') !==  -1;
 
-    return browser === 'ie' && version === '11';
+    return browser === 'ie' && version === '11' && isWin7;
   },
-
 
   /**
    * Checks the current value of this masked input against it's stored "previousMaskResult" state to see if the value changed.
@@ -306,7 +304,6 @@ SohoMaskedInput.prototype = {
 
     return this.state.previousMaskResult !== this.state.initialValue;
   },
-
 
   /**
    * Gets the safe raw value of an input field
@@ -328,7 +325,6 @@ SohoMaskedInput.prototype = {
       );
     }
   },
-
 
   /**
    * Changes a bunch of "legacy" setting definitions into more apt names.  Additionally handles
@@ -468,7 +464,7 @@ SohoMaskedInput.prototype = {
       })(this.settings.showSymbol);
 
       // derive the location of the symbol
-      var detectableSymbol = (symbolSetting === 'currency' ? '¤' : symbol.char),
+      var detectableSymbol = (symbolSetting === 'currency' ? 'Â¤' : symbol.char),
         symbolRegex = new RegExp(detectableSymbol, 'g'),
         match = symbolRegex.exec(symbol.format),
         replacementRegex,
@@ -493,7 +489,7 @@ SohoMaskedInput.prototype = {
         }
 
         if (symbolSetting === 'currency') {
-          symbolWithWhitespace = symbolWithWhitespace.replace('¤', symbol.char);
+          symbolWithWhitespace = symbolWithWhitespace.replace('Â¤', symbol.char);
         }
         this.settings.patternOptions[placementType] = symbolWithWhitespace;
       }
@@ -527,6 +523,5 @@ SohoMaskedInput.prototype = {
     return this;
   }
 };
-
 
 export { SohoMaskedInput, COMPONENT_NAME };

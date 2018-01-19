@@ -16,7 +16,7 @@
           var lookup = $('#custom').data('lookup'),
             selectedRows = lookup.grid.selectedRows();
 
-           $(this).modal('close');
+           $(this).data('modal').close();
           lookup.insertRows(selectedRows);
         },
         isDefault: true

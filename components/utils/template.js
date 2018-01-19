@@ -28,7 +28,7 @@ ComponentName.prototype = {
 
   /**
    * Do initialization, build up and / or add events ect.
-   * @return {object} The Component prototype, useful for chaining.
+   * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
     // Do initialization. Build or Events ect
@@ -39,7 +39,7 @@ ComponentName.prototype = {
 
   /**
    * Add any needed markup to the component.
-   * @return {object} The Component prototype, useful for chaining.
+   * @returns {object} The Component prototype, useful for chaining.
    * @private
    */
   build() {
@@ -48,7 +48,7 @@ ComponentName.prototype = {
 
   /**
    * Sets up event handlers for this component and its sub-elements.
-   * @return {object} The Component prototype, useful for chaining.
+   * @returns {object} The Component prototype, useful for chaining.
    * @private
    */
   handleEvents() {
@@ -63,7 +63,7 @@ ComponentName.prototype = {
 
   /**
    * Example Method.
-   * @return {void}
+   * @returns {void}
    */
   someMethod() {
     // do something with this.settings not settings.
@@ -71,7 +71,7 @@ ComponentName.prototype = {
 
   /**
    * Handle updated settings and values.
-   * @return {[type]} [description]
+   * @returns {[type]} [description]
    */
   updated() {
     return this
@@ -81,7 +81,7 @@ ComponentName.prototype = {
 
   /**
    * Simple Teardown - remove events & rebuildable markup.
-   * @return {object} The Component prototype, useful for chaining.
+   * @returns {object} The Component prototype, useful for chaining.
    * @private
    */
   teardown() {
@@ -91,7 +91,7 @@ ComponentName.prototype = {
 
   /**
    * Teardown - Remove added markup and events.
-   * @return {object} The Component prototype, useful for chaining.
+   * @returns {object} The Component prototype, useful for chaining.
    * @private
    */
   destroy() {

@@ -117,14 +117,17 @@ Hierarchy.prototype = {
     });
 
     /**
-     *  Public,
-     *  Usage: $('#hierarchy').on('selected', function(event, eventInfo) {}
-     */
+    * Fires when node is selected
+    * @event selected
+    * @property {object} event - The jquery event object
+    * @property {object} eventInfo - More info to identify the node.
+    */
     self.element.on('mousedown', '.leaf, .back button', function (e) {
       const leaf = $(this);
       const target = $(e.target);
       const hierarchy = leaf.closest('.hierarchy').data('hierarchy');
       const nodeData = leaf.data();
+      const nodeId = $(this).attr('id');
       const targetInfo = { target: e.target, pageX: e.pageX, pageY: e.pageY };
       const isButton = target.is('button');
       const isNotBack = !target.hasClass('btn-back');
@@ -135,7 +138,7 @@ Hierarchy.prototype = {
       let eventType = 'selected';
 
       $('.is-selected').removeClass('is-selected');
-      $(`#${nodeData.id}`).addClass('is-selected');
+      $(`#${nodeId}`).addClass('is-selected');
 
       // Is collapse event
       if (isButton && isCollapseButton && isNotBack) {
