@@ -173,7 +173,7 @@
 
 
     /**
-     * @return {number}
+     * @returns {number}
      */
     totalDuration: function() {
       return timestamp() - this.startTime;

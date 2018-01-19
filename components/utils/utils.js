@@ -56,7 +56,7 @@ $.fn.uniqueId = function(className, prefix, suffix) {
 /**
  * Check for CSS Property Support in a cross browser way
  * @param {string} prop
- * @return {string}
+ * @returns {string}
  */
 $.fn.cssPropSupport = function(prop) {
 
@@ -296,7 +296,7 @@ utils.parseOptions = utils.parseSettings;
 * jQuery Behavior Wrapper for `utils.parseOptions`.
 * @deprecated
 * @param {string} [attrName]
-* @return {Object|Object[]}
+* @returns {Object|Object[]}
 */
 $.fn.parseOptions = function(element, attr) {
   var results = [],
@@ -553,7 +553,7 @@ utils.actualChar = function(e) {
 /**
  * Get the actualy typed key from the event.
  * @param  {object} e The event to check for the key.
- * @return {string} The actual key typed.
+ * @returns {string} The actual key typed.
  */
 $.actualChar = function(e) {
   return utils.actualChar(e);
@@ -671,7 +671,7 @@ utils.extend = $.extend;
 /**
  * Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
  * The action of changing the xlink:href attribute to something else and back will fix the problem.
- * @return {undefined}
+ * @returns {undefined}
  */
 utils.fixSVGIcons = function fixSVGIcons(rootElement) {
   if (env.browser.name !== 'ie' && env.browser.version !== '11') {

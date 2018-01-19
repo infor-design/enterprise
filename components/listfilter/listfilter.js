@@ -21,8 +21,10 @@ const filterModes = ['startsWith', 'contains'];
 * @param {boolean} caseSensitive  Set to true if searches ARE case sensitive
 * @param {string} filterMode  Type of search can current be either 'startsWith' or 'contains'
 * @param {boolean} highlightMatchedText  Inserts markup that appears to highlight text
-* @param {function} highlightCallback  If defined, will execute this code for highlighting text instead of the built-in highlighting code
-* @param {function} searchableTextCallback  If defined, will take each filterable item passed and return user-defined, searchable text content
+* @param {function} highlightCallback  If defined, will execute this code for highlighting text
+* instead of the built-in highlighting code
+* @param {function} searchableTextCallback  If defined, will take each filterable item passed and
+* return user-defined, searchable text content
 *
 */
 function ListFilter(settings) {

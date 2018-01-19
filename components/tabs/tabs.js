@@ -71,7 +71,7 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * @constructor
  * @param {HTMLElement|jQuery[]} element the base element for this component
  * @param {object} settings incoming settings
- * @return {this} component instance
+ * @returns {this} component instance
  */
 function Tabs(element, settings) {
   this.element = $(element);
@@ -1667,7 +1667,7 @@ Tabs.prototype = {
    * If an optional target Tab (li) is provided, use this to perform activation events
    * @param {string} tabId the tab ID
    * @param {jQuery[]} [target] a reference to the previous tab in the list (before this one)
-   * @return {jQuery[]} potentially-updated target
+   * @returns {jQuery[]} potentially-updated target
    */
   activatePreviousTab(tabId, target) {
     const tab = this.getTab(null, tabId);

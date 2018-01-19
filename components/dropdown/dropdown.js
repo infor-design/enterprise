@@ -2242,7 +2242,7 @@ Dropdown.prototype = {
   /**
    * Setup the internal event handlers.
    * @private
-   * @return {void}
+   * @returns {void}
    */
   handleEvents: function() {
     var self = this;

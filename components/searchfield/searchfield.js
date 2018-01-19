@@ -663,7 +663,7 @@ SearchField.prototype = {
 
   /**
    * Gets a complete list of categories in jQuery-collection form.
-   * @return {jQuery} categories
+   * @returns {jQuery} categories
    */
   getCategories: function() {
     return this.list.children('li:not(.separator)');
@@ -671,7 +671,7 @@ SearchField.prototype = {
 
   /**
    * Gets the currently selected list of categories in jQuery-collection form.
-   * @return {jQuery} selectedCategories
+   * @returns {jQuery} selectedCategories
    */
   getSelectedCategories: function() {
     return this.getCategories().filter('.is-checked');
@@ -725,7 +725,7 @@ SearchField.prototype = {
    * @param {string|number} [id] - Category element's ID (if applicable).
    * @param {string|number} [value] - Category element's value (if applicable).
    * @param {boolean} [checked=true] - Category's selection status
-   * @return {undefined}
+   * @returns {undefined}
    */
   updateCategories: function(categories) {
     this.settings.categories = categories;
@@ -739,7 +739,7 @@ SearchField.prototype = {
    * @param {string|number} [id] - Category element's ID (if applicable).
    * @param {string|number} [value] - Category element's value (if applicable).
    * @param {boolean} [checked=true] - Category's selection status
-   * @return {undefined}
+   * @returns {undefined}
    */
   setCategories: function(categories) {
     this.list.empty();

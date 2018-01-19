@@ -1174,7 +1174,7 @@ Accordion.prototype = {
    * Teardown and remove any events.
    * @private
    * @param  {object} headers The headers to destroy
-   * @return {void}
+   * @returns {void}
    */
   handleEvents(headers) {
     const self = this;

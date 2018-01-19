@@ -222,7 +222,7 @@ BusyIndicator.prototype = {
   /**
    * Removes the appended markup and hides any trace of the indicator.
    * @param  {boolean} fromEvent Designates the close is comming from an event (internal)
-   * @return {void}
+   * @returns{void}
    */
   close(fromEvent) {
     const self = this;
@@ -337,7 +337,7 @@ BusyIndicator.prototype = {
    * Update the component and apply current settings.
    *
    * @param  {object} settings the settings to update to.
-   * @return {object} The plugin api for chaining.
+   * @returns {object} The plugin api for chaining.
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
@@ -346,7 +346,7 @@ BusyIndicator.prototype = {
 
   /**
    * Returns if the indicator is active or not.
-   * @return {Boolean} If the busy indicator is active.
+   * @returns {Boolean} If the busy indicator is active.
    */
   isActive() {
     if (this.container) {
@@ -357,7 +357,7 @@ BusyIndicator.prototype = {
 
   /**
    * Teardown and remove any added markup and events.
-   * @return {void}
+   * @returns {void}
    */
   destroy() {
     this.element.off('start.busyindicator complete.busyindicator afterstart.busyindicator aftercomplete.busyindicator updated.busyindicator');

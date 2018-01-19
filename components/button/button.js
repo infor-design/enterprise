@@ -176,7 +176,7 @@ Button.prototype = {
   /**
    * Update the component with new settings.
    * @param  {[type]} settings The settings you would like to modify.
-   * @return {object} The api.
+   * @returns {object} The api.
    */
   updated(settings) {
     if (settings) {
@@ -187,7 +187,7 @@ Button.prototype = {
 
   /**
   * Teardown and remove any added markup and events.
-  * @return {void}
+  * @returns {void}
   */
   destroy() {
     this.element.off('click.button touchstart.button focusin.hide-focus focusout.hide-focus mousedown.hide-focus touchstart.hide-focus');
