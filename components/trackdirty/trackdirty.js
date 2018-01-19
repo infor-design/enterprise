@@ -207,7 +207,7 @@
             if (field.is('.editor-container')) {
               // editors values are further down it's tree in a textarea,
               // so get the elements with the value
-              const textArea = field.find('textarea');
+              var textArea = field.find('textarea');
               original = textArea[0].defaultValue;
               current = self.valMethod(textArea);
             }
