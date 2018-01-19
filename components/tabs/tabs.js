@@ -1752,7 +1752,8 @@ Tabs.prototype = {
         targetPanelElem.classList.add('can-show');
         self.renderVisiblePanel();
         // trigger reflow as display property is none for animation
-        targetPanelElem.offsetHeight; // eslint-disable-line
+        // eslint-disable-next-line
+        targetPanelElem.offsetHeight; // jshint ignore:line
 
         targetPanel.one(`${$.fn.transitionEndName()}.tabs`, () => {
           self.element.trigger('afteractivated', [a]);
