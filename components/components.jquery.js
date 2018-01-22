@@ -19,6 +19,7 @@ import './about/about.jquery';
 import './accordion/accordion.jquery';
 import './applicationmenu/applicationmenu.jquery';
 import './busyindicator/busyindicator.jquery';
+import './charts/charts.jquery';
 import './circlepager/circlepager.jquery';
 import './colorpicker/colorpicker.jquery';
 import './compositeform/compositeform.jquery';
