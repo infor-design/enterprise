@@ -26,7 +26,8 @@
           string
         </td>
         <td>
-          Allows you to set if the first header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
+          Allows you to set if the first header inserted is
+a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
 
         </td>
       </tr>
@@ -38,7 +39,9 @@
           boolean
         </td>
         <td>
-          Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
+          Allows you to set if the second header inserted
+is a h3 or h4 element. You should set this to match the structure of the parent
+page for accessibility
 
         </td>
       </tr>
@@ -62,7 +65,8 @@
           string
         </td>
         <td>
-          If true, when you paste into the editor the element will be unformatted to plain text.
+          If true, when you paste into the editor
+the element will be unformatted to plain text.
 
         </td>
       </tr>
@@ -77,7 +81,10 @@
           An object with settings related to controlling link behavior when inserted example: 
 <code>{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},</code>
 
-the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
+the url is the default url to display. Class should normally stay hyperlink
+and represents the styling class. target can be 'New window' or 'Same window',
+isClickable make the links appear clickable in the editor, showIsClickable will
+show a checkbox to allow the user to make clickable links in the link popup.
 
         </td>
       </tr>
@@ -126,10 +133,13 @@ the url is the default url to display. Class should normally stay hyperlink and 
           
         </td>
         <td>
-          <p>Function that creates the Url Modal Dialog. This can be customized by making a modal with ID <code>#modal-url-{this.id}</code></p>
+          <p>Function that creates the Url Modal Dialog. This can be customized by making
+a modal with ID <code>#modal-url-{this.id}</code></p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -138,10 +148,13 @@ the url is the default url to display. Class should normally stay hyperlink and 
           
         </td>
         <td>
-          <p>Function that creates the Image Dialog. This can be customized by making a modal with ID <code>#modal-image-{this.id}</code></p>
+          <p>Function that creates the Image Dialog. This can be customized by making a
+modal with ID <code>#modal-image-{this.id}</code></p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -149,7 +162,8 @@ the url is the default url to display. Class should normally stay hyperlink and 
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings (Object) = The settings to apply.
+ </span>
                 
           
         </td>
@@ -158,8 +172,8 @@ the url is the default url to display. Class should normally stay hyperlink and 
 
         </td>
         <td>
-          
-this
+          The api
+Object
         </td>
       </tr>
       <tr>
@@ -196,6 +210,8 @@ this
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -232,16 +248,16 @@ this
 
 <h2 id="code-example">Code Example</h2>
 <h3 id="rich-text-editor">Rich Text Editor</h3>
-<p>A Rich Text Editor is implemented using a content editable element with several polyfills. To make an editor all you need to do is add a field element, a label, and a div with class=“editor”. You should also add aria-label for better accessibility.</p>
+<p>A Rich Text Editor is implemented using a content editable element with several polyfills. To make an editor all you need to do is add a field element, a label, and a div with class=&quot;editor&quot;. You should also add aria-label for better accessibility.</p>
 <p>To save and get the data from the content editable, you should simply save and restore the markup inside the div.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"> <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">      <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Comments<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;editor&quot;</span><span class="ot"> role=</span><span class="st">&quot;textbox&quot;</span><span class="ot"> aria-multiline=</span><span class="st">&quot;true&quot;</span><span class="ot"> aria-label=</span><span class="st">&quot;Comments - Type To Replace Existing Content&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">        <span class="kw">&lt;p&gt;</span>Embrace <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;http://en.wikipedia.org/wiki/e-commerce&quot;</span><span class="kw">&gt;</span>e-commerce action-items<span class="kw">&lt;/a&gt;</span>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.<span class="kw">&lt;/p&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="kw">&lt;p&gt;</span>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, &quot;cross-media exploit infomediaries innovative integrate integrateAJAX-enabled.&quot; Killer interactive reinvent, cultivate widgets leverage morph.<span class="kw">&lt;/p&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">      <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="kw">&lt;/div&gt;</span></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+ <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Comments<span class="kw">&lt;/span&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;editor&quot;</span><span class="ot"> role=</span><span class="st">&quot;textbox&quot;</span><span class="ot"> aria-multiline=</span><span class="st">&quot;true&quot;</span><span class="ot"> aria-label=</span><span class="st">&quot;Comments - Type To Replace Existing Content&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;p&gt;</span>Embrace <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;http://en.wikipedia.org/wiki/e-commerce&quot;</span><span class="kw">&gt;</span>e-commerce action-items<span class="kw">&lt;/a&gt;</span>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.<span class="kw">&lt;/p&gt;</span>
+        <span class="kw">&lt;p&gt;</span>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, &quot;cross-media exploit infomediaries innovative integrate integrateAJAX-enabled.&quot; Killer interactive reinvent, cultivate widgets leverage morph.<span class="kw">&lt;/p&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span></code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>aria-multiline = true is added</li>
