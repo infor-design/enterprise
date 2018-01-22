@@ -23,7 +23,6 @@ import './circlepager/circlepager.jquery';
 import './colorpicker/colorpicker.jquery';
 import './compositeform/compositeform.jquery';
 import './contextualactionpanel/contextualactionpanel.jquery';
-import './datagrid/datagrid.jquery';
 import './datepicker/datepicker.jquery';
 import './dropdown/dropdown.jquery';
 import './editor/editor.jquery';
@@ -37,7 +36,6 @@ import './fileupload-advanced/fileupload-advanced.jquery';
 import './homepage/homepage.jquery';
 import './listbuilder/listbuilder.jquery';
 import './listview/listview.jquery';
-import './lookup/lookup.jquery';
 import './mask/masked-input.jquery';
 import './message/message.jquery';
 import './modal/modal.jquery';
@@ -70,4 +68,6 @@ import './wizard/wizard.jquery';
 import './zoom/zoom.jquery';
 
 // Organisms
+import './datagrid/datagrid.jquery';
 import './header/header.jquery';
+import './lookup/lookup.jquery';

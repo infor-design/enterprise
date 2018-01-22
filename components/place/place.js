@@ -1,30 +1,41 @@
 import { utils, DOM } from '../utils/utils';
 
+// Component Name
+const COMPONENT_NAME = 'place';
 
 /**
- *
+ * @namespace
+ * @property {boolean} bleedFromContainer If true, allows positioned content to bleed
+ *  outside of a defined container.
+ * @property {function} [callback] If defined, provides extra placement adjustments
+ *  after the main calculation is performed.
+ * @property {HTMLElement} [container] If defined, contains the placement of the
+ *  element to the boundaries of a specific container element.
+ * @property {HTMLElement} [parent] If defined, will be used as the reference
+ *  element for placement this element.
+ * @property {string} [parentXAlignment] Only used for parent-based placement.
+ *  Determines the X-coordinate alignment of the placed element against its parent.
+ * @property {string} [parentYAlignment] Only used for parent-based placement.
+ *  Determines the Y-coordinate alignment of the placed element against its parent.
+ * @property {string} [placement] If defined, changes the direction in which
+ *  placement of the element happens
+ * @property {string[]} strategies Determines the "strategy" for alternatively
+ *  placing the element if it doesn't fit in the defined boundaries.  Only matters
+ *  when "parent" is a defined setting.  It's possible to define multiple strategies
+ *  and execute them in order.
  */
-let COMPONENT_NAME = 'place';
-
-
-/**
- *
- */
-let DEFAULT_PLACE_SETTINGS = {
-  bleedFromContainer: false, // If true, allows positioned content to bleed outside of a defined container.
-  callback: null, // If defined, provides extra placement adjustments after the main calculation is performed.
-  container: null, // If defined, contains the placement of the element to the boundaries of a specific container element.
-  parent: null, // If defined, will be used as the reference element for placement this element.
+const DEFAULT_PLACE_SETTINGS = {
+  bleedFromContainer: false,
+  callback: null,
+  container: null,
+  parent: null,
   parentXAlignment: 'center',
-  parentYAlignment: 'center', // Only used for parent-based placement. Determines the alignment of the placed element against its parent. value 0 === X, value 1 === Y
-  placement: 'bottom', // If defined, changes the direction in which placement of the element happens
-  strategies: ['nudge'] // Determines the "strategy" for alternatively placing the element if it doesn't fit in the defined boundaries.  Only matters when "parent" is a defined setting.  It's possible to define multiple strategies and execute them in order.
+  parentYAlignment: 'center',
+  placement: 'bottom',
+  strategies: ['nudge']
 };
 
-
-/**
- * Constants used throughout
- */
+// Constants used throughout
 const PLACE_STRATEGIES = ['nudge', 'clockwise', 'flip', 'shrink', 'shrink-x', 'shrink-y'];
 const PLACE_POSITIONS = ['top', 'left', 'right', 'bottom', 'center'];
 const PLACE_X_ALIGNMENTS = ['left', 'center', 'right'];
@@ -39,25 +50,24 @@ const PLACEMENT_OBJECT_SETTING_KEYS = [
   'strategies'
 ];
 
-
 /**
  * Object that contains coordinates along with temporary, changeable properties.
  * This object gets passed around the Place Behavior and modified during each phase of positioning.
  * This object is also passed to all callbacks and event listeners for further modification.
  * @constructor
- * @param {object} placementOptions
+ * @param {object} placementOptions object containing settings for placement
  */
 function PlacementObject(placementOptions) {
-  var self = this;
+  const self = this;
 
-  PLACEMENT_OBJECT_SETTING_KEYS.forEach(function settingIterator(val) {
+  PLACEMENT_OBJECT_SETTING_KEYS.forEach((val) => {
     if (placementOptions[val] === null) {
       return;
     }
 
     if (val === 'x' || val === 'y') {
       self.setCoordinate(val, placementOptions[val]);
-      self['original' + val] = placementOptions[val];
+      self[`original${val}`] = placementOptions[val];
       return;
     }
 
@@ -70,41 +80,48 @@ function PlacementObject(placementOptions) {
 }
 
 PlacementObject.prototype = {
-  isReasonableDefault: function(setting, limits) {
+  isReasonableDefault(setting, limits) {
     return $.inArray(setting, limits) > -1;
   },
 
-  sanitize: function() {
-    var self = this;
+  sanitize() {
+    const self = this;
 
     this.bleedFromContainer = this.bleedFromContainer === true;
     this.callback = (typeof this.callback === 'function') ? this.callback : DEFAULT_PLACE_SETTINGS.callback;
-    this.container = (this.container instanceof $ && this.container.length) ? this.container : DEFAULT_PLACE_SETTINGS.container;
-    this.containerOffsetX = !isNaN(parseInt(this.containerOffsetX)) ? this.containerOffsetX : 0;
-    this.containerOffsetY = !isNaN(parseInt(this.containerOffsetY)) ? this.containerOffsetY : 0;
-    this.parent = (this.parent instanceof $ && this.parent.length) ? this.parent : DEFAULT_PLACE_SETTINGS.parent;
-    this.parentXAlignment = this.isReasonableDefault(this.parentXAlignment, PLACE_X_ALIGNMENTS) ? this.parentXAlignment : DEFAULT_PLACE_SETTINGS.parentXAlignment;
-    this.parentYAlignment = this.isReasonableDefault(this.parentYAlignment, PLACE_Y_ALIGNMENTS) ? this.parentYAlignment : DEFAULT_PLACE_SETTINGS.parentYAlignment;
-    this.placement = this.isReasonableDefault(this.placement, PLACE_POSITIONS) ? this.placement : DEFAULT_PLACE_SETTINGS.placement;
+    this.container = (this.container instanceof $ && this.container.length) ?
+      this.container : DEFAULT_PLACE_SETTINGS.container;
+    this.containerOffsetX = !Number.isNaN(parseInt(this.containerOffsetX, 10)) ?
+      this.containerOffsetX : 0;
+    this.containerOffsetY = !Number.isNaN(parseInt(this.containerOffsetY, 10)) ?
+      this.containerOffsetY : 0;
+    this.parent = (this.parent instanceof $ && this.parent.length) ?
+      this.parent : DEFAULT_PLACE_SETTINGS.parent;
+    this.parentXAlignment = this.isReasonableDefault(this.parentXAlignment, PLACE_X_ALIGNMENTS) ?
+      this.parentXAlignment : DEFAULT_PLACE_SETTINGS.parentXAlignment;
+    this.parentYAlignment = this.isReasonableDefault(this.parentYAlignment, PLACE_Y_ALIGNMENTS) ?
+      this.parentYAlignment : DEFAULT_PLACE_SETTINGS.parentYAlignment;
+    this.placement = this.isReasonableDefault(this.placement, PLACE_POSITIONS) ?
+      this.placement : DEFAULT_PLACE_SETTINGS.placement;
     this.useParentHeight = this.useParentHeight === true;
     this.useParentWidth = this.useParentWidth === true;
 
     if (!$.isArray(this.strategies) || !this.strategies.length) {
       this.strategies = ['nudge'];
     }
-    this.strategies.forEach(function(strat, i) {
-      self.strategies[i] = self.isReasonableDefault(strat, PLACE_STRATEGIES) ? strat : self.strategies[i];
+    this.strategies.forEach((strat, i) => {
+      self.strategies[i] = self.isReasonableDefault(strat, PLACE_STRATEGIES) ?
+        strat : self.strategies[i];
     });
-
   },
 
-  setCoordinate: function(coordinate, value) {
-    var coordinates = ['x', 'y'];
+  setCoordinate(coordinate, value) {
+    const coordinates = ['x', 'y'];
     if (!this.isReasonableDefault(coordinate, coordinates)) {
       return;
     }
 
-    if (isNaN(value)) {
+    if (Number.isNaN(Number(value))) {
       value = 0;
     }
 
@@ -112,10 +129,12 @@ PlacementObject.prototype = {
   }
 };
 
-
 /**
  * Place Behavior Constructor
  * This is the actual "thing" that is tied to a Placeable Element.
+ * @constructor
+ * @param {HTMLElement|jQuery[]} element the base element being placed
+ * @param {object} [settings] incoming settings
  */
 function Place(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DEFAULT_PLACE_SETTINGS);
@@ -124,15 +143,24 @@ function Place(element, settings) {
 }
 
 Place.prototype = {
-  init: function() {
-    //Do other init (change/normalize settings, load externals, etc)
+
+  /**
+   * Do other init (change/normalize settings, load externals, etc)
+   * @private
+   * @returns {this} component instance
+   */
+  init() {
     return this
       .build()
       .handleEvents();
   },
 
-  // Add markup to the control
-  build: function() {
+  /**
+   * Add markup to the control
+   * @private
+   * @returns {this} component instance
+   */
+  build() {
     if (!this.element.hasClass('placeable')) {
       this.element.addClass('placeable');
     }
@@ -140,8 +168,8 @@ Place.prototype = {
     // Setup a hash of original styles that will retain width/height whenever
     // the placement for this element is recalculated.
     this.originalStyles = {};
-    var h = this.element[0].style.height,
-      w = this.element[0].style.width;
+    const h = this.element[0].style.height;
+    const w = this.element[0].style.width;
 
     if (h) {
       this.originalStyles.height = h;
@@ -153,47 +181,59 @@ Place.prototype = {
     return this;
   },
 
-  // Sets up event handlers for this control and its sub-elements
-  handleEvents: function() {
-    var self = this;
+  /**
+   * Sets up event handlers for this control and its sub-elements
+   * @private
+   * @returns {this} component instance
+   */
+  handleEvents() {
+    const self = this;
 
-    this.element.on('place.' + COMPONENT_NAME, function placementEventHandler(e, x, y) {
-      self.place(new PlacementObject({ x: x, y: y }));
-    }).on('updated.' + COMPONENT_NAME, function updatedEventHandler() {
+    this.element.on(`place.${COMPONENT_NAME}`, (e, x, y) => {
+      self.place(new PlacementObject({ x, y }));
+    }).on(`updated.${COMPONENT_NAME}`, () => {
       self.updated();
     });
 
     return this;
   },
 
-  // Actually renders an element with coordinates inside the DOM
-  render: function(placementObj) {
-    var unitRegex = /(px|%)/i;
+  /**
+   * Actually renders an element with coordinates inside the DOM
+   * @param {PlacementObject} placementObj settings for the placement routine
+   * @returns {void}
+   */
+  render(placementObj) {
+    const unitRegex = /(px|%)/i;
 
     this.element.offset({
-      'left': placementObj.x,
-      'top': placementObj.y
+      left: placementObj.x,
+      top: placementObj.y
     });
 
     if (placementObj.height) {
-      this.element[0].style.height = placementObj.height + (unitRegex.test(placementObj.height + '') ? '' : 'px');
+      this.element[0].style.height = placementObj.height + (unitRegex.test(`${placementObj.height}`) ? '' : 'px');
     }
     if (placementObj.width) {
-      this.element[0].style.width = placementObj.width + (unitRegex.test(placementObj.width + '') ? '' : 'px');
+      this.element[0].style.width = placementObj.width + (unitRegex.test(`${placementObj.width}`) ? '' : 'px');
     }
   },
 
-  // Main placement API Method (external)
-  // Can either take a PlacementObject as a single argument, or can take 2 coordinates (x, y) and
-  // will use the pre-defined settings.
-  place: function(placementObj) {
-    var curr = [
+  /**
+   * Main placement API Method (external)
+   * Can either take a PlacementObject as a single argument, or can take 2 coordinates (x, y) and
+   * will use the pre-defined settings.
+   * @param {PlacementObject} placementObj settings for the placement routine
+   * @returns {void}
+   */
+  place(placementObj) {
+    const curr = [
       this.element[0].style.left,
       this.element[0].style.top,
     ];
 
     // Cancel placement with return:false; from a "beforeplace" event
-    var canBePlaced = this.element.trigger('beforeplace', [curr]);
+    const canBePlaced = this.element.trigger('beforeplace', [curr]);
     if (!canBePlaced) {
       return curr;
     }
@@ -213,29 +253,36 @@ Place.prototype = {
 
     // Use different methods if placement against a parent, versus straight-up coordinate placement
     if (placementObj.parent) {
-      return this._placeWithParent(placementObj);
+      return this.placeWithParent(placementObj);
     }
 
-    return this._placeWithCoords(placementObj);
+    return this.placeWithCoords(placementObj);
   },
 
-  // Placement Routine that expects a parent to be used as a base placement marking.
-  // In this case, "x" and "y" integers are "relative" adjustments to the original numbers generated by the parent.
-  // Can be modified by using a callback in the settings.
-  _placeWithParent: function(placementObj) {
+  /**
+   * Placement Routine that expects a parent to be used as a base placement marking.
+   * In this case, "x" and "y" integers are "relative" adjustments to the original
+   * numbers generated by the parent. Can be modified by using a callback in the settings.
+   * @private
+   * @param {PlacementObject} placementObj settings for the placement routine
+   * @returns {PlacementObject} modified placementObject with updated settings
+   */
+  placeWithParent(placementObj) {
     if (!placementObj.parent || !placementObj.parent.length) {
-      return [undefined, undefined]; // can't simply return x and y here because they are not coordinates, they are offsets
+      // can't simply return x and y here because if there is no parent element,
+      // these numbers are not coordinates, they are offsets.
+      return [undefined, undefined];
     }
 
-    var self = this,
-      parentRect = DOM.getDimensions(placementObj.parent[0]),
-      elRect = DOM.getDimensions(this.element[0]),
-      container = this.getContainer(placementObj),
-      containerIsBody = container.length && container[0] === document.body,
-      // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
-      // Firefox $('body').scrollTop() will always return zero.
-      scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
-      scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
+    const self = this;
+    const parentRect = DOM.getDimensions(placementObj.parent[0]);
+    const elRect = DOM.getDimensions(this.element[0]);
+    const container = this.getContainer(placementObj);
+    const containerIsBody = container.length && container[0] === document.body;
+    // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
+    // Firefox $('body').scrollTop() will always return zero.
+    const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
+    const scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
 
     if (placementObj.useParentWidth) {
       placementObj.width = parentRect.width;
@@ -244,54 +291,61 @@ Place.prototype = {
       placementObj.height = parentRect.height;
     }
 
-    function getCoordsFromPlacement(placementObj) {
-      var cX, cY,
-        p = placementObj.placement,
-        aX = placementObj.parentXAlignment,
-        aY = placementObj.parentYAlignment;
+    function getCoordsFromPlacement(incomingPlacementObj) {
+      const p = incomingPlacementObj.placement;
+      const aX = incomingPlacementObj.parentXAlignment;
+      const aY = incomingPlacementObj.parentYAlignment;
+      let cX;
+      let cY;
 
       // Set initial placements
-      switch(p) {
+      switch (p) {
         case 'top':
-          cY = parentRect.top - elRect.height - placementObj.y + (containerIsBody ? scrollY : 0);
+          cY = parentRect.top - elRect.height - incomingPlacementObj.y +
+            (containerIsBody ? scrollY : 0);
           break;
         case 'left':
-          cX = parentRect.left - elRect.width - placementObj.x + (containerIsBody ? scrollX : 0);
+          cX = parentRect.left - elRect.width - incomingPlacementObj.x +
+            (containerIsBody ? scrollX : 0);
           break;
         case 'right':
-          cX = parentRect.right + placementObj.x + (containerIsBody ? scrollX : 0);
+          cX = parentRect.right + incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
           break;
         default: // Bottom
-          cY = parentRect.bottom + placementObj.y + (containerIsBody ? scrollY : 0);
+          cY = parentRect.bottom + incomingPlacementObj.y + (containerIsBody ? scrollY : 0);
           break;
       }
 
       // Set X alignments on bottom/top placements
       if (p === 'top' || p === 'bottom') {
-        switch(aX) {
+        switch (aX) {
           case 'left':
-            cX = parentRect.left - placementObj.x + (containerIsBody ? scrollX : 0);
+            cX = parentRect.left - incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
             break;
           case 'right':
-            cX = (parentRect.right - elRect.width) + placementObj.x + (containerIsBody ? scrollX : 0);
+            cX = (parentRect.right - elRect.width) +
+              incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
             break;
           default: // center
-            cX = (parentRect.left + ((parentRect.width - elRect.width) / 2)) + placementObj.x + (containerIsBody ? scrollX : 0);
+            cX = (parentRect.left + ((parentRect.width - elRect.width) / 2)) +
+              incomingPlacementObj.x + (containerIsBody ? scrollX : 0);
             break;
         }
       }
 
       // Set Y alignments on left/right placements
       if (p === 'right' || p === 'left') {
-        switch(aY) {
+        switch (aY) {
           case 'top':
-            cY = parentRect.top - placementObj.y + (containerIsBody ? scrollY : 0);
+            cY = parentRect.top - incomingPlacementObj.y + (containerIsBody ? scrollY : 0);
             break;
           case 'bottom':
-            cY = (parentRect.bottom - elRect.height) + placementObj.y + (containerIsBody ? scrollY : 0);
+            cY = (parentRect.bottom - elRect.height) +
+              incomingPlacementObj.y + (containerIsBody ? scrollY : 0);
             break;
           default: // center
-            cY = (parentRect.top + ((parentRect.height - elRect.height) / 2)) + placementObj.y + (containerIsBody ? scrollY : 0);
+            cY = (parentRect.top + ((parentRect.height - elRect.height) / 2)) +
+              incomingPlacementObj.y + (containerIsBody ? scrollY : 0);
             break;
         }
       }
@@ -299,26 +353,27 @@ Place.prototype = {
       return [cX, cY];
     }
 
-    function doPlacementAgainstParent(placementObj) {
-      var coords = getCoordsFromPlacement(placementObj);
-      placementObj.setCoordinate('x', coords[0]);
-      placementObj.setCoordinate('y', coords[1]);
-      self.render(placementObj);
-      placementObj = self._handlePlacementCallback(placementObj);
-      return placementObj;
+    function doPlacementAgainstParent(incomingPlacementObj) {
+      const coords = getCoordsFromPlacement(incomingPlacementObj);
+      incomingPlacementObj.setCoordinate('x', coords[0]);
+      incomingPlacementObj.setCoordinate('y', coords[1]);
+      self.render(incomingPlacementObj);
+      incomingPlacementObj = self.handlePlacementCallback(incomingPlacementObj);
+      return incomingPlacementObj;
     }
 
     // Simple placement logic
     placementObj = doPlacementAgainstParent(placementObj);
 
     // Adjusts the placement coordinates based on a defined strategy
-    // Will only adjust the current strategy if bleeding outside the viewport/container are detected.
-    placementObj.strategies.forEach(function(strat) {
+    // Will only adjust the current strategy if bleeding outside the
+    // viewport/container are detected.
+    placementObj.strategies.forEach((strat) => {
       placementObj = self.checkBleeds(placementObj);
 
       if (placementObj.bleeds) {
-        placementObj = (function(self) {
-          switch(strat) {
+        placementObj = (function () {
+          switch (strat) {
             case 'nudge':
               return self.nudge(placementObj);
             case 'clockwise':
@@ -338,7 +393,7 @@ Place.prototype = {
             default:
               return placementObj;
           }
-        })(self);
+        }(self));
 
         self.render(placementObj);
       }
@@ -350,13 +405,18 @@ Place.prototype = {
     return placementObj;
   },
 
-  // Basic Placement Routine that simply accepts X and Y coordinates.
-  // In this case, "x" and "y" integers are "absolute" and will be the base point for placement.
-  // Can be modified by using a callback in the settings.
-  _placeWithCoords: function(placementObj) {
+  /**
+   * Basic Placement Routine that simply accepts X and Y coordinates.
+   * In this case, "x" and "y" integers are "absolute" and will be the base point for placement.
+   * Can be modified by using a callback in the settings.
+   * @private
+   * @param {PlacementObject} placementObj settings for the placement routine
+   * @returns {PlacementObject} modified placementObject with updated settings
+   */
+  placeWithCoords(placementObj) {
     this.render(placementObj);
 
-    placementObj = this._handlePlacementCallback(placementObj);
+    placementObj = this.handlePlacementCallback(placementObj);
 
     this.render(placementObj);
 
@@ -383,11 +443,17 @@ Place.prototype = {
     return placementObj;
   },
 
-  // Perform callback, if it exists
-  // Callback should return an array containing the modified coordinate values: [x, y];
-  // NOTE: These are actual coordinates in all cases.  They are not relative values - they are absolute
-  _handlePlacementCallback: function(placementObj) {
-    var cb = placementObj.callback || this.settings.callback;
+  /**
+   * Perform callback, if it exists.
+   * Callback should return an array containing the modified coordinate values: [x, y];
+   * NOTE: These are actual coordinates in all cases.
+   * NOTE: They are not relative values - they are absolute.
+   * @private
+   * @param {PlacementObject} placementObj settings for the placement routine
+   * @returns {PlacementObject} modified placementObject with updated settings
+   */
+  handlePlacementCallback(placementObj) {
+    const cb = placementObj.callback || this.settings.callback;
 
     if (cb && typeof cb === 'function') {
       placementObj = cb(placementObj);
@@ -401,22 +467,24 @@ Place.prototype = {
    * Detects for elements with fixed positioning, or an absolutely-positioned containment.
    * If either condition is true, this placement should not account for container scrolling.
    * @private
+   * @param {PlacementObject} placementObj settings for the placement routine
+   * @returns {boolean} whether or not the values calculated should account for scrolling.
    */
-  _accountForScrolling: function(placementObj) {
-    var container = placementObj.container,
-      containerStyle,
-      pos = window.getComputedStyle(this.element[0]).position;
+  accountForScrolling(placementObj) {
+    let container = placementObj.container;
+    let pos = window.getComputedStyle(this.element[0]).position;
 
     // fixed-positoned, placed elements don't account for scrolling
     if (pos === 'fixed') {
       return false;
     }
 
-    // Check the container element. If we can't find a valid container element, do account for scrolling.
+    // Check the container element.
+    // If we can't find a valid container element, do account for scrolling.
     if (!container || !container.length) {
-      container = this.element.parents().filter(function() {
-        var pos = window.getComputedStyle(this).position;
-        return pos === 'absolute' || pos === 'fixed';
+      container = this.element.parents().filter(function () {
+        const containerPos = window.getComputedStyle(this).position;
+        return containerPos === 'absolute' || pos === 'fixed';
       });
     }
     if (!container || !container.length) {
@@ -427,7 +495,7 @@ Place.prototype = {
       return false;
     }
 
-    containerStyle = window.getComputedStyle(container[0]);
+    const containerStyle = window.getComputedStyle(container[0]);
     pos = containerStyle.position;
     if (pos === 'fixed') {
       return false;
@@ -438,13 +506,17 @@ Place.prototype = {
     return true;
   },
 
-  // Gets a parent container element.
-  getContainer: function(placementObj) {
+  /**
+   * Gets a parent container element.
+   * @param {PlacementObject} placementObj settings for the placement routine
+   * @returns {HTMLElement|jQuery[]} container element
+   */
+  getContainer(placementObj) {
     if (placementObj.container instanceof $ && placementObj.container.length) {
       return placementObj.container;
     }
 
-    var modalParent = this.element.parents('.modal');
+    const modalParent = this.element.parents('.modal');
     if (modalParent.length) {
       return modalParent;
     }
@@ -452,70 +524,78 @@ Place.prototype = {
     return $(document.body);
   },
 
-  // Re-adjust a previously-placed element to account for bleeding off the edges.
-  // Element must fit within the boundaries of the page or it's current scrollable pane.
-  checkBleeds: function(placementObj) {
-    var containerBleed = this.settings.bleedFromContainer,
-      container = this.getContainer(placementObj),
-      containerIsBody = container.length && container[0] === document.body,
-      BoundingRect = this.element[0].getBoundingClientRect(),
-      rect = {},
-      containerRect = container ? container[0].getBoundingClientRect() : {},
-      // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
-      // Firefox $('body').scrollTop() will always return zero.
-      scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
-      scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop(),
-      windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
-      windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-      d;
+  /**
+   * Re-adjust a previously-placed element to account for bleeding off the edges.
+   * Element must fit within the boundaries of the page or it's current scrollable pane.
+   * @param {PlacementObject} placementObj settings for the placement routine.
+   * @returns {PlacementObject} modified placementObject with updated settings.
+   */
+  checkBleeds(placementObj) {
+    const containerBleed = this.settings.bleedFromContainer;
+    const container = this.getContainer(placementObj);
+    const containerIsBody = container.length && container[0] === document.body;
+    const BoundingRect = this.element[0].getBoundingClientRect();
+    const rect = {};
+    const containerRect = container ? container[0].getBoundingClientRect() : {};
+    // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
+    // Firefox $('body').scrollTop() will always return zero.
+    const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
+    const scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
+    const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    let d;
 
-      rect.width = BoundingRect.width;
-      rect.height = BoundingRect.height;
-      rect.top = BoundingRect.top;
-      rect.right = BoundingRect.right;
-      rect.bottom = BoundingRect.bottom;
-      rect.left = BoundingRect.left;
+    rect.width = BoundingRect.width;
+    rect.height = BoundingRect.height;
+    rect.top = BoundingRect.top;
+    rect.right = BoundingRect.right;
+    rect.bottom = BoundingRect.bottom;
+    rect.left = BoundingRect.left;
 
     function getBoundary(edge) {
-      switch(edge) {
+      switch (edge) {
         case 'top':
-          return (containerBleed ? 0 : containerRect.top) - (!containerIsBody ? 0 : scrollY * -1); // 0 === top edge of viewport
+          return (containerBleed ? 0 : containerRect.top) -
+            (!containerIsBody ? 0 : scrollY * -1); // 0 === top edge of viewport
         case 'left':
-          return (containerBleed ? 0 : containerRect.left) - (!containerIsBody ? 0 : scrollX * -1); // 0 === left edge of viewport
+          return (containerBleed ? 0 : containerRect.left) -
+            (!containerIsBody ? 0 : scrollX * -1); // 0 === left edge of viewport
         case 'right':
-          return (containerBleed ? windowW : containerRect.right) - (!containerIsBody ? 0 : scrollX * -1);
+          return (containerBleed ? windowW : containerRect.right) -
+            (!containerIsBody ? 0 : scrollX * -1);
         default: // bottom
-          return (containerBleed ? windowH : containerRect.bottom) - (!containerIsBody ? 0 : scrollY * -1);
+          return (containerBleed ? windowH : containerRect.bottom) -
+            (!containerIsBody ? 0 : scrollY * -1);
       }
     }
 
     // If element width is greater than window width, shrink to fit
-    var rightViewportEdge = getBoundary('right');
+    const rightViewportEdge = getBoundary('right');
     if (rect.width >= rightViewportEdge) {
       d = rect.width - rightViewportEdge;
-      var newWidth = rect.width - d;
+      const newWidth = rect.width - d;
       placementObj.width = newWidth;
 
-      this.element[0].style.width = newWidth + 'px';
+      this.element[0].style.width = `${newWidth}px`;
       rect.width = newWidth; // reset the rect because the size changed
     }
 
     // If element height is greater than window height, shrink to fit
-    var bottomViewportEdge = getBoundary('bottom');
+    const bottomViewportEdge = getBoundary('bottom');
     if (rect.height >= bottomViewportEdge) {
       d = rect.height - bottomViewportEdge;
-      var newHeight = rect.height - d;
+      const newHeight = rect.height - d;
       placementObj.height = newHeight;
 
-      this.element[0].style.height = newHeight + 'px';
+      this.element[0].style.height = `${newHeight}px`;
       rect.height = newHeight; // reset the rect because the size changed
     }
 
     // build conditions
-    var offRightEdge = rect.right > getBoundary('right'),
-        offLeftEdge = rect.left < getBoundary('left'),
-        offTopEdge = rect.top < getBoundary('top'),
-        offBottomEdge = rect.bottom > getBoundary('bottom');
+    const offRightEdge = rect.right > getBoundary('right');
+    const offLeftEdge = rect.left < getBoundary('left');
+    const offTopEdge = rect.top < getBoundary('top');
+    const offBottomEdge = rect.bottom > getBoundary('bottom');
 
     // Return if no bleeding is detected (no need to fix anything!)
     if (!offRightEdge && !offLeftEdge && !offTopEdge && !offBottomEdge) {
@@ -534,31 +614,31 @@ Place.prototype = {
   },
 
   // Bumps the element around in each direction
-  nudge: function(placementObj) {
+  nudge(placementObj) {
     if (!placementObj.nudges) {
-      placementObj.nudges = {x: 0, y: 0};
+      placementObj.nudges = { x: 0, y: 0 };
     }
 
-    var d = 0;
+    let d = 0;
     if (placementObj.bleeds.right) {
       d = Math.abs(placementObj.bleeds.right) + Math.abs(placementObj.containerOffsetX);
       placementObj.setCoordinate('x', placementObj.x - d);
-      placementObj.nudges.x = placementObj.nudges.x - d;
+      placementObj.nudges.x -= d;
     }
     if (placementObj.bleeds.left) {
       d = Math.abs(placementObj.bleeds.left) + Math.abs(placementObj.containerOffsetX);
       placementObj.setCoordinate('x', placementObj.x + d);
-      placementObj.nudges.x = placementObj.nudges.x + d;
+      placementObj.nudges.x += d;
     }
     if (placementObj.bleeds.top) {
       d = Math.abs(placementObj.bleeds.top) + Math.abs(placementObj.containerOffsetY);
       placementObj.setCoordinate('y', placementObj.y + d);
-      placementObj.nudges.y = placementObj.nudges.y + d;
+      placementObj.nudges.y += d;
     }
     if (placementObj.bleeds.bottom) {
       d = Math.abs(placementObj.bleeds.bottom) + Math.abs(placementObj.containerOffsetY);
       placementObj.setCoordinate('y', placementObj.y - d);
-      placementObj.nudges.y = placementObj.nudges.y - d;
+      placementObj.nudges.y -= d;
     }
 
     placementObj.wasNudged = true;
@@ -567,7 +647,7 @@ Place.prototype = {
     return placementObj;
   },
 
-  flip: function(placementObj) {
+  flip(placementObj) {
     // Don't attempt to flip if there was no bleeding on the edge we're attempting to leave from.
     if (!placementObj.bleeds[placementObj.placement]) {
       return placementObj;
@@ -584,22 +664,22 @@ Place.prototype = {
       return placementObj;
     }
 
-    var accountForScrolling = this._accountForScrolling(placementObj),
-      isXCoord = ['left', 'right'].indexOf(placementObj.placement) > -1,
-      containerBleed = this.settings.bleedFromContainer,
-      container = this.getContainer(placementObj),
-      containerIsBody = container.length && container[0] === document.body,
-      containerRect = container ? container[0].getBoundingClientRect() : {},
-      parentRect = placementObj.parent[0].getBoundingClientRect(),
-      // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
-      // Firefox $('body').scrollTop() will always return zero.
-      scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
-      scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop(),
-      windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
-      windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const accountForScrolling = this.accountForScrolling(placementObj);
+    const isXCoord = ['left', 'right'].indexOf(placementObj.placement) > -1;
+    const containerBleed = this.settings.bleedFromContainer;
+    const container = this.getContainer(placementObj);
+    const containerIsBody = container.length && container[0] === document.body;
+    const containerRect = container ? container[0].getBoundingClientRect() : {};
+    const parentRect = placementObj.parent[0].getBoundingClientRect();
+    // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
+    // Firefox $('body').scrollTop() will always return zero.
+    const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
+    const scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
+    const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
     function getOppositeDir(dir) {
-      switch(dir) {
+      switch (dir) {
         case 'left':
           return 'right';
         case 'right':
@@ -613,20 +693,25 @@ Place.prototype = {
 
     // Gets the distance between an edge on the target element, and its opposing viewport border
     function getDistance(dir) {
-      var d = 0;
+      let d = 0;
 
       switch (dir) {
         case 'left':
-          d = (containerBleed ? 0 : containerRect.left) - (accountForScrolling ? scrollX : 0) - parentRect.left + placementObj.containerOffsetX;
+          d = (containerBleed ? 0 : containerRect.left) -
+            (accountForScrolling ? scrollX : 0) - parentRect.left + placementObj.containerOffsetX;
           break;
         case 'right':
-          d = ((containerBleed ? windowW : containerRect.right) - (accountForScrolling ? scrollX : 0)) - parentRect.right - placementObj.containerOffsetX;
+          d = ((containerBleed ? windowW : containerRect.right) -
+            (accountForScrolling ? scrollX : 0)) - parentRect.right - placementObj.containerOffsetX;
           break;
         case 'top':
-          d = (containerBleed ? 0 : containerRect.top) - (accountForScrolling ? scrollY : 0) - parentRect.top + placementObj.containerOffsetY;
+          d = (containerBleed ? 0 : containerRect.top) -
+            (accountForScrolling ? scrollY : 0) - parentRect.top + placementObj.containerOffsetY;
           break;
         default: // bottom
-          d = ((containerBleed ? windowH : containerRect.bottom) - (accountForScrolling ? scrollY : 0)) - parentRect.bottom - placementObj.containerOffsetY;
+          d = ((containerBleed ? windowH : containerRect.bottom) -
+            (accountForScrolling ? scrollY : 0)) - parentRect.bottom -
+            placementObj.containerOffsetY;
           break;
       }
 
@@ -638,11 +723,11 @@ Place.prototype = {
     }
 
     function performFlip(originalDir) {
-      var newDir = getOppositeDir(originalDir),
-        perpendicularDir = isXCoord ? 'top' : 'left',
-        oppPerpendicularDir = getOppositeDir(perpendicularDir),
-        originalDistance = getDistance(originalDir),
-        targetDistance = getDistance(newDir);
+      const newDir = getOppositeDir(originalDir);
+      const perpendicularDir = isXCoord ? 'top' : 'left';
+      const oppPerpendicularDir = getOppositeDir(perpendicularDir);
+      const originalDistance = getDistance(originalDir);
+      const targetDistance = getDistance(newDir);
 
       if (!tried(newDir)) {
         if (originalDistance >= targetDistance) {
@@ -655,12 +740,12 @@ Place.prototype = {
 
       // switch the coordinate definitions
       // since the axis for placement is flipped, our coordinate offsets should also flip
-      var tmp = placementObj.originalx;
+      const tmp = placementObj.originalx;
       placementObj.originalx = placementObj.originaly;
       placementObj.originaly = tmp;
 
-      var perpendicularDistance = getDistance(perpendicularDir),
-        oppPerpendicularDistance = getDistance(oppPerpendicularDir);
+      const perpendicularDistance = getDistance(perpendicularDir);
+      const oppPerpendicularDistance = getDistance(oppPerpendicularDir);
 
       if (!tried(perpendicularDir)) {
         if (perpendicularDistance >= oppPerpendicularDistance) {
@@ -681,35 +766,39 @@ Place.prototype = {
   },
 
   // TODO: Move Clockwise
-  clockwise: function(placementObj) {
+  clockwise(placementObj) {
     return placementObj;
   },
 
   // If element height/width is greater than window height/width, shrink to fit
-  shrink: function(placementObj, dimension) {
-    var accountForScrolling = this._accountForScrolling(placementObj),
-      containerBleed = this.settings.bleedFromContainer,
-      container = this.getContainer(placementObj),
-      containerRect = container ? container[0].getBoundingClientRect() : {},
-      containerIsBody = container.length && container[0] === document.body,
-      rect = this.element[0].getBoundingClientRect(),
-      useX = dimension === undefined || dimension === null || dimension === 'x',
-      useY = dimension === undefined || dimension === null || dimension === 'y',
-      // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
-      // Firefox $('body').scrollTop() will always return zero.
-      scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
-      scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop(),
-      windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
-      windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-      leftViewportEdge = (accountForScrolling ? scrollX: 0) + (containerBleed ? 0 : containerRect.left) + placementObj.containerOffsetX,
-      topViewportEdge = (accountForScrolling ? scrollY : 0) + (containerBleed ? 0 : containerRect.top) + placementObj.containerOffsetY,
-      rightViewportEdge = (accountForScrolling ? scrollX : 0) + (containerBleed ? windowW : containerRect.right) - placementObj.containerOffsetX,
-      bottomViewportEdge = (accountForScrolling ? scrollY : 0) + (containerBleed ? windowH : containerRect.bottom) - placementObj.containerOffsetY,
-      d;
+  shrink(placementObj, dimension) {
+    const accountForScrolling = this.accountForScrolling(placementObj);
+    const containerBleed = this.settings.bleedFromContainer;
+    const container = this.getContainer(placementObj);
+    const containerRect = container ? container[0].getBoundingClientRect() : {};
+    const containerIsBody = container.length && container[0] === document.body;
+    const rect = this.element[0].getBoundingClientRect();
+    const useX = dimension === undefined || dimension === null || dimension === 'x';
+    const useY = dimension === undefined || dimension === null || dimension === 'y';
+    // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
+    // Firefox $('body').scrollTop() will always return zero.
+    const scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft();
+    const scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
+    const windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    const windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const leftViewportEdge = (accountForScrolling ? scrollX : 0) +
+      (containerBleed ? 0 : containerRect.left) + placementObj.containerOffsetX;
+    const topViewportEdge = (accountForScrolling ? scrollY : 0) +
+      (containerBleed ? 0 : containerRect.top) + placementObj.containerOffsetY;
+    const rightViewportEdge = (accountForScrolling ? scrollX : 0) +
+      (containerBleed ? windowW : containerRect.right) - placementObj.containerOffsetX;
+    const bottomViewportEdge = (accountForScrolling ? scrollY : 0) +
+      (containerBleed ? windowH : containerRect.bottom) - placementObj.containerOffsetY;
+    let d;
 
     // Shrink in each direction.
-    // The value of the "containerOffsets" is "factored out" of each calculation, if for some reason the
-    // element is larger than the viewport/container space allowed.
+    // The value of the "containerOffsets" is "factored out" of each calculation,
+    // if for some reason the element is larger than the viewport/container space allowed.
     placementObj.nudges = placementObj.nudges || {};
 
     if (useX) {
@@ -717,18 +806,18 @@ Place.prototype = {
       if (rect.left < leftViewportEdge) {
         d = Math.abs(leftViewportEdge - rect.left);
         if (rect.right >= rightViewportEdge) {
-          d = d - placementObj.containerOffsetX;
+          d -= placementObj.containerOffsetX;
         }
         placementObj.width = rect.width - d;
         placementObj.setCoordinate('x', placementObj.x + d);
-        placementObj.nudges.x = placementObj.nudges.x + d;
+        placementObj.nudges.x += d;
       }
 
       // Right
       if (rect.right > rightViewportEdge) {
         d = Math.abs(rect.right - rightViewportEdge);
         if (rect.left <= leftViewportEdge) {
-          d = d - placementObj.containerOffsetX;
+          d -= placementObj.containerOffsetX;
         }
         placementObj.width = rect.width - d;
       }
@@ -739,18 +828,18 @@ Place.prototype = {
       if (rect.top < topViewportEdge) {
         d = Math.abs(topViewportEdge - rect.top);
         if (rect.bottom >= bottomViewportEdge) {
-          d = d - placementObj.containerOffsetY;
+          d -= placementObj.containerOffsetY;
         }
         placementObj.height = rect.height - d;
         placementObj.setCoordinate('y', placementObj.y + d);
-        placementObj.nudges.y = placementObj.nudges.y + d;
+        placementObj.nudges.y += d;
       }
 
       // Bottom
       if (rect.bottom > bottomViewportEdge) {
         d = Math.abs(rect.bottom - bottomViewportEdge);
         if (rect.top <= topViewportEdge) {
-          d = d - placementObj.containerOffsetY;
+          d -= placementObj.containerOffsetY;
         }
         placementObj.height = rect.height - d;
       }
@@ -760,7 +849,7 @@ Place.prototype = {
   },
 
   // Giving up causes all the placementObj settings to revert
-  giveup: function(placementObj) {
+  giveup(placementObj) {
     placementObj.giveup = true;
     placementObj.strategy = this.settings.strategy;
     placementObj.placement = this.settings.placement;
@@ -768,13 +857,13 @@ Place.prototype = {
   },
 
   // Clears the old styles that may be present
-  clearOldStyles: function() {
+  clearOldStyles() {
     this.element[0].style.left = '';
     this.element[0].style.top = '';
     this.element[0].style.width = '';
     this.element[0].style.height = '';
 
-    var os = this.originalStyles;
+    const os = this.originalStyles;
     if (os) {
       if (os.width) {
         this.element[0].style.width = os.width;
@@ -790,16 +879,16 @@ Place.prototype = {
 
   // Built-in method for handling positon of optional arrow elements.
   // Used for tooltip/popovers/popupmenus
-  setArrowPosition: function(e, placementObj, element) {
-    var target = placementObj.parent,
-      arrow = element.find('div.arrow'),
-      dir = placementObj.placement,
-      isXCoord = ['left', 'right'].indexOf(dir) > -1,
-      targetRect = {},
-      elementRect = element[0].getBoundingClientRect(),
-      arrowRect = {},
-      newArrowRect = {},
-      hideArrow = false;
+  setArrowPosition(e, placementObj, element) {
+    let target = placementObj.parent;
+    const arrow = element.find('div.arrow');
+    const dir = placementObj.placement;
+    const isXCoord = ['left', 'right'].indexOf(dir) > -1;
+    let targetRect = {};
+    const elementRect = element[0].getBoundingClientRect();
+    let arrowRect = {};
+    let newArrowRect = {};
+    let hideArrow = false;
 
     if (!target || !target.length || !arrow.length) {
       return;
@@ -807,13 +896,13 @@ Place.prototype = {
 
     arrow[0].removeAttribute('style');
 
-    //if (placementObj.attemptedFlips) { TJM Removed for pager bug. Seems to work.
-      element.removeClass('top right bottom left').addClass(dir);
-    //}
+    // if (placementObj.attemptedFlips) { TJM Removed for pager bug. Seems to work.
+    element.removeClass('top right bottom left').addClass(dir);
+    // }
 
     // Flip the arrow if we're in RTL mode
     if (this.isRTL && isXCoord) {
-      var opposite = dir === 'right' ? 'left' : 'right';
+      const opposite = dir === 'right' ? 'left' : 'right';
       element.removeClass('right left').addClass(opposite);
     }
 
@@ -848,13 +937,13 @@ Place.prototype = {
     }
 
     function getDistance() {
-      var targetCenter = 0,
-        currentArrowCenter = 0,
-        d = 0;
+      let targetCenter = 0;
+      let currentArrowCenter = 0;
+      let d = 0;
 
       if (dir === 'left' || dir === 'right') {
-        targetCenter = targetRect.top + (targetRect.height/2);
-        currentArrowCenter = arrowRect.top + (arrowRect.height/2);
+        targetCenter = targetRect.top + (targetRect.height / 2);
+        currentArrowCenter = arrowRect.top + (arrowRect.height / 2);
         d = targetCenter - currentArrowCenter;
         newArrowRect.top = arrowRect.top + d;
         newArrowRect.bottom = arrowRect.bottom + d;
@@ -864,8 +953,8 @@ Place.prototype = {
         }
       }
       if (dir === 'top' || dir === 'bottom') {
-        targetCenter = targetRect.left + (targetRect.width/2);
-        currentArrowCenter = arrowRect.left + (arrowRect.width/2);
+        targetCenter = targetRect.left + (targetRect.width / 2);
+        currentArrowCenter = arrowRect.left + (arrowRect.width / 2);
         d = targetCenter - currentArrowCenter;
         newArrowRect.left = arrowRect.left + d;
         newArrowRect.right = arrowRect.right + d;
@@ -879,7 +968,7 @@ Place.prototype = {
     }
 
     // line the arrow up with the target element's "dropdown icon", if applicable
-    var positionOpts = {};
+    const positionOpts = {};
     positionOpts[getMargin(dir)] = getDistance();
     if (hideArrow) {
       positionOpts.display = 'none';
@@ -887,8 +976,8 @@ Place.prototype = {
     arrow.css(positionOpts);
   },
 
-  //Handle Updating Settings
-  updated: function(settings) {
+  // Handle Updating Settings
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -899,22 +988,21 @@ Place.prototype = {
   },
 
   // Simple Teardown - remove events & rebuildable markup.
-  teardown: function() {
+  teardown() {
     this.clearOldStyles();
     this.element.removeClass('placeable');
 
-    this.element.off('updated.' + COMPONENT_NAME + ' place.' + COMPONENT_NAME);
+    this.element.off(`updated.${COMPONENT_NAME} place.${COMPONENT_NAME}`);
 
     this.element.trigger('afterteardown');
     return this;
   },
 
   // Teardown - Remove added markup and events
-  destroy: function() {
+  destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
-
 
 export { PlacementObject, Place, COMPONENT_NAME };
