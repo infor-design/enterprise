@@ -14,6 +14,11 @@ module.exports = {
     'ecmaVersion': 6,
     'sourceType': 'module'
   },
+  'env': {
+    'browser': true,
+    'jquery': true,
+    'node': false
+  },
   'rules': {
     // require function expressions to have a name
     // https://eslint.org/docs/rules/func-names
@@ -106,15 +111,6 @@ module.exports = {
 
   },
   'globals': {
-    '$': false,
-    'navigator': false,
-    'document': false,
-    'window': false,
-    'Soho': false,
-    'grunt': false,
-    'jQuery': false,
-    'localStorage': false,
-    'Blob': false,
-    'd3': false,
+    'd3': false
   }
 };
