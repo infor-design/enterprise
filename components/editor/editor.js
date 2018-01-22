@@ -1,4 +1,9 @@
 /* jshint esversion:6 */
+
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
+
 import { Environment as env } from '../utils/environment';
 import { debounce } from '../utils/debounced-resize';
 import * as debug from '../utils/debug';
@@ -34,20 +39,28 @@ const EDITOR_DEFAULTS = {
   placeholder: null,
   pasteAsPlainText: false,
   // anchor > target: 'Same window'|'New window'| any string value
-  anchor: {url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},
-  image: {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}
+  anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false },
+  image: { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' }
 };
 
 /**
 * The Editor Component is displays and edits markdown.
 *
 * @class Editor
-* @param {string} firstHeader  Allows you to set if the first header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
-* @param {boolean} secondHeader  Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
-* @param {string} productName  Additional product name information to display
-* @param {string} pasteAsPlainText  If true, when you paste into the editor the element will be unformatted to plain text.
+* @param {String} element The component element.
+* @param {String} settings The component settings.
+* @param {string} firstHeader  Allows you to set if the first header inserted is
+ a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
+* @param {boolean} secondHeader  Allows you to set if the second header inserted
+ is a h3 or h4 element. You should set this to match the structure of the parent
+  page for accessibility
+* @param {string} pasteAsPlainText  If true, when you paste into the editor
+ the element will be unformatted to plain text.
 * @param {string} anchor  An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
-* the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
+* the url is the default url to display. Class should normally stay hyperlink
+ and represents the styling class. target can be 'New window' or 'Same window',
+ isClickable make the links appear clickable in the editor, showIsClickable will
+show a checkbox to allow the user to make clickable links in the link popup.
 * @param {string} image  Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
 */
 function Editor(element, settings) {
@@ -71,7 +84,7 @@ Editor.prototype = {
     this.isFirefox = env.browser.name === 'firefox';
 
     this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
-    this.id = this.element.uniqueId('editor') + '-id';
+    this.id = `${this.element.uniqueId('editor')}-id`;
     this.container = this.element.parent('.field, .field-short').addClass('editor-container');
 
     s.anchor = $.extend({}, EDITOR_DEFAULTS.anchor, s.anchor);
@@ -87,7 +100,7 @@ Editor.prototype = {
       'New window': '_blank'
     };
 
-    for (let key of Object.keys(s.anchor.targets)) {
+    for (const key of Object.keys(s.anchor.targets)) {
       if ((s.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
         s.anchor.target = s.anchor.targets[key];
         s.anchor.defaultTarget = s.anchor.targets[key];
@@ -120,14 +133,15 @@ Editor.prototype = {
   },
 
   initElements() {
-    //Make it an editor
+    // Make it an editor
     this.element.attr({
-      'contentEditable': true,
+      contentEditable: true,
       'aria-multiline': true,
-      'role': 'textbox'
+      role: 'textbox'
     });
 
-    //Bind functionality for Pre elements. We dont use this yet but could if we want to edit code blocks.
+    // Bind functionality for Pre elements. We dont use this yet but could if we
+    // want to edit code blocks.
     this.element.attr('data-editor', true);
     this.bindParagraphCreation().bindTab();
 
@@ -136,7 +150,7 @@ Editor.prototype = {
       .bindModals()
       .bindAnchorPreview();
 
-    //Build the textarea that will be used as source view and for content serialization
+    // Build the textarea that will be used as source view and for content serialization
     this.initTextarea();
     return this;
   },
@@ -146,11 +160,11 @@ Editor.prototype = {
     return this.element.hasClass('source-view-active');
   },
 
-  //Bind Events for the place holder
+  // Bind Events for the place holder
   setPlaceholders() {
     this.element
-    .on('blur.editor', () => this.togglePlaceHolder())
-    .on('keypress.editor', () => this.togglePlaceHolder());
+      .on('blur.editor', () => this.togglePlaceHolder())
+      .on('keypress.editor', () => this.togglePlaceHolder());
 
     this.togglePlaceHolder();
     return this;
@@ -164,7 +178,8 @@ Editor.prototype = {
     }
   },
 
-  // Returns the currently visible element - either the main editor window, or the source-view textarea
+  // Returns the currently visible element - either the main editor window,
+  // or the source-view textarea
   getCurrentElement() {
     return this.sourceViewActive() ? this.textarea : this.element;
   },
@@ -172,8 +187,8 @@ Editor.prototype = {
   bindParagraphCreation() {
     const currentElement = this.getCurrentElement();
     currentElement.on('keyup.editor', (e) => {
-      let node = this.getSelectionStart(),
-        tagName;
+      let node = this.getSelectionStart();
+      let tagName;
 
       if (node && node.getAttribute('data-editor') && node.children.length === 0) {
         document.execCommand('formatBlock', false, 'p');
@@ -185,10 +200,10 @@ Editor.prototype = {
 
         if (tagName !== 'li' && !this.isListItemChild(node)) {
           if (!e.shiftKey) {
-              document.execCommand('formatBlock', false, 'p');
+            document.execCommand('formatBlock', false, 'p');
           }
           if (tagName === 'a') {
-              document.execCommand('unlink', false, null);
+            document.execCommand('unlink', false, null);
           }
         }
       }
@@ -221,10 +236,10 @@ Editor.prototype = {
   // Builds a fake element and gets the name of the event that will be used for "paste"
   // Used for cross-browser compatability.
   getPasteEvent() {
-    const el = document.createElement('input'),
-      name = 'onpaste';
+    const el = document.createElement('input');
+    const name = 'onpaste';
     el.setAttribute(name, '');
-    return ((typeof el[name] === 'function') ? 'paste' : 'input') + '.editor';
+    return `${((typeof el[name] === 'function') ? 'paste' : 'input')}.editor`;
   },
 
   initToolbar() {
@@ -239,8 +254,8 @@ Editor.prototype = {
   // Set excluded buttons
   setExcludedButtons() {
     const excludeButtons = (elements, toExclude) => {
-      let separatorIndex = -1,
-        numOfExcluded = 0;
+      let separatorIndex = -1;
+      let numOfExcluded = 0;
 
       return elements.filter((x, i) => {
         let r = true;
@@ -248,9 +263,8 @@ Editor.prototype = {
         if (toExclude.indexOf(x) > -1 && x !== 'separator') {
           numOfExcluded++;
           r = false;
-        }
-        // Exclude extra separator/s
-        else if (x === 'separator' && ((i - numOfExcluded - 1) === separatorIndex)) {
+        } else if (x === 'separator' && ((i - numOfExcluded - 1) === separatorIndex)) {
+          // Exclude extra separator/s
           numOfExcluded = 0;
           r = false;
         }
@@ -259,29 +273,29 @@ Editor.prototype = {
         }
         return r;
       });
-    },
-
-    // Run only if it needs (excludeButtons)
-    setButtons = () => {
-      const s = this.settings,
-        btns = s.buttons,
-        exBtns = s.excludeButtons;
-
-      return (this.sourceViewActive()) ?
-        (exBtns && exBtns.source && exBtns.source.length ?
-          excludeButtons(btns.source, exBtns.source) : btns.source) :
-        (exBtns && exBtns.editor && exBtns.editor.length ?
-          excludeButtons(btns.editor, exBtns.editor) : btns.editor);
     };
 
+    // Run only if it needs (excludeButtons)
+    const setButtons = () => {
+      const s = this.settings;
+      const btns = s.buttons;
+      const exBtns = s.excludeButtons;
+
+      if (this.sourceViewActive()) {
+        return (exBtns && exBtns.source && exBtns.source.length) ?
+          excludeButtons(btns.source, exBtns.source) : btns.source;
+      }
+      return (exBtns && exBtns.editor && exBtns.editor.length) ?
+        excludeButtons(btns.editor, exBtns.editor) : btns.editor;
+    };
     return setButtons();
   },
 
   createToolbar() {
     const btns = this.setExcludedButtons();
-    let toolbar = '<div class="toolbar editor-toolbar formatter-toolbar"' +
-                  ' id="editor-toolbar-' + this.id + '">',
-      buttonset =  '<div class="buttonset">';
+    let toolbar = `<div class="toolbar editor-toolbar formatter-toolbar"
+                   id="editor-toolbar-${this.id}">`;
+    let buttonset = '<div class="buttonset">';
 
     for (let i = 0, l = btns.length; i < l; i += 1) {
       const btn = this.buttonTemplate(btns[i]);
@@ -291,17 +305,18 @@ Editor.prototype = {
     }
 
     buttonset += '</div>';
-    toolbar += buttonset+'</div>';
+    toolbar += `${buttonset}</div>`;
 
-    this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ? this.element.prev() : this.element);
+    this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
+      this.element.prev() : this.element);
     this.toolbar.toolbar();
 
-    //Invoke Tooltips
+    // Invoke Tooltips
     this.toolbar.find('button[title]').tooltip();
 
     // Invoke colorpicker
     const cpElements = this.toolbar.find('[data-action="foreColor"], [data-action="backColor"]');
-    cpElements.colorpicker({placeIn: 'editor'});
+    cpElements.colorpicker({ placeIn: 'editor' });
     $('.trigger', cpElements).off('click.colorpicker');
 
     return this;
@@ -309,6 +324,7 @@ Editor.prototype = {
 
   /**
   * Switch between source and editing toolbar.
+  * @returns {void}
   */
   switchToolbars() {
     this.destroyToolbar();
@@ -321,8 +337,8 @@ Editor.prototype = {
     this.toolbar.find('button').button();
   },
 
-  initTextarea: function() {
-    var self = this;
+  initTextarea() {
+    const self = this;
     if (this.textarea) {
       return this;
     }
@@ -331,8 +347,7 @@ Editor.prototype = {
     // fill the text area with any content that may already exist within the editor DIV
     this.textarea.text(this.element.html().toString());
 
-
-    this.element.on('input.editor keyup.editor', debounce( function() {
+    this.element.on('input.editor keyup.editor', debounce(function () {
       self.textarea.val(self.element.html().toString());
       // setting the value via .val doesn't trigger the change event
       $(this).trigger('change');
@@ -344,53 +359,63 @@ Editor.prototype = {
 
   createTextarea() {
     this.sourceView = $('<div></div>').attr({
-      'class' : 'editor-source editable hidden',
-      'id' : 'editor-source-' + this.id
+      class: 'editor-source editable hidden',
+      id: `editor-source-${this.id}`
     }).insertBefore(this.element);
 
     $('<ul></ul>').addClass('line-numbers').appendTo(this.sourceView);
-    const textareaContainer = $('<div class="text-container"></div>').appendTo(this.sourceView),
-      newTextareaID = 'source-textarea-' + ($('[id^="source-textarea-"]').length+1),
-      labelContents = this.element.prev('.label').addClass('audible').text() + ' - HTML Source View';
+    const textareaContainer = $('<div class="text-container"></div>').appendTo(this.sourceView);
 
-    $('<label class="audible" for="' + newTextareaID + '">' + labelContents + '</label>').appendTo(textareaContainer);
-    const textarea = $('<textarea id="' + newTextareaID + '" class="editable"></textarea>').appendTo(textareaContainer);
+    const newTextareaID = `source-textarea-${($('[id^="source-textarea-"]').length + 1)}`;
+
+    const labelContents = `${this.element.prev('.label').addClass('audible').text()} - HTML Source View`;
+
+    $(`<label class="audible" for="${newTextareaID}">${labelContents}</label>`).appendTo(textareaContainer);
+
+    const textarea = $(`<textarea id="${newTextareaID}" class="editable"></textarea>`).appendTo(textareaContainer);
     return textarea;
   },
 
   triggerClick(e, btn) {
-    $('button[data-action="' + btn + '"]', this.toolbar).trigger('click.editor');
+    $(`button[data-action="' + ${btn} + '"]`, this.toolbar).trigger('click.editor');
   },
 
   setupKeyboardEvents() {
-    const self = this,
-      currentElement = this.getCurrentElement(),
-      keys = {
-        b  : 66, // {Ctrl + B} bold
-        e  : 69, // {Ctrl + E} justifyCenter
-        h  : 72, // {Ctrl + H} anchor
-        i  : 73, // {Ctrl + I} italic --------with SHIFT: {Ctrl + Shift + I} image
-        l  : 76, // {Ctrl + L} justifyLeft
-        bl : 55, // {Ctrl + + Shift + 7} bullet list
-        n  : 56, // {Ctrl + Shift + 8} numbered list
-        q  : 81, // {Ctrl + Q} blockquotes
-        r  : 82, // {Ctrl + R} justifyRight
-        u  : 85, // {Ctrl + U} underline
-        h3 : 51, // {Ctrl + 3} h3
-        h4 : 52, // {Ctrl + 4} h4
-        sv : 192 // {Ctrl + ~} toggle source -or- visualview
-      };
+    const self = this;
+    const currentElement = this.getCurrentElement();
+    const keys = {
+      b: 66, // {Ctrl + B} bold
+      e: 69, // {Ctrl + E} justifyCenter
+      h: 72, // {Ctrl + H} anchor
+      i: 73, // {Ctrl + I} italic --------with SHIFT: {Ctrl + Shift + I} image
+      l: 76, // {Ctrl + L} justifyLeft
+      bl: 55, // {Ctrl + + Shift + 7} bullet list
+      n: 56, // {Ctrl + Shift + 8} numbered list
+      q: 81, // {Ctrl + Q} blockquotes
+      r: 82, // {Ctrl + R} justifyRight
+      u: 85, // {Ctrl + U} underline
+      h3: 51, // {Ctrl + 3} h3
+      h4: 52, // {Ctrl + 4} h4
+      sv: 192 // {Ctrl + ~} toggle source -or- visualview
+    };
 
     currentElement.on('keydown.editor', (e) => {
-      e = (e) ? e : window.event;
-      keys.charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false);
+      e = e || window.event;
+
+      if (e.which) {
+        keys.charCode = e.which;
+      } else if (e.keyCode) {
+        keys.charCode = e.keyCode;
+      } else {
+        keys.charCode = false;
+      }
 
       switch (e.ctrlKey && keys.charCode) {
         case keys.h3:
-          this.triggerClick(e, 'append-' + this.settings.firstHeader);
+          this.triggerClick(e, `append-${this.settings.firstHeader}`);
           break;
         case keys.h4:
-          this.triggerClick(e, 'append-' + this.settings.secondHeader);
+          this.triggerClick(e, `append-${this.settings.secondHeader}`);
           break;
         case keys.b:
           this.triggerClick(e, 'bold');
@@ -439,11 +464,13 @@ Editor.prototype = {
         case keys.sv:
           this.triggerClick(e, currentElement === this.element ? 'source' : 'visual');
           break;
+        default:
+          break;
       }
     });
 
     // Open link in new windows/tab, if clicked with command-key(for mac) or ctrl-key(for windows)
-    this.element.on('mousedown.editor', 'a', function(e) {
+    this.element.on('mousedown.editor', 'a', function (e) {
       const href = $(this).attr('href');
       if (!self.isFirefox && ((self.isMac && e.metaKey) || (!self.isMac && e.ctrlKey))) {
         window.open(href, '_blank');
@@ -479,33 +506,33 @@ Editor.prototype = {
   },
 
   adjustSourceLineNumbers() {
-    const container = this.textarea.parent(),
-      lineHeight = parseInt(getComputedStyle(this.textarea[0]).lineHeight),
-      YPadding = (this.textarea.innerHeight() - this.textarea.height());
+    const container = this.textarea.parent();
+    const lineHeight = parseInt(getComputedStyle(this.textarea[0]).lineHeight, 10);
+    const YPadding = (this.textarea.innerHeight() - this.textarea.height());
 
     this.textarea[0].style.height = '';
 
-    const scrollHeight = this.textarea[0].scrollHeight,
-      lineNumberCount = Math.floor((scrollHeight - YPadding) / lineHeight),
-      numberList = this.sourceView.find('.line-numbers'),
-      lastIdx = numberList.find('li').length;
+    const scrollHeight = this.textarea[0].scrollHeight;
+    const lineNumberCount = Math.floor((scrollHeight - YPadding) / lineHeight);
+    const numberList = this.sourceView.find('.line-numbers');
+    const lastIdx = numberList.find('li').length;
 
-    let list = '',
-      i = 0;
+    let list = '';
+    let i = 0;
 
     if (!this.lineNumbers || lineNumberCount !== this.lineNumbers) {
       if (!this.lineNumbers) {
         // Build the list of line numbers from scratch
         this.lineNumbers = lineNumberCount;
         while (i < this.lineNumbers) {
-          list += '<li role="presentation"><span>'+ (i + 1) +'</span></li>';
+          list += `<li role="presentation"><span>${(i + 1)}</span></li>`;
           i++;
         }
         numberList.append(list);
       } else if (this.lineNumbers < lineNumberCount) {
         // Add extra line numbers to the bottom
         while (i < (lineNumberCount - this.lineNumbers)) {
-          list += '<li role="presentation"><span>'+ (lastIdx + i + 1) +'</span></li>';
+          list += `<li role="presentation"><span>${(lastIdx + i + 1)}</span></li>`;
           i++;
         }
         numberList.append(list);
@@ -515,28 +542,28 @@ Editor.prototype = {
         numberList.find('li').slice(-(i)).remove();
       }
       this.lineNumbers = lineNumberCount;
-      container[0].style.width = 'calc(100% - ' + (numberList.outerWidth() + 1) + 'px)';
+      container[0].style.width = `calc(100% - ${(numberList.outerWidth() + 1)}px)`;
     }
     if (scrollHeight !== this.textarea[0].scrollHeight) {
       this.adjustSourceLineNumbers();
       return;
     }
 
-    this.textarea[0].style.height = numberList[0].scrollHeight + 'px';
+    this.textarea[0].style.height = `${numberList[0].scrollHeight}px`;
   },
 
   wrapTextInTags(insertedText, selectedText, action) {
-    let tags,
-      finalText;
-    switch(action) {
+    let tags;
+    let finalText;
+    switch (action) {
       case 'bold':
-        tags = ['<b>','</b>'];
+        tags = ['<b>', '</b>'];
         break;
       case 'italic':
-        tags = ['<i>','</i>'];
+        tags = ['<i>', '</i>'];
         break;
       case 'underline':
-        tags = ['<u>','</u>'];
+        tags = ['<u>', '</u>'];
         break;
       case 'strikethrough':
         tags = ['<strike>', '</strike>'];
@@ -545,11 +572,11 @@ Editor.prototype = {
         tags = ['<blockquote>', '</blockquote>'];
         break;
       default:
-        tags = ['',''];
+        tags = ['', ''];
     }
 
     if (action === 'anchor') {
-      const alink = $('<a href="'+ insertedText +'">' + selectedText + '</a>');
+      const alink = $(`<a href="${insertedText}">${selectedText}</a>`);
 
       if (this.settings.anchor.class && $.trim(this.settings.anchor.class).length) {
         alink.addClass(this.settings.anchor.class);
@@ -564,30 +591,32 @@ Editor.prototype = {
       }
 
       finalText = alink[0].outerHTML;
-    }
-    else {
+    } else {
       finalText = tags[0] + insertedText + selectedText + tags[1];
     }
     return finalText;
   },
 
   insertTextAreaContent(text, action) {
-    const el = this.textarea[0],
-      val = el.value;
+    const el = this.textarea[0];
+    const val = el.value;
 
-    let sel, startPos, endPos, scrollTop;
+    let sel;
+    let startPos;
+    let endPos;
+    let scrollTop;
 
     // Always have empty text
-    text = text ? text : '';
+    text = text || '';
 
     if (document.selection && el.tagName === 'TEXTAREA') {
-      //IE textarea support
+      // IE textarea support
       $(el).focus();
       sel = document.selection.createRange();
       sel.text = this.wrapTextInTags(text, sel.text, action);
       $(el).focus();
     } else if (el.selectionStart || el.selectionStart === '0') {
-      //MOZILLA/NETSCAPE support
+      // MOZILLA/NETSCAPE support
       startPos = el.selectionStart;
       endPos = el.selectionEnd;
       scrollTop = el.scrollTop;
@@ -601,67 +630,87 @@ Editor.prototype = {
       // IE input[type=text] and other browsers
       el.value += this.wrapTextInTags(text, el.value, action);
       $(el).focus();
-      el.value = el.value;    // forces cursor to end
+      el.value = el.value; // forces cursor to end
     }
   },
 
   buttonTemplate(btnType) {
-    const buttonLabels = this.getButtonLabels(this.settings.buttonLabels),
-      buttonTemplates = {
-        'bold': '<button type="button" class="btn" title="'+ Locale.translate('ToggleBold') + '" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
-        'italic': '<button type="button" class="btn" title="'+ Locale.translate('ToggleItalic') + '" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
-        'underline': '<button type="button" class="btn underline" title="'+ Locale.translate('ToggleUnderline') + '" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-        'strikethrough': '<button type="button" class="btn" title="'+ Locale.translate('StrikeThrough') + '" data-action="strikethrough" data-element="strike">' + buttonLabels.strikethrough + '</button>',
-        'foreColor': '<button type="button" class="btn colorpicker-editor-button" title="'+ Locale.translate('TextColor') + '" data-action="foreColor" data-element="foreColor">' + buttonLabels.foreColor + '</button>',
-        'backColor': '<button type="button" class="btn colorpicker-editor-button" title="'+ Locale.translate('BackgroundColor') + '" data-action="backColor" data-element="backColor">' + buttonLabels.backColor + '</button>',
-        'superscript': '<button type="button" class="btn" title="'+ Locale.translate('Superscript') + '" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
-        'subscript': '<button type="button" class="btn" title="'+ Locale.translate('Subscript') + '" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
-        'separator': '<div class="separator"></div>',
-        'anchor': '<button type="button" class="btn" title="'+ Locale.translate('InsertAnchor') + '" data-action="anchor" data-modal="modal-url-'+ this.id +'" data-element="a">' + buttonLabels.anchor + '</button>',
-        'image': '<button type="button" class="btn" title="'+ Locale.translate('InsertImage') + '" data-action="image" data-modal="modal-image-'+ this.id +'" data-element="img">' + buttonLabels.image + '</button>',
-        'header1': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH3') + '" data-action="append-' + this.settings.firstHeader + '" data-element="' + this.settings.firstHeader + '">' + buttonLabels.header1 + '</button>',
-        'header2': '<button type="button" class="btn" title="'+ Locale.translate('ToggleH4') + '" data-action="append-' + this.settings.secondHeader + '" data-element="' + this.settings.secondHeader + '">' + buttonLabels.header2 + '</button>',
-        'quote': '<button type="button" class="btn" title="'+ Locale.translate('Blockquote') + '" data-action="append-blockquote" data-element="blockquote">' + buttonLabels.quote + '</button>',
-        'orderedlist': '<button type="button" class="btn" title="'+ Locale.translate('OrderedList') + '" data-action="insertorderedlist" data-element="ol">' + buttonLabels.orderedlist + '</button>',
-        'unorderedlist': '<button type="button" class="btn" title="'+ Locale.translate('UnorderedList') + '" data-action="insertunorderedlist" data-element="ul">' + buttonLabels.unorderedlist + '</button>',
-        'justifyLeft': '<button type="button" class="btn" title="'+ Locale.translate('JustifyLeft') + '" data-action="justifyLeft" >' + buttonLabels.justifyLeft + '</button>',
-        'justifyCenter': '<button type="button" class="btn" title="'+ Locale.translate('JustifyCenter') + '" data-action="justifyCenter">' + buttonLabels.justifyCenter + '</button>',
-        'justifyRight': '<button type="button" class="btn" title="'+ Locale.translate('JustifyRight') + '" data-action="justifyRight" >' + buttonLabels.justifyRight + '</button>',
-        'source': '<button type="button" class="btn" title="'+ Locale.translate('ViewSource') + '" data-action="source" >' + buttonLabels.source + '</button>',
-        'visual': '<button type="button" class="btn" title="'+ Locale.translate('ViewVisual') + '" data-action="visual" >' + buttonLabels.visual + '</button>'
-      };
-   return buttonTemplates[btnType] || false;
+    const buttonLabels = this.getButtonLabels(this.settings.buttonLabels);
+    const buttonTemplates = {
+      bold: `<button type="button" class="btn" title="${Locale.translate('ToggleBold')}" data-action="bold" data-element="b">${buttonLabels.bold}</button>`,
+
+      italic: `<button type="button" class="btn" title="${Locale.translate('ToggleItalic')}" data-action="italic" data-element="i">${buttonLabels.italic}</button>`,
+
+      underline: `<button type="button" class="btn underline" title="${Locale.translate('ToggleUnderline')}" data-action="underline" data-element="u">${buttonLabels.underline}</button>`,
+
+      strikethrough: `<button type="button" class="btn" title="${Locale.translate('StrikeThrough')}" data-action="strikethrough" data-element="strike">${buttonLabels.strikethrough}</button>`,
+
+      foreColor: `<button type="button" class="btn colorpicker-editor-button" title="${Locale.translate('TextColor')}" data-action="foreColor" data-element="foreColor">${buttonLabels.foreColor}</button>`,
+
+      backColor: `<button type="button" class="btn colorpicker-editor-button" title="${Locale.translate('BackgroundColor')}" data-action="backColor" data-element="backColor">${buttonLabels.backColor}</button>`,
+
+      superscript: `<button type="button" class="btn" title="${Locale.translate('Superscript')}" data-action="superscript" data-element="sup">${buttonLabels.superscript}</button>`,
+
+      subscript: `<button type="button" class="btn" title="${Locale.translate('Subscript')}" data-action="subscript" data-element="sub">${buttonLabels.subscript}</button>`,
+
+      separator: '<div class="separator"></div>',
+
+      anchor: `<button type="button" class="btn" title="${Locale.translate('InsertAnchor')}" data-action="anchor" data-modal="modal-url-${this.id}" data-element="a">${buttonLabels.anchor}</button>`,
+
+      image: `<button type="button" class="btn" title="${Locale.translate('InsertImage')}" data-action="image" data-modal="modal-image-${this.id}" data-element="img">${buttonLabels.image}</button>`,
+
+      header1: `<button type="button" class="btn" title="${Locale.translate('ToggleH3')}" data-action="append-${this.settings.firstHeader}" data-element="${this.settings.firstHeader}">${buttonLabels.header1}</button>`,
+
+      header2: `<button type="button" class="btn" title="${Locale.translate('ToggleH4')}" data-action="append-${this.settings.secondHeader}" data-element="${this.settings.secondHeader}">${buttonLabels.header2}</button>`,
+
+      quote: `<button type="button" class="btn" title="${Locale.translate('Blockquote')}" data-action="append-blockquote" data-element="blockquote">${buttonLabels.quote}</button>`,
+
+      orderedlist: `<button type="button" class="btn" title="${Locale.translate('OrderedList')}" data-action="insertorderedlist" data-element="ol">${buttonLabels.orderedlist}</button>`,
+
+      unorderedlist: `<button type="button" class="btn" title="${Locale.translate('UnorderedList')}" data-action="insertunorderedlist" data-element="ul">${buttonLabels.unorderedlist}</button>`,
+
+      justifyLeft: `<button type="button" class="btn" title="${Locale.translate('JustifyLeft')}" data-action="justifyLeft" >${buttonLabels.justifyLeft}</button>`,
+
+      justifyCenter: `<button type="button" class="btn" title="${Locale.translate('JustifyCenter')}" data-action="justifyCenter">${buttonLabels.justifyCenter}</button>`,
+
+      justifyRight: `<button type="button" class="btn" title="${Locale.translate('JustifyRight')}" data-action="justifyRight" >${buttonLabels.justifyRight}</button>`,
+
+      source: `<button type="button" class="btn" title="${buttonLabels.source}</button>`,
+
+      visual: `<button type="button" class="btn" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
+    };
+    return buttonTemplates[btnType] || false;
   },
 
   getIcon(textName, iconName, className) {
-    return '<span class="audible">'+ Locale.translate(textName) +'</span>' + $.createIcon({ classes: (className || ''), icon: iconName });
+    return `<span class="audible">${Locale.translate(textName)}</span>${$.createIcon({ classes: (className || ''), icon: iconName })}`;
   },
 
   getButtonLabels(buttonLabelType) {
     const buttonLabels = {
-      'bold': this.getIcon('Bold', 'bold'),
-      'italic': this.getIcon('Italic', 'italic'),
-      'underline': this.getIcon('Underline', 'underline'),
-      'superscript': '<span aria-hidden="true"><b>x<sup>1</sup></b></span>',
-      'subscript': '<span aria-hidden="true"><b>x<sub>1</sub></b></span>',
-      'strikethrough': this.getIcon('StrikeThrough', 'strike-through'),
-      'foreColor': this.getIcon('TextColor', 'fore-color'),
-      'backColor': this.getIcon('BackgroundColor', 'back-color'),
-      'anchor': this.getIcon('InsertAnchor', 'link'),
-      'image': this.getIcon('InsertImage', 'insert-image'),
-      'header1': this.getIcon('ToggleH3', 'h3'),
-      'header2': this.getIcon('ToggleH4', 'h4'),
-      'quote': this.getIcon('Blockquote', 'quote'),
-      'orderedlist': this.getIcon('OrderedList', 'number-list'),
-      'unorderedlist': this.getIcon('UnorderedList', 'bullet-list'),
-      'pre': '<span aria-hidden="true"><b>0101</b></span>',
-      'indent': '<span aria-hidden="true"><b>&rarr;</b></span>',
-      'outdent': '<span aria-hidden="true"><b>&larr;</b></span>',
-      'justifyLeft': this.getIcon('JustifyLeft', 'left-text-align'),
-      'justifyCenter': this.getIcon('JustifyCenter', 'center-text'),
-      'justifyRight': this.getIcon('JustifyRight', 'right-text-align'),
-      'source': this.getIcon('ViewSource', 'html', 'html-icon'),
-      'visual': this.getIcon('ViewSource', 'visual', 'visual-icon')
+      bold: this.getIcon('Bold', 'bold'),
+      italic: this.getIcon('Italic', 'italic'),
+      underline: this.getIcon('Underline', 'underline'),
+      superscript: '<span aria-hidden="true"><b>x<sup>1</sup></b></span>',
+      subscript: '<span aria-hidden="true"><b>x<sub>1</sub></b></span>',
+      strikethrough: this.getIcon('StrikeThrough', 'strike-through'),
+      foreColor: this.getIcon('TextColor', 'fore-color'),
+      backColor: this.getIcon('BackgroundColor', 'back-color'),
+      anchor: this.getIcon('InsertAnchor', 'link'),
+      image: this.getIcon('InsertImage', 'insert-image'),
+      header1: this.getIcon('ToggleH3', 'h3'),
+      header2: this.getIcon('ToggleH4', 'h4'),
+      quote: this.getIcon('Blockquote', 'quote'),
+      orderedlist: this.getIcon('OrderedList', 'number-list'),
+      unorderedlist: this.getIcon('UnorderedList', 'bullet-list'),
+      pre: '<span aria-hidden="true"><b>0101</b></span>',
+      indent: '<span aria-hidden="true"><b>&rarr;</b></span>',
+      outdent: '<span aria-hidden="true"><b>&larr;</b></span>',
+      justifyLeft: this.getIcon('JustifyLeft', 'left-text-align'),
+      justifyCenter: this.getIcon('JustifyCenter', 'center-text'),
+      justifyRight: this.getIcon('JustifyRight', 'right-text-align'),
+      source: this.getIcon('ViewSource', 'html', 'html-icon'),
+      visual: this.getIcon('ViewSource', 'visual', 'visual-icon')
     };
 
     let customButtonLabels;
@@ -670,8 +719,8 @@ Editor.prototype = {
       customButtonLabels = buttonLabelType;
     }
     if (typeof customButtonLabels === 'object') {
-      for (let attrname in customButtonLabels) {
-        if (customButtonLabels.hasOwnProperty(attrname)) {
+      for (const attrname in customButtonLabels) {
+        if (customButtonLabels.hasOwnProperty(attrname)) {// eslint-disable-line
           buttonLabels[attrname] = customButtonLabels[attrname];
         }
       }
@@ -679,18 +728,18 @@ Editor.prototype = {
     return buttonLabels;
   },
 
-  //Show the Buttons
+  // Show the Buttons
   activateButton(tag) {
-    this.toolbar.find('[data-element="' + tag + '"]').addClass('is-active');
+    this.toolbar.find(`[data-element="${tag}"]`).addClass('is-active');
   },
 
-  //Bind Events to Toolbar Buttons
+  // Bind Events to Toolbar Buttons
   bindButtons() {
     const self = this;
 
     this.toolbar.on('touchstart.editor click.editor', 'button', function (e) {
-      const btn = $(this),
-        action = btn.attr('data-action');
+      const btn = $(this);
+      const action = btn.attr('data-action');
 
       // Don't do anything if it's the More Button
       if (btn.is('.btn-actions')) {
@@ -726,14 +775,13 @@ Editor.prototype = {
       image: this.createImageModal()
     };
 
-    $('[name="em-target-'+ this.id +'"]').dropdown();
+    $(`[name="em-target-${this.id}"]`).dropdown();
 
-    $('#modal-url-'+ this.id +', #modal-image-'+ this.id).modal()
+    $(`#modal-url-${this.id}, #modal-image-${this.id}`).modal()
       .on('beforeopen', function () {
         self.savedSelection = self.saveSelection();
 
-        if ($(this).attr('id') === ('modal-url-' + self.id)) {
-
+        if ($(this).attr('id') === (`modal-url-${self.id}`)) {
           if (!self.selectionRange) {
             return undefined;
           }
@@ -741,24 +789,23 @@ Editor.prototype = {
       })
       .off('open')
       .on('open', function () {
-        const isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
-          id = $(this).attr('id'),
-          input = $('input:first', this),
-          button = $('.modal-buttonset .btn-modal-primary', this);
+        const isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const id = $(this).attr('id');
+        const input = $('input:first', this);
+        const button = $('.modal-buttonset .btn-modal-primary', this);
 
-        $('[name="em-url-'+ self.id +'"]').val(self.settings.anchor.url);
-        $('[name="em-class-'+ self.id +'"]').val(self.settings.anchor.class);
-        $('[name="em-target-'+ self.id +'"]').val(self.settings.anchor.target).trigger('updated');
-        $('[name="em-isclickable-'+ this.id +'"]').prop('checked', self.settings.anchor.isClickable);
+        $(`[name="em-url-${self.id}"]`).val(self.settings.anchor.url);
+        $(`[name="em-class-${self.id}"]`).val(self.settings.anchor.class);
+        $(`[name="em-target-${self.id}"]`).val(self.settings.anchor.target).trigger('updated');
+        $(`[name="em-isclickable-${this.id}"]`).prop('checked', self.settings.anchor.isClickable);
 
         setTimeout(() => {
-          if (isTouch && id === 'modal-image-'+ self.id) {
+          if (isTouch && id === `modal-image-${self.id}`) {
             button.focus();
           } else {
             input.focus().select();
           }
         }, 10);
-
       })
       .off('close')
       .on('close', function (e, isCancelled) {
@@ -768,13 +815,13 @@ Editor.prototype = {
           return;
         }
 
-        //insert image or link
-        if ($(this).attr('id') === ('modal-url-'+ self.id)) {
+        // insert image or link
+        if ($(this).attr('id') === (`modal-url-${self.id}`)) {
           const currentLink = $(self.findElementInSelection('a', self.element[0]));
           if (currentLink.length) {
             self.updateCurrentLink(currentLink);
           } else {
-            self.createLink($('[name="em-url-'+ self.id +'"]', this));
+            self.createLink($(`[name="em-url-${self.id}"]`, this));
           }
         } else {
           self.insertImage($('#image').val());
@@ -785,22 +832,25 @@ Editor.prototype = {
   },
 
   /**
-  * Function that creates the Url Modal Dialog. This can be customized by making a modal with ID `#modal-url-{this.id}`
+  * Function that creates the Url Modal Dialog. This can be customized by making
+   a modal with ID `#modal-url-${this.id}`
+  * @private
+  * @returns {void}
   */
   createURLModal() {
-    const s = this.settings,
-      urlModal = $('#modal-url-'+ this.id);
+    const s = this.settings;
+    const urlModal = $(`#modal-url-${this.id}`);
 
     if (urlModal.length > 0) {
       return urlModal;
     }
 
-    let targetOptions = '',
-      isTargetCustom = true;
+    let targetOptions = '';
+    let isTargetCustom = true;
 
-    for (let key of Object.keys(s.anchor.targets)) {
+    for (const key of Object.keys(s.anchor.targets)) {
       const val = s.anchor.targets[key];
-      targetOptions += '<option value="'+ val +'">'+ key +'</option>';
+      targetOptions += `<option value="${val}">${key}</option>`;
 
       if ((s.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
         isTargetCustom = false;
@@ -808,83 +858,86 @@ Editor.prototype = {
     }
 
     if (isTargetCustom) {
-      targetOptions += '<option value="'+ s.anchor.target +'">'+ s.anchor.target +'</option>';
+      targetOptions += `<option value="${s.anchor.target}">${s.anchor.target}</option>`;
     }
-
-
-    return $('<div class="modal editor-modal-url" id="modal-url-'+ this.id +'"></div>')
-      .html('<div class="modal-content">' +
-        '<div class="modal-header">' +
-          '<h1 class="modal-title">' + Locale.translate('InsertAnchor') + '</h1>' +   //TODO: Rename to link when you get strings
-        '</div>' +
-        '<div class="modal-body">' +
-          '<div class="field">' +
-            '<label for="em-url-'+ this.id +'">' + Locale.translate('Url') + '</label>' +
-            '<input id="em-url-'+ this.id +'" name="em-url-'+ this.id +'" type="text" value="'+ s.anchor.url +'">' +
-          '</div>' +
-          (s.anchor.showIsClickable ?('<div class="field">' +
-            '<input type="checkbox" class="checkbox" id="em-isclickable-'+ this.id +'" name="em-isclickable-'+ this.id +'" checked="'+ s.anchor.isClickable +'">' +
-            '<label for="em-isclickable-'+ this.id +'" class="checkbox-label">' + Locale.translate('Clickable') + '</label>' +
-          '</div>') : '') +
-          '<div class="field">' +
-            '<label for="em-class-'+ this.id +'">' + Locale.translate('CssClass') + '</label>' +
-            '<input id="em-class-'+ this.id +'" name="em-class-'+ this.id +'" type="text" value="'+ s.anchor.class +'">' +
-          '</div>' +
-          '<div class="field">' +
-            '<label for="em-target-'+ this.id +'" class="label">' + Locale.translate('Target') + '</label>' +
-            '<select id="em-target-'+ this.id +'" name="em-target-'+ this.id +'" class="dropdown">' +
-              targetOptions +
-            '</select>' +
-          '</div>' +
-          '<div class="modal-buttonset">' +
-            '<button type="button" class="btn-modal btn-cancel">' + Locale.translate('Cancel') + '</button>' +
-            '<button type="button" class="btn-modal-primary">' + Locale.translate('Insert') + '</button>' +
-          '</div>' +
-        '</div>' +
-      '</div>').appendTo('body');
+    // TODO: Rename to link when you get strings
+    return $(`<div class="modal editor-modal-url" id="modal-url-${this.id}"></div>`)
+      .html(`<div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">${Locale.translate('InsertAnchor')}</h1>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <label for="em-url-${this.id}">${Locale.translate('Url')}</label>
+            <input id="em-url-${this.id}" name="em-url-${this.id}" type="text" value="${s.anchor.url}">
+          </div>
+          ${(s.anchor.showIsClickable ? (`<div class="field">
+            <input type="checkbox" class="checkbox" id="em-isclickable-${this.id}" name="em-isclickable-${this.id}" checked="${s.anchor.isClickable}">
+            <label for="em-isclickable-${this.id}" class="checkbox-label"> ${Locale.translate('Clickable')}</label>
+          </div>`) : '')}
+          <div class="field">
+            <label for="em-class-${this.id}">${Locale.translate('CssClass')}</label>
+            <input id="em-class-${this.id}" name="em-class-${this.id}" type="text" value="${s.anchor.class}">
+          </div>
+          <div class="field">
+            <label for="em-target-${this.id}" class="label"> ${Locale.translate('Target')}</label>
+            <select id="em-target-${this.id}" name="em-target-${this.id}" class="dropdown">
+              ${targetOptions}
+            </select>
+          </div>
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal btn-cancel"> ${Locale.translate('Cancel')}</button>
+            <button type="button" class="btn-modal-primary"> ${Locale.translate('Insert')}</button>
+          </div>
+        </div>
+      </div>`).appendTo('body');
   },
 
-   /**
-   * Function that creates the Image Dialog. This can be customized by making a modal with ID `#modal-image-{this.id}`
+  /**
+   * Function that creates the Image Dialog. This can be customized by making a
+    modal with ID `#modal-image-{this.id}`
+   * @private
+   * @returns {void}
    */
   createImageModal() {
-    const imageModal = $('#modal-image-' + this.id);
+    const imageModal = $(`#modal-image-${this.id}`);
 
     if (imageModal.length > 0) {
       return imageModal;
     }
-    return $('<div class="modal editor-modal-image" id="modal-image-'+ this.id +'"></div>')
-      .html('<div class="modal-content">' +
-        '<div class="modal-header">' +
-          '<h1 class="modal-title">' + Locale.translate('InsertImage') + '</h1>' +
-        '</div>' +
-        '<div class="modal-body">' +
-          '<div class="field">' +
-            '<label for="image">' + Locale.translate('Url') + '</label>' +
-            '<input id="image" name="image" type="text" value="'+ this.settings.image.url +'">' +
-          '</div>' +
-          '<div class="modal-buttonset">' +
-            '<button type="button" class="btn-modal btn-cancel">' + Locale.translate('Cancel') + '</button>' +
-            '<button type="button" class="btn-modal-primary">' + Locale.translate('Insert') + '</button>' +
-          '</div>' +
-        '</div>' +
-      '</div>').appendTo('body');
+    return $(`<div class="modal editor-modal-image" id="modal-image-${this.id}"></div>'`)
+      .html(`<div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title">${Locale.translate('InsertImage')}</h1>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <label for="image">${Locale.translate('Url')}</label>
+            <input id="image" name="image" type="text" value="${this.settings.image.url}">
+          </div>
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal btn-cancel">
+              ${Locale.translate('Cancel')}</button>
+            <button type="button" class="btn-modal-primary">
+              ${Locale.translate('Insert')}</button>
+          </div>
+        </div>
+      </div>`).appendTo('body');
   },
 
   bindAnchorPreview() {
     this.element.find('a').tooltip({
-      content: function() {
+      content() {
         return $(this).attr('href');
       }
     });
-    return;
   },
 
   updateCurrentLink(alink) {
-    const emUrl = $('[name="em-url'+ this.id +'"]').val(),
-      emClass = $('[name="em-class'+ this.id +'"]').val(),
-      emTarget = $('[name="em-target'+ this.id +'"]').val(),
-      emIsClickable = this.settings.anchor.showIsClickable ? $('[name="em-isclickable'+ this.id +'"]').is(':checked') : this.settings.anchor.isClickable;
+    const emUrl = $(`[name="em-url${this.id}"]`).val();
+    const emClass = $(`[name="em-class${this.id}"]`).val();
+    const emTarget = $(`[name="em-target${this.id}"]`).val();
+    const emIsClickable = this.settings.anchor.showIsClickable ? $(`[name="em-isclickable${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
     alink.attr('href', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl));
     alink.attr('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
@@ -903,22 +956,20 @@ Editor.prototype = {
   },
 
   createLink(input) {
-    let alink;
-
-    //Restore Selection in the Editor and Variables
+    // Restore Selection in the Editor and Variables
     this.restoreSelection(this.savedSelection);
 
-    //Fix and Format the Link
+    // Fix and Format the Link
     input.val(this.fixLinkFormat(input.val()));
 
     // Set selection url/class/target for Link
     this.settings.anchor.url = input.val();
-    this.settings.anchor.class = $('[name="em-class-'+ this.id +'"]').val();
-    this.settings.anchor.target = $('[name="em-target-'+ this.id +'"]').val();
+    this.settings.anchor.class = $(`[name="em-class-${this.id}"]`).val();
+    this.settings.anchor.target = $(`[name="em-target-${this.id}"]`).val();
     this.settings.anchor.isClickable = this.settings.anchor.showIsClickable ?
-        $('[name="em-isclickable-'+ this.id +'"]').is(':checked') : this.settings.anchor.isClickable;
+      $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    alink = $('<a href="'+ input.val() +'">' + input.val() + '</a>');
+    const alink = $(`<a href="${input.val()}">${input.val()}</a>`);
 
     if (this.settings.anchor.class && $.trim(this.settings.anchor.class).length) {
       alink.addClass(this.settings.anchor.class);
@@ -935,18 +986,19 @@ Editor.prototype = {
     if (this.sourceViewActive()) {
       this.insertTextAreaContent(input.val(), 'anchor');
     } else {
-      let sel, range, rangeStr;
+      let sel;
+      let range;
+      let rangeStr;
 
       if (!this.selection.isCollapsed || this.isIe11) {
-
-        //get example from: http://jsfiddle.net/jwvha/1/
-        //and info: http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div
+        // get example from: http://jsfiddle.net/jwvha/1/
+        // and info: http://stackoverflow.com/questions/6690752/insert-html-at-caret-in-a-contenteditable-div
         if (window.getSelection) {
           // IE9 and non-IE
           sel = window.getSelection();
           if (sel.getRangeAt && sel.rangeCount) {
             range = sel.getRangeAt(0);
-            rangeStr = range + '';
+            rangeStr = `${range}`;
             if (rangeStr.trim() !== '') {
               alink.html(rangeStr);
             }
@@ -958,9 +1010,10 @@ Editor.prototype = {
             const el = document.createElement('div');
             el.innerHTML = alink[0].outerHTML;
             const frag = document.createDocumentFragment();
-            let node, lastNode;
+            let node;
+            let lastNode;
 
-            while ((node = el.firstChild)) {
+            while ((node = el.firstChild)) {// eslint-disable-line
               lastNode = frag.appendChild(node);
             }
             range.insertNode(frag);
@@ -989,10 +1042,10 @@ Editor.prototype = {
     if (value.match(/^https?:\/\//)) {
       return value;
     }
-    return 'http://' + value;
+    return `http://${value}`;
   },
 
-  //Setup Events For Text Selection
+  // Setup Events For Text Selection
   bindSelect() {
     let selectionTimer = '';
 
@@ -1012,21 +1065,23 @@ Editor.prototype = {
   },
 
   checkSelection() {
-    let newSelection,
-        selectionElement;
+    let newSelection;
 
     if (this.selection === undefined) {
       if (this.sourceViewActive()) {
-        newSelection = this.textarea.val().substring(this.textarea[0].selectionStart, this.textarea[0].selectionEnd ).toString().trim();
+        newSelection = this.textarea.val().substring(
+          this.textarea[0].selectionStart,
+          this.textarea[0].selectionEnd
+        ).toString().trim();
         this.hideToolbarActions();
         return;
       }
     }
 
     newSelection = window.getSelection();
-    selectionElement = this.getSelectionElement();
+    const selectionElement = this.getSelectionElement();
     if (!selectionElement) {
-        this.hideToolbarActions();
+      this.hideToolbarActions();
     } else {
       this.checkSelectionElement(newSelection, selectionElement);
     }
@@ -1034,19 +1089,22 @@ Editor.prototype = {
   },
 
   getSelectionElement() {
-    let range, current, parent, result;
-    const selection = window.getSelection(),
-      getElement = (e) => {
-        let localParent = e;
-        try {
-            while (!localParent.getAttribute('data-editor')) {
-                localParent = localParent.parentNode;
-            }
-        } catch (errb) {
-            return false;
+    let range;
+    let current;
+    let parent;
+    let result;
+    const selection = window.getSelection();
+    const getElement = (e) => {
+      let localParent = e;
+      try {
+        while (!localParent.getAttribute('data-editor')) {
+          localParent = localParent.parentNode;
         }
-        return localParent;
-      };
+      } catch (errb) {
+        return false;
+      }
+      return localParent;
+    };
 
     // First try on current node
     try {
@@ -1061,7 +1119,7 @@ Editor.prototype = {
     return result;
   },
 
-  //See if the Editor is Selected and Show Toolbar
+  // See if the Editor is Selected and Show Toolbar
   checkSelectionElement(newSelection, selectionElement) {
     const currentElement = this.sourceViewActive() ? this.sourceView[0] : this.element[0];
 
@@ -1074,7 +1132,7 @@ Editor.prototype = {
     this.hideToolbarActions();
   },
 
-  //Set button states for toolbar buttons
+  // Set button states for toolbar buttons
   setToolbarButtonStates() {
     this.toolbar.find('button').removeClass('is-active');
     this.checkActiveButtons();
@@ -1092,7 +1150,8 @@ Editor.prototype = {
 
     let parentNode = this.getSelectedParentElement();
 
-    while (parentNode.tagName !== undefined && this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
+    while (parentNode.tagName !== undefined &&
+      this.parentElements.indexOf(parentNode.tagName.toLowerCase) === -1) {
       this.activateButton(parentNode.tagName.toLowerCase());
 
       // we can abort the search upwards if we leave the contentEditable element
@@ -1109,9 +1168,9 @@ Editor.prototype = {
     }
 
     if (document.queryCommandState(command)) {
-      this.toolbar.find('[data-action="' + command + '"]').addClass('is-active');
+      this.toolbar.find(`[data-action="${command}"]`).addClass('is-active');
     } else {
-      this.toolbar.find('[data-action="' + command + '"]').removeClass('is-active');
+      this.toolbar.find(`[data-action="${command}"]`).removeClass('is-active');
     }
   },
 
@@ -1123,47 +1182,49 @@ Editor.prototype = {
   },
 
   getSelectedParentElement() {
-    let selectedParentElement = null,
-        range = this.selectionRange;
+    let selectedParentElement = null;
+    const range = this.selectionRange;
+
     if (this.rangeSelectsSingleNode(range)) {
-        selectedParentElement = range.startContainer.childNodes[range.startOffset];
+      selectedParentElement = range.startContainer.childNodes[range.startOffset];
     } else if (range.startContainer.nodeType === 3) {
-        selectedParentElement = range.startContainer.parentNode;
+      selectedParentElement = range.startContainer.parentNode;
     } else {
-        selectedParentElement = range.startContainer;
+      selectedParentElement = range.startContainer;
     }
     return selectedParentElement;
   },
 
-  //Hide Toolbar
+  // Hide Toolbar
   hideToolbarActions() {
     if (this.toolbar !== undefined) {
       this.toolbar.removeClass('is-active');
     }
   },
 
-  //Handle Pasted In Text
+  // Handle Pasted In Text
   bindPaste() {
-    const self = this,
-      currentElement = self.getCurrentElement();
+    const self = this;
+    const currentElement = self.getCurrentElement();
 
     if (!self.pasteEvent) {
       self.pasteEvent = self.getPasteEvent();
     }
 
     this.pasteWrapper = function (e) {
+      let paste;
+      if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
+        paste = e.originalEvent.clipboardData.getData('text/plain');// Standard
+      } else {
+        paste = window.clipboardData && window.clipboardData.getData ?
+          window.clipboardData.getData('Text') : false;// MS : false
+      }
 
-      const paste = e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData ?
-        e.originalEvent.clipboardData.getData('text/plain') : // Standard
-        window.clipboardData && window.clipboardData.getData ?
-        window.clipboardData.getData('Text') : // MS
-        false;
+      let p;
+      let paragraphs;
+      let html = '';
 
-      let p,
-        paragraphs,
-        html = '';
-
-      if (self.sourceViewActive() ) {
+      if (self.sourceViewActive()) {
         return this;
       }
 
@@ -1174,23 +1235,21 @@ Editor.prototype = {
         for (p = 0; p < paragraphs.length; p += 1) {
           if (paragraphs[p] !== '') {
             if (navigator.userAgent.match(/firefox/i) && p === 0) {
-              html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+              html += `<p>${self.htmlEntities(paragraphs[p])}</p>`;
+            } else if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(paragraphs[p])) {
+              html += `<img src="${self.htmlEntities(paragraphs[p])}" />`;
             } else {
-              if((/\.(gif|jpg|jpeg|tiff|png)$/i).test(paragraphs[p])) {
-                html += '<img src="' + self.htmlEntities(paragraphs[p]) + '" />';
-              } else {
-                html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
-              }
+              html += `<p>${self.htmlEntities(paragraphs[p])}</p>`;
             }
           }
         }
 
         if (document.queryCommandSupported('insertText')) {
-            document.execCommand('insertHTML', false, html);
-            return false;
-        } else { // IE > 7
-          self.pasteHtmlAtCaret(html);
+          document.execCommand('insertHTML', false, html);
+          return false;
         }
+        // IE > 7
+        self.pasteHtmlAtCaret(html);
       }
     };
 
@@ -1198,14 +1257,18 @@ Editor.prototype = {
       if (self.sourceViewActive()) {
         return this;
       }
-      let types, clipboardData, pastedData,
-        paste, p, paragraphs;
+      let types;
+      let clipboardData;
+      let pastedData;
+      let paste;
+      let p;
+      let paragraphs;
 
       if (e.clipboardData || e.originalEvent) {
         if (e.clipboardData && e.clipboardData.types) {
           clipboardData = e.clipboardData;
-        }
-        else if (e.originalEvent && e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
+        } else if (e.originalEvent && e.originalEvent.clipboardData &&
+           e.originalEvent.clipboardData.getData) {
           clipboardData = e.originalEvent.clipboardData;
         }
       }
@@ -1217,7 +1280,7 @@ Editor.prototype = {
             (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
         // jshint undef:true
           if (self.isIeEdge) {
-            pastedData =  e.originalEvent.clipboardData.getData('text/plain');
+            pastedData = e.originalEvent.clipboardData.getData('text/plain');
           } else {
             pastedData = e.originalEvent.clipboardData.getData('text/html');
           }
@@ -1229,13 +1292,11 @@ Editor.prototype = {
         for (p = 0; p < paragraphs.length; p += 1) {
           if (paragraphs[p] !== '') {
             if (navigator.userAgent.match(/firefox/i) && p === 0) {
-              pastedData += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+              pastedData += `<p>${self.htmlEntities(paragraphs[p])}</p>`;
+            } else if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(paragraphs[p])) {
+              pastedData += `<img src="${self.htmlEntities(paragraphs[p])}" />`;
             } else {
-              if((/\.(gif|jpg|jpeg|tiff|png)$/i).test(paragraphs[p])) {
-                pastedData += '<img src="' + self.htmlEntities(paragraphs[p]) + '" />';
-              } else {
-                pastedData += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
-              }
+              pastedData += `<p>${self.htmlEntities(paragraphs[p])}</p>`;
             }
           }
         }
@@ -1244,20 +1305,36 @@ Editor.prototype = {
       self.pastedData = self.isIe11 ?
         pastedData : self.getCleanedHtml(pastedData);
 
-      $.when(self.element.triggerHandler('beforepaste', [{pastedData: self.pastedData}])).done(function() {
+      /**
+      * Fires before paste.
+      *
+      * @event beforepaste
+      * @type {Object}
+      * @property {Object} event - The jquery event object
+      * @property {String} pastedData .
+      */
+      $.when(self.element.triggerHandler('beforepaste', [{ pastedData: self.pastedData }])).done(() => {
         if (self.pastedData && !e.defaultPrevented) {
           if (!self.isIe11) {
             e.preventDefault();
           }
 
           if (document.queryCommandSupported('insertText')) {
-              document.execCommand('insertHTML', false, self.pastedData);
-              return false;
-          } else {
-            self.pasteHtmlAtCaret(self.pastedData);
+            document.execCommand('insertHTML', false, self.pastedData);
+            return false;
           }
+          self.pasteHtmlAtCaret(self.pastedData);
         }
-        self.element.triggerHandler('afterpaste', [{pastedData: self.pastedData}]);
+
+        /**
+        * Fires after paste.
+        *
+        * @event afterpaste
+        * @type {Object}
+        * @property {Object} event - The jquery event object
+        * @property {String} pastedData .
+        */
+        self.element.triggerHandler('afterpaste', [{ pastedData: self.pastedData }]);
         self.pastedData = null;
       });
       if (!self.isIe11) {
@@ -1265,16 +1342,18 @@ Editor.prototype = {
       }
     };
 
-    currentElement.on(self.pasteEvent, (self.settings.pasteAsPlainText ? self.pasteWrapper : self.pasteWrapperHtml));
+    currentElement.on(self.pasteEvent, (self.settings.pasteAsPlainText ?
+      self.pasteWrapper : self.pasteWrapperHtml));
 
     return this;
   },
 
   pasteHtmlAtCaret(html) {
-    const self = this,
-      templIE11 = 'x-text-content-templ-x';
+    const self = this;
+    const templIE11 = 'x-text-content-templ-x';
 
-    let sel, range;
+    let sel;
+    let range;
     if (window.getSelection) {
       sel = window.getSelection();
       if (sel.getRangeAt && sel.rangeCount) {
@@ -1293,9 +1372,10 @@ Editor.prototype = {
         el.innerHTML = html;
 
         const frag = document.createDocumentFragment();
-        let node, lastNode;
+        let node;
+        let lastNode;
 
-        while ( (node = el.firstChild) ) {
+        while ((node = el.firstChild)) {// eslint-disable-line
           lastNode = frag.appendChild(node);
         }
         range.insertNode(frag);
@@ -1312,9 +1392,9 @@ Editor.prototype = {
         // IE 11
         if (self.isIe11) {
           let maxRun = 50;
-          const deferredIE11 = $.Deferred(),
+          const deferredIE11 = $.Deferred();
 
-          waitForPastedData = (elem, savedContent) => {
+          const waitForPastedData = (elem, savedContent) => {
             maxRun--;
             if (maxRun < 0) {
               deferredIE11.reject();
@@ -1330,9 +1410,8 @@ Editor.prototype = {
               elem.innerHTML = '';
               elem.appendChild(savedContent);
               deferredIE11.resolve();
-            }
-            // Else wait 5ms and try again
-            else {
+            } else {
+              // Else wait 5ms and try again
               setTimeout(() => {
                 waitForPastedData(elem, savedContent);
               }, 5);
@@ -1341,24 +1420,24 @@ Editor.prototype = {
 
           // Everything else: Move existing element contents to a DocumentFragment for safekeeping
           const savedContent = document.createDocumentFragment();
-          while(self.element[0].childNodes.length > 0) {
+          while (self.element[0].childNodes.length > 0) {
             savedContent.appendChild(self.element[0].childNodes[0]);
           }
           // Then wait for browser to paste content into it and cleanup
           waitForPastedData(self.element[0], savedContent);
 
-          $.when(deferredIE11).done(function() {
-            let str = '',
-              node = self.element
-                .find(':contains('+ templIE11 +')')
-                .filter(function() {
-                  return (this.textContent === templIE11);
-                });
+          $.when(deferredIE11).done(() => {
+            let str = '';
+            let thisNode = self.element
+              .find(`:contains(+ ${templIE11})`)
+              .filter(function () {
+                return (this.textContent === templIE11);
+              });
 
-            if (!node.length) {
-              node = self.element
-                .find(':contains('+ templIE11 +')')
-                .filter(function() {
+            if (!thisNode.length) {
+              thisNode = self.element
+                .find(`:contains(+ ${templIE11})`)
+                .filter(function () {
                   return (this.textContent.indexOf(templIE11) > -1 && this.tagName !== 'UL');
                 });
             }
@@ -1368,53 +1447,44 @@ Editor.prototype = {
             // Working with list
             // Start with "<li"
             if (/(^(\s+?)?<li)/ig.test(html)) {
-
               // Pasted data starts and ends with "li" tag
-              if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) { //ends with "</li>"
-
+              if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) { // ends with "</li>"
                 // Do not add "ul" if pasting on "li" node
-                if (!node.is('li')) {
-                  html = '<ul>'+ html +'</ul>';
+                if (!thisNode.is('li')) {
+                  html = `<ul>${html}</ul>`;
                 }
-                node.replaceWith(html);
-              }
-              // Missing at the end "</li>" tag
-              else {
+                thisNode.replaceWith(html);
+              } else if (thisNode.is('li')) {
+                // Missing at the end "</li>" tag
                 // Pasting on "li" node
-                if (node.is('li')) {
-                  node.replaceWith(html +'</li>');
-                }
-
+                thisNode.replaceWith(`${html}</li>`);
+              } else {
                 // Not pasting on "li" node
-                else {
-                  // If ul was closed and have extra nodes after list close
-                  str = (html.match(/<\/ul|<\/ol/gi) || []);
-                  // Pasted data contains "ul or ol" tags
-                  if (str.length) {
-                    node.replaceWith(html);
-                  } else {
-                    node.replaceWith(html +'</li></ul>');
-                  }
+
+                // If ul was closed and have extra nodes after list close
+                str = (html.match(/<\/ul|<\/ol/gi) || []);
+                // Pasted data contains "ul or ol" tags
+                if (str.length) {
+                  thisNode.replaceWith(html);
+                } else {
+                  thisNode.replaceWith(`${html}</li></ul>`);
                 }
-
               }
-            }
+            } else if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) {
+              // Ends with "</li>" tag, but not started with "li" tag
 
-            // Ends with "</li>" tag, but not started with "li" tag
-            else if (/((\s+?)?<\/li>(\s+?)?$)/ig.test(html)) {
               // Pasting on "li" node
-              if (node.is('li')) {
-                node.replaceWith('<li>'+ html);
+              if (thisNode.is('li')) {
+                thisNode.replaceWith(`<li>${html}`);
               } else {
                 str = (html.match(/<ul|<ol/gi) || []);
                 // Pasted data contains "ul or ol" tags
                 if (str.length) {
-                  html += (str[str.length-1]).replace(/<(ul|ol)/gi, '<$1>');
+                  html += (str[str.length - 1]).replace(/<(ul|ol)/gi, '<$1>');
+                } else {
+                  html = `<ul>${html}</ul>`;
                 }
-                else {
-                  html = '<ul>'+ html +'</ul>';
-                }
-                node.replaceWith(html);
+                thisNode.replaceWith(html);
               }
             }
 
@@ -1424,7 +1494,6 @@ Editor.prototype = {
               str = str.replace(templIE11, html);
             }
             self.element[0].innerHTML = self.getCleanedHtml(str);
-
           });
         }
       }
@@ -1435,13 +1504,13 @@ Editor.prototype = {
 
   // Get cleaned extra from html
   getCleanedHtml(pastedData) {
-    let i, l, attributeStripper,
-      s = pastedData || '';
+    let attributeStripper;
+    let s = pastedData || '';
 
     const badAttributes = [
-      'start','xmlns','xmlns:o','xmlns:w','xmlns:x','xmlns:m',
-      'onmouseover','onmouseout','onmouseenter','onmouseleave',
-      'onmousemove','onload','onfocus','onblur','onclick',
+      'start', 'xmlns', 'xmlns:o', 'xmlns:w', 'xmlns:x', 'xmlns:m',
+      'onmouseover', 'onmouseout', 'onmouseenter', 'onmouseleave',
+      'onmousemove', 'onload', 'onfocus', 'onblur', 'onclick',
       'style'
     ];
 
@@ -1451,11 +1520,11 @@ Editor.prototype = {
     }
 
     // Remove bad attributes
-    for (i = 0, l = badAttributes.length; i < l; i++) {
-      attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
+    for (let i = 0, l = badAttributes.length; i < l; i++) {
+      attributeStripper = new RegExp(` ${badAttributes[i]}="(.*?)"`, 'gi');
       s = this.stripAttribute(s, badAttributes[i], attributeStripper);
 
-      attributeStripper = new RegExp(' ' + badAttributes[i] + '=\'(.*?)\'','gi');
+      attributeStripper = new RegExp(` ${badAttributes[i]}='(.*?)'`, 'gi');
       s = this.stripAttribute(s, badAttributes[i], attributeStripper);
     }
 
@@ -1487,40 +1556,43 @@ Editor.prototype = {
   htmlEntities(str) {
     // converts special characters (like <) into their escaped/encoded values (like &lt;).
     // This allows you to show to display the string without the browser reading it as HTML.
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
   },
 
   bindWindowActions() {
-    const editorContainer = this.element.closest('.editor-container'),
-      currentElement = this.getCurrentElement();
+    const editorContainer = this.element.closest('.editor-container');
+    const currentElement = this.getCurrentElement();
 
     this.element
     // Work around for Firefox with using keys was not focusing on first child in editor
     // Firefox behaves differently than other browsers
-    .on('mousedown.editor', () => {
-      this.mousedown = true;
-    })
-    .on('focus.editor', () => {
-      if (this.isFirefox && !this.mousedown && this.element === currentElement) {
-        this.setFocus();
-      }
-    })
+      .on('mousedown.editor', () => {
+        this.mousedown = true;
+      })
+      .on('focus.editor', () => {
+        if (this.isFirefox && !this.mousedown && this.element === currentElement) {
+          this.setFocus();
+        }
+      })
 
-    // Work around for Chrome's bug wrapping contents in <span>
-    // http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
-    .on('DOMNodeInserted', (e) => {
-      const target = $(e.target),
-        helper = $('<b>helper</b>');
+      // Work around for Chrome's bug wrapping contents in <span>
+      // http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
+      .on('DOMNodeInserted', (e) => {
+        const target = $(e.target);
+        const helper = $('<b>helper</b>');
 
-      if (e.target.tagName === 'IMG') {
-        target.removeAttr('id style srcset');
-      }
-      else if (e.target.tagName === 'SPAN') {
-        target.before(helper);
-        helper.after(target.contents());
-        helper.add(target).remove();
-      }
-    });
+        if (e.target.tagName === 'IMG') {
+          target.removeAttr('id style srcset');
+        } else if (e.target.tagName === 'SPAN') {
+          target.before(helper);
+          helper.after(target.contents());
+          helper.add(target).remove();
+        }
+      });
 
     editorContainer
       .on('focus.editor', '.editor, .editor-source', function () {
@@ -1540,7 +1612,7 @@ Editor.prototype = {
         editorContainer.parent().find('.editor-source').removeClass('error');
       });
 
-    //Attach Label
+    // Attach Label
     const label = this.element.prevAll('.label');
     for (let i = 0, l = label.length; i < l; i++) {
       label[i].style.cursor = 'default';
@@ -1552,7 +1624,7 @@ Editor.prototype = {
     return this;
   },
 
-  //Restore Text Selection
+  // Restore Text Selection
   restoreSelection(savedSel) {
     const sel = window.getSelection();
 
@@ -1563,12 +1635,12 @@ Editor.prototype = {
     if (savedSel) {
       sel.removeAllRanges();
       for (let i = 0, len = savedSel.length; i < len; i += 1) {
-          sel.addRange(savedSel[i]);
+        sel.addRange(savedSel[i]);
       }
     }
   },
 
-  //Save Text Selection
+  // Save Text Selection
   saveSelection() {
     let ranges;
     const sel = window.getSelection();
@@ -1585,8 +1657,8 @@ Editor.prototype = {
 
   // Get the Element the Caret idea from http://bit.ly/1kRmZIL
   getSelectionStart() {
-    const node = document.getSelection().anchorNode,
-      startNode = (node && node.nodeType === 3 ? node.parentNode : node);
+    const node = document.getSelection().anchorNode;
+    const startNode = (node && node.nodeType === 3 ? node.parentNode : node);
     return startNode;
   },
 
@@ -1597,7 +1669,9 @@ Editor.prototype = {
   // Find element within the selection
   // http://stackoverflow.com/questions/6052870/how-to-know-if-there-is-a-link-element-within-the-selection
   findElementInSelection(tagname, container) {
-    let i, len, el, comprng, selparent;
+    let el;
+    let comprng;
+    let selparent;
     const rng = this.getrange();
 
     if (rng) {
@@ -1610,19 +1684,20 @@ Editor.prototype = {
       }
 
       // Look for an element *within* the selected range
-      if (!rng.collapsed && (rng.text === undefined || rng.text) && selparent.getElementsByTagName) {
+      if (!rng.collapsed && (rng.text === undefined || rng.text) &&
+       selparent.getElementsByTagName) {
         el = selparent.getElementsByTagName(tagname);
         comprng = document.createRange ? document.createRange() : document.body.createTextRange();
 
-        for (i = 0, len = el.length; i < len; i++) {
+        for (let i = 0, len = el.length; i < len; i++) {
           // determine if element el[i] is within the range
           if (document.createRange) { // w3c
             comprng.selectNodeContents(el[i]);
-            if (rng.compareBoundaryPoints(Range.END_TO_START, comprng) < 0 && rng.compareBoundaryPoints(Range.START_TO_END, comprng) > 0) {
+            if (rng.compareBoundaryPoints(Range.END_TO_START, comprng) < 0 &&
+             rng.compareBoundaryPoints(Range.START_TO_END, comprng) > 0) {
               return el[i];
             }
-          }
-          else { // microsoft
+          } else { // microsoft
             comprng.moveToElementText(el[i]);
             if (rng.compareEndPoints('StartToEnd', comprng) < 0 && rng.compareEndPoints('EndToStart', comprng) > 0) {
               return el[i];
@@ -1652,10 +1727,9 @@ Editor.prototype = {
         this.settings.anchor.isClickable = true;
       }
     }
-
   },
 
-  //Run the CE action.
+  // Run the CE action.
   execAction(action) {
     const currentElement = this.getCurrentElement();
 
@@ -1677,7 +1751,7 @@ Editor.prototype = {
       }
     } else {
       // Source Mode
-      switch(action) {
+      switch (action) {
         case 'visual':
           this.toggleSource();
           break;
@@ -1689,7 +1763,6 @@ Editor.prototype = {
           break;
       }
     }
-
   },
 
   insertImage(url) {
@@ -1725,8 +1798,8 @@ Editor.prototype = {
 
   // Set ['foreColor'|'backColor'] button icon color in toolbar
   colorpickerButtonState(action) {
-    const cpBtn = $('[data-action="'+ action +'"]', this.toolbar),
-      cpApi = cpBtn.data('colorpicker');
+    const cpBtn = $(`[data-action="${action}"]`, this.toolbar);
+    const cpApi = cpBtn.data('colorpicker');
 
     let color = document.queryCommandValue(action);
 
@@ -1743,28 +1816,27 @@ Editor.prototype = {
       color = cpApi.rgb2hex(color);
       cpBtn.attr('data-value', color).find('.icon').css('fill', color);
     }
-    return {cpBtn:cpBtn, cpApi:cpApi, color:color};
+    return { cpBtn, cpApi, color };
   },
 
   // Colorpicker actions ['foreColor'|'backColor']
   colorpickerActions(action) {
-    const state = this.colorpickerButtonState(action),
-      cpBtn = state.cpBtn,
-      cpApi = state.cpApi;
+    const state = this.colorpickerButtonState(action);
+    const cpBtn = state.cpBtn;
+    const cpApi = state.cpApi;
 
     cpBtn.on('selected.editor', (e, item) => {
-      const value = ('#' + item.data('value')).toLowerCase();
+      const value = (`#${item.data('value')}`).toLowerCase();
       cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
       if (this.isIe || action === 'foreColor') {
         document.execCommand(action, false, value);
-      }
-
-      // [action: backColor] - for Chrome/Firefox/Safari
-      else {
+      } else {
+        // [action: backColor] - for Chrome/Firefox/Safari
         // Get selection parent element
-        const getSelectionParentElement = function() {
-          let parentEl = null, sel;
+        const getSelectionParentElement = function () {
+          let parentEl = null;
+          let sel;
           if (window.getSelection) {
             sel = window.getSelection();
             if (sel.rangeCount) {
@@ -1773,7 +1845,7 @@ Editor.prototype = {
                 parentEl = parentEl.parentNode;
               }
             }
-          } else if ((sel = document.selection) && sel.type !== 'Control') {
+          } else if ((sel = document.selection) && sel.type !== 'Control') {// eslint-disable-line
             parentEl = sel.createRange().parentElement();
           }
           return parentEl;
@@ -1784,19 +1856,18 @@ Editor.prototype = {
         // so use "fontSize" command to add node, then remove size attribute
         // this fix will conflict with combination of font size & background color
         document.execCommand('fontSize', false, '2');
-        const parent = getSelectionParentElement().parentNode,
-          els = parent.getElementsByTagName('font');
+        const parent = getSelectionParentElement().parentNode;
+        const els = parent.getElementsByTagName('font');
 
         // Using timeout, firefox not executes with current call stack
         setTimeout(() => {
           for (let i = 0, l = els.length; i < l; i++) {
             if (els[i].hasAttribute('size')) {
-              els[i].setAttribute('style', 'background-color: '+ value +';');
+              els[i].setAttribute('style', `background-color: ${value};`);
               els[i].removeAttribute('size');
             }
           }
         }, 0);
-
       }
 
       setTimeout(() => {
@@ -1828,13 +1899,13 @@ Editor.prototype = {
       if (el === 'blockquote') {
         return document.execCommand('indent', false, el);
       }
-      el = '<' + el + '>';
+      el = `<${el}>`;
     }
 
     return document.execCommand('formatBlock', false, el);
   },
 
-  //Get What is Selected
+  // Get What is Selected
   getSelectionData(el) {
     let tagName;
 
@@ -1849,12 +1920,12 @@ Editor.prototype = {
       }
     }
 
-    return {el: el, tagName: tagName};
+    return { el, tagName };
   },
 
   isListItemChild(node) {
-    let parentNode = node.parentNode,
-      tagName = parentNode.tagName.toLowerCase();
+    let parentNode = node.parentNode;
+    let tagName = parentNode.tagName.toLowerCase();
 
     while (this.parentElements.indexOf(tagName) === -1 && tagName !== 'div') {
       if (tagName === 'li') {
@@ -1880,7 +1951,7 @@ Editor.prototype = {
 
     const tooltips = this.toolbar.find('button');
     for (let i = 0, l = tooltips.length; i < l; i++) {
-      let tooltip = $(tooltips[i]).data('tooltip');
+      const tooltip = $(tooltips[i]).data('tooltip');
       if (tooltip && typeof tooltip.destroy === 'function') {
         tooltip.destroy();
       }
@@ -1888,7 +1959,7 @@ Editor.prototype = {
 
     const colorpickers = $('[data-action="foreColor"], [data-action="backColor"]', this.element);
     for (let i = 0, l = colorpickers.length; i < l; i++) {
-      let colorpicker = $(colorpickers[i]).data('colorpicker');
+      const colorpicker = $(colorpickers[i]).data('colorpicker');
       if (colorpicker && typeof colorpicker.destroy === 'function') {
         colorpicker.destroy();
       }
@@ -1897,14 +1968,14 @@ Editor.prototype = {
     this.toolbar.off('touchstart.editor click.editor click.editor mousedown.editor');
     this.toolbar.remove();
     this.toolbar = undefined;
-    this.element.off('mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor ' + this.pasteEvent);
+    this.element.off(`mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor ${this.pasteEvent}`);
     this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
     this.element.prev('.label').off('click.editor');
 
     this.element.closest('.editor-container').off('focus.editor blur.editor');
 
-    let state = this.colorpickerButtonState('foreColor'),
-      cpBtn = state.cpBtn;
+    let state = this.colorpickerButtonState('foreColor');
+    let cpBtn = state.cpBtn;
     cpBtn.off('selected.editor');
 
     state = this.colorpickerButtonState('backColor');
@@ -1915,8 +1986,8 @@ Editor.prototype = {
 
     if (this.modals) {
       for (let i = 0, l = this.modals.length; i < l; i++) {
-        const modal = $(this.modals[i]),
-          modalApi = modal.data('modal');
+        const modal = $(this.modals[i]);
+        const modalApi = modal.data('modal');
         modal.off('beforeclose.editor close.editor open.editor beforeopen.editor');
         if (modalApi && typeof modalApi.destroy === 'function') {
           modalApi.destroy();
@@ -1930,7 +2001,8 @@ Editor.prototype = {
 
   /**
    * Updates the component instance.  Can be used after being passed new settings.
-   * @returns {this}
+   * @param {Object} settings The settings to apply.
+   * @returns {Object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
@@ -1952,27 +2024,25 @@ Editor.prototype = {
     }
 
     if ($('[data-editor="true"]').length === 1) {
-      $('#modal-url-'+ this.id +', #modal-image-'+ this.id).remove();
+      $(`#modal-url-${this.id}, #modal-image-${this.id}`).remove();
     }
 
     return this;
   },
 
   /**
-  * Remove all events and reset back to default.
-  */
-  /**
-  * Detach Events and tear back additions.
-  */
+   * Destroy this component instance and remove all events and reset back to default.
+   * @returns {void}
+   */
   destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 
-
- /**
- * Disable the editable area.
- */
+  /**
+  * Disable the editable area.
+  * @returns {void}
+  */
   disable() {
     this.element.addClass('is-disabled').attr('contenteditable', 'false');
     this.container.addClass('is-disabled');
@@ -1980,6 +2050,7 @@ Editor.prototype = {
 
   /**
   * Enable the editable area.
+  * @returns {void}
   */
   enable() {
     this.element.removeClass('is-disabled is-readonly').attr('contenteditable', 'true');
@@ -1988,6 +2059,7 @@ Editor.prototype = {
 
   /**
   * Make the editable area readonly.
+  * @returns {void}
   */
   readonly() {
     this.element.removeClass('is-readonly').attr('contenteditable', 'false');
@@ -1997,10 +2069,11 @@ Editor.prototype = {
   // Fix to Firefox get focused by keyboard
   setFocus() {
     const el = ($.trim(this.element.html()).slice(0, 1) === '<') ?
-        $(':first-child', this.element)[0] : this.element[0];
+      $(':first-child', this.element)[0] : this.element[0];
 
     window.setTimeout(() => {
-      let sel, range;
+      let sel;
+      let range;
       if (window.getSelection && document.createRange) {
         range = document.createRange();
         range.selectNodeContents(el);
@@ -2015,7 +2088,6 @@ Editor.prototype = {
         range.select();
       }
     }, 1);
-
   },
 
   // Called whenever a paste event has occured
@@ -2026,9 +2098,9 @@ Editor.prototype = {
           const copiedData = e.clipboardData.items[0]; // Get the clipboard data
           // If the clipboard data is of type image, read the data
           if (copiedData.type.indexOf('image') === 0) {
-            const imageFile = copiedData.getAsFile(),
-              // We will use HTML5 FileReader API to read the image file
-              reader = new FileReader();
+            const imageFile = copiedData.getAsFile();
+            // We will use HTML5 FileReader API to read the image file
+            const reader = new FileReader();
 
             reader.onload = function (evt) {
               const result = evt.target.result; // base64 encoded image
@@ -2072,19 +2144,17 @@ Editor.prototype = {
 
     // Convert <span style="mso-spacerun:yes"></span> to string of alternating
     // breaking/non-breaking spaces of same length
-    s = s.replace(/<span\s+style\s*=\s*"\s*mso-spacerun\s*:\s*yes\s*;?\s*"\s*>([\s\u00a0]*)<\/span>/gi, (str, spaces) => {
-      return (spaces.length > 0) ?
-      spaces.replace(/./, ' ').slice(Math.floor(spaces.length / 2)).split('').join('\u00a0') : '';
-    });
+    s = s.replace(/<span\s+style\s*=\s*"\s*mso-spacerun\s*:\s*yes\s*;?\s*"\s*>([\s\u00a0]*)<\/span>/gi, (str, spaces) => ((spaces.length > 0) ?
+      spaces.replace(/./, ' ').slice(Math.floor(spaces.length / 2)).split('').join('\u00a0') : ''));
 
     // Remove line breaks / Mso classes
     s = s.replace(/(\n|\r| class=(\'|")?Mso[a-zA-Z]+(\'|")?)/g, ' ');
 
-    const badTags = ['style', 'script','applet','embed','noframes','noscript'];
+    const badTags = ['style', 'script', 'applet', 'embed', 'noframes', 'noscript'];
 
     // Remove everything in between and including "badTags"
     for (let i = 0, l = badTags.length; i < l; i++) {
-      const re = new RegExp('<'+badTags[i]+'.*?'+badTags[i]+'(.*?)>', 'gi');
+      const re = new RegExp(`<${badTags[i]}.*?${badTags[i]}(.*?)>`, 'gi');
       s = s.replace(re, '');
     }
 
@@ -2100,22 +2170,22 @@ Editor.prototype = {
 
   // Strip styles
   stripStyles(s, styleStripper) {
-    const stylesToKeep = ['color','background','font-weight','font-style','text-decoration','text-align'];
+    const stylesToKeep = ['color', 'background', 'font-weight', 'font-style', 'text-decoration', 'text-align'];
     return s.replace(styleStripper, (m) => {
       m = m.replace(/( style=|("|\'))/gi, '');
       const attributes = m.split(';');
       let strStyle = '';
       for (let i = 0; i < attributes.length; i++) {
         const entry = attributes[i].split(':');
-        strStyle += (stylesToKeep.indexOf(entry[0]) > -1) ? entry[0] +':'+ entry[1] +';' : '';
+        strStyle += (stylesToKeep.indexOf(entry[0]) > -1) ? `${entry[0]}:${entry[1]};` : '';
       }
-      return (strStyle !=='') ? (' style="'+ strStyle +'"') : '';
+      return (strStyle !== '') ? ` style="${strStyle}"` : '';
     });
   },
 
   getIndent(level) {
-    let result = '',
-      i = level * 2;
+    let result = '';
+    let i = level * 2;
     if (level > -1) {
       while (i--) {
         result += ' ';
@@ -2126,9 +2196,9 @@ Editor.prototype = {
 
   formatHtml(html) {
     html = html.trim();
-    let result = '',
-      indentLevel = 0,
-      tokens = html.split(/</);
+    let result = '';
+    let indentLevel = 0;
+    const tokens = html.split(/</);
 
     for (let i = 0, l = tokens.length; i < l; i++) {
       const parts = tokens[i].split(/>/);
@@ -2143,15 +2213,15 @@ Editor.prototype = {
         if (i > 0) {
           result += '<';
         }
-        result += parts[0].trim() + '>\n';
+        result += `${parts[0].trim()} + >\n`;
         if (parts[1].trim() !== '') {
-          result += this.getIndent(indentLevel) + parts[1].trim().replace(/\s+/g, ' ') + '\n';
+          result += `${this.getIndent(indentLevel) + parts[1].trim().replace(/\s+/g, ' ')}\n`;
         }
         if (parts[0].match(/^(area|base|br|col|command|embed|hr|img|input|link|meta|param|source)/)) {
           indentLevel--;
         }
       } else {
-        result += this.getIndent(indentLevel) + parts[0] + '\n';
+        result += `${this.getIndent(indentLevel) + parts[0]}\n`;
       }
     }
     return result.trim();
@@ -2159,4 +2229,7 @@ Editor.prototype = {
 
 };
 
+/* eslint-enable consistent-return */
+/* eslint-enable no-restricted-syntax */
+/* eslint-enable no-useless-escape */
 export { Editor, COMPONENT_NAME };
