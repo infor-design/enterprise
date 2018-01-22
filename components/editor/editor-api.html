@@ -38,18 +38,6 @@ page for accessibility
       </tr>
       <tr>
         <td>
-          productName
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Additional product name information to display
-
-        </td>
-      </tr>
-      <tr>
-        <td>
           pasteAsPlainText
         </td>
         <td>
@@ -116,34 +104,6 @@ show a checkbox to allow the user to make clickable links in the link popup.
 
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>createURLModal</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Function that creates the Url Modal Dialog. This can be customized by making
-a modal with ID <code>#modal-url-{this.id}</code></p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>createImageModal</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Function that creates the Image Dialog. This can be customized by making a
-modal with ID <code>#modal-image-{this.id}</code></p>
-
-        </td>
-        <td>
           
 void
         </td>
@@ -173,22 +133,12 @@ Object
           
         </td>
         <td>
-          <p>Remove all events and reset back to default.</p>
+          <p>Destroy this component instance and remove all events and reset back to default.</p>
 
         </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>destroy</td>
         <td>
           
-        </td>
-        <td>
-          <p>Detach Events and tear back additions.</p>
-
-        </td>
-        <td>
+void
         </td>
       </tr>
       <tr>
@@ -215,6 +165,8 @@ void
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -227,12 +179,90 @@ void
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
+  
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>beforepaste
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>pastedData (String)
+        
+        = .
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before paste.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afterpaste
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>pastedData (String)
+        
+        = .
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after paste.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

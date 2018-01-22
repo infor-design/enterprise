@@ -1,4 +1,9 @@
 /* jshint esversion:6 */
+
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
+
 import { Environment as env } from '../utils/environment';
 import { debounce } from '../utils/debounced-resize';
 import * as debug from '../utils/debug';
@@ -37,9 +42,6 @@ const EDITOR_DEFAULTS = {
   anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false },
   image: { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' }
 };
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable consistent-return */
 
 /**
 * The Editor Component is displays and edits markdown.
@@ -52,7 +54,6 @@ const EDITOR_DEFAULTS = {
 * @param {boolean} secondHeader  Allows you to set if the second header inserted
  is a h3 or h4 element. You should set this to match the structure of the parent
   page for accessibility
-* @param {string} productName  Additional product name information to display
 * @param {string} pasteAsPlainText  If true, when you paste into the editor
  the element will be unformatted to plain text.
 * @param {string} anchor  An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
@@ -323,6 +324,7 @@ Editor.prototype = {
 
   /**
   * Switch between source and editing toolbar.
+  * @returns {void}
   */
   switchToolbars() {
     this.destroyToolbar();
@@ -831,7 +833,8 @@ Editor.prototype = {
 
   /**
   * Function that creates the Url Modal Dialog. This can be customized by making
-   a modal with ID `#modal-url-{this.id}`
+   a modal with ID `#modal-url-${this.id}`
+  * @private
   * @returns {void}
   */
   createURLModal() {
@@ -893,6 +896,7 @@ Editor.prototype = {
   /**
    * Function that creates the Image Dialog. This can be customized by making a
     modal with ID `#modal-image-{this.id}`
+   * @private
    * @returns {void}
    */
   createImageModal() {
@@ -1301,6 +1305,14 @@ Editor.prototype = {
       self.pastedData = self.isIe11 ?
         pastedData : self.getCleanedHtml(pastedData);
 
+      /**
+      * Fires before paste.
+      *
+      * @event beforepaste
+      * @type {Object}
+      * @property {Object} event - The jquery event object
+      * @property {String} pastedData .
+      */
       $.when(self.element.triggerHandler('beforepaste', [{ pastedData: self.pastedData }])).done(() => {
         if (self.pastedData && !e.defaultPrevented) {
           if (!self.isIe11) {
@@ -1313,6 +1325,15 @@ Editor.prototype = {
           }
           self.pasteHtmlAtCaret(self.pastedData);
         }
+
+        /**
+        * Fires after paste.
+        *
+        * @event afterpaste
+        * @type {Object}
+        * @property {Object} event - The jquery event object
+        * @property {String} pastedData .
+        */
         self.element.triggerHandler('afterpaste', [{ pastedData: self.pastedData }]);
         self.pastedData = null;
       });
@@ -2010,11 +2031,9 @@ Editor.prototype = {
   },
 
   /**
-  * Remove all events and reset back to default.
-  */
-  /**
-  * Detach Events and tear back additions.
-  */
+   * Destroy this component instance and remove all events and reset back to default.
+   * @returns {void}
+   */
   destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
@@ -2031,6 +2050,7 @@ Editor.prototype = {
 
   /**
   * Enable the editable area.
+  * @returns {void}
   */
   enable() {
     this.element.removeClass('is-disabled is-readonly').attr('contenteditable', 'true');
@@ -2039,6 +2059,7 @@ Editor.prototype = {
 
   /**
   * Make the editable area readonly.
+  * @returns {void}
   */
   readonly() {
     this.element.removeClass('is-readonly').attr('contenteditable', 'false');
