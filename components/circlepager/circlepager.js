@@ -11,15 +11,18 @@ const CIRCLEPAGER_DEFAULTS = {
   startingSlide: null,
   loop: false
 };
+
 /**
-* The Circle Pager Displays content in a sliding carousel and has paging buttons.
-*
-* @class CirclePager
-* @param {Integer} slidesToShow  The number of slides to show in one view / pane
-* @param {Integer} startingSlide  First showing slide/group, an 0-based integer
-* @param {boolean} loop   Setting loop: true will loop back after next/previous reached to end
-*
-*/
+ * The Circle Pager Displays content in a sliding carousel and has paging buttons.
+ *
+ * @class CirclePager
+ * @param {String} element The component element.
+ * @param {String} settings The component settings.
+ * @param {Integer} slidesToShow The number of slides to show in one view / pane
+ * @param {Integer} startingSlide First showing slide/group, an 0-based integer
+ * @param {boolean} loop Setting loop: true will loop back after next/previous reached to end
+ *
+ */
 function CirclePager(element, settings) {
   this.settings = utils.mergeSettings(element, settings, CIRCLEPAGER_DEFAULTS);
 
@@ -43,7 +46,11 @@ CirclePager.prototype = {
     }
   },
 
-  // Set elements
+  /**
+   * Set elements
+   * @private
+   * @returns {void}
+   */
   setElements() {
     const s = this.settings;
 
@@ -58,30 +65,40 @@ CirclePager.prototype = {
 
     this.activeIndex = s.startingSlide !== null &&
       s.startingSlide > -1 && s.startingSlide < this.slides.length ?
-        s.startingSlide : 0;
+      s.startingSlide : 0;
   },
 
-  // Create controls
+  /**
+   * Create controls
+   * @private
+   * @returns {void}
+   */
   createControls() {
-    let len = this.slides.length,
-      html = '<div class="controls">',
-      htmlContent = '',
-      numOfButtons = 0,
-      i, l, slide, temp, href, text, buttonText,
-      last, lastIndex, isSingle, isDisabled,
-      previousButton, nextButton;
+    const len = this.slides.length;
+    let html = '<div class="controls">';
+    let htmlContent = '';
+    let numOfButtons = 0;
+    let slide;
+    let temp;
+    let href;
+    let text;
+    let buttonText;
+    let last;
+    let lastIndex;
+    let isSingle;
+    let isDisabled;
 
-    for (i = 0, l = len; i < l; i += this.slidesToShow) {
+    for (let i = 0, l = len; i < l; i += this.slidesToShow) {
       temp = '';
       numOfButtons++;
       isSingle = (this.slidesToShow === 1) || (len - i === 1);
-      text = Locale.translate(isSingle ? 'SlideOf' : 'SlidesOf') + '';
+      text = Locale.translate(isSingle ? 'SlideOf' : 'SlidesOf');
       // Keep href in english language only
       href = isSingle ? '#slide {0} of {1}' : '#slides {0} and {1} of {2}';
 
       // Collect as much bullets need to present
       for (let g = 0; g < this.slidesToShow && (i + g) < len; g++) {
-        temp += (i + g + 1) + ', ';
+        temp += `${(i + g + 1)}, `;
       }
       text = text.replace(isSingle ? '{1}' : '{2}', len);
       href = href.replace(isSingle ? '{1}' : '{2}', len);
@@ -111,10 +128,8 @@ CirclePager.prototype = {
           buttonText : text.replace('{0}', temp);
 
         href = href.replace('{0}', temp);
-      }
-
-      // Controls for multiple slides in view
-      else {
+      } else {
+        // Controls for multiple slides in view
         temp = temp.substr(0, lastIndex);
         text = text.replace('{1}', last).replace('{0}', temp);
         href = href.replace('{1}', last).replace('{0}', temp);
@@ -122,23 +137,29 @@ CirclePager.prototype = {
 
       href = href.toLowerCase().replace(/[\s,--]+/g, '-');
 
-      htmlContent += '<a href="'+ href +'" class="control-button hyperlink hide-focus"'+ isDisabled +'><span class="audible">'+ text +'</span></a>';
+      htmlContent += `<a href="${href}" class="control-button hyperlink hide-focus"${isDisabled}><span class="audible">${text}</span></a>`;
     }
 
-    html += htmlContent + '</div>';
+    html += `${htmlContent}</div>`;
 
     // Previous/Next buttons
     this.isBulletsNav = this.element.width() > numOfButtons * 29;
-    previousButton = $('.btn-previous', this.element);
-    nextButton = $('.btn-next', this.element);
+    const previousButton = $('.btn-previous', this.element);
+    const nextButton = $('.btn-next', this.element);
     if (!this.isBulletsNav) {
       if (!previousButton.length) {
-        html += '<button class="btn-previous" type="button">' + $.createIcon('left-arrow') + '<span class="audible">'+
-            Locale.translate('Previous') +'</span></button>';
+        html += '' +
+          `<button class="btn-previous" type="button">
+            ${$.createIcon('left-arrow')}
+            <span class="audible"> ${Locale.translate('Previous')}</span>
+          </button>`;
       }
       if (!nextButton.length) {
-        html += '<button class="btn-next" type="button">' + $.createIcon('right-arrow') + '<span class="audible">'+
-            Locale.translate('Next') +'</span></button>';
+        html += '' +
+          `<button class="btn-next" type="button">
+            ${$.createIcon('right-arrow')}
+            <span class="audible">${Locale.translate('Next')}</span>
+          </button>`;
       }
     } else {
       previousButton.add(nextButton).remove();
@@ -153,28 +174,44 @@ CirclePager.prototype = {
     }
   },
 
-  // Check if given element is visible in container
+  /**
+   * Check if given element is visible in container
+   * @private
+   * @param {Object} element to check.
+   * @returns {Boolean} -1 if not in container
+   */
   isVisibleInContainer(element) {
     if (element && element[0]) {
-      const eRect = element[0].getBoundingClientRect(),
-        cRect = this.element[0].getBoundingClientRect();
+      const eRect = element[0].getBoundingClientRect();
+      const cRect = this.element[0].getBoundingClientRect();
+
       return (eRect.left > cRect.left && eRect.left < (cRect.left + cRect.width) &&
         eRect.top > cRect.top && eRect.top < (cRect.top + cRect.height));
     }
     return -1;
   },
 
-  // Update number of slides to show in view
+  /**
+   * Update number of slides to show in view
+   * @private
+   * @param {Object} numOfSlides to show.
+   * @returns {Object} this api
+   */
   updateSlidesToShow(numOfSlides) {
     if (!this.isActive) {
       return;
     }
     this.settings.slidesToShow = numOfSlides || 1;
     this.updated();
-    return this;
+    return this; // eslint-disable-line
   },
 
-  // Make sure max number of slides to show in view
+  /**
+   * Make sure max number of slides to show in view
+   * @private
+   * @param {Object} numOfSlides to show.
+   * @returns {void}
+   */
   responsiveSlidesToShow(numOfSlides) {
     if (!this.isActive) {
       return;
@@ -193,9 +230,11 @@ CirclePager.prototype = {
   },
 
   /**
-  * Show a slide to First Slide
-  * @param {string} index  The index of the slide to show (0 based)
-  */
+   * Show a slide to First Slide
+   * @private
+   * @param {string} index  The index of the slide to show (0 based)
+   * @returns {void}
+   */
   show(index) {
     if (!this.isActive) {
       return;
@@ -203,7 +242,7 @@ CirclePager.prototype = {
     index = typeof index !== 'undefined' ? index : this.activeIndex;
     this.activeIndex = index;
 
-    const left = index > 0 ? ((Locale.isRTL() ? '' : '-') + (index * 100) +'%') : 0;
+    const left = index > 0 ? (`${(Locale.isRTL() ? '' : '-') + (index * 100)}%`) : 0;
     this.controlButtons.removeClass('is-active').eq(index).addClass('is-active');
     this.container[0].style.left = left;
 
@@ -211,7 +250,9 @@ CirclePager.prototype = {
     if (!this.isBulletsNav) {
       this.element.addClass('is-bullets-nav-hidden');
       this.controlButtons.find('span').addClass('audible').end()
-        .eq(index).find('span').removeClass('audible');
+        .eq(index)
+        .find('span')
+        .removeClass('audible');
     } else {
       this.element.removeClass('is-bullets-nav-hidden');
       this.controlButtons.find('span').addClass('audible');
@@ -225,25 +266,36 @@ CirclePager.prototype = {
   },
 
   /**
-  * Move to First Slide
-  */
+   * Move to First Slide
+   * @private
+   * @returns {void}
+   */
   first() {
     this.show(0);
   },
 
   /**
-  * Move to Last Slide
-  */
+   * Move to Last Slide
+   * @private
+   * @returns {void}
+   */
   last() {
     this.show(Math.round(this.slides.length / this.slidesToShow) - 1);
   },
 
   /**
-  * Move to Previous Slide
-  */
-  prev() {
-    const prev = this.activeIndex > 0 ?
-      this.activeIndex - 1 : (this.settings.loop ? Math.round(this.slides.length / this.slidesToShow) - 1 : 0);
+   * Move to Previous Slide
+   * @private
+   * @returns {void}
+   */
+  prev() {// eslint-disable-line
+    let prev;
+
+    if (this.activeIndex > 0) {
+      prev = this.activeIndex - 1;
+    } else {
+      prev = this.settings.loop ? Math.round(this.slides.length / this.slidesToShow) - 1 : 0;
+    }
 
     if (this.slides[prev].isDisabled) {
       setTimeout(() => {
@@ -257,9 +309,16 @@ CirclePager.prototype = {
 
   /**
   * Move to Next Slide
+  * @private
+  * @returns {void}
   */
-  next() {
-    const next = this.activeIndex >= Math.round(this.slides.length / this.slidesToShow) - 1 ? (this.settings.loop ? 0 : this.activeIndex) : this.activeIndex + 1;
+  next() {// eslint-disable-line
+    let next;
+    if (this.activeIndex >= Math.round(this.slides.length / this.slidesToShow) - 1) {
+      next = this.settings.loop ? 0 : this.activeIndex;
+    } else {
+      next = this.activeIndex + 1;
+    }
 
     if (this.slides[next].isDisabled) {
       setTimeout(() => {
@@ -271,23 +330,31 @@ CirclePager.prototype = {
     this.show(next);
   },
 
-  // Make active
+  /**
+  * Make active
+  * @private
+  * @returns {void}
+  */
   showCollapsedView() {
     this.isActive = true;
     this.element.addClass('is-active');
-    this.container[0].style.width = (100 * this.slides.length) + '%';
+    this.container[0].style.width = `${(100 * this.slides.length)}%`;
     if (this.settings.slidesToShow > 1 &&
        (this.slidesJQ.eq(0).width() * this.slidesToShow > this.element.width())) {
       this.responsiveSlidesToShow(this.slidesToShow - 1);
       return;
     }
     for (let i = 0, l = this.slidesJQ.length; i < l; i++) {
-      this.slidesJQ[i].style.width = ((100 / this.slidesToShow) / this.slides.length) + '%';
+      this.slidesJQ[i].style.width = `${((100 / this.slidesToShow) / this.slides.length)}%`;
     }
     this.show();
   },
 
-  // Make un-active
+  /**
+  * Make un-active
+  * @private
+  * @returns {void}
+  */
   showExpandedView() {
     this.isActive = false;
     this.element.removeClass('is-active');
@@ -296,8 +363,12 @@ CirclePager.prototype = {
     this.container[0].style.left = '';
   },
 
-  // Initialize active slide
-  initActiveSlide() {
+  /**
+  * Initialize active slide
+  * @private
+  * @returns {void}
+  */
+  initActiveSlide() {// eslint-disable-line
     if (this.slides[this.activeIndex].isDisabled) {
       this.next();
       return false;
@@ -305,6 +376,11 @@ CirclePager.prototype = {
     this.show();
   },
 
+  /**
+   * Removes event bindings from the instance.
+   * @private
+   * @returns {Object} The api
+   */
   unbind() {
     $('body').off('resize.circlepager');
     this.element.off('focus.circlepager keydown.circlepager', '*');
@@ -315,6 +391,11 @@ CirclePager.prototype = {
     return this;
   },
 
+  /**
+   * Resync the UI and Settings.
+   * @param {Object} settings The settings to apply.
+   * @returns {Object} The api
+   */
   updated(settings) {
     if (typeof settings !== 'undefined') {
       this.settings = utils.mergeSettings(this.element, settings, CIRCLEPAGER_DEFAULTS);
@@ -324,13 +405,20 @@ CirclePager.prototype = {
       .init();
   },
 
-  // Teardown
+  /**
+   * Destroy this component instance and remove the link from its base element.
+   * @returns {void}
+   */
   destroy() {
     this.unbind();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 
-  // Handle events
+  /**
+   * Attach Events used by the Control
+   * @private
+   * @returns {void}
+   */
   handleEvents() {
     const self = this;
 
@@ -353,7 +441,7 @@ CirclePager.prototype = {
     this.controlButtons = $('.control-button', this.element);
 
     for (let i = 0, l = this.controlButtons.length; i < l; i++) {
-      let btn = $(this.controlButtons[i]);
+      const btn = $(this.controlButtons[i]);
       btn.hideFocus();
 
       // Handle clicks for bottom bullet links
@@ -366,12 +454,11 @@ CirclePager.prototype = {
       });
     }
 
-
     // Handle keyboard events
 
     // Prevent hidden slide's content to be get focused
     // on focusable elements in slides content
-    this.element.on('focus.circlepager', '*', function(e) {
+    this.element.on('focus.circlepager', '*', function(e) {// eslint-disable-line
       let handled = false;
       if (!self.isVisibleInContainer($(this))) {
         const canfocus = self.element.find(':focusable');
@@ -390,16 +477,16 @@ CirclePager.prototype = {
     });
     // Keydown on focusable elements in slides content to
     // prevent hidden slide's content to be get focused
-    this.element.on('keydown.circlepager', '*', function(e) {
+    this.element.on('keydown.circlepager', '*', function(e) {// eslint-disable-line
       let handled = false;
-      const key = e.which || e.keyCode || e.charCode || 0,
-        canfocus = $(':focusable'),
-        index = canfocus.index(this);
+      const key = e.which || e.keyCode || e.charCode || 0;
+      const canfocus = $(':focusable');
+      const index = canfocus.index(this);
 
-      if (key === 9) {//tab
+      if (key === 9) { // tab
         // Using shift key with tab (going backwards)
         if (e.shiftKey) {
-          for (let i = index-1; i >= 0; i--) {
+          for (let i = index - 1; i >= 0; i--) {
             if ((self.element.has(canfocus.eq(i)).length < 1) ||
                 (self.isVisibleInContainer(canfocus.eq(i)))) {
               canfocus.eq(i).focus();
@@ -407,13 +494,10 @@ CirclePager.prototype = {
               break;
             }
           }
-        }
-        // Using only tab key (going forward)
-        else {
-          if (!self.isVisibleInContainer(canfocus.eq(index + 1))) {
-            self.controlButtons.first().focus();
-            handled = true;
-          }
+        } else if (!self.isVisibleInContainer(canfocus.eq(index + 1))) {
+          // Using only tab key (going forward)
+          self.controlButtons.first().focus();
+          handled = true;
         }
       }
       e.stopPropagation();
@@ -423,10 +507,10 @@ CirclePager.prototype = {
     });
 
     // Control buttons
-    this.controlButtons.on('keydown.circlepager', function(e) {
+    this.controlButtons.on('keydown.circlepager', (e) => {// eslint-disable-line
       let handled = false;
-      const key = e.which || e.keyCode || e.charCode || 0,
-        isRTL = Locale.isRTL();
+      const key = e.which || e.keyCode || e.charCode || 0;
+      const isRTL = Locale.isRTL();
 
       // Left and Right arrow keys
       if ([37, 39].indexOf(key) !== -1) {
@@ -438,9 +522,8 @@ CirclePager.prototype = {
           } else {
             self.last();
           }
-        }
-        // Left and Right arrow keys to navigate
-        else {
+        } else {
+          // Left and Right arrow keys to navigate
           if ((!isRTL && key === 37) || (isRTL && key === 39)) {
             self.prev();
           } else {
@@ -461,7 +544,6 @@ CirclePager.prototype = {
     $('body').on('resize.circlepager', () => {
       self.responsiveSlidesToShow();
     });
-
   }
 
 };

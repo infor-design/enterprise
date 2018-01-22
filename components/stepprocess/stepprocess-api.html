@@ -1,137 +1,16 @@
   <section>
   
     
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          linearProgression
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          The Main Application Name to display in the header. (Defaults to false)
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          folderIconOpen
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A specific folder open icon. (Defaults to 'caret-up')
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          folderIconClosed
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A specific folder close icon. (Defaults to 'caret-down')
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          stepList
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled).
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          stepLi
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          jQuery selector for the step elements.
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          stepLink
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          jQuery selector for the step link elements.
 
-        </td>
-      </tr>
-      <tr>
-        <td>
-          stepFolder
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          jQuery selector for the step folder elements.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnPrev
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          jQuery selector for the previous step button.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          btnNext
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          jQuery selector for the next step button.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          beforeSelectStep
-        </td>
-        <td>
-          Function
-        </td>
-        <td>
-          A callback (function or promise) that gives args: stepLink (the step link element) and isStepping (whether we are prev/next'ing or not).
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
+  
+    
 
 
   <h2>Methods</h2>
@@ -144,53 +23,86 @@
     </thead>
     <tbody>
       <tr>
-        <td>goToNextStep</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Go to the next step element</p>
-
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>goToPreviousStep</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Go to the previous step element</p>
-
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>selectStep</td>
+        <td>updated</td>
         <td>
           
                 
-                  <span>stepLink (object) = The jquery object for the step link element
- </span>
-                
-                  <span>linearDirection (string) = Which direction we are traveling
+                  <span>settings (Object) = The settings to apply.
  </span>
                 
           
         </td>
         <td>
-          <p>Select a step</p>
+          <p>Resync the UI and Settings.</p>
 
         </td>
         <td>
+          The api
+Object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Destroy this component instance and remove the link from its base element.</p>
+
+        </td>
+        <td>
+          
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>selected
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>stepLink (Object)
+        
+        = element
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when selected step link.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
