@@ -15,9 +15,10 @@ We are migrating the Soho codebase to an ES6-based project.  Major reasons inclu
 - Break up components/behaviors/utils more logically.
 - (optional?) separate jQuery component definitions from standard JS constructors?
 
-# Current Status
+# Resources and Links on ES6
+https://medium.com/@timoxley/named-exports-as-the-default-export-api-670b1b554f65
 
-Last updated:  *December 21, 2017*
+# Current Status
 
 See the file [`<project root>/components/index.js`](./components/index.js) to see which Soho components are currently being bundled.  There's also a human-readable list being maintained by [Ed Coyle](mailto:ed.coyle@infor.com) located [here](./ES6-CONVERTED.md).
 

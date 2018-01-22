@@ -99,6 +99,11 @@ module.exports = {
     // https://eslint.org/docs/rules/no-mixed-operators
     'no-mixed-operators': ['off'],
 
+    // Require modules with a single export to use a default export
+    // Will ignore because of https://medium.com/@timoxley/named-exports-as-the-default-export-api-670b1b554f65
+    // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/prefer-default-export.md
+    'import/prefer-default-export': 'off'
+
   },
   'globals': {
     '$': false,
@@ -109,6 +114,7 @@ module.exports = {
     'grunt': false,
     'jQuery': false,
     'localStorage': false,
-    'Blob': false
+    'Blob': false,
+    'd3': false,
   }
 };

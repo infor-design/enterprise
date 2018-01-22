@@ -23,13 +23,13 @@ stringUtils.splice = function splice(str, start, delCount, newSubStr) {
  * Takes a string with possible duplicate characters and returns a string
  * containing ALL unique characters.  Useful for construction of REGEX objects
  * with characters from an input field, etc.
- * @param {string} str
- * @returns {string}
+ * @param {string} str The string to process
+ * @returns {string} The processed string
  */
 stringUtils.removeDuplicates = function removeDuplicates(str) {
   return str
     .split('')
-    .filter(function(item, pos, self) {
+    .filter(function(item, pos, self) { //eslint-disable-line
       return self.indexOf(item) === pos;
     })
     .join('');
@@ -44,4 +44,4 @@ stringUtils.containsHTML = function containsHTML(str) {
   return /<[a-z][\s\S]*>/i.test(str);
 };
 
-export { stringUtils };
+export { stringUtils }; //eslint-disable-line

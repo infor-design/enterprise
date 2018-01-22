@@ -1,13 +1,13 @@
-import { CirclePager, COMPONENT_NAME } from './circlepager';
+import { Stepprocess, COMPONENT_NAME } from './stepprocess';
 
 // Initialize the plugin (Once)
-$.fn.circlepager = function (settings) {
+$.fn.stepprocess = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, COMPONENT_NAME, new CirclePager(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new Stepprocess(this, settings));
     }
   });
 };

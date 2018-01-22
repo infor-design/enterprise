@@ -91,7 +91,6 @@ ComponentName.prototype = {
 
   /**
    * Teardown - Remove added markup and events.
-   * @returns {object} The Component prototype, useful for chaining.
    * @private
    */
   destroy() {

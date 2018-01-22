@@ -43,12 +43,14 @@ All the following Soho Components have been converted to ES6:
 * Popover
 * Progress
 * Rating
+* Scrollaction
 * Searchfield
 * Signin
 * Slider
 * Spinbox
 * Splitter
 * Stepchart
+* Step Process
 * Swaplist
 * Tag
 * Textarea
@@ -86,5 +88,3 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 * Angular 1.0 Directives (TJM tested should work)
 * Charts (TJM In Progress)
 * Lookup
-* Scrollaction
-* Step Process

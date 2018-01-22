@@ -1,6 +1,7 @@
   <section>
   
     
+
   <h2>Settings</h2>
   <table class="section-table">
     <thead>
@@ -11,43 +12,48 @@
     <tbody>
       <tr>
         <td>
-          slidesToShow
+          dataset
         </td>
         <td>
-          Integer
+          array
         </td>
         <td>
-          The number of slides to show in one view / pane
+          The data to use in the chart.
 
         </td>
       </tr>
       <tr>
         <td>
-          startingSlide
+          animate
         </td>
         <td>
-          Integer
+          
         </td>
         <td>
-          First showing slide/group, an 0-based integer
+          true|false - will do or not do the animation.
+'initial' will do only first time the animation.
 
         </td>
       </tr>
       <tr>
         <td>
-          loop
+          tooltip
         </td>
         <td>
-          boolean
+          string
         </td>
         <td>
-          Setting loop: true will loop back after next/previous reached to end
+          Tooltip conetnts
 
         </td>
       </tr>
     </tbody>
   </table>
 
+
+
+  
+    
 
 
   <h2>Methods</h2>
@@ -60,22 +66,33 @@
     </thead>
     <tbody>
       <tr>
-        <td>updated</td>
+        <td>init</td>
         <td>
-          
-                
-                  <span>settings (Object) = The settings to apply.
- </span>
-                
           
         </td>
         <td>
-          <p>Resync the UI and Settings.</p>
+          <p>Do initialization, build up and / or add events ect.</p>
 
         </td>
         <td>
-          The api
-Object
+          The bullet chart prototype for chaining.
+object
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Handle updated settings and values.</p>
+
+        </td>
+        <td>
+          [
+description
+]
+
         </td>
       </tr>
       <tr>
@@ -84,7 +101,7 @@ Object
           
         </td>
         <td>
-          <p>Destroy this component instance and remove the link from its base element.</p>
+          <p>Teardown - Remove added markup and events.</p>
 
         </td>
         <td>
