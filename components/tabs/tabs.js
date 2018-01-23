@@ -71,7 +71,6 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * @constructor
  * @param {HTMLElement|jQuery[]} element the base element for this component
  * @param {object} settings incoming settings
- * @returns {this} component instance
  */
 function Tabs(element, settings) {
   this.element = $(element);
@@ -358,8 +357,8 @@ Tabs.prototype = {
     self.panels.appendTo(self.container);
 
     const excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)';
-    const tabs = this.tablist.children(`li ${excludes}`);
-    let selected = this.tablist.children(`li.is-selected ${excludes}`);
+    const tabs = this.tablist.children(`li${excludes}`);
+    let selected = this.tablist.children(`li.is-selected${excludes}`);
     let selectedAnchor = selected.children('a');
     let hash;
     let matchingTabs;

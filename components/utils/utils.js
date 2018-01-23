@@ -709,12 +709,11 @@ DOM.getDimensions = function getDimensions(el) {
   const rect = el.getBoundingClientRect();
   const rectObj = {};
 
-  const rectProps = Object.keys(rect);
-  rectProps.forEach((prop) => {
+  for (let prop in rect) { // eslint-disable-line
     if (!Number.isNaN(Number(rect[prop]))) {
       rectObj[prop] = rect[prop];
     }
-  });
+  }
 
   return rectObj;
 };
