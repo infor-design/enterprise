@@ -84,9 +84,7 @@ Search Input field in the open combo box
           boolean
         </td>
         <td>
-          If true, displays 
-<optgroup>
- headers in the list even
+          If true, displays optgroup headers in the list even
 if no selectable options are present underneath.
 
         </td>
@@ -149,7 +147,7 @@ the list is opened.  If false, the first AJAX call's results are cached.
           boolean
         </td>
         <td>
-          Typing Buffer Delay in ms
+          Typing buffer delay in ms
 
         </td>
       </tr>
@@ -185,16 +183,40 @@ the list is opened.  If false, the first AJAX call's results are cached.
     </thead>
     <tbody>
       <tr>
-        <td>activate</td>
+        <td>close</td>
         <td>
-          
-                
-                  <span>useSearchInput () =  </span>
-                
           
         </td>
         <td>
-          <p>Focus the input Element</p>
+          <p>Alias that works with the global "closeChildren" method.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>isOpen</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Return true/false depending on if the list is open.</p>
+
+        </td>
+        <td>
+          The current state (open = true).
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>toggleList</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Toggle the current state of the list between open and closed.</p>
 
         </td>
         <td>
@@ -205,56 +227,13 @@ the list is opened.  If false, the first AJAX call's results are cached.
         <td>
           
                 
-                  <span>value () =  </span>
-                
-                  <span>option (value) = A string containing the value to look for. (Case insensitive)
+                  <span>value (string) = A string containing the value to look for. (Case insensitive)
  </span>
                 
           
         </td>
         <td>
           <p>Select an option by the value.</p>
-
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>getDataAttributes</td>
-        <td>
-          
-                
-                  <span>attr (array) = List of all attributes.
- </span>
-                
-                  <span>attrToExclude (array) = List of attributes to be excluded from passed list.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Get data attributes from passed list of attributes</p>
-
-        </td>
-        <td>
-          It will return an object containing two keys
-str - string of attributes
-obj - object of attributes
-object
-        </td>
-      </tr>
-      <tr>
-        <td>setCode</td>
-        <td>
-          
-                
-                  <span>code (string) = The value to match and set on the value element.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>External Facing function to set value by code - Depricated set on select and trigger updated.</p>
 
         </td>
         <td>
@@ -282,6 +261,8 @@ object
 
         </td>
         <td>
+          True if the element is disabled.
+boolean
         </td>
       </tr>
       <tr>
@@ -309,12 +290,31 @@ object
         </td>
       </tr>
       <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = The settings object to use.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Tear down events and restore to original state.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
         <td>destroy</td>
         <td>
           
         </td>
         <td>
-          <p>Tear down events and restore to default.</p>
+          <p>Tear down events and restore to original state.</p>
 
         </td>
         <td>

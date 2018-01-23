@@ -1,4 +1,3 @@
-/* eslint-disable */
 import * as debug from '../utils/debug';
 import { utils, DOM } from '../utils/utils';
 import { Environment as env } from '../utils/environment';
@@ -22,7 +21,7 @@ const COMPONENT_NAME = 'dropdown';
 *  will not allow client side filter
 * @property {boolean} noSearch  If true, disables the ability of the user to enter text in the
 *  Search Input field in the open combo box
-* @property {boolean} showEmptyGroupHeaders  If true, displays <optgroup> headers in the list even
+* @property {boolean} showEmptyGroupHeaders  If true, displays optgroup headers in the list even
 *  if no selectable options are present underneath.
 * @property {boolean} source  A function that can do an ajax call.
 * @property {boolean} sourceArguments  If a source method is defined, this flexible object can be
@@ -30,7 +29,7 @@ const COMPONENT_NAME = 'dropdown';
 * @property {boolean} reloadSourceOnOpen  If set to true, will always perform an ajax call whenever
 *  the list is opened.  If false, the first AJAX call's results are cached.
 * @property {boolean} empty  Initialize Empty Value
-* @property {boolean} delay  Typing Buffer Delay in ms
+* @property {boolean} delay  Typing buffer delay in ms
 * @property {number} maxWidth If set the width of the dropdown is limited to this pixel width. Fx
 *  300 for the 300 px size fields. Default is size of the largest data.
 */
@@ -58,8 +57,11 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 
 /**
 * The Dropdown allows users to select from a list. Like an Html Select.
-* @class Dropdown
-*/
+ * @class Dropdown
+ * @param {object} element The component element.
+ * @param {object} [settings] The component settings.
+ *
+ */
 function Dropdown(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DROPDOWN_DEFAULTS);
   this.element = $(element);
@@ -70,8 +72,14 @@ function Dropdown(element, settings) {
 
 // Actual DropDown Code
 Dropdown.prototype = {
-  init: function() {
-    var orgId = this.element.attr('id');
+
+  /**
+   * Initialize the dropdown.
+   * @private
+   * @returns {object} The api for chaining
+   */
+  init() {
+    let orgId = this.element.attr('id');
 
     this.isIe10 = (env.browser.name === 'ie' && env.browser.version === '10');
     this.isIe11 = (env.browser.name === 'ie' && env.browser.version === '11');
@@ -91,20 +99,20 @@ Dropdown.prototype = {
     }
 
     // convert <select> tag's size css classes for the pseudo element
-    var elemClassList = this.element[0].classList;
+    const elemClassList = this.element[0].classList;
     if (elemClassList.length === 0) {
       this.element[0].classList = 'dropdown';
     }
-    var pseudoClassString = elemClassList.contains('dropdown-xs') ? 'dropdown input-xs' :
-        elemClassList.contains('dropdown-sm') ? 'dropdown input-sm' :
-        elemClassList.contains('dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
+    let pseudoClassString = elemClassList.contains('dropdown-xs') ? 'dropdown input-xs' : //eslint-disable-line
+      elemClassList.contains('dropdown-sm') ? 'dropdown input-sm' : //eslint-disable-line
+        elemClassList.contains('dropdown-lg') ? 'dropdown input-lg' : 'dropdown'; //eslint-disable-line
 
-    //Detect Inline Styles
-    var style = this.element.attr('style');
+    // Detect Inline Styles
+    const style = this.element.attr('style');
     this.isHidden = style && style.indexOf('display: none') >= 0;
 
     // Build the wrapper if it doesn't exist
-    var baseElement = this.isInlineLabel ? this.inlineLabel : this.element;
+    const baseElement = this.isInlineLabel ? this.inlineLabel : this.element;
     this.wrapper = baseElement.next('.dropdown-wrapper');
     this.isWrapped = this.wrapper.length > 0;
 
@@ -113,23 +121,23 @@ Dropdown.prototype = {
     }
 
     if (this.isWrapped) {
-      this.pseudoElem = this.wrapper.find('.' + pseudoClassString);
+      this.pseudoElem = this.wrapper.find(`.${pseudoClassString}`);
       this.trigger = this.wrapper.find('.trigger');
     } else {
-      this.pseudoElem = $('div#'+ orgId + '-shdo');
+      this.pseudoElem = $(`div#${orgId}-shdo`);
     }
 
-    if(elemClassList.contains('text-align-reverse')) {
+    if (elemClassList.contains('text-align-reverse')) {
       pseudoClassString += ' text-align-reverse';
-    } else if (elemClassList.contains('text-align-center')){
+    } else if (elemClassList.contains('text-align-center')) {
       pseudoClassString += ' text-align-center';
     }
 
     // Build sub-elements if they don't exist
-    this.label = $('label[for="'+ orgId +'"]');
+    this.label = $(`label[for="${orgId}"]`);
 
     if (!this.pseudoElem.length) {
-      this.pseudoElem = $('<div class="'+ pseudoClassString + '">');
+      this.pseudoElem = $(`<div class="${pseudoClassString}">`);
     } else {
       this.pseudoElem[0].setAttribute('class', pseudoClassString);
     }
@@ -137,15 +145,14 @@ Dropdown.prototype = {
     if (!this.isWrapped) {
       this.pseudoElem.append($('<span></span>'));
     }
-
-    var toExclude = ['data-validate'],
-      attributes = DOM.getAttributes(this.element[0]),
-      attributesToCopy = this.getDataAttributes(attributes, toExclude);
+    const toExclude = ['data-validate'];
+    const attributes = DOM.getAttributes(this.element[0]);
+    const attributesToCopy = this.getDataAttributes(attributes, toExclude);
 
     this.pseudoElem
       .attr(attributesToCopy.obj)
       .attr({
-        'role': 'combobox',
+        role: 'combobox',
         'aria-autocomplete': 'list',
         'aria-controls': 'dropdown-list',
         'aria-readonly': 'true',
@@ -156,8 +163,8 @@ Dropdown.prototype = {
     // Pass disabled/readonly from the original element, if applicable
     // "disabled" is a stronger setting than "readonly" - should take precedent.
     function handleStates(self) {
-      var disabled = self.element.prop('disabled'),
-        readonly = self.element.prop('readonly');
+      const disabled = self.element.prop('disabled');
+      const readonly = self.element.prop('readonly');
 
       if (disabled) {
         return self.disable();
@@ -186,12 +193,12 @@ Dropdown.prototype = {
     if (this.element.prop('multiple') && !this.settings.multiple) {
       this.settings.multiple = true;
     }
-    var dataSource = this.element.attr('data-source');
+    const dataSource = this.element.attr('data-source');
     if (dataSource && dataSource !== 'source') {
       this.settings.source = dataSource;
     }
-    var dataMaxselected = this.element.attr('data-maxselected');
-    if (dataMaxselected && !isNaN(dataMaxselected)) {
+    const dataMaxselected = this.element.attr('data-maxselected');
+    if (dataMaxselected && !isNaN(dataMaxselected)) { //eslint-disable-line
       this.settings.maxSelected = parseInt(dataMaxselected, 10);
     }
 
@@ -216,31 +223,31 @@ Dropdown.prototype = {
       this.settings.moveSelected = this.settings.moveSelectedToTop;
     }
 
-    var dataMoveSelected = this.element.attr('data-move-selected');
+    const dataMoveSelected = this.element.attr('data-move-selected');
     if (dataMoveSelected) {
       this.settings.moveSelected = getMoveSelectedSetting(dataMoveSelected, true);
     } else {
       this.settings.moveSelected = getMoveSelectedSetting(this.settings.moveSelected);
     }
 
-    var dataCloseOnSelect = this.element.attr('data-close-on-select');
+    const dataCloseOnSelect = this.element.attr('data-close-on-select');
     if (dataCloseOnSelect && !this.settings.closeOnSelect) {
       this.settings.closeOnSelect = dataCloseOnSelect === 'true';
     }
-    var dataNoSearch = this.element.attr('data-no-search');
+    const dataNoSearch = this.element.attr('data-no-search');
     if (dataNoSearch && !this.settings.noSearch) {
       this.settings.noSearch = dataNoSearch === 'true';
     }
 
     // Persist sizing defintions
-    var sizingStrings = ['-xs', '-sm', '-md', '-lg'],
-      classString = this.element.attr('class'),
-      s;
+    const sizingStrings = ['-xs', '-sm', '-md', '-lg'];
+    const classString = this.element.attr('class');
+    let s = null;
 
-    for (var i = 0; i < sizingStrings.length; i++) {
+    for (let i = 0; i < sizingStrings.length; i++) {
       s = sizingStrings[i];
       if (classString.match(s)) {
-        this.pseudoElem.addClass('dropdown' + s);
+        this.pseudoElem.addClass(`dropdown${s}`);
       }
     }
 
@@ -261,16 +268,20 @@ Dropdown.prototype = {
     return this.handleEvents();
   },
 
-  // Used for preventing menus from popping open/closed when they shouldn't.
-  // Gets around the need for timeouts everywhere
-  inputTimer: function() {
+  /**
+   * Used for preventing menus from popping open/closed when they shouldn't.
+   * Gets around the need for timeouts everywhere
+   * @private
+   * @returns {boolean} If the timeout should be cancelled.
+    */
+  inputTimer() {
     if (this.inputTimeout) {
       return false;
     }
 
-    var self = this;
+    const self = this;
 
-    this.inputTimeout = setTimeout(function inputTimeout(){
+    this.inputTimeout = setTimeout(() => {
       clearTimeout(self.inputTimeout);
       self.inputTimeout = null;
     }, 100);
@@ -278,9 +289,12 @@ Dropdown.prototype = {
     return true;
   },
 
-  // Set Field Width
-  setWidth: function() {
-    var style = this.element[0].style;
+  /**
+   * Set Width on the field
+   * @private
+   */
+  setWidth() {
+    const style = this.element[0].style;
 
     if (style.width) {
       this.pseudoElem[0].style.width = style.width;
@@ -294,14 +308,17 @@ Dropdown.prototype = {
     }
   },
 
-  // Set list item icon
-  setItemIcon: function(listIconItem) {
-    var self = this;
+  /**
+   * Set list item icon
+   * @private
+   * @param  {object} listIconItem The icon info to use on the list.
+   */
+  setItemIcon(listIconItem) {
+    const self = this;
     if (self.listIcon.hasIcons) {
-      var specColor = null;
+      let specColor = null;
 
       if (listIconItem.icon) {
-
         // Set icon properties
         if (typeof listIconItem.icon === 'object') {
           listIconItem.obj = listIconItem.icon;
@@ -313,16 +330,14 @@ Dropdown.prototype = {
             if (specColor) {
               listIconItem.specColor = listIconItem.obj.color;
             } else {
-              listIconItem.classList = ' '+ listIconItem.obj.color;
+              listIconItem.classList = ` ${listIconItem.obj.color}`;
             }
-          }
-          // Class
-          else if (listIconItem.obj.class) {
+          } else if (listIconItem.obj.class) {
             specColor = listIconItem.obj.class.indexOf('#') === 0;
             if (specColor) {
               listIconItem.specColor = listIconItem.obj.class;
             } else {
-              listIconItem.classList = ' '+ listIconItem.obj.class;
+              listIconItem.classList = ` ${listIconItem.obj.class}`;
             }
           }
 
@@ -332,19 +347,16 @@ Dropdown.prototype = {
             if (specColor) {
               listIconItem.specColorOver = listIconItem.obj.colorOver;
             } else {
-              listIconItem.classListOver = ' '+ listIconItem.obj.colorOver;
+              listIconItem.classListOver = ` ${listIconItem.obj.colorOver}`;
             }
-          }
-          // Class Over
-          else if (listIconItem.obj.classOver) {
+          } else if (listIconItem.obj.classOver) {
             specColor = listIconItem.obj.classOver.indexOf('#') === 0;
             if (specColor) {
               listIconItem.specColorOver = listIconItem.obj.classOver;
             } else {
-              listIconItem.classListOver = ' '+ listIconItem.obj.classOver;
+              listIconItem.classListOver = ` ${listIconItem.obj.classOver}`;
             }
           }
-
         }
 
         // Set flags
@@ -368,29 +380,33 @@ Dropdown.prototype = {
       // Build icon
       listIconItem.html = $.createIcon({
         icon: listIconItem.isIcon ? listIconItem.icon : '',
-        class: 'listoption-icon' + (listIconItem.isClassList ? ' '+ listIconItem.classList : '')
+        class: `listoption-icon${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
       });
+
       if (listIconItem.isSpecColor) {
-        listIconItem.html = listIconItem.html.replace('<svg', ('<svg '+ 'style="fill:'+ listIconItem.specColor +';"'));
+        listIconItem.html = listIconItem.html.replace('<svg', (`${'<svg style="fill:'}${listIconItem.specColor};"`));
       }
     }
     self.listIcon.items.push(listIconItem);
   },
 
-  // Set list icon
-  setListIcon: function() {
-    var self = this,
-      hasIcons = self.settings.multiple ? false : self.element.find('[data-icon]').length > 0,
-      opts = hasIcons ? this.element.find('option') : [];
+  /**
+   * Set all icons on the list.
+   * @private
+   */
+  setListIcon() {
+    const self = this;
+    let hasIcons = self.settings.multiple ? false : self.element.find('[data-icon]').length > 0;
+    const opts = hasIcons ? this.element.find('option') : [];
 
-    self.listIcon = {hasIcons: hasIcons, items: []};
+    self.listIcon = { hasIcons, items: [] };
 
     if (hasIcons) {
-      var count = 0;
+      let count = 0;
 
-      opts.each(function(i) {
-        var iconAttr = $(this).attr('data-icon'),
-          icon;
+      opts.each(function (i) {
+        const iconAttr = $(this).attr('data-icon');
+        let icon = null;
 
         if (typeof iconAttr !== 'string') {
           return;
@@ -401,7 +417,7 @@ Dropdown.prototype = {
         } else {
           icon = $.fn.parseOptions(this, 'data-icon');
         }
-        self.setItemIcon({html: '', icon: icon});
+        self.setItemIcon({ html: '', icon });
 
         if (self.listIcon.items[i].isIcon) {
           count++;
@@ -412,7 +428,7 @@ Dropdown.prototype = {
     }
 
     if (hasIcons) {
-      self.pseudoElem.prepend($.createIcon({icon:'', class:'listoption-icon'}));
+      self.pseudoElem.prepend($.createIcon({ icon: '', class: 'listoption-icon' }));
       self.listIcon.pseudoElemIcon = self.pseudoElem.find('> .listoption-icon');
       self.listIcon.idx = -1;
     }
@@ -420,24 +436,28 @@ Dropdown.prototype = {
     self.listIcon.hasIcons = hasIcons;
   },
 
-  // Set over color for list item icon,
-  // if run without pram {target}, it will make on only
-  setItemIconOverColor: function(target) {
-    var self = this;
+  /**
+   * Set over color for list item icon,
+   * if run without pram {target}, it will make on only
+   * @private
+   * @param  {object} target The dom target.
+   */
+  setItemIconOverColor(target) {
+    const self = this;
     if (self.listIcon.hasIcons) {
-      var targetIcon = target ? target.find('.listoption-icon') : null;
-      self.list.find('li').each(function(i) {
-        var li = $(this),
-          icon = li.find('.listoption-icon');
+      const targetIcon = target ? target.find('.listoption-icon') : null;
+      self.list.find('li').each(function (i) {
+        const li = $(this);
+        const icon = li.find('.listoption-icon');
 
         // make it on
         if (li.is('.is-focused')) {
           if (self.listIcon.items[i].isClassListOver) {
             icon.removeClass(self.listIcon.items[i].classListOver)
-                .addClass(self.listIcon.items[i].classList);
+              .addClass(self.listIcon.items[i].classList);
           }
           if (self.listIcon.items[i].isSpecColorOver) {
-            icon.css({fill: self.listIcon.items[i].specColor});
+            icon.css({ fill: self.listIcon.items[i].specColor });
           }
         }
         // make it over
@@ -447,28 +467,30 @@ Dropdown.prototype = {
             targetIcon.addClass(self.listIcon.items[i].classListOver);
           }
           if (self.listIcon.items[i].isSpecColorOver) {
-            targetIcon.css({fill: self.listIcon.items[i].specColorOver});
+            targetIcon.css({ fill: self.listIcon.items[i].specColorOver });
           }
         }
       });
     }
   },
 
-  // Update list item icon
-  updateItemIcon: function(opt) {
-    var self = this;
+  /**
+   * Update the icon.
+   * @private
+   * @param {object} opt The dom target.
+   */
+  updateItemIcon(opt) {
+    const self = this;
     if (self.listIcon.hasIcons) {
-      var target = self.listIcon.pseudoElemIcon,
-        i = opt.index(),
-        idx = self.listIcon.idx,
-        icon = self.listIcon.items[i].isIcon ? self.listIcon.items[i].icon : '';
+      const target = self.listIcon.pseudoElemIcon;
+      const i = opt.index();
+      const idx = self.listIcon.idx;
+      const icon = self.listIcon.items[i].isIcon ? self.listIcon.items[i].icon : '';
 
       // Reset class and color
       if (idx > -1) {
-        target.removeClass(
-          self.listIcon.items[idx].classList +' '+
-          self.listIcon.items[idx].classListOver
-        );
+        target.removeClass(`${self.listIcon.items[idx].classList} ${
+          self.listIcon.items[idx].classListOver}`);
         target[0].style.fill = '';
       }
 
@@ -479,73 +501,76 @@ Dropdown.prototype = {
         target.addClass(self.listIcon.items[i].classList);
       }
       if (self.listIcon.items[i].isSpecColor) {
-        target.css({fill: self.listIcon.items[i].specColor});
+        target.css({ fill: self.listIcon.items[i].specColor });
       }
     }
   },
 
-  // Keep a generated list of items and update as needed
-  updateList: function() {
-    var self = this,
-      isMobile = self.isMobile(),
-      listExists = self.list !== undefined && self.list !== null && self.list.length > 0,
-      listContents = '',
-      ulContents = '',
-      upTopOpts = 0,
-      hasOptGroups = this.element.find('optgroup').length,
-      reverseText = '',
-      isMultiselect = this.settings.multiple === true,
-      moveSelected = '' + this.settings.moveSelected,
-      showSelectAll = this.settings.showSelectAll === true;
+  /**
+   * Update the visible list object.
+   * @private
+   */
+  updateList() {
+    const self = this;
+    const isMobile = self.isMobile();
+    const listExists = self.list !== undefined && self.list !== null && self.list.length > 0;
+    let listContents = '';
+    let ulContents = '';
+    let upTopOpts = 0;
+    const hasOptGroups = this.element.find('optgroup').length;
+    let reverseText = '';
+    const isMultiselect = this.settings.multiple === true;
+    let moveSelected = `${this.settings.moveSelected}`;
+    const showSelectAll = this.settings.showSelectAll === true;
 
-    if(this.element[0].classList.contains('text-align-reverse')){
+    if (this.element[0].classList.contains('text-align-reverse')) {
       reverseText = ' text-align-reverse';
-    } else if (this.element[0].classList.contains('text-align-center')){
+    } else if (this.element[0].classList.contains('text-align-center')) {
       reverseText = ' text-align-center';
     }
 
     if (!listExists) {
-      listContents = '<div class="dropdown-list' + reverseText +
-        (isMobile ? ' mobile' : '') +
-        (this.settings.multiple ? ' multiple' : '') + '" id="dropdown-list" role="application" ' + (this.settings.multiple ? 'aria-multiselectable="true"' : '') + '>' +
-        '<label for="dropdown-search" class="audible">' + Locale.translate('Search') + '</label>' +
-        '<input type="text" class="dropdown-search' + reverseText +
-        '" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">' +
-        '<span class="trigger">' +
-          (isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')) +
-          '<span class="audible">' + (isMobile ? Locale.translate('Close') : Locale.translate('Collapse')) + '</span>' +
+      listContents = `<div class="dropdown-list${reverseText
+      }${isMobile ? ' mobile' : ''
+      }${this.settings.multiple ? ' multiple' : ''}" id="dropdown-list" role="application" ${this.settings.multiple ? 'aria-multiselectable="true"' : ''}>` +
+        `<label for="dropdown-search" class="audible">${Locale.translate('Search')}</label>` +
+        `<input type="text" class="dropdown-search${reverseText
+        }" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">` +
+        `<span class="trigger">${
+          isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')
+        }<span class="audible">${isMobile ? Locale.translate('Close') : Locale.translate('Collapse')}</span>` +
         '</span>' +
         '<ul role="listbox">';
     }
 
     // Get a current list of <option> elements
     // If none are available, simply return out
-    var opts = this.element.find('option');
-    var groups = this.element.find('optgroup');
-    var selectedOpts = opts.filter(':selected');
-    var groupsSelectedOpts = [];
+    let opts = this.element.find('option');
+    let groups = this.element.find('optgroup');
+    const selectedOpts = opts.filter(':selected');
+    const groupsSelectedOpts = [];
 
     function buildLiHeader(textContent) {
-      return '<li role="presentation" class="group-label" focusable="false">' +
-          textContent +
-        '</li>';
+      return `<li role="presentation" class="group-label" focusable="false">${
+        textContent
+      }</li>`;
     }
 
     function buildLiOption(option, index) {
-      var liMarkup = '',
-        attributes = DOM.getAttributes(option),
-        text = option.innerHTML,
-        value = attributes.getNamedItem('value'),
-        title = attributes.getNamedItem('title'),
-        badge = attributes.getNamedItem('data-badge'),
-        badgeColor = attributes.getNamedItem('data-badge-color'),
-        isSelected = option.selected,
-        isDisabled = option.disabled,
-        cssClasses = option.className,
-        toExclude = ['data-badge', 'data-badge-color', 'data-val', 'data-icon'],
-        attributesToCopy = self.getDataAttributes(attributes, toExclude),
-        trueValue = value && value.value ? value.value : text,
-        iconHtml = self.listIcon.hasIcons ? self.listIcon.items[index].html : '';
+      let liMarkup = '';
+      const attributes = DOM.getAttributes(option);
+      let text = option.innerHTML;
+      const value = attributes.getNamedItem('value');
+      const title = attributes.getNamedItem('title');
+      const badge = attributes.getNamedItem('data-badge');
+      const badgeColor = attributes.getNamedItem('data-badge-color');
+      const isSelected = option.selected;
+      const isDisabled = option.disabled;
+      const cssClasses = option.className;
+      const toExclude = ['data-badge', 'data-badge-color', 'data-val', 'data-icon'];
+      const attributesToCopy = self.getDataAttributes(attributes, toExclude);
+      const trueValue = value && value.value ? value.value : text;
+      const iconHtml = self.listIcon.hasIcons ? self.listIcon.items[index].html : '';
 
       if (cssClasses.indexOf('clear') > -1) {
         if (text === '') {
@@ -553,25 +578,25 @@ Dropdown.prototype = {
         }
       }
 
-      liMarkup += '' +
-        '<li role="presentation" class="dropdown-option' +
-          (isSelected ? ' is-selected' : '') +
-          (isDisabled ? ' is-disabled' : '') +
-          (cssClasses ? ' '+ cssClasses.value : '' ) + '"' +
-          attributesToCopy.str +
-          ' data-val="'+ trueValue.replace('"', '/quot/') + '"' +
-          (title ? '" title="' + title.value + '"' : '') +
-          ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
-            '<a role="option" href="#" class="' +
-              (cssClasses.indexOf('clear') > -1 ?
-                ' clear-selection' : '' ) + '"' +
-              'id="list-option'+ index +'">' +
-                iconHtml + text +
-            '</a>' +
-            (badge ? '<span class="badge ' +
-              (badgeColor ? badgeColor.value : 'azure07') +
-            '"> '+ badge.value + '</span>' : '') +
-        '</li>';
+      liMarkup += `${'' +
+        '<li role="presentation" class="dropdown-option'}${
+        isSelected ? ' is-selected' : ''
+      }${isDisabled ? ' is-disabled' : ''
+      }${cssClasses ? ` ${cssClasses.value}` : ''}"${
+        attributesToCopy.str
+      } data-val="${trueValue.replace('"', '/quot/')}"${
+        title ? `" title="${title.value}"` : ''
+      } tabindex="${index && index === 0 ? 0 : -1}">` +
+            `<a role="option" href="#" class="${
+              cssClasses.indexOf('clear') > -1 ?
+                ' clear-selection' : ''}"` +
+              `id="list-option${index}">${
+                iconHtml}${text
+              }</a>${
+                badge ? `<span class="badge ${
+                  badgeColor ? badgeColor.value : 'azure07'
+                }"> ${badge.value}</span>` : ''
+              }</li>`;
 
       return liMarkup;
     }
@@ -579,12 +604,12 @@ Dropdown.prototype = {
     // In multiselect scenarios, shows an option at the top of the list that will
     // select all available options if checked.
     if (isMultiselect && showSelectAll) {
-      var allSelected = opts.not('[disabled], .hidden').length === selectedOpts.not('[disabled], .hidden').length;
+      const allSelected = opts.not('[disabled], .hidden').length === selectedOpts.not('[disabled], .hidden').length;
 
-      ulContents += '<li role="presentation" class="dropdown-select-all-list-item'+ (allSelected ? ' is-selected' : '') + '">' +
-        '<a role="option" href="#" id="dropdown-select-all-anchor" class="dropdown-select-all-anchor">' +
-          Locale.translate('SelectAll') +
-        '</a>' +
+      ulContents += `<li role="presentation" class="dropdown-select-all-list-item${allSelected ? ' is-selected' : ''}">` +
+        `<a role="option" href="#" id="dropdown-select-all-anchor" class="dropdown-select-all-anchor">${
+          Locale.translate('SelectAll')
+        }</a>` +
       '</li>';
     }
 
@@ -594,16 +619,14 @@ Dropdown.prototype = {
       if (!groups || !groups.length) {
         moveSelected = 'all';
       } else {
-
         // Break apart selectedOpts into groups.
         // These selected items are applied when the header is generated.
-        groups.each(function(i, g) {
-          var els = selectedOpts.filter(function() {
+        groups.each((i, g) => {
+          const els = selectedOpts.filter(function () {
             return $.contains(g, this);
           });
           groupsSelectedOpts.push(els);
         });
-
       }
     }
 
@@ -614,26 +637,27 @@ Dropdown.prototype = {
 
       // Show a "selected" header if there are selected options
       if (selectedOpts.length > 0) {
-        ulContents += buildLiHeader(Locale.translate('Selected') + ' ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
+        ulContents += buildLiHeader(`${Locale.translate('Selected')} ${self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()}`);
       }
 
-      selectedOpts.each(function(i) {
+      selectedOpts.each(function (i) {
         ulContents += buildLiOption(this, i);
         upTopOpts++;
       });
 
-      // Only show the "all" header beneath the selected options if there are no other optgroups present
+      // Only show the "all" header beneath the selected options if there
+      // are no other optgroups present
       if (!hasOptGroups && opts.length > 0) {
-        ulContents += buildLiHeader(Locale.translate('All') + ' ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
+        ulContents += buildLiHeader(`${Locale.translate('All')} ${self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()}`);
       }
     }
 
-    opts.each(function(i) {
-      var count = i + upTopOpts,
-        option = $(this),
-        parent = option.parent(),
-        optgroupIsNotDrawn,
-        optgroupIndex;
+    opts.each(function (i) {
+      const count = i + upTopOpts;
+      const option = $(this);
+      const parent = option.parent();
+      let optgroupIsNotDrawn;
+      let optgroupIndex;
 
       // Add Group Header if this is an <optgroup>
       // Remove the group header from the queue.
@@ -643,12 +667,12 @@ Dropdown.prototype = {
 
         if (optgroupIsNotDrawn) {
           groups = groups.not(parent);
-          ulContents += buildLiHeader('' + parent.attr('label'));
+          ulContents += buildLiHeader(`${parent.attr('label')}`);
 
           // Add all selected items for this group
           if (moveSelected === 'group') {
-            groupsSelectedOpts[optgroupIndex].each(function(i) {
-              ulContents += buildLiOption(this, i);
+            groupsSelectedOpts[optgroupIndex].each(function (j) {
+              ulContents += buildLiOption(this, j);
               upTopOpts++;
             });
           }
@@ -666,7 +690,7 @@ Dropdown.prototype = {
     // Build the entire thing and set references if this is the first opening.
     // Otherwise, simply replace the elements inside the <ul>.
     if (!listExists) {
-      listContents += ulContents + '</ul>' +
+      listContents += `${ulContents}</ul>` +
         '</div>';
 
       // Append markup to the DOM
@@ -693,10 +717,13 @@ Dropdown.prototype = {
     }
   },
 
-  // Set the value based on selected options
-  setValue: function () {
-    var opts = this.element.find('option:selected'),
-      text = this.getOptionText(opts);
+  /**
+   * Set the value based on selected option on the select.
+   * @private
+   */
+  setValue() {
+    const opts = this.element.find('option:selected');
+    let text = this.getOptionText(opts);
 
     if (opts.hasClass('clear')) {
       text = '';
@@ -707,34 +734,47 @@ Dropdown.prototype = {
       return;
     }
 
-    //Set initial values for the edit box
+    // Set initial values for the edit box
     this.setPseudoElemDisplayText(text);
     if (this.element.attr('maxlength')) {
-       this.setPseudoElemDisplayText(text.substr(0, this.element.attr('maxlength')));
+      this.setPseudoElemDisplayText(text.substr(0, this.element.attr('maxlength')));
     }
 
-    //Set the "previousActiveDescendant" to the first of the items
+    // Set the "previousActiveDescendant" to the first of the items
     this.previousActiveDescendant = opts.first().val();
 
     this.updateItemIcon(opts);
     this.setBadge(opts);
   },
 
-  // Sets only the display text of the Dropdown/Mutliselect
-  // Can be used for setting a pre-populated value when working with an AJAX call.
-  setPseudoElemDisplayText: function(text) {
+  /**
+   * Sets only the display text of the Dropdown/Mutliselect
+   * Can be used for setting a pre-populated value when working with an AJAX call.
+   * @private
+   * @param  {string} text The text to set.
+   */
+  setPseudoElemDisplayText(text) {
     this.pseudoElem.find('span').text(text);
   },
 
-  copyClass: function(from, to, prop) {
+  /**
+   * Copy classes from the two objects
+   * @private
+   * @param  {object} from The from element
+   * @param  {object} to  The to element
+   * @param  {string} prop The property to set
+   */
+  copyClass(from, to, prop) {
     if (from.hasClass(prop)) {
       to.addClass(prop);
     }
   },
 
-  // Copy initial stuff from the drop down.
-  setInitial: function() {
-
+  /**
+   * Copy initial stuff from the drop down to the pseudo element.
+   * @private
+   */
+  setInitial() {
     if (this.element.is(':disabled')) {
       this.disable();
     }
@@ -752,10 +792,17 @@ Dropdown.prototype = {
     }
   },
 
-  ignoreKeys: function (input, e) {
-    var charCode = e.which;
+  /**
+   * Figure out which keys to ignore on typehead.
+   * @private
+   * @param  {element} input The input element.
+   * @param  {object} e  The event.
+   * @returns {boolean} False if the key should be ignored.
+   */
+  ignoreKeys(input, e) {
+    const charCode = e.which;
 
-    //Needed for browsers that use keypress events to manipulate the window.
+    // Needed for browsers that use keypress events to manipulate the window.
     if (e.altKey && (charCode === 38 || charCode === 40)) {
       e.stopPropagation();
       e.preventDefault();
@@ -769,30 +816,36 @@ Dropdown.prototype = {
     }
 
     if (input.is(':disabled') || input.hasClass('is-readonly')) {
-      return;
+      return; // eslint-disable-line
     }
 
-    if (e.ctrlKey  || e.metaKey) {
+    if (e.ctrlKey || e.metaKey) {
       return false;
     }
 
     return true;
   },
 
-  //handle events while search is focus'd
-  handleSearchEvents: function () {
-    var self = this, timer;
+  /**
+   * Handle events while search is focus'd
+   * @private
+   * @returns {void}
+   */
+  handleSearchEvents() {
+    const self = this;
+    let timer;
 
     if (this.settings.noSearch) {
       this.searchInput.prop('readonly', true);
     }
 
-    // Used to determine how spacebar should function.  False means space will select/deselect.  True means
+    // Used to determine how spacebar should function.
+    // False means space will select/deselect.  True means
     // Space will add a space inside the search input.
     this.searchKeyMode = false;
 
-    this.searchInput.on('keydown.dropdown', function(e) {
-      var searchInput = $(this);
+    this.searchInput.on('keydown.dropdown', function (e) {
+      const searchInput = $(this);
 
       if (!self.ignoreKeys(searchInput, e)) {
         return;
@@ -804,7 +857,7 @@ Dropdown.prototype = {
 
       if (self.settings.noSearch === false && !self.settings.source) {
         clearTimeout(timer);
-        timer = setTimeout(function () {
+        timer = setTimeout(() => {
           if (searchInput.val() === '') {
             self.resetList();
           } else {
@@ -812,19 +865,23 @@ Dropdown.prototype = {
           }
         }, 100);
       }
-    }).on('keypress.dropdown', function (e) {
+    }).on('keypress.dropdown', (e) => {
       self.isFiltering = true;
       self.handleAutoComplete(e);
     });
-
   },
 
-  filterList: function(term) {
-    var self = this,
-      selected = false,
-      list = $('.dropdown-option', this.listUl),
-      headers = $('.group-label', this.listUl),
-      results;
+  /**
+   * Filter the list elements by term.
+   * @private
+   * @param  {string} term The search term
+   */
+  filterList(term) {
+    const self = this;
+    let selected = false;
+    const list = $('.dropdown-option', this.listUl);
+    const headers = $('.group-label', this.listUl);
+    let results;
 
     if (!list.length || !this.list || this.list && !this.list.length) {
       return;
@@ -850,8 +907,8 @@ Dropdown.prototype = {
     }
 
     list.not(results).add(headers).addClass('hidden');
-    list.filter(results).each(function(i) {
-      var li = $(this);
+    list.filter(results).each(function (i) {
+      const li = $(this);
       li.attr('tabindex', i === 0 ? '0' : '-1');
 
       if (!selected) {
@@ -859,14 +916,14 @@ Dropdown.prototype = {
         selected = true;
       }
 
-      //Highlight Term
-      var exp = new RegExp('(' + term + ')', 'i');
-      var text = li.text().replace(exp, '<i>$1</i>');
+      // Highlight Term
+      const exp = new RegExp(`(${term})`, 'i');
+      const text = li.text().replace(exp, '<i>$1</i>');
       li.removeClass('hidden').children('a').html(text);
     });
 
-    headers.each(function() {
-      var children = $(this).nextUntil('.group-label, .selector').not('.hidden');
+    headers.each(function () {
+      const children = $(this).nextUntil('.group-label, .selector').not('.hidden');
       if (self.settings.showEmptyGroupHeaders || children.length) {
         $(this).removeClass('hidden');
       }
@@ -876,14 +933,17 @@ Dropdown.prototype = {
     this.position();
   },
 
-  // Removes filtering from an open Dropdown list and turns off "search mode"
-  resetList: function() {
+  /**
+   * Removes filtering from an open Dropdown list and turns off "search mode"
+   * @private
+   */
+  resetList() {
     if (!this.list || this.list && !this.list.length) {
       return;
     }
-    var isMobile = this.isMobile(),
-      cssClass = 'icon' + (isMobile ? ' close' : ''),
-      icon = $.getBaseURL(isMobile ? 'close' : 'dropdown');
+    const isMobile = this.isMobile();
+    const cssClass = `icon${isMobile ? ' close' : ''}`;
+    const icon = $.getBaseURL(isMobile ? 'close' : 'dropdown');
 
     this.list.removeClass('search-mode');
     this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
@@ -897,15 +957,15 @@ Dropdown.prototype = {
       return obj[0].textContent || obj[0].innerText;
     }
 
-    var lis = this.listUl.find('li');
-    lis.removeAttr('style').each(function() {
-      var a = $(this).children('a');
+    const lis = this.listUl.find('li');
+    lis.removeAttr('style').each(function () {
+      const a = $(this).children('a');
       a.text(stripHtml(a));
     });
 
-    //Adjust height / top position
+    // Adjust height / top position
     if (this.list.hasClass('is-ontop')) {
-      this.list[0].style.top = (this.pseudoElem.offset().top - this.list.height() + this.pseudoElem.outerHeight() - 2) +'px';
+      this.list[0].style.top = `${this.pseudoElem.offset().top - this.list.height() + this.pseudoElem.outerHeight() - 2}px`;
     }
 
     if (this.settings.multiple) {
@@ -916,8 +976,12 @@ Dropdown.prototype = {
     this.position();
   },
 
-  selectBlank: function() {
-    var blank = this.element.find('option').filter(function() {
+  /**
+   * Select the blank item (if present)
+   * @private
+   */
+  selectBlank() {
+    const blank = this.element.find('option').filter(function () {
       return !this.value || $.trim(this.value).length === 0;
     });
 
@@ -925,60 +989,66 @@ Dropdown.prototype = {
       blank[0].selected = true;
       this.element.triggerHandler('updated').triggerHandler('change');
     }
-
   },
 
-  handleKeyDown: function(input, e) {
-    var selectedIndex = this.element[0].selectedIndex || -1,
-        options = this.element[0].options,
-        key = e.which,
-        self = this,
-        excludes = 'li:visible:not(.separator):not(.group-label):not(.is-disabled)',
-        next;
+  /**
+   * Handle the key down event actions.
+   * @private
+   * @param  {object} input The dom element.
+   * @param  {object} e The event element.
+   * @returns {boolean} Returns the event in some situations.
+   */
+  handleKeyDown(input, e) {
+    let selectedIndex = this.element[0].selectedIndex || -1;
+    let options = this.element[0].options;
+    const key = e.which;
+    const self = this;
+    const excludes = 'li:visible:not(.separator):not(.group-label):not(.is-disabled)';
+    let next;
 
     if (this.isLoading()) {
       return;
     }
 
-    //Down arrow, Up arrow, or Spacebar to open
+    // Down arrow, Up arrow, or Spacebar to open
     if (!self.isOpen() && (key === 38 || key === 40 || key === 32)) {
       self.toggleList();
       e.stopPropagation();
       e.preventDefault();
-      return e;
+      return e; //eslint-disable-line
     }
 
     if (e.metaKey) {
-      return ;
+      return;
     }
 
     if (self.isOpen()) {
       options = this.listUl.find(excludes);
       selectedIndex = -1;
-      $(options).each(function(index) {
+      $(options).each(function (index) {
         if ($(this).is('.is-focused')) {
           selectedIndex = index;
         }
       });
     }
 
-    switch (key) {
-      case 37: //backspace
-      case 8: //del & backspace
-      case 46: { //del
-
+    switch (key) {  //eslint-disable-line
+      case 37: // backspace
+      case 8: // del & backspace
+      case 46: { // del
         if (!self.isOpen()) {
           self.selectBlank();
           // Prevent Backspace from returning to the previous page.
           e.stopPropagation();
           e.preventDefault();
-          return false;
+          return false;  //eslint-disable-line
         }
         break;
       }
-      case 9: {  //tab - save the current selection
+      case 9: { // tab - save the current selection
         // If "search mode" is currently off, Tab should turn this mode on and place focus back
-        // into the SearchInput.  If search mode is on, Tab should 'select' the currently highlighted
+        // into the SearchInput.
+        // If search mode is on, Tab should 'select' the currently highlighted
         // option in the list, update the SearchInput and close the list.
         if (self.isOpen()) {
           self.selectOption($(options[selectedIndex])); // store the current selection
@@ -986,23 +1056,23 @@ Dropdown.prototype = {
           this.activate();
         }
         // allow tab to propagate otherwise
-        return true;
+        return true;   //eslint-disable-line
       }
-      case 27: { //Esc - Close the Combo and Do not change value
+      case 27: { // Esc - Close the Combo and Do not change value
         if (self.isOpen()) {
           // Close the option list
           self.element.closest('.modal.is-visible').data('listclosed', true);
           self.closeList('cancel');
           self.activate();
           e.stopPropagation();
-          return false;
+          return false;  //eslint-disable-line
         }
         // Allow Esc to propagate if the menu was closed, since some other Controls
         // that rely on dropdown may need to trigger routines when the Esc key is pressed.
         break;
       }
       case 32: // spacebar // TODO: Figure Out what to do about using Spacebar.
-      case 13: { //enter
+      case 13: { // enter
         if (self.isOpen()) {
           if (key === 32 && self.searchKeyMode === true) {
             break;
@@ -1012,14 +1082,14 @@ Dropdown.prototype = {
 
           self.selectOption($(options[selectedIndex])); // store the current selection
           if (self.settings.closeOnSelect) {
-            self.closeList('select');  // Close the option list
+            self.closeList('select'); // Close the option list
             self.activate();
           }
         }
         e.stopPropagation();
-        return false;
+        return false;  //eslint-disable-line
       }
-      case 38: {  //up
+      case 38: { // up
         if (e.shiftKey) {
           return;
         }
@@ -1029,18 +1099,18 @@ Dropdown.prototype = {
           next = $(options[selectedIndex - 1]);
           this.highlightOption(next);
           self.setItemIconOverColor(next);
-          // NOTE: Do not also remove the ".is-selected" class here!  It's not the same as ".is-focused"!
+          // NOTE: Do not also remove the ".is-selected" class here!
+          // It's not the same as ".is-focused"!
           // Talk to ed.coyle@infor.com if you need to know why.
-          next.parent().find
-          ('.is-focused').removeClass('is-focused');
+          next.parent().find('.is-focused').removeClass('is-focused');
           next.addClass('is-focused');
         }
 
         e.stopPropagation();
         e.preventDefault();
-        return false;
+        return false;  //eslint-disable-line
       }
-      case 40: {  //down
+      case 40: { // down
         if (e.shiftKey) {
           return;
         }
@@ -1050,7 +1120,8 @@ Dropdown.prototype = {
           next = $(options[selectedIndex + 1]);
           this.highlightOption(next);
           self.setItemIconOverColor(next);
-          // NOTE: Do not also remove the ".is-selected" class here!  It's not the same as ".is-focused"!
+          // NOTE: Do not also remove the ".is-selected" class here!
+          //  It's not the same as ".is-focused"!
           // Talk to ed.coyle@infor.com if you need to know why.
           next.parent().find('.is-focused').removeClass('is-focused');
           next.addClass('is-focused');
@@ -1058,37 +1129,38 @@ Dropdown.prototype = {
 
         e.stopPropagation();
         e.preventDefault();
-        return false;
+        return false;  //eslint-disable-line
       }
-      case 35: { //end
+      case 35: { // end
         this.searchKeyMode = false;
 
-        var last = $(options[options.length - 1]);
+        const last = $(options[options.length - 1]);
         this.highlightOption(last);
 
         e.stopPropagation();
-        return false;
+        return false;  //eslint-disable-line
       }
-      case 36: {  //home
+      case 36: { // home
         this.searchKeyMode = false;
 
-        var first = $(options[0]);
+        const first = $(options[0]);
         this.highlightOption(first);
 
         e.stopPropagation();
-        return false;
+        return false;  //eslint-disable-line
       }
     }
 
     if (self.isOpen() && self.isControl(key) && key !== 8) {
-      return false;
+      return false;  //eslint-disable-line
     }
 
-    var isSearchInput = self.searchInput && self.searchInput.length;
+    const isSearchInput = self.searchInput && self.searchInput.length;
 
     self.initialFilter = false;
-    if (!self.isOpen() && !self.isControl(key) && !this.settings.source && !this.settings.noSearch) {
-      //Make this into Auto Complete
+    if (!self.isOpen() && !self.isControl(key) &&
+      !this.settings.source && !this.settings.noSearch) {
+      // Make this into Auto Complete
       self.initialFilter = true;
       self.isFiltering = true;
       self.filterTerm = $.actualChar(e);
@@ -1103,18 +1175,23 @@ Dropdown.prototype = {
     if (self.searchInput) {
       self.searchInput.attr('aria-activedescendant', '');
     }
-    return true;
+    return true;  // eslint-disable-line
   },
 
   timer: null,
   filterTerm: '',
 
-  handleAutoComplete: function(e) {
+  /**
+   * Handle the typeahead.
+   * @private
+   * @param  {object} e The event object
+   */
+  handleAutoComplete(e) {
     if (this.isLoading()) {
       return;
     }
 
-    var self = this;
+    const self = this;
     clearTimeout(this.timer);
 
     if (!self.settings.source) {
@@ -1124,7 +1201,7 @@ Dropdown.prototype = {
     self.initialFilter = true;
     self.filterTerm += $.actualChar(e);
 
-    this.timer = setTimeout(function () {
+    this.timer = setTimeout(() => {
       if (!self.isOpen()) {
         self.searchInput.val(self.filterTerm);
         self.toggleList();
@@ -1134,21 +1211,30 @@ Dropdown.prototype = {
     }, self.settings.delay);
   },
 
-  isControl: function(keycode) {
-    var valid =
-      (keycode > 7 && keycode < 48)   || // control chars
-      (keycode > 90 && keycode < 94)   || // windows keys
-      (keycode > 111 && keycode < 146);  // function keys
+  /**
+   * Determine if the key is a control key
+   * @private
+   * @param  {number} keycode The keycode to check.
+   * @returns {boolean} true if the key is a control key.
+   */
+  isControl(keycode) {
+    const valid =
+      (keycode > 7 && keycode < 48) || // control chars
+      (keycode > 90 && keycode < 94) || // windows keys
+      (keycode > 111 && keycode < 146); // function keys
 
-      return valid;
+    return valid;
   },
 
   /**
-  * Focus the input Element
-  */
-  activate: function (useSearchInput) {
-    var self = this,
-      input = this.pseudoElem;
+   * Focus the input element. Since the select is hidden this is needed over normal focus()
+   * @private
+   * @param  {boolean} [useSearchInput] If true the search is used.
+   * @returns {void}
+   */
+  activate(useSearchInput) {
+    const self = this;
+    let input = this.pseudoElem;
 
     if (useSearchInput || self.isMobile()) {
       input = this.searchInput;
@@ -1164,11 +1250,9 @@ Dropdown.prototype = {
       }
 
       if (input[0].setSelectionRange) {
-        input[0].setSelectionRange(0, input[0].value.length);  //scroll to left
-      } else {
-        if (input[0].tagName === 'INPUT') { // using Search Input instead of Pseudo Div
-          input[0].select();
-        }
+        input[0].setSelectionRange(0, input[0].value.length); // scroll to left
+      } else if (input[0].tagName === 'INPUT') { // using Search Input instead of Pseudo Div
+        input[0].select();
       }
     }
 
@@ -1180,21 +1264,26 @@ Dropdown.prototype = {
     }
 
     if (self.isIe10 || self.isIe11) {
-      setTimeout(function() {
+      setTimeout(() => {
         input[0].focus();
       }, 0);
     }
   },
 
-  // Retrieves a string containing all text for currently selected options delimited by commas
-  getOptionText: function(opts) {
-    var text = '';
+  /**
+   * Retrieves a string containing all text for currently selected options.
+   * @private
+   * @param  {array} opts The current option elements.
+   * @returns {string} The selection options in a string  delimited by commas.
+   */
+  getOptionText(opts) {
+    let text = '';
 
     if (!opts) {
       opts = this.element.find('option:selected');
     }
 
-    opts.each(function() {
+    opts.each(function () {
       if (text.length > 0) {
         text += ', ';
       }
@@ -1204,9 +1293,12 @@ Dropdown.prototype = {
     return text;
   },
 
-  // Prep for opening list,make ajax call ect...
-  open: function() {
-    var self = this;
+  /**
+   * Open the dropdown list (normally done internal but available for possible use.)
+   * @private
+   */
+  open() {
+    const self = this;
 
     if (!this.inputTimer()) {
       return;
@@ -1216,7 +1308,7 @@ Dropdown.prototype = {
       return;
     }
 
-    if (!self.callSource(function () {
+    if (!self.callSource(() => {
       self.updateList();
       self.openList();
     })) {
@@ -1225,14 +1317,19 @@ Dropdown.prototype = {
     }
   },
 
-  // Actually Show The List
-  openList: function () {
-    var current = this.previousActiveDescendant ? this.list.find('.dropdown-option[data-val="'+ this.previousActiveDescendant.replace('"', '/quot/') +'"]') : this.list.find('.is-selected'),
-      self =  this,
-      touchPrevented = false,
-      threshold = 10,
-      isEmpty = true,
-      pos;
+  /**
+   * Actually Show The List
+   * @private
+   */
+  openList() {
+    const current = this.previousActiveDescendant ?
+      this.list.find(`.dropdown-option[data-val="${this.previousActiveDescendant.replace('"', '/quot/')}"]`) :
+      this.list.find('.is-selected');
+    const self = this;
+    let touchPrevented = false;
+    const threshold = 10;
+    let isEmpty = true;
+    let pos;
 
     if (current.length > 0) {
       isEmpty = true;
@@ -1243,7 +1340,7 @@ Dropdown.prototype = {
     }
 
     // Persist the "short" input field
-    var isShort = (this.element.closest('.field-short').length === 1);
+    const isShort = (this.element.closest('.field-short').length === 1);
 
     this.list.addClass(isShort ? 'dropdown-short' : '');
 
@@ -1254,9 +1351,9 @@ Dropdown.prototype = {
     this.pseudoElem.attr('aria-label', this.label.text());
     this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
-    //Close any other drop downs.
+    // Close any other drop downs.
     $('select').each(function () {
-      var data = $(this).data();
+      const data = $(this).data();
       if (data.dropdown) {
         data.dropdown.closeList('cancel');
       }
@@ -1264,22 +1361,22 @@ Dropdown.prototype = {
 
     this.list.appendTo('body').show();
 
-    //In a grid cell
+    // In a grid cell
     this.isInGrid = this.pseudoElem.closest('.datagrid-row').length === 1;
     if (this.pseudoElem.parent().hasClass('is-inline')) {
       this.isInGrid = false;
     }
 
     if (this.isInGrid) {
-      var rowHeight = this.pseudoElem.closest('.datagrid').attr('class').replace('datagrid', '');
-      this.list.addClass('datagrid-dropdown-list ' + rowHeight);
+      const rowHeight = this.pseudoElem.closest('.datagrid').attr('class').replace('datagrid', '');
+      this.list.addClass(`datagrid-dropdown-list ${rowHeight}`);
     }
 
     if (this.pseudoElem.closest('.datagrid-filter-wrapper').length === 1) {
       this.list.addClass('datagrid-filter-dropdown');
     }
 
-    var cssClass = this.settings.cssClass;
+    const cssClass = this.settings.cssClass;
     if (cssClass && typeof cssClass === 'string') {
       this.list.addClass(cssClass);
     }
@@ -1288,11 +1385,11 @@ Dropdown.prototype = {
 
     // Limit the width
     if (this.settings.maxWidth) {
-      this.list.css('max-width', this.settings.maxWidth + 'px');
+      this.list.css('max-width', `${this.settings.maxWidth}px`);
     }
 
     if (!this.settings.multiple && this.initialFilter) {
-      setTimeout(function () {
+      setTimeout(() => {
         self.searchInput.val(self.filterTerm);
         self.filterList(self.searchInput.val());
       }, 0);
@@ -1302,11 +1399,11 @@ Dropdown.prototype = {
       this.searchInput.val(this.pseudoElem.find('span').text().trim());
     }
 
-    var noScroll = this.settings.multiple;
+    const noScroll = this.settings.multiple;
     this.highlightOption(current, noScroll);
     if (this.settings.multiple && this.listUl.find('.is-selected').length > 0) {
       this.highlightOption(this.listUl.find('.dropdown-option').eq(0));
-      setTimeout(function() {
+      setTimeout(() => {
         self.listUl.scrollTop(0);
       }, 0);
     }
@@ -1329,7 +1426,7 @@ Dropdown.prototype = {
 
     if (this.isMobile()) {
       // iOS-specific keypress event that listens for when you click the "done" button
-      self.searchInput.on('keypress.dropdown', function(e) {
+      self.searchInput.on('keypress.dropdown', (e) => {
         if (e.which === 13) {
           self.closeList('select');
         }
@@ -1337,8 +1434,8 @@ Dropdown.prototype = {
     }
 
     function listItemClickHandler(e) {
-      var target = $(e.target),
-        ddOption = target.closest('li');
+      let target = $(e.target);
+      const ddOption = target.closest('li');
 
       if (ddOption.length) {
         // Do nothing for group labels or separators
@@ -1355,7 +1452,7 @@ Dropdown.prototype = {
 
       // If this is the Select All option, select/deselect all.
       if (self.settings.multiple && target.is('.dropdown-select-all-list-item')) {
-        var doSelectAll = !(target.is('.is-selected'));
+        const doSelectAll = !(target.is('.is-selected'));
         if (doSelectAll) {
           target.addClass('is-selected');
           self.selectOptions(self.element.find('option:not(:selected)'), false);
@@ -1364,28 +1461,28 @@ Dropdown.prototype = {
           self.selectOptions(self.element.find('option:selected'), false);
         }
 
-        return true;
+        return true;  //eslint-disable-line
       }
 
       e.preventDefault();
       e.stopPropagation();
 
-      var val = target.attr('data-val').replace('"','/quot/'),
-        cur = self.element.find('option[value="'+ val +'"]');
-      //Try matching the option's text if 'cur' comes back empty or overpopulated.
-      //Supports options that don't have a 'value' attribute
-      //And also some special &quote handling
+      const val = target.attr('data-val').replace('"', '/quot/');
+      let cur = self.element.find(`option[value="${val}"]`);
+      // Try matching the option's text if 'cur' comes back empty or overpopulated.
+      // Supports options that don't have a 'value' attribute
+      // And also some special &quote handling
       if (cur.length === 0 || cur.length > 1) {
-        cur = self.element.find('option').filter(function() {
-          var elem = $(this),
-            attr = elem.attr('value');
-          return elem.text() === val || (attr && attr.replace('"','/quot/') === val);
+        cur = self.element.find('option').filter(function () {
+          const elem = $(this);
+          const attr = elem.attr('value');
+          return elem.text() === val || (attr && attr.replace('"', '/quot/') === val);
         });
       }
 
-      //Select the clicked item
+      // Select the clicked item
       if (cur.is(':disabled')) {
-        return false;
+        return false; //eslint-disable-line
       }
 
       self.selectOption(cur);
@@ -1395,19 +1492,19 @@ Dropdown.prototype = {
       }
 
       if (self.isMobile()) {
-        return true;
+        return true;  //eslint-disable-line
       }
 
       self.activate(!self.settings.closeOnSelect);
-      return true;
+      return true;  //eslint-disable-line
     }
 
     self.list
       .removeClass('dropdown-tall')
       .onTouchClick('list', 'li')
       .on('click.list', 'li', listItemClickHandler)
-      .on('mouseenter.list', 'li', function() {
-        var target = $(this);
+      .on('mouseenter.list', 'li', function () {
+        const target = $(this);
 
         if (target.is('.separator, .group-label')) {
           return;
@@ -1421,7 +1518,7 @@ Dropdown.prototype = {
     // Some list-closing events are on a timer to prevent immediate list close
     // There would be several things to check with a setTimeout, so this is done with a CSS
     // class to keep things a bit cleaner
-    setTimeout(function delayedListCloseEvents() {
+    setTimeout(() => {
       self.list.addClass('is-closable');
     }, 100);
 
@@ -1435,7 +1532,7 @@ Dropdown.prototype = {
     // Triggered when the user scrolls the page.
     // Ignores Scrolling on Mobile, and will not close the list if accessing an item within the list
     function scrollDocument(e) {
-      var focus = $('*:focus'); //dont close on timepicker arrow down and up
+      const focus = $('*:focus'); // dont close on timepicker arrow down and up
       if (touchPrevented || isDropdownElement($(e.target)) || focus.is('.timepicker')) {
         return;
       }
@@ -1446,7 +1543,7 @@ Dropdown.prototype = {
     // Will not close the list if the clicked target is anywhere inside the dropdown list.
 
     function clickDocument(e) {
-      var target = $(e.target);
+      const target = $(e.target);
       if (touchPrevented || (isDropdownElement(target) && !target.is('.icon'))) {
         e.preventDefault();
 
@@ -1465,10 +1562,10 @@ Dropdown.prototype = {
         y: e.originalEvent.touches[0].pageY
       };
 
-      $(document).on('touchmove.dropdown', function touchMoveCallback(e) {
-        var newPos = {
-          x: e.originalEvent.touches[0].pageX,
-          y: e.originalEvent.touches[0].pageY
+      $(document).on('touchmove.dropdown', (evt) => {
+        const newPos = {
+          x: evt.originalEvent.touches[0].pageX,
+          y: evt.originalEvent.touches[0].pageY
         };
 
         if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
@@ -1478,7 +1575,7 @@ Dropdown.prototype = {
       });
     }
 
-    function touchEndCallback(e) {
+    function touchEndCallback(e) {  //eslint-disable-line
       $(document).off('touchmove.dropdown');
       e.preventDefault();
 
@@ -1497,13 +1594,13 @@ Dropdown.prototype = {
       .on('touchend.dropdown touchcancel.dropdown', touchEndCallback)
       .on('click.dropdown', clickDocument);
 
-    var modalScroll = $('.modal.is-visible .modal-body-wrapper'),
-      parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
+    const modalScroll = $('.modal.is-visible .modal-body-wrapper');
+    let parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
     parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
     parentScroll = modalScroll.length ? modalScroll : parentScroll;
     parentScroll.on('scroll.dropdown', scrollDocument);
 
-    $('body').on('resize.dropdown', function() {
+    $('body').on('resize.dropdown', () => {
       self.position();
 
       // in desktop environments, close the list on viewport resize
@@ -1516,7 +1613,7 @@ Dropdown.prototype = {
     // Don't do this on mobile against a resize because of the software keyboard's potential
     // to cause a "resize" event to fire.
     if (window.orientation !== undefined) {
-      $(window).on('orientationchange.dropdown', function() {
+      $(window).on('orientationchange.dropdown', () => {
         self.closeList('cancel');
       });
     }
@@ -1530,13 +1627,13 @@ Dropdown.prototype = {
    * Set size and positioning of the list
    * @private
    */
-  position: function() {
-    var self = this,
-      positionOpts = {
-        parentXAlignment: 'left',
-        placement: 'bottom',
-        strategies: ['flip', 'shrink-y']
-      };
+  position() {
+    const self = this;
+    const positionOpts = {
+      parentXAlignment: 'left',
+      placement: 'bottom',
+      strategies: ['flip', 'shrink-y']
+    };
 
     function dropdownAfterPlaceCallback(e, placementObj) {
       // Turn upside-down if flipped to the top of the pseudoElem
@@ -1546,11 +1643,11 @@ Dropdown.prototype = {
       }
 
       // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
-      var ulHeight = parseInt(window.getComputedStyle(self.listUl[0]).height),
-        listHeight = parseInt(window.getComputedStyle(self.list[0]).height),
-        searchInputHeight = 34;
+      const ulHeight = parseInt(window.getComputedStyle(self.listUl[0]).height, 10);
+      const listHeight = parseInt(window.getComputedStyle(self.list[0]).height, 10);
+      const searchInputHeight = 34;
       if (ulHeight + searchInputHeight > listHeight) {
-        self.listUl[0].style.height = (listHeight - searchInputHeight) + 'px';
+        self.listUl[0].style.height = `${listHeight - searchInputHeight}px`;
       }
 
       return placementObj;
@@ -1560,23 +1657,23 @@ Dropdown.prototype = {
     this.list[0].removeAttribute('style');
     this.listUl[0].removeAttribute('style');
 
-    var parentElement = this.pseudoElem;
+    let parentElement = this.pseudoElem;
     if (this.isInGrid) {
       parentElement = this.element.closest('.datagrid-cell-wrapper');
     }
 
     // If the list would end up being wider parent,
     // use the list's width instead of the parent's width
-    var parentElementStyle = window.getComputedStyle(parentElement[0]),
-      parentElementBorderWidth = parseInt(parentElementStyle.borderLeftWidth) * 2,
-      parentElementWidth = Math.round(parseInt(parentElement[0].clientWidth) + parentElementBorderWidth),
-      listDefaultWidth, useParentWidth;
+    const parentElementStyle = window.getComputedStyle(parentElement[0]);
+    const parentElementBorderWidth = parseInt(parentElementStyle.borderLeftWidth, 10) * 2;
+    const parentElementWidth = Math.round(parseInt(parentElement[0].clientWidth, 10) +
+      parentElementBorderWidth);
 
     // Temporarily shrink the value of the search input, and compare the size of the list to
     // the parent element.
-    this.searchInput[0].style.cssText = 'width: '+ parentElementWidth +'px !important';
-    listDefaultWidth = Math.round(this.list.width());
-    useParentWidth = listDefaultWidth <= parentElementWidth;
+    this.searchInput[0].style.cssText = `width: ${parentElementWidth}px !important`;
+    const listDefaultWidth = Math.round(this.list.width());
+    const useParentWidth = listDefaultWidth <= parentElementWidth;
     this.searchInput[0].style.width = '';
 
     // Add parent info to positionOpts
@@ -1584,22 +1681,33 @@ Dropdown.prototype = {
     positionOpts.useParentWidth = useParentWidth;
 
     // use negative height of the pseudoElem to get the Dropdown list to overlap the input.
-    var isRetina = window.devicePixelRatio > 1,
-      isChrome = env.browser.name === 'chrome';
-    positionOpts.y = -(parseInt(parentElement[0].clientHeight) + parseInt(parentElementStyle.borderTopWidth) + parseInt(parentElementStyle.borderBottomWidth) - (!isChrome && isRetina ? 1 : 0));
+    const isRetina = window.devicePixelRatio > 1;
+    const isChrome = env.browser.name === 'chrome';
+
+    positionOpts.y = -(parseInt(parentElement[0].clientHeight, 10) +
+      parseInt(parentElementStyle.borderTopWidth, 10) +
+      parseInt(parentElementStyle.borderBottomWidth, 10) - (!isChrome && isRetina ? 1 : 0));
     positionOpts.x = 0;
 
     this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
     this.list.data('place').place(positionOpts);
   },
 
-  // Alias that works with the global "closeChildren" method.  See "js/lifecycle.js"
-  close: function() {
-    return this.closeList('cancel');
+  /**
+  * Alias that works with the global "closeChildren" method.
+  * @returns {void}
+  */
+  close() {
+    return this.closeList('cancel'); // See "js/lifecycle.js"
   },
 
-  //Close list and detach events
-  closeList: function(action) {
+  /**
+   * Alias that works with the global "closeChildren" method.  See "js/lifecycle.js"
+   * @private
+   * @param  {string} action The action that trigger the closing (cancel fx)
+   * @returns {void}
+   */
+  closeList(action) {
     if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
       return;
     }
@@ -1615,9 +1723,9 @@ Dropdown.prototype = {
     this.filterTerm = '';
     this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
 
-    //Destroy any tooltip items
+    // Destroy any tooltip items
     this.listUl.find('.has-tooltip').each(function () {
-      var api = $(this).data('tooltip');
+      const api = $(this).data('tooltip');
       if (api) {
         api.destroy();
       }
@@ -1654,9 +1762,14 @@ Dropdown.prototype = {
     this.listUl = null;
   },
 
-  //Set option into view
-  scrollToOption: function(current) {
-    var self = this;
+  /**
+  * Scroll to a particular option and make it in view.
+  * @private
+  * @param  {object} current The option element to scroll to.
+  * @returns {void}
+  */
+  scrollToOption(current) {
+    const self = this;
     if (!current) {
       return;
     }
@@ -1665,15 +1778,20 @@ Dropdown.prototype = {
     }
     // scroll to the currently selected option
     self.listUl.scrollTop(0);
-    self.listUl.scrollTop(current.offset().top - self.listUl.offset().top - self.listUl.scrollTop() - 40);
+    self.listUl.scrollTop(current.offset().top - self.listUl.offset().top -
+      self.listUl.scrollTop() - 40);
   },
 
-  //Blur and Close List
-  handleBlur: function() {
-    var self = this;
+  /**
+  * Blur and Close List
+  * @private
+  * @returns {void}
+  */
+  handleBlur() {
+    const self = this;
 
     if (this.isOpen()) {
-      this.timer = setTimeout(function() {
+      this.timer = setTimeout(() => {
         self.closeList('cancel');
       }, 40);
     }
@@ -1681,18 +1799,26 @@ Dropdown.prototype = {
     return true;
   },
 
-  // returns true if the field is attempting to load via AJAX.
-  isLoading: function() {
-    return this.element.is('.is-loading') &&  this.element.is('.is-blocked') ;
+  /*
+  * Function that is used to chekc if the field is loading from an ajax call.
+  * @returns {void} Returns true if the field is attempting to load via AJAX.
+  */
+  isLoading() {
+    return this.element.is('.is-loading') && this.element.is('.is-blocked');
   },
 
-  // Return true/false if the list is open
-  isOpen: function() {
-    return (this.list && this.list.is(':visible')) ? true : false;
+  /**
+   * Return true/false depending on if the list is open.
+   * @returns {boolean} The current state (open = true).
+   */
+  isOpen() {
+    return !!((this.list && this.list.is(':visible')));
   },
 
-  // Hide or Show list
-  toggleList: function() {
+  /**
+   * Toggle the current state of the list between open and closed.
+   */
+  toggleList() {
     if (this.isOpen() || this.isLoading()) {
       this.closeList('cancel');
       return;
@@ -1700,9 +1826,15 @@ Dropdown.prototype = {
     this.open();
   },
 
-  highlightOption: function(listOption, noScroll) {
+  /**
+   * Highlight the option that is being typed.
+   * @private
+   * @param  {object} listOption The option element
+   * @param  {boolean} noScroll If true will scroll to the option
+   */
+  highlightOption(listOption, noScroll) { //eslint-disable-line
     if (!listOption) {
-      return listOption;
+      return;
     }
 
     if (listOption.length === 0) {
@@ -1710,38 +1842,42 @@ Dropdown.prototype = {
     }
 
     // Get corresponding option from the list
-    var option = this.element.find('option[value="' + listOption.attr('data-val') + '"]');
+    const option = this.element.find(`option[value="${listOption.attr('data-val')}"]`);
 
     if (option.hasClass('.is-disabled') || option.is(':disabled')) {
-      return;
+      return; //eslint-disable-line
     }
 
     if (this.isOpen()) {
       this.setItemIconOverColor();
-      this.list.find('.is-focused').removeClass('is-focused').attr({'tabindex':'-1'});
+      this.list.find('.is-focused').removeClass('is-focused').attr({ tabindex: '-1' });
       if (!option.hasClass('clear')) {
         this.setItemIconOverColor(listOption);
-        listOption.addClass('is-focused').attr({'tabindex': '0'});
+        listOption.addClass('is-focused').attr({ tabindex: '0' });
       }
 
       // Set activedescendent for new option
-      //this.pseudoElem.attr('aria-activedescendant', listOption.attr('id'));
+      // this.pseudoElem.attr('aria-activedescendant', listOption.attr('id'));
       this.searchInput.attr('aria-activedescendant', listOption.children('a').attr('id'));
 
       if (!noScroll || noScroll === false || noScroll === undefined) {
         this.scrollToOption(listOption);
       }
     }
-
-    return;
   },
 
-  unhighlightOptions: function(listOptions, noScroll) {
+  /**
+   * Un Highlight the option that is being typed.
+   * @private
+   * @param  {object} listOptions The option element
+   * @param  {boolean} noScroll If true will scroll to the option
+   */
+  unhighlightOptions(listOptions, noScroll) {
     if (!listOptions || !listOptions.length) {
       listOptions = this.list.find('.is-selected');
     }
     this.setItemIconOverColor();
-    listOptions.removeClass('is-focused').attr({'tabindex': '-1'});
+    listOptions.removeClass('is-focused').attr({ tabindex: '-1' });
 
     this.searchInput.removeAttr('aria-activedescendant');
 
@@ -1754,17 +1890,18 @@ Dropdown.prototype = {
    * Convenience method for running _selectOption()_ on a set of list options.
    * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
    * @private
-   * @param {Array / jQuery[]} options incoming options
-   * @param {boolean} noTrigger if true, causes the 'selected' and 'change' events not to fire on each list item.
+   * @param {object} options incoming options
+   * @param {boolean} noTrigger if true, causes the 'selected' and 'change' events
+   * not to fire on each list item.
    */
-  selectOptions: function(options, noTrigger) {
+  selectOptions(options, noTrigger) {
     // Use a jQuery selector if the incoming options are inside an array
     if (Array.isArray(options)) {
       options = $(options);
     }
 
-    var self = this;
-    options.each(function() {
+    const self = this;
+    options.each(function () {
       self.selectOption($(this), noTrigger);
     });
   },
@@ -1773,48 +1910,51 @@ Dropdown.prototype = {
    * Select an option and conditionally trigger events.
    * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
    * @private
-   * @param {jQuery} option - the incoming li option
-   * @param {boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on the list item.
+   * @param {object} option - the incoming li option
+   * @param {boolean} noTrigger - if true, causes the 'selected' and 'change' events not to
+   * fire on the list item.
    */
-  selectOption: function(option, noTrigger) {
+  selectOption(option, noTrigger) {
     if (!option) {
-      return option;
+      return;
     }
-    var li;
+    let li;
 
     if (option.is('li')) {
       li = option;
-      option = this.element.find('option[value="' + option.attr('data-val') + '"]');
+      option = this.element.find(`option[value="${option.attr('data-val')}"]`);
 
-      //Try matching the option's text if 'cur' comes back empty.
-      //Supports options that don't have a 'value' attribute.
+      // Try matching the option's text if 'cur' comes back empty.
+      // Supports options that don't have a 'value' attribute.
       if (option.length === 0) {
-        option = this.element.find('option').filter(function() {
+        option = this.element.find('option').filter(function () {
           return $(this).text() === li.attr('data-val');
         });
       }
     }
 
-    var value = option.val();
+    const value = option.val();
     if (!option) {
       return;
     }
 
     if (!li && typeof value === 'string') {
-      li = this.listUl.find('li[data-val="'+ value.replace('"', '/quot/') +'"]');
+      li = this.listUl.find(`li[data-val="${value.replace('"', '/quot/')}"]`);
     }
 
     if (option.hasClass('is-disabled') || option.is(':disabled')) {
       return;
     }
 
-    var code = option.val(),
-      val = this.element.val(),
-      oldText = this.pseudoElem.text(),
-      text = '',
-      trimmed = '',
-      clearSelection = false,
-      isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
+    const code = option.val();
+    let val = this.element.val();
+    const oldText = this.pseudoElem.text();
+    let text = '';
+    let trimmed = '';
+    let clearSelection = false;
+
+    // Sets to false if the option is being removed from a multi-select instead of added
+    let isAdded = true;
 
     if (option.hasClass('clear') || !li) {
       clearSelection = true;
@@ -1826,14 +1966,13 @@ Dropdown.prototype = {
         val = [];
       }
       if ($.inArray(code, val) !== -1) {
-        val = $.grep(val, function(optionValue) {
-          return optionValue !== code;
-        });
+        val = $.grep(val, optionValue => optionValue !== code);
         li.removeClass('is-selected');
         this.previousActiveDescendant = undefined;
         isAdded = false;
       } else {
-        if (!isNaN(this.settings.maxSelected) && this.element.find('option:selected').length >= this.settings.maxSelected) {
+        if (!isNaN(this.settings.maxSelected) &&  //eslint-disable-line
+          this.element.find('option:selected').length >= this.settings.maxSelected) {
           return;
         }
 
@@ -1843,7 +1982,7 @@ Dropdown.prototype = {
         this.previousActiveDescendant = option.val();
       }
 
-      var newOptions = this.element.find('option').filter(function() {
+      const newOptions = this.element.find('option').filter(function () {
         return $.inArray($(this)[0].value, val) !== -1;
       });
       text = this.getOptionText(newOptions);
@@ -1858,7 +1997,7 @@ Dropdown.prototype = {
       text = option.text();
     }
     if (!clearSelection) {
-      this.element.find('option').each(function () {
+      this.element.find('option').each(function () {  //eslint-disable-line
         if (this.value === code) {
           this.selected = true;
           return false;
@@ -1919,47 +2058,55 @@ Dropdown.prototype = {
 
   /**
    * Select an option by the value.
-   *
-   * @param {value} option - A string containing the value to look for. (Case insensitive)
+   * @param {string} value - A string containing the value to look for. (Case insensitive)
    */
-  selectValue: function(value) {
-
+  selectValue(value) {
     if (typeof value === 'string') {
-      var option = this.element.find('option[value="' + value + '"]');
+      const option = this.element.find(`option[value="${value}"]`);
       this.element.find('option:selected').removeAttr('selected');
       option.attr('selected', 'true');
       this.updated();
     }
-
   },
 
-  setBadge: function (option) {
-    //Badge Support
+  /**
+   * Set the bade on the option from the config.
+   * @private
+   * @param {string} option - A string containing the value to look for. (Case insensitive)
+   */
+  setBadge(option) {
+    // Badge Support
     if (this.badges) {
-      var badge = this.element.parent().find('.badge');
+      let badge = this.element.parent().find('.badge');
 
       if (badge.length === 0) {
         this.element.parent().find('.dropdown-wrapper').append('<span class="badge">1</span>');
         badge = this.element.parent().find('.badge');
       }
 
-      badge.attr('class', 'badge ' + (option.attr('data-badge-color') ? option.attr('data-badge-color') : 'azure07'))
+      badge.attr('class', `badge ${option.attr('data-badge-color') ? option.attr('data-badge-color') : 'azure07'}`)
         .text(option.attr('data-badge'));
     }
   },
 
-  // Execute the source ajax option
-  callSource: function(callback) {
-    var self = this, searchTerm = '';
+  /**
+   * Execute the source ajax option
+   * @private
+   * @param {function} callback - The function call back.
+   * @returns {function} The callback for execution.
+   */
+  callSource(callback) {
+    const self = this;
+    const searchTerm = '';
 
     if (this.settings.source) {
       this.isFiltering = false;
 
-      var sourceType = typeof this.settings.source,
-        response = function (data, isManagedByTemplate) {
-        //to do - no results back do not open.
-        var list = '',
-          val = self.element.val();
+      const sourceType = typeof this.settings.source;
+      const response = function (data, isManagedByTemplate) {
+        // to do - no results back do not open.
+        let list = '';
+        const val = self.element.val();
 
         function replaceDoubleQuotes(content) {
           return content.replace('"', '\'');
@@ -1970,8 +2117,8 @@ Dropdown.prototype = {
             return;
           }
 
-          var isString = typeof option === 'string',
-            stringContent = option;
+          const isString = typeof option === 'string';
+          const stringContent = option;
 
           if (isString) {
             option = {
@@ -1984,8 +2131,8 @@ Dropdown.prototype = {
           }
 
           if (option.id !== undefined) {
-            if (!isNaN(option.id)) {
-              option.id = '' + option.id;
+            if (!isNaN(option.id)) {  //eslint-disable-line
+              option.id = `${option.id}`;
             }
             option.id = replaceDoubleQuotes(option.id);
           }
@@ -1998,10 +2145,10 @@ Dropdown.prototype = {
             option.selected = true;
           }
 
-          list += '<option' + (option.id === undefined ? '' : ' id="' + option.id + '"') +
-                    ' value="' + option.value + '"' +
-                    (option.selected ? ' selected ' : '') +
-                  '>'+ (option.label !== undefined ? option.label : option.value !== undefined ? option.value : '') + '</option>';
+          list += `<option${option.id === undefined ? '' : ` id="${option.id}"`
+          } value="${option.value}"${
+            option.selected ? ' selected ' : ''
+          }>${option.label !== undefined ? option.label : option.value !== undefined ? option.value : ''}</option>`;  //eslint-disable-line
         }
 
         // If the incoming dataset is different than the one we started with,
@@ -2011,13 +2158,13 @@ Dropdown.prototype = {
 
           if (!isManagedByTemplate) {
             self.element.empty();
-            for (var i=0; i < data.length; i++) {
-              var opts;
+            for (let i = 0; i < data.length; i++) {
+              let opts;
 
               if (data[i].group) {
                 opts = data[i].options;
-                list += '<optgroup label="' + data[i].group + '">';
-                for (var ii = 0; ii < opts.length; ii++) {
+                list += `<optgroup label="${data[i].group}">`;
+                for (let ii = 0; ii < opts.length; ii++) {
                   buildOption(opts[ii]);
                 }
                 list += '</optgroup>';
@@ -2034,7 +2181,6 @@ Dropdown.prototype = {
         self.element.triggerHandler('complete'); // For Busy Indicator
         self.element.trigger('requestend', [searchTerm, data]);
         callback();
-        return;
       };
 
       self.element.triggerHandler('start'); // For Busy Indicator
@@ -2046,16 +2192,17 @@ Dropdown.prototype = {
       } else if (sourceType === 'object') {
         // Use the 'source' setting as pre-existing data.
         // Sanitize accordingly.
-        var sourceData = $.isArray(this.settings.source) ? this.settings.source : [this.settings.source];
+        const sourceData = $.isArray(this.settings.source) ? this.settings.source :
+          [this.settings.source];
         response(sourceData);
       } else {
         // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
-        var sourceURL = this.settings.source.toString(),
-          request = $.getJSON(sourceURL);
+        const sourceURL = this.settings.source.toString();
+        const request = $.getJSON(sourceURL);
 
-        request.done(function(data) {
+        request.done((data) => {
           response(data);
-        }).fail(function() {
+        }).fail(() => {
           response([]);
         });
       }
@@ -2067,75 +2214,86 @@ Dropdown.prototype = {
 
   /**
    * Get data attributes from passed list of attributes
+   * @private
    * @param {array} attr - List of all attributes.
    * @param {array} attrToExclude - List of attributes to be excluded from passed list.
    * @returns {object} It will return an object containing two keys
    * str - string of attributes
    * obj - object of attributes
    */
-  getDataAttributes: function(attr, attrToExclude) {
+  getDataAttributes(attr, attrToExclude) {
     if (!attr) {
       return;
-    }
-    else if (typeof attr === 'string') {
+    } else if (typeof attr === 'string') {
       attr = [attr];
     }
 
-    var toExclude = attrToExclude || [];
+    let toExclude = attrToExclude || [];
     if (typeof toExclude === 'string') {
       toExclude = [toExclude];
     }
-    var attrToCopy = {
+    const attrToCopy = {
       obj: {},
       str: '',
-      isExclude: function(attr) {
-        return $.inArray(attr, toExclude) > -1;
+      isExclude(attrib) {
+        return $.inArray(attrib, toExclude) > -1;
       }
     };
-    for (var key in attr) {
-      if (!attr.hasOwnProperty(key)) {
-        continue;
+    for (const key in attr) { //eslint-disable-line
+      if (!attr.hasOwnProperty(key)) {  //eslint-disable-line
+        continue; //eslint-disable-line
       }
-      attrToCopy.name = attr[key].name + '';
+      attrToCopy.name = `${attr[key].name}`;
       attrToCopy.isData = attrToCopy.name.substr(0, 5) === 'data-';
       if (attrToCopy.isData && !attrToCopy.isExclude(attrToCopy.name)) {
         attrToCopy.obj[attrToCopy.name] = attr[key].value;
-        attrToCopy.str += ' '+
-          attrToCopy.name +'="'+ attr[key].value +'"';
+        attrToCopy.str += ` ${
+          attrToCopy.name}="${attr[key].value}"`;
       }
     }
-    return { str: attrToCopy.str, obj: attrToCopy.obj };
+    return { str: attrToCopy.str, obj: attrToCopy.obj };  //eslint-disable-line
   },
 
   /**
    * External Facing function to set value by code - Depricated set on select and trigger updated.
-   *
+   * @private
+   * @deprecated
    * @param {string} code - The value to match and set on the value element.
    */
-  setCode: function(code) {
-    var self = this,
-      doSetting = function ()  {
-        self.element.val(code);
-        self.updated();
-      };
+  setCode(code) {
+    const self = this;
+    const doSetting = function () {
+      self.element.val(code);
+      self.updated();
+    };
 
     if (!self.callSource(doSetting)) {
       doSetting();
     }
   },
 
-  isMobile: function() {
+  /**
+   * Returns true if the object is a mobile element.
+   * @private
+   * @returns {boolean} code - True if this is a mobile device
+   */
+  isMobile() {
     return ['ios', 'android'].indexOf(env.os.name) > -1;
   },
 
-  isListClosable: function() {
+  /**
+   * Returns true if the element already has the closable class.
+   * @private
+   * @returns {object} The list
+   */
+  isListClosable() {
     return this.list.hasClass('is-closable');
   },
 
   /**
    * Disable the input element.
    */
-  disable: function() {
+  disable() {
     this.element
       .prop('disabled', true)
       .prop('readonly', false);
@@ -2155,15 +2313,16 @@ Dropdown.prototype = {
 
   /**
   * Returns true if the dropdown is disabled.
+  * @returns {boolean} True if the element is disabled.
   */
-  isDisabled: function() {
+  isDisabled() {
     return this.element.prop('disabled');
   },
 
   /**
    * Enable the input element.
    */
-  enable: function() {
+  enable() {
     this.element
       .prop('disabled', false)
       .prop('readonly', false);
@@ -2178,7 +2337,7 @@ Dropdown.prototype = {
   /**
    * Make the input element readonly.
    */
-  readonly: function() {
+  readonly() {
     this.element
       .prop('disabled', false)
       .prop('readonly', true);
@@ -2191,8 +2350,12 @@ Dropdown.prototype = {
     this.closeList('cancel');
   },
 
-  // Triggered whenever the plugin's settings are changed
-  updated: function(settings) {
+  /**
+   * Tear down events and restore to original state.
+   * @param  {object} settings The settings object to use.
+   * @returns {void}
+   */
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
@@ -2214,7 +2377,7 @@ Dropdown.prototype = {
     }
 
     // update "disabled" prop
-    this.pseudoElem[ this.element.prop('disabled') ? 'addClass' : 'removeClass' ]('is-disabled');
+    this.pseudoElem[this.element.prop('disabled') ? 'addClass' : 'removeClass']('is-disabled');
 
     // update the list and set a new value, if applicable
     this.updateList();
@@ -2226,9 +2389,9 @@ Dropdown.prototype = {
   },
 
   /**
-   * Tear down events and restore to default.
+   * Tear down events and restore to original state.
    */
-  destroy: function() {
+  destroy() {
     $.removeData(this.element[0], COMPONENT_NAME);
     this.closeList('cancel');
     this.label.remove();
@@ -2242,18 +2405,16 @@ Dropdown.prototype = {
   /**
    * Setup the internal event handlers.
    * @private
-   * @returns {void}
    */
-  handleEvents: function() {
-    var self = this;
+  handleEvents() {
+    const self = this;
 
-    this.pseudoElem.on('keydown.dropdown', function(e) {
+    this.pseudoElem.on('keydown.dropdown', function (e) {
       if (!self.ignoreKeys($(this), e)) {
         return;
       }
       self.handleKeyDown($(this), e);
-    }).on('keypress.dropdown', function(e) {
-
+    }).on('keypress.dropdown', function (e) {
       if (e.keyCode === 9) {
         return;
       }
@@ -2266,43 +2427,43 @@ Dropdown.prototype = {
         self.toggleList();
       }
       self.handleAutoComplete(e);
-    }).on('click.dropdown', function(e) {
+    }).on('click.dropdown', (e) => {
       // landmark would like the click event to bubble up if ctrl and shift are pressed
       if (!(e.originalEvent.ctrlKey && e.originalEvent.shiftKey)) {
         e.stopPropagation();
       }
-    }).on('mouseup.dropdown', function(e) {
+    }).on('mouseup.dropdown', (e) => {
       if (e.button === 2) {
         return;
       }
       self.toggleList();
-    }).on('touchend.dropdown touchcancel.dropdown', function(e) {
-      e.stopPropagation();
-      self.toggleList();
-      e.preventDefault();
-    });
+    })
+      .on('touchend.dropdown touchcancel.dropdown', (e) => {
+        e.stopPropagation();
+        self.toggleList();
+        e.preventDefault();
+      });
 
-    self.element.on('activated.dropdown', function () {
+    self.element.on('activated.dropdown', () => {
       self.label.trigger('click');
-    }).on('updated.dropdown', function (e) {
+    }).on('updated.dropdown', (e) => {
       e.stopPropagation();
       self.updated();
-    }).on('openlist.dropdown', function() {
+    }).on('openlist.dropdown', () => {
       self.toggleList();
     });
 
-    //for form resets.
-    self.element.closest('form').on('reset.dropdown', function() {
-      setTimeout(function () {
+    // for form resets.
+    self.element.closest('form').on('reset.dropdown', () => {
+      setTimeout(() => {
         self.element.triggerHandler('updated');
       }, 1);
     });
 
-    //Handle Label click
-    this.label.onTouchClick().on('click', function () {
+    // Handle Label click
+    this.label.onTouchClick().on('click', () => {
       self.pseudoElem.focus();
     });
-
   }
 };
 

@@ -1,19 +1,24 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
-// jQuery Components
-
-
-/**
- *
- */
-let COMPONENT_NAME = 'textarea';
-
+// Name of this component
+const COMPONENT_NAME = 'textarea';
 
 /**
- *
- */
-let TEXTAREA_DEFAULTS = {
+* @namespace
+* @property {boolean} autoGrow Will automatically expand the text area to fit the contents.
+* @property {boolean} autoGrowAnimate Will animate the text area growing.
+* @property {integer} autoGrowAnimateSpeed The speed of the animation.
+* @property {boolean} characterCounter Displays a counter that counts down from the maximum
+* length allowed.
+* @property {boolean} printable Determines whether or not the text area can be displayed on a
+* printed page.
+* @property {null|String} charRemainingText  Text that will be used in place of the "remaining"
+* text.
+* @property {null|String} charMaxText  Text that will be used in place of the "Max" text.
+*/
+const TEXTAREA_DEFAULTS = {
   autoGrow: false,
   autoGrowAnimate: true,
   autoGrowAnimateSpeed: 200,
@@ -23,18 +28,11 @@ let TEXTAREA_DEFAULTS = {
   charMaxText: null
 };
 
-
 /**
 * The Textarea Component wraps a standard HTML Textarea element and provides additional features.
-*
 * @class Textarea
-* @param {boolean} autoGrow Will automatically expand the text area to fit the contents.
-* @param {boolean} autoGrowAnimate Will animate the text area growing.
-* @param {integer} autoGrowAnimateSpeed The speed of the animation.
-* @param {boolean} characterCounter Displays a counter that counts down from the maximum length allowed.
-* @param {boolean} printable Determines whether or not the text area can be displayed on a printed page.
-* @param {null|String} charRemainingText  Text that will be used in place of the "remaining" text.
-* @param {null|String} charMaxText  Text that will be used in place of the "Max" text.
+* @param {object} element The component element.
+* @param {object} settings The component settings.
 */
 function Textarea(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TEXTAREA_DEFAULTS);
@@ -44,23 +42,22 @@ function Textarea(element, settings) {
   debug.logTimeEnd(COMPONENT_NAME);
 }
 
-
 Textarea.prototype = {
 
   /**
    * @private
    */
-  init: function() {
+  init() {
     this.isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
     this.isSafari = (
-      navigator.userAgent.indexOf('Safari')  !== -1 &&
+      navigator.userAgent.indexOf('Safari') !== -1 &&
       navigator.userAgent.indexOf('Chrome') === -1 &&
       navigator.userAgent.indexOf('Android') === -1
     );
 
-    this.element.addClass(this.element.is('.textarea-xs') ? 'input-xs' :
-        this.element.is('.textarea-sm') ? 'input-sm' :
-        this.element.is('.textarea-lg') ? 'input-lg' : '');
+    this.element.addClass(this.element.is('.textarea-xs') ? 'input-xs' : //eslint-disable-line
+      this.element.is('.textarea-sm') ? 'input-sm' : //eslint-disable-line
+        this.element.is('.textarea-lg') ? 'input-lg' : ''); //eslint-disable-line
 
     if (this.settings.characterCounter && this.element.attr('maxlength')) {
       this.counter = $('<span class="textarea-wordcount">Chars Left..</span>').insertAfter(this.element);
@@ -74,7 +71,7 @@ Textarea.prototype = {
     }
 
     if (this.settings.autoGrow && this.element.length) {
-      this.element.css('overflow','hidden');
+      this.element.css('overflow', 'hidden');
       this.handleResize(this);
     }
 
@@ -83,60 +80,61 @@ Textarea.prototype = {
   },
 
   /**
-   * @private
+   * Determines if the text is selected.
+   * @param  {object}  input The input dom element (jQuery)
+   * @returns {boolean} True if the text is selected in the input.
    */
-  // TODO: What does this do?
-  isSelected: function (input) {
+  isSelected(input) {
     if (typeof input.selectionStart === 'number') {
       return input.selectionStart === 0 && input.selectionEnd === input.value.length;
     } else if (typeof document.selection !== 'undefined') {
       return document.selection.createRange().text === input.value;
     }
+    return false;
   },
 
   /**
    * Checks a keycode value and determines if it belongs to a printable character.
    * @param {number} keycode - a number representing an ASCII keycode value
-   * @returns {boolean}
+   * @returns {boolean} Returns true if the key is a printable one.
    */
-  isPrintable: function(keycode) {
-    var valid =
-      (keycode > 47 && keycode < 58)   || // number keys
-      (keycode > 64 && keycode < 91)   || // letter keys
-      (keycode > 95 && keycode < 112)  || // numpad keys
+  isPrintable(keycode) {
+    const valid =
+      (keycode > 47 && keycode < 58) || // number keys
+      (keycode > 64 && keycode < 91) || // letter keys
+      (keycode > 95 && keycode < 112) || // numpad keys
       (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
-      (keycode > 218 && keycode < 223);   // [\]' (in order)
+      (keycode > 218 && keycode < 223); // [\]' (in order)
     return valid;
   },
 
   /**
-  * resizes the texarea based on the content.
+  * Resizes the texarea based on the content.
   * @private
-  * @param {TextArea} self
-  * @param {event} e
+  * @param {obkect} self The textaarea api
+  * @param {event} e The resive event object
   */
-  handleResize: function (self, e) {
-    var value = self.element.val(),
-      oldHeight = self.element.innerHeight(),
-      newHeight = self.element.get(0).scrollHeight,
-      minHeight = self.element.data('autogrow-start-height') || 0,
-      clone;
+  handleResize(self, e) {
+    const value = self.element.val();
+    const oldHeight = self.element.innerHeight();
+    let newHeight = self.element.get(0).scrollHeight;
+    const minHeight = self.element.data('autogrow-start-height') || 0;
+    let clone;
 
     if (oldHeight < newHeight) {
       self.scrollTop = 0;
 
       if (self.settings.autoGrowAnimate) {
-        self.element.stop().animate({height: newHeight}, self.settings.autoGrowAnimateSpeed);
+        self.element.stop().animate({ height: newHeight }, self.settings.autoGrowAnimateSpeed);
       } else {
         self.element.innerHeight(newHeight);
       }
     } else if (!e || e.which === 8 || e.which === 46 || (e.ctrlKey && e.which === 88)) {
-
       if (oldHeight > minHeight) {
         clone = self.element.clone()
-        .addClass('clone')
-        .css({position: 'absolute', zIndex:-10, height: ''})
-        .val(value);
+          .addClass('clone')
+          .css({ position: 'absolute', zIndex: -10, height: '' })
+          .val(value);
 
         self.element.after(clone);
         do {
@@ -152,7 +150,7 @@ Textarea.prototype = {
         }
 
         if (oldHeight > newHeight && self.settings.autoGrowAnimate) {
-          self.element.stop().animate({height: newHeight}, self.settings.autoGrowAnimateSpeed);
+          self.element.stop().animate({ height: newHeight }, self.settings.autoGrowAnimateSpeed);
         } else {
           self.element.innerHeight(newHeight);
         }
@@ -164,29 +162,33 @@ Textarea.prototype = {
 
   /**
    * Counts the number of line breaks in a string
-   * @param {string} s
-   * @returns {number}
+   * @private
+   * @param {string} s The string to test.
+   * @returns {number} The number of found line countLinebreaks
    */
-  countLinebreaks: function(s) {
+  countLinebreaks(s) {
     return (s.match(/\n/g) || []).length;
   },
 
   /**
-   * Updates the descriptive markup (counter, etc) to notify the user how many characters can be typed.
+   * Updates the descriptive markup (counter, etc) to notify the user how many
+   * characters can be typed.
    * @private
-   * @param {TextArea} self
+   * @param {object} self The current object.
    */
-  updateCounter: function (self) {
-    var value = self.element.val(),
-      isExtraLinebreaks = this.isChrome || this.isSafari,
-      length = value.length + (isExtraLinebreaks ? this.countLinebreaks(value) : 0),
-      max = parseInt(self.element.attr('maxlength')),
-      remaining = (parseInt(max)-length),
-      text = (self.settings.charRemainingText ? self.settings.charRemainingText : (Locale.translate('CharactersLeft') === 'CharactersLeft' ? 'Characters Left' : Locale.translate('CharactersLeft'))).replace('{0}', remaining.toString());
+  updateCounter(self) {
+    const value = self.element.val();
+    const isExtraLinebreaks = this.isChrome || this.isSafari;
+    const length = value.length + (isExtraLinebreaks ? this.countLinebreaks(value) : 0);
+    const max = parseInt(self.element.attr('maxlength'), 10);
+    const remaining = (parseInt(max, 10) - length);
+    let text = (self.settings.charRemainingText ? self.settings.charRemainingText : //eslint-disable-line
+      (Locale.translate('CharactersLeft') === 'CharactersLeft' ? 'Characters Left' :
+        Locale.translate('CharactersLeft'))).replace('{0}', remaining.toString());
 
     if (self.counter) {
       if (length === max) {
-        text = (self.settings.charMaxText ? self.settings.charMaxText.replace('{0}', max) : Locale.translate('CharactersMax')+ max) ;
+        text = (self.settings.charMaxText ? self.settings.charMaxText.replace('{0}', max) : Locale.translate('CharactersMax') + max);
         self.counter.text(text);
         self.counter.removeClass('almost-empty');
       } else {
@@ -207,35 +209,37 @@ Textarea.prototype = {
   /**
    * Enables this component instance.
    */
-  enable: function () {
+  enable() {
     this.element.prop('disabled', false).prop('readonly', false);
   },
 
   /**
    * Disables this component instance.
    */
-  disable: function () {
+  disable() {
     this.element.prop('disabled', true);
   },
 
   /**
-  * Returns true if the texarea is disabled.
-  */
-  isDisabled: function() {
+   * Returns true if the texarea is disabled
+   * @returns {boolean} True if the elemet is disabled.
+   */
+  isDisabled() {
     return this.element.prop('disabled');
   },
 
   /**
    * Sets this component instance to "readonly"
    */
-  readonly: function () {
+  readonly() {
     this.element.prop('readonly', true);
   },
 
   /**
    * Call whenever the plugin's settings are changed
+   * @param {object} settings The settings object.
    */
-  updated: function (settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
@@ -247,7 +251,7 @@ Textarea.prototype = {
   /**
    * Destroys this component instance and unlinks it from its element.
    */
-  destroy: function() {
+  destroy() {
     $.removeData(this.element[0], COMPONENT_NAME);
     if (this.printarea && this.printarea.length) {
       this.printarea.remove();
@@ -267,24 +271,24 @@ Textarea.prototype = {
    * @param {object} keypress  &nbsp;-&nbsp;
    * @param {object} blur  &nbsp;-&nbsp;
    */
-  handleEvents: function() {
-    var self = this;
+  handleEvents() {
+    const self = this;
 
-    this.element.on('keyup.textarea', function (e) {
+    this.element.on('keyup.textarea', (e) => {
       self.updateCounter(self);
 
       if (self.settings.autoGrow) {
         self.handleResize(self, e);
       }
-    }).on('focus.textarea', function () {
+    }).on('focus.textarea', () => {
       if (self.counter) {
         self.counter.addClass('focus');
       }
-    }).on('updated.dropdown', function () {
+    }).on('updated.dropdown', () => {
       self.updated();
     }).on('keypress.textarea', function (e) {
-      var length = self.element.val().length,
-      max = self.element.attr('maxlength');
+      const length = self.element.val().length;
+      const max = self.element.attr('maxlength');
 
       if ([97, 99, 118, 120].indexOf(e.which) > -1 && (e.metaKey || e.ctrlKey)) {
         self.updateCounter(self);
@@ -299,14 +303,13 @@ Textarea.prototype = {
         e.preventDefault();
       }
     })
-    .on('blur.textarea', function () {
-      self.updateCounter(self);
-      if (self.counter) {
-        self.counter.removeClass('focus');
-      }
-    });
+      .on('blur.textarea', () => {
+        self.updateCounter(self);
+        if (self.counter) {
+          self.counter.removeClass('focus');
+        }
+      });
   }
 };
-
 
 export { Textarea, COMPONENT_NAME };

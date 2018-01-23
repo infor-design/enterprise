@@ -30,7 +30,7 @@ const ABOUT_DEFAULTS = {
  *
  * @class About
  * @param {object} element The component element.
- * @param {object} settings The component settings.
+ * @param {object} [settings] The component settings.
  *
  */
 function About(element, settings) {

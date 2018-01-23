@@ -44,4 +44,44 @@ charts.hideTooltip = function hideTooltip() {
   });
 };
 
+/*
+ * Remove the tooltip from the DOM
+ * @returns {void}
+ */
+charts.removeTooltip = function removeTooltip() {
+  if (this.tooltip) {
+    this.tooltip.remove();
+  }
+};
+
+/**
+ * Show Tooltip
+ * @param  {[type]} x       [description]
+ * @param  {[type]} y       [description]
+ * @param  {[type]} content [description]
+ * @param  {[type]} arrow   [description]
+ */
+charts.showTooltip = function (x, y, content, arrow) {
+  // Simple Collision of left side
+  if (x < 0) {
+    x = 2;
+  }
+
+  this.tooltip[0].style.left = `${x}px`;
+  this.tooltip[0].style.top = `${y}px`;
+  this.tooltip.find('.tooltip-content').html(content);
+
+  this.tooltip.removeClass('bottom top left right').addClass(arrow);
+  this.tooltip.removeClass('is-hidden');
+
+  // Hide the tooltip when the page scrolls.
+  $('body').off('scroll.chart-tooltip').on('scroll.chart-tooltip', () => {
+    this.hideTooltip();
+  });
+
+  $('.scrollable').off('scroll.chart-tooltip').on('scroll.chart-tooltip', () => {
+    this.hideTooltip();
+  });
+};
+
 export { charts };

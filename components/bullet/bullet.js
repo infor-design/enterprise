@@ -11,13 +11,16 @@ const COMPONENT_NAME = 'bullet';
 
 /**
 * @namespace
-* @property {array} dataset The data to use in the chart.
+* @property {array} dataset.data The data to use in the chart.
 * @property {boolean|string} animate true|false - will do or not do the animation.
 * 'initial' will do only first time the animation.
-* @property {string} tooltip Tooltip conetnts
+* @property {array} dataset.data.tooltip Tooltip conents for each point.
+* @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
 */
 const BULLET_DEFAULTS = {
-  dataset: []
+  dataset: [],
+  animate: 600,
+  redrawOnResize: true
 };
 
 /**
@@ -41,13 +44,21 @@ Bullet.prototype = {
 
   /**
    * Do initialization, build up and / or add events ect.
+   * @private
    * @returns {object} The bullet chart prototype for chaining.
    */
   init() {
     // Do initialization. Build or Events ect
-    return this
+    this
       .build()
       .handleEvents();
+
+    // Handle initial option
+    if (this.settings.animate === 'initial') {
+      this.settings.animate = 0;
+    }
+
+    return this;
   },
 
   /**
@@ -88,6 +99,7 @@ Bullet.prototype = {
     for (let i = 0; i < chartData.data.length; i++) {
       const duration = this.settings.animate ? 600 : 0;
       const barHeight = 20;
+      const self = this;
       const rowData = chartData.data[i];
       const ranges = rowData.ranges.slice().sort(d3.descending);
       let markers = (rowData.markers ? rowData.markers.slice().sort(d3.descending) : []);
@@ -149,18 +161,18 @@ Bullet.prototype = {
           return '';
         })
         .attr('height', barHeight)
-        .on('click', () => {
+        .on('click', function () {
           const bar = d3.select(this);
-          this.element.trigger('selected', [bar, chartData.data[bar.attr('data-idx')]]);
+          self.element.trigger('selected', [bar, chartData.data[bar.attr('data-idx')]]);
         })
-        .on('mouseenter', (d) => {
+        .on('mouseenter', function (d, mouseEnterIdx) {
           const bar = d3.select(this);
           const data = chartData.data[bar.attr('data-idx')];
           const rect = this.getBoundingClientRect();
           let content = `<p>${d}</p>`;
 
           const show = function () {
-            const size = charts.getTooltipSize(content);
+            const size = charts.tooltipSize(content);
             const x = rect.left + rect.width - (size.width / 2);
             const y = rect.top - size.height + $(window).scrollTop() - 5;
 
@@ -169,11 +181,11 @@ Bullet.prototype = {
             }
           };
 
-          if (data.tooltip && data.tooltip[i]) {
-            content = data.tooltip[data.tooltip.length - i - 1];
+          if (data.tooltip && data.tooltip[mouseEnterIdx]) {
+            content = data.tooltip[data.tooltip.length - mouseEnterIdx - 1];
           }
 
-          if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
+          if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[mouseEnterIdx]) {
             content = '';
             let runInterval = true;
             tooltipInterval = setInterval(() => {
@@ -198,9 +210,9 @@ Bullet.prototype = {
         .on('mouseleave', () => {
           clearInterval(tooltipInterval);
           charts.hideTooltip();
-        });
-
-      range.transition()
+        })
+        .merge(range)
+        .transition()
         .duration(duration)
         .attr('width', w1);
 
@@ -219,9 +231,9 @@ Bullet.prototype = {
           }
           return '';
         })
-        .attr('y', 8.5);
-
-      measure.transition()
+        .attr('y', 8.5)
+        .merge(measure)
+        .transition()
         .duration(duration)
         .attr('width', w1);
 
@@ -240,9 +252,9 @@ Bullet.prototype = {
           return '';
         })
         .attr('y1', barHeight / 6)
-        .attr('y2', barHeight * 5 / 6);
-
-      marker.transition()
+        .attr('y2', barHeight * 5 / 6)
+        .merge(marker)
+        .transition()
         .duration(duration)
         .attr('x1', x1)
         .attr('x2', x1)
@@ -259,9 +271,9 @@ Bullet.prototype = {
           .attr('y', barHeight / 2 + 4)
           .attr('dx', charts.isRTL ? '-20px' : '20px')
           .attr('x', 0)
-          .text(diff);
-
-        marker.transition()
+          .text(diff)
+          .merge(marker)
+          .transition()
           .duration(duration)
           .attr('x', () => {
             let total = 0;
@@ -305,7 +317,7 @@ Bullet.prototype = {
         .attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'))
         .text(d => d);
 
-      // Transition the entering ticks to the new scale, x1.
+      // Transition the entering ticks to the new scale, x1
       tickEnter.transition()
         .duration(duration)
         .attr('transform', d => `translate(${x1(d)},0)`)
@@ -332,7 +344,37 @@ Bullet.prototype = {
       this.updated();
     });
 
+    if (this.settings.redrawOnResize) {
+      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+        this.handleResize();
+      });
+
+      this.element.on(`resize.${COMPONENT_NAME}`, () => {
+        this.handleResize();
+      });
+    }
+
     return this;
+  },
+
+  width: 0,
+
+  /*
+   * Handles resizing a chart.
+   * @returns {void}
+   */
+  handleResize() {
+    if (this.width === this.element.width()) {
+      return;
+    }
+
+    this.width = this.element.width();
+
+    if (!this.element.is(':visible')) {
+      return;
+    }
+
+    this.updated();
   },
 
   /**
@@ -340,6 +382,7 @@ Bullet.prototype = {
    * @returns {[type]} [description]
    */
   updated() {
+    this.element.empty();
     return this
       .teardown()
       .init();
@@ -351,7 +394,8 @@ Bullet.prototype = {
    * @private
    */
   teardown() {
-    this.element.off(`updated.${BULLET_DEFAULTS}`);
+    this.element.off(`updated.${COMPONENT_NAME} resize.${COMPONENT_NAME}`);
+    $(window).off(`resize.${COMPONENT_NAME}`);
     return this;
   },
 
@@ -360,8 +404,11 @@ Bullet.prototype = {
    * @returns {void}
    */
   destroy() {
+    this.element.removeClass('bullet-chart');
+    charts.removeTooltip();
     this.teardown();
-    $.removeData(this.element[0], BULLET_DEFAULTS);
+    $.removeData(this.element[0], COMPONENT_NAME);
+    $.removeData(this.element[0], 'chart');
   }
 };
 

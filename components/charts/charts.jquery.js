@@ -1,4 +1,5 @@
 import { Bullet, COMPONENT_NAME as BULLET_NAME } from '../bullet/bullet';
+import { CompletionChart, COMPONENT_NAME as COMPLETION_CHART_NAME } from '../completion-chart/completion-chart';
 
 /*
 * jQuery Component Wrapper for Charts. It maps the singlular components
@@ -12,7 +13,24 @@ $.fn.chart = function (settings) {
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, BULLET_NAME, new Bullet(this, settings));
+      switch (settings.type) {
+        case 'targeted-achievement':
+        case 'completion':
+        case 'completion-target': {
+          const chartComponent = new CompletionChart(this, settings);
+          instance = $.data(this, COMPLETION_CHART_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'bullet': {
+          const chartComponent = new Bullet(this, settings);
+          instance = $.data(this, BULLET_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        default:
+          instance = null;
+      }
     }
   });
 };
