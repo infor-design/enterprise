@@ -14,7 +14,7 @@ $.fn.modal = function (settings) {
       instance = elem.closest('.modal').data(COMPONENT_NAME);
     }
 
-    if (instance) {
+    if (instance && settings) {
       instance.updated(settings);
       // This was added for backwards compatability when using:
       // `$(this).modal('close');`

@@ -675,7 +675,7 @@ Editor.prototype = {
 
       justifyRight: `<button type="button" class="btn" title="${Locale.translate('JustifyRight')}" data-action="justifyRight" >${buttonLabels.justifyRight}</button>`,
 
-      source: `<button type="button" class="btn" title="${buttonLabels.source}</button>`,
+      source: `<button type="button" class="btn" title="${Locale.translate('ViewSource')}" data-action="source" >${buttonLabels.source}</button>`,
 
       visual: `<button type="button" class="btn" title="${Locale.translate('ViewVisual')}" data-action="visual" >${buttonLabels.visual}</button>`
     };
