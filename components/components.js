@@ -54,6 +54,7 @@ export { Zoom } from './zoom/zoom';
 
 // Oraganisms
 export { Header } from './header/header';
+export { MultiTabs } from './tabs-multi/multi-tabs';
 // -- ex: datagrid
 // -- ex: lookup
 // -- ex: composite form

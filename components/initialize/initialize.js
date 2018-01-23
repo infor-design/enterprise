@@ -60,7 +60,7 @@ Initialize.prototype = {
         noinitExcludes = '.no-init, [data-init]';
 
       function invokeWithInlineOptions(elem, plugin) {
-        var options = Soho.utils.parseOptions(elem);
+        var options = utils.parseOptions(elem);
         $(elem)[plugin](options);
       }
 
@@ -278,7 +278,7 @@ Initialize.prototype = {
         //Context Menus
         matchedItems('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
           var triggerButton = $(this),
-            options = $.extend({}, Soho.utils.parseOptions(this)),
+            options = $.extend({}, utils.parseOptions(this)),
             popupData = triggerButton.attr('data-popupmenu');
 
           if (popupData) {
@@ -305,7 +305,7 @@ Initialize.prototype = {
       //Popovers
       if ($.fn.popover) {
         matchedItems('[data-popover]:not('+ noinitExcludes +')').each(function () {
-          var options = Soho.utils.parseOptions(this),
+          var options = utils.parseOptions(this),
             obj = $(this),
             trigger = obj.attr('data-trigger'),
             title = obj.attr('data-title'),
@@ -416,6 +416,5 @@ Initialize.prototype = {
     return this;
   }
 };
-
 
 export { Initialize, COMPONENT_NAME };

@@ -98,3 +98,5 @@ ComponentName.prototype = {
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
+
+export { ComponentName, COMPONENT_NAME };

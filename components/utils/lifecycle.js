@@ -1,7 +1,7 @@
- // Lifecycle Methods for jQuery Controls
- // Recursive methods that "globally" call certain methods on large groups of controls
-var EXCLUDED_FROM_CLOSE_CHILDREN = ['.expandable-area', '.accordion'],
-    EXCLUDED_FROM_HANDLE_RESIZE = [];
+// Lifecycle Methods for jQuery Controls
+// Recursive methods that "globally" call certain methods on large groups of controls
+const EXCLUDED_FROM_CLOSE_CHILDREN = ['.expandable-area', '.accordion'];
+const EXCLUDED_FROM_HANDLE_RESIZE = [];
 
 // Used by several of these plugins to detect whether or not the "data" property in question
 // is a valid SoHo Xi Control.
@@ -12,7 +12,7 @@ function canAccessAPI(prop) {
 // Used by several of these plugins to detect whether or not there is a method on a "data" api
 // that can be called.
 function canCall(prop, method) {
-  var api = canAccessAPI(prop);
+  const api = canAccessAPI(prop);
   if (!api) {
     return false;
   }
@@ -32,10 +32,10 @@ function triggerAPIMethod(prop, method) {
 // Tracks each element that attempts to trigger an API method.
 // If a trigger is successful, it stores it in an array that's used later.
 function findControlsOnElements(elems, method) {
-  var foundControls = [];
+  const foundControls = [];
 
-  $.each(elems, function elementIterator(index, elem) {
-    $.each($(elem).data(), function dataEntryIterator(index, dataEntry) {
+  $.each(elems, (index, elem) => {
+    $.each($(elem).data(), (i, dataEntry) => {
       if (triggerAPIMethod(dataEntry, method)) {
         foundControls.push({ elem: $(elem), control: dataEntry });
       }
@@ -48,33 +48,33 @@ function findControlsOnElements(elems, method) {
 // Kicks it all off
 function siftFor(rootElem, method, filteredOutElements) {
   if (!rootElem || !method) {
-    return;
+    return undefined;
   }
 
   rootElem = $(rootElem);
-  var DOMelements = rootElem.find('*').add(rootElem);
+  let DOMelements = rootElem.find('*').add(rootElem);
 
   if (filteredOutElements) {
     DOMelements = DOMelements.not(filteredOutElements.join(', '));
   }
-  var siftedControls = findControlsOnElements(DOMelements, method);
+  const siftedControls = findControlsOnElements(DOMelements, method);
 
-  rootElem.trigger('sift-' + method + '-complete', [siftedControls]);
+  rootElem.trigger(`sift-${method}-complete`, [siftedControls]);
   return rootElem;
 }
 
-//==========================================================
+// =========================================================
 // Actual Control Plugins
-//==========================================================
+// =========================================================
 
-$.fn.destroy = function() {
+$.fn.destroy = function () {
   return siftFor($(this), 'destroy');
 };
 
-$.fn.closeChildren = function() {
+$.fn.closeChildren = function () {
   return siftFor($(this), 'close', EXCLUDED_FROM_CLOSE_CHILDREN);
 };
 
-$.fn.handleResize = function() {
+$.fn.handleResize = function () {
   return siftFor($(this), 'handleResize', EXCLUDED_FROM_HANDLE_RESIZE);
 };

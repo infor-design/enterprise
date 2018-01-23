@@ -74,3 +74,4 @@ import './zoom/zoom.jquery';
 import './datagrid/datagrid.jquery';
 import './header/header.jquery';
 import './lookup/lookup.jquery';
+import './tabs-multi/multi-tabs.jquery';
