@@ -11,6 +11,26 @@ module.exports = function (config) {
     exclude: [
       'node_modules'
     ],
+    browserStack: {
+      username: process.env.BROWSER_STACK_USERNAME,
+      accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
+      startTunnel: true
+    },
+    customLaunchers: {
+      bs_firefox_mac: {
+        base: 'BrowserStack',
+        browser: 'firefox',
+        browser_version: '21.0',
+        os: 'OS X',
+        os_version: 'Mountain Lion'
+      },
+      bs_iphone5: {
+        base: 'BrowserStack',
+        device: 'iPhone 5',
+        os: 'ios',
+        os_version: '6.0'
+      }
+    },
     preprocessors: {
       'components/**/*.spec.js': ['webpack'],
       'dist/js/sohoxi.js': ['coverage']
@@ -28,7 +48,7 @@ module.exports = function (config) {
     webpackMiddleware: {
       stats: 'errors-only'
     },
-    reporters: ['mocha', 'coverage'],
+    reporters: ['mocha', 'coverage', 'BrowserStack'],
     coverageReporter: {
       includeAllSources: true,
       dir: 'coverage/',
@@ -41,7 +61,11 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    browsers: [
+      'ChromeHeadless',
+      'bs_firefox_mac',
+      'bs_iphone5'
+    ],
     singleRun: false,
     concurrency: Infinity
   });
