@@ -7,7 +7,7 @@ let svgEl;
 let rowEl;
 let dropdownData;
 
-describe('Dropdown', () => {
+describe('Dropdown API', () => {
   beforeEach(() => {
     dropdownEl = svgEl = rowEl = dropdownData = null;
     document.body.insertAdjacentHTML('afterbegin', dropdownHTML);
@@ -44,9 +44,23 @@ describe('Dropdown', () => {
     expect(document.body.querySelector('.dropdown.is-open')).toBeFalsy();
   });
 
+  it('Should disable dropdown', () => {
+    dropdownData.disable();
+    expect(document.body.querySelector('.dropdown.is-disabled')).toBeTruthy();
+    expect(dropdownData.isDisabled()).toBeTruthy();
+  });
+
   it('Should enable dropdown', () => {
     dropdownData.enable();
     expect(document.body.querySelector('.dropdown.is-disabled')).toBeFalsy();
+    expect(dropdownData.isDisabled()).toBeFalsy();
+  });
+
+  it('Should render dropdown readonly', () => {
+    dropdownData.readonly();
+    debugger;
+    expect(document.body.querySelector('.dropdown.is-readonly')).toBeTruthy();
+    expect(document.querySelector('[aria-label="readonly"]')).toBeTruthy;
     expect(dropdownData.isDisabled()).toBeFalsy();
   });
 });
