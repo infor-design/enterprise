@@ -2,10 +2,83 @@
   
     
 
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          rightAligned
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Will always attempt to right-align the contents of
+the toolbar. By default if there is no title it will left align. This forces right alignment.
 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          maxVisibleButtons
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          Total amount of buttons that can be present, not
+including the More button.
 
-  
-    
+        </td>
+      </tr>
+      <tr>
+        <td>
+          resizeContainers
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, uses Javascript to size the Title and
+Buttonset elements in a way that shows as much of the Title area as possible.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          favorButtonset
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If "resizeContainers" is true, setting this to
+true will try to display as many buttons as possible while resizing the toolbar.
+Setting to false attempts to show the entire title instead.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          noSearchfieldReinvoke
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, does not manage the lifecycle
+of an internal toolbarsearchfield automatically.  Allows an external controller
+to do it instead.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 
@@ -34,14 +107,15 @@
         </td>
         <td>
           <p>Builds a single "More Actions Menu" item from a source toolbar item.
-Also sets up linkage between the menu item and the original toolbar item to allow events/properties
-to propagate when the More Actions item is acted upon.</p>
+Also sets up linkage between the menu item and the original toolbar item to
+allow events/properties to propagate when the More Actions item is acted upon.</p>
 
         </td>
         <td>
           a jQuery-wrapped 
 <li>
- representing a More Actions menu implementation of the toolbar item.
+ representing a More Actions menu
+implementation of the toolbar item.
 
         </td>
       </tr>
@@ -75,7 +149,8 @@ optionally refresh only part of the menu.</p>
           
         </td>
         <td>
-          <p>Gets the complete text contnts of a Toolbar Item, in order to create its corresponding "more actions" menu item.</p>
+          <p>Gets the complete text contnts of a Toolbar Item, in order to create its
+corresponding "more actions" menu item.</p>
 <p>Order of operations for populating the List Item text:
 1. span contents (.audible), then
 2. button title attribute, then
@@ -92,7 +167,10 @@ string
         <td>
           
                 
-                  <span>e (jQuery.Event) =  </span>
+                  <span>e (jQuery.Event) = custom 
+<code>show-submenu</code>
+ jQuery event
+ </span>
                 
                   <span>li () = the 
 <code>li.submenu</code>
@@ -114,7 +192,8 @@ the case of a menu button that's been spilled over into this Toolbar's More Acti
         <td>
           
                 
-                  <span>containerDims () = an object containing dimensions that can be set on the Toolbar's title and buttonset elements.
+                  <span>containerDims () = an object containing dimensions that can be set
+on the Toolbar's title and buttonset elements.
  </span>
                 
           
@@ -125,7 +204,7 @@ the case of a menu button that's been spilled over into this Toolbar's More Acti
         </td>
         <td>
           
-
+void
         </td>
       </tr>
       <tr>
@@ -150,7 +229,7 @@ the case of a menu button that's been spilled over into this Toolbar's More Acti
         </td>
         <td>
           
-
+void
         </td>
       </tr>
       <tr>
@@ -163,7 +242,7 @@ the case of a menu button that's been spilled over into this Toolbar's More Acti
 
         </td>
         <td>
-          
+          the last visible button in the buttonset.
 
         </td>
       </tr>
@@ -177,7 +256,7 @@ the case of a menu button that's been spilled over into this Toolbar's More Acti
 
         </td>
         <td>
-          
+          the first visible button in the buttonset.
 
         </td>
       </tr>
@@ -189,7 +268,8 @@ the case of a menu button that's been spilled over into this Toolbar's More Acti
                   <span>activeButton () = the preferred target element to make active.
  </span>
                 
-                  <span>noFocus () = if defined, prevents this method from giving focus to the new active button.
+                  <span>noFocus () = if defined, prevents this method from giving focus
+to the new active button.
  </span>
                 
           
@@ -206,7 +286,8 @@ the case of a menu button that's been spilled over into this Toolbar's More Acti
         <td>
           
                 
-                  <span>element () = a jQuery Object containing an anchor tag, button, or input field.
+                  <span>element () = a jQuery Object containing an
+anchor tag, button, or input field.
  </span>
                 
           
@@ -216,20 +297,6 @@ the case of a menu button that's been spilled over into this Toolbar's More Acti
 
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>_getButtonsetButtons</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Assembles and returns a list of all buttons inside the Buttonset element.</p>
-
-        </td>
-        <td>
-          
-array
         </td>
       </tr>
       <tr>
@@ -243,7 +310,8 @@ array
           
         </td>
         <td>
-          <p>Gets and Iterates through a list of toolbar items and determines which are currently overflowed, and which are visible.</p>
+          <p>Gets and Iterates through a list of toolbar items and determines which are
+currently overflowed, and which are visible.</p>
 
         </td>
         <td>
@@ -251,7 +319,8 @@ array
 VisibilitySortedToolbarItems
           visible - An array containing all visible items.
 VisibilitySortedToolbarItems.Array
-          hidden - An array containing all hidden (overflowed) items.
+          hidden - An array containing all
+hidden (overflowed) items.
 VisibilitySortedToolbarItems.Array
         </td>
       </tr>
@@ -262,18 +331,20 @@ VisibilitySortedToolbarItems.Array
                 
                   <span>items (object) = an object (normally generated by 
 <code>_.getVisibleButtons()</code>
-) containing arrays of currently visible and hidden buttons, along with some meta-data.
+)
+containing arrays of currently visible and hidden buttons, along with some meta-data.
  </span>
                 
           
         </td>
         <td>
-          <p>Gets and Iterates through the full list of Toolbar Items and determines which ones should currently be present in the More Actions menu.</p>
+          <p>Gets and Iterates through the full list of Toolbar Items and determines which
+ones should currently be present in the More Actions menu.</p>
 
         </td>
         <td>
           
-
+void
         </td>
       </tr>
       <tr>
@@ -287,11 +358,13 @@ VisibilitySortedToolbarItems.Array
           
         </td>
         <td>
-          <p>Detects whether or not a toolbar item is currently overflowed.  In general, toolbar items are considered overflow if their right-most edge sits past the right-most edge of the buttonset border.  There are some edge-cases.</p>
+          <p>Detects whether or not a toolbar item is currently overflowed.  In general,
+toolbar items are considered overflow if their right-most edge sits past the
+right-most edge of the buttonset border.  There are some edge-cases.</p>
 
         </td>
         <td>
-          
+          whether or not the item belongs in the More Actions menu
 boolean
         </td>
       </tr>
@@ -301,11 +374,10 @@ boolean
           
         </td>
         <td>
-          <p>Detection for whether or not this toolbar is able to have a More Button</p>
-
+          
         </td>
         <td>
-          
+          whether or not this toolbar is able to have a More Button
 boolean
         </td>
       </tr>
@@ -315,11 +387,13 @@ boolean
           
         </td>
         <td>
-          <p>Detection for whether or not More Actions menu is currently visible.</p>
+          <p>Detection for whether or not More Actions menu is currently visible.  This is
+different than the More Actions menu being disabled.  This check determines
+whether or not items have spilled over, causing the menu to be shown or hidden.</p>
 
         </td>
         <td>
-          
+          whether or not More Actions menu is currently visible.
 boolean
         </td>
       </tr>
@@ -328,7 +402,8 @@ boolean
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming different settings
+ </span>
                 
           
         </td>
@@ -336,6 +411,8 @@ boolean
           
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -349,7 +426,7 @@ boolean
         </td>
         <td>
           
-
+void
         </td>
       </tr>
       <tr>
@@ -363,7 +440,7 @@ boolean
         </td>
         <td>
           
-
+void
         </td>
       </tr>
       <tr>
@@ -376,7 +453,7 @@ boolean
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -390,7 +467,8 @@ this
  from inside the More Actions menu.
  </span>
                 
-                  <span>doRemove (boolean) = if defined, causes the list item to be removed from the more actions menu.
+                  <span>doRemove (boolean) = if defined, causes the list item to be removed from
+the more actions menu.
  </span>
                 
           
@@ -408,12 +486,13 @@ this
           
         </td>
         <td>
-          <p>Destroys this Toolbar Component instance and completely disassociates it from its corresponding DOM Element.</p>
+          <p>Destroys this Toolbar Component instance and completely disassociates it from
+its corresponding DOM Element.</p>
 
         </td>
         <td>
           
-
+void
         </td>
       </tr>
     </tbody>

@@ -12,30 +12,35 @@ const COMPONENT_NAME = 'tooltip';
 /**
  * Tooltip Component Default Settings
  * @namespace
- * @property {string|function} [content] - Takes title attribute or feed content. Can be a string or jQuery markup
+ * @property {string|function} [content] Takes title attribute or feed content.
+ *  Can be a string or jQuery markup
  * @property {object} [offset={top: 10, left: 10}] - How much room to leave
  * @property {string} [placement=top|bottom|right|offset]
- * @property {string} [trigger=hover] - supports click and immediate and hover (and maybe in future focus)
+ * @property {string} [trigger=hover] - supports click and immediate and hover
+ *  (and maybe in future focus)
  * @property {string} [title] - Title for Infor Tips
  * @property {string} [beforeShow] - Call back for ajax tooltip
  * @property {string} [popover] - force it to be a popover (no content)
  * @property {string} [closebutton] - Show X close button next to title in popover
  * @property {boolean} [isError=false] - Add error classes
  * @property {boolean} [isErrorColor=false] - Add error color only not description
- * @property {string} [tooltipElement] - ID selector for an alternate element to use to contain the tooltip classes
- * @property {object} [parentElement=this.element] - jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.
- * @property {boolean} [keepOpen=false] - Forces the tooltip to stay open in situations where it would normally close.
+ * @property {string} [tooltipElement] - ID selector for an alternate element to use
+ *  to contain the tooltip classes
+ * @property {object} [parentElement=this.element] - jQuery-wrapped element that gets
+ *  passed to the 'place' behavior as the element to place the tooltip against.
+ * @property {boolean} [keepOpen=false] - Forces the tooltip to stay open in situations
+ *  where it would normally close.
  * @property {string} [extraClass] - Extra css class
  * @property {string} [maxWidth] - Toolip max width
  */
 const TOOLTIP_DEFAULTS = {
   content: null,
-  offset: {top: 10, left: 10},
+  offset: { top: 10, left: 10 },
   placement: 'top',
   trigger: 'hover',
   title: null,
   beforeShow: null,
-  popover: null ,
+  popover: null,
   closebutton: null,
   isError: false,
   isErrorColor: false,
@@ -50,8 +55,8 @@ const TOOLTIP_DEFAULTS = {
 /**
  * Tooltip and Popover Control
  * @constructor
- * @param {HTMLElement|jQuery[]} element
- * @param {object|function} settings
+ * @param {HTMLElement|jQuery[]} element the base element
+ * @param {object|function} [settings] incoming settings
  */
 function Tooltip(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TOOLTIP_DEFAULTS);
@@ -68,14 +73,14 @@ Tooltip.prototype = {
    * @private
    * @returns {void}
    */
-  init: function() {
+  init() {
     this.setup();
     this.appendTooltip();
 
     // Initial Content Setting.
     // Don't do this if we're using an "immediate" trigger because _setContent()_ is handled at
     // display time in that case.
-    var shouldRender = this.settings.trigger !== 'immediate';
+    const shouldRender = this.settings.trigger !== 'immediate';
     if (shouldRender) {
       this.setContent(this.settings.content, true);
     }
@@ -88,29 +93,33 @@ Tooltip.prototype = {
    * @private
    * @returns {void}
    */
-  setup: function() {
+  setup() {
     // "this.activeElement" is the target element that the Tooltip will display itself against
-    this.activeElement = this.settings.parentElement instanceof $ && this.settings.parentElement.length ? this.settings.parentElement : this.element;
+    this.activeElement = this.settings.parentElement instanceof $ &&
+      this.settings.parentElement.length ? this.settings.parentElement : this.element;
 
     this.descriptionId = $('.tooltip-description').length + 1;
     this.description = this.element.parent().find('.tooltip-description');
     if (!this.description.length && this.settings.isError) {
-      this.description = $('<span id="tooltip-description-'+ this.descriptionId +'" class="tooltip-description audible"></span>').insertAfter(this.element);
+      this.description = $(`<span id="tooltip-description-${this.descriptionId}" class="tooltip-description audible"></span>`).insertAfter(this.element);
     }
 
     if (this.element.is('.dropdown, .multiselect')) {
       this.activeElement = this.element.nextAll('.dropdown-wrapper:first').find('>.dropdown');
     }
 
-    var titleAttr = this.element.attr('title');
-    if ((!this.settings.popover && titleAttr && titleAttr.length) || (!this.settings.popover && this.settings.title)) {
+    const titleAttr = this.element.attr('title');
+    if (
+      (!this.settings.popover && titleAttr && titleAttr.length) ||
+      (!this.settings.popover && this.settings.title)
+    ) {
       this.settings.content = this.settings.title ? this.settings.title : titleAttr;
       this.element.removeAttr('title');
     }
 
     this.isPopover = (this.settings.content !== null && typeof this.settings.content === 'object') || this.settings.popover === true;
 
-    this.settings.closebutton = (this.settings.closebutton || this.element.data('closebutton')) ? true : false;
+    this.settings.closebutton = !!((this.settings.closebutton || this.element.data('closebutton')));
 
     if (this.element.data('extraClass') && this.element.data('extraClass').length) {
       this.settings.extraClass = this.element.data('extraClass');
@@ -124,7 +133,7 @@ Tooltip.prototype = {
    * @private
    * @returns {void}
    */
-  addAria: function() {
+  addAria() {
     if (!this.content) {
       return;
     }
@@ -143,30 +152,32 @@ Tooltip.prototype = {
 
   /**
    * @param {jQuery[]|string} content HTML or String-based content.
-   * @param {string} [thisClass] optional, additional CSS class that gets appeneded to any anchor tags inside of the content.
-   * @returns {string}
+   * @param {string} [thisClass] optional, additional CSS class that gets appeneded to any
+   *  anchor tags inside of the content.
+   * @returns {string} the appended content
    */
-  addClassToLinks: function(content, thisClass) {
-    var isjQuery = (content instanceof $ && content.length > 0);
+  addClassToLinks(content, thisClass) {
+    const isjQuery = (content instanceof $ && content.length > 0);
     if (isjQuery) {
       return content;
     }
 
-    var d = $('<div/>').html(content);
+    const d = $('<div/>').html(content);
     $('a', d).addClass(thisClass);
     return d.html();
   },
 
   /**
-   * Gets a reference to the element being used for the tooltip and positions it in the correct spot on the page.
+   * Gets a reference to the element being used for the tooltip and positions
+   *  it in the correct spot on the page.
    * @private
    * @returns {void}
    */
-  appendTooltip: function() {
+  appendTooltip() {
     this.tooltip = this.settings.tooltipElement ? $(this.settings.tooltipElement) : $('#tooltip');
     if (!this.tooltip.length) {
-      var name = (this.settings.tooltipElement ? this.settings.tooltipElement.substring(1, this.settings.tooltipElement.length) : 'tooltip');
-      this.tooltip = $('<div class="' + (this.isPopover ? 'popover' : 'tooltip') + ' bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"></div></div>');
+      const name = (this.settings.tooltipElement ? this.settings.tooltipElement.substring(1, this.settings.tooltipElement.length) : 'tooltip');
+      this.tooltip = $(`<div class="${this.isPopover ? 'popover' : 'tooltip'} bottom is-hidden" role="tooltip" id="${name}"><div class="arrow"></div><div class="tooltip-content"></div></div>`);
     }
 
     this.tooltip.place({
@@ -184,23 +195,25 @@ Tooltip.prototype = {
    * @private
    * @returns {void}
    */
-  handleEvents: function() {
-    var self = this, timer, delay = 400;
+  handleEvents() {
+    const self = this;
+    const delay = 400;
+    let timer;
 
     if (this.settings.trigger === 'hover' && !this.settings.isError) {
       ((this.element.is('.dropdown, .multiselect')) ? this.activeElement : this.element)
-        .on('mouseenter.tooltip', function() {
-          timer = setTimeout(function() {
+        .on('mouseenter.tooltip', () => {
+          timer = setTimeout(() => {
             self.show();
           }, delay);
         })
-        .on('mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip', function() {
+        .on('mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip', () => {
           clearTimeout(timer);
-          setTimeout(function() {
+          setTimeout(() => {
             self.hide();
           }, delay);
         })
-        .on('updated.tooltip', function() {
+        .on('updated.tooltip', () => {
           self.updated();
         });
     }
@@ -214,54 +227,53 @@ Tooltip.prototype = {
     }
 
     if (this.settings.trigger === 'click') {
-      this.element.on('click.tooltip', function() {
+      this.element.on('click.tooltip', () => {
         toggleTooltipDisplay();
       });
     }
 
     if (this.settings.trigger === 'immediate') {
-      timer = setTimeout(function() {
+      timer = setTimeout(() => {
         toggleTooltipDisplay();
       }, 1);
     }
 
-    // Uncomment the line below to get focus support on some elements all the time, regardless of trigger setting.
-    //var isFocusable = (this.element.filter('button, a').length && this.settings.trigger !== 'click') || this.settings.trigger === 'focus';
-    var isFocusable = this.settings.trigger === 'focus';
+    const isFocusable = this.settings.trigger === 'focus';
     if (isFocusable) {
-      this.element.on('focus.tooltip', function() {
+      this.element.on('focus.tooltip', () => {
         self.show();
       })
-      .on('blur.tooltip', function() {
-        if (!self.settings.keepOpen) {
-          self.hide();
-        }
-      });
+        .on('blur.tooltip', () => {
+          if (!self.settings.keepOpen) {
+            self.hide();
+          }
+        });
     }
 
     // Close the popup/tooltip on orientation changes (but not when keyboard is open)
-    $(window).on('orientationchange.tooltip', function() {
+    $(window).on('orientationchange.tooltip', () => {
       // Match every time.
       if (self.tooltip.hasClass('is-hidden')) {
         return;
       }
       self.close();
     }, false);
-
   },
 
   /**
    * Sets the content used inside the Tooltip element.
-   * @param {jQuery[]|string|function} content
-   * @param {boolean} dontRender causes the tooltip to prevent a visual refresh after changing its content, meaning it will keep the previous content visible until this tooltip is closed or manually re-drawn.
-   * @returns {boolean}
+   * @param {jQuery[]|string|function} content incoming content to be set
+   * @param {boolean} dontRender causes the tooltip to prevent a visual refresh after
+   *  changing its content, meaning it will keep the previous content visible until
+   *  this tooltip is closed or manually re-drawn.
+   * @returns {boolean} whether or not the render was successful
    */
-  setContent: function(content, dontRender) {
-    var self = this,
-      specified,
-      settingsContent = this.settings.content,
-      noIncomingContent = (content === undefined || content === null),
-      noSettingsContent = (settingsContent === undefined || settingsContent === null);
+  setContent(content, dontRender) {
+    const self = this;
+    let specified;
+    const settingsContent = this.settings.content;
+    const noIncomingContent = (content === undefined || content === null);
+    const noSettingsContent = (settingsContent === undefined || settingsContent === null);
 
     function doRender() {
       if (dontRender === true) {
@@ -276,9 +288,11 @@ Tooltip.prototype = {
       return false;
     }
 
-    // If the settingsContent type is a function, we need to re-run that function to update the content.
-    // NOTE: If you need to use a function to generate content, understand that the tooltip/popover will not
-    // cache your content for future reuse.  It will ALWAYS override incoming content.
+    // If the settingsContent type is a function, we need to re-run that function
+    // to update the content.
+    // NOTE: If you need to use a function to generate content, understand that the
+    //  tooltip/popover will not cache your content for future reuse.  It will ALWAYS
+    //  override incoming content.
     if (typeof settingsContent === 'function') {
       content = settingsContent;
     }
@@ -288,8 +302,9 @@ Tooltip.prototype = {
       content = settingsContent;
     }
 
-    // If the incoming/preset content is exactly the same as the stored content, don't continue with this step.
-    // Deep object comparison for jQuery objects is done further down the chain.
+    // If the incoming/preset content is exactly the same as the stored content,
+    // don't continue with this step. Deep object comparison for jQuery objects
+    // is done further down the chain.
     if (content === this.content) {
       doRender();
       return true;
@@ -313,10 +328,11 @@ Tooltip.prototype = {
       // Could be a translation definition
       content = Locale.translate(content, true) || content;
 
-      // Could be an ID attribute
-      // If it matches an element already on the page, grab that element's content and store the reference only.
+      // Could be an ID attribute.
+      // If it matches an element already on the page, grab that element's content
+      // and store the reference only.
       if (content.indexOf('#') === 0) {
-        var contentCheck = $('' + content);
+        const contentCheck = $(`${content}`);
         if (contentCheck.length) {
           this.content = contentCheck;
           doRender();
@@ -327,7 +343,7 @@ Tooltip.prototype = {
 
     // functions
     } else if (typeof content === 'function') {
-      var callbackResult = content.call(this.element);
+      const callbackResult = content.call(this.element);
       if (!callbackResult || typeof callbackResult !== 'string' || !callbackResult.length) {
         return false;
       }
@@ -341,10 +357,10 @@ Tooltip.prototype = {
     // Store an internal copy of the processed content
     this.content = $.sanitizeHTML(content);
 
-     // Wrap tooltip content in <p> tags if there isn't already one present.
-     // Only happens for non-jQuery markup.
+    // Wrap tooltip content in <p> tags if there isn't already one present.
+    // Only happens for non-jQuery markup.
     if (!specified) {
-      this.content = '<p>' + this.content + '</p>';
+      this.content = `<p>${this.content}</p>`;
     }
 
     doRender();
@@ -355,7 +371,7 @@ Tooltip.prototype = {
    * Renders internal content either as a Tooltip or Popover.
    * @returns {void}
    */
-  render: function() {
+  render() {
     if (this.isPopover) {
       return this.renderPopover();
     }
@@ -367,16 +383,16 @@ Tooltip.prototype = {
    * @private
    * @returns {void}
    */
-  renderTooltip: function() {
-    var titleArea = this.tooltip[0].querySelectorAll('.tooltip-title')[0],
-      contentArea = this.tooltip[0].querySelectorAll('.tooltip-content')[0],
-      extraClass = this.settings.extraClass,
-      content = this.content,
-      tooltip = this.tooltip[0],
-      classes = 'tooltip is-hidden';
+  renderTooltip() {
+    const titleArea = this.tooltip[0].querySelectorAll('.tooltip-title')[0];
+    const contentArea = this.tooltip[0].querySelectorAll('.tooltip-content')[0];
+    const extraClass = this.settings.extraClass;
+    const content = this.content;
+    const tooltip = this.tooltip[0];
+    let classes = 'tooltip is-hidden';
 
     if (extraClass) {
-      classes += ' ' + extraClass;
+      classes += ` ${extraClass}`;
     }
     tooltip.setAttribute('class', classes);
 
@@ -400,21 +416,19 @@ Tooltip.prototype = {
    * @private
    * @returns {void}
    */
-  renderPopover: function() {
-    var self = this,
-      extraClass = this.settings.extraClass,
-      content = this.content,
-      contentArea = this.tooltip.find('.tooltip-content'),
-      title = this.tooltip[0].querySelector('.tooltip-title'),
-      classes = 'popover is-hidden';
+  renderPopover() {
+    const self = this;
+    const extraClass = this.settings.extraClass;
+    const contentArea = this.tooltip.find('.tooltip-content');
+    let title = this.tooltip[0].querySelector('.tooltip-title');
+    let content = this.content;
+    let classes = 'popover is-hidden';
 
     if (extraClass) {
-      classes += ' ' + extraClass;
+      classes += ` ${extraClass}`;
     }
 
     this.tooltip[0].setAttribute('class', classes);
-
-    var popoverWidth;
 
     if (typeof content === 'string') {
       content = $(content);
@@ -424,7 +438,7 @@ Tooltip.prototype = {
       contentArea.html(content);
     }
 
-    popoverWidth = contentArea.width();
+    const popoverWidth = contentArea.width();
 
     if (!this.settings.placementOpts) {
       this.settings.placementOpts = {};
@@ -437,7 +451,7 @@ Tooltip.prototype = {
     content[0].classList.remove('hidden');
     contentArea[0].firstElementChild.classList.remove('hidden');
 
-    var parentWidth = this.settings.placementOpts.parent.width();
+    const parentWidth = this.settings.placementOpts.parent.width();
 
     if (Locale.isRTL()) {
       this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'left' : 'right';
@@ -447,7 +461,7 @@ Tooltip.prototype = {
 
     if (this.settings.title !== null) {
       if (!title) {
-        var titleFrag = document.createDocumentFragment();
+        const titleFrag = document.createDocumentFragment();
         title = document.createElement('div');
         title.innerHTML = this.settings.title;
         title.classList.add('tooltip-title');
@@ -457,19 +471,15 @@ Tooltip.prototype = {
         title.style.display = '';
         title.childNodes[0].nodeValue = this.settings.title;
       }
-    } else {
-      if (title) {
-        title.style.display = 'none';
-      }
+    } else if (title) {
+      title.style.display = 'none';
     }
 
     if (this.settings.closebutton && title && !title.firstElementChild) {
-      var closeBtnX = $(
-        '<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">' +
-          $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
-          '<span>Close</span>' +
-        '</button>'
-      ).on('click', function() {
+      const closeBtnX = $(`<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">${
+        $.createIcon({ classes: ['icon-close'], icon: 'close' })
+      }<span>Close</span>` +
+        '</button>').on('click', () => {
         self.hide();
       });
 
@@ -484,17 +494,18 @@ Tooltip.prototype = {
    * @private
    * @returns {void}
    */
-  open: function() {
+  open() {
     return this.show();
   },
 
   /**
    * Causes the tooltip to become shown
-   * @param {object} newSettings an object containing changed settings that will be applied to the Tooltip/Popover before it's displayed.
+   * @param {object} newSettings an object containing changed settings that will be
+   *  applied to the Tooltip/Popover before it's displayed.
    * @param {boolean} ajaxReturn causes an AJAX-powered Tooltip/Popover not to refresh.
    */
-  show: function(newSettings, ajaxReturn) {
-    var self = this;
+  show(newSettings, ajaxReturn) {
+    const self = this;
     this.isInPopup = false;
 
     if (newSettings) {
@@ -502,8 +513,8 @@ Tooltip.prototype = {
     }
 
     if (this.settings.beforeShow && !ajaxReturn) {
-      var response = function (content) {
-        self.show({content: content}, true);
+      const response = function (content) {
+        self.show({ content }, true);
       };
 
       if (typeof this.settings.beforeShow === 'string') {
@@ -515,7 +526,7 @@ Tooltip.prototype = {
       return;
     }
 
-    var okToShow = true;
+    let okToShow = true;
 
     okToShow = this.setContent(this.content);
     if (okToShow === false) {
@@ -538,9 +549,9 @@ Tooltip.prototype = {
     utils.fixSVGIcons(this.tooltip);
     this.element.trigger('show', [this.tooltip]);
 
-    setTimeout(function () {
-      $(document).on('mouseup.tooltip', function (e) {
-        var target = $(e.target);
+    setTimeout(() => {
+      $(document).on('mouseup.tooltip', (e) => {
+        const target = $(e.target);
 
         if (self.settings.isError || self.settings.trigger === 'focus') {
           return;
@@ -559,11 +570,11 @@ Tooltip.prototype = {
           self.hide(e);
         }
       })
-      .on('keydown.tooltip', function (e) {
-        if (e.which === 27 || self.settings.isError) {
-          self.hide();
-        }
-      });
+        .on('keydown.tooltip', (e) => {
+          if (e.which === 27 || self.settings.isError) {
+            self.hide();
+          }
+        });
 
       if (self.settings.isError &&
           !self.element.is(':visible, .dropdown') &&
@@ -572,46 +583,46 @@ Tooltip.prototype = {
       }
 
       if (window.orientation === undefined) {
-        $('body').on('resize.tooltip', function() {
+        $('body').on('resize.tooltip', () => {
           self.hide();
         });
       }
 
       // Hide on Page scroll
-      $('body').on('scroll.tooltip', function() {
+      $('body').on('scroll.tooltip', () => {
         self.hide();
       });
 
-      self.element.closest('.modal-body-wrapper').on('scroll.tooltip', function() {
+      self.element.closest('.modal-body-wrapper').on('scroll.tooltip', () => {
         self.hide();
       });
 
-      self.element.closest('.scrollable').on('scroll.tooltip', function() {
+      self.element.closest('.scrollable').on('scroll.tooltip', () => {
         self.hide();
       });
 
-      self.element.closest('.datagrid-body').on('scroll.tooltip', function() {
+      self.element.closest('.datagrid-body').on('scroll.tooltip', () => {
         self.hide();
       });
 
       // Click to close
       if (self.settings.isError) {
-        self.tooltip.on('click.tooltip', function () {
+        self.tooltip.on('click.tooltip', () => {
           self.hide();
         });
       }
       self.element.trigger('aftershow', [self.tooltip]);
     }, 400);
-
   },
 
   /**
    * Places the tooltip element itself in the correct DOM element.
-   * If the current element is inside a scrollable container, the tooltip element goes as high as possible in the DOM structure.
+   * If the current element is inside a scrollable container, the tooltip element
+   *  goes as high as possible in the DOM structure.
    * @returns {void}
    */
-  setTargetContainer: function() {
-    var targetContainer = $('body');
+  setTargetContainer() {
+    let targetContainer = $('body');
 
     // adjust the tooltip if the element is being scrolled inside a scrollable DIV
     this.scrollparent = this.element.closest('.page-container.scrollable');
@@ -623,7 +634,7 @@ Tooltip.prototype = {
       targetContainer = this.settings.parentElement;
     }
 
-    //this.tooltip.detach().appendTo(targetContainer);
+    // this.tooltip.detach().appendTo(targetContainer);
     targetContainer[0].appendChild(this.tooltip[0]);
   },
 
@@ -631,47 +642,47 @@ Tooltip.prototype = {
    * Placement behavior's "afterplace" handler.
    * DO NOT USE FOR ADDITIONAL POSITIONING.
    * @private
-   * @param {jQuery.Event} e
-   * @param {PlacementObject} placementObj
+   * @param {jQuery.Event} e custom `afterPlace` event
+   * @param {PlacementObject} placementObj object containing placement settings
    * @returns {void}
    */
-  handleAfterPlace: function(e, placementObj) {
+  handleAfterPlace(e, placementObj) {
     this.tooltip.data('place').setArrowPosition(e, placementObj, this.tooltip);
     this.tooltip.triggerHandler('tooltipafterplace', [placementObj]);
   },
 
   /**
    * Resets the current position of the tooltip.
-   * @returns {this}
+   * @returns {this} component instance
    */
-  position: function () {
+  position() {
     this.setTargetContainer();
     this.tooltip[0].classList.remove('is-hidden');
 
-    var self = this,
-      distance = this.isPopover ? 20 : 10,
-      tooltipPlacementOpts = this.settings.placementOpts || {},
-      opts = $.extend({}, {
-        x: 0,
-        y: distance,
-        container: this.scrollparent,
-        containerOffsetX: tooltipPlacementOpts.containerOffsetX || this.settings.offset.left,
-        containerOffsetY: tooltipPlacementOpts.containerOffsetY || this.settings.offset.top,
-        parent: tooltipPlacementOpts.parent || this.activeElement,
-        placement: tooltipPlacementOpts.placement || this.settings.placement,
-        strategies: ['flip', 'nudge']
-      }, tooltipPlacementOpts);
+    const self = this;
+    const distance = this.isPopover ? 20 : 10;
+    const tooltipPlacementOpts = this.settings.placementOpts || {};
+    const opts = $.extend({}, {
+      x: 0,
+      y: distance,
+      container: this.scrollparent,
+      containerOffsetX: tooltipPlacementOpts.containerOffsetX || this.settings.offset.left,
+      containerOffsetY: tooltipPlacementOpts.containerOffsetY || this.settings.offset.top,
+      parent: tooltipPlacementOpts.parent || this.activeElement,
+      placement: tooltipPlacementOpts.placement || this.settings.placement,
+      strategies: ['flip', 'nudge']
+    }, tooltipPlacementOpts);
 
     if (opts.placement === 'left' || opts.placement === 'right') {
       opts.x = distance;
       opts.y = 0;
     }
 
-    this.tooltip.one('afterplace.tooltip', function(e, placementObj) {
+    this.tooltip.one('afterplace.tooltip', (e, placementObj) => {
       self.handleAfterPlace(e, placementObj);
     });
 
-    //Tool tip may be cleaned up on a modal or CAP
+    // Tool tip may be cleaned up on a modal or CAP
     if (this.tooltip.data('place')) {
       this.tooltip.data('place').place(opts);
     } else {
@@ -686,7 +697,7 @@ Tooltip.prototype = {
    * @private
    * @returns {void}
    */
-  close: function() {
+  close() {
     return this.hide();
   },
 
@@ -694,7 +705,7 @@ Tooltip.prototype = {
    * Hides the Tooltip/Popover
    * @returns {void}
    */
-  hide: function() {
+  hide() {
     if (this.settings.keepOpen) {
       return;
     }
@@ -721,17 +732,17 @@ Tooltip.prototype = {
 
   /**
    * Causes the tooltip to store updated settings and re-render itself.
-   * @param {object} [settings]
-   * @returns {this}
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
    */
-  updated: function(settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
 
-    var self = this;
+    const self = this;
     if (self.settings.trigger === 'immediate') {
-      setTimeout(function() {
+      setTimeout(() => {
         self.show();
       }, 100);
     } else {
@@ -746,7 +757,7 @@ Tooltip.prototype = {
    * @private
    * @returns {void}
    */
-  detachOpenEvents: function () {
+  detachOpenEvents() {
     this.tooltip.off('click.tooltip');
     $(document).off('mouseup.tooltip');
     $('body').off('resize.tooltip scroll.tooltip');
@@ -757,9 +768,9 @@ Tooltip.prototype = {
 
   /**
    * Tears down this component instance, removing all internal flags and unbinding events.
-   * @returns {this}
+   * @returns {this} component instance
    */
-  teardown: function() {
+  teardown() {
     this.description.remove();
     this.descriptionId = undefined;
     this.activeElement = undefined;
@@ -770,7 +781,7 @@ Tooltip.prototype = {
     }
 
     if (this.tooltip && this.tooltip.data('place')) {
-     this.tooltip.data('place').destroy();
+      this.tooltip.data('place').destroy();
     }
 
     this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');
@@ -785,11 +796,10 @@ Tooltip.prototype = {
    * Destroys this component instance
    * @returns {void}
    */
-  destroy: function() {
+  destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
-
 
 export { Tooltip, COMPONENT_NAME };

@@ -306,7 +306,7 @@ utils.parseSettings = function parseSettings(element, attr) {
 
     // add double quotes to strings in values
     changedStr = changedStr.replace(regex, ':\"$2\"'); // eslint-disable-line
-    changedStr = replaceDoubleQuotes(str);
+    changedStr = replaceDoubleQuotes(changedStr);
     return changedStr;
   }
 

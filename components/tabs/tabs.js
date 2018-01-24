@@ -316,7 +316,7 @@ Tabs.prototype = {
       // so they aren't accounted for here.
       if (popup) {
         popup.menu.children('li').each(() => {
-          const popupA = li.childern('a');
+          const popupA = li.children('a');
           const popupPanel = $(href);
 
           popupA.data('panel-link', popupPanel);
@@ -424,7 +424,7 @@ Tabs.prototype = {
   /**
    * Adds/removes helper buttons and accessibility-centric markup, based on Tabs' configuration
    * Designed to be run at any point in the Tabs lifecycle.
-   * @returns {this}
+   * @returns {this} component instance
    */
   renderHelperMarkup() {
     let auxilaryButtonLocation = this.tablistContainer || this.tablist;
@@ -522,7 +522,7 @@ Tabs.prototype = {
 
   /**
    * Establishes the bound event listeners on all tabs elements
-   * @returns {this}
+   * @returns {this} component instance
    */
   setupEvents() {
     const self = this;
@@ -718,7 +718,6 @@ Tabs.prototype = {
   /**
    * Adds events associated with elements that are re-renderable during the Tabs lifecycle
    * @private
-   * @returns {this}
    */
   setupHelperMarkupEvents() {
     const self = this;
@@ -757,7 +756,7 @@ Tabs.prototype = {
   /**
    * Removes events associated with elements that are re-renderable during the Tabs lifecycle
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
   removeHelperMarkupEvents() {
     if (this.moreButton && this.moreButton.length) {
@@ -1636,7 +1635,7 @@ Tabs.prototype = {
   /**
    * Takes a tab ID and returns a jquery object containing the previous available tab
    * @param {string} tabId the tab ID
-   * @returns {jQuery[]}
+   * @returns {jQuery[]} jQuery-wrapped element reference for the tab
    */
   getPreviousTab(tabId) {
     const tab = this.getTab(null, tabId);
@@ -2178,8 +2177,9 @@ Tabs.prototype = {
    * Removes a tab from the list and cleans up properly
    * NOTE: Does not take advantage of _activatePreviousTab()_ due to specific needs
    * of selecting certain Tabs/Anchors at certain times.
-   * @param {string} tabId
-   * @param {boolean} disableBeforeClose
+   * @param {string} tabId tab ID that corresponds to a `.tab-panel` element's ID attribute
+   * @param {boolean} disableBeforeClose whether or not tab closing can become veteoed
+   * @returns {boolean|this} component instance
    */
   remove(tabId, disableBeforeClose) {
     const self = this;
@@ -3319,8 +3319,6 @@ Tabs.prototype = {
 
     // build CSS string containing each prop and set it:
     let targetPosString = '';
-
-    // awesome
     Object.keys(targetPos).forEach((key) => {
       if (targetPosString.length) {
         targetPosString += ' ';
@@ -3375,7 +3373,8 @@ Tabs.prototype = {
 
   /**
    * Disables the entire Tab Component
-   * @param {boolean} isPartial
+   * @param {boolean} isPartial whether or not this disable call is a partial
+   *  disabling of the tabset
    * @returns {void}
    */
   disable(isPartial) {

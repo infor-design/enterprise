@@ -107,7 +107,13 @@ module.exports = {
     // Require modules with a single export to use a default export
     // Will ignore because of https://medium.com/@timoxley/named-exports-as-the-default-export-api-670b1b554f65
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/prefer-default-export.md
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+
+    // Ignore certain globals:
+    // - IsNaN - due to our previous assumptions in code about how it sometimes will return 'false'
+    // for things that are not numbers (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#Examples).
+    // https://eslint.org/docs/rules/no-restricted-globals
+    'no-restricted-globals': ['off', 'isNaN']
 
   },
   'globals': {

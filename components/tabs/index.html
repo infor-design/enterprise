@@ -236,7 +236,7 @@ Designed to be run at any point in the Tabs lifecycle.</p>
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -250,7 +250,7 @@ this
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -525,7 +525,7 @@ void
 
         </td>
         <td>
-          
+          jQuery-wrapped element reference for the tab
 
         </td>
       </tr>
@@ -595,9 +595,13 @@ or a promise object that will fire callbacks in either "success" or "failure" sc
         <td>
           
                 
-                  <span>tabId (string) =  </span>
+                  <span>tabId (string) = tab ID that corresponds to a 
+<code>.tab-panel</code>
+ element's ID attribute
+ </span>
                 
-                  <span>disableBeforeClose (boolean) =  </span>
+                  <span>disableBeforeClose (boolean) = whether or not tab closing can become veteoed
+ </span>
                 
           
         </td>
@@ -608,6 +612,8 @@ of selecting certain Tabs/Anchors at certain times.</p>
 
         </td>
         <td>
+          component instance
+
         </td>
       </tr>
       <tr>
@@ -702,7 +708,9 @@ void
         <td>
           
                 
-                  <span>isPartial (boolean) =  </span>
+                  <span>isPartial (boolean) = whether or not this disable call is a partial
+disabling of the tabset
+ </span>
                 
           
         </td>
