@@ -852,6 +852,7 @@ Toolbar.prototype = {
     }
 
     // Get the target size of the title element
+    const self = this;
     const hasTitleSizeGetter = (titleSize !== undefined && !isNaN(titleSize));
     const hasButtonsetSizeGetter = (buttonsetSize !== undefined && !isNaN(buttonsetSize));
     let d;
@@ -863,7 +864,7 @@ Toolbar.prototype = {
       if (hasTitleSizeGetter) {
         return parseInt(titleSize, 10);
       }
-      if (this.settings.favorButtonset === true) {
+      if (self.settings.favorButtonset === true) {
         return toolbarDims.width - (toolbarPadding +
           (hasButtonsetSizeGetter ? parseInt(buttonsetSize, 10) : buttonsetDims.width) +
           moreDims.width);
@@ -877,7 +878,7 @@ Toolbar.prototype = {
       if (hasButtonsetSizeGetter) {
         return parseInt(buttonsetSize, 10);
       }
-      if (this.settings.favorButtonset === true) {
+      if (self.settings.favorButtonset === true) {
         return buttonsetDims.width;
       }
       return toolbarDims.width - (toolbarPadding +
