@@ -1294,8 +1294,7 @@ Dropdown.prototype = {
   },
 
   /**
-   * Open the dropdown list (normally done internal but available for possible use.)
-   * @private
+   * Open the dropdown list of options
    */
   open() {
     const self = this;
@@ -1319,6 +1318,7 @@ Dropdown.prototype = {
 
   /**
    * Popup the list of options for selection.
+   * @private
    */
   openList() {
     const current = this.previousActiveDescendant ?
@@ -1818,6 +1818,16 @@ Dropdown.prototype = {
 
   /**
    * Toggle the current state of the list between open and closed.
+   * @private
+   */
+  toggle() {
+    this.toggleList();
+  },
+
+  /**
+   * Toggle the current state of the list between open and closed.
+   * @deprecated
+   * @private
    */
   toggleList() {
     if (this.isOpen() || this.isLoading()) {
