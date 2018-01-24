@@ -581,7 +581,7 @@
         if (this.settings.showTime) {
 
           //Set to 12:00
-          if (this.element.val() === '') {
+          if (this.element.val() === '' && this.currentDate && this.currentDate.getDate()) {
             this.currentDate.setHours(0);
             this.currentDate.setMinutes(0);
             this.currentDate.setSeconds(0);
@@ -924,8 +924,14 @@
       showMonth: function (month, year, skipYear) {
         var self = this;
 
-        var elementDate = this.currentDate.getDate() ?
-          this.currentDate : (new Date()).setHours(0,0,0,0);
+        var now = new Date();
+
+        now.setHours(0);
+        now.setMinutes(0);
+        now.setSeconds(0);
+
+        var elementDate = (this.currentDate && this.currentDate.getDate()) ?
+          this.currentDate : now;
 
         this.setCurrentCalendar();
 
