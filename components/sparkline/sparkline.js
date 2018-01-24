@@ -327,7 +327,6 @@ Sparkline.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.removeClass('completion-chart');
     charts.removeTooltip();
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);

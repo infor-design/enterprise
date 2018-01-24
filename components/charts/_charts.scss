@@ -108,31 +108,6 @@
     }
   }
 
-  //Line Chart Style
-  &.line-chart {
-    .domain {
-      stroke: transparent;
-    }
-
-    .dot {
-      cursor: pointer;
-      stroke: transparent;
-    }
-
-    .line-group .line {
-      cursor: pointer;
-    }
-
-    .area {
-      opacity: .2;
-      pointer-events: none;
-    }
-
-    .is-not-selected {
-      opacity: .35;
-    }
-  }
-
   // Svg Hidden
   .is-hidden {
     @include opacity(0);
@@ -207,8 +182,8 @@
 
 // Legend Styling
 .chart-legend {
-  margin-left: 55px;
-  margin-top: -13px;
+  margin-left: 45px;
+  margin-top: -9px;
 
   &.is-below {
     border-top: 1px solid $panel-border-color;
@@ -227,7 +202,7 @@
     &:focus {
       border-color: $input-focus-border-color;
       // Removed box shadow to match current style
-      box-shadow: $focus-box-shadow;
+      box-shadow: 0 0 4px 1px $focus-box-shadow-color;
       outline: none;
     }
 

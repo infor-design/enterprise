@@ -107,8 +107,8 @@ $('body').on('initialized', function () {
 ];
 
 // D3 parse/format date
-var parseDate = d3.time.format('%m/%d/%Y').parse,
-  formatDate = d3.time.format('%b %d');
+var parseDate = d3.timeParse('%m/%d/%Y'),
+  formatDate = d3.timeFormat('%b %d');
 
   // Flatten data for x-axis
   var dataX = dataset.map(function(d, i) {
@@ -122,7 +122,7 @@ var parseDate = d3.time.format('%m/%d/%Y').parse,
   var dates = dataX.map(function(d, i) {
       var dt = parseDate(d.name);
       // Add custom tooltip
-      d.tooltip = 'Value: '+ d.value +'<br>'+ d3.time.format('%a %m/%d/%Y')(dt);
+      d.tooltip = 'Value: '+ d.value +'<br>'+ d3.timeFormat('%a %m/%d/%Y')(dt);
       return  dt;
     });
 
@@ -144,9 +144,9 @@ var parseDate = d3.time.format('%m/%d/%Y').parse,
     type: 'line',
     dataset: dataset,
     xAxis: {
-      scale: d3.time.scale(),
+      scale: d3.scaleTime(),
       domain: [minDate, maxDate],
-      ticks: d3.time.days,
+      ticks: d3.timeDays,
       formatter: function (d, i) {
         return formatDate(d);
       },

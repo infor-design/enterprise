@@ -16,9 +16,12 @@ http://usalvlhlpool1.infor.com/4.4.0/components/
 
 ### <a name="version-4.4.0-key-new-features">Key New Features</a>
 - The Components are now built using Rollup and the internals are ES6 (but there is still a jQuery dependency)
+- The d3 version being used was updated from version 3 to version 4.0
 
 ### <a name="version-4.4.0-corrections">Corrections to Your Code</a>
+- Change the d3 script to the new version `d3.v4.js`
 - The completion chart had a likely not widely used 'update' api. This was removed in favor of 'update(settings)' that all the other components use. You may need to refactor your update call to completion chart. See completion-chart/test-updated.html for an example
+- Some not widely used line chart examples time formatters. Some functions are renamed. See the examples or https://github.com/d3/d3-time/releases
 
 ### <a name="version-4.4.0-behavior-changes">Behavior Changes</a>
 -

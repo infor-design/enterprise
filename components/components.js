@@ -28,6 +28,7 @@ export { EmptyMessage } from './emptymessage/emptymessage';
 export { ExpandableArea } from './expandablearea/expandablearea';
 export { Modal } from './modal/modal';
 export { About } from './about/about';
+export { Line } from './line/line';
 export { ListView } from './listview/listview';
 export { Lookup } from './lookup/lookup';
 export { SohoMaskedInput as MaskedInput } from './mask/masked-input';
