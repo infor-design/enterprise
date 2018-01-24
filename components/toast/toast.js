@@ -1,31 +1,39 @@
 import * as debug from '../utils/debug';
 import { utils, math } from '../utils/utils';
 import { renderLoop, RenderLoopItem } from '../utils/renderloop';
+import { Locale } from '../locale/locale';
 
-
-/**
- * Component Name
- */
-let COMPONENT_NAME = 'toast';
-
+// Component Name
+const COMPONENT_NAME = 'toast';
 
 /**
  * Default Settings for Toast
+ * @namespace
+ * @property {string} title text that is displayed in the Toast's title.
+ * @property {string} message text/HTML that's displayed in the Toast's body.
+ * @property {string} position text that propagates into CSS classes that
+ *  position the Toast in specific places. top left, bottom left, bottom right (center??)
+ * @property {boolean} audibleOnly if true, causes the toast to be invisble on the screen,
+ * but still read out lout by screen readers.
+ * @property {boolean} progressBar causes the toast to have a visible progress bar that
+ *  will be completely disappeared when the toast should be removed.
+ * @property {number} timeout the amount of time the toast should be present on-screen.
  */
-let TOAST_DEFAULTS = {
+const TOAST_DEFAULTS = {
   title: '(Title)',
   message: '(Content)',
-  position: 'top right',  //top left, bottom left, bottom right (center??)
+  position: 'top right',
   audibleOnly: false,
   progressBar: true,
   timeout: 6000
 };
 
-
 /**
- * Toast Component.  This component produces small, temporary messages in one of the application's corners.
+ * Toast Component.  This component produces small, temporary messages in
+ *  one of the application's corners.
  * @constructor
- * @param {HTMLElement} element
+ * @param {HTMLElement} element the target location for the Toast message
+ * @param {object} [settings] incoming settings
  */
 function Toast(element, settings) {
   this.element = $(element);
@@ -38,31 +46,44 @@ function Toast(element, settings) {
 // Toast Methods
 Toast.prototype = {
 
-  init: function() {
+  /**
+   * @private
+   * @returns {void}
+   */
+  init() {
     this.show();
   },
 
-  // Show a Single Toast Message
-  show: function() {
-    var self = this,
-      settings = self.settings,
-      maxHideTime = parseFloat(math.convertDelayToFPS(settings.timeout)),
-      isPausePlay = false,
-      percentage = 100,
-      timer,
-      container = $('#toast-container'),
-      toast = $('<div class="toast"><span class="toast-title">'+ settings.title+
-        '</span><span class="toast-message">'+ settings.message + '</span></div>'),
-      closeBtn = $('<button type="button" class="btn-icon btn-close" title="'+ Locale.translate('Close')+
-        '" aria-hidden="true">' + $.createIcon('close') + '<span class="audible"> '+ Locale.translate('Close')+'</span></button>'),
-      progress = $('<div class="toast-progress"></div>');
+  /**
+   * Show a Single Toast Message
+   * @returns {void}
+   */
+  show() {
+    const self = this;
+    const settings = self.settings;
+    const maxHideTime = parseFloat(math.convertDelayToFPS(settings.timeout));
+    let isPausePlay = false;
+    let percentage = 100;
+    let container = $('#toast-container');
+    const toast = $(`
+      <div class="toast">
+        <span class="toast-title">${settings.title}</span>
+        <span class="toast-message">${settings.message}</span>
+      </div>`);
+    const closeBtn = $(`
+      <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
+        ${$.createIcon('close')}
+        <span class="audible">${Locale.translate('Close')}</span>
+      </button>
+    `);
+    const progress = $('<div class="toast-progress"></div>');
 
     if (!container.length) {
       container = $('<div id="toast-container" class="toast-container" aria-relevant="additions" aria-live="polite"></div>').appendTo('body');
     }
 
     container.removeClass('toast-top-left toast-top-right toast-bottom-right toast-bottom-left')
-      .addClass('toast-' + settings.position.replace(' ', '-'));
+      .addClass(`toast-${settings.position.replace(' ', '-')}`);
 
     settings.timeout = settings.audibleOnly ? 100 : settings.timeout;
 
@@ -71,12 +92,12 @@ Toast.prototype = {
     }
 
     // Build the RenderLoop integration
-    timer = new RenderLoopItem({
+    const timer = new RenderLoopItem({
       duration: math.convertDelayToFPS(settings.timeout),
-      timeoutCallback: function() {
+      timeoutCallback() {
         self.remove(toast);
       },
-      updateCallback: function(data) {
+      updateCallback(data) {
         percentage = ((data.duration - data.elapsedTime) / maxHideTime) * 100;
 
         if (Locale.isRTL()) {
@@ -84,7 +105,7 @@ Toast.prototype = {
         }
 
         if (settings.progressBar) {
-          progress[0].style.width = percentage + '%';
+          progress[0].style.width = `${percentage}%`;
         }
       }
     });
@@ -94,27 +115,31 @@ Toast.prototype = {
     toast.addClass((settings.audibleOnly ? 'audible' : 'effect-scale'));
     toast.append(closeBtn);
 
-    $(document).on('keydown keyup', function(e) {
+    $(document).on('keydown keyup', (e) => {
       e = e || window.event;
-      if(e.ctrlKey && e.altKey && e.keyCode === 80) { //[Control + Alt + P] - Pause/Play toggle
-        isPausePlay = e.type === 'keydown' ? true : false;
+      if (e.ctrlKey && e.altKey && e.keyCode === 80) { // [Control + Alt + P] - Pause/Play toggle
+        isPausePlay = e.type === 'keydown';
         timer[isPausePlay ? 'pause' : 'resume']();
       }
     });
 
-    toast.on('mousedown.toast touchstart.toast mouseup.toast touchend.toast', function (e) {
-      isPausePlay = /mousedown|touchstart/i.test(e.type) ? true : false;
+    toast.on('mousedown.toast touchstart.toast mouseup.toast touchend.toast', (e) => {
+      isPausePlay = !!/mousedown|touchstart/i.test(e.type);
       timer[isPausePlay ? 'pause' : 'resume']();
     });
 
-    closeBtn.on('click', function () {
+    closeBtn.on('click', () => {
       timer.destroy();
       self.remove(toast);
     });
   },
 
-  // Remove the Message and Animate
-  remove: function (toast) {
+  /**
+   * Remove the Message and Animate
+   * @param {jQuery[]|HTMLElement} toast the toast message to be removed
+   * @returns {void}
+   */
+  remove(toast) {
     if (this.settings.audibleOnly) {
       toast.remove();
       return;
@@ -122,31 +147,35 @@ Toast.prototype = {
 
     toast.addClass('effect-scale-hide');
 
-    var closeTimer = new RenderLoopItem({
+    const closeTimer = new RenderLoopItem({
       duration: 20,
-      updateCallback: function() {}, // TODO: make this work without an empty function
-      timeoutCallback: function() {
+      updateCallback() {}, // TODO: make this work without an empty function
+      timeoutCallback() {
         toast.remove();
       }
     });
     renderLoop.register(closeTimer);
-
-    return closeTimer;
   },
 
-  updated: function(settings) {
+  /**
+   * @param {object} [settings] incoming settings
+   * @returns {void}
+   */
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
     this.show();
   },
 
-  // Teardown
-  destroy: function() {
+  /**
+   * Teardown
+   * @returns {void}
+   */
+  destroy() {
     $('#toast-container').remove();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
-
 
 export { Toast, COMPONENT_NAME };

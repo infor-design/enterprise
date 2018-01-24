@@ -8,9 +8,7 @@ import '../popupmenu/popupmenu.jquery';
 import '../toolbarsearchfield/toolbarsearchfield.jquery';
 import '../tooltip/tooltip.jquery';
 
-/**
- * Component Names
- */
+// Component Names
 const COMPONENT_NAME = 'toolbar';
 
 /**

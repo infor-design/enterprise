@@ -3,9 +3,7 @@ import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'trackdirty';
 
 /**
