@@ -64,7 +64,7 @@ module.exports = function (config) {
     browsers: [
       'ChromeHeadless',
       'bs_firefox_mac',
-      'bs_iphone5'
+      'bs_iphone8'
     ],
     singleRun: false,
     concurrency: Infinity
