@@ -1,4 +1,3 @@
-/* eslint-disable */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -16,11 +15,19 @@ const COMPONENT_NAME = 'toolbar';
 
 /**
  * Component Default Settings
- * @param {boolean} rightAligned   &nbsp;-&nbsp; Will always attempt to right-align the contents of the toolbar. By default if there is no title it will left align. This forces right alignment.
- * @param {number} maxVisibleButtons   &nbsp;-&nbsp; Total amount of buttons that can be present, not including the More button.
- * @param {boolean} resizeContainers   &nbsp;-&nbsp; If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
- * @param {boolean} favorButtonset   &nbsp;-&nbsp; If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
- * @param {boolean} noSearchfieldReinvoke   &nbsp;-&nbsp; If true, does not manage the lifecycle of an internal toolbarsearchfield automatically.  Allows an external controller to do it instead.
+ * @namespace
+ * @property {boolean} rightAligned Will always attempt to right-align the contents of
+ *  the toolbar. By default if there is no title it will left align. This forces right alignment.
+ * @property {number} maxVisibleButtons Total amount of buttons that can be present, not
+ *  including the More button.
+ * @property {boolean} resizeContainers If true, uses Javascript to size the Title and
+ *  Buttonset elements in a way that shows as much of the Title area as possible.
+ * @property {boolean} favorButtonset If "resizeContainers" is true, setting this to
+ *  true will try to display as many buttons as possible while resizing the toolbar.
+ *  Setting to false attempts to show the entire title instead.
+ * @property {boolean} noSearchfieldReinvoke If true, does not manage the lifecycle
+ *  of an internal toolbarsearchfield automatically.  Allows an external controller
+ *  to do it instead.
  */
 const TOOLBAR_DEFAULTS = {
   rightAligned: false,
@@ -31,13 +38,14 @@ const TOOLBAR_DEFAULTS = {
 };
 
 /**
- * The Toolbar Component manages various levels of application navigation.  It contains a group of buttons that functionally
- * related content. Each panel consists of two levels: the top level identifies the
- * category or section header, and the second level provides the associated options.
+ * The Toolbar Component manages various levels of application navigation.
+ * It contains a group of buttons that functionally related content. Each panel
+ * consists of two levels: the top level identifies the category or section header,
+ * and the second level provides the associated options.
  *
  * @class Toolbar
- * @param {HTMLElement|jQuery[]} element
- * @param {object} [settings]
+ * @param {HTMLElement|jQuery[]} element the base Toolbar element
+ * @param {object} [settings] incoming settings
  */
 function Toolbar(element, settings) {
   this.element = $(element);
@@ -55,9 +63,9 @@ Toolbar.prototype = {
    * Initializes the Toolbar Component
    * @private
    * @chainable
-   * @returns {this}
+   * @returns {this} component instance
    */
-  init: function() {
+  init() {
     return this
       .setup()
       .build()
@@ -65,12 +73,13 @@ Toolbar.prototype = {
   },
 
   /**
-   * Detects discrepencies in settings.  In general, configures the component based on user settings.
+   * Detects discrepencies in settings.  In general, configures the component
+   * based on user settings.
    * @private
    * @chainable
-   * @returns {this}
+   * @returns {this} component instance
    */
-  setup: function() {
+  setup() {
     // Can't have zero buttons
     if (this.settings.maxVisibleButtons <= 0) {
       this.settings.maxVisibleButtons = TOOLBAR_DEFAULTS.maxVisibleButtons;
@@ -80,13 +89,15 @@ Toolbar.prototype = {
   },
 
   /**
-   * Adds additional markup, wraps some internal elements, and helps construct a complete Toolbar representation in the HTML Markup.  This method also builds the "More Actions" menu and ties its elements to the toolbar items.
+   * Adds additional markup, wraps some internal elements, and helps construct a
+   * complete Toolbar representation in the HTML Markup. This method also builds the
+   * "More Actions" menu and ties its elements to the toolbar items.
    * @private
    * @chainable
-   * @returns {this}
+   * @returns {this} component instance
    */
-  build: function() {
-    var self = this;
+  build() {
+    const self = this;
 
     this.element.attr('role', 'toolbar');
     if (this.settings.resizeContainers && this.element.is(':not(:hidden)')) {
@@ -109,10 +120,8 @@ Toolbar.prototype = {
       this.element[0].classList.add('has-title');
 
       this.cutoffTitle = false;
-      this.title.on('beforeshow.toolbar', function() {
-        return self.cutoffTitle;
-      }).tooltip({
-        content: '' + this.title.text().trim()
+      this.title.on('beforeshow.toolbar', () => self.cutoffTitle).tooltip({
+        content: `${this.title.text().trim()}`
       });
     } else {
       this.element[0].classList.remove('has-title');
@@ -134,15 +143,15 @@ Toolbar.prototype = {
     // Add and invoke More Button, if it doesn't exist
     this.more = this.element.find('.btn-actions');
     if (this.more.length === 0 && !this.element.hasClass('no-actions-button')) {
-      var moreContainer = this.element.find('.more');
+      let moreContainer = this.element.find('.more');
 
       if (!moreContainer.length) {
         moreContainer = $('<div class="more"></div>').appendTo(this.element);
       }
 
       this.more = $('<button class="btn-actions" type="button"></button>')
-        .html($.createIcon({icon: 'more'}) +
-          '<span class="audible">'+Locale.translate('MoreActions')+'</span>')
+        .html(`${$.createIcon({ icon: 'more' })
+        }<span class="audible">${Locale.translate('MoreActions')}</span>`)
         .appendTo(moreContainer);
     }
 
@@ -150,15 +159,16 @@ Toolbar.prototype = {
     this.buttonsetItems = this.buttonset.children('button')
       .add(this.buttonset.find('input')); // Searchfield Wrappers
 
-    // Items contains all actionable items in the toolbar, including the ones in the title, and the more button
+    // Items contains all actionable items in the toolbar, including the ones in
+    // the title, and the more button
     this.items = this.buttonsetItems
       .add(this.title.children('button'))
       .add(this.more);
 
     // Invoke buttons
-    var buttons = this.items.filter('button, input[type="button"], [class^="btn"]');
-    buttons.each(function() {
-      var buttonControl = $(this).data('button');
+    const buttons = this.items.filter('button, input[type="button"], [class^="btn"]');
+    buttons.each(function () {
+      const buttonControl = $(this).data('button');
       if (!buttonControl) {
         $(this).button();
       }
@@ -166,32 +176,33 @@ Toolbar.prototype = {
 
     // Invoke searchfields
     if (!this.settings.noSearchfieldReinvoke) {
-      var searchfields = this.items.filter('.searchfield, .toolbar-searchfield-wrapper, .searchfield-wrapper');
-      searchfields.each(function(i, item) {
-        var sf = $(item);
+      const searchfields = this.items.filter('.searchfield, .toolbar-searchfield-wrapper, .searchfield-wrapper');
+      searchfields.each((i, item) => {
+        let sf = $(item);
         if (sf.is('.toolbar-searchfield-wrapper, .searchfield-wrapper')) {
           sf = sf.children('.searchfield');
         }
 
         if (!sf.data('searchfield')) {
-          var searchfieldOpts = $.extend({}, utils.parseSettings(sf[0]));
+          const searchfieldOpts = $.extend({}, utils.parseSettings(sf[0]));
           sf.toolbarsearchfield(searchfieldOpts);
         }
       });
     }
 
-    // Setup the More Actions Menu.  Add Menu Items for existing buttons/elements in the toolbar, but
-    // hide them initially.  They are revealed when overflow checking happens as the menu is opened.
-    var popupMenuInstance = this.more.data('popupmenu'),
-      moreAriaAttr = this.more.attr('aria-controls');
+    // Setup the More Actions Menu.  Add Menu Items for existing buttons/elements in
+    // the toolbar, but hide them initially. They are revealed when overflow checking
+    // happens as the menu is opened.
+    const popupMenuInstance = this.more.data('popupmenu');
+    const moreAriaAttr = this.more.attr('aria-controls');
 
     if (!popupMenuInstance) {
-      this.moreMenu = $('#' + moreAriaAttr);
+      this.moreMenu = $(`#${moreAriaAttr}`);
       if (!this.moreMenu.length) {
         this.moreMenu = this.more.next('.popupmenu, .popupmenu-wrapper');
       }
       if (!this.moreMenu.length) {
-        this.moreMenu = $('<ul id="popupmenu-toolbar-'+ this.id +'" class="popupmenu"></ul>').insertAfter(this.more);
+        this.moreMenu = $(`<ul id="popupmenu-toolbar-${this.id}" class="popupmenu"></ul>`).insertAfter(this.more);
       }
 
       // Allow toolbar to understand pre-wrapped popupmenus
@@ -206,17 +217,16 @@ Toolbar.prototype = {
     this.defaultMenuItems = this.moreMenu.children('li:not(.separator)').length > 0;
 
     function menuItemFilter() {
-      //jshint validthis:true
       return $(this).parent('.buttonset, .inline').length;
     }
 
-    var menuItems = [];
-    this.items.not(this.more).filter(menuItemFilter).each(function() {
+    const menuItems = [];
+    this.items.not(this.more).filter(menuItemFilter).each(function () {
       menuItems.push(self.buildMoreActionsMenuItem($(this)));
     });
 
     menuItems.reverse();
-    $.each(menuItems, function(i, item) {
+    $.each(menuItems, (i, item) => {
       if (item.text() !== '') {
         item.prependTo(self.moreMenu);
       }
@@ -226,17 +236,17 @@ Toolbar.prototype = {
     // Menu's items each time the menu is opened.
     if (popupMenuInstance) {
       this.more
-        .on('beforeopen.toolbar', function() {
+        .on('beforeopen.toolbar', () => {
           self.refreshMoreActionsMenu(self.moreMenu);
         })
         .triggerHandler('updated');
     } else {
-      var actionButtonOpts = utils.parseSettings(this.more[0]);
+      const actionButtonOpts = utils.parseSettings(this.more[0]);
 
       this.more.popupmenu($.extend({}, actionButtonOpts, {
         trigger: 'click',
         menu: this.moreMenu
-      })).on('beforeopen.toolbar', function() {
+      })).on('beforeopen.toolbar', () => {
         self.refreshMoreActionsMenu(self.moreMenu);
       });
     }
@@ -245,7 +255,7 @@ Toolbar.prototype = {
     function setActiveToolbarItem() {
       self.items.attr('tabindex', '-1');
 
-      var active = self.items.filter('.is-selected');
+      let active = self.items.filter('.is-selected');
       if (active.length) {
         self.activeButton = active.first().attr('tabindex', '0');
         self.items.not(self.activeButton).removeClass('is-selected');
@@ -267,7 +277,6 @@ Toolbar.prototype = {
         active.attr('tabindex', '-1');
         self.activeButton = self.more.addClass('is-selected').attr('tabindex', '0');
       }
-      return;
     }
 
     setActiveToolbarItem();
@@ -278,7 +287,7 @@ Toolbar.prototype = {
 
     this.element.triggerHandler('rendered');
 
-    var searchfieldWrapper = this.buttonset.find('.searchfield-wrapper, .toolbar-searchfield-wrapper');
+    const searchfieldWrapper = this.buttonset.find('.searchfield-wrapper, .toolbar-searchfield-wrapper');
     if (searchfieldWrapper.length) {
       searchfieldWrapper.trigger('reanimate');
     }
@@ -288,25 +297,26 @@ Toolbar.prototype = {
 
   /**
    * Builds a single "More Actions Menu" item from a source toolbar item.
-   * Also sets up linkage between the menu item and the original toolbar item to allow events/properties
-   * to propagate when the More Actions item is acted upon.
-   * @param {jQuery[]} item - the source item from the toolbar.
-   * @returns {jQuery[]} - a jQuery-wrapped <li> representing a More Actions menu implementation of the toolbar item.
+   * Also sets up linkage between the menu item and the original toolbar item to
+   * allow events/properties to propagate when the More Actions item is acted upon.
+   * @param {jQuery[]} item the source item from the toolbar.
+   * @returns {jQuery[]} a jQuery-wrapped <li> representing a More Actions menu
+   *  implementation of the toolbar item.
    */
-  buildMoreActionsMenuItem: function(item) {
-    var isSplitButton = false;
+  buildMoreActionsMenuItem(item) {
+    const isSplitButton = false;
+    let popupLi;
 
     // If this item should be skipped, just return out
     if (item.data('skipit') === true) {
       item.data('skipit', undefined);
-      return;
+      return popupLi;
     }
 
     // Attempt to re-use an existing <li>, if possible.
     // If a new one is created, setup the linkage between the original element and its
     // "More Actions" menu counterpart.
-    var a = item.data('action-button-link'),
-      popupLi;
+    let a = item.data('action-button-link');
 
     if (!a || !a.length) {
       popupLi = $('<li></li>');
@@ -335,34 +345,34 @@ Toolbar.prototype = {
     a.text(this.getItemText(item));
 
     // Pass along any icons except for the dropdown (which is added as part of the submenu design)
-    var submenuDesignIcon = $.getBaseURL('#icon-dropdown');
-    var icon = item.children('.icon').filter(function() {
-      var iconName = $(this).getIconName();
+    const submenuDesignIcon = $.getBaseURL('#icon-dropdown');
+    const icon = item.children('.icon').filter(function () {
+      const iconName = $(this).getIconName();
       return iconName && iconName !== submenuDesignIcon && iconName.indexOf('dropdown') === -1;
     });
 
     if (icon && icon.length) {
-      a.html('<span>' + a.text() + '</span>');
+      a.html(`<span>${a.text()}</span>`);
       icon.clone().detach().prependTo(a);
     }
 
-    var linkspan = popupLi.find('b');
+    const linkspan = popupLi.find('b');
     if (linkspan.length) {
       this.moreMenu.addClass('has-icons');
       linkspan.detach().prependTo(popupLi);
     }
 
     function addItemLinksRecursively(menu, diffMenu, parentItem) {
-      var children = menu.children('li'),
-        id = diffMenu.attr('id');
+      const children = menu.children('li');
+      const id = diffMenu.attr('id');
 
-      diffMenu.children('li').each(function(i, diffMenuItem) {
-        var dmi = $(diffMenuItem), // "Diffed" Menu Item
-          omi = children.eq(i), // Corresponding "Original" menu item
-          dmiA = dmi.children('a'), // Anchor inside of "Diffed" menu item
-          omiA = omi.children('a'), // Anchor inside of "Original" menu item
-          dmiID = dmi.attr('id'),
-          dmiAID = dmiA.attr('id');
+      diffMenu.children('li').each((i, diffMenuItem) => {
+        const dmi = $(diffMenuItem); // "Diffed" Menu Item
+        const omi = children.eq(i); // Corresponding "Original" menu item
+        const dmiA = dmi.children('a'); // Anchor inside of "Diffed" menu item
+        const omiA = omi.children('a'); // Anchor inside of "Original" menu item
+        const dmiID = dmi.attr('id');
+        const dmiAID = dmiA.attr('id');
 
         // replace menu item ids with spillover-menu specific ids.
         if (dmiID) {
@@ -375,8 +385,8 @@ Toolbar.prototype = {
         omiA.data('action-button-link', dmiA);
         dmiA.data('original-button', omiA);
 
-        var omiSubMenu = omi.children('.wrapper').children('.popupmenu'),
-          dmiSubMenu = dmi.children('.wrapper').children('.popupmenu');
+        const omiSubMenu = omi.children('.wrapper').children('.popupmenu');
+        const dmiSubMenu = dmi.children('.wrapper').children('.popupmenu');
 
         if (omiSubMenu.length && dmiSubMenu.length) {
           addItemLinksRecursively(omiSubMenu, dmiSubMenu, dmi);
@@ -390,7 +400,7 @@ Toolbar.prototype = {
       diffMenu.removeAttr('id').attr('data-original-menu', id);
       parentItem.addClass('submenu');
 
-      var appendTarget;
+      let appendTarget;
       if (parentItem.is(popupLi)) {
         appendTarget = parentItem.children('.wrapper');
         if (!appendTarget || !appendTarget.length) {
@@ -404,17 +414,15 @@ Toolbar.prototype = {
     if (item.is('.btn-menu')) {
       if (!item.data('popupmenu')) {
         item.popupmenu();
-      } else {
-        if (!a.children('.icon.arrow').length) {
-          a.append($.createIcon({
-            classes: 'icon arrow icon-dropdown',
-            icon: 'dropdown'
-          }));
-        }
+      } else if (!a.children('.icon.arrow').length) {
+        a.append($.createIcon({
+          classes: 'icon arrow icon-dropdown',
+          icon: 'dropdown'
+        }));
       }
 
-      var menu = item.data('popupmenu').menu,
-        diffMenu = menu.clone();
+      const menu = item.data('popupmenu').menu;
+      const diffMenu = menu.clone();
 
       addItemLinksRecursively(menu, diffMenu, popupLi);
     }
@@ -432,16 +440,16 @@ Toolbar.prototype = {
    * optionally refresh only part of the menu.
    * @param {jQuery[]} menu - the menu/submenu to be refreshed.
    */
-  refreshMoreActionsMenu: function(menu) {
-    var self = this;
+  refreshMoreActionsMenu(menu) {
+    const self = this;
 
     $('li > a', menu).each(function () {
-      var a = $(this),
-          li = a.parent(),
-          item = a.data('originalButton'),
-          itemParent,
-          text = self.getItemText(item),
-          submenu;
+      const a = $(this);
+      const li = a.parent();
+      const item = a.data('originalButton');
+      let itemParent;
+      const text = self.getItemText(item);
+      let submenu;
 
       if (item) {
         if (a.find('span').length) {
@@ -484,7 +492,8 @@ Toolbar.prototype = {
   },
 
   /**
-   * Gets the complete text contnts of a Toolbar Item, in order to create its corresponding "more actions" menu item.
+   * Gets the complete text contnts of a Toolbar Item, in order to create its
+   * corresponding "more actions" menu item.
    *
    * Order of operations for populating the List Item text:
    * 1. span contents (.audible), then
@@ -493,18 +502,24 @@ Toolbar.prototype = {
    * @param {jQuery[]} item - the item being evaluated.
    * @returns {string} - the complete text representation.
    */
-  getItemText: function (item) {
+  getItemText(item) {
     if (!item) {
-      return;
+      return '';
     }
-    var span = item.find('.audible'),
-      title = item.attr('title'),
-      tooltip = item.data('tooltip'),
-      tooltipText = tooltip && typeof tooltip.content === 'string' ? tooltip.content : undefined;
+    const span = item.find('.audible');
+    const title = item.attr('title');
+    const tooltip = item.data('tooltip');
+    const tooltipText = tooltip && typeof tooltip.content === 'string' ? tooltip.content : undefined;
 
-    var popupLiText = span.length ? span.text() :
-      title !== '' && title !== undefined ? item.attr('title') :
-      tooltipText ? tooltipText : item.text();
+    let popupLiText;
+
+    if (span.length) {
+      popupLiText = span.text();
+    } else if (title !== '' && title !== undefined) {
+      popupLiText = item.attr('title');
+    } else {
+      popupLiText = tooltipText || item.text();
+    }
 
     return popupLiText;
   },
@@ -513,22 +528,22 @@ Toolbar.prototype = {
    * Sets up all necessary event handling on a Toolbar component
    * @private
    * @chainable
-   * @returns {this}
+   * @returns {this} component instance
    */
-  handleEvents: function() {
-    var self = this;
+  handleEvents() {
+    const self = this;
 
     this.items
-      .off('keydown.toolbar').on('keydown.toolbar', function(e) {
+      .off('keydown.toolbar').on('keydown.toolbar', (e) => {
         self.handleKeys(e);
-      }).off('click.toolbar').on('click.toolbar', function(e) {
+      }).off('click.toolbar').on('click.toolbar', (e) => {
         self.handleClick(e);
       });
 
     this.items.filter('.btn-menu, .btn-actions')
       .off('close.toolbar').on('close.toolbar', function onClosePopup() {
-        var el = $(this),
-          last;
+        const el = $(this);
+        let last;
 
         if (el.is('.is-overflowed')) {
           last = self.getLastVisibleButton();
@@ -542,16 +557,16 @@ Toolbar.prototype = {
         self.buttonset.scrollTop(0);
       });
 
-    this.items.not(this.more).off('selected.toolbar').on('selected.toolbar', function(e, anchor) {
+    this.items.not(this.more).off('selected.toolbar').on('selected.toolbar', (e, anchor) => {
       e.stopPropagation();
       self.handleSelected(e, anchor);
     });
 
-    this.more.on('keydown.toolbar', function(e) {
+    this.more.on('keydown.toolbar', (e) => {
       self.handleKeys(e);
-    }).on('beforeopen.toolbar', function() {
+    }).on('beforeopen.toolbar', () => {
       self.adjustMenuItemVisibility();
-    }).on('selected.toolbar', function(e, anchor) {
+    }).on('selected.toolbar', (e, anchor) => {
       e.stopPropagation();
       self.handleSelected(e, anchor);
     });
@@ -561,23 +576,25 @@ Toolbar.prototype = {
     // instead of directly handling this itself.
     this.more
       .off('show-submenu.toolbar')
-      .on('show-submenu.toolbar', function(e, li) {
-      self.handleTransferToMenuButtonItem(e, li);
-    });
+      .on('show-submenu.toolbar', (e, li) => {
+        self.handleTransferToMenuButtonItem(e, li);
+      });
 
-    this.element.off('updated.toolbar').on('updated.toolbar', function(e, settings) {
+    this.element.off('updated.toolbar').on('updated.toolbar', (e, settings) => {
       e.stopPropagation();
       self.updated(settings);
-    }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', function(e, containerDims) {
+    }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', (e, containerDims) => {
       self.handleResize(containerDims);
-    }).off('scrollup.toolbar').on('scrollup.toolbar', function() {
-      var moduleTabsParent = self.element.parents('.tab-container.module-tabs');
-      if (moduleTabsParent.length) {
-        moduleTabsParent.scrollTop(0);
-      }
-    });
+    })
+      .off('scrollup.toolbar')
+      .on('scrollup.toolbar', () => {
+        const moduleTabsParent = self.element.parents('.tab-container.module-tabs');
+        if (moduleTabsParent.length) {
+          moduleTabsParent.scrollTop(0);
+        }
+      });
 
-    $('body').off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
+    $('body').off(`resize.toolbar-${this.id}`).on(`resize.toolbar-${this.id}`, () => {
       self.handleResize();
     });
 
@@ -590,16 +607,16 @@ Toolbar.prototype = {
   /**
    * Event Handler for the Soho Popupmenu's custom 'show-submenu' event, specifically for
    * the case of a menu button that's been spilled over into this Toolbar's More Actions menu.
-   * @param {jQuery.Event} e
+   * @param {jQuery.Event} e custom `show-submenu` jQuery event
    * @param {jQuery[]} li - the `li.submenu` element.
    */
-  handleTransferToMenuButtonItem: function(e, li) {
-    var originalMenuButton = li.children('a').data('original-button');
+  handleTransferToMenuButtonItem(e, li) {
+    const originalMenuButton = li.children('a').data('original-button');
     if (!originalMenuButton) {
       return;
     }
 
-    var popupAPI = originalMenuButton.data('popupmenu');
+    const popupAPI = originalMenuButton.data('popupmenu');
     if (!popupAPI || typeof popupAPI.settings.beforeOpen !== 'function') {
       return;
     }
@@ -613,16 +630,18 @@ Toolbar.prototype = {
   /**
    * Event handler for the Soho `selected` event on toolbar items
    * @private
-   * @listens {jQuery.Event} e
-   * @param {jQuery.Event} e
-   * @returns {undefined}
+   * @listens {jQuery.Event}
+   * @param {jQuery.Event} e custom `selected` event
+   * @param {jQuery[]} anchor a reference to the anchor that was selected
+   * @returns {void}
    */
-  handleSelected: function(e, anchor) {
-    var itemLink = anchor.data('original-button'),
-      li = anchor.parent(),
-      itemEvts,
-      toolbarEvts,
-      popup, popupTrigger;
+  handleSelected(e, anchor) {
+    const itemLink = anchor.data('original-button');
+    const li = anchor.parent();
+    let itemEvts;
+    let toolbarEvts;
+    let popup;
+    let popupTrigger;
 
     // Don't continue if hidden/readonly/disabled
     if (li.is('.hidden, .is-disabled') || anchor.is('[readonly], [disabled]')) {
@@ -657,14 +676,14 @@ Toolbar.prototype = {
 
       // Check the Toolbar Button for the existence of certain event types.
       // Checks the button, and checks the toolbar container element for delegated events.
-      var evtTypes = ['click', 'touchend', 'touchcancel'];
-      for (var i = 0; i < evtTypes.length; i++) {
-        var type = evtTypes[i];
+      const evtTypes = ['click', 'touchend', 'touchcancel'];
+      for (let i = 0; i < evtTypes.length; i++) {
+        const type = evtTypes[i];
 
         // Check toolbar element for delegated-down events first
         if (toolbarEvts && toolbarEvts[type] && toolbarEvts[type].delegateCount > 0) {
-          var el = this.element,
-            evt = $.Event(type);
+          const el = this.element;
+          const evt = $.Event(type);
 
           evt.target = el.find(itemLink)[0];
           el.trigger(evt);
@@ -672,7 +691,7 @@ Toolbar.prototype = {
         }
 
         // Check for events directly on the element
-        if ((itemEvts && itemEvts[type]) || itemLink[0]['on' + type]) {
+        if ((itemEvts && itemEvts[type]) || itemLink[0][`on${type}`]) {
           itemLink.trigger(type);
           return;
         }
@@ -693,7 +712,8 @@ Toolbar.prototype = {
 
     // If no item link exists, it's a pre-defined menu item.
     // Trigger 'selected' manually on the toolbar element.
-    // Normally this would happen by virtue of triggering the "click" handlers on a linked button above.
+    // Normally this would happen by virtue of triggering the "click"
+    // handlers on a linked button above.
     this.triggerSelect(anchor);
   },
 
@@ -701,10 +721,10 @@ Toolbar.prototype = {
    * Event handler for clicks on toolbar items
    * @private
    * @listens {jQuery.Event} e
-   * @param {jQuery.Event} e
-   * @returns {false}
+   * @param {jQuery.Event} e jQuery click event
+   * @returns {boolean} basic "false" return expected for click events
    */
-  handleClick: function(e) {
+  handleClick(e) {
     this.setActiveButton($(e.currentTarget));
     this.triggerSelect($(e.currentTarget));
     return false;
@@ -714,24 +734,24 @@ Toolbar.prototype = {
    * Event handler for key presses on toolbar items
    * @private
    * @listens {jQuery.Event} e
-   * @param {jQuery.Event} e
-   * @returns {undefined}
+   * @param {jQuery.Event} e `keypress` event
+   * @returns {void}
    */
-  handleKeys: function(e) {
-    var self = this,
-      key = e.which,
-      target = $(e.target),
-      isActionButton = target.is('.btn-actions'),
-      isRTL = Locale.isRTL();
+  handleKeys(e) {
+    const self = this;
+    const key = e.which;
+    const target = $(e.target);
+    const isActionButton = target.is('.btn-actions');
+    const isRTL = Locale.isRTL();
 
     if ((key === 37 && target.is(':not(input)')) ||
       (key === 38 && target.is(':not(input.is-open)'))) { // Don't navigate away if Up Arrow in autocomplete field that is open
       e.preventDefault();
 
       if (isActionButton) {
-        self.setActiveButton( isRTL ? self.getFirstVisibleButton() : self.getLastVisibleButton() );
+        self.setActiveButton(isRTL ? self.getFirstVisibleButton() : self.getLastVisibleButton());
       } else {
-        self.navigate( isRTL ? 1 : -1 );
+        self.navigate(isRTL ? 1 : -1);
       }
     }
 
@@ -740,32 +760,33 @@ Toolbar.prototype = {
       e.preventDefault();
 
       if (isActionButton) {
-        self.setActiveButton( isRTL ? self.getLastVisibleButton() : self.getFirstVisibleButton() );
+        self.setActiveButton(isRTL ? self.getLastVisibleButton() : self.getFirstVisibleButton());
       } else {
-        self.navigate( isRTL ? -1 : 1 );
+        self.navigate(isRTL ? -1 : 1);
       }
     }
-
-    return;
   },
 
   /**
    * Re-renders the toolbar element and adjusts all internal parts to account for the new size.
-   * @param {object} [containerDims] - an object containing dimensions that can be set on the Toolbar's title and buttonset elements.
-   * @param {number} [containerDims.title] - represents the width that will be applied to the title element
-   * @param {number} [containerDims.buttonset] - represents the width that will be applied to the buttonset element
-   * @returns {undefined}
+   * @param {object} [containerDims] an object containing dimensions that can be set
+   *  on the Toolbar's title and buttonset elements.
+   * @param {number} [containerDims.title] represents the width that will be applied
+   *  to the title element
+   * @param {number} [containerDims.buttonset] represents the width that will be
+   *  applied to the buttonset element
+   * @returns {void}
    */
-  handleResize: function(containerDims) {
+  handleResize(containerDims) {
     if (this.settings.resizeContainers) {
-      var title = containerDims ? containerDims.title : undefined,
-        buttonset = containerDims ? containerDims.buttonset : undefined;
+      const title = containerDims ? containerDims.title : undefined;
+      const buttonset = containerDims ? containerDims.buttonset : undefined;
 
       this.sizeContainers(title, buttonset);
     }
 
-    var buttons = this._getButtonsetButtons();
-    for (var i = 0; i < buttons.length; i++) {
+    const buttons = this.getButtonsetButtons();
+    for (let i = 0; i < buttons.length; i++) {
       buttons[i].removeClass('is-overflowed');
     }
 
@@ -776,18 +797,18 @@ Toolbar.prototype = {
   },
 
   /**
-   * Resizes the Toolbar's internal container areas (title, buttonset) to make efficient use of their space.
+   * Resizes the Toolbar's internal container areas (title, buttonset) to make
+   * efficient use of their space.
    * @private
    * @chainable
-   * @param {number} titleSize - desired size of the title element.
-   * @param {number} buttonsetSize - desired size of the buttonset element.
-   * @returns {this}
+   * @param {number} titleSize desired size of the title element.
+   * @param {number} buttonsetSize desired size of the buttonset element.
    */
-  sizeContainers: function(titleSize, buttonsetSize) {
-    var containerElem = this.element[0],
-      titleElem = this.title[0],
-      buttonsetElem = this.buttonset[0],
-      moreElem = this.more[0];
+  sizeContainers(titleSize, buttonsetSize) {
+    const containerElem = this.element[0];
+    const titleElem = this.title[0];
+    const buttonsetElem = this.buttonset[0];
+    const moreElem = this.more[0];
 
     // Don't do this at all unless we have a title element (which is optional)
     if (!this.title || !this.title.length) {
@@ -802,9 +823,9 @@ Toolbar.prototype = {
       return;
     }
 
-    var WHITE_SPACE = 30,
-      MIN_TITLE_SIZE = 44 + WHITE_SPACE,
-      MIN_BUTTONSET_SIZE = 0;
+    const WHITE_SPACE = 30;
+    const MIN_TITLE_SIZE = 44 + WHITE_SPACE;
+    const MIN_BUTTONSET_SIZE = 0;
 
     buttonsetElem.style.width = '';
     titleElem.style.width = '';
@@ -813,11 +834,12 @@ Toolbar.prototype = {
       containerElem.classList.add('do-resize');
     }
 
-    var toolbarDims = $(containerElem).getHiddenSize(),
-      buttonsetDims = $(buttonsetElem).getHiddenSize(),
-      titleDims = $(titleElem).getHiddenSize(),
-      moreDims = $(moreElem).getHiddenSize(),
-      toolbarPadding = parseInt(toolbarDims.padding.left) + parseInt(toolbarDims.padding.right);
+    const toolbarDims = $(containerElem).getHiddenSize();
+    const buttonsetDims = $(buttonsetElem).getHiddenSize();
+    const titleDims = $(titleElem).getHiddenSize();
+    const moreDims = $(moreElem).getHiddenSize();
+    const toolbarPadding = parseInt(toolbarDims.padding.left, 10) +
+      parseInt(toolbarDims.padding.right, 10);
 
     if (isNaN(moreDims.width)) {
       moreDims.width = 50;
@@ -828,28 +850,43 @@ Toolbar.prototype = {
     }
 
     function addPx(val) {
-      return val + 'px';
+      return `${val}px`;
     }
 
     // Get the target size of the title element
-    var hasTitleSizeGetter = (titleSize !== undefined && !isNaN(titleSize)),
-      hasButtonsetSizeGetter = (buttonsetSize !== undefined && !isNaN(buttonsetSize)),
-      targetTitleWidth, targetButtonsetWidth, d;
+    const hasTitleSizeGetter = (titleSize !== undefined && !isNaN(titleSize));
+    const hasButtonsetSizeGetter = (buttonsetSize !== undefined && !isNaN(buttonsetSize));
+    let d;
     this.cutoffTitle = false;
 
+    // Determine the target sizes for title, based on external setters,
+    //  or building an estimated size.
+    function getTargetTitleWidth() {
+      if (hasTitleSizeGetter) {
+        return parseInt(titleSize, 10);
+      }
+      if (this.settings.favorButtonset === true) {
+        return toolbarDims.width - (toolbarPadding +
+          (hasButtonsetSizeGetter ? parseInt(buttonsetSize, 10) : buttonsetDims.width) +
+          moreDims.width);
+      }
+      return titleDims.scrollWidth;
+    }
+    let targetTitleWidth = getTargetTitleWidth();
 
-    // Determine the target sizes for title and buttonset, based on external setters, or building an estimated size.
-    targetTitleWidth = hasTitleSizeGetter ?
-      parseInt(titleSize) :
-      this.settings.favorButtonset === true ?
-        toolbarDims.width - (toolbarPadding + (hasButtonsetSizeGetter ? parseInt(buttonsetSize) : buttonsetDims.width) + moreDims.width) :
-        titleDims.scrollWidth;
-    targetButtonsetWidth = hasButtonsetSizeGetter ?
-      parseInt(buttonsetSize) :
-      this.settings.favorButtonset === true ?
-        buttonsetDims.width :
-        toolbarDims.width - (toolbarPadding + (hasTitleSizeGetter ? parseInt(titleSize) : titleDims.scrollWidth) + moreDims.width);
-
+    // Determine the target sizes for buttonset
+    function getTargetButtonsetWidth() {
+      if (hasButtonsetSizeGetter) {
+        return parseInt(buttonsetSize, 10);
+      }
+      if (this.settings.favorButtonset === true) {
+        return buttonsetDims.width;
+      }
+      return toolbarDims.width - (toolbarPadding +
+        (hasTitleSizeGetter ? parseInt(titleSize, 10) : titleDims.scrollWidth) +
+        moreDims.width);
+    }
+    let targetButtonsetWidth = getTargetButtonsetWidth();
 
     if (this.settings.favorButtonset) {
       // Cut off the buttonset anyway if title is completely hidden.  Something's gotta give!
@@ -857,40 +894,39 @@ Toolbar.prototype = {
         this.cutoffTitle = true;
         d = Math.abs(targetTitleWidth - MIN_TITLE_SIZE);
         targetTitleWidth = MIN_TITLE_SIZE;
-        targetButtonsetWidth = targetButtonsetWidth - d;
+        targetButtonsetWidth -= d;
       }
 
       buttonsetElem.style.width = addPx(targetButtonsetWidth + 2);
       titleElem.style.width = addPx(targetTitleWidth - 2);
 
-      return this;
+      return;
     }
-    //==========================
+    //= =========================
     // Favor the title element
     // Cut off the title anyway if buttonset is completely hidden.  Something's gotta give!
     if (targetButtonsetWidth < MIN_BUTTONSET_SIZE) {
       this.cutoffTitle = true;
       d = Math.abs(targetButtonsetWidth - MIN_BUTTONSET_SIZE);
       targetButtonsetWidth = MIN_BUTTONSET_SIZE;
-      targetTitleWidth = targetTitleWidth - d;
+      targetTitleWidth -= d;
     }
 
     // Always favor the title by one extra px for Chrome
     titleElem.style.width = addPx(targetTitleWidth + 2);
     buttonsetElem.style.width = addPx(targetButtonsetWidth - 2);
-    return this;
   },
 
   /**
    * Changes the "active" button on the toolbar.
    * @param {number} direction - can be `-1` (previous), `1` (next), or `0` (remain on current).
-   * @returns {jQuery[]}
+   * @returns {void}
    */
-  navigate: function (direction) {
-    var items = this.items.filter(':visible:not(:disabled)'),
-      current = items.index(this.activeButton),
-      next = current + direction,
-      target;
+  navigate(direction) {
+    const items = this.items.filter(':visible:not(:disabled)');
+    const current = items.index(this.activeButton);
+    const next = current + direction;
+    let target;
 
     if (next >= 0 && next < items.length) {
       target = items.eq(next);
@@ -909,21 +945,19 @@ Toolbar.prototype = {
     }
 
     this.setActiveButton(target);
-    return false;
   },
 
   /**
    * Gets a reference to the last visible (not overflowed) button inside of the buttonset.
-   * @returns {jQuery[]}
+   * @returns {jQuery[]} the last visible button in the buttonset.
    */
-  getLastVisibleButton: function() {
-    var items = $(this.items.get().reverse()).not(this.more),
-      target;
+  getLastVisibleButton() {
+    const items = $(this.items.get().reverse()).not(this.more);
+    let target;
+    let i = 0;
+    let elem;
 
-    var i = 0,
-      elem;
-
-    while(!target && i < items.length) {
+    while (!target && i < items.length) {
       elem = $(items[i]);
       if (!this.isItemOverflowed(elem)) {
         target = elem;
@@ -936,7 +970,7 @@ Toolbar.prototype = {
       target = items.first();
     }
 
-    while(target.length && target.is('.separator, *:disabled, *:hidden')) {
+    while (target.length && target.is('.separator, *:disabled, *:hidden')) {
       target = target.prev();
     }
 
@@ -945,14 +979,14 @@ Toolbar.prototype = {
 
   /**
    * Gets a reference to the first visible (not overflowed) button inside of the buttonset.
-   * @returns {jQuery[]}
+   * @returns {jQuery[]} the first visible button in the buttonset.
    */
-  getFirstVisibleButton: function() {
-    var i = 0,
-      items = this.items,
-      target = items.eq(i);
+  getFirstVisibleButton() {
+    let i = 0;
+    const items = this.items;
+    let target = items.eq(i);
 
-    while(target.is('.separator, *:disabled, *:hidden')) {
+    while (target.is('.separator, *:disabled, *:hidden')) {
       i++;
       target = items.eq(i);
     }
@@ -962,16 +996,17 @@ Toolbar.prototype = {
 
   /**
    * Sets the currently "active" (focused) Toolbar item
-   * @param {jQuery[]} activeButton - the preferred target element to make active.
-   * @param {boolean} [noFocus] - if defined, prevents this method from giving focus to the new active button.
+   * @param {jQuery[]} activeButton the preferred target element to make active.
+   * @param {boolean} [noFocus] if defined, prevents this method from giving focus
+   *  to the new active button.
    */
-  setActiveButton: function(activeButton, noFocus) {
+  setActiveButton(activeButton, noFocus) {
     // Return out of this if we're clicking the currently-active item
     if (activeButton[0] === this.activeButton[0]) {
       return;
     }
 
-    var self = this;
+    const self = this;
 
     function getMoreOrLast() {
       if (self.hasNoMoreButton() || !self.element.hasClass('has-more-button')) {
@@ -988,7 +1023,7 @@ Toolbar.prototype = {
       }
 
       // If it's the more button, hide the tooltip and set it as active
-      var tooltip = self.more.data('tooltip');
+      const tooltip = self.more.data('tooltip');
       if (activeButton[0] === self.more[0]) {
         if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
           tooltip.hide();
@@ -1019,10 +1054,11 @@ Toolbar.prototype = {
 
   /**
    * Triggers a "selected" event on the base Toolbar element using a common element as an argument.
-   * @param {HTMLElement|SVGElement|jQuery[]} element - a jQuery Object containing an anchor tag, button, or input field.
+   * @param {HTMLElement|SVGElement|jQuery[]} element a jQuery Object containing an
+   *  anchor tag, button, or input field.
    */
-  triggerSelect: function(element) {
-    var elem = $(element);
+  triggerSelect(element) {
+    const elem = $(element);
     if (elem.is(this.more) || (elem.is('.btn-menu, li.submenu'))) {
       return;
     }
@@ -1032,14 +1068,15 @@ Toolbar.prototype = {
 
   /**
    * Assembles and returns a list of all buttons inside the Buttonset element.
-   * @returns {array}
+   * @private
+   * @returns {array} of b
    */
-  _getButtonsetButtons: function() {
-    var buttons = [],
-      items = this.buttonsetItems,
-      item;
+  getButtonsetButtons() {
+    const buttons = [];
+    const items = this.buttonsetItems;
+    let item;
 
-    for (var i = 0; i < items.length; i++) {
+    for (let i = 0; i < items.length; i++) {
       item = items.eq(i);
       if (item.data('action-button-link') !== undefined && item.is(':not(.searchfield)')) {
         buttons.push(item);
@@ -1050,27 +1087,28 @@ Toolbar.prototype = {
   },
 
   /**
-   * Gets and Iterates through a list of toolbar items and determines which are currently overflowed, and which are visible.
+   * Gets and Iterates through a list of toolbar items and determines which are
+   * currently overflowed, and which are visible.
    * @param {array} buttons - an Array of jQuery-wrapped elements that represents toolbar items.
    * @returns {VisibilitySortedToolbarItems}
    * @returns {VisibilitySortedToolbarItems.Array} visible - An array containing all visible items.
-   * @returns {VisibilitySortedToolbarItems.Array} hidden - An array containing all hidden (overflowed) items.
-  */
-  getVisibleButtons: function(buttons) {
-    var self = this,
-      hiddenButtons = [],
-      visibleButtons = [],
-      i;
+   * @returns {VisibilitySortedToolbarItems.Array} hidden - An array containing all
+   *  hidden (overflowed) items.
+   */
+  getVisibleButtons(buttons) {
+    const self = this;
+    const hiddenButtons = [];
+    const visibleButtons = [];
 
     if (!buttons || !Array.isArray(buttons)) {
-      buttons = this._getButtonsetButtons();
+      buttons = this.getButtonsetButtons();
     }
 
-    for (i = 0; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length; i++) {
       buttons[i][0].classList.remove('is-overflowed');
     }
 
-    function getButtonVisibility(i, button) {
+    function getButtonVisibility(button) {
       if (!self.isItemOverflowed(button)) {
         visibleButtons.push(button);
       } else {
@@ -1078,8 +1116,8 @@ Toolbar.prototype = {
       }
     }
 
-    for (i = 0; i < buttons.length; i++) {
-      getButtonVisibility(i, buttons[i]);
+    for (let i = 0; i < buttons.length; i++) {
+      getButtonVisibility(buttons[i]);
     }
 
     return {
@@ -1089,31 +1127,27 @@ Toolbar.prototype = {
   },
 
   /**
-   * Gets and Iterates through the full list of Toolbar Items and determines which ones should currently be present in the More Actions menu.
-   * @param {object} items - an object (normally generated by `_.getVisibleButtons()`) containing arrays of currently visible and hidden buttons, along with some meta-data.
-   * @returns {undefined}
+   * Gets and Iterates through the full list of Toolbar Items and determines which
+   *  ones should currently be present in the More Actions menu.
+   * @param {object} items - an object (normally generated by `_.getVisibleButtons()`)
+   *  containing arrays of currently visible and hidden buttons, along with some meta-data.
+   * @returns {void}
    */
-  adjustMenuItemVisibility: function(items) {
-    var iconDisplay = 'removeClass';
+  adjustMenuItemVisibility(items) {
+    let iconDisplay = 'removeClass';
 
     if (!items) {
       items = this.getVisibleButtons();
     }
 
     function toggleClass($elem, doHide) {
-      var elem = $elem[0],
-        li = $elem.data('action-button-link').parent()[0],
-        elemIsHidden = $elem.isHiddenAtBreakpoint();
+      const elem = $elem[0];
+      const li = $elem.data('action-button-link').parent()[0];
+      const elemIsHidden = $elem.isHiddenAtBreakpoint();
 
       if (doHide) {
         li.classList.add('hidden');
         elem.classList.remove('is-overflowed');
-
-        /*
-        if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn-menu')) {
-          $elem.last().last().removeClass('is-overflowed');
-        }
-        */
         return;
       }
 
@@ -1122,18 +1156,12 @@ Toolbar.prototype = {
       }
       elem.classList.add('is-overflowed');
 
-      /*
-      if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn-menu')) {
-        $elem.last().last().addClass('is-overflowed');
-      }
-      */
-
       if ($elem.find('.icon').length) {
         iconDisplay = 'addClass';
       }
     }
 
-    var i = 0;
+    let i = 0;
     for (i; i < items.visible.length; i++) {
       toggleClass(items.visible[i], true);
     }
@@ -1141,10 +1169,10 @@ Toolbar.prototype = {
       toggleClass(items.hidden[i], false);
     }
 
-    var numIcons = 0;
+    let numIcons = 0;
     this.moreMenu.find('.icon').each(function () {
       if (!$(this).parent().parent().hasClass('hidden')) {
-        numIcons ++;
+        numIcons++;
       }
     });
 
@@ -1156,11 +1184,13 @@ Toolbar.prototype = {
   },
 
   /**
-   * Detects whether or not a toolbar item is currently overflowed.  In general, toolbar items are considered overflow if their right-most edge sits past the right-most edge of the buttonset border.  There are some edge-cases.
-   * @param {jQuery[]} item - the Toolbar item being tested.
-   * @returns {boolean}
+   * Detects whether or not a toolbar item is currently overflowed.  In general,
+   *  toolbar items are considered overflow if their right-most edge sits past the
+   *  right-most edge of the buttonset border.  There are some edge-cases.
+   * @param {jQuery[]} item the Toolbar item being tested.
+   * @returns {boolean} whether or not the item belongs in the More Actions menu
    */
-  isItemOverflowed: function(item) {
+  isItemOverflowed(item) {
     // No items will be overflowed if the `More Actions` menu is purposefully disabled.
     if (this.moreButtonIsDisabled()) {
       return false;
@@ -1170,14 +1200,14 @@ Toolbar.prototype = {
       return true;
     }
 
-    var itemIndexInButtonset = this.buttonsetItems.filter(':not(.hidden)').index(item),
-      maxVisibleButtons = this.settings.maxVisibleButtons;
+    const itemIndexInButtonset = this.buttonsetItems.filter(':not(.hidden)').index(item);
+    let maxVisibleButtons = this.settings.maxVisibleButtons;
 
     // the `maxVisibleButtons` calculation should include a visible More Actions button.
-    // Subtract one from the `maxVisibleButtons` setting to account for the More Button, if it's visible.
-    // See SOHO-7237
+    // Subtract one from the `maxVisibleButtons` setting to account for the More Button,
+    // if it's visible. See SOHO-7237
     if (this.moreButtonIsVisible()) {
-      maxVisibleButtons = maxVisibleButtons - 1;
+      maxVisibleButtons -= 1;
     }
 
     // In cases where a Title is present and buttons are right-aligned,
@@ -1197,8 +1227,8 @@ Toolbar.prototype = {
       item = item[0];
     }
 
-    var classList = item.classList,
-      style = window.getComputedStyle(item);
+    const classList = item.classList;
+    const style = window.getComputedStyle(item);
 
     if (classList.contains('btn-actions')) {
       return true;
@@ -1210,62 +1240,64 @@ Toolbar.prototype = {
       return true;
     }
 
-    var isRTL = Locale.isRTL(),
-      itemRect = item.getBoundingClientRect(),
-      buttonsetRect = this.buttonset[0].getBoundingClientRect(),
-      itemOutsideXEdge = isRTL ? (itemRect.left <= buttonsetRect.left) : (itemRect.right >= buttonsetRect.right),
-      itemBelowYEdge = itemRect.bottom >= buttonsetRect.bottom;
+    const isRTL = Locale.isRTL();
+    const itemRect = item.getBoundingClientRect();
+    const buttonsetRect = this.buttonset[0].getBoundingClientRect();
+    const itemOutsideXEdge = isRTL ? (itemRect.left <= buttonsetRect.left) :
+      (itemRect.right >= buttonsetRect.right);
+    const itemBelowYEdge = itemRect.bottom >= buttonsetRect.bottom;
 
     return (itemBelowYEdge === true || itemOutsideXEdge === true);
   },
 
   /**
-  * Detection for whether or not this toolbar is able to have a More Button
-  * @returns {boolean}
-  */
-  moreButtonIsDisabled: function() {
+   * @returns {boolean} whether or not this toolbar is able to have a More Button
+   */
+  moreButtonIsDisabled() {
     return this.element[0].classList.contains('no-actions-button');
   },
 
   /**
-  * Detection for this toolbar to have a More Button
-  * TODO: Deprecate in 4.4.0 due to unclear nomenclature
-  * @private
-  * @returns {boolean}
-  */
-  hasNoMoreButton: function() {
+   * Detection for this toolbar to have a More Button
+   * @deprecated as of v4.4.0 due to unclear nomenclature.  Use `moreButtonIsDisabled()`
+   * @private
+   * @returns {boolean} whether or not the More Actions button is disabled.
+   */
+  hasNoMoreButton() {
     return this.moreButtonIsDisabled();
   },
 
   /**
-  * Detection for whether or not More Actions menu is currently visible.
-  * @returns {boolean}
+  * Detection for whether or not More Actions menu is currently visible.  This is
+  * different than the More Actions menu being disabled.  This check determines
+  * whether or not items have spilled over, causing the menu to be shown or hidden.
+  * @returns {boolean} whether or not More Actions menu is currently visible.
   */
-  moreButtonIsVisible: function() {
+  moreButtonIsVisible() {
     return this.element[0].classList.contains('has-more-button');
   },
 
   /**
    * Determines whether or not the "more actions" button should be displayed.
    * @private
-   * @returns {undefined}
+   * @returns {undefined} whether or not the "more actions" button should be displayed.
    */
-  toggleMoreMenu: function() {
+  toggleMoreMenu() {
     if (this.moreButtonIsDisabled()) {
       return;
     }
 
-    var overflowItems = this.moreMenu.children('li:not(.separator)'),
-      hiddenOverflowItems = overflowItems.not('.hidden');
+    const overflowItems = this.moreMenu.children('li:not(.separator)');
+    const hiddenOverflowItems = overflowItems.not('.hidden');
 
-    var method = 'removeClass';
+    let method = 'removeClass';
     if (this.defaultMenuItems || hiddenOverflowItems.length > 0) {
       method = 'addClass';
     }
 
     this.element[method]('has-more-button');
 
-    var popupAPI = this.more.data('popupmenu');
+    const popupAPI = this.more.data('popupmenu');
     if (method === 'removeClass') {
       if (!popupAPI) {
         return;
@@ -1273,10 +1305,10 @@ Toolbar.prototype = {
 
       popupAPI.close();
 
-      var menuItems = popupAPI.menu.find('li:not(.separator)').children('a'),
-        shouldFocus = false;
+      const menuItems = popupAPI.menu.find('li:not(.separator)').children('a');
+      let shouldFocus = false;
 
-      menuItems.add(this.more).each(function() {
+      menuItems.add(this.more).each(function () {
         if (document.activeElement === this) {
           shouldFocus = true;
         }
@@ -1289,32 +1321,49 @@ Toolbar.prototype = {
   },
 
   /**
-   * Creates an `aria-label` attribute on the toolbar, for bettery accessibility
+   * Creates an `aria-label` attribute on the toolbar, for bettery accessibility.
+   * Based on AOL Access Guidelines:
+   * http://access.aol.com/dhtml-style-guide-working-group/#toolbar
    * @private
-   * @returns {undefined}
+   * @returns {void}
    */
-  buildAriaLabel: function() {
-    // Set up an aria-label as per AOL guidelines
-    // http://access.aol.com/dhtml-style-guide-working-group/#toolbar
-    if (!this.element.attr('aria-label')) {
-      var isHeader = (this.element.closest('.header').length ===1),
-        id = this.element.attr('id') || '',
-        title = this.element.children('.title'),
-        prevLabel = this.element.prev('label'),
-        prevSpan = this.element.prev('.label'),
-        labelText = isHeader ? $('header.header').find('h1').text() :
-        title.length ? title.filter('div').text() :
-        prevLabel.length ? prevLabel.text() :
-        prevSpan.length ? prevSpan.text() : id + ' ' + Locale.translate('Toolbar');
-
-      this.element.attr('aria-label', labelText.replace(/\s+/g,' ').trim());
+  buildAriaLabel() {
+    // Don't re-build if one already exists.
+    if (this.element.attr('aria-label')) {
+      return;
     }
+
+    const isHeader = (this.element.closest('.header').length === 1);
+    const id = this.element.attr('id') || '';
+    const title = this.element.children('.title');
+    const prevLabel = this.element.prev('label');
+    const prevSpan = this.element.prev('.label');
+
+    function getLabelText() {
+      if (isHeader) {
+        return $('header.header').find('h1').text();
+      }
+      if (title.length) {
+        return title.filter('div').text();
+      }
+      if (prevLabel.length) {
+        return prevLabel.text();
+      }
+      if (prevSpan.length) {
+        return prevSpan.text();
+      }
+      return `${id} ${Locale.translate('Toolbar')}`;
+    }
+    const labelText = getLabelText();
+
+    this.element.attr('aria-label', labelText.replace(/\s+/g, ' ').trim());
   },
 
   /**
-   * @param {object} [settings]
+   * @param {object} [settings] incoming different settings
+   * @returns {void}
    */
-  updated: function(settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -1327,9 +1376,9 @@ Toolbar.prototype = {
 
   /**
    * Enables the entire Toolbar component
-   * @returns {undefined}
+   * @returns {void}
    */
-  enable: function() {
+  enable() {
     this.element.prop('disabled', false);
     this.items.prop('disabled', false);
     this.more.prop('disabled', false);
@@ -1337,9 +1386,9 @@ Toolbar.prototype = {
 
   /**
    * Disables the entire Toolbar component
-   * @returns {undefined}
+   * @returns {void}
    */
-  disable: function() {
+  disable() {
     this.element.prop('disabled', true);
     this.items.prop('disabled', true);
     this.more.prop('disabled', true).data('popupmenu').close();
@@ -1349,34 +1398,34 @@ Toolbar.prototype = {
    * Removes currently associated event listeners from the Toolbar.
    * @private
    * @chainable
-   * @returns {this}
+   * @returns {this} component instance
    */
-  unbind: function() {
+  unbind() {
     this.items
       .offTouchClick('toolbar')
       .off('keydown.toolbar click.toolbar focus.toolbar blur.toolbar');
 
     this.more.off('keydown.toolbar beforeopen.toolbar selected.toolbar');
-    $('body').off('resize.toolbar-' + this.id);
+    $('body').off(`resize.toolbar-${this.id}`);
     return this;
   },
 
   /**
    * Returns the Toolbar's internal markup to its original state.
    * @chainable
-   * @returns {this}
+   * @returns {this} component instance
    */
-  teardown: function() {
-    var self = this;
+  teardown() {
+    const self = this;
 
     if (this.title && this.title.length) {
-      var dataTooltip = this.title.off('beforeshow.toolbar').data('tooltip');
+      const dataTooltip = this.title.off('beforeshow.toolbar').data('tooltip');
       if (dataTooltip) {
         dataTooltip.destroy();
       }
     }
 
-    this.moreMenu.children('li').each(function() {
+    this.moreMenu.children('li').each(function () {
       self.teardownMoreActionsMenuItem($(this), true);
     });
     return this;
@@ -1385,25 +1434,26 @@ Toolbar.prototype = {
   /**
    * Tears down a More Actions Menu item.
    * @param {jQuery[]} item - the existing <li> from inside the More Actions menu.
-   * @param {boolean} doRemove - if defined, causes the list item to be removed from the more actions menu.
+   * @param {boolean} doRemove - if defined, causes the list item to be removed from
+   *  the more actions menu.
    */
-  teardownMoreActionsMenuItem: function(item, doRemove) {
-    var self = this,
-      li = $(item),
-      a = li.children('a'),
-      itemLink = a.data('original-button');
+  teardownMoreActionsMenuItem(item, doRemove) {
+    const self = this;
+    const li = $(item);
+    const a = li.children('a');
+    const itemLink = a.data('original-button');
 
     a.off('updated.toolbar mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar recalculate-buttons.toolbar');
 
-    var icons = li.find('.icon');
+    const icons = li.find('.icon');
     if (icons.length) {
       icons.remove();
     }
 
-    var submenuContainer;
+    let submenuContainer;
     if (li.is('.submenu')) {
       submenuContainer = li.children('.wrapper').children('.popupmenu');
-      submenuContainer.children('li').each(function(){
+      submenuContainer.children('li').each(function () {
         self.teardownMoreActionsMenuItem($(this), true);
       });
     }
@@ -1416,7 +1466,7 @@ Toolbar.prototype = {
       if (submenuContainer) {
         submenuContainer
           .off()
-        .parent('.wrapper')
+          .parent('.wrapper')
           .off()
           .remove();
       }
@@ -1428,31 +1478,21 @@ Toolbar.prototype = {
   },
 
   /**
-   * Destroys this Toolbar Component instance and completely disassociates it from its corresponding DOM Element.
-   * @returns {undefined}
+   * Destroys this Toolbar Component instance and completely disassociates it from
+   *  its corresponding DOM Element.
+   * @returns {void}
    */
-  destroy: function() {
+  destroy() {
     this
       .unbind()
       .teardown();
 
     if (this.buttonset.children('.searchfield-wrapper').length) {
-      var searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
+      const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
       if (searchFields.data('toolbarsearchfield')) {
         searchFields.data('toolbarsearchfield').destroy();
       }
     }
-
-    /*
-    // Remove split button wrappers
-    if (this.splitButtonWrappers.length) {
-      $.each(this.splitButtonWrappers, function(wrapper) {
-        var els = wrapper.children().detach();
-        els.insertAfter(wrapper);
-        wrapper.remove();
-      });
-    }
-    */
 
     if (this.more.length && this.more.data('popupmenu') !== undefined) {
       this.more.data('popupmenu').destroy();

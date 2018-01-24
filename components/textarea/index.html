@@ -281,9 +281,9 @@ boolean
 <li>Text Areas should always have a minimum height of 3 text lines.</li>
 </ul>
 <h2 id="code-example">Code Example</h2>
-<p>A Text Area is a standard css / html element. To implement a Text Area, you can insert a standard textarea element and add the class=“textarea”. Also be sure to create a meaningful label which is linked to the input.</p>
-<p>You can optionally add the class=“resizable” to the input to allow it to be resized.</p>
-<p>You can optionally set a placeholder for inline text such as “type your comments here” etc.</p>
+<p>A Text Area is a standard css / html element. To implement a Text Area, you can insert a standard textarea element and add the class=&quot;textarea&quot;. Also be sure to create a meaningful label which is linked to the input.</p>
+<p>You can optionally add the class=&quot;resizable&quot; to the input to allow it to be resized.</p>
+<p>You can optionally set a placeholder for inline text such as &quot;type your comments here&quot; etc.</p>
 <p>You can optionally set a maxlength attribute which is the maximum number of characters that can be used. If you do this, a count will be shown below the input to assist the user.</p>
 <p>Text areas support:</p>
 <ul>
@@ -292,19 +292,19 @@ boolean
 <li>Required Validation</li>
 <li>Disabled/Enabled</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;description&quot;</span><span class="kw">&gt;</span>Notes (resizable)<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;description&quot;</span><span class="ot"> class=</span><span class="st">&quot;resizable&quot;</span><span class="ot"> name=</span><span class="st">&quot;description&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Type your notes here...&quot;</span><span class="kw">&gt;&lt;/textarea&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;description-max&quot;</span><span class="kw">&gt;</span>Notes (maxlength)<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;description-max&quot;</span><span class="ot"> class=</span><span class="st">&quot;textarea&quot;</span><span class="ot"> maxlength=</span><span class="st">&quot;90&quot;</span><span class="ot"> name=</span><span class="st">&quot;description-max&quot;</span> <span class="kw">&gt;</span>Line One<span class="kw">&lt;/textarea&gt;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;description&quot;</span><span class="kw">&gt;</span>Notes (resizable)<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;description&quot;</span><span class="ot"> class=</span><span class="st">&quot;resizable&quot;</span><span class="ot"> name=</span><span class="st">&quot;description&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Type your notes here...&quot;</span><span class="kw">&gt;&lt;/textarea&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;description-max&quot;</span><span class="kw">&gt;</span>Notes (maxlength)<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;description-max&quot;</span><span class="ot"> class=</span><span class="st">&quot;textarea&quot;</span><span class="ot"> maxlength=</span><span class="st">&quot;90&quot;</span><span class="ot"> name=</span><span class="st">&quot;description-max&quot;</span> <span class="kw">&gt;</span>Line One<span class="kw">&lt;/textarea&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>Printing is supported now. To do this we need a second shadow element in the page which is shown in the print media query.</li>
