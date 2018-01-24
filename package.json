@@ -42,6 +42,7 @@
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
     "test:es6:unit": "karma start karma.conf.js",
+    "test:es6-browserstack:unit": "karma start karma.browserstack.conf.js",
     "pree2e": "npm run webdriver && (npm run start & sleep 10)",
     "e2e": "protractor ./protractor.conf.js",
     "poste2e": "npm run stop && exit 0",
