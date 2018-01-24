@@ -162,6 +162,15 @@ $subheader-height: 60px;
       padding: 0;
     }
 
+    .btn-toggle.is-pressed svg,
+    .btn-toggle:hover svg {
+      fill: white !important;
+    }
+
+    .btn-toggle svg {
+      fill: rgba(255, 255, 255, 0.7) !important;
+    }
+
     .panel-title {
       @include font-size(20);
       line-height: 1.2;
