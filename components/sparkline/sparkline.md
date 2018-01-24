@@ -9,12 +9,9 @@
 
 ## API Details
 
-### Dataset Settings
+{{api-details}}
 
-* `data` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - An array of data to structure the sparklines.
-* `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** - The name of the data used in the accessibility label and tooltip.
-
-### Spark Line Types
+## Spark Line Chart Types
 
 * `sparkline-dots-n-peak` - Shows dots for each datapoint and highlights the top value as "peak".
 * `sparkline-peak` - Shows a continuous line changing at each datapoint and highlights the top value as "peak".

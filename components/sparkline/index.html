@@ -6,12 +6,162 @@
 <li>Example showing Set Selected value <a href="../components/sparkline/example-set-selected">View Example</a></li>
 </ol>
 <h2 id="api-details">API Details</h2>
-<h3 id="dataset-settings">Dataset Settings</h3>
-<ul>
-<li><code>data</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Array</a></strong> - An array of data to structure the sparklines.</li>
-<li><code>name</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">String</a></strong> - The name of the data used in the accessibility label and tooltip.</li>
-</ul>
-<h3 id="spark-line-types">Spark Line Types</h3>
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          dataset
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          The data to use in the sparklines.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          name
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          The name of the data used in the accessibility label and tooltip.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          colors
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          An array of color sequences in hex format fx #1D5F8A.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isDots
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Shows dots on the data points.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isPeakDot
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Highlights the top value as peak with a special dot.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isMinMax
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Shows a continuous shading to highlight the min and max values.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isMedianRange
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Adds a median range display.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = The new settings object
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handle updated settings and values.</p>
+
+        </td>
+        <td>
+          The api for chaining.
+object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown - Remove added markup and events.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
+<h2 id="spark-line-chart-types">Spark Line Chart Types</h2>
 <ul>
 <li><code>sparkline-dots-n-peak</code> - Shows dots for each datapoint and highlights the top value as “peak”.</li>
 <li><code>sparkline-peak</code> - Shows a continuous line changing at each datapoint and highlights the top value as “peak”.</li>

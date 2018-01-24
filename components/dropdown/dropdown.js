@@ -1318,8 +1318,7 @@ Dropdown.prototype = {
   },
 
   /**
-   * Actually Show The List
-   * @private
+   * Popup the list of options for selection.
    */
   openList() {
     const current = this.previousActiveDescendant ?
@@ -1694,7 +1693,7 @@ Dropdown.prototype = {
   },
 
   /**
-  * Alias that works with the global "closeChildren" method.
+  * Close the list of options if open.
   * @returns {void}
   */
   close() {
@@ -1702,12 +1701,14 @@ Dropdown.prototype = {
   },
 
   /**
-   * Alias that works with the global "closeChildren" method.  See "js/lifecycle.js"
+   * Close the list of options if open.
    * @private
-   * @param  {string} action The action that trigger the closing (cancel fx)
+   * @param  {string} [action] The action that trigger the closing (cancel fx) this
+   * is passed to the events.
    * @returns {void}
    */
   closeList(action) {
+    //  Also see "js/lifecycle.js" alias that works with the global "closeChildren" method.
     if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
       return;
     }
