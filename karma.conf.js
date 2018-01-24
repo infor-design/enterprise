@@ -20,15 +20,15 @@ module.exports = function (config) {
       bs_firefox_mac: {
         base: 'BrowserStack',
         browser: 'firefox',
-        browser_version: '21.0',
+        browser_version: '56.0',
         os: 'OS X',
-        os_version: 'Mountain Lion'
+        os_version: 'Sierra'
       },
-      bs_iphone5: {
+      bs_iphone8: {
         base: 'BrowserStack',
-        device: 'iPhone 5',
+        device: 'iPhone 8',
         os: 'ios',
-        os_version: '6.0'
+        os_version: '11.0'
       }
     },
     preprocessors: {
