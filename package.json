@@ -30,6 +30,7 @@
     "test:functional": "./bin/test.sh runner config=test/intern.local.functional",
     "test:unit": "./bin/test.sh client config=test/intern.local.unit",
     "test:es6:unit": "karma start karma.conf.js",
+    "test:es6-browserstack:unit": "karma start karma.browserstack.conf.js",
     "pree2e": "npm run webdriver && (npm run start & sleep 10)",
     "e2e": "protractor ./protractor.conf.js",
     "poste2e": "npm run stop && exit 0",

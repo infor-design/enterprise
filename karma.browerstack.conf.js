@@ -11,6 +11,26 @@ module.exports = function (config) {
     exclude: [
       'node_modules'
     ],
+    browserStack: {
+      username: process.env.BROWSER_STACK_USERNAME,
+      accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
+      startTunnel: true
+    },
+    customLaunchers: {
+      bs_firefox_mac: {
+        base: 'BrowserStack',
+        browser: 'firefox',
+        browser_version: '56.0',
+        os: 'OS X',
+        os_version: 'Sierra'
+      },
+      bs_iphone8: {
+        base: 'BrowserStack',
+        device: 'iPhone 8',
+        os: 'ios',
+        os_version: '11.0'
+      }
+    },
     preprocessors: {
       'components/**/*.spec.js': ['webpack'],
       'dist/js/sohoxi.js': ['coverage']
@@ -42,7 +62,9 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: [
-      'ChromeHeadless'
+      'ChromeHeadless',
+      'bs_firefox_mac',
+      'bs_iphone8'
     ],
     singleRun: false,
     concurrency: Infinity
