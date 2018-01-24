@@ -38,6 +38,7 @@ export { PopupMenu } from './popupmenu/popupmenu';
 export { Popdown } from './popdown/popdown';
 export { SearchField } from './searchfield/searchfield';
 export { Slider } from './slider/slider';
+export { Sparkline } from './sparkline/sparkline';
 export { Spinbox } from './spinbox/spinbox';
 export { Tabs } from './tabs/tabs';
 export { Tag } from './tag/tag';

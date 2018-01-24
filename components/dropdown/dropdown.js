@@ -1294,8 +1294,7 @@ Dropdown.prototype = {
   },
 
   /**
-   * Open the dropdown list (normally done internal but available for possible use.)
-   * @private
+   * Open the dropdown list of options
    */
   open() {
     const self = this;
@@ -1318,7 +1317,7 @@ Dropdown.prototype = {
   },
 
   /**
-   * Actually Show The List
+   * Popup the list of options for selection.
    * @private
    */
   openList() {
@@ -1694,7 +1693,7 @@ Dropdown.prototype = {
   },
 
   /**
-  * Alias that works with the global "closeChildren" method.
+  * Close the list of options if open.
   * @returns {void}
   */
   close() {
@@ -1702,12 +1701,14 @@ Dropdown.prototype = {
   },
 
   /**
-   * Alias that works with the global "closeChildren" method.  See "js/lifecycle.js"
+   * Close the list of options if open.
    * @private
-   * @param  {string} action The action that trigger the closing (cancel fx)
+   * @param  {string} [action] The action that trigger the closing (cancel fx) this
+   * is passed to the events.
    * @returns {void}
    */
   closeList(action) {
+    //  Also see "js/lifecycle.js" alias that works with the global "closeChildren" method.
     if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
       return;
     }
@@ -1817,6 +1818,16 @@ Dropdown.prototype = {
 
   /**
    * Toggle the current state of the list between open and closed.
+   * @private
+   */
+  toggle() {
+    this.toggleList();
+  },
+
+  /**
+   * Toggle the current state of the list between open and closed.
+   * @deprecated
+   * @private
    */
   toggleList() {
     if (this.isOpen() || this.isLoading()) {

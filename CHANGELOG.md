@@ -1,3 +1,36 @@
+## <a name="version-4.4.0">44.4.0</a>
+
+Release Date: TBD
+
+Full Jira Release Notes: http://bit.ly/2D6PShK
+
+### <a name="version-4.4.0-download-build-assets">Download Build Assets:</a>
+
+Build Server: http://bamboo.infor.com/browse/label/release-440
+Npm: http://npm.infor.com
+Angular Specific Change Log: http://git.infor.com/projects/SOHO/repos/angular-components/browse/CHANGELOG.md
+
+### <a name="version-4.4.0-download-build-assets">Demo Site</a>
+
+http://usalvlhlpool1.infor.com/4.4.0/components/
+
+### <a name="version-4.4.0-key-new-features">Key New Features</a>
+- The Components are now built using Rollup and the internals are ES6 (but there is still a jQuery dependency)
+
+### <a name="version-4.4.0-corrections">Corrections to Your Code</a>
+- The completion chart had a likely not widely used 'update' api. This was removed in favor of 'update(settings)' that all the other components use. You may need to refactor your update call to completion chart. See completion-chart/test-updated.html for an example
+
+### <a name="version-4.4.0-behavior-changes">Behavior Changes</a>
+-
+
+### <a name="version-4.4.0-improvements">Improvements</a>
+-
+
+### <a name="version-4.4.0-bug-fixes">Bug Fixes</a>
+-
+
+(n Jira Issues Solved this release, Backlog Dev n, Design n, Unresolved n)
+
 ## <a name="version-4.3.4">4.3.4</a>
 
 Release Date: 2017-12-20
