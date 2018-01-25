@@ -18,21 +18,29 @@ const COMPONENT_NAME = 'line';
 * @property {string} isArea Render as an area chart.
 * @property {string} isBubble Render as a bubble chart.
 * @property {string} showLegend If false the label will not be shown.
-* @property {object} xAxis Settings for the x axis
-* @property {object} yAxis Settings for the x axis (can include yAxis.formatter)
+* @property {object} xAxis A series of options for the xAxis
+* @property {number} xAxis.rotate Rotate the elements on the x axis.
+* Recommend -65 deg but this can be tweaked depending on look.
+* @property {object} yAxis A series of options for the yAxis
+* @property {object} xAxis.ticks Data to control the number of ticks and y axis format.
+* For example `{number: 5, format: ',.1s'}` would show only 5 yaxis points and format the
+* data to show 1K, 1M, 1G ect.. This uses the d3 formatter.
+* @property {function} xAxis.formatText A function that passes the text element and a counter.
+* You can return a formatted svg markup element to replace the current element.
+* For example you could use tspans to wrap the strings or color them.
+* @property {object} yAxis A series of options for the yAxis
+* @property {function} yAxis.formatter A d3 formatter for the yAxis points.
 * @property {boolean} hideDots If true no dots are shown
-* @property {array} axisLabels A list of axis Labels to use
+* @property {array} axisLabels  Option to a label to one of the four sides. For Example
+* `{left: 'Left axis label', top: 'Top axis label',
+* right: 'Right axis label', bottom: 'Bottom axis label'}`
 * @property {boolean|string} animate true|false - will do or not do the animation.
 * 'initial' will do only first time the animation.
 * @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
-* @property {object} dots Lets you control the dot configuration.
-* The following options are accepted.
-* `dots: {
-*   radius: 3,
-*   radiusOnHover: 4,
-*   strokeWidth: 0,
-*   class: 'custom-dots'
-*  }`
+* @property {object} dots Option to customize the dot behavior. You can set the dot size (radius),
+* the size on hover and stroke or even add a custom class.
+* Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`
+* @property {string} formatterString Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 */
 const LINE_DEFAULTS = {
   dataset: [],
@@ -86,18 +94,10 @@ Line.prototype = {
    * @private
    */
   build() {
-    // chartData, options, isArea, isBubble) {
-    const defaults = {
-    // Use d3 Format
-    // http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
-    // [null | formatter string] - Only value will be formated
-      formatterString: null,
-    };
     const self = this;
-    const settings = $.extend(true, defaults, charts.options);
-    const isFormatter = !!settings.formatterString;
+    const isFormatter = !!this.settings.formatterString;
     const format = function (value) {
-      return isFormatter ? d3.format(settings.formatterString)(value) : value;
+      return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
     };
 
     this.element.addClass(`line-chart${self.settings.isBubble ? ' bubble' : ''}`);
@@ -147,7 +147,8 @@ Line.prototype = {
     let longestLabel = '';
     let longestLabelLength = 0;
     const dataset = this.settings.dataset;
-    const isAxisXRotate = (settings.xAxis && settings.xAxis.rotate !== undefined); // TODO
+
+    const isAxisXRotate = (self.settings.xAxis && self.settings.xAxis.rotate !== undefined); // TODO
     const getMaxes = function (d, option) {
       return d3.max(d.data, function (da) {
         return option ? d.value[option] : da.value;
@@ -182,7 +183,7 @@ Line.prototype = {
       height -= 40;
     }
 
-    const svg = d3.select(this.element[0]).append('svg')
+    self.svg = d3.select(this.element[0]).append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)
       .append('g')
@@ -218,8 +219,8 @@ Line.prototype = {
 
     // Calculate the Domain X and Y Ranges
     let maxes;
-    const x = ((!!settings.xAxis && !!settings.xAxis.scale) ? (settings.xAxis.scale) :
-      (d3.scaleLinear())).range([0, width]);
+    const x = ((!!self.settings.xAxis && !!self.settings.xAxis.scale) ?
+      (self.settings.xAxis.scale) : (d3.scaleLinear())).range([0, width]);
 
     const y = d3.scaleLinear().range([height, 0]);
     const z = d3.scaleLinear().range([1, 25]);
@@ -241,12 +242,16 @@ Line.prototype = {
 
     const yScale = y.domain([0, d3.max(self.settings.isBubble ? maxes.y : maxes)]).nice();
     const zScale = z.domain([0, d3.max(self.settings.isBubble ? maxes.z : maxes)]).nice();
+    let numTicks = entries;
+    if (self.settings.xAxis && self.settings.xAxis.ticks) {
+      numTicks = self.settings.xAxis.ticks === 'auto' ? Math.max(width / 85, 2) : self.settings.xAxis.ticks;
+      if (self.settings.isBubble && isViewSmall) {
+        numTicks = Math.round(entries / 2);
+      }
+    }
 
     const xAxis = d3.axisBottom(xScale)
-      .ticks((!!self.settings.xAxis && !!self.settings.xAxis.ticks) ?
-        (self.settings.xAxis.ticks === 'auto' ?
-          Math.max(width / 55, 2) : self.settings.xAxis.ticks) :
-        (self.settings.isBubble && isViewSmall ? Math.round(entries / 2) : entries))
+      .ticks(numTicks)
       .tickPadding(10)
       .tickSize(self.settings.isBubble ? -(height + 10) : 0)
       .tickFormat(function (d, j) {
@@ -267,8 +272,8 @@ Line.prototype = {
 
     if (self.settings.yAxis && self.settings.yAxis.formatter) {
       yAxis.tickFormat(function (d, k) {
-        if (typeof settings.yAxis.formatter === 'function') {
-          return settings.yAxis.formatter(d, k);
+        if (typeof self.settings.yAxis.formatter === 'function') {
+          return self.settings.yAxis.formatter(d, k);
         }
         return d;
       });
@@ -280,7 +285,7 @@ Line.prototype = {
 
     // Append The Axis Labels
     if (isAxisLabels.atLeastOne) {
-      const axisLabelsGroup = svg.append('g').attr('class', 'axis-labels');
+      const axisLabelsGroup = self.svg.append('g').attr('class', 'axis-labels');
       const place = {
         top: `translate(${width / 2},${-10})`,
         right: `translate(${width + 28},${height / 2})rotate(90)`,
@@ -313,31 +318,31 @@ Line.prototype = {
     }
 
     // Append The Axis to the svg
-    svg.append('g')
+    self.svg.append('g')
       .attr('class', 'x axis')
       .attr('transform', `translate(0,${height})`)
       .call(xAxis);
 
-    svg.append('g')
+    self.svg.append('g')
       .attr('class', 'y axis')
       .call(yAxis);
 
     // Offset the tick inside, uses the fact that the yAxis has 20 added.
-    svg.selectAll('.tick line').attr('x1', '-10');
+    self.svg.selectAll('.tick line').attr('x1', '-10');
 
     if (self.settings.isBubble) {
-      svg.selectAll('.x.axis .tick line, .y.axis .tick line').style('opacity', 0);
-      svg.select('.x.axis .tick line').attr('x2', '-10').style('opacity', 1);
-      svg.select('.y.axis .tick line').style('opacity', 1);
+      self.svg.selectAll('.x.axis .tick line, .y.axis .tick line').style('opacity', 0);
+      self.svg.select('.x.axis .tick line').attr('x2', '-10').style('opacity', 1);
+      self.svg.select('.y.axis .tick line').style('opacity', 1);
     }
 
     if (isRTL) {
-      svg.selectAll('text').attr('transform', 'scale(-1, 1)');
-      svg.selectAll('.y.axis text').style('text-anchor', 'end');
+      self.svg.selectAll('text').attr('transform', 'scale(-1, 1)');
+      self.svg.selectAll('.y.axis text').style('text-anchor', 'end');
     }
 
     if (isAxisXRotate) {
-      svg.selectAll('.x.axis .tick text') // select all the text for the xaxis
+      self.svg.selectAll('.x.axis .tick text') // select all the text for the xaxis
         .attr('y', 0)
         .attr('x', function () {
           return -(this.getBBox().width + 10);
@@ -348,7 +353,7 @@ Line.prototype = {
     }
 
     if (self.settings.xAxis && self.settings.xAxis.formatText) {
-      svg.selectAll('.x.axis .tick text').each(function (m) {
+      self.svg.selectAll('.x.axis .tick text').each(function (m) {
         const elem = d3.select(this);
         const text = d3.select(this).text();
         const markup = self.settings.xAxis.formatText(text, m);
@@ -371,7 +376,7 @@ Line.prototype = {
 
     // Append the lines
     dataset.forEach(function (d, lineIdx) {
-      const lineGroups = svg.append('g')
+      const lineGroups = self.svg.append('g')
         .attr('data-group-id', lineIdx)
         .attr('class', 'line-group');
 
@@ -403,7 +408,7 @@ Line.prototype = {
         .attr('fill', 'none')
         .attr('class', 'line')
         .on('click.chart', function () {
-          charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
+          charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), d, self.element);
         });
 
       // Add animation
@@ -433,9 +438,9 @@ Line.prototype = {
           .style('stroke-width', dots.strokeWidth)
           .style('fill', function () { return charts.chartColor(lineIdx, 'line', d); })
           .style('opacity', (self.settings.isBubble ? '.7' : '1'))
-          .on('mouseenter.chart', function (d2) {
+          .on('mouseenter.chart', function (mouseEnterData) {
             const rect = this.getBoundingClientRect();
-            let content = `<p><b>${d2.name} </b> ${format(d2.value)}</p>`;
+            let content = `<p><b>${mouseEnterData.name} </b> ${format(mouseEnterData.value)}</p>`;
 
             const show = function () {
               const size = charts.tooltipSize(content);
@@ -443,7 +448,7 @@ Line.prototype = {
               const posY = rect.top - size.height - 18;
 
               posX = self.settings.isBubble ?
-                ((rect.left + (rect.width / 2)) - (size.width / 2)) : x;
+                ((rect.left + (rect.width / 2)) - (size.width / 2)) : posX;
 
               if (content !== '') {
                 charts.showTooltip(posX, posY, content, 'top');
@@ -454,22 +459,20 @@ Line.prototype = {
               content = `${'' +
                 '<div class="chart-swatch" style="min-width: 95px;">' +
                   '<div class="swatch-caption">' +
-                    '<span style="background-color:'}${charts.chartColor(lineIdx, 'line', d)};" class="indicator-box"></span>` +
-                    `<b>${d.name}</b>` +
+                    '<span style="background-color:'}${charts.chartColor(lineIdx, 'line', mouseEnterData)};" class="indicator-box"></span>` +
+                    `<b>${mouseEnterData.name}</b>` +
                   '</div>';
 
-              const obj = d2;
-
-              for (const key in obj) {  //eslint-disable-line
-                if (obj.hasOwnProperty(key)) {  //eslint-disable-line
-                  if (typeof obj[key] !== 'object') {
+              for (const key in mouseEnterData) {  //eslint-disable-line
+                if (mouseEnterData.hasOwnProperty(key)) {  //eslint-disable-line
+                  if (typeof mouseEnterData[key] !== 'object') {
                     content += `${'' +
                         '<div class="swatch-row">' +
                           '<span>'}${labels[key]}</span>` +
-                          `<b>${obj[key]}</b>` +
+                          `<b>${mouseEnterData[key]}</b>` +
                         '</div>';
                   } else {
-                    const obj2 = obj[key];
+                    const obj2 = mouseEnterData[key];
                     for (const key2 in obj2) {  //eslint-disable-line
                       if (obj2.hasOwnProperty(key2)) {  //eslint-disable-line
                         content += `${'' +
@@ -503,7 +506,7 @@ Line.prototype = {
               }, 10);
             } else {
               tooltipData = typeof tooltipData === 'object' ? '' : tooltipData;
-              content = tooltipDataCache[i] || tooltipData || d2.tooltip || d.tooltip || content || '';
+              content = tooltipDataCache[i] || tooltipData || mouseEnterData.tooltip || d.tooltip || content || '';
               show();
             }
 
@@ -520,7 +523,7 @@ Line.prototype = {
             });
           })
           .on('click.chart', function (dh) {
-            charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), dh);
+            charts.selectElement(d3.select(this.parentNode), self.svg.selectAll('.line-group'), dh, self.element);
           });
 
         if (self.settings.isBubble) {
@@ -535,12 +538,12 @@ Line.prototype = {
     });
 
     // Set y-axix tick css class
-    svg.selectAll('.y.axis .tick').attr('class', function (di) {
+    self.svg.selectAll('.y.axis .tick').attr('class', function (di) {
       return `tick${di === 0 ? ' tick0' : ''}`;
     });
 
     const series = dataset.map(function (d) {
-      return { color: d.color, name: d.name, selectionObj: svg.selectAll('.line-group'), selectionInverse: svg.selectAll('.line-group'), data: d };
+      return { color: d.color, name: d.name, selectionObj: self.svg.selectAll('.line-group'), selectionInverse: self.svg.selectAll('.line-group'), data: d };
     });
 
     if (this.settings.showLegend) {
@@ -557,7 +560,7 @@ Line.prototype = {
 
       const setSelected = function (d, i1, d2, i2) {
         if (d2) {
-          elem = svg.select(`[data-group-id="${i1}"]`)
+          elem = self.svg.select(`[data-group-id="${i1}"]`)
             .select(`.dot:nth-child(${i2 + 2})`);
           if ((typeof o.groupIndex === 'number' &&
                 typeof o.fieldName !== 'undefined' &&
@@ -571,10 +574,10 @@ Line.prototype = {
               (o.data && equals(o.data, d2))) {
             selected++;
             selectorData = d2;
-            selector = svg.select(`[data-group-id="${i1}"]`);
+            selector = self.svg.select(`[data-group-id="${i1}"]`);
           }
         } else {
-          elem = svg.select(`[data-group-id="${i1}"]`);
+          elem = self.svg.select(`[data-group-id="${i1}"]`);
           if ((typeof o.groupName !== 'undefined' &&
                 typeof o.groupValue !== 'undefined' &&
                   o.groupValue === d[o.groupName]) ||
@@ -603,45 +606,50 @@ Line.prototype = {
       });
 
       if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
-        charts.selectElement(selector, svg.selectAll('.line-group'), selectorData);
+        charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element);
       }
     };
 
-    // Set initial selected
-    (function () {
-      let selected = 0;
-      let selector;
-      let selectorData;
-
-      const setSelected = function (node, d, selectedIdx) {
-        if (node.selected && selected < 1) {
-          selected++;
-          selector = d3.select(svg.selectAll('.line-group')[0][selectedIdx]);
-          selectorData = d;
-        }
-      };
-
-      dataset.forEach(function (d, setIdx) {
-        if (d) {
-          setSelected(d, d, setIdx);
-        }
-      });
-
-      dataset.forEach(function (d, setIdx) {
-        if (d || d.data) {
-          d.data.forEach(function (d2) {
-            setSelected(d2, d, setIdx);
-          });
-        }
-      });
-
-      if (selected > 0) {
-        charts.selectElement(selector, svg.selectAll('.line-group'), selectorData);
-      }
-    }());
-
+    this.setInitialSelected();
     this.element.trigger('rendered');
     return this;
+  },
+
+  /**
+   * Set the initially selected elements
+   * @private
+   */
+  setInitialSelected() {
+    const self = this;
+    let selected = 0;
+    let selector;
+    let selectorData;
+
+    const setInitialSelected = function (node, d, selectedIdx) {
+      if (node.selected && selected < 1) {
+        selected++;
+        selector = d3.select(self.svg.selectAll('.line-group').nodes()[selectedIdx]);
+        selectorData = d;
+      }
+    };
+
+    this.settings.dataset.forEach(function (d, setIdx) {
+      if (d) {
+        setInitialSelected(d, d, setIdx);
+      }
+    });
+
+    this.settings.dataset.forEach(function (d, setIdx) {
+      if (d || d.data) {
+        d.data.forEach(function (d2) {
+          setInitialSelected(d2, d, setIdx);
+        });
+      }
+    });
+
+    if (selected > 0) {
+      charts.selectElement(selector, self.svg.selectAll('.line-group'), selectorData, self.element);
+    }
   },
 
   /**
@@ -668,6 +676,35 @@ Line.prototype = {
   },
 
   width: 0,
+
+  /*
+   * Get info on the currently selected lines.
+   * @returns {object} An object with the matching data and reference to the triggering element.
+   */
+  getSelected() {
+    return charts.selected;
+  },
+
+  /*
+   * Get info on the currently selected lines.
+   */
+  setSelected(options, isToggle) {
+    const internals = {
+      svg: this.svg,
+      chartData: this.settings.dataset,
+      isStacked: false,
+      isGrouped: false,
+      isSingle: false
+    };
+    charts.setSelected(options, isToggle, internals);
+  },
+
+  /*
+   * Get info on the currently selected lines.
+   */
+  toggleSelected(options) {
+    this.setSelected(options, true);
+  },
 
   /*
    * Handles resizing a chart.

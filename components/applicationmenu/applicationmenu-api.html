@@ -19,7 +19,7 @@
         </td>
         <td>
           Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024),
-or 'large' (+1280). Default is phablet (968)
+or 'large' (+1280). Default is 'phone-to-tablet' (968)
 
         </td>
       </tr>
@@ -28,10 +28,11 @@ or 'large' (+1280). Default is phablet (968)
           filterable
         </td>
         <td>
-          string
+          boolean
         </td>
         <td>
-          
+          If true a search / filter option will be added.
+
         </td>
       </tr>
       <tr>
@@ -39,7 +40,7 @@ or 'large' (+1280). Default is phablet (968)
           openOnLarge
         </td>
         <td>
-          string
+          boolean
         </td>
         <td>
           If true, will automatically open the Application Menu when a
@@ -52,7 +53,7 @@ large screen-width breakpoint is met.
           triggers
         </td>
         <td>
-          string
+          array
         </td>
         <td>
           An Array of jQuery-wrapped elements that are able to open/close

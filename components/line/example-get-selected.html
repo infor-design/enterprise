@@ -92,7 +92,7 @@ $('body').on('initialized', function () {
 
   elem.chart({type: 'line', dataset: dataset})
     .on('selected', function (e, args) {
-      // console.log(args);
+      console.log('Select Event Fired', args);
     });
 
   $('#btn-get-selected').on('click', function() {

@@ -27,6 +27,10 @@
     .is-not-selected {
       opacity: .35;
     }
+
+    .x.axis .tick line {  //small line that shows up on the x axis
+      visibility: hidden;
+    }
   }
 }
 

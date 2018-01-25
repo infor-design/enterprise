@@ -1,10 +1,8 @@
-
-
 <div class="row">
   <div class="two-thirds column">
       <div class="widget">
         <div class="widget-header">
-          <h2 class="widget-title">Line Chart Title</h2>
+          <h2 class="widget-title">Line Chart Title - Shows formatting values (tooltip)</h2>
         </div>
         <div class="widget-content">
           <div id="line-example" class="chart-container">
@@ -85,7 +83,7 @@ $('body').on('initialized', function () {
   $('#line-example').chart({
     type: 'line',
     dataset: dataset,
-    formatterString: 'f'
+    formatterString: '.0f'  //in d3 v 3 'f' worked but for the same thing in d3 v4 you need the explicit .0f
   });
 
 });
