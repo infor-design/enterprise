@@ -147,7 +147,7 @@ Line.prototype = {
     let longestLabel = '';
     let longestLabelLength = 0;
     const dataset = this.settings.dataset;
-    const isAxisXRotate = (settings.xAxis && settings.xAxis.rotate !== undefined); // TODO
+    const isAxisXRotate = (this.settings.xAxis && this.settings.xAxis.rotate !== undefined); // TODO
     const getMaxes = function (d, option) {
       return d3.max(d.data, function (da) {
         return option ? d.value[option] : da.value;
@@ -218,8 +218,8 @@ Line.prototype = {
 
     // Calculate the Domain X and Y Ranges
     let maxes;
-    const x = ((!!settings.xAxis && !!settings.xAxis.scale) ? (settings.xAxis.scale) :
-      (d3.scaleLinear())).range([0, width]);
+    const x = ((!!this.settings.xAxis && !!this.settings.xAxis.scale) ?
+      (this.settings.xAxis.scale) : (d3.scaleLinear())).range([0, width]);
 
     const y = d3.scaleLinear().range([height, 0]);
     const z = d3.scaleLinear().range([1, 25]);
@@ -262,13 +262,14 @@ Line.prototype = {
       });
 
     const yAxis = d3.axisLeft(yScale)
+      .ticks(8)
       .tickSize(-(width + 20))
       .tickPadding(isRTL ? -18 : 20);
 
     if (self.settings.yAxis && self.settings.yAxis.formatter) {
       yAxis.tickFormat(function (d, k) {
-        if (typeof settings.yAxis.formatter === 'function') {
-          return settings.yAxis.formatter(d, k);
+        if (typeof self.settings.yAxis.formatter === 'function') {
+          return self.settings.yAxis.formatter(d, k);
         }
         return d;
       });
