@@ -78,7 +78,7 @@ $('body').on('initialized', function () {
       xAxis: {
         scale: d3.scaleTime(),
         domain: [minDate, maxDate],
-        ticks: d3.timeMonths,
+        ticks: d3.timeMonth,
         // rotate: '-45',
         formatter: function (d, i) {
           return formatDate(d);

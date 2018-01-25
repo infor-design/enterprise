@@ -146,7 +146,7 @@ var parseDate = d3.timeParse('%m/%d/%Y'),
     xAxis: {
       scale: d3.scaleTime(),
       domain: [minDate, maxDate],
-      ticks: d3.timeDays,
+      ticks: d3.timeDay,
       formatter: function (d, i) {
         return formatDate(d);
       },
