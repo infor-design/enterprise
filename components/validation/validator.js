@@ -1,4 +1,5 @@
 import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 import { Validation } from './validation';
 
@@ -10,12 +11,31 @@ import '../toast/toast.jquery';
 const COMPONENT_NAME = 'Validator';
 
 /**
+ * Validation Message Defaults
+ * @namespace
+ * @property {boolean} inline
+ * @property {boolean} isAlert
+ * @property {string} message
+ * @property {string} type
+ * @property {boolean} showTooltip
+ */
+const VALIDATION_MESSAGE_DEFAULTS = {
+  inline: true,
+  isAlert: false,
+  message: '',
+  type: 'error',
+  showTooltip: false
+};
+
+/**
  * @class Validator
  * @constructor
- * @param {object} element the base element
+ * @param {jQuery[]|HTMLElement} element the base element
+ * @param {object} [settings] incoming settings
  */
-function Validator(element) {
+function Validator(element, settings) {
   this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, VALIDATION_MESSAGE_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -42,6 +62,8 @@ Validator.prototype = {
 
     this.element.addClass('validation-active');
     this.timeout = null;
+
+    this.attachEvents();
   },
 
   /**
@@ -797,7 +819,7 @@ Validator.prototype = {
         ${Locale.translate(validationType.titleMessageID)}
       </pre>
       <p class="message-text">${message}</p>
-    </div>'`;
+    </div>`;
 
     if (!isAlert) {
       loc.addClass(type);
@@ -848,7 +870,7 @@ Validator.prototype = {
     const errorIcon = field.closest('.field, .field-short').find('.icon-error');
     let tooltipAPI = errorIcon.data('tooltip');
     const hasTooltip = field.attr(`data-${type}-type`) || !!tooltipAPI;
-    const hasError = field.getErrorMessage();
+    const hasError = field.getMessage({ type: 'error' });
 
     this.inputs.filter('input, textarea').off('focus.validate');
     field.removeClass(type);
@@ -963,7 +985,18 @@ Validator.prototype = {
    */
   removePositive(field) {
     $('.icon-confirm', field.parent('.field, .field-short')).remove();
+  },
+
+  /**
+   * Update method
+   * @param {object} [settings] incoming settings
+   */
+  updated(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+    }
   }
+
 };
 
-export { Validator };
+export { Validator, COMPONENT_NAME };
