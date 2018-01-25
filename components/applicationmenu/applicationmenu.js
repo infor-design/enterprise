@@ -13,11 +13,11 @@ const COMPONENT_NAME = 'applicationmenu';
 /**
 * @namespace
 * @property {string} breakpoint  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024),
-* or 'large' (+1280). Default is phablet (968)
-* @property {string} filterable
-* @property {string} openOnLarge  If true, will automatically open the Application Menu when a
+* or 'large' (+1280). Default is 'phone-to-tablet' (968)
+* @property {boolean} filterable If true a search / filter option will be added.
+* @property {boolean} openOnLarge  If true, will automatically open the Application Menu when a
 * large screen-width breakpoint is met.
-* @property {string} triggers  An Array of jQuery-wrapped elements that are able to open/close
+* @property {array} triggers  An Array of jQuery-wrapped elements that are able to open/close
 * this nav menu.
 */
 const APPLICATIONMENU_DEFAULTS = {

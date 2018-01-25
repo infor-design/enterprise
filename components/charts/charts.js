@@ -289,7 +289,7 @@ charts.selected = [];
  */
 charts.selectElement = function (element, inverse, data, container) {
   const isSelected = element.node() && element.classed('is-selected');
-  const triggerData = [{ elem: element, data: (!isSelected ? data : {}) }];
+  const triggerData = [{ elem: element.nodes(), data: (!isSelected ? data : {}) }];
 
   inverse.classed('is-selected', false)
     .classed('is-not-selected', !isSelected);
@@ -483,6 +483,113 @@ charts.setSelectedElement = function (o, settings) {
   if (o.isTrigger) {
     $(o.container).triggerHandler((taskSelected ? 'selected' : 'unselected'), [triggerData]);
   }
+};
+
+/**
+ * Set the select element based on provided options and fire the events.
+ * @param {object} o An object with various
+ * @param {boolean} isToggle If the select is a toggle of the state
+ * @param {object} internals An object passing in chart internals
+*/
+charts.setSelected = function (o, isToggle, internals) {
+  if (!o) {
+    return;
+  }
+
+  let selected = 0;
+  const equals = window.Soho.utils.equals;
+  const legendsNode = internals.svg.node().parentNode.nextSibling;
+  const legends = d3.select(legendsNode);
+  const isLegends = legends.node() && legends.classed('chart-legend');
+  let barIndex;
+  let selector;
+  let isStackedGroup;
+  let xGroup;
+
+  const setSelectedBar = function (g) {
+    const isGroup = !!g;
+    g = isGroup ? d3.select(g) : internals.svg;
+    g.selectAll('.bar').each(function (d, i) {
+      if (!d) {
+        return;
+      }
+      if (selected < 1) {
+        if ((typeof o.fieldName !== 'undefined' &&
+              typeof o.fieldValue !== 'undefined' &&
+                o.fieldValue === d[o.fieldName]) ||
+            (typeof o.index !== 'undefined' && o.index === i) ||
+            (o.data && equals(o.data, internals.chartData[d.index].data[i])) ||
+            (o.elem && $(this).is(o.elem))) {
+          selected++;
+          selector = d3.select(this);
+          barIndex = i;
+          if (isGroup && !internals.isStacked) {
+            isStackedGroup = true;
+          }
+        }
+      }
+    });
+  };
+
+  const setSelectedGroup = function () {
+    const groups = internals.svg.selectAll('.series-group');
+
+    if (groups[0].length) {
+      groups.each(function () {
+        setSelectedBar(this);
+      });
+    }
+  };
+
+  if (internals.isGrouped || (internals.isStacked && !internals.isSingle)) {
+    internals.chartData.forEach(function(d, i) {  //eslint-disable-line
+      if (selected < 1) {
+        xGroup = $(internals.svg.select('[data-group-id="' + i + '"]').node()); //eslint-disable-line
+        if ((typeof o.groupName !== 'undefined' &&
+              typeof o.groupValue !== 'undefined' &&
+                o.groupValue === d[o.groupName]) ||
+            (typeof o.groupIndex !== 'undefined' && o.groupIndex === i) ||
+            (o.data && equals(o.data, d)) ||
+            (o.elem && (xGroup.is(o.elem)))) {
+          if (typeof o.fieldName === 'undefined' &&
+                typeof o.fieldValue === 'undefined' &&
+                  typeof o.index === 'undefined') {
+            selected++;
+            selector = internals.svg.select('[data-group-id="' + i + '"]').select('.bar'); //eslint-disable-line
+            barIndex = i;
+
+            if (internals.isStacked && !internals.isGrouped) {
+              isStackedGroup = true;
+            }
+          }
+        }
+      }
+    });
+    if (selected < 1) {
+      setSelectedGroup();
+    }
+  } else {
+    setSelectedBar();
+  }
+
+  if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+    if (isStackedGroup) {
+      if (isLegends) {
+        $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
+      }
+    } else {
+      selector.on('click').call(selector.node(), selector.datum(), barIndex);
+    }
+  }
+};
+
+/**
+ * Toggle the current selection state.
+ * @param {object} o An object with various
+ * @param {object} internals An object passing in chart internals
+*/
+charts.toggleSelected = function (o, internals) {
+  charts.setSelected(o, true, internals);
 };
 
 export { charts };
