@@ -5,8 +5,14 @@ All of the charts are documented separately by type. See the respective pages fo
 
 ## Chart Types
 
-1. Default About Example [View Example]( ../components/about/example-index)
-2. Close Event Demo [View Example]( ../components/about/test-close-event)
+1. Area [View Example]( ../components/area)
+2. Bar [View Example]( ../components/bar)
+3. Bar Grouped [View Example]( ../components/bar-grouped)
+4. Bar Stacked [View Example]( ../components/bar-stacked)
+5. Bubble [View Example]( ../components/bubble)
+6. Column [View Example]( ../components/column)
+7. Column Grouped [View Example]( ../components/column-grouped)
+8. Completion Chart [View Example]( ../components/completion-chart)
 
 ## Basic Chart Use Cases
 

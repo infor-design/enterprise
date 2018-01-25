@@ -89,14 +89,14 @@ $.fn.chart = function (settings) {
         case 'area': {
           settings.isArea = true;
           const chartComponent = new Line(this, settings);
-          instance = $.data(this, LINE_NAME, new Line(this, settings));
+          instance = $.data(this, LINE_NAME, chartComponent);
           $.data(this, 'chart', chartComponent); // Compatibility
           break;
         }
         case 'bubble': {
           settings.isBubble = true;
           const chartComponent = new Line(this, settings);
-          instance = $.data(this, LINE_NAME, new Line(this, settings));
+          instance = $.data(this, LINE_NAME, chartComponent);
           $.data(this, 'chart', chartComponent); // Compatibility
           break;
         }

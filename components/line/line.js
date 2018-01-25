@@ -219,13 +219,8 @@ Line.prototype = {
 
     // Calculate the Domain X and Y Ranges
     let maxes;
-<<<<<<< HEAD
     const x = ((!!self.settings.xAxis && !!self.settings.xAxis.scale) ?
       (self.settings.xAxis.scale) : (d3.scaleLinear())).range([0, width]);
-=======
-    const x = ((!!this.settings.xAxis && !!this.settings.xAxis.scale) ?
-      (this.settings.xAxis.scale) : (d3.scaleLinear())).range([0, width]);
->>>>>>> 7860b095f25af21043fdf4a5db7e8c564c7e11d6
 
     const y = d3.scaleLinear().range([height, 0]);
     const z = d3.scaleLinear().range([1, 25]);
