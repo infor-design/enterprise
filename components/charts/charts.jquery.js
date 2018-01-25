@@ -1,6 +1,7 @@
 import { Bullet, COMPONENT_NAME as BULLET_NAME } from '../bullet/bullet';
 import { CompletionChart, COMPONENT_NAME as COMPLETION_CHART_NAME } from '../completion-chart/completion-chart';
 import { Sparkline, COMPONENT_NAME as SPARKLINE_NAME } from '../sparkline/sparkline';
+import { Line, COMPONENT_NAME as LINE_NAME } from '../line/line';
 
 /*
 * jQuery Component Wrapper for Charts. It maps the singlular components
@@ -76,6 +77,26 @@ $.fn.chart = function (settings) {
           settings.isPeakDot = true;
           const chartComponent = new Sparkline(this, settings);
           instance = $.data(this, SPARKLINE_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'line': {
+          const chartComponent = new Line(this, settings);
+          instance = $.data(this, SPARKLINE_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'area': {
+          settings.isArea = true;
+          const chartComponent = new Line(this, settings);
+          instance = $.data(this, LINE_NAME, new Line(this, settings));
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'bubble': {
+          settings.isBubble = true;
+          const chartComponent = new Line(this, settings);
+          instance = $.data(this, LINE_NAME, new Line(this, settings));
           $.data(this, 'chart', chartComponent); // Compatibility
           break;
         }

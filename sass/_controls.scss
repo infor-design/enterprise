@@ -44,7 +44,6 @@
 @import 'components/timepicker/timepicker';
 @import 'components/busyindicator/busyindicator';
 @import 'components/toast/toast';
-@import 'components/charts/charts';
 @import 'components/searchfield/searchfield';
 @import 'components/toolbar/toolbar';
 @import 'components/editor/editor';
@@ -71,9 +70,11 @@
 @import 'components/field-options/field-options';
 
 // Charts
+@import 'components/charts/charts';
 @import 'components/bullet/bullet';
 @import 'components/stepchart/stepchart';
 @import 'components/completion-chart/completion-chart';
+@import 'components/line/line';
 
 // Patterns
 @import 'components/homepage/homepage';

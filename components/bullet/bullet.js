@@ -19,7 +19,7 @@ const COMPONENT_NAME = 'bullet';
 */
 const BULLET_DEFAULTS = {
   dataset: [],
-  animate: 600,
+  animate: true,
   redrawOnResize: true
 };
 
@@ -55,7 +55,7 @@ Bullet.prototype = {
 
     // Handle initial option
     if (this.settings.animate === 'initial') {
-      this.settings.animate = 0;
+      this.settings.animate = false;
     }
 
     return this;
@@ -361,6 +361,7 @@ Bullet.prototype = {
 
   /*
    * Handles resizing a chart.
+   * @private
    * @returns {void}
    */
   handleResize() {
@@ -379,10 +380,13 @@ Bullet.prototype = {
 
   /**
    * Handle updated settings and values.
-   * @returns {[type]} [description]
+   * @param  {object} settings The new settings to use.
+   * @returns {object} The api for chaining.
    */
-  updated() {
+  updated(settings) {
+    this.settings = utils.mergeSettings(this.element, settings, this.settings);
     this.element.empty();
+
     return this
       .teardown()
       .init();

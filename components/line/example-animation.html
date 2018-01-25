@@ -1,9 +1,9 @@
 <div class="row">
   <div class="two-thirds column">
-    <h2 class="widget-title">Line Chart &mdash; Set animation speed</h2>
+    <h2 class="widget-title">Line Chart - Configure Animation</h2>
     <p>
-      <u>Use api settings "animate"</u><br>
-      <strong>true or false</strong> - will do or not do the animation.<br>
+      Use api setting "animate"<br />
+      <strong>true or false</strong> - Will do or not do the animation.<br />
       <strong>'initial'</strong> - will do only first time the animation.
     </p>
   </div>
@@ -92,6 +92,6 @@ $('body').on('initialized', function () {
     name: 'Component C'
   }];
 
-  $('#line-example').chart({type: 'line', dataset: dataset, animate: false});
+  $('#line-example').chart({type: 'line', dataset: dataset, animate: 'initial'});
 });
 </script>
