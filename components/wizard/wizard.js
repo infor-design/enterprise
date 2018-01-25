@@ -1,28 +1,26 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 
-
-/**
- * Component Name
- */
-let COMPONENT_NAME = 'wizard';
-
+// Component Name
+const COMPONENT_NAME = 'wizard';
 
 /**
  * Component Default Settings
- * @param {jQuery[]} ticks  Defines the data to use, must be specified.
+ * @namespace
+ * @property {jQuery[]} ticks  Defines the data to use, must be specified.
  */
-let WIZARD_DEFAULTS = {
+const WIZARD_DEFAULTS = {
   ticks: null
 };
-
 
 /**
  * @class Wizard
  * @constructor
- * @param {object} element
+ * @param {jQuery[]|HTMLElement} element the Wizard container
+ * @param {object} [settings] incoming settings
  */
 function Wizard(element, settings) {
   this.element = $(element);
@@ -38,9 +36,8 @@ Wizard.prototype = {
 
   /**
    * @private
-   * @returns {this}
    */
-  init: function() {
+  init() {
     this
       .build()
       .handleEvents();
@@ -48,9 +45,9 @@ Wizard.prototype = {
 
   /**
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  build: function() {
+  build() {
     this.header = this.element.find('.wizard-header');
     if (!this.header.length) {
       this.header = $('<div class="wizard-header"></div>').appendTo(this.element);
@@ -73,16 +70,19 @@ Wizard.prototype = {
     return this;
   },
 
-  buildTicks: function() {
-    var settingTicks = this.settings.ticks,
-      self = this;
+  /**
+   * Builds the HTML Markup that draws out defined Wizard tick marks.
+   * @returns {this} component instance
+   */
+  buildTicks() {
+    const settingTicks = this.settings.ticks;
+    const self = this;
 
     this.ticks = this.bar.children('.tick');
 
     if (!this.ticks.length && settingTicks) {
-
-      for (var i = 0; i < settingTicks.length; i++) {
-        var link = $('<a ng-click="handleClick()" class="tick ' + (settingTicks[i].state ? settingTicks[i].state : '') + '" href="'+ (settingTicks[i].href ? settingTicks[i].href : '#') +'"><span class="label">' + settingTicks[i].label + '</span></a>');
+      for (let i = 0; i < settingTicks.length; i++) {
+        const link = $(`<a ng-click="handleClick()" class="tick ${settingTicks[i].state ? settingTicks[i].state : ''}" href="${settingTicks[i].href ? settingTicks[i].href : '#'}"><span class="label">${settingTicks[i].label}</span></a>`);
 
         if (settingTicks[i].ngClick) {
           link.attr('ng-click', settingTicks[i].ngClick);
@@ -94,8 +94,8 @@ Wizard.prototype = {
     }
     this.positionTicks();
 
-    $('.tick', self.element).each(function() {
-      var tick = $(this);
+    $('.tick', self.element).each(function () {
+      const tick = $(this);
       if (tick.hasClass('is-disabled')) {
         tick.removeAttr('onclick ng-click');
       }
@@ -105,10 +105,10 @@ Wizard.prototype = {
     return this;
   },
 
-  positionTicks: function() {
-    var l = this.ticks.length,
-      delta = 100 / (l - 1),
-      tickPos = [];
+  positionTicks() {
+    const l = this.ticks.length;
+    const delta = 100 / (l - 1);
+    const tickPos = [];
 
     function getPoint(i) {
       if (i === 0) {
@@ -116,24 +116,23 @@ Wizard.prototype = {
       }
       if (i === l - 1) {
         return 100;
-      } else {
-        return delta * i;
       }
+      return delta * i;
     }
 
-    for (var i = 0; i < l; i++) {
+    for (let i = 0; i < l; i++) {
       tickPos.push(getPoint(i));
     }
 
-    this.ticks.each(function(i) {
-      var tick = $(this),
-        label = tick.children('.label'),
-        left = Locale.isRTL() ? (100-tickPos[i]) : tickPos[i];
+    this.ticks.each(function (i) {
+      const tick = $(this);
+      const label = tick.children('.label');
+      const left = Locale.isRTL() ? (100 - tickPos[i]) : tickPos[i];
 
-      this.style.left = left + '%';
+      this.style.left = `${left}%`;
 
-      for (var i2 = 0, l2 = label.length; i2 < l2; i2++) {
-        label[i2].style.left = '-' + (label.outerWidth()/2 - tick.outerWidth()/2) + 'px';
+      for (let i2 = 0, l2 = label.length; i2 < l2; i2++) {
+        label[i2].style.left = `-${label.outerWidth() / 2 - tick.outerWidth() / 2}px`;
       }
 
       if (tick.is('.is-disabled')) {
@@ -142,20 +141,29 @@ Wizard.prototype = {
     });
   },
 
-  updateRange: function() {
-    var currentTick = this.ticks.filter('.current').last(),
-      widthPercentage = 0;
+  /**
+   * Re-renders the Wizard Range with updated ticks
+   * @returns {this} component instance
+   */
+  updateRange() {
+    const currentTick = this.ticks.filter('.current').last();
+    let widthPercentage = 0;
 
     if (currentTick.length) {
-      widthPercentage = (100 * parseFloat(window.getComputedStyle(currentTick[0]).left) / parseFloat(window.getComputedStyle(currentTick.parent()[0]).width));
-      widthPercentage = Locale.isRTL() ? (100-widthPercentage) : widthPercentage;
+      widthPercentage = (100 * parseFloat(window.getComputedStyle(currentTick[0]).left) /
+        parseFloat(window.getComputedStyle(currentTick.parent()[0]).width));
+      widthPercentage = Locale.isRTL() ? (100 - widthPercentage) : widthPercentage;
     }
 
-    this.completedRange[0].style.width = widthPercentage + '%';
+    this.completedRange[0].style.width = `${widthPercentage}%`;
     return this;
   },
 
-  updated: function(settings) {
+  /**
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
+   */
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -167,7 +175,10 @@ Wizard.prototype = {
     return this;
   },
 
-  teardown: function() {
+  /**
+   * @returns {this} component instance
+   */
+  teardown() {
     this.ticks.offTouchClick('wizard').off('click.wizard');
     this.element.off('updated.wizard');
 
@@ -175,26 +186,41 @@ Wizard.prototype = {
     return this;
   },
 
-  // Deprecating the "select()" method in favor of "activate()" to match the API of our other controls
-  // Temporarily adding functionality that reroutes this method to the new "activate" method.
-  select: function(e, tick) {
+  /**
+   * Deprecating the "select()" method in favor of "activate()" to match the API
+   * of our other controls. Temporarily adding functionality that reroutes this
+   * method to the new "activate" method.
+   * @private
+   * @deprecated as of v4.4.0
+   * @param {jQuery.Event} e the activate event object
+   * @param {jQuery[]|HTMLElement} tick the target tick to be activated
+   * @returns {this} component instance
+   */
+  select(e, tick) {
     return this.activate(e, tick);
   },
 
-  // Activates one of the Wizard's ticks.
-  // Tick can either be a number (representing the tick's index) or a jQuery element reference to a tick
-  activate: function(e, tick) {
+  /**
+   * Activates one of the Wizard's ticks.
+   * Tick can either be a number (representing the tick's index) or a jQuery
+   * element reference to a tick.
+   * @param {jQuery.Event} e the activate event object
+   * @param {jQuery[]|HTMLElement} tick the target tick to be activated
+   * @returns {this} component instance
+   */
+  activate(e, tick) {
     if (e === undefined && !tick) {
       return this;
     }
 
-    var self = this;
+    const self = this;
 
     function getTick() {
-      var target;
+      let target;
 
-      // Use the first variable as the tick definition or index if "e" is null, undefined, or not an event object.
-      // This is for backwards compatibility with this control's old select() method, which took an index as an argument.
+      // Use the first variable as the tick definition or index if "e" is null,
+      // undefined, or not an event object. This is for backwards compatibility with
+      // this control's old select() method, which took an index as an argument.
       if (e !== undefined && (e === undefined || e === null || !e.type || !e.target) && !tick) {
         tick = e;
       }
@@ -220,52 +246,55 @@ Wizard.prototype = {
     }
 
     // Cancel selection by returning a 'beforeactivate' handler as 'false'
-    var canNav = this.element.triggerHandler('beforeactivate', [tick]);
+    const canNav = this.element.triggerHandler('beforeactivate', [tick]);
     if (canNav === false) {
       return this;
     }
 
-    var trueIndex = this.ticks.index(tick);
+    const trueIndex = this.ticks.index(tick);
     this.ticks.removeClass('complete current')
       .eq(trueIndex).addClass('current')
-      .prevAll('.tick').addClass('complete');
+      .prevAll('.tick')
+      .addClass('complete');
 
     this.updateRange();
     this.element.trigger('activated', [tick]);
 
     // Timeout allows animation to finish
-    setTimeout(function () {
+    setTimeout(() => {
       self.element.trigger('afteractivated', [tick]);
     }, 300);
 
     return this;
   },
 
-  // Teardown - Remove added markup and events
-  destroy: function() {
+  /**
+   * Teardown - Remove added markup and events
+   */
+  destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
    * This component listens to the following events:
-   * @param module:Wizard~event:updated
-   * @param module:Wizard~event:click
+   * @listens updated custom updated event
+   * @listens click jQuery click event
+   * @returns {this} component instance
    */
-  handleEvents: function() {
-    var self = this;
+  handleEvents() {
+    const self = this;
 
-    this.element.on('updated', function() {
+    this.element.on('updated', () => {
       self.updated();
     });
 
-    this.ticks.onTouchClick('wizard').on('click.wizard', function(e) {
+    this.ticks.onTouchClick('wizard').on('click.wizard', function (e) {
       self.activate(e, $(this));
     });
 
     return this;
   }
 };
-
 
 export { Wizard, COMPONENT_NAME };

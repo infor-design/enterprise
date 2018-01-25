@@ -1,36 +1,34 @@
 import { utils } from '../utils/utils';
 import { HideFocus } from '../utils/behaviors';
 
-/**
- * Plugin Name
- */
-let COMPONENT_NAME = 'hyperlink';
+// Component Name
+const COMPONENT_NAME = 'hyperlink';
 
 /**
- *
+ * Component Default Settings
+ * @namespace
  */
-var HYPERLINK_DEFAULTS = {};
+const HYPERLINK_DEFAULTS = {};
 
 /**
  * Soho component wrapper for Hyperlinks.
  * @class Hyperlink
- *
- * @param {HTMLElement} element
- * @param {object} options
- * @returns {Hyperlink}
+ * @param {HTMLElement} element the base Hyperlink element
+ * @param {object} [settings] incoming settings
+ * @returns {this} component instance
  */
 function Hyperlink(element, settings) {
   return this.init(element, settings);
 }
 
 Hyperlink.prototype = {
-  init: function(element, settings) {
+  init(element, settings) {
     if (!this.element && element instanceof HTMLElement) {
       this.element = element;
     }
 
     if (typeof settings === 'object') {
-      var previousSettings = this.settings || HYPERLINK_DEFAULTS;
+      const previousSettings = this.settings || HYPERLINK_DEFAULTS;
       this.settings = utils.mergeSettings(this.element, settings, previousSettings);
     }
 
@@ -41,11 +39,11 @@ Hyperlink.prototype = {
     return this;
   },
 
-  handleEvents: function() {
+  handleEvents() {
     return this;
   },
 
-  updated: function(settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
@@ -55,10 +53,9 @@ Hyperlink.prototype = {
       .init();
   },
 
-  teardown: function() {
+  teardown() {
     return this;
   }
 };
-
 
 export { Hyperlink, COMPONENT_NAME };

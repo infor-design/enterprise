@@ -1145,7 +1145,7 @@ Tabs.prototype = {
   /**
    * Handler for keydown events on Dismissible tabs
    * @param {jQuery.event} e incoming keydown event
-   * @returns {boolean|undefined} ?
+   * @returns {void}
    */
   handleDismissibleTabKeydown(e) {
     const key = e.which;
@@ -3196,6 +3196,8 @@ Tabs.prototype = {
 
   /**
    * Updates the position of the focus state, to the tab/button that currently has focus.
+   * @param {jQuery[]|HTMLElement} target the element that will receive the focus state
+   * @param {boolean} [unhide] if true, unhides the focus state if it's previously been hidden.
    * @returns {void}
    */
   positionFocusState(target, unhide) {

@@ -1,27 +1,29 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
-/**
- *
- */
-let COMPONENT_NAME = 'icon';
-
+// component name
+const COMPONENT_NAME = 'icon';
 
 /**
- * Default Options
+ * Default Component Settings
+ * @namespace
+ * @property {string} use the type of icon that will appear.
+ *  (gets added to the `<use>` tag's `xlink:href` property)
+ * @property {boolean} focusable whether or not this icon gets a `tabIndex` and
+ *  becomes a focusable element on the page.
  */
-let ICON_DEFAULTS = {
+const ICON_DEFAULTS = {
   use: 'user-profile', // Match this to one of the SoHo Xi icons, prefixed with an ID of '#icon-'
   focusable: false
 };
-
 
 /**
  * Icon Control
  * Wraps SVG Icons with a Javascript control that can change the icon type, reference
  * relative or absolute URLs, and clean up after itself.  Works with the Base tag.
  * @constructor
- * @param {object} element
+ * @param {jQuery[]|HTMLElement} element the base element
+ * @param {object} [settings] incoming settings
  */
 function Icon(element, settings) {
   this.settings = utils.mergeSettings(element, settings, ICON_DEFAULTS);
@@ -33,18 +35,29 @@ function Icon(element, settings) {
 
 // Plugin Methods
 Icon.prototype = {
-  init: function() {
+
+  /**
+   * @private
+   * @chainable
+   * @returns {this} component instance
+   */
+  init() {
     this.getExistingUseTag();
 
-    //Do other init (change/normalize settings, load externals, etc)
+    // Do other init (change/normalize settings, load externals, etc)
     return this
       .render()
       .handleEvents();
   },
 
-  // Add markup to the control
-  render: function() {
-    var self = this;
+  /**
+   * Add markup to the control
+   * @private
+   * @chainable
+   * @returns {this} component instance
+   */
+  render() {
+    const self = this;
     this.element.addClass('icon');
 
     if (!this.element.is('svg')) {
@@ -54,13 +67,13 @@ Icon.prototype = {
 
     // Get a "base-tag-proof" version of the Use tag's definition.
     // jQuery can't work with SVG elements, so we just modify it with regular DOM APIs
-    var use = this.element[0].getElementsByTagName('use')[0];
+    const use = this.element[0].getElementsByTagName('use')[0];
     if (!use) {
       return this;
     }
 
     if (use.getAttribute('xlink:href') !== self.getBasedUseTag()) {
-      setTimeout(function () {
+      setTimeout(() => {
         use.setAttribute('xlink:href', self.getBasedUseTag());
       }, 0);
     }
@@ -68,41 +81,59 @@ Icon.prototype = {
     return this;
   },
 
-  getBasedUseTag: function() {
-    return $.getBaseURL('#icon-' + this.settings.use);
+  /**
+   * @returns {string} a version of this icon's definition prefixed with the current base tag's URL.
+   */
+  getBasedUseTag() {
+    return $.getBaseURL(`#icon-${this.settings.use}`);
   },
 
-  // In the event that a <use> tag exists on an icon, we want to retain it
-  // and replace the settings.
-  getExistingUseTag: function() {
+  /**
+   * Changes this icon instance's `use` setting to match an existing `<use> tag's
+   * `xlink:href` attribute. In the event that a <use> tag pre-exists on an icon,
+   * we want to retain it, and simply replace the settings.
+   * @chainable
+   * @returns {this} component instance
+   */
+  getExistingUseTag() {
     if (!this.element.is('svg')) {
-      return;
+      return this;
     }
 
-    var useTag = this.element.children('use');
+    const useTag = this.element.children('use');
     if (!useTag.length) {
       return this;
     }
 
-    var xlinkHref = useTag.attr('xlink:href');
+    const xlinkHref = useTag.attr('xlink:href');
     this.settings.use = xlinkHref.replace('#icon-', '');
 
     return this;
   },
 
-  // Sets up event handlers for this control and its sub-elements
-  handleEvents: function() {
-    var self = this;
+  /**
+   * Sets up event handlers for this control and its sub-elements
+   * @private
+   * @chainable
+   * @returns {this} component instance
+   */
+  handleEvents() {
+    const self = this;
 
-    this.element.on('updated.' + COMPONENT_NAME, function() {
+    this.element.on(`updated.${COMPONENT_NAME}`, () => {
       self.updated();
     });
 
     return this;
   },
 
-  // Handle Updating Settings
-  updated: function(settings) {
+  /**
+   * Handle Updating Settings
+   * @chainable
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
+   */
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
@@ -112,18 +143,23 @@ Icon.prototype = {
       .init();
   },
 
-  // Simple Teardown - remove events & rebuildable markup.
-  teardown: function() {
-    this.element.off('updated.' + COMPONENT_NAME);
+  /**
+   * Simple Teardown - remove events & rebuildable markup.
+   * @chainable
+   * @returns {this} component instance
+   */
+  teardown() {
+    this.element.off(`updated.${COMPONENT_NAME}`);
     return this;
   },
 
-  // Teardown - Remove added markup and events
-  destroy: function() {
+  /**
+   * Teardown - Remove added markup and events
+   */
+  destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
-
 
 export { Icon, COMPONENT_NAME };
