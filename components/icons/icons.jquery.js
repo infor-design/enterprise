@@ -1,12 +1,13 @@
 import { Icon, COMPONENT_NAME } from './icons';
 
-
 /**
  * jQuery component wrappers
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} jQuery-wrapped components being acted on.
  */
-$.fn.icon = function(settings) {
-  return this.each(function() {
-    var instance = $.data(this, COMPONENT_NAME);
+$.fn.icon = function (settings) {
+  return this.each(function () {
+    let instance = $.data(this, COMPONENT_NAME);
     if (!instance) {
       instance = $.data(this, COMPONENT_NAME, new Icon(this, settings));
     } else {
@@ -15,17 +16,14 @@ $.fn.icon = function(settings) {
   });
 };
 
-
 /**
  * Factory Function for instantly building icons.
  * Use this for building icons that don't exist yet.
  * Scoped Privately on purpose...
  */
-(function (){
-  'use strict';
-
+(function () {
   function normalizeIconOptions(options) {
-    var defaults = {
+    const defaults = {
       icon: 'user-profile', // omit the "icon-" if you want; this code strips it out.
       classes: ['icon']
     };
@@ -63,8 +61,8 @@ $.fn.icon = function(settings) {
     options = normalizeIconOptions(options);
 
     return [
-      '<svg class="' + options.classes.join(' ') + '" focusable="false" aria-hidden="true" role="presentation">' +
-        '<use xlink:href="#icon-' + options.icon + '"></use>' +
+      `<svg class="${options.classes.join(' ')}" focusable="false" aria-hidden="true" role="presentation">` +
+        `<use xlink:href="#icon-${options.icon}"></use>` +
       '</svg>'
     ].join('');
   };
@@ -77,24 +75,21 @@ $.fn.icon = function(settings) {
   // Returns just the path part
   $.createIconPath = function createIconElement(options) {
     options = normalizeIconOptions(options);
-    return $.getBaseURL('#icon-' + options.icon.replace('icon-',''));
+    return $.getBaseURL(`#icon-${options.icon.replace('icon-', '')}`);
   };
 
-  //Toggle the use or entire svg icon in the case of the polyfill
-  $.fn.changeIcon = function(icon) {
-    $(this).find('use').attr('xlink:href', $.createIconPath({icon: icon}));
+  // Toggle the use or entire svg icon in the case of the polyfill
+  $.fn.changeIcon = function (icon) {
+    $(this).find('use').attr('xlink:href', $.createIconPath({ icon }));
   };
 
-  $.fn.getIconName = function() {
-    var svg = $(this),
-        use = svg.find('use');
+  $.fn.getIconName = function () {
+    const svg = $(this);
+    const use = svg.find('use');
 
     if (use.length === 1) {
-      return use.attr('xlink:href').substr(use.attr('xlink:href').indexOf('#icon-')+6);
-    } else {
-      return svg.attr('data-icon');
+      return use.attr('xlink:href').substr(use.attr('xlink:href').indexOf('#icon-') + 6);
     }
-
+    return svg.attr('data-icon');
   };
-
-})();
+}());

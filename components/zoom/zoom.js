@@ -1,5 +1,6 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
+import { Environment as env } from '../utils/environment';
 
 // Name of this component
 const COMPONENT_NAME = 'zoom';
@@ -58,7 +59,7 @@ Zoom.prototype = {
     });
 
     // Don't continue setting this up on each element if
-    if (Soho.env.os.name !== 'ios') {
+    if (env.os.name !== 'ios') {
       return this;
     }
 
@@ -104,7 +105,7 @@ Zoom.prototype = {
   /**
   * Handle Updating Settings
   * @param {object} settings The settings to update to.
-  * @returns {object} The api prototype for chaining.
+  * @returns {this} component instance
   */
   updated(settings) {
     if (settings) {
@@ -119,7 +120,7 @@ Zoom.prototype = {
   /**
   * Simple Teardown - remove events & rebuildable markup.
   * @private
-  * @returns {object} The api prototype for chaining.
+  * @returns {object} component instance
   */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME} enable-zoom disable-zoom`);

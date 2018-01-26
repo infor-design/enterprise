@@ -2,10 +2,28 @@
   
     
 
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          ticks
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Defines the data to use, must be specified.
 
-
-  
-    
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 
@@ -23,16 +41,103 @@
     </thead>
     <tbody>
       <tr>
-        <td>handleEvents</td>
+        <td>buildTicks</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds the HTML Markup that draws out defined Wizard tick marks.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>updateRange</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Re-renders the Wizard Range with updated ticks</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
         <td>
           
                 
-                  <span>module:Wizard~event () = :updated
+                  <span>settings () = incoming settings
  </span>
                 
-                  <span>module:Wizard~event () = :click
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>activate</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = the activate event object
  </span>
                 
+                  <span>tick () = the target tick to be activated
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Activates one of the Wizard's ticks.
+Tick can either be a number (representing the tick's index) or a jQuery
+element reference to a tick.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown - Remove added markup and events</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
           
         </td>
         <td>
@@ -40,6 +145,8 @@
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
     </tbody>

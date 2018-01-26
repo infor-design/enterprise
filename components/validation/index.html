@@ -12,42 +12,42 @@
 <h2 id="api-details">API Details</h2>
 <h2 id="code-example---auto">Code Example - Auto</h2>
 <p>This example shows how to manually link validation automatically on fields. Use the <code>data-validate</code> attribute to indicate a space separated list of validation rules to use out of the validation object.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"> <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address-ok&quot;</span><span class="kw">&gt;</span>Email Address <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Required<span class="kw">&lt;/span&gt;&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> name=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required customRule&quot;</span> <span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+ <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address-ok&quot;</span><span class="kw">&gt;</span>Email Address <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Required<span class="kw">&lt;/span&gt;&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> name=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required customRule&quot;</span> <span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h2 id="code-example---manual">Code Example - Manual</h2>
 <p>This example shows how to manually invoke an error message on a field. The function is chainable so you can add several errors.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="at">$</span>(<span class="st">&#39;#username-field&#39;</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  .<span class="at">addError</span>(<span class="op">{</span><span class="dt">message</span><span class="op">:</span> <span class="st">&#39;I have an Error.&#39;</span><span class="op">}</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  .<span class="at">addError</span>(<span class="op">{</span><span class="dt">message</span><span class="op">:</span> <span class="st">&#39;I have another Error.&#39;</span><span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">//Later on</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="at">$</span>(<span class="st">&#39;#username-field&#39;</span>).<span class="at">removeError</span>()</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="fu">$</span>(<span class="st">&#39;#username-field&#39;</span>)
+  .<span class="fu">addError</span>({<span class="dt">message</span>: <span class="st">&#39;I have an Error.&#39;</span>})
+  .<span class="fu">addError</span>({<span class="dt">message</span>: <span class="st">&#39;I have another Error.&#39;</span>});
+
+<span class="co">//Later on</span>
+<span class="fu">$</span>(<span class="st">&#39;#username-field&#39;</span>).<span class="fu">removeError</span>()
+</code></pre>
 <h2 id="validation-types">Validation Types</h2>
 <p>There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule, but error is used if it is not defined.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="va">$</span>.<span class="va">fn</span>.<span class="va">validation</span>.<span class="va">rules</span>.<span class="at">customWarningRule</span> <span class="op">=</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="dt">check</span><span class="op">:</span> <span class="kw">function</span> (value) <span class="op">{</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="cf">return</span> (value <span class="op">!==</span> <span class="st">&#39;&#39;</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="op">},</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">  <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;Warning the value may be incorrect&#39;</span><span class="op">,</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">  <span class="dt">type</span><span class="op">:</span> <span class="st">&#39;alert&#39;</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="op">};</span></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">$</span>.<span class="ot">fn</span>.<span class="ot">validation</span>.<span class="ot">rules</span>.<span class="fu">customWarningRule</span> = {
+  <span class="dt">check</span>: <span class="kw">function</span> (value) {
+
+    <span class="kw">return</span> (value !== <span class="st">&#39;&#39;</span>);
+  },
+  <span class="dt">message</span>: <span class="st">&#39;Warning the value may be incorrect&#39;</span>,
+  <span class="dt">type</span>: <span class="st">&#39;alert&#39;</span>
+};</code></pre>
 <p>Each type is style differntly and can be defined if the formValidation passes or errors based on the rules result. This is defined via the errorsForm on the validation type.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="va">$</span>.<span class="va">fn</span>.<span class="va">validation</span>.<span class="va">ValidationTypes</span>.<span class="at">alert</span> <span class="op">=</span> <span class="op">{</span> <span class="dt">type</span><span class="op">:</span> <span class="st">&#39;alert&#39;</span><span class="op">,</span> <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Alert&#39;</span><span class="op">,</span> <span class="dt">errorsForm</span><span class="op">:</span> <span class="kw">false</span> <span class="op">};</span></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">$</span>.<span class="ot">fn</span>.<span class="ot">validation</span>.<span class="ot">ValidationTypes</span>.<span class="fu">alert</span> = { <span class="dt">type</span>: <span class="st">&#39;alert&#39;</span>, <span class="dt">title</span>: <span class="st">&#39;Alert&#39;</span>, <span class="dt">errorsForm</span>: <span class="kw">false</span> };</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>On required fields always add an audible label for example</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address-ok&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">  Email Address <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Required<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">&lt;/label&gt;</span></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address-ok&quot;</span><span class="kw">&gt;</span>
+  Email Address <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Required<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;/label&gt;</span></code></pre>
 <ul>
 <li>Errors will be read audibly by the API using an aria-alert (polite)</li>
 </ul>

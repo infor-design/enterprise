@@ -24,3 +24,24 @@ export function logTimeEnd(label) {
     console.timeEnd(label); // jshint ignore:line
   }
 }
+
+// Easy flag for allowing console debugging
+export const enableConsoleLogging = false;
+
+/**
+ * Simple wrapper for `console.[whatever]` to abstract out console access.
+ * @param {string} type console display type
+ * @param {string} message message type
+ * @returns {void}
+ */
+export function log(type, message) {
+  if (!console) { // eslint-disable-line
+    return;
+  }
+
+  if (typeof !console[type] !== 'function') {  // eslint-disable-line
+    type = 'log';
+  }
+
+  console[type](`${message}`); // eslint-disable-line
+}

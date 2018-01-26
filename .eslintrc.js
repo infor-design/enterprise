@@ -113,7 +113,13 @@ module.exports = {
     // - IsNaN - due to our previous assumptions in code about how it sometimes will return 'false'
     // for things that are not numbers (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#Examples).
     // https://eslint.org/docs/rules/no-restricted-globals
-    'no-restricted-globals': ['off', 'isNaN']
+    'no-restricted-globals': ['off', 'isNaN'],
+
+    // Ignore errors for continue statements, currently used in:
+    // - Mask
+    // - Validation
+    // https://eslint.org/docs/rules/no-continue
+    'no-continue': ['off']
 
   },
   'globals': {

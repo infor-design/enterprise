@@ -96,14 +96,11 @@ svg.icon-dirty,
     }
   }
 
-
-
   .lookup-wrapper {
     .icon-error,
     .icon-confirm {
-      margin-right: -20px;
-      right: 55px;
-      top: auto;
+      right: 31px;
+      top: 1px;
     }
   }
 
@@ -584,7 +581,7 @@ html[dir='rtl'] {
     .lookup-wrapper {
       .icon-error,
       .icon-confirm {
-        left: 55px;
+        left: 50px;
         margin-left: -20px;
         margin-right: inherit;
         right: auto;
