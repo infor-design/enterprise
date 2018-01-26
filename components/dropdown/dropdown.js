@@ -1346,10 +1346,10 @@
             var doSelectAll = !(target.is('.is-selected'));
             if (doSelectAll) {
               target.addClass('is-selected');
-              self.selectOptions(self.element.find('option:not(:selected)'), false);
+              self.selectOptions(self.element.find('option:not(:selected)'), true);
             } else {
               target.removeClass('is-selected');
-              self.selectOptions(self.element.find('option:selected'), false);
+              self.selectOptions(self.element.find('option:selected'), true);
             }
 
             return true;
@@ -1747,6 +1747,8 @@
         options.each(function() {
           self.selectOption($(this), noTrigger);
         });
+
+        self.element.trigger('change').triggerHandler('selected');
       },
 
       /**
