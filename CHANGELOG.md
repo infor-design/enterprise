@@ -1,4 +1,4 @@
-## <a name="version-4.4.0">44.4.0</a>
+## <a name="version-4.4.0">4.4.0</a>
 
 Release Date: TBD
 

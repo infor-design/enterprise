@@ -583,13 +583,4 @@ charts.setSelected = function (o, isToggle, internals) {
   }
 };
 
-/**
- * Toggle the current selection state.
- * @param {object} o An object with various
- * @param {object} internals An object passing in chart internals
-*/
-charts.toggleSelected = function (o, internals) {
-  charts.setSelected(o, true, internals);
-};
-
 export { charts };

@@ -9,6 +9,11 @@
 4. Example showing Get Selected value [View Example]( ../components/bubble/example-get-selected)
 5. Example showing Set Selected value [View Example]( ../components/bubble/example-set-selected)
 
+## API Details
+
+The ubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
+See the [line chart api]( ../components/line) for more details.
+
 ## Code Example
 
 This example shows how to invoke a bubble chart. The data for the bubble chart should be 3 dimensional. You pass and x and y value and a depth (z) which controls the bubbles size on the x and y axis. You may need to transform your data to use this approach.
