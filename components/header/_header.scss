@@ -162,13 +162,28 @@ $subheader-height: 60px;
       padding: 0;
     }
 
-    .btn-toggle.is-pressed svg,
-    .btn-toggle:hover svg {
-      fill: white !important;
+    [class^="btn"]:hover:not([disabled]) {
+      color: white !important;
     }
 
-    .btn-toggle svg {
-      fill: rgba(255, 255, 255, 0.7) !important;
+    .btn-toggle {
+      color: rgba(255, 255, 255, 0.7) !important;
+
+      &.is-pressed {
+        color: white !important;
+
+        svg {
+          fill: white !important;
+        }
+      }
+
+      &:hover svg {
+        fill: white !important;
+      }
+
+      svg {
+        fill: rgba(255, 255, 255, 0.7) !important;
+      }
     }
 
     .panel-title {
