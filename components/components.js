@@ -18,6 +18,7 @@ export { Autocomplete } from './autocomplete/autocomplete';
 export { Bullet } from './bullet/bullet';
 export { BusyIndicator } from './busyindicator/busyindicator';
 export { ColorPicker } from './colorpicker/colorpicker';
+export { Column } from './column/column';
 export { CompositeForm } from './compositeform/compositeform';
 export { CompletionChart } from './completion-chart/completion-chart';
 export { ContextualActionPanel } from './contextualactionpanel/contextualactionpanel';
