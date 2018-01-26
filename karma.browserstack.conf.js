@@ -63,6 +63,7 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: [
       'ChromeHeadless',
+      'Chrome',
       'bs_firefox_mac',
       'bs_iphone8'
     ],

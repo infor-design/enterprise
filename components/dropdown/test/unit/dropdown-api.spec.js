@@ -38,8 +38,14 @@ describe('Dropdown API', () => {
     expect(document.body.querySelector('.dropdown.is-open')).toBeTruthy();
   });
 
+  it('Should activate dropdown', () => {
+    dropdownData.activate();
+    expect(dropdownData.isOpen()).toBeFalsy();
+    expect(document.body.querySelector('.dropdown.is-open')).toBeFalsy();
+  });
+
   it('Should destroy dropdown', () => {
-    $('.dropdown').destroy();
+    dropdownData.destroy();
     expect(dropdownData.isOpen()).toBeFalsy();
     expect(document.body.querySelector('.dropdown.is-open')).toBeFalsy();
   });
