@@ -18,13 +18,18 @@ const COMPONENT_NAME = 'column';
 * @property {boolean|string} animate true|false - will do or not do the animation.
 * 'initial' will do only first time the animation.
 * @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
-*/
+* @property {string} format The d3 axis format
+* @property {string} formatterString Use d3 format some examples can be found on http://bit.ly/1IKVhHh
+* @property {number} ticks The number of ticks to show.
+* */
 const COLUMN_DEFAULTS = {
   dataset: [],
   isStacked: false,
   showLegend: true,
   animate: true,
-  redrawOnResize: true
+  format: null,
+  redrawOnResize: true,
+  ticks: 10
 };
 
 /**
@@ -168,7 +173,9 @@ Column.prototype = {
     const tooltipData = self.settings.tooltip;
 
     const x0 = d3.scaleBand()
-      .rangeRound([0, width], 0.1);
+      .range([0, width])
+      .round(true)
+      .padding(0.1);
 
     const x1 = d3.scaleBand();
 
@@ -231,10 +238,10 @@ Column.prototype = {
       .tickSize(0)
       .tickPadding(12);
 
-    const yAxis = d3.axisBottom(y)
+    const yAxis = d3.axisLeft(y)
       .tickSize(-width)
       .tickPadding(isRTL ? -12 : 12)
-      .tickFormat(d3.format(charts.format || 's'));
+      .ticks(self.settings.ticks || 10, d3.format(self.settings.format || 's'));
 
     const svg = d3.select(this.element[0])
       .append('svg')
@@ -307,7 +314,7 @@ Column.prototype = {
 
     x0.domain(self.settings.isStacked ? xAxisValues : names);
     x1.domain(xAxisValues)
-      .rangeRound([0, (isSingular || self.settings.isStacked) ? width : x0.bandWidth()]);
+      .rangeRound([0, (isSingular || self.settings.isStacked) ? width : x0.bandwidth()]);
     y.domain([(yMin < 0 ? yMin : (self.settings.minValue || 0)), d3.max(self.settings.isStacked ?
       maxesStacked : maxes)]).nice();
 
@@ -363,7 +370,7 @@ Column.prototype = {
         callback();
       } else {
         n = transition.size();
-        transition.each('end', function () {
+        transition.on('end', function () {
           n--;
           if (n === 0) {
             callback();
@@ -378,7 +385,7 @@ Column.prototype = {
 
       // Add the bars - done different depending on if grouped or singlular
       if (isSingular || isPositiveNegative) {
-        bars = svg.selectAll(`rect${isTargetBars ? '.target-bar' : '.bar'}`)
+        bars = self.svg.selectAll(`rect${isTargetBars ? '.target-bar' : '.bar'}`)
           .data(self.settings.isStacked ? datasetStacked : dataArray)
           .enter()
           .append('rect')
@@ -391,10 +398,10 @@ Column.prototype = {
             }
             return classStr;
           })
-          .attr('width', Math.min.apply(null, [x1.bandWidth() - 2, barMaxWidth]))
+          .attr('width', Math.min.apply(null, [x1.bandwidth() - 2, barMaxWidth]))
           .attr('x', function (d) {
             return self.settings.isStacked ? xScale(0) :
-              (x1(d.name) + (x1.bandWidth() - barMaxWidth) / 2);
+              (x1(d.name) + (x1.bandwidth() - barMaxWidth) / 2);
           })
           .attr('y', function () {
             return y(0) > height ? height : y(0);
@@ -427,7 +434,7 @@ Column.prototype = {
             })
             .attr('text-anchor', 'middle')
             .attr('x', function (d) {
-              return (x1(d.name) + (x1.bandWidth()) / 2) * (isRTL ? -1 : 1);
+              return (x1(d.name) + (x1.bandwidth()) / 2) * (isRTL ? -1 : 1);
             })
             .attr('y', function (d) {
               return isTargetBars ?
@@ -444,10 +451,10 @@ Column.prototype = {
             });
         }
 
-        bars.transition().duration(charts.animate ? 1000 : 0)
+        bars.transition().duration(self.settings.animate ? 1000 : 0)
           .call(onEndAllTransition, function () {
             svg.selectAll('.target-bartext, .bartext')
-              .transition().duration(charts.animate ? 300 : 0).style('opacity', 1);
+              .transition().duration(self.settings.animate ? 300 : 0).style('opacity', 1);
           })
           .attr('y', function (d) {
             const r = self.settings.isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) :
@@ -487,11 +494,11 @@ Column.prototype = {
           .attr('class', function (d, i) {
             return `series-${i} bar`;
           })
-          .attr('width', Math.min.apply(null, [x1.bandWidth() - 2, barMaxWidth]))
+          .attr('width', Math.min.apply(null, [x1.bandwidth() - 2, barMaxWidth]))
           .attr('x', function (d, i) {
-            const width = Math.min.apply(null, [x1.bandWidth() - 2, barMaxWidth]);  //eslint-disable-line
+            const width = Math.min.apply(null, [x1.bandwidth() - 2, barMaxWidth]);  //eslint-disable-line
             return self.settings.isStacked ? xScale(i) :
-              (x1.bandWidth() / 2 + ((width + 2) * i) - (dataArray[0].values.length === 1 ||
+              (x1.bandwidth() / 2 + ((width + 2) * i) - (dataArray[0].values.length === 1 ||
                 dataArray[0].values.length === 5 || dataArray[0].values.length === 4 ?
                 (width / 2) : 0));
           })
@@ -499,9 +506,9 @@ Column.prototype = {
           .attr('height', function () { return 0; });
 
         bars
-          .transition().duration(charts.animate ? 600 : 0)
+          .transition().duration(self.settings.animate ? 600 : 0)
           .attr('y', function (d) {
-            const r = self.settings.self.settings.isStacked ?
+            const r = self.settings.isStacked ?
               (height - yScale(d.y) - yScale(d.y0)) : (d.value < 0 ? y(0) : y(d.value));
             return d.value < 0 ? r : (r > (height - 3) ? height - 2 : r);
           })
@@ -601,7 +608,7 @@ Column.prototype = {
         };
 
         const show = function (isTooltipBottom) { //eslint-disable-line
-          size = charts.getTooltipSize(content);
+          size = charts.tooltipSize(content);
           x = shape[0].getBoundingClientRect().left - (size.width / 2) + (shape.attr('width') / 2);
 
           if (self.settings.isStacked) {
@@ -648,7 +655,7 @@ Column.prototype = {
             }
             content += '</div>';
           }
-          size = charts.getTooltipSize(content);
+          size = charts.tooltipSize(content);
           x = shape[0].getBoundingClientRect().left - (size.width / 2) + (shape.attr('width') / 2);
           y = shape[0].getBoundingClientRect().top - size.height - 10;
         } else { // Not Stacked
@@ -694,7 +701,7 @@ Column.prototype = {
             isTooltipBottom = data.length > maxBarsForTopTooltip;
           }
 
-          size = charts.getTooltipSize(content);
+          size = charts.tooltipSize(content);
           x = shape[0].getBoundingClientRect().left - (size.width / 2) + (shape.attr('width') / 2);
           y = ePageY - charts.tooltip.outerHeight() - 25;
           if (dataset.length > 1) {
@@ -738,7 +745,7 @@ Column.prototype = {
       })
 
       // Click
-      .on('click', function (d, i) {
+      .on('click', function (d, i, clickedLegend) {
         const isTargetBar = this && d3.select(this).classed('target-bar');
         let isSelected = this && d3.select(this).classed('is-selected');
         const thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
@@ -766,29 +773,42 @@ Column.prototype = {
           isTargetBar,
           triggerGroup: isGrouped,
           d,
-          i
+          i,
+          type: self.settings.type,
+          dataset: self.dataset,
+          isSingle: self.isSingular,
+          isGrouped: self.isGrouped,
+          isStacked: self.settings.isStacked,
+          svg: self.svg,
+          clickedLegend: (clickedLegend === true)
         });
 
         if (isSelected) {
-          self.element.triggerHandler('selected', [d3.select(this)[0], {}, (isGrouped ? thisGroupId : i)]);
+          self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, (isGrouped ? thisGroupId : i)]);
         }
       })
 
       // Contextmenu
       .on('contextmenu', function (d) {
-        self.triggerContextMenu(d3.select(this)[0][0], d);
+        charts.triggerContextMenu(self.element, d3.select(this).nodes()[0], d);
       });
 
     // Add Legend
-    if (charts.showLegend) {
+    self.settings.isGrouped = isGrouped;
+    self.settings.isSingular = isSingle;
+    self.settings.isStacked = self.settings.isStacked;
+    self.settings.svg = this.svg;
+
+    if (self.settings.showLegend) {
       if (isSingular && dataset[0].name) {
-        charts.addLegend(dataset);
+        charts.addLegend(dataset, 'column-single', self.settings, self.element);
       } else if (isPositiveNegative) {
-        charts.addLegend(pnSeries);
+        charts.addLegend(pnSeries, self.settings.type, self.settings, self.element);
       } else if (self.settings.isStacked && isSingular) {
-        charts.addLegend(series);
+        charts.addLegend(series, self.settings.type, self.settings, self.element);
       } else if (!isSingular) {
-        charts.addLegend(self.settings.isStacked ? seriesStacked : series);
+        charts.addLegend(self.settings.isStacked ? seriesStacked :
+          series, self.settings.type, self.settings, self.element);
       }
     }
 
@@ -806,7 +826,7 @@ Column.prototype = {
       return `tick${d === 0 ? ' tick0' : ''}`;
     });
 
-    // Add Tooltips
+    // Add Tooltips and legend
     charts.appendTooltip();
 
     // See if any labels overlap and use shorter */
@@ -870,7 +890,7 @@ Column.prototype = {
 
       const setSelectedGroup = function () {
         const groups = svg.selectAll('.series-group');
-        if (groups[0].length) {
+        if (groups.nodes().length) {
           groups.each(function (d, i) {
             setSelectedBar(this, i);
           });
@@ -954,7 +974,7 @@ Column.prototype = {
 
     const setSelectedGroup = function () {
       const groups = self.svg.selectAll('.series-group');
-      if (groups[0].length) {
+      if (groups.nodes().length) {
         groups.each(function () {
           setSelectedBar(this);
         });
@@ -1093,7 +1113,7 @@ Column.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.removeClass('column-chart');
+    this.element.empty().removeClass('column-chart');
     charts.removeTooltip();
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);

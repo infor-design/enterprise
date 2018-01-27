@@ -408,7 +408,7 @@ Bullet.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.removeClass('bullet-chart');
+    this.element.empty().removeClass('bullet-chart');
     charts.removeTooltip();
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);

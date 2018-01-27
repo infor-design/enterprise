@@ -756,7 +756,7 @@ Line.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.removeClass('line-chart');
+    this.element.empty().removeClass('line-chart');
     charts.removeTooltip();
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
