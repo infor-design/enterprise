@@ -290,9 +290,10 @@
      */
     _isWin7IE11: function() {
       var browser = Soho.env && Soho.env.browser && Soho.env.browser.name ? Soho.env.browser.name : '',
-        version = Soho.env.browser.version ? Soho.env.browser.version : '';
+        version = Soho.env.browser.version ? Soho.env.browser.version : '',
+        isWin7 = window.navigator.userAgent.indexOf('Windows NT 6.1') !==  -1;
 
-      return browser === 'ie' && version === '11';
+       return browser === 'ie' && version === '11' && isWin7;
     },
 
 
@@ -302,7 +303,7 @@
      * @returns {boolean}
      */
     _hasChangedValue: function() {
-      if (!this.state || !this.state.previousMaskResult) {
+      if (this.state === undefined || this.state.previousMaskResult === undefined) {
         return true;
       }
 

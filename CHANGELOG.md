@@ -1,3 +1,23 @@
+## <a name="version-4.3.5">4.3.5</a>
+
+Release Date: 2018-02-02
+
+Full Jira Release Notes: http://bit.ly/2DHWiYB
+
+### <a name="version-4.3.5-download-build-assets">Download Build Assets:</a>
+
+Build Server: http://bamboo.infor.com/browse/label/release-435
+Npm: http://npm.infor.com
+
+This is a limited monthly patch release for select P1 issues.
+
+### <a name="version-4.3.5-bug-fixes">Bug Fixes</a>
+- Swaplist not working if it starts out empty
+- Tab panels sometimes don't correctly display SVG icons
+- Datepicker fires change event when field loses focus
+
+(3 Jira Issues Solved this release, Backlog Dev 364, Design 228, Unresolved 689)
+
 ## <a name="version-4.3.4">4.3.4</a>
 
 Release Date: 2017-12-20
