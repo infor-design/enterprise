@@ -731,7 +731,7 @@ DatePicker.prototype = {
     // Set timepicker
     if (this.settings.showTime) {
       // Set to 12:00
-      if (this.element.val() === '') {
+      if (this.element.val() === '' && this.currentDate && this.currentDate.getDate()) {
         this.currentDate.setHours(0);
         this.currentDate.setMinutes(0);
         this.currentDate.setSeconds(0);
@@ -1151,9 +1151,14 @@ DatePicker.prototype = {
    */
   showMonth(month, year, skipYear) {
     const self = this;
+    const now = new Date();
 
-    let elementDate = this.currentDate.getDate() ?
-      this.currentDate : (new Date()).setHours(0, 0, 0, 0);
+    now.setHours(0);
+    now.setMinutes(0);
+    now.setSeconds(0);
+
+    let elementDate = (this.currentDate && this.currentDate.getDate()) ?
+      this.currentDate : now;
 
     this.setCurrentCalendar();
 

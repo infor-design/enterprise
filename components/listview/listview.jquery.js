@@ -9,7 +9,7 @@ $.fn.listview = function (settings) {
   const cs = $(this);
   const attr = cs.attr('data-dataset');
   const tmpl = cs.attr('data-tmpl');
-  const inlineOpts = Soho.utils.parseOptions(this) || {};
+  const inlineOpts = utils.parseOptions(this) || {};
 
   inlineOpts.dataset = inlineOpts.dataset || attr;
   inlineOpts.template = inlineOpts.template || tmpl;

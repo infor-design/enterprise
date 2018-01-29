@@ -983,8 +983,8 @@ ListView.prototype = {
           isMixed = self.settings.selectable === 'mixed',
           target = $(e.target);
 
-        // ignore clicking favorites element
-        if (target.hasClass('icon-favorite')) {
+        // ignore clicking favorites element or a hyperlink
+        if (target.hasClass('icon-favorite') || target.hasClass('hyperlink')) {
           return;
         }
 
