@@ -2,6 +2,7 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
+import { Environment as env } from '../utils/environment';
 
 // jQuery Components
 // import '../validation/validation.jquery';
@@ -391,7 +392,7 @@ DatePicker.prototype = {
     const localeTimeFormat = ((typeof Locale === 'object' && this.currentCalendar.timeFormat) ? this.currentCalendar.timeFormat : null);
 
     if (s.dateFormat === 'locale') {
-      this.pattern = localeDateFormat.short + (s.showTime ? ` ${(s.timeFormat || localeTimeFormat)}` : '');
+      this.pattern = localeDateFormat + (s.showTime ? ` ${(s.timeFormat || localeTimeFormat)}` : '');
     } else {
       this.pattern = s.dateFormat + (s.showTime && s.timeFormat ? ` ${s.timeFormat}` : '');
     }
@@ -698,12 +699,12 @@ DatePicker.prototype = {
     this.trigger.popover(popoverOpts)
       .off('show.datepicker')
       .on('show.datepicker', () => {
-        if (Soho.env.os.name === 'ios') {
+        if (env.os.name === 'ios') {
           $('head').triggerHandler('disable-zoom');
         }
 
         // Horizontal view on mobile
-        if (window.innerHeight < 400) {
+        if (window.innerHeight < 400 && this.popupClosestScrollable) {
           this.popup.find('.arrow').hide();
           this.popup.css('min-height', `${(this.popupClosestScrollable[0].scrollHeight + 2)}px`);
           this.popupClosestScrollable.css('min-height', '375px');
@@ -711,7 +712,7 @@ DatePicker.prototype = {
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
-        if (Soho.env.os.name === 'ios') {
+        if (env.os.name === 'ios') {
           this.trigger.one('hide', () => {
             $('head').triggerHandler('enable-zoom');
           });
