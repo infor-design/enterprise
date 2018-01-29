@@ -15,8 +15,10 @@ This is a limited monthly patch release for select P1 issues.
 - Swaplist not working if it starts out empty
 - Tab panels sometimes don't correctly display SVG icons
 - Datepicker fires change event when field loses focus
+- Datepicker shows mangled date formats in some cases
+- Color picker throughs errors when in a form.
 
-(3 Jira Issues Solved this release, Backlog Dev 364, Design 228, Unresolved 689)
+(5 Jira Issues Solved this release, Backlog Dev 364, Design 228, Unresolved 689)
 
 ## <a name="version-4.3.4">4.3.4</a>
 
