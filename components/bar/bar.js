@@ -130,6 +130,10 @@ Bar.prototype = {
     const series = dataset.map(function (d) { //eslint-disable-line
       return { name: d.name, color: d.color, pattern: d.pattern };
     });
+    const keys = series.map(function (d) { //eslint-disable-line
+      return d.name;
+    });
+
     // Map the Data Sets and Stack them.
     dataset = dataset.map(function (d) {  //eslint-disable-line
       return d.data.map(function (o) { //eslint-disable-line
@@ -141,8 +145,20 @@ Bar.prototype = {
         });
       });
     });
-    const stack = d3.stack();
-    stack(dataset);
+
+    const stack = d3.stack().keys(keys)
+      .order(d3.stackOrderNone)
+      .offset(d3.stackOffsetNone);
+
+    const stackArray = stack(dataset);
+    console.log(stackArray);
+    // Convert back to old d3 format stackArray
+    dataset = stackArray.map(function (d) { //eslint-disable-line
+      return d.map(function (d2) { //eslint-disable-line
+        return d2.data;
+      });
+    });
+    console.log(dataset);
 
     // Calculate max text width
     maxTextWidth = 0;
