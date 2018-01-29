@@ -49,4 +49,11 @@ describe('Dropdown', () => {
     expect(document.body.querySelector('.dropdown.is-disabled')).toBeFalsy();
     expect(dropdownData.isDisabled()).toBeFalsy();
   });
+
+  it('Should render dropdown readonly', () => {
+    dropdownData.readonly();
+    expect(document.body.querySelector('.dropdown.is-readonly')).toBeTruthy();
+    expect(document.querySelector('[aria-label="readonly"]')).toBeTruthy;
+    expect(dropdownData.isDisabled()).toBeFalsy();
+  });
 });

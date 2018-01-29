@@ -16,14 +16,33 @@ exports.config = {
     'browserstack.local': true,
     build: 'protractor-browserstack',
     name: 'e2e test',
-    browserName: 'Safari',
-    browser_version: '11.0',
-    os_version: 'High Sierra'
   },
+  multiCapabilities: [
+    {
+      browserName: 'Chrome',
+      browser_version: '63.0'
+    },
+    {
+      browserName: 'Safari',
+      browser_version: '11.0',
+      os_version: 'High Sierra'
+    },
+    {
+      browserName: 'Firefox',
+      browser_version: '57.0'
+    },
+    {
+      browserName: 'IE',
+      browser_version: '11.0'
+    },
+    {
+      browserName: 'Edge'
+    }
+  ],
   beforeLaunch: () => {
     return new Promise((resolve, reject) => {
       exports.bs_local = new browserstack.Local();
-      exports.bs_local.start({'key': exports.config.capabilities['browserstack.key'] }, (error) => {
+      exports.bs_local.start({'key': exports.config.commonCapabilities['browserstack.key'] }, (error) => {
         if (error) {
           return reject(error);
         };
@@ -39,8 +58,8 @@ exports.config = {
   }
 };
 
-//exports.config.multiCapabilities.forEach(caps => {
-  //for (const i in exports.config.commonCapabilities) {
-    //caps[i] = caps[i] || exports.config.commonCapabilities[i];
-  //}
-//});
+exports.config.multiCapabilities.forEach(caps => {
+  for (const i in exports.config.commonCapabilities) {
+    caps[i] = caps[i] || exports.config.commonCapabilities[i];
+  }
+});
