@@ -2,10 +2,139 @@
   
     
 
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          componentAPI
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          If defined, becomes the definitive way to call methods on
+parent component.
 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          type
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Different types of pagers: list, table and more
 
-  
-    
+        </td>
+      </tr>
+      <tr>
+        <td>
+          position
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Can be on 'bottom' or 'top'.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          activePage
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          Start on this page
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          hideOnOnePage
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, hides the pager if there is only one page worth of
+results.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          source
+        </td>
+        <td>
+          Function
+        </td>
+        <td>
+          Call Back Function for Pager Data Source
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          pagesize
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          Can be calculated or a specific number
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          pagesizes
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          Array of numbers of the page size selector
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showPageSizeSelector
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If false will not show page size selector
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          indeterminate
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true will not show anything that lets you go to a specific
+page.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 
@@ -23,20 +152,84 @@
     </thead>
     <tbody>
       <tr>
+        <td>showPageSizeSelector</td>
+        <td>
+          
+                
+                  <span>toggleOption (boolean) = Toggle vs show
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Show page size selector</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>setActivePage</td>
+        <td>
+          
+                
+                  <span>pagingInfo (object) = The paging info object
+ </span>
+                
+                  <span>force (boolean) = Force the update
+ </span>
+                
+                  <span>op (string) = The paging operation type.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Set or Get Current Page.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>renderPages</td>
+        <td>
+          
+                
+                  <span>op (object) = The paging operation.
+ </span>
+                
+                  <span>callback (function) = The pager callback.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Render a page of items.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
         <td>updated</td>
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings (object) = the settings to update to.
+ </span>
                 
           
         </td>
         <td>
-          
+          <p>Update the component and optionally apply new settings.</p>
+
         </td>
         <td>
-          
-this
+          The plugin api for chaining.
+object
         </td>
       </tr>
       <tr>
@@ -54,6 +247,8 @@ this
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>

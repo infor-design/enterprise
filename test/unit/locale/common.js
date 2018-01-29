@@ -72,6 +72,9 @@ define([
 
       //Other Edge Cases
       expect(Locale.formatDate('11/8/2000')).to.equal('11/8/2000');
+      expect(Locale.formatDate('2018-11-29', { pattern: 'yyyy-MM-dd' })).to.equal('2018-11-29');
+      expect(Locale.formatDate(1458054935410, { pattern: 'yyyy-MM-dd' })).to.equal('2016-03-15');
+
       expect(Locale.formatDate()).to.equal(undefined);
     },
 

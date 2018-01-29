@@ -150,8 +150,8 @@ Line.prototype = {
 
     const isAxisXRotate = (self.settings.xAxis && self.settings.xAxis.rotate !== undefined); // TODO
     const getMaxes = function (d, option) {
-      return d3.max(d.data, function (da) {
-        return option ? d.value[option] : da.value;
+      return d3.max(d.data, function (maxData) {
+        return option ? maxData.value[option] : maxData.value;
       });
     };
 
@@ -225,7 +225,7 @@ Line.prototype = {
     const y = d3.scaleLinear().range([height, 0]);
     const z = d3.scaleLinear().range([1, 25]);
 
-    if (this.settings.bubble) {
+    if (this.settings.isBubble) {
       maxes = {
         x: dataset.map(function (d) { return getMaxes(d, 'x'); }),
         y: dataset.map(function (d) { return getMaxes(d, 'y'); }),
@@ -470,7 +470,7 @@ Line.prototype = {
                     content += `${'' +
                         '<div class="swatch-row">' +
                           '<span>'}${labels[key]}</span>` +
-                          `<b>${mouseEnterData[key]}</b>` +
+                          `<b>${d.name}</b>` +
                         '</div>';
                   } else {
                     const obj2 = mouseEnterData[key];
@@ -532,7 +532,7 @@ Line.prototype = {
           lineGroups.selectAll('circle')
             .attr('cy', function (di) { return yScale(di.value.y); })
             .transition().duration(self.settings.animate ? 750 : 0)
-            .ease('cubic')
+            .ease(d3.easeCubic)
             .attr('r', function (dj) { return zScale(dj.value.z); });
         }
       }
@@ -756,7 +756,7 @@ Line.prototype = {
    * @returns {void}
    */
   destroy() {
-    this.element.removeClass('line-chart');
+    this.element.empty().removeClass('line-chart');
     charts.removeTooltip();
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);

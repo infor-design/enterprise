@@ -1,4 +1,3 @@
-
 # Git Workflow
 
 ## General Policies

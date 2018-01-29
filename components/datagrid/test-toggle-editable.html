@@ -3,7 +3,7 @@
     <br />
     <h3>Grid Example: Editing</h3>
     <p>A visual test showing the grid may be toggled between readonly and editable.
-       Press edit then try to edit some cells.
+       Press edit then try to edit some cells.</p>
   </div>
 </div>
 
@@ -68,7 +68,7 @@
         columns.push({ id: 'rowStatus', resizable: false, formatter: Formatters.Status, align: 'center'});
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
         columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', maxLength: 2, editor: Editors.Input});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', maxLength: 10, editor: Editors.Input});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', required: true, align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row) {
             //For this fake logic just disable odd rows
             return (row % 2 === 0);

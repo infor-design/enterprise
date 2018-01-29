@@ -19,7 +19,9 @@
 
 ## API Details
 
-### Dataset Settings
+{{api-details}}
+
+## Dataset Settings
 
 * name - this value will be on the axis
 * shortName - this value will be used if the name wont fit on the axis

@@ -87,13 +87,16 @@
 
        if (rows.length) {
           var item = rows[0].data;
+          var idx = rows[0].idx;
+
+          console.log(rows);
 
           item.id = item.id + 1;
           item.quantity = item.quantity + 10;
           item.price = item.price + 10;
           item.orderDate = new Date(2016, 0, 1);
 
-          gridApi.updateRow(data.indexOf(item));
+          gridApi.updateRow(idx);
        } else {
           $('body').toast({title: 'Alert', message: 'Please select a row'});
        }
@@ -105,11 +108,12 @@
 
        if (rows.length) {
           var item = rows[0].data;
+          var idx = rows[0].idx;
 
           item.portable = !item.portable;
 
           // Update portable cell
-          gridApi.updateCell(data.indexOf(item), 3);
+          gridApi.updateCell(idx, 3);
        } else {
           $('body').toast({title: 'Alert', message: 'Please select a row'});
        }

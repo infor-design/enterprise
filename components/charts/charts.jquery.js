@@ -2,6 +2,8 @@ import { Bullet, COMPONENT_NAME as BULLET_NAME } from '../bullet/bullet';
 import { CompletionChart, COMPONENT_NAME as COMPLETION_CHART_NAME } from '../completion-chart/completion-chart';
 import { Sparkline, COMPONENT_NAME as SPARKLINE_NAME } from '../sparkline/sparkline';
 import { Line, COMPONENT_NAME as LINE_NAME } from '../line/line';
+import { Column, COMPONENT_NAME as COLUMN_NAME } from '../column/column';
+import { Bar, COMPONENT_NAME as BAR_NAME } from '../bar/bar';
 
 /*
 * jQuery Component Wrapper for Charts. It maps the singlular components
@@ -97,6 +99,49 @@ $.fn.chart = function (settings) {
           settings.isBubble = true;
           const chartComponent = new Line(this, settings);
           instance = $.data(this, LINE_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'column':
+        case 'column-grouped':
+        case 'column-positive-negative': {
+          const chartComponent = new Column(this, settings);
+          instance = $.data(this, COLUMN_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'column-stacked': {
+          settings.isStacked = true;
+          const chartComponent = new Column(this, settings);
+          instance = $.data(this, COLUMN_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'bar': {
+          settings.isStacked = true;
+          const chartComponent = new Bar(this, settings);
+          instance = $.data(this, BAR_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'bar-stacked': {
+          settings.isStacked = true;
+          const chartComponent = new Bar(this, settings);
+          instance = $.data(this, BAR_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'bar-normalized': {
+          settings.isNormalized = true;
+          const chartComponent = new Bar(this, settings);
+          instance = $.data(this, BAR_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'bar-grouped': {
+          settings.isGrouped = true;
+          const chartComponent = new Bar(this, settings);
+          instance = $.data(this, BAR_NAME, chartComponent);
           $.data(this, 'chart', chartComponent); // Compatibility
           break;
         }

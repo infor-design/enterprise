@@ -110,7 +110,7 @@ charts.chartColor = function chartColor(i, chartType, data) {
   if (chartType === 'bar-single' || chartType === 'column-single') {
     return '#1D5F8A';
   }
-  if (chartType === 'bar' || chartType === 'line') {
+  if (chartType === 'bar' || chartType === 'line' || chartType === 'column-grouped') {
     return this.colors(i);
   }
 
@@ -255,21 +255,20 @@ charts.handleElementClick = function (line, series, settings) {
     } else {
       selector = settings.svg.select(`.bar.${elem.option}`);
     }
-  } else if (['column', 'bar'].indexOf(settings.type) !== -1) {
+  } else if (['column', 'bar', 'column-grouped', 'column-stacked'].indexOf(settings.type) !== -1) {
     // Grouped or singlular
     if (settings.isGrouped || settings.isSingular) {
       selector = settings.svg.select(`.series-${idx}`);
     } else if (settings.isStacked && !settings.isSingular) {
       // Stacked
-      const thisGroup = d3.select(settings.svg.selectAll(settings.chartType === 'HorizontalBar' ?
+      const thisGroup = d3.select(settings.svg.selectAll(settings.type === 'bar' ?
         '.series-group' : '.g')[0][idx]);
       selector = thisGroup.select('.bar');
     }
   }
 
-  if (['pie', 'column', 'bar'].indexOf(settings.chartType) !== -1) {
-    settings.isByLegends = true;
-    selector.on('click').call(selector.node(), selector.datum(), idx);
+  if (['pie', 'column', 'bar', 'column-grouped', 'column-stacked'].indexOf(settings.type) !== -1) {
+    selector.on('click').call(selector.node(), selector.datum(), idx, true);
   }
 
   if (elem.selectionObj) {
@@ -307,30 +306,28 @@ charts.selectElement = function (element, inverse, data, container) {
  * Style bars as selected or unselected
  * TODO: Refactor into individual components;
  * @param  {object} o The object to handle.
- * @param  {settings} settings The settings object.
  */
-charts.setSelectedElement = function (o, settings) {
-  const s = settings;
-  let dataset = s.dataset;
-  const isPositiveNegative = s.type === 'column-positive-negative';
-  const isTypeHorizontalBar = s.chartType === 'HorizontalBar';
-  const isTypeColumn = s.chartType === 'Column';
-  const isTypePie = s.chartType === 'Pie';
+charts.setSelectedElement = function (o) {
+  let dataset = o.dataset;
+  const isPositiveNegative = o.type === 'column-positive-negative';
+  const isBar = o.type === 'bar';
+  const isTypeColumn = o.type === 'column' || o.type === 'column-grouped' || o.type === 'column-stacked';
+  const isTypePie = o.type === 'pie';
 
-  const svg = s.svg;
-  const isSingle = s.isSingle;
-  const isGrouped = s.isGrouped;
-  const isStacked = s.isStacked;
-  const isSingular = s.isSingular;
+  const svg = o.svg;
+  const isSingle = o.isSingle;
+  const isGrouped = o.isGrouped;
+  const isStacked = o.isStacked;
+  const isSingular = o.isSingular;
 
   const taskSelected = (o.task === 'selected');
   const selector = d3.select(o.selector);
   const isPositive = selector.classed('positive');
-  const ticksX = svg.selectAll('.axis.x .tick');
-  const ticksY = svg.selectAll('.axis.y .tick');
-  const pnPositiveText = svg.selectAll('.bartext.positive, .target-bartext.positive');
-  const pnNegativeText = svg.selectAll('.bartext.negative, .target-bartext.negative');
-  const pnTargetText = svg.selectAll('.target-bartext.positive, .target-bartext.negative');
+  const ticksX = o.svg.selectAll('.axis.x .tick');
+  const ticksY = o.svg.selectAll('.axis.y .tick');
+  const pnPositiveText = o.svg.selectAll('.bartext.positive, .target-bartext.positive');
+  const pnNegativeText = o.svg.selectAll('.bartext.negative, .target-bartext.negative');
+  const pnTargetText = o.svg.selectAll('.target-bartext.positive, .target-bartext.negative');
   const thisGroup = d3.select(o.selector.parentNode);
   const thisGroupId = parseInt((thisGroup.node() ? thisGroup.attr('data-group-id') : 0), 10);
   let triggerData = [];
@@ -354,14 +351,14 @@ charts.setSelectedElement = function (o, settings) {
     svg.selectAll('.bar, .target-bar').style('opacity', 0.6);
 
     // By legends only
-    if (s.isByLegends && !isTypePie) {
+    if (o.clickedLegend && !isTypePie) {
       if (isPositiveNegative) {
         if (o.isTargetBar) {
-          s.svg.selectAll('.target-bar').classed('is-selected', true).style('opacity', 1);
+          o.svg.selectAll('.target-bar').classed('is-selected', true).style('opacity', 1);
 
           pnTargetText.style('font-weight', 'bolder');
         } else {
-          s.svg.selectAll(isPositive ?
+          o.svg.selectAll(isPositive ?
             '.bar.positive, .target-bar.positive' : '.bar.negative, .target-bar.negative')
             .classed('is-selected', true).style('opacity', 1);
 
@@ -371,15 +368,15 @@ charts.setSelectedElement = function (o, settings) {
         svg.selectAll('.bar').each(function (d, i) {
           const bar = d3.select(this);
           if (bar.classed('is-selected')) {
-            selectedBars.push({ elem: bar[0], data: (dataset ? dataset[i] : d) });
+            selectedBars.push({ elem: bar.node(), data: (dataset ? dataset[i] : d) });
           }
         });
         triggerData = selectedBars;
-      } else if (isTypeColumn || isTypeHorizontalBar) {
+      } else if (isTypeColumn || isBar) {
         // Grouped and stacked only -NOT singular-
 
         if (isGrouped || isSingular) {
-          s.svg.selectAll('.series-' + o.i).classed('is-selected', true).style('opacity', 1); //eslint-disable-line
+          o.svg.selectAll('.series-' + o.i).classed('is-selected', true).style('opacity', 1); //eslint-disable-line
         } else {
           thisGroup.classed('is-selected', true)
             .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
@@ -388,10 +385,24 @@ charts.setSelectedElement = function (o, settings) {
         svg.selectAll('.bar.is-selected').each(function (d, i) {
           const bar = d3.select(this);
 
-          thisData = s.dataset;
-          thisData = thisData ? (isStacked ? isSingular ? (thisData[0].data[o.i]) : //eslint-disable-line
-            (thisData[o.i].data[i]) : thisData[i].data[o.i]) : d; //eslint-disable-line
-          selectedBars.push({ elem: bar[0], data: thisData });
+          thisData = o.dataset;
+          if (!thisData) {
+            thisData = d;
+          }
+
+          if (thisData[0].data[o.i]) {
+            thisData = thisData[0].data[o.i];
+          }
+
+          if (thisData[o.i] && thisData[o.i].data[i]) {
+            thisData = thisData[o.i].data[i];
+          }
+
+          if (thisData[i] && thisData[i].data[o.i]) {
+            thisData = thisData[i].data[o.i];
+          }
+
+          selectedBars.push({ elem: bar.node(), data: thisData });
         });
         triggerData = selectedBars;
       }
@@ -400,15 +411,15 @@ charts.setSelectedElement = function (o, settings) {
       thisData = dataset[0] && dataset[0].data ? dataset[0].data : o.d;
       selector.classed('is-selected', true).style('opacity', 1);
       triggerData.push({ elem: selector[0], data: thisData[o.i] });
-    } else if ((isSingle || isGrouped) && !isStacked && (isTypeColumn || isTypeHorizontalBar)) {
+    } else if ((isSingle || isGrouped) && !isStacked && (isTypeColumn || isBar)) {
       // Single or groups only -NOT stacked-
-      svg.selectAll(`${isTypeColumn ? '.axis.x' : '.axis.y'} .tick:nth-child(${(isGrouped ? thisGroupId : o.i) + 1})`)
+      svg.selectAll(`${isTypeColumn ? '.axis.x' : '.axis.y'} .tick:nth-child(${(isGrouped ? thisGroupId : o.i) + 2})`)
         .style('font-weight', 'bolder');
 
       selector.classed('is-selected', true).style('opacity', 1);
       svg.select(`.target-bar.series-${o.i}`).style('opacity', 1);
-      d3.select(svg.selectAll('.bartext')[0][o.i]).style('font-weight', 'bolder');
-      d3.select(svg.selectAll('.target-bartext')[0][o.i]).style('font-weight', 'bolder');
+      d3.select(svg.selectAll('.bartext').nodes()[o.i]).style('font-weight', 'bolder');
+      d3.select(svg.selectAll('.target-bartext').nodes()[o.i]).style('font-weight', 'bolder');
 
       if (isGrouped || isPositiveNegative || isTypeColumn) {
         if (!isPositiveNegative && !isTypeColumn || (isTypeColumn && isGrouped)) {
@@ -419,7 +430,7 @@ charts.setSelectedElement = function (o, settings) {
         thisGroup.selectAll('.bar').each(function (d, i) {
           const bar = d3.select(this);
           if (bar.classed('is-selected')) {
-            selectedBars.push({ elem: bar[0], data: (dataset ? dataset[i] : d) });
+            selectedBars.push({ elem: bar.node(), data: (dataset ? dataset[i] : d) });
           }
         });
         if (isGrouped) {
@@ -432,7 +443,7 @@ charts.setSelectedElement = function (o, settings) {
           triggerData = selectedBars;
         }
       }
-    } else if (isTypeColumn || isTypeHorizontalBar) {
+    } else if (isTypeColumn || isBar) {
       // Stacked Only
       svg.selectAll(`${isTypeColumn ? '.axis.x' : '.axis.y'} .tick:nth-child(${o.i + 1})`)
         .style('font-weight', 'bolder');
@@ -442,7 +453,7 @@ charts.setSelectedElement = function (o, settings) {
 
       svg.selectAll('.bar.is-selected').each(function (d, i) {
         const bar = d3.select(this);
-        selectedBars.push({ elem: bar[0], data: (dataset ? dataset[i].data[o.i] : d) });
+        selectedBars.push({ elem: bar.node(), data: (dataset ? dataset[i].data[o.i] : d) });
       });
       triggerData = selectedBars;
     } else if (isTypePie) { // Pie
@@ -474,8 +485,8 @@ charts.setSelectedElement = function (o, settings) {
     }
   }
 
-  if (s.isByLegends) {
-    s.isByLegends = false;
+  if (o.clickedLegend) {
+    o.clickedLegend = false;
   }
 
   charts.selected = triggerData;
@@ -584,12 +595,75 @@ charts.setSelected = function (o, isToggle, internals) {
 };
 
 /**
- * Toggle the current selection state.
- * @param {object} o An object with various
- * @param {object} internals An object passing in chart internals
+ * Check if the labels collide.
+ * @param {object} svg The svg dom element.
+ * @returns {boolean} True if the labels collide.
 */
-charts.toggleSelected = function (o, internals) {
-  charts.setSelected(o, true, internals);
+charts.labelsColide = function (svg) {
+  const ticks = svg.selectAll('.x text');
+  let collides = false;
+
+  ticks.each(function (d1, i) {
+    const rect1 = this.getBoundingClientRect();
+    let rect2;
+
+    ticks.each(function (d2, j) {
+      if (i !== j) {
+        rect2 = this.getBoundingClientRect();
+
+        const overlaps = !(rect1.right < rect2.left ||
+          rect1.left > rect2.right ||
+          rect1.bottom < rect2.top ||
+          rect1.top > rect2.bottom);
+
+        if (overlaps) {
+          collides = true;
+        }
+      }
+    });
+  });
+
+  return collides;
+};
+
+/**
+ * Apply a different length label
+ * @param  {object}  svg  The svg element.
+ * @param  {array}  dataArray The data.
+ * @param  {object}  elem The dom element
+ * @param  {object}  selector The d3 selection
+ * @param  {boolean} isNoEclipse True if its an eclipse.
+ */
+charts.applyAltLabels = function (svg, dataArray, elem, selector, isNoEclipse) {
+  const ticks = selector ? svg.selectAll(selector) : svg.selectAll('.x text');
+
+  ticks.each(function (d1, i) {
+    let text = dataArray[i] ? dataArray[i][elem] : '';
+
+    text = text || (isNoEclipse ?
+      ((d3.select(this).text().substring(0, 1))) :
+      (`${d3.select(this).text().substring(0, 6)}...`));
+
+    d3.select(this).text(text);
+  });
+};
+
+/**
+ * Trigger the right click event.
+ * @param  {object}  container  The svg container.
+ * @param  {object}  elem The element that was right clicked.
+ * @param  {object}  d The data object
+ */
+charts.triggerContextMenu = function (container, elem, d) {
+  d3.event.preventDefault();
+  d3.event.stopPropagation();
+  d3.event.stopImmediatePropagation();
+
+  const e = $.Event('contextmenu');
+  e.target = elem;
+  e.pageX = d3.event.pageX;
+  e.pageY = d3.event.pageY;
+  $(container).trigger(e, [elem, d]);
 };
 
 export { charts };

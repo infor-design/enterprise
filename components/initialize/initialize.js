@@ -5,19 +5,15 @@ import { Locale } from '../locale/locale';
 // jQuery components
 import '../components.jquery';
 
-
-/**
- * Component name as referenced by jQuery/event namespace/etc
- */
-let COMPONENT_NAME = 'initialize';
+// he name of this component
+const COMPONENT_NAME = 'initialize';
 
 /**
  * Component Defaults
  */
-let INITIALIZE_DEFAULTS = {
+const INITIALIZE_DEFAULTS = {
   locale: Locale.currentLocale.name || 'en-US'
 };
-
 
 /**
  * Page Bootstrapper

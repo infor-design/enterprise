@@ -70,7 +70,7 @@
             req.total = res.total;
 
             if ((req.filterExpr && req.filterExpr[0])) {
-              req.total = res.total
+              req.total = res.total;
               req.grandTotal = res.grandTotal; // This is the total amount on the server
             }
             response(res.data, req);

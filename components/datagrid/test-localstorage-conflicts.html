@@ -189,7 +189,10 @@
     }
 
     function updateColumns(cols) {
-      $('#my-datagrid').data('datagrid').updateColumns(cols);
+      var gridAPI = $('#my-datagrid').data('datagrid');
+      if (gridAPI) {
+        gridAPI.updateColumns(cols);
+      }
     }
 
     function updateColumns1() {

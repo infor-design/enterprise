@@ -1,5 +1,5 @@
 /**
- * Migration Code for Soho 4.3.x to 4.4.x (or 5.x?)
+ * Migration Code for Soho 4.4.x
  * =================================================
  * Include this file after your `sohoxi.js` and before your application code.
  * NOTE:  Usage of this file should be considered a temporary stop-gap solution.
@@ -33,3 +33,4 @@ window.ListFilter = Soho.ListFilter;
  */
 window.Formatters = Soho.Formatters;
 window.Editors = Soho.Editors;
+window.GroupBy = Soho.GroupBy;

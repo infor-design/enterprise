@@ -201,7 +201,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
   };
 
   let table = self.table.clone();
-  table = appendRows(customDs || this.settings.dataset, table);
+  table = appendRows(customDs || self.settings.dataset, table);
 
   if (!table.find('thead').length) {
     self.headerRow.clone().insertBefore(table.find('tbody'));
