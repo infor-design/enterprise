@@ -33,3 +33,4 @@ window.ListFilter = Soho.ListFilter;
  */
 window.Formatters = Soho.Formatters;
 window.Editors = Soho.Editors;
+window.GroupBy = Soho.GroupBy;

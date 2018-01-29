@@ -568,7 +568,7 @@ Datagrid.prototype = {
 
     this.renderPager(pagerInfo, isResponse);
     this.syncSelectedUI();
-    this.displayCounts();
+    this.displayCounts(pagerInfo.total);
   },
 
   /**
@@ -823,7 +823,7 @@ Datagrid.prototype = {
       const filterId = self.uniqueId(`-header-filter-${idx}`);
       let integerDefaults;
 
-      filterMarkup = `<div class="datagrid-filter-wrapper" ${!self.settings.filterable ? ' style="display:none"' : ''}>${this.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
+      filterMarkup = `<div class="datagrid-filter-wrapper" ${!self.settings.filterable ? ' style="display:none"' : ''}>${self.filterButtonHtml(col)}<label class="audible" for="${filterId}">${
         col.name}</label>`;
 
       switch (col.filterType) {
@@ -848,7 +848,7 @@ Datagrid.prototype = {
             process: 'number'
           };
 
-          col.maskOptions = Soho.utils.extend(true, {}, integerDefaults, col.maskOptions);
+          col.maskOptions = utils.extend(true, {}, integerDefaults, col.maskOptions);
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" id="${filterId}" />`;
           break;
         }
@@ -873,7 +873,7 @@ Datagrid.prototype = {
             };
           }
 
-          col.maskOptions = Soho.utils.extend(true, {}, decimalDefaults, col.maskOptions);
+          col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" id="${filterId}" />`;
           break;
         }
@@ -932,7 +932,7 @@ Datagrid.prototype = {
       } else {
         $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
           const menu = $(this).next('.popupmenu-wrapper');
-          Soho.utils.fixSVGIcons(menu);
+          utils.fixSVGIcons(menu);
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
           .on('selected.datagrid-filter', () => {
@@ -3528,7 +3528,8 @@ Datagrid.prototype = {
   setEmptyMessage(emptyMessage) {
     // Re-evaluate the text
     // TODO if (this.settings.emptyMessage.title === '[NoData]') {
-    // this.settings.emptyMessage.title = (Locale ? Locale.translate('NoData') : 'No Data Available');
+    // this.settings.emptyMessage.title = (Locale ?
+    // Locale.translate('NoData') : 'No Data Available');
     // }
 
     if (!this.emptyMessage) {
@@ -4264,7 +4265,7 @@ Datagrid.prototype = {
    * @private
    */
   setSearchActivePage() {
-    if (this.pager && this.filterExpr.length === 1) {
+    if (this.pager && this.filterExpr && this.filterExpr.length === 1) {
       if (this.filterExpr[0].value !== '') {
         if (this.pager.searchActivePage === undefined) {
           this.pager.searchActivePage = this.pager.activePage;
@@ -4575,28 +4576,30 @@ Datagrid.prototype = {
   */
   syncHeaderCheckbox(rows) {
     const headerCheckbox = this.headerRow.find('.datagrid-checkbox');
-    const selectedRows = this.selectedRows();
+    const rowsLength = rows.length;
+    const selectedRowsLength = this.selectedRows().length;
     const status = headerCheckbox.data('selected');
 
     // Do not run if checkbox in same state
-    if ((selectedRows.length > 0 && status === 'partial') ||
-      (selectedRows.length === rows.length && status === 'all') ||
-      (selectedRows.length === 0 && status === 'none')) {
+    if ((selectedRowsLength !== rowsLength &&
+          selectedRowsLength > 0 && status === 'partial') ||
+            (selectedRowsLength === rowsLength && status === 'all') ||
+              (selectedRowsLength === 0 && status === 'none')) {
       return;
     }
 
     // Sync the header checkbox
-    if (selectedRows.length > 0) {
+    if (selectedRowsLength > 0) {
       headerCheckbox.data('selected', 'partial')
         .addClass('is-checked is-partial');
     }
 
-    if (selectedRows.length === rows.length) {
+    if (selectedRowsLength === rowsLength) {
       headerCheckbox.data('selected', 'all')
         .addClass('is-checked').removeClass('is-partial');
     }
 
-    if (selectedRows.length === 0) {
+    if (selectedRowsLength === 0) {
       headerCheckbox.data('selected', 'none')
         .removeClass('is-checked is-partial');
     }
