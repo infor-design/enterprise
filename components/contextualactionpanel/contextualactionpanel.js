@@ -180,7 +180,7 @@ ContextualActionPanel.prototype = {
       this.toolbar.toolbar();
     }
 
-    Soho.utils.fixSVGIcons(this.element);
+    utils.fixSVGIcons(this.element);
     return this;
   },
 
@@ -232,7 +232,7 @@ ContextualActionPanel.prototype = {
 
         // Focus the first focusable element inside the Contextual Panel's Body
         self.panel.find('.modal-body-wrapper').find(':focusable').first().focus();
-        Soho.utils.fixSVGIcons(self.panel);
+        utils.fixSVGIcons(self.panel);
       })
       .on('beforedestroy.contextualactionpanel', () => {
         self.teardown();

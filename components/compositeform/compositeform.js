@@ -1,6 +1,7 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
+import { breakpoints } from '../utils/breakpoints';
 
 // jQuery Components
 import '../expandablearea/expandablearea.jquery';
@@ -124,7 +125,7 @@ CompositeForm.prototype = {
   checkResponsive() {
     const cl = this.element[0].classList;
 
-    if (Soho.breakpoints.isBelow(this.settings.breakpoint)) {
+    if (breakpoints.isBelow(this.settings.breakpoint)) {
       cl.add('is-in-responsive-mode');
     } else {
       cl.remove('is-in-responsive-mode');
@@ -191,7 +192,7 @@ CompositeForm.prototype = {
 
   /**
    * Destroys the component instance by removing it from its associated element.
-   * @returns {object} The component API for chaining.
+   * @returns {void}
    */
   destroy() {
     this.teardown();

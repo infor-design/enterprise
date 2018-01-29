@@ -1,4 +1,5 @@
 /* eslint-disable */
+import { utils } from '../utils/utils';
 
 /**
 *  A object containing all the supported Editors
@@ -70,7 +71,7 @@ const editors = {
       }
 
       if (useMask) {
-        column.maskOptions = Soho.utils.extend(true, {}, defaults, column.maskOptions);
+        column.maskOptions = utils.extend(true, {}, defaults, column.maskOptions);
         this.input.mask(column.maskOptions);
       }
 
@@ -205,7 +206,7 @@ const editors = {
             }
           }
         });
-      Soho.utils.fixSVGIcons($('#editor-popup'));
+      utils.fixSVGIcons($('#editor-popup'));
     };
 
     this.val = function () {

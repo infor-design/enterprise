@@ -1,18 +1,46 @@
-/* jshint esversion:6 */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
 // jQuery Components
-// import '../validation/validation.jquery';
+import '../validation/validation.jquery';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'datepicker';
 
 /**
  * Default DatePicker Options
+ * @namespace
+ * @property {boolean} showTime If true the time selector will be shown.
+ * @property {string} [timeFormat] Format to use time section fx HH:mm, defaults current locale settings.
+ * @property {number} [minuteInterval]
+ * @property {number} [secondInterval]
+ * @property {string} [mode] Time picker options: 'standard', 'range', this controls the time picker.
+ * @property {boolean} [roundToInterval] In time picker mode, if a non-matching minutes value is entered,
+ rounds the minutes value to the nearest interval when the field is blurred.
+ * @property {string} dateFormat Defaults to current locale but can be overriden to a specific format,
+ like like 'yyyy-MM-dd' iso8601 format.
+ * @property {boolean} disable  Disabled Dates Build up. `{
+   'dates'     : [],
+   'minDate'   : '',
+   'maxDate'   : '',
+   'dayOfWeek' : [],
+   'isEnable' : false
+ }`
+ * @property {boolean} showMonthYearPicker If true the month and year will render as dropdowns.
+ * @property {boolean} hideDays If true the days portion of the calendar will be hidden.
+ Usefull for Month/Year only formats.
+ * @property {boolean} customValidation If true the internal validation is disabled.
+ * @property {boolean} advanceMonths The number of months in each direction to show in
+ the dropdown for months (when initially opening)
+ * @property {boolean} showLegend If true a legend is show to associate dates.
+ * @property {array} legend  Legend Build up
+ for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
+ {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
+ * @property {string} calendarName The name of the calendar to use in instance of multiple calendars.
+ At this time only ar-SA and ar-EG locales have either 'gregorian' or
+ 'islamic-umalqura' as valid values.
+ *
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
@@ -21,7 +49,7 @@ const DATEPICKER_DEFAULTS = {
   secondInterval: undefined,
   mode: undefined,
   roundToInterval: undefined,
-  dateFormat: 'locale', // or can be a specific format like 'yyyy-MM-dd' iso8601 format
+  dateFormat: 'locale', // or can be a specific format
   placeholder: false,
   /** Disabling of dates
     *    dates: 'M/d/yyyy' or
@@ -55,42 +83,14 @@ const DATEPICKER_DEFAULTS = {
 };
 
 /**
-* A component to support date entry.
-*
-* @class DatePicker
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-* @param {boolean} showTime If true the time selector will be shown.
-* @param {string} timeFormat Format to use time section fx HH:mm, defaults current locale settings.
-* @param {string} mode Time picker options: 'standard', 'range', this controls the time picker.
-* @param {boolean} roundToInterval In time picker mode, if a non-matching minutes value is entered,
-rounds the minutes value to the nearest interval when the field is blurred.
-* @param {string} dateFormat  Defaults to current locale but can be overriden to a specific format
-* @param {boolean} disable  Disabled Dates Build up. `{
-  'dates'     : [],
-  'minDate'   : '',
-  'maxDate'   : '',
-  'dayOfWeek' : [],
-  'isEnable' : false
-}`
-* @param {boolean} showMonthYearPicker If true the month and year will render as dropdowns.
-* @param {boolean} hideDays If true the days portion of the calendar will be hidden.
-Usefull for Month/Year only formats.
-* @param {boolean} customValidation If true the internal validation is disabled.
-* @param {boolean} advanceMonths The number of months in each direction to show in
-the dropdown for months (when initially opening)
-* @param {boolean} showLegend If true a legend is show to associate dates.
-* @param {array} legend  Legend Build up
-for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
-{name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
-* @param {string} calendarName The name of the calendar to use in instance of multiple calendars.
-At this time only ar-SA and ar-EG locales have either 'gregorian' or
-'islamic-umalqura' as valid values.
-*/
+ * A component to support date entry.
+ * @class DatePicker
+ * @param {String} element The component element.
+ * @param {String} settings The component settings.
+ */
 function DatePicker(element, settings) {
-  this.settings = utils.mergeSettings(element, settings, DATEPICKER_DEFAULTS);
-
   this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, DATEPICKER_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);

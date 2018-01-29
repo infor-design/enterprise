@@ -1,4 +1,3 @@
-/* jshint esversion:6 */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -7,8 +6,19 @@ import { personalization } from '../personalize/personalize.bootstrap';
 // Default Settings
 const COMPONENT_NAME = 'colorpicker';
 
+/**
+ * Colorpicker Default Settings
+ * @namespace
+ * @property {string} colors An array of objects of the form.
+ * {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
+ * @property {string} showLabel  Show the label if true vs the hex value if false.
+ * @property {string} editable  If false, the field is readonly and transparent.
+ * I.E. The value cannot be typed only editable by selecting.
+ * @property {string} uppercase  If false, lower case hex is allowed.
+ * If true upper case hex is allowed. If showLabel is true this setting is ignored.
+ * @property {string} colorOnly If true the field will be shrunk to only show the color portion.
+ */
 const COLORPICKER_DEFAULTS = {
-
   // Theme key: MUST match with theme file name (ie: [filename: 'light-theme.css' -> 'light-theme'])
 
   // BORDERS
@@ -109,20 +119,11 @@ const COLORPICKER_DEFAULTS = {
 };
 
 /**
-* The ColorPicker Component is a trigger field with a listing colors that can be selected.
-*
-* @class ColorPicker
-* @param {string} element The plugin element for the constuctor
-* @param {string} settings The settings element.
-* @param {string} colors An array of objects of the form
-* {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
-* @param {string} showLabel  Show the label if true vs the hex value if false.
-* @param {string} editable  If false, the field is readonly and transparent.
-* I.E. The value cannot be typed only editable by selecting.
-* @param {string} uppercase  If false, lower case hex is allowed.
-* If true upper case hex is allowed. If showLabel is true this setting is ignored.
-* @param {string} colorOnly If true the field will be shrunk to only show the color portion.
-*/
+ * The ColorPicker Component is a trigger field with a listing colors that can be selected.
+ * @class ColorPicker
+ * @param {string} element The plugin element for the constuctor
+ * @param {string} settings The settings element.
+ */
 function ColorPicker(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COLORPICKER_DEFAULTS);
 

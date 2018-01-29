@@ -238,7 +238,7 @@ Autocomplete.prototype = {
     // if applicable. Each of these results is deep-copied.
     if (filterResult !== false) {
       filterResult.forEach((val, index) => {
-        let result = Soho.utils.extend(true, {}, val);
+        let result = utils.extend(true, {}, val);
         result = self.settings.resultIteratorCallback(result, index);
 
         if (self.settings.highlightMatchedText) {

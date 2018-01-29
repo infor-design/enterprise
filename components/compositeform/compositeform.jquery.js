@@ -1,7 +1,9 @@
 import { CompositeForm, COMPONENT_NAME } from './compositeform';
 
-/*
+/**
  * jQuery Component Wrapper for Composite Form
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
  */
 $.fn.compositeform = function (settings) {
   return this.each(function () {
