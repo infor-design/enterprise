@@ -21,25 +21,25 @@ A component to support date entry.
 
 **Parameters**
 
--   `showTime` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the time selector will be shown.
--   `timeFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The format to use on the time section fx HH:mm, defaults to current locale's settings.
--   `mode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Time picker mode: options: 'standard', 'range', this controls the avilable selections in the time picker.
--   `roundToInterval` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  In time picker mode, if a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
--   `dateFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Defaults to current locale but can be overriden to a specific format
--   `disable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Disabled Dates Build up. `{
+-   `showTime` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the time selector will be shown.
+-   `timeFormat` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The format to use on the time section fx HH:mm, defaults to current locale's settings.
+-   `mode` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Time picker mode: options: 'standard', 'range', this controls the avilable selections in the time picker.
+-   `roundToInterval` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  In time picker mode, if a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
+-   `dateFormat` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Defaults to current locale but can be overriden to a specific format
+-   `disable` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Disabled Dates Build up. `{
     'dates'     : [],
     'minDate'   : '',
     'maxDate'   : '',
     'dayOfWeek' : [],
     'isEnable' : false
     }`
--   `showMonthYearPicker` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the month and year will render as dropdowns.
--   `hideDays` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
--   `customValidation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the internal validation is disabled.
--   `advanceMonths` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  The number of months in each direction to show in the dropdown for months (when initially opening)
--   `showLegend` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true a legend is show to associate dates.
--   `legend` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
--   `calendarName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
+-   `showMonthYearPicker` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the month and year will render as dropdowns.
+-   `hideDays` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
+-   `customValidation` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the internal validation is disabled.
+-   `advanceMonths` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  The number of months in each direction to show in the dropdown for months (when initially opening)
+-   `showLegend` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true a legend is show to associate dates.
+-   `legend` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
+-   `calendarName` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
 
 ### isOpen
 
@@ -59,8 +59,8 @@ Set the Formatted value in the input
 
 **Parameters**
 
--   `date` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to set in date format.
--   `trigger` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true will trigger the change event.
+-   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to set in date format.
+-   `trigger` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true will trigger the change event.
 
 ### enable
 
@@ -94,7 +94,7 @@ This component fires the following events.
 
 **Parameters**
 
--   `listopened` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is opened
--   `listclosed` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is closed
--   `change` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by any means.
--   `input` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction.
+-   `listopened` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is opened
+-   `listclosed` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is closed
+-   `change` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by any means.
+-   `input` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction.
