@@ -20,10 +20,8 @@ export { Bullet } from './bullet/bullet';
 export { BusyIndicator } from './busyindicator/busyindicator';
 export { ColorPicker } from './colorpicker/colorpicker';
 export { Column } from './column/column';
-export { CompositeForm } from './compositeform/compositeform';
 export { CompletionChart } from './completion-chart/completion-chart';
 export { ContextualActionPanel } from './contextualactionpanel/contextualactionpanel';
-export { Datagrid } from './datagrid/datagrid';
 export { Drag } from './drag/drag';
 export { Dropdown } from './dropdown/dropdown';
 export { EmptyMessage } from './emptymessage/emptymessage';
@@ -32,7 +30,6 @@ export { Modal } from './modal/modal';
 export { About } from './about/about';
 export { Line } from './line/line';
 export { ListView } from './listview/listview';
-export { Lookup } from './lookup/lookup';
 export { SohoMaskedInput as MaskedInput } from './mask/masked-input';
 export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
@@ -54,11 +51,10 @@ export { Tree } from './tree/tree';
 export { Validator } from './validation/validator';
 export { Wizard } from './wizard/wizard';
 export { Zoom } from './zoom/zoom';
-// -- ex: dropdown/multiselect
 
 // Oraganisms
+export { CompositeForm } from './compositeform/compositeform';
+export { Datagrid } from './datagrid/datagrid';
 export { Header } from './header/header';
+export { Lookup } from './lookup/lookup';
 export { MultiTabs } from './tabs-multi/multi-tabs';
-// -- ex: datagrid
-// -- ex: lookup
-// -- ex: composite form

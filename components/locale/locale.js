@@ -179,8 +179,8 @@ const Locale = { //jshint ignore:line
     }
 
     //Convert if a string..
-    if (!(value instanceof Date)) {
-      var tDate = new Date(value);
+    if (!(value instanceof Date) && typeof value === 'string') {
+      var tDate = Locale.parseDate(value, attribs);
       if (isNaN(tDate) && attribs.date === 'datetime' &&
         value.substr(4, 1) === '-' &&
         value.substr(7, 1) === '-') {
@@ -194,6 +194,11 @@ const Locale = { //jshint ignore:line
         );
       }
       value = tDate;
+    }
+
+    if (!(value instanceof Date) && typeof value === 'number') {
+      var tDate2 = new Date(value);
+      value = tDate2;
     }
 
     // TODO: Can we handle this if (this.dff.state()==='pending')

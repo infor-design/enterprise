@@ -39,6 +39,7 @@ export { Tmpl } from './tmpl/tmpl';
 // Needed for Datagrid (Previous Globals) ====== /
 export { Formatters } from './datagrid/datagrid.formatters';
 export { Editors } from './datagrid/datagrid.editors';
+export { GroupBy } from './datagrid/datagrid.groupby';
 
 // Components ================================= /
 import * as components from './components';
