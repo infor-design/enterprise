@@ -15,6 +15,7 @@ export { Icon } from './icons/icons';
 export { Accordion } from './accordion/accordion';
 export { ApplicationMenu } from './applicationmenu/applicationmenu';
 export { Autocomplete } from './autocomplete/autocomplete';
+export { Bar } from './bar/bar';
 export { Bullet } from './bullet/bullet';
 export { BusyIndicator } from './busyindicator/busyindicator';
 export { ColorPicker } from './colorpicker/colorpicker';

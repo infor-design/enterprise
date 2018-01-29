@@ -18,7 +18,9 @@
 
 ## API Details
 
-### Dataset Settings
+{{api-details}}
+
+## Dataset Settings
 
 * `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - The name to show on the y axis for the bar
 * `value` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** - The raw data value for the bar.

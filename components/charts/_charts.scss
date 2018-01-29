@@ -61,53 +61,6 @@
     fill: $chart-line-color;
   }
 
-  // Bar Chart Style
-  .bar,
-  .arc {
-    cursor: pointer;
-  }
-
-  .arc {
-    stroke: $chart-arc-stroke;
-  }
-
-  .bar {
-    cursor: pointer;
-    stroke: transparent;
-    stroke-width: 1px;
-  }
-
-  //Bar Grouped Style
-  &.column-chart {
-    .domain {
-      stroke: transparent;
-    }
-
-    .tick {
-      line {
-        stroke: $chart-line-color;
-      }
-
-      &.tick0 {
-        line {
-          stroke: $chart-line-color-axis;
-        }
-      }
-
-      &.is-selected {
-        font-weight: bold;
-      }
-    }
-
-    rect {
-      cursor: pointer;
-
-      &.is-not-selected {
-        opacity: .35;
-      }
-    }
-  }
-
   // Svg Hidden
   .is-hidden {
     @include opacity(0);

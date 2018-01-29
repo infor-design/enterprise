@@ -36,7 +36,7 @@ const COLUMN_DEFAULTS = {
  * A column chart displays a series as a set of vertical bars that are grouped by category.
  * Column charts are useful for showing data changes over a period of time or for illustrating
  * comparisons among items.
- * @class Line
+ * @class Column
  * @param {string} element The plugin element for the constuctor
  * @param {string} settings The settings element.
  */
