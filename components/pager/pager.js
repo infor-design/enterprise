@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -8,15 +9,26 @@ import '../icons/icons.jquery';
 import '../popupmenu/popupmenu.jquery';
 import '../tooltip/tooltip.jquery';
 
-/**
- *
- */
-let COMPONENT_NAME = 'pager';
+// The name of this component.
+const COMPONENT_NAME = 'pager';
 
 /**
- *
- */
-let PAGER_DEFAULTS = {
+* @namespace
+* @property {string} componentAPI  If defined, becomes the definitive way to call methods on
+* parent component.
+* @property {string} type  Different types of pagers: list, table and more
+* @property {string} position  Can be on 'bottom' or 'top'.
+* @property {number} activePage  Start on this page
+* @property {boolean} hideOnOnePage  If true, hides the pager if there is only one page worth of
+* results.
+* @property {Function} source  Call Back Function for Pager Data Source
+* @property {number} pagesize  Can be calculated or a specific number
+* @property {array} pagesizes  Array of numbers of the page size selector
+* @property {boolean} showPageSizeSelector  If false will not show page size selector
+* @property {boolean} indeterminate  If true will not show anything that lets you go to a specific
+* page.
+*/
+const PAGER_DEFAULTS = {
   componentAPI: undefined,
   type: 'list',
   position: 'bottom',
@@ -29,62 +41,61 @@ let PAGER_DEFAULTS = {
   indeterminate: false
 };
 
-
-let PAGER_NON_NUMBER_BUTTON_SELECTOR = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
-
+const PAGER_NON_NUMBER_BUTTON_SELECTOR = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
 
 /**
 * The Pager Component supports paging on lists.
-*
 * @class Pager
-* @param {string} componentAPI  If defined, becomes the definitive way to call methods on parent component.
-* @param {string} type  Different types of pagers: list, table and more
-* @param {string} position  Can be on 'bottom' or 'top'.
-* @param {number} activePage  Start on this page
-* @param {boolean} hideOnOnePage  If true, hides the pager if there is only one page worth of results.
-* @param {Function} source  Call Back Function for Pager Data Source
-* @param {number} pagesize  Can be calculated or a specific number
-* @param {array} pagesizes  Array of numbers of the page size selector
-* @param {boolean} showPageSizeSelector  If false will not show page size selector
-* @param {boolean} indeterminate  If true will not show anything that lets you go to a specific page
+* @param {object} element The component element.
+* @param {object} [settings] The component settings.
 *
 */
 function Pager(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PAGER_DEFAULTS);
+  this.settings.dataset = settings.dataset; // by pass deep copy
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
 }
 
-
 Pager.prototype = {
 
   pagerInfo: {},
 
-  init: function() {
+  /**
+   * Init the pager.
+   * @private
+   * @returns {void}
+   */
+  init() {
     this.setup();
     this.createPagerBar();
-    this.setActivePage(this.settings.activePage, true); //Get First Page
+    this.setActivePage(this.settings.activePage, true); // Get First Page
     this.renderBar();
     this.renderPages('initial');
     this.handleEvents();
   },
 
-  setup: function() {
-
+  /**
+   * Setting the internals of the pager.
+   * @private
+   * @returns {void}
+   */
+  setup() {
     // Add [pagesize] if not found in [pagesizes]
-    if($.inArray(this.settings.pagesize, this.settings.pagesizes) === -1) {
-      var sortNumber = function (a, b) {
+    if ($.inArray(this.settings.pagesize, this.settings.pagesizes) === -1) {
+      const sortNumber = function (a, b) {
         return a - b;
       };
       this.settings.pagesizes.push(this.settings.pagesize);
       this.settings.pagesizes = this.settings.pagesizes.sort(sortNumber);
     }
 
-    var widgetContainer = this.element.parents('.card, .widget');
+    const widgetContainer = this.element.parents('.card, .widget');
 
-    // Adjust for the possibility of the pager being attached to a Table instead of normal grid markup
+    // Adjust for the possibility of the pager being attached to a Table instead
+    // of normal grid markup
     if (this.element.is('tbody')) {
       this.isTable = true;
       this.settings.type = 'table';
@@ -100,7 +111,7 @@ Pager.prototype = {
     }
 
     // If contained by a widget/card container, build some settings for that
-    var listviewContainer = this.element.is('.listview');
+    const listviewContainer = this.element.is('.listview');
     if (listviewContainer.length) {
       this.isTable = false;
       this.settings.type = 'list';
@@ -116,32 +127,36 @@ Pager.prototype = {
     return this;
   },
 
-  createPagerBar: function () {
+  /**
+   * Add the pager dom elements.
+   * @private
+   */
+  createPagerBar() {
     this.pagerBar = this.element.prev('.pager-toolbar');
 
     if (this.pagerBar.length === 0) {
       this.pagerBar = $('<ul class="pager-toolbar"></ul>');
-      var buttons = '<li class="pager-prev">' +
-          '<a href="#" rel="prev" title="PreviousPage">' + $.createIcon({ icon: 'previous-page' }) +
-            '<span class="audible">' + Locale.translate('PreviousPage') + '</span>' +
+      let buttons = `${'<li class="pager-prev">' +
+          '<a href="#" rel="prev" title="PreviousPage">'}${$.createIcon({ icon: 'previous-page' })
+      }<span class="audible">${Locale.translate('PreviousPage')}</span>` +
           '</a>' +
         '</li>' +
         '<li class="pager-next">' +
-          '<a href="#" rel="next" title="NextPage">' + $.createIcon({ icon: 'next-page' }) +
-            '<span class="audible">' + Locale.translate('NextPage') + '</span>' +
+          `<a href="#" rel="next" title="NextPage">${$.createIcon({ icon: 'next-page' })
+          }<span class="audible">${Locale.translate('NextPage')}</span>` +
           '</a>' +
         '</li>';
 
       if (this.settings.type === 'table') {
-        buttons = '<li class="pager-first">' +
-          '<a href="#" title="FirstPage">' + $.createIcon({ icon: 'first-page' }) +
-            '<span class="audible">' + Locale.translate('FirstPage') + '</span>' +
+        buttons = `${'<li class="pager-first">' +
+          '<a href="#" title="FirstPage">'}${$.createIcon({ icon: 'first-page' })
+        }<span class="audible">${Locale.translate('FirstPage')}</span>` +
           '</a>' +
-        '</li>' +
-        buttons +
-        '<li class="pager-last">' +
-          '<a href="#" title="LastPage">' + $.createIcon({ icon: 'last-page' }) +
-            '<span class="audible">' + Locale.translate('LastPage') + '</span>' +
+        `</li>${
+          buttons
+        }<li class="pager-last">` +
+          `<a href="#" title="LastPage">${$.createIcon({ icon: 'last-page' })
+          }<span class="audible">${Locale.translate('LastPage')}</span>` +
           '</a>' +
         '</li>';
       }
@@ -153,29 +168,27 @@ Pager.prototype = {
 
     if (this.isTable) {
       this.mainContainer.after(this.pagerBar);
+    } else if (this.settings.position === 'bottom') {
+      this.element.after(this.pagerBar);
     } else {
-      if (this.settings.position ==='bottom') {
-        this.element.after(this.pagerBar);
-      } else {
-        this.element.before(this.pagerBar);
-      }
+      this.element.before(this.pagerBar);
     }
 
     // Inside of Listviews, place the pager bar inside of the card/widget footer
-    var widgetContainer = this.element.closest('.card, .widget');
+    const widgetContainer = this.element.closest('.card, .widget');
     if (widgetContainer.length) {
-      var self = this,
-        widgetTypes = ['widget', 'card'];
+      const self = this;
+      const widgetTypes = ['widget', 'card'];
 
-      widgetTypes.forEach(function(type) {
-        var widgetContent = self.element.closest('.' + type + '-content');
+      widgetTypes.forEach((type) => {
+        const widgetContent = self.element.closest(`.${type}-content`);
         if (!widgetContent.length) {
           return;
         }
 
-        var widgetFooter = widgetContent.next('.' + type + '-footer');
+        let widgetFooter = widgetContent.next(`.${type}-footer`);
         if (!widgetFooter.length) {
-          widgetFooter = $('<div class="'+ type +'-footer"></div>').insertAfter(widgetContent);
+          widgetFooter = $(`<div class="${type}-footer"></div>`).insertAfter(widgetContent);
         }
 
         self.pagerBar.appendTo(widgetFooter);
@@ -185,37 +198,40 @@ Pager.prototype = {
     this.pagerBar.find('a').tooltip();
   },
 
-  // Attach All relevant events
-  handleEvents: function () {
-    var self = this;
+  /**
+   * Attach All relevant events
+   * @private
+   */
+  handleEvents() {
+    const self = this;
 
     // Set element to be focused after paging
-    self.element.on('afterpaging.pager', function () {
-      var isVisible = $('li[tabindex]:visible, td[tabindex]:visible', self.element);
+    self.element.on('afterpaging.pager', () => {
+      const isVisible = $('li[tabindex]:visible, td[tabindex]:visible', self.element);
       if (!isVisible.length) {
         $('li:visible:first, td:visible:first', self.element).attr('tabindex', '0');
       }
 
       // Fix: Firefox by default to not allow keyboard focus on links
-      $('li a', self.pagerBar).each(function() {
-        var a = $(this),
-          li = a.closest('li');
+      $('li a', self.pagerBar).each(function () {
+        const a = $(this);
+        const li = a.closest('li');
 
         if (!a.is('[disabled]')) {
-          li.attr('tabindex', '0').on('focus.pager', function() {
+          li.attr('tabindex', '0').on('focus.pager', function () {
             $('a', this).focus();
           });
         }
       });
     });
 
-    //Attach button click and touch
+    // Attach button click and touch
     this.pagerBar.on('click.pager', 'a', function (e) {
-      var li = $(this).parent();
+      const li = $(this).parent();
       e.preventDefault();
 
       if ($(this).attr('disabled')) {
-        return;
+        return false;
       }
 
       if (li.is('.pager-prev')) {
@@ -224,7 +240,7 @@ Pager.prototype = {
       }
 
       if (li.is('.pager-next')) {
-        self.setActivePage((self.activePage === -1 ? 0 : self.activePage)  + 1, false, 'next');
+        self.setActivePage((self.activePage === -1 ? 0 : self.activePage) + 1, false, 'next');
         return false;
       }
 
@@ -234,44 +250,45 @@ Pager.prototype = {
       }
 
       if (li.is('.pager-last')) {
-        self.setActivePage(self.pageCount(), false, 'last');  //TODO Calculate Last Page?
+        self.setActivePage(self.pageCount(), false, 'last'); // TODO Calculate Last Page?
         return false;
       }
 
-      //Go to the page via the index of the button
+      // Go to the page via the index of the button
       self.setActivePage($(this).parent().index() + (self.settings.type === 'table' ? -1 : 0), false, 'page');
 
       return false;
     })
-    .on('focus.pager', 'a', function() {
-      var li = $(this).parent('li');
-      li.addClass('is-focused');
-    })
-    .on('blur.pager', 'a', function() {
-      var li = $(this).parent('li');
-      li.removeClass('is-focused');
-    });
+      .on('focus.pager', 'a', function () {
+        const li = $(this).parent('li');
+        li.addClass('is-focused');
+      })
+      .on('blur.pager', 'a', function () {
+        const li = $(this).parent('li');
+        li.removeClass('is-focused');
+      });
 
-    //Toolbar functionality
+    // Toolbar functionality
     this.pagerBar.on('keydown.pager', 'a', function (e) {
       e = e || window.event;
-      var key = e.which || e.keyCode || e.charCode || false,
-        parent = $(this).parent(),
-        btn = ((key === 37 || key === 9 && e.shiftKey) ? parent.prev() : (key === 39 ? parent.next() : $()));
+      const key = e.which || e.keyCode || e.charCode || false;
+      const parent = $(this).parent();
+      let btn = ((key === 37 || key === 9 && e.shiftKey) ? parent.prev() :  //eslint-disable-line
+        (key === 39 ? parent.next() : $()));  //eslint-disable-line
 
       if (key === 9 && e.shiftKey && parent.prev().is('.pager-prev, .pager-first, .pager-count') ||
           key === 9 && e.shiftKey && parent.is('.pager-prev, .pager-first')) {
         parent.removeAttr('tabindex');
-        setTimeout(function () {
+        setTimeout(() => {
           parent.attr('tabindex', '0');
         }, 0);
       // Handle pressing Enter on arrow icons and prevent pagerBar.onTouchClick from being triggered
       } else if (key === 13) {
-        var li = $(this).parent();
+        const li = $(this).parent();
         e.preventDefault();
 
         if ($(this).attr('disabled')) {
-          return;
+          return false;
         }
 
         if (li.is('.pager-prev')) {
@@ -280,7 +297,7 @@ Pager.prototype = {
         }
 
         if (li.is('.pager-next')) {
-          self.setActivePage((self.activePage === -1 ? 0 : self.activePage)  + 1, false, 'next');
+          self.setActivePage((self.activePage === -1 ? 0 : self.activePage) + 1, false, 'next');
           return false;
         }
 
@@ -290,7 +307,7 @@ Pager.prototype = {
         }
 
         if (li.is('.pager-last')) {
-          self.setActivePage(self.pageCount(), false, 'last');  //TODO Calculate Last Page?
+          self.setActivePage(self.pageCount(), false, 'last'); // TODO Calculate Last Page?
           return false;
         }
       }
@@ -299,12 +316,16 @@ Pager.prototype = {
       if (btn.length && !btn.is('[disabled]')) {
         btn.focus();
       }
+      return false;
     });
   },
 
-  //Show page size selector
-  showPageSizeSelector: function(toggleOption) {
-    toggleOption = (toggleOption + '').toLowerCase() === 'true';
+  /**
+   * Show page size selector
+   * @param  {boolean} toggleOption Toggle vs show
+   */
+  showPageSizeSelector(toggleOption) {
+    toggleOption = (`${toggleOption}`).toLowerCase() === 'true';
     this.settings.showPageSizeSelector = toggleOption;
     if (toggleOption) {
       this.isShowPageSizeSelectorCall = toggleOption;
@@ -314,10 +335,16 @@ Pager.prototype = {
     }
   },
 
-  //Set or Get Current Page
-  setActivePage: function(pagingInfo, force, op) {
-    var lis = this.pagerBar.find(PAGER_NON_NUMBER_BUTTON_SELECTOR),
-      pageNum;
+  /**
+   * Set or Get Current Page.
+   * @param  {object} pagingInfo The paging info object
+   * @param  {boolean} force Force the update
+   * @param  {string} op The paging operation type.
+   * @returns {void}
+   */
+  setActivePage(pagingInfo, force, op) {
+    const lis = this.pagerBar.find(PAGER_NON_NUMBER_BUTTON_SELECTOR);
+    let pageNum;
 
     // Backwards compatibility with having "pageNum" as the first argument
     // instead of "pagingInfo"
@@ -340,23 +367,26 @@ Pager.prototype = {
         isNaN(pageNum) ||
         pageNum > this.pageCount() ||
         (pageNum === this.activePage && !force)) {
-
       this.renderBar(pagingInfo);
       return this.activePage;
     }
 
     this.activePage = pageNum;
 
-    //Remove selected
+    // Remove selected
     if (!this.settings.source) {
       lis.filter('.selected').removeClass('selected').removeAttr('aria-selected')
-        .find('a').removeAttr('aria-disabled')
-          .find('.audible').html(Locale.translate('Page'));
+        .find('a')
+        .removeAttr('aria-disabled')
+        .find('.audible')
+        .html(Locale.translate('Page'));
 
-      //Set selected Page
-      lis.eq(pageNum-1).addClass('selected').attr('aria-selected', true)
-        .find('a').attr('aria-disabled', true)
-          .find('.audible').html(Locale.translate('PageOn'));
+      // Set selected Page
+      lis.eq(pageNum - 1).addClass('selected').attr('aria-selected', true)
+        .find('a')
+        .attr('aria-disabled', true)
+        .find('.audible')
+        .html(Locale.translate('PageOn'));
     }
 
     this.renderBar(pagingInfo);
@@ -369,29 +399,38 @@ Pager.prototype = {
 
   _pageCount: 0,
 
-  //Get/Set Total Number of pages
-  pageCount: function(pages) {
-    var self = this,
-      isShowPageSizeSelectorCall = this.isShowPageSizeSelectorCall;
+  /**
+   * Get the Total Number of pages
+   * @private
+   * @param  {object} pages The pages to set.
+   * @returns {void}
+   */
+  pageCount(pages) {
+    const self = this;
+    const isShowPageSizeSelectorCall = this.isShowPageSizeSelectorCall;
 
     // Remove call, after cached
     delete this.isShowPageSizeSelectorCall;
 
     if (pages === undefined && this.settings.indeterminate) {
-      this._pageCount = this.settings.pagesize;
+      this._pageCount = this.settings.pagesize; //eslint-disable-line
     }
 
     if (pages === undefined && !this.settings.source && !isShowPageSizeSelectorCall) {
-      return this._pageCount;
+      return this._pageCount; //eslint-disable-line
     }
 
     if (pages !== undefined) {
-      this._pageCount = pages;
+      this._pageCount = pages;  //eslint-disable-line
     }
 
-    //Add in fake pages
+    // Add in fake pages
     if (!this.isTable) {
-      var i, thisClass, thisText, isAriaSelected, isAriaDisabled;
+      let i;
+      let thisClass;
+      let thisText;
+      let isAriaSelected;
+      let isAriaDisabled;
       this.pagerBar.find(PAGER_NON_NUMBER_BUTTON_SELECTOR).remove();
 
       for (i = pages; i > 0; i--) {
@@ -407,56 +446,56 @@ Pager.prototype = {
           isAriaDisabled = '';
         }
 
-        $('<li '+ thisClass + isAriaSelected +'><a href="#" '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
+        $(`<li ${thisClass}${isAriaSelected}><a href="#" ${isAriaDisabled}><span class="audible">${thisText} </span>${i}</a></li>`).insertAfter(this.pagerBar.find('.pager-prev'));
       }
     }
 
     if (this.isTable && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
-      var text = Locale.translate('PageOf');
-      text = text.replace('{0}', '<input name="pager-pageno" value="' + this.activePage + '">');
-      text = text.replace('{1}', '<span class="pager-total-pages">' + (pages || 1) + '</span>');
-      $('<li class="pager-count"><label>'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
+      let text = Locale.translate('PageOf');
+      text = text.replace('{0}', `<input name="pager-pageno" value="${this.activePage}">`);
+      text = text.replace('{1}', `<span class="pager-total-pages">${pages || 1}</span>`);
+      $(`<li class="pager-count"><label>${text} </label>`).insertAfter(this.pagerBar.find('.pager-prev'));
 
-      //Setup interactivty with the numeric page input
-      var lastValue = null;
+      // Setup interactivty with the numeric page input
+      let lastValue = null;
 
       this.pagerBar.find('.pager-count input')
-      .on('focus', function () {
-        lastValue = $(this).val();
-      }).on('blur', function () {
-        if (lastValue !== $(this).val()) {
-          $(this).val(self.setActivePage(parseInt($(this).val()), false, 'page'));
-        }
-      }).on('keydown', function (e) {
-        if (e.which === 13) {
-          self.setActivePage(parseInt($(this).val()), false, 'page');
+        .on('focus', function () {
+          lastValue = $(this).val();
+        }).on('blur', function () {
+          if (lastValue !== $(this).val()) {
+            $(this).val(self.setActivePage(parseInt($(this).val(), 10), false, 'page'));
+          }
+        }).on('keydown', function (e) {
+          if (e.which === 13) {
+            self.setActivePage(parseInt($(this).val(), 10), false, 'page');
 
-          e.stopPropagation();
-          e.preventDefault();
-        }
-      });
+            e.stopPropagation();
+            e.preventDefault();
+          }
+        });
     }
 
-    //Add functionality to change page size.
+    // Add functionality to change page size.
     if (this.isTable && this.pagerBar.find('.btn-menu').length === 0 && self.settings.showPageSizeSelector) {
-      var pageSize = $('<li class="pager-pagesize"></li>'),
-        pageSizeButton = $('<button type="button" class="btn-menu">' +
-          '<span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) + '</span> ' +
-          $.createIcon({ icon: 'dropdown' }) +
-          ' </button>').appendTo(pageSize);
+      const pageSize = $('<li class="pager-pagesize"></li>');
+      const pageSizeButton = $(`${'<button type="button" class="btn-menu">' +
+        '<span>'}${Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize)}</span> ${
+        $.createIcon({ icon: 'dropdown' })
+      } </button>`).appendTo(pageSize);
 
       pageSize.insertAfter(this.pagerBar.find('.pager-last'));
 
-      var menu = $('<ul class="popupmenu has-icons"></ul>');
+      const menu = $('<ul class="popupmenu has-icons"></ul>');
 
-      for (var k = 0; k < self.settings.pagesizes.length; k++) {
-        var size = self.settings.pagesizes[k];
-        menu.append('<li '+ (size === self.settings.pagesize ? ' class="is-checked"' : '') +'><a href="#">' + size + '</a></li>');
+      for (let k = 0; k < self.settings.pagesizes.length; k++) {
+        const size = self.settings.pagesizes[k];
+        menu.append(`<li ${size === self.settings.pagesize ? ' class="is-checked"' : ''}><a href="#">${size}</a></li>`);
       }
 
       pageSizeButton.after(menu);
 
-      var popupOpts = {
+      const popupOpts = {
         placementOpts: {
           parent: pageSizeButton,
           parentXAlignment: (this.isRTL ? 'left' : 'right'),
@@ -464,11 +503,11 @@ Pager.prototype = {
         }
       };
 
-      pageSizeButton.popupmenu(popupOpts).on('selected.pager', function (e, args) {
-        var tag = args;
+      pageSizeButton.popupmenu(popupOpts).on('selected.pager', (e, args) => {
+        const tag = args;
         tag.closest('.popupmenu').find('.is-checked').removeClass('is-checked');
         tag.parent('li').addClass('is-checked');
-        self.settings.pagesize = parseInt(tag.text());
+        self.settings.pagesize = parseInt(tag.text(), 10);
 
         if (self.settings.componentAPI) {
           self.settings.componentAPI.settings.pagesize = self.settings.pagesize;
@@ -477,17 +516,21 @@ Pager.prototype = {
       });
     }
 
-    var pattern = (''+ this._pageCount).replace(/\d/g, '#');
-    this.pagerBar.find('.pager-count input').attr('data-mask', '').mask({pattern: pattern, mode: 'number', processOnInitialize: false});
+    const pattern = (`${this._pageCount}`).replace(/\d/g, '#');
+    this.pagerBar.find('.pager-count input').attr('data-mask', '').mask({ pattern, mode: 'number', processOnInitialize: false });
 
     this._pageCount = this._pageCount || 1;
 
     return this._pageCount;
   },
 
-  // Reliably gets all the pre-rendered elements in the container and returns them for use.
-  getPageableElements: function() {
-    var elements = this.element.children().not('.datagrid-expandable-row');
+  /**
+   * Reliably gets all the pre-rendered elements in the container and returns them for use.
+   * @private
+   * @returns {array} TThe pagable items
+   */
+  getPageableElements() {
+    let elements = this.element.children().not('.datagrid-expandable-row');
 
     // Adjust for cases where the root is a <ul>
     if (elements.is('ul')) {
@@ -504,38 +547,40 @@ Pager.prototype = {
   /**
    * Renders the pager bar based on derived or forced settings.
    * @private
-   * @param {SohoPagingInfo} pagingInfo - an object containing information on how to render the pager.
+   * @param {SohoPagingInfo} pagingInfo - an object containing information on how to
+   * render the pager.
    * @returns {undefined}
    */
-  renderBar: function(pagingInfo) {
-    //How many can fit?
-    var pb = this.pagerBar,
-      elems, pc,
-      width = (this.element.parent().width() / pb.find('li:first').width()),
-      VISIBLE_BUTTONS = 3, // Take out the ones that should be visible (buttons and selected)
-      howMany = Math.floor(width - VISIBLE_BUTTONS);
+  renderBar(pagingInfo) {
+    // How many can fit?
+    const pb = this.pagerBar;
+    let elems;
+    let pc;
+    const width = (this.element.parent().width() / pb.find('li:first').width());
+    const VISIBLE_BUTTONS = 3; // Take out the ones that should be visible (buttons and selected)
+    const howMany = Math.floor(width - VISIBLE_BUTTONS);
 
     if (!pagingInfo) {
       pagingInfo = {};
     }
 
-    //Check Data Attr
+    // Check Data Attr
     if (this.element.attr('data-pagesize')) {
       this.settings.pagesize = this.element.attr('data-pagesize');
     }
 
-    //Adjust Page count numbers
+    // Adjust Page count numbers
     if (!this.settings.source) {
-      var pageableLength = this.getPageableElements().not('.is-filtered').length;
-      pc = Math.ceil(pageableLength/this.settings.pagesize);
+      const pageableLength = this.getPageableElements().not('.is-filtered').length;
+      pc = Math.ceil(pageableLength / this.settings.pagesize);
 
       if (this.isTable) {
-        var isFiltered = function(value) {
+        const isFiltered = function (value) {
           return !value.isFiltered;
-        },
-        dataLength = this.settings.dataset.filter(isFiltered).length;
+        };
+        const dataLength = this.settings.dataset.filter(isFiltered).length;
 
-        pc = Math.ceil(dataLength/this.settings.pagesize);
+        pc = Math.ceil(dataLength / this.settings.pagesize);
       }
       this.pageCount(pc);
     }
@@ -554,13 +599,13 @@ Pager.prototype = {
       .text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
 
     // Refresh Disabled
-    var prev = pb.find('.pager-prev a'),
-      next = pb.find('.pager-next a'),
-      first = pb.find('.pager-first a'),
-      last = pb.find('.pager-last a'),
-      prevGroup = prev.add(first).add('.pager-prev').add('.pager-first'),
-      nextGroup = next.add(last).add('.pager-next').add('.pager-last'),
-      disabledAttrs = {'disabled': 'disabled', 'tabindex': -1};
+    const prev = pb.find('.pager-prev a');
+    const next = pb.find('.pager-next a');
+    const first = pb.find('.pager-first a');
+    const last = pb.find('.pager-last a');
+    const prevGroup = prev.add(first).add('.pager-prev').add('.pager-first');
+    const nextGroup = next.add(last).add('.pager-next').add('.pager-last');
+    const disabledAttrs = { disabled: 'disabled', tabindex: -1 };
 
     // Reset all pager buttons' disabled/focusable states
     this.pagerBar[0].classList.remove('hidden');
@@ -575,20 +620,22 @@ Pager.prototype = {
     }
 
     // First page
-    if (pagingInfo.firstPage === true || (pagingInfo.firstPage === undefined && this.activePage === 1)) {
+    if (pagingInfo.firstPage === true ||
+      (pagingInfo.firstPage === undefined && this.activePage === 1)) {
       prevGroup.attr(disabledAttrs);
 
       if (pagingInfo.lastPage !== true) {
-        nextGroup.attr({'tabIndex': 0});
+        nextGroup.attr({ tabIndex: 0 });
       }
     }
 
     // Last page
-    if (pagingInfo.lastPage === true || (pagingInfo.lastPage === undefined && this.activePage === this.pageCount())) {
+    if (pagingInfo.lastPage === true ||
+      (pagingInfo.lastPage === undefined && this.activePage === this.pageCount())) {
       nextGroup.attr(disabledAttrs);
 
       if (pagingInfo.firstPage !== true) {
-        prevGroup.attr({'tabindex': 0});
+        prevGroup.attr({ tabindex: 0 });
       }
     }
 
@@ -606,44 +653,45 @@ Pager.prototype = {
       }
 
       elems.each(function () {
-        var li = $(this);
+        const li = $(this);
         if (pb.find('.pager-next').offset().top - pb.offset().top > 1 && !li.is('.selected')) {
           $(this).hide();
         }
       });
-
     }
   },
 
-  // Render Paged Items
-  renderPages: function(op, callback) {
-    var expr,
-      self = this,
-      request = {
-        activePage: self.activePage,
-        pagesize: self.settings.pagesize,
-        type: op,
-        total: self.settings.componentAPI ? self.settings.componentAPI.settings.dataset.length : -1
-      };
+  /**
+   * Render a page of items.
+   * @param  {object} op The paging operation.
+   * @param  {function} callback The pager callback.
+   */
+  renderPages(op, callback) {
+    let expr;
+    const self = this;
+    const request = {
+      activePage: self.activePage,
+      pagesize: self.settings.pagesize,
+      type: op,
+      total: self.settings.componentAPI ? self.settings.componentAPI.settings.dataset.length : -1
+    };
 
-    //Make an ajax call and wait
-    setTimeout(function () {
-      var doPaging = self.element.triggerHandler('beforepaging', request);
+    // Make an ajax call and wait
+    setTimeout(() => {
+      const doPaging = self.element.triggerHandler('beforepaging', request);
       if (doPaging === false) {
         return;
       }
 
       if (self.settings.source && op) {
-        var response;
-
-        response = function(data, pagingInfo) {
+        const response = function (data, pagingInfo) {
           if (pagingInfo && pagingInfo.activePage) {
             if (pagingInfo.activePage > -1) {
               self.activePage = pagingInfo.activePage;
             }
           }
 
-          //Render Data
+          // Render Data
           pagingInfo.preserveSelected = true;
 
           // Call out to the component's API to pull in dataset information.
@@ -654,10 +702,9 @@ Pager.prototype = {
             callback(true);
           }
 
-          setTimeout(function () {
+          setTimeout(() => {
             self.element.trigger('afterpaging', pagingInfo);
-          },1);
-          return;
+          }, 1);
         };
 
         if (self.settings.componentAPI.sortColumn && self.settings.componentAPI.sortColumn.sortId) {
@@ -667,35 +714,37 @@ Pager.prototype = {
         }
 
         if (self.settings.componentAPI.filterExpr) {
-           request.filterExpr = self.settings.componentAPI.filterExpr;
+          request.filterExpr = self.settings.componentAPI.filterExpr;
         }
         self.settings.source(request, response);
       }
 
-      //Make an ajax call and wait
+      // Make an ajax call and wait
       self.element.trigger('paging', request);
-      var elements = self.getPageableElements();
+      const elements = self.getPageableElements();
 
-      //Render page objects
+      // Render page objects
       if (!self.settings.source) {
-        var rows = self.settings.pagesize;
+        const rows = self.settings.pagesize;
 
         self.updatePagingInfo(request);
 
-        if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function' && request.type && request.type !=='initial') {
+        if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function' && request.type && request.type !== 'initial') {
           self.settings.componentAPI.renderRows();
         }
 
         elements.hide();
 
-        //collapse expanded rows
+        // collapse expanded rows
         self.element.children()
           .filter('.datagrid-expandable-row.is-expanded')
-            .removeClass('is-expanded').hide()
-            .prev().removeClass('.is-expanded')
-              .find('.plus-minus').removeClass('active');
+          .removeClass('is-expanded').hide()
+          .prev()
+          .removeClass('.is-expanded')
+          .find('.plus-minus')
+          .removeClass('active');
 
-        expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ rows +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * rows) +'):gt('+ (((self.activePage-1) * rows) -1) +')');
+        expr = (self.activePage === 1 ? `:not(".is-filtered"):lt(${rows})` : `:not(".is-filtered"):lt(${(self.activePage) * rows}):gt(${((self.activePage - 1) * rows) - 1})`);
 
         elements.filter(expr).show();
       } else {
@@ -705,16 +754,16 @@ Pager.prototype = {
       if (!self.settings.source) {
         self.element.trigger('afterpaging', request);
       }
-
     }, 0);
   },
 
-
   /**
-   * @param {object} [settings]
-   * @returns {this}
+   * Update the component and optionally apply new settings.
+   *
+   * @param  {object} settings the settings to update to.
+   * @returns {object} The plugin api for chaining.
    */
-  updated: function(settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
@@ -722,18 +771,21 @@ Pager.prototype = {
     return this;
   },
 
-
   /**
    * Updates this instance of pager with externally-provided settings.
    * @param {object} pagingInfo - contains settings that will change buttons on the pager.
    * @param {number} pagingInfo.pagesize - the number of items visible per page
    * @param {number} pagingInfo.total - the total number of pages
    * @param {number} pagingInfo.activePage - the currently visible page
-   * @param {boolean} [pagingInfo.firstPage=false] - passed if the currently visible page is the first one
-   * @param {boolean} [pagingInfo.lastPage=false] - passed if the currently visible page is the last one
-   * @param {boolean} [pagingInfo.hideDisabledPagers=false] - causes the pager to become completely hidden if all buttons are disabled
+   * @param {boolean} [pagingInfo.firstPage=false] - passed if the currently visible page is the
+   * first one
+   * @param {boolean} [pagingInfo.lastPage=false] - passed if the currently visible page is the
+   * last one
+   * @param {boolean} [pagingInfo.hideDisabledPagers=false] - causes the pager to become completely
+   * hidden if all buttons are disabled
+   * @returns {void}
    */
-  updatePagingInfo: function(pagingInfo) {
+  updatePagingInfo(pagingInfo) {
     if (!pagingInfo) {
       return;
     }
@@ -752,23 +804,30 @@ Pager.prototype = {
     }
 
     if (this.settings.source) {
-      this._pageCount = Math.ceil(pagingInfo.total/this.settings.pagesize);
-      //Set first and last page if passed
+      this._pageCount = Math.ceil(pagingInfo.total / this.settings.pagesize);
+      // Set first and last page if passed
       // If we get a page number as a result, rendering has already happened and
       // we should not attempt to re-render.
-      return this.setActivePage(pagingInfo, false, 'pageinfo');
+      this.setActivePage(pagingInfo, false, 'pageinfo');
+      return;
     }
 
     this.renderBar(pagingInfo);
   },
 
-  // to reclaim the pager height so that datagrid can use it's full container
-  hidePagerBar: function(pagingInfo) {
+  /**
+   * To reclaim the pager height so that datagrid can use it's full container
+   * @private
+   * @param  {object} pagingInfo The pager states.
+   * @returns {void}
+   */
+  hidePagerBar(pagingInfo) {
     if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
       return true;
     }
 
-    if ((pagingInfo.firstPage === true && pagingInfo.lastPage === true) && pagingInfo.hideDisabledPagers) {
+    if ((pagingInfo.firstPage === true && pagingInfo.lastPage === true) &&
+      pagingInfo.hideDisabledPagers) {
       return true;
     }
 
@@ -778,10 +837,9 @@ Pager.prototype = {
   /**
    * Tear down and detatch all events
    */
-  destroy: function() {
+  destroy() {
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
-
 
 export { Pager, COMPONENT_NAME };
