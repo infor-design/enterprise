@@ -64,7 +64,6 @@ describe('Dropdown API', () => {
 
   it('Should render dropdown readonly', () => {
     dropdownData.readonly();
-    debugger;
     expect(document.body.querySelector('.dropdown.is-readonly')).toBeTruthy();
     expect(document.querySelector('[aria-label="readonly"]')).toBeTruthy;
     expect(dropdownData.isDisabled()).toBeFalsy();

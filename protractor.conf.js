@@ -25,19 +25,4 @@ exports.config = {
       spec: { displayStacktrace: true }
     }));
   }
-
-  // ---- To use remote browsers via BrowserStack ---------------------------
-  /**
-   * If browserstackUser and browserstackKey are specified, seleniumServerJar
-   * will be ignored. The tests will be run remotely using BrowserStack.
-   */
-
-  //browserstackUser?: string;
-
-  /**
-   * If browserstackUser and browserstackKey are specified, seleniumServerJar
-   * will be ignored. The tests will be run remotely using BrowserStack.
-   */
-
-  //browserstackKey?: string;
 };
