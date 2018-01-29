@@ -18,7 +18,7 @@
 
     app.controller('demo', function($scope) {
       $scope.dueDate = new Date();
-      $scope.locale = 'en-US';
+      $scope.locale = 'es-ES';
 
       $scope.log = function () {
         console.log('Changed to '+ $scope.dueDate);
@@ -29,7 +29,6 @@
         yesterday.setDate(yesterday.getDate() - 1);
 
         $scope.dueDate = yesterday;
-        $scope.locale = 'el-GR';
       };
     });
 

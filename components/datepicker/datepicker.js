@@ -362,7 +362,7 @@
           localeTimeFormat = ((typeof Locale === 'object' && this.currentCalendar.timeFormat) ? this.currentCalendar.timeFormat : null);
 
         if (this.settings.dateFormat === 'locale') {
-          this.pattern = localeDateFormat.short + (this.settings.showTime ? ' ' + (this.settings.timeFormat || localeTimeFormat) : '');
+          this.pattern = localeDateFormat + (this.settings.showTime ? ' ' + (this.settings.timeFormat || localeTimeFormat) : '');
         } else {
           this.pattern = this.settings.dateFormat + (this.settings.showTime && this.settings.timeFormat ? ' ' + this.settings.timeFormat : '');
         }

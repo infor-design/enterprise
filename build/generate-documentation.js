@@ -10,7 +10,7 @@ const glob = require('glob'),
 //Generate a Doc file with buffered contrnt
 function runPandoc(data, componentPath) {
   // Note that im using markdown_github vs markdown for h level support
-  nodePandoc(data, ['-f','markdown_github','-t','html5','-o', componentPath + 'index.html'], function (err) {
+  nodePandoc(data, ['-f','gfm','-t','html5','-o', componentPath + 'index.html'], function (err) {
       if (err) {
         console.error('Oh No: ',err);
       }
