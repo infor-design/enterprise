@@ -387,9 +387,12 @@ DatePicker.prototype = {
    */
   setFormat() {
     const s = this.settings;
-    const localeDateFormat = ((typeof Locale === 'object' && this.currentCalendar.dateFormat) ? this.currentCalendar.dateFormat : null);
-
+    let localeDateFormat = ((typeof Locale === 'object' && this.currentCalendar.dateFormat) ? this.currentCalendar.dateFormat : null);
     const localeTimeFormat = ((typeof Locale === 'object' && this.currentCalendar.timeFormat) ? this.currentCalendar.timeFormat : null);
+
+    if (typeof localeDateFormat === 'object' && localeDateFormat.short !== undefined) {
+      localeDateFormat = localeDateFormat.short;
+    }
 
     if (s.dateFormat === 'locale') {
       this.pattern = localeDateFormat + (s.showTime ? ` ${(s.timeFormat || localeTimeFormat)}` : '');
