@@ -193,7 +193,7 @@
 
       //Convert if a string..
       if (!(value instanceof Date)) {
-        var tDate = new Date(value);
+        var tDate = Locale.parseDate(value, attribs);
         if (isNaN(tDate) && attribs.date === 'datetime' &&
           value.substr(4, 1) === '-' &&
           value.substr(7, 1) === '-') {
