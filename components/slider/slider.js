@@ -643,48 +643,23 @@ Slider.prototype = {
     e.preventDefault();
     clearTimeout(handle.data('animationTimeout'));
 
-    function getIncrementBy() {
-      if (increment !== undefined) {
-        return increment;
-      }
-      if (this.settings.step !== undefined) {
-        return this.settings.step;
-      }
-      return 1;
-    }
-
     const val = this.value().slice(0);
-    let incrementBy = getIncrementBy();
+    let incrementBy = increment !== undefined ? increment : this.settings.step !== undefined ? this.settings.step : 1; //eslint-disable-line
     let testVal;
     let updatedVal;
     let finalVal;
 
-    function checkIncrementBy(handleType) {
-      if (isInt(testVal)) {
-        return incrementBy;
-      }
-      const subtract = handleType === 'lower';
-      const fraction = testVal % incrementBy;
-      if (isNaN(fraction)) {
-        return 0;
-      }
-      if (subtract) {
-        return incrementBy - fraction;
-      }
-      return fraction;
-    }
-
     if (handle.hasClass('higher')) {
       testVal = value !== undefined ? value : val[1];
-      incrementBy = checkIncrementBy();
+      incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : testVal % incrementBy; //eslint-disable-line
       updatedVal = testVal + incrementBy <
-        (this.settings.max ? testVal + incrementBy : this.settings.max);
+        this.settings.max ? testVal + incrementBy : this.settings.max;
       finalVal = updatedVal % incrementBy ? updatedVal : roundToIncrement(updatedVal, incrementBy);
       this.value([undefined, finalVal]);
     } else {
       testVal = value !== undefined ? value : val[0];
       const maxValue = val[1] === undefined ? this.settings.max : val[1];
-      incrementBy = checkIncrementBy();
+      incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : incrementBy - (testVal % incrementBy); //eslint-disable-line
       updatedVal = testVal + incrementBy < maxValue ? testVal + incrementBy : maxValue;
       finalVal = updatedVal % incrementBy ? updatedVal : roundToIncrement(updatedVal, incrementBy);
       this.value([finalVal]);
@@ -706,49 +681,24 @@ Slider.prototype = {
     e.preventDefault();
     clearTimeout(handle.data('animationTimeout'));
 
-    function getDecrementBy() {
-      if (decrement !== undefined) {
-        return decrement;
-      }
-      if (this.settings.step !== undefined) {
-        return this.settings.step;
-      }
-      return 1;
-    }
-
     const val = this.value();
-    let decrementBy = getDecrementBy();
+    let decrementBy = decrement !== undefined ? decrement : this.settings.step !== undefined ? this.settings.step : 1; //eslint-disable-line
     let testVal;
     let updatedVal;
     let finalVal;
 
-    function checkDecrementBy(handleType) {
-      if (isInt(testVal)) {
-        return decrementBy;
-      }
-      const subtract = handleType === 'higher';
-      const fraction = testVal % decrementBy;
-      if (isNaN(fraction)) {
-        return 0;
-      }
-      if (subtract) {
-        return decrementBy - fraction;
-      }
-      return fraction;
-    }
-
     if (handle.hasClass('higher')) {
       testVal = value !== undefined ? value : val[1];
       const minValue = val[0] === undefined ? this.settings.min : val[0];
-      decrementBy = checkDecrementBy();
+      decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : decrementBy - (testVal % decrementBy); //eslint-disable-line
       updatedVal = testVal - decrementBy > minValue ? testVal - decrementBy : minValue;
       finalVal = updatedVal % decrementBy ? updatedVal : roundToIncrement(updatedVal, decrementBy);
       this.value([undefined, finalVal]);
     } else {
       testVal = value !== undefined ? value : val[0];
-      decrementBy = checkDecrementBy();
+      decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : testVal % decrementBy; //eslint-disable-line
       updatedVal = testVal - decrementBy >
-        (this.settings.min ? testVal - decrementBy : this.settings.min);
+        this.settings.min ? testVal - decrementBy : this.settings.min;
       finalVal = updatedVal % decrementBy ? updatedVal : roundToIncrement(updatedVal, decrementBy);
       this.value([finalVal]);
     }
