@@ -4,6 +4,7 @@ import { Sparkline, COMPONENT_NAME as SPARKLINE_NAME } from '../sparkline/sparkl
 import { Line, COMPONENT_NAME as LINE_NAME } from '../line/line';
 import { Column, COMPONENT_NAME as COLUMN_NAME } from '../column/column';
 import { Bar, COMPONENT_NAME as BAR_NAME } from '../bar/bar';
+import { Pie, COMPONENT_NAME as PIE_NAME } from '../pie/pie';
 
 /*
 * jQuery Component Wrapper for Charts. It maps the singlular components
@@ -142,6 +143,19 @@ $.fn.chart = function (settings) {
           settings.isGrouped = true;
           const chartComponent = new Bar(this, settings);
           instance = $.data(this, BAR_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'pie': {
+          const chartComponent = new Pie(this, settings);
+          instance = $.data(this, PIE_NAME, chartComponent);
+          $.data(this, 'chart', chartComponent); // Compatibility
+          break;
+        }
+        case 'donut': {
+          settings.isDonut = true;
+          const chartComponent = new Pie(this, settings);
+          instance = $.data(this, PIE_NAME, chartComponent);
           $.data(this, 'chart', chartComponent); // Compatibility
           break;
         }

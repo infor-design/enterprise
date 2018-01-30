@@ -66,12 +66,6 @@
     @include opacity(0);
   }
 
-  // Pie Chart
-  .pie path {
-    stroke: $inverse-color;
-    stroke-width: 1px;
-  }
-
   &.completion-chart {
     margin: 30px;
   }
@@ -226,24 +220,6 @@
 
   .is-not-selected {
     opacity: .35;
-  }
-}
-
-// Pie Charts
-.chart-pie {
-  width: inherit;
-
-  .tspan {
-    fill: $chart-font-color;
-  }
-
-  .label-text {
-    @include font-size(14);
-  }
-
-  .label-line {
-    fill: none;
-    stroke-width: 2px;
   }
 }
 

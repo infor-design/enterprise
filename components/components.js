@@ -34,6 +34,7 @@ export { SohoMaskedInput as MaskedInput } from './mask/masked-input';
 export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
 export { Pager } from './pager/pager';
+export { Pie } from './pie/pie';
 export { PopupMenu } from './popupmenu/popupmenu';
 export { Popdown } from './popdown/popdown';
 export { SearchField } from './searchfield/searchfield';

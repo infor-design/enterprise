@@ -1,0 +1,37 @@
+// Pie and Donut Chart
+//==================================================//
+
+.chart-pie {
+  height: 100%;
+  width: 100%;
+
+  .tspan {
+    fill: $chart-font-color;
+  }
+
+  .label-text {
+    @include font-size(14);
+  }
+
+  .label-line {
+    fill: none;
+    stroke-width: 2px;
+  }
+
+  path.slice {
+    stroke: $inverse-color;
+    stroke-width: 1px;
+  }
+
+  polyline {
+    fill: none;
+    opacity: .3;
+    stroke: $chart-line-color;
+    stroke-width: 1px;
+  }
+
+  .labels text {
+    font-size: 12px;
+  }
+
+}
