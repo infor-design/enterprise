@@ -7,6 +7,7 @@
   <section>
   
     
+
   <h2>Settings</h2>
   <table class="section-table">
     <thead>
@@ -71,7 +72,8 @@
           string
         </td>
         <td>
-          The completed text or uses a localized 'N of N Steps complete'. You can use {0} and {1} to replace n of n in the string.
+          The completed text or uses a localized 'N of N Steps complete'.
+You can use {0} and {1} to replace n of n in the string.
 
         </td>
       </tr>
@@ -83,7 +85,8 @@
           boolean
         </td>
         <td>
-          The additional text to show on the right. Defaults to none. You can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
+          The additional text to show on the right. Defaults to none. You
+can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
 
         </td>
       </tr>
@@ -107,7 +110,8 @@
           string
         </td>
         <td>
-          The color to steps when all are completed. Defaults to primary color.
+          The color to steps when all are completed. Defaults to
+primary color.
 
         </td>
       </tr>
@@ -126,6 +130,10 @@
     </tbody>
   </table>
 
+
+
+  
+    
 
 
   <h2>Methods</h2>
@@ -147,6 +155,8 @@
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -159,6 +169,8 @@
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
     </tbody>
@@ -176,21 +188,21 @@
 </ul>
 <h2 id="code-example">Code Example</h2>
 <p>You can initialize a step chart by putting a simple div in the page with data-options which contain any of the above options.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;step-chart&quot;</span><span class="ot"> data-options=</span><span class="st">&quot;{steps: 7, completed: 2, inProgress: 3, iconType: &#39;icon-error&#39;, extraText: &#39;2 Days Overdue&#39;}&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;step-chart&quot;</span><span class="ot"> data-options=</span><span class="st">&quot;{steps: 7, completed: 2, inProgress: 3, iconType: &#39;icon-error&#39;, extraText: &#39;2 Days Overdue&#39;}&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <p>Or you can initialize the component using javascript, remove the data-options and initialize like a normal plugin.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">$(&#39;#manual&#39;).stepchart({</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  completed: 2,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  steps: 10,</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  completedText: &#39;Amount Completed&#39;</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">});</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+$(&#39;#manual&#39;).stepchart({
+  completed: 2,
+  steps: 10,
+  completedText: &#39;Amount Completed&#39;
+});
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>The step chart infor is displayed via the text “N of N Complete” which the user can read with a screen reader.</li>
+<li>The step chart infor is displayed via the text &quot;N of N Complete&quot; which the user can read with a screen reader.</li>
 <li>The rest of the chart</li>
 <li>Colors are AA compliant and adapt to AAA on hey contrast version</li>
 </ul>

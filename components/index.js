@@ -15,6 +15,9 @@ export { breakpoints } from './utils/breakpoints';
 export { Locale } from './locale/locale';
 export { Environment as env } from './utils/environment';
 
+// a Base Tag reference needs to export itself on the Soho object
+export { base } from './utils/base';
+
 // Renderloop needs a single instance of itself
 import { renderLoop, RenderLoopItem } from './utils/renderloop';
 

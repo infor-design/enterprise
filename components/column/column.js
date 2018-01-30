@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary, prefer-arrow-callback */
-/* jshint esversion:6 */
 
 // Other Shared Imports
 import * as debug from '../utils/debug';
@@ -852,7 +851,7 @@ Column.prototype = {
 
     charts.setSelected = function (o, isToggle) {
       let selected = 0;
-      const equals = window.Soho.utils.equals;
+      const equals = utils.equals;
       const legendsNode = svg.node().parentNode.nextSibling;
       const legends = d3.select(legendsNode);
       const isLegends = legends.node() && legends.classed('chart-legend');

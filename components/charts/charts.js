@@ -1,3 +1,5 @@
+import { utils } from '../utils/utils';
+
 const charts = {};
 
 // Reference to the tooltip
@@ -508,7 +510,7 @@ charts.setSelected = function (o, isToggle, internals) {
   }
 
   let selected = 0;
-  const equals = window.Soho.utils.equals;
+  const equals = utils.equals;
   const legendsNode = internals.svg.node().parentNode.nextSibling;
   const legends = d3.select(legendsNode);
   const isLegends = legends.node() && legends.classed('chart-legend');
