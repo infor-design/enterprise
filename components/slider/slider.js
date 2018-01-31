@@ -350,7 +350,9 @@
           }
         });
 
-        if (this.element.prop('disabled') === true) {
+        if (this.element.prop('readonly') === true) {
+          this.readonly();
+        } else if (this.element.prop('disabled') === true) {
           this.disable();
         }
 
@@ -978,6 +980,8 @@
        */
       enable: function() {
         this.element.prop('disabled', false);
+        this.element.prop('readonly', false);
+        this.wrapper.removeClass('is-readonly');
         this.wrapper.removeClass('is-disabled');
 
         var self = this;
@@ -994,7 +998,27 @@
        */
       disable: function() {
         this.element.prop('disabled', true);
+        this.element.prop('readonly', false);
+        this.wrapper.removeClass('is-readonly');
         this.wrapper.addClass('is-disabled');
+
+        var self = this;
+        $.each(this.handles, function(i, handle) {
+          self.disableHandleDrag(handle);
+        });
+
+        return this;
+      },
+
+      /**
+       * Sets the slider in a readonly state
+       * @returns {this}
+       */
+      readonly: function() {
+        this.element.prop('disabled', true);
+        this.element.prop('readonly', true);
+        this.wrapper.removeClass('is-disabled');
+        this.wrapper.addClass('is-readonly');
 
         var self = this;
         $.each(this.handles, function(i, handle) {
