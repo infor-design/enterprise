@@ -4072,7 +4072,7 @@ Datagrid.prototype = {
         buttonSet.append(labelMarkup);
 
         if (!this.settings.toolbar.collapsibleFilter) {
-          searchfieldMarkup.attr('data-options', '{ collapsible: false }');
+          searchfieldMarkup.attr('data-options', '{ "collapsible": false }');
         }
 
         buttonSet.append(searchfieldMarkup);
