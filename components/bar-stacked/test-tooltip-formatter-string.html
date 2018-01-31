@@ -11,10 +11,10 @@
         </div>
     </div>
   </div>
-  
+
   <script>
   $('body').on('initialized', function () {
-  
+
     var dataset = [{
         data: [{
             name: '2008',
@@ -40,17 +40,16 @@
         }],
         name: 'Series 2',
     }];
-  
+
     $('#bar-stacked-example').chart({
-      type: 'bar',
+      type: 'bar-stacked',
       dataset: dataset,
-  
+
       // Use d3 Format
       // http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
       // [formatter string] - Only value will be formated
       formatterString: '$'// Currency
     });
-  
+
   });
   </script>
-  
