@@ -1,0 +1,155 @@
+﻿
+<div class="page-container top-padding scrollable" role="main">
+
+<!--This is only needed because it renders first on the server on the first one-->
+{{={{{ }}}=}}
+
+<script id="swaplist-tmpl" type="text/html">
+  <ul data-swap-handle=".handle">
+    {{#dataset}}
+    {{#text}}
+      <li
+      {{#value}}
+        data-value="{{value}}"
+      {{/value}}
+      {{#selected}}
+        selected="selected"
+      {{/selected}}
+      {{#disabled}}
+        class="is-disabled"
+      {{/disabled}}
+      >
+        <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+        <div class="swaplist-item-content">
+          <p>{{text}}</p>
+        </div>
+      </li>
+    {{/text}}
+    {{/dataset}}
+  </ul>
+</script>
+
+<div class="row top-padding">
+  <div class="columns six">
+
+    <div id="fieldsSL" data-init="false" class="swaplist">
+    	<div class="card available">
+    		<div class="card-header">
+    			<h2 class="card-title">Inactive Fields</h2>
+    			<div class="buttons">
+    				<button title="Move Right" type="button" class="btn btn-moveto-selected"><span class="audible">Select Field</span>
+    					<svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+    						<use xlink:href="#icon-right-arrow"></use>
+    					</svg>
+    				</button>
+    			</div>
+    		</div>
+    		<div class="card-content">
+    			<div class="listview-search">
+    				<input id="search-available" name="searchfield" class="searchfield" data-options="{clearable: true}">
+    			</div>
+    			<div id="availableFields" class="listview"></div>
+    		</div>
+    	</div>
+    	<div class="card selected">
+    		<div class="card-header">
+    			<h2 class="card-title">Active Fields</h2>
+    			<div class="buttons">
+    				<button title="Move Left" type="button" class="btn btn-moveto-left"><span class="audible">Move\u0020Left</span>
+    					<svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+    						<use xlink:href="#icon-left-arrow"></use>
+    					</svg>
+    				</button>
+    			</div>
+    		</div>
+    		<div class="card-content">
+    			<div class="listview-search">
+    				<input id="search-selected" name="searchfield2" class="searchfield" data-options="{clearable: true}">
+    			</div>
+    			<div id="selectedFields" class="listview"></div>
+    		</div>
+    	</div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+
+
+
+<script>
+  var available = [], selected = [];
+  available.push({id: 1, value: 'AVTO52', text: 'Activity Number (AVTO52)'});
+  available.push({id: 2, value: 'AVTO55', text: 'Activity Number (AVTO55)'});
+  available.push({id: 3, value: 'ACOD52', text: 'Activity Type (ACOD52)'});
+  available.push({id: 4, value: 'IOBJ52', text: 'Business Object (IOBJ52)'});
+  available.push({id: 5, value: 'DOCUMENT_TYPE', text: 'Business Object Description (DOCUMENT_TYPE)'});
+  available.push({id: 6, value: 'IOBR52', text: 'Business Object Reference (IOBR52)'});
+  available.push({id: 7, value: 'BPTC52', text: 'Business Process (BPTC52)'});
+  available.push({id: 8, value: 'BPID52', text: 'Business Process ID (BPID52)'});
+  available.push({id: 9, value: 'CONO52', text: 'Company (CONO52)'});
+  available.push({id: 10, value: 'CPTD18', text: 'Completion (CPTD18)'});
+  available.push({id: 11, value: 'DATE55', text: 'Date and time (DATE55)'});
+  available.push({id: 12, value: 'CMD152', text: 'Date and time completed (CMD152)'});
+  available.push({id: 13, value: 'DTCR52', text: 'Date and time created (DTCR52)'});
+  available.push({id: 14, value: 'TDET55', text: 'Date and time effective (TDET55)'});
+  available.push({id: 15, value: 'STXT50', text: 'Description (STXT50)'});
+  available.push({id: 16, value: 'STXT52', text: 'Description (STXT52)'});
+  available.push({id: 17, value: 'STXT55', text: 'Description (STXT55)'});
+  available.push({id: 18, value: 'ELID52', text: 'Element ID (ELID52)'});
+  available.push({id: 19, value: 'MAIL52', text: 'EMail Address (MAIL52)'});
+  available.push({id: 20, value: 'USER52', text: 'Executed By (USER52)'});
+  available.push({id: 21, value: 'EMOD52', text: 'Execution Mode (EMOD52)'});
+  available.push({id: 22, value: 'EBPR52', text: 'Extended Process (EBPR52)'});
+  available.push({id: 23, value: 'ICON', text: 'Icon (ICON)'});
+  available.push({id: 24, value: 'TTYP50', text: 'Message Type (TTYP50)'});
+  available.push({id: 25, value: 'MUTI52', text: 'Multithread ID (MUTI52)'});
+  available.push({id: 26, value: 'MUTI55', text: 'Multithread ID (MUTI55)'});
+  available.push({id: 27, value: 'NSRT09', text: 'Next Scheduled Execution (NSRT09)'});
+  available.push({id: 28, value: 'PRTY52', text: 'Priority (PRTY52)'});
+  available.push({id: 29, value: 'RECIPIENT', text: 'Recipient (RECIPIENT)'});
+  available.push({id: 30, value: 'RECT52', text: 'Recipient Type (RECT52)'});
+  available.push({id: 31, value: 'RLCD52', text: 'Role (RLCD52)'});
+  available.push({id: 32, value: 'RLCD55', text: 'Role (RLCD55)'});
+  available.push({id: 33, value: 'SELECT', text: 'Select (SELECT)'});
+  available.push({id: 34, value: 'PRIN52', text: 'Status (PRIN52)'});
+  available.push({id: 35, value: 'STAT55', text: 'Status (STAT55)'});
+  available.push({id: 36, value: 'TREF50', text: 'Text Reference (TREF50)'});
+  available.push({id: 37, value: 'CPT152', text: 'Time completed (CPT152)'});
+  available.push({id: 38, value: 'TMCR52', text: 'Time created (TMCR52)'});
+  available.push({id: 39, value: 'VIEW', text: 'View (VIEW)'});
+
+  $('body').on('initialized', function () {
+  // $('body').initialize("en-GB").on('initialized', function () {
+    $('#fieldsSL').swaplist({available: available, selected: selected, searchable: true});
+
+    var getContainer = function(items) {
+      if (typeof items[0] === 'object' && items[0].node) {
+        var card = items[0].node.closest('.card');
+        if (card.is('.available')) {
+          return 'available';
+        } else if (card.is('.selected')) {
+          return 'selected';
+        } else if (card.is('.full-access')) {
+          return 'full-access';
+        }
+        }
+        return null;
+    }
+
+    $('#fieldsSL').on('beforeswap', function (e, items) {
+        var container = getContainer(items);
+        if (container) {
+          console.log('Moved from: ' + container, items);
+        }
+    });
+
+    $('#fieldsSL').on("swapupdate", function(e, items) {
+        var container = getContainer(items);
+        if (container) {
+          console.log('Moved to: ' + container, items);
+        }
+    });
+  });
+</script>
