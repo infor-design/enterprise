@@ -139,7 +139,7 @@ window.Formatters = {
     var formatted = value;
     if (typeof Locale !== undefined &&
         formatted !== null && formatted !== undefined && formatted !== '') {
-       formatted = Locale.formatNumber(+value, col.numberFormat);
+       formatted = Locale.formatNumber(value, col.numberFormat);
     }
     return ((formatted === null || formatted === undefined) ? '' : formatted);
   },
@@ -148,7 +148,7 @@ window.Formatters = {
     var formatted = value;
     if (typeof Locale !== undefined &&
         formatted !== null && formatted !== undefined && formatted !== '') {
-      formatted = Locale.formatNumber(+value, col.numberFormat || {style: 'integer'});
+      formatted = Locale.formatNumber(value, col.numberFormat || {style: 'integer'});
     }
     return (formatted === null || formatted === undefined) ? '' : formatted;
   },
