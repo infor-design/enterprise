@@ -70,11 +70,12 @@ define([
       expect(Locale.formatDate(new Date(2000, 10, 8), {date: 'long'})).to.equal('November 8, 2000');
       expect(Locale.formatDate(new Date(2000, 10, 8), {pattern: 'M/d/yyyy'})).to.equal('11/8/2000');
 
-      //Other Edge Cases
+      //Other Cases
       expect(Locale.formatDate('11/8/2000')).to.equal('11/8/2000');
       expect(Locale.formatDate('2018-11-29', { pattern: 'yyyy-MM-dd' })).to.equal('2018-11-29');
       expect(Locale.formatDate(1458054935410, { pattern: 'yyyy-MM-dd' })).to.equal('2016-03-15');
 
+      expect(Locale.formatDate('2015-01-01T05:00:00.000Z', { pattern: 'yyyy-MM-dd' })).to.equal('2015-01-01');
       expect(Locale.formatDate()).to.equal(undefined);
     },
 

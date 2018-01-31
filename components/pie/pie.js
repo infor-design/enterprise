@@ -98,12 +98,13 @@ Pie.prototype = {
       });
 
     self.arc = d3.arc()
-      .outerRadius(dims.radius * 0.8)
-      .innerRadius(self.settings.isDount ? dims.radius * 0.4 : 0);
+      .outerRadius(dims.radius * 0.75)
+      .innerRadius(self.settings.isDonut ? dims.radius * 0.4 : 0);
 
+    // Influences the label position
     self.outerArc = d3.arc()
-      .innerRadius(dims.radius * 0.9)
-      .outerRadius(self.settings.isDount ? dims.radius * 0.9 : 0);
+      .innerRadius(dims.radius * 0.75)
+      .outerRadius((dims.radius * 0.75 + 20));  // was 75 and 75 + 20
 
     self.svg
       .attr('width', '100%')
@@ -115,20 +116,32 @@ Pie.prototype = {
     // move the origin of the group's coordinate space to the center of the SVG element
     dims.center = { x: (dims.width / 2), y: dims.height / 2 };
 
-    self.key = function (d) { return d.data.label; };
+    self.key = function (d) { return d.data.name; };
+    const isEmpty = !self.settings.dataset || self.settings.dataset.length === 0;
+    this.chartData = !isEmpty ? self.settings.dataset[0].data : [];
+    this.sum = d3.sum(this.chartData, function (d) { return d.value; });
 
-    self.colors = d3.scaleOrdinal()
-      .domain(['Lorem ipsum', 'dolor sit', 'amet', 'consectetur'])
-      .range(charts.colorRange);
+    // Calculate the percentages
+    const values = this.chartData.map(function (d) { return d.value / self.sum * 100; });
+    const rounded = this.roundLargestRemainer(values);
 
-    function randomData() {
-      const labels = self.colors.domain();
-      return labels.map(function (label) {
-        return { label, value: Math.random() };
-      });
+    this.chartData = this.chartData.map(function (d, i) {
+      d.percent = d.value / self.sum;
+      d.percentRound = rounded[i];
+      return d;
+    });
+
+    let sum = 0;
+    this.chartData.map(function (d) { // eslint-disable-line
+      sum += d.percentRound;
+    });
+
+    // Handle zero sum or empty pies
+    if (isEmpty || sum === 0) {
+      this.chartData.push({ data: {}, color: '#BDBDBD', name: 'Empty-Pie', value: 100, percent: 1, percentRound: 100 });
     }
 
-    self.update(randomData());
+    self.update(this.chartData);
     charts.appendTooltip();
 
     if (this.settings.showLegend) {
@@ -140,16 +153,87 @@ Pie.prototype = {
     return this;
   },
 
+  randomData() {
+    const labels = this.colors.domain();
+    return labels.map(function (label) {
+      return { label, value: Math.random() };
+    });
+  },
+
   update(data) {
     // Pie Slices
     const self = this;
+    const isEmpty = !self.settings.dataset || self.settings.dataset.length === 0;
     const slice = self.svg.select('.slices').selectAll('path.slice')
       .data(self.pie(data), self.key);
 
     slice.enter()
       .insert('path')
-      .style('fill', function (d) { return self.colors(d.data.label); })
+      .style('fill', function (d, i) {
+        return charts.chartColor(self.isRTL ? self.chartData.length - (i - 1) : i, 'pie', d.data);
+      })
       .attr('class', 'slice')
+      .on('contextmenu', function (d) {
+        // Handle Right Click Menu
+        charts.triggerContextMenu(self.element, d3.select(this).select('path').nodes()[0], d);
+      })
+      .on('click', function (d, i) {
+        // Handle Click to select
+        const isSelected = this && d3.select(this).classed('is-selected');
+
+        // Make unselected
+        charts.setSelectedElement({
+          task: isSelected ? 'unselected' : 'selected',
+          container: self.element,
+          selector: isSelected ? '.chart-container .is-selected' : this,
+          isTrigger: !isSelected,
+          d: d.data,
+          i,
+          type: self.settings.type,
+          dataset: self.settings.dataset,
+          svg: self.svg
+        });
+
+        if (isSelected) {
+          self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, i]);
+        }
+      })
+      .on('mouseenter', function (d) {
+        let x;
+        let y;
+        const offset = $(this).offset();
+        let content = '';
+        const show = function () {
+          const size = charts.tooltipSize(content);
+          const direction = (self.midAngle(d) < Math.PI ? 1 : -1);
+
+          if (self.midAngle(d) < Math.PI) {
+            x = x - (size.width / 2); //eslint-disable-line
+            y = y - (size.height / 2); //eslint-disable-line
+          } else {
+            x = x + (size.width / 2); //eslint-disable-line
+            y = y + (size.height / 2); //eslint-disable-line
+          }
+          console.log(direction, x, y, size);
+          if (content !== '') {
+            charts.showTooltip(x, y, content, 'top');
+          }
+        };
+
+        const centerOutside = self.arc.centroid(d);
+        x = offset.left + centerOutside[0];
+        y = offset.top + centerOutside[1];
+
+        content = d.data.tooltip || '';
+        content = content.replace('{{percent}}', `${d.data.percentRound}%`);
+        content = content.replace('{{value}}', d.value);
+        content = content.replace('%percent%', `${d.data.percentRound}%`);
+        content = content.replace('%value%', d.value);
+        show();
+      })
+      .on('mouseleave', function () {
+        charts.hideTooltip();
+      })
       .merge(slice)
       .transition()
       .duration(self.settings.animationSpeed)
@@ -165,13 +249,13 @@ Pie.prototype = {
     slice.exit()
       .remove();
 
+    if (isEmpty) {
+      return;
+    }
+
     // Text Labels
     const text = self.svg.select('.labels').selectAll('text')
       .data(self.pie(data), self.key);
-
-    function midAngle(d) {
-      return d.startAngle + (d.endAngle - d.startAngle) / 2;
-    }
 
     text.enter()
       .append('text')
@@ -190,7 +274,7 @@ Pie.prototype = {
         return function (t) {
           const d2 = interpolate(t);
           const pos = self.outerArc.centroid(d2);
-          pos[0] = self.dims.radius * (midAngle(d2) < Math.PI ? 1 : -1);
+          pos[0] = self.dims.radius * (self.midAngle(d2) < Math.PI ? 1 : -1);
           return `translate(${pos})`;
         };
       })
@@ -200,7 +284,7 @@ Pie.prototype = {
         this.current = interpolate(0);
         return function (t) {
           const d2 = interpolate(t);
-          return midAngle(d2) < Math.PI ? 'start' : 'end';
+          return self.midAngle(d2) < Math.PI ? 'start' : 'end';
         };
       });
 
@@ -223,13 +307,33 @@ Pie.prototype = {
         return function (t) {
           const d2 = interpolate(t);
           const pos = self.outerArc.centroid(d2);
-          pos[0] = self.dims.radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
-          return [self.arc.centroid(d2), self.outerArc.centroid(d2), pos];
+          pos[0] = self.dims.radius * 0.95 * (self.midAngle(d2) < Math.PI ? 1 : -1);
+          return [self.outerArc.centroid(d2), self.outerArc.centroid(d2), pos];
         };
       });
 
     polyline.exit()
       .remove();
+
+    // Dot at the end of the polyline
+    /* const dots = self.svg.select('.lines').selectAll('polyline')
+      .data(self.pie(data), self.key);
+
+    dots.enter()
+      .append('circle')
+      .merge(dots)
+      .transition()
+      .duration(self.settings.animationSpeed)
+      .attr('r', '4')
+      .attr('cx', function (d) {
+        return 10;
+      })
+      .attr('cy', function (d) {
+        return 10;
+      });
+
+    dots.exit()
+      .remove(); */
   },
 
   /**
@@ -328,6 +432,57 @@ Pie.prototype = {
   },
 
   /**
+   * Handle updated settings and values.
+   * @param  {array} values A list of values
+   * @returns {array} The values rounded to 100
+   */
+  roundLargestRemainer(values) {
+    let sum = 0;
+    let count = 0;
+    let dVala = 0;
+    let dValb = 0;
+    const order = [];
+
+    // Round everything down
+    for (let i = 0; i < values.length; i++) {
+      sum += parseInt(values[i], 10);
+      order[i] = i;
+    }
+
+    // Getting the difference in sum and 100
+    const diff = 100 - sum;
+
+    // Distributing the difference by adding 1 to items in decreasing order of their decimal parts
+    order.sort(function (a, b) {
+      dVala = values[a] - parseInt(values[a], 10);
+      dValb = values[b] - parseInt(values[b], 10);
+      return dValb - dVala;
+    });
+
+    values.sort(function (a, b) {
+      dVala = a - parseInt(a, 10);
+      dValb = b - parseInt(b, 10);
+      return dValb - dVala;
+    });
+
+    for (let j = 0; j < values.length; j++) {
+      count = j;
+      if (count < diff) {
+        values[j] = parseInt(values[j], 10) + 1;
+      } else {
+        values[j] = parseInt(values[j], 10);
+      }
+    }
+
+    // Set back the order
+    const unsorted = [];
+    for (let i = 0; i < values.length; i++) {
+      unsorted[order[i]] = values[i];
+    }
+    return unsorted;
+  },
+
+  /**
    * Simple Teardown - remove events & rebuildable markup.
    * @returns {object} The Component prototype, useful for chaining.
    * @private
@@ -336,6 +491,15 @@ Pie.prototype = {
     this.element.off(`updated.${COMPONENT_NAME}`);
     $(window).off(`resize.${COMPONENT_NAME}`);
     return this;
+  },
+
+  /**
+   * Calculate the middle angle.
+   * @param  {object} d The d3 data.
+   * @returns {boolean} The mid angule
+   */
+  midAngle(d) {
+    return d.startAngle + (d.endAngle - d.startAngle) / 2;
   },
 
   /**

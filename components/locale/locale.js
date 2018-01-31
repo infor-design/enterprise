@@ -179,6 +179,11 @@ const Locale = { //jshint ignore:line
     }
 
     //Convert if a string..
+    if (!(value instanceof Date) && typeof value === 'string' && value.indexOf('Z') > -1) {
+      var tDate1 = new Date(value);
+      value = tDate1;
+    }
+
     if (!(value instanceof Date) && typeof value === 'string') {
       var tDate = Locale.parseDate(value, attribs);
       if (isNaN(tDate) && attribs.date === 'datetime' &&

@@ -60,9 +60,9 @@ charts.removeTooltip = function removeTooltip() {
  * The color sequences to use across charts
  * @type {Array}
  */
-charts.colorRange = ['#1D5F8A', '#8ED1C6', '#9279A6', '#5C5C5C', '#F2BC41', '#66A140', '#AD4242',
-  '#8DC9E6', '#EFA836', '#317C73', '#EB9D9D', '#999999', '#488421', '#C7B4DB',
-  '#54A1D3', '#6e5282', '#AFDC91', '#69ADA3', '#DB7726', '#D8D8D8'];
+charts.colorRange = ['#2578A9', '#8ED1C6', '#C7B4DB', '#5C5C5C', '#F2BC41', '#76B051', '#B94E4E',
+  '#8DC9E6', '#DB7726', '#317C73', '#EB9D9D', '#737373', '#89BF65', '#C7B4DB',
+  '#54A1D3', '#6e5282', '#AFDC91', '#69ADA3', '#EE9A36', '#D8D8D8'];
 
 /**
  * The colors as an array for placement
@@ -272,7 +272,7 @@ charts.handleElementClick = function (line, series, settings) {
   }
 
   if (elem.selectionObj) {
-    charts.selectElement(d3.select(elem.selectionObj._groups[0][idx]), elem.selectionInverse, elem.data); // eslint-disable-line
+    charts.selectElement(d3.select(elem.selectionObj.nodes()[idx]), elem.selectionInverse, elem.data); // eslint-disable-line
   }
 };
 
@@ -410,7 +410,7 @@ charts.setSelectedElement = function (o) {
       // Single and stacked only -NOT grouped-
       thisData = dataset[0] && dataset[0].data ? dataset[0].data : o.d;
       selector.classed('is-selected', true).style('opacity', 1);
-      triggerData.push({ elem: selector[0], data: thisData[o.i] });
+      triggerData.push({ elem: selector.nodes(), data: thisData[o.i] });
     } else if ((isSingle || isGrouped) && !isStacked && (isTypeColumn || isBar)) {
       // Single or groups only -NOT stacked-
       svg.selectAll(`${isTypeColumn ? '.axis.x' : '.axis.y'} .tick:nth-child(${(isGrouped ? thisGroupId : o.i) + 2})`)
@@ -458,18 +458,15 @@ charts.setSelectedElement = function (o) {
       triggerData = selectedBars;
     } else if (isTypePie) { // Pie
       // Unselect selected ones
-      svg.selectAll('.arc')
-        .style({ stroke: '', 'stroke-width': '' })
+      svg.selectAll('.slice')
         .attr('transform', '');
 
-      const color = charts.chartColor(o.i, 'pie', o.d.data);
       const thisArcData = dataset && dataset[0] && dataset[0].data ?  //eslint-disable-line
         dataset[0].data[o.i] : (o.d ? o.d.data : o.d);  //eslint-disable-line
 
       selector.classed('is-selected', true)
-        .style({ stroke: color, 'stroke-width': 0 })
         .attr('transform', 'scale(1.025, 1.025)');
-      triggerData.push({ elem: selector[0], data: thisArcData, index: o.i });
+      triggerData.push({ elem: selector.nodes(), data: thisArcData, index: o.i });
     }
   } else {
     // Task make unselected
@@ -586,7 +583,7 @@ charts.setSelected = function (o, isToggle, internals) {
   if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
     if (isStackedGroup) {
       if (isLegends) {
-        $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
+        $(legends.selectAll('.chart-legend-item').nodes()[barIndex]).trigger('click.chart');
       }
     } else {
       selector.on('click').call(selector.node(), selector.datum(), barIndex);
