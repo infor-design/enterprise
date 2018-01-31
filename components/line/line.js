@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary, prefer-arrow-callback */
-/* jshint esversion:6 */
 
 // Other Shared Imports
 import * as debug from '../utils/debug';
@@ -554,7 +553,7 @@ Line.prototype = {
 
     charts.setSelected = function (o, isToggle) {
       let selected = 0;
-      const equals = window.Soho.utils.equals;
+      const equals = utils.equals;
       let selector;
       let selectorData;
       let elem;

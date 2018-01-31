@@ -2,10 +2,104 @@
   
     
 
-
-
-  
-    
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          value
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          min
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          max
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          range
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          step
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          ticks
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tooltipContent
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          persistTooltip
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 
@@ -27,7 +121,10 @@
         <td>
           
                 
-                  <span>e (jQuery.Event) =  </span>
+                  <span>e (jQuery.Event) = jQuery 
+<code>click</code>
+ event
+ </span>
                 
           
         </td>
@@ -36,6 +133,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -43,7 +142,8 @@
         <td>
           
                 
-                  <span>handle () =  </span>
+                  <span>handle () = element representing a slider handle
+ </span>
                 
           
         </td>
@@ -59,7 +159,8 @@
         <td>
           
                 
-                  <span>handle () =  </span>
+                  <span>handle () = element representing a slider handle
+ </span>
                 
           
         </td>
@@ -75,7 +176,8 @@
         <td>
           
                 
-                  <span>handle () =  </span>
+                  <span>handle () = element representing a slider handle
+ </span>
                 
           
         </td>
@@ -91,7 +193,8 @@
         <td>
           
                 
-                  <span>handle () =  </span>
+                  <span>handle () = element representing a slider handle
+ </span>
                 
           
         </td>
@@ -112,7 +215,7 @@
 
         </td>
         <td>
-          
+          nearest 10% increment
 number
         </td>
       </tr>
@@ -121,9 +224,13 @@ number
         <td>
           
                 
-                  <span>e (jQuery.Event) =  </span>
+                  <span>e (jQuery.Event) = jQuery 
+<code>keydown</code>
+ event
+ </span>
                 
-                  <span>self (this) =  </span>
+                  <span>self (this) = reference to this component instance
+ </span>
                 
           
         </td>
@@ -139,9 +246,15 @@ number
         <td>
           
                 
-                  <span>e (jQuery.Event) =  </span>
+                  <span>e (jQuery.Event) = jQuery 
+<code>click</code>
+ or 
+<code>keydown</code>
+ event.
+ </span>
                 
-                  <span>handle () =  </span>
+                  <span>handle () = represents a slider handle element.
+ </span>
                 
                   <span>value () = target value - will be automatically determined if not passed.
  </span>
@@ -164,9 +277,15 @@ Also visually updates the handle on the visual part of the slider.</p>
         <td>
           
                 
-                  <span>e (jQuery.Event) =  </span>
+                  <span>e (jQuery.Event) = jQuery 
+<code>click</code>
+ or 
+<code>keydown</code>
+ event.
+ </span>
                 
-                  <span>handle () =  </span>
+                  <span>handle () = element representing a slider handle.
+ </span>
                 
                   <span>value () = target value - will be automatically determined if not passed.
  </span>
@@ -201,16 +320,20 @@ Also visually updates the handle on the visual part of the slider.</p>
         <td>
           
                 
-                  <span>handle () =  </span>
+                  <span>handle () = element representing a slider handle
+ </span>
                 
-                  <span>originalVal (number) =  </span>
+                  <span>originalVal (number) = the value before it was modified
+ </span>
                 
-                  <span>updatedVal (number) =  </span>
+                  <span>updatedVal (number) = the target value
+ </span>
                 
           
         </td>
         <td>
-          <p>Allows a handle to animate to a new position if the difference in value is greater than 3% of the size of the range.</p>
+          <p>Allows a handle to animate to a new position if the difference in value is greater
+than 3% of the size of the range.</p>
 
         </td>
         <td>
@@ -221,7 +344,8 @@ Also visually updates the handle on the visual part of the slider.</p>
         <td>
           
                 
-                  <span>handle () =  </span>
+                  <span>handle () = element representing a slider handle.
+ </span>
                 
           
         </td>
@@ -243,7 +367,7 @@ If no handle argument is passed, this method simply hides both handles' tooltips
 
         </td>
         <td>
-          
+          hex value representing a color
 string
         </td>
       </tr>
@@ -252,9 +376,11 @@ string
         <td>
           
                 
-                  <span>minVal (number) =  </span>
+                  <span>minVal (number) = the smaller handle's value
+ </span>
                 
-                  <span>maxVal () =  </span>
+                  <span>maxVal () = the larger handle's value, if applicable
+ </span>
                 
           
         </td>
@@ -264,7 +390,7 @@ NOTE:  Does not visually update the range.  Use <em>setValue()</em> to do both i
 
         </td>
         <td>
-          
+          both currently set handle values
 array
         </td>
       </tr>
@@ -273,7 +399,8 @@ array
         <td>
           
                 
-                  <span>content (string) =  </span>
+                  <span>content (string) = the original tooltip content
+ </span>
                 
           
         </td>
@@ -283,7 +410,7 @@ Used by the tooltip and default ticks to get potential identifiers like $ and %.
 
         </td>
         <td>
-          
+          prepended/appended text that will be displayed inside the tooltip
 string
         </td>
       </tr>
@@ -297,7 +424,7 @@ string
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -311,7 +438,7 @@ this
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -325,7 +452,7 @@ this
 
         </td>
         <td>
-          
+          whether or not this slider is disabled
 boolean
         </td>
       </tr>
@@ -339,7 +466,7 @@ boolean
 
         </td>
         <td>
-          
+          whether or not this slider is vertical
 boolean
         </td>
       </tr>
@@ -348,18 +475,21 @@ boolean
         <td>
           
                 
-                  <span>lowVal (number) =  </span>
+                  <span>lowVal (number) = the value for the lower slider handle.
+ </span>
                 
-                  <span>highVal () =  </span>
+                  <span>highVal () = the value for the upper slider handle, if applicable.
+ </span>
                 
           
         </td>
         <td>
-          <p>Externally-facing function that updates the current values and correctly animates the range handles, if applicable.</p>
+          <p>Externally-facing function that updates the current values and correctly
+animates the range handles, if applicable.</p>
 
         </td>
         <td>
-          
+          the newly set values
 array
         </td>
       </tr>
@@ -368,7 +498,8 @@ array
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming settings
+ </span>
                 
           
         </td>
@@ -379,7 +510,7 @@ with fresh settings.</p>
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -393,7 +524,7 @@ this
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -413,28 +544,12 @@ this
         <td>bindEvents</td>
         <td>
           
-                
-                  <span>mousedown (object) =  </span>
-                
-                  <span>click (object) =  </span>
-                
-                  <span>keydown (object) =  </span>
-                
-                  <span>keyup (object) =  </span>
-                
-                  <span>touchend (object) =  </span>
-                
-                  <span>touchcancel (object) =  </span>
-                
-                  <span>updated (object) =  </span>
-                
-          
         </td>
         <td>
           
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>

@@ -115,6 +115,14 @@ module.exports = {
     // https://eslint.org/docs/rules/no-restricted-globals
     'no-restricted-globals': ['off', 'isNaN'],
 
+    // Ignore usage of certain properties:
+    // - Math.pow (not really sure why AirBNB doesn't allow this)
+    //
+    'no-restricted-properties': ['off', {
+      'object': 'Math',
+      'property': 'pow'
+    }],
+
     // Ignore errors for continue statements, currently used in:
     // - Mask
     // - Validation

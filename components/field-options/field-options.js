@@ -1,6 +1,7 @@
 /* jshint esversion:6 */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
+import { Environment as env } from '../utils/environment';
 
 /**
  * Component Name
@@ -43,8 +44,8 @@ FieldOptions.prototype = {
    * @returns {Object} The api
    */
   setElements() {
-    this.isFirefox = Soho.env.browser.name === 'firefox';
-    this.isSafari = Soho.env.browser.name === 'safari';
+    this.isFirefox = env.browser.name === 'firefox';
+    this.isSafari = env.browser.name === 'safari';
 
     this.targetElem = this.element;
     this.hoverElem = this.targetElem;

@@ -140,6 +140,7 @@ $.fn.chart = function (settings) {
           break;
         }
         case 'bar-grouped': {
+          settings.isStacked = false;
           settings.isGrouped = true;
           const chartComponent = new Bar(this, settings);
           instance = $.data(this, BAR_NAME, chartComponent);

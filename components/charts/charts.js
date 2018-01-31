@@ -1,3 +1,5 @@
+import { utils } from '../utils/utils';
+
 const charts = {};
 
 // Reference to the tooltip
@@ -104,13 +106,13 @@ charts.chartColor = function chartColor(i, chartType, data) {
   }
 
   // Some configuration by specific chart types
-  if (chartType === 'pie' || chartType === 'donut') {
+  if (/^(pie|donut)$/.test(chartType)) {
     return this.colorRange[i];
   }
-  if (chartType === 'bar-single' || chartType === 'column-single') {
+  if (/^(bar-single|column-single)$/.test(chartType)) {
     return '#1D5F8A';
   }
-  if (chartType === 'bar' || chartType === 'line' || chartType === 'column-grouped') {
+  if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|column-grouped)$/.test(chartType)) {
     return this.colors(i);
   }
 
@@ -255,19 +257,19 @@ charts.handleElementClick = function (line, series, settings) {
     } else {
       selector = settings.svg.select(`.bar.${elem.option}`);
     }
-  } else if (['column', 'bar', 'column-grouped', 'column-stacked'].indexOf(settings.type) !== -1) {
+  } else if (['column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized', 'column-grouped', 'column-stacked'].indexOf(settings.type) !== -1) {
     // Grouped or singlular
     if (settings.isGrouped || settings.isSingular) {
       selector = settings.svg.select(`.series-${idx}`);
     } else if (settings.isStacked && !settings.isSingular) {
       // Stacked
-      const thisGroup = d3.select(settings.svg.selectAll(settings.type === 'bar' ?
-        '.series-group' : '.g')[0][idx]);
+      const thisGroup = d3.select(settings.svg.selectAll(settings.type === 'bar' || settings.type === 'bar-stacked' || settings.type === 'bar-normalized' ? '.series-group' : '.g')._groups[0][idx]); // eslint-disable-line
       selector = thisGroup.select('.bar');
     }
   }
 
-  if (['pie', 'column', 'bar', 'column-grouped', 'column-stacked'].indexOf(settings.type) !== -1) {
+  if (['pie', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized', 'column-grouped', 'column-stacked'].indexOf(settings.type) !== -1) {
+    charts.clickedLegend = true;
     selector.on('click').call(selector.node(), selector.datum(), idx, true);
   }
 
@@ -310,8 +312,8 @@ charts.selectElement = function (element, inverse, data, container) {
 charts.setSelectedElement = function (o) {
   let dataset = o.dataset;
   const isPositiveNegative = o.type === 'column-positive-negative';
-  const isBar = o.type === 'bar';
-  const isTypeColumn = o.type === 'column' || o.type === 'column-grouped' || o.type === 'column-stacked';
+  const isBar = /^(bar|bar-stacked|bar-grouped|bar-normalized)$/.test(o.type);
+  const isTypeColumn = /^(column|column-grouped|column-stacked)$/.test(o.type);
   const isTypePie = o.type === 'pie';
 
   const svg = o.svg;
@@ -337,7 +339,8 @@ charts.setSelectedElement = function (o) {
   if (isStacked || isTypePie) {
     dataset = dataset || null;
   } else {
-    dataset = (dataset && dataset[thisGroupId]) ? dataset[thisGroupId].data : null;
+    dataset = (dataset && dataset[thisGroupId]) ?
+      (dataset[thisGroupId].data || dataset[thisGroupId]) : null;
   }
 
   ticksX.style('font-weight', 'normal');
@@ -351,7 +354,7 @@ charts.setSelectedElement = function (o) {
     svg.selectAll('.bar, .target-bar').style('opacity', 0.6);
 
     // By legends only
-    if (o.clickedLegend && !isTypePie) {
+    if (charts.clickedLegend && !isTypePie) {
       if (isPositiveNegative) {
         if (o.isTargetBar) {
           o.svg.selectAll('.target-bar').classed('is-selected', true).style('opacity', 1);
@@ -390,16 +393,30 @@ charts.setSelectedElement = function (o) {
             thisData = d;
           }
 
-          if (thisData[0].data[o.i]) {
-            thisData = thisData[0].data[o.i];
-          }
+          if (isBar) {
+            if (thisData[0][o.i]) {
+              thisData = thisData[0][o.i];
+            }
 
-          if (thisData[o.i] && thisData[o.i].data[i]) {
-            thisData = thisData[o.i].data[i];
-          }
+            if (thisData[o.i] && thisData[o.i][i]) {
+              thisData = thisData[o.i][i];
+            }
 
-          if (thisData[i] && thisData[i].data[o.i]) {
-            thisData = thisData[i].data[o.i];
+            if (thisData[i] && thisData[i][o.i]) {
+              thisData = thisData[i][o.i];
+            }
+          } else {
+            if (thisData[0].data[o.i]) {
+              thisData = thisData[0].data[o.i];
+            }
+
+            if (thisData[o.i] && thisData[o.i].data[i]) {
+              thisData = thisData[o.i].data[i];
+            }
+
+            if (thisData[i] && thisData[i].data[o.i]) {
+              thisData = thisData[i].data[o.i];
+            }
           }
 
           selectedBars.push({ elem: bar.node(), data: thisData });
@@ -445,7 +462,7 @@ charts.setSelectedElement = function (o) {
       }
     } else if (isTypeColumn || isBar) {
       // Stacked Only
-      svg.selectAll(`${isTypeColumn ? '.axis.x' : '.axis.y'} .tick:nth-child(${o.i + 1})`)
+      svg.selectAll(`${isTypeColumn ? '.axis.x' : '.axis.y'} .tick:nth-child(${o.i + 2})`)
         .style('font-weight', 'bolder');
 
       svg.selectAll(`.bar:nth-child(${o.i + 1})`)
@@ -453,7 +470,11 @@ charts.setSelectedElement = function (o) {
 
       svg.selectAll('.bar.is-selected').each(function (d, i) {
         const bar = d3.select(this);
-        selectedBars.push({ elem: bar.node(), data: (dataset ? dataset[i].data[o.i] : d) });
+        let data = d;
+        if (dataset) {
+          data = isStacked ? dataset[i][o.i] : dataset[i].data[o.i];
+        }
+        selectedBars.push({ elem: bar.node(), data });
       });
       triggerData = selectedBars;
     } else if (isTypePie) { // Pie
@@ -482,8 +503,8 @@ charts.setSelectedElement = function (o) {
     }
   }
 
-  if (o.clickedLegend) {
-    o.clickedLegend = false;
+  if (charts.clickedLegend) {
+    charts.clickedLegend = false;
   }
 
   charts.selected = triggerData;
@@ -505,7 +526,7 @@ charts.setSelected = function (o, isToggle, internals) {
   }
 
   let selected = 0;
-  const equals = window.Soho.utils.equals;
+  const equals = utils.equals;
   const legendsNode = internals.svg.node().parentNode.nextSibling;
   const legends = d3.select(legendsNode);
   const isLegends = legends.node() && legends.classed('chart-legend');

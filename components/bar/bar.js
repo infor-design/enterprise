@@ -130,14 +130,22 @@ Bar.prototype = {
     const series = dataset.map(function (d) { //eslint-disable-line
       return { name: d.name, color: d.color, pattern: d.pattern };
     });
-    const keys = series.map(function (d) { //eslint-disable-line
-      return d.name;
-    });
 
     // Map the Data Sets and Stack them.
-    dataset = dataset.map(function (d) {  //eslint-disable-line
-      return d.data.map(function (o) { //eslint-disable-line
+    const yStack = { y1: [], y2: [] };
+    dataset = dataset.map(function (d, i) {  //eslint-disable-line
+      return d.data.map(function (o, i2) { //eslint-disable-line
+        let y0 = 0;
+        if (i === 0) {
+          yStack.y1.push(o.value);
+          yStack.y2.push(0);
+        } else {
+          y0 = yStack.y1[i2] + yStack.y2[i2];
+          yStack.y1[i2] = o.value;
+          yStack.y2[i2] = y0;
+        }
         return $.extend({}, o, {  //eslint-disable-line
+          y0,
           y: o.value,
           x: o.name,
           color: o.color,
@@ -145,20 +153,6 @@ Bar.prototype = {
         });
       });
     });
-
-    const stack = d3.stack().keys(keys)
-      .order(d3.stackOrderNone)
-      .offset(d3.stackOffsetNone);
-
-    const stackArray = stack(dataset);
-    console.log(stackArray);
-    // Convert back to old d3 format stackArray
-    dataset = stackArray.map(function (d) { //eslint-disable-line
-      return d.map(function (d2) { //eslint-disable-line
-        return d2.data;
-      });
-    });
-    console.log(dataset);
 
     // Calculate max text width
     maxTextWidth = 0;
@@ -308,6 +302,7 @@ Bar.prototype = {
 
     const yAxis = d3.axisLeft()
       .scale(yScale)
+      .tickPadding(15)
       .tickSize(0);
 
     self.svg.append('g')
@@ -481,11 +476,12 @@ Bar.prototype = {
           d,
           i,
           type: self.settings.type,
-          dataset: self.dataset,
+          dataset,
           isSingle: self.isSingular,
-          isGrouped: self.isGrouped,
+          isGrouped: self.settings.isGrouped,
           isStacked: self.settings.isStacked,
-          svg: self.svg
+          svg: self.svg,
+          clickedLegend: self.settings.clickedLegend
         });
 
         if (isSelected) {
@@ -527,16 +523,16 @@ Bar.prototype = {
 
     // Animate the Bars In
     self.svg.selectAll('.bar')
-      .transition().duration(charts.animate ? 600 : 0)
+      .transition().duration(self.settings.animate ? 600 : 0)
       .attr('width', (d) => {
         let scale = xScale(d.x);
         let scale0 = xScale(0);
 
-        if (isNaN(scale)) {
+        if (isNaN(scale) || !Number.isFinite(scale)) {
           scale = 0;
         }
 
-        if (isNaN(scale0)) {
+        if (isNaN(scale0) || !Number.isFinite(scale0)) {
           scale0 = 0;
         }
 
@@ -550,9 +546,17 @@ Bar.prototype = {
           (d.x < 0 ? xScale(d.x) : xScale(0));
       });
 
+    self.settings.svg = self.svg;
+
     // Add Legends
     if (self.settings.showLegend) {
-      charts.addLegend(self.settings.isStacked ? series : legendMap);
+      charts.addLegend(
+        (self.settings.isStacked ? series : legendMap),
+        self.settings.type,
+        self.settings,
+        this.element
+      );
+      // charts.addLegend(self.settings.isStacked ? series : legendMap);
     }
     charts.appendTooltip();
 
@@ -591,7 +595,7 @@ Bar.prototype = {
 
     const setSelectedGroup = function () {
       const groups = self.svg.selectAll('.series-group');
-      if (groups[0].length) {
+      if (groups._groups[0].length) { // eslint-disable-line
         groups.each(function () {
           setSelectedBar(this);
         });
@@ -599,7 +603,7 @@ Bar.prototype = {
     };
 
     if (self.settings.isGrouped || (self.settings.isStacked && !self.settings.isSingle)) {
-      self.dataset.forEach((d, i) => {
+      self.settings.dataset.forEach((d, i) => {
         if (d.selected && selected < 1) {
           selected++;
           selector = self.svg.select(`[data-group-id="${i}"]`).select('.bar');

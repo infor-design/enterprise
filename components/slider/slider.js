@@ -1,5 +1,4 @@
-/* eslint-disable */
-
+/* eslint-disable no-underscore-dangle */
 import * as debug from '../utils/debug';
 import { theme } from '../personalize/personalize';
 import { utils } from '../utils/utils';
@@ -9,17 +8,22 @@ import { Locale } from '../locale/locale';
 import '../drag/drag.jquery';
 import '../tooltip/tooltip.jquery';
 
-
-/**
- * Component Name
- */
-let COMPONENT_NAME = 'slider';
-
+// Component Name
+const COMPONENT_NAME = 'slider';
 
 /**
  * Slider Component Defaults
+ * @namespace
+ * @property {array} value
+ * @property {number} min
+ * @property {number} max
+ * @property {boolean} range
+ * @property {undefined|Number} step
+ * @property {array} ticks
+ * @property {undefined|Array} tooltipContent
+ * @property {boolean} persistTooltip
  */
-let SLIDER_DEFAULTS = {
+const SLIDER_DEFAULTS = {
   value: [50],
   min: 0,
   max: 100,
@@ -30,18 +34,12 @@ let SLIDER_DEFAULTS = {
   persistTooltip: false
 };
 
-
 /**
  * Touch Enabled/Responsive and Accessible Slider Control
- * @class {Slider}
- * @param {array} value
- * @param {number} min
- * @param {number} max
- * @param {boolean} range
- * @param {undefined|Number} step
- * @param {array} ticks
- * @param {undefined|Array} tooltipContent
- * @param {boolean} persistTooltip
+ * @class Slider
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element the base element
+ * @param {object} [settings] incoming settings
  */
 function Slider(element, settings) {
   this.element = $(element);
@@ -63,17 +61,19 @@ function roundToIncrement(number, increment) {
   if (!increment || isNaN(increment) || increment === 0) {
     increment = 1;
   }
-  return Math.round(number/increment) * increment;
+  return Math.round(number / increment) * increment;
 }
 
 // Get the distance between two points.
 // PointA & PointB are both arrays containing X and Y coordinates of two points.
 // Distance Formula:  http://www.purplemath.com/modules/distform.htm
 function getDistance(pointA, pointB) {
-  var aX = pointA[0], aY = pointA[1],
-    bX = pointB[0], bY = pointB[1];
+  const aX = pointA[0];
+  const aY = pointA[1];
+  const bX = pointB[0];
+  const bY = pointB[1];
 
-  return Math.sqrt( Math.pow(bX - aX, 2) + Math.pow(bY - aY, 2) );
+  return Math.sqrt(Math.pow(bX - aX, 2) + Math.pow(bY - aY, 2));
 }
 
 // Actual Plugin Code
@@ -81,9 +81,9 @@ Slider.prototype = {
 
   /**
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  init: function() {
+  init() {
     return this
       .buildSettings()
       .addMarkup()
@@ -93,10 +93,10 @@ Slider.prototype = {
   /**
    * Handles Data Attribute settings, some markup settings
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  buildSettings: function() {
-    var self = this;
+  buildSettings() {
+    const self = this;
 
     // Add "is-disabled" css class to closest ".field" if element is disabled
     if (this.element.is(':disabled')) {
@@ -107,8 +107,8 @@ Slider.prototype = {
       this.settings = {};
     }
     this.settings.value = this.element.attr('value') !== undefined ? this.element.attr('value') : this.settings.value;
-    this.settings.min = this.element.attr('min') !== undefined ? parseInt(this.element.attr('min')) : this.settings.min;
-    this.settings.max = this.element.attr('max') !== undefined ? parseInt(this.element.attr('max')) : this.settings.max;
+    this.settings.min = this.element.attr('min') !== undefined ? parseInt(this.element.attr('min'), 10) : this.settings.min;
+    this.settings.max = this.element.attr('max') !== undefined ? parseInt(this.element.attr('max'), 10) : this.settings.max;
     this.settings.range = this.element.attr('data-range') !== undefined ? (this.element.attr('data-range') === 'true') : this.settings.range;
     this.settings.step = !isNaN(this.element.attr('step')) ? Number(this.element.attr('step')) : this.settings.step;
 
@@ -117,11 +117,12 @@ Slider.prototype = {
     }
 
     // build tick list
-    var parsedTicks;
+    let parsedTicks;
     if (this.element.attr('data-ticks') !== undefined) {
       try {
         parsedTicks = JSON.parse(self.element.attr('data-ticks'));
       } catch (e) {
+        parsedTicks = [];
       }
 
       if ($.isArray(parsedTicks)) {
@@ -130,36 +131,39 @@ Slider.prototype = {
     }
 
     // build tooltip content
-    var isTooltipPersist = (this.element.attr('data-tooltip-persist') === 'true' || this.element.attr('data-tooltip-persist') === true);
+    const isTooltipPersist = (this.element.attr('data-tooltip-persist') === 'true' || this.element.attr('data-tooltip-persist') === true);
     this.settings.persistTooltip = this.element.attr('data-tooltip-persist') !== undefined ? isTooltipPersist : this.settings.persistTooltip;
     this.settings.tooltip = this.settings.tooltipContent;
     if (this.element.attr('data-tooltip-content') !== undefined) {
       try {
         self.settings.tooltip = JSON.parse(self.element.attr('data-tooltip-content'));
       } catch (e) {
+        self.settings.tooltip = ['', ''];
       }
     }
     if (typeof this.settings.tooltip === 'string') {
       if (this.settings.tooltip.indexOf(',') === -1) {
         this.settings.tooltip = [this.settings.tooltip, ''];
       } else {
-        var strings = this.settings.tooltip.split(',');
+        const strings = this.settings.tooltip.split(',');
         this.settings.tooltip = [strings[0]];
-        this.settings.tooltip.push( strings[1] ? strings[1] : '');
+        this.settings.tooltip.push(strings[1] ? strings[1] : '');
       }
     }
     if (this.settings.tooltip && this.settings.tooltip.length === 1) {
       this.settings.tooltip.push('');
     }
 
-    // Build ticks.  All sliders have a tick for minimum and maximum by default.  Some will be provided as extra.
+    // Build ticks.  All sliders have a tick for minimum and maximum by default.
+    // Some will be provided as extra.
     this.ticks = [];
-    var minTick = {
-      'value' : this.settings.min,
-      'description' : self.getModifiedTextValue(this.settings.min)
-    }, maxTick = {
-      'value' : this.settings.max,
-      'description' : self.getModifiedTextValue(this.settings.max)
+    const minTick = {
+      value: this.settings.min,
+      description: self.getModifiedTextValue(this.settings.min)
+    };
+    const maxTick = {
+      value: this.settings.max,
+      description: self.getModifiedTextValue(this.settings.max)
     };
 
     if (!this.settings.ticks) {
@@ -167,39 +171,31 @@ Slider.prototype = {
     } else {
       // Check the type of the data-ticks.  If it's not a complete array
       // and doesn't have at least one option, ignore it.
-      var ticks = self.settings.ticks || [];
+      let ticks = self.settings.ticks || [];
 
       if ($.isArray(ticks) && ticks.length > 0) {
         // Filter through the incoming ticks to figure out if any have been defined
         // That match the values of min and max.
-        var equalsMin = ticks.filter(function(obj) {
-          return obj.value === self.settings.min;
-        }),
-        equalsMax = ticks.filter(function(obj) {
-          return obj.value === self.settings.max;
-        });
+        const equalsMin = ticks.filter(obj => obj.value === self.settings.min);
+        const equalsMax = ticks.filter(obj => obj.value === self.settings.max);
 
         // Overwrite description and color for min/max if they've been found.
         if (equalsMin.length > 0) {
           minTick.description = equalsMin[0].description;
           minTick.color = equalsMin[0].color;
-          ticks = $.grep(ticks, function(val) {
-            return val !== equalsMin[0];
-          });
+          ticks = $.grep(ticks, val => val !== equalsMin[0]);
         }
         if (equalsMax.length > 0) {
           maxTick.description = equalsMax[0].description;
           maxTick.color = equalsMax[0].color;
-          ticks = $.grep(ticks, function(val) {
-            return val !== equalsMax[0];
-          });
+          ticks = $.grep(ticks, val => val !== equalsMax[0]);
         }
       }
 
       // Push the values of all ticks out to the ticks array
       self.ticks.push(minTick);
-      for (var i = 0; i < ticks.length; i++) {
-        var tick = {};
+      for (let i = 0; i < ticks.length; i++) {
+        const tick = {};
         if (ticks[i].value !== undefined) {
           tick.value = ticks[i].value;
           tick.description = ticks[i].description !== undefined ? ticks[i].description : '';
@@ -210,21 +206,24 @@ Slider.prototype = {
       self.ticks.push(maxTick);
     }
 
-    // configure the slider to deal with an array of values, and normalize the values to make sure they are numbers.
+    // configure the slider to deal with an array of values, and normalize the
+    // values to make sure they are numbers.
     if ($.isArray(this.settings.value)) {
-      this.settings.value[0] = isNaN(this.settings.value[0]) ? (this.settings.min + this.settings.max)/2 : parseInt(this.settings.value[0]);
+      this.settings.value[0] = isNaN(this.settings.value[0]) ?
+        (this.settings.min + this.settings.max) / 2 :
+        parseInt(this.settings.value[0], 10);
     } else if (typeof this.settings.value === 'number') {
       this.settings.value = [this.settings.value];
-    } else {
+    } else if (this.settings.value.indexOf(',') === -1) {
       // String
-      if (this.settings.value.indexOf(',') === -1) {
-        this.settings.value = [isNaN(this.settings.value) ? (this.settings.min + this.settings.max)/2 : parseInt(this.settings.value)];
-      } else {
-        var vals = this.settings.value.split(',');
-        vals[0] = isNaN(vals[0]) ? this.settings.min : parseInt(vals[0]);
-        vals[1] = isNaN(vals[1]) ? this.settings.max : parseInt(vals[1]);
-        this.settings.value = vals;
-      }
+      this.settings.value = [isNaN(this.settings.value) ?
+        (this.settings.min + this.settings.max) / 2 :
+        parseInt(this.settings.value, 10)];
+    } else {
+      const vals = this.settings.value.split(',');
+      vals[0] = isNaN(vals[0]) ? this.settings.min : parseInt(vals[0], 10);
+      vals[1] = isNaN(vals[1]) ? this.settings.max : parseInt(vals[1], 10);
+      this.settings.value = vals;
     }
 
     // Add a second value to the array if we're dealing with a range.
@@ -238,30 +237,30 @@ Slider.prototype = {
   /**
    * Adds pseudo-markup that helps build the component
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  addMarkup: function() {
-    var self = this,
-      isVertical = false;
+  addMarkup() {
+    const self = this;
+    let isVertical = false;
 
     if (self.element[0].tagName !== 'INPUT') {
-      throw new Error('Element with ID "' + self.element.id + '" cannot invoke a slider;  it\'s not an Input element.');
+      throw new Error(`Element with ID "${self.element.id}" cannot invoke a slider;  it's not an Input element.`);
     }
 
     // store values and attributes on the original element
     self.originalElement = {
-      'type': self.element.attr('type')
+      type: self.element.attr('type')
     };
 
     // Hide the input element
     self.element.attr('type', 'hidden');
 
     // Build the slider controls
-    self.wrapper = $('<div class="slider-wrapper"></div>').attr('id', self.element.attr('id') + '-slider').insertAfter(self.element);
+    self.wrapper = $('<div class="slider-wrapper"></div>').attr('id', `${self.element.attr('id')}-slider`).insertAfter(self.element);
     self.hitarea = $('<div class="slider-hit-area"></div>').appendTo(self.wrapper);
     self.range = $('<div class="slider-range"></div>').appendTo(self.wrapper);
 
-      // Set to a vertical slider if the class exists on the input
+    // Set to a vertical slider if the class exists on the input
     if (this.element.hasClass('vertical')) {
       this.wrapper.addClass('vertical');
       isVertical = true;
@@ -271,8 +270,9 @@ Slider.prototype = {
     this.isRtlHorizontal = (Locale.isRTL() && !isVertical);
     this.isRtlVertical = (Locale.isRTL() && isVertical);
 
-    // Retain any width or height size properties from the original range element onto the Pseudo-markup
-    var style = this.element.attr('style');
+    // Retain any width or height size properties from the original range
+    // element onto the Pseudo-markup
+    let style = this.element.attr('style');
     if (style) {
       if (style.match(/min-height/)) {
         this.wrapper[0].style.minHeight = this.element[0].style.minHeight;
@@ -292,34 +292,34 @@ Slider.prototype = {
 
     // Handles
     self.handles = [];
-    var labelText = self.element.prev('label').text(),
-      handleLower = $('<div class="slider-handle' + (self.settings.range ? ' lower' : '') +'" tabindex="0"></div>')
-      .attr('aria-label', (self.settings.range ? Locale.translate('SliderMinimumHandle') : Locale.translate('SliderHandle')) + ' ' + labelText);
+    const labelText = self.element.prev('label').text();
+    const handleLower = $(`<div class="slider-handle${self.settings.range ? ' lower' : ''}" tabindex="0"></div>`)
+      .attr('aria-label', `${self.settings.range ? Locale.translate('SliderMinimumHandle') : Locale.translate('SliderHandle')} ${labelText}`);
     self.handles.push(handleLower);
     if (self.settings.range) {
-      var handleHigher = $('<div class="slider-handle higher" tabindex="0"></div>')
-        .attr('aria-label', Locale.translate('SliderMaximumHandle') + ' ' + labelText);
+      const handleHigher = $('<div class="slider-handle higher" tabindex="0"></div>')
+        .attr('aria-label', `${Locale.translate('SliderMaximumHandle')} ${labelText}`);
       self.handles.push(handleHigher);
     }
-    $.each(self.handles, function(i, handle) {
+    $.each(self.handles, (i, handle) => {
       // Add WAI-ARIA to the handles
       handle.attr({
-        'role' : 'slider',
-        'aria-orientation' : (isVertical ? 'vertical' : 'horizontal'),
-        'aria-valuemin' : self.settings.min,
-        'aria-valuemax' : self.settings.max
+        role: 'slider',
+        'aria-orientation': (isVertical ? 'vertical' : 'horizontal'),
+        'aria-valuemin': self.settings.min,
+        'aria-valuemax': self.settings.max
       }).hideFocus();
       handle.appendTo(self.wrapper);
     });
 
     function positionTick(tick) {
-      var convertValueToPercentage = self.isRtlHorizontal ?
-          (100 - self.convertValueToPercentage(tick.value)) :
-          self.convertValueToPercentage(tick.value),
-        pos = 'calc(' + convertValueToPercentage + '% - 4px)';
+      const convertValueToPercentage = self.isRtlHorizontal ?
+        (100 - self.convertValueToPercentage(tick.value)) :
+        self.convertValueToPercentage(tick.value);
+      const pos = `calc(${convertValueToPercentage}% - 4px)`;
 
-      tick.element = $('<div class="tick" data-value="'+ tick.value +'"></div>');
-      tick.label = $('<span class="label">' + tick.description + '</span>');
+      tick.element = $(`<div class="tick" data-value="${tick.value}"></div>`);
+      tick.label = $(`<span class="label">${tick.description}</span>`);
       tick.element[0].style[isVertical ? 'bottom' : 'left'] = pos;
       tick.element.append(tick.label);
       self.wrapper.append(tick.element);
@@ -327,11 +327,11 @@ Slider.prototype = {
       if (isVertical) {
         return;
       }
-      tick.label[0].style.left = -(tick.label.outerWidth()/2 - tick.element.width()/2) + 'px';
+      tick.label[0].style.left = `${-(tick.label.outerWidth() / 2 - tick.element.width() / 2)}px`;
     }
 
     // Ticks
-    self.ticks.forEach(function(tick) {
+    self.ticks.forEach((tick) => {
       positionTick(tick);
     });
 
@@ -339,11 +339,11 @@ Slider.prototype = {
     self.updateRange();
 
     // Tooltip on handle needs to update later
-    $.each(self.handles, function(i, handle) {
+    $.each(self.handles, (i, handle) => {
       if (self.settings.tooltip) {
         handle.tooltip({
-          content: function() {
-            return '' + self.getModifiedTextValue(Math.floor(self.value()[i]));
+          content() {
+            return `${self.getModifiedTextValue(Math.floor(self.value()[i]))}`;
           },
           placement: (isVertical ? 'right' : 'bottom'),
           trigger: 'focus',
@@ -362,139 +362,144 @@ Slider.prototype = {
 
   /**
    * User is interacting with the Slider Range (not the handle or ticks)
-   * @param {jQuery.Event} e
+   * @param {jQuery.Event} e jQuery `click` event
+   * @returns {void}
    */
-  handleRangeClick: function(e) {
-      e.preventDefault();
-      if (this.isDisabled()) {
-        return;
+  handleRangeClick(e) {
+    e.preventDefault();
+    if (this.isDisabled()) {
+      return;
+    }
+
+    const self = this;
+    const isVertical = this.wrapper.hasClass('vertical');
+    const pageX = e.originalEvent.type !== 'click' ? e.originalEvent.changedTouches[0].pageX : e.pageX;
+    const pageY = e.originalEvent.type !== 'click' ? e.originalEvent.changedTouches[0].pageY : e.pageY;
+    const mouseX = pageX - self.wrapper.offset().left - $(document).scrollLeft();
+    const mouseY = pageY - self.wrapper.offset().top - $(document).scrollTop();
+    const clickCoords = [mouseX, mouseY];
+    const fhX = (self.handles[0].offset().left + (self.handles[0].width() / 2)) -
+      self.wrapper.offset().left - $(document).scrollLeft();
+    const fhY = (self.handles[0].offset().top + (self.handles[0].height() / 2)) -
+      self.wrapper.offset().top - $(document).scrollTop();
+    const firstHandleCoords = [fhX, fhY];
+    let shX;
+    let shY;
+    let secondHandleCoords;
+    const oldVals = self.value();
+    const dLower = getDistance(clickCoords, firstHandleCoords);
+    let dHigher;
+    let targetOldVal = oldVals[0];
+    let targetHandle = self.handles[0];
+
+    targetHandle.addClass('hide-focus');
+
+    function conversion() {
+      if (isVertical) {
+        const wh = self.wrapper.height();
+        return ((wh - mouseY) / wh) * 100;
       }
+      return (mouseX / self.wrapper.width()) * 100;
+    }
 
-      var self = this,
-        isVertical = this.wrapper.hasClass('vertical'),
-        pageX = e.originalEvent.type !== 'click' ? e.originalEvent.changedTouches[0].pageX : e.pageX,
-        pageY = e.originalEvent.type !== 'click' ? e.originalEvent.changedTouches[0].pageY : e.pageY,
-        mouseX = pageX - self.wrapper.offset().left - $(document).scrollLeft(),
-        mouseY = pageY - self.wrapper.offset().top - $(document).scrollTop(),
-        clickCoords = [mouseX,mouseY],
-        fhX = (self.handles[0].offset().left + (self.handles[0].width()/2)) - self.wrapper.offset().left - $(document).scrollLeft(),
-        fhY = (self.handles[0].offset().top + (self.handles[0].height()/2)) - self.wrapper.offset().top - $(document).scrollTop(),
-        firstHandleCoords = [fhX,fhY],
-        shX,
-        shY,
-        secondHandleCoords,
-        oldVals = self.value(),
-        dLower = getDistance(clickCoords,firstHandleCoords),
-        dHigher,
-        targetOldVal = oldVals[0],
-        targetHandle = self.handles[0];
+    // Convert the coordinates of the mouse click to a value
+    const val = conversion();
+    const rangeVal = self.convertPercentageToValue(val);
 
-      targetHandle.addClass('hide-focus');
+    // If the slider is a range, we may use the second handle instead of the first
+    if (self.handles[1]) {
+      shX = (self.handles[1].offset().left + (self.handles[1].width() / 2)) -
+        self.wrapper.offset().left - $(document).scrollLeft();
+      shY = (self.handles[1].offset().top + (self.handles[1].height() / 2)) -
+        self.wrapper.offset().top - $(document).scrollTop();
+      secondHandleCoords = [shX, shY];
+      dHigher = getDistance(clickCoords, secondHandleCoords);
 
-      function conversion() {
-        if (isVertical) {
-          var wh = self.wrapper.height();
-          return ((wh - mouseY) / wh) * 100;
-        }
-        return (mouseX / self.wrapper.width()) * 100;
-      }
-
-      // Convert the coordinates of the mouse click to a value
-      var val = conversion(),
-        rangeVal = self.convertPercentageToValue(val);
-
-      // If the slider is a range, we may use the second handle instead of the first
-      if (self.handles[1]) {
-        shX = (self.handles[1].offset().left + (self.handles[1].width()/2)) - self.wrapper.offset().left - $(document).scrollLeft();
-        shY = (self.handles[1].offset().top + (self.handles[1].height()/2)) - self.wrapper.offset().top - $(document).scrollTop();
-        secondHandleCoords = [shX, shY];
-        dHigher = getDistance(clickCoords,secondHandleCoords);
-
-        if (dLower > dHigher) {
-          self.value([undefined, rangeVal]);
-          targetHandle = self.handles[1];
-          targetOldVal = oldVals[1];
-        } else {
-          self.value([rangeVal]);
-        }
+      if (dLower > dHigher) {
+        self.value([undefined, rangeVal]);
+        targetHandle = self.handles[1];
+        targetOldVal = oldVals[1];
       } else {
         self.value([rangeVal]);
       }
+    } else {
+      self.value([rangeVal]);
+    }
 
-      self.checkHandleDifference(targetHandle, targetOldVal, rangeVal);
+    self.checkHandleDifference(targetHandle, targetOldVal, rangeVal);
 
-      if (rangeVal < targetOldVal) {
-        self.decreaseValue(e, targetHandle, rangeVal, 0);
-      } else {
-        self.increaseValue(e, targetHandle, rangeVal, 0);
-      }
+    if (rangeVal < targetOldVal) {
+      self.decreaseValue(e, targetHandle, rangeVal, 0);
+    } else {
+      self.increaseValue(e, targetHandle, rangeVal, 0);
+    }
 
-      // Tooltip repositioner will focus the handle after positioning occurs, but if we are clicking a tick
-      // on a slider with no tooltip, we need to focus it manually.
-      if (!self.settings.tooltip) {
-        targetHandle.focus();
-      }
+    // Tooltip repositioner will focus the handle after positioning occurs, but if
+    // we are clicking a tick on a slider with no tooltip, we need to focus it manually.
+    if (!self.settings.tooltip) {
+      targetHandle.focus();
+    }
   },
 
   /**
    * Activates one of the slider handles
-   * @param {jQuery[]} handle
+   * @param {jQuery[]} handle element representing a slider handle
    */
-  activateHandle: function(handle) {
+  activateHandle(handle) {
     handle.addClass('is-active');
   },
 
   /**
    * Deactivates one of the slider handles
-   * @param {jQuery[]} handle
+   * @param {jQuery[]} handle element representing a slider handle
    */
-  deactivateHandle: function(handle) {
+  deactivateHandle(handle) {
     handle.removeClass('is-active');
   },
 
   /**
    * Enables the ability to drag one of the slider handles.
-   * @param {jQuery[]} handle
+   * @param {jQuery[]} handle element representing a slider handle
    */
-  enableHandleDrag: function(handle) {
+  enableHandleDrag(handle) {
     if (this.isDisabled()) {
       return;
     }
 
-    var self = this,
-      draggableOptions = {
-        containment: 'parent',
-        axis: (this.isVertical() ? 'y' : 'x'),
-        clone: false
-      };
+    const self = this;
+    const draggableOptions = {
+      containment: 'parent',
+      axis: (this.isVertical() ? 'y' : 'x'),
+      clone: false
+    };
 
-    function updateHandleFromDraggable(e, handle, args) {
+    function updateHandleFromDraggable(e, thisHandle, args) {
       if (self.isDisabled()) {
         return;
       }
 
       function conversion() {
         if (self.isVertical()) {
-          var wh = self.wrapper.height(),
+          const wh = self.wrapper.height();
           // Vertical Slider accounts for limits set on the height by SoHo Xi Drag.js
-          adjustedHeight = wh - handle.outerHeight();
+          const adjustedHeight = wh - thisHandle.outerHeight();
 
           return ((adjustedHeight - args.top) / adjustedHeight) * 100;
         }
-        return args.left / (self.wrapper.width() - handle.outerWidth()) * 100;
+        return args.left / (self.wrapper.width() - thisHandle.outerWidth()) * 100;
       }
 
-      var val = conversion(),
-        rangeVal = self.convertPercentageToValue(val);
+      const val = conversion();
+      let rangeVal = self.convertPercentageToValue(val);
 
-      // Ranged values need to check to make sure that the higher-value handle doesn't drawindowg past the
-      // lower-value handle, and vice-versa.
+      // Ranged values need to check to make sure that the higher-value handle
+      // doesn't drawindowg past the lower-value handle, and vice-versa.
       if (self.settings.range) {
-        var originalVal = self.value();
-        if (handle.hasClass('higher') && rangeVal <= originalVal[0]) {
+        const originalVal = self.value();
+        if (thisHandle.hasClass('higher') && rangeVal <= originalVal[0]) {
           rangeVal = originalVal[0];
         }
-        if (handle.hasClass('lower') && rangeVal >= originalVal[1]) {
+        if (thisHandle.hasClass('lower') && rangeVal >= originalVal[1]) {
           rangeVal = originalVal[1];
         }
       }
@@ -505,43 +510,41 @@ Slider.prototype = {
       }
 
       if (!e.defaultPrevented) {
-        self.value(handle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
+        self.value(thisHandle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
         self.updateRange();
-        self.updateTooltip(handle);
-        self.element.trigger('sliding', handle, rangeVal);
+        self.updateTooltip(thisHandle);
+        self.element.trigger('sliding', thisHandle, rangeVal);
       }
-
-      return;
     }
 
     // Add/Remove Classes for canceling animation of handles on the draggable's events.
     handle.drag(draggableOptions)
-    .on('drag.slider', function (e, args) {
-      updateHandleFromDraggable(e, $(e.currentTarget), args);
-    })
-    .on('dragstart', function() {
-      $(this).addClass('is-dragging');
-      self.range.addClass('is-dragging');
-      self.element.trigger('slidestart', handle);
-    })
-    .on('dragend', function() {
-      $(this).removeClass('is-dragging');
-      self.range.removeClass('is-dragging');
-      self.element.trigger('slidestop', handle);
-    });
+      .on('drag.slider', (e, args) => {
+        updateHandleFromDraggable(e, $(e.currentTarget), args);
+      })
+      .on('dragstart', function () {
+        $(this).addClass('is-dragging');
+        self.range.addClass('is-dragging');
+        self.element.trigger('slidestart', handle);
+      })
+      .on('dragend', function () {
+        $(this).removeClass('is-dragging');
+        self.range.removeClass('is-dragging');
+        self.element.trigger('slidestop', handle);
+      });
   },
 
   /**
    * Disables the dragging of a handle.
-   * @param {jQuery[]} handle
+   * @param {jQuery[]} handle element representing a slider handle
    */
-  disableHandleDrag: function(handle) {
+  disableHandleDrag(handle) {
     handle.off('drag.slider dragstart dragend');
 
     this.range.removeClass('is-dragging');
     handle.removeClass('is-dragging');
 
-    var dragAPI = handle.data('drag');
+    const dragAPI = handle.data('drag');
     if (dragAPI) {
       dragAPI.destroy();
     }
@@ -549,29 +552,29 @@ Slider.prototype = {
 
   /**
    * @private
-   * @param {number} value
-   * @returns {number}
+   * @param {number} value pixel value
+   * @returns {number} representing a percentage
    */
-  convertValueToPercentage: function(value) {
+  convertValueToPercentage(value) {
     return (((value - this.settings.min) / (this.settings.max - this.settings.min)) * 100);
   },
 
   /**
    * @private
-   * @param {number} percentage
-   * @returns {number}
+   * @param {number} percentage percentage value
+   * @returns {number} representing a pixel value
    */
-  convertPercentageToValue: function(percentage) {
-    var val = (percentage / 100) * (this.settings.max - this.settings.min) + this.settings.min;
+  convertPercentageToValue(percentage) {
+    const val = (percentage / 100) * (this.settings.max - this.settings.min) + this.settings.min;
     return this.isRtlHorizontal ? (this.settings.max - val + this.settings.min) : val;
   },
 
   /**
    * Gets a 10% increment/decrement as a value within the range of minimum and maximum values.
-   * @returns {number}
+   * @returns {number} nearest 10% increment
    */
-  getIncrement: function() {
-    var increment = 0.1 * (this.settings.max - this.settings.min);
+  getIncrement() {
+    let increment = 0.1 * (this.settings.max - this.settings.min);
     if (this.settings.step !== undefined && increment <= this.settings.step) {
       increment = this.settings.step;
     }
@@ -580,21 +583,21 @@ Slider.prototype = {
 
   /**
    * Handles Slider Component's keystrokes
-   * @param {jQuery.Event} e
-   * @param {this} self
+   * @param {jQuery.Event} e jQuery `keydown` event
+   * @param {this} self reference to this component instance
    */
-  handleKeys: function(e, self) {
+  handleKeys(e, self) {
     if (self.isDisabled()) {
       return;
     }
 
-    var key = e.which,
-      handle = $(e.currentTarget);
+    const key = e.which;
+    const handle = $(e.currentTarget);
 
     handle.removeClass('hide-focus');
 
     // If the keycode got this far, it's an arrow key, Page Up, Page Down, HOME, or END.
-    switch(key) {
+    switch (key) {
       case 33: // Page Up increases the value by 10%
         self.increaseValue(e, handle, undefined, this.getIncrement());
         break;
@@ -604,7 +607,9 @@ Slider.prototype = {
       case 35: // End key sets the handle to its maximum possible value
         self.increaseValue(e, handle, this.settings.max);
         break;
-      case 36: // Home key sets the handle to its lowest (either minimum value or as low as the "lower" handle)
+      case 36:
+        // Home key sets the handle to its lowest
+        // (either minimum value or as low as the "lower" handle)
         self.decreaseValue(e, handle, this.settings.min);
         break;
       case 38: case 39: // Right and Up increase the spinbox value
@@ -621,37 +626,40 @@ Slider.prototype = {
           self.decreaseValue(e, handle);
         }
         break;
+      default:
+        break;
     }
   },
 
   /**
    * Increases the value of one of the slider handles, accounting for step value, percentage, etc.
    * Also visually updates the handle on the visual part of the slider.
-   * @param {jQuery.Event} e
-   * @param {jQuery[]} handle
+   * @param {jQuery.Event} e jQuery `click` or `keydown` event.
+   * @param {jQuery[]} handle represents a slider handle element.
    * @param {number} [value] - target value - will be automatically determined if not passed.
    * @param {number} [increment] - an integer that will be used as the amount to increment.
    */
-  increaseValue: function(e, handle, value, increment) {
+  increaseValue(e, handle, value, increment) {
     e.preventDefault();
     clearTimeout(handle.data('animationTimeout'));
 
-    var val = this.value().slice(0),
-      incrementBy = increment !== undefined ? increment : this.settings.step !== undefined ? this.settings.step : 1,
-      testVal,
-      updatedVal,
-      finalVal;
+    const val = this.value().slice(0);
+    let incrementBy = increment !== undefined ? increment : this.settings.step !== undefined ? this.settings.step : 1; //eslint-disable-line
+    let testVal;
+    let updatedVal;
+    let finalVal;
 
     if (handle.hasClass('higher')) {
       testVal = value !== undefined ? value : val[1];
-      incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : testVal % incrementBy;
-      updatedVal = testVal + incrementBy < this.settings.max ? testVal + incrementBy : this.settings.max;
+      incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : testVal % incrementBy; //eslint-disable-line
+      updatedVal = testVal + incrementBy <
+        this.settings.max ? testVal + incrementBy : this.settings.max;
       finalVal = updatedVal % incrementBy ? updatedVal : roundToIncrement(updatedVal, incrementBy);
       this.value([undefined, finalVal]);
     } else {
       testVal = value !== undefined ? value : val[0];
-      var maxValue = val[1] === undefined ? this.settings.max : val[1];
-      incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : incrementBy - (testVal % incrementBy);
+      const maxValue = val[1] === undefined ? this.settings.max : val[1];
+      incrementBy = isInt(testVal) ? incrementBy : isNaN(testVal % incrementBy) ? 0 : incrementBy - (testVal % incrementBy); //eslint-disable-line
       updatedVal = testVal + incrementBy < maxValue ? testVal + incrementBy : maxValue;
       finalVal = updatedVal % incrementBy ? updatedVal : roundToIncrement(updatedVal, incrementBy);
       this.value([finalVal]);
@@ -664,32 +672,33 @@ Slider.prototype = {
   /**
    * Decreases the value of one of the slider handles, accounting for step value, percentage, etc.
    * Also visually updates the handle on the visual part of the slider.
-   * @param {jQuery.Event} e
-   * @param {jQuery[]} handle
+   * @param {jQuery.Event} e jQuery `click` or `keydown` event.
+   * @param {jQuery[]} handle element representing a slider handle.
    * @param {number} [value] - target value - will be automatically determined if not passed.
    * @param {number} [decrement] - an integer that will be used as the amount to decrement.
    */
-  decreaseValue: function(e, handle, value, decrement) {
+  decreaseValue(e, handle, value, decrement) {
     e.preventDefault();
     clearTimeout(handle.data('animationTimeout'));
 
-    var val = this.value(),
-      decrementBy = decrement !== undefined ? decrement : this.settings.step !== undefined ? this.settings.step : 1,
-      testVal,
-      updatedVal,
-      finalVal;
+    const val = this.value();
+    let decrementBy = decrement !== undefined ? decrement : this.settings.step !== undefined ? this.settings.step : 1; //eslint-disable-line
+    let testVal;
+    let updatedVal;
+    let finalVal;
 
     if (handle.hasClass('higher')) {
       testVal = value !== undefined ? value : val[1];
-      var minValue = val[0] === undefined ? this.settings.min : val[0];
-      decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : decrementBy - (testVal % decrementBy);
+      const minValue = val[0] === undefined ? this.settings.min : val[0];
+      decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : decrementBy - (testVal % decrementBy); //eslint-disable-line
       updatedVal = testVal - decrementBy > minValue ? testVal - decrementBy : minValue;
       finalVal = updatedVal % decrementBy ? updatedVal : roundToIncrement(updatedVal, decrementBy);
       this.value([undefined, finalVal]);
     } else {
       testVal = value !== undefined ? value : val[0];
-      decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : testVal % decrementBy;
-      updatedVal = testVal - decrementBy > this.settings.min ? testVal - decrementBy : this.settings.min;
+      decrementBy = isInt(testVal) ? decrementBy : isNaN(testVal % decrementBy) ? 0 : testVal % decrementBy; //eslint-disable-line
+      updatedVal = testVal - decrementBy >
+        this.settings.min ? testVal - decrementBy : this.settings.min;
       finalVal = updatedVal % decrementBy ? updatedVal : roundToIncrement(updatedVal, decrementBy);
       this.value([finalVal]);
     }
@@ -701,15 +710,15 @@ Slider.prototype = {
   /**
    * Changes the position of the bar and handles based on their values.
    */
-  updateRange: function() {
-    var self = this,
-      newVal = this.value(),
-      percentages = [],
-      color = this.getColorClosestToValue(),
-      isVertical = self.wrapper.hasClass('vertical');
+  updateRange() {
+    const self = this;
+    const newVal = this.value();
+    const percentages = [];
+    const color = this.getColorClosestToValue();
+    const isVertical = self.wrapper.hasClass('vertical');
 
-    for (var i = 0; i < this.ticks.length; i++) {
-      var condition = !this.settings.range ? this.ticks[i].value <= newVal[0] :
+    for (let i = 0; i < this.ticks.length; i++) {
+      const condition = !this.settings.range ? this.ticks[i].value <= newVal[0] :
         newVal[0] < this.ticks[i].value && this.ticks[i].value <= newVal[1];
 
       if (condition) {
@@ -729,14 +738,14 @@ Slider.prototype = {
 
     if (color) {
       this.range[0].style.backgroundColor = color;
-      $.each(this.handles, function(i, handle) {
+      $.each(this.handles, (i, handle) => {
         handle[0].style.backgroundColor = color;
         handle[0].style.borderColor = color;
       });
     }
 
     // Remove any text colors that already existed.
-    $.each(self.ticks, function(i) {
+    $.each(self.ticks, (i) => {
       self.ticks[i].label[0].style.color = '';
     });
 
@@ -746,29 +755,38 @@ Slider.prototype = {
       percentages[1] = this.convertValueToPercentage(newVal[1]);
     }
 
-    var posAttrs = (isVertical ? ['bottom', 'top'] :
-      (self.isRtlHorizontal ? ['right', 'left'] : ['left', 'right'])),
-      cssProps = {};
+    function getPosAttrs() {
+      if (isVertical) {
+        return ['bottom', 'top'];
+      }
+      if (self.isRtlHorizontal) {
+        return ['right', 'left'];
+      }
+      return ['left', 'right'];
+    }
+
+    const posAttrs = getPosAttrs();
+    const cssProps = {};
 
     // If no arguments are provided, update both handles with the latest stored values.
     if (!this.handles[1]) {
       cssProps[posAttrs[0]] = '0%';
-      cssProps[posAttrs[1]] = (100 - percentages[0]) + '%';
+      cssProps[posAttrs[1]] = `${100 - percentages[0]}%`;
     } else {
-      cssProps[posAttrs[0]] = percentages[0] + '%';
-      cssProps[posAttrs[1]] = (100 - percentages[1]) + '%';
+      cssProps[posAttrs[0]] = `${percentages[0]}%`;
+      cssProps[posAttrs[1]] = `${100 - percentages[1]}%`;
     }
     this.range.css(cssProps);
 
     function positionHandle(handle, percentage) {
-      var basePosition = isVertical ? posAttrs[1] : posAttrs[0],
-        realPercentage = isVertical ? 100 - percentage : percentage;
+      const basePosition = isVertical ? posAttrs[1] : posAttrs[0];
+      const realPercentage = isVertical ? 100 - percentage : percentage;
 
-      handle.css(basePosition, 'calc(' + realPercentage + '% - ' + handle.outerWidth()/2 + 'px)');
+      handle.css(basePosition, `calc(${realPercentage}% - ${handle.outerWidth() / 2}px)`);
     }
 
     if (this.handles[0].hasClass('is-animated')) {
-      this.handles[0].data('animationTimeout', setTimeout( function() {
+      this.handles[0].data('animationTimeout', setTimeout(() => {
         self.handles[0].removeClass('is-animated').trigger('slide-animation-end');
         self.range.removeClass('is-animated');
       }, 201));
@@ -777,33 +795,34 @@ Slider.prototype = {
 
     if (this.handles[1]) {
       if (this.handles[1].hasClass('is-animated')) {
-        this.handles[1].data('animationTimeout', setTimeout( function() {
+        this.handles[1].data('animationTimeout', setTimeout(() => {
           self.handles[1].removeClass('is-animated').trigger('slide-animation-end');
           self.range.removeClass('is-animated');
         }, 201));
       }
       positionHandle(this.handles[1], percentages[1]);
 
-      // update the 'aria-valuemin' attribute on the Max handle, and the 'aria-valuemax' attribute on the Min handle
-      // for better screen reading compatability
+      // update the 'aria-valuemin' attribute on the Max handle, and the 'aria-valuemax'
+      // attribute on the Min handle for better screen reading compatability
       this.handles[0].attr('aria-valuemax', newVal[1]);
       this.handles[1].attr('aria-valuemin', newVal[0]);
     }
   },
 
   /**
-   * Allows a handle to animate to a new position if the difference in value is greater than 3% of the size of the range.
-   * @param {jQuery[]} handle
-   * @param {number} originalVal
-   * @param {number} updatedVal
+   * Allows a handle to animate to a new position if the difference in value is greater
+   *  than 3% of the size of the range.
+   * @param {jQuery[]} handle element representing a slider handle
+   * @param {number} originalVal the value before it was modified
+   * @param {number} updatedVal the target value
    */
-  checkHandleDifference: function(handle, originalVal, updatedVal) {
+  checkHandleDifference(handle, originalVal, updatedVal) {
     // IE9 doesn't support animation so return immediately.
     if ($('html').hasClass('ie9')) {
       return;
     }
-    var origPercent = this.convertValueToPercentage(originalVal),
-      updatedPercent = this.convertValueToPercentage(updatedVal);
+    const origPercent = this.convertValueToPercentage(originalVal);
+    const updatedPercent = this.convertValueToPercentage(updatedVal);
 
     if (Math.abs(origPercent - updatedPercent) > 3) {
       handle.addClass('is-animated');
@@ -814,16 +833,16 @@ Slider.prototype = {
   /**
    * If tooltips are active, updates the current placement and content of the Tooltip.
    * If no handle argument is passed, this method simply hides both handles' tooltips.
-   * @param {jQuery[]} [handle]
+   * @param {jQuery[]} [handle] element representing a slider handle.
    */
-  updateTooltip: function(handle) {
+  updateTooltip(handle) {
     if (!this.settings.tooltip) {
       return;
     }
 
     if (!handle) {
-      var tooltipLow = this.handles[0].data('tooltip'),
-        tooltipHigh;
+      const tooltipLow = this.handles[0].data('tooltip');
+      let tooltipHigh;
 
       if (this.handles[1]) {
         tooltipHigh = this.handles[1].data('tooltip');
@@ -837,19 +856,20 @@ Slider.prototype = {
       return;
     }
 
-    var tooltip = handle.data('tooltip');
+    const tooltip = handle.data('tooltip');
 
     function update() {
       tooltip.position();
       handle.focus();
     }
 
-    // NOTE: This is a bit hacky because it depends on the setTimeout() method for animation that is triggered
-    // inside the self.updateRange() method to have not fired yet.  If you put a breakpoint anywhere in there you
-    // may see strange results with animation.
+    // NOTE: This is a bit hacky because it depends on the setTimeout() method for
+    // animation that is triggered inside the self.updateRange() method to have not
+    // fired yet.  If you put a breakpoint anywhere in there you may see strange
+    // results with animation.
     if (handle.hasClass('is-animated')) {
       tooltip.hide();
-      handle.one('slide-animation-end', function() {
+      handle.one('slide-animation-end', () => {
         update();
       });
     } else {
@@ -859,45 +879,46 @@ Slider.prototype = {
 
   /**
    * Gets a string-based hex value for the closest tick's defined color.
-   * @returns {string}
+   * @returns {string} hex value representing a color
    */
-  getColorClosestToValue: function() {
-    var currentTheme = theme,
-      preColors = {
-        'light': {
-          'default'   : '#000000',
-          'very-poor' : '#a13030',
-          'poor'      : '#d66221',
-          'adequate'  : '#f2bc41',
-          'good'      : '#9cce7c',
-          'very-good' : '#76b051',
-          'superior'  : '#488421'
-        },
-        'dark': {
-          'default'   : '#ffffff',
-          'very-poor' : '#a13030',
-          'poor'      : '#d66221',
-          'adequate'  : '#f2bc41',
-          'good'      : '#9cce7c',
-          'very-good' : '#76b051',
-          'superior'  : '#488421'
-        },
-        'high-contrast': {
-          'default'   : '#000000',
-          'very-poor' : '#a13030',
-          'poor'      : '#d66221',
-          'adequate'  : '#e4882b',
-          'good'      : '#76b051',
-          'very-good' : '#56932e',
-          'superior'  : '#397514'
-        }
-      };
+  getColorClosestToValue() {
+    const currentTheme = theme;
+    const preColors = {
+      light: {
+        default: '#000000',
+        'very-poor': '#a13030',
+        poor: '#d66221',
+        adequate: '#f2bc41',
+        good: '#9cce7c',
+        'very-good': '#76b051',
+        superior: '#488421'
+      },
+      dark: {
+        default: '#ffffff',
+        'very-poor': '#a13030',
+        poor: '#d66221',
+        adequate: '#f2bc41',
+        good: '#9cce7c',
+        'very-good': '#76b051',
+        superior: '#488421'
+      },
+      'high-contrast': {
+        default: '#000000',
+        'very-poor': '#a13030',
+        poor: '#d66221',
+        adequate: '#e4882b',
+        good: '#76b051',
+        'very-good': '#56932e',
+        superior: '#397514'
+      }
+    };
 
-    var themeColors = preColors[currentTheme],
-      val = this.value()[0],
-      highestTickColor, c;
+    const themeColors = preColors[currentTheme];
+    const val = this.value()[0];
+    let highestTickColor;
+    let c;
 
-    for (var i = 0; i < this.ticks.length; i++) {
+    for (let i = 0; i < this.ticks.length; i++) {
       c = this.ticks[i].color;
       if (c && val >= this.ticks[i].value) {
         highestTickColor = c;
@@ -911,12 +932,12 @@ Slider.prototype = {
   /**
    * External Facing Function to set the value. Works as percent for now but need it on ticks.
    * NOTE:  Does not visually update the range.  Use _setValue()_ to do both in one swoop.
-   * @param {number} minVal
-   * @param {number} [maxVal]
-   * @returns {array}
+   * @param {number} minVal the smaller handle's value
+   * @param {number} [maxVal] the larger handle's value, if applicable
+   * @returns {array} both currently set handle values
    */
-  value: function(minVal, maxVal) {
-    var self = this;
+  value(minVal, maxVal) {
+    const self = this;
 
     // if both options are absent, act as a getter and return the current value
     if (minVal === undefined && maxVal === undefined) {
@@ -939,14 +960,14 @@ Slider.prototype = {
       maxVal = self._value[1];
     }
 
-    //set the internal value and the element's retrievable value.
+    // set the internal value and the element's retrievable value.
     self._value = [minVal, maxVal];
     self.element.val(maxVal !== undefined ? self._value : self._value[0]);
-    $.each(self.handles, function(i, handle) {
-      var value = self._value[i],
-        valueText = self.getModifiedTextValue(value);
+    $.each(self.handles, (i, handle) => {
+      const value = self._value[i];
+      let valueText = self.getModifiedTextValue(value);
 
-      $.each(self.ticks, function(a, tick) {
+      $.each(self.ticks, (a, tick) => {
         if (tick.value === value) {
           valueText = tick.description;
         }
@@ -965,10 +986,10 @@ Slider.prototype = {
   /**
    * Returns a value with prefixed/suffixed text content.
    * Used by the tooltip and default ticks to get potential identifiers like $ and %.
-   * @param {string} content
-   * @returns {string}
+   * @param {string} content the original tooltip content
+   * @returns {string} prepended/appended text that will be displayed inside the tooltip
    */
-  getModifiedTextValue: function(content) {
+  getModifiedTextValue(content) {
     if (!this.settings.tooltip) {
       return content;
     }
@@ -977,14 +998,14 @@ Slider.prototype = {
 
   /**
    * Enables the slider instance.
-   * @returns {this}
+   * @returns {this} component instance
    */
-  enable: function() {
+  enable() {
     this.element.prop('disabled', false);
     this.wrapper.removeClass('is-disabled');
 
-    var self = this;
-    $.each(this.handles, function(i, handle) {
+    const self = this;
+    $.each(this.handles, (i, handle) => {
       self.enableHandleDrag(handle);
     });
 
@@ -993,14 +1014,14 @@ Slider.prototype = {
 
   /**
    * Disables the slider instance.
-   * @returns {this}
+   * @returns {this} component instance
    */
-  disable: function() {
+  disable() {
     this.element.prop('disabled', true);
     this.wrapper.addClass('is-disabled');
 
-    var self = this;
-    $.each(this.handles, function(i, handle) {
+    const self = this;
+    $.each(this.handles, (i, handle) => {
       self.disableHandleDrag(handle);
     });
 
@@ -1009,48 +1030,51 @@ Slider.prototype = {
 
   /**
    * Detects whether or not this slider is disabled
-   * @returns {boolean}
+   * @returns {boolean} whether or not this slider is disabled
    */
-  isDisabled: function() {
+  isDisabled() {
     return this.element.prop('disabled');
   },
 
   /**
    * Detects whether or not this slider is vertical
-   * @returns {boolean}
+   * @returns {boolean} whether or not this slider is vertical
    */
-  isVertical: function() {
+  isVertical() {
     return this.wrapper.hasClass('vertical');
   },
 
   /**
-   * Externally-facing function that updates the current values and correctly animates the range handles, if applicable.
-   * @param {number} lowVal
-   * @param {number} [highVal]
-   * @returns {array}
+   * Externally-facing function that updates the current values and correctly
+   * animates the range handles, if applicable.
+   * @param {number} lowVal the value for the lower slider handle.
+   * @param {number} [highVal] the value for the upper slider handle, if applicable.
+   * @returns {array} the newly set values
    */
-  setValue: function(lowVal, highVal) {
-    var oldVals = this.value();
+  setValue(lowVal, highVal) {
+    const oldVals = this.value();
 
     this.checkHandleDifference(this.handles[0], oldVals[0], lowVal);
     if (this.handles[1]) {
-        this.checkHandleDifference(this.handles[1], oldVals[1], highVal);
+      this.checkHandleDifference(this.handles[1], oldVals[1], highVal);
     }
 
-    var vals = this.value(lowVal, highVal);
+    const vals = this.value(lowVal, highVal);
     this.updateRange();
     this.updateTooltip();
 
     return vals;
   },
 
-  // NOTE: refresh() has been deprecated in Xi Controls v4.2 - has been replaced with setValue().
-  // This method will be completely removed in v4.3 and v5.x.  Please update your code.
   /**
+   * replaced with `setValue()`
    * @private
-   * @returns {array}
+   * @deprecated in v4.2.0
+   * @param {number} lowVal the value for the lower slider handle.
+   * @param {number} [highVal] the value for the upper slider handle, if applicable.
+   * @returns {array} the newly set values
    */
-  refresh: function(lowVal, highVal) {
+  refresh(lowVal, highVal) {
     return this.setValue(lowVal, highVal);
   },
 
@@ -1058,10 +1082,10 @@ Slider.prototype = {
    * Updates the slider instance after a settings change.
    * Settings and markup are complicated in the slider so we just destroy and re-invoke it
    * with fresh settings.
-   * @param {Object|function} [settings]
-   * @returns {this}
+   * @param {object|function} [settings] incoming settings
+   * @returns {this} component instance
    */
-  updated: function(settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -1074,11 +1098,11 @@ Slider.prototype = {
 
   /**
    * Removes the events and pseudo-markup created by the slider
-   * @returns {this}
+   * @returns {this} component instance
    */
-  teardown: function() {
-    var self = this;
-    $.each(self.handles, function (i, handle) {
+  teardown() {
+    const self = this;
+    $.each(self.handles, (i, handle) => {
       self.disableHandleDrag(handle);
       handle.off('mousedown.slider click.slider blur.slider keydown.slider keyup.slider');
     });
@@ -1091,58 +1115,57 @@ Slider.prototype = {
   /**
    * Destroys the slider component instance and unlinks it from its base element.
    */
-  destroy: function() {
+  destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
    * @fires Slider#events
-   * @param {object} mousedown
-   * @param {object} click
-   * @param {object} keydown
-   * @param {object} keyup
-   * @param {object} touchend
-   * @param {object} touchcancel
-   * @param {object} updated
-   * @returns {this}
+   * @listens mousedown
+   * @listens click
+   * @listens keydown
+   * @listens keyup
+   * @listens touchend
+   * @listens touchcancel
+   * @listens updated
+   * @returns {this} component instance
    */
-  bindEvents: function() {
-    var self = this;
+  bindEvents() {
+    const self = this;
 
-    $.each(self.handles, function (i, handle) {
+    $.each(self.handles, (i, handle) => {
       handle.on('mousedown.slider', function () {
         if (self.isDisabled()) {
           return;
         }
         $(this).focus();
       })
-      .on('click.slider', function (e) {
-        e.preventDefault(); //Prevent from jumping to top.
-      })
-      .on('keydown.slider', function(e) {
-        self.activateHandle(handle);
-        self.handleKeys(e, self);
-      })
-      .on('keyup.slider blur.slider', function() {
-        self.deactivateHandle(handle);
-      });
+        .on('click.slider', (e) => {
+          e.preventDefault(); // Prevent from jumping to top.
+        })
+        .on('keydown.slider', (e) => {
+          self.activateHandle(handle);
+          self.handleKeys(e, self);
+        })
+        .on('keyup.slider blur.slider', () => {
+          self.deactivateHandle(handle);
+        });
 
       self.enableHandleDrag(handle);
     });
 
-    self.wrapper.on('click.slider touchend.slider touchcancel.slider', function(e) {
+    self.wrapper.on('click.slider touchend.slider touchcancel.slider', (e) => {
       self.handleRangeClick(e);
     });
 
     // Slider Control listens to 'updated' trigger on its base element to update values
-    self.element.on('updated.slider', function() {
+    self.element.on('updated.slider', () => {
       self.updated();
     });
 
     return self;
   }
 };
-
 
 export { Slider, COMPONENT_NAME };
