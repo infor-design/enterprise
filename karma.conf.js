@@ -5,6 +5,7 @@ module.exports = function (config) {
     files: [
       'dist/css/light-theme.css',
       'dist/js/jquery-3.1.1.js',
+      'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
       'components/**/*.spec.js'
     ],
@@ -28,7 +29,7 @@ module.exports = function (config) {
     webpackMiddleware: {
       stats: 'errors-only'
     },
-    reporters: ['mocha', 'coverage', 'BrowserStack'],
+    reporters: ['mocha', 'coverage'],
     coverageReporter: {
       includeAllSources: true,
       dir: 'coverage/',
