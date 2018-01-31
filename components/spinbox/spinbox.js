@@ -1,37 +1,40 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../button/button.jquery';
 import '../mask/masked-input.jquery';
 
+// Component Name
+const COMPONENT_NAME = 'spinbox';
 
 /**
- *
+ * Spinbox default settings
+ * @namespace
+ * @property {boolean} autocorrectOnBlur
+ * @property {null|Number} min if defined, provides a minimum numeric limit
+ * @property {null|Number} max  if defined, provides a maximum numeric limit
+ * @property {null|Number} step  if defined, increases or decreases the spinbox value
+ *  by a specific interval whenever the control buttons are used.
+ * @property {boolean} validateOnInput  If set to false, will only automatically correct
+ *  the spinbox value after the spinbox has lost focus.
  */
-let COMPONENT_NAME = 'spinbox';
-
-
-/**
- *
- */
-let SPINBOX_DEFAULTS = {
+const SPINBOX_DEFAULTS = {
   autocorrectOnBlur: false,
   min: null,
   max: null,
-  step: null
+  step: null,
+  validateOnInput: true
 };
 
-
 /**
-* The Spinbox component provides easy access to modification of a numeric input field.
-*
-* @class Spinbox
-* @param {null|Number} min if defined, provides a minimum numeric limit
-* @param {null|Number} max  if defined, provides a maximum numeric limit
-* @param {null|Number} step  if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.
-* @param {boolean} validateOnInput  If set to false, will only automatically correct the spinbox value after the spinbox has lost focus.
-*/
+ * The Spinbox component provides easy access to modification of a numeric input field.
+ * @class Spinbox
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element the base element
+ * @param {object} [settings] incoming settings
+ */
 function Spinbox(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, SPINBOX_DEFAULTS);
@@ -46,7 +49,7 @@ Spinbox.prototype = {
   /**
    * @private
    */
-  init: function() {
+  init() {
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
@@ -61,13 +64,13 @@ Spinbox.prototype = {
 
   /**
    * Sets the width of the spinbox input field.
-   * @returns {this}
+   * @returns {this} component instance
    */
-  setWidth: function() {
-    var style = this.element[0].style;
+  setWidth() {
+    const style = this.element[0].style;
 
     if (style.width) {
-      this.element.parent()[0].style.width = (parseInt(style.width) + (this.element.parent().find('.down').outerWidth() * 2)) + 'px';
+      this.element.parent()[0].style.width = `${parseInt(style.width, 10) + (this.element.parent().find('.down').outerWidth() * 2)}px`;
     }
 
     return this;
@@ -75,11 +78,11 @@ Spinbox.prototype = {
 
   /**
    * Sanitize the initial value of the input field.
-   * @returns {this}
+   * @returns {this} component instance
    */
-  setInitialValue: function() {
-    var self = this,
-      val = self.checkForNumeric(self.element.val());
+  setInitialValue() {
+    const self = this;
+    const val = self.checkForNumeric(self.element.val());
 
     this.element.val(val);
     // If using Dirty Tracking, reset the "original" value of the dirty tracker to the current value
@@ -88,10 +91,10 @@ Spinbox.prototype = {
       this.element.data('original', val);
     }
 
-    //allow numeric input on iOS
-    var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+    // allow numeric input on iOS
+    const iOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
     if (iOS) {
-      this.element.attr('pattern','\\d*');
+      this.element.attr('pattern', '\\d*');
     }
 
     if (this.settings.max) {
@@ -104,24 +107,22 @@ Spinbox.prototype = {
       this.element.attr('min', this.settings.min);
     }
 
-
     return this;
   },
 
   /**
    * Appends extra control markup to a Spinbox field.
-   * @returns {this}
+   * @returns {this} component instance
    */
-  addMarkup: function() {
-    var self = this;
+  addMarkup() {
+    const self = this;
     if (this.isInlineLabel) {
       this.inlineLabel.addClass('spinbox-wrapper');
-    }
-    else if (!this.isWrapped) {
-      var spinboxWrapper = '<span class="spinbox-wrapper"></span>';
+    } else if (!this.isWrapped) {
+      const spinboxWrapper = '<span class="spinbox-wrapper"></span>';
       if (this.element.is('.field-options')) {
-        var field = this.element.closest('.field'),
-          fieldOptionsTrigger = field.find('.btn-actions');
+        const field = this.element.closest('.field');
+        const fieldOptionsTrigger = field.find('.btn-actions');
 
         this.element
           .add(fieldOptionsTrigger)
@@ -136,8 +137,8 @@ Spinbox.prototype = {
 
     if (this.isWrapped) {
       this.buttons = {
-        'down' : this.element.parent().find('.down').button(),
-        'up' : this.element.parent().find('.up').button()
+        down: this.element.parent().find('.down').button(),
+        up: this.element.parent().find('.up').button()
       };
 
       if (this.isTouch) {
@@ -148,36 +149,37 @@ Spinbox.prototype = {
 
     if (!this.buttons) {
       this.buttons = {
-        'down' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control down">-</span>').insertBefore(this.element).button(),
-        'up' : $('<span ' + (this.isTouch ? '' : 'aria-hidden="true"') + ' class="spinbox-control up">+</span>').insertAfter(this.element).button()
+        down: $(`<span ${this.isTouch ? '' : 'aria-hidden="true"'} class="spinbox-control down">-</span>`).insertBefore(this.element).button(),
+        up: $(`<span ${this.isTouch ? '' : 'aria-hidden="true"'} class="spinbox-control up">+</span>`).insertAfter(this.element).button()
       };
     }
 
     // Figure out minimum/maximum and data-masking attributes.  The user can provide the spinbox
     // plugin either the min/max or the mask, and the plugin will automatically figure out how to
     // use them.
-    var min = this.element.attr('min'),
-      max = this.element.attr('max'),
-      mask = this.element.attr('data-mask'),
-      maskSize, maskValue = '',
-      attributes = {
-        role: 'spinbutton'
-      },
-      i = 0;
+    const min = this.element.attr('min');
+    let max = this.element.attr('max');
+    let mask = this.element.attr('data-mask');
+    let maskValue = '';
+    const attributes = {
+      role: 'spinbutton'
+    };
+    let i = 0;
 
     // Define a default Max value if none of these attributes exist, to ensure the mask plugin will
-    // work correctly.  Cannot define a Min value here because the plugin must be able to invoke itself
-    // with a NULL value.
+    // work correctly.  Cannot define a Min value here because the plugin must be able to invoke
+    // itself with a NULL value.
     if (!min && !max && !mask) {
       max = '9999999';
     }
 
-    // If a mask doesn't exist, but min and max values do exist, create a mask that reflects those min/max values
+    // If a mask doesn't exist, but min and max values do exist, create a mask that reflects
+    // those min/max values
     if ((min || max) && !mask) {
-      var newMask = '',
-        tempMin = min ? min : '',
-        tempMax = max ? max : '',
-        longerVal = tempMin.length > tempMax.length ? tempMin : tempMax;
+      let newMask = '';
+      const tempMin = min || '';
+      const tempMax = max || '';
+      const longerVal = tempMin.length > tempMax.length ? tempMin : tempMax;
       i = 0;
 
       while (i <= longerVal.length) {
@@ -187,16 +189,17 @@ Spinbox.prototype = {
 
       // Add a negative symbol to the mask if it exists within the longer value.
       if (tempMin.indexOf('-') !== -1 || tempMax.indexOf('-') !== -1) {
-        newMask = '-' + newMask.substring(0, (newMask.length - 1));
+        newMask = `-${newMask.substring(0, (newMask.length - 1))}`;
       }
 
       attributes['data-mask'] = newMask;
       mask = newMask;
     }
 
-    // If a "data-mask" attribute is already defined, use it to determine missing values for min/max, if they
-    // don't already exist.
-    maskSize = mask.length;
+    // If a "data-mask" attribute is already defined, use it to determine missing values
+    // for min/max, if they don't already exist.
+    const maskSize = mask.length;
+
     i = 0;
     while (i <= maskSize) {
       maskValue += '9';
@@ -205,20 +208,20 @@ Spinbox.prototype = {
 
     // If no negative symbol exists in the mask, the minimum value must be zero.
     if (mask.indexOf('-') === -1) {
-      attributes.min = min ? min : 0;
-      attributes.max = max ? max : maskValue;
+      attributes.min = min || 0;
+      attributes.max = max || maskValue;
     } else {
-      attributes.min = min ? min : maskValue;
-      attributes.max = max ? max : maskValue.substring(0, (maskValue.length - 1));
+      attributes.min = min || maskValue;
+      attributes.max = max || maskValue.substring(0, (maskValue.length - 1));
     }
 
     if (!this.element.attr('data-mask-mode') || this.element.attr('data-mask-mode') !== 'number') {
       attributes['data-mask-mode'] = 'number';
     }
 
-    // Destroy the Mask Plugin if it's already been invoked.  We will reinvoke it later on during
-    // initialization.  Check to make sure its the actual Mask plugin object, and not the "data-mask"
-    // pattern string.
+    // Destroy the Mask Plugin if it's already been invoked.  We will reinvoke it later
+    // on during initialization.  Check to make sure its the actual Mask plugin object,
+    // and not the "data-mask" pattern string.
     if (this.element.data('mask') && typeof this.element.data('mask') === 'object') {
       this.element.data('mask').destroy();
     }
@@ -248,12 +251,13 @@ Spinbox.prototype = {
 
   /**
    * Enables Long Pressing one of the Spinbox control buttons.
-   * @param {jQuery.Event} e
-   * @param {Spinbox} self
+   * @param {jQuery.Event} e jQuery `touchstart` or `mousedown` events
+   * @param {Spinbox} self this component instance
+   * @returns {void}
    */
-  enableLongPress: function(e, self) {
+  enableLongPress(e, self) {
     self.addButtonStyle(e);
-    self.longPressInterval = setInterval(function() {
+    self.longPressInterval = setInterval(() => {
       if ($(e.currentTarget).is(':hover')) {
         self.handleClick(e);
       }
@@ -262,10 +266,11 @@ Spinbox.prototype = {
 
   /**
    * Disables Long Pressing one of the Spinbox control buttons.
-   * @param {jQuery.Event} e
-   * @param {Spinbox} self
+   * @param {jQuery.Event} e jQuery `touchend` or `mouseup` events
+   * @param {Spinbox} self this component instance
+   * @returns {void}
    */
-  disableLongPress: function(e, self) {
+  disableLongPress(e, self) {
     self.removeButtonStyle(e);
     clearInterval(self.longPressInterval);
     self.longPressInterval = null;
@@ -273,13 +278,14 @@ Spinbox.prototype = {
 
   /**
    * Event handler for 'click' events
-   * @param {jQuery.Event} e
+   * @param {jQuery.Event} e jQuery `click` event
+   * @returns {void}
    */
-  handleClick: function(e) {
+  handleClick(e) {
     if (this.isDisabled() || e.which !== 1) {
       return;
     }
-    var target = $(e.currentTarget);
+    const target = $(e.currentTarget);
     if (target.hasClass('up')) {
       this.increaseValue();
     } else {
@@ -295,19 +301,19 @@ Spinbox.prototype = {
 
   /**
    * Event handler for 'keydown' events
-   * @param {jQuery.Event} e
-   * @param {Spinbox} self
+   * @param {jQuery.Event} e jQuery `keydown` event
+   * @param {Spinbox} self component instance
    */
-  handleKeyDown: function(e, self) {
-    var key = e.which,
-      validKeycodes = [35, 36, 37, 38, 39, 40];
+  handleKeyDown(e, self) {
+    const key = e.which;
+    const validKeycodes = [35, 36, 37, 38, 39, 40];
 
     if ($.inArray(key, validKeycodes) === -1) {
       return;
     }
 
     // If the keycode got this far, it's an arrow key, HOME, or END.
-    switch(key) {
+    switch (key) {
       case 35: // End key sets the spinbox to its minimum value
         if (self.element.attr('min')) { self.element.val(self.element.attr('min')); }
         break;
@@ -322,41 +328,43 @@ Spinbox.prototype = {
         self.addButtonStyle(self.buttons.down);
         self.decreaseValue();
         break;
+      default:
+        break;
     }
   },
-
 
   /**
    * Event handler for 'keypress' events
    * TODO: Deprecate in 4.4.0
-   * @param {jQuery.Event} e
-   * @param {Spinbox} self
+   * @param {jQuery.Event} e jQuery `keypress` event
+   * @param {Spinbox} self component instance
+   * @returns {void}
    */
-  handleKeyPress: function(e, self) {
-    var key = e.which;
+  handleKeyPress(e, self) {
+    const key = e.which;
 
     // NOTE:
     if (key < 48 || (key > 57 && key < 96) || key > 105) {
-      return;
+      return undefined;
     }
 
     return this.handleInput(e, self);
   },
 
-
   /**
    * Event handler for the 'input' event
-   * @param {jQuery.Event} e
-   * @param {Spinbox} self
+   * @param {jQuery.Event} e jQuery `input` event
+   * @param {Spinbox} self this component instance
+   * @returns {void}
    */
-  handleInput: function(e, self) {
+  handleInput(e, self) {
     if (self.isDisabled()) {
-      return;
+      return undefined;
     }
 
     // If we're only auto-correcting on blur, don't continue.
     if (this.settings.autocorrectOnBlur) {
-      return;
+      return undefined;
     }
 
     return this.correctValue(e);
@@ -364,14 +372,15 @@ Spinbox.prototype = {
 
   /**
    * Event handler for 'keyup' events
-   * @param {jQuery.Event} e
-   * @param {Spinbox} self
+   * @param {jQuery.Event} e jQuery `input` event
+   * @param {Spinbox} self this component instance
+   * @returns {void}
    */
-  handleKeyup: function(e, self) {
+  handleKeyup(e, self) {
     if (self.isDisabled()) {
       return;
     }
-    var key = e.which;
+    const key = e.which;
 
     // Spinbox Control Button styles are added/removed on keyup.
     switch (key) {
@@ -389,33 +398,45 @@ Spinbox.prototype = {
           self.removeButtonStyle(self.buttons.down);
         }
         break;
+      default:
+        break;
     }
 
     self.updateAria(self.element.val());
   },
 
   /**
-   * Change a newly pasted value to this element's min or max values, if the pasted value goes
-   * beyond either of those limits.  Listens to an event emitted by the Mask plugin after pasted content
-   * is handled.
-   * @param {Spinbox} self
+   * Change a newly pasted value to this element's min or max values, if the pasted
+   * value goes beyond either of those limits.  Listens to an event emitted by the
+   * Mask plugin after pasted content is handled.
+   * @param {Spinbox} self this component instance
+   * @returns {void}
    */
-  handleAfterPaste: function(self) {
-    var min = Number(self.element.attr('min')),
-      max = Number(self.element.attr('max')),
-      val = Number(self.element.val());
+  handleAfterPaste(self) {
+    const min = Number(self.element.attr('min'));
+    const max = Number(self.element.attr('max'));
+    let val = Number(self.element.val());
 
-    val = (val < min ? min : (val > max ? max : val));
+    if (val < min) {
+      val = min;
+    }
+    if (val > max) {
+      val = max;
+    }
+
     self.updateVal(val);
   },
 
   /**
-   *
+   * Fixes a value that may have been entered programmatically, or by paste,
+   * if it goes out of the range boundaries.
+   * @param {jQuery.Event} e jQuery `input` event
+   * @returns {void}
    */
-  correctValue: function(e) {
-    var num = Number(this.element.val()),
-      min = this.element.attr('min'),
-      max = this.element.attr('max');
+  correctValue(e) {
+    const num = Number(this.element.val());
+    const min = this.element.attr('min');
+    const max = this.element.attr('max');
 
     if (num < min) {
       if (e) {
@@ -429,38 +450,43 @@ Spinbox.prototype = {
       }
       return this.updateVal(max);
     }
+    return undefined;
   },
-
 
   /**
    * Increases the value of the Spinbox field, constrained by the step interval and maximum limit.
+   * @returns {void}
    */
-  increaseValue: function() {
-    var max = this.element.attr('max'),
-      val = this.checkForNumeric(this.element.val()) + Number(this.element.attr('step') || 1);
+  increaseValue() {
+    const max = this.element.attr('max');
+    const val = this.checkForNumeric(this.element.val()) + Number(this.element.attr('step') || 1);
+
     if (max && val > max) {
       return this.updateVal(max);
     }
-    this.updateVal(val);
+    return this.updateVal(val);
   },
 
   /**
    * Decreases the value of the Spinbox field, constrained by the step interval and minimum limit.
+   * @returns {void}
    */
-  decreaseValue: function() {
-    var min = this.element.attr('min'),
-      val = this.checkForNumeric(this.element.val()) - Number(this.element.attr('step') || 1);
+  decreaseValue() {
+    const min = this.element.attr('min');
+    const val = this.checkForNumeric(this.element.val()) - Number(this.element.attr('step') || 1);
+
     if (min && val < min) {
       return this.updateVal(min);
     }
-    this.updateVal(val);
+    return this.updateVal(val);
   },
 
   /**
    * Sets a new spinbox value and focuses the spinbox.
-   * @param {Number|String} newVal
+   * @param {Number|String} newVal the value to set on the spinbox
+   * @returns {void}
    */
-  updateVal: function(newVal) {
+  updateVal(newVal) {
     this.element.val(newVal).trigger('change');
     this.updateAria(newVal);
     this.element.focus();
@@ -468,10 +494,10 @@ Spinbox.prototype = {
 
   /**
    * Sanitizes the value of the input field to an integer if it isn't already established.
-   * @param {Number|String} val - will be converted to a number if it's a string.
-   * @returns {number}
+   * @param {Number|String} val will be converted to a number if it's a string.
+   * @returns {number} a numeric version of the value provided, or a corrected value.
    */
-  checkForNumeric: function(val) {
+  checkForNumeric(val) {
     // Allow for NULL
     if (val === '') {
       return val;
@@ -479,7 +505,7 @@ Spinbox.prototype = {
     if ($.isNumeric(val)) {
       return Number(val);
     }
-    val = parseInt(val);
+    val = parseInt(val, 10);
     if ($.isNumeric(val)) {
       return Number(val);
     }
@@ -489,27 +515,31 @@ Spinbox.prototype = {
 
   /**
    * Updates the "aria-valuenow" property on the spinbox element if the value is currently set
+   * @param {number} val the new value to be set on the spinbox
+   * @returns {void}
    */
-  updateAria: function(val) {
-    var min = this.element.attr('min'),
-      max = this.element.attr('max');
+  updateAria(val) {
+    const min = this.element.attr('min');
+    const max = this.element.attr('max');
 
     val = this.checkForNumeric(val);
     this.element.attr('aria-valuenow', (val !== '' ? val : ''));
 
-    // Tougle min/max buttons
+    // Toggle min/max buttons
     this.setIsDisabled(this.buttons.up, (val !== '' && max && val >= max) ? 'disable' : 'enable');
     this.setIsDisabled(this.buttons.down, (val !== '' && min && val <= min) ? 'disable' : 'enable');
   },
 
   /**
-   * adds a "pressed-in" styling for one of the spinner buttons
+   * Adds a "pressed-in" styling for one of the spinner buttons.
+   * @param {jQuery.Event|jQuery[]} e either an incoming event, or a button element to be acted on
+   * @returns {void}
    */
-  addButtonStyle: function(e) {
+  addButtonStyle(e) {
     if (this.isDisabled()) {
       return;
     }
-    var target = e;
+    let target = e;
     if (e.currentTarget) {
       target = $(e.currentTarget);
     }
@@ -518,12 +548,14 @@ Spinbox.prototype = {
 
   /**
    * Removes "pressed-in" styling for one of the spinner buttons
+   * @param {jQuery.Event|jQuery[]} e either an incoming event, or a button element to be acted on
+   * @returns {void}
    */
-  removeButtonStyle: function(e) {
+  removeButtonStyle(e) {
     if (this.isDisabled()) {
       return;
     }
-    var target = e;
+    let target = e;
     if (e.currentTarget) {
       target = $(e.currentTarget);
     }
@@ -532,44 +564,49 @@ Spinbox.prototype = {
 
   /**
    * Enables the Spinbox
+   * @returns {void}
    */
-  enable: function() {
+  enable() {
     this.element.prop('disabled', false);
     this.element.parent('.spinbox-wrapper').removeClass('is-disabled');
   },
 
   /**
    * Disables the Spinbox
+   * @returns {void}
    */
-  disable: function() {
+  disable() {
     this.element.prop('disabled', true);
     this.element.parent('.spinbox-wrapper').addClass('is-disabled');
   },
 
   /**
    * Determines whether or not the spinbox is disabled.
-   * @returns {boolean}
+   * @returns {boolean} whether or not the spinbox is disabled.
    */
-  isDisabled: function() {
+  isDisabled() {
     return this.element.prop('disabled');
   },
 
   /**
    * Toggle whther or not the component is disabled.
-   * @param {jQuery[]} button
-   * @param {booelan} isDisabled
+   * @param {jQuery[]} button the button element to be disabled
+   * @param {booelan} [isDisabled] whether or not to force a change to the button's state.
+   * @returns {void}
    */
-  setIsDisabled: function(button, isDisabled) {
+  setIsDisabled(button, isDisabled) {
     isDisabled = isDisabled === undefined ? true :
-      (!isDisabled || isDisabled === 'enable') ? false : true;
+      !((!isDisabled || isDisabled === 'enable'));
 
     button[isDisabled ? 'addClass' : 'removeClass']('is-disabled');
   },
 
   /**
    * Updated
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
    */
-  updated: function(settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -578,15 +615,16 @@ Spinbox.prototype = {
 
   /**
    * Teardown
+   * @returns {void}
    */
-  destroy: function() {
-    var mask = this.element.data('mask');
+  destroy() {
+    const mask = this.element.data('mask');
     if (mask && typeof mask.destroy === 'function') {
       mask.destroy();
     }
 
-    for (var button in this.buttons) {
-      var buttonAPI = $(button).data('button');
+    for (const button in this.buttons) { // eslint-disable-line
+      const buttonAPI = $(button).data('button');
 
       if (buttonAPI) {
         buttonAPI.destroy();
@@ -604,42 +642,43 @@ Spinbox.prototype = {
 
   /**
    * Sets up event handlers for this control and its sub-elements
-   *
-   * @listens Spinbox#events
-   * @param {object} focus  &nbsp;-&nbsp;
-   * @param {object} blur  &nbsp;-&nbsp;
-   * @param {object} keydown  &nbsp;-&nbsp;
-   * @param {object} keypress  &nbsp;-&nbsp;
-   * @param {object} keyup  &nbsp;-&nbsp;
-   * @param {object} afterpaste  &nbsp;-&nbsp;
+   * @fires Spinbox#events
+   * @listens focus  &nbsp;-&nbsp;
+   * @listens blur  &nbsp;-&nbsp;
+   * @listens keydown  &nbsp;-&nbsp;
+   * @listens keypress  &nbsp;-&nbsp;
+   * @listens keyup  &nbsp;-&nbsp;
+   * @listens afterpaste  &nbsp;-&nbsp;
+   * @returns {this} component instance
    */
-  bindEvents: function() {
-    var self = this,
-      preventClick = false;
+  bindEvents() {
+    const self = this;
+    let preventClick = false;
 
     // Main Spinbox Input
-    this.element.on('focus.spinbox', function() {
+    this.element.on('focus.spinbox', () => {
       self.element.parent('.spinbox-wrapper').addClass('is-focused');
-    }).on('blur.spinbox', function() {
+    }).on('blur.spinbox', () => {
       self.element.parent('.spinbox-wrapper').removeClass('is-focused');
       if (self.settings.autocorrectOnBlur) {
         self.correctValue();
       }
-    }).on('keydown.spinbox', function(e) {
+    }).on('keydown.spinbox', (e) => {
       self.handleKeyDown(e, self);
-    }).on('input.spinbox', function(e) {
+    }).on('input.spinbox', (e) => {
       self.handleInput(e, self);
-    }).on('keyup.spinbox', function(e) {
-      self.handleKeyup(e, self);
-    }).on('afterpaste.mask', function() {
-      self.handleAfterPaste(self);
-    });
+    })
+      .on('keyup.spinbox', (e) => {
+        self.handleKeyup(e, self);
+      })
+      .on('afterpaste.mask', () => {
+        self.handleAfterPaste(self);
+      });
 
     // Up and Down Buttons
-    var buttons = this.buttons.up.add(this.buttons.down[0]);
-    buttons.on('touchstart.spinbox mousedown.spinbox', function(e) {
+    const buttons = this.buttons.up.add(this.buttons.down[0]);
+    buttons.on('touchstart.spinbox mousedown.spinbox', function (e) {
       if (e.which === 1) {
-
         if (!preventClick) {
           self.handleClick(e);
         }
@@ -651,13 +690,13 @@ Spinbox.prototype = {
         preventClick = true;
         self.enableLongPress(e, self);
 
-        $(document).one('mouseup', function() {
+        $(document).one('mouseup', () => {
           self.disableLongPress(e, self);
           preventClick = false;
           self.element.focus();
         });
 
-        //Stop MouseDown From Running
+        // Stop MouseDown From Running
         if (this.isTouch) {
           e.preventDefault();
           e.stopPropagation();
@@ -668,6 +707,5 @@ Spinbox.prototype = {
     return this;
   }
 };
-
 
 export { Spinbox, COMPONENT_NAME };

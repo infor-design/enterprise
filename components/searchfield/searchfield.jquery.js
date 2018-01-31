@@ -1,31 +1,34 @@
 import { SearchField, COMPONENT_NAME } from './searchfield';
 
-
-$.fn.searchfield = function(settings) {
-  'use strict';
-
+/**
+ * jQuery Component Wrapper for SearchField
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
+ */
+$.fn.searchfield = function (settings) {
   if (!settings) {
     settings = {};
   }
 
   // Initialize the plugin (Once)
-  return this.each(function() {
+  return this.each(function () {
     // Detect if we're inside of a Toolbar and invoke Toolbar Searchfield first, if applicable.
     // Added for SOHO-6448.
     // NOTE: If we merge the searchfield/toolbarsearchfield apis, revisit this solution.
-    var sf = $(this),
-      toolbarParent = sf.parents('.toolbar');
+    const sf = $(this);
+    const toolbarParent = sf.parents('.toolbar');
+
     if (toolbarParent.length && !settings.noToolbarSearchfieldInvoke) {
-      var tbsf = sf.data('toolbarsearchfield');
+      const tbsf = sf.data('toolbarsearchfield');
       if (!tbsf) {
-        return sf.toolbarsearchfield(settings);
-      } else {
-        tbsf.updated(settings);
+        sf.toolbarsearchfield(settings);
+        return;
       }
+      tbsf.updated(settings);
     }
 
     // Normal invoke setup
-    var instance = $.data(this, COMPONENT_NAME);
+    let instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {

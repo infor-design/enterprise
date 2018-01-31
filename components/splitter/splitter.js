@@ -1,14 +1,20 @@
-/* jshint esversion:6 */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'splitter';
 
 /**
  * Default Splitter Options
+ * @namespace
+ * @property {string} axis x or y
+ * @property {string} side left or right
+ * @property {string} resize immediate,
+ * @property {HTMLElement|jQuery[]} [containment] can be document, or a parent element
+ * @property {boolean} save
+ * @property {object} maxWidth
+ * @property {string|number} maxWidth.left 'auto' or a pixel value
+ * @property {string|number} maxWidth.right 'auto' or a pixel value
  */
 const SPLITTER_DEFAULTS = {
   axis: 'x',
@@ -25,6 +31,7 @@ const SPLITTER_DEFAULTS = {
 /**
 *
 * @class Splitter
+* @constructor
 * @param {String} element The component element.
 * @param {String} settings The component settings.
 */
@@ -39,8 +46,13 @@ function Splitter(element, settings) {
 
 // Plugin Methods
 Splitter.prototype = {
+
+  /**
+   * Do other init (change/normalize settings, load externals, etc)
+   * @private
+   * @returns {this} component instance
+   */
   init() {
-    // Do other init (change/normalize settings, load externals, etc)
     return this
       .build()
       .handleEvents();

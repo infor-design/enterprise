@@ -2,8 +2,8 @@ import { Modal, COMPONENT_NAME } from './modal';
 
 /**
 * jQuery Component Wrapper for Modal
-* @param  {object} settings The settings to apply.
-* @returns {object} The jquery object for chaining.
+* @param {object} settings The settings to apply.
+* @returns {jQuery[]} The jquery object for chaining.
 */
 $.fn.modal = function (settings) {
   return this.each(function () {
