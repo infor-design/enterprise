@@ -15,7 +15,7 @@
 
   $.fn.searchfield = function(options) {
     'use strict';
-
+    
     if (!options) {
       options = {};
     }
@@ -71,6 +71,17 @@
       build: function() {
         this.optionsParseBoolean();
         this.label = this.element.prev('label, .label');
+        var categoriesOptions = [];
+        
+        for (var key in this.settings) {
+          if (typeof this.settings[key] === 'object') {
+            categoriesOptions.push(this.settings[key]);
+          }
+        }
+
+        if (categoriesOptions) {
+          this.settings.categories = categoriesOptions;
+        }
 
         // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
         // Autocomplete settings are fed the same settings as Searchfield
