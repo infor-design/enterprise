@@ -8,10 +8,175 @@
   
     
 
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          isStandalone
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          On page(true)|on modal(false), used for some visual style only.
 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          allowedTypes
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Restrict file types(ie. 'jpg|png|gif') 
+[
+'*' all types
+]
 
-  
-    
+        </td>
+      </tr>
+      <tr>
+        <td>
+          maxFilesInProcess
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Max number of files can be uploaded
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          maxFileSize
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Max file size in bytes, -1 for unlimited
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          fileName
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Variable name to read from server
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isDisabled
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Make control disabled
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showBrowseButton
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Add way to browse files to upload
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          send
+        </td>
+        <td>
+          Function
+        </td>
+        <td>
+          Method for send file to upload
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textDropArea
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Text to show in drop area
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textDropAreaWithBrowse
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Text to show in drop area when browse option true
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textBtnCancel
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Hidden text for cancel button
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textBtnCloseError
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Hidden text for error close button
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          textBtnRemove
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Hidden text for remove button
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 
@@ -364,11 +529,11 @@ void
 <h2 id="code-example">Code Example</h2>
 <h3 id="file-upload-advanced">File Upload Advanced</h3>
 <p>The advanced file upload control just needs a div in which to draw its contents.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;fileupload-advanced&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;fileupload-advanced&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>This is done by using an html5 drag drop feature. So is only supported well on IE11 +</li>

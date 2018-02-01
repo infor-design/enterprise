@@ -221,8 +221,8 @@ BusyIndicator.prototype = {
 
   /**
    * Removes the appended markup and hides any trace of the indicator.
-   * @param  {boolean} fromEvent Designates the close is comming from an event (internal)
-   * @returns{void}
+   * @param {boolean} fromEvent Designates the close is comming from an event (internal)
+   * @returns {void}
    */
   close(fromEvent) {
     const self = this;
@@ -268,7 +268,10 @@ BusyIndicator.prototype = {
     }, 600);
   },
 
-  // Browsers that don't support CSS-based animation can still show the animating Busy Indicator.
+  /**
+   * Browsers that don't support CSS-based animation can still show the animating Busy Indicator.
+   * @private
+   */
   animateWithJS() {
     const self = this;
     const bar1 = this.container.find('.bar.one');
@@ -335,9 +338,8 @@ BusyIndicator.prototype = {
 
   /**
    * Update the component and apply current settings.
-   *
-   * @param  {object} settings the settings to update to.
-   * @returns {object} The plugin api for chaining.
+   * @param {object} settings the settings to update to.
+   * @returns {this} component instance.
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
@@ -346,7 +348,7 @@ BusyIndicator.prototype = {
 
   /**
    * Returns if the indicator is active or not.
-   * @returns {Boolean} If the busy indicator is active.
+   * @returns {boolean} If the busy indicator is active.
    */
   isActive() {
     if (this.container) {

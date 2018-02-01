@@ -3,13 +3,25 @@ import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'fileuploadadvanced';
 
 /**
  * Default FileUploadAdvanced Options
+ * @namespace
+ * @property {boolean} isStandalone On page(true)|on modal(false), used for some visual style only.
+ * @property {boolean} allowedTypes Restrict file types(ie. 'jpg|png|gif') ['*' all types]
+ * @property {boolean} maxFilesInProcess Max number of files can be uploaded
+ * @property {boolean} maxFileSize Max file size in bytes, -1 for unlimited
+ * @property {boolean} fileName Variable name to read from server
+ * @property {boolean} isDisabled Make control disabled
+ * @property {boolean} showBrowseButton Add way to browse files to upload
+ * @property {Function} send Method for send file to upload
+ * @property {string} textDropArea Text to show in drop area
+ * @property {string} textDropAreaWithBrowse Text to show in drop area when browse option true
+ * @property {string} textBtnCancel Hidden text for cancel button
+ * @property {string} textBtnCloseError Hidden text for error close button
+ * @property {string} textBtnRemove Hidden text for remove button
  */
 const FILEUPLOADADVANCED_DEFAULTS = {
   isStandalone: true, //
@@ -37,29 +49,14 @@ const FILEUPLOADADVANCED_DEFAULTS = {
 
 /**
 * A trigger field for uploading a single file.
-*
 * @class FileUploadAdvanced
+* @constructor
 * @param {String} element The component element.
 * @param {String} settings The component settings.
-* @param {boolean} isStandalone On page(true)|on modal(false), used for some visual style only.
-* @param {boolean} allowedTypes Restrict file types(ie. 'jpg|png|gif') ['*' all types]
-* @param {boolean} maxFilesInProcess Max number of files can be uploaded
-* @param {boolean} maxFileSize Max file size in bytes, -1 for unlimited
-* @param {boolean} fileName Variable name to read from server
-* @param {boolean} isDisabled Make control disabled
-* @param {boolean} showBrowseButton Add way to browse files to upload
-* @param {Function} send Method for send file to upload
-* @param {string} textDropArea Text to show in drop area
-* @param {string} textDropAreaWithBrowse Text to show in drop area when browse option true
-* @param {string} textBtnCancel Hidden text for cancel button
-* @param {string} textBtnCloseError Hidden text for error close button
-* @param {string} textBtnRemove Hidden text for remove button
-*
 */
 function FileUploadAdvanced(element, settings) {
-  this.settings = utils.mergeSettings(element, settings, FILEUPLOADADVANCED_DEFAULTS);
-
   this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, FILEUPLOADADVANCED_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);

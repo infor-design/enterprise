@@ -23,6 +23,169 @@
     </thead>
     <tbody>
       <tr>
+        <td>buildBreadcrumb</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Used for adding a Breadcrumb Element to the Header</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>adjustBreadcrumb</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds Breadcrumb markup that reflects the current state of the application</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>buildTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds Header Tabs</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>buildWizard</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds a Header Wizard</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>buildPopupmenu</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds a Popupmenu in place of the usual Title text, to allow for context swapping.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Sets up header-level events</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>handleBreadcrumbClick</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = <code>click</code>
+ event
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handles click events on Breadcrumb elements</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>initPageChanger</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = <code>click</code>
+ event
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Sets up the <code>selected</code> events on the More Actions area of the header, which can include
+Menu Options for changing the current theme, persoanlization colors, and language locale.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>drilldown</td>
+        <td>
+          
+                
+                  <span>viewTitle (string) = text contents to put in place of the title area.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Drills deeper into a breadcrumb structure while updating the Header title to reflect state.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>drillup</td>
+        <td>
+          
+                
+                  <span>viewTitle (string) = text contents to put in place of the title area.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Moves up into a breadcrumb structure while updating the Header title to reflect state.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
         <td>reset</td>
         <td>
           
@@ -32,6 +195,92 @@
 
         </td>
         <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>removeButton</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Button pattern from the Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>removeBreadcrumb</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Breadcrumb structure from the Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>removeTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Header Tabs pattern from the Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>removeWizard</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Header Wizard pattern from the Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>removePopupmenu</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Popupmenu pattern from the Header's title.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>unbind</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes bound events from the Header</p>
+
+        </td>
+        <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -39,7 +288,8 @@
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming settings.
+ </span>
                 
           
         </td>
@@ -48,6 +298,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -56,10 +308,12 @@
           
         </td>
         <td>
-          <p>Tear down and destroy the menu and events.</p>
+          <p>Teardown and destroy the menu and events.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
     </tbody>

@@ -3,13 +3,17 @@ import { Environment as env } from '../utils/environment';
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'arrange';
 
 /**
  * Default Arrange Options
+ * @namespace
+ * @param {string} handle The CSS class name of the handle element to connect
+ * @param {string} itemsSelector The CSS selector to match all the sortable elements.
+ * @param {string} [connectWith] Optional CSS Selector to connect with when using two lists
+ * @param {string} placeholder The html for the element that appears while dragging
+ * @param {string} placeholderCssClass The class to add to the ghost element that is being dragged.
  */
 const ARRANGE_DEFAULTS = {
   handle: null, // The Class of the handle element
@@ -23,14 +27,9 @@ const ARRANGE_DEFAULTS = {
 * The Arrange Component allows touch and drag support to sort UI items.
 *
 * @class Arrange
+* @constructor
 * @param {String} element The component element.
 * @param {String} settings The component settings.
-* @param {String} handle The class name of the handle element to connect
-* @param {String} itemsSelector The selector to match all the sortable elements.
-* @param {String} connectWith The optional element to connect with when using two lists
-* @param {String} placeholder The html for the element that appears while dragging
-* @param {String} placeholderCssClass The class to add to the ghost element that is being dragged.
-*
 */
 function Arrange(element, settings) {
   this.settings = utils.mergeSettings(element, settings, ARRANGE_DEFAULTS);

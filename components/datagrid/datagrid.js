@@ -178,11 +178,12 @@ const DATAGRID_DEFAULTS = {
 };
 
 /**
-* The Datagrid Component displays and process data in tabular format.
-* @param {string} element The component element.
-* @param {string} settings The component settings.
-* @class Datagrid
-*/
+ * The Datagrid Component displays and process data in tabular format.
+ * @class Datagrid
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object} settings The component settings.
+ */
 function Datagrid(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DATAGRID_DEFAULTS);
   this.element = $(element);

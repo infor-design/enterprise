@@ -36,6 +36,169 @@
     </thead>
     <tbody>
       <tr>
+        <td>buildBreadcrumb</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Used for adding a Breadcrumb Element to the Header</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>adjustBreadcrumb</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds Breadcrumb markup that reflects the current state of the application</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>buildTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds Header Tabs</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>buildWizard</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds a Header Wizard</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>buildPopupmenu</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds a Popupmenu in place of the usual Title text, to allow for context swapping.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Sets up header-level events</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>handleBreadcrumbClick</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = <code>click</code>
+ event
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handles click events on Breadcrumb elements</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>initPageChanger</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = <code>click</code>
+ event
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Sets up the <code>selected</code> events on the More Actions area of the header, which can include
+Menu Options for changing the current theme, persoanlization colors, and language locale.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>drilldown</td>
+        <td>
+          
+                
+                  <span>viewTitle (string) = text contents to put in place of the title area.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Drills deeper into a breadcrumb structure while updating the Header title to reflect state.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>drillup</td>
+        <td>
+          
+                
+                  <span>viewTitle (string) = text contents to put in place of the title area.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Moves up into a breadcrumb structure while updating the Header title to reflect state.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
         <td>reset</td>
         <td>
           
@@ -45,6 +208,92 @@
 
         </td>
         <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>removeButton</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Button pattern from the Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>removeBreadcrumb</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Breadcrumb structure from the Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>removeTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Header Tabs pattern from the Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>removeWizard</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Header Wizard pattern from the Header.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>removePopupmenu</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a previously-built Popupmenu pattern from the Header's title.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>unbind</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes bound events from the Header</p>
+
+        </td>
+        <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -52,7 +301,8 @@
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming settings.
+ </span>
                 
           
         </td>
@@ -61,6 +311,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -69,10 +321,12 @@
           
         </td>
         <td>
-          <p>Tear down and destroy the menu and events.</p>
+          <p>Teardown and destroy the menu and events.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
     </tbody>
@@ -85,40 +339,40 @@
 
 <h2 id="code-example">Code Example</h2>
 <p>A header element always contains a toolbar. The toolbar is composed of three parts a title area a button area and a more/overflow area. This is a simple configuration.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;header</span><span class="ot"> class=</span><span class="st">&quot;header is-personalizable&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;toolbar&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;title&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">      <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-icon application-menu-trigger&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Show navigation<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon app-header&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">          <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;one&quot;</span><span class="kw">&gt;&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">          <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;two&quot;</span><span class="kw">&gt;&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">          <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;three&quot;</span><span class="kw">&gt;&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">        <span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">      <span class="kw">&lt;/button&gt;</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">      <span class="kw">&lt;h1&gt;</span>Page Title<span class="kw">&lt;/h1&gt;</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;buttonset&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">      <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;header-searchfield&quot;</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Search<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">      <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;header-searchfield&quot;</span><span class="ot"> class=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> name=</span><span class="st">&quot;header-searchfield&quot;</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;more&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">      <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-actions&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">        <span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">          <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-more&quot;</span><span class="kw">&gt;&lt;/use&gt;</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">        <span class="kw">&lt;/svg&gt;</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="ot"> data-translate=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span>More<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">      <span class="kw">&lt;/button&gt;</span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">  <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-33" data-line-number="33"><span class="kw">&lt;/header&gt;</span></a>
-<a class="sourceLine" id="cb1-34" data-line-number="34"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+
+<span class="kw">&lt;header</span><span class="ot"> class=</span><span class="st">&quot;header is-personalizable&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;toolbar&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;title&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-icon application-menu-trigger&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Show navigation<span class="kw">&lt;/span&gt;</span>
+        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;icon app-header&quot;</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;one&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+          <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;two&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+          <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;three&quot;</span><span class="kw">&gt;&lt;/span&gt;</span>
+        <span class="kw">&lt;/span&gt;</span>
+      <span class="kw">&lt;/button&gt;</span>
+
+      <span class="kw">&lt;h1&gt;</span>Page Title<span class="kw">&lt;/h1&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;buttonset&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;header-searchfield&quot;</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Search<span class="kw">&lt;/label&gt;</span>
+      <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;header-searchfield&quot;</span><span class="ot"> class=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> name=</span><span class="st">&quot;header-searchfield&quot;</span> <span class="kw">/&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;more&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-actions&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-more&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
+        <span class="kw">&lt;/svg&gt;</span>
+        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="ot"> data-translate=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span>More<span class="kw">&lt;/span&gt;</span>
+      <span class="kw">&lt;/button&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/header&gt;</span>
+</code></pre>
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <ul>
 <li>Add the class is-personalizable so that this element will get the company personalization color when set.</li>

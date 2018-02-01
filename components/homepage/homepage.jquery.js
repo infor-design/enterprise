@@ -1,6 +1,10 @@
 import { Homepage, COMPONENT_NAME } from './homepage';
 
-// Initialize the plugin (Once)
+/**
+ * jQuery Component Wrapper for Homepage
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
+ */
 $.fn.homepage = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);

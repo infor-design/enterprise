@@ -8,6 +8,6 @@ import { Message } from './message';
 $.fn.message = function (settings) {
   // Support Chaining and Init the Control or Set Settings
   return this.each(function () {
-    Message(this, settings);
+    return new Message(this, settings);
   });
 };

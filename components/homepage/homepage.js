@@ -6,25 +6,28 @@ import { Locale } from '../locale/locale';
 // Default Settings
 const COMPONENT_NAME = 'homepage';
 
+/**
+ * Homepage Default Settings
+ * @namespace
+ * @property {boolean} animate  Disable animation during resize
+ * @property {number} columns  Display in 3 (default) or 4 column layout
+ */
 const HOMEPAGE_DEFAULTS = {
+  animate: true,
+  columns: 3,
+  easing: 'blockslide', // Private
   gutterSize: 20, // Private
   widgetWidth: 360, // Private
   widgetHeight: 370, // Private
-  animate: true,
-  timeout: 100, // Private
-  columns: 3,
-  easing: 'blockslide' // Private
+  timeout: 100 // Private
 };
 
 /**
 * The Homepage handles card layout at multiple breakpoints.
-*
 * @class Homepage
+* @constructor
 * @param {String} element The component element.
 * @param {String} settings The component settings.
-* @param {boolean} animate  Disable animation during resize
-* @param {number} columns  Display in 3 (default) or 4 column layout
-*
 */
 function Homepage(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HOMEPAGE_DEFAULTS);
@@ -38,6 +41,10 @@ function Homepage(element, settings) {
 // Homepage Methods
 Homepage.prototype = {
 
+  /**
+   * @private
+   * @returns {void}
+   */
   init() {
     this.isTransitionsSupports = this.supportsTransitions();
     this.initHeroWidget();

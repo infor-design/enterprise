@@ -6,6 +6,13 @@ import { Locale } from '../locale/locale';
 // Default Settings
 const COMPONENT_NAME = 'circlepager';
 
+/**
+ * CirclePager Default Settings
+ * @namespace
+ * @param {Integer} slidesToShow The number of slides to show in one view / pane
+ * @param {Integer} [startingSlide] First showing slide/group, an 0-based integer
+ * @param {boolean} loop Setting loop: true will loop back after next/previous reached to end
+ */
 const CIRCLEPAGER_DEFAULTS = {
   slidesToShow: 1,
   startingSlide: null,
@@ -16,17 +23,12 @@ const CIRCLEPAGER_DEFAULTS = {
  * The Circle Pager Displays content in a sliding carousel and has paging buttons.
  *
  * @class CirclePager
- * @param {String} element The component element.
- * @param {String} settings The component settings.
- * @param {Integer} slidesToShow The number of slides to show in one view / pane
- * @param {Integer} startingSlide First showing slide/group, an 0-based integer
- * @param {boolean} loop Setting loop: true will loop back after next/previous reached to end
- *
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object} [settings] The component settings.
  */
 function CirclePager(element, settings) {
-  this.settings = utils.mergeSettings(element, settings, CIRCLEPAGER_DEFAULTS);
-
   this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, CIRCLEPAGER_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);

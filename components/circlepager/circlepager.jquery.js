@@ -1,6 +1,10 @@
 import { CirclePager, COMPONENT_NAME } from './circlepager';
 
-// Initialize the plugin (Once)
+/**
+ * jQuery Component Wrapper for CirclePager
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
+ */
 $.fn.circlepager = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);

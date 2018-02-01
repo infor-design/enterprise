@@ -1,6 +1,10 @@
 import { Hierarchy, COMPONENT_NAME } from './hierarchy';
 
-// Initialize the plugin (Once)
+/**
+ * jQuery Component Wrapper for Hierarchy
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
+ */
 $.fn.hierarchy = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);

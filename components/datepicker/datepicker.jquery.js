@@ -1,6 +1,10 @@
 import { DatePicker, COMPONENT_NAME } from './datepicker';
 
-// Initialize the plugin (Once)
+/**
+ * jQuery Component Wrapper for Datepicker
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
+ */
 $.fn.datepicker = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);

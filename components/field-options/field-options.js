@@ -3,9 +3,7 @@ import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Environment as env } from '../utils/environment';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'fieldoptions';
 
 /**
@@ -22,9 +20,8 @@ const FIELDOPTIONS_DEFAULTS = {
 * @param {String} settings The component settings.
 */
 function FieldOptions(element, settings) {
-  this.settings = utils.mergeSettings(element, settings, FIELDOPTIONS_DEFAULTS);
-
   this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, FIELDOPTIONS_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);

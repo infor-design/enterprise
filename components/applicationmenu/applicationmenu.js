@@ -1,6 +1,8 @@
+/* eslint-disable no-underscore-dangle, prefer-arrow-callback */
 import { utils } from '../utils/utils';
 import { Environment as env } from '../utils/environment';
 import { breakpoints } from '../utils/breakpoints';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../utils/lifecycle';
@@ -46,9 +48,9 @@ ApplicationMenu.prototype = {
   /**
    * Initialize the plugin.
    * @private
-   * @returns {this} The component API.
+   * @returns {void}
    */
-  init: function() {
+  init() {
     this
       .setup()
       .handleEvents();
@@ -56,9 +58,9 @@ ApplicationMenu.prototype = {
 
   /**
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  setup: function() {
+  setup() {
     this.hasTrigger = false;
     this.isAnimating = false;
 
@@ -68,18 +70,19 @@ ApplicationMenu.prototype = {
 
     this.menu = this.element;
 
-    var openOnLarge = this.element.attr('data-open-on-large');
+    const openOnLarge = this.element.attr('data-open-on-large');
     this.settings.openOnLarge = openOnLarge !== undefined ? openOnLarge === 'true' : this.settings.openOnLarge;
 
-    var dataBreakpoint = this.element.attr('data-breakpoint');
-    this.settings.breakpoint = breakpoints[dataBreakpoint] !== undefined ? dataBreakpoint : this.settings.breakpoint;
+    const dataBreakpoint = this.element.attr('data-breakpoint');
+    this.settings.breakpoint = breakpoints[dataBreakpoint] !== undefined ?
+      dataBreakpoint : this.settings.breakpoint;
 
     // Pull in the list of Nav Menu trigger elements and store them internally.
     this.modifyTriggers(this.settings.triggers, false, true);
 
     this.scrollTarget = this.menu.parents('.header');
-    var masthead = this.menu.prevAll('.masthead'),
-      moduleTabs = this.menu.prevAll('.module-tabs');
+    const masthead = this.menu.prevAll('.masthead');
+    const moduleTabs = this.menu.prevAll('.module-tabs');
 
     if (masthead.length > 0) {
       this.scrollTarget = masthead;
@@ -93,7 +96,7 @@ ApplicationMenu.prototype = {
     this.accordion.addClass('panel').addClass('inverse');
 
     // Check to make sure that the internal Accordion Control is invoked
-    var accordion = this.accordion.data('accordion');
+    let accordion = this.accordion.data('accordion');
     if (!accordion) {
       this.accordion.accordion();
       accordion = this.accordion.data('accordion');
@@ -110,33 +113,31 @@ ApplicationMenu.prototype = {
           this.searchfield = this.searchfield.children('.searchfield');
         }
       } else {
-        this.searchfield = $('<div class="searchfield-wrapper">' +
-          '<label for="application-menu-searchfield">'+ Locale.translate('Search') +'</label>' +
+        this.searchfield = $(`${'<div class="searchfield-wrapper">' +
+          '<label for="application-menu-searchfield">'}${Locale.translate('Search')}</label>` +
           '<input id="application-menu-searchfield" class="searchfield" /></div>').prependTo(this.element);
       }
 
-      var self = this;
+      const self = this;
       this.searchfield.searchfield({
-        source: function(term, done, args) {
+        source(term, done, args) {
           done(term, self.accordion.data('accordion').toData(true, true), args);
         },
-        searchableTextCallback: function(item) {
+        searchableTextCallback(item) {
           return item.text || '';
         },
-        resultIteratorCallback: function(item) {
+        resultIteratorCallback(item) {
           item._highlightTarget = 'text';
           return item;
         },
-        displayResultsCallback: function(results, done) {
+        displayResultsCallback(results, done) {
           return self.filterResultsCallback(results, done);
         }
       });
-    } else {
-      if (this.searchfield.length) {
-        this.searchfield.off();
-        this.searchfield.parent('.searchfield-wrapper').remove();
-        delete this.searchfield;
-      }
+    } else if (this.searchfield.length) {
+      this.searchfield.off();
+      this.searchfield.parent('.searchfield-wrapper').remove();
+      delete this.searchfield;
     }
 
     // Sync with application menus that have an 'is-open' CSS class.
@@ -152,20 +153,23 @@ ApplicationMenu.prototype = {
 
   /**
    * Gets a reference to this Application Menu's adjacent container element.
-   * @returns {jQuery[]}
+   * @returns {jQuery[]} the adjacent container element
    */
-  getAdjacentContainerElement: function() {
-    var container = this.element.next('.page-container');
+  getAdjacentContainerElement() {
+    let container = this.element.next('.page-container');
     if (!container.length) {
       container = $('body');
     }
     return container;
   },
 
-  // Setup click events on this.element if it's not the menu itself
-  // (this means that it's a trigger button)
-  handleTriggerEvents: function() {
-    var self = this;
+  /**
+   * Setup click events on this.element if it's not the menu itself.
+   * (this means that it's a trigger button).
+   * @returns {void}
+   */
+  handleTriggerEvents() {
+    const self = this;
 
     function triggerClickHandler(e) {
       // Don't allow hamburger buttons that have changed state to activate/deactivate the app menu.
@@ -177,7 +181,7 @@ ApplicationMenu.prototype = {
         return false;
       }
 
-      var isOpen = self.menu.hasClass('is-open');
+      const isOpen = self.menu.hasClass('is-open');
       if (!isOpen) {
         self.openMenu(undefined, true);
       } else {
@@ -190,14 +194,18 @@ ApplicationMenu.prototype = {
       this.triggers.off('click.applicationmenu').on('click.applicationmenu', triggerClickHandler);
     }
 
-    $(document).on('keydown.applicationmenu', function(e) {
+    $(document).on('keydown.applicationmenu', (e) => {
       self.handleKeyDown(e);
     });
-
   },
 
-  handleKeyDown: function(e) {
-    var key = e.which;
+  /**
+   * Handles Keydown Events on the App Menu
+   * @param {jQuery.Event} e `keydown` events
+   * @returns {boolean} whether or not the keydown event was successful
+   */
+  handleKeyDown(e) {
+    const key = e.which;
 
     if (key === 121) { // F10
       e.preventDefault();
@@ -213,27 +221,35 @@ ApplicationMenu.prototype = {
 
       return false;
     }
+
+    return true;
   },
 
-  notify: function(anchor, value) {
+  /**
+   * Adds a visual badge-style notification to an Application Menu accordion header
+   * @param {jQuery[]} anchor the anchor to target
+   * @param {number} value the numeric value to attach
+   * @returns {jQuery[]|undefined} a reference to the new tag markup, if applicable
+   */
+  notify(anchor, value) {
     if (!anchor || anchor === undefined) {
-      return;
+      return undefined;
     }
     if (anchor instanceof HTMLElement) {
       anchor = $(anchor);
     }
     if (!anchor.is('a')) {
-      return;
+      return undefined;
     }
 
-    var tag = anchor.find('.tag');
+    let tag = anchor.find('.tag');
 
     // Close the tag if an undefined or '0' value is passed
     if (!value || value === undefined || parseInt(value, 10) === 0) {
       if (tag.length) {
         tag.remove();
       }
-      return;
+      return undefined;
     }
 
     if (!tag.length) {
@@ -247,39 +263,43 @@ ApplicationMenu.prototype = {
   /**
    * Adjusts the application menu's height to fit the page.
    * @private
+   * @returns {void}
    */
-  adjustHeight: function() {
-    var isSticky = this.scrollTarget.is('.is-sticky'),
-      totalHeight = this.scrollTarget.outerHeight(true),
-      offset = totalHeight - (!isSticky ? $(window).scrollTop() : 0);
+  adjustHeight() {
+    const isSticky = this.scrollTarget.is('.is-sticky');
+    const totalHeight = this.scrollTarget.outerHeight(true);
+    let offset = totalHeight - (!isSticky ? $(window).scrollTop() : 0);
 
     if (this.scrollTarget.prev().is('.masthead')) {
       offset += this.scrollTarget.prev().outerHeight(true);
     }
 
-    this.menu[0].style.height = offset > 0 ? ('calc(100% - ' + offset + 'px)') : '100%';
+    this.menu[0].style.height = offset > 0 ? (`calc(100% - ${offset}px)`) : '100%';
   },
 
   /**
    * Checks the window size against the defined breakpoint.
    * @private
+   * @returns {boolean} whether or not the window size is larger than the
+   *  settings-defined breakpoint
    */
-  isLargerThanBreakpoint: function() {
+  isLargerThanBreakpoint() {
     return breakpoints.isAbove(this.settings.breakpoint);
   },
 
   /**
    * Detects whether or not the application menu is open
-   * @returns {boolean}
+   * @returns {boolean} whether or not the application menu is open
    */
-  isOpen: function() {
+  isOpen() {
     return this.menu[0].classList.contains('is-open');
   },
 
   /**
    * Detects a change in breakpoint size that can cause the Application Menu's state to change.
+   * @returns {void}
    */
-  testWidth: function() {
+  testWidth() {
     if (this.isOpen()) {
       if (breakpoints.isAbove(this.settings.breakpoint)) {
         this.element[0].classList.remove('show-shadow');
@@ -311,17 +331,20 @@ ApplicationMenu.prototype = {
 
   /**
    * Opens the Application Menu
-   * @param {boolean} noFocus - If true, sets focus on the first item in the application menu.
-   * @param {boolean} [userOpened] - If true, notifies the component that the menu was manually opened by the user.
-   * @param {boolean} [openedByClass] - If true, only adjusts bare-miniumum requirements for the application menu to appear open (should be used in cases where the application menu has the `is-open` CSS appended to it via markup).  This skips events, animation, etc.
+   * @param {boolean} noFocus If true, sets focus on the first item in the application menu.
+   * @param {boolean} [userOpened] If true, notifies the component that the menu was
+   *  manually opened by the user.
+   * @param {boolean} [openedByClass] If true, only adjusts bare-miniumum requirements
+   *  for the application menu to appear open (should be used in cases where the application
+   *  menu has the `is-open` CSS appended to it via markup).  This skips events, animation, etc.
    */
-  openMenu: function(noFocus, userOpened, openedByClass) {
+  openMenu(noFocus, userOpened, openedByClass) {
     if (this.isAnimating === true) {
       return;
     }
 
-    var self = this,
-      transitionEnd = $.fn.transitonEndName;
+    const self = this;
+    const transitionEnd = $.fn.transitonEndName;
 
     if (!openedByClass) {
       this.isAnimating = true;
@@ -349,10 +372,10 @@ ApplicationMenu.prototype = {
       $('.page-container').removeClass('no-transition');
     }
 
-    this.triggers.each(function() {
-      var trig = $(this);
+    this.triggers.each(function () {
+      const trig = $(this);
       if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
-        var header = trig.parents('.header, .masthead');
+        const header = trig.parents('.header, .masthead');
         if (header.parents('.page-container').length) {
           return;
         }
@@ -363,12 +386,14 @@ ApplicationMenu.prototype = {
     });
 
     // Animate the application menu open.
-    // If opened by class, `is-open` is already applied to the app menu at this point in the render cycle, and should not be re-applied.
+    // If opened by class, `is-open` is already applied to the app menu at this
+    // point in the render cycle, and should not be re-applied.
     if (!openedByClass) {
-      this.menu.off(transitionEnd + '.applicationmenu');
+      this.menu.off(`${transitionEnd}.applicationmenu`);
       this.menu[0].style.display = '';
       // next line forces a repaint
-      this.menu[0].offsetHeight; //jshint ignore:line
+      // eslint-disable-next-line
+      this.menu[0].offsetHeight; // jshint ignore:line
       this.menu.addClass('is-open');
     }
 
@@ -381,12 +406,12 @@ ApplicationMenu.prototype = {
     }
 
     if (env.os.name === 'ios') {
-      var container = this.getAdjacentContainerElement();
+      const container = this.getAdjacentContainerElement();
       container.addClass('ios-click-target');
     }
 
     if (!openedByClass) {
-      this.menu.one(transitionEnd + '.applicationmenu', isOpen);
+      this.menu.one(`${transitionEnd}.applicationmenu`, isOpen);
       this.timeout = setTimeout(isOpen, 300);
     } else {
       isOpen();
@@ -394,8 +419,8 @@ ApplicationMenu.prototype = {
 
     // Events that will close the nav menu
     // On a timer to prevent conflicts with the Trigger button's click events
-    setTimeout(function() {
-      $(document).on('click.applicationmenu', function(e) {
+    setTimeout(() => {
+      $(document).on('click.applicationmenu', (e) => {
         if ($(e.target).parents('.application-menu').length < 1 && !self.isLargerThanBreakpoint()) {
           self.closeMenu(true);
         }
@@ -405,15 +430,16 @@ ApplicationMenu.prototype = {
 
   /**
    * Closes the Application Menu
-   * @param {boolean} userClosed - if true, sets a flag notifying the component that the user was responsible for closing.
+   * @param {boolean} [userClosed] if true, sets a flag notifying the component
+   *  that the user was responsible for closing.
    */
-  closeMenu: function(userClosed) {
+  closeMenu(userClosed) {
     if (this.isAnimating === true) {
       return;
     }
 
-    var self = this,
-      transitionEnd = $.fn.transitionEndName();
+    const self = this;
+    const transitionEnd = $.fn.transitionEndName();
 
     this.isAnimating = true;
 
@@ -423,7 +449,7 @@ ApplicationMenu.prototype = {
         self.timeout = null;
       }
 
-      self.menu.off(transitionEnd + '.applicationmenu');
+      self.menu.off(`${transitionEnd}.applicationmenu`);
       self.menu[0].style.display = 'none';
       self.isAnimating = false;
 
@@ -436,8 +462,8 @@ ApplicationMenu.prototype = {
       $('body').triggerHandler('resize');
     }
 
-    this.triggers.each(function() {
-      var trig = $(this);
+    this.triggers.each(function () {
+      const trig = $(this);
       if (trig.parents('.header').length > 0 || trig.parents('.masthead').length > 0) {
         trig.find('.icon.app-header').removeClass('close');
         trig.trigger('icon-change');
@@ -445,11 +471,11 @@ ApplicationMenu.prototype = {
     });
 
     if (env.os.name === 'ios') {
-      var container = this.getAdjacentContainerElement();
+      const container = this.getAdjacentContainerElement();
       container.removeClass('ios-click-target');
     }
 
-    this.menu.one(transitionEnd + '.applicationmenu', close);
+    this.menu.one(`${transitionEnd}.applicationmenu`, close);
     this.timeout = setTimeout(close, 300);
 
     this.menu.removeClass('is-open show-shadow').find('[tabindex]');
@@ -458,25 +484,28 @@ ApplicationMenu.prototype = {
 
   /**
    * Detects whether or not the Application Menu has external trigger buttons setup to control it.
-   * @returns {boolean}
+   * @returns {boolean} whether or not external triggers have been defined.
    */
-  hasTriggers: function() {
+  hasTriggers() {
     return (this.triggers !== undefined && this.triggers instanceof $ && this.triggers.length);
   },
 
   /**
    * Externally Facing function that can be used to add/remove application nav menu triggers.
-   * @param {Array[]} triggers - an array of HTMLElements or jQuery-wrapped elements that will be used as triggers.
-   * @param {boolean} [remove] - if defined, triggers that are defined will be removed internally instead of added.
-   * @param {boolean} [norebuild] - if defined, this control's events won't automatically be rebound to include the new triggers.
+   * @param {Array[]} triggers an array of HTMLElements or jQuery-wrapped elements that
+   *  will be used as triggers.
+   * @param {boolean} [remove] if defined, triggers that are defined will be removed
+   *  internally instead of added.
+   * @param {boolean} [norebuild] if defined, this control's events won't automatically
+   *  be rebound to include the new triggers.
    */
-  modifyTriggers: function(triggers, remove, norebuild) {
+  modifyTriggers(triggers, remove, norebuild) {
     if (!triggers || !triggers.length) {
       return;
     }
-    var changed = $();
+    let changed = $();
 
-    $.each(triggers, function(i, obj) {
+    $.each(triggers, (i, obj) => {
       changed = changed.add($(obj));
     });
 
@@ -491,12 +520,13 @@ ApplicationMenu.prototype = {
   },
 
   /**
-   * @param {array} results
-   * @param {function} done
+   * @param {array} results list of items that passed the filtering process
+   * @param {function} done method to be called when the display of filtered items completes.
+   * @returns {void}
    */
-  filterResultsCallback: function(results, done) {
-    var self = this,
-      filteredParentHeaders = this.accordion.find('.has-filtered-children');
+  filterResultsCallback(results, done) {
+    const self = this;
+    let filteredParentHeaders = this.accordion.find('.has-filtered-children');
 
     this.accordionAPI.headers.removeClass('filtered has-filtered-children');
 
@@ -509,13 +539,13 @@ ApplicationMenu.prototype = {
       return;
     }
 
-    var matchedHeaders = $();
-    results.map(function(item) {
+    let matchedHeaders = $();
+    results.map(function (item) {
       matchedHeaders = matchedHeaders.add(item.element);
 
-      var parentPanes = $(item.element).parents('.accordion-pane');
-      parentPanes.each(function() {
-        var parentHeaders = $(this).prev('.accordion-header').addClass('has-filtered-children');
+      const parentPanes = $(item.element).parents('.accordion-pane');
+      parentPanes.each(function () {
+        const parentHeaders = $(this).prev('.accordion-header').addClass('has-filtered-children');
         filteredParentHeaders = filteredParentHeaders.not(parentHeaders);
         self.accordionAPI.expand(parentHeaders);
       });
@@ -532,30 +562,29 @@ ApplicationMenu.prototype = {
 
   /**
    * handles the Searchfield Input event
-   * @param {jQuery.Event} e
+   * @param {jQuery.Event} e jQuery `input` event
    */
-  handleSearchfieldInputEvent: function() {
+  handleSearchfieldInputEvent() {
     if (!this.searchfield || !this.searchfield.length) {
       return;
     }
 
-    var val = this.searchfield.val();
+    const val = this.searchfield.val();
 
     if (!val || val === '') {
-      var filteredParentHeaders = this.accordion.find('.has-filtered-children');
+      const filteredParentHeaders = this.accordion.find('.has-filtered-children');
       this.accordionAPI.headers.removeClass('filtered has-filtered-children');
       this.accordionAPI.collapse(filteredParentHeaders);
       this.accordionAPI.updated();
       this.element.triggerHandler('filtered', [[]]);
-      return;
     }
   },
 
   /**
    * Unbinds event listeners and removes extraneous markup from the Application Menu.
-   * @returns {this}
+   * @returns {this} component instance
    */
-  teardown: function() {
+  teardown() {
     this.menu
       .off('animateopencomplete animateclosedcomplete')
       .removeClass('short')
@@ -575,7 +604,7 @@ ApplicationMenu.prototype = {
 
     if (this.searchfield && this.searchfield.length) {
       this.searchfield.off('input.applicationmenu');
-      var sfAPI = this.searchfield.data('searchfield');
+      const sfAPI = this.searchfield.data('searchfield');
       if (sfAPI) {
         sfAPI.destroy();
       }
@@ -589,9 +618,11 @@ ApplicationMenu.prototype = {
   },
 
   /**
-  * Triggers a UI Resync.
-  */
-  updated: function(settings) {
+   * Triggers a UI Resync.
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
+   */
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -602,53 +633,53 @@ ApplicationMenu.prototype = {
   },
 
   /**
-  * Teardown - Remove added markup and events
-  */
-  destroy: function() {
+   * Teardown - Remove added markup and events
+   * @returns {void}
+   */
+  destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 
   /**
-   *  This component fires the following events.
-   *
+   * This component fires the following events.
    * @fires Applicationmenu#events
-   * @param {object} applicationmenuopen  Fires when the menu is opened.
-   * @param {object} applicationmenuclose  Fires as the menu is closed.
-    *
+   * @listens applicationmenuopen  Fires when the menu is opened.
+   * @listens applicationmenuclose  Fires as the menu is closed.
+   * @returns {this} component instance
    */
-  handleEvents: function() {
-    var self = this;
+  handleEvents() {
+    const self = this;
 
     this.handleTriggerEvents();
 
     // Setup notification change events
-    this.menu.on('notify.applicationmenu', function(e, anchor, value) {
+    this.menu.on('notify.applicationmenu', (e, anchor, value) => {
       self.notify(anchor, value);
-    }).on('updated.applicationmenu', function() {
+    }).on('updated.applicationmenu', () => {
       self.updated();
     });
 
-    this.accordion.on('blur.applicationmenu', function() {
+    this.accordion.on('blur.applicationmenu', () => {
       self.closeMenu();
     });
 
-    $(document).on('open-applicationmenu', function() {
+    $(document).on('open-applicationmenu', () => {
       self.openMenu();
-    }).on('close-applicationmenu', function() {
+    }).on('close-applicationmenu', () => {
       self.closeMenu();
     });
 
-    $(window).on('scroll.applicationmenu', function() {
+    $(window).on('scroll.applicationmenu', () => {
       self.adjustHeight();
     });
 
-    $('body').on('resize.applicationmenu', function() {
+    $('body').on('resize.applicationmenu', () => {
       self.testWidth();
     });
 
     if (this.settings.filterable === true && this.searchfield && this.searchfield.length) {
-      this.searchfield.on('input.applicationmenu', function(e) {
+      this.searchfield.on('input.applicationmenu', (e) => {
         self.handleSearchfieldInputEvent(e);
       });
     }
@@ -659,8 +690,8 @@ ApplicationMenu.prototype = {
     }
     this.testWidth();
 
-    //Remove after initial transition
-    setTimeout(function() {
+    // Remove after initial transition
+    setTimeout(() => {
       self.menu.removeClass('no-transition');
       $('.page-container').removeClass('no-transition');
     }, 800);
@@ -669,6 +700,5 @@ ApplicationMenu.prototype = {
   }
 
 };
-
 
 export { ApplicationMenu, COMPONENT_NAME };

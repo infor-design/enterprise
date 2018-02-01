@@ -1,6 +1,10 @@
 import { Datagrid, COMPONENT_NAME } from './datagrid';
 
-// Empty Message jQuery wrapper
+/**
+ * jQuery Component Wrapper for Datagrid
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
+ */
 $.fn.datagrid = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);

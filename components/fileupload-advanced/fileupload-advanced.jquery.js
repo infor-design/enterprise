@@ -1,6 +1,10 @@
 import { FileUploadAdvanced, COMPONENT_NAME } from './fileupload-advanced';
 
-// Initialize the plugin (Once)
+/**
+ * jQuery Component Wrapper for FileUpload Advanced
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
+ */
 $.fn.fileuploadadvanced = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);

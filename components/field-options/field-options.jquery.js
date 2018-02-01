@@ -1,6 +1,10 @@
 import { FieldOptions, COMPONENT_NAME } from './field-options';
 
-// Initialize the plugin (Once)
+/**
+ * jQuery Component Wrapper for FieldOptions
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
+ */
 $.fn.fieldoptions = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);
