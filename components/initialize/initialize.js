@@ -5,7 +5,7 @@ import { Locale } from '../locale/locale';
 // jQuery components
 import '../components.jquery';
 
-// he name of this component
+// The name of this component
 const COMPONENT_NAME = 'initialize';
 
 /**
@@ -17,8 +17,10 @@ const INITIALIZE_DEFAULTS = {
 
 /**
  * Page Bootstrapper
+ * @class Initialize
  * @constructor
- * @param {object} element
+ * @param {jQuery[]|HTMLElement} element the root element to initialize
+ * @param {object} [settings] incoming settings
  */
 function Initialize(element, settings) {
   // Settings and Options
@@ -28,8 +30,8 @@ function Initialize(element, settings) {
     };
   }
 
-  this.settings = utils.mergeSettings({}, settings, INITIALIZE_DEFAULTS);
   this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, INITIALIZE_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -37,31 +39,41 @@ function Initialize(element, settings) {
 
 // Plugin Methods
 Initialize.prototype = {
-  init: function() {
-    var self = this;
 
-    Locale.set(this.settings.locale).done(function () {
+  /**
+   * Makes sure the Locale is set before attempting initialize components
+   * @private
+   * @returns {this} component instance
+   */
+  init() {
+    const self = this;
+
+    Locale.set(this.settings.locale).done(() => {
       self.initAll();
     });
 
     return this;
   },
 
-  initAll: function () {
-    var self = this;
+  /**
+   * Initializes all Soho components inside the root element provided.
+   * @returns {this} component instance
+   */
+  initAll() {
+    const self = this;
 
     // Iterate all objects we are initializing
-    this.element.filter(':not(.no-init)').each(function() {
-      var elem = $(this),
-        noinitExcludes = '.no-init, [data-init]';
+    this.element.filter(':not(.no-init)').each(function () {
+      const elem = $(this);
+      const noinitExcludes = '.no-init, [data-init]';
 
-      function invokeWithInlineOptions(elem, plugin) {
-        var options = utils.parseOptions(elem);
-        $(elem)[plugin](options);
+      function invokeWithInlineOptions(thisElem, plugin) {
+        const options = utils.parseOptions(thisElem);
+        $(thisElem)[plugin](options);
       }
 
       function matchedItems(selector) {
-        var items = elem.find(selector);
+        let items = elem.find(selector);
         if (elem.filter(selector).length) {
           items = items.add(elem);
         }
@@ -69,27 +81,29 @@ Initialize.prototype = {
       }
 
       function simpleInit(plugin, selector) {
-        //Allow only the plugin name to be specified if the default selector is a class with the same name
-        //Like $.fn.header applying to elements that match .header
+        // Allow only the plugin name to be specified if the default selector is
+        // a class with the same name, Like `$.fn.header` applying to elements that
+        // match `.header`
         if (typeof selector === 'undefined') {
-          selector = '.' + plugin;
+          selector = `.${plugin}`;
         }
 
         if ($.fn[plugin]) {
           matchedItems(selector).each(function () {
-            var elem = $(this);
+            const thisElem = $(this);
 
-            if (elem.is(noinitExcludes) && selector !=='[data-trackdirty="true"]') {
+            if (thisElem.is(noinitExcludes) && selector !== '[data-trackdirty="true"]') {
               return;
             }
 
-            if (elem.parents().hasClass('no-init')) {
+            if (thisElem.parents().hasClass('no-init')) {
               return;
             }
 
-            // Don't invoke elements inside of "container" controls that need to invoke their internal
-            // items in a specific order.
-            if (!elem.is('.icon') && elem.parents('.toolbar').length && !elem.parents().hasClass('masthead')) {
+            // Don't invoke elements inside of "container" controls that need to
+            // invoke their internal items in a specific order.
+            if (!thisElem.is('.icon') && thisElem.parents('.toolbar').length &&
+              !thisElem.parents().hasClass('masthead')) {
               return;
             }
 
@@ -98,14 +112,14 @@ Initialize.prototype = {
         }
 
         // Radio switch
-        matchedItems('.radio-section input:radio.handle').change(function() {
+        matchedItems('.radio-section input:radio.handle').change(function () {
           if (this.checked) {
-            var option = $(this).closest('.option'),
-            siblings = option.siblings(),
-            fields = 'button, select, input[type="text"]';
+            const option = $(this).closest('.option');
+            const siblings = option.siblings();
+            const fields = 'button, select, input[type="text"]';
 
             $(fields, option).removeAttr('disabled');
-            $(fields, siblings).attr('disabled','disabled');
+            $(fields, siblings).attr('disabled', 'disabled');
           }
         });
       }
@@ -129,8 +143,8 @@ Initialize.prototype = {
         matchedItems('html').personalize();
       }
 
-      //Array of plugin names and selectors (optional) for no-configuration initializations
-      var simplePluginMappings = [
+      // Array of plugin names and selectors (optional) for no-configuration initializations
+      const simplePluginMappings = [
 
         // Hyperlinks
         ['hyperlink'],
@@ -140,98 +154,98 @@ Initialize.prototype = {
 
         ['splitter'],
 
-        //Tabs
+        // Tabs
         ['tabs', '.tab-container:not(.vertical)'],
 
-        //Vertical Tabs
+        // Vertical Tabs
         ['verticaltabs', '.tab-container.vertical'],
 
-        //MultiTabs Containers
+        // MultiTabs Containers
         ['multitabs', '.multitabs-container'],
 
-        //Select / DropDowns
+        // Select / DropDowns
         ['dropdown', 'select.dropdown:not(.multiselect)'],
         ['dropdown', 'select.dropdown-xs:not(.multiselect)'],
         ['dropdown', 'select.dropdown-sm:not(.multiselect)'],
         ['dropdown', 'select.dropdown-lg:not(.multiselect)'],
 
-        //Modals
+        // Modals
         ['modal'],
 
-        //Sliders
+        // Sliders
         ['slider', 'input[type="range"], .slider'],
 
-        //Editors
+        // Editors
         ['editor'],
 
-        //Tooltips
+        // Tooltips
         ['tooltip', 'button[title], span[title], .hyperlink[title]'],
 
-        //Tree
+        // Tree
         ['tree'],
 
-        //Rating
+        // Rating
         ['rating'],
 
-        //Listbuilder
+        // Listbuilder
         ['listbuilder'],
 
-        //Composite Form Wrapper
+        // Composite Form Wrapper
         ['compositeform', '.composite-form'],
 
-        //Progress
+        // Progress
         ['progress', '.progress-bar'],
 
-        //Format
+        // Format
         ['mask', 'input[data-mask], .new-mask'],
 
-        //Auto Complete
+        // Auto Complete
         ['autocomplete', '.autocomplete:not([data-init])'],
 
-        //Multiselect
+        // Multiselect
         ['multiselect', 'select[multiple]:not(.dropdown), .multiselect:not([data-init])'],
 
-        //Button with Effects
+        // Button with Effects
         ['button', '.btn, .btn-toggle, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split, .btn-secondary-border'],
 
-        //Hide Focus
+        // Hide Focus
         ['hideFocus', 'a.hide-focus, a.tick, .checkbox, .radio, .switch'],
 
-        //Circle Pager
+        // Circle Pager
         ['circlepager'],
 
-        //Track Dirty
+        // Track Dirty
         ['trackdirty', '[data-trackdirty="true"]'],
 
-        //Clear x
+        // Clear x
         ['clearable', '[data-clearable="true"]'],
 
-        //Text Area
+        // Text Area
         ['textarea', 'textarea'],
 
-        //Spinbox
+        // Spinbox
         ['spinbox'],
 
-        //sort drag and drop
+        // sort drag and drop
         ['arrange'],
 
-        //Swap List
+        // Swap List
         ['swaplist'],
 
-        //Color Picker
+        // Color Picker
         ['colorpicker'],
 
-        //Date Picker
+        // Date Picker
         ['datepicker'],
 
-        //Time Picker
+        // Time Picker
         ['timepicker'],
 
-        //Tag
+        // Tag
         ['tag'],
 
-        //Busy Indicator
-        ['busyindicator','.busy, .busy-xs, .busy-sm'],
+        // Busy Indicator
+        ['busyindicator', '.busy, .busy-xs, .busy-sm'],
 
         ['header'],
 
@@ -262,20 +276,20 @@ Initialize.prototype = {
         ['listview']
       ];
 
-      //Do initialization for all the simple controls
-      for(var i = 0; i < simplePluginMappings.length; i++) {
-        simpleInit.apply(null, simplePluginMappings[i]);
+      // Do initialization for all the simple controls
+      for (let i = 0; i < simplePluginMappings.length; i++) {
+        simpleInit(...simplePluginMappings[i]);
       }
 
       if ($.fn.popupmenu) {
         // Don't double-invoke menu buttons
-        var btnExcludes = ', .btn-actions, .btn-filter, .btn-menu';
+        const btnExcludes = ', .btn-actions, .btn-filter, .btn-menu';
 
-        //Context Menus
-        matchedItems('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
-          var triggerButton = $(this),
-            options = $.extend({}, utils.parseOptions(this)),
-            popupData = triggerButton.attr('data-popupmenu');
+        // Context Menus
+        matchedItems(`[data-popupmenu]:not(${noinitExcludes}${btnExcludes})`).each(function () {
+          const triggerButton = $(this);
+          const options = $.extend({}, utils.parseOptions(this));
+          const popupData = triggerButton.attr('data-popupmenu');
 
           if (popupData) {
             options.menuId = popupData;
@@ -284,9 +298,9 @@ Initialize.prototype = {
           triggerButton.popupmenu(options);
         });
 
-        //Button-based Popup-Menus (Action/More Button, Menu Buttons, etc.)
-        matchedItems('.btn-filter, .btn-menu, .btn-actions').filter(':not('+ noinitExcludes +')').each(function() {
-          var triggerButton = $(this);
+        // Button-based Popup-Menus (Action/More Button, Menu Buttons, etc.)
+        matchedItems('.btn-filter, .btn-menu, .btn-actions').filter(`:not(${noinitExcludes})`).each(function () {
+          const triggerButton = $(this);
 
           // Don't auto-invoke Toolbar's Popupmenus.
           // Toolbar needs to completely control its contents and invoke each one manually.
@@ -298,14 +312,14 @@ Initialize.prototype = {
         });
       }
 
-      //Popovers
+      // Popovers
       if ($.fn.popover) {
-        matchedItems('[data-popover]:not('+ noinitExcludes +')').each(function () {
-          var options = utils.parseOptions(this),
-            obj = $(this),
-            trigger = obj.attr('data-trigger'),
-            title = obj.attr('data-title'),
-            placement = obj.attr('data-placement');
+        matchedItems(`[data-popover]:not(${noinitExcludes})`).each(function () {
+          const options = utils.parseOptions(this);
+          const obj = $(this);
+          const trigger = obj.attr('data-trigger');
+          const title = obj.attr('data-title');
+          const placement = obj.attr('data-placement');
 
           if (!$.isEmptyObject(options)) {
             obj.popover({
@@ -313,12 +327,12 @@ Initialize.prototype = {
               popover: true,
               trigger: options.trigger || 'click',
               title: options.title || undefined,
-              placement:  options.placement || 'right',
+              placement: options.placement || 'right',
               extraClass: options.extraClass || undefined
             });
           } else {
             obj.popover({
-              content: $('#' + obj.attr('data-popover')),
+              content: $(`#${obj.attr('data-popover')}`),
               popover: true,
               trigger: trigger || 'click',
               title: title || undefined,
@@ -326,11 +340,10 @@ Initialize.prototype = {
               extraClass: options.extraClass || undefined
             });
           }
-
         });
       }
 
-      //Cardstack
+      // Cardstack
       /*
       if ($.fn.listview) {
         matchedItems('.listview:not('+ noinitExcludes +')').each(function () {
@@ -343,21 +356,21 @@ Initialize.prototype = {
       // NOTE:  The Toolbar Control itself understands how to invoke internal searchfields, so they
       // are excluded from this initializer.
       if ($.fn.searchfield) {
-        var searchfields = matchedItems('.searchfield:not('+ noinitExcludes +')'),
-          toolbarSearchfields = searchfields.filter(function() {
-            return $(this).parents('.toolbar').length;
-          });
+        let searchfields = matchedItems(`.searchfield:not(${noinitExcludes})`);
+        const toolbarSearchfields = searchfields.filter(function () {
+          return $(this).parents('.toolbar').length;
+        });
         searchfields = searchfields.not(toolbarSearchfields);
 
-        searchfields.each(function() {
+        searchfields.each(function () {
           invokeWithInlineOptions(this, 'searchfield');
         });
       }
 
       // Accordion
       if ($.fn.accordion) {
-        matchedItems('.accordion:not('+ noinitExcludes +')').each(function() {
-          var a = $(this);
+        matchedItems(`.accordion:not(${noinitExcludes})`).each(function () {
+          const a = $(this);
           if (a.parents('.application-menu').length) {
             return;
           }
@@ -368,12 +381,14 @@ Initialize.prototype = {
 
       // Toolbar
       if ($.fn.toolbar) {
-        matchedItems('.toolbar:not('+ noinitExcludes +')').each(function() {
-          var t = $(this);
+        matchedItems(`.toolbar:not(${noinitExcludes})`).each(function () {
+          const t = $(this);
           // Don't re-invoke toolbars that are part of the page/section headers or cap header.
           // header.js manually invokes these toolbars during its setup process.
-          // However, if initialize is specifically being called on the toolbar element, then allow it to happen.
-          if (t.parents('.header, .contextual-action-panel .modal-header').length && !self.element.is('.toolbar')) {
+          // However, if initialize is specifically being called on the toolbar element,
+          // then allow it to happen.
+          if (t.parents('.header, .contextual-action-panel .modal-header').length &&
+            !self.element.is('.toolbar')) {
             return;
           }
 
@@ -382,17 +397,17 @@ Initialize.prototype = {
       }
 
       matchedItems('[data-translate="text"]').each(function () {
-        var obj = $(this);
+        const obj = $(this);
         obj.text(Locale.translate(obj.text()));
       });
 
-      //Toggle boxes on image list
+      // Toggle boxes on image list
       matchedItems('.block').on('click', function () {
         $(this).toggleClass('is-selected');
       });
 
-      //Validation
-      //Should be one of the last items to invoke
+      // Validation
+      // Should be one of the last items to invoke
       if ($.fn.validate) {
         matchedItems('[data-validate]').parentsUntil('form, html').validate();
       }
@@ -400,9 +415,10 @@ Initialize.prototype = {
       matchedItems('.breadcrumb ol').attr('aria-label', Locale.translate('Breadcrumb'));
     });
 
-    // NOTE: use of .triggerHandler() here causes event listeners for "initialized" to fire, but prevents the
-    // "initialized" event from bubbling up the DOM.  It should be possible to initialize just the contents
-    // of an element on the page without causing the entire page to re-initialize.
+    // NOTE: use of .triggerHandler() here causes event listeners for "initialized"
+    // to fire, but prevents the "initialized" event from bubbling up the DOM.
+    // It should be possible to initialize just the contents of an element on
+    // the page without causing the entire page to re-initialize.
     this.element.triggerHandler('initialized');
 
     if ($.fn.validate) {

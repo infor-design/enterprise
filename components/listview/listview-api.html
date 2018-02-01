@@ -1,6 +1,7 @@
   <section>
   
     
+
   <h2>Settings</h2>
   <table class="section-table">
     <thead>
@@ -65,7 +66,8 @@
           number
         </td>
         <td>
-          If paging is activated, sets the number of listview items available per page
+          If paging is activated, sets the number of
+listview items available per page
 
         </td>
       </tr>
@@ -77,7 +79,8 @@
           boolean
         </td>
         <td>
-          If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+          If true, associates itself with a Searchfield/Autocomplete
+and allows itself to be filtered
 
         </td>
       </tr>
@@ -89,7 +92,8 @@
           
         </td>
         <td>
-          selection mode, can be false, 'single' or 'multiple' or 'mixed'
+          selection mode, can be false, 'single' or
+'multiple' or 'mixed'
 
         </td>
       </tr>
@@ -101,7 +105,8 @@
           boolean
         </td>
         <td>
-          If true the first item in the list will be selected as it is focused.
+          If true the first item in the list will be
+selected as it is focused.
 
         </td>
       </tr>
@@ -113,7 +118,8 @@
           boolean
         </td>
         <td>
-          If false will not show checkboxes used with multiple selection mode only
+          If false will not show checkboxes used with
+multiple selection mode only
 
         </td>
       </tr>
@@ -125,7 +131,8 @@
           boolean
         </td>
         <td>
-          If true the list element will show a hover action to indicate its actionable.
+          If true the list element will show a hover action
+to indicate its actionable.
 
         </td>
       </tr>
@@ -137,7 +144,9 @@
           
         </td>
         <td>
-          If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+          If source is a string then it serves as the url
+for an ajax call that returns the dataset. If its a function it is a call back for
+getting the data asyncronously.
 
         </td>
       </tr>
@@ -149,13 +158,19 @@
           boolean
         </td>
         <td>
-          If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
+          If true when an item is activated the
+user should not be able to deactivate it by clicking on the activated item. They
+can only select another row.
 
         </td>
       </tr>
     </tbody>
   </table>
 
+
+
+  
+    
 
 
   <h2>Methods</h2>
@@ -217,6 +232,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -229,6 +246,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -241,6 +260,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -258,6 +279,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -275,6 +298,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -287,6 +312,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -295,10 +322,12 @@
           
         </td>
         <td>
-          <p>Remove all selected items entirely from the list..</p>
+          <p>Remove all selected items entirely from the list.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -311,6 +340,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -324,7 +355,7 @@
                   <span>reverse (string) = If true sort descending.
  </span>
                 
-                  <span>primer (Function) = A sorting primer function.
+                  <span>primer (function) = A sorting primer function.
  </span>
                 
           
@@ -334,6 +365,8 @@
 
         </td>
         <td>
+          a customized sorting algorithm
+function
         </td>
       </tr>
       <tr>
@@ -358,15 +391,18 @@
         <td>
           
                 
-                  <span>li () =  </span>
+                  <span>li () = a list item
+ </span>
                 
           
         </td>
         <td>
-          <p>Deprivated - use deselect</p>
+          <p>Deprivated - use <code>deselect()</code></p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -404,6 +440,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -421,6 +459,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -442,7 +482,8 @@ object
         <td>
           
                 
-                  <span>li () = The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
+                  <span>li () = The jQuery list element. The li element or the index.
+If null the currently activated one will be deactivated.
  </span>
                 
           
@@ -452,6 +493,8 @@ object
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -459,7 +502,8 @@ object
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming settings
+ </span>
                 
           
         </td>
@@ -468,6 +512,8 @@ object
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -480,6 +526,8 @@ object
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -492,25 +540,13 @@ object
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
         <td>handleEvents</td>
         <td>
-          
-                
-                  <span>selected (object) = Fires when a item is selected
- </span>
-                
-                  <span>unselected (object) = Fires when a item is deselected (deprecated)
- </span>
-                
-                  <span>deselected (object) = Fires when a item is deselected
- </span>
-                
-                  <span>rendered (object) = Fires after the listbox is fully rendered
- </span>
-                
           
         </td>
         <td>

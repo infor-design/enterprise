@@ -14,6 +14,7 @@
   <section>
   
     
+
   <h2>Settings</h2>
   <table class="section-table">
     <thead>
@@ -78,7 +79,8 @@
           number
         </td>
         <td>
-          If paging is activated, sets the number of listview items available per page
+          If paging is activated, sets the number of
+listview items available per page
 
         </td>
       </tr>
@@ -90,7 +92,8 @@
           boolean
         </td>
         <td>
-          If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+          If true, associates itself with a Searchfield/Autocomplete
+and allows itself to be filtered
 
         </td>
       </tr>
@@ -102,7 +105,8 @@
           
         </td>
         <td>
-          selection mode, can be false, 'single' or 'multiple' or 'mixed'
+          selection mode, can be false, 'single' or
+'multiple' or 'mixed'
 
         </td>
       </tr>
@@ -114,7 +118,8 @@
           boolean
         </td>
         <td>
-          If true the first item in the list will be selected as it is focused.
+          If true the first item in the list will be
+selected as it is focused.
 
         </td>
       </tr>
@@ -126,7 +131,8 @@
           boolean
         </td>
         <td>
-          If false will not show checkboxes used with multiple selection mode only
+          If false will not show checkboxes used with
+multiple selection mode only
 
         </td>
       </tr>
@@ -138,7 +144,8 @@
           boolean
         </td>
         <td>
-          If true the list element will show a hover action to indicate its actionable.
+          If true the list element will show a hover action
+to indicate its actionable.
 
         </td>
       </tr>
@@ -150,7 +157,9 @@
           
         </td>
         <td>
-          If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+          If source is a string then it serves as the url
+for an ajax call that returns the dataset. If its a function it is a call back for
+getting the data asyncronously.
 
         </td>
       </tr>
@@ -162,13 +171,19 @@
           boolean
         </td>
         <td>
-          If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
+          If true when an item is activated the
+user should not be able to deactivate it by clicking on the activated item. They
+can only select another row.
 
         </td>
       </tr>
     </tbody>
   </table>
 
+
+
+  
+    
 
 
   <h2>Methods</h2>
@@ -230,6 +245,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -242,6 +259,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -254,6 +273,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -271,6 +292,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -288,6 +311,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -300,6 +325,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -308,10 +335,12 @@
           
         </td>
         <td>
-          <p>Remove all selected items entirely from the list..</p>
+          <p>Remove all selected items entirely from the list.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -324,6 +353,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -337,7 +368,7 @@
                   <span>reverse (string) = If true sort descending.
  </span>
                 
-                  <span>primer (Function) = A sorting primer function.
+                  <span>primer (function) = A sorting primer function.
  </span>
                 
           
@@ -347,6 +378,8 @@
 
         </td>
         <td>
+          a customized sorting algorithm
+function
         </td>
       </tr>
       <tr>
@@ -371,15 +404,18 @@
         <td>
           
                 
-                  <span>li () =  </span>
+                  <span>li () = a list item
+ </span>
                 
           
         </td>
         <td>
-          <p>Deprivated - use deselect</p>
+          <p>Deprivated - use <code>deselect()</code></p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -417,6 +453,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -434,6 +472,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -455,7 +495,8 @@ object
         <td>
           
                 
-                  <span>li () = The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
+                  <span>li () = The jQuery list element. The li element or the index.
+If null the currently activated one will be deactivated.
  </span>
                 
           
@@ -465,6 +506,8 @@ object
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -472,7 +515,8 @@ object
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming settings
+ </span>
                 
           
         </td>
@@ -481,6 +525,8 @@ object
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -493,6 +539,8 @@ object
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -505,25 +553,13 @@ object
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
         <td>handleEvents</td>
         <td>
-          
-                
-                  <span>selected (object) = Fires when a item is selected
- </span>
-                
-                  <span>unselected (object) = Fires when a item is deselected (deprecated)
- </span>
-                
-                  <span>deselected (object) = Fires when a item is deselected
- </span>
-                
-                  <span>rendered (object) = Fires after the listbox is fully rendered
- </span>
-                
           
         </td>
         <td>
@@ -552,37 +588,37 @@ object
 <h3 id="basic-list">Basic List</h3>
 <p>This example shows using a list with a <a href="https://mustache.github.io/mustache.1.html">mustache template</a>. The list itself is the div with the listview class. This example is showing the list in a card but this is optional.</p>
 <p>The template shows the use of an if/else to show a is-disabled class. And also shows the use of the three text sizes available. Note that <code>dataset</code>}}` is required to loop over teh dataset option passed into the control.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;listview&quot;</span><span class="ot"> id=</span><span class="st">&quot;id-to-list&quot;</span><span class="ot"> data-tmpl=</span><span class="st">&quot;id-to-task-tmpl&quot;</span><span class="ot"> data-dataset=</span><span class="st">&quot;array or url&quot;</span><span class="kw">&gt;&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;listview&quot;</span><span class="ot"> id=</span><span class="st">&quot;id-to-list&quot;</span><span class="ot"> data-tmpl=</span><span class="st">&quot;id-to-task-tmpl&quot;</span><span class="ot"> data-dataset=</span><span class="st">&quot;array or url&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+</code></pre>
 <h3 id="listview---multiselect">Listview - Multiselect</h3>
-<p>Creating a Multiselect Listview also uses the listview component. API guidelines are listed on the basic list page. The only special option to create a multiselect list is to add data-selectable=“multiple”. When doing this, a checkbox is added. You can also create a listview-toolbar which will show buttons upon selection of one or more rows.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card-header&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">&quot;card-title&quot;</span><span class="kw">&gt;</span>My Tasks<span class="kw">&lt;/h2&gt;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-actions&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">      <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Actions<span class="kw">&lt;/span&gt;</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">      <span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">        <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-more&quot;</span><span class="kw">&gt;&lt;/use&gt;</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">      <span class="kw">&lt;/svg&gt;</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="kw">&lt;/button&gt;</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Action One<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Action Two<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="kw">&lt;/ul&gt;</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15">  <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16">  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card-content&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;contextual-toolbar toolbar is-hidden&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;buttonset&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19">        <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-tertiary&quot;</span><span class="ot"> title=</span><span class="st">&quot;Assign Selected Items&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>Assign<span class="kw">&lt;/button&gt;</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20">        <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-tertiary&quot;</span><span class="ot"> id=</span><span class="st">&quot;remove&quot;</span><span class="ot"> title=</span><span class="st">&quot;Remove Selected Items&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>Remove<span class="kw">&lt;/button&gt;</span></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21">      <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;listview&quot;</span><span class="ot"> id=</span><span class="st">&quot;multiselect-listview&quot;</span><span class="ot"> data-options=</span><span class="st">&quot;{ template: &#39;multiselect-tmpl&#39;, selectable: &#39;multiple&#39;, dataset: &#39;demoTasks&#39; }&quot;</span><span class="kw">&gt;&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">  <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"></a></code></pre></div>
+<p>Creating a Multiselect Listview also uses the listview component. API guidelines are listed on the basic list page. The only special option to create a multiselect list is to add data-selectable=&quot;multiple&quot;. When doing this, a checkbox is added. You can also create a listview-toolbar which will show buttons upon selection of one or more rows.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card-header&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">&quot;card-title&quot;</span><span class="kw">&gt;</span>My Tasks<span class="kw">&lt;/h2&gt;</span>
+    <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-actions&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Actions<span class="kw">&lt;/span&gt;</span>
+      <span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-more&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
+      <span class="kw">&lt;/svg&gt;</span>
+    <span class="kw">&lt;/button&gt;</span>
+    <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Action One<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Action Two<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="kw">&lt;/ul&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card-content&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;contextual-toolbar toolbar is-hidden&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;buttonset&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-tertiary&quot;</span><span class="ot"> title=</span><span class="st">&quot;Assign Selected Items&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>Assign<span class="kw">&lt;/button&gt;</span>
+        <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-tertiary&quot;</span><span class="ot"> id=</span><span class="st">&quot;remove&quot;</span><span class="ot"> title=</span><span class="st">&quot;Remove Selected Items&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>Remove<span class="kw">&lt;/button&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;listview&quot;</span><span class="ot"> id=</span><span class="st">&quot;multiselect-listview&quot;</span><span class="ot"> data-options=</span><span class="st">&quot;{ template: &#39;multiselect-tmpl&#39;, selectable: &#39;multiple&#39;, dataset: &#39;demoTasks&#39; }&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
 <li><strong>Tab:</strong> When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.</li>
@@ -600,13 +636,13 @@ object
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Lists must have keyboard support</li>
-<li>Lists should have role=“listbox”</li>
-<li>The aria tag aria-activedescendant should point to the active item’s id</li>
+<li>Lists should have role=&quot;listbox&quot;</li>
+<li>The aria tag aria-activedescendant should point to the active item's id</li>
 <li>The attribute aria-posinset should point to the position index for each item starting at 1</li>
 <li>The attribute aria-setsize - should be the list count</li>
 <li>The attribute aria-disabled should be added to any disabled items</li>
 <li>The aria-selcted tag should be added to any selected entries</li>
-<li>For multiselect note that aria-selected = “true” will set on the selected elements.</li>
+<li>For multiselect note that aria-selected = &quot;true&quot; will set on the selected elements.</li>
 </ul>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <ul>
