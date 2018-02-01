@@ -1504,16 +1504,19 @@ PopupMenu.prototype = {
     if (singleMenu || singleSection) {
       parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
       parent.addClass('is-checked');
-      return returnObj.push('selected');
+      returnObj.push('selected');
+      return returnObj;
     }
 
     if (multipleMenu || multipleSection) {
       if (parent.hasClass('is-checked')) {
         parent.removeClass('is-checked');
-        return returnObj.push('deselected');
+        returnObj.push('deselected');
+        return returnObj;
       }
       parent.addClass('is-checked');
-      return returnObj.push('selected');
+      returnObj.push('selected');
+      return returnObj;
     }
 
     return returnObj;
