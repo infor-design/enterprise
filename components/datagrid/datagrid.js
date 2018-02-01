@@ -2515,7 +2515,7 @@ $.fn.datagrid = function(options) {
 
       if (filterType !== 'checkbox' && filterType !== 'text') {
         btnMarkup += renderButton('equals') +
-          render('equals', 'Equals', (filterType === 'integer' || filterType === 'date' || filterType === 'time')) +
+          render('equals', 'Equals', (filterType === 'integer' || filterType === 'decimal' || filterType === 'date' || filterType === 'time')) +
           render('does-not-equal', 'DoesNotEqual') +
           render('is-empty', 'IsEmpty') +
           render('is-not-empty', 'IsNotEmpty');
