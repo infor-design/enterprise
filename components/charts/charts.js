@@ -112,7 +112,7 @@ charts.chartColor = function chartColor(i, chartType, data) {
   if (/^(bar-single|column-single)$/.test(chartType)) {
     return '#1D5F8A';
   }
-  if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|column-grouped)$/.test(chartType)) {
+  if (/^(bar|bar-stacked|bar-grouped|bar-normalized|line|column-stacked|column-grouped|column-positive-negative)$/.test(chartType)) {
     return this.colors(i);
   }
 
@@ -257,18 +257,18 @@ charts.handleElementClick = function (line, series, settings) {
     } else {
       selector = settings.svg.select(`.bar.${elem.option}`);
     }
-  } else if (['column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized', 'column-grouped', 'column-stacked'].indexOf(settings.type) !== -1) {
+  } else if (['column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized', 'column-grouped', 'column-stacked', 'column-positive-negative'].indexOf(settings.type) !== -1) {
     // Grouped or singlular
-    if (settings.isGrouped || settings.isSingular) {
+    if (settings.isGrouped || settings.isSingle) {
       selector = settings.svg.select(`.series-${idx}`);
-    } else if (settings.isStacked && !settings.isSingular) {
+    } else if (settings.isStacked && !settings.isSingle) {
       // Stacked
       const thisGroup = d3.select(settings.svg.selectAll(settings.type === 'bar' || settings.type === 'bar-stacked' || settings.type === 'bar-normalized' ? '.series-group' : '.g')._groups[0][idx]); // eslint-disable-line
       selector = thisGroup.select('.bar');
     }
   }
 
-  if (['pie', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized', 'column-grouped', 'column-stacked'].indexOf(settings.type) !== -1) {
+  if (['pie', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized', 'column-grouped', 'column-stacked', 'column-positive-negative'].indexOf(settings.type) !== -1) {
     charts.clickedLegend = true;
     selector.on('click').call(selector.node(), selector.datum(), idx, true);
   }
@@ -313,14 +313,13 @@ charts.setSelectedElement = function (o) {
   let dataset = o.dataset;
   const isPositiveNegative = o.type === 'column-positive-negative';
   const isBar = /^(bar|bar-stacked|bar-grouped|bar-normalized)$/.test(o.type);
-  const isTypeColumn = /^(column|column-grouped|column-stacked)$/.test(o.type);
+  const isTypeColumn = /^(column|column-grouped|column-stacked|column-positive-negative)$/.test(o.type);
   const isTypePie = o.type === 'pie';
 
   const svg = o.svg;
   const isSingle = o.isSingle;
   const isGrouped = o.isGrouped;
   const isStacked = o.isStacked;
-  const isSingular = o.isSingular;
 
   const taskSelected = (o.task === 'selected');
   const selector = d3.select(o.selector);
@@ -378,7 +377,7 @@ charts.setSelectedElement = function (o) {
       } else if (isTypeColumn || isBar) {
         // Grouped and stacked only -NOT singular-
 
-        if (isGrouped || isSingular) {
+        if (isGrouped || isSingle) {
           o.svg.selectAll('.series-' + o.i).classed('is-selected', true).style('opacity', 1); //eslint-disable-line
         } else {
           thisGroup.classed('is-selected', true)
@@ -423,20 +422,26 @@ charts.setSelectedElement = function (o) {
         });
         triggerData = selectedBars;
       }
-    } else if (isSingular && isStacked && isTypeColumn) {
+    } else if (isSingle && isStacked && isTypeColumn) {
       // Single and stacked only -NOT grouped-
       thisData = dataset[0] && dataset[0].data ? dataset[0].data : o.d;
       selector.classed('is-selected', true).style('opacity', 1);
-      triggerData.push({ elem: selector[0], data: thisData[o.i] });
+      triggerData.push({ elem: selector._groups[0][0], data: thisData[o.i] });//eslint-disable-line
     } else if ((isSingle || isGrouped) && !isStacked && (isTypeColumn || isBar)) {
       // Single or groups only -NOT stacked-
       svg.selectAll(`${isTypeColumn ? '.axis.x' : '.axis.y'} .tick:nth-child(${(isGrouped ? thisGroupId : o.i) + 2})`)
         .style('font-weight', 'bolder');
 
       selector.classed('is-selected', true).style('opacity', 1);
-      svg.select(`.target-bar.series-${o.i}`).style('opacity', 1);
-      d3.select(svg.selectAll('.bartext').nodes()[o.i]).style('font-weight', 'bolder');
-      d3.select(svg.selectAll('.target-bartext').nodes()[o.i]).style('font-weight', 'bolder');
+
+      if (isPositiveNegative) {
+        const thisIndex = o.isTargetBar ? o.i : o.i - o.dataset[0].data.length;
+        svg.select(`.target-bar.series-${thisIndex}`).classed('is-selected', true).style('opacity', 1);
+        svg.select(`.bar.series-${thisIndex}`).classed('is-selected', true).style('opacity', 1);
+
+        d3.select(svg.selectAll('.bartext').nodes()[thisIndex]).style('font-weight', 'bolder');
+        d3.select(svg.selectAll('.target-bartext').nodes()[thisIndex]).style('font-weight', 'bolder');
+      }
 
       if (isGrouped || isPositiveNegative || isTypeColumn) {
         if (!isPositiveNegative && !isTypeColumn || (isTypeColumn && isGrouped)) {
@@ -453,7 +458,7 @@ charts.setSelectedElement = function (o) {
         if (isGrouped) {
           triggerData.push({
             groupIndex: thisGroupId,
-            groupElem: thisGroup[0],
+            groupElem: thisGroup._groups[0][0],//eslint-disable-line
             groupItems: selectedBars
           });
         } else {
@@ -472,7 +477,7 @@ charts.setSelectedElement = function (o) {
         const bar = d3.select(this);
         let data = d;
         if (dataset) {
-          data = isStacked ? dataset[i][o.i] : dataset[i].data[o.i];
+          data = isBar && isStacked ? dataset[i][o.i] : dataset[i].data[o.i];
         }
         selectedBars.push({ elem: bar.node(), data });
       });

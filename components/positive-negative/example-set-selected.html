@@ -94,7 +94,7 @@ $('body').on('initialized', function () {
   elem.chart({
     type: 'column-positive-negative',
     dataset: dataset,
-    formatterString: 's'
+    formatterString: '.2s'
   })
   .on('selected', function (e, args) {
     console.log(args);
