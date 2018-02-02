@@ -558,14 +558,12 @@ Column.prototype = {
     if (isPositiveNegative) {
       /* eslint-disable no-underscore-dangle */
       pnBars = d3.selectAll('.empty-bars');
-      pnBars._groups[0] = [
+      pnBars._groups[0] = [ // TODO This should be nodes() but not sure how to fix.
         ...pnBars._groups[0],
         ...targetBars._groups[0],
         ...bars._groups[0]
       ];
       /* eslint-enable no-underscore-dangle */
-
-      // charts.mergeArrays(pnBars[0], targetBars[0], bars[0]);
     }
 
     if (!isPositiveNegative) {
@@ -778,7 +776,7 @@ Column.prototype = {
 
         // Set isSelected to false if even 1 bar is selected
         if (isTargetBar) {
-          const allBars = d3.selectAll('.bar')._groups[0];//eslint-disable-line
+          const allBars = d3.selectAll('.bar').nodes();
           const len = allBars.length;
 
           for (let j = 0; j < len; j++) {

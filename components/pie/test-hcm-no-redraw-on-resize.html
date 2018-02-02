@@ -25,28 +25,28 @@ $('body').on('initialized', function () {
         name: 'Company Deductions',
         shortName: 'CD',
         value: 8,
-        tooltip: 'Company Deductions {{percent}}',
+        tooltip: 'Company Deductions <b>{{percent}}</b>',
         color: '#000000'
       }, {
         name: 'After-tax Deductions',
         shortName: 'After-tax',
         value: 11,
-        tooltip: 'After-tax Deductions {{percent}}'
+        tooltip: 'After-tax Deductions <b>{{percent}}</b>'
       }, {
         name: 'Pre-tax Deductions',
         shortName: 'Pre-tax',
         value: 12,
-        tooltip: 'Pre-tax Deductions {{percent}}'
+        tooltip: 'Pre-tax Deductions <b>{{percent}}</b>'
       }, {
         name: 'Taxes',
         shortName: 'Af-tax',
         value: 17,
-        tooltip: 'Taxes %percent%'
+        tooltip: 'Taxes <b>%percent%</b>'
       }, {
         name: 'Wages',
         shortName: 'Wages',
         value: 52,
-        tooltip: 'Wages %percent%'
+        tooltip: 'Wages <b>%percent%</b>'
       }]
     }];
 
@@ -54,9 +54,8 @@ $('body').on('initialized', function () {
     type: 'donut',
     dataset: pieData,
     redrawOnResize: false,
-    labels: {
-      hideLabels: false
-    }
+    showLines: false,
+    legendPlacement: 'bottom'
   });
 
 });

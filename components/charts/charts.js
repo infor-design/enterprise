@@ -271,7 +271,7 @@ charts.handleElementClick = function (line, series, settings) {
       selector = settings.svg.select(`.series-${idx}`);
     } else if (settings.isStacked && !settings.isSingle) {
       // Stacked
-      const thisGroup = d3.select(settings.svg.selectAll(settings.type === 'bar' || settings.type === 'bar-stacked' || settings.type === 'bar-normalized' ? '.series-group' : '.g')._groups[0][idx]); // eslint-disable-line
+      const thisGroup = d3.select(settings.svg.selectAll(settings.type === 'bar' || settings.type === 'bar-stacked' || settings.type === 'bar-normalized' ? '.series-group' : '.g').nodes()[idx]); // eslint-disable-line
       selector = thisGroup.select('.bar');
     }
   }
@@ -470,7 +470,7 @@ charts.setSelectedElement = function (o) {
         if (isGrouped) {
           triggerData.push({
             groupIndex: thisGroupId,
-            groupElem: thisGroup._groups[0][0],//eslint-disable-line
+            groupElem: thisGroup.nodes()[0],//eslint-disable-line
             groupItems: selectedBars
           });
         } else {
@@ -584,7 +584,7 @@ charts.setSelected = function (o, isToggle, internals) {
   const setSelectedGroup = function () {
     const groups = internals.svg.selectAll('.series-group');
 
-    if (groups[0].length) {
+    if (groups.nodes().length) {
       groups.each(function () {
         setSelectedBar(this);
       });

@@ -595,7 +595,7 @@ Bar.prototype = {
 
     const setSelectedGroup = function () {
       const groups = self.svg.selectAll('.series-group');
-      if (groups._groups[0].length) { // eslint-disable-line
+      if (groups.nodes().length) { // eslint-disable-line
         groups.each(function () {
           setSelectedBar(this);
         });

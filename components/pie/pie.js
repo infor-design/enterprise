@@ -5,7 +5,6 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { charts } from '../charts/charts';
-import { Locale } from '../locale/locale';
 
 // Settings and Options
 const COMPONENT_NAME = 'pie';

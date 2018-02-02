@@ -22,6 +22,8 @@ http://usalvlhlpool1.infor.com/4.4.0/components/
 - Change the d3 script to the new version `d3.v4.js`
 - The completion chart had a likely not widely used 'update' api. This was removed in favor of 'update(settings)' that all the other components use. You may need to refactor your update call to completion chart. See completion-chart/test-updated.html for an example
 - Some not widely used line chart examples time formatters. Some functions are renamed. See the examples or https://github.com/d3/d3-time/releases
+- The options for pie and label have changed. All the of label and formatter rules have different settings objects.
+And now you can control the tooltip, legend and lines independently. See examples for updates if you have any issues with pie or donut.
 
 ### <a name="version-4.4.0-behavior-changes">Behavior Changes</a>
 -
