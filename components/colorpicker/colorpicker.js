@@ -121,8 +121,8 @@ const COLORPICKER_DEFAULTS = {
 /**
  * The ColorPicker Component is a trigger field with a listing colors that can be selected.
  * @class ColorPicker
- * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
+ * @param {jQuery[]|HTMLElement} element The plugin element for the constuctor
+ * @param {object} settings The settings element.
  */
 function ColorPicker(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COLORPICKER_DEFAULTS);

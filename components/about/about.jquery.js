@@ -1,10 +1,10 @@
 import { About, COMPONENT_NAME } from './about';
 
-/*
-* jQuery Component Wrapper for Modal
-* @param  {[type]} settings The settings to apply.
-* @returns {object} The jquery object for chaining.
-*/
+/**
+ * jQuery Component Wrapper for About.
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} Elements being acted on.
+ */
 $.fn.about = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);

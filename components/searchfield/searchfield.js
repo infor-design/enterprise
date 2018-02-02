@@ -1,4 +1,3 @@
-/* eslint-disable */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -9,7 +8,7 @@ import '../button/button.jquery';
 import '../popupmenu/popupmenu.jquery';
 
 // Name of this component
-let COMPONENT_NAME = 'searchfield';
+const COMPONENT_NAME = 'searchfield';
 
 /**
 * @namespace
@@ -29,7 +28,7 @@ let COMPONENT_NAME = 'searchfield';
 * @property {string} template The html template to use for the search list
 * @property {boolean} clearable Add an X to clear.
 */
-let SEARCHFIELD_DEFAULTS = {
+const SEARCHFIELD_DEFAULTS = {
   resultsCallback: undefined,
   allResultsCallback: undefined,
   showAllResults: true,
@@ -44,11 +43,11 @@ let SEARCHFIELD_DEFAULTS = {
   clearable: false
 };
 
-
 /**
- * Searchfield Control
+ * @class Searchfield
  * @constructor
- * @param {object} element
+ * @param {jQuery[]|HTMLElement} element the base searchfield element
+ * @param {object} [settings] incoming settings
  */
 function SearchField(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SEARCHFIELD_DEFAULTS);
@@ -59,12 +58,13 @@ function SearchField(element, settings) {
 }
 
 SearchField.prototype = {
+
   /**
    * Initialization Kickoff
    * @private
-   * @returns {this}
+   * @returns {void}
    */
-  init: function() {
+  init() {
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
@@ -74,9 +74,9 @@ SearchField.prototype = {
   /**
    * Builds the markup for this component.
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  build: function() {
+  build() {
     this.optionsParseBoolean();
     this.label = this.element.prev('label, .label');
 
@@ -87,26 +87,27 @@ SearchField.prototype = {
     }
     this.autocomplete = this.element.data('autocomplete');
 
-    //Prevent browser typahead
-    this.element.attr('autocomplete','off');
+    // Prevent browser typahead
+    this.element.attr('autocomplete', 'off');
 
     this.wrapper = this.element.parent('.searchfield-wrapper');
     if (!this.wrapper || !this.wrapper.length) {
       if (this.isInlineLabel) {
         this.wrapper = this.inlineLabel.addClass('searchfield-wrapper');
-      }
-      else {
+      } else {
         this.wrapper = this.element.wrap('<span class="searchfield-wrapper"></span>').parent();
       }
 
-      // Label for toolbar-inlined searchfields needs to be inside the wrapper to help with positioning.
+      // Label for toolbar-inlined searchfields needs to be inside the
+      // wrapper to help with positioning.
       if (this.element.closest('.toolbar').length) {
         this.label.prependTo(this.wrapper);
       }
 
-      var customClasses = ['context', 'alternate'],
-        c;
-      for (var i = 0; i < customClasses.length; i++) {
+      const customClasses = ['context', 'alternate'];
+      let c;
+
+      for (let i = 0; i < customClasses.length; i++) {
         if (this.element.hasClass(customClasses[i])) {
           c = customClasses[i];
           this.wrapper.addClass(c);
@@ -116,8 +117,8 @@ SearchField.prototype = {
     }
 
     // Add Icon
-    var icon = this.wrapper.find('.icon:not(.icon-dropdown)'),
-      insertIconInFront = this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories');
+    let icon = this.wrapper.find('.icon:not(.icon-dropdown)');
+    const insertIconInFront = this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories');
 
     if (!icon || !icon.length) {
       icon = $.createIconElement('search');
@@ -143,13 +144,13 @@ SearchField.prototype = {
         this.wrapper.addClass('show-category');
       }
 
-      var ddIcon = icon.find('.icon-dropdown');
+      let ddIcon = icon.find('.icon-dropdown');
       if (!ddIcon.length) {
         ddIcon = $.createIconElement({ classes: 'icon-dropdown', icon: 'dropdown' }).icon();
       }
       ddIcon.appendTo(icon);
 
-      var popupAPI = this.categoryButton.data('popupmenu');
+      const popupAPI = this.categoryButton.data('popupmenu');
       if (!popupAPI) {
         this.list = this.wrapper.find('ul.popupmenu');
         if (!this.list || !this.list.length) {
@@ -157,9 +158,9 @@ SearchField.prototype = {
         }
 
         // Handle Single vs Multi-Selectable Lists
-        var categoryListType = this.settings.categoryMultiselect ? 'is-multiselectable' : 'is-selectable';
+        const categoryListType = this.settings.categoryMultiselect ? 'is-multiselectable' : 'is-selectable';
         this.list.addClass(categoryListType);
-        var removeListType = 'is-selectable';
+        let removeListType = 'is-selectable';
         if (!this.settings.categoryMultiselect) {
           removeListType = 'is-multiselectable';
         }
@@ -174,7 +175,6 @@ SearchField.prototype = {
             y: 10
           }
         });
-
       } else {
         this.setCategories(this.settings.categories);
       }
@@ -183,7 +183,7 @@ SearchField.prototype = {
     }
 
     // Pull a Go Button from markup, if applicable.
-    var goButton = this.wrapper.next('.go-button');
+    let goButton = this.wrapper.next('.go-button');
     if (!goButton.length) {
       goButton = this.wrapper.find('.go-button');
     }
@@ -196,7 +196,7 @@ SearchField.prototype = {
 
     // Add a "Go" Button from scratch if we enable the setting
     if (this.settings.showGoButton && (!this.goButton || !this.goButton.length)) {
-      this.goButton = $('<button class="btn-secondary go-button"><span>'+ this.settings.goButtonCopy +'</span></button>');
+      this.goButton = $(`<button class="btn-secondary go-button"><span>${this.settings.goButtonCopy}</span></button>`);
       this.goButton.attr('id', this.goButton.uniqueId('searchfield-go-button-'));
       this.wrapper.addClass('has-go-button');
       this.element.after(this.goButton);
@@ -205,7 +205,7 @@ SearchField.prototype = {
     }
 
     // Hoist the 'alternate' CSS class to the wrapper, if applicable
-    var isAlternate = this.element.hasClass('alternate');
+    const isAlternate = this.element.hasClass('alternate');
     this.wrapper[isAlternate ? 'addClass' : 'removeClass']('alternate');
 
     if (this.settings.clearable) {
@@ -220,89 +220,92 @@ SearchField.prototype = {
   /**
    * Set boolean value if strings
    * @private
-   * @returns {undefined}
+   * @returns {void}
    */
-  optionsParseBoolean: function() {
-    var i, l,
-      arr = [
-        'showAllResults',
-        'categoryMultiselect',
-        'showCategoryText',
-        'clearable'
-      ];
-    for (i=0,l=arr.length; i<l; i++) {
+  optionsParseBoolean() {
+    let i;
+    let l;
+    const arr = [
+      'showAllResults',
+      'categoryMultiselect',
+      'showCategoryText',
+      'clearable'
+    ];
+    for (i = 0, l = arr.length; i < l; i++) {
       this.settings[arr[i]] = this.parseBoolean(this.settings[arr[i]]);
     }
   },
 
   /**
-   * Reveals whether or not categories are active on this searchfield
-   * @returns {boolean}
+   * Reveals whether or not categories are active on this searchfield.
+   * @returns {boolean} whether or not categories are active on this searchfield.
    */
-  hasCategories: function() {
-    return this.settings.categories && $.isArray(this.settings.categories) && this.settings.categories.length > 0;
+  hasCategories() {
+    return this.settings.categories && $.isArray(this.settings.categories) &&
+      this.settings.categories.length > 0;
   },
 
   /**
    * Detects the existence of a "Go" button added to the main searchfield API
-   * @returns {boolean}
+   * @returns {boolean} whether or not a "Go" button is present
    */
-  hasGoButton: function() {
+  hasGoButton() {
     return this.settings.showGoButton && this.goButton && this.goButton.length;
   },
 
   /**
    * Sets up the event-listening structure for this component instance.
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  setupEvents: function() {
-    var self = this;
+  setupEvents() {
+    const self = this;
 
-    self.element.on('updated.searchfield', function() {
+    self.element.on('updated.searchfield', () => {
       self.updated();
-    }).on('focus.searchfield', function(e) {
+    }).on('focus.searchfield', (e) => {
       self.handleFocus(e);
-    }).on('blur.searchfield', function(e) {
+    }).on('blur.searchfield', (e) => {
       self.handleBlur(e);
     }).onTouchClick('searchfield', '.searchfield')
-    .on('click.searchfield', function(e) {
-      self.handleClick(e);
-    }).on('keydown.searchfield', function(e) {
-      self.handleKeydown(e);
-    }).on('beforeopen.searchfield', function(e, menu) { // propagates from Autocomplete's Popupmenu
-      self.handlePopupBeforeOpen(e, menu);
-    }).on('safe-blur.searchfield listclose.searchfield', function() {
-      self.wrapper.removeClass('popup-is-open');
-    });
+      .on('click.searchfield', (e) => {
+        self.handleClick(e);
+      })
+      .on('keydown.searchfield', (e) => {
+        self.handleKeydown(e);
+      })
+      .on('beforeopen.searchfield', (e, menu) => { // propagates from Autocomplete's Popupmenu
+        self.handlePopupBeforeOpen(e, menu);
+      })
+      .on('safe-blur.searchfield listclose.searchfield', () => {
+        self.wrapper.removeClass('popup-is-open');
+      });
 
-    self.wrapper.on('mouseenter.searchfield', function() {
+    self.wrapper.on('mouseenter.searchfield', function () {
       $(this).addClass('is-hovered');
-    }).on('mouseleave.searchfield', function() {
+    }).on('mouseleave.searchfield', function () {
       $(this).removeClass('is-hovered');
     });
 
     if (this.hasCategories()) {
-      this.categoryButton.on('selected.searchfield', function(e, anchor) {
+      this.categoryButton.on('selected.searchfield', (e, anchor) => {
         self.handleCategorySelected(e, anchor);
         self.element.trigger('selected', [anchor]);
-      }).on('focus.searchfield', function(e) {
+      }).on('focus.searchfield', (e) => {
         self.handleCategoryFocus(e);
-      }).on('blur.searchfield', function(e) {
+      }).on('blur.searchfield', (e) => {
         self.handleCategoryBlur(e);
-      }).on('close.searchfield', function(e) { // Popupmenu Close
+      }).on('close.searchfield', (e) => { // Popupmenu Close
         self.handlePopupClose(e);
       });
     }
 
     if (self.hasGoButton()) {
-      self.goButton.on('click.searchfield', function(e) {
-        return self.handleGoButtonClick(e);
-      });
+      self.goButton.on('click.searchfield', e => self.handleGoButtonClick(e));
     }
 
     // Insert the "view more results" link on the Autocomplete control's "populated" event
-    self.element.off('populated.searchfield').on('populated.searchfield', function(e, items) {
+    self.element.off('populated.searchfield').on('populated.searchfield', (e, items) => {
       if (items.length > 0) {
         if (self.settings.showAllResults) {
           self.addMoreLink();
@@ -312,19 +315,19 @@ SearchField.prototype = {
       }
     });
 
-    // Override the 'click' listener created by Autocomplete (which overrides the default Popupmenu method)
-    // to act differntly when the More Results link is activated.
-    self.element.on('listopen.searchfield', function(e, items) {
-      var list = $('#autocomplete-list');
+    // Override the 'click' listener created by Autocomplete (which overrides the
+    // default Popupmenu method) to act differntly when the More Results link is activated.
+    self.element.on('listopen.searchfield', (e, items) => {
+      const list = $('#autocomplete-list');
 
       // Visual indicator class
       self.wrapper.addClass('popup-is-open');
 
-      list.off('click').on('click.autocomplete', 'a', function (e) {
-        var a = $(e.currentTarget),
-          ret = a.text().trim(),
-          isMoreLink = a.hasClass('more-results'),
-          isNoneLink = a.hasClass('no-results');
+      list.off('click').on('click.autocomplete', 'a', (thisE) => {
+        const a = $(thisE.currentTarget);
+        let ret = a.text().trim();
+        const isMoreLink = a.hasClass('more-results');
+        const isNoneLink = a.hasClass('no-results');
 
         if (!isMoreLink && !isNoneLink) {
           // Only write text into the field on a regular result pick.
@@ -333,14 +336,14 @@ SearchField.prototype = {
 
         if (isMoreLink) {
           // Trigger callback if one is defined
-          var callback = self.settings.allResultsCallback;
+          const callback = self.settings.allResultsCallback;
           if (callback && typeof callback === 'function') {
             callback(ret);
           }
         }
 
         if (a.parent().attr('data-value')) {
-          for (var i = 0; i < items.length; i++) {
+          for (let i = 0; i < items.length; i++) {
             if (items[i].value.toString() === a.parent().attr('data-value')) {
               ret = items[i];
             }
@@ -349,14 +352,14 @@ SearchField.prototype = {
 
         self.element.trigger('selected', [a, ret]);
         self.element.data('popupmenu').close();
-        //e.preventDefault();
+        // e.preventDefault();
         return false;
       });
 
       // Override the focus event created by the Autocomplete control to make the more link
       // and no-results link blank out the text inside the input.
       list.find('.more-results, .no-results').off('focus').on('focus.searchfield', function () {
-        var anchor = $(this);
+        const anchor = $(this);
         list.find('li').removeClass('is-selected');
         anchor.parent('li').addClass('is-selected');
         self.element.val('');
@@ -364,48 +367,49 @@ SearchField.prototype = {
 
       // Setup a listener for the Clearable behavior, if applicable
       if (self.settings.clearable) {
-        self.element.on('cleared.searchfield', function() {
+        self.element.on('cleared.searchfield', () => {
           self.element.triggerHandler('resetfilter');
         });
       }
-
     });
 
     return this;
   },
 
   /**
-   * If located inside a toolbar element, setup a timed event that will send a signal to the parent toolbar,
-   * telling it to recalculate which buttons are visible. Needs to be done after a CSS animation on the searchfield finishes.
+   * If located inside a toolbar element, setup a timed event that will send a
+   * signal to the parent toolbar, telling it to recalculate which buttons are visible.
+   * Needs to be done after a CSS animation on the searchfield finishes.
    * @private
-   * @returns {undefined}
+   * @returns {void}
    */
-  recalculateParent: function() {
-    var toolbar = this.element.closest('.toolbar');
+  recalculateParent() {
+    const toolbar = this.element.closest('.toolbar');
     if (toolbar.length) {
       // TODO: Bolster this to work with CSS TransitonEnd
-      setTimeout(function() {
+      setTimeout(() => {
         toolbar.triggerHandler('recalculate-buttons');
       }, 300);
     }
   },
 
   /**
-   * Activates a toolbar-based searchfield and keeps it "open".  Instead of closing it on blur, sets up
-   * an explicit, out-of-bounds click/tap that will serve to close it when the user acts.
+   * Activates a toolbar-based searchfield and keeps it "open".  Instead of closing
+   * it on blur, sets up an explicit, out-of-bounds click/tap that will serve to close
+   * it when the user acts.
    * @private
-   * @param {boolean} force - ignore any attempt to return out first
-   * @param {boolean} doFocus - focus the searchfield element.
-   * @returns {undefined}
+   * @param {boolean} force ignore any attempt to return out first
+   * @param {boolean} doFocus focus the searchfield element.
+   * @returns {void}
    */
-  setAsActive: function(force, doFocus) {
+  setAsActive(force, doFocus) {
     if (!force && this.wrapper.hasClass('active')) {
       return;
     }
 
     // Activate
     this.wrapper.addClass('active');
-    var toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
+    const toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
     if (toolbar.length) {
       toolbar.addClass('searchfield-active');
     }
@@ -422,10 +426,10 @@ SearchField.prototype = {
 
   /**
    * Detects whether or not the Searchfield has focus.
-   * @returns {boolean}
+   * @returns {boolean} whether or not the Searchfield has focus.
    */
-  hasFocus: function() {
-    var active = document.activeElement;
+  hasFocus() {
+    const active = document.activeElement;
 
     if ($.contains(this.wrapper[0], active)) {
       return true;
@@ -433,7 +437,7 @@ SearchField.prototype = {
 
     // Don't close if a category is being selected from a category menu
     if (this.categoryButton && this.categoryButton.length) {
-      var menu = this.categoryButton.data('popupmenu').menu;
+      const menu = this.categoryButton.data('popupmenu').menu;
       if (menu.has(active).length) {
         return true;
       }
@@ -445,18 +449,18 @@ SearchField.prototype = {
   /**
    * Focus event handler
    * @private
-   * @returns {undefined}
+   * @returns {void}
    */
-  handleFocus: function() {
+  handleFocus() {
     this.setAsActive();
   },
 
   /**
    * Blur event handler
    * @private
-   * @returns {undefined}
+   * @returns {void}
    */
-  handleBlur: function() {
+  handleBlur() {
     if (!this.hasFocus()) {
       this.wrapper.removeClass('has-focus active');
     }
@@ -465,19 +469,20 @@ SearchField.prototype = {
   /**
    * Click event handler
    * @private
-   * @returns {undefined}
+   * @returns {void}
    */
-  handleClick: function() {
+  handleClick() {
     this.setAsActive();
   },
 
   /**
    * Keydown event handler
    * @private
-   * @returns {undefined}
+   * @param {jQuery.Event} e jQuery `keydown`
+   * @returns {void}
    */
-  handleKeydown: function(e) {
-    var key = e.which;
+  handleKeydown(e) {
+    const key = e.which;
 
     if (key === 27) {
       this.clear();
@@ -485,59 +490,62 @@ SearchField.prototype = {
   },
 
   /**
-   * Modifies the menu at $('#autocomplete-list') to propagate/remove style classes on the Searchfield element.
+   * Modifies the menu at $('#autocomplete-list') to propagate/remove style
+   *  classes on the Searchfield element.
    * @private
-   * @returns {boolean}
+   * @param {jQuery.Event} e custom jQuery `beforeopen` event from the Popupmenu Component.
+   * @param {jQuery[]} menu element that represents the popupmenu that is being opened.
+   * @returns {void}
    */
-  handlePopupBeforeOpen: function(e, menu) {
+  handlePopupBeforeOpen(e, menu) {
     if (!menu) {
       return;
     }
 
-    var contextClassMethod = this.wrapper.hasClass('context') ? 'addClass' : 'removeClass',
-      altClassMethod = this.wrapper.hasClass('alternate') ? 'addClass' : 'removeClass';
+    const contextClassMethod = this.wrapper.hasClass('context') ? 'addClass' : 'removeClass';
+    const altClassMethod = this.wrapper.hasClass('alternate') ? 'addClass' : 'removeClass';
 
     menu[contextClassMethod]('context');
     menu[altClassMethod]('alternate');
-
-    return true;
   },
 
-
   /**
-   * @param {jQuery.Event} e
+   * @private
+   * @param {jQuery.Event} e jQuery `click` event
+   * @returns {void}
    */
-  handleGoButtonClick: function(e) {
-    var action = this.settings.goButtonAction;
+  handleGoButtonClick(e) {
+    const action = this.settings.goButtonAction;
     if (typeof action !== 'function') {
-      return;
+      return undefined;
     }
 
-    var searchfieldValue = this.element.val(),
-      categorySelection;
+    const searchfieldValue = this.element.val();
+    let categorySelection;
 
     if (this.hasCategories()) {
-      categorySelection =this.getCategoryData();
+      categorySelection = this.getCategoryData();
     }
 
     // gives access to the current searchfield value, and category data if applicable.
     return action(e, searchfieldValue, categorySelection);
   },
 
-
   /**
-   * Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.
-   * @param {string} [textContent] - Optional incoming text that will be subtituted for the selected element count.
+   * Sets the text content on the category button.  Will either display a single category
+   * name, or a translated "[x] Selected." string.
+   * @param {string} [textContent] Optional incoming text that will be subtituted for the
+   * selected element count.
    * @returns {undefined}
    */
-  setCategoryButtonText: function(textContent) {
+  setCategoryButtonText(textContent) {
     if (!this.settings.showCategoryText || !this.hasCategoryButton()) {
       return;
     }
 
-    var text = '',
-      button = this.wrapper.find('.btn'),
-      span = button.find('span');
+    let text = '';
+    const button = this.wrapper.find('.btn');
+    let span = button.find('span');
 
     if (!span || !span.length) {
       span = $('<span class="category"></span>').insertAfter(button.find('.icon').first());
@@ -553,13 +561,13 @@ SearchField.prototype = {
 
     // Otherwise, grab currently selected categories and set text
     // (or clear, if no options are selected).
-    var item = this.getSelectedCategories();
+    const item = this.getSelectedCategories();
     if (!item.length) {
       return;
     }
 
     if (item.length > 1) {
-      text = item.length + ' ' + Locale.translate('Selected');
+      text = `${item.length} ${Locale.translate('Selected')}`;
     } else {
       text = item.text().trim();
     }
@@ -572,11 +580,11 @@ SearchField.prototype = {
    * is chosen from a category searchfield.
    * NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
    */
-  calculateSearchfieldWidth: function() {
+  calculateSearchfieldWidth() {
     if (this.isToolbarSearchfield()) {
       // If this is a toolbar searchfield, run its internal size check that fixes the
       // trigger button and input field size.
-      var tsAPI = this.element.data('toolbarsearchfield');
+      const tsAPI = this.element.data('toolbarsearchfield');
       if (tsAPI && typeof tsAPI.setOpenWidth === 'function') {
         tsAPI.calculateOpenWidth();
         tsAPI.setOpenWidth();
@@ -584,19 +592,19 @@ SearchField.prototype = {
       return;
     }
 
-    var subtractWidth = 0,
-      targetWidthProp = '100%';
+    let subtractWidth = 0;
+    let targetWidthProp = '100%';
 
     if (this.hasCategories()) {
-      subtractWidth = subtractWidth + this.categoryButton.outerWidth(true);
+      subtractWidth += this.categoryButton.outerWidth(true);
     }
     if (this.hasGoButton()) {
-      subtractWidth = subtractWidth + this.goButton.outerWidth(true);
+      subtractWidth += this.goButton.outerWidth(true);
     }
 
     // NOTE: final width can only be 100% if no value is subtracted for other elements
     if (subtractWidth > 0) {
-      targetWidthProp = 'calc(100% - '+ subtractWidth +'px)';
+      targetWidthProp = `calc(100% - ${subtractWidth}px)`;
     }
 
     this.element[0].style.width = targetWidthProp;
@@ -604,9 +612,9 @@ SearchField.prototype = {
 
   /**
    * Detects whether or not this component is a Toolbar Searchfield
-   * @returns {boolean}
+   * @returns {boolean} whether or not this component is a Toolbar Searchfield
    */
-  isToolbarSearchfield: function() {
+  isToolbarSearchfield() {
     return this.wrapper.is('.toolbar-searchfield-wrapper');
   },
 
@@ -615,7 +623,7 @@ SearchField.prototype = {
    * @private
    * @returns {undefined}
    */
-  handleCategorySelected: function(e, anchor) {
+  handleCategorySelected(e, anchor) {
     // Only change the text and searchfield size if we can
     if (!this.settings.showCategoryText) {
       return;
@@ -630,7 +638,7 @@ SearchField.prototype = {
    * @private
    * @returns {undefined}
    */
-  handleCategoryFocus: function() {
+  handleCategoryFocus() {
     // if Toolbar Searchfield, allow that control to handle adding this class
     if (this.isToolbarSearchfield()) {
       return;
@@ -646,15 +654,15 @@ SearchField.prototype = {
    * @private
    * @returns {undefined}
    */
-  handleCategoryBlur: function() {
-    var self = this;
+  handleCategoryBlur() {
+    const self = this;
 
     // if Toolbar Searchfield, allow that control to handle adding this class
     if (this.isToolbarSearchfield()) {
       return;
     }
 
-    setTimeout(function () {
+    setTimeout(() => {
       if (!self.hasFocus()) {
         self.wrapper.removeClass('has-focus');
       }
@@ -665,7 +673,7 @@ SearchField.prototype = {
    * Gets a complete list of categories in jQuery-collection form.
    * @returns {jQuery} categories
    */
-  getCategories: function() {
+  getCategories() {
     return this.list.children('li:not(.separator)');
   },
 
@@ -673,41 +681,42 @@ SearchField.prototype = {
    * Gets the currently selected list of categories in jQuery-collection form.
    * @returns {jQuery} selectedCategories
    */
-  getSelectedCategories: function() {
+  getSelectedCategories() {
     return this.getCategories().filter('.is-checked');
   },
 
   /**
    * Gets the currently selected categories as data.
-   * @param {boolean} [onlyReturnSelected=false] - If set to true, will only return checked list items.
+   * @param {boolean} [onlyReturnSelected=false] - If set to true, will only return
+   *  checked list items.
    * @returns {Object[]} data -
    * @returns {string} name - Category name
    * @returns {string|number} id - Category element's ID (if applicable)
    * @returns {string|number} value - Category element's value (if applicable)
    * @returns {boolean} [checked=true] - Category's selection status
    */
-  getCategoryData: function(onlyReturnSelected) {
-    var categories = this.getCategories(),
-      data = [];
+  getCategoryData(onlyReturnSelected) {
+    const categories = this.getCategories();
+    const data = [];
 
-    categories.each(function() {
-      var classList = this.classList,
-        checked = classList.contains('is-checked');
+    categories.each(function () {
+      const classList = this.classList;
+      const checked = classList.contains('is-checked');
 
       if (onlyReturnSelected === true && checked === false) {
         return;
       }
 
-      var category = {
+      const category = {
         name: this.innerText,
-        checked: checked
+        checked
       };
 
       if (this.id) {
         category.id = this.id;
       }
 
-      var value = this.getAttribute('data-value');
+      const value = this.getAttribute('data-value');
       if (value !== undefined) {
         category.value = value;
       }
@@ -727,7 +736,7 @@ SearchField.prototype = {
    * @param {boolean} [checked=true] - Category's selection status
    * @returns {undefined}
    */
-  updateCategories: function(categories) {
+  updateCategories(categories) {
     this.settings.categories = categories;
     this.setCategories(this.settings.categories);
   },
@@ -741,13 +750,14 @@ SearchField.prototype = {
    * @param {boolean} [checked=true] - Category's selection status
    * @returns {undefined}
    */
-  setCategories: function(categories) {
+  setCategories(categories) {
     this.list.empty();
 
-    var self = this,
-      previouslySelected = false;
+    const self = this;
+    const valueTypes = ['string', 'number'];
+    let previouslySelected = false;
 
-    categories.forEach(function(val) {
+    categories.forEach((val) => {
       // if passed a string, typecast to an object.
       if (typeof val === 'string') {
         val = {
@@ -761,18 +771,17 @@ SearchField.prototype = {
         return;
       }
 
-      var id = '';
+      let id = '';
       if (typeof val.id === 'string' && val.id.length) {
-        id = ' id="'+ val.id +'"';
+        id = ` id="${val.id}"`;
       }
 
-      var value = '',
-        valueTypes = ['string', 'number'];
+      let value = '';
       if (valueTypes.indexOf(typeof val.value) > -1) {
-        value = ' data-value="'+ val.value +'"';
+        value = ` data-value="${val.value}"`;
       }
 
-      var selected = '';
+      let selected = '';
       if (val.checked === true && previouslySelected !== true) {
         selected = ' class="is-checked"';
 
@@ -781,10 +790,10 @@ SearchField.prototype = {
         }
       }
 
-      self.list.append('<li'+ selected + id + value + '><a href="#">' + val.name + '</a></li>');
+      self.list.append(`<li${selected}${id}${value}><a href="#">${val.name}</a></li>`);
     });
 
-    var api = this.categoryButton.data('popupmenu');
+    const api = this.categoryButton.data('popupmenu');
     if (api && typeof api.updated === 'function') {
       api.updated();
     }
@@ -792,69 +801,71 @@ SearchField.prototype = {
 
   /**
    * Determines whether or not a Category Trigger exists.
-   * @returns {boolean}
+   * @returns {boolean} whether or not a Category Trigger exists.
    */
-  hasCategoryButton: function() {
+  hasCategoryButton() {
     return this.wrapper.find('.btn').length > 0;
   },
 
   /**
    * Category Button Close event handler
    * @private
-   * @returns {function}
+   * @returns {void}
    */
-  handlePopupClose: function() {
+  handlePopupClose() {
     return this.setAsActive(true, true);
   },
 
   /**
    * Clears the contents of the searchfield
-   * @returns {undefined}
+   * @returns {void}
    */
-  clear: function() {
+  clear() {
     this.element.val('').trigger('change').focus();
   },
 
   /**
-   * Adds a link at the bottom of a searchfield with more than (0) results that can be used to link out to a larger display of search results.
+   * Adds a link at the bottom of a searchfield with more than (0) results that can
+   *  be used to link out to a larger display of search results.
    * @private
-   * @returns {undefined}
+   * @returns {void}
    */
-  addMoreLink: function() {
-    var list = $('#autocomplete-list'),
-      val = this.element.val();
+  addMoreLink() {
+    const list = $('#autocomplete-list');
+    const val = this.element.val();
 
     if ($('.more-results', list).length > 0) {
       return;
     }
 
     $('<li class="separator" role="presentation"></li>').appendTo(list);
-    var more = $('<li role="presentation"></li>').appendTo(list);
-    this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('AllResults') + ' "' + val + '"</span>').appendTo(more);
+    const more = $('<li role="presentation"></li>').appendTo(list);
+    this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html(`<span>${Locale.translate('AllResults')} "${val}"</span>`).appendTo(more);
   },
 
   /**
    * Adds a link at the bottom of a searchfield with no results that announces no search results.
    * @private
-   * @returns {undefined}
+   * @returns {void}
    */
-  addNoneLink: function() {
-    var list = $('#autocomplete-list');
+  addNoneLink() {
+    const list = $('#autocomplete-list');
     if ($('.no-results', list).length > 0) {
       return;
     }
 
-    var none = $('<li role="presentation"></li>').appendTo(list);
+    const none = $('<li role="presentation"></li>').appendTo(list);
 
-    this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('NoResults') + '</span>').appendTo(none);
+    this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html(`<span>${Locale.translate('NoResults')}</span>`).appendTo(none);
   },
 
   /**
-   * Tears down and rebuilds the Searchfield.
-   * Can be called directly, but is also triggered by calling the "updated.searchfield" event on the searchfield element.
-   * @returns {undefined}
+   * Tears down and rebuilds the Searchfield. Can be called directly, but is also
+   * triggered by calling the "updated.searchfield" event on the searchfield element.
+   * @param {object} [settings] incoming settings
+   * @returns {void}
    */
-  updated: function(settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
@@ -863,35 +874,37 @@ SearchField.prototype = {
 
   /**
    * Enables the Searchfield
-   * @returns {undefined}
+   * @returns {void}
    */
-  enable: function() {
+  enable() {
     this.element.prop('disabled', false);
   },
 
   /**
    * Disables the Searchfield
-   * @returns {undefined}
+   * @returns {void}
    */
-  disable: function() {
+  disable() {
     this.element.prop('disabled', true);
   },
 
   /**
-   * Performs the usual Boolean coercion with the exception of the strings "false" (case insensitive) and "0"
+   * Performs the usual Boolean coercion with the exception of the strings "false"
+   * (case insensitive) and "0"
    * @private
-   * @returns {boolean}
+   * @param {boolean|string|number} b the value to be checked
+   * @returns {boolean} whether or not the value passed coerces to true.
    */
-  parseBoolean: function(b) {
+  parseBoolean(b) {
     return !(/^(false|0)$/i).test(b) && !!b;
   },
 
   /**
    * Unbinds events and removes unnecessary markup.
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  teardown: function() {
+  teardown() {
     this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield listclose.searchfield safe-blur.searchfield cleared.searchfield');
 
     if (this.autocomplete) {
@@ -913,14 +926,15 @@ SearchField.prototype = {
 
   /**
    * Destroys the Searchfield and removes all jQuery component instancing.
-   * @param {boolean} dontDestroyToolbarSearchfield - if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
+   * @param {boolean} dontDestroyToolbarSearchfield if true, will not pass through
+   *  and destroy a linked instance of the Toolbar Searchfield component.
    * @returns {undefined}
    */
-  destroy: function(dontDestroyToolbarSearchfield) {
+  destroy(dontDestroyToolbarSearchfield) {
     this.teardown();
 
     // Destroy the linked Toolbar Searchfield instance
-    var tbsf = this.element.data('toolbarsearchfield');
+    const tbsf = this.element.data('toolbarsearchfield');
     if (!dontDestroyToolbarSearchfield && tbsf && typeof tbsf.destroy === 'function') {
       tbsf.destroy(true);
     }

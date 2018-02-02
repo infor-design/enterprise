@@ -4,11 +4,9 @@ import { utils } from '../utils/utils';
 /**
  * Current "theme" string
  */
-let theme = 'light';
+let theme = 'light'; //eslint-disable-line
 
-/**
- * Component name as referenced by jQuery/event namespace/etc
- */
+// Component name as referenced by jQuery/event namespace/etc
 const COMPONENT_NAME = 'personalize';
 
 /**
@@ -18,15 +16,15 @@ const COMPONENT_NAME = 'personalize';
  */
 const PERSONALIZE_DEFAULTS = {
   colors: '',
-  theme: theme
+  theme
 };
 
 /**
  * The personalization routines for setting custom company colors.
  *
  * @class Personalize
- * @param {HTMLElement|jQuery[]} element
- * @param {object} [settings]
+ * @param {HTMLElement|jQuery[]} element the base element
+ * @param {object} [settings] incoming settings
  */
 function Personalize(element, settings) {
   this.element = $(element);
@@ -39,11 +37,16 @@ function Personalize(element, settings) {
 
 // Plugin Methods
 Personalize.prototype = {
-  init() {
 
+  /**
+   * Runs on each initialization
+   * @private
+   * @returns {this} component instance
+   */
+  init() {
     // Set the default theme, or grab the theme from an external CSS stylesheet.
     const cssTheme = this.getThemeFromStylesheet();
-    this.currentTheme = cssTheme ? cssTheme : this.settings.theme;
+    this.currentTheme = cssTheme || this.settings.theme;
     this.setTheme(this.currentTheme);
 
     if (this.settings.colors) {
@@ -55,7 +58,11 @@ Personalize.prototype = {
     return this;
   },
 
-  // Sets up event handlers for this control and its sub-elements
+  /**
+   * Sets up event handlers for this control and its sub-elements
+   * @private
+   * @returns {this} component instance
+   */
   handleEvents() {
     const self = this;
 
@@ -63,16 +70,18 @@ Personalize.prototype = {
       self.updated();
     }).on(`changecolors.${COMPONENT_NAME}`, (e, newColor, noAnimate) => {
       self.setColors(newColor, noAnimate);
-    }).on(`changetheme.${COMPONENT_NAME}`, (e, theme) => {
-      self.setTheme(theme);
+    }).on(`changetheme.${COMPONENT_NAME}`, (e, thisTheme) => {
+      self.setTheme(thisTheme);
     });
 
     return this;
   },
 
-  // Validates a string containing a hexadecimal number
-  // @param {string} hex: A hex color.
-  // @returns {string} a validated hexadecimal string.
+  /**
+   * Validates a string containing a hexadecimal number
+   * @param {string} hex: A hex color.
+   * @returns {string} a validated hexadecimal string.
+   */
   validateHex(hex) {
     hex = String(hex).replace(/[^0-9a-f]/gi, '');
 
@@ -103,7 +112,8 @@ Personalize.prototype = {
       colors = {};
     }
 
-    // Use an incoming `colors` param defined as a string, as the desired "header" color (backwards compatibility)
+    // Use an incoming `colors` param defined as a string, as the desired
+    // "header" color (backwards compatibility)
     if (typeof colors === 'string') {
       colors = {
         header: colors
@@ -140,13 +150,20 @@ Personalize.prototype = {
     // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
     colors.header = this.validateHex(colors.header || defaultColors.header);
     colors.text = this.validateHex(colors.text || defaultColors.text);
-    colors.subheader = this.validateHex(colors.subheader || this.getLuminousColorShade(colors.header, 0.2));
-    colors.inactive = this.validateHex(colors.inactive || this.getLuminousColorShade(colors.header, -0.22));
-    colors.verticalBorder = this.validateHex(colors.verticalBorder || this.getLuminousColorShade(colors.header, 0.1));
-    colors.horizontalBorder = this.validateHex(colors.horizontalBorder || this.getLuminousColorShade(colors.header, -0.4));
-    colors.hover = this.validateHex(colors.hover || this.getLuminousColorShade(colors.header, -0.5));
-    colors.btnColorHeader = this.validateHex(colors.btnColorHeader || this.getLuminousColorShade(colors.subheader, -0.025));
-    colors.btnColorSubheader = this.validateHex(colors.btnColorSubheader || this.getLuminousColorShade(colors.header, -0.025));
+    colors.subheader = this.validateHex(colors.subheader ||
+      this.getLuminousColorShade(colors.header, 0.2));
+    colors.inactive = this.validateHex(colors.inactive ||
+      this.getLuminousColorShade(colors.header, -0.22));
+    colors.verticalBorder = this.validateHex(colors.verticalBorder ||
+      this.getLuminousColorShade(colors.header, 0.1));
+    colors.horizontalBorder = this.validateHex(colors.horizontalBorder ||
+      this.getLuminousColorShade(colors.header, -0.4));
+    colors.hover = this.validateHex(colors.hover ||
+      this.getLuminousColorShade(colors.header, -0.5));
+    colors.btnColorHeader = this.validateHex(colors.btnColorHeader ||
+      this.getLuminousColorShade(colors.subheader, -0.025));
+    colors.btnColorSubheader = this.validateHex(colors.btnColorSubheader ||
+      this.getLuminousColorShade(colors.header, -0.025));
 
     // not that the sheet is appended in backwards
     const cssRules = `.tab-container.module-tabs.is-personalizable { border-top: 1px solid ${colors.horizontalBorder} !important; border-bottom: 1px solid ${colors.horizontalBorder} !important}` +
@@ -184,8 +201,8 @@ Personalize.prototype = {
 
   /**
   * Sets the personalization color(s)
-  *
   * @param {array} colors The original hex color as a string or an object with all the Colors
+  * @returns {this} component instance
   */
   setColors(colors) {
     if (!colors) {
@@ -209,9 +226,10 @@ Personalize.prototype = {
     lum = lum || 0;
 
     // convert to decimal and change luminosity
-    let rgb = '#',
-      c,
-      i;
+    let rgb = '#';
+    let c;
+    let i;
+
     for (i = 0; i < 3; i++) {
       c = parseInt(hex.substr(i * 2, 2), 16);
       c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
@@ -229,18 +247,17 @@ Personalize.prototype = {
 
   getThemeFromStylesheet() {
     const css = $('#stylesheet, #sohoxi-stylesheet');
-    let theme = '';
+    let thisTheme = '';
 
     if (css.length > 0) {
       const path = css.attr('href');
-      theme = path.substring(path.lastIndexOf('/') + 1).replace('.min.css', '').replace('.css', '').replace('-theme', '');
+      thisTheme = path.substring(path.lastIndexOf('/') + 1).replace('.min.css', '').replace('.css', '').replace('-theme', '');
     }
-    return theme;
+    return thisTheme;
   },
 
   /**
   * Sets the current theme, blocking the ui during the change.
-  *
   * @param {string} incomingTheme  Represents the file name of a color
   * scheme (can be dark, light or high-contrast)
   */
@@ -278,23 +295,37 @@ Personalize.prototype = {
     originalCss.after(newCss);
   },
 
-  // Block the ui from FOUC
+  /**
+   * Builds a temporary page overlay that prevents end users from experiencing FOUC
+   * @returns {void}
+   */
   blockUi() {
-    this.pageOverlay = this.pageOverlay || $(`${'<div style="' +
-      'background: '}${theme === 'light' ? '#f0f0f0;' : (theme === 'dark' ? '#313236;' : '#bdbdbd;')
-    }display: block;` +
-      'height: 100%;' +
-      'left: 0;' +
-      'position: fixed;' +
-      'text-align: center;' +
-      'top: 0;' +
-      'width: 100%;' +
-      'z-index: 10000;' +
-      '"></div>');
+    let backgroundColor = '#bdbdbd';
+    if (theme === 'light') {
+      backgroundColor = '#f0f0f0';
+    }
+    if (theme === 'dark') {
+      backgroundColor = '#313236';
+    }
+
+    this.pageOverlay = this.pageOverlay ||
+      $(`<div style="background: ${backgroundColor};
+        display: block;
+        height: 100%;
+        left: 0;
+        position: fixed;
+        text-align: center;
+        top: 0;
+        width: 100%;
+        z-index: 10000;"></div>`);
 
     $('body').append(this.pageOverlay);
   },
 
+  /**
+   * Removes a temporary page overlay built by `blockUi()`
+   * @returns {void}
+   */
   unBlockUi() {
     const self = this;
 
@@ -306,7 +337,8 @@ Personalize.prototype = {
 
   /**
    * Handle Updating Settings
-   * @param {object} [settings]
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
    */
   updated(settings) {
     if (settings) {
@@ -318,19 +350,24 @@ Personalize.prototype = {
       .init();
   },
 
-  // Simple Teardown - remove events & rebuildable markup.
-  // Ideally this will do non-destructive things that make it possible to easily rebuild
+  /**
+   * Simple Teardown - remove events & rebuildable markup.
+   * Ideally this will do non-destructive things that make it possible to easily rebuild
+   * @returns {this} component instance
+   */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
     return this;
   },
 
-  // Teardown - Remove added markup and events
+  /**
+   * Teardown - Remove added markup and events
+   * @returns {void}
+   */
   destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };
-
 
 export { theme, Personalize, COMPONENT_NAME };

@@ -76,9 +76,12 @@ Accordion.prototype = {
     let isGlobalBuild = true;
 
     if (!headers || !(headers instanceof jQuery)) {
-      headers = this.headers = this.element.find('.accordion-header');
-      anchors = this.anchors = headers.children('a');
-      panes = this.panes = headers.next('.accordion-pane');
+      this.headers = this.element.find('.accordion-header');
+      headers = this.element.find('.accordion-header');
+      this.anchors = headers.children('a');
+      anchors = headers.children('a');
+      this.panes = headers.next('.accordion-pane');
+      panes = headers.next('.accordion-pane');
     } else {
       anchors = headers.children('a');
       panes = headers.next('.accordion-pane');

@@ -25,11 +25,11 @@ const COMPOSITEFORM_DEFAULTS = {
 };
 
 /**
- * *
  * CompositeForm is a specialized responsive form component.
  * @class CompositeForm
- * @param {string} element The component element.
- * @param {string} settings The component settings.
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object} [settings] The component settings.
  */
 function CompositeForm(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPOSITEFORM_DEFAULTS);

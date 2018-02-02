@@ -3,28 +3,37 @@ import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'listbuilder';
 
 /**
  * Default ListBuilder Options
+ * @namespace
+ * @param {array} dataset  Array of data
+ * @param {string} handle  The CSS Class of the handle element
+ * @param {string|jQuery[]} btnAdd  "Add" action button (takes a string representing a
+ *  "data-action" attribute, or a jQuery-wrapped element reference).
+ * @param {string|jQuery[]} btnEdit  "Edit" action button (takes a string representing a
+ *  "data-action" attribute, or a jQuery-wrapped element reference).
+ * @param {string|jQuery[]} btnDelete  "Delete" action button (takes a string representing a
+ *  "data-action" attribute, or a jQuery-wrapped element reference).
+ * @param {string|jQuery[]} btnGoUp  "GoUp" action button (takes a string representing a
+ *  "data-action" attribute, or a jQuery-wrapped element reference).
+ * @param {string|jQuery[]} btnGoDown  "GoDown" action button (takes a string representing a
+ *  "data-action" attribute, or a jQuery-wrapped element reference).
+ * @param {string} template  representing HTML content that builds a list
+ * @param {string} templateNewItem  representing HTML content that builds a single list item
+ * @param {string} templateItemContent  representing HTML content that replaces the inner content
+ *  section of each item.
  */
 const LISTBUILDER_DEFAULTS = {
-  dataset: [], // Array of data,
-  handle: '.handle', // The Class of the handle element
-
-  // Action buttons
-  // use "data-action" attributes, ie. data-action="add"
-  // or jQuery elements
+  dataset: [],
+  handle: '.handle',
   btnAdd: 'add',
   btnEdit: 'edit',
   btnDelete: 'delete',
   btnGoUp: 'goup',
   btnGoDown: 'godown',
-
-  // Template HTML
   template: '' +
     '<ul data-handle=".handle">' +
       '{{#dataset}}' +
@@ -40,35 +49,24 @@ const LISTBUILDER_DEFAULTS = {
         '{{/text}}' +
       '{{/dataset}}' +
     '</ul>',
-
   templateNewItem: '' +
     '<li data-value="{{text}}" role="option">' +
       '<span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>' +
       '<div class="item-content"><p>{{text}}</p></div>' +
     '</li>',
-
   templateItemContent: '<p>{{text}}</p>'
 };
 
 /**
-* A list of items with add/remove/delete and sort functionality.
-*
-* @class ListBuilder
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-* @param {Object} dataset The array of data
-* @param {String} btnAdd The attribute to match the add button (ie. data-action="add")
-* @param {String} btnEdit The attribute to match the edit button (ie. data-action="edit")
-* @param {String} btnDelete The attribute to match the delete button (ie. data-action="delete")
-* @param {String} btnGoUp The attribute to match the move up button (ie. data-action="goup")
-* @param {String} btnGoDown The attribute to match the move up button (ie. data-action="dodown")
-* @param {String} template The list view markdown / template.
-* @param {String} templateItemContent The markdown for editing an item
-*/
+ * A list of items with add/remove/delete and sort functionality.
+ * @class ListBuilder
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element The base element.
+ * @param {object} [settings] incoming settings.
+ */
 function ListBuilder(element, settings) {
-  this.settings = utils.mergeSettings(element, settings, LISTBUILDER_DEFAULTS);
-
   this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, LISTBUILDER_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -77,6 +75,10 @@ function ListBuilder(element, settings) {
 // ListBuilder Methods
 ListBuilder.prototype = {
 
+  /**
+   * @private
+   * @returns {void}
+   */
   init() {
     this
       .loadListview()
@@ -92,7 +94,7 @@ ListBuilder.prototype = {
   /**
    * Load listview
    * @private
-   * @returns {Object} this api
+   * @returns {this} component instance
    */
   loadListview() {
     const s = this.settings;
@@ -109,7 +111,7 @@ ListBuilder.prototype = {
   /**
    * Initialize dataset
    * @private
-   * @returns {Object} this api
+   * @returns {this} component instance
    */
   initDataset() {
     const s = this.settings;
@@ -134,8 +136,8 @@ ListBuilder.prototype = {
   /**
    * Extract node data
    * @private
-   * @param {Object} node .
-   * @returns {Object} data
+   * @param {jQuery[]} node element to be checked for data
+   * @returns {Object} data from the node.
    */
   extractNodeData(node) {
     const data = { node, text: $.trim($('.item-content', node).text()) };
@@ -149,7 +151,7 @@ ListBuilder.prototype = {
   /**
    * Set elements
    * @private
-   * @returns {Object} this api
+   * @returns {this} component instance
    */
   setElements() {
     const s = this.settings;
@@ -399,7 +401,7 @@ ListBuilder.prototype = {
   /**
    * Edit the selected item
    * @private
-   * @param {Boolean} isNewItem  Is it a newly added item?
+   * @param {boolean} isNewItem  Is it a newly added item?
    * @returns {void}
    */
   editItem(isNewItem) {
@@ -416,8 +418,8 @@ ListBuilder.prototype = {
   /**
    * Make the node editable
    * @private
-   * @param {Object} node  The HTML element to edit
-   * @param {Boolean} isNewItem  Is it a newly added item?
+   * @param {object} node  The HTML element to edit
+   * @param {boolean} isNewItem  Is it a newly added item?
    * @returns {void}
    */
   makeEditable(node, isNewItem) {
@@ -429,9 +431,9 @@ ListBuilder.prototype = {
       /**
        * Fires before edit item.
        * @event beforeedit
-       * @type {Object}
-       * @property {Object} event - The jquery event object
-       * @property {Object} data - Data for this item
+       * @type {object}
+       * @property {object} event - The jquery event object
+       * @property {object} data - Data for this item
        */
       $.when(self.element.triggerHandler('beforeedit', [data])).done(() => {
         const origValue = container.text().trim();
@@ -455,9 +457,9 @@ ListBuilder.prototype = {
         /**
          * Fires when enter to edit mode.
          * @event entereditmode
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this item
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this item
          */
         self.element.triggerHandler('entereditmode', [data]);
       });
@@ -467,8 +469,8 @@ ListBuilder.prototype = {
   /**
    * Commit the changes to item.
    * @private
-   * @param {Object} node  The HTML element to commit changes
-   * @param {Boolean} isNewItem  Is it a newly added item?
+   * @param {object} node  The HTML element to commit changes
+   * @param {boolean} isNewItem  Is it a newly added item?
    * @returns {void}
    */
   commitEdit(node, isNewItem) {
@@ -488,9 +490,9 @@ ListBuilder.prototype = {
     /**
      * Fires when exited to edit mode.
      * @event exiteditmode
-     * @type {Object}
-     * @property {Object} event - The jquery event object
-     * @property {Object} data - Data for this item
+     * @type {object}
+     * @property {object} event - The jquery event object
+     * @property {object} data - Data for this item
      */
     this.element.triggerHandler('exiteditmode', [data]);
   },
@@ -509,9 +511,9 @@ ListBuilder.prototype = {
         /**
          * Fires before delete item.
          * @event beforedelete
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this item
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this item
          */
         $.when(self.element.triggerHandler('beforedelete', [data])).done(() => {
           self.listApi.removeAllSelected();
@@ -521,9 +523,9 @@ ListBuilder.prototype = {
           /**
            * Fires after delete item.
            * @event afterdelete
-           * @type {Object}
-           * @property {Object} event - The jquery event object
-           * @property {Object} data - Data for this item
+           * @type {object}
+           * @property {object} event - The jquery event object
+           * @property {object} data - Data for this item
            */
           self.element.triggerHandler('afterdelete', [data]);
         });
@@ -533,8 +535,8 @@ ListBuilder.prototype = {
 
   /**
    * Get data from dataset by node
-   * @param {Object} node  The HTML element to get data
-   * @returns {Object} node data
+   * @param {jQuery[]} node  The HTML element to get data
+   * @returns {object} node data
    */
   getDataByNode(node) {
     let data = {};
@@ -551,9 +553,9 @@ ListBuilder.prototype = {
   /**
    * Move an array element position
    * @private
-   * @param {Array} arr .
-   * @param {Number} from .
-   * @param {Number} to .
+   * @param {array} arr .
+   * @param {number} from .
+   * @param {number} to .
    * @returns {void}
    */
   arrayIndexMove(arr, from, to) {
@@ -563,8 +565,8 @@ ListBuilder.prototype = {
   /**
    * Check if given object is a jQuery object
    * @private
-   * @param {Object} obj .
-   * @returns {Boolean} true if jQuery
+   * @param {object} obj .
+   * @returns {boolean} true if jQuery
    */
   isjQuery(obj) {
     return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
@@ -574,7 +576,7 @@ ListBuilder.prototype = {
    * Move cursor to end
    * http://stackoverflow.com/a/26900921
    * @private
-   * @param {Object} el as element.
+   * @param {object} el as element.
    * @returns {void}
    */
   moveCursorToEnd(el) {
@@ -606,7 +608,7 @@ ListBuilder.prototype = {
   /**
    * Update dataset
    * @private
-   * @param {Object} ds as dataset.
+   * @param {object} ds as dataset.
    * @returns {void}
    */
   updateDataset(ds) {
@@ -630,7 +632,7 @@ ListBuilder.prototype = {
   /**
    * Set pre selected items
    * @private
-   * @returns {Object} this api
+   * @returns {object} this api
    */
   setSelected() {
     const nodes = $('li[selected]', this.ul);
@@ -647,7 +649,7 @@ ListBuilder.prototype = {
   /**
    * Make selected
    * @private
-   * @param {Object} selector .
+   * @param {object} selector .
    * @returns {void}
    */
   select(selector) {
@@ -661,7 +663,7 @@ ListBuilder.prototype = {
   /**
    * Make unselected
    * @private
-   * @param {Object} selector .
+   * @param {object} selector .
    * @returns {void}
    */
   unselect(selector) {
@@ -676,8 +678,8 @@ ListBuilder.prototype = {
    * Get an item from list, selector: can be
    * jQuery, DOM element, zero based index or 'first'|'last' as string
    * @private
-   * @param {Object} selector .
-   * @returns {Object} item node
+   * @param {object} selector .
+   * @returns {object} item node
    */
   getListItem(selector) {
     let li = $();
@@ -706,8 +708,8 @@ ListBuilder.prototype = {
   /**
    * Check if given object is a DOM object
    * @private
-   * @param {Object} obj .
-   * @returns {Object} item node
+   * @param {object} obj .
+   * @returns {object} item node
    */
   isElement(obj) {
     /* global Element */
@@ -751,7 +753,7 @@ ListBuilder.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {this} component instance
    */
   unbind() {
     this.element.off(this.updatedEventsStr);
@@ -782,8 +784,8 @@ ListBuilder.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} [settings] incoming settings.
+   * @returns {this} component instance
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

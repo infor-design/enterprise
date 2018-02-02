@@ -2,10 +2,145 @@
   
     
 
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          menu
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Menu's ID Selector, or a jQuery object representing a menu
 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          trigger
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Action on which to trigger a menu can be: click,
+rightClick, immediate ect
 
-  
-    
+        </td>
+      </tr>
+      <tr>
+        <td>
+          autoFocus
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If false the focus will not focus the first list
+element. (At the cost of accessibility)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          attachToBody
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true the menu will be moved out to the body.
+To be used in certin overflow situations.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          beforeOpen
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+          Callback that can be used for populating the
+contents of the menu.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          ariaListbox
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Switches aria to use listbox construct instead
+of menu construct (internal)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          eventObj
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Can pass in the event object so you can do a right
+click with immediate
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          returnFocus
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          If set to false, focus will not be returned to
+the calling element. It usually should be for accessibility purposes.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          placementOpts
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          Gets passed to this control's Place behavior
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          offset
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          Can tweak the menu position in the x and y direction.
+Takes an object of form: 
+<code>{x: 0, y: 0}</code>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 
@@ -23,11 +158,27 @@
     </thead>
     <tbody>
       <tr>
+        <td>isRTL</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Checks whether or not Right-To-Left reading mode is active.</p>
+
+        </td>
+        <td>
+          whether or not the reading/writing direction is RTL
+boolean
+        </td>
+      </tr>
+      <tr>
         <td>markupItems</td>
         <td>
           
                 
-                  <span>contextElement () =  </span>
+                  <span>contextElement () = the top-most element that will
+be modified (defaults to the top-level menu).
+ </span>
                 
           
         </td>
@@ -35,6 +186,171 @@
           
         </td>
         <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>getPositionFromEvent</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = the mouse event to be checked for pageX/pageY
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Get the event position, handling browser cases (IE,FF) as well as SVG</p>
+
+        </td>
+        <td>
+          containing x/y coordinates
+object
+        </td>
+      </tr>
+      <tr>
+        <td>position</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = jQuery Event that caused the menu to open (can be several types)
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Sets the position of the context menu.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>highlight</td>
+        <td>
+          
+                
+                  <span>anchor () = the anchor tag representing the menu item.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Places a highlighted visual state on an item inside the menu</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>select</td>
+        <td>
+          
+                
+                  <span>anchor () = the anchor tag representing the menu item.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Adds/removes checkmarks that are in selectable groups inside the Popupmenu</p>
+
+        </td>
+        <td>
+          updated references to the anchor and its state.
+array
+        </td>
+      </tr>
+      <tr>
+        <td>getSelected</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Gets references to top-level menu items that are currently selected.</p>
+
+        </td>
+        <td>
+          elements inside the top-level menu that are selected.
+
+        </td>
+      </tr>
+      <tr>
+        <td>isInSelectableSection</td>
+        <td>
+          
+                
+                  <span>anchor () = the anchor tag being checked.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Determines whether or not an anchor resides inside of a selectable Popupmenu section.</p>
+
+        </td>
+        <td>
+          elements inside the top-level menu that are selected.
+
+        </td>
+      </tr>
+      <tr>
+        <td>isInSingleSelectSection</td>
+        <td>
+          
+                
+                  <span>anchor () = the anchor tag being checked.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Determines whether or not an anchor resides inside of a single-selectable Popupmenu section.</p>
+
+        </td>
+        <td>
+          elements inside the top-level menu that are selected
+within a single-selectable section.
+
+        </td>
+      </tr>
+      <tr>
+        <td>isInMultiselectSection</td>
+        <td>
+          
+                
+                  <span>anchor () = the anchor tag being checked.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Determines whether or not an anchor resides inside of a multi-selectable Popupmenu section.</p>
+
+        </td>
+        <td>
+          elements inside the top-level menu that are selected
+within a multi-selectable section.
+
+        </td>
+      </tr>
+      <tr>
+        <td>detach</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes event listeners from all popupmenu elements.</p>
+
+        </td>
+        <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -42,10 +358,11 @@
         <td>
           
                 
-                  <span>isCancelled (boolean) = Internally set option used if the operation is a cancel. Wont matter for manual api call.
+                  <span>isCancelled (boolean) = Internally set option used if the operation is a cancel.
+Wont matter for manual api call.
  </span>
                 
-                  <span>noFocus (boolean) = Do not return focus to the calling element (fx a button)
+                  <span>noFocus () = Do not return focus to the calling element (fx a button)
  </span>
                 
           
@@ -58,6 +375,39 @@
         </td>
       </tr>
       <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes bound events and generated markup from this component</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Updates this Popupmenu instance with new settings</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
         <td>destroy</td>
         <td>
           
@@ -67,6 +417,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
     </tbody>

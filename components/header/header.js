@@ -1,5 +1,6 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../button/button.jquery';
@@ -15,14 +16,22 @@ const COMPONENT_NAME = 'header';
 
 /**
  * Component Default Settings
- * @param {boolean} demoOptions  Used to enable/disable default SoHo Xi options for demo purposes
- * @param {boolean} useBackButton  If true, displays a back button next to the title in the header toolbar
- * @param {boolean} useBreadcrumb  If true, displays a breadcrumb on drilldown
- * @param {boolean} usePopupmenu  f true, changes the Header Title into a popupmenu that can change the current page
- * @param {array} tabs  If defined as an array of Tab objects, displays a series of tabs that represent application sections
- * @param {array} wizardTicks  If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
- * @param {boolean} useAlternate  If true, use alternate background/text color for sub-navigation areas
- * @param {boolean} addScrollClass  If true a class will be added as the page scrolls up and down to the header for manipulation. Eg: Docs Page.
+ * @namespace
+ * @property {boolean} demoOptions  Used to enable/disable default SoHo Xi options
+ *  for demo purposes
+ * @property {boolean} useBackButton  If true, displays a back button next to the
+ *  title in the header toolbar
+ * @property {boolean} useBreadcrumb  If true, displays a breadcrumb on drilldown
+ * @property {boolean} usePopupmenu  f true, changes the Header Title into a popupmenu
+ *  that can change the current page
+ * @property {array} tabs  If defined as an array of Tab objects, displays a series
+ *  of tabs that represent application sections
+ * @property {array} wizardTicks  If defined as an array of Wizard Ticks, displays
+ *  a Wizard Control that represents steps in a process
+ * @property {boolean} useAlternate  If true, use alternate background/text color
+ *  for sub-navigation areas
+ * @property {boolean} addScrollClass  If true a class will be added as the page
+ *  scrolls up and down to the header for manipulation. Eg: Docs Page.
  */
 const HEADER_DEFAULTS = {
   demoOptions: true,
@@ -35,14 +44,13 @@ const HEADER_DEFAULTS = {
   addScrollClass: false
 };
 
-
 /**
-* Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
-*
-* @class Header
-* @param {HTMLElement|jQuery[]} element
-* @param {object} [settings]
-*/
+ * Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
+ * @class Header
+ * @constructor
+ * @param {HTMLElement|jQuery[]} element the base element
+ * @param {object} [settings] incoming settings
+ */
 function Header(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, HEADER_DEFAULTS);
@@ -54,7 +62,11 @@ function Header(element, settings) {
 
 Header.prototype = {
 
-  init: function() {
+  /**
+   * @private
+   * @returns {void}
+   */
+  init() {
     this
       .setup()
       .build()
@@ -66,7 +78,11 @@ Header.prototype = {
     }
   },
 
-  setup: function() {
+  /**
+   * @private
+   * @returns {this} component instance
+   */
+  setup() {
     // TODO: Settings all work independently, but give better descriptions
     this.settings.demoOptions = this.element.attr('data-demo-options') ? this.element.attr('data-demo-options') === 'true' : this.settings.demoOptions;
     this.settings.useBackButton = this.element.attr('data-use-backbutton') ? this.element.attr('data-use-backbutton') === 'true' : this.settings.useBackButton;
@@ -74,18 +90,23 @@ Header.prototype = {
     this.settings.useAlternate = this.element.attr('data-use-alternate') ? this.element.attr('data-use-alternate') === 'true' : this.settings.useAlternate;
 
     this.settings.tabs = !$.isArray(this.settings.tabs) ? null : this.settings.tabs;
-    this.settings.wizardTicks = !$.isArray(this.settings.wizardTicks) ? null : this.settings.wizardTicks;
+    this.settings.wizardTicks = !$.isArray(this.settings.wizardTicks) ? null :
+      this.settings.wizardTicks;
 
     this.titleText = this.element.find('.title > h1');
 
     // Used to track levels deep
     this.levelsDeep = [];
-    this.levelsDeep.push('' + this.titleText.text());
+    this.levelsDeep.push(`${this.titleText.text()}`);
 
     return this;
   },
 
-  build: function() {
+  /**
+   * @private
+   * @returns {this} component instance
+   */
+  build() {
     this.toolbarElem = this.element.find('.toolbar');
 
     // Build toolbar if it doesn't exist
@@ -100,7 +121,7 @@ Header.prototype = {
 
     if (this.hasTitleButton) {
       this.toolbarElem.addClass('has-title-button');
-      var appMenu = $('#application-menu').data('applicationmenu');
+      const appMenu = $('#application-menu').data('applicationmenu');
       if (appMenu) {
         appMenu.modifyTriggers([this.titleButton], null, true);
       } else {
@@ -110,7 +131,8 @@ Header.prototype = {
       }
     }
 
-    // Application Tabs would be available from the Application Start, so activate them during build if they exist
+    // Application Tabs would be available from the Application Start, so activate
+    // them during build if they exist
     if (this.settings.tabs && this.settings.tabs.length) {
       this.buildTabs();
     }
@@ -123,12 +145,12 @@ Header.prototype = {
       this.buildPopupmenu();
     }
 
-    //Add a Scrolling Class to manipulate the header
+    // Add a Scrolling Class to manipulate the header
     if (this.settings.addScrollClass) {
-      var self =$(this.element),
-        scrollDiv = $(this.element).next('.scrollable'),
-        container = (scrollDiv.length === 1 ? scrollDiv : $(window)),
-        scrollThreshold = this.settings.scrollThreshold ? this.settings.scrollThreshold : 15;
+      const self = $(this.element);
+      const scrollDiv = $(this.element).next('.scrollable');
+      const container = (scrollDiv.length === 1 ? scrollDiv : $(window));
+      const scrollThreshold = this.settings.scrollThreshold ? this.settings.scrollThreshold : 15;
 
       container.on('scroll.header', function () {
         if (this.scrollTop > scrollThreshold) {
@@ -136,10 +158,9 @@ Header.prototype = {
         } else {
           self.removeClass('is-scrolled-down');
         }
-
       });
 
-      if (container.scrollTop() > scrollThreshold ) {
+      if (container.scrollTop() > scrollThreshold) {
         self.addClass('is-scrolled-down');
       }
     }
@@ -147,10 +168,14 @@ Header.prototype = {
     return this;
   },
 
-  buildTitleButton: function() {
+  /**
+   * @private
+   * @returns {void}
+   */
+  buildTitleButton() {
     if (this.levelsDeep.length > 1 && !this.hasTitleButton && !this.titleButton.length) {
       this.titleButton = $('<button class="btn-icon back-button" type="button"></button>');
-      this.titleButton.html('<span class="audible">'+ Locale.translate('Drillup') +'</span>' +
+      this.titleButton.html(`<span class="audible">${Locale.translate('Drillup')}</span>` +
         '<span class="icon app-header go-back">' +
           '<span class="one"></span>' +
           '<span class="two"></span>' +
@@ -158,17 +183,21 @@ Header.prototype = {
         '</span>');
       this.titleButton.prependTo(this.element.find('.title'));
 
-      // Need to trigger an update on the toolbar control to make sure tabindexes and events are all firing on the button
+      // Need to trigger an update on the toolbar control to make sure tabindexes
+      // and events are all firing on the button
       this.toolbar.element.triggerHandler('updated');
     }
 
     this.titleButton.find('.icon.app-header').addClass('go-back');
   },
 
-  // Used for adding a Breadcrumb Element to the Header
-  buildBreadcrumb: function() {
-    var self = this,
-      breadcrumbClass = 'has-breadcrumb';
+  /**
+   * Used for adding a Breadcrumb Element to the Header
+   * @returns {void}
+   */
+  buildBreadcrumb() {
+    const self = this;
+    let breadcrumbClass = 'has-breadcrumb';
 
     if (this.settings.useAlternate) {
       breadcrumbClass = 'has-alternate-breadcrumb';
@@ -178,7 +207,7 @@ Header.prototype = {
     this.breadcrumb = this.element.find('.breadcrumb');
     if (!this.breadcrumb.length) {
       this.breadcrumb = $('<nav class="breadcrumb" role="navigation" style="display: none;"></nav>').appendTo(this.element);
-      this.breadcrumb.on('click', 'a', function(e) {
+      this.breadcrumb.on('click', 'a', (e) => {
         self.handleBreadcrumbClick(e);
       });
     }
@@ -187,29 +216,36 @@ Header.prototype = {
     this.adjustBreadcrumb();
   },
 
-  // Builds Breadcrumb markup that reflects the current state of the application
-  adjustBreadcrumb: function() {
-    var last = this.levelsDeep[this.levelsDeep.length - 1];
+  /**
+   * Builds Breadcrumb markup that reflects the current state of the application
+   * @returns {void}
+   */
+  adjustBreadcrumb() {
+    const last = this.levelsDeep[this.levelsDeep.length - 1];
     this.breadcrumb.empty();
 
-    var bcMarkup = $('<ol aria-label="breadcrumb"></ol>').appendTo(this.breadcrumb);
-    $.each(this.levelsDeep, function(i, txt) {
-      var current = '';
+    const bcMarkup = $('<ol aria-label="breadcrumb"></ol>').appendTo(this.breadcrumb);
+    $.each(this.levelsDeep, (i, txt) => {
+      let current = '';
       if (last === txt) {
         current = ' current';
       }
 
-      bcMarkup.append($('<li><a href="#" class="hyperlink'+ current +'">'+ txt +'</a></li>'));
+      bcMarkup.append($(`<li><a href="#" class="hyperlink${current}">${txt}</a></li>`));
     });
   },
 
-  buildTabs: function() {
+  /**
+   * Builds Header Tabs
+   * @returns {void}
+   */
+  buildTabs() {
     this.tabsContainer = this.element.find('.tab-container');
     if (!this.tabsContainer.length) {
       this.tabsContainer = $('<div class="tab-container"></div>').appendTo(this.element);
 
       // TODO: Flesh this out so that the header control can build tabs based on options
-      var tablist = $('<ul class="tab-list" role="tablist"></ul>').appendTo(this.tabsContainer);
+      const tablist = $('<ul class="tab-list" role="tablist"></ul>').appendTo(this.tabsContainer);
       $('<li class="tab"><a href="#header-tabs-home" role="tab">SoHo Xi Controls | Patterns</a></li>').appendTo(tablist);
       $('<li class="tab"><a href="#header-tabs-level-1" role="tab">Level 1 Detail</a></li>').appendTo(tablist);
       $('<li class="tab"><a href="#header-tabs-level-2" role="tab">Level 2 Detail</a></li>').appendTo(tablist);
@@ -218,7 +254,8 @@ Header.prototype = {
     this.element.addClass(this.settings.useAlternate ? 'has-alternate-tabs' : 'has-tabs');
     this.tabsContainer[this.settings.useAlternate ? 'addClass' : 'removeClass']('alternate');
 
-    // NOTE: For demo purposes the markup for tab panels is already inside the Nav Patterns Test page.
+    // NOTE: For demo purposes the markup for tab panels is already inside the
+    // Nav Patterns Test page.
     $('#header-tabs-level-1').removeAttr('style');
     $('#header-tabs-level-2').removeAttr('style');
 
@@ -228,14 +265,18 @@ Header.prototype = {
     });
   },
 
-  buildWizard: function() {
+  /**
+   * Builds a Header Wizard
+   * @returns {void}
+   */
+  buildWizard() {
     this.element.addClass('has-wizard');
 
     this.wizard = this.element.find('.wizard');
     if (!this.wizard.length) {
       this.wizard = $('<div class="wizard"></div>').appendTo(this.element);
-      var header = $('<div class="wizard-header"></div>').appendTo(this.wizard),
-        bar = $('<div class="bar"></div>').appendTo(header);
+      const header = $('<div class="wizard-header"></div>').appendTo(this.wizard);
+      const bar = $('<div class="bar"></div>').appendTo(header);
       $('<div class="completed-range"></div>').appendTo(bar);
 
       // TODO: Flesh this out so the header control can build the Wizard Ticks based on options
@@ -255,11 +296,15 @@ Header.prototype = {
     this.wizard.wizard();
   },
 
-  buildPopupmenu: function() {
-    var title = this.toolbarElem.children('.title');
+  /**
+   * Builds a Popupmenu in place of the usual Title text, to allow for context swapping.
+   * @returns {void}
+   */
+  buildPopupmenu() {
+    const title = this.toolbarElem.children('.title');
     this.titlePopup = title.find('.btn-menu');
     if (!this.titlePopup.length) {
-      var heading = title.find('h1'); // If H1 doesn't exist here, you're doing it wrong.
+      const heading = title.find('h1'); // If H1 doesn't exist here, you're doing it wrong.
       heading.wrap('<button id="header-menu" type="button" class="btn-menu"></button>');
       this.titlePopup = heading.parent('.btn-menu');
     }
@@ -284,25 +329,37 @@ Header.prototype = {
     this.toolbarElem.triggerHandler('updated');
   },
 
-  handleEvents: function() {
-    var self = this;
+  /**
+   * Sets up header-level events
+   * @fires Header#events
+   * @listens updated
+   * @listens reset
+   * @listens drilldown
+   * @listens drillup
+   * @listens click
+   * @listens selected
+   * @returns {this} component instance
+   */
+  handleEvents() {
+    const self = this;
 
     this.element
-      .on('updated.header', function() {
+      .on('updated.header', () => {
         self.updated();
       })
-      .on('reset.header', function() {
+      .on('reset.header', () => {
         self.reset();
       })
-      .on('drilldown.header', function(e, viewTitle) {
+      .on('drilldown.header', (e, viewTitle) => {
         self.drilldown(viewTitle);
       })
-      .on('drillup.header', function(e, viewTitle) {
+      .on('drillup.header', (e, viewTitle) => {
         self.drillup(viewTitle);
       });
 
-    // Events for the title button.  e.preventDefault(); stops Application Menu functionality while drilled
-    this.titleButton.bindFirst('click.header', function(e) {
+    // Events for the title button.  e.preventDefault(); stops Application Menu
+    // functionality while drilled
+    this.titleButton.bindFirst('click.header', (e) => {
       if (self.levelsDeep.length > 1) {
         e.stopImmediatePropagation();
         self.drillup();
@@ -312,7 +369,7 @@ Header.prototype = {
 
     // Popupmenu Events
     if (this.settings.usePopupmenu) {
-      this.titlePopup.on('selected.header', function(e, anchor) {
+      this.titlePopup.on('selected.header', function (e, anchor) {
         $(this).children('h1').text(anchor.text());
       });
     }
@@ -320,35 +377,47 @@ Header.prototype = {
     return this;
   },
 
-  handleBreadcrumbClick: function(e) {
-    var selected = $(e.target).parent(),
-      breadcrumbs = this.breadcrumb.find('li'),
-      selectedIndex = breadcrumbs.index(selected),
-      delta;
+  /**
+   * Handles click events on Breadcrumb elements
+   * @param {jQuery.Event} e `click` event
+   * @returns {void}
+   */
+  handleBreadcrumbClick(e) {
+    const selected = $(e.target).parent();
+    const breadcrumbs = this.breadcrumb.find('li');
+    const selectedIndex = breadcrumbs.index(selected);
+    let delta;
 
     if (selected.hasClass('current')) {
       return;
     }
 
     if (selectedIndex === 0) {
-      return this.reset();
+      this.reset();
+      return;
     }
 
     if (selectedIndex < breadcrumbs.length - 1) {
       delta = (breadcrumbs.length - 1) - selectedIndex;
       while (delta > 0) {
         this.drillup();
-        delta = delta - 1;
+        delta -= 1;
       }
     }
   },
 
-  initPageChanger: function () {
-    this.element.find('.page-changer').on('selected.header', function (e, link) {
+  /**
+   * Sets up the `selected` events on the More Actions area of the header, which can include
+   * Menu Options for changing the current theme, persoanlization colors, and language locale.
+   * @param {jQuery.Event} e `click` event
+   * @returns {void}
+   */
+  initPageChanger() {
+    this.element.find('.page-changer').on('selected.header', (e, link) => {
       // Change Theme
       if (link.attr('data-theme')) {
-        var theme = link.attr('data-theme');
-        $('body').trigger('changetheme', theme.replace('-theme',''));
+        const theme = link.attr('data-theme');
+        $('body').trigger('changetheme', theme.replace('-theme', ''));
         return;
       }
 
@@ -359,13 +428,17 @@ Header.prototype = {
       }
 
       // Change Color
-      var color = link.attr('data-rgbcolor');
+      const color = link.attr('data-rgbcolor');
       $('body').trigger('changecolors', [color]);
     });
   },
 
-  // Activates the Drilldown Header View
-  drilldown: function(viewTitle) {
+  /**
+   * Drills deeper into a breadcrumb structure while updating the Header title to reflect state.
+   * @param {string} viewTitle text contents to put in place of the title area.
+   * @returns {void}
+   */
+  drilldown(viewTitle) {
     this.element.addClass('is-drilldown');
     this.levelsDeep.push(viewTitle.toString());
     this.titleText.text(this.levelsDeep[this.levelsDeep.length - 1]);
@@ -377,15 +450,20 @@ Header.prototype = {
     if (this.settings.useBreadcrumb) {
       if (!this.breadcrumb || !this.breadcrumb.length) {
         this.buildBreadcrumb();
-        this.breadcrumb.css({'display': 'block', 'height': 'auto'});
+        this.breadcrumb.css({ display: 'block', height: 'auto' });
       } else {
         this.adjustBreadcrumb();
       }
     }
   },
 
-  drillup: function(viewTitle) {
-    var title;
+  /**
+   * Moves up into a breadcrumb structure while updating the Header title to reflect state.
+   * @param {string} viewTitle text contents to put in place of the title area.
+   * @returns {void}
+   */
+  drillup(viewTitle) {
+    let title;
     this.element.removeClass('is-drilldown');
 
     if (this.levelsDeep.length > 1) {
@@ -423,9 +501,10 @@ Header.prototype = {
   },
 
   /**
-  * Reset the toolbar to its default removing the drilled in patterns.
-  */
-  reset: function() {
+   * Reset the toolbar to its default removing the drilled in patterns.
+   * @returns {this} component instance
+   */
+  reset() {
     while (this.levelsDeep.length > 1) {
       this.levelsDeep.pop();
     }
@@ -441,7 +520,11 @@ Header.prototype = {
     return this;
   },
 
-  removeButton: function() {
+  /**
+   * Removes a previously-built Button pattern from the Header.
+   * @returns {void}
+   */
+  removeButton() {
     if (this.hasTitleButton) {
       this.titleButton.find('.icon.app-header').removeClass('go-back');
       return;
@@ -451,19 +534,24 @@ Header.prototype = {
       this.titleButton.remove();
       this.titleButton = $();
 
-      // Need to trigger an update on the toolbar control to make sure tabindexes and events are all firing on the button
+      // Need to trigger an update on the toolbar control to make sure
+      // tabindexes and events are all firing on the button
       this.toolbar.element.triggerHandler('updated');
     }
   },
 
-  removeBreadcrumb: function() {
+  /**
+   * Removes a previously-built Breadcrumb structure from the Header.
+   * @returns {void}
+   */
+  removeBreadcrumb() {
     if (!this.breadcrumb || !this.breadcrumb.length) {
       return;
     }
 
-    var self = this,
-      transitionEnd = $.fn.transitionEndName(),
-      timeout;
+    const self = this;
+    const transitionEnd = $.fn.transitionEndName();
+    let timeout;
 
     function destroyBreadcrumb() {
       if (timeout) {
@@ -471,28 +559,32 @@ Header.prototype = {
         timeout = null;
       }
 
-      self.element.off(transitionEnd + '.breadcrumb-header');
+      self.element.off(`${transitionEnd}.breadcrumb-header`);
       self.breadcrumb.off().remove();
       self.breadcrumb = $();
     }
 
     self.element.removeClass('has-breadcrumb').removeClass('has-alternate-breadcrumb');
     if (this.breadcrumb.is(':not(:hidden)')) {
-      this.element.one(transitionEnd + '.breadcrumb-header', destroyBreadcrumb);
+      this.element.one(`${transitionEnd}.breadcrumb-header`, destroyBreadcrumb);
       timeout = setTimeout(destroyBreadcrumb, 300);
     } else {
       destroyBreadcrumb();
     }
   },
 
-  removeTabs: function() {
+  /**
+   * Removes a previously-built Header Tabs pattern from the Header.
+   * @returns {void}
+   */
+  removeTabs() {
     if (!this.tabsContainer || !this.tabsContainer.length) {
       return;
     }
 
-    var self = this,
-      transitionEnd = $.fn.transitionEndName(),
-      timeout;
+    const self = this;
+    const transitionEnd = $.fn.transitionEndName();
+    let timeout;
 
     function destroyTabs() {
       if (timeout) {
@@ -500,33 +592,38 @@ Header.prototype = {
         timeout = null;
       }
 
-      self.element.off(transitionEnd + '.tabs-header');
+      self.element.off(`${transitionEnd}.tabs-header`);
       self.tabsContainer.data('tabs').destroy();
       self.tabsContainer.remove();
       self.tabsContainer = null;
 
-      // NOTE: For demo purposes the markup for tab panels is already inside the Nav Patterns Test page.
+      // NOTE: For demo purposes the markup for tab panels is already
+      // inside the Nav Patterns Test page.
       $('#header-tabs-level-1').css('display', 'none');
       $('#header-tabs-level-2').css('display', 'none');
     }
 
     this.element.removeClass('has-tabs').removeClass('has-alternate-tabs');
     if (this.tabsContainer.is(':not(:hidden)')) {
-      this.element.one(transitionEnd + '.tabs-header', destroyTabs);
+      this.element.one(`${transitionEnd}.tabs-header`, destroyTabs);
       timeout = setTimeout(destroyTabs, 300);
     } else {
       destroyTabs();
     }
   },
 
-  removeWizard: function() {
+  /**
+   * Removes a previously-built Header Wizard pattern from the Header.
+   * @returns {void}
+   */
+  removeWizard() {
     if (!this.wizard || !this.wizard.length) {
       return;
     }
 
-    var self = this,
-      transitionEnd = $.fn.transitionEndName(),
-      timeout;
+    const self = this;
+    const transitionEnd = $.fn.transitionEndName();
+    let timeout;
 
     function destroyWizard() {
       if (timeout) {
@@ -534,24 +631,27 @@ Header.prototype = {
         timeout = null;
       }
 
-      self.element.off(transitionEnd + '.wizard-header');
+      self.element.off(`${transitionEnd}.wizard-header`);
       self.wizard.data('wizard').destroy();
       self.wizard.remove();
       self.wizard = null;
-
     }
 
     this.element.removeClass('has-wizard');
     if (this.wizard.is(':not(:hidden)')) {
-      this.element.one(transitionEnd + '.wizard-header', destroyWizard);
+      this.element.one(`${transitionEnd}.wizard-header`, destroyWizard);
       timeout = setTimeout(destroyWizard, 300);
     } else {
       destroyWizard();
     }
   },
 
-  removePopupmenu: function() {
-    var self = this;
+  /**
+   * Removes a previously-built Popupmenu pattern from the Header's title.
+   * @returns {void}
+   */
+  removePopupmenu() {
+    const self = this;
 
     if (!this.titlePopup || !this.titlePopup.length) {
       return;
@@ -569,17 +669,22 @@ Header.prototype = {
     this.toolbarElem.triggerHandler('updated');
   },
 
-  // teardown events
-  unbind: function() {
+  /**
+   * Removes bound events from the Header
+   * @returns {this} component instance
+   */
+  unbind() {
     this.titleButton.off('click.header');
     this.element.off('drilldown.header drillup.header');
     return this;
   },
 
   /**
-  * Sync up the ui with settings.
-  */
-  updated: function(settings) {
+   * Sync up the ui with settings.
+   * @param {object} [settings] incoming settings.
+   * @returns {void}
+   */
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -591,9 +696,10 @@ Header.prototype = {
   },
 
   /**
-  * Tear down and destroy the menu and events.
-  */
-  destroy: function() {
+   * Teardown and destroy the menu and events.
+   * @returns {void}
+   */
+  destroy() {
     this.unbind();
     if (this.hasTitleButton) {
       this.toolbarElem.removeClass('has-title-button');

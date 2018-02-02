@@ -98,7 +98,64 @@ this nav menu.
 
         </td>
         <td>
+          the adjacent container element
+
+        </td>
+      </tr>
+      <tr>
+        <td>handleTriggerEvents</td>
+        <td>
           
+        </td>
+        <td>
+          <p>Setup click events on this.element if it's not the menu itself.
+(this means that it's a trigger button).</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>handleKeyDown</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = <code>keydown</code>
+ events
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handles Keydown Events on the App Menu</p>
+
+        </td>
+        <td>
+          whether or not the keydown event was successful
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>notify</td>
+        <td>
+          
+                
+                  <span>anchor () = the anchor to target
+ </span>
+                
+                  <span>value (number) = the numeric value to attach
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Adds a visual badge-style notification to an Application Menu accordion header</p>
+
+        </td>
+        <td>
+          a reference to the new tag markup, if applicable
 
         </td>
       </tr>
@@ -112,7 +169,7 @@ this nav menu.
 
         </td>
         <td>
-          
+          whether or not the application menu is open
 boolean
         </td>
       </tr>
@@ -126,6 +183,8 @@ boolean
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -136,10 +195,13 @@ boolean
                   <span>noFocus (boolean) = If true, sets focus on the first item in the application menu.
  </span>
                 
-                  <span>userOpened () = If true, notifies the component that the menu was manually opened by the user.
+                  <span>userOpened () = If true, notifies the component that the menu was
+manually opened by the user.
  </span>
                 
-                  <span>openedByClass () = If true, only adjusts bare-miniumum requirements for the application menu to appear open (should be used in cases where the application menu has the 
+                  <span>openedByClass () = If true, only adjusts bare-miniumum requirements
+for the application menu to appear open (should be used in cases where the application
+menu has the 
 <code>is-open</code>
  CSS appended to it via markup).  This skips events, animation, etc.
  </span>
@@ -158,7 +220,8 @@ boolean
         <td>
           
                 
-                  <span>userClosed (boolean) = if true, sets a flag notifying the component that the user was responsible for closing.
+                  <span>userClosed () = if true, sets a flag notifying the component
+that the user was responsible for closing.
  </span>
                 
           
@@ -180,7 +243,7 @@ boolean
 
         </td>
         <td>
-          
+          whether or not external triggers have been defined.
 boolean
         </td>
       </tr>
@@ -189,13 +252,16 @@ boolean
         <td>
           
                 
-                  <span>triggers () = an array of HTMLElements or jQuery-wrapped elements that will be used as triggers.
+                  <span>triggers () = an array of HTMLElements or jQuery-wrapped elements that
+will be used as triggers.
  </span>
                 
-                  <span>remove () = if defined, triggers that are defined will be removed internally instead of added.
+                  <span>remove () = if defined, triggers that are defined will be removed
+internally instead of added.
  </span>
                 
-                  <span>norebuild () = if defined, this control's events won't automatically be rebound to include the new triggers.
+                  <span>norebuild () = if defined, this control's events won't automatically
+be rebound to include the new triggers.
  </span>
                 
           
@@ -212,9 +278,11 @@ boolean
         <td>
           
                 
-                  <span>results (array) =  </span>
+                  <span>results (array) = list of items that passed the filtering process
+ </span>
                 
-                  <span>done (function) =  </span>
+                  <span>done (function) = method to be called when the display of filtered items completes.
+ </span>
                 
           
         </td>
@@ -222,6 +290,8 @@ boolean
           
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -229,7 +299,10 @@ boolean
         <td>
           
                 
-                  <span>e (jQuery.Event) =  </span>
+                  <span>e (jQuery.Event) = jQuery 
+<code>input</code>
+ event
+ </span>
                 
           
         </td>
@@ -250,7 +323,7 @@ boolean
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -259,7 +332,8 @@ this
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming settings
+ </span>
                 
           
         </td>
@@ -268,6 +342,8 @@ this
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -280,19 +356,13 @@ this
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
         <td>handleEvents</td>
         <td>
-          
-                
-                  <span>applicationmenuopen (object) = Fires when the menu is opened.
- </span>
-                
-                  <span>applicationmenuclose (object) = Fires as the menu is closed.
- </span>
-                
           
         </td>
         <td>
@@ -300,6 +370,8 @@ this
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
     </tbody>
@@ -339,7 +411,7 @@ this
 <h2 id="states-and-variations">States and Variations</h2>
 <p>Different components of the menu have different requirements.</p>
 <ul>
-<li>The menu “box” should behave like other overlays or panels.</li>
+<li>The menu &quot;box&quot; should behave like other overlays or panels.</li>
 <li>The hierarchical structure should support the same states as a standard tree (specifically, open and closed).</li>
 <li>The individual objects (links) in the menu should support the same states (hover, focus, selected) as the context menu.</li>
 </ul>

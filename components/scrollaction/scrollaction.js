@@ -1,10 +1,7 @@
-/* jshint esversion:6 */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'scrollaction';
 
 /**

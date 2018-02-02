@@ -1,18 +1,35 @@
-
 import * as debug from '../utils/debug';
 import { utils, DOM } from '../utils/utils';
+import { Locale } from '../locale/locale';
 import { PlacementObject, Place } from '../place/place';
 
 // jQuery Components
 import '../place/place.jquery';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'popupmenu';
 
 /**
  * Default Popupmenu Settings
+ * @namespace
+ * @property {string} menu  Menu's ID Selector, or a jQuery object representing a menu
+ * @property {string} trigger  Action on which to trigger a menu can be: click,
+ *  rightClick, immediate ect
+ * @property {boolean} autoFocus  If false the focus will not focus the first list
+ *  element. (At the cost of accessibility)
+ * @property {boolean} attachToBody  If true the menu will be moved out to the body.
+ *  To be used in certin overflow situations.
+ * @property {function} beforeOpen  Callback that can be used for populating the
+ *  contents of the menu.
+ * @property {string} ariaListbox   Switches aria to use listbox construct instead
+ *  of menu construct (internal)
+ * @property {string} eventObj  Can pass in the event object so you can do a right
+ *  click with immediate
+ * @property {string} returnFocus  If set to false, focus will not be returned to
+ *  the calling element. It usually should be for accessibility purposes.
+ * @property {object} placementOpts  Gets passed to this control's Place behavior
+ * @property {object} offset  Can tweak the menu position in the x and y direction.
+ *  Takes an object of form: `{x: 0, y: 0}`
  */
 const POPUPMENU_DEFAULTS = {
   menu: null,
@@ -36,33 +53,28 @@ const POPUPMENU_DEFAULTS = {
 };
 
 /**
-* Responsive Popup Menu Control aka Context Menu when doing a right click action.
-*
-* @class PopupMenu
-* @param {string} menu  Menu's ID Selector, or a jQuery object representing a menu
-* @param {string} trigger  Action on which to trigger a menu can be: click, rightClick, immediate ect
-* @param {boolean} autoFocus  If false the focus will not focus the first list element. (At the cost of accessibility)
-* @param {boolean} attachToBody  If true the menu will be moved out to the body. To be used in certin overflow situations.
-* @param {function} beforeOpen  Callback that can be used for populating the contents of the menu.
-* @param {string} ariaListbox   Switches aria to use listbox construct instead of menu construct (internal)
-* @param {string} eventObj  Can pass in the event object so you can do a right click with immediate
-* @param {string} returnFocus  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
-* @param {object} placementOpts  Gets passed to this control's Place behavior
-* @param {object} offset  Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
-*
-*/
+ * Responsive Popup Menu Control aka Context Menu when doing a right click action.
+ * @class PopupMenu
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element the base element
+ * @param {object} [settings] incoming settings
+ */
 function PopupMenu(element, settings) {
   this.settings = utils.mergeSettings(element, settings, POPUPMENU_DEFAULTS);
   this.element = $(element);
-  this.isOldIe  = $('html').is('.ie11, .ie10, .ie9');
+  this.isOldIe = $('html').is('.ie11, .ie10, .ie9');
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
 }
 
-
 PopupMenu.prototype = {
-  init: function() {
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  init() {
     this.setup();
     this.addMarkup();
     this.handleEvents();
@@ -80,11 +92,19 @@ PopupMenu.prototype = {
     }
   },
 
-  isRTL: function() {
+  /**
+   * Checks whether or not Right-To-Left reading mode is active.
+   * @returns {boolean} whether or not the reading/writing direction is RTL
+   */
+  isRTL() {
     return $('html').attr('dir') === 'rtl';
   },
 
-  setup: function() {
+  /**
+   * @private
+   * @returns {void}
+   */
+  setup() {
     if (this.element.attr('data-popupmenu') && !this.settings.menu) {
       this.settings.menu = this.element.attr('data-popupmenu').replace(/#/g, '');
     }
@@ -98,20 +118,24 @@ PopupMenu.prototype = {
     // keep track of how many popupmenus there are with an ID.
     // Used for managing events that are bound to $(document)
     if (!this.id) {
-      this.id = (parseInt($('.popupmenu-wrapper').length, 10)+1).toString();
+      this.id = (parseInt($('.popupmenu-wrapper').length, 10) + 1).toString();
     }
   },
 
-  //Add markip including Aria
-  addMarkup: function () {
-    var id,
-      leftClick = this.settings.trigger !== 'rightClick',
-      immediate = this.settings.trigger === 'immediate';
+  /**
+   * Add markip including Aria
+   * @private
+   * @returns {void}
+   */
+  addMarkup() {
+    let id;
+    const leftClick = this.settings.trigger !== 'rightClick';
+    const immediate = this.settings.trigger === 'immediate';
 
-    switch(typeof this.settings.menu) {
+    switch (typeof this.settings.menu) {
       case 'string': // ID Selector
         id = this.settings.menu;
-        this.menu = $('#' + this.settings.menu);
+        this.menu = $(`#${this.settings.menu}`);
         break;
       case 'object': // jQuery Object
         if (this.settings.menu === null) {
@@ -122,9 +146,11 @@ PopupMenu.prototype = {
 
         id = this.menu.attr('id');
         if (!id || id === '') {
-          this.menu.attr('id', 'popupmenu-' + this.id);
+          this.menu.attr('id', `popupmenu-${this.id}`);
           id = this.menu.attr('id');
         }
+        break;
+      default:
         break;
     }
 
@@ -144,7 +170,7 @@ PopupMenu.prototype = {
     // If we still don't have a menu reference at this point, fail gracefully by returning out
     // and simply acting like a button.
     if (this.menu.length === 0) {
-      return false;
+      return;
     }
 
     // if the menu is deeply rooted inside the markup, detach it and append it to the <body> tag
@@ -168,20 +194,20 @@ PopupMenu.prototype = {
     }
 
     // Invoke all icons as icons
-    this.wrapper.find('svg').each(function() {
+    this.wrapper.find('svg').each(function () {
       if (!$(this).data('icon')) {
         $(this).icon();
       }
     });
 
-    //Enforce Correct Modality
+    // Enforce Correct Modality
     this.menu.parent('.popupmenu-wrapper').attr('role', 'application').attr('aria-hidden', 'true');
 
     // Use "absolute" positioning on the menu insead of "fixed", only when the
     // menu lives <body> tag and we have a <body> element that is tall enough to
     // scroll and is allowed to scroll.
     function scrollableFilter() {
-      var c = this ? this.style.overflow : null;
+      const c = this ? this.style.overflow : null;
       return c !== 'auto' && c !== 'visible' && c !== 'scroll';
     }
     if (this.wrapper.parents().filter(scrollableFilter).length === 0) {
@@ -189,8 +215,8 @@ PopupMenu.prototype = {
     }
 
     // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
-    this.menu.find('.popupmenu').each(function(i, elem) {
-      var popup = $(elem);
+    this.menu.find('.popupmenu').each((i, elem) => {
+      const popup = $(elem);
 
       if (!(popup.parent().hasClass('wrapper'))) {
         popup.wrap('<div class="wrapper"></div>');
@@ -198,7 +224,7 @@ PopupMenu.prototype = {
     });
 
     // If the trigger element is a button with no border append arrow markup
-    var containerClass = this.element.parent().attr('class');
+    const containerClass = this.element.parent().attr('class');
     if ((this.element.hasClass('btn-menu') ||
         this.element.hasClass('btn-actions') ||
         this.element.hasClass('btn-icon') && this.element.find('use').attr('xlink:href') === '#icon-more' ||
@@ -208,18 +234,18 @@ PopupMenu.prototype = {
         this.element.is('.searchfield-category-button') ||
         (containerClass && containerClass.indexOf('more') >= 0) ||
         containerClass && containerClass.indexOf('btn-group') >= 0)) {
-
-      var arrow = $('<div class="arrow"></div>'),
-        wrapper = this.menu.parent('.popupmenu-wrapper');
+      const arrow = $('<div class="arrow"></div>');
+      const wrapper = this.menu.parent('.popupmenu-wrapper');
 
       wrapper.addClass('bottom').append(arrow);
     }
 
     // If inside of a ".field-short" container, make smaller
-    var addFieldShort = this.element.closest('.field-short').length;
+    const addFieldShort = this.element.closest('.field-short').length;
     this.menu[addFieldShort ? 'addClass' : 'removeClass']('popupmenu-short');
 
-    // If button is part of a header/masthead or a container using the "alternate" UI color, add the "alternate" class.
+    // If button is part of a header/masthead or a container using the "alternate"
+    // UI color, add the "alternate" class.
     if (containerClass !== undefined &&
       (this.element.closest('.masthead').not('.search-results .masthead').length > 0)) {
       this.menu.parent('.popupmenu-wrapper').addClass('inverse');
@@ -230,13 +256,17 @@ PopupMenu.prototype = {
 
     this.markupItems();
 
-    //Add an Audible Label
+    // Add an Audible Label
     if (!leftClick && !immediate) {
-      var audibleSpanId = 'popupmenu-f10-label';
-      if ($('#'+audibleSpanId).length === 0) {
-        this.element.after('<span style="display:none;" id="' + audibleSpanId + '">' + Locale.translate('PressShiftF10') + '</span>');
+      const audibleSpanId = 'popupmenu-f10-label';
+      if ($(`#${audibleSpanId}`).length === 0) {
+        this.element.after(`
+          <span style="display:none;" id="${audibleSpanId}">
+            ${Locale.translate('PressShiftF10')}
+          </span>
+        `);
       }
-      //PressShiftF10
+      // PressShiftF10
       this.element.attr('aria-describedby', audibleSpanId);
     }
 
@@ -247,10 +277,12 @@ PopupMenu.prototype = {
   },
 
   /**
-   * @param {jQuery[]|HTMLElement}
+   * @param {jQuery[]|HTMLElement} [contextElement] the top-most element that will
+   *  be modified (defaults to the top-level menu).
+   * @returns {void}
    */
-  markupItems: function (contextElement) {
-    var self = this;
+  markupItems(contextElement) {
+    const self = this;
 
     if (!contextElement) {
       contextElement = this.menu;
@@ -258,15 +290,15 @@ PopupMenu.prototype = {
       contextElement = $(contextElement);
     }
 
-    var lis = contextElement.find('li:not(.heading):not(.separator)'),
-      menuClassName = contextElement[0].className,
-      isTranslatable = DOM.classNameHas(menuClassName, 'isTranslatable');
+    const lis = contextElement.find('li:not(.heading):not(.separator)');
+    const menuClassName = contextElement[0].className;
+    const isTranslatable = DOM.classNameHas(menuClassName, 'isTranslatable');
 
-    lis.each(function(i, li) {
-      var a = $(li).children('a')[0], // TODO: do this better when we have the infrastructure
-        span = $(a).children('span')[0],
-        submenu = $(li).children('ul')[0],
-        submenuWrapper = $(li).children('.wrapper')[0];
+    lis.each((i, li) => {
+      const a = $(li).children('a')[0]; // TODO: do this better when we have the infrastructure
+      let span = $(a).children('span')[0];
+      let submenu = $(li).children('ul')[0];
+      const submenuWrapper = $(li).children('.wrapper')[0];
 
       li.setAttribute('role', 'presentation');
 
@@ -280,8 +312,8 @@ PopupMenu.prototype = {
         }
 
         // disabled menu items, by prop and by className
-        var $a = $(a),
-          $li = $(li);
+        const $a = $(a);
+        const $li = $(li);
 
         if ($li.hasClass('is-disabled') || (a.getAttribute('disabled') === 'true' || a.getAttribute('disabled') === 'disabled')) {
           $li.addClass('is-disabled');
@@ -298,15 +330,14 @@ PopupMenu.prototype = {
           submenu.classList.add('popupmenu');
         }
         if (submenuWrapper instanceof HTMLElement) {
-          li.className += (DOM.classNameExists(li) ? ' ' : '') + 'submenu';
+          li.className += `${DOM.classNameExists(li) ? ' ' : ''}submenu`;
           submenu = $(submenuWrapper).children('ul')[0];
           submenu.classList.add('popupmenu');
         }
         if (DOM.classNameHas(li.className, 'submenu')) {
-
           // Add a span
           if (!span) {
-            a.innerHTML = '<span>' + a.innerHTML + '</span>';
+            a.innerHTML = `<span>${a.innerHTML}</span>`;
             span = $a.children('span')[0];
           }
 
@@ -316,7 +347,6 @@ PopupMenu.prototype = {
           a.setAttribute('aria-haspopup', 'true');
 
           // Check for existing menus, and if present, apply a `.popupmenu` class automatically.
-
         }
 
         // is-checked
@@ -335,10 +365,19 @@ PopupMenu.prototype = {
     });
   },
 
-  handleEvents: function() {
-    var self = this,
-      leftClick = this.settings.trigger !== 'rightClick',
-      immediate = this.settings.trigger === 'immediate';
+  /**
+   * Sets up the event listener structure for the popupmenu
+   * @private
+   * @listens dragstart
+   * @listens contextmenu
+   * @listens keydown
+   * @listens updated
+   * @returns {void}
+   */
+  handleEvents() {
+    const self = this;
+    const leftClick = this.settings.trigger !== 'rightClick';
+    const immediate = this.settings.trigger === 'immediate';
 
     function disableBrowserContextMenu(e) {
       e.stopPropagation();
@@ -347,7 +386,7 @@ PopupMenu.prototype = {
     }
 
     function doOpen(e) {
-      var rightClick = self.settings.trigger === 'rightClick';
+      const rightClick = self.settings.trigger === 'rightClick';
 
       e.stopPropagation();
       e.preventDefault();
@@ -358,7 +397,7 @@ PopupMenu.prototype = {
         return;
       }
 
-      if (self.menu.hasClass('is-open')){
+      if (self.menu.hasClass('is-open')) {
         self.close();
       } else {
         self.open(e);
@@ -373,7 +412,7 @@ PopupMenu.prototype = {
         return;
       }
 
-      var btn = isLeftClick === true ? 0 : 2;
+      const btn = isLeftClick === true ? 0 : 2;
       if (e.button > btn || self.element.is(':disabled')) {
         return;
       }
@@ -385,7 +424,7 @@ PopupMenu.prototype = {
       // Left-Click activation
       if (leftClick) {
         this.element
-          .on('click.popupmenu', function (e) {
+          .on('click.popupmenu', (e) => {
             contextMenuHandler(e, true);
           });
       }
@@ -394,7 +433,7 @@ PopupMenu.prototype = {
       if (!leftClick) {
         this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
         this.element
-          .on('contextmenu.popupmenu', function(e) {
+          .on('contextmenu.popupmenu', (e) => {
             disableBrowserContextMenu(e);
             contextMenuHandler(e);
           });
@@ -402,14 +441,12 @@ PopupMenu.prototype = {
     }
 
     // Disable dragging text to a new browser tab
-    this.menu.off('dragstart.popupmenu').on('dragstart.popupmenu', 'a', function () {
-      return false;
-    });
+    this.menu.off('dragstart.popupmenu').on('dragstart.popupmenu', 'a', () => false);
 
     // Setup these next events no matter what trigger type is
     this.element.not('.autocomplete, ul')
-      .on('keydown.popupmenu', function (e) {
-        switch(e.which) {
+      .on('keydown.popupmenu', (e) => {
+        switch (e.which) {
           case 13:
           case 32:
             if (self.settings.trigger === 'click') {
@@ -418,56 +455,57 @@ PopupMenu.prototype = {
             }
             break;
           case 121:
-            if (e.shiftKey) { //Shift F10
+            if (e.shiftKey) { // Shift F10
               self.open(e);
             }
             break;
+          default:
+            break;
         }
       })
-      .on('updated.popupmenu', function(e) {
+      .on('updated.popupmenu', (e) => {
         e.stopPropagation();
         self.updated();
       });
 
-      // Media Query Listener to detect a menu closing on mobile devices that change orientation.
-      if (window.matchMedia) {
-        this.matchMedia = window.matchMedia('(orientation: landscape)');
-        this.mediaQueryListener = function() {
-          // Match every time.
-          if (!self.menu.hasClass('is-open')) {
-            return;
-          }
-          self.close();
-        };
-        this.matchMedia.addListener(this.mediaQueryListener);
-      }
+    // Media Query Listener to detect a menu closing on mobile devices that change orientation.
+    if (window.matchMedia) {
+      this.matchMedia = window.matchMedia('(orientation: landscape)');
+      this.mediaQueryListener = function () {
+        // Match every time.
+        if (!self.menu.hasClass('is-open')) {
+          return;
+        }
+        self.close();
+      };
+      this.matchMedia.addListener(this.mediaQueryListener);
+    }
   },
 
-  handleKeys: function () {
-    var self = this;
-    //http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
+  handleKeys() {
+    const self = this;
+    // http://access.aol.com/dhtml-style-guide-working-group/#popupmenu
 
-    //Handle Events in Anchors
+    // Handle Events in Anchors
     this.menu.onTouchClick('popupmenu', 'a')
-      .on('click.popupmenu', 'a', function(e) {
+      .on('click.popupmenu', 'a', function (e) {
         self.handleItemClick(e, $(this));
       });
 
-    var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+    const excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
 
-    //Select on Focus
+    // Select on Focus
     if (this.settings.mouseFocus) {
       this.menu.on('mouseenter.popupmenu', 'li', function () {
         self.highlight($(this).children('a'));
       });
     }
 
-    setTimeout(function() {
-      $(document).off('keydown.popupmenu.' + this.id).on('keydown.popupmenu.' + this.id, function (e) {
-        var key = e.which,
-          focus;
+    setTimeout(function () {
+      $(document).off(`keydown.popupmenu.${this.id}`).on(`keydown.popupmenu.${this.id}`, (e) => {
+        const key = e.which;
 
-        //Close on escape
+        // Close on escape
         if (key === 27) {
           e.stopPropagation();
           e.stopImmediatePropagation();
@@ -475,30 +513,31 @@ PopupMenu.prototype = {
           return false;
         }
 
-        //Close on tab
+        // Close on tab
         if (key === 9) {
           e.stopPropagation();
           self.close(true);
         }
 
-        //Select Checkboxes
+        // Select Checkboxes
         if (key === 32) {
           e.stopPropagation();
 
-          var target = $(e.target),
-            checkbox = target.find('input:checkbox');
+          const target = $(e.target);
+          const checkbox = target.find('input:checkbox');
+
           if (checkbox.length) {
             checkbox.trigger('click');
-            return;
+            return true;
           }
 
-          var a = $();
+          let a = $();
 
           // Return here and let Tabs control handle the spacebar
           if (target.is('.tab') || target.parent().is('.tab') || target.is('.tab-more')) {
             // Spacebar acts like Enter if there aren't any checkboxes (trigger links, etc)
             e.preventDefault();
-            return;
+            return true;
           }
 
           if (target.is('li')) {
@@ -511,14 +550,14 @@ PopupMenu.prototype = {
 
           if (a.length) {
             a.trigger('click');
-            return;
+            return true;
           }
         }
 
-        focus = self.menu.find(':focus');
+        const focus = self.menu.find(':focus');
 
-        var isPicker = (self.settings.menu === 'colorpicker-menu'),
-          isAutocomplete = self.element.is('.autocomplete');
+        const isPicker = (self.settings.menu === 'colorpicker-menu');
+        const isAutocomplete = self.element.is('.autocomplete');
 
         // Close Submenu
         if (key === 37 && !isAutocomplete) {
@@ -526,24 +565,29 @@ PopupMenu.prototype = {
           e.preventDefault();
 
           if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
-            focus.closest('.popupmenu').removeClass('is-open').parent().parent().removeClass('is-submenu-open');
+            focus.closest('.popupmenu').removeClass('is-open').parent().parent()
+              .removeClass('is-submenu-open');
             self.highlight(focus.closest('.popupmenu').parent().prev('a'));
           }
         }
 
-        var getPrev, getNext, getLast, getFirst;
+        let getPrev;
+        let getNext;
+        let getLast;
+        let getFirst;
 
-        getPrev = function(a) {
-          var prevs = a.parent().prevAll(excludes),
-            prev;
+        getPrev = function (a) { //eslint-disable-line
+          const prevs = a.parent().prevAll(excludes);
+          let prev;
 
-          prevs.each(function() {
+          prevs.each(function () {
             if (prev) {
               return;
             }
 
-            var li = $(this),
-              targetA = li.children('a');
+            const li = $(this);
+            const targetA = li.children('a');
+
             if (li.is('.is-disabled') || targetA.prop('disabled') === true) {
               return;
             }
@@ -557,9 +601,9 @@ PopupMenu.prototype = {
           return prev;
         };
 
-        getFirst = function(a) {
-          var first = a.parent().prevAll(excludes).last(),
-            targetA = first.children('a');
+        getFirst = function (a) { //eslint-disable-line
+          const first = a.parent().prevAll(excludes).last();
+          const targetA = first.children('a');
 
           if (first.is('.is-disabled') || targetA.prop('disabled') === true) {
             return getNext(targetA);
@@ -568,17 +612,18 @@ PopupMenu.prototype = {
           return targetA;
         };
 
-        getNext = function(a) {
-          var nexts = a.parent().nextAll(excludes),
-            next;
+        getNext = function (a) {  //eslint-disable-line
+          const nexts = a.parent().nextAll(excludes);
+          let next;
 
-          nexts.each(function() {
+          nexts.each(function () {
             if (next) {
               return;
             }
 
-            var li = $(this),
-              targetA = li.children('a');
+            const li = $(this);
+            const targetA = li.children('a');
+
             if (li.is('.is-disabled') || targetA.prop('disabled') === true) {
               return;
             }
@@ -592,9 +637,9 @@ PopupMenu.prototype = {
           return next;
         };
 
-        getLast = function(a) {
-          var last = a.parent().nextAll(excludes).last(),
-            targetA = last.children('a');
+        getLast = function (a) { //eslint-disable-line
+          const last = a.parent().nextAll(excludes).last();
+          const targetA = last.children('a');
 
           if (last.is('.is-disabled') || targetA.prop('disabled') === true) {
             return getPrev(targetA);
@@ -604,43 +649,43 @@ PopupMenu.prototype = {
         };
 
         // Count number of rows in picker
-        var rowCount = 0,
-            colors = self.menu.children(excludes),
-            colorsLength = colors.length,
-            currentOffsetTop = 0;
+        let rowCount = 0;
+        const colors = self.menu.children(excludes);
+        const colorsLength = colors.length;
+        let currentOffsetTop = 0;
 
-        for (var i = 0; i < colorsLength; i++) {
-          var colorItem = colors[i];
+        for (let i = 0; i < colorsLength; i++) {
+          const colorItem = colors[i];
 
           if (currentOffsetTop === 0) {
             currentOffsetTop = colorItem.offsetTop;
           }
 
-          if(colorItem.offsetTop === currentOffsetTop) {
+          if (colorItem.offsetTop === currentOffsetTop) {
             rowCount++;
           } else {
             break;
           }
         }
 
-        //Up on Up
+        // Up on Up
         if ((!isPicker && key === 38) || (isPicker && key === 37)) {
-           e.stopPropagation();
-           e.preventDefault();
+          e.stopPropagation();
+          e.preventDefault();
 
-          //Go back to Top on the last one
+          // Go back to Top on the last one
           if (focus.parent().prevAll(excludes).length === 0) {
             if (focus.length === 0) {
               self.highlight(self.menu.children(excludes).last().find('a'));
             } else {
               self.highlight(getLast(focus));
             }
-            return;
+            return undefined;
           }
           self.highlight(getPrev(focus));
         }
 
-        //Up a square
+        // Up a square
         if (isPicker && key === 38) {
           e.stopPropagation();
           e.preventDefault();
@@ -650,8 +695,8 @@ PopupMenu.prototype = {
           }
         }
 
-        //Right Open Submenu
-        if (key === 39  && !isAutocomplete) {
+        // Right Open Submenu
+        if (key === 39 && !isAutocomplete) {
           e.stopPropagation();
           e.preventDefault();
 
@@ -661,24 +706,24 @@ PopupMenu.prototype = {
           }
         }
 
-        //Down
+        // Down
         if ((!isPicker && key === 40) || (isPicker && key === 39 && !isAutocomplete)) {
           e.stopPropagation();
           e.preventDefault();
 
-          //Go back to Top on the last one
+          // Go back to Top on the last one
           if (focus.parent().nextAll(excludes).length === 0) {
             if (focus.length === 0) {
               self.highlight(self.menu.children(excludes).first().find('a'));
             } else {
               self.highlight(getFirst(focus));
             }
-            return;
+            return undefined;
           }
           self.highlight(getNext(focus));
         }
 
-        //Down a square
+        // Down a square
         if ((isPicker && key === 40)) {
           e.stopPropagation();
           e.preventDefault();
@@ -687,7 +732,7 @@ PopupMenu.prototype = {
             self.highlight($(focus.parent().nextAll(excludes)[rowCount - 1]).find('a'));
           }
         }
-
+        return undefined;
       });
     }, 1);
   },
@@ -695,23 +740,26 @@ PopupMenu.prototype = {
   /**
    * Handles the action of clicking items in the popupmenu.
    * @private
+   * @param {jQuery.Event} e jQuery `click` event
+   * @param {jQuery[]} anchor the anchor tag element that was clicked
+   * @returns {boolean} whether or not the click handler successfully passed.
    */
-  handleItemClick: function(e, anchor) {
-    var href = anchor.attr('href'),
-      selectionResult = [anchor];
+  handleItemClick(e, anchor) {
+    const href = anchor.attr('href');
+    let selectionResult = [anchor];
 
     if (!e && !anchor) {
-      return;
+      return false;
     }
 
     if (anchor.parent().is('.submenu, .hidden, .is-disabled') || anchor[0].disabled) {
-      //Do not close parent items of submenus on click
+      // Do not close parent items of submenus on click
       e.preventDefault();
-      return;
+      return false;
     }
 
     if (anchor.find('input[checkbox]').length > 0) {
-      return;
+      return false;
     }
 
     if (this.element.hasClass('btn-filter')) {
@@ -743,13 +791,13 @@ PopupMenu.prototype = {
     // MultiSelect Lists should act like other "multiselect" items and not
     // close the menu when options are chosen.
     if (this.menu.hasClass('is-multiselectable') || this.isInMultiselectSection(anchor)) {
-      return;
+      return true;
     }
 
     this.close();
 
     if (this.element.is('.autocomplete')) {
-      return;
+      return true;
     }
 
     if (href && href.charAt(0) !== '#') {
@@ -765,14 +813,21 @@ PopupMenu.prototype = {
       e.preventDefault();
       e.stopPropagation();
     }
+
+    return true;
   },
 
-  // Filtering icon initial setup
-  iconFilteringSetup: function(alink) {
+  /**
+   * Filtering icon initial setup
+   * @private
+   * @param {jQuery[]} [alink] menu item to be targeted
+   * @returns {void}
+   */
+  iconFilteringSetup(alink) {
     if (this.element.hasClass('btn-filter')) {
-      var svg = this.element.find('svg.icon-dropdown'),
-        link = alink || $('li:first a', this.menu),
-        audibleText = link.find('span').text();
+      const svg = this.element.find('svg.icon-dropdown');
+      const link = alink || $('li:first a', this.menu);
+      const audibleText = link.find('span').text();
 
       if (svg.length === 1) {
         this.element.append($.createIconElement({ classes: 'icon-dropdown', icon: 'dropdown' }));
@@ -783,20 +838,30 @@ PopupMenu.prototype = {
     }
   },
 
-  // Filtering icon update
-  iconFilteringUpdate: function(alink) {
+  /**
+   * Filtering icon update
+   * @private
+   * @param {jQuery[]} [alink] menu item to be targeted
+   * @returns {void}
+   */
+  iconFilteringUpdate(alink) {
     if (this.element.hasClass('btn-filter')) {
-      var link = alink || $('li:first a', this.menu),
-        audibleText = link.find('span').text();
+      const link = alink || $('li:first a', this.menu);
+      const audibleText = link.find('span').text();
 
       this.element.find('.audible').text(audibleText);
       this.element.find('svg:not(.ripple-effect):first').changeIcon(link.find('svg').getIconName());
     }
   },
 
-  // Get the event position, handling browser cases (IE,FF) as well as SVG
-  getPositionFromEvent: function (e) {
-    var x = 0, y = 0;
+  /**
+   * Get the event position, handling browser cases (IE,FF) as well as SVG
+   * @param {jQuery.Event} e the mouse event to be checked for pageX/pageY
+   * @returns {object} containing x/y coordinates
+   */
+  getPositionFromEvent(e) {
+    let x = 0;
+    let y = 0;
 
     if (!e) {
       e = window.event;
@@ -817,28 +882,33 @@ PopupMenu.prototype = {
     }
 
     return {
-      x: x,
-      y: y
+      x,
+      y
     };
   },
 
-  position: function(e) {
-    var self = this,
-      target = this.element,
-      isRTL = this.isRTL(),
-      wrapper = this.menu.parent('.popupmenu-wrapper'),
-      mouse =  this.getPositionFromEvent(e),
-      menuDimensions = {
-        width: this.menu.outerWidth(),
-        height: this.menu.outerHeight()
-      };
+  /**
+   * Sets the position of the context menu.
+   * @param {jQuery.Event} e jQuery Event that caused the menu to open (can be several types)
+   * @returns {void}
+   */
+  position(e) {
+    const self = this;
+    let target = this.element;
+    const isRTL = this.isRTL();
+    const wrapper = this.menu.parent('.popupmenu-wrapper');
+    const mouse = this.getPositionFromEvent(e);
+    const menuDimensions = {
+      width: this.menu.outerWidth(),
+      height: this.menu.outerHeight()
+    };
 
     if (!wrapper.length) {
       return;
     }
 
     // Make the field the same size
-    var elemWidth = this.element.outerWidth();
+    const elemWidth = this.element.outerWidth();
     if (this.settings.trigger === 'click' && elemWidth > menuDimensions.width) {
       this.menu.width(elemWidth);
     }
@@ -847,7 +917,7 @@ PopupMenu.prototype = {
       target = target.closest('.tab');
     }
 
-    function getCoordinates(e, axis) {
+    function getCoordinates(thisE, axis) {
       axis = ((axis === 'x' || axis === 'y') ? axis : 'x');
       return mouse[axis]; // use mouseX/mouseY if this doesn't work
     }
@@ -855,8 +925,8 @@ PopupMenu.prototype = {
     // Reset the arrow
     wrapper.find('.arrow').removeAttr('style');
 
-    var opts = $.extend({}, this.settings.placementOpts),
-      strategies = ['flip'];
+    const opts = $.extend({}, this.settings.placementOpts);
+    const strategies = ['flip'];
 
     /*
     if (!target.is('.autocomplete, .searchfield')) {
@@ -878,7 +948,6 @@ PopupMenu.prototype = {
         opts.placement = 'bottom';
         opts.parentXAlignment = isRTL ? 'right' : 'left';
       }
-
     } else {
       opts.x = this.settings.offset.x || 0;
       opts.y = this.settings.offset.y || 0;
@@ -887,18 +956,19 @@ PopupMenu.prototype = {
       opts.strategies.push('nudge');
     }
 
-    //=======================================================
-    // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
-    //=======================================================
+    //= ======================================================
+    // BEGIN Temporary stuff until we sort out passing these settings
+    // from the controls that utilize them
+    //= ======================================================
 
-    var toolbarParent = target.parents('.toolbar'),
-      insideToolbar = toolbarParent.length > 0,
-      insideToolbarTitle = target.parents('.title').length > 0,
-      isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1,
-      isPagerMenu = target.parents('.pager-pagesize').length > 0;
+    const toolbarParent = target.parents('.toolbar');
+    const insideToolbar = toolbarParent.length > 0;
+    const insideToolbarTitle = target.parents('.title').length > 0;
+    const isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1;
+    const isPagerMenu = target.parents('.pager-pagesize').length > 0;
 
     function alignLeft() {
-      opts.parentXAlignment = (isRTL ? 'right': 'left');
+      opts.parentXAlignment = (isRTL ? 'right' : 'left');
     }
 
     function alignRight() {
@@ -906,7 +976,7 @@ PopupMenu.prototype = {
     }
 
     function shiftDown() {
-      opts.y = opts.y + 15;
+      opts.y += 15;
     }
 
     // Change the alignment of the popupmenu based on certain conditions
@@ -939,9 +1009,11 @@ PopupMenu.prototype = {
 
       if ((target.is('.btn-split-menu, .tab, .searchfield-category-button') &&
         !target.parent('.pager-pagesize').length)) {
-          return alignLeft();
-        }
-    })();
+        return alignLeft();
+      }
+
+      return undefined;
+    }());
 
     if (target.parents('.masthead').length > 0) {
       shiftDown();
@@ -949,34 +1021,35 @@ PopupMenu.prototype = {
 
     // If inside a "page-container" element, constrain the popupmenu to that element
     // (fixes SOHO-6223)
-    var container = this.element.parents('.page-container:not(.tab-container)');
+    const container = this.element.parents('.page-container:not(.tab-container)');
     if (container.length) {
       opts.container = container.first();
     }
 
-    //=======================================================
-    // END Temporary stuff until we sort out passing these settings from the controls that utilize them
-    //=======================================================
+    //= ======================================================
+    // END Temporary stuff until we sort out passing these settings
+    // from the controls that utilize them
+    //= ======================================================
 
-    wrapper.one('afterplace.popupmenu', function(e, positionObj) {
-      self.handleAfterPlace(e, positionObj);
+    wrapper.one('afterplace.popupmenu', (thisE, positionObj) => {
+      self.handleAfterPlace(thisE, positionObj);
     });
 
     this.wrapperPlace = new Place(wrapper, opts);
     this.wrapperPlace.place(opts);
   },
 
-  handleAfterPlace: function(e, placementObj) {
-    var wrapper = this.menu.parent('.popupmenu-wrapper');
+  handleAfterPlace(e, placementObj) {
+    const wrapper = this.menu.parent('.popupmenu-wrapper');
     this.wrapperPlace.setArrowPosition(e, placementObj, wrapper);
 
     if (placementObj.height) {
       wrapper[0].style.height = '';
-      this.menu[0].style.height = (placementObj.height) + (/(px|%)/i.test(placementObj.height + '') ? '' : 'px');
+      this.menu[0].style.height = (placementObj.height) + (/(px|%)/i.test(`${placementObj.height}`) ? '' : 'px');
     }
     if (placementObj.width) {
       wrapper[0].style.width = '';
-      this.menu[0].style.width = (placementObj.width) + (/(px|%)/i.test(placementObj.width + '') ? '' : 'px');
+      this.menu[0].style.width = (placementObj.width) + (/(px|%)/i.test(`${placementObj.width}`) ? '' : 'px');
     }
 
     wrapper.triggerHandler('popupmenuafterplace', [placementObj]);
@@ -986,35 +1059,37 @@ PopupMenu.prototype = {
   /**
    * Calls an external source.
    * @private
-   * @param {jQuery.Event} e
-   * @param {boolean} doOpen
-   * @param {jQuery[]|HTMLElement} [contextElement] - if passed, represents a submenu as the actionable, replaceable menu element instead of the main menu.
+   * @param {jQuery.Event} [e] an event that triggered the Popupmenu to open
+   *  (could be several types)
+   * @param {boolean} [doOpen] causes the menu to re-open once the data has been reloaded.
+   * @param {jQuery[]|HTMLElement} [contextElement] if passed, represents a submenu
+   *  as the actionable, replaceable menu element instead of the main menu.
    */
-  callSource: function (e, doOpen, contextElement) {
+  callSource(e, doOpen, contextElement) {
     if (typeof this.settings.beforeOpen !== 'function') {
       return;
     }
 
-    var self = this,
-      targetMenu = this.menu;
+    const self = this;
+    let targetMenu = this.menu;
 
     // Use a different menu, if applicable
     if (DOM.isElement(contextElement) && $(contextElement).is('.popupmenu, .submenu')) {
       targetMenu = $(contextElement);
     }
 
-    var response = function(content) {
-      var existingMenuItems = targetMenu.children();
+    const response = function (content) {
+      const existingMenuItems = targetMenu.children();
       existingMenuItems.off().remove();
 
       if (content === false) {
         return false;
       }
 
-      var newContent = $(content);
+      const newContent = $(content);
       targetMenu.append(newContent);
 
-      var wrapper = targetMenu.parent('.wrapper, .popupmenu-wrapper');
+      let wrapper = targetMenu.parent('.wrapper, .popupmenu-wrapper');
       if (!wrapper.length) {
         wrapper = targetMenu.wrap('<div class="wrapper">').parent();
       }
@@ -1052,7 +1127,7 @@ PopupMenu.prototype = {
       */
     };
 
-    var callbackOpts = {};
+    const callbackOpts = {};
     if (!targetMenu.is(this.menu)) {
       callbackOpts.contextElement = targetMenu;
     }
@@ -1063,13 +1138,12 @@ PopupMenu.prototype = {
     }
 
     this.settings.beforeOpen(response, callbackOpts);
-    return;
   },
 
-  open: function(e, ajaxReturn) {
-    var self = this;
+  open(e, ajaxReturn) {
+    const self = this;
 
-    var canOpen = this.element.triggerHandler('beforeopen', [this.menu]);
+    let canOpen = this.element.triggerHandler('beforeopen', [this.menu]);
     if (canOpen === false) {
       return;
     }
@@ -1083,17 +1157,17 @@ PopupMenu.prototype = {
       }
     }
 
-    var otherMenus = $('.popupmenu.is-open').filter(function() {
+    const otherMenus = $('.popupmenu.is-open').filter(function () {
       return $(this).parents('.popupmenu').length === 0;
-    }).not(this.menu);  //close others.
+    }).not(this.menu); // close others.
 
-    otherMenus.each(function() {
-      var trigger = $(this).data('trigger');
+    otherMenus.each(function () {
+      const trigger = $(this).data('trigger');
       if (!trigger || !trigger.length) {
         return;
       }
 
-      var api = $(this).data('trigger').data('popupmenu');
+      const api = $(this).data('trigger').data('popupmenu');
       if (api && typeof api.close === 'function') {
         api.close();
       }
@@ -1109,14 +1183,14 @@ PopupMenu.prototype = {
     this.position(e);
 
     if (this.element.closest('.header').length > 0) {
-      this.menu.parent()[0].style.zIndex =  '9001';
+      this.menu.parent()[0].style.zIndex = '9001';
     }
 
     // Check every anchor tag to see if it should be disabled.
     // Use the CSS class on its parent to determine whether or not to disable.
-    this.menu.find('a').each(function() {
-      var a = $(this),
-        li = a.parent();
+    this.menu.find('a').each(function () {
+      const a = $(this);
+      const li = a.parent();
 
       if (li.hasClass('is-disabled')) {
         li.addClass('is-disabled');
@@ -1129,95 +1203,96 @@ PopupMenu.prototype = {
       }
     });
 
-    //Close on Document Click ect..
-    setTimeout(function () {
-      $(document).on('touchend.popupmenu.' + self.id +' click.popupmenu.' + self.id, function (e) {
-        if (e.button === 2) {
+    // Close on Document Click ect..
+    setTimeout(() => {
+      $(document).on(`touchend.popupmenu.${self.id} click.popupmenu.${self.id}`, (thisE) => {
+        if (thisE.button === 2) {
           return;
         }
 
-        //Click functionality will toggle the menu - otherwise it closes and opens
-        if ($(e.target).is(self.element)) {
+        // Click functionality will toggle the menu - otherwise it closes and opens
+        if ($(thisE.target).is(self.element)) {
           return;
         }
 
-        if ($(e.target).closest('.popupmenu').length === 0) {
-          self.close(true, self.settings.trigger ==='rightClick');
+        if ($(thisE.target).closest('.popupmenu').length === 0) {
+          self.close(true, self.settings.trigger === 'rightClick');
         }
       });
 
       // in desktop environments, close the list on viewport resize
       if (window.orientation === undefined) {
-        $('body').on('resize.popupmenu', function() {
+        $('body').on('resize.popupmenu', () => {
           self.close();
         });
       }
 
-      $(window).on('scroll.popupmenu', function () {
+      $(window).on('scroll.popupmenu', () => {
         self.close();
       });
 
-      $('.scrollable, .modal.is-visible .modal-body-wrapper').on('scroll.popupmenu', function () {
+      $('.scrollable, .modal.is-visible .modal-body-wrapper').on('scroll.popupmenu', () => {
         self.close();
       });
 
       self.element.triggerHandler('open', [self.menu]);
 
       if (self.settings.trigger === 'rightClick') {
-        self.element.on('click.popupmenu touchend.popupmenu', function () {
+        self.element.on('click.popupmenu touchend.popupmenu', () => {
           self.close();
         });
       }
     }, 300);
 
-    //Hide on iFrame Clicks - only works if on same domain
+    // Hide on iFrame Clicks - only works if on same domain
     $('iframe').each(function () {
-      var frame = $(this);
-      frame.ready(function () {
-
+      const frame = $(this);
+      frame.ready(() => {
         try {
-          frame.contents().find('body').on('click.popupmenu', function () {
+          frame.contents().find('body').on('click.popupmenu', () => {
             self.close();
           });
-        } catch (e)  {
-          //Ignore security errors on out of iframe
+        } catch (thisE) {
+          // Ignore security errors on out of iframe
         }
-
       });
     });
 
     this.handleKeys();
 
-    //hide and decorate submenus - we use a variation on
-    var tracker = 0, startY, menuToClose, timeout;
+    // hide and decorate submenus - we use a variation on
+    let tracker = 0;
+    let startY;
+    let menuToClose;
+    let timeout;
 
     self.menu.find('.popupmenu').removeClass('is-open');
-    self.menu.on('mouseenter.popupmenu touchstart.popupmenu', '.submenu', function (e) {
-      var menuitem = $(this);
-      startY = e.pageX;
+    self.menu.on('mouseenter.popupmenu touchstart.popupmenu', '.submenu', function (thisE) {
+      const menuitem = $(this);
+      startY = thisE.pageX;
 
       clearTimeout(timeout);
-      timeout = setTimeout(function () {
+      timeout = setTimeout(() => {
         self.openSubmenu(menuitem);
       }, 300);
 
-      $(document).on('mousemove.popupmenu.' + this.id, function (e) {
-        tracker = e.pageX;
+      $(document).on(`mousemove.popupmenu.${this.id}`, (documentE) => {
+        tracker = documentE.pageX;
       });
     }).on('mouseleave.popupmenu', '.submenu', function () {
-      $(document).off('mousemove.popupmenu.' + this.id);
+      $(document).off(`mousemove.popupmenu.${this.id}`);
 
       menuToClose = $(this).find('ul');
 
-      var hasWrapper = menuToClose.parent('.wrapper').length > 0,
-        isLeft = (hasWrapper ? parseInt(menuToClose.parent('.wrapper')[0].style.left) : 0) < 0,
-        canClose = (tracker - startY) < 3.5;
+      const hasWrapper = menuToClose.parent('.wrapper').length > 0;
+      const isLeft = (hasWrapper ? parseInt(menuToClose.parent('.wrapper')[0].style.left, 10) : 0) < 0;
+      let canClose = (tracker - startY) < 3.5;
 
       if (isLeft) {
         canClose = (tracker - startY) >= 0;
       }
 
-      if (canClose) { //We are moving slopie to the menu
+      if (canClose) { // We are moving slopie to the menu
         menuToClose.removeClass('is-open').removeAttr('style');
         menuToClose.parent('.wrapper').removeAttr('style');
         menuToClose.parent().parent().removeClass('is-submenu-open');
@@ -1227,9 +1302,9 @@ PopupMenu.prototype = {
     });
 
     if (self.settings.autoFocus) {
-      setTimeout(function () {
-        var excludes = ':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)',
-          selection = self.menu.children(excludes).find('.is-selected').children('a');
+      setTimeout(() => {
+        const excludes = ':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+        let selection = self.menu.children(excludes).find('.is-selected').children('a');
 
         if (!selection.length) {
           selection = self.menu.children(excludes).first().children('a');
@@ -1241,17 +1316,25 @@ PopupMenu.prototype = {
     }
   },
 
-  openSubmenu: function(li, ajaxReturn) {
+  /**
+   * Opens a top-level menu item's submenu, if applicable
+   * @private
+   * @param {jQuery[]} li the list item that needs to be opened.
+   * @param {boolean} [ajaxReturn] if defined, prevents an external source from
+   *  re-populating the menu before it opens.
+   * @returns {void}
+   */
+  openSubmenu(li, ajaxReturn) {
     if (DOM.classNameHas(li[0].className, 'is-disabled') || li[0].disabled) {
       return;
     }
 
-    var submenu = li.children('.wrapper, .popupmenu');
+    let submenu = li.children('.wrapper, .popupmenu');
     if (submenu.length && submenu.is('.wrapper')) {
       submenu = submenu.children('.popupmenu');
     }
 
-    var canOpen = this.element.triggerHandler('beforeopen', [submenu]);
+    let canOpen = this.element.triggerHandler('beforeopen', [submenu]);
     if (canOpen === false) {
       return;
     }
@@ -1264,28 +1347,34 @@ PopupMenu.prototype = {
       }
     }
 
-    return this.showSubmenu(li);
+    this.showSubmenu(li);
   },
 
-  showSubmenu: function (li) {
+  /**
+   * Opens a top-level menu item's submenu, if applicable
+   * @private
+   * @param {jQuery[]} li the list item that needs to be opened.
+   * @returns {void}
+   */
+  showSubmenu(li) {
     // Trigger an event so other components can listen to this element as a popupmenu trigger.
     this.element.triggerHandler('show-submenu', [li]);
 
-    var wrapper = li.children('.wrapper').filter(':first'),
-      isRTL = this.isRTL(),
-      rtlPadding = 30;
+    let wrapper = li.children('.wrapper').filter(':first');
+    const isRTL = this.isRTL();
+    const rtlPadding = 30;
 
     // Wrap if not wrapped (dynamic menu situation)
     if (wrapper.length === 0) {
-      var ul = li.children('ul').filter(':first');
+      const ul = li.children('ul').filter(':first');
       ul.wrap('<div class="wrapper"></div>');
       wrapper = ul.parent();
     }
 
-    var menu = wrapper.children('.popupmenu'),
-      mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top,
-      wrapperLeft = li.position().left + li.outerWidth(),
-      wrapperWidth = 0;
+    const menu = wrapper.children('.popupmenu');
+    const mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
+    let wrapperLeft = li.position().left + li.outerWidth();
+    let wrapperWidth = 0;
 
     li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
 
@@ -1295,71 +1384,82 @@ PopupMenu.prototype = {
     if (isRTL) {
       wrapperLeft = li.position().left - wrapperWidth;
     }
-    wrapper[0].style.left = wrapperLeft + 'px';
-    wrapper[0].style.top = (parseInt(li.position().top) - 5) + 'px';
+    wrapper[0].style.left = `${wrapperLeft}px`;
+    wrapper[0].style.top = `${parseInt(li.position().top, 10) - 5}px`;
 
-    //Handle Case where the menu is off to the right
-    var menuWidth = menu.outerWidth();
-    if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft()) || (isRTL && wrapper.offset().left < 0)) {
+    // Handle Case where the menu is off to the right
+    let menuWidth = menu.outerWidth();
+    if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft()) ||
+      (isRTL && wrapper.offset().left < 0)) {
       wrapper[0].style.left = '-9999px';
       menuWidth = menu.outerWidth();
       wrapperLeft = li.position().left - menuWidth;
 
       if (isRTL) {
-        var parentMenuWidth = wrapper.closest('.popupmenu').outerWidth();
+        const parentMenuWidth = wrapper.closest('.popupmenu').outerWidth();
         wrapperLeft = parentMenuWidth - 4; // Move back across the parent menu
       }
-      wrapper[0].style.left = wrapperLeft + 'px';
+      wrapper[0].style.left = `${wrapperLeft}px`;
 
       // Did it fit?
-      if (wrapper.offset().left < 0 || (isRTL && (wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft()))) {
+      if (wrapper.offset().left < 0 ||
+        (isRTL &&
+          (wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())
+        )
+      ) {
         // No. Push the menu's left offset onto the screen.
         wrapperLeft = li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 40;
         if (isRTL) {
           wrapperLeft = li.position().left - menuWidth - rtlPadding;
         }
-        wrapper[0].style.left = wrapperLeft + 'px';
+        wrapper[0].style.left = `${wrapperLeft}px`;
         menuWidth = menu.outerWidth();
       }
 
       // Do one more check to see if the right edge bleeds off the screen.
       // If it does, shrink the menu's X size.
-      if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft()) || (isRTL && wrapper.offset().left < 0)) {
-        var differenceY = (wrapper.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
-        menuWidth = menuWidth - differenceY;
-        menu[0].style.width = menuWidth + 'px';
+      if ((wrapper.offset().left + menuWidth) >
+        ($(window).width() + $(document).scrollLeft()) || (isRTL && wrapper.offset().left < 0)) {
+        const differenceY = (wrapper.offset().left + menuWidth) -
+          ($(window).width() + $(document).scrollLeft());
+        menuWidth -= differenceY;
+        menu[0].style.width = `${menuWidth}px`;
       }
     }
 
-    //Handle Case where menu is off bottom
-    var menuHeight = menu.outerHeight();
+    // Handle Case where menu is off bottom
+    let menuHeight = menu.outerHeight();
     if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
       // First try bumping up the menu to sit just above the bottom edge of the window.
-      var bottomEdgeCoord = wrapper.offset().top + menuHeight,
-        differenceFromBottomY = bottomEdgeCoord - ($(window).height() + $(document).scrollTop());
+      const bottomEdgeCoord = wrapper.offset().top + menuHeight;
+      const differenceFromBottomY = bottomEdgeCoord -
+        ($(window).height() + $(document).scrollTop());
 
-      wrapper[0].style.top = (wrapper.position().top - differenceFromBottomY) + 'px';
+      wrapper[0].style.top = `${wrapper.position().top - differenceFromBottomY}px`;
 
       // Does it fit?
       if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-        // No. Bump the menu up higher based on the menu's height and the extra space from the main wrapper.
-        wrapper[0].style.top = (($(window).height() + $(document).scrollTop()) - menuHeight - mainWrapperOffset) + 'px';
+        // No. Bump the menu up higher based on the menu's height and the extra
+        // space from the main wrapper.
+        wrapper[0].style.top = `${($(window).height() + $(document).scrollTop()) -
+          menuHeight - mainWrapperOffset}px`;
       }
 
       // Does it fit now?
       if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
         // No. Push the menu down onto the screen from the top of the window edge.
         wrapper[0].style.top = 0;
-        wrapper[0].style.top = (wrapper.offset().top * -1) + 'px';
+        wrapper[0].style.top = `${wrapper.offset().top * -1}px`;
         menuHeight = menu.outerHeight();
       }
 
       // Do one more check to see if the bottom edge bleeds off the screen.
       // If it does, shrink the menu's Y size and make it scrollable.
       if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-        var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
+        const differenceX = (wrapper.offset().top + menuHeight) -
+          ($(window).height() + $(document).scrollTop());
         menuHeight = menuHeight - differenceX - 32;
-        menu[0].style.height = menuHeight + 'px';
+        menu[0].style.height = `${menuHeight}px`;
       }
     }
 
@@ -1367,54 +1467,66 @@ PopupMenu.prototype = {
     li.addClass('is-submenu-open');
   },
 
-  highlight: function(anchor) {
+  /**
+   * Places a highlighted visual state on an item inside the menu
+   * @param {jQuery[]} anchor the anchor tag representing the menu item.
+   * @returns {void}
+   */
+  highlight(anchor) {
     if (!anchor || !anchor.length) {
-      return false;
+      return;
     }
 
-    var li = anchor.parent();
+    const li = anchor.parent();
 
     li.parent().children('li').removeClass('is-focused');
     li.addClass('is-focused');
 
-    //Prevent chrome from scrolling - toolbar
+    // Prevent chrome from scrolling - toolbar
     anchor.focus();
     li.closest('.header').scrollTop(0);
-
   },
 
-  // adds/removes checkmarks that are in selectable groups inside the popupmenu
-  select: function(anchor) {
-    var singleMenu = this.menu.is('.is-selectable'),
-      multipleMenu = this.menu.is('.is-multiselectable'),
-      singleSection = this.isInSingleSelectSection(anchor),
-      multipleSection = this.isInMultiselectSection(anchor),
-      parent = anchor.parent(),
-      returnObj = [anchor, 'selected'];
-
-    if (!singleMenu && !multipleMenu && !singleSection && !multipleSection) {
-      return;
-    }
+  /**
+   * Adds/removes checkmarks that are in selectable groups inside the Popupmenu
+   * @param {jQuery[]} anchor the anchor tag representing the menu item.
+   * @returns {array} updated references to the anchor and its state.
+   */
+  select(anchor) {
+    const singleMenu = this.menu.is('.is-selectable');
+    const multipleMenu = this.menu.is('.is-multiselectable');
+    const singleSection = this.isInSingleSelectSection(anchor);
+    const multipleSection = this.isInMultiselectSection(anchor);
+    const parent = anchor.parent();
+    const returnObj = [anchor];
 
     // If the entire menu is "selectable", place the checkmark where it's supposed to go.
     if (singleMenu || singleSection) {
       parent.prevUntil('.heading, .separator').add(parent.nextUntil('.heading, .separator')).removeClass('is-checked');
       parent.addClass('is-checked');
+      returnObj.push('selected');
       return returnObj;
     }
 
     if (multipleMenu || multipleSection) {
       if (parent.hasClass('is-checked')) {
-        returnObj[1] = 'deselected';
         parent.removeClass('is-checked');
+        returnObj.push('deselected');
         return returnObj;
       }
       parent.addClass('is-checked');
+      returnObj.push('selected');
       return returnObj;
     }
+
+    return returnObj;
   },
 
-  getSelected: function() {
+  /**
+   * Gets references to top-level menu items that are currently selected.
+   * @returns {jQuery[]} elements inside the top-level menu that are selected.
+   */
+  getSelected() {
     if (!this.menu.is('.is-selectable, .is-multiselectable')) {
       return $();
     }
@@ -1422,21 +1534,44 @@ PopupMenu.prototype = {
     return this.menu.children('.is-checked').children('a');
   },
 
-  isInSelectableSection: function(anchor) {
-    var separator = anchor.parent().prevAll().filter('.separator').first();
+  /**
+   * Determines whether or not an anchor resides inside of a selectable Popupmenu section.
+   * @param {jQuery[]} anchor the anchor tag being checked.
+   * @returns {jQuery[]} elements inside the top-level menu that are selected.
+   */
+  isInSelectableSection(anchor) {
+    const separator = anchor.parent().prevAll().filter('.separator').first();
     return (separator.hasClass('multi-selectable-section') || separator.hasClass('single-selectable-section'));
   },
 
-  isInSingleSelectSection: function(anchor) {
-    return anchor.parent().prevAll().filter('.separator').first().hasClass('single-selectable-section');
+  /**
+   * Determines whether or not an anchor resides inside of a single-selectable Popupmenu section.
+   * @param {jQuery[]} anchor the anchor tag being checked.
+   * @returns {jQuery[]} elements inside the top-level menu that are selected
+   *  within a single-selectable section.
+   */
+  isInSingleSelectSection(anchor) {
+    return anchor.parent().prevAll().filter('.separator').first()
+      .hasClass('single-selectable-section');
   },
 
-  isInMultiselectSection: function(anchor) {
-    return anchor.parent().prevAll().filter('.separator').first().hasClass('multi-selectable-section');
+  /**
+   * Determines whether or not an anchor resides inside of a multi-selectable Popupmenu section.
+   * @param {jQuery[]} anchor the anchor tag being checked.
+   * @returns {jQuery[]} elements inside the top-level menu that are selected
+   *  within a multi-selectable section.
+   */
+  isInMultiselectSection(anchor) {
+    return anchor.parent().prevAll().filter('.separator').first()
+      .hasClass('multi-selectable-section');
   },
 
-  detach: function () {
-    $(document).off('touchend.popupmenu.' + this.id +' click.popupmenu.' + this.id +' keydown.popupmenu');
+  /**
+   * Removes event listeners from all popupmenu elements.
+   * @returns {void}
+   */
+  detach() {
+    $(document).off(`touchend.popupmenu.${this.id} click.popupmenu.${this.id} keydown.popupmenu`);
     $(window).off('scroll.popupmenu orientationchange.popupmenu');
     $('body').off('resize.popupmenu');
     $('.scrollable').off('scroll.popupmenu');
@@ -1448,21 +1583,22 @@ PopupMenu.prototype = {
     }
 
     $('iframe').each(function () {
-      var frame = $(this);
+      const frame = $(this);
       try {
         frame.contents().find('body').off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
       } catch (e) {
-        //Ignore security errors on out of iframe
+        // Ignore security errors on out of iframe
       }
     });
   },
 
   /**
    * Close the open menu
-   * @param {boolean} isCancelled  Internally set option used if the operation is a cancel. Wont matter for manual api call.
-   * @param {boolean} noFocus  Do not return focus to the calling element (fx a button)
+   * @param {boolean} isCancelled Internally set option used if the operation is a cancel.
+   *  Wont matter for manual api call.
+   * @param {boolean} [noFocus] Do not return focus to the calling element (fx a button)
    */
-  close: function (isCancelled, noFocus) {
+  close(isCancelled, noFocus) {
     if (!isCancelled || isCancelled === undefined) {
       isCancelled = false;
     }
@@ -1471,9 +1607,9 @@ PopupMenu.prototype = {
       return;
     }
 
-    var self = this,
-      wrapper = this.menu.parent('.popupmenu-wrapper'),
-      menu = this.menu.find('.popupmenu');
+    const self = this;
+    const wrapper = this.menu.parent('.popupmenu-wrapper');
+    const menu = this.menu.find('.popupmenu');
 
     this.menu.removeClass('is-open').attr('aria-hidden', 'true');
     if (this.menu[0]) {
@@ -1498,7 +1634,7 @@ PopupMenu.prototype = {
     this.menu.find('.is-focused').removeClass('is-focused');
 
     // Close all events
-    $(document).off('keydown.popupmenu.' + this.id + ' click.popupmenu.' + this.id + ' mousemove.popupmenu.' + this.id);
+    $(document).off(`keydown.popupmenu.${this.id} click.popupmenu.${this.id} mousemove.popupmenu.${this.id}`);
     this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
     this.element.removeClass('is-open').triggerHandler('close', [isCancelled]);
@@ -1517,9 +1653,13 @@ PopupMenu.prototype = {
     }
   },
 
-  teardown: function() {
-    var self = this,
-      wrapper = this.menu.parent('.popupmenu-wrapper');
+  /**
+   * Removes bound events and generated markup from this component
+   * @returns {void}
+   */
+  teardown() {
+    const self = this;
+    const wrapper = this.menu.parent('.popupmenu-wrapper');
 
     if (this.ajaxContent) {
       this.ajaxContent.off().remove();
@@ -1536,8 +1676,8 @@ PopupMenu.prototype = {
       this.originalLocation.after(this.menu);
     } else {
       // TODO: Fix when we have time - shouldn't be referencing other controls here
-      var insertTarget = this.element,
-        searchfield = this.element.parent().children('.searchfield');
+      let insertTarget = this.element;
+      const searchfield = this.element.parent().children('.searchfield');
 
       if (searchfield.length) {
         insertTarget = searchfield.first();
@@ -1548,21 +1688,21 @@ PopupMenu.prototype = {
       }
     }
 
-    this.menu.find('.submenu').children('a').each(function(i, item) {
-      var text = $(item).find('span').text();
+    this.menu.find('.submenu').children('a').each((i, item) => {
+      const text = $(item).find('span').text();
       $(item).find('span, svg').remove();
       $(item).text(text);
     });
 
     function unwrapPopup(menu) {
-      var wrapper = menu.parent();
-      if (wrapper.is('.popupmenu-wrapper, .wrapper')) {
+      const thisWrapper = menu.parent();
+      if (thisWrapper.is('.popupmenu-wrapper, .wrapper')) {
         menu.unwrap();
       }
     }
 
     // Unwrap submenus
-    this.menu.find('.popupmenu').each(function() {
+    this.menu.find('.popupmenu').each(function () {
       unwrapPopup($(this));
     });
 
@@ -1589,7 +1729,12 @@ PopupMenu.prototype = {
     return this;
   },
 
-  updated: function(settings) {
+  /**
+   * Updates this Popupmenu instance with new settings
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
+   */
+  updated(settings) {
     this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     return this
       .teardown()
@@ -1598,8 +1743,9 @@ PopupMenu.prototype = {
 
   /**
    * Teardown markup and detach all events.
+   * @returns {void}
    */
-  destroy: function() {
+  destroy() {
     this.close();
     this.teardown();
     this.menu.trigger('destroy');

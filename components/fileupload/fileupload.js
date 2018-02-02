@@ -3,9 +3,7 @@ import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'fileupload';
 
 /**
@@ -22,9 +20,8 @@ const FILEUPLOAD_DEFAULTS = {
 * @param {String} settings The component settings.
 */
 function FileUpload(element, settings) {
-  this.settings = utils.mergeSettings(element, settings, FILEUPLOAD_DEFAULTS);
-
   this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, FILEUPLOAD_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);

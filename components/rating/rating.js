@@ -2,23 +2,22 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'rating';
 
 /**
  * Default Rating Options
+ * @namespace
  */
 const RATING_DEFAULTS = {
 };
 
 /**
-*
-* @class Rating
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
+ * @class Rating
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object} [settings] The component settings.
+ */
 function Rating(element, settings) {
   this.settings = utils.mergeSettings(element, settings, RATING_DEFAULTS);
 

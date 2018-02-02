@@ -1,12 +1,13 @@
 import { Place, COMPONENT_NAME } from './place';
 
-
 /**
- * jQuery Component Wrapper
+ * jQuery Component Wrapper for Place
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
  */
-$.fn.place = function(settings) {
-  return this.each(function() {
-    var instance = $.data(this, COMPONENT_NAME);
+$.fn.place = function (settings) {
+  return this.each(function () {
+    let instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {

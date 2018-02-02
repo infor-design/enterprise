@@ -1,19 +1,16 @@
-/* eslint-disable */
+/* eslint-disable no-underscore-dangle, new-cap */
 import { utils } from '../utils/utils';
 import { Environment as env } from '../utils/environment';
 import { Locale } from '../locale/locale';
 import { masks } from './masks';
 import { SohoMaskAPI } from './mask-api';
 
-/**
- * The name of this componnet
- * @private
- */
+// The name of this component
 const COMPONENT_NAME = 'mask';
 
 /**
  * Default Masked Input field options
- * @private
+ * @namespace
  */
 const DEFAULT_MASKED_INPUT_OPTIONS = {
   autocorrect: false,
@@ -31,13 +28,12 @@ const DEFAULT_MASKED_INPUT_OPTIONS = {
 };
 
 /**
- * @class SohoMaskedInput
  * Component Wrapper for input elements that gives them the ability to become "masked".
- *
+ * @class SohoMaskedInput
  * @constructor
- * @param {HTMLInputElement} element - regular HTML Input Element (not wrapped with jQuery)
- * @param {SohoMaskedInputOptions} settings
- * @returns {SohoMaskedInput}
+ * @param {HTMLInputElement} element regular HTML Input Element (not wrapped with jQuery)
+ * @param {SohoMaskedInputOptions} [settings] incoming settings
+ * @returns {SohoMaskedInput} component instance
  */
 function SohoMaskedInput(element, settings) {
   this.element = element;
@@ -54,8 +50,10 @@ SohoMaskedInput.prototype = {
   /**
    * Initialization/things that need to be called on `updated()` in addition to initialization
    * @private
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
    */
-  init: function(settings) {
+  init(settings) {
     // Define internal settings
     if (!this.settings) {
       this.settings = utils.mergeSettings(this.element, settings, DEFAULT_MASKED_INPUT_OPTIONS);
@@ -69,11 +67,11 @@ SohoMaskedInput.prototype = {
     // TODO: Deprecate legacy settings in v4.4.0, remove in v4.5.0
     this._replaceLegacySettings();
 
-    var styleClasses = ['is-number-mask'];
+    const styleClasses = ['is-number-mask'];
 
     // If the 'process' setting is defined, connect a pre-defined Soho Mask/Pattern
     if (typeof this.settings.process === 'string') {
-      switch(this.settings.process) {
+      switch (this.settings.process) {
         case 'number': {
           this.settings.pattern = masks.numberMask;
           this.element.classList.add('is-number-mask');
@@ -81,7 +79,7 @@ SohoMaskedInput.prototype = {
         }
         case 'date': {
           // Check for an instance of a Datepicker/Timepicker Component, and grab the date format
-          var datepicker = $(this.element).data('datepicker');
+          const datepicker = $(this.element).data('datepicker');
           if ($.fn.datepicker && $(this.element).data('datepicker')) {
             this.settings.patternOptions.format = datepicker.settings.format;
           }
@@ -109,29 +107,27 @@ SohoMaskedInput.prototype = {
     return this;
   },
 
-
   /**
    * Sets up events
+   * @returns {this} component instance
    */
-  handleEvents: function() {
-    var self = this;
+  handleEvents() {
+    const self = this;
 
     // Store an initial value on focus
-    this.focusEventHandler = function() {
+    this.focusEventHandler = function () {
       self.state.initialValue = self.element.value;
     };
     this.element.addEventListener('focus', this.focusEventHandler);
 
-
     // Handle all masking on the `input` event
-    this.inputEventHandler = function() {
+    this.inputEventHandler = function () {
       return self.process();
     };
     this.element.addEventListener('input', this.inputEventHandler);
 
-
     // Remove an initial value from the state object on blur
-    this.blurEventHandler = function(e) {
+    this.blurEventHandler = function (e) {
       // Handle mask processing on blur, if settings allow.  Otherwise, return out.
       if (self.settings.processOnBlur) {
         if (self.element.readOnly) {
@@ -155,19 +151,19 @@ SohoMaskedInput.prototype = {
     return this;
   },
 
-
   /**
    * Main Process for conforming a mask against the API.
-   * @returns {boolean}
+   * @returns {boolean} whether or not the mask process was successful
    */
-  process: function() {
+  process() {
     // If no pattern's defined, act as if no mask component is present.
     if (!this.settings.pattern) {
       return true;
     }
 
-    // Get a reference to the desired Mask API (by default, the one setup during Soho initialization).
-    var api = this.mask;
+    // Get a reference to the desired Mask API (by default, the one setup
+    // during Soho initialization).
+    const api = this.mask;
     if (!api.pattern) {
       api.configure({
         pattern: this.settings.pattern,
@@ -176,29 +172,29 @@ SohoMaskedInput.prototype = {
     }
 
     // Get all necessary bits of data from the input field.
-    var rawValue = this.element.value;
+    let rawValue = this.element.value;
 
     // Don't continue if there was no change to the input field's value
     if (rawValue === this.state.previousMaskResult) {
       return false;
     }
 
-    var posBegin = this.element.selectionStart,
-      posEnd = this.element.selectionEnd;
+    let posBegin = this.element.selectionStart;
+    let posEnd = this.element.selectionEnd;
 
-    // On Android, the first character inserted into a field is automatically selected when it shouldn't be.
-    // This snippet fixes that problem.
-
+    // On Android, the first character inserted into a field is automatically
+    // selected when it shouldn't be. This snippet fixes that problem.
     if (this._isAndroid() && this.state.previousMaskResult === '' && posBegin !== posEnd) {
       utils.safeSetSelection(rawValue.length, rawValue.length);
       posBegin = rawValue.length;
       posEnd = rawValue.length;
     }
 
-    // Attempt to make the raw value safe to use.  If it's not in a viable format this will throw an error.
+    // Attempt to make the raw value safe to use.  If it's not in a viable format
+    // this will throw an error.
     rawValue = this._getSafeRawValue(rawValue);
 
-    var opts = {
+    const opts = {
       guide: this.settings.guide,
       keepCharacterPositions: this.settings.keepCharacterPositions,
       patternOptions: this.settings.patternOptions,
@@ -218,23 +214,23 @@ SohoMaskedInput.prototype = {
     }
 
     // Perform the mask processing.
-    var processed = api.process(rawValue, opts);
+    const processed = api.process(rawValue, opts);
     if (!processed.maskResult) {
       // Error during masking.  Simply return out and don't mask this field.
       return processed.maskResult;
     }
 
     // Use the piped value, if applicable.
-    var finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
+    const finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
 
     // Setup values for getting corrected caret position
     // TODO: Improve this by eliminating the need for an extra settings object.
-    var adjustCaretOpts = {
+    const adjustCaretOpts = {
       previousMaskResult: this.state.previousMaskResult || '',
       previousPlaceholder: this.state.previousPlaceholder || '',
       conformedValue: finalValue,
       placeholder: processed.placeholder,
-      rawValue: rawValue,
+      rawValue,
       caretPos: processed.caretPos,
       placeholderChar: this.settings.placeholderChar
     };
@@ -264,17 +260,16 @@ SohoMaskedInput.prototype = {
     return processed.maskResult;
   },
 
-
   /**
    * Obfuscates the operating system/browser check from Soho.env into internal methods
    * NOTE: Helps compartmentalize us from using calls to global "Soho" object until we can
    * properly setup import/export for unit tests.
    * TODO: deprecate eventually (v4.4.0?)
    * @private
-   * @returns {boolean}
+   * @returns {boolean} whether or not the current device is running the Android OS.
    */
-  _isAndroid: function() {
-    var os = env && env.os && env.os.name ? env.os.name : '';
+  _isAndroid() {
+    const os = env && env.os && env.os.name ? env.os.name : '';
     return os === 'android';
   },
 
@@ -282,22 +277,24 @@ SohoMaskedInput.prototype = {
    * Same as the Android method, but for IE 11 on Windows 7
    * TODO: deprecate eventually (v4.4.0?)
    * @private
-   * @returns {boolean}
+   * @returns {boolean} whether or not the current device is running Windows 7
+   *  using the IE11 browser.
    */
-  _isWin7IE11: function() {
-    let browser = env && env.browser && env.browser.name ? env.browser.name : '';
-    let version = env.browser.version ? env.browser.version : '';
-    let isWin7 = window.navigator.userAgent.indexOf('Windows NT 6.1') !==  -1;
+  _isWin7IE11() {
+    const browser = env && env.browser && env.browser.name ? env.browser.name : '';
+    const version = env.browser.version ? env.browser.version : '';
+    const isWin7 = window.navigator.userAgent.indexOf('Windows NT 6.1') !== -1;
 
     return browser === 'ie' && version === '11' && isWin7;
   },
 
   /**
-   * Checks the current value of this masked input against it's stored "previousMaskResult" state to see if the value changed.
+   * Checks the current value of this masked input against it's stored "previousMaskResult"
+   *  state to see if the value changed.
    * @private
-   * @returns {boolean}
+   * @returns {boolean} whether or not the previous mask state matches the current one.
    */
-  _hasChangedValue: function() {
+  _hasChangedValue() {
     if (!this.state || !this.state.previousMaskResult) {
       return true;
     }
@@ -308,8 +305,8 @@ SohoMaskedInput.prototype = {
   /**
    * Gets the safe raw value of an input field
    * @private
-   * @param {?} inputValue
-   * @returns {string}
+   * @param {?} inputValue the original value that came from an input field or other source
+   * @returns {string} the string-ified version of the original value
    */
   _getSafeRawValue: function getSafeRawValue(inputValue) {
     if (utils.isString(inputValue)) {
@@ -318,42 +315,40 @@ SohoMaskedInput.prototype = {
       return String(inputValue);
     } else if (inputValue === undefined || inputValue === null) {
       return '';
-    } else {
-      throw new Error(
-        'The "value" provided to the Masked Input needs to be a string or a number. The value ' +
-        'received was:\n\n' + JSON.stringify(inputValue)
-      );
     }
+    throw new Error(`${'The "value" provided to the Masked Input needs to be a string or a number. The value ' +
+        'received was:\n\n'}${JSON.stringify(inputValue)}`);
   },
 
   /**
    * Changes a bunch of "legacy" setting definitions into more apt names.  Additionally handles
    * the old data-attribute system that is still occasionally used.
    * @private
+   * @returns {void}
    */
-  _replaceLegacySettings: function() {
-    var modes = ['group', 'number', 'date', 'time'];
+  _replaceLegacySettings() {
+    const modes = ['group', 'number', 'date', 'time'];
 
     // pre-set a bunch of objects if they don't already exist
     this.settings.patternOptions = this.settings.patternOptions || {};
     this.settings.patternOptions.symbols = this.settings.patternOptions.symbols || {};
 
-    //======================================
+    //= =====================================
     // Deprecated as of v4.3.2
-    //======================================
+    //= =====================================
     // Order of operations when choosing pattern strings:
     // HTML5 'data-mask' attribute > Generic pattern string based on "type" attribute > nothing.
     //
     // if no pattern is provided in settings, use a pre-determined pattern based
     // on element type, or grab the pattern from the element itself.
-    var html5DataMask = this.element.getAttribute('data-mask') || false;
+    const html5DataMask = this.element.getAttribute('data-mask') || false;
     if (typeof html5DataMask === 'string' && html5DataMask.length) {
       this.settings.pattern = html5DataMask;
     }
 
     // If a "mode" is defined, special formatting rules may apply to this mask.
     // Otherwise, the standard single-character pattern match will take place.
-    var html5DataMaskMode = this.element.getAttribute('data-mask-mode') || false;
+    const html5DataMaskMode = this.element.getAttribute('data-mask-mode') || false;
     if (html5DataMaskMode && modes.indexOf(html5DataMaskMode) > -1) {
       this.settings.mode = html5DataMaskMode;
     }
@@ -386,7 +381,7 @@ SohoMaskedInput.prototype = {
       // If "thousands" is defined, the thousands separator for numbers (comma or decimal, based on
       // localization) will be inserted wherever necessary during typing. Will automatically set to
       // "true" if the localized thousands separator is detected inside the mask.
-      var html5DataThousands = this.element.getAttribute('data-thousands') || false;
+      const html5DataThousands = this.element.getAttribute('data-thousands') || false;
       if (html5DataThousands) {
         this.settings.patternOptions.allowThousandsSeparator = (html5DataThousands === 'true');
       }
@@ -394,18 +389,19 @@ SohoMaskedInput.prototype = {
       if (typeof this.settings.pattern === 'string') {
         // If "negative" is defined, you can type the negative symbol in front of the number.
         // Will automatically set to "true" if a negative symbol is detected inside the mask.
-        var allowNegative = this.settings.pattern.indexOf('-') !== -1;
+        const allowNegative = this.settings.pattern.indexOf('-') !== -1;
         if (allowNegative) {
           this.settings.patternOptions.allowNegative = allowNegative;
           this.settings.patternOptions.symbols.negative = '-';
         }
 
         // Detect the thousands separator and see if we use it.
-        var thousandsSep = this.settings.patternOptions && this.settings.patternOptions.symbols && this.settings.patternOptions.symbols.thousands ?
+        const thousandsSep = this.settings.patternOptions && this.settings.patternOptions.symbols &&
+          this.settings.patternOptions.symbols.thousands ?
           this.settings.patternOptions.symbols.thousands :
           Locale.currentLocale.data.numbers.group;
 
-        var hasThousandsInPattern = this.settings.pattern.indexOf(thousandsSep) !== -1;
+        const hasThousandsInPattern = this.settings.pattern.indexOf(thousandsSep) !== -1;
         this.settings.patternOptions.allowThousandsSeparator = hasThousandsInPattern;
         if (hasThousandsInPattern) {
           this.settings.patternOptions.symbols.thousands = thousandsSep;
@@ -413,9 +409,9 @@ SohoMaskedInput.prototype = {
 
         // The new masking algorithm requires an "integerLimit" defined to function.
         // This grabs the number of items currently inside this part of the mask, and sets it.
-        var decimal = typeof this.settings.patternOptions.symbols.decimal === 'string' ?
+        const decimal = typeof this.settings.patternOptions.symbols.decimal === 'string' ?
           this.settings.patternOptions.symbols.decimal : '.';
-        var decimalParts =  this.settings.pattern.split(decimal);
+        const decimalParts = this.settings.pattern.split(decimal);
 
         this.settings.patternOptions.integerLimit = decimalParts[0].replace(/[^#0]/g, '').length;
 
@@ -429,26 +425,26 @@ SohoMaskedInput.prototype = {
       }
     }
 
-    // If 'mustComplete' is defined, you MUST complete the full mask, or the mask will revert to empty
-    // once the field is blurred.
-    var html5DataMustComplete = this.element.getAttribute('data-must-complete') || false;
+    // If 'mustComplete' is defined, you MUST complete the full mask, or the mask
+    // will revert to empty once the field is blurred.
+    const html5DataMustComplete = this.element.getAttribute('data-must-complete') || false;
     if (html5DataMustComplete) {
       this.settings.mustComplete = html5DataMustComplete;
     }
 
     // Backwards compat with the old "data-show-currency"
-    var html5DataCurrency = this.element.getAttribute('data-show-currency');
+    const html5DataCurrency = this.element.getAttribute('data-show-currency');
     if (html5DataCurrency) {
       this.settings.showSymbol = 'currency';
     }
 
     // Handle the currency/percent symbols automatically
-    var symbolSetting = this.settings.showSymbol,
-      symbolTypes = ['currency', 'percent'],
-      symbol;
+    const symbolSetting = this.settings.showSymbol;
+    const symbolTypes = ['currency', 'percent'];
+    let symbol;
 
     if (symbolTypes.indexOf(symbolSetting) > -1) {
-      symbol = (function(s) {
+      symbol = (function (s) {
         if (s === 'currency') {
           return {
             char: Locale.currentLocale.data.currencySign,
@@ -461,28 +457,29 @@ SohoMaskedInput.prototype = {
             format: Locale.currentLocale.data.numbers.percentFormat
           };
         }
-      })(this.settings.showSymbol);
+        return {};
+      }(this.settings.showSymbol));
 
       // derive the location of the symbol
-      var detectableSymbol = (symbolSetting === 'currency' ? 'Â¤' : symbol.char),
-        symbolRegex = new RegExp(detectableSymbol, 'g'),
-        match = symbolRegex.exec(symbol.format),
-        replacementRegex,
-        symbolWithWhitespace,
-        index = -1,
-        placementType;
+      const detectableSymbol = (symbolSetting === 'currency' ? 'Â¤' : symbol.char);
+      const symbolRegex = new RegExp(detectableSymbol, 'g');
+      const match = symbolRegex.exec(symbol.format);
+      let replacementRegex;
+      let symbolWithWhitespace;
+      let index = -1;
+      let placementType;
 
       if (match.length) {
         index = symbol.format.indexOf(match[0]);
         if (index === 0) {
           placementType = 'prefix';
-          replacementRegex = new RegExp('[^'+ detectableSymbol +']\\S', 'g');
+          replacementRegex = new RegExp(`[^${detectableSymbol}]\\S`, 'g');
           symbolWithWhitespace = symbol.format.replace(replacementRegex, '');
         } else if (index > 0) {
           placementType = 'suffix';
-          replacementRegex = new RegExp('\\S[^'+ detectableSymbol +']', 'g');
+          replacementRegex = new RegExp(`\\S[^${detectableSymbol}]`, 'g');
 
-          while(/\s/.test(symbol.format.charAt(index - 1))) {
+          while (/\s/.test(symbol.format.charAt(index - 1))) {
             --index;
           }
           symbolWithWhitespace = symbol.format.substr(index).replace(replacementRegex, '');
@@ -498,17 +495,20 @@ SohoMaskedInput.prototype = {
 
   /**
    * Updates the component instance with new settings.
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
    */
-  updated: function(options) {
+  updated(settings) {
     return this
       .teardown()
-      .init(options);
+      .init(settings);
   },
 
   /**
    * Tears down the current component instance
+   * @returns {this} component instance
    */
-  teardown: function() {
+  teardown() {
     this.element.removeEventListener('focus', this.focusEventHandler);
     delete this.focusEventHandler;
 

@@ -1,27 +1,25 @@
-/* jshint esversion:6 */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
 // jQuery components
 import '../tooltip/tooltip.jquery';
 
-/**
- * Component Name
- */
+// Component Name
 const COMPONENT_NAME = 'progress';
 
 /**
  * Default Progress Options
+ * @namespace
  */
 const PROGRESS_DEFAULTS = {
 };
 
 /**
 * A list of items with add/remove/delete and sort functionality.
-*
 * @class Progress
-* @param {String} element The component element.
-* @param {String} settings The component settings.
+* @constructor
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
 */
 function Progress(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PROGRESS_DEFAULTS);

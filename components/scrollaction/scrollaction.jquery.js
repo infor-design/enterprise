@@ -1,6 +1,10 @@
 import { ScrollAction, COMPONENT_NAME } from './scrollaction';
 
-// Initialize the plugin (Once)
+/**
+ * jQuery Component Wrapper for ScrollAction
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
+ */
 $.fn.scrollaction = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);
