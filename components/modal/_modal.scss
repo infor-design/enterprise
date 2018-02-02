@@ -72,6 +72,7 @@
   }
 
   .field:last-child input:not(.spinbox, .colorpicker),
+  .field:last-child .dropdown,
   .field:last-child textarea {
     margin-bottom: 10px;
   }
