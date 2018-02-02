@@ -556,14 +556,7 @@ Column.prototype = {
     const bars = drawBars();
 
     if (isPositiveNegative) {
-      /* eslint-disable no-underscore-dangle */
-      pnBars = d3.selectAll('.empty-bars');
-      pnBars._groups[0] = [ // TODO This should be nodes() but not sure how to fix.
-        ...pnBars._groups[0],
-        ...targetBars._groups[0],
-        ...bars._groups[0]
-      ];
-      /* eslint-enable no-underscore-dangle */
+      pnBars = d3.selectAll([...targetBars.nodes(), ...bars.nodes()]);
     }
 
     if (!isPositiveNegative) {
