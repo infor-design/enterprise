@@ -63,8 +63,8 @@ const LISTVIEW_DEFAULTS = {
  * @param {object} [settings] incoming settings
  */
 function ListView(element, settings) {
-  this.settings = utils.mergeSettings(element, settings, LISTVIEW_DEFAULTS);
   this.element = $(element);
+  this.settings = utils.mergeSettings(this.element[0], settings, LISTVIEW_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
@@ -291,8 +291,8 @@ ListView.prototype = {
     this.element.trigger('rendered', [dataset]);
 
     // Handle refresh
-    this.element.off('updated').on('updated', () => {
-      self.refresh();
+    this.element.off('updated').on('updated', (e, settings) => {
+      self.updated(settings);
     });
   },
 
@@ -312,10 +312,11 @@ ListView.prototype = {
   },
 
   /**
-  * Get the Data Source. Can be an array, Object or Url and render the list.
-  */
-  refresh() {
-    this.loadData();
+   * Get the Data Source. Can be an array, Object or Url and render the list.
+   * @param {array} dataset contains a potential new dataset to display inside the listview.
+   */
+  refresh(dataset) {
+    this.loadData(dataset);
 
     if (this.list) {
       this.render(this.list.data);
@@ -335,11 +336,12 @@ ListView.prototype = {
     ds = ds || this.settings.dataset;
     pagerInfo = pagerInfo || {};
 
-    if (!ds) {
+    if (!Array.isArray(ds) || !ds.length) {
       return;
     }
 
     function done(response, pagingInfo) {
+      self.settings.dataset = response;
       ds = response;
       self.render(ds, pagingInfo);
     }
@@ -365,11 +367,7 @@ ListView.prototype = {
               url: s,
               async: false,
               dataType: 'json',
-              success(response) {
-                self.settings.dataset = response;
-                ds = response;
-                self.render(ds, pagerInfo);
-              }
+              success: done
             });
           }
           return;
@@ -890,7 +888,7 @@ ListView.prototype = {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
 
-    this.refresh();
+    this.refresh(settings.dataset);
     return this;
   },
 

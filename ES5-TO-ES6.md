@@ -31,7 +31,7 @@ See the file [`<project root>/components/index.js`](./components/index.js) to se
 - `$ grunt` will now run `rollup -c` instead of the old build process.
 - `$ grunt` no longer attempts to clean the `/public` folder.
 - Rollup is completely managing the addition of the software license and any build meta-data to the final `sohoxi.js` bundle.  This code cut is no longer using any of the grunt revision, banner, etc stuff.  There's an additional file being used in `<project root>/build/generate-build-banner.js` that is grabbing all the necessary stuff and spitting out the text content that Rollup is using for the banner.
-- Began Switching to ESLint from JSHint.  In `.eslintrc.js`, truly "extended" airbnb eslint configs per Hook & Loop guidelines. about.js, colorpicker.js and template.js are fully linting.
+- Began Switching to ESLint from JSHint.  In `.eslintrc.js`, truly "extended" airbnb eslint configs per Hook & Loop guidelines. Apart from a few specifically excluded cases, all ES6-converted Soho Components are fully linting.
 
 #### TODO for the Dev environment:
 
@@ -50,7 +50,7 @@ See the file [`<project root>/components/index.js`](./components/index.js) to se
 - Added a handful of low-level components (see [`<project root>/components/components.js`](./components/components.js) for the list of currently-available components after build time)
 - Modifications to the desired component lifecycle
   - Remove as much "setting of options" from the jQuery component wrappers as possible, in favor of working them directly into Vanilla JS constructors.  See [ES6-SETTINGS-CHANGES.md](./ES6-SETTINGS-CHANGES.md) for more details about this change.
-    - Each component's constructor should set `this.settings` on its own.
+    - Each component's constructor should set `this.settings` on its own.  This should not be done in the jQuery factories, or externally without calling `updated()`.
     - the jQuery wrappers' path for "when instance exists" should pass incoming options to the Vanilla JS component's `updated()` method (ex: `instance.updated(settings)`)
     - component `updated()` methods should understand how to deal with setting incoming options over top of existing options and sanitizing the incoming options (sanitizing process may need to be a utility function).
     - should also take advantage of `utils.parseOptions` to take HTML-based options into account.  Need to figure out whether or not DOM or JS-based options take precedence (as of now, DOM-based options take precedence over JS options in most cases, but it's not 100% done that way throughout)
@@ -66,10 +66,7 @@ See the file [`<project root>/components/index.js`](./components/index.js) to se
 
 - Figure out the final location of Locale
 - Figure out if there's a better way to do async loading of culture files (promises?)
-- Get all "building-block"-level components standing on their own in ES6.
-  - Break the actual constructors/prototype defs out from inside the jQuery wrappers.
-  - Still invoke the jQuery wrappers within each `<component>.js` file, but allow the Vanilla JS constructors to stand on their own.
-  - (eventually) figure out a Vanilla-JS, stand-alone replacement for `$.data()` for element-level Soho component access.
+- (eventually) figure out a Vanilla-JS, stand-alone replacement for `$.data()` for element-level Soho component access.
 
 ## REALLY need to fix before we release:
 - Listview Component using external sources (both server and client-side) don't currently work (having trouble debugging).

@@ -32,6 +32,7 @@ All the following Soho Components have been converted to ES6:
 * Icons
 * Listbuilder
 * Listview
+* Lookup
 * Mask
 * Message
 * Modal
@@ -87,4 +88,3 @@ The components listed below are still UMD-wrapped as ES5 jQuery components.  The
 
 * Angular 1.0 Directives (TJM tested should work)
 * Charts (TJM In Progress)
-* Lookup
