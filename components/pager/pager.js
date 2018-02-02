@@ -46,7 +46,7 @@ const PAGER_NON_NUMBER_BUTTON_SELECTOR = 'li:not(.pager-prev):not(.pager-next):n
 /**
 * The Pager Component supports paging on lists.
 * @class Pager
-* @param {object} element The component element.
+* @param {jQuery[]|HTMLElement} element The component element.
 * @param {object} [settings] The component settings.
 *
 */
