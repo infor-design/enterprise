@@ -28,7 +28,7 @@ const COLUMN_DEFAULTS = {
   animate: true,
   format: null,
   redrawOnResize: true,
-  ticks: 10
+  ticks: 9
 };
 
 /**
@@ -82,24 +82,26 @@ Column.prototype = {
 
     let datasetStacked;
     const dataset = this.settings.dataset;
-    self.dataset = dataset;
+    this.dataset = dataset;
     const parent = this.element.parent();
     const isRTL = Locale.isRTL();
     const isPositiveNegative = (this.settings.type === 'column-positive-negative');
-    const isSingular = (dataset.length === 1);
-    this.isSingular = isSingular;
+    const isSingle = (dataset.length === 1);
+    this.isSingle = isSingle;
+    const isGrouped = !(isSingle || !isSingle && self.settings.isStacked);
+    this.isGrouped = isGrouped;
 
     const margin = {
       top: 40,
       right: 40,
-      bottom: (isSingular && dataset[0].name === undefined ?
+      bottom: (isSingle && dataset[0].name === undefined ?
         (self.settings.isStacked ? 20 : 50) : 35),
       left: 45
     };
     const legendHeight = 40;
     const width = parent.width() - margin.left - margin.right - 10;
     const height = parent.height() - margin.top - margin.bottom -
-        (isSingular && dataset[0].name === undefined ?
+        (isSingle && dataset[0].name === undefined ?
           (self.settings.isStacked || isPositiveNegative ? (legendHeight - 10) : 0) : legendHeight);
     let yMinTarget;
     let yMaxTarget;
@@ -186,9 +188,20 @@ Column.prototype = {
 
     if (self.settings.isStacked) {
       // Map the Data Sets and Stack them.
-      if (isSingular) {
-        datasetStacked = dataset[0].data.map(function (d) {
+      const yStack = { y1: [], y2: [] };
+      if (isSingle) {
+        datasetStacked = dataset[0].data.map(function (d, i) {
+          let y0 = 0;
+          if (i === 0) {
+            yStack.y1.push(d.value);
+            yStack.y2.push(0);
+          } else {
+            y0 = yStack.y1[0] + yStack.y2[0];
+            yStack.y1[0] = d.value;
+            yStack.y2[0] = y0;
+          }
           return [$.extend({}, d, {
+            y0,
             y: d.value,
             x: d.name,
             color: d.color,
@@ -198,9 +211,19 @@ Column.prototype = {
           })];
         });
       } else {
-        datasetStacked = dataset.map(function (d) {
-          return d.data.map(function (o) {
+        datasetStacked = dataset.map(function (d, i) {
+          return d.data.map(function (o, i2) {
+            let y0 = 0;
+            if (i === 0) {
+              yStack.y1.push(o.value);
+              yStack.y2.push(0);
+            } else {
+              y0 = yStack.y1[i2] + yStack.y2[i2];
+              yStack.y1[i2] = o.value;
+              yStack.y2[i2] = y0;
+            }
             return $.extend({}, o, {
+              y0,
               y: o.value,
               x: o.name,
               color: o.color,
@@ -218,6 +241,10 @@ Column.prototype = {
       xScale = d3.scaleBand()
         .domain(d3.range(datasetStacked[0].length))
         .rangeRound([0, width], 0.05);
+
+      if (isSingle && self.settings.isStacked) {
+        xScale.paddingInner(0.095);
+      }
 
       yScale = d3.scaleLinear()
         .domain([0,
@@ -240,7 +267,7 @@ Column.prototype = {
     const yAxis = d3.axisLeft(y)
       .tickSize(-width)
       .tickPadding(isRTL ? -12 : 12)
-      .ticks(self.settings.ticks || 10, d3.format(self.settings.format || 's'));
+      .ticks(self.settings.ticks || 9, d3.format(self.settings.format || 's'));
 
     const svg = d3.select(this.element[0])
       .append('svg')
@@ -270,7 +297,7 @@ Column.prototype = {
       });
     }
 
-    if (isSingular) {
+    if (isSingle) {
       names = dataset[0].data.map(function (d) {
         return d.name;
       });
@@ -279,20 +306,17 @@ Column.prototype = {
     // Extra ticks
     if (isPositiveNegative) {
       yMin += yMin / y.ticks().length;
-      maxes[0] += maxes[0] / y.ticks().length;
+      maxes[0] += maxes[0] / (y.ticks().length / 2);
     }
 
     // Set series
     (function () {
-      if (self.settings.isStacked && isSingular) {
+      if (self.settings.isStacked && isSingle) {
         series = dataset[0].data;
       } else {
-        let i;
-        let l;
         let lm;
-
         // Loop backwards to catch and override with found first custom info from top
-        for (i = dataset.length - 1, l = -1; i > l; i--) {
+        for (let i = dataset.length - 1, l = -1; i > l; i--) {
           lm = dataset[i].data.map(function (d) {
             return d;
           });
@@ -305,7 +329,7 @@ Column.prototype = {
       }
     }());
 
-    if (self.settings.isStacked && !isSingular) {
+    if (self.settings.isStacked && !isSingle) {
       seriesStacked = names.map(function (d, i) {
         return dataset[i];
       });
@@ -313,11 +337,11 @@ Column.prototype = {
 
     x0.domain(self.settings.isStacked ? xAxisValues : names);
     x1.domain(xAxisValues)
-      .rangeRound([0, (isSingular || self.settings.isStacked) ? width : x0.bandwidth()]);
+      .rangeRound([0, (isSingle || self.settings.isStacked) ? width : x0.bandwidth()]);
     y.domain([(yMin < 0 ? yMin : (self.settings.minValue || 0)), d3.max(self.settings.isStacked ?
       maxesStacked : maxes)]).nice();
 
-    if (!isSingular || (isSingular && !self.settings.isStacked)) {
+    if (!isSingle || (isSingle && !self.settings.isStacked)) {
       svg.append('g')
         .attr('class', 'x axis')
         .attr('transform', `translate(0,${height + (isPositiveNegative ? 10 : 0)})`)
@@ -340,7 +364,7 @@ Column.prototype = {
           return d < 0 ? 'negative-value' : 'positive-value';
         })
         .attr('x', function (d) {
-          return d < 0 ? ((yMaxLength) * 9) : ((yMaxLength) * 5);
+          return (yMaxLength * (d < 0 ? 9 : 5));
         });
     }
 
@@ -350,7 +374,7 @@ Column.prototype = {
       dataArray.push($.extend({}, d, { values: d.data }));
     });
 
-    if (isSingular) {
+    if (isSingle) {
       dataArray = [];
       names = dataset[0].data.forEach(function (d) {
         dataArray.push(d);
@@ -383,7 +407,7 @@ Column.prototype = {
       isTargetBars = isPositiveNegative && isTargetBars;
 
       // Add the bars - done different depending on if grouped or singlular
-      if (isSingular || isPositiveNegative) {
+      if (isSingle || isPositiveNegative) {
         bars = self.svg.selectAll(`rect${isTargetBars ? '.target-bar' : '.bar'}`)
           .data(self.settings.isStacked ? datasetStacked : dataArray)
           .enter()
@@ -532,8 +556,16 @@ Column.prototype = {
     const bars = drawBars();
 
     if (isPositiveNegative) {
+      /* eslint-disable no-underscore-dangle */
       pnBars = d3.selectAll('.empty-bars');
-      charts.mergeArrays(pnBars[0], targetBars[0], bars[0]);
+      pnBars._groups[0] = [
+        ...pnBars._groups[0],
+        ...targetBars._groups[0],
+        ...bars._groups[0]
+      ];
+      /* eslint-enable no-underscore-dangle */
+
+      // charts.mergeArrays(pnBars[0], targetBars[0], bars[0]);
     }
 
     if (!isPositiveNegative) {
@@ -541,16 +573,16 @@ Column.prototype = {
       if (!self.settings.isStacked) {
         bars
           .style('fill', function (d, i) {
-            return isSingular ?
+            return isSingle ?
               charts.chartColor(i, 'column-single', dataset[0].data[i]) :
               charts.chartColor(i, 'bar', series[i]);
           })
           .attr('mask', function (d, i) {
-            return isSingular ?
+            return isSingle ?
               (dataset[0].data[i].pattern ? `url(#${dataset[0].data[i].pattern})` : null) :
               (series[i].pattern ? `url(#${series[i].pattern})` : null);
           });
-      } else if (self.settings.isStacked && !isSingular) {
+      } else if (self.settings.isStacked && !isSingle) {
         bars
           .style('fill', function () {
             const thisGroup = d3.select(this.parentNode).attr('data-group-id');
@@ -560,7 +592,7 @@ Column.prototype = {
             const thisGroup = d3.select(this.parentNode).attr('data-group-id');
             return (dataset[thisGroup].pattern ? `url(#${dataset[thisGroup].pattern})` : null);
           });
-      } else if (self.settings.isStacked && isSingular) {
+      } else if (self.settings.isStacked && isSingle) {
         bars
           .style('fill', function (d, i) {
             return charts.chartColor(i, 'bar', d[0]);
@@ -571,17 +603,12 @@ Column.prototype = {
       }
     }
 
-    const isSingle = isSingular || !isSingular && self.settings.isStacked;
-    const isGrouped = !isSingle;
-    self.isGrouped = isGrouped;
-
     $.extend(charts.settings, {
       svg,
       chartType: 'Column',
       isSingle,
       isGrouped,
-      isStacked: self.settings.isStacked,
-      isSingular
+      isStacked: self.settings.isStacked
     });
 
     (isPositiveNegative ? pnBars : bars)
@@ -636,7 +663,7 @@ Column.prototype = {
 
         // Stacked
         if (self.settings.isStacked) {
-          if (isSingular) {
+          if (isSingle) {
             content = `<p><b>${format(d[0].value)}</b> ${d[0].name}</p>`;
           } else {
             content = `${'' +
@@ -751,7 +778,7 @@ Column.prototype = {
 
         // Set isSelected to false if even 1 bar is selected
         if (isTargetBar) {
-          const allBars = d3.selectAll('.bar')[0];
+          const allBars = d3.selectAll('.bar')._groups[0];//eslint-disable-line
           const len = allBars.length;
 
           for (let j = 0; j < len; j++) {
@@ -775,7 +802,7 @@ Column.prototype = {
           i,
           type: self.settings.type,
           dataset: self.dataset,
-          isSingle: self.isSingular,
+          isSingle: self.isSingle,
           isGrouped: self.isGrouped,
           isStacked: self.settings.isStacked,
           svg: self.svg,
@@ -794,18 +821,18 @@ Column.prototype = {
 
     // Add Legend
     self.settings.isGrouped = isGrouped;
-    self.settings.isSingular = isSingle;
+    self.settings.isSingle = isSingle;
     self.settings.isStacked = self.settings.isStacked;
     self.settings.svg = this.svg;
 
     if (self.settings.showLegend) {
-      if (isSingular && dataset[0].name) {
+      if (isSingle && dataset[0].name) {
         charts.addLegend(dataset, 'column-single', self.settings, self.element);
       } else if (isPositiveNegative) {
         charts.addLegend(pnSeries, self.settings.type, self.settings, self.element);
-      } else if (self.settings.isStacked && isSingular) {
+      } else if (self.settings.isStacked && isSingle) {
         charts.addLegend(series, self.settings.type, self.settings, self.element);
-      } else if (!isSingular) {
+      } else if (!isSingle) {
         charts.addLegend(self.settings.isStacked ? seriesStacked :
           series, self.settings.type, self.settings, self.element);
       }
@@ -871,7 +898,7 @@ Column.prototype = {
           if (selected < 1) {
             if ((typeof o.fieldName !== 'undefined' &&
                   typeof o.fieldValue !== 'undefined' &&
-                    o.fieldValue === (isSingular && self.settings.isStacked ? d[0][o.fieldName] :
+                    o.fieldValue === (isSingle && self.settings.isStacked ? d[0][o.fieldName] :
                       d[o.fieldName])) ||
                 (typeof o.index !== 'undefined' && o.index === i) ||
                 (o.data && equals(o.data, dataset[gIdx].data[i])) ||
@@ -896,7 +923,7 @@ Column.prototype = {
         }
       };
 
-      if (isGrouped || (self.settings.isStacked && !isSingular && !isGrouped)) {
+      if (isGrouped || (self.settings.isStacked && !isSingle && !isGrouped)) {
         dataset.forEach(function (d, i) {
           if (selected < 1) {
             xGroup = $(svg.select(`[data-group-id="${i}"]`).node());
@@ -962,7 +989,7 @@ Column.prototype = {
         if (!d) {
           return;
         }
-        if ((self.isSingular && self.settings.isStacked ?
+        if ((self.isSingle && self.settings.isStacked ?
           d[0].selected : d.selected) && selected < 1) {
           selected++;
           selector = d3.select(this);
@@ -980,13 +1007,13 @@ Column.prototype = {
       }
     };
 
-    if (self.isGrouped || (self.settings.isStacked && !self.isSingular && !self.isGrouped)) {
+    if (self.isGrouped || (self.settings.isStacked && !self.isSingle && !self.isGrouped)) {
       self.dataset.forEach(function (d, i) {
         if (d.selected && selected < 1) {
           selected++;
           selector = self.svg.select(`[data-group-id="${i}"]`).select('.bar');
           barIndex = i;
-          if (self.settings.isStacked && !self.isSingular && !self.isGrouped) {
+          if (self.settings.isStacked && !self.isSingle && !self.isGrouped) {
             isStackedGroup = true;
           }
         }

@@ -64,9 +64,6 @@ const LISTVIEW_DEFAULTS = {
  */
 function ListView(element, settings) {
   this.settings = utils.mergeSettings(element, settings, LISTVIEW_DEFAULTS);
-  if (settings.dataset) {
-    this.settings.dataset = settings.dataset;
-  }
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
