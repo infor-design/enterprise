@@ -46,8 +46,14 @@ var pieData = [{
     }]
   }];
 
-  $('#pie-chart-example').chart({type: 'pie', dataset: pieData})
-  .on('selected', function(e, args) {
+  $('#pie-chart-example').chart({
+    type: 'pie',
+    dataset: pieData,
+    showLegend: false,
+    lines: {
+      show: 'percent', // value, label or percent or custom function
+      formatter: null
+    }
   });
 
 });

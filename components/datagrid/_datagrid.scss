@@ -1915,6 +1915,10 @@ $datagrid-short-row-height: 23px;
           padding: 3px 24px 2px 5px;
         }
 
+        &.error {
+          color: $datagrid-filter-color !important;
+        }
+
         &:focus {
           border-color: $datagrid-filter-focus-color;
         }

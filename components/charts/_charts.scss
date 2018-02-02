@@ -137,7 +137,14 @@
   margin-left: 50px;
   margin-top: -9px;
 
-  &.is-below {
+  &.is-bottom {
+    border-top: 1px solid $panel-border-color;
+    margin: 0 auto;
+    padding-bottom: 1em;
+    padding-top: 1em;
+  }
+
+  &.is-right {
     border-top: 1px solid $panel-border-color;
     margin: 0 auto;
     padding-bottom: 1em;

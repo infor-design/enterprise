@@ -21,10 +21,15 @@ charts.tooltipSize = function tooltipSize(content) {
 * Add Toolbar to the page.
 * @returns {void}
 */
-charts.appendTooltip = function appendTooltip() {
+charts.appendTooltip = function appendTooltip(extraClass) {
   this.tooltip = $('#svg-tooltip');
   if (this.tooltip.length === 0) {
-    this.tooltip = $('<div id="svg-tooltip" class="tooltip right is-hidden"><div class="arrow"></div><div class="tooltip-content"><p><b>32</b> Element</p></div></div>').appendTo('body');
+    this.tooltip = $(`<div id="svg-tooltip" class="tooltip ${extraClass} right is-hidden">
+      <div class="arrow"></div>
+        <div class="tooltip-content">
+          <p><b>32</b> Element</p>
+        </div>
+      </div>`).appendTo('body');
 
     if (this.isTouch) {
       this.tooltip[0].style.pointerEvents = 'auto';
@@ -165,9 +170,10 @@ charts.addLegend = function (series, chartType, settings, container) {
   }
 
   const isTwoColumn = series[0].display && series[0].display === 'twocolumn';
-  const legend = isTwoColumn ? $('<div class="chart-legend is-below"></div>') :
+  const legend = isTwoColumn ? $(`<div class="chart-legend ${
+    series[0].placement ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
     $('<div class="chart-legend"></div>');
-
+  //
   // Legend width
   let width = 0;
   let currentWidth;
@@ -249,8 +255,8 @@ charts.handleElementClick = function (line, series, settings) {
   const elem = series[idx];
   let selector;
 
-  if (settings.type === 'pie') {
-    selector = d3.select(settings.svg.selectAll('.arc')[0][idx]);
+  if (settings.type === 'pie' || settings.type === 'donut') {
+    selector = d3.select(settings.svg.selectAll('.slice').nodes()[idx]);
   } else if (settings.type === 'column-positive-negative') {
     if (!elem.option || (elem.option && elem.option === 'target')) {
       selector = settings.svg.select('.target-bar');
@@ -314,7 +320,7 @@ charts.setSelectedElement = function (o) {
   const isPositiveNegative = o.type === 'column-positive-negative';
   const isBar = /^(bar|bar-stacked|bar-grouped|bar-normalized)$/.test(o.type);
   const isTypeColumn = /^(column|column-grouped|column-stacked)$/.test(o.type);
-  const isTypePie = o.type === 'pie';
+  const isTypePie = o.type === 'pie' || o.type === 'donut';
 
   const svg = o.svg;
   const isSingle = o.isSingle;
@@ -348,6 +354,10 @@ charts.setSelectedElement = function (o) {
   pnPositiveText.style('font-weight', 'normal');
   pnNegativeText.style('font-weight', 'normal');
   svg.selectAll('.is-selected').classed('is-selected', false);
+
+  if (isTypePie) {
+    svg.selectAll('.is-not-selected').classed('is-not-selected', false);
+  }
 
   // Task make selected
   if (taskSelected) {
@@ -480,12 +490,15 @@ charts.setSelectedElement = function (o) {
     } else if (isTypePie) { // Pie
       // Unselect selected ones
       svg.selectAll('.slice')
+        .classed('is-selected', false)
+        .classed('is-not-selected', true)
         .attr('transform', '');
 
       const thisArcData = dataset && dataset[0] && dataset[0].data ?  //eslint-disable-line
         dataset[0].data[o.i] : (o.d ? o.d.data : o.d);  //eslint-disable-line
 
       selector.classed('is-selected', true)
+        .classed('is-not-selected', false)
         .attr('transform', 'scale(1.025, 1.025)');
       triggerData.push({ elem: selector.nodes(), data: thisArcData, index: o.i });
     }
@@ -527,7 +540,8 @@ charts.setSelected = function (o, isToggle, internals) {
 
   let selected = 0;
   const equals = utils.equals;
-  const legendsNode = internals.svg.node().parentNode.nextSibling;
+  const legendsNode = internals.isPie ? internals.svg.node().nextSibling :
+    internals.svg.node().parentNode.nextSibling;
   const legends = d3.select(legendsNode);
   const isLegends = legends.node() && legends.classed('chart-legend');
   let barIndex;

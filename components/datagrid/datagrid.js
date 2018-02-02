@@ -186,6 +186,9 @@ const DATAGRID_DEFAULTS = {
 function Datagrid(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DATAGRID_DEFAULTS);
   this.element = $(element);
+  if (settings.dataset) {
+    this.settings.dataset = settings.dataset;
+  }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);

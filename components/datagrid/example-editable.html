@@ -144,13 +144,14 @@
         //gridApi.rowStatus(6, 'new', 'new');
         gridApi.rowStatus(6, 'error', 'This row has errors');
 
+      window.data = data;
   });
 
   var newId = 8;
   //Add Code for Add and icon-delete
   $('#add-btn').on('click', function () {
     gridApi.addRow({ id: newId++, productId: 2642206, productName: 'New Product'});
-    console.log(gridApi.settings.dataset[1])
+    console.log(gridApi.settings.dataset[1]);
   });
 
   //Add Code for Add and icon-delete

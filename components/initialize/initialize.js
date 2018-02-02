@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -329,15 +330,6 @@ Initialize.prototype = {
 
         });
       }
-
-      //Cardstack
-      /*
-      if ($.fn.listview) {
-        matchedItems('.listview:not('+ noinitExcludes +')').each(function () {
-          $(this).listview();
-        });
-      }
-      */
 
       // Searchfield
       // NOTE:  The Toolbar Control itself understands how to invoke internal searchfields, so they
