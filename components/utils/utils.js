@@ -997,6 +997,15 @@ utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOp
   ); // possible to run this without an element present -- will simply skip this part
 };
 
+/**
+ * Test if a string is Html or not
+ * @param  {string} string The string to test.
+ * @returns {boolean} True if it is html.
+ */
+utils.isHTML = function (string) {
+  return /(<([^>]+)>)/i.test(string);
+};
+
 const math = {};
 
 /**

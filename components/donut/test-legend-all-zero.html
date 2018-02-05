@@ -40,9 +40,8 @@ $('body').on('initialized', function () {
   $('#pie-chart-example').chart({
     type: 'donut',
     dataset: pieData,
-    labels: {
-      hideLabels: false
-    }
+    showLines: false,
+    legendPlacement: 'bottom'
   });
 
 });
