@@ -1,35 +1,32 @@
-/* eslint-disable */
+/* jshint esversion:6 */
 import { utils } from '../utils/utils';
 
 /**
 * An api for grouping data by a given field (s)
 * @private
 */
-const groupBy = (function() {
+const groupBy = (function () {
+  // Can also use in isEquivalent: function(obj1, obj2)  in datagrid.js
+  const equals = utils.equals;
 
-  //Can also use in isEquivalent: function(obj1, obj2)  in datagrid.js
-  var equals = utils.equals;
-
-  //See if the object has these proprties or not
-  var has = function(obj, target) {
-    return obj.some(function(value) {
-        return equals(value, target);
-    });
+  // See if the object has these proprties or not
+  const has = function (obj, target) {
+    return obj.some(value => equals(value, target));
   };
 
-  //Return just the object properties matching the names
-  var pick = function(obj, names) {
-    var chosen = {};
-    for (var i = 0; i < names.length; i++) {
+  // Return just the object properties matching the names
+  const pick = function (obj, names) {
+    const chosen = {};
+    for (let i = 0, l = names.length; i < l; i++) {
       chosen[names[i]] = obj[names[i]];
     }
     return chosen;
   };
 
-  //Return the specific keys from the object
-  var keys = function(data, names) {
-    return data.reduce(function(memo, item) {
-      var key = pick(item, names);
+  // Return the specific keys from the object
+  const keys = function (data, names) {
+    return data.reduce((memo, item) => {
+      const key = pick(item, names);
 
       if (!has(memo, key)) {
         memo.push(key);
@@ -38,14 +35,15 @@ const groupBy = (function() {
     }, []);
   };
 
-  //Look through each value in the list and return an array of all the values
-  //that contain all of the key-value pairs listed in properties.
-  var where = function (data, names) {
-    var chosen = [];
+  // Look through each value in the list and return an array of all the values
+  // that contain all of the key-value pairs listed in properties.
+  const where = function (data, names) {
+    const chosen = [];
 
-    data.map(function(item) {
-      var match = true;
-      for (var prop in names) {
+    /* eslint-disable */
+    data.map(function (item) {
+      let match = true;
+      for (const prop in names) {
         if (names[prop] !== item[prop]) {
           match = false;
           return;
@@ -54,31 +52,29 @@ const groupBy = (function() {
       chosen.push(item);
       return;
     });
+    /* eslint-enable */
 
     return chosen;
   };
 
-  //Grouping Function with Plugins/Aggregator
-  var group = function(data, names) {
-    var stems = keys(data, names);
+  // Grouping Function with Plugins/Aggregator
+  const group = function (data, names) {
+    const stems = keys(data, names);
 
-    return stems.map(function(stem) {
-      return {
-        key: stem,
-        values: where(data, stem).map(function(item) {
-          return item;
-        })
-      };
-    });
+    return stems.map(stem => ({
+      key: stem,
+      values: where(data, stem).map(item => item)
+    }));
   };
 
-  //Register an aggregator
-  group.register = function(name, converter) {
-    return group[name] = function(data, names, extra) { // jshint ignore:line
-      var that = this;
+  // Register an aggregator
+  group.register = function (name, converter) {
+    group[name] = function (data, names, extra) { // jshint ignore:line
+      const that = this;
       that.extra = extra;
       return group(data, names).map(converter, that);
     };
+    return group[name];
   };
 
   return group;
@@ -88,89 +84,95 @@ const groupBy = (function() {
 * Register built in aggregators
 * @private
 */
-groupBy.register('none', function(item) {
-  return $.extend({}, item.key, {values: item.values});
+groupBy.register('none', item => $.extend({}, item.key, { values: item.values }));
+
+groupBy.register('sum', function (item) {
+  const extra = this.extra;
+  return $.extend(
+    {}, item.key,
+    { values: item.values },
+    { sum: item.values.reduce((memo, node) => memo + Number(node[extra]), 0) }
+  );
 });
 
-groupBy.register('sum', function(item) {
-  var extra = this.extra;
-  return $.extend({}, item.key, {values: item.values}, {sum: item.values.reduce(function(memo, node) {
-      return memo + Number(node[extra]);
-  }, 0)});
+groupBy.register('max', function (item) {
+  const extra = this.extra;
+  return $.extend(
+    {},
+    item.key,
+    { values: item.values }, // eslint-disable-next-line
+    { max: item.values.reduce((memo, node) => Math.max(memo, Number(node[extra])), Number.NEGATIVE_INFINITY) }
+  );
 });
 
-groupBy.register('max', function(item) {
-  var extra = this.extra;
-  return $.extend({}, item.key, {values: item.values}, {max: item.values.reduce(function(memo, node) {
-      return Math.max(memo, Number(node[extra]));
-  }, Number.NEGATIVE_INFINITY)});
-});
+groupBy.register('list', function (item) {
+  const extra = this.extra;
 
-groupBy.register('list', function(item) {
-  var extra = this.extra;
+  return $.extend(
+    {},
+    item.key,
+    { values: item.values },
+    {
+      list: item.values.map((thisItem) => {
+        const list = [];
 
-  return $.extend({}, item.key, {values: item.values}, {list: item.values.map(function(item) {
-    var list = [];
-
-    for (var i = 0; i < extra.list.length; i++) {
-      var exclude = extra.exclude ? item[extra.exclude] : false;
-      if (item[extra.list[i]] && !exclude) {
-        list.push({value: item[extra.list[i]], key: extra.list[i]});
-      }
+        for (let i = 0, l = extra.list.length; i < l; i++) {
+          const exclude = extra.exclude ? thisItem[extra.exclude] : false;
+          if (thisItem[extra.list[i]] && !exclude) {
+            list.push({ value: thisItem[extra.list[i]], key: extra.list[i] });
+          }
+        }
+        return list;
+      })
     }
-    return list;
-  })});
+  );
 });
 
 /**
 * Simple Summary Row Accumlator
 * @private
 */
-let aggregators = {};
+const aggregators = {};
 aggregators.aggregate = function (items, columns) {
-    var totals = {}, self = this;
+  const totals = {};
+  const self = this;
 
-    for (var i = 0; i < columns.length; i++) {
-        if (columns[i].aggregator) {
-            var field = columns[i].field;
+  for (let i = 0, l = columns.length; i < l; i++) {
+    if (columns[i].aggregator) {
+      const field = columns[i].field;
 
-            self.sum = function (sum, node) {
-                var value;
-                if (field.indexOf('.') > -1) {
-                    value = field.split('.').reduce(function (o, x) {
-                        return (o ? o[x] : '');
-                    }, node);
-                }
-                else {
-                    value = node[field];
-                }
-                return sum + Number(value);
-            };
-
-            var total = items.reduce(self[columns[i].aggregator], 0);
-
-            if (field.indexOf('.') > -1) {
-                var currentObj = totals;
-                for (var j = 0; j < field.split('.').length; j++) {
-                    if (j === field.split('.').length - 1) {
-                        currentObj[field.split('.')[j]] = total;
-                    }
-                    else {
-                        if (!(field.split('.')[j] in currentObj)) {
-                            currentObj[field.split('.')[j]] = {};
-                        }
-
-                        currentObj = currentObj[field.split('.')[j]];
-                    }
-                }
-            }
-            else {
-                totals[field] = total;
-            }
+      self.sum = function (sum, node) {
+        let value;
+        if (field.indexOf('.') > -1) {
+          value = field.split('.').reduce((o, x) => (o ? o[x] : ''), node);
+        } else {
+          value = node[field];
         }
-    }
+        return sum + Number(value);
+      };
 
-    return totals;
+      const total = items.reduce(self[columns[i].aggregator], 0);
+
+      if (field.indexOf('.') > -1) {
+        let currentObj = totals;
+        for (let j = 0, k = field.split('.').length; j < k; j++) {
+          if (j === field.split('.').length - 1) {
+            currentObj[field.split('.')[j]] = total;
+          } else {
+            if (!(field.split('.')[j] in currentObj)) {
+              currentObj[field.split('.')[j]] = {};
+            }
+
+            currentObj = currentObj[field.split('.')[j]];
+          }
+        }
+      } else {
+        totals[field] = total;
+      }
+    }
+  }
+
+  return totals;
 };
 
-export { groupBy as GroupBy, aggregators as Aggregators};
+export { groupBy as GroupBy, aggregators as Aggregators };
