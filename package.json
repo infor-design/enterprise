@@ -18,6 +18,7 @@
     "stop": "./bin/stop.sh",
     "jshint": "jshint gruntfile.js app.js components/**/*.js",
     "eslint": "eslint -c .eslintrc.js --quiet components -o eslint.log",
+    "eslint:loud": "eslint -c .eslintrc.js components",
     "build": "rollup -c",
     "install-test-deps": "npm install selenium-standalone@latest && npm run install-drivers",
     "install-drivers": "selenium-standalone install --config=./build/configs/selenium-standalone-install.js",

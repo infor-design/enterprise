@@ -45,7 +45,10 @@
 
   // Right aligned Legend
   &.has-right-legend {
+    align-content: center;
+    align-items: center;
     display: flex;
+    justify-content: center;
 
     svg {
       width: 75%;

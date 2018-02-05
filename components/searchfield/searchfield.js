@@ -621,6 +621,8 @@ SearchField.prototype = {
   /**
    * Category Selection event handler
    * @private
+   * @param  {object} e The event.
+   * @param  {object} anchor the link object
    * @returns {undefined}
    */
   handleCategorySelected(e, anchor) {

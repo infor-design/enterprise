@@ -166,329 +166,90 @@ selected to the left of the Dropdown field.
     
 
 
-  <h2>Methods</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Parameters</th>
-      <th>Description</th>
-      <th>Returns</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>hasCategories</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Reveals whether or not categories are active on this searchfield</p>
 
-        </td>
-        <td>
-          
-boolean
-        </td>
-      </tr>
-      <tr>
-        <td>hasGoButton</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Detects the existence of a "Go" button added to the main searchfield API</p>
+  
+    
 
-        </td>
-        <td>
-          
-boolean
-        </td>
-      </tr>
-      <tr>
-        <td>hasFocus</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Detects whether or not the Searchfield has focus.</p>
 
-        </td>
-        <td>
-          
-boolean
-        </td>
-      </tr>
-      <tr>
-        <td>handleGoButtonClick</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) =  </span>
-                
-          
-        </td>
-        <td>
-          
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>setCategoryButtonText</td>
-        <td>
-          
-                
-                  <span>textContent () = Optional incoming text that will be subtituted for the selected element count.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.</p>
 
-        </td>
-        <td>
-          
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>calculateSearchfieldWidth</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Ensures that the size of the Searchfield Wrapper does not change whenever a category
-is chosen from a category searchfield.
-NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.</p>
 
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>isToolbarSearchfield</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Detects whether or not this component is a Toolbar Searchfield</p>
 
-        </td>
-        <td>
-          
-boolean
-        </td>
-      </tr>
-      <tr>
-        <td>getCategories</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Gets a complete list of categories in jQuery-collection form.</p>
+  
+    
 
-        </td>
-        <td>
-          categories
-jQuery
-        </td>
-      </tr>
-      <tr>
-        <td>getSelectedCategories</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Gets the currently selected list of categories in jQuery-collection form.</p>
 
-        </td>
-        <td>
-          selectedCategories
-jQuery
-        </td>
-      </tr>
-      <tr>
-        <td>getCategoryData</td>
-        <td>
-          
-                
-                  <span>onlyReturnSelected (boolean) = If set to true, will only return checked list items.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Gets the currently selected categories as data.</p>
 
-        </td>
-        <td>
-          data -
+  
+    
 
-          name - Category name
-string
-          id - Category element's ID (if applicable)
 
-          value - Category element's value (if applicable)
 
-          [
-checked=true
-]
- - Category's selection status
-boolean
-        </td>
-      </tr>
-      <tr>
-        <td>updateCategories</td>
-        <td>
-          
-                
-                  <span>categories () = Array of category object definitions.
- </span>
-                
-                  <span>id () = Category element's ID (if applicable).
- </span>
-                
-                  <span>value () = Category element's value (if applicable).
- </span>
-                
-                  <span>checked (boolean) = Category's selection status
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Updates just the categories setting and rerenders the category list.</p>
+  
+    
 
-        </td>
-        <td>
-          
 
-        </td>
-      </tr>
-      <tr>
-        <td>setCategories</td>
-        <td>
-          
-                
-                  <span>categories () = Array of category object definitions.
- </span>
-                
-                  <span>id () = Category element's ID (if applicable).
- </span>
-                
-                  <span>value () = Category element's value (if applicable).
- </span>
-                
-                  <span>checked (boolean) = Category's selection status
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Creates a new set of categories on the Searchfield and rerenders it.</p>
 
-        </td>
-        <td>
-          
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>hasCategoryButton</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Determines whether or not a Category Trigger exists.</p>
 
-        </td>
-        <td>
-          
-boolean
-        </td>
-      </tr>
-      <tr>
-        <td>clear</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Clears the contents of the searchfield</p>
 
-        </td>
-        <td>
-          
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>updated</td>
-        <td>
-          
-                
-                  <span>settings () =  </span>
-                
-          
-        </td>
-        <td>
-          <p>Tears down and rebuilds the Searchfield.
-Can be called directly, but is also triggered by calling the "updated.searchfield" event on the searchfield element.</p>
 
-        </td>
-        <td>
-          
 
-        </td>
-      </tr>
-      <tr>
-        <td>enable</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Enables the Searchfield</p>
+  
+    
 
-        </td>
-        <td>
-          
 
-        </td>
-      </tr>
-      <tr>
-        <td>disable</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Disables the Searchfield</p>
 
-        </td>
-        <td>
-          
+  
+    
 
-        </td>
-      </tr>
-      <tr>
-        <td>destroy</td>
-        <td>
-          
-                
-                  <span>dontDestroyToolbarSearchfield (boolean) = if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Destroys the Searchfield and removes all jQuery component instancing.</p>
 
-        </td>
-        <td>
-          
 
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
 
 
   </section>

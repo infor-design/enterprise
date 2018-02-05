@@ -41,7 +41,6 @@ ContextualActionPanel.prototype = {
   /**
   * Initialize the CAP.
   * @private
-  * @returns {object} The Api for chaining.
   */
   init() {
     this
