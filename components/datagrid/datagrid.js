@@ -6457,6 +6457,7 @@ $.fn.datagrid = function(options) {
           s = this.settings,
           isSingle = s.selectable === 'single',
           isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed',
+          isSiblings = s.selectable === 'siblings';
           dataset = s.treeGrid ? s.treeDepth : s.dataset,
           gIdx = idx;
 
@@ -6478,7 +6479,7 @@ $.fn.datagrid = function(options) {
         this.selectRow(idx, true, true);
       }
 
-      if (isMultiple) {
+      if (isMultiple || isSiblings) {
         if (Object.prototype.toString.call(row) === '[object Array]' ) {
           for (var i = 0; i < row.length; i++) {
             if (s.groupable) {
