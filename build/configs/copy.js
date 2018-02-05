@@ -20,7 +20,10 @@ module.exports = {
         {
           expand: true,
           flatten: true,
-          src: ['node_modules/d3/build/d3.js'],
+          src: [
+            'node_modules/d3/build/d3.js',
+            'node_modules/d3/build/d3.min.js'
+          ],
           dest: 'dist/js/',
           filter: 'isFile'
         },

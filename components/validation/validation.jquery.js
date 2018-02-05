@@ -144,7 +144,7 @@ $.fn.validate = function (settings, args) {
 
   return this.each(function () {
     let instance = $.data(this, VALIDATE_COMPONENT_NAME);
-    if (instance) {
+    if (instance && typeof instance !== 'string') {
       // If settings are a string, assume the string is a function on the instance API
       // that needs to be called, and attempt to call it.
       if (settingsAreAPIFunction) {
