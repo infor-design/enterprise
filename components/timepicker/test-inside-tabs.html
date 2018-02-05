@@ -62,7 +62,7 @@
                       </div>
                       <div class="field">
                         <label for="cbtv2010-submit-rundatetim-time" class="label">&nbsp;</label>
-                        <input id="cbtv2010-submit-rundatetim-time" class="timepicker" name="cbtv2010-submit-rundatetim-time" type="text" data-time-format="h:mm a" aria-expanded="false" role="combobox" data-mask="##:## am" data-mask-mode="time" data-validate="time">
+                        <input id="cbtv2010-submit-rundatetim-time" class="timepicker" name="cbtv2010-submit-rundatetim-time" type="text" data-time-format="h:mm a" aria-expanded="false" role="combobox" data-options='{ "pattern": "##:## am", "process": "date" }' data-validate="time">
                       </div>
                     </div>
                   </div>
@@ -112,12 +112,12 @@
 
                         <div class="field" id="monthly-schedule-datetorun" hidden>
                           <label for="monthly-datetorun" class="required">Date to Run</label>
-                          <input id="monthly-datetorun" class="input-xs" name="monthly-datetorun" type="text" inputmode="numeric" data-mask="###" data-mask-mode="number" value="0" />
+                          <input id="monthly-datetorun" class="input-xs" name="monthly-datetorun" type="text" inputmode="numeric" data-options='{ "pattern": "###", "process": "number" }' value="0" />
                         </div>
 
                         <div class="field" id="weekly-schedule-weeks" hidden>
                           <label for="weeks-reschedule">Weeks before re-scheduling</label>
-                          <input id="weeks-reschedule" class="input-med" name="weeks-reschedule" type="text" inputmode="numeric" data-mask="###" data-mask-mode="number" value="0" />
+                          <input id="weeks-reschedule" class="input-med" name="weeks-reschedule" type="text" inputmode="numeric" data-options='{ "pattern": "###", "process": "number" }' value="0" />
                         </div>
 
                         <div class="field" id="weekly-schedule-runday" hidden>
