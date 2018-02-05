@@ -6457,7 +6457,7 @@ $.fn.datagrid = function(options) {
           s = this.settings,
           isSingle = s.selectable === 'single',
           isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed',
-          isSiblings = s.selectable === 'siblings';
+          isSiblings = s.selectable === 'siblings',
           dataset = s.treeGrid ? s.treeDepth : s.dataset,
           gIdx = idx;
 
