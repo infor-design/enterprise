@@ -1,5 +1,6 @@
-/* eslint-disable */
+/* jshint esversion:6 */
 import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
 /**
 *  A object containing all the supported Editors
@@ -7,23 +8,22 @@ import { utils } from '../utils/utils';
 */
 const editors = {
 
-  //Supports, Text, Numeric, Integer via mask
-  Input: function(row, cell, value, container, column, e, api, item) {
-
+  // Supports, Text, Numeric, Integer via mask
+  Input(row, cell, value, container, column, e, api, item) {
     this.name = 'input';
     this.originalValue = value;
-    this.useValue = column.inlineEditor ? true : false;
+    this.useValue = !!column.inlineEditor;
 
     this.init = function () {
       if (column.inlineEditor) {
         this.input = container.find('input');
       } else {
-        this.input = $('<input type="'+ (column.inputType || 'text') +'"/>')
+        this.input = $(`<input type="${(column.inputType || 'text')}"/>`)
           .appendTo(container);
       }
 
       if (column.align) {
-        this.input.addClass('l-'+ column.align +'-text');
+        this.input.addClass(`l-${column.align}-text`);
       }
 
       if (column.maxLength) {
@@ -35,27 +35,31 @@ const editors = {
       }
 
       if (column.mask && typeof column.mask === 'function') {
-        var mask = column.mask(row, cell, value, column, item);
-        this.input.mask({pattern: mask, mode: column.maskMode});
+        const mask = column.mask(row, cell, value, column, item);
+        this.input.mask({ pattern: mask, mode: column.maskMode });
       } else if (column.maskOptions && typeof column.maskOptions === 'function') {
-        var maskOptions = column.maskOptions(row, cell, value, column, item);
+        const maskOptions = column.maskOptions(row, cell, value, column, item);
         this.input.mask(maskOptions);
       } else if (column.mask) {
-        this.input.mask({pattern: column.mask, mode: column.maskMode});
+        this.input.mask({ pattern: column.mask, mode: column.maskMode });
       }
 
-      var defaults = {
-        patternOptions: {allowNegative: true, allowDecimal: true,
-        integerLimit: 4, decimalLimit: 2,
-        symbols: {
-          thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
-          decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal  : '.',
-          negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign  : '-'
-        }},
+      let defaults = {
+        patternOptions: {
+          allowNegative: true,
+          allowDecimal: true,
+          integerLimit: 4,
+          decimalLimit: 2,
+          symbols: {
+            thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
+            decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal : '.',
+            negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign : '-'
+          }
+        },
         process: 'number'
       };
 
-      var useMask = false;
+      let useMask = false;
 
       if (column.maskOptions) {
         useMask = true;
@@ -63,7 +67,7 @@ const editors = {
 
       if (column.numberFormat) {
         useMask = true;
-        defaults = {patternOptions : {decimalLimit: column.numberFormat.maximumFractionDigits }};
+        defaults = { patternOptions: { decimalLimit: column.numberFormat.maximumFractionDigits } };
       }
 
       if (column.maskOptions && typeof column.maskOptions === 'function') {
@@ -78,13 +82,12 @@ const editors = {
       if (!column.align || column.align !== 'right') {
         this.input.removeClass('is-number-mask');
       }
-
     };
 
-    this.val = function (value) {
-      var thisValue;
-      if (value) {
-        this.input.val(value);
+    this.val = function (v) {
+      let thisValue;
+      if (v) {
+        this.input.val(v);
       }
       if (column && column.numberFormat && column.numberFormat.style === 'percent') {
         thisValue = this.input.val().trim().replace(/(\s%?|%)$/g, '');
@@ -102,17 +105,15 @@ const editors = {
         return;
       }
 
-      var self = this;
-      setTimeout(function() {
-        self.input.remove();
+      setTimeout(() => {
+        this.input.remove();
       }, 0);
     };
 
     this.init();
   },
 
-  Textarea: function(row, cell, value, container, column) {
-
+  Textarea(row, cell, value, container, column) {
     this.name = 'textarea';
     this.originalValue = value;
 
@@ -126,13 +127,12 @@ const editors = {
       if (column.uppercase) {
         this.input.addClass('uppercase-text');
       }
-
     };
 
-    this.val = function (value) {
-      if (value) {
-        //note that focus will help move text to end of input.
-        this.input.focus().val(value);
+    this.val = function (v) {
+      if (v) {
+        // note that focus will help move text to end of input.
+        this.input.focus().val(v);
       }
       return this.input.val();
     };
@@ -142,9 +142,8 @@ const editors = {
     };
 
     this.destroy = function () {
-      var self = this;
-      setTimeout(function() {
-        self.input.remove();
+      setTimeout(() => {
+        this.input.remove();
       }, 0);
     };
 
@@ -152,26 +151,26 @@ const editors = {
   },
 
   // Rich Text Editor
-  Editor: function(row, cell, value, container, column, e, api) {
+  Editor(row, cell, value, container, column, e, api) {
     this.name = 'editor';
     this.originalValue = value;
 
     this.init = function () {
-      var self = this,
-        // Editor options
-        editorOptions = $.extend({}, {
-          buttons: { editor: ['bold','italic','underline','strikethrough','separator', 'foreColor'], source: [] },
-          excludeButtons: { editor: [] }
-        }, column.editorOptions);
+      const self = this;
+      // Editor options
+      const editorOptions = $.extend({}, {
+        buttons: { editor: ['bold', 'italic', 'underline', 'strikethrough', 'separator', 'foreColor'], source: [] },
+        excludeButtons: { editor: [] }
+      }, column.editorOptions);
 
       // Editor width
       this.editorWidth = api.setUnit(editorOptions.width || container.outerWidth());
       delete editorOptions.width;
 
-      container.append(
-        '<div class="editor-wrapper" style="width:'+ this.editorWidth +';">'+
-          '<div class="editor" data-init="false">'+ $.unescapeHTML(value) +'</div>'+
-        '</div>');
+      container.append('' +
+        `<div class="editor-wrapper" style="width: ${this.editorWidth};">
+          <div class="editor" data-init="false">${$.unescapeHTML(value)}</div>
+        </div>`);
       this.td = container.closest('td');
       this.input = $('.editor', container);
 
@@ -180,29 +179,29 @@ const editors = {
           content: $('.editor-wrapper', container),
           placementOpts: {
             x: 0,
-            y: '-'+ (parseInt(container[0].style.height, 10) + 35),
+            y: `-${(parseInt(container[0].style.height, 10) + 35)}`,
             parent: this.td,
             parentXAlignment: Locale.isRTL() ? 'right' : 'left',
             strategies: ['flip', 'nudge', 'shrink'],
           },
-          placement : 'bottom',
+          placement: 'bottom',
           popover: true,
           trigger: 'immediate',
           tooltipElement: '#editor-popup',
           extraClass: 'editor-popup'
         })
         .editor(editorOptions)
-        .on('hide.editor', function () {
+        .on('hide.editor', () => {
           api.commitCellEdit(self.input);
         })
-        .on('keydown.editor', function (e) {
-          var key = e.which || e.keyCode || e.charCode || 0;
+        .on('keydown.editor', (event) => {
+          const key = event.which || event.keyCode || event.charCode || 0;
           // Ctrl + Enter (Some browser return keyCode: 10, not 13)
-          if ((e.ctrlKey || e.metaKey) && (key === 13 || key === 10)) {
-            var apiPopover = self.input.data('tooltip');
+          if ((event.ctrlKey || event.metaKey) && (key === 13 || key === 10)) {
+            const apiPopover = self.input.data('tooltip');
             if (apiPopover) {
               apiPopover.hide();
-              api.setNextActiveCell(e);
+              api.setNextActiveCell(event);
             }
           }
         });
@@ -214,21 +213,20 @@ const editors = {
     };
 
     this.focus = function () {
-      var self = this;
-      setTimeout(function() {
-        self.input.focus();
+      setTimeout(() => {
+        this.input.focus();
       }, 0);
     };
 
     this.destroy = function () {
-      var self = this;
+      const self = this;
       container.removeAttr('style');
       api.quickEditMode = false;
       self.input.off('hide.editor keydown.editor');
-      setTimeout(function() {
+      setTimeout(() => {
         self.input.remove();
         // Reset tooltip
-        var elem = self.td.find('.is-editor.content-tooltip');
+        const elem = self.td.find('.is-editor.content-tooltip');
         api.setupContentTooltip(elem, self.editorWidth);
       }, 0);
     };
@@ -236,39 +234,36 @@ const editors = {
     this.init();
   },
 
-  Checkbox: function(row, cell, value, container, column, event, grid) {
-
+  Checkbox(row, cell, value, container, column, event, grid) {
     this.name = 'checkbox';
     this.originalValue = value;
-    this.useValue = true; //use the data set value not cell value
+    this.useValue = true; // use the data set value not cell value
     this.container = container;
 
     this.init = function () {
-
       this.input = $('<input type="checkbox" class="checkbox"/>').appendTo(container);
       this.input.after('<label class="checkbox-label"></label>');
 
       if (column.align) {
-        this.input.addClass('l-'+ column.align +'-text');
+        this.input.addClass(`l-${column.align}-text`);
       }
-
     };
 
-    this.val = function (value) {
-      var isChecked;
+    this.val = function (v) {// eslint-disable-line
+      let isChecked;
 
-      if (value === undefined) {
+      if (v === undefined) {
         return this.input.prop('checked');
       }
 
       // Use isChecked function if exists
       if (column.isChecked) {
-        isChecked = column.isChecked(value);
+        isChecked = column.isChecked(v);
       } else {
-        isChecked = value;
+        isChecked = v;
       }
 
-      //just toggle it if we click right on it
+      // just toggle it if we click right on it
       if ((event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) && !$(event.target).is('.datagrid-checkbox-wrapper, .datagrid-cell-wrapper')) {
         isChecked = !isChecked;
         grid.setNextActiveCell(event);
@@ -283,58 +278,54 @@ const editors = {
     };
 
     this.destroy = function () {
-      var self = this;
-      setTimeout(function() {
-        self.input.next('.checkbox-label').remove();
-        self.input.remove();
+      setTimeout(() => {
+        this.input.next('.checkbox-label').remove();
+        this.input.remove();
       }, 0);
     };
 
     this.init();
   },
 
-  Colorpicker: function(row, cell, value, container, column, event, grid) {
+  Colorpicker(row, cell, value, container, column, event, grid) {
     this.name = 'colorpicker';
     this.originalValue = value;
-    this.useValue = true; //use the data set value not cell value
+    this.useValue = true; // use the data set value not cell value
 
     this.init = function () {
-      this.input = $('<input id="colorpicker-' + cell + '" name="colorpicker-' + cell + '" class="colorpicker" value="' + value + '" type="text" />').appendTo(container);
+      this.input = $(`<input id="colorpicker-${cell}" name="colorpicker-${cell}" class="colorpicker" value="${value}" type="text" />`).appendTo(container);
       this.input.colorpicker(column.editorOptions);
     };
 
-    this.val = function (value) {
-      return value ? this.input.val(value) : this.input.val();
+    this.val = function (v) {
+      return v ? this.input.val(v) : this.input.val();
     };
 
     this.focus = function () {
-
-      var self = this;
+      const self = this;
 
       this.input.trigger('openlist');
       this.input.focus().select();
 
-      this.input.off('listclosed').on('listclosed', function () {
+      this.input.off('listclosed').on('listclosed', () => {
         grid.commitCellEdit(self.input);
 
         container.parent('td').focus();
-        return;
+        return;// eslint-disable-line
       });
-
     };
 
     this.destroy = function () {
-      //We dont need to destroy since it will when the list is closed
+      // We dont need to destroy since it will when the list is closed
     };
 
     this.init();
   },
 
-  Dropdown: function(row, cell, value, container, column, event, grid, rowData) {
-
+  Dropdown(row, cell, value, container, column, event, grid, rowData) {
     this.name = 'dropdown';
     this.originalValue = value;
-    this.useValue = true; //use the data set value not cell value
+    this.useValue = true; // use the data set value not cell value
     this.cell = grid.activeCell;
 
     this.init = function () {
@@ -346,12 +337,14 @@ const editors = {
       this.input = $('<select class="dropdown"></select>').appendTo(container);
 
       if (column.options) {
-        var html, opt, optionValue;
-        value = grid.fieldValue(rowData,column.field);
+        let html;
+        let opt;
+        let optionValue;
+        value = grid.fieldValue(rowData, column.field);
 
-        var compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
+        const compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
 
-        for (var i = 0; i < column.options.length; i++) {
+        for (let i = 0; i < column.options.length; i++) {
           html = $('<option></option>');
           opt = column.options[i];
           optionValue = column.caseInsensitive && typeof opt.value === 'string' ? opt.value.toLowerCase() : opt.value;
@@ -367,7 +360,7 @@ const editors = {
         }
       }
 
-      var editorOptions = column.editorOptions || {};
+      const editorOptions = column.editorOptions || {};
 
       function hasEditingClass() {
         return editorOptions.cssClass && /is-editing/g.test(editorOptions.cssClass);
@@ -381,29 +374,29 @@ const editors = {
       this.input.dropdown(editorOptions);
 
       // Append the Dropdown's sourceArguments with some row/col meta-data
-      var api = this.input.data('dropdown');
+      const api = this.input.data('dropdown');
       api.settings.sourceArguments = {
-        column: column,
-        container: container,
-        grid: grid,
-        cell: cell,
-        event: event,
-        row: row,
-        rowData: rowData,
-        value: value
+        column,
+        container,
+        grid,
+        cell,
+        event,
+        row,
+        rowData,
+        value
       };
-
     };
 
-    this.val = function (value) {
-
-      if (value !== undefined) {
-        var compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
-        this.input.val(value);
+    this.val = function (v) {
+      if (v !== undefined) {
+        const compareValue = column.caseInsensitive && typeof v === 'string' ? v.toLowerCase() : v;
+        this.input.val(v);
 
         this.input.find('option').each(function () {
-          var opt = $(this), valueAttr = opt.attr('value'), type = opt.attr('data-type');
-          var optionValue = valueAttr;
+          const opt = $(this);
+          const valueAttr = opt.attr('value');
+          const type = opt.attr('data-type');
+          let optionValue = valueAttr;
 
           // Get option value in proper type before checking equality
           if (type === 'number') {
@@ -420,10 +413,12 @@ const editors = {
         });
       }
 
-      var selected = this.input.find(':selected'),
-        val = selected.attr('value'), dataType = selected.attr('data-type');
+      const selected = this.input.find(':selected');
+      let val = selected.attr('value');
+      const dataType = selected.attr('data-type');
 
-      // For non-string option values (number, boolean, etc.), convert string attr value to proper type
+      // For non-string option values (number, boolean, etc.),
+      // convert string attr value to proper type
       if (dataType === 'number') {
         val = parseFloat(val);
       } else if (dataType === 'boolean') {
@@ -438,13 +433,13 @@ const editors = {
     };
 
     this.focus = function () {
-      var self = this;
+      const self = this;
 
-      //Check if isClick or cell touch and just open the list
+      // Check if isClick or cell touch and just open the list
       this.input.trigger('openlist');
       this.input.parent().find('div.dropdown').focus();
 
-      this.input.off('listclosed').on('listclosed', function (e, type) {
+      this.input.off('listclosed').on('listclosed', (e, type) => {
         grid.commitCellEdit(self.input);
 
         if (type === 'select') {
@@ -453,23 +448,21 @@ const editors = {
         }
 
         if (type === 'tab') {
-          setTimeout(function () {
+          setTimeout(() => {
             container.parent('td').focus();
           }, 100);
         }
       });
-
     };
 
     this.destroy = function () {
-      //We dont need to destroy since it will when the list is closed
+      // We dont need to destroy since it will when the list is closed
     };
 
     this.init();
   },
 
-  Date: function(row, cell, value, container, column, event, grid) {
-
+  Date(row, cell, value, container, column, event, grid) {
     this.name = 'date';
     this.originalValue = value;
 
@@ -478,51 +471,47 @@ const editors = {
       this.input.datepicker(column.editorOptions || { dateFormat: column.dateFormat });
     };
 
-    this.val = function (value) {
-      if (value) {
-        //Note that the value should be formatted from the formatter.
-        this.input.val(value);
+    this.val = function (v) {
+      if (v) {
+        // Note that the value should be formatted from the formatter.
+        this.input.val(v);
       }
       return window.Formatters.Date(row, cell, this.input.val(), column, true);
     };
 
     this.focus = function () {
-      var self = this;
+      const self = this;
 
       this.input.select().focus();
 
-      //Check if isClick or cell touch and just open the list
+      // Check if isClick or cell touch and just open the list
       if (event.type === 'click' && $(event.target).is('.icon')) {
         this.input.parent().find('.icon').trigger('click');
         this.input.closest('td').addClass('is-focused');
       }
 
-      this.input.on('listclosed', function () {
+      this.input.on('listclosed', () => {
         self.input.closest('td').removeClass('is-focused');
 
-        setTimeout(function () {
+        setTimeout(() => {
           self.input.trigger('focusout');
           container.parent().focus();
           grid.setNextActiveCell(event);
         }, 1);
-
       });
-
     };
 
     this.destroy = function () {
-      var self = this;
-      setTimeout(function() {
+      setTimeout(() => {
         grid.quickEditMode = false;
-        self.input.remove();
+        this.input.remove();
       }, 0);
     };
 
     this.init();
-
   },
 
-  Time: function(row, cell, value, container, column, event, grid) {
+  Time(row, cell, value, container, column, event, grid) {
     this.name = 'time';
     this.originalValue = value;
 
@@ -531,56 +520,53 @@ const editors = {
       this.api = this.input.timepicker(column.editorOptions || '').data('timepicker');
     };
 
-    this.val = function (value) {
-      if (value) {
-        //Note that the value should be formatted from the formatter.
-        this.input.val(value);
+    this.val = function (v) {
+      if (v) {
+        // Note that the value should be formatted from the formatter.
+        this.input.val(v);
       }
 
       return this.input.val();
     };
 
     this.focus = function () {
-      var self = this;
+      const self = this;
 
       this.input.select().focus();
 
-      //Check if isClick or cell touch and just open the list
+      // Check if isClick or cell touch and just open the list
       if (event.type === 'click' && $(event.target).is('.icon')) {
         this.input.parent().find('.icon').trigger('click');
         this.input.closest('td').addClass('is-focused');
       }
 
-      this.api.trigger.on('hide.editortime', function () {
+      this.api.trigger.on('hide.editortime', () => {
         self.input.closest('td').removeClass('is-focused');
 
-        setTimeout(function () {
+        setTimeout(() => {
           self.input.trigger('focusout');
           container.parent().focus();
           grid.setNextActiveCell(event);
         }, 1);
-
       });
-
     };
 
     this.destroy = function () {
-      var self = this;
+      const self = this;
       if (self.api && self.api.trigger) {
         self.api.trigger.off('hide.editortime');
       }
 
-      setTimeout(function() {
+      setTimeout(() => {
         grid.quickEditMode = false;
         self.input.remove();
       }, 0);
     };
 
     this.init();
-
   },
 
-  Lookup: function(row, cell, value, container, column, event, grid) {
+  Lookup(row, cell, value, container, column, event, grid) {
     this.name = 'lookup';
     this.originalValue = value;
 
@@ -598,23 +584,23 @@ const editors = {
       this.input.lookup(column.editorOptions);
     };
 
-    this.val = function (value) {
-      var fieldValue = this.input.val();
+    this.val = function (v) {
+      let fieldValue = this.input.val();
       if (fieldValue && fieldValue.indexOf('|') > -1) {
         fieldValue = fieldValue.substr(0, fieldValue.indexOf('|'));
       }
-      return value ? this.input.val(value) : fieldValue;
+      return v ? this.input.val(v) : fieldValue;
     };
 
     this.focus = function () {
-      var self = this,
-        api = self.input.data('lookup'),
-        td = self.input.closest('td');
+      const self = this;
+      const api = self.input.data('lookup');
+      const td = self.input.closest('td');
 
       // Using keyboard
       if (event.type === 'keydown') {
         self.input.select().focus();
-        td.on('keydown.editorlookup', function (e) {
+        td.on('keydown.editorlookup', (e) => {
           if (e.keyCode === 40 && grid.quickEditMode) {
             e.preventDefault();
             e.stopPropagation();
@@ -622,33 +608,32 @@ const editors = {
         });
       }
 
-      //Check if isClick or cell touch and just open the list
+      // Check if isClick or cell touch and just open the list
       if (event.type === 'click') {
         if ($(event.target).is('svg')) {
           api.openDialog(event);
         } else {
           self.input.select().focus();
-          td.on('touchcancel.editorlookup touchend.editorlookup', '.trigger', function() {
+          td.on('touchcancel.editorlookup touchend.editorlookup', '.trigger', () => {
             api.openDialog();
           });
         }
       }
 
       // Update on change from lookup
-      self.input.on('change', function () {
-        setTimeout(function () {
+      self.input.on('change', () => {
+        setTimeout(() => {
           container.parent().focus();
           grid.setNextActiveCell(event);
           grid.quickEditMode = false;
         }, 1);
       });
-
     };
 
     this.destroy = function () {
-      var self = this,
-        td = this.input.closest('td');
-      setTimeout(function() {
+      const self = this;
+      const td = this.input.closest('td');
+      setTimeout(() => {
         grid.quickEditMode = false;
         td.off('keydown.editorlookup')
           .find('.trigger').off('touchcancel.editorlookup touchend.editorlookup');
@@ -659,7 +644,7 @@ const editors = {
     this.init();
   },
 
-  Autocomplete: function(ow, cell, value, container, column, event, grid) {
+  Autocomplete(ow, cell, value, container, column, event, grid) {
     this.name = 'autocomplete';
     this.originalValue = value;
 
@@ -670,7 +655,7 @@ const editors = {
         column.editorOptions = {};
       }
       column.editorOptions.width = container.parent().width();
-      column.editorOptions.offset = {left: -1, top: (grid.settings.rowHeight ==='medium' ? 1 : 5)};
+      column.editorOptions.offset = { left: -1, top: (grid.settings.rowHeight === 'medium' ? 1 : 5) };
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
@@ -683,8 +668,8 @@ const editors = {
       this.input.autocomplete(column.editorOptions);
     };
 
-    this.val = function (value) {
-      return value ? this.input.val(value) : this.input.val();
+    this.val = function (v) {
+      return v ? this.input.val(v) : this.input.val();
     };
 
     this.focus = function () {
@@ -693,20 +678,19 @@ const editors = {
     };
 
     this.destroy = function () {
-      var self = this;
-      setTimeout(function() {
+      setTimeout(() => {
         grid.quickEditMode = false;
-        self.input.remove();
+        this.input.remove();
       }, 0);
     };
 
     this.init();
   },
 
-  Spinbox: function(ow, cell, value, container, column, event, grid) {
+  Spinbox(ow, cell, value, container, column, event, grid) {
     this.name = 'spinbox';
     this.originalValue = value;
-    this.useValue = true; //use the data set value not cell value
+    this.useValue = true; // use the data set value not cell value
 
     this.init = function () {
       if (column.inlineEditor) {
@@ -714,10 +698,10 @@ const editors = {
         return;
       }
 
-      var markup = '<label for="spinbox-' + cell + '" class="audible">Quantity</label>' +
-        '<span class="spinbox-wrapper"><span class="spinbox-control down">-</span>' +
-        '<input id="spinbox-' + cell + '" name="spinbox-' + cell + '" type="text" class="spinbox" value="'+ value +'">'+
-        '<span class="spinbox-control up">+</span></span>';
+      const markup = `<label for="spinbox-${cell}" class="audible">Quantity</label>
+        <span class="spinbox-wrapper"><span class="spinbox-control down">-</span>
+        <input id="spinbox-${cell}" name="spinbox-${cell}" type="text" class="spinbox" value="'+ ${value} +'">
+        <span class="spinbox-control up">+</span></span>`;
 
       container.append(markup);
       this.input = container.find('input');
@@ -729,8 +713,8 @@ const editors = {
       this.input.spinbox(column.editorOptions);
     };
 
-    this.val = function (value) {
-      return value ? parseInt(this.input.val(value)) : parseInt(this.input.val());
+    this.val = function (v) {
+      return v ? parseInt(this.input.val(v), 10) : parseInt(this.input.val(), 10);
     };
 
     this.focus = function () {
@@ -743,43 +727,41 @@ const editors = {
         return;
       }
 
-      var self = this;
-      setTimeout(function() {
+      setTimeout(() => {
         grid.quickEditMode = false;
-        self.input.remove();
+        this.input.remove();
       }, 0);
     };
 
     this.init();
   },
 
-  Favorite: function(row, cell, value, container, column, event, grid) {
+  Favorite(row, cell, value, container, column, event, grid) {
     this.name = 'favorite';
     this.useValue = true;
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<span class="icon-favorite">' +
-            $.createIcon({ icon: value ? 'star-filled' : 'star-outlined' }) + '<input type="checkbox"></span>').appendTo(container);
+      this.input = $(`<span class="icon-favorite">${$.createIcon({ icon: value ? 'star-filled' : 'star-outlined' })}<input type="checkbox"></span>`).appendTo(container);
 
       this.input = this.input.find('input');
     };
 
-    this.val = function (value) {
-      var isChecked;
+    this.val = function (v) {// eslint-disable-line
+      let isChecked;
 
-      if (value === undefined) {
+      if (v === undefined) {
         return this.input.prop('checked');
       }
 
       // Use isChecked function if exists
       if (column.isChecked) {
-        isChecked = column.isChecked(value);
+        isChecked = column.isChecked(v);
       } else {
-        isChecked = value;
+        isChecked = v;
       }
 
-      //just toggle it when clicked
+      // just toggle it when clicked
       if ((event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) && (!$(event.target).is('.datagrid-cell-wrapper'))) {
         isChecked = !isChecked;
         grid.setNextActiveCell(event);
@@ -794,9 +776,8 @@ const editors = {
     };
 
     this.destroy = function () {
-      var self = this;
-      setTimeout(function() {
-        self.input.parent().remove();
+      setTimeout(() => {
+        this.input.parent().remove();
       }, 0);
     };
 
