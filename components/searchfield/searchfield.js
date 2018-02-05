@@ -621,7 +621,9 @@ SearchField.prototype = {
   /**
    * Category Selection event handler
    * @private
-   * @returns {undefined}
+   * @param {jQuery.Event} e custom jQuery `selected` event form the popupmenu
+   * @param {jQuery[]} anchor representing an anchor element that was picked from the menu.
+   * @returns {void}
    */
   handleCategorySelected(e, anchor) {
     // Only change the text and searchfield size if we can
