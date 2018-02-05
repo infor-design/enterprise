@@ -66,14 +66,15 @@
 
       .chart-legend-color {
         height: 15px;
-        margin-bottom: 0;
-        margin-right: 7px;
+        margin: 0;
         top: 0;
       }
 
       .chart-legend-item-text {
+        padding-left: 7px;
         position: relative;
-        top: 1px;
+        top: 2px;
+        white-space: pre-line;
       }
     }
   }

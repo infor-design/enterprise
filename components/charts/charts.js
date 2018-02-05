@@ -175,7 +175,7 @@ charts.addLegend = function (series, chartType, settings, container) {
   const legend = isTwoColumn ? $(`<div class="chart-legend ${
     series[0].placement ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
     $('<div class="chart-legend"></div>');
-  //
+
   // Legend width
   let width = 0;
   let currentWidth;
@@ -276,7 +276,8 @@ charts.handleElementClick = function (line, series, settings) {
     }
   }
 
-  if (['pie', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized', 'column-grouped', 'column-stacked', 'column-positive-negative'].indexOf(settings.type) !== -1) {
+  if (['pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
+    'column-grouped', 'column-stacked', 'column-positive-negative'].indexOf(settings.type) !== -1) {
     charts.clickedLegend = true;
     selector.on('click').call(selector.node(), selector.datum(), idx, true);
   }

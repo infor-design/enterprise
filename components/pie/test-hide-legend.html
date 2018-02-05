@@ -15,8 +15,6 @@
   </div>
 </div>
 
-{{={{{ }}}=}}
-
 <script>
 $('body').on('initialized', function () {
 
@@ -25,16 +23,12 @@ $('body').on('initialized', function () {
         name: 'Company Deductions',
         shortName: 'CD',
         value: 8,
-        tooltip: 'Company Deductions {{percent}}',
-        color: '#000000',
         id: 1
       }, {
         name: 'After-tax Deductions',
         shortName: 'After-tax',
         value: 11,
-        tooltip: 'After-tax Deductions {{percent}}',
-        id: 2,
-        selected: true
+        id: 2
       }, {
         name: 'Pre-tax Deductions',
         shortName: 'Pre-tax',
@@ -46,8 +40,7 @@ $('body').on('initialized', function () {
         shortName: 'Af-tax',
         value: 17,
         tooltip: 'Taxes %percent%',
-        id: 4,
-        selected: true
+        id: 4
       }, {
         name: 'Wages',
         shortName: 'Wages',
@@ -57,16 +50,18 @@ $('body').on('initialized', function () {
       }]
     }];
 
-  $('#pie-chart-example').chart({
+  var elem = $('#pie-chart-example');
+
+  elem.chart({
     type: 'pie',
-    dataset: pieData
-  }).on('selected', function (e, args) {
-    if (args[0] && args[0].data) {
-      console.log('Save this id: '+ args[0].data.id);
+    dataset: pieData,
+    showTooltips: false,
+    showLegend: false,
+    showLinesMobile: true,
+    lines: {
+      show: 'percent'
     }
   });
-
-  console.log($('#pie-chart-example').data());
 
 });
 </script>

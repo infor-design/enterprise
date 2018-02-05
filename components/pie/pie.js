@@ -29,6 +29,14 @@ const COMPONENT_NAME = 'pie';
 * @property {string} line.show Controls the line value, this can be value, label or percent or
 * custom function.
 * @property {object} line.formatter The d3.formatter string.
+* @property {object} legend A setting that controls the legend values and format.
+* @property {string} legend.show Controls  what is visible in the legend , this can be value,
+* value (percent), label or percent or your own custom function.
+* @property {object} legend.formatter The d3.formatter string.
+* @property {object} tooltip A setting that controls the tooltip values and format.
+* @property {string} tooltip.show Controls what is visible in the tooltip, this can be value, label
+* or percent or custom function.
+* @property {object} tooltip.formatter The d3.formatter string.
 */
 const PIE_DEFAULTS = {
   dataset: [],
@@ -43,15 +51,15 @@ const PIE_DEFAULTS = {
   legendPlacement: 'right', // Can be bottom or right
   lines: {
     show: 'value', // value, label or percent or custom function
-    formatter: '.0s'
+    formatter: '.0f'
   },
   legend: {
-    show: 'value', // value, label or percent or custom function
-    formatter: '.0s'
+    show: 'label (percent)', // value, label, label (percent) or percent or custom function
+    formatter: '.0f'
   },
   tooltip: {
-    show: 'value', // value, label or percent or custom function
-    formatter: '.0s'
+    show: 'label (value)', // value, label, label (value) or percent or custom function
+    formatter: '.0f'
   }
 };
 
@@ -179,28 +187,28 @@ Pie.prototype = {
     }
 
     // 1. Animate on reload example
-    // self.update(self.chartData);
+    // self.updateData(self.chartData);
     // setTimeout(function () {
-    //  self.update(self.randomize());
+    //  self.updateData(self.randomize());
     // }, 4000);
     // charts.appendTooltip();
 
     // 2. Animate initial - looks wierd
     // const temp = JSON.parse(JSON.stringify(self.chartData));
-    // self.update(self.randomize(true));
+    // self.updateData(self.randomize(true));
     // self.chartData = JSON.parse(JSON.stringify(temp));
     // setTimeout(function () {
-    //   self.update(self.chartData);
+    //   self.updateData(self.chartData);
     // }, 0);
 
-    self.update(self.chartData);
+    self.updateData(self.chartData);
     if (self.settings.showTooltips) {
       charts.appendTooltip('is-pie');
     }
 
     if (this.settings.showLegend) {
       const series = self.chartData.map(function (d) {
-        let name = `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)`;
+        let name = self.formatToSettings(d, self.settings.legend);
 
         if (self.settings.legendFormatter) {
           name = `${d.name} (${d3.format(self.settings.legendFormatter)(d.value)})`;
@@ -221,6 +229,12 @@ Pie.prototype = {
     return this;
   },
 
+  /**
+   * Randomize the data for testing.
+   * @private
+   * @param  {boolean} toZero Set them all to zero value.
+   * @returns {void}
+   */
   randomize(toZero) {
     const self = this;
     this.chartData = this.chartData.map(function (d) {
@@ -243,10 +257,9 @@ Pie.prototype = {
 
   /**
    * Update the chart with a new dataset
-   * @private
    * @param  {object} data The data to use.
    */
-  update(data) {
+  updateData(data) {
     // Pie Slices
     const self = this;
     let tooltipInterval;
@@ -336,11 +349,17 @@ Pie.prototype = {
           }
         };
 
-        content = d.data.tooltip || '';
+        const value = self.formatToSettings(d, self.settings.tooltip);
+        content = d.data.tooltip || value;
         content = content.replace('{{percent}}', `${d.data.percentRound}%`);
         content = content.replace('{{value}}', d.value);
         content = content.replace('%percent%', `${d.data.percentRound}%`);
         content = content.replace('%value%', d.value);
+
+        if (content.indexOf('<b>') === -1) {
+          content = content.replace('(', '<b>');
+          content = content.replace(')', '</b>');
+        }
 
         // Debounce it a bit
         if (tooltipInterval != null) {
@@ -473,7 +492,20 @@ Pie.prototype = {
    * @private
    */
   setInitialSelected() {
+    let selected = 0;
+    let selector;
 
+    this.svg.selectAll('.slice').each(function (d, i) {
+      if (!d || !d.data) {
+        return;
+      }
+
+      if (d.data.selected && selected < 1) {
+        selected++;
+        selector = d3.select(this);
+        selector.on('click').call(selector.node(), selector.datum(), i);
+      }
+    });
   },
 
   /**
@@ -484,7 +516,7 @@ Pie.prototype = {
    * @returns {string} the formatted string.
    */
   formatToSettings(data, settings) {
-    const d = data.data;
+    const d = data.data ? data.data : data;
 
     if (settings.show === 'value') {
       return settings.formatter ? d3.format(settings.formatter)(d.value) : d.value;
@@ -494,12 +526,20 @@ Pie.prototype = {
       return d.name;
     }
 
+    if (settings.show === 'label (percent)') {
+      return `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)`;
+    }
+
+    if (settings.show === 'label (value)') {
+      return `${d.name} (${settings.formatter ? d3.format(settings.formatter)(d.value) : d.value})`;
+    }
+
     if (settings.show === 'percent') {
-      return `${d.percentRound}%`;
+      return `${isNaN(d.percentRound) ? 0 : d.percentRound}%`;
     }
 
     if (typeof settings.show === 'function') {
-      return settings.show(data);
+      return settings.show(d);
     }
 
     return d.value;
@@ -507,8 +547,8 @@ Pie.prototype = {
 
   /**
    * Sets up event handlers for this component and its sub-elements.
-   * @returns {object} The Component prototype, useful for chaining.
    * @private
+   * @returns {object} The Component prototype, useful for chaining.
    */
   handleEvents() {
     this.element.on(`updated.${COMPONENT_NAME}`, () => {
@@ -530,23 +570,27 @@ Pie.prototype = {
 
   width: 0,
 
-  /*
+  /**
    * Get info on the currently selected lines.
+   * @private
    * @returns {object} An object with the matching data and reference to the triggering element.
    */
   getSelected() {
     return charts.selected;
   },
 
-  /*
+  /**
    * Get info on the currently selected lines.
+   * @private
+   * @param {object} o The selection data object
+   * @param {boolean} isToggle If true toggle the current state.
    */
   setSelected(o, isToggle) {
     const self = this;
     let selector;
     let arcIndex;
     let selected = 0;
-    const equals = window.Soho.utils.equals;
+    const equals = utils.equals;
 
     this.svg.selectAll('.slice').each(function (d, i) {
       if (!d || !d.data) {
@@ -572,14 +616,15 @@ Pie.prototype = {
     }
   },
 
-  /*
+  /**
    * Get info on the currently selected lines.
+   * @param {object} options The selected info object.
    */
   toggleSelected(options) {
     this.setSelected(options, true);
   },
 
-  /*
+  /**
    * Handles resizing a chart.
    * @private
    * @returns {void}
@@ -614,6 +659,7 @@ Pie.prototype = {
 
   /**
    * Handle updated settings and values.
+   * @private
    * @param  {array} values A list of values
    * @returns {array} The values rounded to 100
    */
@@ -665,8 +711,8 @@ Pie.prototype = {
 
   /**
    * Simple Teardown - remove events & rebuildable markup.
-   * @returns {object} The Component prototype, useful for chaining.
    * @private
+   * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
@@ -676,6 +722,7 @@ Pie.prototype = {
 
   /**
    * Calculate the middle angle.
+   * @private
    * @param  {object} d The d3 data.
    * @returns {boolean} The mid angule
    */
