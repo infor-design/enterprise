@@ -91,9 +91,9 @@ PlacementObject.prototype = {
     this.callback = (typeof this.callback === 'function') ? this.callback : DEFAULT_PLACE_SETTINGS.callback;
     this.container = (this.container instanceof $ && this.container.length) ?
       this.container : DEFAULT_PLACE_SETTINGS.container;
-    this.containerOffsetX = !Number.isNaN(parseInt(this.containerOffsetX, 10)) ?
+    this.containerOffsetX = !isNaN(parseInt(this.containerOffsetX, 10)) ?
       this.containerOffsetX : 0;
-    this.containerOffsetY = !Number.isNaN(parseInt(this.containerOffsetY, 10)) ?
+    this.containerOffsetY = !isNaN(parseInt(this.containerOffsetY, 10)) ?
       this.containerOffsetY : 0;
     this.parent = (this.parent instanceof $ && this.parent.length) ?
       this.parent : DEFAULT_PLACE_SETTINGS.parent;
@@ -121,7 +121,7 @@ PlacementObject.prototype = {
       return;
     }
 
-    if (Number.isNaN(Number(value))) {
+    if (isNaN(value)) {
       value = 0;
     }
 

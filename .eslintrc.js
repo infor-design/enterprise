@@ -110,7 +110,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
 
     // Ignore certain globals:
-    // - IsNaN - due to our previous assumptions in code about how it sometimes will return 'false'
+    // - IsNaN - due to our previous assumptions in code about how it sometimes will return 'false', and because `Number.isNaN` has no native IE11 support.
     // for things that are not numbers (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN#Examples).
     // https://eslint.org/docs/rules/no-restricted-globals
     'no-restricted-globals': ['off', 'isNaN'],

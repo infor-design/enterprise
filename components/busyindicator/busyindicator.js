@@ -66,12 +66,12 @@ BusyIndicator.prototype = {
       this.loadingText = this.settings.text ? this.settings.text : Locale.translate('Loading');
     }
 
-    const isDelayDefined = delay !== undefined && !Number.isNaN(delay) && parseInt(delay, 10) > 20;
-    const displayDelay = (!Number.isNaN(this.settings.displayDelay) &&
+    const isDelayDefined = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20;
+    const displayDelay = (!isNaN(this.settings.displayDelay) &&
         this.settings.displayDelay >= 20) ? this.settings.displayDelay : 20;
 
     this.delay = isDelayDefined ? delay : displayDelay;
-    this.completionTime = completionTime !== undefined && !Number.isNaN(completionTime) ?
+    this.completionTime = completionTime !== undefined && !isNaN(completionTime) ?
       parseInt(completionTime, 10) : this.settings.timeToComplete;
 
     return this;

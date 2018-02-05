@@ -596,7 +596,7 @@ Lookup.prototype = {
     const value = this.element.val();
     const length = value.length;
     const isUpperCase = (value === value.toUpperCase());
-    const isNumber = !Number.isNaN(Number(value));
+    const isNumber = !isNaN(value);
 
     this.element.attr('size', length + (isUpperCase && !isNumber ? 2 : 1));
   },

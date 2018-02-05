@@ -688,7 +688,7 @@ ListBuilder.prototype = {
     } else {
       const idx = parseInt(selector, 10);
       const items = $('li', this.ul);
-      if (!Number.isNaN(idx) && (idx > -1 && idx < items.length)) {
+      if (!isNaN(idx) && (idx > -1 && idx < items.length)) {
         li = items.eq(idx); // zero based index
       } else if ((`${selector}`).toLowerCase() === 'first') {
         li = items.first(); // first
