@@ -1076,7 +1076,7 @@ Datagrid.prototype = {
 
     if (col.filterType !== 'checkbox' && col.filterType !== 'text') {
       btnMarkup += renderButton('equals') +
-        render('equals', 'Equals', (col.filterType === 'integer' || col.filterType === 'date' || col.filterType === 'time')) +
+        render('equals', 'Equals', (col.filterType === 'integer' || col.filterType === 'decimal' || col.filterType === 'date' || col.filterType === 'time')) +
         render('does-not-equal', 'DoesNotEqual') +
         render('is-empty', 'IsEmpty') +
         render('is-not-empty', 'IsNotEmpty');
@@ -5015,6 +5015,7 @@ Datagrid.prototype = {
     const s = this.settings;
     const isSingle = s.selectable === 'single';
     const isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed';
+    const isSiblings = s.selectable === 'siblings';
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
     let gIdx = idx;
 
@@ -5036,7 +5037,7 @@ Datagrid.prototype = {
       this.selectRow(idx, true, true);
     }
 
-    if (isMultiple) {
+    if (isMultiple || isSiblings) {
       if (Object.prototype.toString.call(row) === '[object Array]') {
         for (let i = 0; i < row.length; i++) {
           if (s.groupable) {

@@ -177,8 +177,10 @@ FieldOptions.prototype = {
     // Adjust stack order for dropdown
     if (dropdown) {
       setTimeout(() => {
-        this.trigger.data('popupmenu')
-          .menu.closest('.popupmenu-wrapper').css({ 'z-index': '4502' });
+        const popupmenu = this.trigger.data('popupmenu');
+        if (popupmenu) {
+          popupmenu.menu.closest('.popupmenu-wrapper').css({ 'z-index': '4502' });
+        }
       }, 0);
     }
     // Bind active/unactive on show datepicker or timepicker

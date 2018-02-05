@@ -80,6 +80,19 @@ SearchField.prototype = {
     this.optionsParseBoolean();
     this.label = this.element.prev('label, .label');
 
+    const categoriesOptions = [];
+    const settingsKeys = Object.keys(this.settings);
+
+    settingsKeys.forEach((key) => {
+      if (typeof this.settings[key] === 'object') {
+        categoriesOptions.push(this.settings[key]);
+      }
+    });
+
+    if (categoriesOptions) {
+      this.settings.categories = categoriesOptions;
+    }
+
     // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
     // Autocomplete settings are fed the same settings as Searchfield
     if (this.settings.source || this.element.attr('data-autocomplete')) {
