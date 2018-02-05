@@ -623,7 +623,6 @@ SearchField.prototype = {
    * @private
    * @param  {object} e The event.
    * @param  {object} anchor the link object
-   * @returns {undefined}
    */
   handleCategorySelected(e, anchor) {
     // Only change the text and searchfield size if we can
