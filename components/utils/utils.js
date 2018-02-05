@@ -128,7 +128,7 @@ function focusable(element) {
   let mapName;
   let img;
   const nodeName = element.nodeName.toLowerCase();
-  const isTabIndexNotNaN = !Number.isNaN(Number($.attr(element, 'tabindex')));
+  const isTabIndexNotNaN = !isNaN($.attr(element, 'tabindex'));
 
   if (nodeName === 'area') {
     map = element.parentNode;
@@ -159,7 +159,7 @@ function focusable(element) {
 // Adds a `:focusable` selector to jQuery's selector library.
 $.extend($.expr[':'], {
   focusable(element) {
-    return focusable(element, !Number.isNaN($.attr(element, 'tabindex')));
+    return focusable(element, !isNaN($.attr(element, 'tabindex')));
   }
 });
 
@@ -710,7 +710,7 @@ DOM.getDimensions = function getDimensions(el) {
   const rectObj = {};
 
   for (let prop in rect) { // eslint-disable-line
-    if (!Number.isNaN(Number(rect[prop]))) {
+    if (!isNaN(rect[prop])) {
       rectObj[prop] = rect[prop];
     }
   }
@@ -920,7 +920,7 @@ utils.isString = function isString(value) {
  * @returns {boolean} whether or not a specific input is a Number
  */
 utils.isNumber = function isNumber(value) {
-  return typeof value === 'number' && value.length === undefined && !Number.isNaN(Number(value));
+  return typeof value === 'number' && value.length === undefined && !isNaN(value);
 };
 
 /**
@@ -1006,7 +1006,7 @@ const math = {};
  * @returns {number} Frames Per Second
  */
 math.convertDelayToFPS = function convertDelayToFPS(delay) {
-  if (Number.isNaN(Number(delay))) {
+  if (isNaN(delay)) {
     throw new Error('provided delay value is not a number');
   }
   return delay / 16.7;
@@ -1019,7 +1019,7 @@ math.convertDelayToFPS = function convertDelayToFPS(delay) {
  * @returns {number} delay in CPU ticks
  */
 math.convertFPSToDelay = function convertFPSToDelay(fps) {
-  if (Number.isNaN(Number(fps))) {
+  if (isNaN(fps)) {
     throw new Error('provided delay value is not a number');
   }
   return fps * 16.7;

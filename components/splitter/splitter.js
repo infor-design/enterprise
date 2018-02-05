@@ -144,7 +144,7 @@ Splitter.prototype = {
 
     // Restore from local storage
     if (localStorage && s.save &&
-      !Number.isNaN(parseInt(localStorage[s.uniqueId], 10))) {
+      !isNaN(parseInt(localStorage[s.uniqueId], 10))) {
       w = localStorage[s.uniqueId];
     }
 

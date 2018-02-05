@@ -1440,7 +1440,7 @@ DatePicker.prototype = {
    */
   getBoolean(val) {
     const num = +val;
-    return !Number.isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
+    return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
   },
 
   /**

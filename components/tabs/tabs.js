@@ -1343,7 +1343,7 @@ Tabs.prototype = {
       typeof externalSettings.settings === 'object') {
       settings = externalSettings.settings;
     }
-    if (!Number.isNaN(Number(externalSettings.newIndex))) {
+    if (!isNaN(externalSettings.newIndex)) {
       newIndex = externalSettings.newIndex;
     }
 
@@ -2094,7 +2094,7 @@ Tabs.prototype = {
       const appMenuTrigger = tabs.filter('.application-menu-trigger');
 
       // NOTE: Cannot simply do !targetIndex here because zero is a valid index
-      if (targetIndex === undefined || targetIndex === null || Number.isNaN(Number(targetIndex))) {
+      if (targetIndex === undefined || targetIndex === null || isNaN(targetIndex)) {
         targetIndex = tabs.length;
       }
 

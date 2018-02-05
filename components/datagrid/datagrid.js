@@ -1183,7 +1183,7 @@ Datagrid.prototype = {
           rowValue = rowValue.toLowerCase();
         }
 
-        if ((typeof rowValue === 'number' || (!Number.isNaN(Number(rowValue)) && rowValue !== '')) &&
+        if ((typeof rowValue === 'number' || (!isNaN(rowValue) && rowValue !== '')) &&
               columnDef.filterType !== 'date' && columnDef.filterType !== 'time') {
           rowValue = parseFloat(rowValue);
           conditionValue = Locale.parseNumber(conditionValue);
@@ -2567,7 +2567,7 @@ Datagrid.prototype = {
 
     if (cacheWidths.widthPercent) {
       return 'style = "width: 100%"';
-    } else if (!Number.isNaN(Number(this.totalWidth))) {
+    } else if (!isNaN(this.totalWidth)) {
       return `style = "width: ${parseFloat(this.totalWidth)}px"`;
     }
 
@@ -2725,7 +2725,7 @@ Datagrid.prototype = {
 
       if (this.widthPercent) {
         this.table.css('width', '100%');
-      } else if (!Number.isNaN(Number(this.totalWidth))) {
+      } else if (!isNaN(this.totalWidth)) {
         this.table.css('width', this.totalWidth);
       }
     }
@@ -4464,7 +4464,7 @@ Datagrid.prototype = {
     rowNode = this.visualRowNode(idx);
     dataRowIndex = this.dataRowIndex(rowNode);
 
-    if (Number.isNaN(Number(dataRowIndex))) {
+    if (isNaN(dataRowIndex)) {
       dataRowIndex = idx;
     }
 

@@ -134,7 +134,7 @@ RenderLoop.prototype = {
           // If this item doesn't update on each tick, simply count down.
           // Otherwise, call the update function
           if (loopItem.updateDuration && loopItem.updateDuration > 1) {
-            if (Number.isNaN(loopItem.timeUntilNextUpdate)) {
+            if (isNaN(loopItem.timeUntilNextUpdate)) {
               loopItem.timeUntilNextUpdate = loopItem.updateDuration;
             }
 
@@ -207,7 +207,7 @@ RenderLoop.prototype = {
         noNamespace = false;
       } else {
         const numberDuration = Number(duration);
-        if (!Number.isNaN(numberDuration)) {
+        if (!isNaN(numberDuration)) {
           duration = numberDuration;
         }
       }
