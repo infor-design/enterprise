@@ -177,8 +177,10 @@
         // Adjust stack order for dropdown
         if (dropdown) {
           setTimeout(function() {
-            self.trigger.data('popupmenu')
-              .menu.closest('.popupmenu-wrapper').css({'z-index': '4502'});
+            var popupMenu = self.trigger.data('popupmenu');
+            if (popupMenu) {
+              popupMenu.menu.closest('.popupmenu-wrapper').css({'z-index': '4502'});
+            }
           }, 0);
         }
         // Bind active/unactive on show datepicker or timepicker
