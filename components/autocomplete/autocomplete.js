@@ -262,6 +262,7 @@ Autocomplete.prototype = {
       this.settings.displayResultsCallback(modifiedFilterResults, () => {
         self.element.trigger('listopen', [modifiedFilterResults]);
       });
+      return;
     }
 
     this.handleListResults(term, items, modifiedFilterResults);
