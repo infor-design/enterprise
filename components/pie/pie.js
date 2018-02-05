@@ -23,6 +23,7 @@ const COMPONENT_NAME = 'pie';
 * @property {boolean} showLinesMobile This defaults to false, when false and under 450px the lines
 * will not be shown. If you still want lines at the lower breakpoint you can set this to true
 * @property {boolean} showLegend If false the legend will not be shown.
+* @property {boolean} hideCenterLabel If false the center label will not be shown.
 * @property {string} legendPlacement Where to locate the legend. This can be bottom or right at
 * the moment.
 * @property {object} lines A setting that controls the line values and format.
@@ -44,6 +45,7 @@ const PIE_DEFAULTS = {
   animationSpeed: 600,
   animate: true,
   redrawOnResize: true,
+  hideCenterLabel: false,
   showTooltips: true,
   showLines: true,
   showLinesMobile: false,
@@ -144,7 +146,7 @@ Pie.prototype = {
 
     self.arc = d3.arc()
       .outerRadius(dims.radius * 0.75)
-      .innerRadius(self.settings.isDonut ? dims.radius * 0.4 : 0);
+      .innerRadius(self.settings.isDonut ? dims.radius * 0.5 : 0);
 
     // Influences the label position
     self.outerArc = d3.arc()
@@ -182,7 +184,7 @@ Pie.prototype = {
     });
 
     // Handle zero sum or empty pies
-    if (isEmpty || sum === 0) {
+    if (isEmpty || sum === 0 || isNaN(sum)) {
       this.chartData.push({ data: {}, color: '#BDBDBD', name: 'Empty-Pie', value: 100, percent: 1, percentRound: 100 });
     }
 
@@ -225,6 +227,7 @@ Pie.prototype = {
     }
 
     this.setInitialSelected();
+    this.addCenterLabel();
     this.element.trigger('rendered');
     return this;
   },
@@ -253,6 +256,48 @@ Pie.prototype = {
     });
 
     return this.chartData;
+  },
+
+  /**
+   * Add the center label for donut chart.
+   * @private
+   */
+  addCenterLabel() {
+    const self = this;
+
+    if (self.settings.isDonut && !self.settings.hideCenterLabel) {
+      const centerLabel = self.settings.dataset[0].centerLabel;
+      const arcs = self.svg.selectAll('.slices');
+
+      arcs
+        .append('text')
+        .attr('dy', '.35em')
+        .style('text-anchor', 'middle')
+        .attr('class', 'chart-donut-text')
+        .html(centerLabel);
+
+      // FIX: IE does not render .html
+      // http://stackoverflow.com/questions/13962294/dynamic-styling-of-svg-text
+      if (charts.isIE && !charts.isIEEdge) {
+        if (utils.isHTML(centerLabel)) {
+          const text = arcs.select('.chart-donut-text');
+          const tmp = document.createElement('text');
+
+          tmp.innerHTML = centerLabel;
+
+          const nodes = Array.prototype.slice.call(tmp.childNodes);
+          nodes.forEach(function (node) {
+            text.append('tspan')
+              .attr('style', node.getAttribute && node.getAttribute('style'))
+              .attr('x', node.getAttribute && node.getAttribute('x'))
+              .attr('dy', node.getAttribute && node.getAttribute('dy'))
+              .text(node.textContent);
+          });
+        } else {
+          arcs.select('.chart-donut-text').text(centerLabel);
+        }
+      }
+    }
   },
 
   /**
