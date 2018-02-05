@@ -1,14 +1,13 @@
 import { Tree, COMPONENT_NAME } from './tree';
 
-
 /**
  * jQuery Component Wrapper for Tree
- * TODO: - Context Menus
- *       - Search
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements being acted on
  */
-$.fn.tree = function(settings) {
-  return this.each(function() {
-    var instance = $.data(this, COMPONENT_NAME);
+$.fn.tree = function (settings) {
+  return this.each(function () {
+    let instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {

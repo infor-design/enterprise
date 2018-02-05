@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * Migration Code for Soho 4.4.x
  * =================================================

@@ -13,35 +13,38 @@ const COMPONENT_NAME = 'datepicker';
  * Default DatePicker Options
  * @namespace
  * @property {boolean} showTime If true the time selector will be shown.
- * @property {string} [timeFormat] Format to use time section fx HH:mm, defaults current locale settings.
+ * @property {string} [timeFormat] Format to use time section fx HH:mm,
+ *  defaults current locale settings.
  * @property {number} [minuteInterval]
  * @property {number} [secondInterval]
- * @property {string} [mode] Time picker options: 'standard', 'range', this controls the time picker.
- * @property {boolean} [roundToInterval] In time picker mode, if a non-matching minutes value is entered,
- rounds the minutes value to the nearest interval when the field is blurred.
- * @property {string} dateFormat Defaults to current locale but can be overriden to a specific format,
- like like 'yyyy-MM-dd' iso8601 format.
+ * @property {string} [mode] Time picker options: 'standard', 'range',
+ *  this controls the time picker.
+ * @property {boolean} [roundToInterval] In time picker mode, if a non-matching
+ *  minutes value is entered,
+ *  rounds the minutes value to the nearest interval when the field is blurred.
+ * @property {string} dateFormat Defaults to current locale but can be
+ *  overriden to a specific format, like like 'yyyy-MM-dd' iso8601 format.
  * @property {boolean} disable  Disabled Dates Build up. `{
-   'dates'     : [],
-   'minDate'   : '',
-   'maxDate'   : '',
-   'dayOfWeek' : [],
-   'isEnable' : false
- }`
- * @property {boolean} showMonthYearPicker If true the month and year will render as dropdowns.
+ * 'dates'     : [],
+ * 'minDate'   : '',
+ * 'maxDate'   : '',
+ * 'dayOfWeek' : [],
+ * 'isEnable' : false
+ * }`
+ * @property {boolean} showMonthYearPicker If true the month and year will render
+ *  as dropdowns.
  * @property {boolean} hideDays If true the days portion of the calendar will be hidden.
- Usefull for Month/Year only formats.
+ *  Usefull for Month/Year only formats.
  * @property {boolean} customValidation If true the internal validation is disabled.
  * @property {boolean} advanceMonths The number of months in each direction to show in
- the dropdown for months (when initially opening)
+ *  the dropdown for months (when initially opening)
  * @property {boolean} showLegend If true a legend is show to associate dates.
  * @property {array} legend  Legend Build up
- for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
- {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
- * @property {string} calendarName The name of the calendar to use in instance of multiple calendars.
- At this time only ar-SA and ar-EG locales have either 'gregorian' or
- 'islamic-umalqura' as valid values.
- *
+ * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
+ * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
+ * @property {string} calendarName The name of the calendar to use in instance of
+ * multiple calendars. At this time only ar-SA and ar-EG locales have either
+ * 'gregorian' or 'islamic-umalqura' as valid values.
  */
 const DATEPICKER_DEFAULTS = {
   showTime: false,

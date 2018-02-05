@@ -8,7 +8,6 @@ import '../icons/icons.jquery';
 import '../mask/masked-input.jquery';
 import '../popover/popover.jquery';
 
-
 // Component Name
 const COMPONENT_NAME = 'timepicker';
 
@@ -19,14 +18,19 @@ const TIMEPICKER_MODES = ['standard', 'range'];
  * Default Timepicker Settings
  * @namespace
  * @property {string} timeFormat The time format
- * @property {number} minuteInterval  Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
+ * @property {number} minuteInterval  Integer from 1 to 60.  Multiples of this value
+ *  are displayed as options in the minutes dropdown.
  * @property {number} secondInterval  Integer from 1 to 60.
  * @property {string} mode  can be set to 'standard', 'range',
- * @property {boolean} roundToInterval  if `false`, does not automatically round user-entered values from the pickers to their nearest interval.
- * @property {null|jQuery[]} [parentElement]  if defined as a jQuery-wrapped element, will be used as the target element.
- * @property {string} returnFocus  If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
+ * @property {boolean} roundToInterval  if `false`, does not automatically round
+ *  user-entered values from the pickers to their nearest interval.
+ * @property {null|jQuery[]} [parentElement]  if defined as a jQuery-wrapped element,
+ *  will be used as the target element.
+ * @property {string} returnFocus  If set to false, focus will not be returned to
+ *  the calling element. It usually should be for accessibility purposes.
+ * @returns {object} containing settings
  */
-const TIMEPICKER_DEFAULTS = function() {
+const TIMEPICKER_DEFAULTS = function () {
   return {
     timeFormat: Locale.calendar().timeFormat || 'h:mm a', // The time format
     minuteInterval: 5,
@@ -41,9 +45,8 @@ const TIMEPICKER_DEFAULTS = function() {
 /**
  * The Timepicker Component provides a click/touch user interface for setting a time.
  * @class TimePicker
- * @param {HTMLElement|jQuery[]} element
- * @param {Object} [settings]
- * @returns {this}
+ * @param {HTMLElement|jQuery[]} element the base element
+ * @param {Object} [settings] incoming settings
  */
 function TimePicker(element, settings) {
   this.element = $(element);
@@ -58,9 +61,9 @@ TimePicker.prototype = {
 
   /**
    * @private
-   * @returns {this}
+   * @returns {void}
    */
-  init: function() {
+  init() {
     this
       .setup()
       .build()
@@ -71,20 +74,19 @@ TimePicker.prototype = {
   /**
    * Configure any settings for the Timepicker
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  setup: function() {
-
+  setup() {
     function sanitizeIntervals(value, type) {
       if (!type || ['minute', 'second'].indexOf(type) < 0) {
         type = 'minute';
       }
 
-      var defaultInterval = TIMEPICKER_DEFAULTS[(type + 'Interval')];
+      const defaultInterval = TIMEPICKER_DEFAULTS[(`${type}Interval`)];
       if (value === undefined || isNaN(value)) {
         return defaultInterval;
       }
-      var intValue = parseInt(value, 10);
+      const intValue = parseInt(value, 10);
       return intValue > 0 && intValue < 60 ? intValue : defaultInterval;
     }
 
@@ -101,7 +103,7 @@ TimePicker.prototype = {
     }
 
     function sanitizeMode(value) {
-      var modes = ['standard', 'range'];
+      const modes = ['standard', 'range'];
       return $.inArray(value, modes) > -1 ? value : TIMEPICKER_DEFAULTS.mode;
     }
 
@@ -112,7 +114,7 @@ TimePicker.prototype = {
       this.settings.minuteInterval = sanitizeIntervals(this.element.attr('data-minute-interval'), 'minute');
     }
 
-    this.settings.timeFormat = sanitizeTimeFormat(parseInt(this.element.attr('data-force-hour-mode')) === 24 ? 'HH:mm' : this.settings.timeFormat);
+    this.settings.timeFormat = sanitizeTimeFormat(parseInt(this.element.attr('data-force-hour-mode'), 10) === 24 ? 'HH:mm' : this.settings.timeFormat);
     this.settings.minuteInterval = sanitizeIntervals(this.settings.minuteInterval, 'minute');
     this.settings.secondInterval = sanitizeIntervals(this.settings.secondInterval, 'second');
     this.settings.mode = sanitizeMode(this.settings.mode);
@@ -126,10 +128,10 @@ TimePicker.prototype = {
   /**
    * Add any markup
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  build: function() {
-    //With this option forgoe the input and append the dropdowns/popup to the parent element
+  build() {
+    // With this option forgoe the input and append the dropdowns/popup to the parent element
     if (this.settings.parentElement) {
       this.trigger = $();
       this.buildStandardPopup();
@@ -137,7 +139,7 @@ TimePicker.prototype = {
       return this;
     }
 
-    //Append a Button
+    // Append a Button
     this.trigger = this.element.next('svg.icon');
     if (this.trigger.length === 0) {
       this.trigger = $.createIconElement('clock').insertAfter(this.element);
@@ -154,27 +156,28 @@ TimePicker.prototype = {
   /**
    * Adds ARIA-related attributes
    * @private
-   * @returns {this}
+   * @returns {void}
    */
-  addAria: function () {
+  addAria() {
     this.element.attr({
       'aria-expanded': 'false',
-      'role': 'combobox'
+      role: 'combobox'
     });
 
-    //TODO: Confirm this with Accessibility Team
-    this.label = $('label[for="'+ this.element.attr('id') + '"]');
-    this.label.append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
+    // TODO: Confirm this with Accessibility Team
+    this.label = $(`label[for="${this.element.attr('id')}"]`);
+    this.label.append(`<span class="audible">${Locale.translate('UseArrow')}</span>`);
   },
 
   /**
    * Sets up a `keydown` event listener.
+   * @returns {void}
    */
-  handleKeys: function() {
-    var self = this;
+  handleKeys() {
+    const self = this;
 
-    this.element.on('keydown.timepicker', function (e) {
-      var handled = false;
+    this.element.on('keydown.timepicker', (e) => {
+      let handled = false;
 
       // Esc closes an open popup with no action
       if (e.which === 27 && self.isOpen()) {
@@ -182,7 +185,7 @@ TimePicker.prototype = {
         self.closeTimePopup();
       }
 
-      //Arrow Down or Alt first opens the dialog
+      // Arrow Down or Alt first opens the dialog
       if (e.which === 40 && !self.isOpen()) {
         handled = true;
         self.openTimePopup();
@@ -193,21 +196,24 @@ TimePicker.prototype = {
         e.preventDefault();
         return false;
       }
+
+      return true;
     });
   },
 
   /**
    * Sets up a `blur` event listener.
    */
-  handleBlur: function() {
-    var self = this;
+  handleBlur() {
+    const self = this;
 
-    this.element.on('blur.timepicker', function() {
+    this.element.on('blur.timepicker', () => {
       self.roundMinutes();
 
-      // The action of closing the popup menu is set on a timer because technically there are no fields focused
-      // on frame 0 of the popup menu's existence, which would cause it to close immediately on open.
-      setTimeout(function() {
+      // The action of closing the popup menu is set on a timer because technically
+      // there are no fields focused on frame 0 of the popup menu's existence, which
+      // would cause it to close immediately on open.
+      setTimeout(() => {
         if (self.isOpen() && self.popup.find(':focus').length === 0) {
           self.closeTimePopup();
         }
@@ -218,68 +224,70 @@ TimePicker.prototype = {
   /**
    * Checks a time format value to see if it is a Military (24-hour) format.
    * @param {string} value - a string value representing a time format.
-   * @returns {boolean}
+   * @returns {boolean} whether or not the time format is 24-hour
    */
-  is24HourFormat: function(value) {
+  is24HourFormat(value) {
     if (!value) { value = this.settings.timeFormat; }
     return (value.match('HH') || []).length > 0;
   },
 
   /**
    * @private
+   * @param {number} value incoming value
+   * @returns {string} the hour text
    */
-  hourText: function(value) {
-    return (((this.settings.timeFormat.toUpperCase().match('HH') || []).length > 0 && value < 10 ? '0': '') + value);
+  hourText(value) {
+    return (((this.settings.timeFormat.toUpperCase().match('HH') || []).length > 0 && value < 10 ? '0' : '') + value);
   },
 
   /**
    * Checks a time format value to see if it includes seconds.
-   * @param {string} value - a string value representing a time format.
-   * @returns {boolean}
+   * @param {string} value a string value representing a time format.
+   * @returns {boolean} whether or not seconds are included in the time format
    */
-  hasSeconds: function(value) {
+  hasSeconds(value) {
     if (!value) { value = this.settings.timeFormat; }
     return (value.match('ss') || []).length > 0;
   },
 
   /**
    * Checks to see if a time format contains a space for presenting the day period.
-   * @param {string} value - a string value representing a time format.
-   * @returns {boolean}
+   * @param {string} value a string value representing a time format.
+   * @returns {boolean} whther or not the time format has day periods.
    */
-  hasDayPeriods: function(value) {
+  hasDayPeriods(value) {
     if (!value) { value = this.settings.timeFormat; }
     return (value.match('a') || []).length > 0;
   },
 
   /**
    * Gets a Locale-defined version of the time separator.
-   * @returns {string}
+   * @returns {string} containing the time separator
    */
-  getTimeSeparator: function() {
+  getTimeSeparator() {
     return Locale.calendar().dateFormat.timeSeparator;
   },
 
   /**
    * Rounds the current value of the minutes picker to its nearest interval value.
    */
-  roundMinutes: function() {
+  roundMinutes() {
     if (!this.getBoolean(this.settings.roundToInterval)) {
       return;
     }
 
     // separate out the minutes value from the rest of the value.
-    var val = this.element.val(),
-      timeSeparator = this.getTimeSeparator(),
-      parts = val ? val.split(timeSeparator) : [],
-      interval = this.settings.minuteInterval;
+    const val = this.element.val();
+    const timeSeparator = this.getTimeSeparator();
+    const parts = val ? val.split(timeSeparator) : [];
+    const interval = this.settings.minuteInterval;
 
     if (!parts[1]) {
       return;
     }
 
     if (!this.is24HourFormat(this.settings.timeFormat)) {
-      var periodParts = parts[1].split(' ');
+      const periodParts = parts[1].split(' ');
       parts[1] = periodParts[0];
       if (periodParts[1]) {
         parts.push(periodParts[1]);
@@ -298,10 +306,10 @@ TimePicker.prototype = {
 
     if (parts[1] === '60') {
       parts[1] = '00';
-      parts[0] = (parseInt(parts[0]) + 1).toString();
+      parts[0] = (parseInt(parts[0], 10) + 1).toString();
     }
 
-    var newVal = parts[0] + timeSeparator + parts[1] + ' ' + (parts[2] ? parts[2] : '');
+    const newVal = `${parts[0] + timeSeparator + parts[1]} ${parts[2] ? parts[2] : ''}`;
     this.element.val(newVal);
   },
 
@@ -310,13 +318,13 @@ TimePicker.prototype = {
    * @private
    * @returns {void}
    */
-  addMask: function () {
+  addMask() {
     if (this.element.data('mask') && typeof this.element.data('mask') === 'object') {
       this.element.data('mask').destroy();
     }
     this.element.data('mask', undefined);
 
-    var maskOptions = {
+    const maskOptions = {
       keepCharacterPositions: true,
       process: 'date',
       patternOptions: {
@@ -324,27 +332,27 @@ TimePicker.prototype = {
       }
     };
 
-    var validation = 'time',
-      events = {'time': 'blur'},
-      customValidation = this.element.attr('data-validate'),
-      customEvents = this.element.attr('data-validation-events');
+    let validation = 'time';
+    let events = { time: 'blur' };
+    const customValidation = this.element.attr('data-validate');
+    const customEvents = this.element.attr('data-validation-events');
 
     if (customValidation === 'required' && !customEvents) {
-        validation = customValidation + ' ' + validation;
-        $.extend(events, {
-            'required': 'change blur'
-        });
+      validation = `${customValidation} ${validation}`;
+      $.extend(events, {
+        required: 'change blur'
+      });
     } else if (!!customValidation && !!customEvents) {
-        // Remove default validation, if found "no-default-validation" string in "data-validate" attribute
-        if (customValidation.indexOf('no-default-validation') > -1) {
-            validation = customValidation.replace(/no-default-validation/g, '');
-            events = $.fn.parseOptions(this.element, 'data-validation-events');
-        }
+      // Remove default validation, if found "no-default-validation" string in
+      // "data-validate" attribute
+      if (customValidation.indexOf('no-default-validation') > -1) {
+        validation = customValidation.replace(/no-default-validation/g, '');
+        events = $.fn.parseOptions(this.element, 'data-validation-events');
+      } else {
         // Keep default validation along custom validation
-        else {
-            validation = customValidation + ' ' + validation;
-            $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
-        }
+        validation = `${customValidation} ${validation}`;
+        $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
+      }
     }
 
     this.element
@@ -360,119 +368,120 @@ TimePicker.prototype = {
    * @private
    * @returns {void}
    */
-  buildStandardPopup: function() {
-    var self = this,
-      popupContent = $('<div class="timepicker-popup-content"></div>'),
-      timeSeparator = this.getTimeSeparator(),
-      textValue = '',
-      selected;
+  buildStandardPopup() {
+    const self = this;
+    const popupContent = $('<div class="timepicker-popup-content"></div>');
+    const timeSeparator = this.getTimeSeparator();
+    let textValue = '';
+    let selected;
 
     this.initValues = self.getTimeFromField();
-    var timeParts = $('<div class="time-parts"></div>').appendTo(popupContent);
+    const timeParts = $('<div class="time-parts"></div>').appendTo(popupContent);
 
     // Build the inner-picker HTML
-    var is24HourFormat = this.is24HourFormat(),
-      hasSeconds = this.hasSeconds(),
-      hasDayPeriods = this.hasDayPeriods(),
-      hourCounter = is24HourFormat ? 0 : 1,
-      maxHourCount = is24HourFormat ? 24 : 13;
+    const is24HourFormat = this.is24HourFormat();
+    const hasSeconds = this.hasSeconds();
+    const hasDayPeriods = this.hasDayPeriods();
+    let hourCounter = is24HourFormat ? 0 : 1;
+    const maxHourCount = is24HourFormat ? 24 : 13;
 
     this.hourSelect = $('<select id="timepicker-hours" data-options="{\'noSearch\': \'true\'}" class="hours dropdown"></select>');
 
-    while(hourCounter < maxHourCount) {
+    while (hourCounter < maxHourCount) {
       selected = '';
-      if (parseInt(self.initValues.hours, 10)  === hourCounter) {
+      if (parseInt(self.initValues.hours, 10) === hourCounter) {
         selected = ' selected';
       }
-      self.hourSelect.append($('<option' + selected + '>' + self.hourText(hourCounter) + '</option>'));
+      self.hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
       hourCounter++;
     }
-    timeParts.append($('<label for="timepicker-hours" class="audible">' + Locale.translate('Hours') + '</label>'));
+    timeParts.append($(`<label for="timepicker-hours" class="audible">${Locale.translate('Hours')}</label>`));
     timeParts.append(this.hourSelect);
-    timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
+    timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
 
     // Minutes Picker
-    var minuteCounter = 0;
+    let minuteCounter = 0;
     this.minuteSelect = $('<select id="timepicker-minutes" data-options="{\'noSearch\': \'true\'}" class="minutes dropdown"></select>');
 
-    while(minuteCounter <= 59) {
-      textValue = minuteCounter < 10 ? '0' + minuteCounter : minuteCounter;
+    while (minuteCounter <= 59) {
+      textValue = minuteCounter < 10 ? `0${minuteCounter}` : minuteCounter;
 
       selected = '';
       if (parseInt(self.initValues.minutes, 10) === minuteCounter) {
         selected = ' selected';
       }
-      self.minuteSelect.append($('<option' + selected + '>' + textValue + '</option>'));
-      minuteCounter = minuteCounter + self.settings.minuteInterval;
+      self.minuteSelect.append($(`<option${selected}>${textValue}</option>`));
+      minuteCounter += self.settings.minuteInterval;
     }
 
-    // If the value inside the picker doesn't match an interval, add the value as the currently selected option, right at the top
+    // If the value inside the picker doesn't match an interval, add the value
+    // as the currently selected option, right at the top
     if (!this.minuteSelect.find('option[selected]').length) {
-      this.minuteSelect.prepend($('<option selected>' + self.initValues.minutes + '</option>'));
+      this.minuteSelect.prepend($(`<option selected>${self.initValues.minutes}</option>`));
     }
 
-    timeParts.append($('<label for="timepicker-minutes" class="audible">' + Locale.translate('Minutes') + '</label>'));
+    timeParts.append($(`<label for="timepicker-minutes" class="audible">${Locale.translate('Minutes')}</label>`));
     timeParts.append(this.minuteSelect);
 
     // Seconds Picker
     if (hasSeconds) {
-      var secondCounter = 0;
+      let secondCounter = 0;
       this.secondSelect = $('<select id="timepicker-seconds" data-options="{\'noSearch\': \'true\'}" class="seconds dropdown"></select>');
 
-      while(secondCounter <= 59) {
-        textValue = secondCounter < 10 ? '0' + secondCounter : secondCounter;
+      while (secondCounter <= 59) {
+        textValue = secondCounter < 10 ? `0${secondCounter}` : secondCounter;
 
         selected = '';
         if (parseInt(self.initValues.seconds, 10) === secondCounter || (!self.initValues.seconds && textValue === '00')) {
           selected = ' selected';
         }
-        this.secondSelect.append($('<option' + selected + '>' + textValue + '</option>'));
-        secondCounter = secondCounter + self.settings.secondInterval;
+        this.secondSelect.append($(`<option${selected}>${textValue}</option>`));
+        secondCounter += self.settings.secondInterval;
       }
 
-      // If the value inside the picker doesn't match an interval, add the value as the currently selected option, right at the top
+      // If the value inside the picker doesn't match an interval, add the value
+      // as the currently selected option, right at the top
       if (!this.secondSelect.find('option[selected]').length) {
-        this.secondSelect.prepend($('<option selected>' + self.initValues.seconds + '</option>'));
+        this.secondSelect.prepend($(`<option selected>${self.initValues.seconds}</option>`));
       }
 
-      timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
-      timeParts.append($('<label for="timepicker-seconds" class="audible">' + Locale.translate('Seconds') + '</label>'));
+      timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
+      timeParts.append($(`<label for="timepicker-seconds" class="audible">${Locale.translate('Seconds')}</label>`));
       timeParts.append(this.secondSelect);
     }
 
     if (!is24HourFormat && hasDayPeriods) {
       this.periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
       timeParts.append($('<span class="label colons"></span>'));
-      var localeDays = Locale.calendar().dayPeriods,
-        localeCount = 0,
-        regexDay = new RegExp(self.initValues.period, 'i'),
-        realDayValue = 'AM'; // AM
+      const localeDays = Locale.calendar().dayPeriods;
+      let localeCount = 0;
+      const regexDay = new RegExp(self.initValues.period, 'i');
+      let realDayValue = 'AM'; // AM
 
-      while(localeCount < 2) {
-        realDayValue = localeCount === 0 ? 'AM' : 'PM';  // ? AM : PM
+      while (localeCount < 2) {
+        realDayValue = localeCount === 0 ? 'AM' : 'PM'; // ? AM : PM
         selected = '';
         if (regexDay.test(localeDays[localeCount])) {
           selected = ' selected';
         }
-        this.periodSelect.append($('<option value="' + realDayValue + '"'+ selected +'>' + localeDays[localeCount] + '</option>'));
+        this.periodSelect.append($(`<option value="${realDayValue}"${selected}>${localeDays[localeCount]}</option>`));
 
         localeCount++;
       }
-      timeParts.append($('<label for="timepicker-period" class="audible">' + Locale.translate('TimePeriod') + '</label>'));
+      timeParts.append($(`<label for="timepicker-period" class="audible">${Locale.translate('TimePeriod')}</label>`));
       timeParts.append(this.periodSelect);
     }
 
     if (this.settings.parentElement) {
       this.settings.parentElement.append(popupContent);
-      //self.afterShow(this.settings.parentElement);
+      // self.afterShow(this.settings.parentElement);
       self.popup = this.settings.parentElement.find('.timepicker-popup-content').addClass('timepicker-popup').attr('id', 'timepicker-popup');
     } else {
+      popupContent.append(`<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">${Locale.translate('SetTime')}</button></div>`);
 
-      popupContent.append('<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">' + Locale.translate('SetTime') + '</button></div>');
-
-      var placementParent = this.element,
-        placementParentXAlignment = (Locale.isRTL() ? 'right' : 'left'),
-        parent = this.element.parent();
+      let placementParent = this.element;
+      let placementParentXAlignment = (Locale.isRTL() ? 'right' : 'left');
+      const parent = this.element.parent();
 
       if (parent.is('.datagrid-cell-wrapper')) {
         placementParentXAlignment = 'center';
@@ -488,31 +497,32 @@ TimePicker.prototype = {
           parentXAlignment: placementParentXAlignment,
           strategies: ['flip', 'nudge', 'shrink']
         },
-        tooltipElement: '#timepicker-popup'})
-      .on('show.timepicker', function(e, ui) {
-        self.afterShow(ui);
-      }).on('hide.timepicker', function() {
-        if (self.settings.returnFocus) {
-          self.element.focus();
-        }
-      });
-
+        tooltipElement: '#timepicker-popup'
+      })
+        .on('show.timepicker', (e, ui) => {
+          self.afterShow(ui);
+        }).on('hide.timepicker', () => {
+          if (self.settings.returnFocus) {
+            self.element.focus();
+          }
+        });
     }
 
     // Make adjustments to the popup HTML specific to the timepicker
     if (this.trigger.data('tooltip')) {
-      var tooltip = self.popup = this.trigger.data('tooltip').tooltip;
+      self.popup = this.trigger.data('tooltip').tooltip;
+      const tooltip = self.popup;
       tooltip.addClass('timepicker-popup');
     }
   },
 
   /**
    * Handler for the Timepicker Popover's custom `show` event.
-   * @param {object} ui
+   * @param {object} ui timepicker popup element
    * @returns {void}
    */
-  afterShow: function (ui) {
-    var self = this;
+  afterShow(ui) {
+    const self = this;
 
     ui.find('button').button();
 
@@ -533,7 +543,7 @@ TimePicker.prototype = {
     }
 
     ui.find('div.dropdown').first().focus();
-    ui.find('.set-time').off('click.timepicker').on('click.timepicker', function(e) {
+    ui.find('.set-time').off('click.timepicker').on('click.timepicker', (e) => {
       e.preventDefault();
       self.setTimeOnField();
       self.closeTimePopup();
@@ -541,9 +551,8 @@ TimePicker.prototype = {
 
     // Handle Tabbing on the dialog
     if (!this.settings.parentElement) {
-
-      ui.on('keydown.timepicker', 'button, div.dropdown', function (e) {
-        var key = e.keyCode || e.charCode || 0;
+      ui.on('keydown.timepicker', 'button, div.dropdown', (e) => {
+        const key = e.keyCode || e.charCode || 0;
 
         if (key === 9) {
           self.containFocus(e);
@@ -551,28 +560,27 @@ TimePicker.prototype = {
           e.preventDefault();
           return false;
         }
+        return true;
       });
-
     }
-
   },
 
   /**
    * Focus the next prev focusable element on the popup
    * @private
-   * @param {jQuery.Event} e
+   * @param {jQuery.Event} e the event object
    * @returns {void}
    */
-  containFocus: function (e) {
-    var reverse = e.shiftKey;
+  containFocus(e) {
+    const reverse = e.shiftKey;
 
     // Set focus on (opt: next|prev) focusable element
-    var focusables = this.popup.find(':focusable'),
-      index = focusables.index($(':focus'));
+    const focusables = this.popup.find(':focusable');
+    let index = focusables.index($(':focus'));
 
-    index = (!reverse) ?
-      ((index+1) >= focusables.length ? 0 : (index+1)) :
-      ((index-1) < 0 ? focusables.length : (index-1));
+    index = (!reverse) ? //eslint-disable-line
+    ((index + 1) >= focusables.length ? 0 : (index + 1)) :
+      ((index - 1) < 0 ? focusables.length : (index - 1));
 
     focusables.eq(index).focus();
   },
@@ -582,14 +590,14 @@ TimePicker.prototype = {
    * @private
    * @returns {void}
    */
-  setupStandardEvents: function() {
-    var self = this;
+  setupStandardEvents() {
+    const self = this;
 
-    self.popup.on('touchend.timepicker touchcancel.timepicker', '.set-time', function(e) {
+    self.popup.on('touchend.timepicker touchcancel.timepicker', '.set-time', (e) => {
       e.preventDefault();
       e.target.click();
-    }).on('keydown.timepicker', 'input.dropdown', function(e) {
-      var handled = false;
+    }).on('keydown.timepicker', 'input.dropdown', function (e) {
+      let handled = false;
 
       // Pressing Esc when focused on a closed dropdown menu causes the entire popup to close.
       if (e.which === 27) {
@@ -607,10 +615,10 @@ TimePicker.prototype = {
       // Left & Right Arrows will switch between the available dropdowns
       if (e.which === 37 || e.which === 39) {
         handled = true;
-        var inputs = self.popup.find('input[id$="-shdo"]');
+        const inputs = self.popup.find('input[id$="-shdo"]');
 
         if (e.which === 37) {
-          var prev = inputs.eq(inputs.index(this) - 1);
+          let prev = inputs.eq(inputs.index(this) - 1);
           if (!prev || prev.length === 0) {
             prev = inputs.eq(inputs.length);
           }
@@ -618,7 +626,7 @@ TimePicker.prototype = {
         }
 
         if (e.which === 39) {
-          var next = inputs.eq(inputs.index(this) + 1);
+          let next = inputs.eq(inputs.index(this) + 1);
           if (!next || next.length === 0) {
             next = inputs.eq(0);
           }
@@ -631,20 +639,24 @@ TimePicker.prototype = {
         e.stopPropagation();
         return false;
       }
+
+      return true;
     });
 
-    // Listen to the popover/tooltip's "hide" event to properly close out the popover's inner controls.
-    self.trigger.on('hide.timepicker', function() {
+    // Listen to the popover/tooltip's "hide" event to properly close out the
+    // popover's inner controls.
+    self.trigger.on('hide.timepicker', () => {
       self.onPopupHide();
     });
   },
 
   /**
-   * Constructs all markup and subcomponents needed to build a Timepicker popup containing a time range.
+   * Constructs all markup and subcomponents needed to build a Timepicker popup
+   * containing a time range.
    * @private
    * @returns {void}
    */
-  buildRangePopup: function() {
+  buildRangePopup() {
     // TODO: Build this
   },
 
@@ -653,26 +665,24 @@ TimePicker.prototype = {
    * @private
    * @returns {void}
    */
-  setupRangeEvents: function() {
+  setupRangeEvents() {
     // TODO: Build this
   },
 
   /**
-   * Gets the value of the Timepicker field as an object separated into hours, minutes, (optional) seconds, and (optional) day period.
-   * @param {string} [value] - this method can optionally be passed a string-based time value to calculate instead of the current field's value.
-   * @returns {object}
-   * @returns {Object.hours}
-   * @returns {Object.minutes}
-   * @returns {Object.seconds}
-   * @returns {Object.period}
+   * Gets the value of the Timepicker field as an object separated into hours,
+   * minutes, (optional) seconds, and (optional) day period.
+   * @param {string} [value] this method can optionally be passed
+   * a string-based time value to calculate instead of the current field's value.
+   * @returns {object} containing key/value pairs representing time parts.
    */
-  getTimeFromField: function(value) {
-    var self = this,
-      val = value || this.element.val(),
-      sep = this.getTimeSeparator(),
-      parts,
-      endParts,
-      timeparts = {};
+  getTimeFromField(value) {
+    const self = this;
+    let val = value || this.element.val();
+    const sep = this.getTimeSeparator();
+    let parts;
+    let endParts;
+    const timeparts = {};
 
     val = val.replace(/[T\s:.-]/g, sep).replace(/z/i, '');
     parts = val.split(sep);
@@ -685,21 +695,21 @@ TimePicker.prototype = {
       parts = parts.concat(endParts);
     }
 
-    function isDayPeriod(value) {
-      return self.dayPeriods.indexOf(value) > -1;
+    function isDayPeriod(thisValue) {
+      return self.dayPeriods.indexOf(thisValue) > -1;
     }
 
-    function removeLeadingWhitespace(value) {
-      return value.replace(/^\s+|\s+$/g, '');
+    function removeLeadingWhitespace(thisValue) {
+      return thisValue.replace(/^\s+|\s+$/g, '');
     }
 
-    function addLeadingZero(value) {
-      if (!value || isNaN(value)) {
+    function addLeadingZero(thisValue) {
+      if (!thisValue || isNaN(thisValue)) {
         return '00';
       }
-      value = parseInt(value);
-      value = value < 10 ? '0' + value : value;
-      return value;
+      thisValue = parseInt(thisValue, 10);
+      thisValue = thisValue < 10 ? `0${thisValue}` : thisValue;
+      return thisValue;
     }
 
     // Handle Hours
@@ -708,10 +718,8 @@ TimePicker.prototype = {
     }
 
     parts[0] = parseInt(parts[0], 10);
-    if (isNaN(parts[0])) {
-
-    } else {
-      parts[0] = '' + parseInt(parts[0], 10);
+    if (!isNaN(parts[0])) {
+      parts[0] = `${parseInt(parts[0], 10)}`;
     }
     timeparts.hours = self.hourText(parts[0]);
 
@@ -726,38 +734,36 @@ TimePicker.prototype = {
     }
 
     // Handle Seconds/Period (slot 3)
-    function handleSlot2(value) {
-      // Should not kick off at all if we don't pass it a value, OR if this field is 24-hour display with no seconds
-      if (!value) {
+    function handleSlot2(thisValue) {
+      // Should not kick off at all if we don't pass it a value, OR if this field
+      // is 24-hour display with no seconds
+      if (!thisValue) {
         if (self.hasSeconds()) {
-          value = '00';
-          timeparts.seconds = value;
-          return value;
+          thisValue = '00';
+          timeparts.seconds = thisValue;
         }
 
         if (!self.is24HourFormat()) {
-          value = Locale.translateDayPeriod('AM');
-          timeparts.period = value;
-          return value;
+          thisValue = Locale.translateDayPeriod('AM');
+          timeparts.period = thisValue;
         }
 
-        return '';
+        return;
       }
 
-      value = removeLeadingWhitespace(value);
+      thisValue = removeLeadingWhitespace(thisValue);
 
       // Has seconds
       if (self.hasSeconds()) {
-        value = addLeadingZero(value);
-        timeparts.seconds = value;
-        return value;
+        thisValue = addLeadingZero(thisValue);
+        timeparts.seconds = thisValue;
+        return;
       }
       // No seconds, but has a day period
-      if (!isDayPeriod(value)) {
-        value = Locale.translateDayPeriod('AM');
+      if (!isDayPeriod(thisValue)) {
+        thisValue = Locale.translateDayPeriod('AM');
       }
-      timeparts.period = value;
-      return;
+      timeparts.period = thisValue;
     }
     handleSlot2(parts[2]);
 
@@ -765,10 +771,8 @@ TimePicker.prototype = {
     if (parts[3]) {
       parts[3] = removeLeadingWhitespace(parts[3]);
       timeparts.period = parts[3];
-    } else {
-      if (!this.is24HourFormat() && this.hasSeconds()) {
-        timeparts.period = Locale.translateDayPeriod('AM');
-      }
+    } else if (!this.is24HourFormat() && this.hasSeconds()) {
+      timeparts.period = Locale.translateDayPeriod('AM');
     }
 
     return timeparts;
@@ -779,16 +783,16 @@ TimePicker.prototype = {
    * the contents of the Timepicker field.
    * @returns {void}
    */
-  setTimeOnField: function() {
-    var hours = $('#timepicker-hours').val() || '',
-      minutes = $('#timepicker-minutes').val() || '',
-      seconds = $('#timepicker-seconds').val() || '',
-      period = ($('#timepicker-period').val() || '').toUpperCase(),
-      sep = this.getTimeSeparator(),
-      timeString = '' + hours + sep + minutes + (this.hasSeconds() ? sep + seconds : '');
+  setTimeOnField() {
+    const hours = $('#timepicker-hours').val() || '';
+    const minutes = $('#timepicker-minutes').val() || '';
+    const seconds = $('#timepicker-seconds').val() || '';
+    let period = ($('#timepicker-period').val() || '').toUpperCase();
+    const sep = this.getTimeSeparator();
+    let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
 
     period = (!this.is24HourFormat() && period === '') ? $('#timepicker-period-shdo').val() : period;
-    timeString += period ? ' ' + Locale.translateDayPeriod(period) : '';
+    timeString += period ? ` ${Locale.translateDayPeriod(period)}` : '';
 
     this.element.val(timeString)
       .trigger('change');
@@ -799,18 +803,19 @@ TimePicker.prototype = {
 
   /**
    * Return whether or not the Timepicker popup is open.
-   * @returns {boolean}
+   * @returns {boolean} whether or not the Timepicker popup is open.
    */
-  isOpen: function () {
+  isOpen() {
     return (this.popup && !this.popup.hasClass('is-hidden'));
   },
 
   /**
-   * Opens the Timepicker popup, intializing all the dropdown elements and setting up internal events.
+   * Opens the Timepicker popup, intializing all the dropdown elements and
+   * setting up internal events.
    * @returns {void}
    */
-  openTimePopup: function() {
-    var self = this;
+  openTimePopup() {
+    const self = this;
 
     // Get all current settings.
     self.setup();
@@ -834,17 +839,18 @@ TimePicker.prototype = {
       self.setupStandardEvents();
     }
 
-    this.element.attr({'aria-expanded': 'true'});
+    this.element.attr({ 'aria-expanded': 'true' });
     this.popup.find('div.dropdown').first().focus();
   },
 
   /**
-   * Triggers the "hide" method on the tooltip plugin.  The Timepicker officially "closes" after the popover's
-   * hide event fully completes because certain events need to be turned off and certain markup needs to be
-   * removed only AFTER the popover is hidden.
+   * Triggers the "hide" method on the tooltip plugin.  The Timepicker officially
+   * "closes" after the popover's hide event fully completes because certain events
+   * need to be turned off and certain markup needs to be removed only AFTER
+   * the popover is hidden.
    * @returns {void}
    */
-  closeTimePopup: function() {
+  closeTimePopup() {
     if (this.trigger.data('tooltip')) {
       this.trigger.data('tooltip').hide();
     }
@@ -854,7 +860,7 @@ TimePicker.prototype = {
    * Handles the time popover's "hide" event
    * @returns {void}
    */
-  onPopupHide: function() {
+  onPopupHide() {
     if (this.settings.mode === 'standard') {
       $('#timepicker-hours').data('dropdown').destroy();
       $('#timepicker-minutes').data('dropdown').destroy();
@@ -866,7 +872,7 @@ TimePicker.prototype = {
       }
       this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
     }
-    this.element.attr({'aria-expanded': 'false'});
+    this.element.attr({ 'aria-expanded': 'false' });
     this.trigger.off('hide.timepicker show.timepicker');
     this.trigger.data('tooltip').destroy();
     this.trigger.data('tooltip', undefined);
@@ -878,7 +884,7 @@ TimePicker.prototype = {
    * Toggles the visibility of the Timepicker popup.
    * @returns {void}
    */
-  toggleTimePopup: function() {
+  toggleTimePopup() {
     if (this.isOpen()) {
       this.closeTimePopup();
     } else {
@@ -888,25 +894,25 @@ TimePicker.prototype = {
 
   /**
    * Getter method for retrieving the value of the Timepicker.
-   * @param {boolean} [removePunctuation] - Gets rid of all the value's punctatuion on return.
-   * @returns {string}
+   * @param {boolean} [removePunctuation] Gets rid of all the value's punctatuion on return.
+   * @returns {string} the current timepicker value
    */
-  value: function(removePunctuation) {
-    var val = this.element.val();
+  value(removePunctuation) {
+    let val = this.element.val();
     if (!removePunctuation || removePunctuation === false) {
       return val;
     }
 
-    var timeSeparator = Locale.calendar().dateFormat.timeSeparator,
-      sepRegex = new RegExp(timeSeparator, 'g');
+    const timeSeparator = Locale.calendar().dateFormat.timeSeparator;
+    const sepRegex = new RegExp(timeSeparator, 'g');
 
     // Remove punctuation
     val = val.replace(sepRegex, '');
 
     // Add leading zero for times without a double digit hour
-    var parts = val.split(' ');
+    const parts = val.split(' ');
     if (parts[0].length < 4) {
-      val = '0' + parts[0] + (parts[1] ? parts[1] : '');
+      val = `0${parts[0]}${parts[1] ? parts[1] : ''}`;
     }
 
     return val;
@@ -916,7 +922,7 @@ TimePicker.prototype = {
    * Enables the Timepicker
    * @returns {void}
    */
-  enable: function() {
+  enable() {
     this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
   },
 
@@ -924,7 +930,7 @@ TimePicker.prototype = {
   * Set input to readonly.
   * @returns {void}
   */
-  readonly: function() {
+  readonly() {
     this.enable();
     this.element.attr('readonly', 'readonly');
   },
@@ -933,37 +939,37 @@ TimePicker.prototype = {
    * Disables the Timepicker
    * @returns {void}
    */
-  disable: function() {
+  disable() {
     this.enable();
     this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
   },
 
   /**
    * Detects whether or not the component is disabled
-   * @returns {boolean}
+   * @returns {boolean} whether or not the component is disabled
    */
-  isDisabled: function() {
+  isDisabled() {
     return this.element.prop('disabled');
   },
 
   /**
    * Convert a string to boolean
    * @private
-   * @param {string} val - a text string ("true" or "false") that can be converted to a boolean.
+   * @param {string} val a text string ("true" or "false") that can be converted to a boolean.
    * @returns {boolean}
    */
   // TODO: Move this to Soho.utils?
-  getBoolean: function(val) {
-    var num = +val;
+  getBoolean(val) {
+    const num = +val;
     return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
   },
 
   /**
    * Updates the component instance.  Can be used after being passed new settings.
-   * @param {object} [settings]
-   * @returns {this}
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instanceof
    */
-  updated: function(settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
     }
@@ -976,9 +982,9 @@ TimePicker.prototype = {
   /**
    * Removes all event bindings, subcomponents and unnecessary markup from this component instance.
    * @private
-   * @returns {this}
+   * @returns {this} component instance
    */
-  teardown: function() {
+  teardown() {
     this.trigger.off('keydown.timepicker');
     this.element.off('focus.timepicker blur.timepicker keydown.timepicker');
     if (this.popup) {
@@ -987,7 +993,7 @@ TimePicker.prototype = {
 
     this.trigger.remove();
 
-    var mask = this.element.data('mask');
+    const mask = this.element.data('mask');
     if (mask && typeof mask.destroy === 'function') {
       mask.destroy();
     }
@@ -1001,7 +1007,7 @@ TimePicker.prototype = {
    * Destroys the component instance.
    * @returns {void}
    */
-  destroy: function() {
+  destroy() {
     this.teardown();
     $.removeData(this.element[0], 'validate');
     $.removeData(this.element[0], COMPONENT_NAME);
@@ -1010,15 +1016,16 @@ TimePicker.prototype = {
   /**
    * Sets up event listeners for the timepicker instance.
    * @fires TimePicker#events
-   * @param {object} click  &nbsp;-&nbsp;
-   * @param {object} touchstart  &nbsp;-&nbsp;
-   * @param {object} touchmove  &nbsp;-&nbsp;
-   * @param {object} touchend  &nbsp;-&nbsp;
-   * @param {object} blur  &nbsp;-&nbsp;
+   * @listens click  &nbsp;-&nbsp;
+   * @listens touchstart  &nbsp;-&nbsp;
+   * @listens touchmove  &nbsp;-&nbsp;
+   * @listens touchend  &nbsp;-&nbsp;
+   * @listens blur  &nbsp;-&nbsp;
+   * @returns {this} component instance
    */
-  handleEvents: function () {
-    var self = this;
-    this.trigger.onTouchClick('timepicker').on('click.timepicker', function () {
+  handleEvents() {
+    const self = this;
+    this.trigger.onTouchClick('timepicker').on('click.timepicker', () => {
       self.toggleTimePopup();
     });
 
@@ -1028,6 +1035,5 @@ TimePicker.prototype = {
     return this;
   }
 };
-
 
 export { TimePicker, COMPONENT_NAME };

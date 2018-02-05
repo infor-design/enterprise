@@ -549,6 +549,7 @@ ApplicationMenu.prototype = {
         filteredParentHeaders = filteredParentHeaders.not(parentHeaders);
         self.accordionAPI.expand(parentHeaders);
       });
+      return parentPanes;
     });
 
     this.isFiltered = true;
