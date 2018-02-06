@@ -1,4 +1,3 @@
-/* jshint node:true */
 /* eslint-disable */
 
 // set variables for environment
@@ -9,7 +8,6 @@ let express = require('express'),
   mmm = require('mmm'),
   fs = require('fs'),
   http = require('http'),
-  git = require('git-rev-sync'),
   BASE_PATH = process.env.BASEPATH || '/',
   fullBasePath = function (req) {
     const fullPath = (`${req.protocol}://${req.headers.host.replace('/', '')}${BASE_PATH}`);
@@ -47,8 +45,7 @@ const defaults = {
   locale: 'en-US',
   title: 'SoHo XI',
   basepath: BASE_PATH,
-  version: packageJSON.version,
-  commit: git.long(),
+  version: packageJSON.version
 };
 
   // Option Handling - Custom Middleware

@@ -17,7 +17,7 @@ module.exports = {
   'env': {
     'browser': true,
     'jquery': true,
-    'node': false
+    'node': true
   },
   'rules': {
     // require function expressions to have a name
