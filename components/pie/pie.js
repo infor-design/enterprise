@@ -447,6 +447,7 @@ Pie.prototype = {
 
     // Text Labels
     if (shouldShow) {
+      const padding = 20;
       const text = self.svg.select('.labels').selectAll('text')
         .data(self.pie(data), self.key);
 
@@ -467,6 +468,9 @@ Pie.prototype = {
             const d2 = interpolate(t);
             const pos = self.outerArc.centroid(d2);
             pos[0] = self.dims.radius * (self.midAngle(d2) < Math.PI ? 1 : -1);
+            if (!self.isRTL) {
+              pos[0] -= (self.midAngle(d2) < Math.PI ? padding : -padding);
+            }
             return `translate(${pos})`;
           };
         })
@@ -476,6 +480,11 @@ Pie.prototype = {
           this.current = interpolate(0);
           return function (t) {
             const d2 = interpolate(t);
+
+            if (self.isRTL) {
+              return self.midAngle(d2) > Math.PI ? 'start' : 'end';
+            }
+
             return self.midAngle(d2) < Math.PI ? 'start' : 'end';
           };
         });
@@ -499,7 +508,7 @@ Pie.prototype = {
           return function (t) {
             const d2 = interpolate(t);
             const pos = self.outerArc.centroid(d2);
-            pos[0] = self.dims.radius * 0.95 * (self.midAngle(d2) < Math.PI ? 1 : -1);
+            pos[0] = self.dims.radius * 0.85 * (self.midAngle(d2) < Math.PI ? 1 : -1);
             return [self.outerArc.centroid(d2), self.outerArc.centroid(d2), pos];
           };
         });
@@ -572,11 +581,11 @@ Pie.prototype = {
     }
 
     if (settings.show === 'label (percent)') {
-      return `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)`;
+      return `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)&rlm;`;
     }
 
     if (settings.show === 'label (value)') {
-      return `${d.name} (${settings.formatter ? d3.format(settings.formatter)(d.value) : d.value})`;
+      return `${d.name} (${settings.formatter ? d3.format(settings.formatter)(d.value) : d.value})&rlm;`;
     }
 
     if (settings.show === 'percent') {

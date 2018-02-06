@@ -57,7 +57,7 @@
     .chart-legend {
       border-top: 0;
       margin: auto;
-      width: 30%;
+      width: 36%;
 
       .is-two-column {
         display: flex;
@@ -97,5 +97,13 @@
 @include respond-to(phone) {
   .chart-pie.has-right-legend .chart-legend {
     width: 34%;
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .chart-pie.has-right-legend .chart-legend-item-text {
+    padding-left: 0;
+    padding-right: 7px;
   }
 }

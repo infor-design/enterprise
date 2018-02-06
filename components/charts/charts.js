@@ -221,7 +221,7 @@ charts.addLegend = function (series, chartType, settings, container) {
     }
 
     if (isTwoColumn) {
-      if (widthPercent > 45) {
+      if (widthPercent > 45 && settings.legendPlacement !== 'right') {
         seriesLine = `<span class="chart-legend-item${extraClass}" tabindex="0" style="float: none; display: block; margin: 0 auto; width: ${width}px;"></span>`;
       } else {
         seriesLine = `<span class="chart-legend-item${extraClass} is-two-column" tabindex="0" ></span>`;
