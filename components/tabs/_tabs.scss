@@ -63,6 +63,7 @@
   > .busy-indicator-container {
     @include font-size(14);
   }
+
 }
 
 .tab-list {
@@ -187,6 +188,24 @@
   // These two rules fix an IE bug where contents of all tab panels are shown.
   > .page-container {
     position: static;
+  }
+
+  .column, .columns {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // For tabledevices larger than 550px
+  @media (min-width: $breakpoint-phone-to-tablet) {
+    .column, .columns {
+      padding-left: 20px;
+    }
+
+    .column:first-child, .columns:first-child {
+      margin-left: 0;
+      padding-left: 0;
+      padding-right: 20px;
+    }
   }
 
 }

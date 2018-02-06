@@ -18,9 +18,22 @@ fieldset,
     }
   }
 
-  .column:first-child {
-    margin-left: 0;
+  .column, .columns {
     padding-left: 0;
+    padding-right: 0;
+  }
+
+  // For tabledevices larger than 550px
+  @media (min-width: $breakpoint-phone-to-tablet) {
+    .column, .columns {
+      padding-left: 20px;
+    }
+
+    .column:first-child, .columns:first-child {
+      margin-left: 0;
+      padding-left: 0;
+      padding-right: 20px;
+    }
   }
 
   .row:last-child {
