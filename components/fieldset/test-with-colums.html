@@ -1,0 +1,122 @@
+
+<div class="row">
+	<div class="twelve columns">
+		<fieldset>
+			<legend>Company Information</legend>
+      <div class="row">
+        <div class="four columns">
+          <div class="field">
+            <label for="example-fs-company-name">Company Name</label>
+            <input type="text" id="example-fs-company-name" name="example-fs-company-name">
+          </div>
+        </div>
+        <div class="four columns">
+          <div class="field">
+            <label for="example-fs-company-type">Company Type</label>
+            <input type="text" id="example-fs-company-type" name="example-fs-company-type">
+          </div>
+        </div>
+        <div class="four columns">
+          <div class="field">
+            <label for="example-fs-company-address">Company Address</label>
+            <input type="text" id="example-fs-company-address" name="example-fs-company-address">
+          </div>
+        </div>
+      </div>
+		</fieldset>
+    <fieldset>
+			<legend>User Information</legend>
+      <div class="row">
+        <div class="one-half column">
+          <div class="field">
+            <label for="example-fs-user-name">User Name</label>
+            <input type="text" id="example-fs-user-name" name="example-fs-user-name">
+          </div>
+        </div>
+        <div class="one-half column">
+          <div class="field">
+            <label for="example-fs-user-address">User Address</label>
+            <input type="text" id="example-fs-user-address" name="example-fs-user-address">
+          </div>
+        </div>
+      </div>
+		</fieldset>
+
+    <div class="expandable-area is-expanded">
+			<div class="expandable-header">
+				<a class="title">
+					<span>SMS via E-Mail Parameters</span>
+				</a>
+			</div>
+			<div class="expandable-pane">
+				<div class="content">
+					<div class="row">
+						<div class="six columns">
+							<fieldset>
+								<legend>SMS Provider</legend>
+								<div class="summary-form">
+									<div class="field">
+										<label for="cnanprm-smsemail" class="label">E-mail Address Suffix</label>
+										<input type="text" id="cnanprm-smsemail" class="input" name="cnanprm-smsemail"  maxlength="250" value ="@smsprovider.com.au"/>
+									</div>
+
+									<div class="field">
+										<label for="cnanprm-smsprovide" class="label">Provider Details</label>
+										<input type="text" id="cnanprm-smsprovide" class="input" name="cnanprm-smsprovide"  maxlength="250" value ="AussieSms (Website:www.aussiesms.com.au AccountMobile:61421952326 AccountPassword:InforPathway2010) (Fall Back to an E-mail Address Suffix of @sms.utbox.net)"/>
+									</div>
+
+									<div class="field">
+										<label for="cnanprm-smssubject" class="label">E-mail Subject</label>
+										<input type="text" id="cnanprm-smssubject" class="input" name="cnanprm-smssubject"  maxlength="250" value ="Infor"/>
+									</div>
+
+								</div>
+							</fieldset>
+
+						</div>
+
+						<div class="six columns">
+							<fieldset>
+								<legend>SMS Message</legend>
+								<div class="summary-form">
+									<div class="field">
+										<label for="cnanprm-smsmaxchar" class="label">Maximum Characters</label>
+										<input type="text" class="spinbox" id="cnanprm-smsmaxchar" name="cnanprm-smsmaxchar" value="160"/>
+									</div>
+
+									<div class="field">
+										<label for="cnanprm-smsfooter" class="label">Footer</label>
+										<input type="text" id="cnanprm-smsfooter" class="input" name="cnanprm-smsfooter"  maxlength="250" value ="Do not respond directly to this message."/>
+									</div>
+
+								</div>
+							</fieldset>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="twelve columns">
+							<fieldset>
+								<legend>SMS Phone Number</legend>
+								<div class="summary-form">
+									<div class="switch">
+										<input type="checkbox" class="switch" id="cnanprm-smsnozeros"/>
+										<label for="cnanprm-smsnozeros" class="label">Remove Leading Zero</label>
+									</div>
+
+									<div class="field">
+										<label for="cnanprm-smsprefix" class="label">Dialling Prefix</label>
+										<input type="text" class="spinbox" id="cnanprm-smsprefix" name="cnanprm-smsprefix" value="61"/>
+									</div>
+
+								</div>
+							</fieldset>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
