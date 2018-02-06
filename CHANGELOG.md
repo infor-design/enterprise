@@ -24,6 +24,7 @@ http://usalvlhlpool1.infor.com/4.4.0/components/
 - Some not widely used line chart examples time formatters. Some functions are renamed. See the examples or https://github.com/d3/d3-time/releases
 - The options for pie and label have changed. All the of label and formatter rules have different settings objects.
 And now you can control the tooltip, legend and lines independently. If using the labels option see examples for and docs for updates if you have any issues with pie or donut.
+* Projects will need to update to add the sohoxi-migrate-4.4.0.js script until global references are removed. Globals should be moved to the Soho. namespace fx Formatters -> Soho.Formatters (see SOHO-7457 for entire list).
 
 ### <a name="version-4.4.0-behavior-changes">Behavior Changes</a>
 -
