@@ -582,11 +582,11 @@ Pie.prototype = {
     }
 
     if (settings.show === 'label (percent)') {
-      return `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)&rlm;`;
+      return `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)`;
     }
 
     if (settings.show === 'label (value)') {
-      return `${d.name} (${settings.formatter ? d3.format(settings.formatter)(d.value) : d.value})&rlm;`;
+      return `${d.name} (${settings.formatter ? d3.format(settings.formatter)(d.value) : d.value})`;
     }
 
     if (settings.show === 'percent') {
