@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* jshint esversion:6 */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Environment as env } from '../utils/environment';
@@ -55,7 +55,7 @@ Tree.prototype = {
    * @private
    * @returns {undefined}
    */
-  init: function() {
+  init() {
     this.isIe11 = (env.browser.name === 'ie' && env.browser.version === '11');
     this.initTree();
     this.handleKeys();
@@ -73,17 +73,17 @@ Tree.prototype = {
   /**
    * Init Tree from ul, li, a markup structure in DOM
    */
-  initTree: function() {
-    var self = this,
-      s = this.settings,
-      links = this.element.find('a'),
-      selectableAttr = this.element.attr('data-selectable');
+  initTree() {
+    const self = this;
+    const s = this.settings;
+    const links = this.element.find('a');
+    const selectableAttr = this.element.attr('data-selectable');
 
     // Set attribute "data-selectable"
     s.selectable = ((typeof selectableAttr !== 'undefined') &&
      (selectableAttr.toLowerCase() === 'single' ||
        selectableAttr.toLowerCase() === 'multiple')) ?
-        selectableAttr : s.selectable;
+      selectableAttr : s.selectable;
 
     // Set isMultiselect and checkboxes show/hide
     this.isMultiselect = s.selectable === 'multiple';
@@ -91,8 +91,8 @@ Tree.prototype = {
 
     this.element.addClass(this.isMultiselect ? ' is-muliselect' : '');
 
-    links.each(function() {
-      var a = $(this);
+    links.each(function () {
+      const a = $(this);
       self.decorateNode(a);
     });
   },
@@ -100,9 +100,9 @@ Tree.prototype = {
   /**
    * Init selected notes
    */
-  initSelected: function () {
-    var self = this;
-    this.element.find('li').each(function() {
+  initSelected() {
+    const self = this;
+    this.element.find('li').each(function () {
       self.setNodeStatus($('a:first', this));
     });
   },
@@ -110,71 +110,74 @@ Tree.prototype = {
   /**
    * Focus the first tree node
    */
-  focusFirst: function () {
+  focusFirst() {
     this.element.find('a:first').attr('tabindex', '0');
   },
 
   /**
    * Set focus
-   * @param {jQuery[]} node
+   * @private
+   * @param {Object} node .
+   * @returns {void}
    */
-  setFocus: function (node) {
+  setFocus(node) {
     node.focus().removeClass('hide-focus');
   },
 
   /**
    * From the LI, Read props and add stuff
-   * @param {jQuery[]} a - an anchor tag reference wrapped in a jQuery object.
+   * @private
+   * @param {Object} a an anchor tag reference wrapped in a jQuery object.
+   * @returns {void}
    */
-  decorateNode: function(a) {
-    var subNode,
-    parentCount = 0,
-    badgeData = a.attr('data-badge'),
-    alertIcon = a.attr('data-alert-icon'),
-    badge = {elem: $('<span class="tree-badge badge"></span>')},
-    isParentsDisabled = a.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0,
-    isDisabled = a.hasClass('is-disabled') || isParentsDisabled;
+  decorateNode(a) {
+    let parentCount = 0;
+    let badgeData = a.attr('data-badge');
+    const alertIcon = a.attr('data-alert-icon');
+    const badge = { elem: $('<span class="tree-badge badge"></span>') };
+    const isParentsDisabled = a.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
+    const isDisabled = a.hasClass('is-disabled') || isParentsDisabled;
 
     if (typeof badgeData !== 'undefined') {
       badgeData = utils.parseSettings(a, 'data-badge');
     }
 
-    //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
-    a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
+    // Set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
+    a.attr({ role: 'treeitem', tabindex: '-1', 'aria-selected': 'false' });
 
     // Add Aria disabled
     if (isDisabled) {
-      a.addClass('is-disabled').attr('aria-disabled','true');
-      var childSection = a.next();
+      a.addClass('is-disabled').attr('aria-disabled', 'true');
+      const childSection = a.next();
 
       if (childSection.is('ul.is-open')) {
-        $('a', childSection).addClass('is-disabled').attr('aria-disabled','true');
+        $('a', childSection).addClass('is-disabled').attr('aria-disabled', 'true');
         $('ul', a.parent()).addClass('is-disabled');
       }
     }
 
-    //parentCount 'aria-level' to the node's level depth
+    // ParentCount 'aria-level' to the node's level depth
     parentCount = a.parentsUntil(this.element, 'ul').length - 1;
     a.attr('aria-level', parentCount + 1);
 
-    //Set the current tree item node position relative to its aria-setsize
-    var posinset = a.parent().index();
+    // SSet the current tree item node position relative to its aria-setsize
+    const posinset = a.parent().index();
     a.attr('aria-posinset', posinset + 1);
 
-    //Set the current tree item aria-setsize
-    var listCount = a.closest('li').siblings().addBack().length;
+    // Set the current tree item aria-setsize
+    const listCount = a.closest('li').siblings().addBack().length;
     a.attr('aria-setsize', listCount);
 
-    //Set the current tree item node expansion state
+    // Set the current tree item node expansion state
     if (a.next('ul').children().length > 0) {
       a.attr('aria-expanded', a.next().hasClass('is-open') ? 'true' : 'false');
     }
 
-    //adds role=group' to all subnodes
-    subNode = a.next();
+    // Adds role=group' to all subnodes
+    const subNode = a.next();
 
-    //Inject Icons
-    var text = a.contents().filter(function() {
+    // Inject Icons
+    const text = a.contents().filter(function () {
       return !$(this).is('.tree-badge');// Do not include badge text
     }).text();
 
@@ -183,16 +186,16 @@ Tree.prototype = {
       a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
 
       if (this.settings.useStepUI) {
-        a.prepend($.createIcon({ icon: alertIcon, classes: ['step-alert', 'icon-' + alertIcon] }));
+        a.prepend($.createIcon({ icon: alertIcon, classes: ['step-alert', `icon-${alertIcon}`] }));
       }
     }
 
-    //Inject checkbox
+    // Inject checkbox
     if (this.isMultiselect && !this.settings.hideCheckboxes) {
       a.append('<span class="tree-checkbox"></span>');
     }
 
-    //Inject badge
+    // Inject badge
     if (badgeData && !badgeData.remove) {
       badge.text = '';
 
@@ -204,17 +207,17 @@ Tree.prototype = {
         }
       }
 
-      var badgeStyle = '';
+      let badgeStyle = '';
       if (/info|good|error|alert|pending/i.test(badgeData.type)) {
         badge.elem.addClass(badgeData.type);
       } else if (badgeData.type && badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
-        badgeStyle = 'background-color: ' + badgeData.type + ' !important;';
+        badgeStyle = `background-color: ${badgeData.type} !important;`;
       }
       if (badgeData.backColor) {
-        badgeStyle = 'background-color: ' + badgeData.backColor + ' !important;';
+        badgeStyle = `background-color: ${badgeData.backColor} !important;`;
       }
       if (badgeData.foreColor) {
-        badgeStyle += 'color: ' + badgeData.foreColor + ' !important;';
+        badgeStyle += `color: ${badgeData.foreColor} !important;`;
       }
 
       badge.elem.attr('style', badgeStyle);
@@ -230,7 +233,7 @@ Tree.prototype = {
     a.append($('<span class="tree-text"></span>').text(text));
 
     if (a.is('[class^="icon"]')) {
-      //createIconPath
+      // CreateIconPath
       this.setTreeIcon(a.find('svg.icon-tree'), a.attr('class'));
     }
 
@@ -244,7 +247,8 @@ Tree.prototype = {
       }
 
       if (a.is('[class^="icon"]')) {
-        this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ?  a.attr('class') : a.attr('class').replace('open', 'closed') );
+        this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ?
+          a.attr('class') : a.attr('class').replace('open', 'closed'));
       }
     }
 
@@ -254,85 +258,97 @@ Tree.prototype = {
 
   /**
    * Sets the correct icon to use on a particular SVG element.
-   * @param {jQuery[]} svg - an SVG element reference wrapped in a jQuery object
-   * @param {string} icon - the ID of a Soho Icon type.
+   * @private
+   * @param {Object} svg an SVG element reference wrapped in a jQuery object
+   * @param {String} icon the ID of a Soho Icon type.
+   * @returns {void}
    */
-  setTreeIcon: function(svg, icon) {
+  setTreeIcon(svg, icon) {
     // Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing
-    var iconStr = icon.replace(/#?icon-|hide-focus|\s?/gi, '');
+    const iconStr = icon.replace(/#?icon-|hide-focus|\s?/gi, '');
     svg.changeIcon(iconStr);
   },
 
   /**
    * Expands a collection of tree nodes.
-   * @param {jQuery[]} nodes - a jQuery-wrapped collection of tree node elements.  If left undefined, this will automatically use all `ul[role=group]` elements.
+   * @param {Object} nodes - a jQuery-wrapped collection of tree node elements.
+   If left undefined, this will automatically use all `ul[role=group]` elements.
+   * @returns {void}
    */
-  expandAll: function(nodes) {
-    var self = this;
+  expandAll(nodes) {
+    const self = this;
     nodes = nodes || this.element.find('ul[role=group]');
 
     nodes.each(function () {
-      var node = $(this);
+      const node = $(this);
       node.addClass('is-open');
       self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconOpen);
 
       if (node.prev('a').is('[class^="icon"]')) {
         self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class'));
       }
-
     });
   },
 
   /**
    * Collapses a collection of tree nodes.
-   * @param {jQuery[]} nodes - a jQuery-wrapped collection of tree node elements.  If left undefined, this will automatically use all `ul[role=group]` elements.
+   * @param {Object} nodes - a jQuery-wrapped collection of tree node elements.
+   If left undefined, this will automatically use all `ul[role=group]` elements.
+   * @returns {void}
    */
-  collapseAll: function (nodes) {
-    var self = this;
+  collapseAll(nodes) {
+    const self = this;
     nodes = nodes || this.element.find('ul[role=group]');
 
     nodes.each(function () {
-      var node = $(this);
+      const node = $(this);
       node.removeClass('is-open');
       self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconClosed);
 
       if (node.prev('a').is('[class^="icon"]')) {
-        self.setTreeIcon(node.prev('a').find('svg.icon-tree'), node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', '') );
+        self.setTreeIcon(node.prev('a').find('svg.icon-tree'), node.prev('a').attr('class')
+          .replace('open', 'closed')
+          .replace(' hide-focus', '')
+          .replace(' is-selected', ''));
       }
 
       if (node.prev('a').is('[class^="icon"]')) {
         self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class').replace('open', 'closed'));
       }
-
     });
   },
 
   /**
    * Check if an object is an instance of a jQuery object
-   * @param {object} obj - the object being tested.
-   * @returns {boolean}
+   * @private
+   * @param {Object} obj the object being tested.
+   * @returns {Boolean} true if jQuery
    */
-  isjQuery: function (obj) {
+  isjQuery(obj) {
     // TODO: Move this to a Soho utility object?
     return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
   },
 
   /**
    * Selects a tree node specifically using it's ID attribute.
-   * @param {string} id - the ID string to use.
+   * @param {String} id - the ID string to use.
+   * @returns {void}
    */
-  selectNodeById: function (id) {
-    this.selectNodeByJquerySelector('#'+ id);
+  selectNodeById(id) {
+    this.selectNodeByJquerySelector(`#${id}`);
   },
 
   /**
    * Selects a tree node by [jquery selector] -or- [jquery object]
-   * @param {string|jQuery[]} selector - uses a string that represents a jQuery-wrapped element's ID attribute, or a jQuery-wrapped reference to the element itself.
+   * @private
+   * @param {Object} selector uses a string that represents a jQuery-wrapped
+   element's ID attribute, or a jQuery-wrapped reference to the element itself.
+   * @returns {void}
    */
-  selectNodeByJquerySelector: function (selector) {
-    var target = this.isjQuery(selector) ? selector : $(selector);
+  selectNodeByJquerySelector(selector) {
+    const target = this.isjQuery(selector) ? selector : $(selector);
     if (target.length && !target.is('.is-disabled')) {
-      var nodes = target.parentsUntil(this.element, 'ul[role=group]');
+      const nodes = target.parentsUntil(this.element, 'ul[role=group]');
       this.expandAll(nodes);
       this.selectNode(target, true);
     }
@@ -340,16 +356,18 @@ Tree.prototype = {
 
   /**
    * Deselects a tree node
-   * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
-   * @param {boolean} focus - if defined, causes the node to become focused.
+   * @private
+   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {Boolean} focus - if defined, causes the node to become focused.
+   * @returns {void}
    */
-  unSelectedNode: function (node, focus) {
+  unSelectedNode(node, focus) {
     if (node.length === 0) {
       return;
     }
 
-    var self = this,
-      aTags = $('a', this.element);
+    const self = this;
+    const aTags = $('a', this.element);
 
     aTags.attr('tabindex', '-1');
     node.attr('tabindex', '0');
@@ -367,30 +385,40 @@ Tree.prototype = {
     $('li', self.element).removeClass('is-active');
     node.parent().addClass('is-active');
 
-    setTimeout(function() {
-      var jsonData = node.data('jsonData') || {};
-      self.element.triggerHandler('unselected', {node: node, data: jsonData});
+    setTimeout(() => {
+      const jsonData = node.data('jsonData') || {};
+      /**
+      * Fires on un select node.
+      *
+      * @event unselected
+      * @type {Object}
+      * @property {Object} event - The jquery event object
+      * @property {Object} data and node element
+      */
+      self.element.triggerHandler('unselected', { node, data: jsonData });
     }, 0);
   },
 
   /**
    * Selects a tree node
-   * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
-   * @param {boolean} focus - if defined, causes the node to become focused.
+   * @private
+   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {Boolean} focus - if defined, causes the node to become focused.
+   * @returns {void}
    */
-  selectNode: function (node, focus) {
-    var self = this;
+  selectNode(node, focus) {
+    const self = this;
 
     if (node.length === 0) {
       return;
     }
 
     // Possibly Call the onBeforeSelect
-    var result;
+    let result;
     if (typeof self.settings.onBeforeSelect === 'function') {
       result = self.settings.onBeforeSelect(node);
       if (result && result.done && typeof result.done === 'function') { // A promise is returned
-        result.done(function(continueSelectNode) {
+        result.done((continueSelectNode) => {
           if (continueSelectNode) {
             self.selectNodeFinish(node, focus);
           }
@@ -398,7 +426,6 @@ Tree.prototype = {
       } else if (result) { // Boolean is returned instead of a promise
         self.selectNodeFinish(node, focus);
       }
-
     } else { // No Callback specified
       self.selectNodeFinish(node, focus);
     }
@@ -406,20 +433,21 @@ Tree.prototype = {
 
   /**
    * ?
-   * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
-   * @param {boolean} focus - if defined, causes the node to become focused.
+   * @private
+   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {Boolean} focus - if defined, causes the node to become focused.
+   * @returns {void}
    */
-  selectNodeFinish: function(node, focus) {
-    var self = this;
-    var aTags = $('a', this.element);
+  selectNodeFinish(node, focus) {
+    const self = this;
+    const aTags = $('a', this.element);
     aTags.attr('tabindex', '-1');
     node.attr('tabindex', '0');
 
     if (this.isMultiselect) {
       $('a:not(.is-disabled)', node.parent())
         .attr('aria-selected', 'true').parent().addClass('is-selected');
-    }
-    else {
+    } else {
       aTags.attr('aria-selected', 'false').parent().removeClass('is-selected');
       aTags.attr('aria-selected', 'false').removeClass('is-selected');
       node.attr('aria-selected', 'true').parent().addClass('is-selected');
@@ -438,20 +466,30 @@ Tree.prototype = {
     $('li', self.element).removeClass('is-active');
     node.parent().addClass('is-active');
 
-    setTimeout(function() {
-      var jsonData = node.data('jsonData') || {};
-      self.element.triggerHandler('selected', {node: node, data: jsonData});
+    setTimeout(() => {
+      const jsonData = node.data('jsonData') || {};
+      /**
+      * Fires on select node.
+      *
+      * @event selected
+      * @type {Object}
+      * @property {Object} event - The jquery event object
+      * @property {Object} data and node element
+      */
+      self.element.triggerHandler('selected', { node, data: jsonData });
     }, 0);
   },
 
   /**
    * Deselects a tree node
-   * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
+   * @private
+   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @returns {void}
    */
-  setNodeStatus: function(node) {
-    var self = this,
-      data = node.data('jsonData'),
-      nodes;
+  setNodeStatus(node) {
+    const self = this;
+    const data = node.data('jsonData');
+    let nodes;
 
     // Not multiselect
     if (!this.isMultiselect) {
@@ -462,48 +500,47 @@ Tree.prototype = {
       return;
     }
 
-    var setStatus = function (nodes, isFirstSkipped) {
-      nodes.each(function() {
-        var node = $('a:first', this),
-          parent = node.parent(),
-          status = self.getSelectedStatus(node, isFirstSkipped);
+    const setStatus = function (thisNodes, isFirstSkipped) {
+      thisNodes.each(function () {
+        const thisNode = $('a:first', this);
+        const parent = thisNode.parent();
+        const status = self.getSelectedStatus(thisNode, isFirstSkipped);
 
         if (status === 'mixed') {
           parent.removeClass('is-selected is-partial').addClass('is-partial');
-        }
-        else if (status) {
+        } else if (status) {
           parent.removeClass('is-selected is-partial').addClass('is-selected');
-        }
-        else {
+        } else {
           parent.removeClass('is-selected is-partial');
         }
-        self.syncNode(node);
+        self.syncNode(thisNode);
       });
     };
 
     // Multiselect
-    var isFirstSkipped = false;
+    let isFirstSkipped = false;
     nodes = node.parent().find('li.folder');
     setStatus(nodes, isFirstSkipped);
 
-    isFirstSkipped = (!nodes.length && data && !data.selected) ? false : true;
+    isFirstSkipped = !(!nodes.length && data && !data.selected);
     nodes = node.parentsUntil(this.element, 'li.folder');
     setStatus(nodes, isFirstSkipped);
   },
 
   /**
    * Get's a tree node's current 'selected' status
-   * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
-   * @param {boolean} isFirstSkipped - ?
+   * @private
+   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {Boolean} isFirstSkipped - ?
+   * @returns {Boolean} status as true|false|'mixed'
    */
-  getSelectedStatus: function(node, isFirstSkipped) {
-    var status,
-      total = 0,
-      selected = 0,
-      unselected = 0,
-      data;
+  getSelectedStatus(node, isFirstSkipped) {
+    let total = 0;
+    let selected = 0;
+    let unselected = 0;
+    let data;
 
-    node.parent().find('a').each(function(i) {
+    node.parent().find('a').each(function (i) {
       if (isFirstSkipped && i === 0) {
         return;
       }
@@ -516,25 +553,34 @@ Tree.prototype = {
       }
     });
 
-    status = ((total === selected) ? true : ((total === unselected) ? false : 'mixed'));
+    let status;
+    if (total === selected) {
+      status = true;
+    } else if (total === unselected) {
+      status = false;
+    } else {
+      status = 'mixed';
+    }
     return status;
   },
 
   /**
    * Changes a node's selected status to its opposite form.
-   * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
+   * @private
+   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {Boolean} isFirstSkipped - ?
+   * @returns {void}
    */
-  toggleNode: function(node) {
-    var next = node.next(),
-      self = this;
-    var result;
+  toggleNode(node) {
+    const next = node.next();
+    const self = this;
+    let result;
     if (next.is('ul[role="group"]')) {
       if (next.hasClass('is-open')) {
-
         if (typeof self.settings.onCollapse === 'function') {
           result = self.settings.onCollapse(node);
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
-            result.done(function(continueSelectNode) {
+            result.done((continueSelectNode) => {
               if (continueSelectNode) {
                 self.selectNodeFinish(node, focus);
               }
@@ -546,12 +592,16 @@ Tree.prototype = {
           self.selectNodeFinish(node, focus);
         }
 
-
         self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
 
         if (node.closest('.folder a').is('[class^="icon"]')) {
-          self.setTreeIcon(node.closest('.folder a').find('svg.icon-tree'),
-            node.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', ''));
+          self.setTreeIcon(
+            node.closest('.folder a').find('svg.icon-tree'),
+            node.closest('.folder a').attr('class')
+              .replace('open', 'closed')
+              .replace(' hide-focus', '')
+              .replace(' is-selected', '')
+          );
         }
 
         self.isAnimating = true;
@@ -561,18 +611,17 @@ Tree.prototype = {
           node.removeClass('is-selected');
         }
 
-        next.one('animateclosedcomplete', function() {
+        next.one('animateclosedcomplete', () => {
           next.removeClass('is-open');
           self.isAnimating = false;
         }).animateClosed();
 
-        node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
-
+        node.attr('aria-expanded', node.attr('aria-expanded') !== 'true');
       } else {
         if (typeof self.settings.onExpand === 'function') {
           result = self.settings.onExpand(node);
           if (result && result.done && typeof result.done === 'function') { // A promise is returned
-            result.done(function(continueSelectNode) {
+            result.done((continueSelectNode) => {
               if (continueSelectNode) {
                 self.selectNodeFinish(node, focus);
               }
@@ -584,30 +633,30 @@ Tree.prototype = {
           self.selectNodeFinish(node, focus);
         }
 
-        var nodeData = node.data('jsonData');
+        const nodeData = node.data('jsonData');
 
         if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
-          var response = function (nodes) {
-            var id = nodeData.id,
-              elem = self.findById(id);
+          const response = function (nodes) {
+            const id = nodeData.id;
+            const elem = self.findById(id);
 
-            //Add DB and UI nodes
+            // Add DB and UI nodes
             elem.children = nodes;
             self.addChildNodes(elem, node.parent());
             node.removeClass('is-loading');
             self.loading = false;
 
-            //open
+            // Open
             self.accessNode(next, node);
 
-            //sync data on node
+            // Sync data on node
             nodeData.children = nodes;
             node.data('jsonData', nodeData);
             self.selectNode(node, true);
             self.initSelected();
           };
 
-          var args = {node: node, data: node.data('jsonData')};
+          const args = { node, data: node.data('jsonData') };
           self.settings.source(args, response);
           node.addClass('is-loading');
           self.loading = true;
@@ -619,9 +668,9 @@ Tree.prototype = {
     }
   },
 
-  //Access the node
-  accessNode: function(next, node) {
-    var self = this;
+  // Access the node
+  accessNode(next, node) {
+    const self = this;
 
     self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconOpen);
 
@@ -631,38 +680,38 @@ Tree.prototype = {
 
     self.isAnimating = true;
 
-    next.one('animateopencomplete', function() {
+    next.one('animateopencomplete', () => {
       self.isAnimating = false;
     }).addClass('is-open').css('height', 0).animateOpen();
-    node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
+    node.attr('aria-expanded', node.attr('aria-expanded') !== 'true');
   },
 
-  openNode: function(nextTarget, nodeTarget) {
-    var self = this;
-    var nodeData = nodeTarget.data('jsonData');
+  openNode(nextTarget, nodeTarget) {
+    const self = this;
+    const nodeData = nodeTarget.data('jsonData');
 
     if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
-        var response = function (nodes) {
-          var id = nodeData.id,
-          elem = self.findById(id);
+      const response = function (nodes) {
+        const id = nodeData.id;
+        const elem = self.findById(id);
 
-          //Add DB and UI nodes
-          elem.children = nodes;
-          self.addChildNodes(elem, nodeTarget.parent());
-          nodeTarget.removeClass('is-loading');
-          self.loading = false;
+        // Add DB and UI nodes
+        elem.children = nodes;
+        self.addChildNodes(elem, nodeTarget.parent());
+        nodeTarget.removeClass('is-loading');
+        self.loading = false;
 
-          //open
-          self.accessNode(nextTarget, nodeTarget);
+        // Open
+        self.accessNode(nextTarget, nodeTarget);
 
-          //sync data on node
-          nodeData.children = nodes;
-          nodeTarget.data('jsonData', nodeData);
-          self.selectNode(nodeTarget, true);
-          self.initSelected();
-        };
+        // Sync data on node
+        nodeData.children = nodes;
+        nodeTarget.data('jsonData', nodeData);
+        self.selectNode(nodeTarget, true);
+        self.initSelected();
+      };
 
-      var args = {node: nodeTarget, data: nodeTarget.data('jsonData')};
+      const args = { node: nodeTarget, data: nodeTarget.data('jsonData') };
       self.settings.source(args, response);
       nodeTarget.addClass('is-loading');
       self.loading = true;
@@ -672,13 +721,18 @@ Tree.prototype = {
     self.accessNode(nextTarget, nodeTarget);
   },
 
-  closeNode: function(nextTarget, nodeTarget) {
-    var self = this;
+  closeNode(nextTarget, nodeTarget) {
+    const self = this;
     self.setTreeIcon(nodeTarget.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
 
     if (nodeTarget.closest('.folder a').is('[class^="icon"]')) {
-      self.setTreeIcon(nodeTarget.closest('.folder a').find('svg.icon-tree'),
-      nodeTarget.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', ''));
+      self.setTreeIcon(
+        nodeTarget.closest('.folder a').find('svg.icon-tree'),
+        nodeTarget.closest('.folder a').attr('class')
+          .replace('open', 'closed')
+          .replace(' hide-focus', '')
+          .replace(' is-selected', '')
+      );
     }
 
     self.isAnimating = true;
@@ -688,95 +742,88 @@ Tree.prototype = {
       nodeTarget.removeClass('is-selected');
     }
 
-    nextTarget.one('animateclosedcomplete', function() {
+    nextTarget.one('animateclosedcomplete', () => {
       nextTarget.removeClass('is-open');
       self.isAnimating = false;
     }).animateClosed();
 
-    nodeTarget.attr('aria-expanded', nodeTarget.attr('aria-expanded')!=='true');
-
+    nodeTarget.attr('aria-expanded', nodeTarget.attr('aria-expanded') !== 'true');
   },
 
-  //Setup event handlers
-  setupEvents: function () {
-    var self = this;
-    self.element.on('updated.tree', function (e, newSettings) {
+  // Setup event handlers
+  setupEvents() {
+    const self = this;
+    self.element.on('updated.tree', (e, newSettings) => {
       self.updated(newSettings);
       self.initTree();
     });
   },
 
-  //Handle Keyboard Navigation
-  handleKeys: function () {
-
-    //Key Behavior as per: http://access.aol.com/dhtml-style-guide-working-group/#treeview
-    var self = this;
-    //on click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
+  // Handle Keyboard Navigation
+  handleKeys() {
+    // Key Behavior as per: http://access.aol.com/dhtml-style-guide-working-group/#treeview
+    const self = this;
+    // On click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
     this.element.on('click.tree', 'a:not(.is-clone)', function (e) {
-      var target = $(this),
-        parent = target.parent();
+      const target = $(this);
+      const parent = target.parent();
       if (!target.is('.is-disabled, .is-loading')) {
         if (self.isMultiselect) {
           if ($(e.target).is('.icon') && parent.is('.folder')) {
             self.toggleNode(target);
-          }
-          else if (parent.is('.is-selected, .is-partial')) {
+          } else if (parent.is('.is-selected, .is-partial')) {
             self.unSelectedNode(target, true);
-          }
-          else {
+          } else {
             self.selectNode(target, true);
           }
-        }
-        else {
+        } else {
           self.selectNode(target, true);
           self.toggleNode(target);
         }
         e.stopPropagation();
       }
-      return false; //Prevent Click from Going to Top
+      return false; // Prevent Click from Going to Top
     });
 
     this.element
-    //Focus on "a" elements
-    .on('focus.tree', 'a', function() {
-      var target = $(this);
-      if ((parseInt(target.attr('aria-level')) === 0) &&
-          (parseInt(target.attr('aria-posinset')) === 1)) {
-
-        // First element if disabled
-        if (target.hasClass('is-disabled')) {
-          var e = $.Event('keydown.tree');
-          e.keyCode = 40; // move down
-          target.trigger(e);
-          return;
+    // Focus on "a" elements
+      .on('focus.tree', 'a', function () {
+        const target = $(this);
+        if (parseInt(target.attr('aria-level'), 10) === 0 && parseInt(target.attr('aria-posinset'), 10) === 1) {
+          // First element if disabled
+          if (target.hasClass('is-disabled')) {
+            const e = $.Event('keydown.tree');
+            e.keyCode = 40; // move down
+            target.trigger(e);
+            return;// eslint-disable-line
+          }
         }
-      }
-    });
+      });
 
-    //Handle Up/Down Arrow Keys and Space
+    // Handle Up/Down Arrow Keys and Space
     this.element.on('keydown.tree', 'a', function (e) {
-
-      var charCode = e.charCode || e.keyCode,
-          target = $(this),
-          next, prev;
+      const charCode = e.charCode || e.keyCode;
+      const target = $(this);
+      let next;
+      let prev;
 
       if (self.isAnimating) {
         return;
       }
 
-      //down arrow
+      // Down arrow
       if (charCode === 40) {
-        var nextNode = self.getNextNode(target);
+        const nextNode = self.getNextNode(target);
         self.setFocus(nextNode);
       }
 
-      //up arrow,
+      // Up arrow,
       if (charCode === 38) {
-        var prevNode = self.getPreviousNode(target);
+        const prevNode = self.getPreviousNode(target);
         self.setFocus(prevNode);
       }
 
-      //space
+      // Space
       if (e.keyCode === 32) {
         target.trigger('click.tree');
       }
@@ -790,16 +837,14 @@ Tree.prototype = {
           } else {
             self.toggleNode(target);
           }
+        } else if (target.next().hasClass('is-open')) {
+          self.toggleNode(target);
         } else {
-          if (target.next().hasClass('is-open')) {
-            self.toggleNode(target);
-          } else {
-            prev = target.closest('.folder').find('a:first');
-            self.setFocus(prev);
-          }
+          prev = target.closest('.folder').find('a:first');
+          self.setFocus(prev);
         }
         e.stopPropagation();
-        return false;
+        return false;// eslint-disable-line
       }
 
       // Right arrow
@@ -811,50 +856,48 @@ Tree.prototype = {
             next = target.closest('.folder').find('a:first');
             self.setFocus(next);
           }
+        } else if (target.next().hasClass('is-open')) {
+          next = target.next().find('a:first');
+          self.setFocus(next);
         } else {
-          if (target.next().hasClass('is-open')) {
-            next = target.next().find('a:first');
-            self.setFocus(next);
-          } else {
-            self.toggleNode(target);
-            self.setFocus(target);
-          }
-
+          self.toggleNode(target);
+          self.setFocus(target);
         }
         e.stopPropagation();
-        return false;
+        return false;// eslint-disable-line
       }
 
-      //Home  (fn-right on mac)
+      // Home  (fn-right on mac)
       if (charCode === 36) {
         next = self.element.find('a:first:visible');
         self.setFocus(next);
       }
 
-      //End (fn-right on mac)
+      // End (fn-right on mac)
       if (charCode === 35) {
         next = self.element.find('a:last:visible');
         self.setFocus(next);
       }
-
     });
 
-    //Handle Left/Right Arrow Keys
+    // Handle Left/Right Arrow Keys
+    // eslint-disable-next-line
     this.element.on('keypress.tree', 'a', function (e) {
-      var charCode = e.charCode || e.keyCode,
-        target = $(this);
+      const charCode = e.charCode || e.keyCode;
+      const target = $(this);
 
       if ((charCode >= 37 && charCode <= 40) || charCode === 32) {
         e.stopPropagation();
         return false;
       }
 
-      //Printable Chars Jump to first high level node with it...
-       if (e.which !== 0) {
+      // Printable Chars Jump to first high level node with it...
+      if (e.which !== 0) {
+        // eslint-disable-next-line
         target.closest('li').nextAll().find('a:visible').each(function () {
-          var node = $(this),
-            first = node.text().substr(0,1).toLowerCase(),
-            term = String.fromCharCode(e.which).toLowerCase();
+          const node = $(this);
+          const first = node.text().substr(0, 1).toLowerCase();
+          const term = String.fromCharCode(e.which).toLowerCase();
 
           if (first === term) {
             self.setFocus(node);
@@ -862,21 +905,23 @@ Tree.prototype = {
           }
         });
       }
-
     });
   },
 
-  //handle Loading JSON
-  loadData: function (dataset) {
-    var self = this;
+  /**
+   * Handle Loading JSON.
+   * @param {Object} dataset - to load.
+   * @returns {void}
+   */
+  loadData(dataset) {// eslint-disable-line
     if (!dataset) {
       return -1;
     }
-
+    const self = this;
     self.element.empty();
 
     self.loading = true;
-    for (var i = 0; i < dataset.length; i++) {
+    for (let i = 0, l = dataset.length; i < l; i++) {
       self.addNode(dataset[i], 'bottom');
     }
     self.loading = false;
@@ -888,9 +933,9 @@ Tree.prototype = {
     self.createSortable();
   },
 
-  //Functions to Handle Internal Data Store
-  addToDataset: function (node, location) {
-    var elem;
+  // Functions to Handle Internal Data Store
+  addToDataset(node, location) {
+    let elem;
 
     if (node.parent) {
       elem = this.findById(node.parent);
@@ -905,7 +950,6 @@ Tree.prototype = {
     }
 
     if (node.parent && elem) {
-
       if (!elem.children) {
         elem.children = [];
       }
@@ -917,71 +961,78 @@ Tree.prototype = {
       }
     }
 
-    return ((node.parent && !elem) ? false : true);
+    return !(node.parent && !elem);
   },
 
-  //Find the Node (Dataset) By Id
-  findById: function (id, source) {
-    var key,
-      self = this;
+  // Find the Node (Dataset) By Id
+  findById(id, source) {
+    const self = this;
 
     if (!source) {
       source = this.settings.dataset;
     }
 
-    for (key in source) {
-        var item = source[key];
-        if (item.id === id) {
-          return item;
-        }
+    /* eslint-disable guard-for-in */
+    /* eslint-disable no-restricted-syntax */
+    for (const key in source) {
+      const item = source[key];
+      if (item.id === id) {
+        return item;
+      }
 
-        if (item.children) {
-          var subresult = self.findById(id, item.children);
+      if (item.children) {
+        const subresult = self.findById(id, item.children);
 
-          if (subresult) {
-            return subresult;
-          }
+        if (subresult) {
+          return subresult;
         }
+      }
     }
+    /* eslint-enable no-restricted-syntax */
+    /* eslint-enable guard-for-in */
     return null;
   },
 
   // Get node by ID if selected
-  getNodeByIdIfSelected: function (id, source) {
-    var node = this.findById(id, source);
+  getNodeByIdIfSelected(id, source) {
+    const node = this.findById(id, source);
     return (node && node.selected) ? node : null;
   },
 
-  // Get selected nodes
-  getSelectedNodes: function () {
-    var node, data,
-      selected = [];
+  /**
+   * Get selected nodes.
+   * @returns {Object} selected nodes
+   */
+  getSelectedNodes() {
+    let node;
+    let data;
+    const selected = [];
 
-    $('li.is-selected', this.element).each(function() {
+    $('li.is-selected', this.element).each(function () {
       node = $('a:first', this);
       data = node.data('jsonData');
-      selected.push({'node': node, 'data': data});
+      selected.push({ node, data });
     });
     return selected;
   },
 
-  getNextNode: function(target) {
-    var next = target.parent().next().find('a:first'),
-      subTarget = target.next();
+  getNextNode(target) {
+    let next = target.parent().next().find('a:first');
+    const subTarget = target.next();
 
-    //Move Into Children
+    // Move Into Children
     if (subTarget.is('ul.is-open')) {
       next = subTarget.find('a:first');
     }
 
-    //skip disabled
+    // Skip disabled
     if (next.hasClass('is-disabled')) {
       next = next.parent().next().find('a:first');
     }
 
-    //bottom of a group..{l=1000: max folders to be deep }
+    // Bottom of a group..{l=1000: max folders to be deep }
     if (next.length === 0) {
-      for (var i = 0, l = 1000, closest = target; i < l; i++) {
+      for (let i = 0, l = 1000, closest = target; i < l; i++) {
         closest = closest.parent().closest('.folder');
         next = closest.next().find('a:first');
         if (next.length) {
@@ -990,7 +1041,7 @@ Tree.prototype = {
       }
     }
 
-    //another check for disabled
+    // Another check for disabled
     if (next.hasClass('is-disabled')) {
       next = this.getNextNode(next);
     }
@@ -998,22 +1049,22 @@ Tree.prototype = {
     return next;
   },
 
-  getPreviousNode: function(target) {
-    var prev = target.parent().prev().find('a:first'),
-      subTarget = prev.parent();
+  getPreviousNode(target) {
+    let prev = target.parent().prev().find('a:first');
+    let subTarget = prev.parent();
 
-    //move into children at bottom
+    // Move into children at bottom
     if (subTarget.is('.folder.is-open') &&
         subTarget.find('ul.is-open a').length &&
         !subTarget.find('ul.is-disabled').length) {
       prev = subTarget.find('ul.is-open a:last');
     }
 
-    //skip disabled
+    // Skip disabled
     if (prev.hasClass('is-disabled')) {
       prev = prev.parent().prev().find('a:first');
 
-      //another check if get to prev open folder
+      // Another check if get to prev open folder
       subTarget = prev.parent();
       if (subTarget.is('.folder.is-open') &&
           subTarget.find('ul.is-open a').length &&
@@ -1022,12 +1073,12 @@ Tree.prototype = {
       }
     }
 
-    //top of a group
+    // Top of a group
     if (prev.length === 0) {
       prev = target.closest('ul').prev('a');
     }
 
-    //another check for disabled
+    // Another check for disabled
     if (prev.hasClass('is-disabled')) {
       prev = this.getPreviousNode(prev);
     }
@@ -1035,30 +1086,27 @@ Tree.prototype = {
     return prev;
   },
 
-
-  //Sync the tree with the underlying dataset
-  syncDataset: function (node) {
-
-    var json = [],
-      self = this;
+  // Sync the tree with the underlying dataset
+  syncDataset(node) {
+    const json = [];
+    const self = this;
 
     node.children('li').each(function () {
-      var elem = $(this),
-        tag = elem.find('a:first');
+      const elem = $(this);
+      const tag = elem.find('a:first');
 
-      var entry = self.syncNode(tag);
+      const entry = self.syncNode(tag);
       json.push(entry);
-
     });
 
     this.settings.dataset = json;
   },
 
-  //Sync a node with its dataset 'record'
-  syncNode: function (node) {
-    var entry = {},
-      self = this,
-      jsonData = node.data('jsonData');
+  // Sync a node with its dataset 'record'
+  syncNode(node) {
+    let entry = {};
+    const self = this;
+    const jsonData = node.data('jsonData');
 
     entry.node = node;
     entry.id = node.attr('id');
@@ -1076,19 +1124,19 @@ Tree.prototype = {
       entry.selected = true;
     }
 
-    //icon
-    var clazz = node.attr('class');
+    // Icon
+    const clazz = node.attr('class');
     if (clazz && clazz.indexOf('icon') > -1) {
       entry.icon = node.attr('class');
     }
 
     if (node.next().is('ul')) {
-      var ul = node.next();
+      const ul = node.next();
       entry.children = [];
 
       ul.children('li').each(function () {
-        var elem = $(this),
-          tag = elem.find('a:first');
+        const elem = $(this);
+        const tag = elem.find('a:first');
 
         entry.children.push(self.syncNode(tag));
       });
@@ -1103,17 +1151,22 @@ Tree.prototype = {
     return entry;
   },
 
-  // Add a node and all its related markup
-  addNode: function (nodeData, location) {
-    var li = $('<li></li>'),
-      a = $('<a href="#"></a>').appendTo(li),
-      badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
+  /**
+   * Add a node and all its related markup.
+   * @param {Object} nodeData to add.
+   * @param {Object} location in tree.
+   * @returns {Object} li added
+   */
+  addNode(nodeData, location) {
+    let li = $('<li></li>');
+    const a = $('<a href="#"></a>').appendTo(li);
+    const badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
 
-    location = (!location ? 'bottom' : location); //supports button or top or jquery node
+    location = (!location ? 'bottom' : location); // supports button or top or jquery node
 
     a.attr({
-      'id': nodeData.id,
-      'href': nodeData.href,
+      id: nodeData.id,
+      href: nodeData.href,
       'data-badge': badgeAttr,
       'data-alert-icon': nodeData.alertIcon
     }).text(nodeData.text);
@@ -1130,14 +1183,15 @@ Tree.prototype = {
       a.addClass(nodeData.icon);
     }
 
-    //Handle Location
-    var found = this.loading ? true : this.addToDataset(nodeData, location);
+    // Handle Location
+    let found = this.loading ? true : this.addToDataset(nodeData, location);
 
     if (nodeData.parent instanceof jQuery) {
       found = true;
     }
 
-    if (location instanceof jQuery && (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)) {
+    if (location instanceof jQuery &&
+      (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)) {
       location.append(li);
       found = true;
     }
@@ -1152,9 +1206,8 @@ Tree.prototype = {
 
     // Support ParentId in JSON Like jsTree
     if (nodeData.parent) {
-
       if (found && typeof nodeData.parent === 'string') {
-        li = this.element.find('#'+nodeData.parent).parent();
+        li = this.element.find(`#${nodeData.parent}`).parent();
 
         if (!nodeData.disabled && li.is('.is-selected') && typeof nodeData.selected === 'undefined') {
           nodeData.selected = true;
@@ -1169,8 +1222,7 @@ Tree.prototype = {
         }
         this.addAsChild(nodeData, li);
       }
-      nodeData.node = li.find('ul li a#'+ nodeData.id);
-
+      nodeData.node = li.find(`ul li a#${nodeData.id}`);
     } else {
       this.addChildNodes(nodeData, li);
       nodeData.node = li.children('a').first();
@@ -1186,9 +1238,9 @@ Tree.prototype = {
     return li;
   },
 
-  //Add a node to an exiting node, making it a folder if need be
-  addAsChild: function (nodeData, li) {
-    var ul = li.find('ul').first();
+  // Add a node to an exiting node, making it a folder if need be
+  addAsChild(nodeData, li) {
+    let ul = li.find('ul').first();
     if (ul.length === 0) {
       ul = $('<ul></ul>').appendTo(li);
       ul.addClass('folder');
@@ -1201,10 +1253,10 @@ Tree.prototype = {
     this.addNode(nodeData, ul);
   },
 
-  //Add the children for the specified node element
-  addChildNodes: function (nodeData, li) {
-    var self = this,
-      ul = li.find('ul');
+  // Add the children for the specified node element
+  addChildNodes(nodeData, li) {
+    const self = this;
+    let ul = li.find('ul');
 
     if (!nodeData.children) {
       ul.remove();
@@ -1220,29 +1272,33 @@ Tree.prototype = {
     ul.empty();
 
     if (nodeData.children) {
-      for (var i = 0; i < nodeData.children.length; i++) {
-        var elem = nodeData.children[i];
+      for (let i = 0, l = nodeData.children.length; i < l; i++) {
+        const elem = nodeData.children[i];
         self.addNode(elem, ul);
       }
     }
   },
 
   // Check for true value
-  isTrue: function(v) {
+  isTrue(v) {
     return (typeof v !== 'undefined' && v !== null && ((typeof v === 'boolean' && v === true) || (typeof v === 'string' && v.toLowerCase() === 'true')));
   },
 
   // Check for false value
-  isFalse: function(v) {
+  isFalse(v) {
     return (typeof v !== 'undefined' && v !== null && ((typeof v === 'boolean' && v === false) || (typeof v === 'string' && v.toLowerCase() === 'false')));
   },
 
-  //Update fx rename a node
-  updateNode: function (nodeData) {
-    //Find the node in the dataset and ui and sync it
-    var elem = this.findById(nodeData.id);
+  /**
+   * Update fx rename a node.
+   * @param {Object} nodeData to update.
+   * @returns {void}
+   */
+  updateNode(nodeData) {
+    // Find the node in the dataset and ui and sync it
+    let elem = this.findById(nodeData.id);
 
-    //Passed in the node element
+    // Passed in the node element
     if (nodeData.node) {
       elem = {};
       elem.node = nodeData.node;
@@ -1252,13 +1308,13 @@ Tree.prototype = {
       return;
     }
 
-    var parent = elem.node.parent(),
-      isDisabled = this.isTrue(nodeData.disabled) || this.isFalse(nodeData.enabled),
-      isEnabled = this.isTrue(nodeData.enabled) || this.isFalse(nodeData.disabled);
+    const parent = elem.node.parent();
+    const isDisabled = this.isTrue(nodeData.disabled) || this.isFalse(nodeData.enabled);
+    const isEnabled = this.isTrue(nodeData.enabled) || this.isFalse(nodeData.disabled);
 
     // Update badge
     if (nodeData.badge) {
-      var badge = elem.node.find('.tree-badge:first');
+      let badge = elem.node.find('.tree-badge:first');
       // Add badge if not exists
       if (!badge.length && !nodeData.badge.remove) {
         if (!nodeData.badge.remove && typeof nodeData.badge.text !== 'undefined' && $.trim(nodeData.badge.text) !== '') {
@@ -1289,7 +1345,7 @@ Tree.prototype = {
         }
         elem.badge = nodeData.badge;
 
-        //Remove badge
+        // Remove badge
         if (this.parseBool(nodeData.badge.remove)) {
           badge.remove();
           if (typeof elem.badge !== 'undefined') {
@@ -1310,15 +1366,15 @@ Tree.prototype = {
     }
 
     if (isDisabled) {
-      elem.node.addClass('is-disabled').attr('aria-disabled','true');
+      elem.node.addClass('is-disabled').attr('aria-disabled', 'true');
 
       if (parent.is('.folder.is-open')) {
-        $('a, ul[role=group]', parent).addClass('is-disabled').attr('aria-disabled','true');
+        $('a, ul[role=group]', parent).addClass('is-disabled').attr('aria-disabled', 'true');
       }
     }
 
     if (isEnabled) {
-      var isParentsDisabled = elem.node.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
+      const isParentsDisabled = elem.node.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
 
       if (!isParentsDisabled) {
         elem.node.removeClass('is-disabled').removeAttr('aria-disabled');
@@ -1336,32 +1392,34 @@ Tree.prototype = {
     if (nodeData.children) {
       if (nodeData.children.length) {
         this.addChildNodes(nodeData, parent);
-      }
-      else {
+      } else {
         this.removeChildren(nodeData, parent);
       }
     }
-
   },
 
   // Performs the usual Boolean coercion with the exception of
   // the strings "false" (case insensitive) and "0"
-  parseBool: function(b) {
+  parseBool(b) {
     return !(/^(false|0)$/i).test(b) && !!b;
   },
 
   // Delete children nodes
-  removeChildren: function (nodeData, li) {
-    var ul = li.find('ul');
+  removeChildren(nodeData, li) {
+    const ul = li.find('ul');
 
     this.setTreeIcon(li.find('svg.icon-tree').first(), (nodeData.icon || 'icon-tree-node'));
     li.removeClass('folder is-open');
     ul.remove();
   },
 
-  //Delete a node from the dataset or tree
-  removeNode: function (nodeData) {
-    var elem = this.findById(nodeData.id);
+  /**
+   * Delete a node from the dataset or tree.
+   * @param {Object} nodeData to delete.
+   * @returns {void}
+   */
+  removeNode(nodeData) {
+    let elem = this.findById(nodeData.id);
 
     if (nodeData instanceof jQuery) {
       elem = nodeData;
@@ -1376,36 +1434,52 @@ Tree.prototype = {
     this.syncDataset(this.element);
   },
 
-  //Attach Context Menus
-  attachMenu: function (menuId) {
-    var self = this;
+  // Attach Context Menus
+  attachMenu(menuId) {
+    const self = this;
 
     if (!menuId) {
       return;
     }
 
     this.element.off('contextmenu.tree').on('contextmenu.tree', 'a', function (e) {
-      var node = $(this);
+      const node = $(this);
       e.preventDefault();
-
-      $(e.currentTarget).popupmenu({menuId: menuId, eventObj: e, trigger: 'immediate', attachToBody: true}).off('selected').on('selected', function (e, args) {
-        self.element.triggerHandler('menuselect', {node: node, item: args});
+      $(e.currentTarget).popupmenu({ menuId, eventObj: e, trigger: 'immediate', attachToBody: true }).off('selected').on('selected', (event, args) => {
+        /**
+        * Fires when the menu item select.
+        *
+        * @event menuselect
+        * @type {Object}
+        * @property {Object} event - The jquery event object
+        * @property {Object} data for node element, item
+        */
+        self.element.triggerHandler('menuselect', { node, item: args });
       });
 
-      self.element.triggerHandler('menuopen', {menu: $('#' +menuId), node: node});
+      /**
+      * Fires when the menu open.
+      * menu options - use it to update the menu as needed
+      * @event menuopen
+      * @type {Object}
+      * @property {Object} event - The jquery event object
+      * @property {Object} data for node element, menu
+      */
+      self.element.triggerHandler('menuopen', { menu: $(`#${menuId}`), node });
       return false;
     });
-
   },
 
   // Create sortable
-  createSortable: function() {
+  createSortable() {
     if (!this.settings.sortable) {
       return;
     }
 
-    var self = this,
-      clone, interval, doDrag;
+    const self = this;
+    let clone;
+    let interval;
+    let doDrag;
 
     self.targetArrow = self.element.prev('.tree-drag-target-arrow');
     self.linkSelector = 'a:not(.is-dragging-clone, .is-disabled)';
@@ -1420,124 +1494,122 @@ Tree.prototype = {
       if (!self.loading) {
         clearInterval(interval);
 
-        $(self.linkSelector, self.element).each(function() {
-          var a = $(this);
+        $(self.linkSelector, self.element).each(function () {
+          const a = $(this);
 
           // Don't drag with folder icon, save for toggle nodes
-          a.on('mousedown.tree', function(e) {
+          a.on('mousedown.tree', (e) => {
             e.preventDefault();
-            doDrag = (e.which === 3) ? false : // 3 - Right mouse button clicked
-              ($(e.target).is('.icon') ? !a.parent().is('.folder') : true);
+
+            if (e.which === 3) {
+              doDrag = false;
+            } else {
+              doDrag = $(e.target).is('.icon') ? !a.parent().is('.folder') : true;
+            }
           })
 
-          // Invoke drag
-          .drag({
-            clone: true,
-            cloneAppendTo: a.closest('li'),
-            clonePosIsFixed: true
-          })
+            // Invoke drag
+            .drag({
+              clone: true,
+              cloneAppendTo: a.closest('li'),
+              clonePosIsFixed: true
+            })
 
-          // Drag start =======================================
-          .on('dragstart.tree', function (e, pos, thisClone) {
-            if (!thisClone || !doDrag) {
-              a.removeClass('is-dragging');
-              if (thisClone) {
-                thisClone.remove();
+            // Drag start =======================================
+            .on('dragstart.tree', (e, pos, thisClone) => {
+              if (!thisClone || !doDrag) {
+                a.removeClass('is-dragging');
+                if (thisClone) {
+                  thisClone.remove();
+                }
+                return;
               }
-              return;
-            }
-            clone = thisClone;
-            clone.removeAttr('id').addClass('is-dragging-clone');
-            clone.find('.tree-checkbox, .tree-badge').remove();
+              clone = thisClone;
+              clone.removeAttr('id').addClass('is-dragging-clone');
+              clone.find('.tree-checkbox, .tree-badge').remove();
 
-            self.sortable = {
-              // Do not use index from each loop, get updated index on drag start
-              startIndex: $(self.linkSelector, self.element).index(a),
-              startNode: a,
-              startIcon: $('svg.icon-tree', a).getIconName(),
-              startUl: a.closest('ul'),
-              startFolderNode: a.closest('ul').prev('a'),
-              startWidth: a.outerWidth()
-            };
+              self.sortable = {
+                // Do not use index from each loop, get updated index on drag start
+                startIndex: $(self.linkSelector, self.element).index(a),
+                startNode: a,
+                startIcon: $('svg.icon-tree', a).getIconName(),
+                startUl: a.closest('ul'),
+                startFolderNode: a.closest('ul').prev('a'),
+                startWidth: a.outerWidth()
+              };
 
-            e.preventDefault();
-            e.stopImmediatePropagation();
-          })
+              e.preventDefault();
+              e.stopImmediatePropagation();
+            })
 
-          // While dragging ===================================
-          .on('drag.tree', function (e, pos) {
-            if (!clone) {
-              return;
-            }
-            clone[0].style.left = pos.left + 'px';
-            clone[0].style.top = pos.top + 'px';
-            clone[0].style.opacity = '1';
-            self.setDragOver(clone, pos);
-          })
-
-          // Drag end =========================================
-          .on('dragend.tree', function (e, pos) {
-            self.targetArrow.hide();
-            $(self.linkSelector, self.element).removeClass('is-over');
-
-            if (!clone || !self.sortable.overDirection) {
-              return;
-            }
-            clone[0].style.left = pos.left + 'px';
-            clone[0].style.top = pos.top + 'px';
-
-            var start = self.sortable.startNode.parent(),
-              end = self.sortable.overNode.parent();
-
-            // Over
-            if (self.sortable.overDirection === 'over') {
-              if (!end.is('.folder')) {
-                self.convertFileToFolder(self.sortable.overNode);
+            // While dragging ===================================
+            .on('drag.tree', (e, pos) => {
+              if (!clone) {
+                return;
               }
-              $('ul:first', end).append(start);
-              if (!end.is('.is-open')) {
-                self.toggleNode(self.sortable.overNode);
+              clone[0].style.left = `${pos.left}px`;
+              clone[0].style.top = `${pos.top}px`;
+              clone[0].style.opacity = '1';
+              self.setDragOver(clone, pos);
+            })
+
+            // Drag end =========================================
+            .on('dragend.tree', (e, pos) => {
+              self.targetArrow.hide();
+              $(self.linkSelector, self.element).removeClass('is-over');
+
+              if (!clone || !self.sortable.overDirection) {
+                return;
               }
-            }
+              clone[0].style.left = `${pos.left}px`;
+              clone[0].style.top = `${pos.top}px`;
 
-            // Up
-            else if (self.sortable.overDirection === 'up') {
-              start.insertBefore(end);
-            }
-            // Down
-            else if (self.sortable.overDirection === 'down') {
-              if (end.is('.is-open')) {
-                $('ul:first', end).prepend(start);
+              const start = self.sortable.startNode.parent();
+              const end = self.sortable.overNode.parent();
+
+              // Over
+              if (self.sortable.overDirection === 'over') {
+                if (!end.is('.folder')) {
+                  self.convertFileToFolder(self.sortable.overNode);
+                }
+                $('ul:first', end).append(start);
+                if (!end.is('.is-open')) {
+                  self.toggleNode(self.sortable.overNode);
+                }
+              } else if (self.sortable.overDirection === 'up') {
+                // Up
+                start.insertBefore(end);
+              } else if (self.sortable.overDirection === 'down') {
+                // Down
+                if (end.is('.is-open')) {
+                  $('ul:first', end).prepend(start);
+                } else {
+                  start.insertAfter(end);
+                }
               }
-              else {
-                start.insertAfter(end);
+
+              // Restore file type
+              if ($('li', self.sortable.startUl).length === 0 &&
+                !!self.sortable.startFolderNode.data('oldData') &&
+                  self.sortable.startFolderNode.data('oldData').type === 'file') {
+                self.convertFolderToFile(self.sortable.startFolderNode);
               }
-            }
 
-            // Restore file type
-            if ($('li', self.sortable.startUl).length === 0 &&
-              !!self.sortable.startFolderNode.data('oldData') &&
-                self.sortable.startFolderNode.data('oldData').type === 'file') {
-              self.convertFolderToFile(self.sortable.startFolderNode);
-            }
+              // Fix: On windows 10 with IE-11 icons disappears
+              if (self.isIe11) {
+                start.find('.icon-tree').each(function () {
+                  const svg = $(this);
+                  self.setTreeIcon(svg, svg.find('use').attr('xlink:href'));
+                });
+              }
 
-            // Fix: On windows 10 with IE-11 icons disappears
-            if (self.isIe11) {
-              start.find('.icon-tree').each(function() {
-                var svg = $(this);
-                self.setTreeIcon(svg, svg.find('use').attr('xlink:href'));
-              });
-            }
-
-            // Sync dataset and ui
-            self.syncDataset(self.element);
-            if (self.isMultiselect) {
-              self.initSelected();
-            }
-
-          });
+              // Sync dataset and ui
+              self.syncDataset(self.element);
+              if (self.isMultiselect) {
+                self.initSelected();
+              }
+            });
         });
-
       }
     }
     // Wait for make sure all dynamic nodes sync
@@ -1545,33 +1617,43 @@ Tree.prototype = {
   },
 
   // Set actions while drag over
-  setDragOver: function(clone, pos) {
-    var self = this,
-      treeRec = self.element[0].getBoundingClientRect(),
-      extra = 20,
-      exMargin, isParentsStartNode, isBeforeStart, isAfterSttart,
-      li, a, ul, links, rec, i, l, left, top, direction, doAction,
+  setDragOver(clone, pos) {
+    const self = this;
+    const treeRec = self.element[0].getBoundingClientRect();
+    let extra = 20;
+    let exMargin;
+    let isParentsStartNode;
+    let isBeforeStart;
+    let isAfterSttart;
+    let li;
+    let a;
+    let ul;
+    let links;
+    let rec;
+    let left;
+    let top;
+    let direction;
+    let doAction;
 
-      // Set as out of range
-      outOfRange = function() {
-        self.sortable.overNode = null;
-        self.sortable.overIndex = null;
-        self.sortable.overDirection = null;
+    // Set as out of range
+    const outOfRange = function () {
+      self.sortable.overNode = null;
+      self.sortable.overIndex = null;
+      self.sortable.overDirection = null;
 
-        self.targetArrow.hide();
-        self.setTreeIcon($('svg.icon-tree', clone), 'icon-cancel');
-      };
+      self.targetArrow.hide();
+      self.setTreeIcon($('svg.icon-tree', clone), 'icon-cancel');
+    };
 
     // Moving inside tree
     if (pos.top > (treeRec.top - extra) &&
         pos.top < (treeRec.bottom + extra) &&
         pos.left > (treeRec.left - extra - self.sortable.startWidth) &&
         pos.left < (treeRec.left + treeRec.height + extra)) {
-
       links = $(self.linkSelector, self.element);
       extra = 2;
 
-      for (i = 0, l = links.length; i < l; i++) {
+      for (let i = 0, l = links.length; i < l; i++) {
         direction = null;
         rec = links[i].getBoundingClientRect();
 
@@ -1582,7 +1664,7 @@ Tree.prototype = {
           // Moving on/around node has parents as same node need to rearrange
           // Cannot rearrange parents to child
           isParentsStartNode = !!a.parentsUntil(self.element, '.folder')
-            .filter(function() {
+            .filter(function () {
               return $('a:first', this).is(self.sortable.startNode);
             }).length;
           if (isParentsStartNode) {
@@ -1594,12 +1676,13 @@ Tree.prototype = {
           left = rec.left;
           ul = a.closest('ul');
           exMargin = parseInt(li[0].style.marginTop, 10) > 0 ? 2 : 0;
-          isBeforeStart = ((i-1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
-          isAfterSttart = ((i+1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
+          isBeforeStart = ((i - 1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
+          isAfterSttart = ((i + 1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
           links.removeClass('is-over');
 
           // Apply actions
-          doAction = function() {
+          /* eslint-disable no-loop-func */
+          doAction = function () {
             if (!direction) {
               outOfRange();
               return;
@@ -1614,15 +1697,14 @@ Tree.prototype = {
               if (!a.is('.is-disabled')) {
                 a.addClass('is-over');
               }
-            }
-            // Up -or- Down
-            else {
+            } else {
+              // Up -or- Down
               links.removeClass('is-over');
               top = (direction === 'up') ?
                 (rec.top - 1.5 - (li.is('.is-active') ? 3 : 0)) :
                 (rec.bottom + (li.next().is('.is-active') ? -1 : 1.5) + exMargin);
-              self.targetArrow[0].style.left = left + 'px';
-              self.targetArrow[0].style.top = top + 'px';
+              self.targetArrow[0].style.left = `${left}px`;
+              self.targetArrow[0].style.top = `${top}px`;
               self.targetArrow.show();
             }
 
@@ -1631,6 +1713,7 @@ Tree.prototype = {
             self.sortable.overIndex = i;
             self.sortable.overDirection = direction;
           };
+          /* eslint-disable no-loop-func */
 
           // Set moveing directions
           if (i !== self.sortable.startIndex) {
@@ -1639,44 +1722,36 @@ Tree.prototype = {
               pos.left < rec.right + extra) {
               if (!isBeforeStart && pos.top < rec.top) {
                 direction = 'up';
-              }
-              else if (!isAfterSttart && pos.top > rec.top + (extra * 2)) {
+              } else if (!isAfterSttart && pos.top > rec.top + (extra * 2)) {
                 direction = 'down';
-              }
-              else {
+              } else {
                 direction = 'over';
               }
-            }
-            // Not hover on link
-            else {
-              if (!isBeforeStart && pos.top < rec.top) {
-                direction = 'up';
-              }
-              else if (!isAfterSttart) {
-                direction = 'down';
-              }
+            } else if (!isBeforeStart && pos.top < rec.top) {
+              // Not hover on link
+              direction = 'up';
+            } else if (!isAfterSttart) {
+              direction = 'down';
             }
           }
           doAction(direction);
         }
       }
-
-    }
-    else {
+    } else {
       // Out side from tree area
       outOfRange();
     }
   },
 
   // Convert file node to folder type
-  convertFileToFolder: function(node) {
-    var newFolder = $('<ul role="group"></ul>'),
-      oldData = {
-        icon: $('svg.icon-tree', node).getIconName(),
-        type: 'file'
-      };
+  convertFileToFolder(node) {
+    const newFolder = $('<ul role="group"></ul>');
+    const oldData = {
+      icon: $('svg.icon-tree', node).getIconName(),
+      type: 'file'
+    };
     if (node.is('[class^="icon"]')) {
-      var iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
+      const iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
       oldData.iconClass = iconClass;
       node.removeClass(iconClass);
     }
@@ -1686,8 +1761,8 @@ Tree.prototype = {
   },
 
   // Convert folder node to file type
-  convertFolderToFile: function(node) {
-    var parent = node.parent('.folder');
+  convertFolderToFile(node) {
+    const parent = node.parent('.folder');
     parent.removeClass('folder is-open');
     $('ul:first', parent).remove();
     if (parent.length) {
@@ -1703,19 +1778,15 @@ Tree.prototype = {
   },
 
   /**
-   * @param {object} settings
+   * Removes event bindings from the instance.
+   * @private
+   * @returns {Object} The api
    */
-  updated: function(settings) {
-    if (settings) {
-      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
-    }
-  },
-
-  // Tree Related Functions
-  destroy: function() {
+  unbind() {
     if (this.settings.sortable) {
-      this.element.find('a').each(function() {
-        var a = $(this), dragApi = a.data('drag');
+      this.element.find('a').each(function () {
+        const a = $(this);
+        const dragApi = a.data('drag');
         a.off('mousedown.tree');
         if (!!dragApi && !!dragApi.destroy) {
           dragApi.destroy();
@@ -1723,9 +1794,34 @@ Tree.prototype = {
       });
       this.element.prev('.tree-drag-target-arrow').remove();
     }
-    this.element.removeData(COMPONENT_NAME);
-    this.element.off('contextmenu.tree updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
-  }
+    this.element.off('contextmenu.tree updated.tree click.tree focus.tree keydown.tree keypress.tree');
+
+    return this;
+  },
+
+  /**
+   * Resync the UI and Settings.
+   * @param {Object} settings The settings to apply.
+   * @returns {Object} The api
+   */
+  updated(settings) {
+    if (typeof settings !== 'undefined') {
+      this.settings = utils.mergeSettings(this.element, settings, TREE_DEFAULTS);
+    }
+    return this
+      .unbind()
+      .init();
+  },
+
+  /**
+   * Destroy this component instance and remove the link from its base element.
+   * @returns {void}
+   */
+  destroy() {
+    this.unbind();
+    this.element.empty();
+    $.removeData(this.element[0], COMPONENT_NAME);
+  },
 };
 
 export { Tree, COMPONENT_NAME };

@@ -158,6 +158,7 @@ input[type="range"] {
   // scss-lint:disable ImportantRule
   &.is-disabled {
     background-color: $slider-disabled-color !important;
+    opacity: .7;
 
     > * {
       cursor: default;
@@ -191,6 +192,40 @@ input[type="range"] {
   }
   // scss-lint:enable ImportantRule
 
+  // scss-lint:disable ImportantRule
+  &.is-readonly {
+    background-color: $slider-readonly-color !important;
+
+    > * {
+      cursor: default;
+    }
+
+    > .tick {
+      background-color: $slider-readonly-color !important;
+
+      > .label {
+        color: $slider-readonly-labels-color;
+      }
+
+      &:after {
+        background-color: $slider-readonly-color;
+      }
+
+      &.complete {
+        background-color: $slider-readonly-active-bg-color !important;
+      }
+    }
+
+    > .slider-range {
+      background-color: $slider-readonly-range-color !important;
+      border-color: $slider-readonly-range-color !important;
+    }
+
+    > .slider-handle {
+      background-color: $slider-readonly-handle-color !important;
+      border-color: $slider-readonly-handle-color !important;
+    }
+  }
 }
 
 // Tick Margins are screwy in old versions of IE

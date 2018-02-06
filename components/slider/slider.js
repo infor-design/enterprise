@@ -353,7 +353,9 @@ Slider.prototype = {
       }
     });
 
-    if (this.element.prop('disabled') === true) {
+    if (this.element.prop('readonly') === true) {
+      this.readonly();
+    } else if (this.element.prop('disabled') === true) {
       this.disable();
     }
 
@@ -1002,6 +1004,8 @@ Slider.prototype = {
    */
   enable() {
     this.element.prop('disabled', false);
+    this.element.prop('readonly', false);
+    this.wrapper.removeClass('is-readonly');
     this.wrapper.removeClass('is-disabled');
 
     const self = this;
@@ -1018,11 +1022,30 @@ Slider.prototype = {
    */
   disable() {
     this.element.prop('disabled', true);
+    this.element.prop('readonly', false);
+    this.wrapper.removeClass('is-readonly');
     this.wrapper.addClass('is-disabled');
 
     const self = this;
     $.each(this.handles, (i, handle) => {
       self.disableHandleDrag(handle);
+    });
+
+    return this;
+  },
+
+  /**
+   * Sets the slider in a readonly state
+   * @returns {this} component instance
+   */
+  readonly() {
+    this.element.prop('disabled', true);
+    this.element.prop('readonly', true);
+    this.wrapper.removeClass('is-disabled');
+    this.wrapper.addClass('is-readonly');
+
+    $.each(this.handles, (i, handle) => {
+      this.disableHandleDrag(handle);
     });
 
     return this;
