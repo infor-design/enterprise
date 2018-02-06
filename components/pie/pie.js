@@ -5,6 +5,7 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { charts } from '../charts/charts';
+import { Locale } from '../locale/locale';
 
 // Settings and Options
 const COMPONENT_NAME = 'pie';
@@ -312,10 +313,12 @@ Pie.prototype = {
     const slice = self.svg.select('.slices').selectAll('path.slice')
       .data(self.pie(data), self.key);
 
+    self.isRTL = Locale.isRTL();
+
     slice.enter()
       .insert('path')
       .style('fill', function (d, i) {
-        return charts.chartColor(self.isRTL ? self.chartData.length - (i - 1) : i, 'pie', d.data);
+        return charts.chartColor(i, 'pie', d.data);
       })
       .attr('class', 'slice')
       .on('contextmenu', function (d) {
@@ -468,9 +471,7 @@ Pie.prototype = {
             const d2 = interpolate(t);
             const pos = self.outerArc.centroid(d2);
             pos[0] = self.dims.radius * (self.midAngle(d2) < Math.PI ? 1 : -1);
-            if (!self.isRTL) {
-              pos[0] -= (self.midAngle(d2) < Math.PI ? padding : -padding);
-            }
+            pos[0] -= (self.midAngle(d2) < Math.PI ? padding : -padding);
             return `translate(${pos})`;
           };
         })
