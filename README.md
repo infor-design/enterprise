@@ -1,4 +1,3 @@
-
 # Welcome to Soho XI
 
 SoHo XI provides comprehensive tools for product development teams to create use experiences that are: Intuitive, Engaging, Purposeful, Relevant Functional and Beautiful.
@@ -11,9 +10,13 @@ This project is an open source project. If you have a contribution please [submi
 
 The sample / demo project is a node project using SASS and Grunt with Grunt Watch and Live Reload to stage a series of examples shown on example and documentation pages.
 
+## About this branch of Soho XI
+
+This branch of Soho is a major upgrade of the codebase to an ES6-based project.  At this time, it should be considered unfinished, unstable and not meant for production use.  To see more information on the conversion, please see the [ES5 to ES6 Conversion Project](./ES5-TO-ES6.md) page.
+
 ## Contacting Us and Updates
 
-Please use the [Jira tracker | http://jira/browse/SOHO] to report all requests, bugs, questions and feature requests.
+Please use the [JIRA Issue Tracker](http://jira/browse/SOHO) to report all requests, bugs, questions and feature requests.
 
 For release updates see our upcoming and past version in our [Releases road map | http://jira/projects/SOHO?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page].
 

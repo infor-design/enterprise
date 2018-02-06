@@ -25,33 +25,33 @@ $('body').on('initialized', function () {
         name: 'Company Deductions',
         shortName: 'CD',
         value: 0,
-        tooltip: 'Company Deductions {{value}}',
+        tooltip: 'Company Deductions <b>{{value}}</b>',
         color: '#000000'
       }, {
         name: 'After-tax Deductions',
         shortName: 'After-tax',
         value: 11,
-        tooltip: 'After-tax Deductions {{value}}'
+        tooltip: 'After-tax Deductions <b>{{value}}</b>'
       }, {
         name: 'Pre-tax Deductions',
         shortName: 'Pre-tax',
         value: 12,
-        tooltip: 'Pre-tax Deductions {{value}}'
+        tooltip: 'Pre-tax Deductions <b>{{value}}</b>'
       }, {
         name: 'Taxes',
         shortName: 'Af-tax',
         value: 17,
-        tooltip: 'Taxes %value%'
+        tooltip: 'Taxes <b>%value%</<b>'
       }, {
         name: 'Wages',
         shortName: 'Wages',
         value: 52,
-        tooltip: 'Wages %value%'
+        tooltip: 'Wages <b>%value%</b>'
       }]
     }];
 
   $('#pie-chart-example').chart({
-    type: 'donut',
+    type: 'pie',
     dataset: pieData,
     labels: {
       isTwoline: false,

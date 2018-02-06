@@ -49,6 +49,8 @@
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
         columns: columns,
+        selectable: 'multiple',
+        treeGrid: true,
         dataset: data
       });
 

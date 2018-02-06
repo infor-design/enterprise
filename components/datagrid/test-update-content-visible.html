@@ -55,11 +55,11 @@
     });
 
     //Init and get the api for the grid
-    $('#datagrid').datagrid({
+    grid = $('#datagrid').datagrid({
       columns: columns,
       idProperty:'index',
       dataset: data,
       rowHeight: 'short'
-    });
+    }).data('datagrid');
   });
 </script>

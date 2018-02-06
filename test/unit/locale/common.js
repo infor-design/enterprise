@@ -70,8 +70,12 @@ define([
       expect(Locale.formatDate(new Date(2000, 10, 8), {date: 'long'})).to.equal('November 8, 2000');
       expect(Locale.formatDate(new Date(2000, 10, 8), {pattern: 'M/d/yyyy'})).to.equal('11/8/2000');
 
-      //Other Edge Cases
+      //Other Cases
       expect(Locale.formatDate('11/8/2000')).to.equal('11/8/2000');
+      expect(Locale.formatDate('2018-11-29', { pattern: 'yyyy-MM-dd' })).to.equal('2018-11-29');
+      expect(Locale.formatDate(1458054935410, { pattern: 'yyyy-MM-dd' })).to.equal('2016-03-15');
+
+      expect(Locale.formatDate('2015-01-01T05:00:00.000Z', { pattern: 'yyyy-MM-dd' })).to.equal('2015-01-01');
       expect(Locale.formatDate()).to.equal(undefined);
     },
 
@@ -125,7 +129,7 @@ define([
       expect(Locale.formatDate(new Date(2000, 10, 8, 13, 0), {date: 'datetime'})).to.equal('11/8/2000 1:00 PM');
       Locale.set('de-DE');
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'datetime'})).to.equal('01.12.2000 13:40');
-      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {pattern: 'M.dd.yyyy HH:mm'})).to.equal('12.01.2000 13:05');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 5), {pattern: 'M.dd.yyyy HH:mm'})).to.equal('12.01.2000 13:05');
 
       var date = new Date(2017, 01, 01, 17, 27, 40),
         opts = {pattern: 'yyyy-MM-dd HH:mm' , date: 'datetime'};

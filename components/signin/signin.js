@@ -1,137 +1,170 @@
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
-  $.fn.signin = function(options) {
-    'use strict';
+// Component Name
+const COMPONENT_NAME = 'signin';
 
-    // Settings and Options
-    var pluginName = 'signin',
-        defaults = {},
-        settings = $.extend({}, defaults, options);
+/**
+ * Default SignIn Options
+ * @namespace
+ */
+const SIGNIN_DEFAULTS = {
+};
 
-    /**
-     * @class {SignIn}
-     * @constructor
-     * @param {Object} element
-     */
-    function SignIn(element) {
-      this.element = $(element);
-      Soho.logTimeStart(pluginName);
-      this.init();
-      Soho.logTimeEnd(pluginName);
+/**
+*
+* @class SignIn
+* @param {String} element The component element.
+* @param {String} settings The component settings.
+*/
+function SignIn(element, settings) {
+  this.settings = utils.mergeSettings(element, settings, SIGNIN_DEFAULTS);
+
+  this.element = $(element);
+  debug.logTimeStart(COMPONENT_NAME);
+  this.init();
+  debug.logTimeEnd(COMPONENT_NAME);
+}
+
+// Plugin Methods
+SignIn.prototype = {
+
+  init() {
+    this.handleKeys();
+  },
+
+  /**
+   * Checks a keyboard event for a CAPS LOCK modifier.
+   * @private
+   * @param {Object} e jQuery.Event
+   * @returns {Boolean} true if caps lock
+   */
+  isCapslock(e) {
+    e = e || window.event;
+    let charCode = false;
+    let shifton = false;
+
+    if (e.which) {
+      charCode = e.which;
+    } else if (e.keyCode) {
+      charCode = e.keyCode;
     }
 
-    // Plugin Methods
-    SignIn.prototype = {
+    if (e.shiftKey) {
+      shifton = e.shiftKey;
+    } else if (e.modifiers) {
+      shifton = !!(e.modifiers & 4);// eslint-disable-line
+    }
 
+    if (charCode >= 97 && charCode <= 122 && shifton) {
+      return true;
+    }
+    if (charCode >= 65 && charCode <= 90 && !shifton) {
+      return true;
+    }
+    return false;
+  },
+
+  /**
+   * Removes event bindings from the instance.
+   * @private
+   * @returns {Object} The api
+   */
+  unbind() {
+    $('body').off('keypress.signin blur.signin change.signin');
+    return this;
+  },
+
+  /**
+   * Resync the UI and Settings.
+   * @param {Object} settings The settings to apply.
+   * @returns {Object} The api
+   */
+  updated(settings) {
+    if (typeof settings !== 'undefined') {
+      this.settings = utils.mergeSettings(this.element, settings, SIGNIN_DEFAULTS);
+    }
+    return this
+      .unbind()
+      .init();
+  },
+
+  /**
+   * Destroy this component instance and remove the link from its base element.
+   * @returns {void}
+   */
+  destroy() {
+    this.unbind();
+    $.removeData(this.element[0], COMPONENT_NAME);
+  },
+
+  /**
+   * Attach Events used by the Control
+   * @private
+   * @returns {void}
+   */
+  handleKeys() {
+    const self = this;
+    const cssIcon = $.createIconElement({ classes: 'icon-capslock', icon: 'capslock' });
+
+    // Disable default [caps lock on] popup in IE
+    document.msCapsLockWarningOff = true;
+
+    this.element
       /**
-       * @private
-       */
-      init: function() {
-        this.settings = settings;
-        this.handleKeys();
-      },
+      * Fires when keypress.
+      *
+      * @event keypress
+      * @type {Object}
+      * @property {Object} event - The jquery event object
+      */
+      .on('keypress.signin', '[type="password"]', function (e) {
+        const field = $(this);
+        const fieldParent = field.parent('.field');
+        const iconCapslock = $('.icon-capslock', fieldParent);
 
-      /**
-       * Checks a keyboard event for a CAPS LOCK modifier.
-       * @param {jQuery.Event} e
-       * @returns {boolean}
-       */
-      isCapslock: function(e) {
-        e = (e) ? e : window.event;
-        var charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false),
-         shifton = (e.shiftKey) ? e.shiftKey : ((e.modifiers) ? (!!(e.modifiers & 4)) : false);
-
-        if (charCode >= 97 && charCode <= 122 && shifton) {
-          return true;
-        }
-        if (charCode >= 65 && charCode <= 90 && !shifton) {
-          return true;
-        }
-        return false;
-      },
-
-      /**
-       * Teardown - Remove added markup and events
-       */
-      destroy: function() {
-        $.removeData(this.element[0], pluginName);
-        $('body').off('keypress.signin blur.signin change.signin');
-      },
-
-      /**
-       * @fires SignIn#events
-       * @param {Object} keypress
-       * @param {Object} blur
-       * @param {Object} change
-       *
-       */
-      handleKeys: function() {
-        var self = this,
-          cssIcon = $.createIconElement({ classes: 'icon-capslock', icon: 'capslock' });
-
-        // Disable default [caps lock on] popup in IE
-        document.msCapsLockWarningOff = true;
-
-        this.element
-        .on('keypress.signin', '[type="password"]', function (e) {
-          var field = $(this),
-            fieldParent = field.parent('.field'),
-            iconCapslock = $('.icon-capslock', fieldParent);
-
-          if (self.isCapslock(e) && !field.hasClass('error')) {
-            if(!iconCapslock.length) {
-              fieldParent.append(cssIcon);
-              $('body').toast({audibleOnly: true, message: Locale.translate('CapsLockOn')});
-            }
-          } else {
-            iconCapslock.remove();
+        if (self.isCapslock(e) && !field.hasClass('error')) {
+          if (!iconCapslock.length) {
+            fieldParent.append(cssIcon);
+            $('body').toast({ audibleOnly: true, message: Locale.translate('CapsLockOn') });
           }
+        } else {
+          iconCapslock.remove();
+        }
+      })
 
-        })
-        .on('blur.signin change.signin', '[type="password"]', function () {
-          var field = $(this),
-            fieldParent = field.closest('.field'),
-            iconCapslock = $('.icon-capslock', fieldParent);
+      /**
+      * Fires when blur.
+      *
+      * @event blur
+      * @type {Object}
+      * @property {Object} event - The jquery event object
+      */
+      .on('blur.signin change.signin', '[type="password"]', function () {
+        const field = $(this);
+        const fieldParent = field.closest('.field');
+        const iconCapslock = $('.icon-capslock', fieldParent);
 
-          // Wait for error class to be added
-          setTimeout(function() {
-            if (iconCapslock && iconCapslock.length) {
-              if (field.hasClass('error')) {
-                iconCapslock.remove();
-              } else {
-                fieldParent.append(cssIcon);
-              }
+        /**
+        * Fires when change.
+        *
+        * @event change
+        * @type {Object}
+        * @property {Object} event - The jquery event object
+        */
+        // Wait for error class to be added
+        setTimeout(() => {
+          if (iconCapslock && iconCapslock.length) {
+            if (field.hasClass('error')) {
+              iconCapslock.remove();
+            } else {
+              fieldParent.append(cssIcon);
             }
-          }, 150);
+          }
+        }, 150);
+      });
+  }
+};
 
-        });
-      }
-    };
-
-    // Initialize the plugin (Once)
-    return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, defaults, options);
-      } else {
-        instance = $.data(this, pluginName, new SignIn(this, settings));
-      }
-    });
-  };
-
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+export { SignIn, COMPONENT_NAME };

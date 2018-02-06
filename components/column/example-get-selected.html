@@ -68,12 +68,12 @@ $('body').on('initialized', function () {
 
     elem.chart({type: 'column', dataset: dataset})
     .on('selected', function (e, args) {
-      // console.log(args);
+      console.log('selected event', args);
     });
 
     $('#btn-get-selected').on('click', function() {
       var api = elem.data('chart');
-      console.log(api.getSelected());
+      console.log('Get Selected Result', api.getSelected());
     });
 
 });

@@ -45,8 +45,7 @@
       data.push({firstName: 'Item', lastName: 'Updated'});
       data.push({firstName: 'Item', lastName: 'Updated'});
 
-      $('#list-one').trigger('updated');
-
+      $('#list-one').trigger('updated', [{ dataset: data }]);
     });
 
   });

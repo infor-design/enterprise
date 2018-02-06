@@ -1,0 +1,225 @@
+  <section>
+
+
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          bleedFromContainer
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, allows positioned content to bleed
+outside of a defined container.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          callback
+        </td>
+        <td>
+
+        </td>
+        <td>
+          If defined, provides extra placement adjustments
+after the main calculation is performed.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          container
+        </td>
+        <td>
+
+        </td>
+        <td>
+          If defined, contains the placement of the
+element to the boundaries of a specific container element.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          parent
+        </td>
+        <td>
+
+        </td>
+        <td>
+          If defined, will be used as the reference
+element for placement this element.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          parentXAlignment
+        </td>
+        <td>
+
+        </td>
+        <td>
+          Only used for parent-based placement.
+Determines the X-coordinate alignment of the placed element against its parent.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          parentYAlignment
+        </td>
+        <td>
+
+        </td>
+        <td>
+          Only used for parent-based placement.
+Determines the Y-coordinate alignment of the placed element against its parent.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          placement
+        </td>
+        <td>
+
+        </td>
+        <td>
+          If defined, changes the direction in which
+placement of the element happens
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          strategies
+        </td>
+        <td>
+
+        </td>
+        <td>
+          Determines the "strategy" for alternatively
+placing the element if it doesn't fit in the defined boundaries.  Only matters
+when "parent" is a defined setting.  It's possible to define multiple strategies
+and execute them in order.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>render</td>
+        <td>
+
+
+                  <span>placementObj (PlacementObject) = settings for the placement routine
+ </span>
+
+
+        </td>
+        <td>
+          <p>Actually renders an element with coordinates inside the DOM</p>
+
+        </td>
+        <td>
+
+void
+        </td>
+      </tr>
+      <tr>
+        <td>place</td>
+        <td>
+
+
+                  <span>placementObj (PlacementObject) = settings for the placement routine
+ </span>
+
+
+        </td>
+        <td>
+          <p>Main placement API Method (external)
+Can either take a PlacementObject as a single argument, or can take 2 coordinates (x, y) and
+will use the pre-defined settings.</p>
+
+        </td>
+        <td>
+
+void
+        </td>
+      </tr>
+      <tr>
+        <td>getContainer</td>
+        <td>
+
+
+                  <span>placementObj (PlacementObject) = settings for the placement routine
+ </span>
+
+
+        </td>
+        <td>
+          <p>Gets a parent container element.</p>
+
+        </td>
+        <td>
+          container element
+
+        </td>
+      </tr>
+      <tr>
+        <td>checkBleeds</td>
+        <td>
+
+
+                  <span>placementObj (PlacementObject) = settings for the placement routine.
+ </span>
+
+
+        </td>
+        <td>
+          <p>Re-adjust a previously-placed element to account for bleeding off the edges.
+Element must fit within the boundaries of the page or it's current scrollable pane.</p>
+
+        </td>
+        <td>
+          modified placementObject with updated settings.
+PlacementObject
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>

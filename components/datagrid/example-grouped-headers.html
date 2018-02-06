@@ -8,7 +8,7 @@
 
 <script>
   $('body').one('initialized', function () {
-    Locale.set('en-US').done(function () {
+
       var grid,
         columns = [],
         data = [];
@@ -24,7 +24,7 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Text});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text'});
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
@@ -33,7 +33,7 @@
       columns.push({ id: 'action', name: 'Action Item', field: 'action'});
 
       //Init and get the api for the grid
-      grid = $('#datagrid').datagrid({
+      $('#datagrid').datagrid({
         columns: columns,
         columnGroups: [{colspan: 3, id: 'group1', name: 'Column Group One'}, {colspan: 4, id: 'group2', name: 'Column Group Two'}], //Numeric Column Span Groups
         dataset: data,
@@ -41,10 +41,7 @@
         saveColumns: false,
         filterable: true,
         toolbar: {title: 'Groups', actions: true, personalize: true, results: true, resetLayout: true}
-      }).data('datagrid');
-
-      //grid.setSortColumn('productId');
-  });
+      });
 
  });
 

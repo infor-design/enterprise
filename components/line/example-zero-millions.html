@@ -1,0 +1,42 @@
+
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Line Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="line-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [{
+      "data":[
+        {"name":"08/30/17","value": 56237570.2},
+        {"name":"09/29/17","value": 0},
+        {"name":"10/30/17","value": 0},
+        {"name":"11/30/17","value": 62936.76},
+        {"name":"12/28/17","value": 8490223.97}],
+      name: 'Component C'
+    }];
+
+  $('#line-example').chart({
+    type: 'line',
+    dataset: dataset,
+    yAxis: {
+      ticks: {
+        number: 5,
+        format: 's'
+      }
+    }
+  });
+
+});
+</script>

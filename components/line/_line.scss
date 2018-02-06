@@ -1,0 +1,50 @@
+// Line Chart Specific Css
+//==================================================//
+
+// SVG Chart Styles
+.chart-container {
+
+  //Line Chart Style
+  &.line-chart {
+    .domain {
+      stroke: transparent;
+    }
+
+    .dot {
+      cursor: pointer;
+      stroke: transparent;
+    }
+
+    .line-group .line {
+      cursor: pointer;
+    }
+
+    .area {
+      opacity: .2;
+      pointer-events: none;
+    }
+
+    .is-not-selected {
+      opacity: .35;
+    }
+  }
+}
+
+.line-chart:not(.bubble) {
+  .x.axis .tick line {  //small line that shows up on the x axis
+    visibility: hidden;
+  }
+}
+
+// Mobile Specific style
+@include respond-to(phone) {
+  .line-chart {
+    .chart-legend {
+      margin-left: 10px;
+
+      .chart-legend-item {
+        margin-right: 0;
+      }
+    }
+  }
+}

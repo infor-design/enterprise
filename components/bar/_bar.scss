@@ -1,0 +1,22 @@
+// Bar Chart
+//==================================================//
+
+
+.chart-container {
+
+  .bar,
+  .arc {
+    cursor: pointer;
+  }
+
+  .arc {
+    stroke: $chart-arc-stroke;
+  }
+
+  .bar {
+    cursor: pointer;
+    stroke: transparent;
+    stroke-width: 1px;
+  }
+
+}

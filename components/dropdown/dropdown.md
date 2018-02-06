@@ -6,7 +6,7 @@
 1. Default Dropdown Example [View Example]( ../components/dropdown/example-index)
 2. Clearable Dropdown [View Example]( ../components/dropdown/example-clearable.html)
 3. Updating the Contents [View Example]( ../components/dropdown/example-updating.html)
-4. Ajax Conents on Open [View Example]( ../components/dropdown/example-ajax.html)
+4. Ajax Contents on Open [View Example]( ../components/dropdown/example-ajax.html)
 5. Section / Groups [View Example]( ../components/dropdown/example-groups.html)
 6. Disable Search [View Example]( ../components/dropdown/example-no-search.html)
 7. States [View Example]( ../components/dropdown/example-states.htm)
@@ -23,8 +23,6 @@
 -   The field height is not dynamic; do not expand the height of the field to display multiple selections. See the live example for how multiple selections are handled in the field display and the list display.
 
 ## Code Example
-
-### Single Select Dropdown
 
 The basic drop down works similar to a standard Html select element, because of styling and functionality requirements we use a stylized shadow widget which implements the drop down behavior and updates in sync with a hidden select element. This allows the select element to be serialized with the DOM like normal. The simplest way to use the drop down is to create markup containing: a field (for field and responsive form alignment), a label and a select. For accessibility and implementation reasons the label is required.\
  Create a select element with similar markup:

@@ -13,7 +13,7 @@
           columns = [];
 
         //Define Columns for the Grid.
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' }),
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' });
         columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Text, filterType: 'text'});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
@@ -36,15 +36,13 @@
               filterable: true,
               showFilterTotal: true,
               resultsText: function (grid, count, filterCount) {
+                if (count === 100 && filterCount === 0) {
+                  return '(' + 'all '+ count + ')';
+                }
 
                 if (filterCount > 0 ) {
                   return '(' + filterCount + ' of '+ count + ')';
                 }
-
-                if (count === 100) {
-                  return '(' + 'all '+ count + ')';
-                }
-
               },
               toolbar: {title: 'Compressors', results: true, dateFilter: false ,keywordFilter: false, advancedFilter: false, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
           });

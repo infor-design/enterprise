@@ -2,40 +2,40 @@
 <h2 id="api-details">API Details</h2>
 <p>The Switch Component is a CSS-only component, and has no specific Javascript API.</p>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
-<li><a href="../components/switch/example-index">Main Switch Example</a><br /></li>
-<li><a href="../components/switch/example-alignment">Alternate Alignment</a><br /></li>
+<ol type="1">
+<li><a href="../components/switch/example-index">Main Switch Example</a></li>
+<li><a href="../components/switch/example-alignment">Alternate Alignment</a></li>
 <li><a href="../components/switch/example-two-columns">Two Column Layout</a></li>
 </ol>
 <h2 id="code-example">Code Example</h2>
 <p>A Switch element is essentially a specially-styled <a href="../components/checkboxes">checkbox element</a>. Create an input element with <code>type=&quot;checkbox&quot;</code> and <code>class=&quot;switch&quot;</code>. Also create a label which is linked, and accurately describes the setting of the checkbox. Consider using a checkbox for most form layouts; Switch is primary for settings.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;switch&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> checked id=</span><span class="st">&quot;notifications&quot;</span><span class="ot"> name=</span><span class="st">&quot;notifications&quot;</span><span class="ot"> class=</span><span class="st">&quot;switch&quot;</span> <span class="kw">/&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;notifications&quot;</span><span class="kw">&gt;</span>Allow notifications<span class="kw">&lt;/label&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;switch&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> checked id=</span><span class="st">&quot;notifications&quot;</span><span class="ot"> name=</span><span class="st">&quot;notifications&quot;</span><span class="ot"> class=</span><span class="st">&quot;switch&quot;</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;notifications&quot;</span><span class="kw">&gt;</span>Allow notifications<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Always include a meaningfully described label thats linked correctly to the input field by the for / id attribute</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li>Tab/Shift Tab navigates in and out of the switch<br /></li>
+<li>Tab/Shift Tab navigates in and out of the switch</li>
 <li>Space Bar key toggles the selection, checking or unchecking the box.</li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
 <ul>
-<li>On/Off<br /></li>
-<li>Hover<br /></li>
-<li>Focus<br /></li>
-<li>Disabled<br /></li>
-<li>Read-Only<br /></li>
+<li>On/Off</li>
+<li>Hover</li>
+<li>Focus</li>
+<li>Disabled</li>
+<li>Read-Only</li>
 <li>Dirty</li>
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
-<li>The new markup is much simpler...<br /></li>
-<li>Replaced inforSwitchLabelContainer with label<br /></li>
+<li>The new markup is much simpler…</li>
+<li>Replaced inforSwitchLabelContainer with label</li>
 <li>replace inforSwitchCheckbox with switch</li>
 </ul>

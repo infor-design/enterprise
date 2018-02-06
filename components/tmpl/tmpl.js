@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  *  Copyright 2011 Twitter, Inc.
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +16,9 @@
  *  @private
  */
 
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function() {
-/* end-amd-strip-block */
-
-  var Tmpl = window.Tmpl = {};
+  // NOTE: jshint fails below due to a "redefinition" by the migration file.
+  // TODO: Figure out why
+  let Tmpl = {}; // jshint ignore:line
 
   Tmpl.Template = function (codeObj, text, compiler, options) {
     codeObj = codeObj || {};
@@ -761,6 +750,5 @@
     return template;
   };
 
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+
+  export { Tmpl };

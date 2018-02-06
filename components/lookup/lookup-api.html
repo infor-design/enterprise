@@ -1,0 +1,382 @@
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          click
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+          Provide a special function to run when the dialog opens to
+customize the interaction entirely.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          field
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Field name to return from the dataset or can be a function
+which returns a string on logic
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          title
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Dialog title to show, or befault shows  field label + "Lookup"
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          buttons
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          Pass dialog buttons or Cancel / Apply
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          options
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          Options to pass to the datagrid
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          beforeShow
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+          Call back that executes async before the lookup is opened.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          modalContent
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Custom modal markup can be sent in here
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          editable
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Can the user type text in the field
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          autoApply
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          If set to false the dialog wont apply the value on
+clicking a value.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          validator
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+          A function that fires to let you validate form
+items on open and select
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          autoWidth
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true the field will grow/change in size based
+on the content selected.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>openDialog</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = click or keyup event
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Create and Open the Dialog</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>createModal</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Overidable function to create the modal dialog</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>createGrid</td>
+        <td>
+          
+                
+                  <span>grid () = jQuery wrapped element containing a pre-invoked datagrid instance
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Overridable Function in which we create the grid on the current UI dialog.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>selectGridRows</td>
+        <td>
+          
+                
+                  <span>val (object) = incoming value from the grid row
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Given a field value, select the row</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>selectRowByValue</td>
+        <td>
+          
+                
+                  <span>field (string) = the ID of the field whose value is to be returned.
+ </span>
+                
+                  <span>value (string) = the value to set.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Find the row and select it based on select value / function / field value</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>insertRows</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get the selected rows and return them to the UI</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Enable the input.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Disable the input.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>readonly</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Make the input readonly.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>isDisabled</td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          whether or not the Input is disabled
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isReadonly</td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          whether or not the Input is readonly
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Updates the lookup instance with new settings</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown events and objects.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

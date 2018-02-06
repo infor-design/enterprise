@@ -5,10 +5,23 @@ All of the charts are documented separately by type. See the respective pages fo
 
 ## Chart Types
 
-1. Default About Example [View Example]( ../components/about/example-index)
-2. Close Event Demo [View Example]( ../components/about/test-close-event)
+1. Area [View Example]( ../components/area)
+2. Bar [View Example]( ../components/bar)
+3. Bar Grouped [View Example]( ../components/bar-grouped)
+4. Bar Stacked [View Example]( ../components/bar-stacked)
+5. Bubble [View Example]( ../components/bubble)
+6. Column [View Example]( ../components/column)
+7. Column Grouped [View Example]( ../components/column-grouped)
+8. Completion Chart [View Example]( ../components/completion-chart)
+9. Donut [View Example]( ../components/donut)
+10. Line [View Example]( ../components/line)
+11. Positive Negative [View Example]( ../components/positive-negative)
+12. Sparkline [View Example]( ../components/sparkline)
+13. Step Chart [View Example]( ../components/step-chart)
+14. Targeted Achievement [View Example]( ../components/targeted-achievement)
+15. Timeline [View Example]( ../components/timeline)
 
-## Basic Chart Use Cases
+## Other Chart Use Cases
 
 1. Using Patterns on Chart Colors [View Example]( ../components/charts/example-chart-patterns.html)
 2. How to Hide / Show a Chart [View Example]( ../components/charts/example-hide-show.html)
@@ -25,12 +38,11 @@ All of the charts are initialized via the chart api with an option for each char
     dataset: pieData
   });
 
-
 ```
 
 ## Accessibility
 
-We still have some work to do to make charts accessible. TODO:
+We still have some work to do to make charts accessible. Some todo's
 
 - Should be keyboard friendly. Can focus the legend and hit enter to select.
 - When keying in to the legend elements it should read the data
@@ -38,9 +50,9 @@ We still have some work to do to make charts accessible. TODO:
 
 ## Keyboard Shortcuts
 
--   **Tab:** Tab throught the tabbble elements in the chart.
+-   **Tab:** Tab throughout the tabbable elements in the chart.
 -   **Enter/Space:** Toggle selection on the element
 
 ## Upgrading from 3.X
 
--   This api is compatable with version 3.6
+-   This api is roughly compatible with version 3.6

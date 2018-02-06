@@ -1,92 +1,61 @@
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+import { utils } from '../utils/utils';
+import { HideFocus } from '../utils/behaviors';
 
-  window.Soho = window.Soho || {};
-  window.Soho.components = window.Soho.components || {};
+// Component Name
+const COMPONENT_NAME = 'hyperlink';
 
-  var DEFAULT_HYPERLINK_OPTIONS = {};
+/**
+ * Component Default Settings
+ * @namespace
+ */
+const HYPERLINK_DEFAULTS = {};
 
-  /**
-   * Soho component wrapper for Hyperlinks.
-   * @class Hyperlink
-   *
-   * @param {HTMLElement} element
-   * @param {Object} options
-   * @returns {Hyperlink}
-   */
-  function Hyperlink(element, options) {
-    return this.init(element, options);
-  }
+/**
+ * Soho component wrapper for Hyperlinks.
+ * @class Hyperlink
+ * @param {HTMLElement} element the base Hyperlink element
+ * @param {object} [settings] incoming settings
+ * @returns {this} component instance
+ */
+function Hyperlink(element, settings) {
+  return this.init(element, settings);
+}
 
-  Hyperlink.prototype = {
-    init: function(element, options) {
-      if (!this.element && element instanceof HTMLElement) {
-        this.element = element;
-      }
-
-      if (typeof options === 'object') {
-        var previousOptions = this.options || DEFAULT_HYPERLINK_OPTIONS;
-        this.options = $.extend({}, previousOptions, options);
-      }
-
-      if (!this.focusBehavior) {
-        this.focusBehavior = new Soho.behaviors.hideFocus(this.element);
-      }
-
-      return this;
-    },
-
-    handleEvents: function() {
-      return this;
-    },
-
-    updated: function(options) {
-      $.extend({}, this.options, options);
-
-      return this
-        .teardown()
-        .init();
-    },
-
-    teardown: function() {
-      return this;
+Hyperlink.prototype = {
+  init(element, settings) {
+    if (!this.element && element instanceof HTMLElement) {
+      this.element = element;
     }
-  };
 
-  // Add to the Soho object
-  window.Soho.components.hyperlink = Hyperlink;
+    if (typeof settings === 'object') {
+      const previousSettings = this.settings || HYPERLINK_DEFAULTS;
+      this.settings = utils.mergeSettings(this.element, settings, previousSettings);
+    }
 
-  // Legacy jQuery wrappers
-  $.fn.hyperlink = function(options) {
-    'use strict';
+    if (!this.focusBehavior) {
+      this.focusBehavior = new HideFocus(this.element);
+    }
 
-    // Initialize the plugin (Once)
-    return this.each(function() {
-      var instance = $.data(this, 'hyperlink');
-      if (instance) {
-        instance.updated(options);
-      } else {
-        instance = $.data(this, 'hyperlink', new Hyperlink(this, options));
-        instance.destroy = function destroy() {
-          this.teardown();
-          $.removeData(this, 'hyperlink');
-        };
-      }
-    });
-  };
+    return this;
+  },
 
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+  handleEvents() {
+    return this;
+  },
+
+  updated(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    }
+
+    return this
+      .teardown()
+      .init();
+  },
+
+  teardown() {
+    return this;
+  }
+};
+
+export { Hyperlink, COMPONENT_NAME };

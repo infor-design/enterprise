@@ -1,0 +1,381 @@
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          content
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Takes title attribute or feed content. Can be a string or jQuery markup
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          offset
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          How much room to leave
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          placement
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          trigger
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          supports click and immediate and hover (and maybe in future focus)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          title
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Title for Infor Tips
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          beforeShow
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Call back for ajax tooltip
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          popover
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          force it to be a popover (no content)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          closebutton
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Show X close button next to title in popover
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isError
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Add error classes
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isErrorColor
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Add error color only not description
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tooltipElement
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          ID selector for an alternate element to use to contain the tooltip classes
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          parentElement
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          keepOpen
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Forces the tooltip to stay open in situations where it would normally close.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          extraClass
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Extra css class
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          maxWidth
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Toolip max width
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>addClassToLinks</td>
+        <td>
+          
+                
+                  <span>content () = HTML or String-based content.
+ </span>
+                
+                  <span>thisClass () = optional, additional CSS class that gets appeneded to any anchor tags inside of the content.
+ </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+string
+        </td>
+      </tr>
+      <tr>
+        <td>setContent</td>
+        <td>
+          
+                
+                  <span>content () =  </span>
+                
+                  <span>dontRender (boolean) = causes the tooltip to prevent a visual refresh after changing its content, meaning it will keep the previous content visible until this tooltip is closed or manually re-drawn.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Sets the content used inside the Tooltip element.</p>
+
+        </td>
+        <td>
+          
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>render</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Renders internal content either as a Tooltip or Popover.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>show</td>
+        <td>
+          
+                
+                  <span>newSettings (object) = an object containing changed settings that will be applied to the Tooltip/Popover before it's displayed.
+ </span>
+                
+                  <span>ajaxReturn (boolean) = causes an AJAX-powered Tooltip/Popover not to refresh.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Causes the tooltip to become shown</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>setTargetContainer</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Places the tooltip element itself in the correct DOM element.
+If the current element is inside a scrollable container, the tooltip element goes as high as possible in the DOM structure.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>position</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Resets the current position of the tooltip.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>hide</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Hides the Tooltip/Popover</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () =  </span>
+                
+          
+        </td>
+        <td>
+          <p>Causes the tooltip to store updated settings and re-render itself.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Tears down this component instance, removing all internal flags and unbinding events.</p>
+
+        </td>
+        <td>
+          
+this
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Destroys this component instance</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

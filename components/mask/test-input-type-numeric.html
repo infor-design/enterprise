@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Mask Test: Input Type "Numeric"</h2>
+    <p>Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7352" target="_blank">SOHO-7352</a></p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <div class="field">
+      <label for="test-input">Numeric Input</label>
+      <input id="test-input" type="number" class="new-mask" data-options='{ "process": "number", "patternOptions": { "allowThousandsSeparator": true, "allowDecimal": true, "allowNegative": true, "integerLimit": 7, "decimalLimit": 2 } }' placeholder="-#,###,###.00"/>
+    </div>
+  </div>
+</div>

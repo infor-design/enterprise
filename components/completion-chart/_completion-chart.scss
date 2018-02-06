@@ -1,0 +1,371 @@
+// Completion Chart
+//==================================================//
+
+.chart-completion-target,
+
+.chart-completion {
+  background-color: $chart-progressbar-bg-color;
+  height: 10px;
+  margin-bottom: 70px;
+  width: 100%;
+
+  &.chart-completion {
+    margin-bottom: 25px;
+
+    .completed {
+      background-color: $turquoise06;
+
+      &.error-color,
+      &.error {
+        background-color: $error-color;
+      }
+
+      &::after {
+        width: 0;
+      }
+    }
+  }
+
+  span:not(.audible) {
+    @include font-size(12);
+    position: absolute;
+    right: 2px;
+    text-align: right;
+    top: 34px;
+
+    &.completed-label,
+    &.completed-label span {
+      position: static;
+      text-align: left;
+      width: 100%;
+    }
+  }
+
+  .chart-percent-text {
+    @include font-size(14);
+    cursor: default;
+    height: 25px;
+    margin-top: -25px;
+    position: relative;
+    text-align: center;
+
+    &.error-color,
+    &.error {
+      color: $error-color;
+    }
+
+    &.alert {
+      color: $alert-orange;
+    }
+
+    &.alert-yellow {
+      color: $alert-yellow;
+    }
+
+    &.alert-neutral {
+      color: $alert-neutral;
+    }
+
+    &.dark {
+      color: $chart-progressbar-dark-fill;
+    }
+
+    &.good {
+      color: $alert-green;
+    }
+
+    &.primary {
+      color: $chart-progressbar-primary-fill;
+    }
+
+    &.inverse {
+      color: $inverse-color;
+    }
+  }
+
+  .chart-targeted-text {
+    left: 50%;
+    margin-top: -38px;
+    position: relative;
+  }
+
+  .completed {
+    background-color: $chart-progressbar-completed-fill;
+    border-right: 1px solid $chart-progressbar-bg-color;
+    height: 10px;
+    margin-top: -10px;
+    position: relative;
+    transition: width .2s ease 0s;
+    width: 50%;
+
+    span {
+      color: $chart-progressbar-completed-fill;
+      font-weight: bold;
+
+      &.value,
+      &.text {
+        position: static;
+      }
+    }
+
+    &.error-color,
+    &.error {
+      background-color: $error-color;
+
+      span {
+        color: $error-color;
+      }
+    }
+
+    &.alert {
+      background-color: $alert-orange;
+
+      span {
+        color: $alert-orange;
+      }
+    }
+
+    &.alert-yellow {
+      background-color: $alert-yellow;
+
+      span {
+        color: $alert-yellow;
+      }
+    }
+
+    &.alert-neutral {
+      background-color: $alert-neutral;
+
+      span {
+        color: $alert-neutral;
+      }
+    }
+
+    &.good {
+      background-color: $alert-green;
+
+      span {
+        color: $alert-green;
+      }
+    }
+
+    &.primary {
+      background-color: $chart-progressbar-primary-fill;
+
+      span {
+        color: $chart-progressbar-primary-fill;
+      }
+    }
+
+    &.dark {
+      background-color: $chart-progressbar-dark-fill;
+
+      span {
+        color: $chart-progressbar-dark-fill;
+      }
+    }
+
+    &::after {
+      background-color: inherit;
+      content: '';
+      height: 30px;
+      left: 100%;
+      position: absolute;
+      width: 2px;
+    }
+  }
+
+  .target {
+    background-color: $chart-progressbar-target-fill;
+    height: 10px;
+    position: relative;
+    transition: width .5s ease 0s;
+    width: 60%;
+
+    span {
+      @include font-size(12);
+      color: $font-color;
+      position: absolute;
+      text-align: right;
+      top: 34px;
+
+      &.value,
+      &.text {
+        position: static;
+      }
+    }
+
+    &::after {
+      background-color: inherit;
+      content: '';
+      height: 30px;
+      left: 100%;
+      position: absolute;
+      width: 2px;
+    }
+
+    &.overlap {
+      span {
+        top: 70px;
+        transition: top .5s ease 0s;
+      }
+
+      &::after {
+        height: 65px;
+        transition: height .5s ease 0s;
+      }
+    }
+  }
+
+  .target-line {
+    background-color: $amethyst07;
+    border-radius: 1px;
+    color: transparent;
+    height: 20px;
+    left: 45px;
+    margin-top: -15px;
+    position: relative;
+    width: 5px;
+    z-index: 1;
+  }
+
+  &.overlap {
+    margin-bottom: 100px;
+    transition: margin .5s ease 0s;
+  }
+
+  .total,
+  .remaining,
+  .completed,
+  .completed-label,
+  .target-line {
+
+    &.bar {
+      &.error-color,
+      &.error {
+        background-color: $error-color;
+      }
+
+      &.alert {
+        background-color: $alert-orange;
+      }
+
+      &.alert-yellow {
+        background-color: $alert-yellow;
+      }
+
+      &.alert-neutral {
+        background-color: $alert-neutral;
+      }
+
+      &.dark {
+        background-color: $chart-progressbar-dark-fill;
+      }
+
+      &.good {
+        background-color: $alert-green;
+      }
+
+      &.primary {
+        background-color: $chart-progressbar-primary-fill;
+      }
+    }
+
+    .text,
+    .value {
+      &.error-color,
+      &.error {
+        color: $error-color;
+      }
+
+      &.alert {
+        color: $alert-orange;
+      }
+
+      &.alert-yellow {
+        color: $alert-yellow;
+      }
+
+      &.alert-neutral {
+        color: $alert-neutral;
+      }
+
+      &.dark {
+        color: $chart-progressbar-dark-fill;
+      }
+
+      &.good {
+        color: $alert-green;
+      }
+
+      &.primary {
+        color: $chart-progressbar-primary-fill;
+      }
+    }
+  }
+
+}
+
+// TODO - Fix this.
+.completion-chart {
+  .remaining,
+  .info {
+    .value {
+      font-weight: bold;
+    }
+
+    .error-color,
+    .error {
+      color: $error-color;
+    }
+
+    .alert {
+      color: $alert-orange;
+    }
+
+    .alert-yellow {
+      color: $alert-yellow;
+    }
+
+    .alert-neutral {
+      color: $alert-neutral;
+    }
+
+    .dark {
+      color: $chart-progressbar-dark-fill;
+    }
+
+    .good {
+      color: $alert-green;
+    }
+
+    .primary {
+      color: $chart-progressbar-primary-fill;
+    }
+  }
+
+  .name {
+    position: relative;
+  }
+
+  .icon-error {
+    right: -20px;
+    top: -8px;
+  }
+}
+
+.label + .label .chart-completion {
+  margin-top: 20px;
+}
+
+.is-firefox {
+  .chart-percent-text {
+    margin-top: -26px;
+  }
+
+  &.is-mac {
+    .chart-percent-text {
+      margin-top: -23px;
+    }
+  }
+}

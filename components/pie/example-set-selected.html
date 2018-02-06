@@ -1,5 +1,3 @@
-
-
 <div class="row top-padding">
   <div class="two-thirds column">
 
@@ -33,7 +31,7 @@ $('body').on('initialized', function () {
 
   var pieData = [{
     data: [{
-        name: 'Company Deductions Really Long Description',
+        name: 'Company Deductions',
         shortName: 'CD',
         value: 8,
         tooltip: 'Company Deductions {{percent}}',
@@ -69,7 +67,7 @@ $('body').on('initialized', function () {
   var elem = $('#pie-chart-example');
 
   elem.chart({
-    type: 'donut',
+    type: 'pie',
     dataset: pieData,
     labels: {
       hideLabels: false

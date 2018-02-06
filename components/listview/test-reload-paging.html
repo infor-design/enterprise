@@ -14,7 +14,7 @@
 				</div>
 			</div>
 		</div>
-    <button class="btn" onClick="addItems();">Change Data</button>
+    <button class="btn-primary" onClick="addItems();">Change Data</button>
 
   </div>
 </div>
@@ -32,27 +32,25 @@
 	</script>
 
 	<script>
-	 var list,
-    demoTasks = [{name: 'opt-1'}, {name: 'opt-2'}, {name: 'opt-3'}];
+	var list,
+		count = 4;
+		itemsPerClick = 8,
+  	demoTasks = [{name: 'opt-1'}, {name: 'opt-2'}, {name: 'opt-3'}];
 
 		$('#task-listview').listview({
       dataset: demoTasks,
   		template: $('#task-tmpl').html(),
   		paging: true,
-  		pagesize: 2
+  		pagesize: 6
 		});
 
 	  function addItems() {
-  		demoTasks.push({ name: 'opt-4'});
-  		demoTasks.push({ name: 'opt-5'});
-  		demoTasks.push({ name: 'opt-6'});
-  		demoTasks.push({ name: 'opt-7'});
-  		demoTasks.push({ name: 'opt-8'});
-  		demoTasks.push({ name: 'opt-9'});
-  		demoTasks.push({ name: 'opt-10'});
-  		demoTasks.push({ name: 'opt-11'});
+			for (var i = itemsPerClick; i > 0; --i) {
+				demoTasks.push({ name: ('opt-' + count) });
+				count++;
+			}
 
-      $('#task-listview').trigger('updated');
+      $('#task-listview').trigger('updated', [{ dataset: demoTasks }]);
 		}
 
 	</script>

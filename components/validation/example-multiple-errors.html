@@ -45,7 +45,7 @@
 
     <div class="field">
       <label class="required label" for="text">Text Field</label>
-      <input type="text" id="text" name=text" data-validate="required" >
+      <input type="text" id="text" name="text" data-validate="required" >
     </div>
 
     <div class="field">
@@ -60,12 +60,12 @@
   $('#show').button().on('click', function () {
     $('#username-display')
     .removeError()
-    .addError({ message: 'I have an Error.', showTooltip: true })
-    .addError({ message: 'I have another Error.', showTooltip: true });
+    .addError({ message: 'I have an Error.', inline: true })
+    .addError({ message: 'I have another Error.', inline: true });
 
     $('#states')
     .removeError()
-    .addError({ message: 'Dropdown is in Error.', showTooltip: true })
+    .addError({ message: 'Dropdown is in Error.', inline: true })
   });
 
   $('#hide').button().on('click', function () {

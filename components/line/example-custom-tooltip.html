@@ -25,7 +25,7 @@ $('body').on('initialized', function () {
       }, {
           name: 'Feb',
           value: 11,
-          tooltip: 'Custom Tooltip'
+          tooltip: 'Custom Tooltip' // Custom Tooltip for just this point
       }, {
           name: 'Mar',
           value: 14
@@ -40,7 +40,7 @@ $('body').on('initialized', function () {
           value: 8
       }],
       name: 'Component A',
-      // tooltip: 'Custom Tooltip for Component A'
+      tooltip: 'Custom Tooltip for Component A' // Tooltip for just this line
     }, {
       data: [{
           name: 'Jan',
@@ -86,6 +86,7 @@ $('body').on('initialized', function () {
     }];
 
   $('#line-example').chart({type: 'line', dataset: dataset});
+  // If you want a custom tooltip the same every dot.
   // $('#line-example').chart({type: 'line', dataset: dataset, tooltip: 'Custom Tooltip for whole chart'});
 
 });

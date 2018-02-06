@@ -1,247 +1,228 @@
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+/* jshint esversion:6 */
+import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
-  $.fn.trackdirty = function(options) {
-    'use strict';
+// Component Name
+const COMPONENT_NAME = 'trackdirty';
 
-    // Settings and Options
-    var pluginName = 'trackdirty',
-        defaults = {
-        },
-        settings = $.extend({}, defaults, options);
+/**
+ * Default Trackdirty Options
+ */
+const TRACKDIRTY_DEFAULTS = {
+};
 
-    /**
-     * Track changes on the inputs passed in the jQuery selector and show a dirty indicator
-     * @constructor
-     * @param {Object} element
-     */
-    function Trackdirty(element) {
-      this.settings = $.extend({}, settings);
-      this.element = $(element);
-      Soho.logTimeStart(pluginName);
-      this.init();
-      Soho.logTimeEnd(pluginName);
+/**
+* Track changes on the inputs passed in the jQuery selector and show a dirty indicator
+* @class Tag
+* @param {String} element The component element.
+* @param {String} settings The component settings.
+*/
+function Trackdirty(element, settings) {
+  this.settings = utils.mergeSettings(element, settings, TRACKDIRTY_DEFAULTS);
+
+  this.element = $(element);
+  debug.logTimeStart(COMPONENT_NAME);
+  this.init();
+  debug.logTimeEnd(COMPONENT_NAME);
+}
+
+// Trackdirty Methods
+Trackdirty.prototype = {
+
+  init() {
+    this.handleEvents();
+  },
+
+  /**
+   * Get the value or checked if checkbox or radio
+   * @private
+   * @param {Object} element .
+   * @returns {String} element value
+   */
+  valMethod(element) {
+    switch (element.attr('type')) {
+      case 'checkbox':
+      case 'radio':
+        return element.prop('checked');
+      default:
+        return element.val();
+    }
+  },
+
+  /**
+   * Get absolute position for an element
+   * @private
+   * @param {Object} element .
+   * @returns {Object} position for given element
+   */
+  getAbsolutePosition(element) {
+    const pos = element.position();
+    // eslint-disable-next-line
+    element.parents().each(function () {
+      const el = this;
+      if (window.getComputedStyle(el, null).position === 'relative') {
+        return false;
+      }
+      pos.left += el.scrollLeft;
+      pos.top += el.scrollTop;
+    });
+    return { left: pos.left, top: pos.top };
+  },
+
+  /**
+   * Removes event bindings from the instance.
+   * @private
+   * @returns {Object} The api
+   */
+  unbind() {
+    this.element
+      .removeClass('dirty')
+      .off('resetdirty.dirty change.dirty doresetdirty.dirty');
+
+    if (this.settings && typeof this.settings.d === 'object') {
+      const d = this.settings.d;
+      $('.icon-dirty, .msg-dirty', d.field).add(d.icon).add(d.msg).remove();
     }
 
-    // Trackdirty Methods
-    Trackdirty.prototype = {
+    $.removeData(this.element[0], 'original');
+    return this;
+  },
 
-      init: function () {
-        this.handleEvents();
-      },
+  /**
+   * Resync the UI and Settings.
+   * @param {Object} settings The settings to apply.
+   * @returns {Object} The api
+   */
+  updated(settings) {
+    if (typeof settings !== 'undefined') {
+      this.settings = utils.mergeSettings(this.element, settings, TRACKDIRTY_DEFAULTS);
+    }
+    return this
+      .unbind()
+      .init();
+  },
 
-      /**
-       * Get the value or checked if checkbox or radio
-       * @private
-       * @param {Object} element .
-       * @returns {String} element value
-       */
-      valMethod: function (element) {
-        switch (element.attr('type')) {
-          case 'checkbox':
-          case 'radio':
-            return element.prop('checked');
-          default:
-            return element.val();
+  /**
+   * Destroy this component instance and remove the link from its base element.
+   * @returns {void}
+   */
+  destroy() {
+    this.unbind();
+    $.removeData(this.element[0], COMPONENT_NAME);
+  },
+
+  /**
+   * Attach Events used by the Control
+   * @private
+   * @returns {void}
+   */
+  handleEvents() {
+    const input = this.element;
+
+    input.data('original', this.valMethod(input))
+      .on('resetdirty.dirty', () => {
+        /**
+        * Fires when reset dirty.
+        *
+        * @event resetdirty
+        * @type {Object}
+        * @property {Object} event - The jquery event object
+        */
+        input.data('original', this.valMethod(input))
+          .triggerHandler('doresetdirty.dirty');
+      })
+      .on('change.dirty doresetdirty.dirty', (e) => {
+        let el = input;
+        const field = input.closest('.field, .radio-group');
+        let label = $('label:visible', field);
+        const d = { class: '', style: '' };
+
+        if (field.is('.field-fileupload')) {
+          el = label.prev('input');
         }
-      },
 
-      /**
-       * Get absolute position for an element
-       * @private
-       * @param {Object} element .
-       * @returns {Object} position for given element
-       */
-      getAbsolutePosition: function (element) {
-        var pos = element.position();
-        element.parents().each(function() {
-          var el = this;
-          if (window.getComputedStyle(el, null).position === 'relative') {
-            return false;
+        if (field.is('.editor-container')) {
+          el = field.closest('textarea');
+        }
+
+        // Used element without .field wrapper
+        if (!label[0]) {
+          label = input.next('label');
+        }
+        if (input.attr('data-trackdirty') !== 'true') {
+          return;
+        }
+
+        // Add class to element
+        input.addClass('dirty');
+
+        // Set css class
+        if (input.is('[type="checkbox"], [type="radio"]')) {
+          d.class += ` dirty-${input.attr('type')}`;
+          d.class += input.is(':checked') ? ' is-checked' : '';
+        }
+        if (input.is('select')) {
+          d.class += ' is-select';
+          el = input.next('.dropdown-wrapper').find('.dropdown');
+        }
+
+        // Add class and icon
+        d.icon = el.prev();
+        if (!d.icon.is('.icon-dirty')) {
+          if (input.is('[type="checkbox"]')) {
+            d.rect = this.getAbsolutePosition(label);
+            d.style = ` style="left:${d.rect.left}px; top:${d.rect.top}px;"`;
           }
-          pos.left += el.scrollLeft;
-          pos.top += el.scrollTop;
-        });
-        return { left:pos.left, top:pos.top };
-      },
+          d.icon = `<span class="icon-dirty${d.class}"${d.style}></span>`;
+          d.msg = Locale.translate('MsgDirty') || '';
+          d.msg = `<span class="audible msg-dirty">${d.msg}</span>`;
 
-      /**
-       * Removes event bindings from the instance.
-       * @private
-       * @returns {Object} The api
-       */
-      unbind: function () {
-        this.element
-          .removeClass('dirty')
-          .off('resetdirty.dirty change.dirty doresetdirty.dirty');
+          // Add icon and msg
+          const firstInput = $($(el[0].parentElement).find('input')[0]);
+          el = input.is('[type="radio"]') ? firstInput : el;
 
-        if (this.settings && typeof this.settings.d === 'object') {
-          var d = this.settings.d;
-          $('.icon-dirty, .msg-dirty', d.field).add(d.icon).add(d.msg).remove();
+          if ($(el[0].parentElement).find('.icon-dirty').length === 0) {
+            el.before(d.icon);
+            label.append(d.msg);
+          }
+
+          // Cache icon and msg
+          d.icon = el.prev();
+          d.msg = label.find('.msg-dirty');
         }
 
-        $.removeData(this.element[0], 'original');
-        return this;
-      },
+        // Handle resetting value back
+        let original = input.data('original');
+        let current = this.valMethod(input);
 
-      /**
-       * Resync the UI and Settings.
-       * @param {Object} settings The settings to apply.
-       * @returns {Object} The api
-       */
-      updated: function () {
-        return this
-          .unbind()
-          .init();
-      },
+        d.field = field;
+        this.settings.d = d;
 
-      /**
-       * Destroy this component instance and remove the link from its base element.
-       * @returns {void}
-       */
-      destroy: function () {
-        this.unbind();
-        $.removeData(this.element[0], pluginName);
-      },
+        if (field.is('.editor-container')) {
+          // editors values are further down it's tree in a textarea,
+          // so get the elements with the value
+          const textArea = field.find('textarea');
+          original = textArea[0].defaultValue;
+          current = this.valMethod(textArea);
+        }
+        if (current === original) {
+          input.removeClass('dirty');
+          $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
+          input.trigger(e.type === 'doresetdirty' ? 'afterresetdirty' : 'pristine');
+          return;
+        }
 
-      /**
-       * Attach Events used by the Control
-       * @private
-       * @returns {void}
-       */
-      handleEvents: function () {
-        var self = this;
-        var input = this.element;
+        /**
+        * Fires when trackdirty added.
+        *
+        * @event dirty
+        * @type {Object}
+        * @property {Object} event - The jquery event object
+        */
+        input.trigger('dirty');
+      });
+  }
+};
 
-        input.data('original', self.valMethod(input))
-          .on('resetdirty.dirty', function () {
-            /**
-            * Fires when reset dirty.
-            *
-            * @event resetdirty
-            * @type {Object}
-            * @property {Object} event - The jquery event object
-            */
-            input.data('original', self.valMethod(input))
-              .triggerHandler('doresetdirty.dirty');
-          })
-          .on('change.dirty doresetdirty.dirty', function (e) {
-            var el = input;
-            var field = input.closest('.field, .radio-group');
-            var label = $('label:visible', field);
-            var d = { class: '', style: '' };
-
-            if (field.is('.field-fileupload')) {
-              el = label.prev('input');
-            }
-
-            if (field.is('.editor-container')) {
-              el = field.closest('textarea');
-            }
-
-            // Used element without .field wrapper
-            if (!label[0]) {
-              label = input.next('label');
-            }
-            if (input.attr('data-trackdirty') !== 'true') {
-              return;
-            }
-
-            // Add class to element
-            input.addClass('dirty');
-
-            // Set css class
-            if (input.is('[type="checkbox"], [type="radio"]')) {
-              d.class += ' dirty-'+ input.attr('type');
-              d.class += input.is(':checked') ? ' is-checked' : '';
-            }
-            if (input.is('select')) {
-              d.class += ' is-select';
-              el = input.next('.dropdown-wrapper').find('.dropdown');
-            }
-
-            // Add class and icon
-            d.icon = el.prev();
-            if (!d.icon.is('.icon-dirty')) {
-              if (input.is('[type="checkbox"]')) {
-                d.rect = self.getAbsolutePosition(label);
-                d.style = ' style="left:'+ d.rect.left +'px; top:'+ d.rect.top +'px;"';
-              }
-              d.icon = '<span class="icon-dirty'+ d.class +'"'+ d.style +'></span>';
-              d.msg = Locale.translate('MsgDirty') || '';
-              d.msg = '<span class="audible msg-dirty">'+ d.msg +'</span>';
-
-              // Add icon and msg
-              var firstInput = $($(el[0].parentElement).find('input')[0]);
-              el = input.is('[type="radio"]') ? firstInput : el;
-
-              if ($(el[0].parentElement).find('.icon-dirty').length === 0) {
-                el.before(d.icon);
-                label.append(d.msg);
-              }
-
-              // Cache icon and msg
-              d.icon = el.prev();
-              d.msg = label.find('.msg-dirty');
-            }
-
-            // Handle resetting value back
-            var original = input.data('original');
-            var current = self.valMethod(input);
-
-            d.field = field;
-            self.settings.d = d;
-
-            if (field.is('.editor-container')) {
-              // editors values are further down it's tree in a textarea,
-              // so get the elements with the value
-              var textArea = field.find('textarea');
-              original = textArea[0].defaultValue;
-              current = self.valMethod(textArea);
-            }
-            if (current === original) {
-              input.removeClass('dirty');
-              $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
-              input.trigger(e.type === 'doresetdirty' ? 'afterresetdirty' : 'pristine');
-              return;
-            }
-
-            /**
-            * Fires when trackdirty added.
-            *
-            * @event dirty
-            * @type {Object}
-            * @property {Object} event - The jquery event object
-            */
-            input.trigger('dirty');
-          });
-      }
-    };
-
-    // Initialize the plugin (Once)
-    return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
-        instance.updated();
-      } else {
-        instance = $.data(this, pluginName, new Trackdirty(this, settings));
-      }
-    });
-  };
-
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+export { Trackdirty, COMPONENT_NAME };

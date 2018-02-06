@@ -1,0 +1,415 @@
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          source
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Defines the data to use, must be specified.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          sourceArguments
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          If a source method is defined, this flexible
+object can be passed into the source method, and augmented with parameters specific to the
+implementation.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          template
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If defined, use this to draw the contents of each
+search result instead of the default draw routine.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          filterMode
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          The matching algorithm, startsWith and contains
+are supported - false will not filter client side
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          delay
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          The delay between key strokes on the keypad before it
+thinks you stopped typing
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          width
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Width of the open auto complete menu
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          offset
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          For the open menu, the left or top offset
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          autoSelectFirstItem
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Whether or not to select he first item in the
+list to be selected
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          resultsCallback
+        </td>
+        <td>
+          function
+        </td>
+        <td>
+          If defined, does not produce the results of the
+Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback
+function.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>resetFilters</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Resets a filtered autocomplete back to its original state.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = The new settings object to use.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Update the component with new settings.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Enable the input from readonly or disabled state.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Disable the input from editing</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown and remove any added markup and events.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  
+  
+  
+  
+  
+  
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>populated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>filterResult (object)
+        
+        = The results of the filtering
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the menu is populated with its contents.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>safe-blur
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The input event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the input (and menu) both loose focus
+</td>
+</tr>
+
+      
+        <tr>
+  <td>requestend
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The input event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>An (array)
+        
+        = array containing the searchTerm and call back function
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the ajax request (source option) is completed
+</td>
+</tr>
+
+      
+        <tr>
+  <td>requeststart
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The input event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>event (array)
+        
+        = An array with the buffer in it
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the ajax request (source option) is initiated
+</td>
+</tr>
+
+      
+        <tr>
+  <td>listopen
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the menu is opened.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>listopen
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Comes from Searchfields wrapping an autocomplete - resets
+a filtered autocomplete back to normal.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

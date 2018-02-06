@@ -17,8 +17,8 @@ module.exports = {
             'dist/css/light-theme.css',
             'dist/css/light-theme.min.css',
             'dist/css/css-only.css',
-            'dist/css/css-only.min.css',
-            'dist/js/all/*.js'
+            'dist/css/css-only.min.css'/*,
+            'dist/js/all/*.js'*/
           ]
         }
       }

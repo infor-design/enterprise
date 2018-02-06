@@ -463,6 +463,10 @@ $datagrid-short-row-height: 23px;
   table {
     empty-cells: show;
   }
+
+  .empty-message {
+    display: none;
+  }
 }
 
 // Grid Styling
@@ -781,8 +785,8 @@ $datagrid-short-row-height: 23px;
         }
 
         .row-btn {
-          height: 26px;
-          line-height: 32px;
+          height: 24px;
+          line-height: 24px;
           min-width: 80px;
           top: -10px;
           vertical-align: middle;
@@ -1091,7 +1095,7 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &:not(.error):not(.is-selected):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
+    &:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -1541,10 +1545,10 @@ $datagrid-short-row-height: 23px;
       }
 
       .checkbox-label::before {
-        top: 50%;
         left: 50%;
         margin-left: -8px;
         margin-top: 4px;
+        top: 50%;
       }
 
       .checkbox-label::after {
@@ -1909,6 +1913,10 @@ $datagrid-short-row-height: 23px;
 
         &.datepicker {
           padding: 3px 24px 2px 5px;
+        }
+
+        &.error {
+          color: $datagrid-filter-color !important;
         }
 
         &:focus {
@@ -2333,8 +2341,8 @@ td .btn-actions {
 
   }
 
-  &:not(.is-readonly):not(.error):hover,
-  &:not(.is-readonly):not(.error):focus {
+  &.has-editor:not(.is-readonly):not(.error):hover,
+  &.has-editor:not(.is-readonly):not(.error):focus {
     .icon {
       visibility: visible;
     }
@@ -2596,8 +2604,9 @@ td .btn-actions {
 
   input {
     height: 49px;
-    text-indent: 10px;
     // scss-lint:disable ImportantRule
+    padding-top: 12px !important;
+    text-indent: 10px;
     width: 100% !important;
     // scss-lint:enable ImportantRule
   }
@@ -2887,10 +2896,10 @@ html[dir='rtl'] {
     .is-draggable-target {
       display: none;
       font-size: 2.6em;
-      height: $datagrid-header-height + 1;
+      height: $datagrid-header-height;
       left: 0;
       margin: 0;
-      padding: 1px 0 0 6px;
+      padding: 1px 0 0 5px;
       position: absolute;
       top: 0;
 

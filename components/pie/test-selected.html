@@ -22,7 +22,7 @@ $('body').on('initialized', function () {
 
   var pieData = [{
     data: [{
-        name: 'Company Deductions Really Long Description',
+        name: 'Company Deductions',
         shortName: 'CD',
         value: 8,
         tooltip: 'Company Deductions {{percent}}',
@@ -58,11 +58,8 @@ $('body').on('initialized', function () {
     }];
 
   $('#pie-chart-example').chart({
-    type: 'donut',
-    dataset: pieData,
-    labels: {
-      hideLabels: false
-    }
+    type: 'pie',
+    dataset: pieData
   }).on('selected', function (e, args) {
     if (args[0] && args[0].data) {
       console.log('Save this id: '+ args[0].data.id);

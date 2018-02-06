@@ -44,8 +44,8 @@ $('body').on('initialized', function () {
   var url = '{{basepath}}api/year2014';
 
   // D3 parse/format date
-  var parseDate = d3.time.format('%Y-%m-%d').parse,
-    formatDate = d3.time.format('%b');
+  var parseDate = d3.timeParse('%Y-%m-%d'),
+    formatDate = d3.timeFormat('%b');
 
   //TODO https://bl.ocks.org/mbostock/1849162
 
@@ -54,7 +54,7 @@ $('body').on('initialized', function () {
       dates = data.map(function(d, i) {
         var dt = parseDate(d.name);
         // Add custom tooltip
-        d.tooltip = 'Value: '+ d.value +'<br>'+ d3.time.format('%a %B %d %Y')(dt);
+        d.tooltip = 'Value: '+ d.value +'<br>'+ d3.timeFormat('%a %B %d %Y')(dt);
         return  dt;
       });
 
@@ -76,9 +76,9 @@ $('body').on('initialized', function () {
       type: 'line',
       dataset: res,
       xAxis: {
-        scale: d3.time.scale(),
+        scale: d3.scaleTime(),
         domain: [minDate, maxDate],
-        ticks: d3.time.months,
+        ticks: d3.timeMonth,
         // rotate: '-45',
         formatter: function (d, i) {
           return formatDate(d);

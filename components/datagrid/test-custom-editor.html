@@ -23,22 +23,22 @@
         this.init = function () {
           this.editor.init();
           this.input = this.editor.input;
-        }
+        };
 
         this.val = function (value) {
           if (value) {
-            this.input.val(value)
+            this.input.val(value);
           }
           return this.input.val();
-        }
+        };
 
         this.focus = function () {
           this.editor.focus();
-        }
+        };
 
         this.destroy = function () {
           this.editor.destroy();
-        }
+        };
 
         this.init();
       };
@@ -53,8 +53,8 @@
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly, editor: Editors.Input });
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, editor: Editors.Input });
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
       columns.push({ id: 'custom', name: 'Custom', field: 'quantity', editor: Editors.MyCustom});
 
       //Init and get the api for the grid

@@ -1,30 +1,30 @@
 <h1 id="menubutton-component-learn-more">MenuButton Component <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
-<li>Simple Menu Button <a href="../components/menubutton/example-index">View Example</a><br /></li>
-<li>Menu Button Events <a href="../components/menubutton/example-events">View Example</a><br /></li>
-<li>Submenus <a href="../components/menubutton/example-submenu.htm">View Example</a><br /></li>
-<li>Submenu With Icons <a href="../components/menubutton/example-submenu-icons.htm">View Example</a><br /></li>
-<li>RTL <a href="../components/menubutton/example-submenu-icons-rtl.html?locale=ar-SA">View Example</a><br /></li>
+<ol type="1">
+<li>Simple Menu Button <a href="../components/menubutton/example-index">View Example</a></li>
+<li>Menu Button Events <a href="../components/menubutton/example-events">View Example</a></li>
+<li>Submenus <a href="../components/menubutton/example-submenu.htm">View Example</a></li>
+<li>Submenu With Icons <a href="../components/menubutton/example-submenu-icons.htm">View Example</a></li>
+<li>RTL <a href="../components/menubutton/example-submenu-icons-rtl.html?locale=ar-SA">View Example</a></li>
 <li>Replace Text Content with Selection <a href="../components/menubutton/example-replace-text">View Example</a></li>
 </ol>
 <h2 id="code-example">Code Example</h2>
 <p>The menu button component is comprised of the <a href="../components/popupmenu">popupmenu</a> and <a href="../components/popupmenu">button</a> components.</p>
-<p>Once the proper markup is in place calling <code>$(elem).button()</code> will correctly initialize a menu button.<br />If the arrow is missing in the markup it will be added.</p>
+<p>Once the proper markup is in place calling <code>$(elem).button()</code> will correctly initialize a menu button. If the arrow is missing in the markup it will be added.</p>
 <p>The popupmenu markup follows as per the <a href="../components/popupmenu">popupmenu</a> , menu details.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-menu&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;span&gt;</span>Normal Menu<span class="kw">&lt;/span&gt;</span>
-  <span class="kw">&lt;svg</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon icon-dropdown&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-dropdown&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
-  <span class="kw">&lt;/svg&gt;</span>
-<span class="kw">&lt;/button&gt;</span>
-<span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
-  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
-  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #3<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
-<span class="kw">&lt;/ul&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-menu&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;span&gt;</span>Normal Menu<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;svg</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon icon-dropdown&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-dropdown&quot;</span><span class="kw">&gt;&lt;/use&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="kw">&lt;/svg&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">&lt;/button&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #3<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">&lt;/ul&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <p>See <a href="../components/popupmenu">popupmenu</a> details.</p>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>

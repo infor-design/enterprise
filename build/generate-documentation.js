@@ -1,70 +1,81 @@
 #!/usr/bin/env node
 /* jshint node:true */
+/* eslint-disable import/no-extraneous-dependencies, function-paren-newline,
+  no-console, no-restricted-syntax, no-continue, no-loop-func, prefer-template */
 
-const glob = require('glob'),
-  fs = require('fs'),
-  c = require('child_process'),
-  nodePandoc = require('node-pandoc'),
-  singleComponent = process.argv[2];
+const singleComponent = process.argv[2];
+const glob = require('glob');
+const fs = require('fs');
+const c = require('child_process');
+const nodePandoc = require('node-pandoc');
 
-//Generate a Doc file with buffered contrnt
-function runPandoc(data, componentPath) {
-  // Note that im using markdown_github vs markdown for h level support
-  nodePandoc(data, ['-f','markdown','-t','html5','-o', componentPath + 'index.html'], function (err) {
-      if (err) {
-        console.error('Oh No: ',err);
-      }
-      // Without the -o arg, the converted value will be returned.
-      //return console.log(result), result;
-    });
+// Generate a Doc file with buffered content
+function runPandoc(data, apiHtml, componentPath) {
+  // Note that im using gfm vs markdown for h level support
+  nodePandoc(data, ['-f', 'markdown', '-t', 'html5', '-o', componentPath + 'index.html'], (error, stdout, stderr) => {
+    if (error) {
+      console.log(error);
+    }
+
+    if (stderr) {
+      console.log(stderr);
+    }
+
+    if (stdout && apiHtml) {
+      fs.readFile(componentPath + 'index.html', 'utf8', (readError, htmlData) => {
+        if (readError) {
+          throw readError;
+        }
+
+        const newData = htmlData.replace('<p>{{api-details}}</p>', apiHtml);
+        fs.writeFile(componentPath + 'index.html', newData, (err) => {
+          if (err) {
+            throw err;
+          }
+        });
+      });
+    }
+  });
 }
 
 // Expect a folder to have an .md file and an optional .js file.
-glob('components/*/', function(err, components) {
-  for (let componentPath of components) {
-    let componentName = componentPath.replace('components/', '').replace('/', '').toLowerCase();
+glob('components/*/', (err, components) => {
+  for (const componentPath of components) {
+    const componentName = componentPath.replace('components/', '').replace('/', '').toLowerCase();
 
-    if (singleComponent && singleComponent.toLowerCase() !==componentName) {
+    if (singleComponent && singleComponent.toLowerCase() !== componentName) {
       continue;
     }
 
     console.log('Generating Docs for :', componentName);
 
     // Read the md file and Generate the Pandoc / Html file for it
-    if (fs.existsSync(componentPath + componentName + '.md')) {
+    if (fs.existsSync(`${componentPath + componentName}.md`)) {
+      const mdData = fs.readFileSync(`${componentPath + componentName}.md`, 'utf8');
 
-      var mdData = fs.readFileSync(componentPath + componentName + '.md', 'utf8');
+      if (fs.existsSync(`${componentPath + componentName}.js`)) {
+        // Write the file out
+        const cmd = `documentation build ${componentPath}${componentName}.js --format html --theme docs/theme --o ${componentPath}${componentName}-api.html --shallow`;
+        c.exec(cmd, (error, stdout, stderr) => {
+          if (error) {
+            throw error;
+          }
 
-      if (fs.existsSync(componentPath + componentName + '.js')) {
-        //Write the file out
-        c.execSync('documentation build '+ componentPath + componentName + '.js' +' -f md -o ' + componentPath + componentName + '-api.md');
+          if (stderr) {
+            throw stderr;
+          }
 
-        //Read it back in
-        var apiData = fs.readFileSync(componentPath + componentName + '-api.md', 'utf8');
+          fs.readFile(`${componentPath + componentName}-api.html`, 'utf8', (readError, apiData) => {
+            if (readError) {
+              throw readError;
+            }
 
-        //Some Scrubbing that document.js cant handle
-        if ((apiData.match(/Parameters/g) || []).length > 0) {
-          apiData = apiData.substr(0, apiData.indexOf('### Table')) + apiData.substr(apiData.indexOf('**Parameters**'));
-        }
-        apiData = apiData.replace(/### /g, '#### ');
-
-        // Add Section Titles
-        apiData = apiData.substr(0, apiData.indexOf('####')) + '\n### Functions \n' + apiData.substr(apiData.indexOf('####'));
-        apiData = apiData.replace('**Parameters**', '## API Details \n### Settings');
-        apiData = apiData.replace('#### handleEvents', '### Events');
-        apiData = apiData.replace('### handleEvents', '### Events');
-
-        // More Fixes
-        apiData = apiData.replace('-   `element`', '');
-        var fullData = mdData.replace('{{api-details}}', '\r\n'+apiData+'\r\n');
-
-        runPandoc(fullData, componentPath);
-
+            runPandoc(mdData, apiData, componentPath);
+          });
+        });
       } else {
-        runPandoc(mdData, componentPath);
+        runPandoc(mdData, null, componentPath);
       }
-
     }
-
   }
 });

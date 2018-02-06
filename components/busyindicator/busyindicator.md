@@ -9,7 +9,7 @@
 4. Smaller Size [View Example]( ../components/busyindicator/example-small)
 5. On the Page Body [View Example]( ../components/busyindicator/example-body)
 6. Customize Loading Text [View Example]( ../components/busyindicator/example-custom-loading-text.html)
-7. Nested Busy Indicators [View Example]( ../components/busyindicator/example-nested.html)
+7. Nested Busy Indicators [View Example]( ../components/busyindicator/test-nested.html)
 8. transparent Overlay [View Example]( ../components/busyindicator/example-transparent-overlay.html)
 9. Ajax Calls [View Test]( ../components/busyindicator/test-ajax-calls)
 10. Block Entire UI [View Test]( ../components/busyindicator/test-ajax-calls)
@@ -22,7 +22,7 @@
 ## Code Example
 
 To use the busy indicator place it on a element with class = "busy". Keep in mind it will center itself on that element.
-You can provide the options inline in the data-options. This example is using the initializer. If you arent call `$('#busy-form').busyindictor()` to init the plugin.
+You can provide the options inline in the data-options. This example is using the initializer. If you arent call `$('#busy-form').busyindicator()` to init the plugin.
 
 ```html
 
@@ -44,10 +44,9 @@ You can provide the options inline in the data-options. This example is using th
   </div>
 </form>
 
-
 ```
 
-When a task happens that requires the indicator trigger the even on the element.
+When a task happens that requires the indicator; you can trigger the event on the element to force this indicator to show.
 
 ```javascript
 
@@ -55,7 +54,6 @@ $('#busy-form button[type="submit"]').click(function(e) {
   e.preventDefault();
   $('#busy-form').trigger('start.busyindicator');
 });
-
 
 ```
 

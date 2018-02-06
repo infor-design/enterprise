@@ -10,15 +10,16 @@
   </title>
 
   <!-- Meta Info -->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="version" content="{{version}}">
-  <meta name="commit" content="{{commit}}">
+  <meta name="version" content="{{version}}"/>
+  <meta name="commit" content="{{commit}}"/>
 
   <script src="{{basepath}}js/jquery-3.1.1.js"></script>
-  <script src="{{basepath}}js/d3.js"></script>
+  <script src="{{basepath}}js/d3.v4.js"></script>
   <script src="{{basepath}}js/sohoxi.js"></script>
+  <script src="{{basepath}}js/sohoxi-migrate-4.4.0.js"></script>
   <!-- Supplying the culture in the head is supported
   <script src="{{basepath}}js/sohoxi.js?v=MTIuMC4wLjAuMQ"></script>
   <script src="../../js/cultures/{{locale}}.js"></script>-->
@@ -42,9 +43,10 @@
     //If Initialize isnt called need to defer this
     $('html').personalize({colors: colors});
   </script>
-  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}stylesheets/{{theme}}-theme.css" type="text/css">
+
+  <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme}}-theme.css" type="text/css"/>
 
   <!-- Style Sheets -->
-  <link rel="stylesheet" href="{{basepath}}stylesheets/demo.css" type="text/css">
+  <link rel="stylesheet" href="{{basepath}}css/demo.css" type="text/css"/>
 
 </head>

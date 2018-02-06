@@ -17,99 +17,100 @@ This example shows a simple accordion with a single accordion header that contai
 Create accordion headers by using a block-level element with the "accordion-header" class. Place any number of these elements underneath the accordion element. Accordion headers require an a tag underneath with a blank href attribute. Optionally, use an icon svg tag with the "icon" CSS class, placed before the title element. Create accordion panes by using a block-level element with the "accordion-pane" CSS class. Place any number of these elements underneath and next to the "accordion-header" element that should open the pane. Place any number of block-level elements with the "accordion-header" CSS class underneath this "accordion-header". Optionally, place any number of block-level elements with the "accordion-content" CSS class underneath this "accordion-header". Inside this "accordion-content" element can be any HTML markup, including other controls.
 
 ```html
-    <div class="accordion" data-demo-set-links="true">
+
+<div class="accordion" data-demo-set-links="true">
+  <div class="accordion-header">
+    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+      <use xlink:href="#icon-user"></use>
+    </svg>
+    <a href="#"><span>Personal</span></a>
+  </div>
+  <div class="accordion-pane">
+    <div class="accordion-header">
+      <a href="#"><span>Item 1</span></a>
+    </div>
+    <div class="accordion-header">
+      <a href="#"><span>Item 2</span></a>
+    </div>
+  </div>
+
+  <div class="accordion-header">
+    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+      <use xlink:href="#icon-roles"></use>
+    </svg>
+    <a href="#"><span>Position</span></a>
+  </div>
+  <div class="accordion-pane">
+    <div class="accordion-header">
+      <a href="#"><span>Item 1</span></a>
+    </div>
+    <div class="accordion-header">
+      <a href="#"><span>Item 2</span></a>
+    </div>
+  </div>
+
+  <div class="accordion-header">
+    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+      <use xlink:href="#icon-export-spreadsheet"></use>
+    </svg>
+    <a href="#"><span>Financials</span></a>
+  </div>
+  <div class="accordion-pane">
+    <div class="accordion-header">
+      <a href="#"><span>Item 1</span></a>
+    </div>
+    <div class="accordion-header">
+      <a href="#"><span>Item 2</span></a>
+    </div>
+  </div>
+
+  <div class="accordion-header">
+    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+      <use xlink:href="#icon-url"></use>
+    </svg>
+    <a href="#"><span>Learning</span></a>
+  </div>
+  <div class="accordion-pane">
+    <div class="accordion-header">
+      <a href="#"><span>Education</span></a>
+    </div>
+    <div class="accordion-pane">
       <div class="accordion-header">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-user"></use>
-        </svg>
-        <a href="#"><span>Personal</span></a>
+        <a href="#"><span>Undergraduate</span></a>
       </div>
-      <div class="accordion-pane">
-        <div class="accordion-header">
-          <a href="#"><span>Item 1</span></a>
-        </div>
-        <div class="accordion-header">
-          <a href="#"><span>Item 2</span></a>
-        </div>
-      </div>
-
       <div class="accordion-header">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-roles"></use>
-        </svg>
-        <a href="#"><span>Position</span></a>
-      </div>
-      <div class="accordion-pane">
-        <div class="accordion-header">
-          <a href="#"><span>Item 1</span></a>
-        </div>
-        <div class="accordion-header">
-          <a href="#"><span>Item 2</span></a>
-        </div>
-      </div>
-
-      <div class="accordion-header">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-export-spreadsheet"></use>
-        </svg>
-        <a href="#"><span>Financials</span></a>
-      </div>
-      <div class="accordion-pane">
-        <div class="accordion-header">
-          <a href="#"><span>Item 1</span></a>
-        </div>
-        <div class="accordion-header">
-          <a href="#"><span>Item 2</span></a>
-        </div>
-      </div>
-
-      <div class="accordion-header">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-url"></use>
-        </svg>
-        <a href="#"><span>Learning</span></a>
-      </div>
-      <div class="accordion-pane">
-        <div class="accordion-header">
-          <a href="#"><span>Education</span></a>
-        </div>
-        <div class="accordion-pane">
-          <div class="accordion-header">
-            <a href="#"><span>Undergraduate</span></a>
-          </div>
-          <div class="accordion-header">
-            <a href="#"><span>Graduate</span></a>
-          </div>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Skills</span></a>
-        </div>
-        <div class="accordion-pane">
-          <div class="accordion-content">
-            <p>Need some content here</p>
-          </div>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Certifications</span></a>
-        </div>
-        <div class="accordion-pane">
-          <div class="accordion-content">
-            <p>Need some content here</p>
-          </div>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Compliance Training</span></a>
-        </div>
-        <div class="accordion-pane">
-          <div class="accordion-content">
-            <p>Need some content here</p>
-          </div>
-        </div>
+        <a href="#"><span>Graduate</span></a>
       </div>
     </div>
+
+    <div class="accordion-header">
+      <a href="#"><span>Skills</span></a>
+    </div>
+    <div class="accordion-pane">
+      <div class="accordion-content">
+        <p>Need some content here</p>
+      </div>
+    </div>
+
+    <div class="accordion-header">
+      <a href="#"><span>Certifications</span></a>
+    </div>
+    <div class="accordion-pane">
+      <div class="accordion-content">
+        <p>Need some content here</p>
+      </div>
+    </div>
+
+    <div class="accordion-header">
+      <a href="#"><span>Compliance Training</span></a>
+    </div>
+    <div class="accordion-pane">
+      <div class="accordion-content">
+        <p>Need some content here</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 ```
 
@@ -178,6 +179,6 @@ The Accordion container (the element with the .accordion CSS class) will size to
 
 ## Upgrading from 3.X
 
--   The initial markup is changed considerably from the previous version. Sync the markup using [the new version](http://usmvvwdev53/component/accordion#code-example)
+-   The initial markup is changed considerably from the previous version. Sync the markup using the markup above
 -   Initialize the accordion plugin with .accordion() as opposed to .inforAccordion() or by using the page initializer
 -   onExpanded and onCollapsed option are done with events (expanded and collapsed)

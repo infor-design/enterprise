@@ -56,7 +56,7 @@
     odd = !odd;
 
     // update the listview
-    $('#travelSectionList').listview({dataset: tsdata, template: $('#ts-list-template').html()}).trigger('updated');
+    $('#travelSectionList').trigger('updated', [ {dataset: tsdata, template: $('#ts-list-template').html()} ]);
   };
 
 // dummy data from app...

@@ -20,7 +20,7 @@ The Message component is a component that inserts a dialog in the page for showi
           buttons: [{
               text: 'Restart Now',
               click: function() {
-                  $(this).modal('close');
+                  $(this).data('modal').close();
               },
               isDefault: true
           }]

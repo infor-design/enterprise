@@ -1,191 +1,137 @@
-// Page Bootstrapper
+import { version as SOHO_XI_VERSION } from '../../package.json';
+import { breakpoints } from './breakpoints';
 
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-  /* end-amd-strip-block */
+// jQuery Components
+import './debounced-resize.jquery';
+
+/**
+ * @class {Environment}
+ */
+const Environment = {
+
+  browser: {},
+
+  os: {},
+
+  rtl: $('html').attr('dir') === 'rtl',
 
   /**
-   * Checks the breakpoint and triggers an event if the breakpoint's changed.
+   * Builds run-time environment settings
    */
-  function breakpointCheck() {
-    if (!Soho.breakpoints.last) {
-      Soho.breakpoints.last = '';
+  set() {
+    $('html').attr('data-sohoxi-version', SOHO_XI_VERSION);
+    this.addBrowserClasses();
+    this.addGlobalResize();
+  },
+
+  /**
+   * Global Classes for browser, version and device as needed.
+   */
+  addBrowserClasses() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const html = $('html');
+    let cssClasses = ''; // User-agent string
+
+    if (ua.indexOf('Safari') !== -1 &&
+        ua.indexOf('Chrome') === -1 &&
+        ua.indexOf('Android') === -1) {
+      cssClasses += 'is-safari ';
+      this.browser.name = 'safari';
     }
 
-    var cur = Soho.breakpoints.current();
-    if (Soho.breakpoints.last !== cur) {
-      $('body').triggerHandler('breakpoint-change', [{
-        previous: Soho.breakpoints.last,
-        current: cur
-      }]);
-      Soho.breakpoints.last = cur;
+    if (ua.indexOf('Chrome') !== -1) {
+      cssClasses += 'is-chrome ';
+      this.browser.name = 'chrome';
     }
+
+    if (ua.indexOf('Mac OS X') !== -1) {
+      cssClasses += 'is-mac ';
+      this.os.name = 'Mac OS X';
+    }
+
+    if (ua.indexOf('Firefox') > 0) {
+      cssClasses += 'is-firefox ';
+      this.browser.name = 'firefox';
+    }
+
+    // Class-based detection for IE
+    if (ua.match(/Edge\//)) {
+      cssClasses += 'ie ie-edge ';
+      this.browser.name = 'edge';
+    }
+    if (ua.match(/Trident/)) {
+      cssClasses += 'ie ';
+      this.browser.name = 'ie';
+    }
+    if (navigator.appVersion.indexOf('MSIE 8.0') > -1 ||
+      ua.indexOf('MSIE 8.0') > -1 ||
+      document.documentMode === 8) {
+      cssClasses += 'ie8 ';
+      this.browser.version = '8';
+    }
+    if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
+      cssClasses += 'ie9 ';
+      this.browser.version = '9';
+    }
+    if (navigator.appVersion.indexOf('MSIE 10.0') > -1) {
+      cssClasses += 'ie10 ';
+      this.browser.version = '10';
+    } else if (ua.match(/Trident\/7\./)) {
+      cssClasses += 'ie11 ';
+      this.browser.version = '11';
+    }
+
+    // Class-based detection for iOS
+    // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
+    if ((/iPhone|iPod|iPad/).test(ua)) {
+      cssClasses += 'ios ';
+      this.os.name = 'ios';
+
+      const iDevices = ['iPod', 'iPad', 'iPhone'];
+      for (let i = 0; i < iDevices.length; i++) {
+        if (new RegExp(iDevices[i]).test(ua)) {
+          cssClasses += `${iDevices[i].toLowerCase()} `;
+          this.device = iDevices[i];
+        }
+      }
+    }
+
+    if ((/Android/.test(ua))) {
+      cssClasses += 'android ';
+      this.os.name = 'android';
+    }
+
+    html.addClass(cssClasses);
+  },
+
+  /**
+   * Setup a global resize event trigger for controls to listen to
+   */
+  addGlobalResize() {
+    // Global resize event
+    $(window).debouncedResize(() => {
+      $('body').triggerHandler('resize', [window]);
+      breakpoints.compare();
+    });
+
+    // Also detect whenenver a load or orientation change occurs
+    $(window).on('orientationchange load', () => breakpoints.compare());
   }
+};
 
+/**
+ *
+ */
+Environment.pasteEvent = (function getPasteEvent() {
+  const el = document.createElement('input');
+  const name = 'onpaste';
+  el.setAttribute(name, '');
+  return ((typeof el[name] === 'function') ? 'paste' : 'input');
+}());
 
-  var version = '4.3.3',
-    environment = {
+/**
+ * Automatically set up the environment by virtue of including this script
+ */
+Environment.set();
 
-    // Setup a global resize event trigger for controls to listen to
-    addGlobalResize: function() {
-      window.Soho.breakpoints = window.Soho.breakpoints || {};
-
-      // Global resize event
-      $(window).debouncedResize(function() {
-        $('body').triggerHandler('resize', [window]);
-        breakpointCheck();
-      });
-
-      // Also detect whenenver a load or orientation change occurs
-      $(window).on('orientationchange load', breakpointCheck);
-
-      return this;
-    },
-
-    set: function () {
-      this
-        .makeSohoObject()
-        .addBrowserClasses()
-        .addGlobalResize();
-    },
-
-    // Global Classes for browser, version and device as needed.
-    addBrowserClasses: function() {
-      var ua = navigator.userAgent || navigator.vendor || window.opera,
-        html = $('html'),
-        cssClasses = ''; // User-agent string
-
-      if (ua.indexOf('Safari')  !== -1 &&
-          ua.indexOf('Chrome')  === -1 &&
-          ua.indexOf('Android') === -1) {
-        cssClasses += 'is-safari ';
-        Soho.env.browser.name = 'safari';
-      }
-
-      if (ua.indexOf('Chrome') !== -1) {
-        cssClasses += 'is-chrome ';
-        Soho.env.browser.name = 'chrome';
-      }
-
-      if (ua.indexOf('Mac OS X') !== -1) {
-        cssClasses += 'is-mac ';
-        Soho.env.os.name = 'Mac OS X';
-      }
-
-      if (ua.indexOf('Firefox') > 0) {
-        cssClasses += 'is-firefox ';
-        Soho.env.browser.name = 'firefox';
-      }
-
-      //Class-based detection for IE
-      if (ua.match(/Edge\//)) {
-        cssClasses += 'ie ie-edge ';
-        Soho.env.browser.name = 'edge';
-      }
-      if (ua.match(/Trident/)) {
-        cssClasses += 'ie ';
-        Soho.env.browser.name = 'ie';
-      }
-      if (navigator.appVersion.indexOf('MSIE 8.0') > -1 ||
-        ua.indexOf('MSIE 8.0') > -1 ||
-        document.documentMode === 8) {
-        cssClasses += 'ie8 ';
-        Soho.env.browser.version = '8';
-      }
-      if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
-        cssClasses += 'ie9 ';
-        Soho.env.browser.version = '9';
-      }
-      if (navigator.appVersion.indexOf('MSIE 10.0') > -1) {
-        cssClasses += 'ie10 ';
-        Soho.env.browser.version = '10';
-      } else {
-        if (ua.match(/Trident\/7\./)) {
-          cssClasses += 'ie11 ';
-          Soho.env.browser.version = '11';
-        }
-      }
-
-      // Class-based detection for iOS
-      // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
-      if ((/iPhone|iPod|iPad/).test(ua)) {
-        cssClasses += 'ios ';
-        Soho.env.os.name = 'ios';
-
-        var iDevices = ['iPod', 'iPad', 'iPhone'];
-        for (var i = 0; i < iDevices.length; i++) {
-          if (new RegExp(iDevices[i]).test(ua)) {
-            cssClasses += iDevices[i].toLowerCase() + ' ';
-            Soho.env.device = iDevices[i];
-          }
-        }
-      }
-
-      if ((/Android/.test(ua))) {
-        cssClasses += 'android ';
-        Soho.env.os.name = 'android';
-      }
-
-      html.addClass(cssClasses);
-      html.attr('data-sohoxi-version', version);
-      return this;
-    },
-
-    makeSohoObject: function() {
-      window.Soho = window.Soho || {};
-
-      window.Soho.logTimeStart = function(label) {
-        if (window.Soho.logTime) {
-          console.time(label); // jshint ignore:line
-        }
-      };
-
-      window.Soho.logTimeEnd = function(label) {
-        if (window.Soho.logTime) {
-          console.timeEnd(label); // jshint ignore:line
-        }
-      };
-
-      // Environment object provides JS-friendly way to figure out our browser support
-      window.Soho.env = {
-        browser: {},
-        os: {},
-        rtl: $('html').attr('dir') === 'rtl'
-      };
-
-      // Get the name of the paste event.  Could be "paste" or "input" based on the browser.
-      window.Soho.env.pasteEvent = (function getPasteEvent() {
-        var el = document.createElement('input'),
-            name = 'onpaste';
-        el.setAttribute(name, '');
-        return ((typeof el[name] === 'function') ? 'paste' : 'input');
-      })();
-
-      window.Soho.theme = 'light';
-
-      // Soho RenderLoop integration
-      // Added in v4.3.4-rc (SOHO-7005)
-      if (Soho.renderLoop && typeof Soho.renderLoop.start === 'function') {
-        Soho.renderLoop.start();
-      }
-
-      return this;
-    }
-
-  };
-
-  environment.set();
-  /* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+export { Environment };

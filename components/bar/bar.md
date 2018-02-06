@@ -18,7 +18,9 @@
 
 ## API Details
 
-### Dataset Settings
+{{api-details}}
+
+## Dataset Settings
 
 * `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - The name to show on the y axis for the bar
 * `value` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** - The raw data value for the bar.
@@ -52,7 +54,6 @@ This example shows how to invoke a simple bar chart with a dataset controlling t
 
   $('#bar-example').chart({type: 'bar', dataset: dataset});
 
-
 ```
 
 ## Accessibility
@@ -64,7 +65,6 @@ This example shows how to invoke a simple bar chart with a dataset controlling t
 color: '#1a1a1a'
 name: 'Component C'
 
-
 ```
 
 ## Code Tips
@@ -74,7 +74,6 @@ You can override the tooltip by passing in a specific tooltip text value.
 ```javascript
 
 {type: 'bar-grouped', dataset: dataset, tooltip: 'Tooltip by attribute'}
-
 
 ```
 
@@ -90,7 +89,6 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
     }, 400);
   }
 });
-
 
 ```
 

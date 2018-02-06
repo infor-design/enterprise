@@ -1,0 +1,43 @@
+// Bullet Chart
+//==================================================//
+
+.bullet-chart {
+  @include font-size(12);
+  .range {
+    cursor: pointer;
+  }
+
+  .marker {
+    stroke: $primary-color;
+    stroke-width: 2px;
+  }
+
+  .tick line {
+    stroke: $font-color;
+    stroke-width: .5px;
+  }
+
+  .title {
+    @include font-size(12);
+    font-weight: bold;
+  }
+
+  .subtitle {
+    font-weight: normal;
+    text-transform: none;
+  }
+
+  //Handles max 3 ranges
+
+}
+
+.bullet {
+  .range.s0 {fill: $slate01;};
+  .range.s1 {fill: $slate02;};
+  .range.s2 {fill: $slate03;};
+  .measure.s0 {fill: $azure02;};
+  .measure.s1 {fill: $azure04;};
+  .measure.s2 {fill: $azure06;};
+  .measure.s3 {fill: $azure08;};
+  .measure.s4 {fill: $azure10;};
+}

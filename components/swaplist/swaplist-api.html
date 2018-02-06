@@ -1,0 +1,190 @@
+  <section>
+  
+    
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>getAvailable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get the current representative dataset with only the available elements in it.</p>
+
+        </td>
+        <td>
+          dataset
+
+        </td>
+      </tr>
+      <tr>
+        <td>getSelected</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get the current representative dataset with only the selected elements in it.</p>
+
+        </td>
+        <td>
+          dataset
+
+        </td>
+      </tr>
+      <tr>
+        <td>getAdditional</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get the current representative dataset with only the additional elements in it.</p>
+
+        </td>
+        <td>
+          dataset
+
+        </td>
+      </tr>
+      <tr>
+        <td>updateDataset</td>
+        <td>
+          
+                
+                  <span>ds (object) = The updated dataset(s) of the form.
+
+<code>{available: [], selected: [], additional: []}</code>
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Updates the internal datasets and refresh the ui.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Destroys this instance of the swaplist component and removes its link to its base element.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  
+  
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>swapupdate
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>items (Array)
+        
+        = List of items data
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when any bucket has its content changed.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforeswap
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>items (Array)
+        
+        = List of selected items data
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before moving an element allowing you to access the draggable item.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

@@ -1,0 +1,335 @@
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          selectable
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          'single' or 'multiple'.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          hideCheckboxes
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Only applies when 
+<code>selectable</code>
+ is set to 'multiple'.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          menuId
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          if defined, will be used to identify a Context Menu by ID
+attribute in which to add nodes.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          useStepUI
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          if 
+<code>true</code>
+, turns this tree instance into a "Stepped" tree.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          folderIconOpen
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          the icon used when a tree folder node is open.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          folderIconClosed
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          the icon used when a tree folder node is closed.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          sortable
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          if 
+<code>true</code>
+, allows nodes to become sortable.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          onBeforeSelect
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          if defined as a function, fires that function as a
+callback before the selection on a node occurs.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+    
+
+
+
+  
+  
+  
+  
+  </section>
+
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>unselected
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = and node element
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires on un select node.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>selected
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = and node element
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires on select node.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>menuselect
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = for node element, item
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the menu item select.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>menuopen
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (Object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>data (Object)
+        
+        = for node element, menu
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the menu open.
+menu options - use it to update the menu as needed
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

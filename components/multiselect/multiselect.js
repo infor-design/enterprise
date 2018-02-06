@@ -1,142 +1,138 @@
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
 
-  $.fn.multiselect = function(options) {
+// jQuery Components
+import '../dropdown/dropdown.jquery';
 
-    'use strict';
+// Component Name
+const COMPONENT_NAME = 'multiselect';
 
-    // Settings and Options
-    var pluginName = 'multiselect',
-        defaults = {
-          filterMode: 'contains',
-          maxSelected: undefined,
-          moveSelected: 'all',
-          showEmptyGroupHeaders: false,
-          showSelectAll: false,
-          source: undefined
-        },
-        settings = $.extend({}, defaults, options);
+/**
+ * Multiselect Component Defaults
+ * @namespace
+ * @property {string} filterMode  The search mode to use, can be 'contains' or 'startsWith'
+ * @property {number} maxSelected  The max number of items which can be selected
+ * @property {string} moveSelected   Move selected options in each group to just underneath
+ *  their corresponding group headers.
+ * @property {boolean} showEmptyGroupHeaders  If true groups with no items will still show
+ *  the empty group header.
+ * @property {boolean} showSelectAll  Show the select all text/option.
+ * @property {Function} source  The calback for ajax.
+ */
+const MULTISELECT_DEFAULTS = {
+  filterMode: 'contains',
+  maxSelected: undefined,
+  moveSelected: 'all',
+  showEmptyGroupHeaders: false,
+  showSelectAll: false,
+  source: undefined
+};
 
-    /**
-    * The MultiSelect Component allows selecting multiple items from a list
-    *
-    * @class MultiSelect
-    * @param {String} filterMode  &nbsp;-&nbsp; The search mode to use, can be 'contains' or 'startsWith'
-    * @param {Number} maxSelected  &nbsp;-&nbsp; The max number of items which can be selected
-    * @param {String} moveSelected  &nbsp;-&nbsp;  Move selected options in each group to just underneath their corresponding group headers.
-    * @param {Boolean} showEmptyGroupHeaders  &nbsp;-&nbsp; If true groups with no items will still show the empty group header.
-    * @param {Boolean} showSelectAll  &nbsp;-&nbsp; Show the select all text/option.
-    * @param {Function} source  &nbsp;-&nbsp; The calback for ajax.
-    *
-    */
-    function MultiSelect(element) {
-      this.settings = $.extend({}, settings);
-      this.element = $(element);
-      Soho.logTimeStart(pluginName);
-      this.init();
-      Soho.logTimeEnd(pluginName);
-    }
+/**
+ * The MultiSelect Component allows selecting multiple items from a list
+ * @class MultiSelect
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element the base element
+ * @param {object} [settings] incoming settings
+ */
+function MultiSelect(element, settings) {
+  this.settings = utils.mergeSettings(element, settings, MULTISELECT_DEFAULTS);
+  this.element = $(element);
+  debug.logTimeStart(COMPONENT_NAME);
+  this.init();
+  debug.logTimeEnd(COMPONENT_NAME);
+}
 
-    // Plugin Methods
-    MultiSelect.prototype = {
+MultiSelect.prototype = {
 
-      init: function() {
-        this.build();
-      },
+  /**
+   * @private
+   * @returns {void}
+   */
+  init() {
+    this.build();
+  },
 
-      build: function() {
-        var ddOpts = {
-            closeOnSelect: false,
-            empty: true,
-            moveSelected: 'all',
-            multiple: true
-          };
-
-        if (this.settings.filterMode) {
-          ddOpts.filterMode = this.settings.filterMode;
-        }
-
-        if (this.settings.source) {
-          ddOpts.source = this.settings.source;
-        }
-
-        if (this.settings.maxSelected) {
-          ddOpts.maxSelected = this.settings.maxSelected;
-        }
-
-        if (this.settings.moveSelected) {
-          ddOpts.moveSelected = this.settings.moveSelected;
-        }
-
-        if (this.settings.showEmptyGroupHeaders) {
-          ddOpts.showEmptyGroupHeaders = this.settings.showEmptyGroupHeaders;
-        }
-
-        if (this.settings.showSelectAll) {
-          ddOpts.showSelectAll = this.settings.showSelectAll;
-        }
-
-        this.element.dropdown(ddOpts);
-        this.dropdown = this.element.data('dropdown');
-
-        return this;
-      },
-
-      /**
-      * Enable the multiselect input
-      */
-      enable: function() {
-        this.dropdown.enable();
-      },
-
-      /**
-      * Disable the multiselect input
-      */
-      disable: function() {
-        this.dropdown.disable();
-      },
-
-      /**
-      * Trigger a rebuild due to settings change
-      */
-      updated: function() {
-        this.build();
-      },
-
-      /**
-      * Remove added markup and events
-      */
-      destroy: function() {
-        this.dropdown.destroy();
-        this.element.off();
-        $.removeData(this.element[0], pluginName);
-      }
+  /**
+   * @private
+   * @returns {void}
+   */
+  build() {
+    const ddOpts = {
+      closeOnSelect: false,
+      empty: true,
+      moveSelected: 'all',
+      multiple: true
     };
 
-    // Initialize the plugin (Once)
-    return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
-        instance.updated();
-      } else {
-        instance = $.data(this, pluginName, new MultiSelect(this, settings));
-      }
-    });
-  };
+    if (this.settings.filterMode) {
+      ddOpts.filterMode = this.settings.filterMode;
+    }
 
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+    if (this.settings.source) {
+      ddOpts.source = this.settings.source;
+    }
+
+    if (this.settings.maxSelected) {
+      ddOpts.maxSelected = this.settings.maxSelected;
+    }
+
+    if (this.settings.moveSelected) {
+      ddOpts.moveSelected = this.settings.moveSelected;
+    }
+
+    if (this.settings.showEmptyGroupHeaders) {
+      ddOpts.showEmptyGroupHeaders = this.settings.showEmptyGroupHeaders;
+    }
+
+    if (this.settings.showSelectAll) {
+      ddOpts.showSelectAll = this.settings.showSelectAll;
+    }
+
+    this.element.dropdown(ddOpts);
+    this.dropdown = this.element.data('dropdown');
+
+    return this;
+  },
+
+  /**
+   * Enable the multiselect input
+   * @returns {void}
+   */
+  enable() {
+    this.dropdown.enable();
+  },
+
+  /**
+  * Disable the multiselect input
+  * @returns {void}
+  */
+  disable() {
+    this.dropdown.disable();
+  },
+
+  /**
+  * Trigger a rebuild due to settings change
+  * @param {object} [settings] incoming settings
+  * @returns {void}
+  */
+  updated(settings) {
+    if (settings) {
+      this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    }
+
+    this.build();
+  },
+
+  /**
+   * Remove added markup and events
+   * @returns {void}
+   */
+  destroy() {
+    this.dropdown.destroy();
+    this.element.off();
+    $.removeData(this.element[0], COMPONENT_NAME);
+  }
+};
+
+export { MultiSelect, COMPONENT_NAME };

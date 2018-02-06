@@ -43,11 +43,8 @@ $('body').on('initialized', function () {
   $('#pie-chart-example').chart({
     type: 'pie',
     dataset: pieData,
-    labels: {
-      lineColor: 'color-as-arc'
-      //contentsTop: 'value',
-      //formatterTop: '$,.2f',// Currency
-    }
+    showLines: false,
+    showTooltips: true
   });
 
 });

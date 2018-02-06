@@ -1,100 +1,80 @@
- // Lifecycle Methods for jQuery Controls
- // Recursive methods that "globally" call certain methods on large groups of controls
+// Lifecycle Methods for jQuery Controls
+// Recursive methods that "globally" call certain methods on large groups of controls
+const EXCLUDED_FROM_CLOSE_CHILDREN = ['.expandable-area', '.accordion'];
+const EXCLUDED_FROM_HANDLE_RESIZE = [];
 
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-  /* end-amd-strip-block */
+// Used by several of these plugins to detect whether or not the "data" property in question
+// is a valid SoHo Xi Control.
+function canAccessAPI(prop) {
+  return prop && !(prop instanceof jQuery);
+}
 
-  var EXCLUDED_FROM_CLOSE_CHILDREN = ['.expandable-area', '.accordion'],
-      EXCLUDED_FROM_HANDLE_RESIZE = [];
-
-  // Used by several of these plugins to detect whether or not the "data" property in question
-  // is a valid SoHo Xi Control.
-  function canAccessAPI(prop) {
-    return prop && !(prop instanceof jQuery);
-  }
-
-  // Used by several of these plugins to detect whether or not there is a method on a "data" api
-  // that can be called.
-  function canCall(prop, method) {
-    var api = canAccessAPI(prop);
-    if (!api) {
-      return false;
-    }
-
-    return (prop[method] && typeof prop[method] === 'function');
-  }
-
-  // Actually triggers the method on the control if it's possible
-  function triggerAPIMethod(prop, method) {
-    if (canCall(prop, method)) {
-      prop[method]();
-      return true;
-    }
+// Used by several of these plugins to detect whether or not there is a method on a "data" api
+// that can be called.
+function canCall(prop, method) {
+  const api = canAccessAPI(prop);
+  if (!api) {
     return false;
   }
 
-  // Tracks each element that attempts to trigger an API method.
-  // If a trigger is successful, it stores it in an array that's used later.
-  function findControlsOnElements(elems, method) {
-    var foundControls = [];
+  return (prop[method] && typeof prop[method] === 'function');
+}
 
-    $.each(elems, function elementIterator(index, elem) {
-      $.each($(elem).data(), function dataEntryIterator(index, dataEntry) {
-        if (triggerAPIMethod(dataEntry, method)) {
-          foundControls.push({ elem: $(elem), control: dataEntry });
-        }
-      });
+// Actually triggers the method on the control if it's possible
+function triggerAPIMethod(prop, method) {
+  if (canCall(prop, method)) {
+    prop[method]();
+    return true;
+  }
+  return false;
+}
+
+// Tracks each element that attempts to trigger an API method.
+// If a trigger is successful, it stores it in an array that's used later.
+function findControlsOnElements(elems, method) {
+  const foundControls = [];
+
+  $.each(elems, (index, elem) => {
+    $.each($(elem).data(), (i, dataEntry) => {
+      if (triggerAPIMethod(dataEntry, method)) {
+        foundControls.push({ elem: $(elem), control: dataEntry });
+      }
     });
+  });
 
-    return foundControls;
+  return foundControls;
+}
+
+// Kicks it all off
+function siftFor(rootElem, method, filteredOutElements) {
+  if (!rootElem || !method) {
+    return undefined;
   }
 
-  // Kicks it all off
-  function siftFor(rootElem, method, filteredOutElements) {
-    if (!rootElem || !method) {
-      return;
-    }
+  rootElem = $(rootElem);
+  let DOMelements = rootElem.find('*').add(rootElem);
 
-    rootElem = $(rootElem);
-    var DOMelements = rootElem.find('*').add(rootElem);
-
-    if (filteredOutElements) {
-      DOMelements = DOMelements.not(filteredOutElements.join(', '));
-    }
-    var siftedControls = findControlsOnElements(DOMelements, method);
-
-    rootElem.trigger('sift-' + method + '-complete', [siftedControls]);
-    return rootElem;
+  if (filteredOutElements) {
+    DOMelements = DOMelements.not(filteredOutElements.join(', '));
   }
+  const siftedControls = findControlsOnElements(DOMelements, method);
 
-  //==========================================================
-  // Actual Control Plugins
-  //==========================================================
+  rootElem.trigger(`sift-${method}-complete`, [siftedControls]);
+  return rootElem;
+}
 
-  $.fn.destroy = function() {
-    return siftFor($(this), 'destroy');
-  };
+// =========================================================
+// Actual Control Plugins
+// =========================================================
 
-  $.fn.closeChildren = function() {
-    return siftFor($(this), 'close', EXCLUDED_FROM_CLOSE_CHILDREN);
-  };
+$.fn.destroy = function () {
+  return siftFor($(this), 'destroy');
+};
 
-  $.fn.handleResize = function() {
-    return siftFor($(this), 'handleResize', EXCLUDED_FROM_HANDLE_RESIZE);
-  };
+$.fn.closeChildren = function () {
+  return siftFor($(this), 'close', EXCLUDED_FROM_CLOSE_CHILDREN);
+};
 
-  /* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+$.fn.handleResize = function () {
+  return siftFor($(this), 'handleResize', EXCLUDED_FROM_HANDLE_RESIZE);
+};

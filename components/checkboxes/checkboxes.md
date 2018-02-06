@@ -19,30 +19,32 @@
 The checkbox is a css only control. So principals of the input type="checkbox" apply. The label is used to style the checkbox so is required (and its also needed for accessibility too). The checkbox can have a disabled attribute or checked attribute and can be set in any way supported in JS or your framework.
 
 ```html
-  <div class="field">
-    <input type="checkbox" class="checkbox" id="checkbox1">
-    <label for="checkbox1" class="checkbox-label">Unchecked</label>
-  </div>
 
-  <div class="field">
-    <input type="checkbox" class="checkbox" id="checkbox2" checked>
-    <label for="checkbox2" class="checkbox-label" >Checked</label>
-  </div>
+<div class="field">
+  <input type="checkbox" class="checkbox" id="checkbox1">
+  <label for="checkbox1" class="checkbox-label">Unchecked</label>
+</div>
 
-  <div class="field">
-    <input type="checkbox" data-trackdirty="true" class="checkbox" id="checkbox3" >
-    <label for="checkbox3" class="checkbox-label">Dirty Tracking</label>
-  </div>
+<div class="field">
+  <input type="checkbox" class="checkbox" id="checkbox2" checked>
+  <label for="checkbox2" class="checkbox-label" >Checked</label>
+</div>
 
-  <div class="field">
-    <input type="checkbox" class="checkbox" id="checkbox4" disabled>
-    <label for="checkbox4" class="checkbox-label" >Disabled and Unchecked</label>
-  </div>
+<div class="field">
+  <input type="checkbox" data-trackdirty="true" class="checkbox" id="checkbox3" >
+  <label for="checkbox3" class="checkbox-label">Dirty Tracking</label>
+</div>
 
-  <div class="field">
-    <input type="checkbox" class="checkbox" id="checkbox5" disabled checked>
-    <label for="checkbox5" class="checkbox-label">Disabled and Checked</label>
-  </div>
+<div class="field">
+  <input type="checkbox" class="checkbox" id="checkbox4" disabled>
+  <label for="checkbox4" class="checkbox-label" >Disabled and Unchecked</label>
+</div>
+
+<div class="field">
+  <input type="checkbox" class="checkbox" id="checkbox5" disabled checked>
+  <label for="checkbox5" class="checkbox-label">Disabled and Checked</label>
+</div>
+
 ```
 
 ## Implementation Tips

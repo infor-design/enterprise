@@ -1,37 +1,49 @@
 <h1 id="charts-learn-more">Charts <a href="#">Learn More</a></h1>
 <p>All of the charts are documented separately by type. See the respective pages for each chart in addition to this shared API info page. The following charts are currently supported</p>
 <h2 id="chart-types">Chart Types</h2>
-<ol>
-<li>Default About Example <a href="../components/about/example-index">View Example</a><br /></li>
-<li>Close Event Demo <a href="../components/about/test-close-event">View Example</a></li>
+<ol type="1">
+<li>Area <a href="../components/area">View Example</a></li>
+<li>Bar <a href="../components/bar">View Example</a></li>
+<li>Bar Grouped <a href="../components/bar-grouped">View Example</a></li>
+<li>Bar Stacked <a href="../components/bar-stacked">View Example</a></li>
+<li>Bubble <a href="../components/bubble">View Example</a></li>
+<li>Column <a href="../components/column">View Example</a></li>
+<li>Column Grouped <a href="../components/column-grouped">View Example</a></li>
+<li>Completion Chart <a href="../components/completion-chart">View Example</a></li>
+<li>Donut <a href="../components/donut">View Example</a></li>
+<li>Line <a href="../components/line">View Example</a></li>
+<li>Positive Negative <a href="../components/positive-negative">View Example</a></li>
+<li>Sparkline <a href="../components/sparkline">View Example</a></li>
+<li>Step Chart <a href="../components/step-chart">View Example</a></li>
+<li>Targeted Achievement <a href="../components/targeted-achievement">View Example</a></li>
+<li>Timeline <a href="../components/timeline">View Example</a></li>
 </ol>
-<h2 id="basic-chart-use-cases">Basic Chart Use Cases</h2>
-<ol>
-<li>Using Patterns on Chart Colors <a href="../components/charts/example-chart-patterns.html">View Example</a><br /></li>
-<li>How to Hide / Show a Chart <a href="../components/charts/example-hide-show.html">View Example</a><br /></li>
+<h2 id="other-chart-use-cases">Other Chart Use Cases</h2>
+<ol type="1">
+<li>Using Patterns on Chart Colors <a href="../components/charts/example-chart-patterns.html">View Example</a></li>
+<li>How to Hide / Show a Chart <a href="../components/charts/example-hide-show.html">View Example</a></li>
 <li>How to Change Chart Type <a href="../components/charts/example-change-type.html">View Example</a></li>
 </ol>
 <h2 id="code-example">Code Example</h2>
 <p>All of the charts are initialized via the chart api with an option for each chart. The dataset option accepts a JSON array with slightly different structure depending on chart. This is an example of a donut chart.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-  $(&#39;#pie-chart-example&#39;).chart({
-    type: &#39;donut&#39;,
-    dataset: pieData
-  });
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  $(&#39;#pie-chart-example&#39;).chart({</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    type: &#39;donut&#39;,</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    dataset: pieData</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  });</a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
-<p>We still have some work to do to make charts accessible. TODO:</p>
+<p>We still have some work to do to make charts accessible. Some todo’s</p>
 <ul>
-<li>Should be keyboard friendly. Can focus the legend and hit enter to select.<br /></li>
-<li>When keying in to the legend elements it should read the data<br /></li>
+<li>Should be keyboard friendly. Can focus the legend and hit enter to select.</li>
+<li>When keying in to the legend elements it should read the data</li>
 <li>Have a table option to display the data in optional data form.</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li><strong>Tab:</strong> Tab throught the tabbble elements in the chart.<br /></li>
+<li><strong>Tab:</strong> Tab throughout the tabbable elements in the chart.</li>
 <li><strong>Enter/Space:</strong> Toggle selection on the element</li>
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
-<li>This api is compatable with version 3.6</li>
+<li>This api is roughly compatible with version 3.6</li>
 </ul>

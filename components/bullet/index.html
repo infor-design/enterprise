@@ -1,37 +1,130 @@
 <h1 id="bullet-chart-learn-more">Bullet Chart <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
-<li>Standard Bullet Chart <a href="../components/bullet/example-index">View Example</a><br /></li>
-<li>Shows Grouping a Series of Related Bullet Charts <a href="../components/bullet/example-data-group">View Example</a><br /></li>
-<li>Shows a Bullet Chart with Positive and Negative Values <a href="../components/bullet/example-negative-positive-value">View Example</a><br /></li>
-<li>Shows a bullet with a negative value <a href="../components/bullet/example-negative-value">View Example</a><br /></li>
+<ol type="1">
+<li>Standard Bullet Chart <a href="../components/bullet/example-index">View Example</a></li>
+<li>Shows Grouping a Series of Related Bullet Charts <a href="../components/bullet/example-data-group">View Example</a></li>
+<li>Shows a Bullet Chart with Positive and Negative Values <a href="../components/bullet/example-negative-positive-value">View Example</a></li>
+<li>Shows a bullet with a negative value <a href="../components/bullet/example-negative-value">View Example</a></li>
 <li>Set animation speed <a href="../components/bullet/example-animation">View Example</a></li>
 </ol>
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          animate
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          true|false - will do or not do the animation.
+'initial' will do only first time the animation.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          redrawOnResize
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, the component will not resize when resizing the page.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = The new settings to use.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handle updated settings and values.</p>
+
+        </td>
+        <td>
+          The api for chaining.
+object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown - Remove added markup and events.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke the bullet chart as part of the charts component. We pass a dataset data points for each bar group we want to show.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-  <span class="kw">var</span> dataset1 = [{
-      <span class="dt">data</span>: [
-        {<span class="st">&#39;title&#39;</span>: <span class="st">&#39;Revenue&#39;</span>,<span class="st">&#39;subtitle&#39;</span>: <span class="st">&#39;US$, in thousands&#39;</span>,<span class="st">&#39;ranges&#39;</span>: [<span class="dv">150</span>, <span class="dv">225</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">600</span>], <span class="st">&#39;measures&#39;</span>: [<span class="dv">220</span>,<span class="dv">270</span>], <span class="st">&#39;markers&#39;</span>: [<span class="dv">250</span>], <span class="dt">url</span>: <span class="st">&#39;http://someplace.com&#39;</span>,
-          <span class="dt">tooltip</span>: [<span class="st">&#39;&lt;b&gt;Poor&lt;/b&gt; 150&#39;</span>, <span class="st">&#39;&lt;b&gt;Ok&lt;/b&gt; 225&#39;</span>, <span class="st">&#39;&lt;b&gt;Good&lt;/b&gt; 300&#39;</span>, <span class="st">&#39;&lt;b&gt;Excellent&lt;/b&gt; 400&#39;</span>, <span class="st">&#39;&lt;b&gt;Revenue&lt;/b&gt; 600&#39;</span>]}
-      ],
-      <span class="dt">barColors</span>: [<span class="st">&#39;#C0EDE3&#39;</span>, <span class="st">&#39;#8ED1C6&#39;</span>, <span class="st">&#39;#69ADA3&#39;</span>, <span class="st">&#39;#448D83&#39;</span>, <span class="st">&#39;#206B62&#39;</span>],
-      <span class="dt">lineColors</span>: [<span class="st">&#39;#000000&#39;</span>, <span class="st">&#39;#000000&#39;</span>, <span class="st">&#39;#000000&#39;</span>],
-      <span class="dt">markerColors</span>: [<span class="st">&#39;#000000&#39;</span>]
-    }];
-
-  <span class="fu">$</span>(<span class="st">&#39;#bullet-example1&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;bullet&#39;</span>, <span class="dt">dataset</span>: dataset1});
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">var</span> dataset1 <span class="op">=</span> [<span class="op">{</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="dt">data</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">      <span class="op">{</span><span class="st">&#39;title&#39;</span><span class="op">:</span> <span class="st">&#39;Revenue&#39;</span><span class="op">,</span><span class="st">&#39;subtitle&#39;</span><span class="op">:</span> <span class="st">&#39;US$, in thousands&#39;</span><span class="op">,</span><span class="st">&#39;ranges&#39;</span><span class="op">:</span> [<span class="dv">150</span><span class="op">,</span> <span class="dv">225</span><span class="op">,</span> <span class="dv">300</span><span class="op">,</span> <span class="dv">400</span><span class="op">,</span> <span class="dv">600</span>]<span class="op">,</span> <span class="st">&#39;measures&#39;</span><span class="op">:</span> [<span class="dv">220</span><span class="op">,</span><span class="dv">270</span>]<span class="op">,</span> <span class="st">&#39;markers&#39;</span><span class="op">:</span> [<span class="dv">250</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">        <span class="dt">tooltip</span><span class="op">:</span> [<span class="st">&#39;&lt;b&gt;Poor&lt;/b&gt; 150&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;b&gt;Ok&lt;/b&gt; 225&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;b&gt;Good&lt;/b&gt; 300&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;b&gt;Excellent&lt;/b&gt; 400&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;b&gt;Revenue&lt;/b&gt; 600&#39;</span>]<span class="op">}</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="dt">barColors</span><span class="op">:</span> [<span class="st">&#39;#C0EDE3&#39;</span><span class="op">,</span> <span class="st">&#39;#8ED1C6&#39;</span><span class="op">,</span> <span class="st">&#39;#69ADA3&#39;</span><span class="op">,</span> <span class="st">&#39;#448D83&#39;</span><span class="op">,</span> <span class="st">&#39;#206B62&#39;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="dt">lineColors</span><span class="op">:</span> [<span class="st">&#39;#000000&#39;</span><span class="op">,</span> <span class="st">&#39;#000000&#39;</span><span class="op">,</span> <span class="st">&#39;#000000&#39;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="dt">markerColors</span><span class="op">:</span> [<span class="st">&#39;#000000&#39;</span>]</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="op">}</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="at">$</span>(<span class="st">&#39;#bullet-example1&#39;</span>).<span class="at">chart</span>(<span class="op">{</span><span class="dt">type</span><span class="op">:</span> <span class="st">&#39;bullet&#39;</span><span class="op">,</span> <span class="dt">dataset</span><span class="op">:</span> dataset1<span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.</li>
 </ul>
-<h2 id="code-tips">Code Tips</h2>
-<p>You can pass extra values like a url in the data which you can use in the events.</p>
-<p>Or if you have more dynamic requirements you can do this with an ajax callback.</p>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
-<p>None</p>
+<p>Not Applicable</p>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
-<li>This component did not exist in 3.X</li>
+<li>This visualization did not exist in 3.X</li>
 </ul>
