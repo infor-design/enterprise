@@ -15,7 +15,10 @@ module.exports = {
             'node_modules/jquery/dist/jquery.min.map'
           ],
           dest: 'dist/js/',
-          filter: 'isFile'
+          filter: 'isFile',
+          rename(dest, src) {
+            return dest + src.replace('jquery.', 'jquery-3.1.1.');
+          }
         },
         {
           expand: true,
@@ -25,7 +28,10 @@ module.exports = {
             'node_modules/d3/build/d3.min.js'
           ],
           dest: 'dist/js/',
-          filter: 'isFile'
+          filter: 'isFile',
+          rename(dest, src) {
+            return dest + src.replace('d3.', 'd3.v4.');
+          }
         },
         { expand: true, flatten: true, src: ['components/locale/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['components/empty-widgets/svg-empty.html'], dest: 'dist/svg/', filter: 'isFile' },
