@@ -2,6 +2,9 @@ import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
+// jQuery Components
+import '../listview/listview.jquery';
+
 // The name of this component
 const COMPONENT_NAME = 'swaplist';
 
@@ -143,6 +146,9 @@ SwapList.prototype = {
         options.template = s.template;
         options.dataset = c.dataset || [];
 
+        if (options.dataset.length === 0) {
+          options.forceToRenderOnEmptyDs = true;
+        }
         lv.listview(options);
       }
 
@@ -841,13 +847,20 @@ SwapList.prototype = {
       let moveTo = null;
 
       if (container.is(settings.availableClass)) { // Move from Available to Selected or Additional
-        moveTo = settings.draggable.selected ? settings.selectedClass : //eslint-disable-line
-          (self.isAdditional && settings.draggable.additional ? settings.additionalClass : null);
+        if (settings.draggable.selected) {
+          moveTo = settings.selectedClass;
+        } else {
+          moveTo = self.isAdditional && settings.draggable.additional ?
+            settings.additionalClass : null;
+        }
         self.moveElements(settings.availableClass, moveTo);
       } else if (container.is(settings.additionalClass)) {
         // Move from Additional to Selected or Available
-        moveTo = settings.draggable.selected ? settings.selectedClass : //eslint-disable-line
-          (settings.draggable.available ? settings.availableClass : null);
+        if (settings.draggable.selected) {
+          moveTo = settings.selectedClass;
+        } else {
+          moveTo = settings.draggable.available ? settings.availableClass : null;
+        }
         self.moveElements(settings.additionalClass, moveTo);
       } else if (container.is(settings.selectedClass)) {
         // Move from Selected
@@ -888,9 +901,11 @@ SwapList.prototype = {
       // Left or Right arrow
       if ((e.keyCode === 37 || e.keyCode === 39) && self.selectedButtons.length > 1) {
         index = self.selectedButtons.index(this);
-        move = e.keyCode === 37 ? // eslint-disable-line
-        (index > 0 ? index - 1 : self.selectedButtons.length - 1) :
-          (index < self.selectedButtons.length - 1 ? index + 1 : 0);
+        if (e.keyCode === 37) {
+          move = index > 0 ? index - 1 : self.selectedButtons.length - 1;
+        } else {
+          move = index < self.selectedButtons.length - 1 ? index + 1 : 0;
+        }
         self.selectedButtons[move].focus();
       }
     });
