@@ -14,7 +14,7 @@ describe('Dropdown tests', () => {
       done();
     } catch(error) {
       sessionId = session.getId();
-      console.log(sessionId);
+      console.log(`Marking Session: ${sessionId} as error with reason: ${error.name}`);
       const username = process.env.BROWSER_STACK_USERNAME;
       const accessKey = process.env.BROWSER_STACK_ACCESS_KEY;
       const url = `https://${username}:${accessKey}@api.browserstack.com/automate/sessions/${sessionId}.json`
