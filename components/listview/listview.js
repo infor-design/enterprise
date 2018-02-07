@@ -339,7 +339,7 @@ ListView.prototype = {
     ds = ds || this.settings.dataset;
     pagerInfo = pagerInfo || {};
 
-    if (!Array.isArray(ds) || !ds.length) {
+    if (!Array.isArray(ds)) {
       return;
     }
 
