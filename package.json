@@ -32,7 +32,7 @@
     "bump-version": "./bin/bump-version.js",
     "publish-dev": "grunt publish && npm publish publish --tag dev --force",
     "publish-prod": "grunt publish && npm publish publish --force",
-    "install-global": "npm install -g pandoc-bin grunt-cli documentation rollup",
+    "install-globals": "npm install -g pandoc-bin grunt-cli documentation rollup",
     "documentation": "./build/generate-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.3.3 -v"
   },
