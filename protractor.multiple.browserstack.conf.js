@@ -7,6 +7,7 @@ exports.config = {
     '**/e2e/*.e2e-spec.js'
   ],
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
+  SELENIUM_PROMISE_MANAGER: false,
   commonCapabilities: {
     'browserstack.user': process.env.BROWSER_STACK_USERNAME,
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
