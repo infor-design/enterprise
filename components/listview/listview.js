@@ -17,25 +17,27 @@ const COMPONENT_NAME = 'listview';
 /**
  * Listview Default Settings
  * @namespace
- * @property {array} dataset  Array of data to feed the template
- * @property {string} content  Html Template String
- * @property {string} description  Audible Label (or use parent title)
- * @property {boolean} paging  If true, activates paging
- * @property {number} pagesize  If paging is activated, sets the number of
+ * @property {array} dataset Array of data to feed the template
+ * @property {string} content Html Template String
+ * @property {string} description Audible Label (or use parent title)
+ * @property {boolean} paging If true, activates paging
+ * @property {number} pagesize If paging is activated, sets the number of
  *  listview items available per page
- * @property {boolean} searchable  If true, associates itself with a Searchfield/Autocomplete
- *  and allows itself to be filtered
- * @property {String|Boolean} selectable   selection mode, can be false, 'single' or
+ * @property {boolean} searchable If true, associates itself with a
+ * Searchfield/Autocomplete and allows itself to be filtered
+ * @property {String|Boolean} selectable selection mode, can be false, 'single' or
  *  'multiple' or 'mixed'
- * @property {boolean} selectOnFocus   If true the first item in the list will be
+ * @property {boolean} selectOnFocus If true the first item in the list will be
  *  selected as it is focused.
- * @property {boolean} showCheckboxes   If false will not show checkboxes used with
+ * @property {boolean} showCheckboxes If false will not show checkboxes used with
  *  multiple selection mode only
- * @property {boolean} hoverable   If true the list element will show a hover action
+ * @property {boolean} hoverable If true the list element will show a hover action
  *  to indicate its actionable.
- * @property {Function|String} source  If source is a string then it serves as the url
+ * @property {Function|String} source If source is a string then it serves as the url
  *  for an ajax call that returns the dataset. If its a function it is a call back for
  *  getting the data asyncronously.
+ * @param {Boolean} forceToRenderOnEmptyDs If true list will render as an empty
+ * list with ul tag, but not any li tags in it.
  * @property {boolean} disableItemDeactivation  If true when an item is activated the
  *  user should not be able to deactivate it by clicking on the activated item. They
  *  can only select another row.
@@ -53,6 +55,7 @@ const LISTVIEW_DEFAULTS = {
   hoverable: true,
   emptyMessage: null,
   source: null,
+  forceToRenderOnEmptyDs: false,
   disableItemDeactivation: false
 };
 
@@ -225,7 +228,7 @@ ListView.prototype = {
       const compiledTmpl = Tmpl.compile(this.settings.template);
       const renderedTmpl = compiledTmpl.render({ dataset, totals });
 
-      if (dataset.length > 0) {
+      if (dataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
         this.element.html(renderedTmpl);
       } else if (self.emptyMessageContainer) {
         this.element.empty().append(this.emptyMessageContainer);
