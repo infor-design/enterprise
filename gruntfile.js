@@ -15,7 +15,7 @@ module.exports = function (grunt) {
   // const revision = require('./build/configs/revision.js');
   // const stripCode = require('./build/configs/strip_code.js');
   const clean = require('./build/configs/clean.js');
-  //const jshint = require('./build/configs/jshint.js');
+  // const jshint = require('./build/configs/jshint.js');
   // uglify = require('./build/configs/uglify.js');
   const dependencyBuilder = require('./build/dependencybuilder.js');
   const strBanner = require('./build/strbanner.js');
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
     config,
     chokidar,
     clean,
-    //jshint,
+    // jshint,
     sass,
     meta,
     amdHeader,
@@ -95,13 +95,13 @@ module.exports = function (grunt) {
     'clean:dist',
     'clean:public',
     // 'revision',
-    //'jshint',
+    // 'jshint',
     'sass',
     // 'copy:amd',
     // 'strip_code',
     'run:build',
     // 'clean:amd',
-    //'uglify',
+    // 'uglify',
     'cssmin',
     'copy:main',
     'compress',
@@ -128,14 +128,8 @@ module.exports = function (grunt) {
   grunt.registerTask('publish', [
     'clean:dist',
     'clean:public',
-    // 'revision',
-    //'jshint',
     'sass',
-    // 'copy:amd',
-    // 'strip_code',
     'run:build',
-    // 'clean:amd',
-    // 'uglify',
     'cssmin',
     'copy:main',
     'compress',
