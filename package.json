@@ -39,7 +39,11 @@
     "pree2e": "npm run webdriver && (npm run start & sleep 10)",
     "e2e": "protractor ./protractor.browserstack.conf.js || npm run stop",
     "poste2e": "npm run stop && exit 0",
+    "pree2emulti": "npm run webdriver && (npm run start & sleep 10)",
+    "e2emulti": "protractor ./protractor.multiple.browserstack.conf.js || npm run stop",
+    "poste2emulti": "npm run stop && exit 0",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
+    "webdriver:update": "webdriver-manager update",
     "develop-tag": "./bin/add-npm-tag.js develop",
     "bump-version": "./bin/bump-version.js",
     "publish-dev": "grunt publish && npm publish publish --tag dev --force",
@@ -51,7 +55,8 @@
   "dependencies": {
     "browserstack-local": "^1.3.0",
     "d3": "^4.12.2",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "r2": "^2.0.0"
   },
   "main": "dist/js/sohoxi",
   "jspm": {
