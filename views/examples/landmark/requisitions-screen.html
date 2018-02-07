@@ -1,0 +1,92 @@
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  <header class="header is-personalizable">
+    <div class="toolbar">
+      <div class="title">
+
+        <button class="btn-icon" type="button">
+          <span class="audible">Show navigation</span>
+          <span class="icon app-header">
+            <span class="one"></span>
+            <span class="two"></span>
+            <span class="three"></span>
+          </span>
+        </button>
+
+        <h1>All Requisitions</h1>
+      </div>
+
+      {{> includes/header-actionbutton}}
+    </div>
+  </header>
+
+  <div id="maincontent" class="two-column page-container fixed list-detail">
+
+    <div class="sidebar" role="complementary">
+      <div class="listview scrollable" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
+    </div>
+
+    <div class="main" role="main">
+      <div class="page-container no-scroll">
+        <div class="tab-container header-tabs alternate">
+          <div class="tab-list-container">
+            <ul class="tab-list">
+              <li class="tab"><a href="#overview">Overview</a></li>
+              <li class="tab is-selected"><a href="#workflow">Workflow</a></li>
+              <li class="tab"><a href="#all-applicants">All Applicants (32)</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-panel-container">
+          <div class="tab-panel" id="overview">
+            <h3>Overview</h3>
+          </div>
+
+          <!-- begin overview tab -->
+          <div class="tab-panel" id="workflow">
+            <div class="content">
+              <!-- Begin StepPattern -->
+                {{> includes/requisitions-stepprocess}}
+              <!-- End StepPattern -->
+            </div>
+          </div>
+          <!-- end overview tab -->
+
+          <div class="tab-panel" id="all-applicants">
+            <h3>All Applicants</h3>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{{={{{ }}}=}}
+
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}}</p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<!-- Change Colors -->
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $(this).personalize({
+      startingColor: '#2578A9' // Azure07
+    });
+  });
+</script>
