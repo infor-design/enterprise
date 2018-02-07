@@ -20,21 +20,22 @@ $.fn.chart = function (settings) {
     case 'targeted-achievement':
     case 'completion':
     case 'completion-target': {
-      instance = $.data(this, COMPLETION_CHART_NAME);
+      instance = $.data(this, settings.type);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       const chartComponent = new CompletionChart(this, settings);
       instance = $.data(this, COMPLETION_CHART_NAME, chartComponent);
       $.data(this, 'chart', chartComponent); // Compatibility
+      $.data(this, settings.type, chartComponent); // Compatibility
       break;
     }
     case 'bullet': {
       instance = $.data(this, BULLET_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       const chartComponent = new Bullet(this, settings);
       instance = $.data(this, BULLET_NAME, chartComponent);
@@ -45,7 +46,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       const chartComponent = new Sparkline(this, settings);
       instance = $.data(this, SPARKLINE_NAME, chartComponent);
@@ -56,7 +57,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isDots = true;
       const chartComponent = new Sparkline(this, settings);
@@ -68,7 +69,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isPeakDot = true;
       const chartComponent = new Sparkline(this, settings);
@@ -80,7 +81,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isPeakDot = true;
       settings.isDots = true;
@@ -93,7 +94,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isMinMax = true;
       const chartComponent = new Sparkline(this, settings);
@@ -105,7 +106,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isMedianRange = true;
       const chartComponent = new Sparkline(this, settings);
@@ -117,7 +118,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isMedianRange = true;
       settings.isPeakDot = true;
@@ -130,7 +131,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, LINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       const chartComponent = new Line(this, settings);
       instance = $.data(this, LINE_NAME, chartComponent);
@@ -141,7 +142,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, LINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isArea = true;
       const chartComponent = new Line(this, settings);
@@ -153,7 +154,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, LINE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isBubble = true;
       const chartComponent = new Line(this, settings);
@@ -167,7 +168,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, COLUMN_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       const chartComponent = new Column(this, settings);
       instance = $.data(this, COLUMN_NAME, chartComponent);
@@ -178,7 +179,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, COLUMN_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isStacked = true;
       const chartComponent = new Column(this, settings);
@@ -190,7 +191,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, BAR_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isStacked = true;
       const chartComponent = new Bar(this, settings);
@@ -202,7 +203,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, BAR_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isStacked = true;
       const chartComponent = new Bar(this, settings);
@@ -214,7 +215,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, BAR_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isNormalized = true;
       const chartComponent = new Bar(this, settings);
@@ -226,7 +227,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, BAR_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isStacked = false;
       settings.isGrouped = true;
@@ -239,7 +240,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, PIE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       const chartComponent = new Pie(this, settings);
       instance = $.data(this, PIE_NAME, chartComponent);
@@ -250,7 +251,7 @@ $.fn.chart = function (settings) {
       instance = $.data(this, PIE_NAME);
       if (instance) {
         instance.updated(settings);
-        return;
+        return this;
       }
       settings.isDonut = true;
       const chartComponent = new Pie(this, settings);
@@ -261,4 +262,6 @@ $.fn.chart = function (settings) {
     default:
       instance = null;
   }
+
+  return this;
 };

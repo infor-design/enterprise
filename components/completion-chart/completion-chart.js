@@ -291,25 +291,34 @@ CompletionChart.prototype = {
       '</span>';
     } else {
       html.body.addClass('chart-completion');
-      html.label = `${'' +
-      '<b class="label name">'}${fixUndefined(dataset.name.text)}</b>` +
-      `<b class="label info${dataset.info && dataset.info.color && !specColor.info ?
-        ` ${fixUndefined(dataset.info.color)}` :
-        `${!specColor.completed ? ` ${fixUndefined(dataset.completed.color)}` : ''} colored`}">` +
-        `<span class="value${dataset.info.color && !specColor.info ?  //eslint-disable-line
-        ` ${fixUndefined(dataset.info.color)}` :
-        (!specColor.completed ? ` ${fixUndefined(dataset.completed.color)}` : '')}"${dataset.info.color && specColor.info ? //eslint-disable-line
-        ` style="color:${fixUndefined(dataset.info.color)};"` : //eslint-disable-line
-          (specColor.completed ? ` style="color:${fixUndefined(dataset.completed.color)};"` : '')}>${
-          dataset.info && !isUndefined(dataset.info.value) ? fixUndefined(dataset.info.value) : //eslint-disable-line
-            setFormat(dataset.completed)
-        }</span> ` +
-        `<span class="text${dataset.info.color && !specColor.info ? //eslint-disable-line
-        ` ${fixUndefined(dataset.info.color)}` :
-        (!specColor.completed ? ` ${fixUndefined(dataset.completed.color)}` : '')}"${dataset.info.color && specColor.info ? //eslint-disable-line
-        ` style="color:${fixUndefined(dataset.info.color)};"` :
-          (specColor.completed ? ` style="color:${fixUndefined(dataset.completed.color)};"` : '')}>${fixUndefined(dataset.info.text)}</span>` +
-    '</b>';
+      const name = fixUndefined(dataset.name.text);
+      const completedColor = fixUndefined(dataset.completed.color);
+      const infoColor = fixUndefined(dataset.info.color);
+      let bColor = dataset.info.color && !specColor.info ? infoColor : '';
+      const infoText = fixUndefined(dataset.info.text);
+
+      if (!specColor.completed) {
+        bColor = completedColor;
+      }
+
+      let styleColor = '';
+      if (dataset.info.color && specColor.info) {
+        styleColor = infoColor;
+      }
+
+      if (specColor.completed) {
+        styleColor = completedColor;
+      }
+
+      const styleValue = (dataset.info && !isUndefined(dataset.info.value) ?
+        fixUndefined(dataset.info.value) :
+        setFormat(dataset.completed));
+
+      html.label = `<b class="label name">${name}</b>
+      <b class="label info ${bColor} colored">
+      <span class="value ${bColor}" style="color: ${styleColor};">${styleValue}</span>
+      <span class="text ${bColor}" style="color: ${styleColor};">${infoText}</span>
+      </b>`;
     }
 
     if (dataset.remaining) {

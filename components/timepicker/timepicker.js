@@ -577,10 +577,10 @@ TimePicker.prototype = {
     // Set focus on (opt: next|prev) focusable element
     const focusables = this.popup.find(':focusable');
     let index = focusables.index($(':focus'));
+    const next = ((index + 1) >= focusables.length ? 0 : (index + 1));
+    const prev = ((index - 1) < 0 ? focusables.length : (index - 1));
 
-    index = (!reverse) ? //eslint-disable-line
-    ((index + 1) >= focusables.length ? 0 : (index + 1)) :
-      ((index - 1) < 0 ? focusables.length : (index - 1));
+    index = (!reverse) ? next : prev;
 
     focusables.eq(index).focus();
   },
