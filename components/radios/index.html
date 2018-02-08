@@ -11,20 +11,20 @@
 <h2 id="code-example">Code Example</h2>
 <p>A Radio Button should always have a group label to indicate what you are selecting. To get the group label, place the Radio Button in a field set with class radio-group. The legend contains this label.</p>
 <p>Add any number of input elements, but other controls are better for a large number of options: See <a href="https://soho.infor.com/index.php?p=articles/selecting-from-a-set-of-values-choosing-the-right-component">decision tree article</a>.</p>
-<p>Each input should have class = “radio” and type=“radio” and should have an id that points to the matching label (required). Value can be set to the logical value represented by that radio choice.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"> <span class="kw">&lt;fieldset</span><span class="ot"> class=</span><span class="st">&quot;radio-group&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;legend&gt;</span>Select delivery method<span class="kw">&lt;/legend&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> id=</span><span class="st">&quot;delivery1&quot;</span><span class="ot"> value=</span><span class="st">&quot;in&quot;</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;delivery1&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Dine in<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="kw">&lt;br&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> checked class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> id=</span><span class="st">&quot;delivery2&quot;</span><span class="ot"> value=</span><span class="st">&quot;out&quot;</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;delivery2&quot;</span><span class="ot">  class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Carry out<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="kw">&lt;br&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> id=</span><span class="st">&quot;delivery3&quot;</span><span class="ot"> value=</span><span class="st">&quot;delivery&quot;</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;delivery3&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Delivery<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">&lt;/fieldset&gt;</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"></a></code></pre></div>
+<p>Each input should have class = &quot;radio&quot; and type=&quot;radio&quot; and should have an id that points to the matching label (required). Value can be set to the logical value represented by that radio choice.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+ <span class="kw">&lt;fieldset</span><span class="ot"> class=</span><span class="st">&quot;radio-group&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;legend&gt;</span>Select delivery method<span class="kw">&lt;/legend&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> id=</span><span class="st">&quot;delivery1&quot;</span><span class="ot"> value=</span><span class="st">&quot;in&quot;</span> <span class="kw">/&gt;</span>
+    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;delivery1&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Dine in<span class="kw">&lt;/label&gt;</span>
+    <span class="kw">&lt;br&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> checked class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> id=</span><span class="st">&quot;delivery2&quot;</span><span class="ot"> value=</span><span class="st">&quot;out&quot;</span> <span class="kw">/&gt;</span>
+    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;delivery2&quot;</span><span class="ot">  class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Carry out<span class="kw">&lt;/label&gt;</span>
+    <span class="kw">&lt;br&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> id=</span><span class="st">&quot;delivery3&quot;</span><span class="ot"> value=</span><span class="st">&quot;delivery&quot;</span> <span class="kw">/&gt;</span>
+    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;delivery3&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Delivery<span class="kw">&lt;/label&gt;</span>
+<span class="kw">&lt;/fieldset&gt;</span>
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>The radio button element uses the standard radio construct which makes it possible to be accessible.</li>

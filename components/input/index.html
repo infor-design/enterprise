@@ -15,7 +15,7 @@
 <p>The Text Input Field supports both unstructured and structured entries. Certain types of values (such as phone numbers, credit card numbers, part codes, even decimal values etc.) may have more complex formatting rules than simple text and decimal entries. You can use smart (forgiving) and structured formats within a text input field to support more of these types of values.</p>
 <p>With smart formatting, the system interprets the user entry and restructures the data if necessary. Use this method when:</p>
 <ul>
-<li>You don’t want to require users to enter the value in exact format. For example, if you require currency values to have two decimal places, a smart format will automatically add two zeros after the decimal place if the user does not enter a decimal point (user enters 94, system interprets as 94.00).</li>
+<li>You don't want to require users to enter the value in exact format. For example, if you require currency values to have two decimal places, a smart format will automatically add two zeros after the decimal place if the user does not enter a decimal point (user enters 94, system interprets as 94.00).</li>
 <li>The system can easily interpret what the user intends. For example, for a phone number in the U.S., the system should be able to interpret multiple entry methods: (123) 456-7890; 123-456-7890; 123.456.7890; 1234567890</li>
 </ul>
 <p>With structured formatting, the system requires values be entered in a specific format. The field uses inline help to identify the field mask and forces the correct structure. Use this method when</p>
@@ -26,7 +26,7 @@
 </ul>
 <h2 id="code-example">Code Example</h2>
 <h3 id="text-input-field">Text Input Field</h3>
-<p>A standard Text Input is a basic input element with type=“text”. Password type can also be used. To implement one, create an input element with type=“text”. You can also add various related features, including:</p>
+<p>A standard Text Input is a basic input element with type=&quot;text&quot;. Password type can also be used. To implement one, create an input element with type=&quot;text&quot;. You can also add various related features, including:</p>
 <ul>
 <li>Masking</li>
 <li>Placeholder</li>
@@ -36,42 +36,42 @@
 <li>Dirty Indicator</li>
 <li>Enabled/Readonly</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;first-name&quot;</span><span class="kw">&gt;</span>First Name<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;first-name&quot;</span><span class="ot"> name=</span><span class="st">&quot;first-name&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Normal text Field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;last-name&quot;</span><span class="kw">&gt;</span>Last Name<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;last-name&quot;</span><span class="ot"> aria-required=</span><span class="st">&quot;true&quot;</span><span class="ot"> name=</span><span class="st">&quot;last-name&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address&quot;</span><span class="kw">&gt;</span>Email Address<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;email-address&quot;</span><span class="ot"> aria-required=</span><span class="st">&quot;true&quot;</span><span class="ot"> name=</span><span class="st">&quot;email-address&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required email&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Company@address.com&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address-ok&quot;</span><span class="kw">&gt;</span>Email Address - Checker<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> name=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;emailPositive&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;department&quot;</span><span class="kw">&gt;</span>Department<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> disabled value=</span><span class="st">&quot;Field not editable&quot;</span><span class="ot"> id=</span><span class="st">&quot;department&quot;</span><span class="ot"> name=</span><span class="st">&quot;department&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;department-code&quot;</span><span class="kw">&gt;</span>Department Code<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> readonly value=</span><span class="st">&quot;02006&quot;</span><span class="ot"> id=</span><span class="st">&quot;department-code&quot;</span><span class="ot"> name=</span><span class="st">&quot;department-code&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-33" data-line-number="33">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;department-code-trackdirty&quot;</span><span class="kw">&gt;</span>Department Code<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Dirty Tracking&quot;</span><span class="ot"> data-trackdirty=</span><span class="st">&quot;true&quot;</span><span class="ot"> id=</span><span class="st">&quot;department-code-trackdirty&quot;</span><span class="ot"> name=</span><span class="st">&quot;department-code-trackdirty&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-35" data-line-number="35"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-36" data-line-number="36"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;first-name&quot;</span><span class="kw">&gt;</span>First Name<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;first-name&quot;</span><span class="ot"> name=</span><span class="st">&quot;first-name&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Normal text Field&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;last-name&quot;</span><span class="kw">&gt;</span>Last Name<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;last-name&quot;</span><span class="ot"> aria-required=</span><span class="st">&quot;true&quot;</span><span class="ot"> name=</span><span class="st">&quot;last-name&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address&quot;</span><span class="kw">&gt;</span>Email Address<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;email-address&quot;</span><span class="ot"> aria-required=</span><span class="st">&quot;true&quot;</span><span class="ot"> name=</span><span class="st">&quot;email-address&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required email&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Company@address.com&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address-ok&quot;</span><span class="kw">&gt;</span>Email Address - Checker<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> name=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;emailPositive&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;department&quot;</span><span class="kw">&gt;</span>Department<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> disabled value=</span><span class="st">&quot;Field not editable&quot;</span><span class="ot"> id=</span><span class="st">&quot;department&quot;</span><span class="ot"> name=</span><span class="st">&quot;department&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;department-code&quot;</span><span class="kw">&gt;</span>Department Code<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> readonly value=</span><span class="st">&quot;02006&quot;</span><span class="ot"> id=</span><span class="st">&quot;department-code&quot;</span><span class="ot"> name=</span><span class="st">&quot;department-code&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;department-code-trackdirty&quot;</span><span class="kw">&gt;</span>Department Code<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Dirty Tracking&quot;</span><span class="ot"> data-trackdirty=</span><span class="st">&quot;true&quot;</span><span class="ot"> id=</span><span class="st">&quot;department-code-trackdirty&quot;</span><span class="ot"> name=</span><span class="st">&quot;department-code-trackdirty&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Make sure the input has a matching label which is meaningful.</li>

@@ -10,10 +10,90 @@
   
     
 
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          filterMode
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          The search mode to use, can be 'contains' or 'startsWith'
 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          maxSelected
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          The max number of items which can be selected
 
-  
-    
+        </td>
+      </tr>
+      <tr>
+        <td>
+          moveSelected
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Move selected options in each group to just underneath
+their corresponding group headers.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showEmptyGroupHeaders
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true groups with no items will still show
+the empty group header.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showSelectAll
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Show the select all text/option.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          source
+        </td>
+        <td>
+          Function
+        </td>
+        <td>
+          The calback for ajax.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 
@@ -40,6 +120,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -52,6 +134,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -59,7 +143,8 @@
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming settings
+ </span>
                 
           
         </td>
@@ -68,6 +153,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -80,6 +167,8 @@
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
     </tbody>
@@ -91,21 +180,21 @@
   
 
 <h2 id="code-example">Code Example</h2>
-<p>The Multi-select Drop Down works similar to a standard HTML select element using the “multiple” attribute. Because of styling and functionality requirements, we use a stylized shadow widget which implements the drop down behavior and updates in sync with a hidden select element. This allows the select element to be serialized with the DOM like normal. The simplest way to use the drop down is to create markup containing: a field (for field and responsive form alignment), a label and a select. For accessibility and implementation reasons the label is required.</p>
+<p>The Multi-select Drop Down works similar to a standard HTML select element using the &quot;multiple&quot; attribute. Because of styling and functionality requirements, we use a stylized shadow widget which implements the drop down behavior and updates in sync with a hidden select element. This allows the select element to be serialized with the DOM like normal. The simplest way to use the drop down is to create markup containing: a field (for field and responsive form alignment), a label and a select. For accessibility and implementation reasons the label is required.</p>
 <p>Create a select element with similar markup:</p>
 <p>The control is initialized through the page initializer <code>$('body').initialize('en-US');</code> or manually with <code>$('.multiselect').multiselect()</code>;</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;states&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>States<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;select</span><span class="ot"> multiple id=</span><span class="st">&quot;states&quot;</span><span class="ot"> name=</span><span class="st">&quot;states&quot;</span><span class="ot"> data-maxselected=</span><span class="st">&quot;3&quot;</span><span class="ot"> class=</span><span class="st">&quot;multiselect&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;AL&quot;</span><span class="kw">&gt;</span>Alabama<span class="kw">&lt;/option&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;CA&quot;</span><span class="kw">&gt;</span>California<span class="kw">&lt;/option&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;DE&quot;</span><span class="kw">&gt;</span>Delaware<span class="kw">&lt;/option&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;NY&quot;</span><span class="kw">&gt;</span>New York<span class="kw">&lt;/option&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;WY&quot;</span><span class="kw">&gt;</span>Wyoming<span class="kw">&lt;/option&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="kw">&lt;/select&gt;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;states&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>States<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;select</span><span class="ot"> multiple id=</span><span class="st">&quot;states&quot;</span><span class="ot"> name=</span><span class="st">&quot;states&quot;</span><span class="ot"> data-maxselected=</span><span class="st">&quot;3&quot;</span><span class="ot"> class=</span><span class="st">&quot;multiselect&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;AL&quot;</span><span class="kw">&gt;</span>Alabama<span class="kw">&lt;/option&gt;</span>
+    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;CA&quot;</span><span class="kw">&gt;</span>California<span class="kw">&lt;/option&gt;</span>
+    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;DE&quot;</span><span class="kw">&gt;</span>Delaware<span class="kw">&lt;/option&gt;</span>
+    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;NY&quot;</span><span class="kw">&gt;</span>New York<span class="kw">&lt;/option&gt;</span>
+    <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;WY&quot;</span><span class="kw">&gt;</span>Wyoming<span class="kw">&lt;/option&gt;</span>
+  <span class="kw">&lt;/select&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <ul>
 <li>Multi-Select Dropdowns should have Checkboxes, to distinguish them from <a href="https://soho.infor.com/index.php?p=component/single-select-dropdown">Single-Select Drop Downs</a>.</li>
@@ -118,10 +207,10 @@
 <li>Make sure that there is a label which matches both the input and any shadow element inputs and identifies the field and is correctly matched using the label for to the input id.</li>
 <li>Use the following aria tags:
 <ul>
-<li>role=“combobox” - must be set on the input</li>
+<li>role=&quot;combobox&quot; - must be set on the input</li>
 <li>aria-expanded - set to true when the list is expanded, set to false when closed</li>
-<li>role=“listbox” on the open list</li>
-<li>role=“option” on each list item</li>
+<li>role=&quot;listbox&quot; on the open list</li>
+<li>role=&quot;option&quot; on each list item</li>
 <li>aria-activedescendant - associates the input to the active list item. Must be removed if no options are selected</li>
 <li>aria-controls on the input field, containing the ID of the matching drop down list</li>
 </ul></li>

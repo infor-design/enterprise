@@ -12,7 +12,7 @@
 <p>Mask Patterns are comprised of two different types of characters:</p>
 <ul>
 <li><strong>Pattern Characters</strong> - These are characters replaceable by a pre-defined subset of other characters. For example, by default, a <strong>#</strong> can only be replaced by any numeric character (0 through 9). One pattern character will always match one keyed character.</li>
-<li><strong>Literal Characters</strong> - These characters are “literal,” meaning that they will only be represented in the text input by itself. When the cursor is placed at a literal character and any key is pressed, the Mask Control will find the next possible pattern character in the string and match the keyboard input against it. If it’s a match, the pattern character and all literal characters preceding it will be filled in automatically. It’s also possible to individually key in each literal character in the string.</li>
+<li><strong>Literal Characters</strong> - These characters are &quot;literal,&quot; meaning that they will only be represented in the text input by itself. When the cursor is placed at a literal character and any key is pressed, the Mask Control will find the next possible pattern character in the string and match the keyboard input against it. If it's a match, the pattern character and all literal characters preceding it will be filled in automatically. It's also possible to individually key in each literal character in the string.</li>
 </ul>
 <h4 id="available-mask-pattern-characters">Available Mask Pattern Characters</h4>
 <p>The following mask pattern characters are available by default:</p>
@@ -25,17 +25,17 @@
 <li><strong>m</strong> - Represents the second character in the time period (am/pm). Can be replaced by <strong>m</strong> or <strong>M</strong>.</li>
 </ul>
 <h4 id="creating-new-pattern-characters">Creating New Pattern Characters</h4>
-<p>It’s possible to create additional pattern characters by extending the Control’s “definitions” option. The below example sets up a rule that will allow a pattern character of ‘d’ to only be replaced by lowercase letters between <strong>a</strong> and <strong>e</strong>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="va">$</span>.<span class="at">extend</span>(<span class="at">$</span>(<span class="st">&#39;#mask&#39;</span>).<span class="at">data</span>(<span class="st">&#39;mask&#39;</span>).<span class="va">settings</span>.<span class="at">definitions</span><span class="op">,</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="st">&#39;d&#39;</span> <span class="op">:</span> <span class="st">&#39;[abcde]&#39;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a></code></pre></div>
+<p>It's possible to create additional pattern characters by extending the Control's &quot;definitions&quot; option. The below example sets up a rule that will allow a pattern character of 'd' to only be replaced by lowercase letters between <strong>a</strong> and <strong>e</strong>.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="ot">$</span>.<span class="fu">extend</span>(<span class="fu">$</span>(<span class="st">&#39;#mask&#39;</span>).<span class="fu">data</span>(<span class="st">&#39;mask&#39;</span>).<span class="ot">settings</span>.<span class="fu">definitions</span>, {
+  <span class="st">&#39;d&#39;</span> : <span class="st">&#39;[abcde]&#39;</span>
+});
+</code></pre>
 <h2 id="code-example">Code Example</h2>
 <h3 id="mask">Mask</h3>
-<p>A Mask Control is created simply by adding a “data-mask” attribute to any input field. The “data-mask” attribute contains a pattern that will control the allowed text-entry into the input field.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;input</span><span class="ot"> data-mask=</span><span class="st">&quot;####-####-####-####&quot;</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a></code></pre></div>
+<p>A Mask Control is created simply by adding a &quot;data-mask&quot; attribute to any input field. The &quot;data-mask&quot; attribute contains a pattern that will control the allowed text-entry into the input field.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;input</span><span class="ot"> data-mask=</span><span class="st">&quot;####-####-####-####&quot;</span> <span class="kw">/&gt;</span>
+</code></pre>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <p>No specific keyboard shortcuts exist for the Mask Control, but it should be noted that certain keys will not produce a character in the Input field based on the current position of the cursor inside the mask.</p>

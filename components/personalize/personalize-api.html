@@ -13,11 +13,6 @@
     
 
 
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -27,6 +22,25 @@
       <th>Returns</th>
     </thead>
     <tbody>
+      <tr>
+        <td>validateHex</td>
+        <td>
+          
+                
+                  <span>hex (string) = : A hex color.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Validates a string containing a hexadecimal number</p>
+
+        </td>
+        <td>
+          a validated hexadecimal string.
+string
+        </td>
+      </tr>
       <tr>
         <td>setColors</td>
         <td>
@@ -42,6 +56,8 @@
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -86,11 +102,40 @@ scheme (can be dark, light or high-contrast)
         </td>
       </tr>
       <tr>
+        <td>blockUi</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Builds a temporary page overlay that prevents end users from experiencing FOUC</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>unBlockUi</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Removes a temporary page overlay built by <code>blockUi()</code></p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
         <td>updated</td>
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming settings
+ </span>
                 
           
         </td>
@@ -99,6 +144,37 @@ scheme (can be dark, light or high-contrast)
 
         </td>
         <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Simple Teardown - remove events &#x26; rebuildable markup.
+Ideally this will do non-destructive things that make it possible to easily rebuild</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown - Remove added markup and events</p>
+
+        </td>
+        <td>
+          
+void
         </td>
       </tr>
     </tbody>

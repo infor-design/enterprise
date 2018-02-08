@@ -8,16 +8,174 @@
   
     
 
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          title
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          text that is displayed in the Toast's title.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          message
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          text/HTML that's displayed in the Toast's body.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          position
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          text that propagates into CSS classes that
+position the Toast in specific places. top left, bottom left, bottom right (center??)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          audibleOnly
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          if true, causes the toast to be invisble on the screen,
+but still read out lout by screen readers.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          progressBar
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          causes the toast to have a visible progress bar that
+will be completely disappeared when the toast should be removed.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          timeout
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          the amount of time the toast should be present on-screen.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
 
 
   
     
 
 
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>show</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Show a Single Toast Message</p>
 
-  
-    
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>remove</td>
+        <td>
+          
+                
+                  <span>toast () = the toast message to be removed
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Remove the Message and Animate</p>
 
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
   </section>
@@ -30,13 +188,13 @@
 </ul>
 <h2 id="code-example">Code Example</h2>
 <p>The Toast component is a JS-based component that lets you send a quick feedback message to the user. The message will display and timeout after 6s, showing a progress bar with an option to immediately dismiss. To show a test message, call the toast function on the body element passing in the title and message content.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">//Show a Visual Toast Message</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="at">$</span>(<span class="st">&#39;body&#39;</span>).<span class="at">toast</span>(<span class="op">{</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Application Offline&#39;</span><span class="op">,</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;This is a Toast message&#39;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="co">//Show a Visual Toast Message</span>
+<span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">toast</span>({
+  <span class="dt">title</span>: <span class="st">&#39;Application Offline&#39;</span>,
+  <span class="dt">message</span>: <span class="st">&#39;This is a Toast message&#39;</span>
+});
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>The Toast Component is made accessible by making an aria live region which means the attribute <code>aria-live=&quot;polite&quot;</code> is added. Because of this, the control can actually be used to announce/read out something to a screen reader. You can do this by passing the <code>audible: true</code> setting. Because the message is polite, it will be read after the user is done with the current actions.</li>
