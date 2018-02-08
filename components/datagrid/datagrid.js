@@ -2232,6 +2232,7 @@ Datagrid.prototype = {
     let d2;
     let j = 0;
     let isHidden;
+    let skipColumns;
 
     if (!rowData) {
       return '';
@@ -2310,6 +2311,11 @@ Datagrid.prototype = {
         rowData,
         self
       );
+
+      if (skipColumns > 0) {
+        skipColumns -= skipColumns;
+        continue;
+      }
 
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
         col.readonly = true;
@@ -2411,10 +2417,30 @@ Datagrid.prototype = {
         }
       }
 
+      // Run an optional function to calculate a colspan
+      let colspan = null;
+      if (col.colspan && typeof col.colspan === 'function') {
+        const fieldVal = self.fieldValue(rowData, self.settings.columns[j].field);
+        colspan = col.colspan(ariaRowindex - 1, j, fieldVal, col, rowData, self);
+
+        const max = self.settings.columns.length - j;
+        colspan = (colspan && colspan > max) ? max : colspan;
+        if (colspan && colspan > 1) {
+          skipColumns = colspan - 1;
+          if (col.align) {
+            cssClass = cssClass.replace(` l-${col.align}-text`, '');
+          }
+          cssClass += ' l-left-text';
+        } else {
+          colspan = null;
+        }
+      }
+
       rowHtml += `<td role="gridcell" ${ariaReadonly} aria-colindex="${j + 1}" ` +
           ` aria-describedby="${self.uniqueId(`-header-${j}`)}"${
             isSelected ? ' aria-selected= "true"' : ''
           }${cssClass ? ` class="${cssClass}"` : ''
+          }${colspan ? ` colspan="${colspan}"` : ''
           }${col.tooltip && typeof col.tooltip === 'string' ? ` title="${col.tooltip.replace('{{value}}', cellValue)}"` : ''
           }${col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ` title="${rowData.rowStatus.tooltip}"` : ''
           }${self.settings.columnGroups ? `headers = "${self.uniqueId(`-header-${j}`)} ${self.getColumnGroup(j)}"` : ''
