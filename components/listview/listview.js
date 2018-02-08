@@ -886,7 +886,7 @@ ListView.prototype = {
    * @param {object} [settings] incoming settings
    * @returns {this} component instance
    */
-  updated: function updated(settings) {
+  updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
