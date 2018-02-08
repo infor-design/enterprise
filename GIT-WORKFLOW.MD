@@ -1,5 +1,7 @@
 # Git Workflow
 
+Note: For details info and great tutorials on Git scenarios see `https://www.atlassian.com/git/tutorials/`
+
 ## General Policies
 - NEVER commit directly onto or merge PRs into any `4.X.X` branch
 - All merges into RC branches must be through PR approvals, either from feature branches or user forks
