@@ -886,12 +886,11 @@ ListView.prototype = {
    * @param {object} [settings] incoming settings
    * @returns {this} component instance
    */
-  updated(settings) {
+  updated: function updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
-
-    this.refresh(settings.dataset);
+    this.refresh(settings ? settings.dataset : null);
     return this;
   },
 
