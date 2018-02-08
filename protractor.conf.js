@@ -1,4 +1,5 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
+const protractorImageComparison = require('protractor-image-comparison');
 
 exports.config = {
   allScriptsTimeout: 11000,
