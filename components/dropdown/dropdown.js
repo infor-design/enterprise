@@ -584,7 +584,7 @@ Dropdown.prototype = {
       }${isDisabled ? ' is-disabled' : ''
       }${cssClasses ? ` ${cssClasses.value}` : ''}"${
         attributesToCopy.str
-      } data-val="${trueValue.replace('"', '/quot/')}"${
+      } data-val="${trueValue.replace(/"/g, '/quot/')}"${
         title ? `" title="${title.value}"` : ''
       } tabindex="${index && index === 0 ? 0 : -1}">` +
             `<a role="option" href="#" class="${
@@ -1322,7 +1322,7 @@ Dropdown.prototype = {
    */
   openList() {
     const current = this.previousActiveDescendant ?
-      this.list.find(`.dropdown-option[data-val="${this.previousActiveDescendant.replace('"', '/quot/')}"]`) :
+      this.list.find(`.dropdown-option[data-val="${this.previousActiveDescendant.replace(/"/g, '/quot/')}"]`) :
       this.list.find('.is-selected');
     const self = this;
     let touchPrevented = false;
@@ -1466,7 +1466,7 @@ Dropdown.prototype = {
       e.preventDefault();
       e.stopPropagation();
 
-      const val = target.attr('data-val').replace('"', '/quot/');
+      const val = target.attr('data-val').replace(/"/g, '/quot/');
       let cur = self.element.find(`option[value="${val}"]`);
       // Try matching the option's text if 'cur' comes back empty or overpopulated.
       // Supports options that don't have a 'value' attribute
@@ -1475,7 +1475,7 @@ Dropdown.prototype = {
         cur = self.element.find('option').filter(function () {
           const elem = $(this);
           const attr = elem.attr('value');
-          return elem.text() === val || (attr && attr.replace('"', '/quot/') === val);
+          return elem.text() === val || (attr && attr.replace(/"/g, '/quot/') === val);
         });
       }
 
@@ -1952,7 +1952,7 @@ Dropdown.prototype = {
     }
 
     if (!li && typeof value === 'string') {
-      li = this.listUl.find(`li[data-val="${value.replace('"', '/quot/')}"]`);
+      li = this.listUl.find(`li[data-val="${value.replace(/"/g, '/quot/')}"]`);
     }
 
     if (option.hasClass('is-disabled') || option.is(':disabled')) {
@@ -2122,7 +2122,7 @@ Dropdown.prototype = {
         const val = self.element.val();
 
         function replaceDoubleQuotes(content) {
-          return content.replace('"', '\'');
+          return content.replace(/"/g, '\'');
         }
 
         function buildOption(option) {
