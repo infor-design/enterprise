@@ -166,7 +166,8 @@ module.exports = function (grunt) {
 
       //runConfig.documentation.args[2] = componentName;
       //grunt.config.set('exec', runConfig);
-      grunt.task.run('exec:documentation');
+      //grunt.task.run('exec:documentation');
+      grunt.task.run(`exec:documentation:${componentName}`);
     }
   });
 
