@@ -890,8 +890,7 @@ ListView.prototype = {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
-
-    this.refresh(settings.dataset);
+    this.refresh(settings ? settings.dataset : null);
     return this;
   },
 
