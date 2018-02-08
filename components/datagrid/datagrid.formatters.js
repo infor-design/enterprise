@@ -50,7 +50,7 @@ const formatters = {
       }
 
       if (!col.sourceFormat) {
-        value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? { vpattern: col.dateFormat } : col.dateFormat));
+        value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
       } else {
         value2 = Locale.parseDate(value, (typeof col.sourceFormat === 'string' ? { pattern: col.sourceFormat } : col.sourceFormat));
       }
