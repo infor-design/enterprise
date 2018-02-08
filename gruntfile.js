@@ -160,13 +160,7 @@ module.exports = function (grunt) {
   // Run the event to regen docs
   grunt.event.on('chokidar', (action, filepath) => {
     if (filepath.indexOf('components') > -1 && (filepath.indexOf('.js') > -1 || filepath.indexOf('.md') > -1)) {
-      // grunt.log.writeln('Generating Docs for ' + ': ' + filepath );
-      //const runConfig = grunt.config.get(['exec:documentation']);
       const componentName = filepath.substr(filepath.lastIndexOf('/') + 1).replace('.js', '').replace('.md', '');
-
-      //runConfig.documentation.args[2] = componentName;
-      //grunt.config.set('exec', runConfig);
-      //grunt.task.run('exec:documentation');
       grunt.task.run(`exec:documentation:${componentName}`);
     }
   });
