@@ -32,6 +32,7 @@
 28. Export with trailing negative signs moved in front [View Example]( ../components/datagrid/example-export-convert-negative.html)
 29. Empty Message Area [View Example]( ../components/datagrid/example-empty-message.html)
 30. Expandable Cells [View Example]( ../components/datagrid/example-expandable-cells.html)
+31. Dynamic Column Spans [View Example]( ../components/datagrid/example-colspan.html)
 
 {{api-details}}
 
