@@ -61,7 +61,21 @@ module.exports = function (grunt) {
         },
         nonull: true
       }
-    }
+    },
+
+    exec: {
+      build: {
+        cmd: 'npm run build'
+      },
+
+      documentation: {
+        cmd: function(componentName) {
+          componentName = componentName || '';
+          return 'npm run documentation ' + componentName;
+        }
+      }
+    },
+
   };
 
   grunt.initConfig(Object.assign(
@@ -88,7 +102,7 @@ module.exports = function (grunt) {
   // require('load-grunt-parent-tasks')(grunt);
 
   grunt.registerTask('build', [
-    'run:build'
+    'exec:build'
   ]);
 
   grunt.registerTask('default', [
@@ -99,7 +113,7 @@ module.exports = function (grunt) {
     'sass',
     // 'copy:amd',
     // 'strip_code',
-    'run:build',
+    'build',
     // 'clean:amd',
     // 'uglify',
     'cssmin',
@@ -113,7 +127,7 @@ module.exports = function (grunt) {
     // 'copy:amd',
     // 'strip_code',
     // 'concat:basic'
-    'run:build'
+    'build'
   ]);
 
   grunt.registerTask('js-uglify', [
@@ -121,7 +135,7 @@ module.exports = function (grunt) {
     // 'copy:amd',
     // 'strip_code',
     // 'concat:basic',
-    'run:build',
+    'build',
     // 'uglify'
   ]);
 
@@ -129,7 +143,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'clean:public',
     'sass',
-    'run:build',
+    'build',
     'cssmin',
     'copy:main',
     'compress',
@@ -147,12 +161,12 @@ module.exports = function (grunt) {
   grunt.event.on('chokidar', (action, filepath) => {
     if (filepath.indexOf('components') > -1 && (filepath.indexOf('.js') > -1 || filepath.indexOf('.md') > -1)) {
       // grunt.log.writeln('Generating Docs for ' + ': ' + filepath );
-      const runConfig = grunt.config.get(['run']);
+      //const runConfig = grunt.config.get(['exec:documentation']);
       const componentName = filepath.substr(filepath.lastIndexOf('/') + 1).replace('.js', '').replace('.md', '');
 
-      runConfig.documentation.args[2] = componentName;
-      grunt.config.set('run', runConfig);
-      grunt.task.run('run:documentation');
+      //runConfig.documentation.args[2] = componentName;
+      //grunt.config.set('exec', runConfig);
+      grunt.task.run('exec:documentation');
     }
   });
 
@@ -161,7 +175,7 @@ module.exports = function (grunt) {
     'sass',
     /* 'copy:amd', */
     /* 'strip_code', */
-    'run:build',
+    'build',
     /* 'clean:amd', */
     'copy:main',
     'usebanner'
