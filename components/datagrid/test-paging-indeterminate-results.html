@@ -39,10 +39,11 @@
         paging: true,
         pagesize: pageSize,
         indeterminate: true,
+        pagesizes: [5, 10, 15, 20],
         resultsText: function (grid, count, filterCount) {
           var currentPage = grid.pager.activePage,
-            endPage = currentPage * (pageSize),
-            startPage = currentPage === 1 ? 1 : endPage - pageSize +1;
+            endPage = currentPage * (grid.settings.pagesize),
+            startPage = currentPage === 1 ? 1 : endPage - grid.settings.pagesize +1;
 
           return '(rows '+ startPage + ' - ' + endPage + ')';
         },

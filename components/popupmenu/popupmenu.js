@@ -826,7 +826,7 @@ PopupMenu.prototype = {
   iconFilteringSetup(alink) {
     if (this.element.hasClass('btn-filter')) {
       const svg = this.element.find('svg.icon-dropdown');
-      const link = alink || $('li:first a', this.menu);
+      const link = alink || $('li.is-checked a', this.menu) || $('li:first a', this.menu);
       const audibleText = link.find('span').text();
 
       if (svg.length === 1) {
@@ -846,7 +846,7 @@ PopupMenu.prototype = {
    */
   iconFilteringUpdate(alink) {
     if (this.element.hasClass('btn-filter')) {
-      const link = alink || $('li:first a', this.menu);
+      const link = alink || $('li.is-checked a', this.menu) || $('li:first a', this.menu);
       const audibleText = link.find('span').text();
 
       this.element.find('.audible').text(audibleText);

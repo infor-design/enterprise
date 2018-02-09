@@ -9,35 +9,35 @@
 <p>The context menu control is also referred to as a popupmenu. It can be invoked in several ways. As a right click menu fx on an input field or grid or list row. As a click menu for example on a menu or actions button. Or manually on demand via the api.</p>
 <p>The structure of the menu is a ul element with li elements containing links for each of the rows in the menu. An other ul element can be added to create a submenu. Use only one level of submenus for accessibility and usability reasons.</p>
 <p>The class popupmenu should be added to the ul elements at the top and submenu level. You can create rows as space separators for grouping with the tag with the class separator. You can create rows as groups with titles as well with the class group.</p>
-<p>The popupmenu can be linked as a right click menu item by adding the attribute data-popupmenu=“action-popupmenu” to any element that should get the menu, this should point to the id of the menu.</p>
+<p>The popupmenu can be linked as a right click menu item by adding the attribute data-popupmenu=&quot;action-popupmenu&quot; to any element that should get the menu, this should point to the id of the menu.</p>
 <p>This page focus on the right click popup menu (Context Menu).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;input-menu&quot;</span><span class="kw">&gt;</span>Label<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-popupmenu=</span><span class="st">&quot;action-popupmenu&quot;</span><span class="ot"> value=</span><span class="st">&quot;Right Click Me&quot;</span><span class="ot"> id=</span><span class="st">&quot;input-menu&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">&lt;ul</span><span class="ot"> id=</span><span class="st">&quot;action-popupmenu&quot;</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Cut<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Copy<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Paste<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="kw">&lt;li&gt;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Paste Special<span class="kw">&lt;/a&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">    <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Sub Menu 1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Sub Menu 2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="kw">&lt;/ul&gt;</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">  <span class="kw">&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;separator&quot;</span><span class="kw">&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Name and project range<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> id=</span><span class="st">&#39;x&#39;</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> disabled</span><span class="kw">&gt;</span>Insert comment<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> disabled</span><span class="kw">&gt;</span>Insert note<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Clear notes<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;separator single-selectable-section&quot;</span><span class="kw">&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;heading&quot;</span><span class="kw">&gt;</span>Additional Options<span class="kw">&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;is-selectable is-checked&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Conditional formatting<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;is-selectable&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Data validation<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="kw">&lt;/ul&gt;</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;input-menu&quot;</span><span class="kw">&gt;</span>Label<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-popupmenu=</span><span class="st">&quot;action-popupmenu&quot;</span><span class="ot"> value=</span><span class="st">&quot;Right Click Me&quot;</span><span class="ot"> id=</span><span class="st">&quot;input-menu&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;ul</span><span class="ot"> id=</span><span class="st">&quot;action-popupmenu&quot;</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Cut<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Copy<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Paste<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;</span>
+    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Paste Special<span class="kw">&lt;/a&gt;</span>
+    <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Sub Menu 1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Sub Menu 2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="kw">&lt;/ul&gt;</span>
+  <span class="kw">&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;separator&quot;</span><span class="kw">&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Name and project range<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> id=</span><span class="st">&#39;x&#39;</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> disabled</span><span class="kw">&gt;</span>Insert comment<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> disabled</span><span class="kw">&gt;</span>Insert note<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Clear notes<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;separator single-selectable-section&quot;</span><span class="kw">&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;heading&quot;</span><span class="kw">&gt;</span>Additional Options<span class="kw">&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;is-selectable is-checked&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Conditional formatting<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;is-selectable&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Data validation<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="kw">&lt;/ul&gt;</span>
+</code></pre>
 <h2 id="coding-tips">Coding Tips</h2>
 <ul>
 <li>If necessary, the options can be broken up into categories</li>
