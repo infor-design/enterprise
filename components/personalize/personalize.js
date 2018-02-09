@@ -263,6 +263,9 @@ Personalize.prototype = {
   */
   setTheme(incomingTheme) {
     if (theme === incomingTheme) {
+      if (!$('html').hasClass(`${theme}-theme`)) {
+        $('html').addClass(`${theme}-theme`);
+      }
       return;
     }
 
