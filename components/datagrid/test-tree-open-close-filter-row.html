@@ -1,0 +1,81 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var columns = [];
+    var someData = [
+      {
+        id: 215,
+        escalated: 0,
+        taskName: 'Follow up action with Residental Housing',
+        desc: 'Contact sales representative with the updated purchase order.',
+        comments: 2,
+        time: '22:10 PM',
+        children: [
+          {
+            id: 216,
+            escalated: 0,
+            taskName: 'Follow up action with Universal HMM Logistics',
+            desc: 'Contact sales representative.',
+            comments: 2,
+            time: '22:10 PM'
+          },
+          {
+            id: 217,
+            escalated: 0,
+            expanded: true,
+            taskName: 'Follow up action with Acme Shipping',
+            desc: 'Contact sales representative.',
+            comments: 2,
+            time: '22:10 PM',
+            children: [
+              {
+                id: 218,
+                escalated: 0,
+                taskName: 'Follow up action with Residental Shipping Logistics ',
+                desc: 'Contact sales representative.',
+                comments: 2,
+                time: '7:04 AM'
+              }
+            ]
+          }
+        ]
+    }];
+
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, filterType: 'text', width: 250});
+    columns.push({ id: 'id', name: 'Id', field: 'id', filterType: 'text', filterDisabled: true, width: 25});
+    columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, filterType: 'checkbox', width: 40});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', filterType: 'text', width: 200});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 130, formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
+
+    //Get some data via ajax
+    var url = '{{basepath}}api/tree-tasks';
+
+    $.getJSON(url, function(data) {
+
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        treeGrid: true,
+        filterable: true,
+        toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+      }).on('openfilterrow', function() {
+        console.log('openfilterrow');
+      }).on('closefilterrow', function() {
+        console.log('closefilterrow');
+      }).on('filtered', function() {
+        console.log('filtered');
+      });
+
+    });
+
+  });
+</script>

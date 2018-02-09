@@ -6373,6 +6373,7 @@ Datagrid.prototype = {
 
       const setChildren = function (elem, lev, expanded) {
         const nodes = elem.nextUntil(`[aria-level="${level}"]`);
+        const isFiltered = self.filterExpr && self.filterExpr.length > 0;
 
         if (expanded) {
           nodes.each(function () {
@@ -6382,6 +6383,10 @@ Datagrid.prototype = {
               node.addClass('is-hidden');
             }
           });
+
+          if (isFiltered) {
+            self.element.triggerHandler('closefilterrow');
+          }
         } else {
           nodes.each(function () {
             const node = $(this);
@@ -6398,6 +6403,10 @@ Datagrid.prototype = {
               }
             }
           });
+
+          if (isFiltered) {
+            self.element.triggerHandler('openfilterrow');
+          }
         }
       };
 
