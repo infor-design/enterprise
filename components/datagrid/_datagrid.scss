@@ -1095,7 +1095,7 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
+    &:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
