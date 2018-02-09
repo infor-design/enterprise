@@ -1,10 +1,12 @@
 <body class="no-scroll">
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
+  {{> includes/masthead}}
+  {{> includes/applicationmenu}}
 
-  <section id="test-multitabs" class="multitabs-container side-by-side" data-options='{"trigger": "rightClick"}' data-popupmenu="action-popupmenu">
-    <div class="multitabs-section">
-      <div id="tab-list-one" class="tab-container module-tabs">
+  <section id="test-multitabs" class="multitabs-container side-by-side" data-options='{"trigger": "rightClick", "containerElement": "#module-tabs-container", "appMenuTrigger": true}' data-popupmenu="action-popupmenu">
+   <div class="multitabs-section">
+       <div id="tab-list-one" class="tab-container module-tabs">
         <ul class="tab-list">
           <li class="tab is-selected"><a href="#tabs-one-contracts">Contracts (and then a few more Contracts)</a></li>
           <li class="tab"><a href="#tabs-one-opportunities">Opportunites</a></li>
@@ -105,7 +107,6 @@
     </div> <!-- .six-columns -->
   </section>
 
-
   <!-- Popupmenu -->
   <ul id="action-popupmenu" class="popupmenu">
     <li><a id="add-new-tab" href="#">Add new tab...</a></li>
@@ -114,7 +115,6 @@
     <li><a id="toggle-primary-container" href="#">Hide "primary" (left) container</a></li>
     <li><a id="toggle-secondary-container" href="#">Hide "secondary" (right) container</a></li>
   </ul>
-
 
   <!-- Modals -->
   <div id="modal-add-tab" style="display: none;">
