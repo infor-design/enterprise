@@ -54,74 +54,74 @@ $.fn.chart = function (settings) {
       break;
     }
     case 'sparkline-dots': {
+      settings.isDots = true;
       instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isDots = true;
       const chartComponent = new Sparkline(this, settings);
       this.data(SPARKLINE_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-peak': {
+      settings.isPeakDot = true;
       instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isPeakDot = true;
       const chartComponent = new Sparkline(this, settings);
       this.data(SPARKLINE_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-dots-n-peak': {
+      settings.isPeakDot = true;
+      settings.isDots = true;
       instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isPeakDot = true;
-      settings.isDots = true;
       const chartComponent = new Sparkline(this, settings);
       this.data(SPARKLINE_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-minmax': {
+      settings.isMinMax = true;
       instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isMinMax = true;
       const chartComponent = new Sparkline(this, settings);
       this.data(SPARKLINE_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-medianrange': {
+      settings.isMedianRange = true;
       instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isMedianRange = true;
       const chartComponent = new Sparkline(this, settings);
       this.data(SPARKLINE_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-medianrange-n-peak': {
+      settings.isMedianRange = true;
+      settings.isPeakDot = true;
       instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isMedianRange = true;
-      settings.isPeakDot = true;
       const chartComponent = new Sparkline(this, settings);
       this.data(SPARKLINE_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
@@ -139,24 +139,24 @@ $.fn.chart = function (settings) {
       break;
     }
     case 'area': {
+      settings.isArea = true;
       instance = this.data(LINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isArea = true;
       const chartComponent = new Line(this, settings);
       this.data(LINE_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bubble': {
+      settings.isBubble = true;
       instance = this.data(LINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isBubble = true;
       const chartComponent = new Line(this, settings);
       this.data(LINE_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
@@ -176,61 +176,61 @@ $.fn.chart = function (settings) {
       break;
     }
     case 'column-stacked': {
+      settings.isStacked = true;
       instance = this.data(COLUMN_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isStacked = true;
       const chartComponent = new Column(this, settings);
       this.data(COLUMN_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bar': {
+      settings.isStacked = true;
       instance = this.data(BAR_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isStacked = true;
       const chartComponent = new Bar(this, settings);
       this.data(BAR_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bar-stacked': {
+      settings.isStacked = true;
       instance = this.data(BAR_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isStacked = true;
       const chartComponent = new Bar(this, settings);
       this.data(BAR_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bar-normalized': {
+      settings.isNormalized = true;
       instance = this.data(BAR_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isNormalized = true;
       const chartComponent = new Bar(this, settings);
       this.data(BAR_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bar-grouped': {
+      settings.isStacked = false;
+      settings.isGrouped = true;
       instance = this.data(BAR_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isStacked = false;
-      settings.isGrouped = true;
       const chartComponent = new Bar(this, settings);
       this.data(BAR_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
@@ -248,12 +248,12 @@ $.fn.chart = function (settings) {
       break;
     }
     case 'donut': {
+      settings.isDonut = true;
       instance = this.data(PIE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isDonut = true;
       const chartComponent = new Pie(this, settings);
       this.data(PIE_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
