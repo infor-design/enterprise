@@ -2790,25 +2790,44 @@ html[dir='rtl'] {
   }
 
   // Right aligned header
-  th .datagrid-column-wrapper.l-right-text {
-    float: left;
-    vertical-align: baseline;
-
+  th .datagrid-column-wrapper {
     .datagrid-header-text {
-      float: left;
+      direction: rtl;
     }
 
-    .sort-indicator {
-      float: right;
-      margin: -20px 1px 0;
-      position: relative;
-      top: 0;
+    &.l-right-text {
+      float: left;
+      top: 10px;
+      vertical-align: baseline;
+
+      .datagrid-header-text {
+        float: left;
+      }
+
+      .sort-indicator {
+        float: right;
+        margin: -20px 1px 0;
+        position: relative;
+        top: 0;
+      }
     }
   }
 
   tr .datagrid-alert-text {
     padding-left: 0;
     padding-right: 10px;
+  }
+
+  .short-rowheight {
+    .l-right-text .datagrid-header-text {
+      margin-top: -4px !important;
+    }
+  }
+
+  .medium-rowheight {
+    .l-right-text .datagrid-header-text {
+      margin-top: -2px !important;
+    }
   }
 
   .datagrid-header {
