@@ -1,0 +1,121 @@
+// FieldFilter
+//==============================================================================
+$dd-width: 55px;
+
+@function el-width($width) {
+  @return calc(#{$width} - #{$dd-width});
+}
+
+.field.fieldfilter-wrapper {
+  .dropdown-wrapper {
+    margin-right: -1px;
+    vertical-align: top;
+
+    div.dropdown {
+      border-radius: 2px 0 0 2px;
+      border-right-color: $fieldfilter-border-side-color;
+      text-overflow: inherit;
+      width: $dd-width;
+
+      span {
+        position: static;
+      }
+
+      &.is-open {
+        + .ffdropdown-icon {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  .icon-dirty {
+    left: $dd-width + 2px;
+  }
+
+  .icon-confirm {
+    vertical-align: top;
+  }
+
+  .field-filter {
+    border-radius: 0 2px 2px 0;
+    max-width: $field-md;
+    width: el-width($field-md);
+
+    &.timepicker,
+    &.datepicker {
+      width: el-width($datepicker-default-width);
+    }
+
+    &.input-xs {
+      width: el-width($field-xs);
+    }
+
+    &.input-sm {
+      width: el-width($field-sm);
+    }
+
+    &.input-mm {
+      width: el-width($field-mm);
+    }
+
+    &.input-md {
+      width: el-width($field-md);
+    }
+
+    &.input-lg {
+      width: el-width($field-lg);
+    }
+
+    &.input-full {
+      width: el-width(100%);
+    }
+  }
+}
+
+// Opened Dropdown list
+.dropdown-list.ffdropdown {
+  .dropdown-search {
+    opacity: 0;
+    padding-left: 23px;
+    width: 0;
+  }
+
+  > .listoption-icon {
+    display: none;
+  }
+}
+
+// RTL Styles ******************************************************************
+html[dir='rtl'] {
+  .field.fieldfilter-wrapper {
+    .dropdown-wrapper {
+      margin-left: -1px;
+      margin-right: inherit;
+
+      div.dropdown {
+        border-left-color: $fieldfilter-border-side-color;
+        border-radius: 0 2px 2px 0;
+        border-right-color: $input-border-color;
+        padding-top: 8px;
+      }
+    }
+
+    .field-filter {
+      border-radius: 2px 0 0 2px;
+    }
+  }
+
+  // Opened Dropdown list
+  .dropdown-list.ffdropdown {
+    .dropdown-search {
+      padding-left: inherit;
+      padding-right: 23px;
+    }
+
+    > .trigger {
+      margin-left: inherit;
+      margin-right: 26px;
+    }
+  }
+}

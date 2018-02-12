@@ -1,0 +1,91 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="example-textfield">Text Field</label>
+      <input type="text" class="field-filter" name="example-textfield" id="example-textfield">
+    </div>
+
+    <div class="field">
+      <label for="example-datepicker" class="label">Date Picker</label>
+      <input class="datepicker field-filter input-md" name="example-datepicker" type="text" id="example-datepicker">
+    </div>
+
+    <div class="field">
+       <label for="example-timepicker" class="label">Time Picker</label>
+       <input class="timepicker field-filter input-md" name="example-timepicker" type="text" id="example-timepicker">
+    </div>
+
+    <div class="field">
+      <label for="example-lookup" class="label">Lookup</label>
+      <input class="lookup field-filter" name="example-lookup" type="text" id="example-lookup" data-init="false">
+    </div>
+
+
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  $('body').one('initialized', function () {
+
+    // Some Sample Data for Lookup
+    var columns = [],
+      data = [];
+    data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+    data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+    data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+    data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: 210.99, status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+    data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 210.99, status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+    data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: 120.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+    data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+    // Define Columns for the Grid.
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
+    columns.push({ id: 'quantity', filterType: 'text', name: 'Quantity', field: 'quantity'});
+    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+
+    // Init Lookup
+    $('#example-lookup').lookup({
+      field: 'productId',
+      autoApply: true,
+      options: {
+        columns: columns,
+        dataset: data,
+        selectable: 'single', // multiselect|single
+        toolbar: {
+          results: true,
+          keywordFilter: true,
+          advancedFilter: true,
+          actions: true,
+          selectable: 'single',
+          filterable: true,
+          views: true,
+          rowHeight: false,
+          collapsibleFilter: false,
+          fullWidth: true
+        }
+      }
+    });
+
+    // Some Sample Data for Field Filter
+    var fieldfilterData = [
+      { value: 'v1', text: 'Equals', icon: 'filter-equals' },
+      { value: 'v2', text: 'Does Not Equal', icon: 'filter-does-not-equal' },
+      { value: 'v3', text: 'Before', icon: 'filter-less-than' },
+      { value: 'v4', text: 'On Or Before', icon: 'filter-less-equals' },
+      { value: 'v5', text: 'After', icon: 'filter-greater-than' },
+      { value: 'v6', text: 'On Or After', icon: 'filter-greater-equals' },
+    ];
+
+    // Init Field Filter and bind `selectedfieldfilter` event
+    $('.field-filter').fieldfilter({ dataset: fieldfilterData })
+      .on('selectedfieldfilter', function (e, args) {
+        console.log(args);
+      });
+
+  });
+</script>

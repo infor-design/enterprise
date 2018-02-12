@@ -31,6 +31,7 @@ import './emptymessage/emptymessage.jquery';
 import './expandablearea/expandablearea.jquery';
 import './form/form';
 import './hierarchy/hierarchy.jquery';
+import './field-filter/field-filter.jquery';
 import './field-options/field-options.jquery';
 import './fileupload/fileupload.jquery';
 import './fileupload-advanced/fileupload-advanced.jquery';

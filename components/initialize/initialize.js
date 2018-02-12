@@ -254,6 +254,8 @@ Initialize.prototype = {
 
         ['fileuploadadvanced', '.fileupload-advanced'],
 
+        ['fieldfilter', '.field-filter'],
+
         ['fieldoptions', '.field-options'],
 
         ['about'],

@@ -32,6 +32,7 @@ const COMPONENT_NAME = 'dropdown';
 * @property {boolean} delay  Typing buffer delay in ms
 * @property {number} maxWidth If set the width of the dropdown is limited to this pixel width. Fx
 *  300 for the 300 px size fields. Default is size of the largest data.
+* @property {object} placementOpts  Gets passed to this control's Place behavior
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
@@ -49,7 +50,8 @@ const DROPDOWN_DEFAULTS = {
   reloadSourceOnOpen: false,
   empty: false,
   delay: 300,
-  maxWidth: null
+  maxWidth: null,
+  placementOpts: null
 };
 
 // Dropdown Settings and Options
@@ -1687,6 +1689,9 @@ Dropdown.prototype = {
       parseInt(parentElementStyle.borderTopWidth, 10) +
       parseInt(parentElementStyle.borderBottomWidth, 10) - (!isChrome && isRetina ? 1 : 0));
     positionOpts.x = 0;
+    if (self.settings.placementOpts && self.settings.placementOpts.x) {
+      positionOpts.x = self.settings.placementOpts.x;
+    }
 
     this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
     this.list.data('place').place(positionOpts);
