@@ -65,7 +65,13 @@ $('body').on('initialized', function () {
 
   //$('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset});
 
-   $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset, tooltip: 'Tooltip by attribute'});
+   $('#bar-grouped-example').chart({
+    type: 'bar-grouped',
+    dataset: dataset,
+    tooltip: 'Tooltip by attribute'
+   });
+
+  console.log($('#bar-grouped-example').data());
 
   // $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
   //   tooltip: function(response) {

@@ -2,10 +2,57 @@
   
     
 
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          clearable
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If "true", provides an "x" button on the right
+edge that clears the field
 
+        </td>
+      </tr>
+      <tr>
+        <td>
+          collapsible
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If "true", allows the field to expand/collapse
+on larger breakpoints when focused/blurred respectively
 
-  
-    
+        </td>
+      </tr>
+      <tr>
+        <td>
+          collapsibleOnMobile
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, overrides 
+<code>collapsible</code>
+ only
+on mobile settings.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
 
@@ -32,7 +79,7 @@
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -46,7 +93,7 @@ this
 
         </td>
         <td>
-          
+          whether or not the Toolbar Searchfield has focus.
 boolean
         </td>
       </tr>
@@ -60,7 +107,7 @@ boolean
 
         </td>
         <td>
-          
+          whether or not a categories button exists.
 boolean
         </td>
       </tr>
@@ -74,7 +121,7 @@ boolean
 
         </td>
         <td>
-          
+          whether or not a "Go" button exists.
 boolean
         </td>
       </tr>
@@ -88,23 +135,8 @@ boolean
 
         </td>
         <td>
-        </td>
-      </tr>
-      <tr>
-        <td>handleFakeBlur</td>
-        <td>
           
-                
-                  <span>e () =  </span>
-                
-          
-        </td>
-        <td>
-          <p>Triggers an artificial "blur" of the searchfield, resulting in a time-delayed collapse.
-TODO: Deprecate in 4.4.0</p>
-
-        </td>
-        <td>
+void
         </td>
       </tr>
       <tr>
@@ -117,6 +149,8 @@ TODO: Deprecate in 4.4.0</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -124,7 +158,8 @@ TODO: Deprecate in 4.4.0</p>
         <td>
           
                 
-                  <span>element (HTMLElement) =  </span>
+                  <span>element (HTMLElement) = the element being checked.
+ </span>
                 
           
         </td>
@@ -133,7 +168,7 @@ TODO: Deprecate in 4.4.0</p>
 
         </td>
         <td>
-          
+          whether or not the element provided is part of this Searchfield component
 boolean
         </td>
       </tr>
@@ -142,7 +177,9 @@ boolean
         <td>
           
                 
-                  <span>e () =  </span>
+                  <span>e (jQuery.Event) = <code>click</code>
+ event
+ </span>
                 
           
         </td>
@@ -151,6 +188,8 @@ boolean
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -168,6 +207,8 @@ boolean
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -186,6 +227,8 @@ collapse/de-highlight searchfields on a timer.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -198,7 +241,8 @@ collapse/de-highlight searchfields on a timer.</p>
  Event
  </span>
                 
-                  <span>menu () =  </span>
+                  <span>menu () = reference to the popupmenu
+ </span>
                 
           
         </td>
@@ -207,6 +251,8 @@ collapse/de-highlight searchfields on a timer.</p>
 
         </td>
         <td>
+          the ability to cancel the menu's opening.
+boolean
         </td>
       </tr>
       <tr>
@@ -214,9 +260,11 @@ collapse/de-highlight searchfields on a timer.</p>
         <td>
           
                 
-                  <span>leftBoundary () =  </span>
+                  <span>leftBoundary () = left boundary in pixels
+ </span>
                 
-                  <span>rightBoundary () =  </span>
+                  <span>rightBoundary () = right boundary in pixels
+ </span>
                 
           
         </td>
@@ -226,7 +274,7 @@ Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining
 
         </td>
         <td>
-          
+          the fill size area
 number
         </td>
       </tr>
@@ -236,11 +284,11 @@ number
           
         </td>
         <td>
-          <p>Detects whether or not one of the components inside of this searchfield is the document's "active" element.</p>
-
+          
         </td>
         <td>
-          
+          whether or not one of the components inside of this searchfield
+is the document's "active" element.
 boolean
         </td>
       </tr>
@@ -250,11 +298,10 @@ boolean
           
         </td>
         <td>
-          <p>Detects whether or not this searchfield instance is currently expanded.</p>
-
+          
         </td>
         <td>
-          
+          whether or not this searchfield instance is currently expanded.
 boolean
         </td>
       </tr>
@@ -269,6 +316,8 @@ breakpoint changes.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -276,7 +325,9 @@ breakpoint changes.</p>
         <td>
           
                 
-                  <span>noFocus () =  </span>
+                  <span>noFocus () = If defined, causes the searchfield component not to become focused
+at the end of the expand method. Its default functionality is that it will become focused.
+ </span>
                 
           
         </td>
@@ -285,6 +336,8 @@ breakpoint changes.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -297,6 +350,8 @@ breakpoint changes.</p>
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -304,17 +359,18 @@ breakpoint changes.</p>
         <td>
           
                 
-                  <span>settings () =  </span>
+                  <span>settings () = incoming settings
+ </span>
                 
           
         </td>
         <td>
-          <p>Used when the control has its settings or structural markup changed.  Rebuilds key parts of the control that
-otherwise wouldn't automatically update.</p>
+          <p>Used when the control has its settings or structural markup changed.
+Rebuilds key parts of the control that otherwise wouldn't automatically update.</p>
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -328,6 +384,8 @@ this
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -340,6 +398,8 @@ this
 
         </td>
         <td>
+          
+void
         </td>
       </tr>
       <tr>
@@ -352,7 +412,7 @@ this
 
         </td>
         <td>
-          
+          component instance
 this
         </td>
       </tr>
@@ -361,7 +421,8 @@ this
         <td>
           
                 
-                  <span>dontDestroySearchfield (boolean) = if true, will not pass through and destroy a linked instance of the Searchfield component.
+                  <span>dontDestroySearchfield (boolean) = if true, will not pass through and destroy
+a linked instance of the Searchfield component.
  </span>
                 
           
@@ -377,52 +438,14 @@ this
         <td>handleEvents</td>
         <td>
           
-                
-                  <span>mousedown (object) = Fires when the searchfield is clicked (if enabled).
- </span>
-                
-                  <span>focusin (object) = Fires when the searchfield is focused.
- </span>
-                
-                  <span>keydown (object) = Fires when a key is pressed inside of the searchfield.
- </span>
-                
-                  <span>collapse (object) = Fires when a 
-<code>collapse</code>
- event is triggered externally on the searchfield.
- </span>
-                
-                  <span>beforeopen (object) = Fires when a 
-<code>beforeopen</code>
- event is triggered on the searchfield's optional categories menubutton.
- </span>
-                
-                  <span>navigate (object) = Fires when a 
-<code>navigate</code>
- event is triggered on the searchfield's parent toolbar.
- </span>
-                
-                  <span>keydown (object) = Fires when a 
-<code>keydown</code>
- event is triggered at the 
-<code>document</code>
- level.
- </span>
-                
-                  <span>resize (object) = Fires when a 
-<code>resize</code>
- event is triggered at the 
-<code>body</code>
- level.
- </span>
-                
-          
         </td>
         <td>
           <p>This component fires the following events.</p>
 
         </td>
         <td>
+          component instance
+this
         </td>
       </tr>
     </tbody>

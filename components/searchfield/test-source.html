@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Searchfield Test: Source Callback</h2>
+    <p>Two search options are shown, returning a array of strings
+      or returning an array of objects</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="searchfield-strings">Searchfield Strings</label>
+      <input data-init="false" id="searchfield-strings" type="text" class="searchfield"/>
+    </div>
+
+    <div class="field">
+      <label for="searchfield-objects">Searchfield Objects</label>
+      <input data-init="false" id="searchfield-objects" type="text" class="searchfield"/>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+
+    var items1 = ['Item One', 'Item Two', 'Item Three', 'Item Four','Item Five'];
+
+    var items2 = [
+      {value: '1', label: 'Item One'},
+      {value: '2', label: 'Item Two'},
+      {value: '3', label: 'Item Three'},
+      {value: '4', label: 'Item Four'},
+      {value: '4', label: 'Item Five'}
+    ];
+
+    // Arrays Example
+    var stringsField = $('#searchfield-strings').searchfield({
+      filterMode: 'contains',
+      delay: 500,
+      source: function(term, response) {
+        console.log(this);
+        response(stringsField.val(), items1);
+      }
+    });
+
+    // Objects Example
+    var objectsField = $('#searchfield-objects').searchfield({
+      filterMode: 'contains',
+      delay: 500,
+      source: function(term, response) {
+        console.log(this);
+        response(objectsField.val(), items2);
+      }
+    });
+
+  });
+</script>

@@ -18,8 +18,8 @@
 <li><code>labels: {isTwoline}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> - Show the labels on two different lines</li>
 <li><code>labels: {contentsTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Customize the top of two the labels, can be <code>'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'</code>. If only one label this setting will be used.</li>
 <li><code>labels: {contentsBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Customize the bottom of the two labels, can be <code>'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'</code></li>
-<li><code>labels: {formatterTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html (percentage)’`</li>
-<li><code>labels: {formatterBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html (percentage)’`</li>
+<li><code>labels: {formatterTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html (percentage)'`</li>
+<li><code>labels: {formatterBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html (percentage)'`</li>
 <li><code>labels: {colorTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How to colorize the top label it can be one of <code>'default'|'color-as-arc'|'#000000'|'black'</code></li>
 <li><code>labels: {colorBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How to colorize the bottom label it can be one of <code>'default'|'color-as-arc'|'#000000'|'black'</code></li>
 <li><code>labels: {lineColor}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How to colorize the line links can be one of <code>'default'|'color-as-arc'|'#000000'|'black'</code></li>
@@ -28,22 +28,22 @@
 </ul>
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke a dount bar chart with a dataset controlling the values.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">var</span> donutData <span class="op">=</span> [<span class="op">{</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="dt">data</span><span class="op">:</span> [<span class="op">{</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Component A&#39;</span><span class="op">,</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">        <span class="dt">value</span><span class="op">:</span> <span class="dv">30</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="op">},</span> <span class="op">{</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Component B&#39;</span><span class="op">,</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">        <span class="dt">value</span><span class="op">:</span> <span class="dv">40</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="op">}</span>]<span class="op">,</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="dt">centerLabel</span><span class="op">:</span> <span class="st">&#39;Donut Chart&#39;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="op">}</span>]<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">  <span class="at">$</span>(<span class="st">&#39;#pie-donut-example&#39;</span>).<span class="at">chart</span>(<span class="op">{</span><span class="dt">type</span><span class="op">:</span> <span class="st">&#39;donut&#39;</span><span class="op">,</span> <span class="dt">dataset</span><span class="op">:</span> donutData<span class="op">}</span>).<span class="at">on</span>(<span class="st">&#39;selected&#39;</span><span class="op">,</span> <span class="kw">function</span> (e<span class="op">,</span> elem<span class="op">,</span> args) <span class="op">{</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="va">console</span>.<span class="at">log</span>(e<span class="op">,</span> elem<span class="op">,</span> args)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">  <span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+  <span class="kw">var</span> donutData = [{
+    <span class="dt">data</span>: [{
+        <span class="dt">name</span>: <span class="st">&#39;Component A&#39;</span>,
+        <span class="dt">value</span>: <span class="dv">30</span>
+    }, {
+        <span class="dt">name</span>: <span class="st">&#39;Component B&#39;</span>,
+        <span class="dt">value</span>: <span class="dv">40</span>
+    }],
+    <span class="dt">centerLabel</span>: <span class="st">&#39;Donut Chart&#39;</span>
+  }];
+
+  <span class="fu">$</span>(<span class="st">&#39;#pie-donut-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;donut&#39;</span>, <span class="dt">dataset</span>: donutData}).<span class="fu">on</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">function</span> (e, elem, args) {
+    <span class="ot">console</span>.<span class="fu">log</span>(e, elem, args);
+  });
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.</li>

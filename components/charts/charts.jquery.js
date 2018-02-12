@@ -20,243 +20,243 @@ $.fn.chart = function (settings) {
     case 'targeted-achievement':
     case 'completion':
     case 'completion-target': {
-      instance = $.data(this, settings.type);
+      instance = this.data(settings.type);
       if (instance) {
         instance.updated(settings);
         return this;
       }
       const chartComponent = new CompletionChart(this, settings);
-      instance = $.data(this, COMPLETION_CHART_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
-      $.data(this, settings.type, chartComponent); // Compatibility
+      this.data(COMPLETION_CHART_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
+      this.data(settings.type, chartComponent); // Compatibility
       break;
     }
     case 'bullet': {
-      instance = $.data(this, BULLET_NAME);
+      instance = this.data(BULLET_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
       const chartComponent = new Bullet(this, settings);
-      instance = $.data(this, BULLET_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(BULLET_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline': {
-      instance = $.data(this, SPARKLINE_NAME);
+      instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
       const chartComponent = new Sparkline(this, settings);
-      instance = $.data(this, SPARKLINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(SPARKLINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-dots': {
-      instance = $.data(this, SPARKLINE_NAME);
+      settings.isDots = true;
+      instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isDots = true;
       const chartComponent = new Sparkline(this, settings);
-      instance = $.data(this, SPARKLINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(SPARKLINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-peak': {
-      instance = $.data(this, SPARKLINE_NAME);
+      settings.isPeakDot = true;
+      instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isPeakDot = true;
       const chartComponent = new Sparkline(this, settings);
-      instance = $.data(this, SPARKLINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(SPARKLINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-dots-n-peak': {
-      instance = $.data(this, SPARKLINE_NAME);
+      settings.isPeakDot = true;
+      settings.isDots = true;
+      instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isPeakDot = true;
-      settings.isDots = true;
       const chartComponent = new Sparkline(this, settings);
-      instance = $.data(this, SPARKLINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(SPARKLINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-minmax': {
-      instance = $.data(this, SPARKLINE_NAME);
+      settings.isMinMax = true;
+      instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isMinMax = true;
       const chartComponent = new Sparkline(this, settings);
-      instance = $.data(this, SPARKLINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(SPARKLINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-medianrange': {
-      instance = $.data(this, SPARKLINE_NAME);
+      settings.isMedianRange = true;
+      instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isMedianRange = true;
       const chartComponent = new Sparkline(this, settings);
-      instance = $.data(this, SPARKLINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(SPARKLINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'sparkline-medianrange-n-peak': {
-      instance = $.data(this, SPARKLINE_NAME);
+      settings.isMedianRange = true;
+      settings.isPeakDot = true;
+      instance = this.data(SPARKLINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isMedianRange = true;
-      settings.isPeakDot = true;
       const chartComponent = new Sparkline(this, settings);
-      instance = $.data(this, SPARKLINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(SPARKLINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'line': {
-      instance = $.data(this, LINE_NAME);
+      instance = this.data(LINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
       const chartComponent = new Line(this, settings);
-      instance = $.data(this, LINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(LINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'area': {
-      instance = $.data(this, LINE_NAME);
+      settings.isArea = true;
+      instance = this.data(LINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isArea = true;
       const chartComponent = new Line(this, settings);
-      instance = $.data(this, LINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(LINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bubble': {
-      instance = $.data(this, LINE_NAME);
+      settings.isBubble = true;
+      instance = this.data(LINE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isBubble = true;
       const chartComponent = new Line(this, settings);
-      instance = $.data(this, LINE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(LINE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'column':
     case 'column-grouped':
     case 'column-positive-negative': {
-      instance = $.data(this, COLUMN_NAME);
+      instance = this.data(COLUMN_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
       const chartComponent = new Column(this, settings);
-      instance = $.data(this, COLUMN_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(COLUMN_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'column-stacked': {
-      instance = $.data(this, COLUMN_NAME);
+      settings.isStacked = true;
+      instance = this.data(COLUMN_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isStacked = true;
       const chartComponent = new Column(this, settings);
-      instance = $.data(this, COLUMN_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(COLUMN_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bar': {
-      instance = $.data(this, BAR_NAME);
+      settings.isStacked = true;
+      instance = this.data(BAR_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isStacked = true;
       const chartComponent = new Bar(this, settings);
-      instance = $.data(this, BAR_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(BAR_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bar-stacked': {
-      instance = $.data(this, BAR_NAME);
+      settings.isStacked = true;
+      instance = this.data(BAR_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isStacked = true;
       const chartComponent = new Bar(this, settings);
-      instance = $.data(this, BAR_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(BAR_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bar-normalized': {
-      instance = $.data(this, BAR_NAME);
+      settings.isNormalized = true;
+      instance = this.data(BAR_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isNormalized = true;
       const chartComponent = new Bar(this, settings);
-      instance = $.data(this, BAR_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(BAR_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'bar-grouped': {
-      instance = $.data(this, BAR_NAME);
+      settings.isStacked = false;
+      settings.isGrouped = true;
+      instance = this.data(BAR_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isStacked = false;
-      settings.isGrouped = true;
       const chartComponent = new Bar(this, settings);
-      instance = $.data(this, BAR_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(BAR_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'pie': {
-      instance = $.data(this, PIE_NAME);
+      instance = this.data(PIE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
       const chartComponent = new Pie(this, settings);
-      instance = $.data(this, PIE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(PIE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     case 'donut': {
-      instance = $.data(this, PIE_NAME);
+      settings.isDonut = true;
+      instance = this.data(PIE_NAME);
       if (instance) {
         instance.updated(settings);
         return this;
       }
-      settings.isDonut = true;
       const chartComponent = new Pie(this, settings);
-      instance = $.data(this, PIE_NAME, chartComponent);
-      $.data(this, 'chart', chartComponent); // Compatibility
+      this.data(PIE_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
       break;
     }
     default:
