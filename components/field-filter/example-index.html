@@ -81,9 +81,9 @@
       { value: 'v6', text: 'On Or After', icon: 'filter-greater-equals' },
     ];
 
-    // Init Field Filter and bind `selectedfieldfilter` event
+    // Init Field Filter and bind `filtered` event
     $('.field-filter').fieldfilter({ dataset: fieldfilterData })
-      .on('selectedfieldfilter', function (e, args) {
+      .on('filtered', function (e, args) {
         console.log(args);
       });
 

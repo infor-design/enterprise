@@ -157,11 +157,11 @@ FieldFilter.prototype = {
         };
         /**
         * Fires after the value in the dropdown is selected.
-        * @event selectedfieldfilter
+        * @event filtered
         * @property {object} event The jquery event object.
         * @property {object} data for selected item.
         */
-        this.element.triggerHandler('selectedfieldfilter', [triggerData]);
+        this.element.triggerHandler('filtered', [triggerData]);
       });
 
     return this;
