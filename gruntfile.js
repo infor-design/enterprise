@@ -69,9 +69,9 @@ module.exports = function (grunt) {
       },
 
       documentation: {
-        cmd: function(componentName) {
+        cmd: (componentName) => {
           componentName = componentName || '';
-          return 'npm run documentation ' + componentName;
+          return `npm run documentation ${componentName}`;
         }
       }
     },

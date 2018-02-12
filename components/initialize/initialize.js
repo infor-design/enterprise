@@ -274,7 +274,9 @@ Initialize.prototype = {
 
         ['stepchart', '.step-chart'],
 
-        ['listview']
+        ['listview'],
+
+        ['listdetail', '.list-detail']
       ];
 
       // Do initialization for all the simple controls

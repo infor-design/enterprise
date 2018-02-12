@@ -74,5 +74,6 @@ import './zoom/zoom.jquery';
 // Organisms
 import './datagrid/datagrid.jquery';
 import './header/header.jquery';
+import './list-detail/list-detail.jquery';
 import './lookup/lookup.jquery';
 import './tabs-multi/multi-tabs.jquery';

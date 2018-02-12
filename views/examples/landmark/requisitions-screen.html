@@ -22,7 +22,7 @@
     </div>
   </header>
 
-  <div id="maincontent" class="two-column page-container fixed list-detail">
+  <div id="maincontent" class="two-column page-container fixed list-detail" data-options='{ "listElement": "#task-listview" }'>
 
     <div class="sidebar" role="complementary">
       <div class="listview scrollable" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
@@ -47,9 +47,32 @@
           <!-- begin overview tab -->
           <div class="tab-panel" id="workflow">
             <div class="content">
-              <!-- Begin StepPattern -->
-                {{> includes/requisitions-stepprocess}}
-              <!-- End StepPattern -->
+
+              <div class="scrollable-flex">
+                <div class="scrollable-flex-header">
+                  <div class="toolbar">
+                    <div class="title">Workflow Steps</div>
+                  </div>
+                </div>
+                <div class="scrollable-flex-content">
+
+                  <!-- begin accordion -->
+                  <div class="accordion panel">
+                    <div class="accordion-header">
+                      <span>Head Mans</span>
+                    </div>
+                    <div class="accordion-header">
+                      <span>Head Mans 2</span>
+                    </div>
+                    <div class="accordion-header">
+                      <span>Head Mans 3</span>
+                    </div>
+                  </div>
+                  <!-- end accordion -->
+
+                </div>
+              </div>
+
             </div>
           </div>
           <!-- end overview tab -->
