@@ -162,6 +162,7 @@ $datagrid-short-row-height: 23px;
     td {
       background-color: transparent;
       border-top: 0;
+      box-shadow: none;
 
       .is-readonly {
         background-color: transparent;

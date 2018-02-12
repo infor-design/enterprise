@@ -2293,7 +2293,7 @@ Datagrid.prototype = {
               }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
               }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
               }${isSummaryRow ? ' datagrid-summary-row' : ''
-              }${!self.settings.cellNavigation ? ' is-clickable' : ''
+              }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
               }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
               }">`;
 
