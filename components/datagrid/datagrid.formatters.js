@@ -353,7 +353,7 @@ const formatters = {
     const isOpen = item.expanded;
     const depth = api.settings.treeDepth[row] ? api.settings.treeDepth[row].depth : 0;
     const button = `<button type="button" class="btn-icon datagrid-expand-btn${(isOpen ? ' is-expanded' : '')}" tabindex="-1"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}>
-      <span class="icon plus-minus'+ ${(isOpen ? ' active' : '')}"></span>
+      <span class="icon plus-minus ${(isOpen ? ' active' : '')}"></span>
       <span class="audible">${Locale.translate('ExpandCollapse')}</span>
       </button>${(value ? `<span> ${value}</span>` : '')}`;
     const node = `<span class="datagrid-tree-node"${(depth ? ` style="margin-left: ${(depth ? `${(30 * (depth - 1))}px` : '')}"` : '')}> ${value}</span>`;
