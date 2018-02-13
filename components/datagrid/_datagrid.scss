@@ -2791,25 +2791,18 @@ html[dir='rtl'] {
   }
 
   // Right aligned header
-  th.datagrid-column-wrapper {
+  th .datagrid-column-wrapper {
     .datagrid-header-text {
       direction: rtl;
     }
 
     &.l-right-text {
       float: left;
-      top: 10px;
-      vertical-align: baseline;
 
       .datagrid-header-text {
         float: left;
-      }
-
-      .sort-indicator {
-        float: right;
-        margin: -20px 1px 0;
         position: relative;
-        top: 0;
+        top: 11px;
       }
     }
   }
