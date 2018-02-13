@@ -95,6 +95,14 @@
         paging: true,
         pagesize: 5,
         template:  $('#colleagues-tmpl').html()
+      }).on('selected', function (e, args) {
+        // Clicking a list item
+        console.log('selected list item', args.elem.attr('aria-posinset'));
+      });
+
+      // Clicking a favorite
+      $('#colleagues-listview').find('.icon-favorite').on('click', function (e, args) {
+        console.log('selected favorite item', $(this).closest('tr').attr('aria-posinset'));
       });
     });
 
