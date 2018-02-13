@@ -1,36 +1,40 @@
-import { Dropdown } from '../../dropdown.js';
+import { Dropdown } from '../../dropdown';
 
 const dropdownHTML = require('../../example-index.html');
 const svg = require('../../../icons/svg.html');
+
 let dropdownEl;
 let svgEl;
 let rowEl;
-let dropdownData;
+let dropdownObj;
 
 describe('Dropdown ARIA', () => {
   beforeEach(() => {
-    dropdownEl = svgEl = rowEl = dropdownData = null;
+    dropdownEl = null;
+    svgEl = null;
+    rowEl = null;
+    dropdownObj = null;
     document.body.insertAdjacentHTML('afterbegin', dropdownHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
     dropdownEl = document.body.querySelector('.dropdown');
     rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     dropdownEl.classList.add('no-init');
-    $('.dropdown').dropdown();
-    dropdownData = $('.dropdown').data('dropdown');
+    dropdownObj = new Dropdown(dropdownEl);
+    dropdownObj.init();
+    debugger;
   });
 
   afterEach(() => {
-    dropdownData.destroy();
-    $('.dropdown').destroy();
+    dropdownObj.destroy();
     dropdownEl.remove();
     rowEl.remove();
     svgEl.remove();
   });
 
   it('Should set ARIA labels', () => {
-    expect(document.querySelector('[aria-label="expanded"]')).toBeTruthy;
-    expect(document.querySelector('[aria-label="autocomplete"]')).toBeTruthy;
-    expect(document.querySelector('[aria-label="controls"]')).toBeTruthy;
+    expect(document.querySelector('[aria-expanded="false"]')).toBeTruthy();
+    expect(document.querySelector('[aria-autocomplete="list"]')).toBeTruthy();
+    expect(document.querySelector('[aria-controls="dropdown-list"]')).toBeTruthy();
   });
 });

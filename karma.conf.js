@@ -7,13 +7,13 @@ module.exports = function (config) {
       'dist/js/jquery-3.1.1.js',
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
-      'components/**/*.spec.js'
+      'components/**/*.spec.js',
     ],
     exclude: [
       'node_modules'
     ],
     preprocessors: {
-      'components/**/*.spec.js': ['webpack'],
+      'components/**/*.spec.js': ['webpack', 'sourcemap'],
       'dist/js/sohoxi.js': ['coverage']
     },
     webpack: {
@@ -43,7 +43,7 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: [
-      'ChromeHeadless'
+      'Chrome'
     ],
     singleRun: false,
     concurrency: Infinity

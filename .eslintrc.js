@@ -11,13 +11,15 @@ module.exports = {
   // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
   'extends': 'airbnb-base',
   'parserOptions': {
-    'ecmaVersion': 6,
+    'ecmaVersion': 8,
     'sourceType': 'module'
   },
   'env': {
     'browser': true,
     'jquery': true,
-    'node': true
+    'node': true,
+    'jasmine': true,
+    'protractor': true
   },
   'rules': {
     // require function expressions to have a name

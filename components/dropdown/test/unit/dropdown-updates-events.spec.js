@@ -1,16 +1,19 @@
-import { Dropdown } from '../../dropdown.js';
+import { Dropdown } from '../../dropdown';
 
 const dropdownHTML = require('../../example-index.html');
 const svg = require('../../../icons/svg.html');
+
 let dropdownEl;
 let svgEl;
 let rowEl;
-let dropdownData;
-let spyEvent;
+let dropdownObj;
 
 describe('Dropdown updates, events', () => {
   beforeEach(() => {
-    dropdownEl = svgEl = rowEl = dropdownData = null;
+    dropdownEl = null;
+    svgEl = null;
+    rowEl = null;
+    dropdownObj = null;
     document.body.insertAdjacentHTML('afterbegin', dropdownHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
     dropdownEl = document.body.querySelector('.dropdown');
@@ -18,11 +21,11 @@ describe('Dropdown updates, events', () => {
     svgEl = document.body.querySelector('.svg-icons');
     dropdownEl.classList.add('no-init');
     $('.dropdown').dropdown();
-    dropdownData = $('.dropdown').data('dropdown');
+    dropdownObj = new Dropdown(dropdownEl);
   });
 
   afterEach(() => {
-    dropdownData.destroy();
+    dropdownObj.destroy();
     $('.dropdown').destroy();
     dropdownEl.remove();
     rowEl.remove();
@@ -45,7 +48,7 @@ describe('Dropdown updates, events', () => {
       delay: 300,
       maxWidth: null
     };
-    expect(dropdownData.settings).toEqual(settings);
+    expect(dropdownObj.settings).toEqual(settings);
   });
 
   it('Should update set settings via data', () => {
@@ -65,10 +68,10 @@ describe('Dropdown updates, events', () => {
       maxWidth: 1000
     };
 
-    dropdownData.updated();
-    dropdownData.settings.maxWidth = 1000;
-    dropdownData.settings.delay = 2000;
-    expect(dropdownData.settings).toEqual(settings);
+    dropdownObj.updated();
+    dropdownObj.settings.maxWidth = 1000;
+    dropdownObj.settings.delay = 2000;
+    expect(dropdownObj.settings).toEqual(settings);
   });
 
   it('Should update set settings via parameters', () => {
@@ -88,14 +91,14 @@ describe('Dropdown updates, events', () => {
       maxWidth: 1000
     };
 
-    dropdownData.updated(settings);
-    expect(dropdownData.settings).toEqual(settings);
+    dropdownObj.updated(settings);
+    expect(dropdownObj.settings).toEqual(settings);
   });
 
   it('Should trigger "has-updated" event', () => {
     $('.dropdown').on('has-update', () => {
       expect(true).toBe(true);
-    })
-    dropdownData.updated();
+    });
+    dropdownObj.updated();
   });
 });

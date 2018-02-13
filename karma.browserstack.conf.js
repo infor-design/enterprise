@@ -14,7 +14,9 @@ module.exports = function (config) {
     browserStack: {
       username: process.env.BROWSER_STACK_USERNAME,
       accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
-      startTunnel: true
+      startTunnel: true,
+      build: 'unit-tests-browserstack',
+      name: 'Unit tests'
     },
     customLaunchers: {
       bs_firefox_mac: {

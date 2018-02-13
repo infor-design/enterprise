@@ -15,7 +15,9 @@ exports.config = {
     'browserstack.debug': true,
     'browserstack.local': true,
     build: 'protractor-browserstack',
-    name: 'e2e test',
+    name: 'functional test',
+    browserName: 'Safari',
+    browser_version: '11.0'
   },
   multiCapabilities: [
     {

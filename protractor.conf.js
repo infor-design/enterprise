@@ -7,12 +7,9 @@ exports.config = {
     '**/e2e/*.e2e-spec.js'
   ],
   capabilities: {
-    browserName: 'chrome',
-    chromeOptions: {
-      args: ['--headless', '--disable-gpu', '--window-size=360,640']
-    }
+    browserName: 'safari'
   },
-  directConnect: true,
+  directConnect: false,
   baseUrl: 'http://localhost:4000/',
   framework: 'jasmine2',
   jasmineNodeOpts: {
@@ -21,7 +18,12 @@ exports.config = {
     print: function() {}
   },
   onPrepare: function() {
-    browser.ignoreSynchronization = true;
+    browser.protractorImageComparison = new protractorImageComparison({
+      baselineFolder: './baseline/',
+      screenshotPath: './.tmp/',
+      autoSaveBaseline: true,
+      debug: true
+    });
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: true }
     }));
