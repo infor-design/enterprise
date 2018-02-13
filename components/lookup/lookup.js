@@ -290,8 +290,8 @@ Lookup.prototype = {
         return thisLabel.clone().find('span').remove().end()
           .text();
       }
-      if (this.settings.title) {
-        return this.settings.title;
+      if (self.settings.title) {
+        return self.settings.title;
       }
       return '';
     }
