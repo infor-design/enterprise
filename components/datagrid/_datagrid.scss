@@ -2791,7 +2791,7 @@ html[dir='rtl'] {
   }
 
   // Right aligned header
-  th .datagrid-column-wrapper {
+  th.datagrid-column-wrapper {
     .datagrid-header-text {
       direction: rtl;
     }
@@ -2834,7 +2834,7 @@ html[dir='rtl'] {
   .datagrid-header {
     //Push sort indicator over
     .sort-indicator {
-      margin: 3px 3px 0;
+      margin: auto 3px 0;
     }
 
     .required::after {
