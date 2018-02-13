@@ -38,6 +38,9 @@
     .on('dblclick', function(e, args) {
       console.log('double clicked row index', args.row);
     })
+    .on('contextmenu', function(e, args) {
+      console.log('contextmenu event', args.row);
+    })
     .data('datagrid');
 
     function datagridPagingFucntion(request, response) {
