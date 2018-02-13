@@ -3599,7 +3599,8 @@ Datagrid.prototype = {
   triggerRowEvent(eventName, e, stopPropagation) {
     const self = this;
     const cell = $(e.target).closest('td').index();
-    const row = self.dataRowIndex($(e.target).closest('tr'));
+    const rowIndex = $(e.target).closest('tr');
+    let row = self.dataRowIndex(rowIndex);
     const item = self.settings.dataset[row];
 
     if ($(e.target).is('a')) {
@@ -3609,6 +3610,10 @@ Datagrid.prototype = {
     if (stopPropagation) {
       e.stopPropagation();
       e.preventDefault();
+    }
+
+    if (self.settings.indeterminate) {
+      row = self.actualArrayIndex(rowIndex);
     }
 
     self.element.trigger(eventName, [{ row, cell, item, originalEvent: e }]);
