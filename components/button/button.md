@@ -13,8 +13,6 @@
 
 ## Code Example
 
-### Buttons
-
 A button object should always use a button element. Also make sure to add type+"button" or some browsers will treat this as a submit button and refresh the page.
 
 This example shows four types of buttons, all controlled by class.
@@ -28,24 +26,23 @@ All buttons are assumed to be icon + text. To add the icon you add the svg icon 
 
 ```javascript
 
-  <button class="btn-primary" type="button">Action</button>
+<button class="btn-primary" type="button">Action</button>
 
-  <button class="btn-secondary" type="button">Action</button>
+<button class="btn-secondary" type="button">Action</button>
 
-  <button type="button" class="btn-tertiary">
-    <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-      <use xlink:href="#icon-filter"/>
-    </svg>
-    <span>Action</span>
-  </button>
+<button type="button" class="btn-tertiary">
+  <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+    <use xlink:href="#icon-filter"/>
+  </svg>
+  <span>Action</span>
+</button>
 
-  <button type="button" class="btn-icon">
-    <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-      <use xlink:href="#icon-calendar"/>
-    </svg>
-    <span>Date</span>
-  </button>
-
+<button type="button" class="btn-icon">
+  <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+    <use xlink:href="#icon-calendar"/>
+  </svg>
+  <span>Date</span>
+</button>
 
 ```
 
@@ -62,9 +59,7 @@ All buttons are assumed to be icon + text. To add the icon you add the svg icon 
 
 ## Keyboard Shortcuts
 
--   **Spacebar or Enter keys** execute the action for that button.
--   If the button activation closes the containing entity or launches another entity, then focus moves to the newly-opened entity.
--   If the button activation does not close or dismiss the containing entity, then focus remains on the button. An example might be an Apply or Recalculate button.
+-   *Spacebar or Enter keys* execute the action for that button. If the button activation closes the containing entity or launches another entity, then focus moves to the newly-opened entity. If the button activation does not close or dismiss the containing entity, then focus remains on the button. An example might be an Apply or Recalculate button.
 
 ## States and Variations
 
@@ -80,5 +75,5 @@ All buttons are assumed to be icon + text. To add the icon you add the svg icon 
 ## Upgrading from 3.X
 
 -   Change class "inforFormButton default" to btn-primary
--   Change class "inforFormButton" to btn
--   Tertiary is new
+-   Change class "inforFormButton" to btn-secondary
+-   Tertiary is a new type we did not have that would be normally used that is the common toolbar / non form button type.

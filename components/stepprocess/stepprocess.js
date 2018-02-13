@@ -1,783 +1,808 @@
-/* start-amd-strip-block */
-(function(factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module
-    define(['jquery'], factory);
-  } else if (typeof exports === 'object') {
-    // Node/CommonJS
-    module.exports = factory(require('jquery'));
-  } else {
-    // Browser globals
-    factory(jQuery);
-  }
-}(function($) {
-/* end-amd-strip-block */
+import * as debug from '../utils/debug';
+import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
-  $.fn.stepprocess = function(options) {
-    var pluginName = 'stepprocess',
-      defaults = {
-        linearProgression: false,
-        folderIconOpen: 'caret-up',
-        folderIconClosed: 'caret-down',
-        stepList: '#step-list',
-        stepLi: '.js-step',
-        stepLink: '.js-step-link',
-        stepFolder: '.js-step-folder',
-        btnPrev: '.js-step-link-prev',
-        btnNext: '.js-step-link-next',
-        beforeSelectStep: null,
-      },
-      settings = $.extend({}, defaults, options);
+// Component Name
+const COMPONENT_NAME = 'stepprocess';
 
-    /**
-    * A Stepprocess/wizard control
-    *
-    * @class Stepprocess
-    * @param {Boolean} linearProgression The Main Application Name to display in the header. (Defaults to false)
-    * @param {String} folderIconOpen A specific folder open icon. (Defaults to 'caret-up')
-    * @param {String} folderIconClosed A specific folder close icon. (Defaults to 'caret-down')
-    * @param {Boolean} stepList Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled).
-    * @param {String} stepLi jQuery selector for the step elements.
-    * @param {Boolean} stepLink jQuery selector for the step link elements.
-    * @param {String} stepFolder jQuery selector for the step folder elements.
-    * @param {String} btnPrev jQuery selector for the previous step button.
-    * @param {String} btnNext jQuery selector for the next step button.
-    * @param {Function} beforeSelectStep  A callback (function or promise) that gives args: stepLink (the step link element) and isStepping (whether we are prev/next'ing or not).
-    *
-    */
-    function Stepprocess(element) {
-      this.element = $(element);
-      this.init();
+/**
+ * Default Stepprocess Options
+ */
+const STEPPROCESS_DEFAULTS = {
+  linearProgression: false,
+  folderIconOpen: 'caret-up',
+  folderIconClosed: 'caret-down',
+  stepList: '#step-list',
+  stepLi: '.js-step',
+  stepLink: '.js-step-link',
+  stepFolder: '.js-step-folder',
+  btnPrev: '.js-step-link-prev',
+  btnNext: '.js-step-link-next',
+  beforeSelectStep: null,
+};
+
+/**
+* A Stepprocess/wizard control
+*
+* @class Stepprocess
+* @param {String} element The component element.
+* @param {String} settings The component settings.
+* @param {boolean} linearProgression The Main Application Name to display
+ in the header. (Defaults to false)
+* @param {string} folderIconOpen A specific folder open icon. (Defaults to 'caret-up')
+* @param {string} folderIconClosed A specific folder close icon. (Defaults to 'caret-down')
+* @param {boolean} stepList Determines whether or not to display device
+ information (Browser, Platform, Locale, Cookies Enabled).
+* @param {string} stepLi jQuery selector for the step elements.
+* @param {boolean} stepLink jQuery selector for the step link elements.
+* @param {string} stepFolder jQuery selector for the step folder elements.
+* @param {string} btnPrev jQuery selector for the previous step button.
+* @param {string} btnNext jQuery selector for the next step button.
+* @param {Function} beforeSelectStep  A callback (function or promise)
+ that gives args: stepLink (the step link element) and isStepping
+  (whether we are prev/next'ing or not).
+*/
+function Stepprocess(element, settings) {
+  this.settings = utils.mergeSettings(element, settings, STEPPROCESS_DEFAULTS);
+
+  this.element = $(element);
+  debug.logTimeStart(COMPONENT_NAME);
+  this.init();
+  debug.logTimeEnd(COMPONENT_NAME);
+}
+
+// Stepprocess Methods
+Stepprocess.prototype = {
+
+  init() {
+    this.stepListJq = $(this.settings.stepList);
+    this.initStepprocess();
+    this.handleKeys();
+    this.setupEvents();
+    this.focusFirst();
+  },
+
+  /**
+   * Initialize stepprocess
+   * @private
+   * @returns {void}
+   */
+  initStepprocess() {
+    const steps = this.stepListJq.find(this.settings.stepLi);
+
+    for (let i = 0, l = steps.length; i < l; i++) {
+      this.decorateNode(steps[i]);
     }
 
-    // Stepprocess Methods
-    Stepprocess.prototype = {
-      init: function() {
-        this.settings = $.extend({}, settings);
-        this.$stepList = $(this.settings.stepList);
-        this.initStepprocess();
-        this.handleKeys();
-        this.setupEvents();
-        this.focusFirst();
-      },
+    const startingStep = $(`${this.settings.stepLi}.is-selected`);
+    const startingStepLink = startingStep.find(this.settings.stepLink);
+    this.selectStep(startingStepLink);
+  },
 
-      /** @private  */
-      initStepprocess: function() {
-        var self = this,
-          steps = self.$stepList.find(this.settings.stepLi);
+  /**
+   * Set initial attributes on each step its counterparts
+   * @private
+   * @param  {Object} step - The step element to decorate
+   * @returns {void}
+   */
+  decorateNode(step) {
+    const self = this;
+    const stepJq = $(step);
+    const stepLinkJq = stepJq.children(this.settings.stepLink);
+    const stepFolderJq = stepJq.children(this.settings.stepFolder);
+    const isDisabled = stepLinkJq.hasClass('is-disabled');
+    const isOpen = stepFolderJq.hasClass('is-open');
 
-        steps.each(function() {
-          self.decorateNode(this);
-        });
+    if (isDisabled) {
+      stepLinkJq.attr('aria-disabled', 'true');
+    }
 
-        var startingStep = $(this.settings.stepLi + '.is-selected');
-        var startingStepLink = startingStep.find(this.settings.stepLink);
-        this.selectStep(startingStepLink);
-      },
+    if (stepFolderJq.length) {
+      stepJq.addClass('folder');
+      stepFolderJq.attr('role', 'group');
 
-       /**
-       * @private
-       * Set initial attributes on each step its counterparts
-       * @param  {object} step - The step element to decorate
-       */
+      if (isDisabled) {
+        stepFolderJq.addClass('disabled');
 
-      decorateNode: function(step) {
-        var self = this,
-            $step = $(step),
-            $stepLink = $step.children(this.settings.stepLink),
-            $stepFolder = $step.children(this.settings.stepFolder),
-            isDisabled = $stepLink.hasClass('is-disabled'),
-            isOpen = $stepFolder.hasClass('is-open');
+        if (isOpen) {
+          const stepLinks = stepFolderJq.children();
 
-        if (isDisabled) {
-          $stepLink.attr('aria-disabled','true');
-        }
-
-        if ($stepFolder.length) {
-
-          $step.addClass('folder');
-          $stepFolder.attr('role', 'group');
-
-          if (isDisabled) {
-            $stepFolder.addClass('disabled');
-
-            if (isOpen) {
-              $stepFolder.children().each(function() {
-                $(this).find(self.settings.stepLink)
-                  .addClass('is-disabled')
-                  .attr('aria-disabled', 'true');
-              });
-            }
-          }
-
-          $stepLink.attr('aria-expanded', isOpen);
-        }
-
-        // parentCount 'aria-level' to the node's level depth
-        var parentCount = $stepLink.parentsUntil(this.$stepList, 'ul').length - 1;
-
-        // Set the current stepprocess item node position relative to its aria-setsize
-        var posinset = $step.index();
-
-        // Set the current stepprocess item aria-setsize
-        var listCount = $step.siblings().addBack().length;
-
-        $stepLink
-          .attr({
-            'role': 'stepitem',
-            'tabindex': '-1',
-            'aria-selected': 'false',
-            'aria-level': parentCount + 1,
-            'aria-posinset': posinset + 1,
-            'aria-setsize': listCount,
-            'aria-disabled': isDisabled
-          })
-          .addClass('hide-focus')
-          .hideFocus();
-      },
-
-       /** @private  */
-
-        /**
-       * @private
-       * @param  {object} step - The step element
-       * @return {boolean}
-       */
-
-      /** @private  */
-      focusFirst: function () {
-        this.$stepList.find(this.settings.stepLi + ':first').attr('tabindex', '0');
-      },
-
-          /**
-       * @private
-       * @param  {[type]} step - The step element
-       */
-
-      /**
-       * @private
-       * @param  {object} step - The step element
-       */
-      folderClose: function(step) {
-        var self = this,
-            $step = $(step),
-            $stepLink = $step.children(this.settings.stepLink),
-            $stepFolder = $step.children(this.settings.stepFolder);
-
-        var treeIcon = $stepLink
-                        .closest('.folder')
-                          .removeClass('is-open')
-                          .end()
-                        .find('svg.icon-tree');
-
-        this.setIcon(treeIcon, this.settings.folderIconClosed);
-
-        this.isAnimating = true;
-
-        $stepFolder
-          .one('animateclosedcomplete', function() {
-            $stepFolder.removeClass('is-open');
-            self.isAnimating = false;
-          })
-          .animateClosed();
-
-        $stepLink.attr('aria-expanded', 'false');
-      },
-
-      /**
-       * @private
-       * @param  {object} step - The step element
-       */
-      folderOpen: function(step) {
-        var self = this,
-            $step = $(step);
-
-        if (!this.isOpen($step)) {
-
-          var $stepLink = $step.children(this.settings.stepLink),
-              $stepFolder = $step.children(this.settings.stepFolder);
-
-          $step.addClass('is-open');
-          $stepLink.attr('aria-expanded', 'true');
-
-          var svgElem = $stepLink.find('svg.icon-tree');
-          self.setIcon(svgElem, self.settings.folderIconOpen);
-
-          self.isAnimating = true;
-
-          $stepFolder
-            .one('animateopencomplete', function() {
-              self.isAnimating = false;
-            })
-            .addClass('is-open')
-            .css('height', 0)
-            .animateOpen();
-        }
-      },
-
-      /**
-       * @private
-       * @param  {[type]} stepLink- Description
-       * @return {[type]}     - Description
-       */
-      folderToggle: function(stepLink) {
-        var $step = stepLink.closest(this.settings.stepLi);
-
-        if (this.isFolder($step)) {
-          var $stepFolder = $step.children(this.settings.stepFolder);
-          if (this.isOpen($stepFolder)) {
-            this.folderClose($step);
-          } else {
-            this.folderOpen($step);
+          for (let i = 0, l = stepLinks.length; i < l; i++) {
+            $(stepLinks[i]).find(self.settings.stepLink)
+              .addClass('is-disabled')
+              .attr('aria-disabled', 'true');
           }
         }
-      },
-
-
-       /**
-       * @private
-       * @return {object} - the "step" element
-       */
-
-      /**
-       * @private
-       * @return {object}
-       */
-      getSelectedStep: function () {
-        return $(this.settings.stepLi + '.is-selected', this.$stepList);
-      },
-
-      /**
-       * @private
-       * @param  {object} stepLink - The step link element
-       * @return {object}
-       */
-      getNextNode: function(stepLink) {
-        var next = stepLink.parent().next().find(this.settings.stepLink + ':first');
-        var $nextStep = next.closest(this.settings.stepLi);
-
-        // Possibly Move Into Children
-        if (stepLink.next().is(this.settings.stepFolder) && stepLink.next().hasClass('is-open')) {
-          next = stepLink.next().find(this.settings.stepLink + ':first');
-        }
-
-        //skip disabled
-        if(next.hasClass('is-disabled')) {
-          next = $nextStep.next().find(this.settings.stepLink + ':first');
-        }
-
-        //bottom of a group..{l=2: max folders to be deep }
-        if (next.length === 0) {
-          for (var i=0, l=2, closest=stepLink; i < l; i++) {
-            closest = closest.parent().closest('.folder');
-            next = closest.next().find(this.settings.stepLink + ':first');
-            if (next.length) {
-              break;
-            }
-          }
-        }
-        return next;
-      },
-       /**
-       * @private
-       * Get the next step in the tree
-       * (not to be confused with getNextNode, which includes folders)
-       * @return {object}
-       */
-
-      /**
-       * @private
-       * @return {object}
-       */
-      getNextStep: function() {
-        var $curStep = this.getSelectedStep(),
-            $curStepLink = $curStep.children(this.settings.stepLink),
-            $curStepFolder = $curStep.next(this.settings.stepFolder),
-            $nextStepLink = this.getNextNode($curStepLink),
-            $nextStepFolder = $nextStepLink.next(this.settings.stepFolder),
-            stepLinkToSelect = null,
-            theFolder = null;
-
-        if ($curStepFolder.length) {
-          // Select the first node of the current folder,
-          // unless its empty, which means nextStep will be the folder's "title"
-          theFolder = $curStepFolder;
-          stepLinkToSelect = theFolder.children().length ? theFolder.find(this.settings.stepLink).first() : $nextStepLink;
-
-        } else if ($nextStepFolder.length) {
-          // Select the first node of the next node's folder,
-          // unless its empty, which means nextStep will be the folder's "title"
-          theFolder = $nextStepFolder;
-          stepLinkToSelect = theFolder.children().length ? theFolder.find(this.settings.stepLink).first() : $nextStepLink;
-
-        } else {
-          // Neither folders options work so select the next node
-          stepLinkToSelect = $nextStepLink;
-        }
-
-        return stepLinkToSelect;
-      },
-
-      /**
-       * @private
-       * @param  {object} stepLink - The step link element
-       * @return {object}
-       */
-      getPreviousNode: function(stepLink) {
-        var prev = stepLink.parent().prev().find(this.settings.stepLink + ':first');
-        var $prevStep = prev.closest(this.settings.stepLi);
-
-        //move into children at bottom
-        if ($prevStep.is('.folder.is-open') &&
-            $prevStep.find('ul.is-open a').length &&
-            !$prevStep.find('ul.is-disabled').length) {
-          prev = $prevStep.find('ul.is-open ' + this.settings.stepLink + ':last');
-        }
-
-        //skip disabled
-        if(prev.hasClass('is-disabled')) {
-          prev = $prevStep.prev().find(this.settings.stepLink + ':first');
-        }
-
-        //top of a group
-        if (prev.length === 0) {
-          prev = stepLink.closest(this.settings.stepFolder).prev(this.settings.stepLink);
-        }
-        return prev;
-      },
-
-      /**
-       * @private
-       * Get the previous step in the tree
-       * (not to be confused with getPreviousNode, which includes folders)
-       * @return {object}
-       */
-      getPreviousStep: function() {
-        // Get the currently select node
-        var $curStep = this.getSelectedStep(),
-            $curStepLink = $curStep.children(this.settings.stepLink);
-
-        // Get the previous step to switch to
-        var $prevStepLink = this.getPreviousNode($curStepLink),
-            $prevStep = $prevStepLink.closest(this.settings.stepLi),
-            stepLinkToSelect = $prevStepLink;
-
-        // If we are moving upwards and hit a folder title step
-        if (this.isFolder($prevStep)) {
-
-          if (this.isOpen($prevStep)) {
-            // If the folder is open, and we got here, that means we
-            // were currently at the first step in the folder and need to
-            // go to the prev step above the folder step (aka the prev to the prev)
-            stepLinkToSelect = this.getPreviousNode($prevStepLink);
-
-          } else {
-            var theFolder = $prevStep.children(this.settings.stepFolder);
-
-            if (theFolder.children().length) {
-              stepLinkToSelect = theFolder.find(this.settings.stepLink).last();
-            }
-          }
-        }
-
-        return stepLinkToSelect;
-      },
-
-      /**
-       * Go to the next step element
-       */
-      goToNextStep: function() {
-        var stepLink = this.getNextStep();
-        if (stepLink.length) {
-          this.selectStep(stepLink, 'next');
-        }
-      },
-
-      /**
-       * Go to the previous step element
-       */
-      goToPreviousStep: function() {
-        var stepLink = this.getPreviousStep();
-        if (stepLink.length) {
-          this.selectStep(stepLink, 'prev');
-        }
-      },
-
-      /**
-       * @private
-       * Key Behavior as per:
-       * http://access.aol.com/dhtml-style-guide-working-group/#treeview
-       */
-      handleKeys: function () {
-        var self = this;
-
-        this.$stepList.on('focus.stepprocess', this.settings.stepLink, function() {
-          var target = $(this);
-          if ((parseInt(target.attr('aria-level')) === 0) &&
-              (parseInt(target.attr('aria-posinset')) === 1)) {
-
-            // First element if disabled
-            if (target.hasClass('is-disabled')) {
-              var e = $.Event('keydown.stepprocess');
-              e.keyCode= 40; // move down
-              target.trigger(e);
-              return;
-            }
-          }
-        });
-
-        // Handle Up/Down Arrow Keys and Space
-        this.$stepList.on('keydown.stepprocess', this.settings.stepLink, function (e) {
-
-          var charCode = e.charCode || e.keyCode,
-              target = $(this),
-              next, prev;
-
-          if (self.isAnimating) {
-            return;
-          }
-
-          //down arrow
-          if (charCode === 40) {
-            var nextNode = self.getNextNode(target);
-            self.setFocus(nextNode);
-          }
-
-          //up arrow,
-          if (charCode === 38) {
-            var prevNode = self.getPreviousNode(target);
-            self.setFocus(prevNode);
-          }
-
-          //space
-          if (e.keyCode === 32) {
-            target.trigger('click.stepprocess');
-          }
-
-          // Left arrow
-          if (charCode === 37) {
-            if (Locale.isRTL()) {
-              if (target.next().hasClass('is-open')) {
-                prev = target.next().find(self.settings.stepLink + ':first');
-                self.setFocus(prev);
-              } else {
-                self.folderToggle(target);
-              }
-            } else {
-              if (target.next().hasClass('is-open')) {
-                self.folderToggle(target);
-              } else {
-                prev = target.closest('.folder').find(self.settings.stepLink + ':first');
-                self.setFocus(prev);
-              }
-            }
-            e.stopPropagation();
-            return false;
-          }
-
-          // Right arrow
-          if (charCode === 39) {
-            if (Locale.isRTL()) {
-              if (target.next().hasClass('is-open')) {
-                self.folderToggle(target);
-              } else {
-                next = target.closest('.folder').find(self.settings.stepLink + ':first');
-                self.setFocus(next);
-              }
-            } else {
-              if (target.next().hasClass('is-open')) {
-                next = target.next().find(self.settings.stepLink + ':first');
-                self.setFocus(next);
-              } else {
-                self.folderToggle(target);
-                self.setFocus(target);
-              }
-
-            }
-            e.stopPropagation();
-            return false;
-          }
-
-          // Home  (fn-right on mac)
-          if (charCode === 36) {
-            next = self.$stepList.find(self.settings.stepLink + ':first:visible');
-            self.setFocus(next);
-          }
-
-          // End (fn-right on mac)
-          if (charCode === 35) {
-            next = self.$stepList.find(self.settings.stepLink + ':last:visible');
-            self.setFocus(next);
-          }
-
-        });
-
-        // Handle Left/Right Arrow Keys
-        this.$stepList.on('keypress.stepprocess', this.settings.stepLink, function (e) {
-          var charCode = e.charCode || e.keyCode,
-            target = $(this);
-
-          if ((charCode >= 37 && charCode <= 40) || charCode === 32) {
-            e.stopPropagation();
-            return false;
-          }
-
-          //Printable Chars Jump to first high level node with it...
-           if (e.which !== 0) {
-            target.closest(self.settings.stepLi).nextAll().find('.js-step-link:visible').each(function () {
-              var node = $(this),
-                first = node.text().substr(0,1).toLowerCase(),
-                term = String.fromCharCode(e.which).toLowerCase();
-
-              if (first === term) {
-                self.setFocus(node);
-                return false;
-              }
-            });
-          }
-        });
-      },
-
-      /**
-       * @private
-       * @param  {[type]}  step - The step Li element
-       * @return {Boolean}
-       */
-      isFolder: function(step) {
-        return $(step).hasClass('folder');
-      },
-
-      /**
-       * @private
-       * @param  {object} step - The step element
-       * @return {boolean}
-       */
-      isInFolder: function(step) {
-        return $(step).closest(this.settings.stepFolder, this.$stepList).length;
-      },
-
-      /**
-       * @private
-       * @param  {object}  stepFolder - The step folder element
-       * @return {boolean}
-       */
-      isOpen: function(stepFolder) {
-        return $(stepFolder).hasClass('is-open');
-      },
-
-      /**
-       * @private
-       * @param {object} stepLink
-       */
-      setFocus: function (stepLink) {
-        stepLink.focus();
-      },
-
-      /**
-       * @private
-       * Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing
-       * @param {string} svg
-       * @param {string} icon
-       */
-      setIcon: function(svg, icon) {
-        var iconStr = icon.replace(/icon-|hide-focus|\s?/gi, '');
-        svg.changeIcon(iconStr);
-      },
-
-        /**
-       * Select a step
-       * @param  {object} stepLink - The jquery object for the step link element
-       * @param  {string} [linearDirection=none|previous|next] - Which direction we are traveling
-       */
-      selectStep: function (stepLink, linearDirection) {
-        var self = this;
-        if (linearDirection === undefined) {
-          linearDirection = 'none';
-        }
-
-        // Possibly Call the beforeSelectStep
-        var result;
-        if (typeof self.settings.beforeSelectStep === 'function') {
-
-          var args = {
-            stepLink: stepLink,
-            isStepping: linearDirection
-          };
-          result = self.settings.beforeSelectStep(args);
-
-          if (result.done && typeof result.done === 'function') { // A promise is returned
-            result.done(function(continueSelectNode, stepLinkToSelect) {
-              if (continueSelectNode) {
-                if (stepLinkToSelect) {
-                  stepLink = stepLinkToSelect;
-                }
-                self.selectStepFinish(stepLink, linearDirection);
-              }
-            });
-          } else if (result) { // boolean is returned instead of a promise
-            self.selectStepFinish(stepLink, linearDirection);
-          }
-
-        } else { // No Callback specified
-          self.selectStepFinish(stepLink, linearDirection);
-        }
-      },
-
-      /**
-       * @private
-       * Finishes selecting a step
-       * @param  {object} stepLink - Description
-       * @param  {string} [linearDirection=previous|next] - Description
-       *
-       */
-      selectStepFinish: function(stepLink, linearDirection) {
-        var self = this,
-            $allStepLinks = $(this.settings.stepLink, this.$stepList),
-            $step = stepLink.closest(this.settings.stepLi);
-
-        $allStepLinks
-          .attr({
-            'tabindex': '-1',
-            'aria-selected': 'false'
-          })
-          .parent().removeClass('is-selected');
-
-        stepLink.attr({
-          'tabindex': '0',
-          'aria-selected': 'true'
-        });
-
-        $step.addClass('is-selected');
-
-        if (this.isFolder($step)) {
-          // It is a folder
-          if (linearDirection === 'none') {
-            this.folderToggle($step); // clicking toggles
-          } else {
-            this.folderOpen($step); // going prev/next always opens
-          }
-        } else {
-          // Its not a folder
-          var parentIsFolder = $step.closest(this.settings.stepFolder, this.$stepList);
-
-          if (parentIsFolder.length) {
-            // If the step is in a folder, make sure that folder opens
-            this.folderOpen(parentIsFolder.closest(this.settings.stepLi));
-          }
-
-          // Show the step's panel
-          this.showStepPanel(stepLink.attr('href'));
-        }
-        stepLink.focus();
-
-        setTimeout(function() {
-          self.element.triggerHandler('selected', stepLink);
-        }, 0);
-      },
-
-      /**
-       * @private
-       * @param  {object} step - The step element to decorate
-       */
-      unSelectedNode: function (step) {
-        var aTags = $(this.settings.stepLink, this.$stepList),
-            $step = $(step),
-            $stepLink = $step.children(this.settings.stepLink);
-
-        aTags.attr('tabindex', '-1');
-        $stepLink.attr('tabindex', '0');
-
-        $step.removeClass('is-selected');
-        $stepLink.attr('aria-selected', 'false');
-      },
-
-      /**
-       * @private
-       * @return {[type]}- Description
-       */
-      setupEvents: function () {
-        var self = this;
-
-        // Updated and Click events
-        self.$stepList
-          .on('updated.stepprocess', function () {
-            self.initStepprocess();
-          })
-          .on('click.stepprocess', self.settings.stepLink + ':not(.is-clone)', function (e) {
-            e.preventDefault();
-
-            if (!self.settings.linearProgression) {
-              var $target = $(this);
-
-              if (!$target.is('.is-disabled, .is-loading')) {
-                self.selectStep($target);
-                e.stopPropagation();
-              }
-            }
-          });
-
-        // Next Button Click
-        $(this.settings.btnPrev).on('click', function(e) {
-          e.preventDefault();
-          self.goToPreviousStep.call(self);
-        });
-
-        // Previous Button Click
-        $(this.settings.btnNext).on('click', function(e) {
-          e.preventDefault();
-          self.goToNextStep.call(self);
-        });
-
-        // Setup main scrolling
-        $(this.settings.contentScroll).scrollaction({
-          scrollActionTarget: '.main'
-        });
-
-        // Setup sidebar scrolling
-        $(this.settings.stepListScroll).scrollaction({
-          scrollActionTarget: '.sidebar'
-        });
-
-        // Toggle sidebar
-        // Button to toggle the tree in responsive view
-        $('.js-toggle-sidebar').click(function(e) {
-          e.preventDefault();
-          self.element
-            .toggleClass('tablet-hide-steps')
-            .toggleClass('phone-hide-steps');
-        });
-      },
-
-      /**
-       * @private
-       * Show the content panel for the step
-       * @param  {string} contentId - The contentId to show
-       */
-      showStepPanel: function(contentId) {
-        $('.step-panel-active').removeClass('step-panel-active');
-        $(contentId).addClass('step-panel-active');
-        this.element.addClass('phone-hide-steps');
-      },
-
-      /** @private */
-      destroy: function() {
-        this.$stepList.removeData(pluginName);
-        this.$stepList.off('updated.stepprocess click.stepprocess focus.stepprocess keydown.stepprocess keypress.stepprocess').empty();
       }
-    };
 
-    // Keep the Chaining and Init the Controls or Settings
-    return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+      stepLinkJq.attr('aria-expanded', isOpen);
+    }
+
+    // parentCount 'aria-level' to the node's level depth
+    const parentCount = stepLinkJq.parentsUntil(this.stepListJq, 'ul').length - 1;
+
+    // Set the current stepprocess item node position relative to its aria-setsize
+    const posinset = stepJq.index();
+
+    // Set the current stepprocess item aria-setsize
+    const listCount = stepJq.siblings().addBack().length;
+
+    stepLinkJq
+      .attr({
+        role: 'stepitem',
+        tabindex: '-1',
+        'aria-selected': 'false',
+        'aria-level': parentCount + 1,
+        'aria-posinset': posinset + 1,
+        'aria-setsize': listCount,
+        'aria-disabled': isDisabled
+      })
+      .addClass('hide-focus')
+      .hideFocus();
+  },
+
+  /**
+   * Set tabindex to be focus first
+   * @private
+   * @returns {void}
+   */
+  focusFirst() {
+    this.stepListJq.find(`${this.settings.stepLi}:first`).attr('tabindex', '0');
+  },
+
+  /**
+   * Set initial attributes on each step its counterparts
+   * @private
+   * @param  {Object} step - The step element
+   * @returns {void}
+   */
+  folderClose(step) {
+    const stepJq = $(step);
+    const stepLinkJq = stepJq.children(this.settings.stepLink);
+    const stepFolderJq = stepJq.children(this.settings.stepFolder);
+
+    const treeIcon = stepLinkJq
+      .closest('.folder')
+      .removeClass('is-open')
+      .end()
+      .find('svg.icon-tree');
+
+    this.setIcon(treeIcon, this.settings.folderIconClosed);
+    this.isAnimating = true;
+
+    stepFolderJq
+      .one('animateclosedcomplete', () => {
+        stepFolderJq.removeClass('is-open');
+        this.isAnimating = false;
+      })
+      .animateClosed();
+
+    stepLinkJq.attr('aria-expanded', 'false');
+  },
+
+  /**
+   * Folder open
+   * @private
+   * @param  {Object} step - The step element
+   * @returns {void}
+   */
+  folderOpen(step) {
+    const stepJq = $(step);
+
+    if (!this.isOpen(stepJq)) {
+      const stepLinkJq = stepJq.children(this.settings.stepLink);
+      const stepFolderJq = stepJq.children(this.settings.stepFolder);
+
+      stepJq.addClass('is-open');
+      stepLinkJq.attr('aria-expanded', 'true');
+
+      const svgElem = stepLinkJq.find('svg.icon-tree');
+      this.setIcon(svgElem, this.settings.folderIconOpen);
+
+      this.isAnimating = true;
+
+      stepFolderJq
+        .one('animateopencomplete', () => {
+          this.isAnimating = false;
+        })
+        .addClass('is-open')
+        .css('height', 0)
+        .animateOpen();
+    }
+  },
+
+  /**
+   * Folder toggle
+   * @private
+   * @param  {Object} stepLink - Description
+   * @returns {void}
+   */
+  folderToggle(stepLink) {
+    const stepJq = stepLink.closest(this.settings.stepLi);
+
+    if (this.isFolder(stepJq)) {
+      const stepFolderJq = stepJq.children(this.settings.stepFolder);
+      if (this.isOpen(stepFolderJq)) {
+        this.folderClose(stepJq);
       } else {
-        instance = $.data(this, pluginName, new Stepprocess(this, settings));
+        this.folderOpen(stepJq);
+      }
+    }
+  },
+
+  /**
+   * Get selected step
+   * @private
+   * @returns {Object} selected step
+   */
+  getSelectedStep() {
+    return $(`${this.settings.stepLi}.is-selected`, this.stepListJq);
+  },
+
+  /**
+   * Get next node
+   * @private
+   * @param  {Object} stepLink - The step link element
+   * @returns {Object} node
+   */
+  getNextNode(stepLink) {
+    const s = this.settings;
+    let next = stepLink.parent().next().find(`${s.stepLink}:first`);
+    const nextStepJq = next.closest(s.stepLi);
+
+    // Possibly Move Into Children
+    if (stepLink.next().is(s.stepFolder) && stepLink.next().hasClass('is-open')) {
+      next = stepLink.next().find(`${s.stepLink}:first`);
+    }
+
+    // Skip disabled
+    if (next.hasClass('is-disabled')) {
+      next = nextStepJq.next().find(`${s.stepLink}:first`);
+    }
+
+    // Bottom of a group..{l=2: max folders to be deep }
+    if (next.length === 0) {
+      for (let i = 0, l = 2, closest = stepLink; i < l; i++) {
+        closest = closest.parent().closest('.folder');
+        next = closest.next().find(`${s.stepLink}:first`);
+        if (next.length) {
+          break;
+        }
+      }
+    }
+    return next;
+  },
+
+  /**
+   * Get the next step in the tree
+   * (not to be confused with getNextNode, which includes folders)
+   * @private
+   * @returns {Object} next step
+   */
+  getNextStep() {
+    const curStepJq = this.getSelectedStep();
+    const curStepLinkJq = curStepJq.children(this.settings.stepLink);
+    const curStepFolderJq = curStepJq.next(this.settings.stepFolder);
+    const nextStepLinkJq = this.getNextNode(curStepLinkJq);
+    const nextStepFolderJq = nextStepLinkJq.next(this.settings.stepFolder);
+    let stepLinkToSelect = null;
+    let theFolder = null;
+
+    if (curStepFolderJq.length) {
+      // Select the first node of the current folder,
+      // unless its empty, which means nextStep will be the folder's "title"
+      theFolder = curStepFolderJq;
+      stepLinkToSelect = theFolder.children().length ?
+        theFolder.find(this.settings.stepLink).first() : nextStepLinkJq;
+    } else if (nextStepFolderJq.length) {
+      // Select the first node of the next node's folder,
+      // unless its empty, which means nextStep will be the folder's "title"
+      theFolder = nextStepFolderJq;
+      stepLinkToSelect = theFolder.children().length ?
+        theFolder.find(this.settings.stepLink).first() : nextStepLinkJq;
+    } else {
+      // Neither folders options work so select the next node
+      stepLinkToSelect = nextStepLinkJq;
+    }
+
+    return stepLinkToSelect;
+  },
+
+  /**
+   * Get the previous node
+   * @private
+   * @param  {Object} stepLink - The step link element
+   * @returns {Object} previous node
+   */
+  getPreviousNode(stepLink) {
+    const s = this.settings;
+    let prev = stepLink.parent().prev().find(`${s.stepLink}:first`);
+    const prevStepJq = prev.closest(s.stepLi);
+
+    // Move into children at bottom
+    if (prevStepJq.is('.folder.is-open') &&
+        prevStepJq.find('ul.is-open a').length &&
+        !prevStepJq.find('ul.is-disabled').length) {
+      prev = prevStepJq.find(`ul.is-open ${s.stepLink}:last`);
+    }
+
+    // Skip disabled
+    if (prev.hasClass('is-disabled')) {
+      prev = prevStepJq.prev().find(`${s.stepLink}:first`);
+    }
+
+    // Top of a group
+    if (prev.length === 0) {
+      prev = stepLink.closest(s.stepFolder).prev(s.stepLink);
+    }
+    return prev;
+  },
+
+  /**
+   * Get the previous step in the tree
+   * (not to be confused with getPreviousNode, which includes folders)
+   * @private
+   * @param  {Object} stepLink - The step link element
+   * @returns {Object} previous step
+   */
+  getPreviousStep() {
+    const s = this.settings;
+    // Get the currently select node
+    const curStepJq = this.getSelectedStep();
+    const curStepLinkJq = curStepJq.children(s.stepLink);
+
+    // Get the previous step to switch to
+    const prevStepLinkJq = this.getPreviousNode(curStepLinkJq);
+    const prevStepJq = prevStepLinkJq.closest(s.stepLi);
+    let stepLinkToSelect = prevStepLinkJq;
+
+    // If we are moving upwards and hit a folder title step
+    if (this.isFolder(prevStepJq)) {
+      if (this.isOpen(prevStepJq)) {
+        // If the folder is open, and we got here, that means we
+        // were currently at the first step in the folder and need to
+        // go to the prev step above the folder step (aka the prev to the prev)
+        stepLinkToSelect = this.getPreviousNode(prevStepLinkJq);
+      } else {
+        const theFolder = prevStepJq.children(s.stepFolder);
+
+        if (theFolder.children().length) {
+          stepLinkToSelect = theFolder.find(s.stepLink).last();
+        }
+      }
+    }
+    return stepLinkToSelect;
+  },
+
+  /**
+   * Go to the next step element
+   * @private
+   * @returns {void}
+   */
+  goToNextStep() {
+    const stepLink = this.getNextStep();
+    if (stepLink.length) {
+      this.selectStep(stepLink, 'next');
+    }
+  },
+
+  /**
+   * Go to the previous step element
+   * @private
+   * @returns {void}
+   */
+  goToPreviousStep() {
+    const stepLink = this.getPreviousStep();
+    if (stepLink.length) {
+      this.selectStep(stepLink, 'prev');
+    }
+  },
+
+  /**
+   * Key Behavior as per:
+   * http://access.aol.com/dhtml-style-guide-working-group/#treeview
+   * @private
+   * @returns {void}
+   */
+  handleKeys() {
+    /* eslint-disable consistent-return */
+    const self = this;
+    const s = this.settings;
+
+    this.stepListJq.on('focus.stepprocess', s.stepLink, function () {
+      const target = $(this);
+      if ((parseInt(target.attr('aria-level'), 10) === 0) &&
+          (parseInt(target.attr('aria-posinset'), 10) === 1)) {
+        // First element if disabled
+        if (target.hasClass('is-disabled')) {
+          const e = $.Event('keydown.stepprocess');
+          e.keyCode = 40; // move down
+          target.trigger(e);
+          return; // eslint-disable-line
+        }
       }
     });
 
-  };
+    // Handle Up/Down Arrow Keys and Space
+    this.stepListJq.on('keydown.stepprocess', s.stepLink, function (e) {
+      const charCode = e.charCode || e.keyCode;
+      const target = $(this);
+      let next;
+      let prev;
 
-/* start-amd-strip-block */
-}));
-/* end-amd-strip-block */
+      if (self.isAnimating) {
+        return;
+      }
+
+      // Down arrow
+      if (charCode === 40) {
+        const nextNode = self.getNextNode(target);
+        self.setFocus(nextNode);
+      }
+
+      // Up arrow,
+      if (charCode === 38) {
+        const prevNode = self.getPreviousNode(target);
+        self.setFocus(prevNode);
+      }
+
+      // Space
+      if (e.keyCode === 32) {
+        target.trigger('click.stepprocess');
+      }
+
+      // Left arrow
+      if (charCode === 37) {
+        if (Locale.isRTL()) {
+          if (target.next().hasClass('is-open')) {
+            prev = target.next().find(`${s.stepLink}:first`);
+            self.setFocus(prev);
+          } else {
+            self.folderToggle(target);
+          }
+        } else if (target.next().hasClass('is-open')) {
+          self.folderToggle(target);
+        } else {
+          prev = target.closest('.folder').find(`${s.stepLink}:first`);
+          self.setFocus(prev);
+        }
+        e.stopPropagation();
+        return false;
+      }
+
+      // Right arrow
+      if (charCode === 39) {
+        if (Locale.isRTL()) {
+          if (target.next().hasClass('is-open')) {
+            self.folderToggle(target);
+          } else {
+            next = target.closest('.folder').find(`${s.stepLink}:first`);
+            self.setFocus(next);
+          }
+        } else if (target.next().hasClass('is-open')) {
+          next = target.next().find(`${s.stepLink}:first`);
+          self.setFocus(next);
+        } else {
+          self.folderToggle(target);
+          self.setFocus(target);
+        }
+        e.stopPropagation();
+        return false; // eslint-disable-line
+      }
+
+      // Home  (fn-right on mac)
+      if (charCode === 36) {
+        next = self.stepListJq.find(`${s.stepLink}:first:visible`);
+        self.setFocus(next);
+      }
+
+      // End (fn-right on mac)
+      if (charCode === 35) {
+        next = self.stepListJq.find(`${s.stepLink}:last:visible`);
+        self.setFocus(next);
+      }
+    });
+
+    // Handle Left/Right Arrow Keys
+    this.stepListJq.on('keypress.stepprocess', s.stepLink, function (e) {
+      const charCode = e.charCode || e.keyCode;
+      const target = $(this);
+
+      if ((charCode >= 37 && charCode <= 40) || charCode === 32) {
+        e.stopPropagation();
+        return false;
+      }
+
+      // Printable Chars Jump to first high level node with it...
+      if (e.which !== 0) {
+        target.closest(s.stepLi)
+          .nextAll().find('.js-step-link:visible').each(function () {
+            const node = $(this);
+            const first = node.text().substr(0, 1).toLowerCase();
+            const term = String.fromCharCode(e.which).toLowerCase();
+
+            if (first === term) {
+              self.setFocus(node);
+              return false;
+            }
+          });
+      }
+    });
+    /* eslint-enable consistent-return */
+  },
+
+  /**
+   * Checks if given step element is folder.
+   * @private
+   * @param {Object} step - The step element
+   * @returns {Boolean} true if folder
+   */
+  isFolder(step) {
+    return $(step).hasClass('folder');
+  },
+
+  /**
+   * Checks if given step element is in folder.
+   * @private
+   * @param {Object} step - The step element
+   * @returns {Boolean} true is in folder
+   */
+  isInFolder(step) {
+    return $(step).closest(this.settings.stepFolder, this.stepListJq).length;
+  },
+
+  /**
+   * Checks if given step folder is open.
+   * @private
+   * @param {Object} stepFolder element
+   * @returns {Boolean} true is open
+   */
+  isOpen(stepFolder) {
+    return $(stepFolder).hasClass('is-open');
+  },
+
+  /**
+   * Set focus on given step link.
+   * @private
+   * @param {Object} stepLink element
+   * @returns {void}
+   */
+  setFocus(stepLink) {
+    stepLink.focus();
+  },
+
+  /**
+   * Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing.
+   * @private
+   * @param {Object} svg element.
+   * @param {String} icon to set.
+   * @returns {void}
+   */
+  setIcon(svg, icon) {
+    const iconStr = icon.replace(/icon-|hide-focus|\s?/gi, '');
+    svg.changeIcon(iconStr);
+  },
+
+  /**
+   * Select a step
+   * @private
+   * @param  {Object} stepLink - The jquery object for the step link element
+   * @param  {String} linearDirection - [none|previous|next] Which direction we are traveling
+   * @returns {void}
+   */
+  selectStep(stepLink, linearDirection) {
+    const self = this;
+    if (linearDirection === undefined) {
+      linearDirection = 'none';
+    }
+
+    // Possibly Call the beforeSelectStep
+    let result;
+    if (typeof self.settings.beforeSelectStep === 'function') {
+      const args = {
+        stepLink,
+        isStepping: linearDirection
+      };
+      result = self.settings.beforeSelectStep(args);
+
+      if (result.done && typeof result.done === 'function') { // A promise is returned
+        result.done((continueSelectNode, stepLinkToSelect) => {
+          if (continueSelectNode) {
+            if (stepLinkToSelect) {
+              stepLink = stepLinkToSelect;
+            }
+            self.selectStepFinish(stepLink, linearDirection);
+          }
+        });
+      } else if (result) { // boolean is returned instead of a promise
+        self.selectStepFinish(stepLink, linearDirection);
+      }
+    } else { // No Callback specified
+      self.selectStepFinish(stepLink, linearDirection);
+    }
+  },
+
+  /**
+   * Finishes selecting a step
+   * @private
+   * @param  {Object} stepLink - Description
+   * @param  {String} [linearDirection=previous|next] - Description
+   * @returns {void}
+   */
+  selectStepFinish(stepLink, linearDirection) {
+    const self = this;
+    const allStepLinksJq = $(this.settings.stepLink, this.stepListJq);
+    const stepJq = stepLink.closest(this.settings.stepLi);
+
+    allStepLinksJq
+      .attr({
+        tabindex: '-1',
+        'aria-selected': 'false'
+      })
+      .parent().removeClass('is-selected');
+
+    stepLink.attr({
+      tabindex: '0',
+      'aria-selected': 'true'
+    });
+
+    stepJq.addClass('is-selected');
+
+    if (this.isFolder(stepJq)) {
+      // It is a folder
+      if (linearDirection === 'none') {
+        this.folderToggle(stepJq); // clicking toggles
+      } else {
+        this.folderOpen(stepJq); // going prev/next always opens
+      }
+    } else {
+      // Its not a folder
+      const parentIsFolder = stepJq.closest(this.settings.stepFolder, this.stepListJq);
+
+      if (parentIsFolder.length) {
+        // If the step is in a folder, make sure that folder opens
+        this.folderOpen(parentIsFolder.closest(this.settings.stepLi));
+      }
+
+      // Show the step's panel
+      this.showStepPanel(stepLink.attr('href'));
+    }
+    stepLink.focus();
+
+    setTimeout(() => {
+      /**
+      * Fires when selected step link.
+      *
+      * @event selected
+      * @type {Object}
+      * @property {Object} event - The jquery event object
+      * @property {Object} stepLink element
+      */
+      self.element.triggerHandler('selected', stepLink);
+    }, 0);
+  },
+
+  /**
+   * Un selected node
+   * @private
+   * @param {Object} step - The step element to decorate
+   * @returns {void}
+   */
+  unSelectedNode(step) {
+    const aTags = $(this.settings.stepLink, this.stepListJq);
+    const stepJq = $(step);
+    const stepLinkJq = stepJq.children(this.settings.stepLink);
+
+    aTags.attr('tabindex', '-1');
+    stepLinkJq.attr('tabindex', '0');
+
+    stepJq.removeClass('is-selected');
+    stepLinkJq.attr('aria-selected', 'false');
+  },
+
+  /**
+   * Setup events
+   * @private
+   * @returns {void}
+   */
+  setupEvents() {
+    const self = this;
+    const s = this.settings;
+
+    // Updated and Click events
+    this.stepListJq
+      .on('updated.stepprocess', () => {
+        this.initStepprocess();
+      })
+      .on('click.stepprocess', `${s.stepLink}:not(.is-clone)`, function (e) {
+        e.preventDefault();
+
+        if (!s.linearProgression) {
+          const targetJq = $(this);
+
+          if (!targetJq.is('.is-disabled, .is-loading')) {
+            self.selectStep(targetJq);
+            e.stopPropagation();
+          }
+        }
+      });
+
+    // Next Button Click
+    $(s.btnPrev).on('click', (e) => {
+      e.preventDefault();
+      this.goToPreviousStep.call(self);
+    });
+
+    // Previous Button Click
+    $(s.btnNext).on('click', (e) => {
+      e.preventDefault();
+      this.goToNextStep.call(self);
+    });
+
+    // Setup main scrolling
+    $(s.contentScroll).scrollaction({
+      scrollActionTarget: '.main'
+    });
+
+    // Setup sidebar scrolling
+    $(s.stepListScroll).scrollaction({
+      scrollActionTarget: '.sidebar'
+    });
+
+    // Toggle sidebar
+    // Button to toggle the tree in responsive view
+    $('.js-toggle-sidebar').click((e) => {
+      e.preventDefault();
+      this.element
+        .toggleClass('tablet-hide-steps')
+        .toggleClass('phone-hide-steps');
+    });
+  },
+
+  /**
+   * Show the content panel for the step
+   * @private
+   * @param  {string} contentId - The contentId to show
+   * @returns {void}
+   */
+  showStepPanel(contentId) {
+    $('.step-panel-active').removeClass('step-panel-active');
+    $(contentId).addClass('step-panel-active');
+    this.element.addClass('phone-hide-steps');
+  },
+
+  /**
+   * Removes event bindings from the instance.
+   * @private
+   * @returns {Object} The api
+   */
+  unbind() {
+    this.stepListJq.off('updated.stepprocess click.stepprocess focus.stepprocess keydown.stepprocess keypress.stepprocess').empty();
+    return this;
+  },
+
+  /**
+   * Resync the UI and Settings.
+   * @param {Object} settings The settings to apply.
+   * @returns {Object} The api
+   */
+  updated(settings) {
+    if (typeof settings !== 'undefined') {
+      this.settings = utils.mergeSettings(this.element, settings, STEPPROCESS_DEFAULTS);
+    }
+    return this
+      .unbind()
+      .init();
+  },
+
+  /**
+   * Destroy this component instance and remove the link from its base element.
+   * @returns {void}
+   */
+  destroy() {
+    this.unbind();
+    $.removeData(this.element[0], COMPONENT_NAME);
+  },
+};
+
+export { Stepprocess, COMPONENT_NAME };

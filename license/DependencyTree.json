@@ -2047,11 +2047,6 @@
 │  ├─ publisher: Alex Wilson
 │  ├─ email: alex.wilson@joyent.com
 │  └─ licenseFile: /Users/tmcconechy/Dev/develop/node_modules/getpass/LICENSE
-├─ git-rev-sync@1.8.0
-│  ├─ licenses: MIT
-│  ├─ repository: https://github.com/kurttheviking/git-rev-sync
-│  ├─ publisher: kurttheviking
-│  └─ licenseFile: /Users/tmcconechy/Dev/develop/node_modules/git-rev-sync/LICENSE
 ├─ git-up@2.0.6
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/IonicaBizau/git-up
@@ -5902,4 +5897,3 @@
    ├─ publisher: Chris Talkington
    ├─ url: http://christalkington.com/
    └─ licenseFile: /Users/tmcconechy/Dev/develop/node_modules/zip-stream/LICENSE
-

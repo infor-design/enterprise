@@ -1,33 +1,280 @@
 <h1 id="line-learn-more">Line <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
-<li>Line Chart Example <a href="../components/line/example-index">View Example</a><br /></li>
-<li>Labels on Axis <a href="../components/line/example-axis-labels">View Example</a><br /></li>
-<li>Ticks Adjustment (Less ticks than data points) <a href="../components/line/example-axis-ticks">View Example</a><br /></li>
-<li>Customize Tooltip <a href="../components/line/example-custom-tooltip">View Example</a><br /></li>
-<li>Customize Dot Size <a href="../components/line/example-custom-dots">View Example</a><br /></li>
-<li>Set animation speed <a href="../components/line/example-animation">View Example</a><br /></li>
-<li>Rotate Bottom Labels <a href="../components/line/test-rotate">View Example</a><br /></li>
-<li>Example showing Get Selected value <a href="../components/line/example-get-selected">View Example</a><br /></li>
-<li>Example showing Set Selected value <a href="../components/line/example-set-selected">View Example</a><br /></li>
+<ol type="1">
+<li>Line Chart Example <a href="../components/line/example-index">View Example</a></li>
+<li>Labels on Axis <a href="../components/line/example-axis-labels">View Example</a></li>
+<li>Ticks Adjustment (Less ticks than data points) <a href="../components/line/example-axis-ticks">View Example</a></li>
+<li>Customize Tooltip <a href="../components/line/example-custom-tooltip">View Example</a></li>
+<li>Customize Dot Size <a href="../components/line/example-custom-dots">View Example</a></li>
+<li>Set animation speed <a href="../components/line/example-animation">View Example</a></li>
+<li>Rotate Bottom Labels <a href="../components/line/test-rotate">View Example</a></li>
+<li>Example showing Get Selected value <a href="../components/line/example-get-selected">View Example</a></li>
+<li>Example showing Set Selected value <a href="../components/line/example-set-selected">View Example</a></li>
 <li>Example showing two line x axis <a href="../components/line/example-two-lines">View Example</a></li>
 </ol>
 <h2 id="api-details">API Details</h2>
-<h3 id="dataset-settings">Dataset Settings</h3>
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          dataset
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          The data to use in the line/area/bubble.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tooltip
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          A custom tooltip or tooltip renderer function
+for the whole chart.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isArea
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Render as an area chart.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isBubble
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Render as a bubble chart.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showLegend
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          If false the label will not be shown.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          xAxis
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          A series of options for the xAxis
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          yAxis
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          A series of options for the yAxis
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          yAxis
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          A series of options for the yAxis
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          hideDots
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true no dots are shown
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          axisLabels
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          Option to a label to one of the four sides. For Example
+
+<code>{left: 'Left axis label', top: 'Top axis label', right: 'Right axis label', bottom: 'Bottom axis label'}</code>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          animate
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          true|false - will do or not do the animation.
+'initial' will do only first time the animation.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          redrawOnResize
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, the component will not resize when resizing the page.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          dots
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          Option to customize the dot behavior. You can set the dot size (radius),
+the size on hover and stroke or even add a custom class.
+Example 
+<code>dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}</code>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          formatterString
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Use d3 format some examples can be found on 
+<a href="http://bit.ly/1IKVhHh">http://bit.ly/1IKVhHh</a>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = The new settings to use.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handle updated settings and values.</p>
+
+        </td>
+        <td>
+          The api for chaining.
+object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown - Remove added markup and events.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
+<h2 id="dataset-settings">Dataset Settings</h2>
 <ul>
-<li><code>name</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - The name to show on the y axis for the line chart<br /></li>
-<li><code>value</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> - The raw data value.<br /></li>
+<li><code>name</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - The name to show on the y axis for the line chart</li>
+<li><code>value</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> - The raw data value.</li>
 <li><code>tooltip</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - The custom tooltip to show.</li>
 </ul>
 <h3 id="extra-chart-settings">Extra Chart Settings</h3>
 <ul>
-<li><code>hideDots</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> - Hide the dots in the line chart<br /></li>
-<li><code>axisLabels</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Object</a></strong> - Option to a label to one of the four sides. Example <code>axisLabels: {left: 'Left axis label', top: 'Top axis label', right: 'Right axis label', bottom: 'Bottom axis label'}</code> <a href="../components/line/example-axis-labels">See Example</a><br /></li>
-<li><code>dots</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Object</a></strong> - Option to customize the dot behavior. You can set the dot size (radius), the size on hover and stroke or even add a custom class. Example <code>dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}</code> <a href="../components/line/example-custom-dots">See Example</a><br /></li>
-<li><code>xAxis</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> - A series of options for the xAxis<br /></li>
-<li><code>xAxis.rotate</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Number</a></strong> - Rotate the elements on the x axis. Recommend -65 deg but this can be tweaked depending on look.<br /></li>
-<li><code>yAxis</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> - A series of options for the yAxis<br /></li>
-<li><code>xAxis.ticks</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> Data to control the number of ticks and y axis format. Options for example <code>{number: 5, format: ',.1s'}</code> would show only 5 yaxis points and format the data to show 1K, 1M, 1G ect.. This uses the d3 formatter.<br /></li>
+<li><code>hideDots</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> - Hide the dots in the line chart</li>
+<li><code>axisLabels</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Object</a></strong> - Option to a label to one of the four sides. Example <code>axisLabels: {left: 'Left axis label', top: 'Top axis label', right: 'Right axis label', bottom: 'Bottom axis label'}</code> <a href="../components/line/example-axis-labels">See Example</a></li>
+<li><code>dots</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Object</a></strong> - Option to customize the dot behavior. You can set the dot size (radius), the size on hover and stroke or even add a custom class. Example <code>dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}</code> <a href="../components/line/example-custom-dots">See Example</a></li>
+<li><code>xAxis</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> - A series of options for the xAxis</li>
+<li><code>xAxis.rotate</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Number</a></strong> - Rotate the elements on the x axis. Recommend -65 deg but this can be tweaked depending on look.</li>
+<li><code>yAxis</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> - A series of options for the yAxis</li>
+<li><code>xAxis.ticks</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> Data to control the number of ticks and y axis format. Options for example <code>{number: 5, format: ',.1s'}</code> would show only 5 yaxis points and format the data to show 1K, 1M, 1G ect.. This uses the d3 formatter.</li>
 <li><code>xAxis.formatText</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a></strong> A function that passes the text element and a counter. You can return a formatted svg markup element to replace the current element. For example you could use tspans to wrap the strings or color them.</li>
 </ul>
 <h2 id="code-example">Code Example</h2>
@@ -102,7 +349,7 @@
 </code></pre>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.<br /></li>
+<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.</li>
 <li><strong>Enter/Space:</strong> Will select the area the corresponds with the focus'd legend item.</li>
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>

@@ -90,22 +90,24 @@
 
 
 <script>
+var body = $('body');
+
 // Wait for initialize
-$('body').on('initialized', function() {
+body.on('initialized', function() {
   var example1 = $('.example1'),
     parent = $('.card-content'),
     api = example1.data('circlepager');
 
-  window.onresize = function() {
+  body.on('resize', () => {
     if (parent.width() < 1000) {
       api.showCollapsedView();
     } else {
       api.showExpandedView();
     }
-  }
+  });
 
   // Init resize
-  window.onresize();
+  body.triggerHandler('resize');
 
   // previous / next
   $('.prev').on('click', function(e) {

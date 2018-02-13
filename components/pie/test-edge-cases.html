@@ -3,7 +3,7 @@
 
   <div class="row">
     <div class="six columns">
-       <div class="widget">
+       <div class="widget auto-height">
          <div class="widget-header">
           <h2 class="widget-title">Facility</h2>
          </div>
@@ -14,12 +14,12 @@
        </div>
      </div>
      <div class="six columns">
-       <div class="widget">
+       <div class="widget auto-height">
          <div class="widget-header">
           <h2 class="widget-title">Ship To </h2>
          </div>
          <div class="widget-content">
-           <div id="pie-shipTo" class="chart-container">
+           <div id="pie-ship-to" class="chart-container">
            </div>
          </div>
        </div>
@@ -27,7 +27,7 @@
    </div>
    <div class="row">
      <div class="six columns">
-       <div class="widget">
+       <div class="widget auto-height">
          <div class="widget-header">
           <h2 class="widget-title">Supplier</h2>
          </div>
@@ -38,7 +38,7 @@
        </div>
      </div>
      <div class="six columns">
-      <div class="widget">
+      <div class="widget auto-height">
         <div class="widget-header">
           <h2 class="widget-title">Reason</h2>
         </div>
@@ -51,7 +51,7 @@
    </div>
   <div class="row">
     <div class="six columns">
-      <div class="widget">
+      <div class="widget auto-height">
       <div class="widget-header">
         <h2 class="widget-title">Carrier</h2>
       </div>
@@ -62,7 +62,7 @@
       </div>
     </div>
     <div class="six columns">
-      <div class="widget">
+      <div class="widget auto-height">
         <div class="widget-header">
           <h2 class="widget-title">Expeditor</h2>
         </div>
@@ -75,12 +75,12 @@
   </div>
   <div class="row">
     <div class="six columns">
-      <div class="widget">
+      <div class="widget auto-height">
         <div class="widget-header">
           <h2 class="widget-title">Authorized By</h2>
         </div>
         <div class="widget-content">
-          <div id="pie-authorizedBy" class="chart-container">
+          <div id="pie-authorized-by" class="chart-container">
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@
       value: 2220.0
      }]
    }];
-   $('#pie-facility').chart({type: 'pie', dataset: facilityChartData, labels: {isTwoline: false, contentsTop: 'name (percentage)'}, format: '0.1%'});
+   $('#pie-facility').chart({type: 'pie', dataset: facilityChartData, legendPlacement: 'bottom'});
 
    //Ship To
    var shipToChartData = [{
@@ -107,20 +107,20 @@
     }]
    }];
 
-   $('#pie-shipTo').chart({type: 'pie', dataset: shipToChartData, labels: {isTwoline: false, contentsTop: 'name (percentage)'}, format: '0.1%'});
+   $('#pie-ship-to').chart({type: 'pie', dataset: shipToChartData, legendPlacement: 'bottom', format: '0.1%'});
 
    //Suppliers
    var supplierChartData = [{
       data: [{
-            name: 'OWENS PRECISION FABRICATORS',
+            name: 'Owen Precision',
             value: 2220.0
       }, {
-            name: 'Amy&#39;s Amazing Machines',
+            name: 'Amys Amazing Machines',
             value: 0.0
       }]
      }];
 
-   $('#pie-supplier').chart({type: 'pie', dataset: supplierChartData, labels: {isTwoline: false, contentsTop: 'name (percentage)'}, format: '0.1%'});
+   $('#pie-supplier').chart({type: 'pie', dataset: supplierChartData, legendPlacement: 'bottom', format: '0.1%'});
 
    //Reasons
    var reasonChartData = [{
@@ -131,7 +131,7 @@
       name: 'reason1 1'
      }];
 
-   $('#pie-reason').chart({type: 'pie', dataset: reasonChartData, labels: {isTwoline: false, contentsTop: 'name (percentage)'}, format: '0.1%'});
+   $('#pie-reason').chart({type: 'pie', dataset: reasonChartData, legendPlacement: 'bottom', format: '0.1%'});
 
    //Carriers
    var carrierChartData = [{
@@ -142,7 +142,7 @@
       name: 'c1'
     }];
 
-   $('#pie-carrier').chart({type: 'pie', dataset: carrierChartData, labels: {isTwoline: false, contentsTop: 'name (percentage)'}, format: '0.1%'});
+   $('#pie-carrier').chart({type: 'pie', dataset: carrierChartData, legendPlacement: 'bottom', format: '0.1%'});
 
    //Expeditors
    var expeditorChartData = [{
@@ -155,7 +155,7 @@
       }]
     }];
 
-   $('#pie-expeditor').chart({type: 'pie', dataset: expeditorChartData, labels: {isTwoline: false, contentsTop: 'name (percentage)'}, format: '0.1%'});
+   $('#pie-expeditor').chart({type: 'pie', dataset: expeditorChartData, legendPlacement: 'bottom', format: '0.1%'});
 
    //Authorized by
    var authorizedByChartData = [{
@@ -171,8 +171,8 @@
       }]
     }];
 
-   $('#pie-authorizedBy').chart({type: 'pie', dataset: authorizedByChartData, labels: {isTwoline: false, contentsTop: 'name (percentage)'}, format: '0.1%'});
+   $('#pie-authorized-by').chart({type: 'pie', dataset: authorizedByChartData, legendPlacement: 'bottom', format: '0.1%'});
 
-});
+  });
  </script>
  </div>

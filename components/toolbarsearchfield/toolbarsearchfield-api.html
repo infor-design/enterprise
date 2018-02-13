@@ -1,0 +1,457 @@
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          clearable
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If "true", provides an "x" button on the right
+edge that clears the field
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          collapsible
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If "true", allows the field to expand/collapse
+on larger breakpoints when focused/blurred respectively
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          collapsibleOnMobile
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, overrides 
+<code>collapsible</code>
+ only
+on mobile settings.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>build</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Creates and manages any markup the control needs to function.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>hasFocus</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Detects whether or not the Toolbar Searchfield has focus.</p>
+
+        </td>
+        <td>
+          whether or not the Toolbar Searchfield has focus.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>hasCategories</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Detects the existence of a "Categories" button added to the searchfield</p>
+
+        </td>
+        <td>
+          whether or not a categories button exists.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>hasGoButton</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Detects the existence of a "Go" button added to the main searchfield API</p>
+
+        </td>
+        <td>
+          whether or not a "Go" button exists.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>handleFocus</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Handles the focus of the searchfield.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>handleFocusOut</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Handles the "focusout" event</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>isSearchfieldElement</td>
+        <td>
+          
+                
+                  <span>element (HTMLElement) = the element being checked.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Detects whether or not an element is part of this instance of the Searchfield component</p>
+
+        </td>
+        <td>
+          whether or not the element provided is part of this Searchfield component
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>handleOutsideClick</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = <code>click</code>
+ event
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Event Handler for dealing with global (document) level clicks.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>handleKeydown</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = jQuery-wrapped Keydown event.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handles Keydown Events</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>handleOutsideKeydown</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = jQuery-wrapped Keydown event
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handles global (document) level keydown events that are established to help
+collapse/de-highlight searchfields on a timer.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>handlePopupBeforeOpen</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = jQuery-wrapped 
+<code>beforeopen</code>
+ Event
+ </span>
+                
+                  <span>menu () = reference to the popupmenu
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Event Handler for the Popupmenu Component's custom <code>beforeopen</code> event.</p>
+
+        </td>
+        <td>
+          the ability to cancel the menu's opening.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>getFillSize</td>
+        <td>
+          
+                
+                  <span>leftBoundary () = left boundary in pixels
+ </span>
+                
+                  <span>rightBoundary () = right boundary in pixels
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Retrieves the distance between a left and right boundary.
+Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.</p>
+
+        </td>
+        <td>
+          the fill size area
+number
+        </td>
+      </tr>
+      <tr>
+        <td>isActive</td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          whether or not one of the components inside of this searchfield
+is the document's "active" element.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isOpen</td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          whether or not this searchfield instance is currently expanded.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>adjustOnBreakpoint</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Makes necessary adjustments to the DOM surrounding the Searchfield element to accommodate
+breakpoint changes.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>expand</td>
+        <td>
+          
+                
+                  <span>noFocus () = If defined, causes the searchfield component not to become focused
+at the end of the expand method. Its default functionality is that it will become focused.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Expands the Searchfield</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>collapse</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Collapses the Searchfield</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Used when the control has its settings or structural markup changed.
+Rebuilds key parts of the control that otherwise wouldn't automatically update.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Enables the Searchfield</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>disable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Disables the Searchfield</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Tears down events, properties, etc. and resets the control to "factory" state</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+                
+                  <span>dontDestroySearchfield (boolean) = if true, will not pass through and destroy
+a linked instance of the Searchfield component.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Removes the entire control from the DOM and from this element's internal data</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>This component fires the following events.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  

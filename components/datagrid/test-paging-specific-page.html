@@ -39,7 +39,7 @@
         toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
       }).data('datagrid');
 
-      setInterval(function(){
+      setTimeout(function() {
         var activePage = gridApi.pager.activePage,
           pagerInfo = gridApi.pager.pagerInfo;
 
@@ -51,7 +51,6 @@
           pagerInfo.total = res.total;
           gridApi.loadData(res.data, pagerInfo, true);
         });
-
       }, 5000);
   });
 </script>

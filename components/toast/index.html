@@ -1,10 +1,187 @@
 <h1 id="toast-component-learn-more">Toast Component <a href="https://soho.infor.com/index.php?p=component/toast-messages">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
-<li><a href="../components/toast/example-index">Common Configuration</a><br /></li>
+<ol type="1">
+<li><a href="../components/toast/example-index">Common Configuration</a></li>
 <li><a href="../components/toast/example-positions">Demo of all Positions</a></li>
 </ol>
-<h3 id="functions">Functions</h3>
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          title
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          text that is displayed in the Toast's title.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          message
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          text/HTML that's displayed in the Toast's body.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          position
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          text that propagates into CSS classes that
+position the Toast in specific places. top left, bottom left, bottom right (center??)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          audibleOnly
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          if true, causes the toast to be invisble on the screen,
+but still read out lout by screen readers.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          progressBar
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          causes the toast to have a visible progress bar that
+will be completely disappeared when the toast should be removed.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          timeout
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          the amount of time the toast should be present on-screen.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>show</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Show a Single Toast Message</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>remove</td>
+        <td>
+          
+                
+                  <span>toast () = the toast message to be removed
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Remove the Message and Animate</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <ul>
 <li>This component is used to read out the error messages for validation as well</li>
@@ -32,8 +209,8 @@
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
-<li>Replaced <code>inforSlideInMessage()</code> so rename that to <code>toast()</code>.<br /></li>
-<li>Change option <code>messageTitle</code> to <code>title</code>.<br /></li>
-<li><code>MessageType</code> is not used.<br /></li>
+<li>Replaced <code>inforSlideInMessage()</code> so rename that to <code>toast()</code>.</li>
+<li>Change option <code>messageTitle</code> to <code>title</code>.</li>
+<li><code>MessageType</code> is not used.</li>
 <li><code>scr-errors</code> is not required to be added to the DOM.</li>
 </ul>

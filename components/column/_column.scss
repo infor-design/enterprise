@@ -1,0 +1,38 @@
+// Column Chart
+//==================================================//
+
+// SVG Chart Styles
+.chart-container {
+
+  //Bar Grouped Style
+  &.column-chart {
+    .domain {
+      stroke: transparent;
+    }
+
+    .tick {
+      line {
+        stroke: $chart-line-color;
+      }
+
+      &.tick0 {
+        line {
+          stroke: $chart-line-color-axis;
+        }
+      }
+
+      &.is-selected {
+        font-weight: bold;
+      }
+    }
+
+    rect {
+      cursor: pointer;
+
+      &.is-not-selected {
+        opacity: .35;
+      }
+    }
+  }
+
+}

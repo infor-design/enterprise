@@ -1,0 +1,109 @@
+// Pie and Donut Chart
+//==================================================//
+
+.chart-pie {
+  height: 100%;
+  width: 100%;
+
+  svg {
+    min-height: inherit;
+  }
+
+  // Label and Line Colors
+  .tspan {
+    fill: $chart-font-color;
+  }
+
+  .label-text {
+    @include font-size(14);
+  }
+
+  .label-line {
+    fill: none;
+    stroke-width: 2px;
+  }
+
+  polyline {
+    fill: none;
+    shape-rendering: crispEdges;
+    stroke: $chart-font-color;
+    stroke-width: 1px;
+  }
+
+  .labels text {
+    color: $chart-font-color;
+    font-size: 12px;
+  }
+
+  .slices path {
+    cursor: pointer;
+
+    &.is-not-selected {
+      opacity: .3;
+    }
+  }
+
+  // Right aligned Legend
+  &.has-right-legend {
+    align-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    svg {
+      width: 75%;
+    }
+
+    .chart-legend {
+      border-top: 0;
+      margin: auto;
+      width: 36%;
+
+      .is-two-column {
+        display: flex;
+        float: none;
+        margin: 2px -5px;
+        padding: 4px;
+        width: 100%;
+      }
+
+      .chart-legend-color {
+        height: 15px;
+        margin: 0;
+        top: 0;
+      }
+
+      .chart-legend-item-text {
+        padding-left: 7px;
+        position: relative;
+        top: 2px;
+        white-space: pre-line;
+      }
+    }
+  }
+}
+
+// A bit different tooltip style
+.is-pie.tooltip {
+  font-weight: normal;
+
+  b {
+    display: block;
+    text-align: center;
+  }
+}
+
+// Slight Nudge
+@include respond-to(phone) {
+  .chart-pie.has-right-legend .chart-legend {
+    width: 34%;
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .chart-pie.has-right-legend .chart-legend-item-text {
+    padding-left: 0;
+    padding-right: 7px;
+  }
+}

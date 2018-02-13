@@ -2,18 +2,411 @@
 <h2 id="important-notes">Important Notes</h2>
 <p>The <a href="../components/popover">Popover</a> component shares a common API with the Tooltip Component. When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover.</p>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
-<li><a href="../components/tooltip/example-index">Default Tooltip Example</a><br /></li>
-<li><a href="../components/tooltip/example-icon-in-tooltip">Tooltip with an Icon</a><br /></li>
-<li><a href="../components/tooltip/example-url-in-tooltip">Functioning URL inside of a Tooltip</a><br /></li>
-<li><a href="../components/tooltip/example-trigger-focus">Example of triggering by &quot;focus&quot;</a><br /></li>
-<li><a href="../components/tooltip/example-trigger-immediate">Example of triggering with &quot;immediate&quot;</a><br /></li>
-<li><a href="../components/tooltip/example-extra-css-class">Using the <code>extraCssClass</code> setting</a><br /></li>
-<li><a href="../components/tooltip/example-setcontent-api">Demo of the <code>setContent()</code> API method</a><br /></li>
-<li><a href="../components/tooltip/example-ajax-tooltip">Demo of AJAX-powered Tooltip Content</a><br /></li>
+<ol type="1">
+<li><a href="../components/tooltip/example-index">Default Tooltip Example</a></li>
+<li><a href="../components/tooltip/example-icon-in-tooltip">Tooltip with an Icon</a></li>
+<li><a href="../components/tooltip/example-url-in-tooltip">Functioning URL inside of a Tooltip</a></li>
+<li><a href="../components/tooltip/example-trigger-focus">Example of triggering by &quot;focus&quot;</a></li>
+<li><a href="../components/tooltip/example-trigger-immediate">Example of triggering with &quot;immediate&quot;</a></li>
+<li><a href="../components/tooltip/example-extra-css-class">Using the <code>extraCssClass</code> setting</a></li>
+<li><a href="../components/tooltip/example-setcontent-api">Demo of the <code>setContent()</code> API method</a></li>
+<li><a href="../components/tooltip/example-ajax-tooltip">Demo of AJAX-powered Tooltip Content</a></li>
 <li><a href="../components/tooltip/example-keep-open">Using the <code>keepOpen</code> setting</a></li>
 </ol>
-<h3 id="functions">Functions</h3>
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          content
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Takes title attribute or feed content.
+Can be a string or jQuery markup
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          offset
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          How much room to leave
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          placement
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+      </tr>
+      <tr>
+        <td>
+          trigger
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          supports click and immediate and hover
+(and maybe in future focus)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          title
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Title for Infor Tips
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          beforeShow
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Call back for ajax tooltip
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          popover
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          force it to be a popover (no content)
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          closebutton
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Show X close button next to title in popover
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isError
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Add error classes
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isErrorColor
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Add error color only not description
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tooltipElement
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          ID selector for an alternate element to use
+to contain the tooltip classes
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          parentElement
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          jQuery-wrapped element that gets
+passed to the 'place' behavior as the element to place the tooltip against.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          keepOpen
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Forces the tooltip to stay open in situations
+where it would normally close.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          extraClass
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Extra css class
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          maxWidth
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          Toolip max width
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>addClassToLinks</td>
+        <td>
+          
+                
+                  <span>content () = HTML or String-based content.
+ </span>
+                
+                  <span>thisClass () = optional, additional CSS class that gets appeneded to any
+anchor tags inside of the content.
+ </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          the appended content
+string
+        </td>
+      </tr>
+      <tr>
+        <td>setContent</td>
+        <td>
+          
+                
+                  <span>content () = incoming content to be set
+ </span>
+                
+                  <span>dontRender (boolean) = causes the tooltip to prevent a visual refresh after
+changing its content, meaning it will keep the previous content visible until
+this tooltip is closed or manually re-drawn.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Sets the content used inside the Tooltip element.</p>
+
+        </td>
+        <td>
+          whether or not the render was successful
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>render</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Renders internal content either as a Tooltip or Popover.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>show</td>
+        <td>
+          
+                
+                  <span>newSettings (object) = an object containing changed settings that will be
+applied to the Tooltip/Popover before it's displayed.
+ </span>
+                
+                  <span>ajaxReturn (boolean) = causes an AJAX-powered Tooltip/Popover not to refresh.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Causes the tooltip to become shown</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>setTargetContainer</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Places the tooltip element itself in the correct DOM element.
+If the current element is inside a scrollable container, the tooltip element
+goes as high as possible in the DOM structure.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>position</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Resets the current position of the tooltip.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>hide</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Hides the Tooltip/Popover</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings () = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Causes the tooltip to store updated settings and re-render itself.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Tears down this component instance, removing all internal flags and unbinding events.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Destroys this component instance</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <ul>
 <li>For accessibility the tooltip should be shown when you keyboard onto an element after a short delay (Open Task)</li>
@@ -51,8 +444,8 @@
 <p>The code above is demoed in the <a href="../components/tooltip/example-icon-in-tooltip">Icons in Tooltips Example</a>.</p>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>aria-describedby is added to the related element<br /></li>
-<li>The tooltip content should be physically add to the dom right after the input field for the case of validation errors. This is so that a screen reader use can down arrow and reread content in case they missed it.<br /></li>
+<li>aria-describedby is added to the related element</li>
+<li>The tooltip content should be physically add to the dom right after the input field for the case of validation errors. This is so that a screen reader use can down arrow and reread content in case they missed it.</li>
 <li>For accessibility the tooltip should be shown when you keyboard onto an element after a short delay (Open Task)</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
@@ -61,7 +454,7 @@
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
 <ul>
-<li>Hidden<br /></li>
+<li>Hidden</li>
 <li>Visible</li>
 </ul>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
@@ -70,7 +463,7 @@
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
-<li>Remove calls to <code>inforTooltip()</code> and use <code>tooltip()</code> instead. Can use the initializer if possible.<br /></li>
-<li>Specific content may need re-styling.<br /></li>
+<li>Remove calls to <code>inforTooltip()</code> and use <code>tooltip()</code> instead. Can use the initializer if possible.</li>
+<li>Specific content may need re-styling.</li>
 <li>close event renamed to hide event</li>
 </ul>

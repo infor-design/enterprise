@@ -1,9 +1,9 @@
 <h1 id="mask-learn-more">Mask <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
-<li>Inputs with Masks <a href="../components/mask/example-index">View Example</a><br /></li>
-<li>Common Mask Patterns <a href="../components/mask/example-common-patterns">View Example</a><br /></li>
-<li>Fields with Symbols <a href="../components/mask/example-fields-with-symbols">View Example</a><br /></li>
+<ol type="1">
+<li>Inputs with Masks <a href="../components/mask/example-index">View Example</a></li>
+<li>Common Mask Patterns <a href="../components/mask/example-common-patterns">View Example</a></li>
+<li>Fields with Symbols <a href="../components/mask/example-fields-with-symbols">View Example</a></li>
 <li>Number Mask Gauntlet <a href="../components/mask/test-number-mask-gauntlet">View Example</a></li>
 </ol>
 <p>{{api-details}}</p>
@@ -11,17 +11,17 @@
 <h3 id="mask-patterns">Mask Patterns</h3>
 <p>Mask Patterns are comprised of two different types of characters:</p>
 <ul>
-<li><strong>Pattern Characters</strong> - These are characters replaceable by a pre-defined subset of other characters. For example, by default, a <strong>#</strong> can only be replaced by any numeric character (0 through 9). One pattern character will always match one keyed character.<br /></li>
+<li><strong>Pattern Characters</strong> - These are characters replaceable by a pre-defined subset of other characters. For example, by default, a <strong>#</strong> can only be replaced by any numeric character (0 through 9). One pattern character will always match one keyed character.</li>
 <li><strong>Literal Characters</strong> - These characters are &quot;literal,&quot; meaning that they will only be represented in the text input by itself. When the cursor is placed at a literal character and any key is pressed, the Mask Control will find the next possible pattern character in the string and match the keyboard input against it. If it's a match, the pattern character and all literal characters preceding it will be filled in automatically. It's also possible to individually key in each literal character in the string.</li>
 </ul>
 <h4 id="available-mask-pattern-characters">Available Mask Pattern Characters</h4>
 <p>The following mask pattern characters are available by default:</p>
 <ul>
-<li><strong>#</strong> - Replaces any number 0 through 9. In a number mask, represents an integer (full number before the decimal point)<br /></li>
-<li><strong>x</strong> - Replaces any alphabetic character, capital or lowercase.<br /></li>
-<li><strong>*</strong> - Replaces any numeric (0 - 9) or alphabetic character (capital or lowercase).<br /></li>
-<li><strong>0</strong> - Replaces any numeric (0 - 9) character. Only used in Number Mask to represent a decimal number (placed after the decimal point)<br /></li>
-<li><strong>a</strong> - Represents the first character in the time period (am/pm). Can be replaced by <strong>a</strong>, <strong>A</strong>, <strong>p</strong>, or <strong>P</strong>.<br /></li>
+<li><strong>#</strong> - Replaces any number 0 through 9. In a number mask, represents an integer (full number before the decimal point)</li>
+<li><strong>x</strong> - Replaces any alphabetic character, capital or lowercase.</li>
+<li><strong>*</strong> - Replaces any numeric (0 - 9) or alphabetic character (capital or lowercase).</li>
+<li><strong>0</strong> - Replaces any numeric (0 - 9) character. Only used in Number Mask to represent a decimal number (placed after the decimal point)</li>
+<li><strong>a</strong> - Represents the first character in the time period (am/pm). Can be replaced by <strong>a</strong>, <strong>A</strong>, <strong>p</strong>, or <strong>P</strong>.</li>
 <li><strong>m</strong> - Represents the second character in the time period (am/pm). Can be replaced by <strong>m</strong> or <strong>M</strong>.</li>
 </ul>
 <h4 id="creating-new-pattern-characters">Creating New Pattern Characters</h4>

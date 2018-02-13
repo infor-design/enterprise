@@ -17,27 +17,27 @@ $('body').on('initialized', function () {
 
     var dataset = [{
       data: [{
-        name: Locale.formatDate(new Date('2017-05-12'), {pattern: 'dd-mm'}),
+        name: Locale.formatDate(new Date('2017-05-12'), {pattern: 'MMM dd'}),
         currency: 'USD',
         value: 12345.67
       }, {
-        name: Locale.formatDate(new Date('2017-05-13'), {pattern: 'dd-mmm'}),
+        name: Locale.formatDate(new Date('2017-05-13'), {pattern: 'MMM dd'}),
         currency: 'USD',
         value: 2000
       }, {
-        name: new Date('2017-05-14'),
+        name: Locale.formatDate(new Date('2017-05-14'), {pattern: 'MMM dd'}),
         currency: 'USD',
         value: 0
       }, {
-        name: new Date('2017-05-15'),
+        name: Locale.formatDate(new Date('2017-05-15'), {pattern: 'MMM dd'}),
         currency: 'USD',
         value: 0
       }, {
-        name: new Date('2017-05-16'),
+        name: Locale.formatDate(new Date('2017-05-16'), {pattern: 'MMM dd'}),
         currency: 'USD',
         value: 10000
       }, {
-        name: new Date('2017-05-24'),
+        name:Locale.formatDate( new Date('2017-05-24'), {pattern: 'MMM dd'}),
         currency: 'USD',
         value: 7000
       } ]

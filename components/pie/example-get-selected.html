@@ -21,7 +21,6 @@
   </div>
 </div>
 
-
 {{={{{ }}}=}}
 
 <script>
@@ -29,7 +28,7 @@ $('body').on('initialized', function () {
 
   var pieData = [{
     data: [{
-        name: 'Company Deductions Really Long Description',
+        name: 'Company Deductions',
         shortName: 'CD',
         value: 8,
         tooltip: 'Company Deductions {{percent}}',
@@ -66,12 +65,7 @@ $('body').on('initialized', function () {
 
   elem.chart({
     type: 'donut',
-    dataset: pieData,
-    labels: {
-      hideLabels: false
-    }
-  }).on('selected', function (e, args) {
-    // console.log(args);
+    dataset: pieData
   });
 
   $('#btn-get-selected').on('click', function() {

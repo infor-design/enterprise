@@ -35,6 +35,7 @@ xunit.xml
 views/docs/changelog-contents.html
 config.json
 docs/api
+eslint.log
 
 # OS generated files #
 ############

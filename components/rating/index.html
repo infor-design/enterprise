@@ -1,8 +1,96 @@
 <h1 id="rating-learn-more">Rating <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
+<ol type="1">
 <li>Rating Example <a href="../components/rating/example-index">View Example</a></li>
 </ol>
+  <section>
+  
+    
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>readonly</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Set component to readonly.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>enable</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Set component to enable.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (Object) = The settings to apply.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Resync the UI and Settings.</p>
+
+        </td>
+        <td>
+          The api
+Object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Destroy and remove added markup, all events</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
 <h2 id="code-example">Code Example</h2>
 <p>The Rating component can be used to either display a rating or allow the end user to select a rating. Half start ratings can be displayed but not set. You can implement the Rating control by using the below markup consisting of a block element (div) with class=&quot;rating&quot;, then any number of inputs followed by labels for the stars. The label element should contain an svg image with the star. An audible label should also be added for accessibility.</p>
 <pre class="sourceCode html"><code class="sourceCode html">
@@ -50,31 +138,31 @@
 </code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
-<li>Rating uses svg elements for the stars<br /></li>
+<li>Rating uses svg elements for the stars</li>
 <li>Functions using a radio button</li>
 </ul>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>Should work like a radio button<br /></li>
+<li>Should work like a radio button</li>
 <li>aubible labels are added for giving the star information</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li><strong>Tab key</strong> will enter the rating group<br /></li>
-<li><strong>Down/Right</strong> decreases the rating<br /></li>
-<li><strong>Up/Left</strong> increases the rating<br /></li>
-<li><strong>Space bar</strong> is a toggle selected/unselected<br /></li>
+<li><strong>Tab key</strong> will enter the rating group</li>
+<li><strong>Down/Right</strong> decreases the rating</li>
+<li><strong>Up/Left</strong> increases the rating</li>
+<li><strong>Space bar</strong> is a toggle selected/unselected</li>
 <li><strong>Control + Arrow</strong> moves through the options without updating content or selecting the rating</li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
 <ul>
-<li>focus<br /></li>
-<li>selected<br /></li>
+<li>focus</li>
+<li>selected</li>
 <li>half star</li>
 </ul>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <ul>
-<li>Smaller than mobile size<br /></li>
+<li>Smaller than mobile size</li>
 <li>May have size variations</li>
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>

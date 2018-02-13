@@ -1,59 +1,65 @@
-'use strict';
+/* eslint-disable import/no-extraneous-dependencies, prefer-destructuring,
+no-mixed-operators, guard-for-in, no-buffer-constructor, no-restricted-syntax */
 
-var fs = require('fs'),
-  path = require('path'),
-  File = require('vinyl'),
-  vfs = require('vinyl-fs'),
-  _ = require('lodash'),
-  concat = require('concat-stream'),
-  GithubSlugger = require('github-slugger'),
-  createFormatters = require('documentation').util.createFormatters,
-  createLinkerStack = require('documentation').util.createLinkerStack,
-  hljs = require('highlight.js');
+const fs = require('fs');
+const path = require('path');
+const write = require('vinyl-write');
+const Vinyl = require('vinyl');
+const _ = require('lodash');
+const GithubSlugger = require('github-slugger');
+const createFormatters = require('documentation').util.createFormatters;
+const LinkerStack = require('documentation').util.LinkerStack;
+const hljs = require('highlight.js');
 
-module.exports = function (comments, options, callback) {
+function isFunction(section) {
+  return section.kind === 'function' || section.kind === 'typedef' &&
+    section.type.type === 'NameExpression' && section.type.name === 'Function';
+}
 
-  var linkerStack = createLinkerStack(options)
-    .namespaceResolver(comments, function (namespace) {
-      var slugger = new GithubSlugger();
-      return '#' + slugger.slug(namespace);
-    });
+module.exports = function (comments, config) {
+  const linkerStack = new LinkerStack(config).namespaceResolver(comments, (namespace) => {
+    const slugger = new GithubSlugger();
+    return `#${slugger.slug(namespace)}`;
+  });
 
-  var formatters = createFormatters(linkerStack.link);
+  const formatters = createFormatters(linkerStack.link);
 
-  hljs.configure(options.hljs || {});
+  // Add an Index
+  for (let i = 0; i < comments.length; i++) {
+    comments[i].index = i.toString();
+  }
 
-  var sharedImports = {
+  hljs.configure(config.hljs || {});
+
+  const sharedImports = {
     imports: {
-      slug: function (str) {
-        var slugger = new GithubSlugger();
+      slug(str) {
+        const slugger = new GithubSlugger();
         return slugger.slug(str);
       },
-      shortSignature: function (section) {
-        var prefix = '';
+      shortSignature(section) {
+        let prefix = '';
         if (section.kind === 'class') {
           prefix = 'new ';
-        } else if (section.kind !== 'function') {
+        } else if (!isFunction(section)) {
           return section.name;
         }
         return prefix + section.name + formatters.parameters(section, true);
       },
-      signature: function (section) {
-        var returns = '';
-        var prefix = '';
+      signature(section) {
+        let returns = '';
+        let prefix = '';
         if (section.kind === 'class') {
           prefix = 'new ';
-        } else if (section.kind !== 'function') {
+        } else if (!isFunction(section)) {
           return section.name;
         }
-
-        if (section.returns && section.returns.length > 0) {
-          returns = ': ' +
-            formatters.type(section.returns[0].type);
+        if (section.returns.length) {
+          returns = `: ${formatters.type(section.returns[0].type)}`;
         }
         return prefix + section.name + formatters.parameters(section) + returns;
       },
-      md: function (ast, inline) {
+      md(ast, inline) {
         if (inline && ast && ast.children.length && ast.children[0].type === 'paragraph') {
           ast = {
             type: 'root',
@@ -62,10 +68,22 @@ module.exports = function (comments, options, callback) {
         }
         return formatters.markdown(ast);
       },
+      typeNoLink(type) {
+        let output = '';
+
+        if (!type || !type.name) {
+          return '';
+        }
+
+        for (const property in type.name) {
+          output += type.name[property];
+        }
+        return output;
+      },
       formatType: formatters.type,
       autolink: formatters.autolink,
-      highlight: function (example) {
-        if (options.hljs && options.hljs.highlightAuto) {
+      highlight(example) {
+        if (config.hljs && config.hljs.highlightAuto) {
           return hljs.highlightAuto(example).value;
         }
         return hljs.highlight('js', example).value;
@@ -73,21 +91,24 @@ module.exports = function (comments, options, callback) {
     }
   };
 
-  sharedImports.imports.renderSectionList =  _.template(fs.readFileSync(path.join(__dirname, 'section_list._'), 'utf8'), sharedImports);
   sharedImports.imports.renderSection = _.template(fs.readFileSync(path.join(__dirname, 'section._'), 'utf8'), sharedImports);
-  sharedImports.imports.renderNote = _.template(fs.readFileSync(path.join(__dirname, 'note._'), 'utf8'), sharedImports);
-
-  var pageTemplate = _.template(fs.readFileSync(path.join(__dirname, 'index._'), 'utf8'),  sharedImports);
+  sharedImports.imports.renderEvent = _.template(fs.readFileSync(path.join(__dirname, 'event._'), 'utf8'), sharedImports);
+  const pageTemplate = _.template(fs.readFileSync(path.join(__dirname, 'index._'), 'utf8'), sharedImports);
+  const events = comments.filter(comment => comment.kind === 'event');
 
   // push assets into the pipeline as well.
-  vfs.src([__dirname + '/assets/**'], { base: __dirname })
-    .pipe(concat(function (files) {
-      callback(null, files.concat(new File({
-        path: 'index.html',
-        contents: new Buffer(pageTemplate({
-          docs: comments,
-          options: options
-        }), 'utf8')
-      })));
-    }));
+  const file = new Vinyl({
+    path: config.output,
+    contents: new Buffer(pageTemplate({
+      docs: comments,
+      events,
+      config
+    }), 'utf8')
+  });
+
+  write(file, (err) => {
+    if (err) {
+      throw err;
+    }
+  });
 };

@@ -1,5 +1,11 @@
-<button id="open-dialog" class="btn">Dialog</button>
-<div id="datagrid"></div>
+
+
+<div class="row">
+    <div class="twelve columns">
+      <button id="open-dialog" class="btn">Show Dialog</button>
+      <div id="datagrid"></div>
+  </div>
+</div>
 
 <script type="text/javascript">
     $('body').one('initialized', function () {
@@ -56,7 +62,7 @@
         var $dialog = $('<div />');
         $dialog.modal({
           title: 'Test',
-          content: '<p>hello world</p>'
+          content: '<p>Test dialog</p>'
         });
       });
   });

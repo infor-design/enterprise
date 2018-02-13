@@ -12,12 +12,12 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'rowReorder', name: 'Re-Order', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder, width: 85});
-      columns.push({ id: 'id', name: 'Id', field: 'id', sortable: false,  width: 50});
-      columns.push({ id: 'taskName', name: 'Task Name', sortable: false, field: 'taskName', sortable: false,  formatter: Formatters.Hyperlink});
+      columns.push({ id: 'rowReorder', name: 'Re-Order', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder});
+      columns.push({ id: 'id', name: 'Id', field: 'id', sortable: false});
+      columns.push({ id: 'taskName', name: 'Task Name', sortable: false, field: 'taskName',formatter: Formatters.Hyperlink});
       columns.push({ id: 'desc', name: 'Description', sortable: false, field: 'desc'});
-      columns.push({ id: 'comments', name: 'Comments', sortable: false, field: 'comments', width: 100});
-      columns.push({ id: 'escalated', name: 'Status', sortable: false, field: 'escalated', width: 100});
+      columns.push({ id: 'comments', name: 'Comments', sortable: false, field: 'comments'});
+      columns.push({ id: 'escalated', name: 'Status', sortable: false, field: 'escalated'});
 
        var url = '{{basepath}}api/tasks';
 

@@ -1,32 +1,292 @@
 <h1 id="pie-chart-learn-more">Pie Chart <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
-<li>Pie Chart Main Example <a href="../components/pie/example-index">View Example</a><br /></li>
-<li>Hcm Example <a href="../components/pie/example-hcm">View Example</a><br /></li>
-<li>Tooltips <a href="../components/pie/example-tooltip">View Example</a><br /></li>
-<li>Donut Chart <a href="../components/donut/example-index">View Example</a><br /></li>
-<li>Set animation speed <a href="../components/pie/example-animation">View Example</a><br /></li>
-<li>Example showing Get Selected value <a href="../components/pie/example-get-selected">View Example</a><br /></li>
+<ol type="1">
+<li>Pie Chart Main Example <a href="../components/pie/example-index">View Example</a></li>
+<li>Hcm Example <a href="../components/pie/example-hcm">View Example</a></li>
+<li>Tooltips <a href="../components/pie/example-tooltip">View Example</a></li>
+<li>Donut Chart <a href="../components/donut/example-index">View Example</a></li>
+<li>Set animation speed <a href="../components/pie/example-animation">View Example</a></li>
+<li>Example showing Get Selected value <a href="../components/pie/example-get-selected">View Example</a></li>
 <li>Example showing Set Selected value <a href="../components/pie/example-set-selected">View Example</a></li>
 </ol>
 <h2 id="api-details">API Details</h2>
-<h3 id="settings">Settings</h3>
-<ul>
-<li><code>redrawOnResize</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong><br /></li>
-<li><code>animate</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If false chart will not animate when rendering<br /></li>
-<li><code>labels</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  An object with options to configure the labels of form <code>labels : {hideLabels: true}</code><br /></li>
-<li><code>labels: {hideLabels}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> - Do not show labels<br /></li>
-<li><code>labels: {isTwoline}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> - Show the labels on two different lines<br /></li>
-<li><code>labels: {contentsTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Customize the top of two the labels, can be <code>'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'</code>. If only one label this setting will be used.<br /></li>
-<li><code>labels: {contentsBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Customize the bottom of the two labels, can be <code>'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'</code><br /></li>
-<li><code>labels: {formatterTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see <a href="http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html">http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html</a><br /> (percentage)'`<br /></li>
-<li><code>labels: {formatterBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - Use d3 Format on the top label, see <a href="http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html">http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html</a><br /> (percentage)'`<br /></li>
-<li><code>labels: {colorTop}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How to colorize the top label it can be one of <code>'default'|'color-as-arc'|'#000000'|'black'</code><br /></li>
-<li><code>labels: {colorBottom}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How to colorize the bottom label it can be one of <code>'default'|'color-as-arc'|'#000000'|'black'</code><br /></li>
-<li><code>labels: {lineColor}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How to colorize the line links can be one of <code>'default'|'color-as-arc'|'#000000'|'black'</code><br /></li>
-<li><code>labels: {lineWidth}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - How many pixels should the line be (default 2)<br /></li>
-<li><code>labels: {linehideWhenMoreThanPercentage}</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - If the percentage is less than this (default 10), hide the line.</li>
-</ul>
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          dataset
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          The data to use in the line/area/bubble.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isDonut
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true it renders as a donut chart.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          animationSpeed
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          Controls the animation speed
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          animate
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          true|false - will do or not do the animation.
+'initial' will do only first time the animation.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          redrawOnResize
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, the component will not resize when resizing the page.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showTooltips
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If false now tooltips will be shown even if
+there is tooltip values provided.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showLines
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If false connector lines wont be shown
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showLinesMobile
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          This defaults to false, when false and under 450px the lines
+will not be shown. If you still want lines at the lower breakpoint you can set this to true
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showLegend
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If false the legend will not be shown.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          hideCenterLabel
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If false the center label will not be shown.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          legendPlacement
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Where to locate the legend. This can be bottom or right at
+the moment.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          lines
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          A setting that controls the line values and format.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          legend
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          A setting that controls the legend values and format.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tooltip
+        </td>
+        <td>
+          object
+        </td>
+        <td>
+          A setting that controls the tooltip values and format.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>updateData</td>
+        <td>
+          
+                
+                  <span>data (object) = The data to use.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Update the chart with a new dataset</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>toggleSelected</td>
+        <td>
+          
+                
+                  <span>options (object) = The selected info object.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Get info on the currently selected lines.</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = The new settings to use.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handle updated settings and values.</p>
+
+        </td>
+        <td>
+          The api for chaining.
+object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown - Remove added markup and events.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke a pie bar chart with a dataset controlling the values.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">
@@ -55,7 +315,7 @@
 <li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing different contrast colors.</li>
 </ul>
 <h2 id="code-tips">Code Tips</h2>
-<p>You can control the size of the donut chart by setting the size of the parent element the pie chart lives in.<br />This may include possibly using an inset margin in some cases.</p>
+<p>You can control the size of the donut chart by setting the size of the parent element the pie chart lives in. This may include possibly using an inset margin in some cases.</p>
 <p>See also <a href="../components/donut/example-index">Donut Chart Example</a></p>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>

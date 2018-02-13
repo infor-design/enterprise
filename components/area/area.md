@@ -10,9 +10,14 @@
 5. Example showing Get Selected value [View Example]( ../components/area/example-get-selected)
 6. Example showing Set Selected value [View Example]( ../components/area/example-set-selected)
 
+## API Details
+
+The area chart is a line chart with the isArea set that adds the fills. See the [line chart api]( ../components/line) for more details.
+
 ## Code Example
 
-This example shows how to invoke the area chart option in the charts component. In this example we pass a dataset with x and y axis values for three lines.
+This example shows how to invoke the area chart option using the charts component. In this example
+we pass a dataset with x and y axis values to make three lines.
 
 ```javascript
 

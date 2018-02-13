@@ -32,13 +32,12 @@ The block grid will layout the elements across the parent width and flow to next
 </div>
 
 
-
 ```
 
 ## Accessibility
 
--  Note that tab order should be maintained.
+-  Note that tab order should be maintained and not changed with tabindex.
 
 ## Code Tips
 
-The elements should be the same or similar sized. Due to constraints the bottom rows if not filled out are not ideally centered.
+The elements should be the same or very close in size (width/height). Due to constraints the bottom rows if not filled out are not ideally centered at this time.

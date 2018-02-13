@@ -17,8 +17,8 @@
   <meta name="commit" content="{{commit}}">
 
   <!-- Style Sheets -->
-  <link rel="stylesheet" id="stylesheet" href="{{basepath}}stylesheets/light-theme.css" type="text/css">
-  <link rel="stylesheet" href="{{basepath}}stylesheets/demo.css" type="text/css">
+  <link rel="stylesheet" id="stylesheet" href="{{basepath}}css/light-theme.css" type="text/css">
+  <link rel="stylesheet" href="{{basepath}}css/demo.css" type="text/css">
 
   {{#amd}}
   <script src="//requirejs.org/docs/release/2.1.18/comments/require.js"></script>
@@ -36,8 +36,9 @@
 
     require([
       '{{basepath}}js/jquery-3.1.1.js',
-      '{{basepath}}js/d3.min.js',
-      '{{basepath}}js/sohoxi.js'
+      '{{basepath}}js/d3.v4.js',
+      '{{basepath}}js/sohoxi.js',
+      '{{basepath}}js/sohoxi-migrate-4.4.0.js'
     ], function() {
     });
   </script>
@@ -46,9 +47,10 @@
   {{^amd}}
   <!-- non-amd loader -->
   <!-- jQuery and Plugin Code -->
-  <script src="{{basepath}}js/jquery-3.1.1.min.js"></script>
-  <script src="{{basepath}}js/d3.min.js"></script>
+  <script src="{{basepath}}js/jquery-3.1.1.js"></script>
+  <script src="{{basepath}}js/d3.v4.js"></script>
   <script src="{{basepath}}js/sohoxi.js"></script>
+  <script src="{{basepath}}js/sohoxi-migrate-4.4.0.js"></script>
   {{/amd}}
 
 </head>

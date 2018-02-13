@@ -10,14 +10,11 @@
 
 ## Code Example
 
-### Breadcrumbs
-
 This is an example showing a bread crumb pattern with four items. The current item should be last and have the current class. All items take the hyperlink style via class hyperlink. However, based on background element (header vs page) the style may adopt and change. Like hyperlinks the states has an underline appearing. The disabled class can be added to prevent links from being clicked, however they can still be focused because the hyperlink element cannot by valid html standards contain a disabled property.
 
-This control is entirely html and css, to update you will need to implement the logic to replace the link elements in the hierrarchy.
+This control is entirely html and css, to update you will need to implement the logic to replace the link elements in the hierarchy.
 
 ```html
-
 
 <nav class="breadcrumb">
   <ol aria-label="breadcrumb">

@@ -10,6 +10,16 @@ module.exports = {
         'run',
         'documentation'
       ]
+    },
+    build: {
+      options: {
+        wait: true
+      },
+      cmd: 'npm',
+      args: [
+        'run',
+        'build'
+      ]
     }
   }
 

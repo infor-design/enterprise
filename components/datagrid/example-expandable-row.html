@@ -10,7 +10,6 @@
 <script>
   $('body').one('initialized', function () {
 
-    Locale.set('en-US').done(function () {
       var grid,
         columns = [],
         data = [];
@@ -50,18 +49,17 @@
         filterable: true,
         isList: true,
         rowTemplate: rowTemplate,
-        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: true ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+        toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true,
+          results: true, keywordFilter: true, actions: true, rowHeight: true}
       });
 
       grid.on('expandrow', function (e, args) {
-        console.log('expandrow', e, args);
+        console.log('expandrow', args);
       });
 
       grid.on('collapserow', function (e, args) {
-        console.log('collapserow', e, args);
+        console.log('collapserow', args);
       });
-
-  });
 
 });
 

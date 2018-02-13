@@ -4,7 +4,7 @@
 
       <div class="field">
         <label for="date-field" class="label">Date Field</label>
-        <input id="date-field" class="datepicker" name="date-field" data-ng-model="dueDate" data-ng-change="log()" data-ng-model-locale="locale" data-datepicker>
+        <input id="date-field" class="datepicker" name="date-field" data-ng-model="dueDate" data-ng-change="log()" data-ng-model-locale="locale" data-datepicker/>
       </div>
 
       <button type="button" class="btn" data-ng-click="change()">Change</button>
@@ -17,20 +17,12 @@
     var app = angular.module('exampleApp', ['sohoxi-angular']);
 
     app.controller('demo', function($scope) {
-      $scope.dueDate = new Date();
-      $scope.locale = 'en-US';
+      $scope.dueDate = new Date(2018, 10, 10);
 
       $scope.log = function () {
         console.log('Changed to '+ $scope.dueDate);
       };
 
-      $scope.change = function () {
-        var yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-
-        $scope.dueDate = yesterday;
-        $scope.locale = 'el-GR';
-      };
     });
 
   </script>

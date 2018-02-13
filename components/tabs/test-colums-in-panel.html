@@ -1,0 +1,115 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="tabs-normal" class="tab-container">
+          <ul class="tab-list">
+            <li class="tab"><a href="#cnav8010_control">Search Profile</a></li>
+            <li class="tab"><a href="#cbtv2010_submit">Query</a></li>
+          </ul>
+          <div id="cnav8010_control" class="tab-panel">
+            <div class="row">
+              <div class="six columns">
+                <div class="field">
+                  <label class="label" for="cnav8010_control-name">Surname or Company</label>
+                  <input class="uppercase" id="cnav8010_control-name" value="" maxlength="50" name="cnav8010_control-name" type="text"/>
+                </div>
+              </div>
+              <div class="six columns">
+                <div class="field">
+                  <label class="label" for="cnav8010_control-givenname">Given Names</label>
+                  <input class="uppercase" id="cnav8010_control-givenname" value="" maxlength="50" name="cnav8010_control-givenname" type="text"/>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="six columns">
+                <div class="field">
+                  <label class="label" for="cnav8010_control-nametype">Name Type</label>
+                  <select class="dropdown required validation-active" id="cnav8010_control-nametype" name="cnav8010_control-nametype" data-validate="required">
+                    <option value="C">Company Name</option>
+                    <option value="P">Personal Name</option>
+                    <option value="B" selected="">Person &amp; Company</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="cbtv2010_submit" class="tab-panel">
+            <div class="row">
+              <div class="one-half column">
+
+                <div id="cbtv2010_submit-tfkcqyqury-field" class="field validation-active">
+                  <label for="cbtv2010_submit-tfkcqyqury" class="label">Dynamic Query<span class="audible">. Use enter or down arrow to lookup.</span></label>
+                  <span class="lookup-wrapper"><input type="text" class="lookup required" data-init="false" id="cbtv2010_submit-tfkcqyqury" name="cbtv2010_submit-tfkcqyqury" value=""><span class="trigger" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-search-list"></use></svg></span></span>
+                </div>
+
+                <div class="field field-checkbox">
+                  <input type="checkbox" class="checkbox hide-focus" id="cbtv2010_submit-retainrslt">
+                  <label for="cbtv2010_submit-retainrslt" class="checkbox-label">Retain Query Result</label>
+                </div>
+
+              </div>
+              <div class="one-half column">
+                <div id="cbtv2010_submit-tfkcqyrslt-field" class="field validation-active">
+                  <label for="cbtv2010_submit-tfkcqyrslt" class="label">Query Result<span class="audible">. Use enter or down arrow to lookup.</span></label>
+                    <span class="lookup-wrapper"><input type="text" class="lookup required" data-init="false" id="cbtv2010_submit-tfkcqyrslt" name="cbtv2010_submit-tfkcqyrslt"  value=""><span class="trigger" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-search-list"></use></svg></span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+  </div>
+</div>
+<div class="row">
+  <div class="six columns">
+    <fieldset id="fieldset-cbtl_submission" class=""><legend>Submission</legend>
+        <div class="field">
+          <label for="cbtv2010_submit-descr" class="label required">Description</label>
+          <input type="text" id="cbtv2010_submit-descr" class="required" name="cbtv2010_submit-descr" maxlength="50" data-validate="required" value="">
+        </div>
+
+        <div class="field">
+          <label for="cbtv2010_submit-runtype" class="label">Run Type</label>
+          <select class="dropdown required validation-active" id="cbtv2010_submit-runtype" name="cbtv2010_submit-runtype" data-validate="required">
+            <option value="I" selected="">Immediate</option>
+            <option value="S">Submit</option>
+            <option value="D">Delayed</option>
+            <option value="E">End of Current Day</option>
+            <option value="C">End of Calendar Day</option>
+            <option value="A">Daily</option>
+            <option value="W">Weekly</option>
+            <option value="F">Fortnightly</option>
+            <option value="M">Monthly</option>
+            <option value="P">Permanent End of Day</option>
+          </select>
+        </div>
+
+    </fieldset>
+  </div>
+  <div class="six columns">
+    <fieldset id="fieldset-cbtl_submisoptn" class=""><legend>Submission Options</legend>
+        <div class="field">
+          <label for="cbtv2010_submit-nosubmission" class="label"></label>
+          <input type="text" id="cbtv2010_submit-nosubmission" class="" name="cbtv2010_submit-nosubmission" readonly="" value="No submission options for this run type">
+        </div>
+    </fieldset>
+  </div>
+</div>
+<div class="row ">
+  <div class="twelve columns">
+    <fieldset id="fieldset-cbtl_procopt" class=""><legend>Processing Options</legend>
+
+        <fieldset class="radio-group required" id="cnav8010_control-jobtype">
+          <legend>Job Type</legend>
+          <input type="radio" class="radio" name="cnav8010_control-jobtype" id="cnav8010_control-jobtype-R" checked="" value="R" data-validate="required">
+          <label class="radio-label" for="cnav8010_control-jobtype-R">Report Only</label>
+          <br>
+          <input type="radio" class="radio" name="cnav8010_control-jobtype" id="cnav8010_control-jobtype-B" value="B" data-validate="required">
+          <label class="radio-label" for="cnav8010_control-jobtype-B">Update and Report</label>
+          <br>
+        </fieldset>
+    </fieldset>
+  </div>
+</div>

@@ -1,27 +1,196 @@
 <h1 id="column-chart-learn-more">Column Chart <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
-<ol>
-<li>Column Chart Main Example <a href="../components/column/example-index">View Example</a><br /></li>
-<li>Column Chart with Legend <a href="../components/column/example-legend">View Example</a><br /></li>
-<li>Balance Widget <a href="../components/column/example-balance">View Example</a><br /></li>
-<li>Changing Colors <a href="../components/column/example-colors">View Example</a><br /></li>
-<li>Changing the Y Domain <a href="../components/column/example-domain-change">View Example</a><br /></li>
-<li>Formatting the Values (Tooltip) <a href="../components/column/example-formatter">View Example</a><br /></li>
-<li>Negative Values <a href="../components/column/example-negative-value">View Example</a><br /></li>
-<li>Pattern Colors <a href="../components/column/example-patterns">View Example</a><br /></li>
-<li>Selecting a Section Colors <a href="../components/column/example-selected">View Example</a><br /></li>
-<li>Set animation speed <a href="../components/column/example-animation">View Example</a><br /></li>
-<li>Testing Date Values <a href="../components/column/test-by-date">View Test</a><br /></li>
-<li>Example showing Get Selected value <a href="../components/column/example-get-selected">View Test</a><br /></li>
+<ol type="1">
+<li>Column Chart Main Example <a href="../components/column/example-index">View Example</a></li>
+<li>Column Chart with Legend <a href="../components/column/example-legend">View Example</a></li>
+<li>Balance Widget <a href="../components/column/example-balance">View Example</a></li>
+<li>Changing Colors <a href="../components/column/example-colors">View Example</a></li>
+<li>Changing the Y Domain <a href="../components/column/example-domain-change">View Example</a></li>
+<li>Formatting the Values (Tooltip) <a href="../components/column/example-formatter">View Example</a></li>
+<li>Negative Values <a href="../components/column/example-negative-value">View Example</a></li>
+<li>Pattern Colors <a href="../components/column/example-patterns">View Example</a></li>
+<li>Selecting a Section Colors <a href="../components/column/example-selected">View Example</a></li>
+<li>Set animation speed <a href="../components/column/example-animation">View Example</a></li>
+<li>Testing Date Values <a href="../components/column/test-by-date">View Test</a></li>
+<li>Example showing Get Selected value <a href="../components/column/example-get-selected">View Test</a></li>
 <li>Example showing Set Selected value <a href="../components/column/example-set-selected">View Test</a></li>
 </ol>
 <h2 id="api-details">API Details</h2>
-<h3 id="dataset-settings">Dataset Settings</h3>
+  <section>
+  
+    
+
+  <h2>Settings</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Description</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          dataset
+        </td>
+        <td>
+          array
+        </td>
+        <td>
+          The data to use in the line/area/bubble.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          isStacked
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          Set to true if its a stacked column chart
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          showLegend
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If false the legend will not be shown.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          animate
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          true|false - will do or not do the animation.
+'initial' will do only first time the animation.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          redrawOnResize
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true, the component will not resize when resizing the page.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          format
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          The d3 axis format
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          formatterString
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Use d3 format some examples can be found on 
+<a href="http://bit.ly/1IKVhHh">http://bit.ly/1IKVhHh</a>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          ticks
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          The number of ticks to show.
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  
+    
+
+
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = The new settings to use.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handle updated settings and values.</p>
+
+        </td>
+        <td>
+          The api for chaining.
+object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Teardown - Remove added markup and events.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+
+  
+
+<h2 id="dataset-settings">Dataset Settings</h2>
 <ul>
-<li>name - this value will be on the axis<br /></li>
-<li>shortName - this value will be used if the name wont fit on the axis<br /></li>
-<li>abbrName - this value will be used if the name and shortName wont fit on the axis (fx a phone sized widget)<br /></li>
-<li>tooltip - the custom tooltip. you can pass {{value}} to have the formatted value inserted<br /></li>
+<li>name - this value will be on the axis</li>
+<li>shortName - this value will be used if the name wont fit on the axis</li>
+<li>abbrName - this value will be used if the name and shortName wont fit on the axis (fx a phone sized widget)</li>
+<li>tooltip - the custom tooltip. you can pass {{value}} to have the formatted value inserted</li>
 <li>value - the value to use across all lines to domain the axis</li>
 </ul>
 <h2 id="code-example">Code Example</h2>
@@ -75,7 +244,7 @@
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.<br /></li>
+<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.</li>
 <li><strong>Enter/Space:</strong> Will select the bar group the corresponds with the focus'd legend item.</li>
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>

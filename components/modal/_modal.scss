@@ -72,6 +72,7 @@
   }
 
   .field:last-child input:not(.spinbox, .colorpicker),
+  .field:last-child .dropdown,
   .field:last-child textarea {
     margin-bottom: 10px;
   }
@@ -136,6 +137,14 @@
       input {
         border-color: $fieldset-border-top-color;
         width: 100%;
+      }
+
+      &.has-focus {
+        box-shadow: none;
+
+        input {
+          box-shadow: none;
+        }
       }
     }
   }

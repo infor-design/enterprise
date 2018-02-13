@@ -68,14 +68,15 @@
           cssClass: 'btn',
           icon: '#icon-close',
           click: function() {
-            $(this).modal('close');
+            var api = $(this).data('modal');
+            api.close();
           }
         }
       ]
     }).on('close', function () {
-      console.log('Close Fired')
-      //If you wanted to remove the dom element on close
-      //$('#new-grid').closest('.contextual-action-panel').remove();
+      console.log('Close Fired');
+      // If you wanted to remove the dom element on close
+      // $('#new-grid').closest('.contextual-action-panel').remove();
     });
   };
 

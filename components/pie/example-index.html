@@ -33,7 +33,7 @@ $('body').on('initialized', function () {
       }, {
           name: 'Item C',
           value: 14.35,
-          tooltip: 'Item C Is Very Cool<b>{{percent}}</b>'
+          tooltip: 'Item C <b>{{percent}}</b>'
       }, {
           name: 'Item D',
           value: 15.6,
@@ -51,9 +51,9 @@ $('body').on('initialized', function () {
 
   $('#pie-chart-example').chart({type: 'pie', dataset: pieData})
   .on('selected', function(e, args) {
-    // if (args[0] && args[0].data && args[0].data.url) {
-    //   window.location = args[0].data.url;
-    // }
+    if (args[0] && args[0].data) {
+      console.log(args[0].data, args[0].data.url);
+    }
   });
 
 });

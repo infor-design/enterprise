@@ -1,3 +1,42 @@
+## <a name="version-4.4.0">4.4.0</a>
+
+Release Date: TBD
+
+Full Jira Release Notes: http://bit.ly/2D6PShK
+
+### <a name="version-4.4.0-download-build-assets">Download Build Assets:</a>
+
+Build Server: http://bamboo.infor.com/browse/label/release-440
+Npm: http://npm.infor.com
+Angular Specific Change Log: http://git.infor.com/projects/SOHO/repos/angular-components/browse/CHANGELOG.md
+
+### <a name="version-4.4.0-download-build-assets">Demo Site</a>
+
+http://usalvlhlpool1.infor.com/4.4.0/components/
+
+### <a name="version-4.4.0-key-new-features">Key New Features</a>
+- The Components are now built using Rollup and the internals are ES6 (but there is still a jQuery dependency)
+- The d3 version being used was updated from version 3 to version 4.0
+
+### <a name="version-4.4.0-corrections">Corrections to Your Code</a>
+- Change the d3 script to the new version `d3.v4.js`
+- The completion chart had a likely not widely used 'update' api. This was removed in favor of 'update(settings)' that all the other components use. You may need to refactor your update call to completion chart. See completion-chart/test-updated.html for an example
+- Some not widely used line chart examples time formatters. Some functions are renamed. See the examples or https://github.com/d3/d3-time/releases
+- The options for pie and label have changed. All the of label and formatter rules have different settings objects.
+And now you can control the tooltip, legend and lines independently. If using the labels option see examples for and docs for updates if you have any issues with pie or donut.
+* Projects will need to update to add the sohoxi-migrate-4.4.0.js script until global references are removed. Globals should be moved to the Soho. namespace fx Formatters -> Soho.Formatters (see SOHO-7457 for entire list).
+
+### <a name="version-4.4.0-behavior-changes">Behavior Changes</a>
+-
+
+### <a name="version-4.4.0-improvements">Improvements</a>
+-
+
+### <a name="version-4.4.0-bug-fixes">Bug Fixes</a>
+-
+
+(n Jira Issues Solved this release, Backlog Dev n, Design n, Unresolved n)
+
 ## <a name="version-4.3.4">4.3.4</a>
 
 Release Date: 2017-12-20
@@ -8,6 +47,7 @@ Full Jira Release Notes: http://bit.ly/2D6PShK
 
 Build Server: http://bamboo.infor.com/browse/label/release-434
 Npm: http://npm.infor.com
+Angular Specific Change Log: http://git.infor.com/projects/SOHO/repos/angular-components/browse/CHANGELOG.md
 
 ### <a name="version-4.3.4-download-build-assets">Demo Site</a>
 
