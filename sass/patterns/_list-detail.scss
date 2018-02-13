@@ -32,6 +32,7 @@
 
     .tab-panel {
       padding-top: 0;
+      position: relative;
     }
   }
 
@@ -47,6 +48,10 @@
     .listview,
     .listview-search {
       border-right: 1px solid $panel-border-color;
+    }
+
+    .accordion {
+      height: 100%;
     }
 
     .header {
@@ -135,9 +140,20 @@
 
   .panel-header {
     height: auto;
+    padding-right: 0;
 
     .toolbar {
       margin-bottom: 0;
+    }
+  }
+
+  .list-detail-back-button {
+    .icon {
+      @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94));
+    }
+
+    .go-back {
+      @include transform(rotateY(180deg));
     }
   }
 
@@ -152,6 +168,15 @@
 .list-detail-back-button {
   @include transition(opacity 200ms cubic-bezier(.17, .04, .03, .94));
   display: none;
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .list-detail {
+    .panel-header {
+      padding-left: 0;
+    }
+  }
 }
 
 // In List-Detail View, Main/Sidebar slide left/right instead of being stacked

@@ -461,6 +461,19 @@
       }
     }
 
+    // Some panel accordions (list/detail patterns) need no inner padding on their panes,
+    // as well as separators between their list items.
+    &.has-subheader-separators {
+      .accordion-pane {
+        &.is-expanded {
+          padding: 0;
+        }
+
+        .accordion-header:not(:last-child) {
+          border-bottom-color: $accordion-toplevel-border-color;
+        }
+      }
+    }
   }
 
   > .accordion-content {

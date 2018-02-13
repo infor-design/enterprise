@@ -60,18 +60,25 @@
           </div>
 
           <!-- begin overview tab -->
-          <section id="workflow" class="tab-panel list-detail two-column fixed" data-options='{ "listElement": "#workflow-accordion", "detailElement": "#workflow-content-area", "edgeBleed": true }'>
+          <section id="workflow" class="tab-panel list-detail two-column fixed" data-options='{ "listElement": "#workflow-accordion", "detailElement": "#workflow-content-area", "backElement": "#inner-back-element", "edgeBleed": true }'>
             <aside class="sidebar">
               <div class="sidebar-content scrollable-flex">
                 <div class="scrollable-flex-header panel-header">
                   <div class="toolbar">
                     <div class="title">Workflow Steps</div>
+                    <div class="buttonset">
+                      <button id="inner-back-element" class="btn-icon list-detail-back-button">
+                        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                          <use xlink:href="#icon-expand-app-tray"></use>
+                        </svg>
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div class="scrollable-flex-content">
 
                   <!-- begin accordion -->
-                  <div id="workflow-accordion" class="accordion panel">
+                  <div id="workflow-accordion" class="accordion panel has-subheader-separators">
                     <div class="accordion-header">
                       <a href="#">
                         <span>Candidates Expressing Interest</span>
@@ -121,7 +128,7 @@
 
                 <!-- NOTE: DON'T COPY THIS PART (demo purposes only) -->
                 <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: relative;">
-                  <div style="width: 90%; height: 90%; border: 1px solid #d0d0d0;">
+                  <div style="display: flex; align-items: center; justify-content: center; width: 90%; height: 90%; border: 3px dotted #d0d0d0;">
                     <h3>Workflow Area Container</h3>
                   </div>
                 </div>
