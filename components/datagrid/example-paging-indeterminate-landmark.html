@@ -9,7 +9,7 @@
 <script>
   $('body').one('initialized', function () {
 
-    var grid, pageSize = 10, pageData, beginIndex, endIndex, PAGING_COLUMNS, PAGING_DATA,
+    var grid, pageSize = 10, pageData, beginIndex, endIndex, PAGING_COLUMNS, PAGING_DATA;
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({
@@ -25,15 +25,18 @@
       if (args && args.length > 1) {
         var indexString = "";
         for (var i = 0; i < args.length; i++) {
-          indexString += args[i].data.id + (i < args.length - 1 ? ', ' : '');
+          indexString += args[i].idx + (i < args.length - 1 ? ', ' : '');
         }
         console.log('selected row indexes', indexString);
       } else if (args && args.length > 0) {
-        console.log('selected row index', args[0].data.id);
+        console.log('selected row index', args[0].idx);
       }
     })
     .on('rowactivated', function(e, args) {
       console.log('activated row index', args.row);
+    })
+    .on('dblclick', function(e, args) {
+      console.log('double clicked row index', args.row);
     })
     .data('datagrid');
 
@@ -50,9 +53,9 @@
         }
 
         var activatedRowIndex = -1;
-        if (activatedRow
-          &&  activatedRow.length === 1
-          &&  activatedRow[0].row > -1) {
+        if (activatedRow &&
+          activatedRow.length === 1 &&
+          activatedRow[0].row > -1) {
           activateRowIndex = activatedRow[0].row;
           grid.deactivateRow();
         }
@@ -75,9 +78,9 @@
         // -------------------------------------------------------------------------------------------------
         response(result.data, request);
 
-        if (activatedRow
-        &&  activatedRow.length === 1
-        &&  activatedRow[0].row > -1) {
+        if (activatedRow &&
+          activatedRow.length === 1 &&
+          activatedRow[0].row > -1) {
           grid.activateRow(activateRowIndex);
         }
 
