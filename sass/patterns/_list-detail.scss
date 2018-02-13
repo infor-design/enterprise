@@ -6,23 +6,43 @@
   font-size: 0;
   height: 100%;
 
-  .main,
-  .sidebar {
+  > .main,
+  > .sidebar {
     position: relative;
   }
 
-  .main {
+  > .main {
     background-color: $panel-bg-color;
     border-left: 0;
+    height: 100%;
 
     &.alternate {
       background-color: $body-bg-color;
     }
+
+    .main-content {
+      display: block;
+      height: 100%;
+      position: static;
+    }
+
+    .tab-panel-container {
+      height: calc(100% - 40px);
+    }
+
+    .tab-panel {
+      padding-top: 0;
+    }
   }
 
-  .sidebar {
+  > .sidebar {
     border-right: 0;
-    height: 100%;
+
+    .sidebar-content {
+      display: block;
+      height: 100%;
+      position: static;
+    }
 
     .listview,
     .listview-search {
@@ -73,7 +93,7 @@
     }
   }
 
-  .header + .sidebar {
+  > .header + .sidebar {
     height: calc(100% - 60px);
 
     .listview-search + .listview.paginated {
@@ -91,7 +111,6 @@
   }
 
   .toolbar {
-
     .searchfield-wrapper {
       width: 35px;
 
@@ -114,9 +133,24 @@
     }
   }
 
+  .panel-header {
+    height: auto;
+
+    .toolbar {
+      margin-bottom: 0;
+    }
+  }
+
+  &.bleeding-edge {
+    .list-detail-back-button {
+      opacity: 0;
+    }
+  }
+
 }
 
 .list-detail-back-button {
+  @include transition(opacity 200ms cubic-bezier(.17, .04, .03, .94));
   display: none;
 }
 
@@ -124,8 +158,8 @@
 @include respond-to(phone) {
 
   .list-detail {
-    .main,
-    .sidebar {
+    > .main,
+    > .sidebar {
       @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
       position: absolute;
 
@@ -136,21 +170,36 @@
       }
     }
 
-    .main {
+    > .main {
       @include css3(transform, translateX(100%));
     }
 
-    .sidebar {
+    > .sidebar {
       @include css3(transform, translateX(0));
     }
 
     &.show-detail {
-      .main {
+      > .main {
         @include css3(transform, translateX(0));
       }
 
-      .sidebar {
+      > .sidebar {
         @include css3(transform, translateX(-100%));
+      }
+
+      &.bleeding-edge {
+        > .main {
+          @include css3(transform, translateX(0) translateX(30px));
+          width: calc(100% - 30px);
+        }
+
+        > .sidebar {
+          @include css3(transform, translateX(-100%) translateX(30px));
+        }
+
+        .list-detail-back-button {
+          opacity: 1;
+        }
       }
     }
   }

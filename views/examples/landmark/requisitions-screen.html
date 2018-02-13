@@ -6,7 +6,7 @@
     <div class="toolbar">
       <div class="title">
 
-        <button class="btn-icon" type="button">
+        <button id="app-menu-trigger" class="btn-icon" type="button list-detail-back-button">
           <span class="audible">Show navigation</span>
           <span class="icon app-header">
             <span class="one"></span>
@@ -22,14 +22,29 @@
     </div>
   </header>
 
-  <div id="maincontent" class="two-column page-container fixed list-detail" data-options='{ "listElement": "#task-listview" }'>
+  <section id="maincontent" class="two-column page-container fixed list-detail" data-options='{ "listElement": "#task-listview", "detailElement": "#main-detail-area", "backElement": "#app-menu-trigger" }'>
 
-    <div class="sidebar" role="complementary">
-      <div class="listview scrollable" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
-    </div>
+    <aside class="sidebar" role="complementary">
+      <div class="sidebar-content scrollable-flex">
+        <div class="scrollable-flex-header panel-header">
+          <div class="toolbar">
+            <div class="title">Job List</div>
+          </div>
+        </div>
+        <div class="scrollable-flex-content">
+          <div class="listview-search">
+            <label class="audible" for="list-detail-sidebar-search">Search Tasks</label>
+            <input class="searchfield" placeholder="Search Tasks" name="list-detail-sidebar-search" id="list-detail-sidebar-search">
+          </div>
 
-    <div class="main" role="main">
-      <div class="page-container no-scroll">
+          <div class="listview scrollable" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
+        </div>
+      </div>
+    </aside>
+
+    <section id="main-detail-area" class="main" role="main">
+      <div class="main-content no-scroll">
+
         <div class="tab-container header-tabs alternate">
           <div class="tab-list-container">
             <ul class="tab-list">
@@ -45,11 +60,10 @@
           </div>
 
           <!-- begin overview tab -->
-          <div class="tab-panel" id="workflow">
-            <div class="content">
-
-              <div class="scrollable-flex">
-                <div class="scrollable-flex-header">
+          <section id="workflow" class="tab-panel list-detail two-column fixed" data-options='{ "listElement": "#workflow-accordion", "detailElement": "#workflow-content-area", "edgeBleed": true }'>
+            <aside class="sidebar">
+              <div class="sidebar-content scrollable-flex">
+                <div class="scrollable-flex-header panel-header">
                   <div class="toolbar">
                     <div class="title">Workflow Steps</div>
                   </div>
@@ -57,34 +71,78 @@
                 <div class="scrollable-flex-content">
 
                   <!-- begin accordion -->
-                  <div class="accordion panel">
+                  <div id="workflow-accordion" class="accordion panel">
                     <div class="accordion-header">
-                      <span>Head Mans</span>
+                      <a href="#">
+                        <span>Candidates Expressing Interest</span>
+                      </a>
                     </div>
                     <div class="accordion-header">
-                      <span>Head Mans 2</span>
+                      <a href="#">
+                        <span>Attached Candidates</span>
+                      </a>
                     </div>
                     <div class="accordion-header">
-                      <span>Head Mans 3</span>
+                      <a href="#">
+                        <span>Recruiter Inbox</span>
+                      </a>
+                    </div>
+                    <div class="accordion-pane">
+                      <div class="accordion-header">
+                        <a href="#">
+                          <span>Successfully Applied</span>
+                        </a>
+                      </div>
+                      <div class="accordion-header">
+                        <a href="#">
+                          <span>Screened Out Online</span>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="accordion-header">
+                      <a href="#">
+                        <span>Not Considered</span>
+                      </a>
+                    </div>
+                    <div class="accordion-header">
+                      <a href="#">
+                        <span>Hiring Manager Inbox</span>
+                      </a>
                     </div>
                   </div>
                   <!-- end accordion -->
-
                 </div>
               </div>
 
-            </div>
-          </div>
+            </aside>
+            <section class="main">
+              <!-- begin content area -->
+              <div class="main-content" id="workflow-content-area">
+
+                <!-- NOTE: DON'T COPY THIS PART (demo purposes only) -->
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: relative;">
+                  <div style="width: 90%; height: 90%; border: 1px solid #d0d0d0;">
+                    <h3>Workflow Area Container</h3>
+                  </div>
+                </div>
+                <!-- END DON'T COPY THIS PART -->
+
+              </div>
+              <!-- end content area -->
+            </section>
+
+          </section>
           <!-- end overview tab -->
 
           <div class="tab-panel" id="all-applicants">
             <h3>All Applicants</h3>
           </div>
-
         </div>
+
       </div>
-    </div>
-  </div>
+    </section>
+
+  </section>
 
 {{={{{ }}}=}}
 

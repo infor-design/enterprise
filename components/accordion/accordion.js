@@ -298,6 +298,7 @@ Accordion.prototype = {
     * @property {object} header - The header object
     */
     this.element.trigger('selected', header);
+    this.element.trigger('drilldown', [header[0]]);
 
     // Set the original element for DOM traversal by keyboard
     this.originalSelection = anchor;

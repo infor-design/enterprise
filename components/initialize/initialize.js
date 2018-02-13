@@ -274,9 +274,7 @@ Initialize.prototype = {
 
         ['stepchart', '.step-chart'],
 
-        ['listview'],
-
-        ['listdetail', '.list-detail']
+        ['listview']
       ];
 
       // Do initialization for all the simple controls
@@ -387,6 +385,13 @@ Initialize.prototype = {
           }
 
           invokeWithInlineOptions(t, 'toolbar');
+        });
+      }
+
+      // List/Detail Pattern
+      if ($.fn.listdetail) {
+        matchedItems(`.list-detail:not(${noinitExcludes})`).each(function() {
+          invokeWithInlineOptions($(this), 'listdetail');
         });
       }
 
