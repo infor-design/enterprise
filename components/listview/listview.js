@@ -930,8 +930,13 @@ ListView.prototype = {
     let isFocused = false;
     const isMultiple = self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed';
 
-    this.element.on('focus.listview', 'li, tbody tr', function () {
+    this.element.on('focus.listview', 'li, tbody tr', function (evt) {
       const item = $(this);
+
+      // Ignore favorite clicks
+      if ($(evt.originalEvent.target).is('.icon-favorite')) {
+        return;
+      }
 
       // First element if disabled
       if (item.is(':first-child') && item.hasClass('is-disabled')) {

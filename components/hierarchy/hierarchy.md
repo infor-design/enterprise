@@ -4,6 +4,9 @@
 ## Configuration Options
 
 1. Org Chart Example [View Example]( ../components/hierarchy/example-index)
+2. Lazy Loading Example [View Example]( ../components/hierarchy/example-lazy-loading)
+3. Example Paging [View Example]( ../components/hierarchy/example-paging)
+4. Example Single Manager/Subordinate [View Example]( ../components/hierarchy/example-single)
 
 {{api-details}}
 
