@@ -1503,7 +1503,7 @@ router.get('/api/orgstructure', (req, res, next) => {
       Name: 'Jonathan Cargill',
       Position: 'Director',
       EmploymentType: 'FT',
-      Picture: `${menPath}2.jpg`,
+      Picture: `${menPath}21.jpg`,
       children: [
         { id: '1_1', Name: 'Partricia Clark', Position: 'Administration', EmploymentType: 'FT', Picture: `${womenPath}4.jpg`, isLeaf: true },
         { id: '1_2', Name: 'Drew Buchanan', Position: 'Assistant Director', EmploymentType: 'FT', Picture: `${menPath}5.jpg`, isLeaf: true },
@@ -1588,7 +1588,7 @@ router.get('/api/orgstructure-large', (req, res, next) => {
       Name: 'Jonathan Cargill',
       Position: 'Director',
       EmploymentType: 'FT',
-      Picture: `${menPath}2.jpg`,
+      Picture: `${menPath}21.jpg`,
       children: [
         { id: '1_1', Name: 'Partricia Clark', Position: 'Administration', EmploymentType: 'FT', Picture: `${womenPath}4.jpg`, isLeaf: true },
         { id: '1_2', Name: 'Drew Buchanan', Position: 'Assistant Director', EmploymentType: 'FT', Picture: `${menPath}5.jpg`, isLeaf: true },
@@ -1680,7 +1680,7 @@ router.get('/api/orgstructure-lazy', (req, res, next) => {
       Name: 'Jonathan Cargill',
       Position: 'Director',
       EmploymentType: 'FT',
-      Picture: `${menPath}2.jpg`,
+      Picture: `${menPath}21.jpg`,
       children: [
         {
           id: '1_3',
@@ -1736,7 +1736,7 @@ router.get('/api/orgstructure-paging', (req, res, next) => {
       Name: 'Jonathan Cargill',
       Position: 'Director',
       EmploymentType: 'FT',
-      Picture: `${menPath}2.jpg`,
+      Picture: `${menPath}21.jpg`,
       children: [
         { id: '1_3', Name: 'Kaylee Edwards', Position: 'Records Manager', EmploymentType: 'FT', Picture: `${womenPath}11.jpg`, children: [] },
         { id: '1_4', Name: 'Jason Ayers', Position: 'HR Manager', EmploymentType: 'FT', Picture: `${menPath}12.jpg`, children: [] },

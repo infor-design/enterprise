@@ -532,6 +532,13 @@ Hierarchy.prototype = {
     const windowWidth = $(window).width();
     const center = (containerWidth - windowWidth) / 2;
     this.element.scrollLeft(center);
+
+    // Add a no-sublevel class if only two levels (to remove extra border)
+    const topLevel = this.element.find('.top-level');
+    if (this.element.find('.sub-level').length === 0 && topLevel.length === 1) {
+      topLevel.addClass('no-sublevel');
+    }
+
     /* eslint-enable no-use-before-define */
   },
 

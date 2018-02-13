@@ -196,3 +196,9 @@
   }
 }
 // scss-lint:enable ImportantRule
+
+.full-width .column:first-child,
+.full-width .columns:first-child {
+  // fixes an issue on http://localhost:4000/examples/landmark/search-form
+  padding-left: 20px !important;
+}

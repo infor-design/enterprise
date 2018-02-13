@@ -3,6 +3,7 @@
 ## Configuration Options
 
 1. Radio Example [View Example]( ../components/radios/example-index)
+1. Horizontal Example [View Example]( ../components/radios/example-horizontal)
 
 ## Behavior Guidelines
 
