@@ -168,14 +168,7 @@ Hierarchy.prototype = {
         isSelectedEvent: hierarchy.isSelectedEvent(),
         allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
       };
-      /**
-      * Fires when leaf selected.
-      *
-      * @event selected
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} eventInfo .
-      */
+
       leaf.trigger('selected', eventInfo);
     });
   },
@@ -481,7 +474,7 @@ Hierarchy.prototype = {
       rootNodeHTML.push(leaf);
 
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
-      this.updateState($('.leaf.root'), true);
+      this.updateState($('.leaf.root'), true, data);
     }
 
     function renderSubChildren(self, subArray, thisData) {
