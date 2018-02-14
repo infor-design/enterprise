@@ -147,6 +147,25 @@
     }
   }
 
+  .card-header {
+    height: auto;
+    line-height: auto;
+    padding: 2px 20px;
+
+    > * {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    h2 {
+      margin: 7px 0;
+    }
+
+    button {
+      float: right;
+    }
+  }
+
   .list-detail-back-button {
     .icon {
       @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94));
