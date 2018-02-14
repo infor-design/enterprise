@@ -21,6 +21,10 @@ $dd-width: 55px;
         position: static;
       }
 
+      > .listoption-icon {
+        height: 14px;
+      }
+
       &.is-open {
         + .ffdropdown-icon {
           opacity: 0;
@@ -83,6 +87,10 @@ $dd-width: 55px;
 
   > .listoption-icon {
     display: none;
+  }
+
+  .listoption-icon {
+    height: 14px;
   }
 }
 
