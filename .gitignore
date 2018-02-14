@@ -37,6 +37,7 @@ config.json
 docs/api
 eslint.log
 coverage
+.tmp/
 
 # OS generated files #
 ############

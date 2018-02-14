@@ -13,6 +13,7 @@ exports.config = {
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
     'browserstack.debug': true,
     'browserstack.local': true,
+    'browserstack.selenium_version' : '3.7.1',
     build: 'protractor-browserstack',
     name: 'Functional tests',
   },
@@ -26,9 +27,10 @@ exports.config = {
       browser_version: '57.0'
     },
     {
-      browserName: 'Safari',
-      browser_version: '11.0',
-      os_version: 'High Sierra'
+      os : 'OS X',
+      os_version : 'High Sierra',
+      browserName : 'Safari',
+      browser_version : '11.0'
     },
     {
       browserName: 'Edge'
