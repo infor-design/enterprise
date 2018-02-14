@@ -30,23 +30,40 @@ const LIST_DETAIL_DEFAULTS = {
 };
 
 /**
+ * Gets the type of list component
+ * @private
+ * @param {HTMLElement} listElement the element being checked
+ * @returns {string|undefined} the type of component, or undefined
+ */
+function getListType(listElement) {
+  if (!(listElement instanceof HTMLElement)) {
+    return undefined;
+  }
+
+  const components = Object.keys($(listElement).data());
+  let type;
+  components.forEach((key) => {
+    if (LIST_DETAIL_SUPPORTED_LIST_TYPES.indexOf(key) > -1) {
+      type = key;
+    }
+  });
+
+  return type;
+}
+
+/**
  * Checks an HTMLElement for a Soho Component instance that can be used for the list
+ * @private
  * @param {HTMLElement} listElement the element being checked
  * @returns {boolean} whether or not the element is a valid list type
  */
-function isListType(listElement) {
+function isValidList(listElement) {
   if (!(listElement instanceof HTMLElement)) {
     return false;
   }
 
-  const components = Object.keys($(listElement).data());
-  let isList = false;
-  components.forEach((key) => {
-    if (LIST_DETAIL_SUPPORTED_LIST_TYPES.indexOf(key) > -1) {
-      isList = true;
-    }
-  });
-  return isList;
+  const type = getListType(listElement);
+  return type !== undefined;
 }
 
 /**
@@ -73,7 +90,7 @@ ListDetail.prototype = {
    * @private
    */
   init() {
-    this.setInternalElementReference('listElement', elemType => isListType(this.settings[elemType]));
+    this.setInternalElementReference('listElement', elemType => isValidList(this.settings[elemType]));
     this.setInternalElementReference('detailElement');
     this.setInternalElementReference('backElement');
 
@@ -81,6 +98,13 @@ ListDetail.prototype = {
     this.showDetail = false;
     if (this.element.classList.contains('show-detail')) {
       this.showDetail = true;
+    }
+
+    // If a proper listElement has been provided, set a flag on its Component API
+    // that notifies the API that it's controlling an adjacent detail area.
+    if (this.listElement) {
+      this.listComponentType = getListType(this.listElement);
+      $(this.listElement).data(this.listComponentType).isControllingDetails = true;
     }
 
     if (this.backElement) {
@@ -278,10 +302,20 @@ ListDetail.prototype = {
   },
 
   /**
+   * Removes all bound events and internal references to other components' elements/APIs
    * @private
+   * @returns {void}
    */
   teardown() {
-    $(this.element).off(`drilldown.${COMPONENT_NAME}`);
+    $(this.element).off(`drilldown.${COMPONENT_NAME} drillup.${COMPONENT_NAME}`);
+
+    if (this.backElement) {
+      this.backElement.removeEventListener('click', this.handleBackClick.bind(this));
+    }
+
+    if (this.listComponentType) {
+      delete $(this.listElement).data(this.listComponentType).isControllingDetails;
+    }
 
     delete this.listElement;
     delete this.detailElement;
@@ -290,11 +324,13 @@ ListDetail.prototype = {
     delete this.edgeBleed;
     delete this.listContainsBackElement;
     delete this.detailContainsBackElement;
+    delete this.childrenListDetailElements;
     delete this.showDetail;
   },
 
   /**
    * @private
+   * @returns {void}
    */
   destroy() {
     this.teardown();
