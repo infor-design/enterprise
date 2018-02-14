@@ -82,7 +82,7 @@ Hierarchy.prototype = {
     const s = this.settings;
 
     // Expand or Collapse
-    self.element.onTouchClick('hierarchy', '.btn').on('click.hierarchy', '.btn', function (e) {
+    self.element.off('click.hierarchy').on('click.hierarchy', '.btn', function (e) {
       if (s.newData.length > 0) {
         s.newData = [];
       }

@@ -299,8 +299,12 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
 
     .btn-expand,
     .btn-collapse {
+      height: 50px;
       left: -12px;
-      top: 17px;
+      min-height: 50px;
+      min-width: 50px;
+      top: 11px;
+      width: 50px;
 
       .icon {
         height: 24px;
