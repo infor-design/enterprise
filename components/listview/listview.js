@@ -882,6 +882,14 @@ ListView.prototype = {
   },
 
   /**
+   * @returns {jQuery[]} the currently selected ListView item, or an empty jQuery selector
+   *  if there are currently no items selected.
+   */
+  getSelected() {
+    return this.element.find('.is-selected');
+  },
+
+  /**
    * Refresh the list with any optioned options that might have been set.
    * @param {object} [settings] incoming settings
    * @returns {this} component instance
@@ -892,6 +900,22 @@ ListView.prototype = {
     }
     this.refresh(settings ? settings.dataset : null);
     return this;
+  },
+
+  /**
+   * Disables the functionality of a ListView.
+   * @returns {void}
+   */
+  disable() {
+    this.element.addClass('is-disabled');
+  },
+
+  /**
+  * Enables the functionality of a ListView.
+  * @returns {void}
+  */
+  enable() {
+    this.element.removeClass('is-disabled');
   },
 
   /**

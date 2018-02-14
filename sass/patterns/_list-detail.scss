@@ -149,8 +149,7 @@
 
   .card-header {
     height: auto;
-    line-height: auto;
-    padding: 2px 20px;
+    padding: 2px 0 2px 20px;
 
     > * {
       display: inline-block;
@@ -178,7 +177,7 @@
 
   &.bleeding-edge {
     .list-detail-back-button {
-      opacity: 0;
+      opacity: 1;
     }
   }
 
@@ -200,8 +199,9 @@ html[dir='rtl'] {
 
 // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
 @include respond-to(phone) {
-
   .list-detail {
+    overflow: hidden;
+
     > .main,
     > .sidebar {
       @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
@@ -222,23 +222,40 @@ html[dir='rtl'] {
       @include css3(transform, translateX(0));
     }
 
-    &.show-detail {
+    &.bleeding-edge__phone {
+      .list-detail-back-button {
+        display: inline-block;
+      }
+
       > .main {
-        @include css3(transform, translateX(0));
+        @include css3(transform, translateX(0) translateX(30px));
+        width: calc(100% - 30px);
+      }
+
+      > .sidebar {
+        @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94),
+          box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
+        @include drawer-box-shadow;
+        width: 75%;
+        z-index: 2;
+      }
+    }
+
+    &.show-detail {
+      &:not(.bleeding-edge__phone, .bleeding-edge__tablet) {
+        > .main {
+          @include css3(transform, translateX(0));
+        }
       }
 
       > .sidebar {
         @include css3(transform, translateX(-100%));
       }
 
-      &.bleeding-edge {
-        > .main {
-          @include css3(transform, translateX(0) translateX(30px));
-          width: calc(100% - 30px);
-        }
-
+      &.bleeding-edge__phone {
         > .sidebar {
           @include css3(transform, translateX(-100%) translateX(30px));
+          box-shadow: 0 0 0 1px $box-shadow-off-color;
         }
 
         .list-detail-back-button {
@@ -246,10 +263,6 @@ html[dir='rtl'] {
         }
       }
     }
-  }
-
-  .list-detail-back-button {
-    display: inline-block;
   }
 
   // Remove excess left-margin in this scenario
@@ -260,5 +273,51 @@ html[dir='rtl'] {
   //Make this color target specifically header
   .header .searchfield-wrapper:not(.context) input {
     color: $header-text-color;
+  }
+}
+
+@include respond-to(tabletdown) {
+  .list-detail.bleeding-edge__tablet {
+    overflow: hidden;
+
+    .list-detail-back-button {
+      display: inline-block;
+    }
+
+    > .main,
+    > .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      position: absolute;
+
+      &.scrollable,
+      &.scrollable-y {
+        height: 100%;
+        overflow: auto;
+      }
+    }
+
+    > .main {
+      @include css3(transform, translateX(0) translateX(30px));
+      width: calc(100% - 30px);
+    }
+
+    > .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94),
+        box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
+      @include drawer-box-shadow;
+      width: 50%;
+      z-index: 2;
+    }
+
+    &.show-detail {
+      > .sidebar {
+        @include css3(transform, translateX(-100%) translateX(30px));
+        box-shadow: 0 0 0 1px $box-shadow-off-color;
+      }
+
+      .list-detail-back-button {
+        opacity: 1;
+      }
+    }
   }
 }

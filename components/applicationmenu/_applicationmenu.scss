@@ -26,7 +26,7 @@
   }
 
   &.show-shadow.is-open {
-    @include css3(box-shadow, 0 0 20px 1px rgba(0, 0, 0, .75));
+    @include drawer-box-shadow;
   }
 
   // Add animation to the page container when Nav is in use

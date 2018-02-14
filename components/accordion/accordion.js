@@ -578,6 +578,15 @@ Accordion.prototype = {
   },
 
   /**
+   * Gets the currently-selected Accordion Header, if applicable.
+   * @returns {jQuery[]} the currently selected Accoridon Header, or an empty jQuery selector
+   *  if there are currently no headers selected.
+   */
+  getSelected() {
+    return this.element.find('.is-selected');
+  },
+
+  /**
   * Checks if a particular header is disabled, or if the entire accordion is disabled..
   * @param {object} header The jquery header element
   * @returns {boolean} Whether or not the element is enabled.

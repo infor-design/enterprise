@@ -1,4 +1,5 @@
-import { utils } from '../utils/utils';
+import { utils, DOM } from '../utils/utils';
+import { breakpoints } from '../utils/breakpoints';
 
 // Component Name
 const COMPONENT_NAME = 'listdetail';
@@ -9,6 +10,12 @@ const LIST_DETAIL_SUPPORTED_LIST_TYPES = [
   'listview'
 ];
 
+// Available breakpoint types for Edge Bleeding
+const LIST_DETAIL_EDGE_BLEED_BREAKPOINTS = [
+  'phone',
+  'tablet'
+];
+
 /**
  * Default List/Detail Settings
  * @namespace
@@ -17,6 +24,8 @@ const LIST_DETAIL_SUPPORTED_LIST_TYPES = [
  * @property {boolean} edgeBleed if true, will show an interactive edge of the "list" element while
  *  the detail view is active.  Clicking the left edge (or a button in the left edge) will cause
  *  the "drillup" operation to occur while making the list active.
+ * @property {string} edgeBleedBreakpoint Defines the breakpoint where the responsive
+ *  "edge bleeding" style will occur.
  * @property {HTMLElement} [listElement] the base element for the Soho component that will
  *  be used as the "List" to be chosen from.  Must implement a Soho Accordion or Listview element.
  * @property {HTMLElement} [detailElement] the base element for the Soho component that will
@@ -25,6 +34,7 @@ const LIST_DETAIL_SUPPORTED_LIST_TYPES = [
 const LIST_DETAIL_DEFAULTS = {
   backElement: undefined,
   edgeBleed: false,
+  edgeBleedBreakpoint: LIST_DETAIL_EDGE_BLEED_BREAKPOINTS[0],
   listElement: undefined,
   detailElement: undefined
 };
@@ -104,7 +114,10 @@ ListDetail.prototype = {
     // that notifies the API that it's controlling an adjacent detail area.
     if (this.listElement) {
       this.listComponentType = getListType(this.listElement);
-      $(this.listElement).data(this.listComponentType).isControllingDetails = true;
+      const API = this.getListAPI();
+      if (API) {
+        API.isControllingDetails = true;
+      }
     }
 
     if (this.backElement) {
@@ -116,7 +129,8 @@ ListDetail.prototype = {
         this.backElementIcon = hasIcon;
       }
 
-      //
+      // Setup internal references that can be used to find out where a backElement
+      // is located internally in this pattern instance.
       this.listContainsBackElement = this.listElement.contains(this.backElement);
       this.detailContainsBackElement = this.detailElement.contains(this.backElement);
     }
@@ -130,13 +144,26 @@ ListDetail.prototype = {
     // Change edgebleed setting
     if (this.settings.edgeBleed) {
       this.edgeBleed = true;
-      this.element.classList.add('bleeding-edge');
+      this.element.classList.add(`bleeding-edge__${this.settings.edgeBleedBreakpoint}`);
     } else {
       this.edgeBleed = false;
-      this.element.classList.remove('bleeding-edge');
+      this.element.classList.remove('bleeding-edge__phone', 'bleeding-edge__tablet');
     }
 
+    // Flags for responsive behavior
+    this.setBreakpointChecks();
+
     this.handleEvents();
+  },
+
+  /**
+   * Sets internal checks for certain breakpoints
+   * @private
+   * @returns {void}
+   */
+  setBreakpointChecks() {
+    this.abovePhoneBreakpoint = breakpoints.isAbove('phone-to-tablet');
+    this.aboveTabletBreakpoint = breakpoints.isAbove('desktop');
   },
 
   /**
@@ -174,6 +201,7 @@ ListDetail.prototype = {
    * @private
    * @listens drilldown custom jQuery event that causes the detail area to become active
    * @listens drillup custom jQuery event that causes the list area to become active
+   * @listens click
    */
   handleEvents() {
     $(this.element).on(`drilldown.${COMPONENT_NAME}`, (e, item) => {
@@ -187,6 +215,11 @@ ListDetail.prototype = {
     if (this.backElement) {
       this.backElement.addEventListener('click', this.handleBackClick.bind(this));
     }
+
+    // Run certain responsive checks on page resize
+    $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      this.handleResize();
+    });
   },
 
   /**
@@ -217,13 +250,7 @@ ListDetail.prototype = {
       this.backElementIcon.classList.add('go-back');
     }
 
-    // enable focusing of the Backbutton if the button is located inside of the
-    // list or detail elements
-    if (this.edgeBleed) {
-      if (this.backElement && (this.listContainsBackElement || this.detailContainsBackElement)) {
-        this.backElement.tabIndex = 0;
-      }
-    }
+    this.getListAPI().disable();
 
     // Pass an event to the Detail Area's main element with some context about
     // what was clicked inside the list.
@@ -245,13 +272,7 @@ ListDetail.prototype = {
       this.backElementIcon.classList.remove('go-back');
     }
 
-    // disable focusing of the Backbutton if the button is located inside of the
-    // list or detail elements
-    if (this.edgeBleed) {
-      if (this.backElement && (this.listContainsBackElement || this.detailContainsBackElement)) {
-        this.backElement.tabIndex = -1;
-      }
-    }
+    this.getListAPI().enable();
 
     this.showDetail = false;
     this.element.classList.remove('show-detail');
@@ -264,7 +285,26 @@ ListDetail.prototype = {
    * @returns {boolean} whether or not the click operation should be allowed to continue
    */
   handleBackClick(e) {
+    function cancelClick() {
+      // Prevent the normal `click` operation of the backElement.
+      // (FX: if `backElement` is the App Menu trigger, prevents the App Menu from opening)
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }
+
     if (!this.showDetail) {
+      // In "edgeBleed" configuration, the BackElement can be used to drill back into a previously
+      // selected list item, if one was previously selected.
+      if (this.edgeBleed) {
+        const selected = this.getCurrentSelectedListItem();
+        if (selected) {
+          this.drilldown(selected);
+          cancelClick();
+          return false;
+        }
+      }
+
       return true;
     }
 
@@ -279,12 +319,71 @@ ListDetail.prototype = {
       });
     }
 
-    // Prevent the normal `click` operation of the backElement.
-    // (FX: if `backElement` is the App Menu trigger, prevents the App Menu from opening)
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-    e.preventDefault();
+    cancelClick();
     return false;
+  },
+
+  /**
+   * Event handler for `body.on('resize')`. Runs whenever the page is resized.
+   */
+  handleResize() {
+    this.setBreakpointChecks();
+
+    if (this.abovePhoneBreakpoint) {
+      if (this.edgeBleed && this.listElement.classList.contains('is-disabled')) {
+        const listAPI = this.getListAPI();
+        if (listAPI) {
+          listAPI.enable();
+        }
+      }
+    } else {
+
+    }
+    if (this.aboveTabletBreakpoint) {
+
+    } else {
+
+    }
+  },
+
+  /**
+   * Gets a reference to the defined List Element's Component API.
+   * @returns {object|undefined} a Soho Component API from a supported list type, or undefined
+   * if no API currently exists.
+   */
+  getListAPI() {
+    if (!this.listElement) {
+      return undefined;
+    }
+    return $(this.listElement).data(this.listComponentType);
+  },
+
+  /**
+   * Finds whatever item is currently selected by the listElement.
+   * @returns {HTMLElement} a reference to that element.
+   */
+  getCurrentSelectedListItem() {
+    if (!this.listElement) {
+      return '';
+    }
+
+    let item;
+    const API = this.getListAPI();
+
+    switch (this.listComponentType) {
+      case 'accordion':
+        item = API.getSelected();
+        break;
+      default: // 'listview'
+        item = API.getSelected();
+        break;
+    }
+
+    // Most components are still using jQuery,
+    // Run through a simple reference extraction to get at the HTMLElement
+    item = DOM.convertToHTMLElement(item);
+
+    return item;
   },
 
   /**
@@ -314,7 +413,10 @@ ListDetail.prototype = {
     }
 
     if (this.listComponentType) {
-      delete $(this.listElement).data(this.listComponentType).isControllingDetails;
+      const API = this.getListAPI();
+      if (API) {
+        delete API.isControllingDetails;
+      }
     }
 
     delete this.listElement;
