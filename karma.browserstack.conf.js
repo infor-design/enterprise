@@ -5,6 +5,7 @@ module.exports = function (config) {
     files: [
       'dist/css/light-theme.css',
       'dist/js/jquery-3.1.1.js',
+      'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
       'components/**/*.spec.js'
     ],
@@ -21,16 +22,19 @@ module.exports = function (config) {
     customLaunchers: {
       bs_firefox_mac: {
         base: 'BrowserStack',
-        browser: 'firefox',
-        browser_version: '56.0',
+        browser: 'Firefox',
+        browser_version: '58.0',
+        os_version: 'High Sierra',
         os: 'OS X',
-        os_version: 'Sierra'
+        resolution: '1024x768'
       },
-      bs_iphone8: {
+      bs_safari_mac: {
         base: 'BrowserStack',
-        device: 'iPhone 8',
-        os: 'ios',
-        os_version: '11.0'
+        browser: 'Safari',
+        browser_version: '11.0',
+        os_version: 'High Sierra',
+        os: 'OS X',
+        resolution: '1024x768'
       }
     },
     preprocessors: {
@@ -64,12 +68,10 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: [
-      'ChromeHeadless',
-      'Chrome',
       'bs_firefox_mac',
-      'bs_iphone8'
+      'bs_safari_mac'
     ],
-    singleRun: false,
-    concurrency: Infinity
+    singleRun: true,
+    concurrency: 1
   });
 };

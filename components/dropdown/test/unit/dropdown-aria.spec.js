@@ -22,7 +22,6 @@ describe('Dropdown ARIA', () => {
     dropdownEl.classList.add('no-init');
     dropdownObj = new Dropdown(dropdownEl);
     dropdownObj.init();
-    debugger;
   });
 
   afterEach(() => {
