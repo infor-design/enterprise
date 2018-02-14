@@ -246,7 +246,7 @@ Soho.Locale.addCulture('ar-EG', {
           let hmonth = 1;
           // find the earliest gregorian date in the array that is greater than
           // or equal to the given date
-          // while (ticks > this.yearInfo[++hyear][1]) {}
+          while (ticks > this.yearInfo[++hyear][1]) { } //eslint-disable-line
 
           if (ticks !== this.yearInfo[hyear][1]) {
             hyear--;
