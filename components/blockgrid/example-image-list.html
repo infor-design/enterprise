@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1 class="section-title">Block Grid with Image</h1>
+
+    <div class="row blockgrid l-center" id="blockgrid">
+      <!--div class="block" tabindex="1">
+        <input type="checkbox" class="checkbox" id="checkbox1">
+        <label for="checkbox1" class="checkbox-label" style="display:none;"><span class="audible">Checked</span></label>
+
+        <img alt="Placeholder Image" src="https://randomuser.me/api/portraits/med/women/8.jpg" class="image-round">
+        <p>Sheena Taylor <br> SVP, Infor</p>
+      </div>
+      <div class="block" tabindex="1">
+        <input type="checkbox" class="checkbox" id="checkbox2">
+        <label for="checkbox2" class="checkbox-label"><span class="audible">Checked</span></label>
+
+        <img alt="Placeholder Image" src="https://randomuser.me/api/portraits/med/women/8.jpg" class="image-round">
+        <p>Sheena Taylor <br> SVP, Infor</p>
+      </div>
+      <div class="block" tabindex="1">
+        <input type="checkbox" class="checkbox" id="checkbox3">
+        <label for="checkbox3" class="checkbox-label"><span class="audible">Checked</span></label>
+
+        <img alt="Placeholder Image" src="https://randomuser.me/api/portraits/med/women/8.jpg" class="image-round">
+        <p>Sheena Taylor <br> SVP, Infor</p>
+      </div>
+      <div class="block" tabindex="1">
+        <input type="checkbox" class="checkbox" id="checkbox4">
+        <label for="checkbox4" class="checkbox-label"><span class="audible">Checked</span></label>
+
+        <img alt="Placeholder Image" src="https://randomuser.me/api/portraits/med/women/8.jpg" class="image-round">
+        <p>Sheena Taylor <br> SVP, Infor</p>
+      </div>
+      <div class="block" tabindex="1">
+        <input type="checkbox" class="checkbox" id="checkbox5">
+        <label for="checkbox5" class="checkbox-label"><span class="audible">Checked</span></label>
+
+        <img alt="Placeholder Image" src="https://randomuser.me/api/portraits/med/women/8.jpg" class="image-round">
+        <p>Sheena Taylor <br> SVP, Infor</p>
+      </div>
+    </div-->
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var data = [];
+
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+
+    $('#blockgrid').blockgrid({
+      dataset: data
+    });
+  });
+
+</script>

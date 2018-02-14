@@ -6,16 +6,24 @@
   text-align: left;
 
   .block {
-    border-radius: 2px;
+    border-radius: 3px;
     display: inline-block;
     margin: 20px 0 0 20px;
     padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
     text-align: center;
     vertical-align: top;
     width: 200px;
 
     img {
       margin-bottom: 10px;
+
+      &.image-round {
+        border-radius: 100%;
+        height: 75px;
+        width: 75px;
+      }
     }
 
     a {
@@ -24,7 +32,49 @@
     }
 
     &.is-selected {
+      background-color: transparent;
+      border: 2px $btn-focus-border-color solid;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    &.is-activated {
       background-color: $selected-bg-color;
+      border: 1px $btn-active-bg-color solid;
+
+      &.is-selected {
+        border: 2px $btn-focus-border-color solid;
+      }
+
+      .checkbox-label {
+        display: block !important;
+      }
+    }
+
+    &:hover {
+      border-radius: 3px;
+      background-color: $image-background-color;
+      cursor: pointer;
+    }
+
+    &:focus {
+      border-radius: 3px;
+      border: 1px $trigger-focus-color solid;
+      outline: none;
+
+      .checkbox-label {
+        display: block !important;
+      }
+    }
+
+    input.checkbox {
+      + label {
+        position: absolute;
+        right: 0;
+        top: 7px;
+      }
     }
   }
 
