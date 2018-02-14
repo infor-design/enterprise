@@ -32,48 +32,55 @@
     }
 
     &.is-selected {
-      background-color: transparent;
-      border: 2px $btn-focus-border-color solid;
-
-      &:hover {
-        background-color: transparent;
-      }
+      background-color: $selected-bg-color;
     }
 
-    &.is-activated {
-      background-color: $selected-bg-color;
-      border: 1px $btn-active-bg-color solid;
+    &.selection {
 
       &.is-selected {
+        background-color: transparent;
         border: 2px $btn-focus-border-color solid;
+
+        &:hover {
+          background-color: transparent;
+        }
       }
 
-      .checkbox-label {
-        display: block !important;
+      &.is-activated {
+        background-color: $selected-bg-color;
+        border: 1px $btn-active-bg-color solid;
+
+        &.is-selected {
+          border: 2px $btn-focus-border-color solid;
+        }
+
+        .checkbox-label {
+          display: block !important;
+        }
       }
-    }
 
-    &:hover {
-      border-radius: 3px;
-      background-color: $image-background-color;
-      cursor: pointer;
-    }
-
-    &:focus {
-      border-radius: 3px;
-      border: 1px $trigger-focus-color solid;
-      outline: none;
-
-      .checkbox-label {
-        display: block !important;
+      &:hover {
+        border-radius: 3px;
+        background-color: $image-background-color;
+        cursor: pointer;
       }
-    }
 
-    input.checkbox {
-      + label {
-        position: absolute;
-        right: 0;
-        top: 7px;
+      &:focus {
+        border-radius: 3px;
+        border: 1px $trigger-focus-color solid;
+        outline: none;
+
+        .checkbox-label {
+          display: block !important;
+        }
+      }
+
+      input.checkbox {
+        + label {
+          position: absolute;
+          right: 0;
+          top: 7px;
+        }
       }
     }
   }
