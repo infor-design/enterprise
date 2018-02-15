@@ -53,10 +53,6 @@
         &.is-selected {
           border: 2px $btn-focus-border-color solid;
         }
-
-        .checkbox-label {
-          display: block !important;
-        }
       }
 
       &:hover {
@@ -69,10 +65,6 @@
         border-radius: 3px;
         border: 1px $trigger-focus-color solid;
         outline: none;
-
-        .checkbox-label {
-          display: block !important;
-        }
       }
 
       input.checkbox {

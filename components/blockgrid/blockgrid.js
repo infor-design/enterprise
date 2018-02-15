@@ -5,8 +5,16 @@ import { utils } from '../utils/utils';
 // Settings and Options
 const COMPONENT_NAME = 'blockgrid';
 
+/**
+ * Blockgrid Default Settings
+ * @namespace
+ * @property {array} dataset An array of data objects
+ * @property {string} selectable Controls the selection Mode this may be:
+ * false, 'single' or 'multiple' or 'mixed' or 'siblings'
+ */
 const BLOCKGRID_DEFAULTS = {
-  dataset: []
+  dataset: [],
+  selectable: false // false, 'single' or 'multiple' or 'siblings'
 };
 
 /**
@@ -56,23 +64,39 @@ Blockgrid.prototype = {
    */
   handleEvents() {
     const self = this;
+    const s = self.settings;
 
     $('.block').hover((e) => {
       const blockEl = $(e.currentTarget);
-      blockEl.find('.checkbox-label').css('display', 'block');
+
+      if (s.selectable === 'multiple' || s.selectable === 'mixed') {
+        blockEl.find('.checkbox-label').css('display', 'block');
+      }
     }, (e) => {
       const blockEl = $(e.currentTarget);
       const cboxVal = blockEl.find('.checkbox')[0].checked;
-      if (!cboxVal) {
+      const isActivated = blockEl.hasClass('is-activated');
+      if (!cboxVal && !isActivated) {
         blockEl.find('.checkbox-label').css('display', 'none');
       }
     }).on('click', (e) => {
       const blockEl = $(e.currentTarget);
 
-      if (blockEl.hasClass('is-activated')) {
-        blockEl.removeClass('is-activated');
-      } else {
-        blockEl.addClass('is-activated');
+      if (s.selectable === 'single' || s.selectable === 'mixed') {
+        $('.block').removeClass('is-activated');
+        if (blockEl) {
+          blockEl.addClass('is-activated');
+        }
+      }
+
+      if (s.selectable === 'multiple') {
+        if (blockEl.hasClass('is-activated')) {
+          blockEl.removeClass('is-activated', 'is-selected');
+          blockEl.find('.checkbox').attr('checked', false);
+        } else {
+          blockEl.addClass('is-activated', 'is-selected');
+          blockEl.find('.checkbox').attr('checked', true);
+        }
       }
     });
 
@@ -84,6 +108,9 @@ Blockgrid.prototype = {
         blockEl.addClass('is-selected');
       } else {
         blockEl.removeClass('is-selected');
+        if (s.selectable === 'multiple') {
+          blockEl.removeClass('is-activated');
+        }
       }
     });
 
@@ -97,8 +124,8 @@ Blockgrid.prototype = {
   /**
    * Example Method.
    * @returns {void}
+   * @private
    */
-
   renderBlock() {
     let blockelements = '';
     const s = this.settings;
@@ -106,19 +133,14 @@ Blockgrid.prototype = {
 
     for (let i = 0; i < dslength; i++) {
       const data = s.dataset[i];
-      blockelements += '<div class="block selection" tabindex="1">';
-      blockelements += `<input type="checkbox" class="checkbox" id="checkbox${i}" idx="${i}">`;
-      blockelements += `<label for="checkbox${i}" class="checkbox-label" style="display:none;" tabindex="1"><span class="audible">Checked</span></label>`;
-
-      blockelements += `<img alt="Placeholder Image" src="${data.img}" class="image-round">`;
-      blockelements += `<p> ${data.maintxt} <br> ${data.subtxt} </p></div>`;
+      blockelements += `<div class="block selection" tabindex="1">
+      <input type="checkbox" class="checkbox" id="checkbox${i}" idx="${i}">
+      <label for="checkbox${i}" class="checkbox-label" style="display:none;" tabindex="1"><span class="audible">Checked</span></label>
+      <img alt="Placeholder Image" src="${data.img}" class="image-round">
+      <p> ${data.maintxt} <br> ${data.subtxt} </p></div>`;
     }
 
     this.element.append(blockelements);
-  },
-
-  iconMouseEnter(ev, icon) {
-    icon.visible = true;
   },
 
   /**
@@ -143,7 +165,6 @@ Blockgrid.prototype = {
 
   /**
    * Teardown - Remove added markup and events.
-   * @private
    */
   destroy() {
     this.teardown();

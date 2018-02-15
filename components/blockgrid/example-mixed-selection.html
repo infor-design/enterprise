@@ -1,6 +1,6 @@
 <div class="row">
   <div class="twelve columns">
-    <h1 class="section-title">Block Grid with Image Selection</h1>
+    <h1 class="section-title">Block Grid with Mixed Selection</h1>
     <div class="row blockgrid l-center" id="blockgrid">
   </div>
 </div>
@@ -36,7 +36,8 @@
     });
 
     $('#blockgrid').blockgrid({
-      dataset: data
+      dataset: data,
+      selectable: 'mixed'
     });
   });
 
