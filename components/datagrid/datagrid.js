@@ -2854,13 +2854,18 @@ Datagrid.prototype = {
         const cell = $(this);
         const text = cell.text();
         const inner = cell.children('.datagrid-cell-wrapper');
+        const element = $(inner[0]);
+        const clonedEl = element.clone().css({ display: 'inline', width: 'auto', visibility: 'hidden' }).appendTo('body');
 
-        if (cell[0] && inner[0] && (inner[0].offsetWidth) < inner[0].scrollWidth && cell.data('tooltip')) {
+        if (cell[0] && inner[0] && clonedEl.width() > element.width() - 30 && cell.data('tooltip')) {
           const w = inner.width();
           cell.data('tooltip').settings.maxWidth = w;
+
+          clonedEl.remove();
           return text;
         }
 
+        clonedEl.remove();
         return '';
       }
     });
