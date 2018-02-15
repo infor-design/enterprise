@@ -10,11 +10,11 @@ const COMPONENT_NAME = 'blockgrid';
  * @namespace
  * @property {array} dataset An array of data objects
  * @property {string} selectable Controls the selection Mode this may be:
- * false, 'single' or 'multiple' or 'mixed' or 'siblings'
+ * false, 'single' or 'multiple' or 'mixed'
  */
 const BLOCKGRID_DEFAULTS = {
   dataset: [],
-  selectable: false // false, 'single' or 'multiple' or 'siblings'
+  selectable: false // false, 'single' or 'multiple' or mixed
 };
 
 /**
