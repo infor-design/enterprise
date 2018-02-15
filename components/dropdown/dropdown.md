@@ -91,3 +91,4 @@ The Dropdown container (the input element) should size to the parent container a
 -   Ensure the select is attached to a label with class="label" via the label's for to select's id
 -   Ensure the select and input are wrapped in a div with class="field"
 -   You can remove any calls to .dropdown() or .inforDropDown() as it will now auto initialize to default options
+
