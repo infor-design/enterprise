@@ -53,7 +53,7 @@ $('body').one('initialized', function () {
       afterTemplate = format(opt.afterTemplate);
 
     return beforeTemplate +'<label for="'+ id +'" class="audible">'+ id +'</label>'+
-        '<input type="'+ type +'" id="'+ id +'" name="'+ id +'" />'+ afterTemplate;
+        '<input type="'+ type +'" id="'+ id +'" name="'+ id +'" />'+ '<span>' + afterTemplate + '</span>';
   };
 
   //Define Columns for the Grid.

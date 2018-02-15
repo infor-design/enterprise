@@ -1,0 +1,51 @@
+
+<div class="row">
+  <div class="full column center" style="height: 110px">
+    <div id="bullet-example1" class="chart-container">
+    </div>
+  </div>
+  <button type="button" class="btn-secondary" id="btn-update">Update</button>
+  <button type="button" class="btn-secondary" id="btn-reload">Reload Update</button>
+</div>
+
+
+<script>
+$('body').on('initialized', function () {
+
+  var dataset1 = [{
+      data: [
+        {'title': 'Revenue','subtitle': 'US$, in thousands','ranges': [150, 225, 300, 400, 600], 'measures': [220,270], 'markers': [250], url: 'http://someplace.com',
+          tooltip: ['<b>Poor</b> 150', '<b>Ok</b> 225', '<b>Good</b> 300', '<b>Excellent</b> 400', '<b>Revenue</b> 600']}
+      ],
+      barColors: ['#C0EDE3', '#8ED1C6', '#69ADA3', '#448D83', '#206B62'], //http://107.170.15.202:4000{{basepath}}controls/colors
+      lineColors: ['#000000', '#000000', '#000000'],
+      markerColors: ['#000000']
+    }];
+
+  var dataset2 = [{
+      data: [
+        {'title': 'Revenue (New)','subtitle': 'DKK$, in thousands','ranges': [50, 100, 150, 200, 250], 'measures': [150,200], 'markers': [250], url: 'http://someplace.com',
+          tooltip: ['<b>Poor</b> 50', '<b>Ok</b> 100', '<b>Good</b> 150', '<b>Excellent</b> 200', '<b>Revenue</b> 250']}
+      ],
+      barColors: ['#206B62', '#448D83', '#69ADA3', '#8ED1C6', '#C0EDE3'], //http://107.170.15.202:4000{{basepath}}controls/colors
+      lineColors: ['#000000', '#000000', '#000000'],
+      markerColors: ['#000000']
+    }];
+
+  var component = $('#bullet-example1').chart({type: 'bullet', dataset: dataset1})
+    .on('selected', function(e, ui, data) {
+      console.log(e, ui, data);
+    });
+
+  // The better way
+  $('#btn-update').on('click', function () {
+    component.data('chart').updated({dataset: dataset2});
+  });
+
+  // The older way
+  $('#btn-reload').on('click', function () {
+    $('#bullet-example1').chart({type: 'bullet', dataset: dataset2});
+  });
+
+});
+</script>

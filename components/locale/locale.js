@@ -1143,13 +1143,13 @@ const Locale = {  // eslint-disable-line
 // Has to delay in order to check if no culture in head since scripts load async
 $(() => {
   setTimeout(() => {
-    if (window.Locale && !window.Locale.cultureInHead() && !window.Locale.currentLocale.name) {
-      window.Locale.set('en-US');
+    if (Locale && !Locale.cultureInHead() && !Locale.currentLocale.name) {
+      Locale.set('en-US');
     }
 
     // ICONS: Right to Left Direction
-    if (window.Locale && window.Locale.isRTL()) {
-      window.Locale.flipIconsHorizontally();
+    if (Locale && Locale.isRTL()) {
+      Locale.flipIconsHorizontally();
     }
   }, 50);
 });

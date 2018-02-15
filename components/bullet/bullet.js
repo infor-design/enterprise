@@ -33,6 +33,9 @@ const BULLET_DEFAULTS = {
  */
 function Bullet(element, settings) {
   this.settings = utils.mergeSettings(element, settings, BULLET_DEFAULTS);
+  if (settings && settings.dataset) {
+    this.settings.dataset = settings.dataset;
+  }
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -385,6 +388,9 @@ Bullet.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    if (settings && settings.dataset) {
+      this.settings.dataset = settings.dataset;
+    }
     this.element.empty();
 
     return this
