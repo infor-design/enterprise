@@ -60,16 +60,11 @@
           </div>
 
           <!-- begin overview tab -->
-          <section id="workflow" class="tab-panel list-detail two-column fixed" data-options='{ "listElement": "#workflow-accordion", "detailElement": "#workflow-content-area", "backElement": "#inner-back-element", "edgeBleed": true, "edgeBleedBreakpoint": "tablet" }'>
+          <section id="workflow" class="tab-panel list-detail two-column fixed" data-options='{ "listElement": "#workflow-accordion", "detailElement": "#workflow-content-area", "backElement": "#detail-area-back-button", "edgeBleed": true, "edgeBleedBreakpoint": "tablet" }'>
             <aside class="sidebar">
               <div class="sidebar-content scrollable-flex">
                 <div class="scrollable-flex-header panel-header card-header">
                   <h2 class="card-title">Workflow Steps</h2>
-                  <button id="inner-back-element" class="btn-icon list-detail-back-button">
-                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                      <use xlink:href="#icon-expand-app-tray"></use>
-                    </svg>
-                  </button>
                 </div>
                 <div class="scrollable-flex-content">
 
@@ -122,8 +117,20 @@
               <!-- begin content area -->
               <div class="main-content" id="workflow-content-area">
 
+                <div class="toolbar">
+                  <div class="title">
+                    <button id="detail-area-back-button" class="btn-icon list-detail-back-button">
+                      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use xlink:href="#icon-bullet-steps"></use>
+                      </svg>
+                      <span class="audible">Show Bulleted Steps</span>
+                    </button>
+                    <span>Recruiter Inbox</span>
+                  </div>
+                </div>
+
                 <!-- NOTE: DON'T COPY THIS PART (demo purposes only) -->
-                <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; position: relative;">
+                <div style="display: flex; align-items: center; justify-content: center; width: 100%; height: calc(100% - 45px); position: relative;">
                   <div style="display: flex; align-items: center; justify-content: center; width: calc(100% - 40px); height: calc(100% - 40px); border: 3px dotted #d0d0d0;">
                     <h3>Workflow Area Container</h3>
                   </div>

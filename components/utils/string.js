@@ -44,4 +44,13 @@ stringUtils.containsHTML = function containsHTML(str) {
   return /<[a-z][\s\S]*>/i.test(str);
 };
 
+/**
+ * Capitalizes the first letter of a string
+ * @param {string} str the incoming text
+ * @returns {string} the modified text
+ */
+stringUtils.capitalize = function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 export { stringUtils }; //eslint-disable-line

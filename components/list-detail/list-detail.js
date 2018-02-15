@@ -1,4 +1,5 @@
 import { utils, DOM } from '../utils/utils';
+import { stringUtils } from '../utils/string';
 import { breakpoints } from '../utils/breakpoints';
 
 // Component Name
@@ -250,7 +251,9 @@ ListDetail.prototype = {
       this.backElementIcon.classList.add('go-back');
     }
 
-    this.getListAPI().disable();
+    if (!this.isAboveBreakpoint()) {
+      this.getListAPI().disable();
+    }
 
     // Pass an event to the Detail Area's main element with some context about
     // what was clicked inside the list.
@@ -325,25 +328,35 @@ ListDetail.prototype = {
 
   /**
    * Event handler for `body.on('resize')`. Runs whenever the page is resized.
+   * @returns {void}
    */
   handleResize() {
     this.setBreakpointChecks();
+    const listAPI = this.getListAPI();
 
-    if (this.abovePhoneBreakpoint) {
-      if (this.edgeBleed && this.listElement.classList.contains('is-disabled')) {
-        const listAPI = this.getListAPI();
-        if (listAPI) {
-          listAPI.enable();
-        }
+    if (this.isAboveBreakpoint()) {
+      if (this.edgeBleed && !this.showDetail && this.listElement.classList.contains('is-disabled')) {
+        listAPI.enable();
       }
-    } else {
-
+    } else if (this.edgeBleed && this.showDetail && !this.listElement.classList.contains('is-disabled')) {
+      listAPI.disable();
     }
-    if (this.aboveTabletBreakpoint) {
 
-    } else {
-
+    // Make sure the list is always re-enabled on desktop
+    if (breakpoints.isAbove('desktop')) {
+      listAPI.enable();
     }
+  },
+
+  /**
+   * Checks to see if the screen size is currently above the defined breakpoint
+   * @returns {boolean} whether or not the screen size is larger than the defined breakpoint.
+   */
+  isAboveBreakpoint() {
+    const breakpoint = this.settings.edgeBleedBreakpoint;
+    const breakpointPropname = `above${stringUtils.capitalize(breakpoint)}Breakpoint`;
+
+    return this[breakpointPropname];
   },
 
   /**
