@@ -18,6 +18,7 @@ import './icons/icons.jquery';
 import './about/about.jquery';
 import './accordion/accordion.jquery';
 import './applicationmenu/applicationmenu.jquery';
+import './blockgrid/blockgrid.jquery';
 import './busyindicator/busyindicator.jquery';
 import './charts/charts.jquery';
 import './circlepager/circlepager.jquery';
