@@ -128,28 +128,33 @@ npm info @infor/sohoxi dist-tags
 
 ## Getting from S3 CDN
 
-You can now refer to the scripts and css from a cdn (AWS) the paths would be...
+You can now refer to the scripts and css from a CDN (AWS) the paths would be...
+https://dx6yfd7aurvg3.cloudfront.net/sohoxi
 
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/js/sohoxi.js
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/js/sohoxi.min.js
+There is a dns for this entry https://cdn.hookandloop.infor.com/sohoxi
 
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/css/dark-theme.css
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/css/dark-theme.min.css
+Sample File Names for 4.3.5:
 
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/css/dark-theme.css
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/css/dark-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/js/sohoxi.js
+https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/js/sohoxi.min.js
 
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/css/light-theme.css
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/css/light-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.min.css
 
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/svg/svg.html
-https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.3/dist/svg/svg-extended.html
+https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.min.css
 
-Todo:
-- Be aware there may be a cost involved to using this with Infor's amazon s3 account
-so use should be limited at this point.
-- Add Version https://dx6yfd7aurvg3.cloudfront.net/4.3.2
-- We will have a dns name for this soon.
+https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/light-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/light-theme.min.css
+
+https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/svg/svg.html
+https://dx6yfd7aurvg3.cloudfront.net/sohoxi/4.3.5/dist/svg/svg-extended.html
+
+Available Versions:
+4.3.2, 4.3.3, 4.3.4, 4.3.5
+
+Note:
+- There may be a cost involved to using this with Infor's amazon s3 account so keep this in mind when using.
 
 # Contributing to Soho XI
 
