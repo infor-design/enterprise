@@ -13,7 +13,7 @@ const COMPONENT_NAME = 'initialize';
  * Component Defaults
  */
 const INITIALIZE_DEFAULTS = {
-  locale: Locale.currentLocale.name || 'en-US'
+  locale: null
 };
 
 /**
@@ -48,10 +48,18 @@ Initialize.prototype = {
    */
   init() {
     const self = this;
+    let locale = this.settings.locale;
+    if ((!Soho.Locale || !Soho.Locale.currentLocale) && !this.settings.locale) {
+      locale = 'en-US';
+    }
 
-    Locale.set(this.settings.locale).done(() => {
+    if (locale) {
+      Locale.set(locale).done(() => {
+        self.initAll();
+      });
+    } else {
       self.initAll();
-    });
+    }
 
     return this;
   },
