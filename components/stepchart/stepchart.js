@@ -147,11 +147,14 @@ StepChart.prototype = {
   },
 
   /**
-   * Update the chart with the current options.
-   * @returns {this} component instance
+   * Handle updated settings and values.
+   * @param  {object} settings The new settings to use.
+   * @returns {object} The api for chaining.
    */
-  updated() {
+  updated(settings) {
+    this.settings = utils.mergeSettings(this.element, settings, this.settings);
     this.element.empty();
+
     return this.render();
   },
 

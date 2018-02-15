@@ -934,7 +934,7 @@ ListView.prototype = {
       const item = $(this);
 
       // Ignore favorite clicks
-      if ($(evt.originalEvent.target).is('.icon-favorite')) {
+      if (evt.originalEvent && evt.originalEvent.target && $(evt.originalEvent.target).is('.icon-favorite')) {
         return;
       }
 

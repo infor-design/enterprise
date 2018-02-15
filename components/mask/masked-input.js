@@ -396,10 +396,11 @@ SohoMaskedInput.prototype = {
         }
 
         // Detect the thousands separator and see if we use it.
+        const group = Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',';
         const thousandsSep = this.settings.patternOptions && this.settings.patternOptions.symbols &&
           this.settings.patternOptions.symbols.thousands ?
           this.settings.patternOptions.symbols.thousands :
-          Locale.currentLocale.data.numbers.group;
+          group;
 
         const hasThousandsInPattern = this.settings.pattern.indexOf(thousandsSep) !== -1;
         this.settings.patternOptions.allowThousandsSeparator = hasThousandsInPattern;

@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn-secondary" id="btn-update">Update</button>
+      <button type="button" class="btn-secondary" id="btn-reload">Reload Update</button>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+      data: [{
+          name: 'Item A',
+          value: 10.1,
+          //  url: '/componentA',
+          id: 'ca',
+          tooltip: 'Item A <b>{{percent}}</b>'
+      }, {
+          name: 'Item B',
+          value: 12.2,
+          id: 'cb',
+          tooltip: 'Item B <b>{{percent}}</b>'
+      }, {
+          name: 'Item C',
+          value: 14.35,
+          tooltip: 'Item C <b>{{percent}}</b>'
+      }, {
+          name: 'Item D',
+          value: 15.6,
+          tooltip: 'Item D <b>{{percent}}</b>'
+      }, {
+          name: 'Item E',
+          value: 21.6,
+          tooltip: 'Item E <b>{{percent}}</b>'
+      }, {
+          name: 'Item F',
+          value: 41.6,
+          tooltip: 'Item F <b>{{percent}}</b>'
+      }]
+    }];
+
+  var pieData2 = [{
+      data: [{
+          name: 'Item A (New)',
+          value: 4343,
+          //  url: '/componentA',
+          id: 'ca',
+          tooltip: 'Item A <b>{{percent}}</b>'
+      }, {
+          name: 'Item B',
+          value: 43,
+          id: 'cb',
+          tooltip: 'Item B <b>{{percent}}</b>'
+      }, {
+          name: 'Item C',
+          value: 23,
+          tooltip: 'Item C <b>{{percent}}</b>'
+      }]
+    }];
+
+  component = $('#pie-chart-example').chart({type: 'pie', dataset: pieData});
+
+  // The better way
+  $('#btn-update').on('click', function () {
+    component.data('chart').updated({dataset: pieData2});
+  });
+
+  // The older way
+  $('#btn-reload').on('click', function () {
+    $('#pie-chart-example').chart({type: 'pie', dataset: pieData2});
+  });
+
+});
+</script>
