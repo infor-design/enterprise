@@ -13,46 +13,45 @@ exports.config = {
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
     'browserstack.debug': true,
     'browserstack.local': true,
-    'browserstack.selenium_version' : '3.7.1',
     build: 'protractor-browserstack',
-    name: 'Functional tests',
+    name: 'Functional tests'
   },
-  'multiCapabilities': [
+  multiCapabilities: [
     {
       browserName: 'Chrome',
-      browser_version: '63.0'
+      browser_version: '63'
     },
     {
       browserName: 'Firefox',
-      browser_version: '57.0'
+      browser_version: '58'
     },
     {
-      os : 'OS X',
-      os_version : 'High Sierra',
-      browserName : 'Safari',
-      browser_version : '11.0'
+      os: 'OS X',
+      os_version: 'El Capitan',
+      browserName: 'Safari',
+      browser_version: '9.1'
     },
     {
       browserName: 'Edge'
     },
     {
       browserName: 'IE',
-      browser_version: '11.0'
+      browser_version: '11'
     }
   ],
   beforeLaunch: () => {
     return new Promise((resolve, reject) => {
       exports.bs_local = new browserstack.Local();
-      exports.bs_local.start({'key': exports.config.commonCapabilities['browserstack.key'] }, (error) => {
+      exports.bs_local.start({ key: exports.config.commonCapabilities['browserstack.key'] }, (error) => {
         if (error) {
           return reject(error);
-        };
+        }
         resolve();
       });
     });
   },
 
-  onPrepare: function() {
+  onPrepare: () => {
     browser.ignoreSynchronization = true;
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: true }
@@ -60,13 +59,13 @@ exports.config = {
   },
 
   afterLaunch: () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       exports.bs_local.stop(resolve);
     });
   }
 };
 
-exports.config.multiCapabilities.forEach(caps => {
+exports.config.multiCapabilities.forEach((caps) => {
   for (const i in exports.config.commonCapabilities) {
     caps[i] = caps[i] || exports.config.commonCapabilities[i];
   }
