@@ -77,7 +77,6 @@ describe('Dropdown updates, events', () => {
   });
 
   it('Should update set settings via parameters', () => {
-
     const settings = {
       closeOnSelect: true,
       cssClass: null,
