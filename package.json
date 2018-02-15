@@ -33,7 +33,7 @@
     "test:unit": "./bin/test.sh client config=test/intern.local.unit",
     "test:es6:local:unit": "karma start karma.conf.js",
     "test:es6:browserstack:unit": "karma start karma.browserstack.conf.js",
-    "pree2elocal": "npm run webdriver && (npm run start & sleep 10)",
+    "pree2elocal": "npm run webdriver || npm run webdriver:update && (npm run start & sleep 10)",
     "e2elocal": "protractor ./protractor.conf.js || npm run stop",
     "poste2elocal": "npm run stop && exit 0",
     "pree2emulti": "npm run webdriver && (npm run start & sleep 10)",

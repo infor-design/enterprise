@@ -7,7 +7,7 @@ exports.config = {
     '**/e2e/*.e2e-spec.js'
   ],
   capabilities: {
-    browserName: 'safari'
+    browserName: 'chrome'
   },
   directConnect: false,
   baseUrl: 'http://localhost:4000/',
