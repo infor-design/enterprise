@@ -55,8 +55,9 @@ glob('components/*/', (err, components) => {
 
       if (fs.existsSync(`${componentPath + componentName}.js`)) {
         // Write the file out
-        const cmd = `documentation build ${componentPath}${componentName}.js --format html --theme docs/theme --o ${componentPath}${componentName}-api.html --shallow`;
-        c.exec(cmd, (error, stdout, stderr) => {
+        const cmdHTML = `documentation build ${componentPath}${componentName}.js --format html --theme docs/theme --o ${componentPath}${componentName}-api.html --shallow`;
+        const cmdMarkdown = `documentation build ${componentPath}${componentName}.js --format md --o ${componentPath}${componentName}-api.md --shallow`;
+        c.exec(cmdHTML, (error, stdout, stderr) => {
           if (error) {
             throw error;
           }
@@ -72,6 +73,16 @@ glob('components/*/', (err, components) => {
 
             runPandoc(mdData, apiData, componentPath);
           });
+        });
+
+        c.exec(cmdMarkdown, (error, stdout, stderr) => {
+          if (error) {
+            throw error;
+          }
+
+          if (stderr) {
+            throw stderr;
+          }
         });
       } else {
         runPandoc(mdData, null, componentPath);

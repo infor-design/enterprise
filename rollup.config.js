@@ -14,9 +14,15 @@ module.exports = {
     file: 'dist/js/sohoxi.js',
     format: 'iife',
     sourcemap: true,
-    sourcemapFile: 'dist/js/sohoxi.js.map'
+    sourcemapFile: 'dist/js/sohoxi.js.map',
+    name: 'Soho',
+    globals: {
+      jquery: '$',
+      d3: 'd3',
+      alert: 'alert',
+      console: 'console'
+    }
   },
-  name: 'Soho',
   plugins: [
     resolve(),
     json(),
@@ -28,10 +34,4 @@ module.exports = {
       banner: bundleBanner
     })
   ],
-  globals: {
-    jquery: '$',
-    d3: 'd3',
-    alert: 'alert',
-    console: 'console'
-  }
 };
