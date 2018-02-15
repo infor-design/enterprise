@@ -8,7 +8,7 @@ let svgEl;
 let rowEl;
 let dropdownObj;
 
-describe('Dropdown', () => {
+describe('Dropdown API', () => {
   beforeEach(() => {
     dropdownEl = null;
     svgEl = null;

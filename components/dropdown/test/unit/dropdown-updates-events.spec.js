@@ -20,8 +20,8 @@ describe('Dropdown updates, events', () => {
     rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     dropdownEl.classList.add('no-init');
-    $('.dropdown').dropdown();
     dropdownObj = new Dropdown(dropdownEl);
+    dropdownObj.init();
   });
 
   afterEach(() => {
@@ -36,17 +36,18 @@ describe('Dropdown updates, events', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
+      delay: 300,
+      empty: false,
       filterMode: 'contains',
+      maxWidth: null,
       moveSelected: 'none',
       multiple: false,
       noSearch: false,
+      placementOpts: null,
+      reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {},
-      reloadSourceOnOpen: false,
-      empty: false,
-      delay: 300,
-      maxWidth: null
+      sourceArguments: {}
     };
     expect(dropdownObj.settings).toEqual(settings);
   });
@@ -55,17 +56,18 @@ describe('Dropdown updates, events', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
+      delay: 2000,
+      empty: false,
       filterMode: 'contains',
+      maxWidth: 1000,
       moveSelected: 'none',
       multiple: false,
       noSearch: false,
+      placementOpts: null,
+      reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {},
-      reloadSourceOnOpen: false,
-      empty: false,
-      delay: 2000,
-      maxWidth: 1000
+      sourceArguments: {}
     };
 
     dropdownObj.updated();
@@ -75,22 +77,23 @@ describe('Dropdown updates, events', () => {
   });
 
   it('Should update set settings via parameters', () => {
+
     const settings = {
       closeOnSelect: true,
       cssClass: null,
+      delay: 2000,
+      empty: false,
       filterMode: 'contains',
+      maxWidth: 1000,
       moveSelected: 'none',
       multiple: false,
       noSearch: false,
+      placementOpts: null,
+      reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {},
-      reloadSourceOnOpen: false,
-      empty: false,
-      delay: 2000,
-      maxWidth: 1000
+      sourceArguments: {}
     };
-
     dropdownObj.updated(settings);
     expect(dropdownObj.settings).toEqual(settings);
   });
