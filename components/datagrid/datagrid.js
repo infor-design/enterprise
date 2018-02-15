@@ -1116,6 +1116,8 @@ Datagrid.prototype = {
       this.settings.filterable = false;
       this.filterRowRendered = false;
       this.element.removeClass('has-filterable-columns');
+
+      this.element.triggerHandler('closefilterrow');
     } else {
       this.settings.filterable = true;
 
@@ -1128,6 +1130,8 @@ Datagrid.prototype = {
       this.headerRow.addClass('is-filterable');
       this.headerRow.find('.is-filterable').addClass('is-filterable');
       this.headerRow.find('.datagrid-filter-wrapper').show();
+
+      this.element.triggerHandler('openfilterrow');
     }
   },
 
@@ -2293,7 +2297,7 @@ Datagrid.prototype = {
               }${isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : ''
               }${self.settings.alternateRowShading && !isEven ? ' alt-shading' : ''
               }${isSummaryRow ? ' datagrid-summary-row' : ''
-              }${!self.settings.cellNavigation ? ' is-clickable' : ''
+              }${!self.settings.cellNavigation && self.settings.selectable !== false ? ' is-clickable' : ''
               }${self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : ''
               }">`;
 
@@ -2850,13 +2854,18 @@ Datagrid.prototype = {
         const cell = $(this);
         const text = cell.text();
         const inner = cell.children('.datagrid-cell-wrapper');
+        const element = $(inner[0]);
+        const clonedEl = element.clone().css({ display: 'inline', width: 'auto', visibility: 'hidden' }).appendTo('body');
 
-        if (cell[0] && inner[0] && (inner[0].offsetWidth) < inner[0].scrollWidth && cell.data('tooltip')) {
+        if (cell[0] && inner[0] && clonedEl.width() > element.width() - 30 && cell.data('tooltip')) {
           const w = inner.width();
           cell.data('tooltip').settings.maxWidth = w;
+
+          clonedEl.remove();
           return text;
         }
 
+        clonedEl.remove();
         return '';
       }
     });
@@ -3599,8 +3608,8 @@ Datagrid.prototype = {
   triggerRowEvent(eventName, e, stopPropagation) {
     const self = this;
     const cell = $(e.target).closest('td').index();
-    const row = self.dataRowIndex($(e.target).closest('tr'));
-    const item = self.settings.dataset[row];
+    const rowIndex = $(e.target).closest('tr');
+    let row = self.dataRowIndex(rowIndex);
 
     if ($(e.target).is('a')) {
       stopPropagation = false;
@@ -3611,7 +3620,18 @@ Datagrid.prototype = {
       e.preventDefault();
     }
 
-    self.element.trigger(eventName, [{ row, cell, item, originalEvent: e }]);
+    if (self.settings.indeterminate) {
+      row = self.actualArrayIndex(rowIndex);
+    }
+
+    const item = self.settings.dataset[row];
+    self.element.trigger(eventName, [{
+      row: self.settings.dataset[row],
+      cell,
+      item,
+      originalEvent: e
+    }]);
+
     return false;
   },
 
@@ -6373,7 +6393,6 @@ Datagrid.prototype = {
 
       const setChildren = function (elem, lev, expanded) {
         const nodes = elem.nextUntil(`[aria-level="${level}"]`);
-        const isFiltered = self.filterExpr && self.filterExpr.length > 0;
 
         if (expanded) {
           nodes.each(function () {
@@ -6383,10 +6402,6 @@ Datagrid.prototype = {
               node.addClass('is-hidden');
             }
           });
-
-          if (isFiltered) {
-            self.element.triggerHandler('closefilterrow');
-          }
         } else {
           nodes.each(function () {
             const node = $(this);
@@ -6403,10 +6418,6 @@ Datagrid.prototype = {
               }
             }
           });
-
-          if (isFiltered) {
-            self.element.triggerHandler('openfilterrow');
-          }
         }
       };
 

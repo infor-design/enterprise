@@ -36,6 +36,8 @@ views/docs/changelog-contents.html
 config.json
 docs/api
 eslint.log
+coverage
+.tmp/
 
 # OS generated files #
 ############

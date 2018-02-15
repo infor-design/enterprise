@@ -162,6 +162,7 @@ $datagrid-short-row-height: 23px;
     td {
       background-color: transparent;
       border-top: 0;
+      box-shadow: none;
 
       .is-readonly {
         background-color: transparent;
@@ -1095,7 +1096,7 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
+    &:not(.error):not(.datagrid-virtual-row-bottom):not(.is-selected):not(.is-rowactivated):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -2790,19 +2791,19 @@ html[dir='rtl'] {
   }
 
   // Right aligned header
-  th .datagrid-column-wrapper.l-right-text {
-    float: left;
-    vertical-align: baseline;
-
+  th .datagrid-column-wrapper {
     .datagrid-header-text {
-      float: left;
+      direction: rtl;
     }
 
-    .sort-indicator {
-      float: right;
-      margin: -20px 1px 0;
-      position: relative;
-      top: 0;
+    &.l-right-text {
+      float: left;
+
+      .datagrid-header-text {
+        float: left;
+        position: relative;
+        top: 11px;
+      }
     }
   }
 
@@ -2811,10 +2812,22 @@ html[dir='rtl'] {
     padding-right: 10px;
   }
 
+  .short-rowheight {
+    .l-right-text .datagrid-header-text {
+      margin-top: -4px !important;
+    }
+  }
+
+  .medium-rowheight {
+    .l-right-text .datagrid-header-text {
+      margin-top: -2px !important;
+    }
+  }
+
   .datagrid-header {
     //Push sort indicator over
     .sort-indicator {
-      margin: 3px 3px 0;
+      margin: auto 3px 0;
     }
 
     .required::after {

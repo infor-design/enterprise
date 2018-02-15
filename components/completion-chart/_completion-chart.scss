@@ -2,7 +2,6 @@
 //==================================================//
 
 .chart-completion-target,
-
 .chart-completion {
   background-color: $chart-progressbar-bg-color;
   height: 10px;
@@ -351,6 +350,15 @@
   .icon-error {
     right: -20px;
     top: -8px;
+  }
+}
+
+// Position the Icon
+.chart-targeted-achievement {
+  .icon-error {
+    margin-right: 8px;
+    right: -1px;
+    top: -2px;
   }
 }
 

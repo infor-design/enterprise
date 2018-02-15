@@ -76,6 +76,9 @@ const PIE_DEFAULTS = {
  */
 function Pie(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PIE_DEFAULTS);
+  if (settings && settings.dataset) {
+    this.settings.dataset = settings.dataset;
+  }
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -705,6 +708,12 @@ Pie.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    if (settings && settings.dataset) {
+      this.settings.dataset = settings.dataset;
+      this.updateData(this.settings.dataset);
+      return this;
+    }
+
     this.element.empty();
 
     return this

@@ -4,12 +4,12 @@
 $hierarchy-padding: 20px;
 $hierarchy-node-height: 75px;
 $hierarchy-node-width: 275px;
-$hierarchy-line-width: 1px;
+$hierarchy-line-width: 1.34px; //Fixes zoom somewhat
 
 // placeholder
 .vertical-line {
-  content: '';
   background: $hierarchy-line-color none repeat scroll 0 0;
+  content: '';
   position: absolute;
   width: $hierarchy-line-width;
   z-index: -1;
@@ -21,10 +21,10 @@ $hierarchy-line-width: 1px;
 
   .branch-collapsed {
     padding-bottom: 20px;
-  }
 
-  .branch-collapsed > ul * {
-    display: none;
+    > ul * {
+      display: none;
+    }
   }
 
   legend {
@@ -47,7 +47,6 @@ $hierarchy-line-width: 1px;
     }
   }
 
-
   // The Centering Container
   .container {
     display: table;
@@ -60,49 +59,58 @@ $hierarchy-line-width: 1px;
     .chart {
       position: relative;
       &.display-for-paging {
-        &:after {
+
+        &::after {
           @extend .vertical-line;
           height: calc(100% - 120px);
           left: 0;
           top: 40px;
         }
+
       }
+
       &.has-back {
-        &:after {
+
+        &::after {
           height: calc(100% - 170px);
           left: 0;
           top: 95px;
         }
+
       }
+
       &.display-for-paging .back  {
         padding-bottom: 20px;
+
         button {
+          background: $azure05;
+          color: $white;
+          display: block;
           margin: 0 auto;
           max-width: 36px;
-          display: block;
-          background: $azure05;
-          color: white;
         }
-        &:after {
+
+        &::after {
           @extend .vertical-line;
+          height: 55px;
           left: 50%;
           top: 0;
-          height: 55px;
         }
       }
 
       &.display-for-paging .root {
-        position: relative;
         overflow: visible;
+        position: relative;
+
         &::after {
-          content:'';
-          position:absolute;
+          content: '';
+          display: block;
+          height: $hierarchy-line-width;
+          left: -25px;
+          position: absolute;
+          top: 50%;
+          width: 50%;
           z-index: -1;
-          width:50%;
-          top:50%;
-          left:-25px;
-          display:block;
-          height: 1px;
         }
       }
 
@@ -117,21 +125,21 @@ $hierarchy-line-width: 1px;
         margin: 0;
 
         + .sub-level::before {
-          left: 20px;
           height: 78px;
+          left: 20px;
         }
 
         + .sub-level > li .leaf::before {
+          border-bottom: $hierarchy-line-width solid $hierarchy-line-color;
+          border-left: $hierarchy-line-width solid $hierarchy-line-color;
           content: '';
           display: block;
           height: 105px;
-          width: 50%;
-          border-left: 1px solid $hierarchy-line-color;
-          border-bottom: 1px solid $hierarchy-line-color;
-          position: absolute;
-          z-index: -1;
-          top: -65px;
           left: -30px;
+          position: absolute;
+          top: -65px;
+          width: 50%;
+          z-index: -1;
         }
       }
 
@@ -141,26 +149,26 @@ $hierarchy-line-width: 1px;
     }
 
     .sub-level > li > ul .leaf::before {
+      border-bottom: $hierarchy-line-width solid $hierarchy-line-color;
+      border-left: $hierarchy-line-width solid $hierarchy-line-color;
       content: '';
       display: block;
       height: 105px;
-      width: 50%;
-      border-left: 1px solid $hierarchy-line-color;
-      border-bottom: 1px solid $hierarchy-line-color;
-      position: absolute;
-      z-index: -1;
-      top: -65px;
       left: -30px;
+      position: absolute;
+      top: -65px;
+      width: 50%;
+      z-index: -1;
     }
 
     .sub-level > li ul {
-      position:relative;
+      position: relative;
     }
 
     .sub-level .sublist::before {
       @extend .vertical-line;
       height: calc(100% - 50px);
-      left:20px;
+      left: 20px;
     }
 
   }
@@ -210,7 +218,7 @@ $hierarchy-line-width: 1px;
     }
 
     &.is-selected {
-      box-shadow: 0 0 0 5px rgba(203, 235, 244, .83);
+      box-shadow: 0 0 0 5px $focus-box-shadow-color;
     }
 
     //Styling for objects in the leafs
@@ -291,8 +299,12 @@ $hierarchy-line-width: 1px;
 
     .btn-expand,
     .btn-collapse {
+      height: 50px;
       left: -12px;
-      top: 17px;
+      min-height: 50px;
+      min-width: 50px;
+      top: 11px;
+      width: 50px;
 
       .icon {
         height: 24px;
@@ -309,9 +321,9 @@ $hierarchy-line-width: 1px;
     //draw a line down
     &::after {
       @extend .vertical-line;
+      bottom: 0;
       height: 50%;
       left: 50%;
-      bottom: 0;
     }
 
     + .sub-level {
@@ -330,9 +342,9 @@ $hierarchy-line-width: 1px;
   //The Second to Top Level - Flows left to right
   .top-level {
     overflow: hidden;
-    text-align: center;
-    position: relative;
     padding: 20px 0;
+    position: relative;
+    text-align: center;
 
     //draw a line down
     &::after {
@@ -340,6 +352,10 @@ $hierarchy-line-width: 1px;
       height: 100%;
       left: 50%;
       top: 0;
+    }
+
+    &.no-sublevel::after {
+      height: calc(100% - 40px);
     }
 
     li {
@@ -360,17 +376,18 @@ $hierarchy-line-width: 1px;
 
     > li .leaf {
       margin: 0 0 20px 40px;
-      position: relative;
       overflow: visible;
+      position: relative;
+
       &::after {
-        content:'';
-        position:absolute;
-        z-index: -1;
         border-top: $hierarchy-line-width solid $hierarchy-line-color;
-        width:50%;
-        top:50%;
-        left:-45px;
-        display:block;
+        content: '';
+        display: block;
+        left: -45px;
+        position: absolute;
+        top: 50%;
+        width: 50%;
+        z-index: -1;
       }
     }
   }
@@ -378,9 +395,9 @@ $hierarchy-line-width: 1px;
   //The Bottom Levels - Flow Down and Up
   .sub-level {
     overflow: hidden;
+    position: relative;
     text-align: center;
     white-space: nowrap;
-    position: relative;
 
     // Top Level Nodes still follow left to right
     > li {
@@ -395,13 +412,13 @@ $hierarchy-line-width: 1px;
         content: '';
         display: inline-block;
         height: 25px;
+        margin-left: 51%;
         width: 55%;
-        margin-left:51%;
       }
 
       &::before {
-        border-left: none;
-        border-right:none;
+        border-left: 0;
+        border-right: 0;
         border-top: $hierarchy-line-width solid $hierarchy-line-color;
         content: '';
         display: inline-block;
@@ -411,21 +428,21 @@ $hierarchy-line-width: 1px;
 
       //Draw Line Up and Left
       &:last-child::before {
+        border-left: 0;
         border-right: $hierarchy-line-width solid $hierarchy-line-color;
         border-top: $hierarchy-line-width solid $hierarchy-line-color;
-        border-left: none;
         content: '';
         display: inline-block;
         height: 25px;
+        margin-left: -51%;
         width: 50%;
-        margin-left: -51%
       }
     }
 
     // Child Nodes - 4th level down
     li ul {
-      padding-left: 45px;
       overflow: hidden;
+      padding-left: 45px;
       padding-right: 5px;
 
       li {
@@ -489,7 +506,7 @@ $hierarchy-line-width: 1px;
     }
 
     .sub-level {
-      margin-left: 0px;
+      margin-left: 0;
     }
 
     //Top level attached to root
@@ -516,7 +533,7 @@ $hierarchy-line-width: 1px;
     //Bottom Nodes
     .sub-level > li {
       display: block;
-      padding: 0px;
+      padding: 0;
     }
 
     .sub-level > li.branch-collapsed {
@@ -525,7 +542,7 @@ $hierarchy-line-width: 1px;
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
   .hierarchy {
     legend {
@@ -638,8 +655,7 @@ html[dir='rtl'] {
       > li {
         //Draw Line Up and Left
         &::before {
-          border-left: none;
-          border-bottom: none;
+          border-bottom: 0;
           border-left: 0 solid $hierarchy-line-color;
           border-right: $hierarchy-line-width solid $hierarchy-line-color;
           margin-left: inherit;
@@ -683,7 +699,7 @@ html[dir='rtl'] {
       .top-level li {
         &::before {
           border-left: 0 solid $hierarchy-line-color;
-          border-right: 1px solid $hierarchy-line-color;
+          border-right: $hierarchy-line-width solid $hierarchy-line-color;
           margin-left: inherit;
           margin-right: -149px;
         }
@@ -693,7 +709,7 @@ html[dir='rtl'] {
       .sub-level > li {
         &::before {
           border-left: 0 solid $hierarchy-line-color;
-          border-right: 1px solid $hierarchy-line-color;
+          border-right: $hierarchy-line-width solid $hierarchy-line-color;
           margin-left: inherit;
           margin-right: -149px;
         }

@@ -1,6 +1,3 @@
-
-/* jshint esversion:6 */
-
 // Other Shared Imports
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
@@ -53,6 +50,9 @@ const BAR_DEFAULTS = {
  */
 function Bar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, BAR_DEFAULTS);
+  if (settings && settings.dataset) {
+    this.settings.dataset = settings.dataset;
+  }
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -711,6 +711,10 @@ Bar.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
+
+    if (settings && settings.dataset) {
+      this.settings.dataset = settings.dataset;
+    }
     this.element.empty();
 
     return this

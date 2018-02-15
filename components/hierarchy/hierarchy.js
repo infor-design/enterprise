@@ -82,7 +82,7 @@ Hierarchy.prototype = {
     const s = this.settings;
 
     // Expand or Collapse
-    self.element.onTouchClick('hierarchy', '.btn').on('click.hierarchy', '.btn', function (e) {
+    self.element.off('click.hierarchy').on('click.hierarchy', '.btn', function (e) {
       if (s.newData.length > 0) {
         s.newData = [];
       }
@@ -168,14 +168,7 @@ Hierarchy.prototype = {
         isSelectedEvent: hierarchy.isSelectedEvent(),
         allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
       };
-      /**
-      * Fires when leaf selected.
-      *
-      * @event selected
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} eventInfo .
-      */
+
       leaf.trigger('selected', eventInfo);
     });
   },
@@ -481,7 +474,7 @@ Hierarchy.prototype = {
       rootNodeHTML.push(leaf);
 
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
-      this.updateState($('.leaf.root'), true);
+      this.updateState($('.leaf.root'), true, data);
     }
 
     function renderSubChildren(self, subArray, thisData) {
@@ -539,6 +532,13 @@ Hierarchy.prototype = {
     const windowWidth = $(window).width();
     const center = (containerWidth - windowWidth) / 2;
     this.element.scrollLeft(center);
+
+    // Add a no-sublevel class if only two levels (to remove extra border)
+    const topLevel = this.element.find('.top-level');
+    if (this.element.find('.sub-level').length === 0 && topLevel.length === 1) {
+      topLevel.addClass('no-sublevel');
+    }
+
     /* eslint-enable no-use-before-define */
   },
 

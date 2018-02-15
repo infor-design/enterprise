@@ -28,6 +28,9 @@ const COMPLETION_CHART_DEFAULTS = {
  */
 function CompletionChart(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPLETION_CHART_DEFAULTS);
+  if (settings && settings.dataset) {
+    this.settings.dataset = settings.dataset;
+  }
   this.element = $(element);
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
@@ -408,6 +411,9 @@ CompletionChart.prototype = {
     const type = settings.type || this.settings.type;
     this.settings = settings;
     this.settings.type = type;
+    if (settings && settings.dataset) {
+      this.settings.dataset = settings.dataset;
+    }
     this.element.empty();
 
     return this

@@ -131,6 +131,7 @@ div.multiselect {
     pointer-events: none;
     -webkit-text-fill-color: $input-disabled-color;
 
+    .icon,
     + .icon {
       background-color: $input-disabled-bg-color;
       cursor: default;

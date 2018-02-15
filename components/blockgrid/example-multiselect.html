@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1 class="section-title">Block Grid multiple Selection</h1>
+    <div class="row blockgrid l-center" id="blockgrid">
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var data = [];
+
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+    data.push({
+      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      maintxt: 'Sheena Taylor',
+      subtxt: 'Infor, SVP'
+    });
+
+    $('#blockgrid').blockgrid({
+      dataset: data,
+      selectable: 'multiple'
+    });
+  });
+
+</script>

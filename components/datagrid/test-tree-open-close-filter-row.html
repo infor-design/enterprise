@@ -66,7 +66,7 @@
         dataset: data,
         treeGrid: true,
         filterable: true,
-        toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+        toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
       }).on('openfilterrow', function() {
         console.log('openfilterrow');
       }).on('closefilterrow', function() {

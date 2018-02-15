@@ -246,7 +246,7 @@ Soho.Locale.addCulture('ar-EG', {
           let hmonth = 1;
           // find the earliest gregorian date in the array that is greater than
           // or equal to the given date
-          // while (ticks > this.yearInfo[++hyear][1]) {}
+          while (ticks > this.yearInfo[++hyear][1]) { } //eslint-disable-line
 
           if (ticks !== this.yearInfo[hyear][1]) {
             hyear--;
@@ -290,7 +290,7 @@ Soho.Locale.addCulture('ar-EG', {
   // Resx - Approved By Translation Team
   messages: {
     AboutText: { id: 'AboutText', value: 'حقوق النشر &copy; {0} Infor. جميع الحقوق محفوظة. تعتبر الكلمات والعلامات المنصوص عليهما بهذه الوثيقة علامات تجارية و/أو علامات تجارية مسجلة لشركة Infor و/أو للشركات التابعة لها والفرعية. جميع الحقوق محفوظة. تعتبر كافة العلامات التجارية المدرجة هنا هي ملكية خاصة بأصحابها.' },
-    Actions: { id: 'Actions', value: 'إجراءات', comment: 'Tooltip text for the action button with additional in context actions' },
+    Actions: { id: 'Actions', value: 'الإجراءات', comment: 'Tooltip text for the action button with additional in context actions' },
     AdditionalItems: { id: 'AdditionalItems', value: 'عناصر إضافية', comment: 'Button tooltip used in a list of movable items' },
     Add: { id: 'Add', value: 'إضافة', comment: 'Add' },
     AddNewTab: { id: 'AddNewTab', value: 'إضافة علامة تبويب جديدة', comment: 'Attached to a button that adds new tabs' },
@@ -332,7 +332,7 @@ Soho.Locale.addCulture('ar-EG', {
     ClearSelection: { id: 'ClearSelection', value: '(مسح التحديد)', comment: 'clear dropdown selection' },
     Clock: { id: 'Clock', value: 'ساعة', comment: 'Clock tooltip' },
     Close: { id: 'Close', value: 'إغلاق', comment: 'Tooltip for a Close Button Action' },
-    Clickable: { id: 'Clickable', value: 'قابل للنقر في المحرر', comment: 'Clickable in editor' },
+    Clickable: { id: 'Clickable', value: 'قابلة للنقر في المحرر', comment: 'Clickable in editor' },
     Copy: { id: 'Copy', value: 'نسخ', comment: 'Copy tooltip' },
     Collapse: { id: 'Collapse', value: 'طي', comment: 'Collapse / close a tree/submenu' },
     CollapseAppTray: { id: 'CollapseAppTray', value: 'طي لوحة التطبيق', comment: 'Collapse App Tray tooltip' },
@@ -342,13 +342,13 @@ Soho.Locale.addCulture('ar-EG', {
     Completed: { id: 'Completed', value: 'مكتمل', comment: 'Text For a Completed Status' },
     Confirm: { id: 'Confirm', value: 'تأكيد', comment: 'Confirm tooltip' },
     ConfirmOnPage: { id: 'ConfirmOnPage', value: 'تأكيد الرسالة/الرسائل الموجودة على الصفحة', comment: 'Confirm message(s) on page n' },
-    CookiesEnabled: { id: 'CookiesEnabled', value: 'ملفات تعريف الارتباط ممكّنة', comment: 'Returns if browser cookies are enabled or not.' },
+    CookiesEnabled: { id: 'CookiesEnabled', value: 'ملفات تعريف الارتباط الممكّنة', comment: 'Returns if browser cookies are enabled or not.' },
     Contains: { id: 'Contains', value: 'يحتوي على', comment: 'Contains in icons for filtering' },
     CssClass: { id: 'CssClass', value: 'فئة Css', comment: 'Label for entering a Css Class name' },
     Cut: { id: 'Cut', value: 'قص', comment: 'Cut tooltip' },
     Date: { id: 'Date', value: 'التاريخ', comment: 'Describes filtering by a date data type' },
-    DaysOverdue: { id: 'DaysOverdue', value: '{0} يوم/أيام تأخير', comment: 'For a task /date UI' },
-    DaysRemaining: { id: 'DaysRemaining', value: 'باق {0} يوم/أيام', comment: 'For a task /date UI' },
+    DaysOverdue: { id: 'DaysOverdue', value: 'متأخر بـ {0} يوم/أيام', comment: 'For a task /date UI' },
+    DaysRemaining: { id: 'DaysRemaining', value: 'الأيام المتبقية {0}', comment: 'For a task /date UI' },
     Delete: { id: 'Delete', value: 'حذف', comment: 'Delete Toolbar Action Tooltip' },
     DistributeHoriz: { id: 'DistributeHoriz', value: 'توزيع أفقي', comment: 'Icon button tooltip for action that distributes elements across Horizontally' },
     Document: { id: 'Document', value: 'مستند', comment: 'Document tooltip' },
@@ -370,7 +370,7 @@ Soho.Locale.addCulture('ar-EG', {
     ErrorAllowedTypes: { id: 'ErrorAllowedTypes', value: 'لا يُسمح بنوع الملف', comment: 'Error string for file-upload' },
     ErrorMaxFileSize: { id: 'ErrorMaxFileSize', value: 'تم تجاوز حد حجم الملف', comment: 'Error string for file-upload' },
     ErrorMaxFilesInProcess: { id: 'ErrorMaxFilesInProcess', value: 'تم تجاوز الحد الأقصى لعدد الملفات المسموح به', comment: 'Error string for file-upload' },
-    ErrorOnPage: { id: 'ErrorOnPage', value: 'رسالة/رسائل الخطأ موجودة على الصفحة', comment: 'Error message(s) on page n' },
+    ErrorOnPage: { id: 'ErrorOnPage', value: 'توجد رسالة/رسائل خطأ على الصفحة', comment: 'Error message(s) on page n' },
     EmailValidation: { id: 'EmailValidation', value: 'عنوان البريد الإلكتروني غير صحيح', comment: 'This the rule for email validation' },
     Emerald: { id: 'Emerald', value: 'زمردي', comment: 'Color in our color pallette' },
     Expand: { id: 'Expand', value: 'توسيع', comment: 'Expand open a tree/submenu' },
@@ -406,7 +406,7 @@ Soho.Locale.addCulture('ar-EG', {
     Image: { id: 'Image', value: 'الصورة', comment: 'Image of something' },
     Import: { id: 'Import', value: 'استيراد', comment: 'Import tooltip' },
     Info: { id: 'Info', value: 'معلومات', comment: 'Info tooltip' },
-    InfoOnPage: { id: 'InfoOnPage', value: 'Information message(s) on page', comment: 'Information message(s) on page n' },
+    InfoOnPage: { id: 'InfoOnPage', value: 'رسالة/رسائل المعلومات موجودة على الصفحة', comment: 'Information message(s) on page n' },
     InProgress: { id: 'In Progress', value: 'قيد التنفيذ', comment: 'Info tooltip that an action is in progress' },
     Insert: { id: 'Insert', value: 'إدراج', comment: 'Insert Modal Dialog Button' },
     InsertAnchor: { id: 'InsertAnchor', value: 'إدراج ارتساء', comment: 'Insert Acnhor (link) in an editor' },
@@ -448,7 +448,7 @@ Soho.Locale.addCulture('ar-EG', {
     Minimize: { id: 'Minimize', value: 'تصغير', comment: 'Minimize tooltip' },
     Minus: { id: 'Minus', value: 'ناقص', comment: 'Minus tooltip' },
     Mobile: { id: 'Mobile', value: 'الهاتف المتحرك', comment: 'Indicates a mobile device (phone tablet ect)' },
-    Month: { id: 'Month', value: 'الشهر', comment: 'As in a date month' },
+    Month: { id: 'Month', value: 'شهر', comment: 'As in a date month' },
     More: { id: 'More', value: 'المزيد...', comment: 'Text Indicating More Buttons or form content' },
     MoreActions: { id: 'MoreActions', value: 'إجراءات إضافية', comment: 'Text on the More Actions button indictating hidden functions' },
     MoveToLeft: { id: 'MoveToLeft', value: 'تحريك لليسار', comment: 'Button tooltip used in a list of movable items' },
@@ -460,6 +460,9 @@ Soho.Locale.addCulture('ar-EG', {
     NextPage: { id: 'NextPage', value: 'الصفحة التالية', comment: 'Next on Pager' },
     NextMonth: { id: 'NextMonth', value: 'الشهر التالي', comment: 'the label for the button that moves calendar to next/prev' },
     No: { id: 'No', value: 'لا', comment: 'On a dialog button' },
+    NoData: { id: 'NoData', value: 'لا توجد بيانات متوفرة', comment: 'Shown when there is no rows shown in a list' },
+    NoDataFilter: { id: 'NoDataFilter', value: 'لا توجد بيانات متوفرة، يمكنك إجراء تحديد عامل تصفية جديد لمشاهدة المزيد من النتائج.', comment: 'Shown when there is no rows shown in a list' },
+    NoDataList: { id: 'NoDataList', value: 'لا توجد بيانات متوفرة، قم بإجراء تحديد من القائمة أعلاه لمشاهدة المزيد من النتائج.', comment: 'Shown when there is no rows shown in a list' },
     NoResults: { id: 'NoResults', value: 'لا توجد نتائج', comment: 'Search Results Text' },
     Normal: { id: 'Normal', value: 'عادي', comment: 'Normal row height' },
     Notes: { id: 'Notes', value: 'ملاحظات', comment: 'Notes icon tooltip' },
@@ -473,7 +476,7 @@ Soho.Locale.addCulture('ar-EG', {
     PageOf: { id: 'PageOf', value: 'صفحة {0} من {1}', comment: 'Pager Text Showing current and number of pages' },
     PageOn: { id: 'PageOn', value: 'أنت موجود حالياً بالصفحة ', comment: 'Text on the pager links' },
     Paste: { id: 'Paste', value: 'لصق', comment: 'Paste icon tooltip' },
-    PasswordValidation: { id: 'PasswordValidation', value: 'يجب أن تتكون <strong>كلمة المرور</strong> <br>من 10 أحرف على الأقل<br>وتضم حرف كبير واحد على الأقل<br>وحرف صغير واحد على الأقل<br>وتضم حرف واحد خاص<br>ولا تحتوي على اسم المستخدم<br>ولا يمكن أن تكون كلمة مرور مستخدمة من قبل<br>', comment: 'Password validation requirements' },
+    PasswordValidation: { id: 'PasswordValidation', value: 'يجب أن يكون طول <strong>كلمة المرور</strong> <br>لا يقل عن 10 أحرف<br>وتحتوي على حرف واحد كبير على الأقل<br>وتحتوي على حرف واحد صغير على الأقل<br>وتحتوي على حرف واحد خاص<br>ولا تحتوي على اسم المستخدم الخاص بك<br>ولا يمكن أن تكون كلمة مرور مستخدمة مسبقاً<br>', comment: 'Password validation requirements' },
     PasswordConfirmValidation: { id: 'PasswordConfirmValidation', value: 'يجب أن تتطابق كلمات المرور', comment: 'Password Confirm validation' },
     Peak: { id: 'Peak', value: 'ذروة', comment: 'the max or peak value in a chart' },
     PersonalizeColumns: { id: 'PersonalizeColumns', value: 'تخصيص الأعمدة', comment: 'Customize Columns in a Grid' },
@@ -528,7 +531,7 @@ Soho.Locale.addCulture('ar-EG', {
     SliderMinimumHandle: { id: 'SliderMinimumHandle', value: 'الحد الأدنى لمؤشر لـ', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control' },
     SkipToMain: { id: 'SkipToMain', value: 'التخطي إلى المحتوى الأساسي', comment: 'Skip link in header, jumps when clicked on to main area' },
     StartsWith: { id: 'StartsWith', value: 'يبدأ بـ', comment: 'for condition filtering' },
-    StepsCompleted: { id: 'StepsCompleted', value: 'اكتمل {0} من {1} خطوة/خطوات', comment: 'steps of a wizard/chart' },
+    StepsCompleted: { id: 'StepsCompleted', value: 'تم إكمال الخطوة {0} من {1}', comment: 'steps of a wizard/chart' },
     StrikeThrough: { id: 'StrikeThrough', value: 'يتوسطه خط', comment: 'turn on and off strike through text in text editor (like word)' },
     SortAtoZ: { id: 'SortAtoZ', value: 'فرز تصاعدي', comment: 'Sort A to Z in icons for filtering' },
     SortZtoA: { id: 'SortZtoA', value: 'فرز تنازلي', comment: 'Sort Z to A in icons for filtering' },
@@ -540,10 +543,10 @@ Soho.Locale.addCulture('ar-EG', {
     Tack: { id: 'Tack', value: 'تثبيت', comment: 'Pin an object' },
     Tall: { id: 'Tall', value: 'طويل', comment: 'Describes a Taller Row Height in a grid/list' },
     Target: { id: 'Target', value: 'الهدف', comment: 'Label for an input to enter a Target (Url Attribute)' },
-    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'اختبار الإعدادات المحلية الافتراضية', comment: 'Do not translate' },
+    TestLocaleDefaults: { id: 'TestLocaleDefaults', value: 'اختبار الإعدادات الافتراضية المحلية', comment: 'Do not translate' },
     TextColor: { id: 'TextColor', value: 'لون النص', comment: 'add or edit text color in the editor' },
-    TextDropArea: { id: 'DropArea', value: 'سحب الملفات وإفلاتها للتحميل', comment: 'text for drop area for advanced fileupload' },
-    TextDropAreaWithBrowse: { id: 'TextDropAreaWithBrowse', value: 'سحب وإفلات أو <span class="hyperlink">تحديد الملفات</span> لتحميلها', comment: 'text for drop area with browse for advanced fileupload' },
+    TextDropArea: { id: 'DropArea', value: 'سحب وإفلات الملفات المراد تحميلها', comment: 'text for drop area for advanced fileupload' },
+    TextDropAreaWithBrowse: { id: 'TextDropAreaWithBrowse', value: 'سحب وإفلات أو <span class="hyperlink">Select Files</span> لإجراء التحميل', comment: 'text for drop area with browse for advanced fileupload' },
     TextBtnCancel: { id: 'TextBtnCancel', value: 'إلغاء تحميل هذا الملف', comment: 'text for cancel button for advanced fileupload' },
     TextBtnCloseError: { id: 'TextBtnCloseError', value: 'إغلاق هذا الخطأ', comment: 'text for error close button for advanced fileupload' },
     TextBtnRemove: { id: 'TextBtnRemove', value: 'إغلاق هذا الخطأ', comment: 'text for remove button for advanced fileupload' },
@@ -577,7 +580,7 @@ Soho.Locale.addCulture('ar-EG', {
     VerticalMiddleAlign: { id: 'VerticalMiddleAlign', value: 'محاذاة عمودية إلى الوسط', comment: 'Vertical Align tooltip' },
     ViewSource: { id: 'ViewSource', value: 'عرض المصدر', comment: 'Toggle the source view in the editor' },
     ViewVisual: { id: 'ViewVisual', value: 'طريقة عرض مرئية', comment: 'Toggle the visual view in the editor' },
-    Year: { id: 'Year', value: 'السنة', comment: 'As in a date year' },
+    Year: { id: 'Year', value: 'سنة', comment: 'As in a date year' },
     Yes: { id: 'Yes', value: 'نعم', comment: 'On a dialog button' }
   }
 });

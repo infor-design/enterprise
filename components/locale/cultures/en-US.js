@@ -149,6 +149,7 @@ Soho.Locale.addCulture('en-US', {
     ExportToExcel: { id: 'ExportToExcel', value: 'Export To Excel', comment: 'Export To Excel menu option in datagrid' },
     Favorite: { id: 'Favorite', value: 'Favorite', comment: 'A favorite item' },
     FileUpload: { id: 'FileUpload', value: 'File Upload. Press Enter to Browse for a file', comment: 'Screen Reader instructions' },
+    FieldFilter: { id: 'FieldFilter', value: 'Field Filter', comment: 'Used for Field Filter' },
     Filter: { id: 'Filter', value: 'Filter', comment: 'Filter tooltip' },
     FirstPage: { id: 'FirstPage', value: 'First Page', comment: 'First Page tooltip' },
     Folder: { id: 'Folder', value: 'Folder', comment: 'Folder tooltip' },
