@@ -22,7 +22,10 @@
     -   [activateItem](#activateitem)
     -   [activatedItem](#activateditem)
     -   [deactivateItem](#deactivateitem)
+    -   [getSelected](#getselected)
     -   [updated](#updated)
+    -   [disable](#disable)
+    -   [enable](#enable)
     -   [teardown](#teardown)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
@@ -229,6 +232,11 @@ Set item to deactivated, uand fire an event.
 
 Returns **void** 
 
+### getSelected
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the currently selected ListView item, or an empty jQuery selector
+ if there are currently no items selected.
+
 ### updated
 
 Refresh the list with any optioned options that might have been set.
@@ -238,6 +246,18 @@ Refresh the list with any optioned options that might have been set.
 -   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
 
 Returns **this** component instance
+
+### disable
+
+Disables the functionality of a ListView.
+
+Returns **void** 
+
+### enable
+
+Enables the functionality of a ListView.
+
+Returns **void** 
 
 ### teardown
 

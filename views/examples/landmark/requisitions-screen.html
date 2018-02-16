@@ -60,11 +60,17 @@
           </div>
 
           <!-- begin overview tab -->
-          <section id="workflow" class="tab-panel list-detail two-column fixed" data-options='{ "listElement": "#workflow-accordion", "detailElement": "#workflow-content-area", "backElement": "#detail-area-back-button", "edgeBleed": true, "edgeBleedBreakpoint": "tablet" }'>
+          <section id="workflow" class="tab-panel list-detail two-column fixed" data-options='{ "listElement": "#workflow-accordion", "detailElement": "#workflow-content-area", "backElement": "#detail-area-back-button", "listCloseElement": "#workflow-close-button", "edgeBleed": true, "edgeBleedBreakpoint": "tablet" }'>
             <aside class="sidebar">
               <div class="sidebar-content scrollable-flex">
                 <div class="scrollable-flex-header panel-header card-header">
                   <h2 class="card-title">Workflow Steps</h2>
+                  <button id="workflow-close-button" class="btn-icon btn-close list-detail-list-close-button">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                      <use xlink:href="#icon-close"></use>
+                    </svg>
+                    <span class="audible">Close Workflow</span>
+                  </button>
                 </div>
                 <div class="scrollable-flex-content">
 

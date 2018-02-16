@@ -149,11 +149,14 @@
 
   .card-header {
     height: auto;
-    padding: 2px 0 2px 20px;
+    padding: 2px 15px 2px 20px;
 
     > * {
-      display: inline-block;
       vertical-align: middle;
+    }
+
+    .list-detail-list-close-button {
+      display: none;
     }
 
     h2 {
@@ -165,10 +168,6 @@
     }
   }
 
-  .list-detail-back-button {
-    display: inline-block;
-  }
-
   &.bleeding-edge {
     .list-detail-back-button {
       opacity: 1;
@@ -177,8 +176,8 @@
 
 }
 
-.list-detail-back-button {
-  @include transition(opacity 200ms cubic-bezier(.17, .04, .03, .94));
+.list-detail-back-button,
+.list-detail-list-close-button {
   display: none;
 }
 
@@ -193,8 +192,15 @@ html[dir='rtl'] {
 
 // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
 @include respond-to(phone) {
-  .list-detail-back-button {
+  .list-detail-back-button,
+  .list-detail-list-close-button {
     display: inline-block;
+  }
+
+  .card-header {
+    .list-detail-list-close-button {
+      display: inline-block;
+    }
   }
 
   .list-detail {
@@ -275,6 +281,17 @@ html[dir='rtl'] {
   .list-detail.bleeding-edge__tablet {
     overflow: hidden;
 
+    .card-header {
+      .list-detail-list-close-button {
+        display: inline-block;
+      }
+    }
+
+    .list-detail-back-button,
+    .list-detail-list-close-button {
+      display: inline-block;
+    }
+
     > .main,
     > .sidebar {
       @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
@@ -305,10 +322,6 @@ html[dir='rtl'] {
       > .sidebar {
         @include css3(transform, translateX(-100%));
         box-shadow: 0 0 0 1px $box-shadow-off-color;
-      }
-
-      .list-detail-back-button {
-        opacity: 1;
       }
     }
   }

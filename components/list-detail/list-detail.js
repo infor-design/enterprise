@@ -22,14 +22,16 @@ const LIST_DETAIL_EDGE_BLEED_BREAKPOINTS = [
  * @namespace
  * @property {HTMLElement} [backElement] defines a trigger button that will be used
  *  to "drill up" from the detail back to the list on the responsive view of this pattern.
- * @property {boolean} edgeBleed if true, will show an interactive edge of the "list" element while
- *  the detail view is active.  Clicking the left edge (or a button in the left edge) will cause
- *  the "drillup" operation to occur while making the list active.
- * @property {string} edgeBleedBreakpoint Defines the breakpoint where the responsive
+ * @property {boolean} [edgeBleed] if true, will show an interactive edge of the "list" element
+ *  while the detail view is active.  Clicking the left edge (or a button in the left edge) will
+ *  cause the "drillup" operation to occur while making the list active.
+ * @property {string} [edgeBleedBreakpoint] Defines the breakpoint where the responsive
  *  "edge bleeding" style will occur.
- * @property {HTMLElement} [listElement] the base element for the Soho component that will
+ * @property {HTMLElement} listElement the base element for the Soho component that will
  *  be used as the "List" to be chosen from.  Must implement a Soho Accordion or Listview element.
- * @property {HTMLElement} [detailElement] the base element for the Soho component that will
+ * @property {HTMLElement} [listCloseElement]  defines a trigger button element that can be used
+ *  to collapse a bleeding-edge list drawer.
+ * @property {HTMLElement} detailElement the base element for the Soho component that will
  *  be used as "detail" or content area that can change based on what is picked from the list.
  */
 const LIST_DETAIL_DEFAULTS = {
@@ -37,6 +39,7 @@ const LIST_DETAIL_DEFAULTS = {
   edgeBleed: false,
   edgeBleedBreakpoint: LIST_DETAIL_EDGE_BLEED_BREAKPOINTS[0],
   listElement: undefined,
+  listCloseElement: undefined,
   detailElement: undefined
 };
 
@@ -104,6 +107,7 @@ ListDetail.prototype = {
     this.setInternalElementReference('listElement', elemType => isValidList(this.settings[elemType]));
     this.setInternalElementReference('detailElement');
     this.setInternalElementReference('backElement');
+    this.setInternalElementReference('listCloseElement');
 
     // Single sanity-check for showing the detail area.
     this.showDetail = false;
@@ -217,6 +221,10 @@ ListDetail.prototype = {
       this.backElement.addEventListener('click', this.handleBackClick.bind(this));
     }
 
+    if (this.listCloseElement) {
+      this.listCloseElement.addEventListener('click', this.handleClose.bind(this));
+    }
+
     // Run certain responsive checks on page resize
     $('body').on(`resize.${COMPONENT_NAME}`, () => {
       this.handleResize();
@@ -327,6 +335,20 @@ ListDetail.prototype = {
   },
 
   /**
+   * Handler for the listCloseElement's `click` event.
+   * @returns {void}
+   */
+  handleClose() {
+    if (this.showDetail) {
+      return;
+    }
+
+    // `selected` may be undefined here
+    const selected = this.getCurrentSelectedListItem();
+    this.drilldown(selected);
+  },
+
+  /**
    * Event handler for `body.on('resize')`. Runs whenever the page is resized.
    * @returns {void}
    */
@@ -423,6 +445,10 @@ ListDetail.prototype = {
 
     if (this.backElement) {
       this.backElement.removeEventListener('click', this.handleBackClick.bind(this));
+    }
+
+    if (this.listCloseElement) {
+      this.listCloseElement.removeEventListener('click', this.handleClose.bind(this));
     }
 
     if (this.listComponentType) {
