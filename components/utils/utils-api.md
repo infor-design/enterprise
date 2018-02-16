@@ -2,78 +2,39 @@
 
 ### Table of Contents
 
--   -   [bindFirst](#bindfirst)
--   [SOHO Utils](#soho-utils)
-    -   [bindFirst](#bindfirst-1)
-    -   [uniqueId](#uniqueid)
-    -   [cssPropSupport](#csspropsupport)
-    -   [transitionEndName](#transitionendname)
-    -   [onTouchClick](#ontouchclick)
-    -   [offTouchClick](#offtouchclick)
-    -   [listEvents](#listevents)
-    -   [parseOptions](#parseoptions)
-    -   [timer](#timer)
-    -   [clearable](#clearable)
-    -   [getHiddenSize](#gethiddensize)
-    -   [hideFocus](#hidefocus)
-    -   [smoothScroll](#smoothscroll)
-    -   [isHiddenAtBreakpoint](#ishiddenatbreakpoint)
-    -   [$](#)
-        -   [copyToClipboard](#copytoclipboard)
-        -   [escapeHTML](#escapehtml)
-        -   [sanitizeHTML](#sanitizehtml)
-        -   [actualChar](#actualchar)
-    -   [uniqueIdCount](#uniqueidcount)
-    -   [focusable](#focusable)
-    -   [extend](#extend)
-    -   [parseSettings](#parsesettings)
-    -   [parseOptions](#parseoptions-1)
-    -   [actualChar](#actualchar-1)
-    -   [equals](#equals)
-    -   [extend](#extend-1)
-    -   [fixSVGIcons](#fixsvgicons)
-    -   [getViewportSize](#getviewportsize)
-    -   [getContainerScrollDistance](#getcontainerscrolldistance)
-    -   [getHiddenSize](#gethiddensize-1)
-    -   [isString](#isstring)
-    -   [isNumber](#isnumber)
-    -   [safeSetSelection](#safesetselection)
-    -   [mergeSettings](#mergesettings)
-    -   [getAttributes](#getattributes)
-    -   [classNameExists](#classnameexists)
-    -   [classNameHas](#classnamehas)
-    -   [hasClass](#hasclass)
-    -   [addClass](#addclass)
-    -   [isElement](#iselement)
-    -   [getDimensions](#getdimensions)
-    -   [convertDelayToFPS](#convertdelaytofps)
-    -   [convertFPSToDelay](#convertfpstodelay)
-    -   [HideFocus](#hidefocus-1)
-    -   [smoothScrollTo](#smoothscrollto)
-    -   [defer](#defer)
-    -   [Environment](#environment)
-        -   [set](#set)
-        -   [addBrowserClasses](#addbrowserclasses)
-        -   [addGlobalResize](#addglobalresize)
-        -   [pasteEvent](#pasteevent)
-    -   [set](#set-1)
-    -   [current](#current)
-    -   [isAbove](#isabove)
-    -   [isBelow](#isbelow)
-    -   [compare](#compare)
-    -   [isHidden](#ishidden)
-    -   [debounce](#debounce)
-
-## bindFirst
-
-============================================
-
-# SOHO Utils
-
-**Parameters**
-
--   `name`  
--   `fn`  
+-   [bindFirst](#bindfirst)
+-   [uniqueId](#uniqueid)
+-   [cssPropSupport](#csspropsupport)
+-   [transitionEndName](#transitionendname)
+-   [listEvents](#listevents)
+-   [parseOptions](#parseoptions)
+-   [timer](#timer)
+-   [clearable](#clearable)
+-   [getHiddenSize](#gethiddensize)
+-   [copyToClipboard](#copytoclipboard)
+-   [escapeHTML](#escapehtml)
+-   [unescapeHTML](#unescapehtml)
+-   [sanitizeHTML](#sanitizehtml)
+-   [actualChar](#actualchar)
+-   [uniqueIdCount](#uniqueidcount)
+-   [focusable](#focusable)
+-   [parseSettings](#parsesettings)
+-   [parseOptions](#parseoptions-1)
+-   [actualChar](#actualchar-1)
+-   [equals](#equals)
+-   [extend](#extend)
+-   [fixSVGIcons](#fixsvgicons)
+-   [getViewportSize](#getviewportsize)
+-   [getContainerScrollDistance](#getcontainerscrolldistance)
+-   [getHiddenSize](#gethiddensize-1)
+-   [isString](#isstring)
+-   [isNumber](#isnumber)
+-   [safeSetSelection](#safesetselection)
+-   [mergeSettings](#mergesettings)
+-   [isHTML](#ishtml)
+-   [convertToHTMLElement](#converttohtmlelement)
+-   [convertDelayToFPS](#convertdelaytofps)
+-   [convertFPSToDelay](#convertfpstodelay)
 
 ## bindFirst
 
@@ -82,57 +43,49 @@ Events invoked by other plugins <http://stackoverflow.com/questions/2360655>
 
 **Parameters**
 
--   `name`  
--   `fn`  
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the event name
+-   `fn` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** callback function that will be called during the supplied event name
+
+Returns **void** 
 
 ## uniqueId
 
+Generates a unique ID for an element based on the element's configuration, any
+Soho components that are generated against it, and provided prefixes/suffixes.
+
 **Parameters**
 
--   `className`  
--   `prefix`  
--   `suffix`  
+-   `className` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** CSS classname (will be interpreted automatically
+     if it's not provided)
+-   `prefix` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** optional prefix
+-   `suffix` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** optional suffix
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the compiled uniqueID
 
 ## cssPropSupport
 
-Check for CSS Property Support in a cross browser way
+Detect whether or not a text string represents a valid CSS property.  This check
+includes an attempt at checking for vendor-prefixed versions of the CSS property
+provided.
 
 **Parameters**
 
--   `prop` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `prop` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** a possible CSS property
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** If the property exists, it will be returned in string format.
+ If the property doesn't exist, a null result is returned.
 
 ## transitionEndName
 
 Returns the name of the TransitionEnd event.
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## onTouchClick
-
-Custom Touch Event Handler that simply passes Touch Event Handlers onto a Click Event Handler.
-Used for avoiding the 300ms wait time that click events have in most mobile environments
-if 'one' is defined, it only listens once.
-
-**Parameters**
-
--   `eventNamespace`  
--   `filter`  
--   `one`  
-
-## offTouchClick
-
-Reverses the .onTouchClick() method and turns off a matching event listener.
-
-**Parameters**
-
--   `eventNamespace`  
--   `filter`  
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** a (possibly) vendor-adjusted CSS transition property name.
 
 ## listEvents
 
 Returns a key/value list of currently attached event listeners
+
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** containing list of event names as keys, and event listener functions as values.
 
 ## parseOptions
 
@@ -140,11 +93,10 @@ jQuery Behavior Wrapper for `utils.parseOptions`.
 
 **Parameters**
 
--   `element`  
--   `attr`  
--   `attrName` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** the element whose options are being parsed
+-   `attr` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** an optional alternate attribute name to use when obtaining settings
 
-Returns **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** 
+Returns **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** an object representation of parsed settings.
 
 **Meta**
 
@@ -153,15 +105,18 @@ Returns **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ## timer
 
-Timer - can be use for play/pause or stop for given time
-use as new instance [ var timer = new $.fn.timer(function() {}, 6000); ]
-then can be listen events as [ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]
+Timer - can be used for play/pause or stop for given time.
+Use as new instance [ var timer = new $.fn.timer(function() {}, 6000); ]
+then can be listen events as:
+[ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]
 or can access as [ timer.cancel(); -or- timer.pause(); -or- timer.resume(); ]
 
 **Parameters**
 
--   `callback`  
--   `delay`  
+-   `callback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** method that will run on each timer update
+-   `delay` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** amount of time between timer ticks
+
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** containing methods that can be run on the timer
 
 ## clearable
 
@@ -175,36 +130,9 @@ Binds the Soho Util _getHiddenSize()_ to a jQuery selector
 
 -   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** hidden size
 
-## hideFocus
-
-jQuery component wrapper for the HideFocus behavior
-
-## smoothScroll
-
-Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
-
-**Parameters**
-
--   `target` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance to scroll the element
--   `duration` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
-
-Returns **$.Deferred** 
-
-## isHiddenAtBreakpoint
-
-jQuery wrapper for `Soho.breakpoints.isHidden()`
-NOTE: if a jQuery selector with multiple elements is passed to this function, it will only operate on the first one.
-This method is NOT chainable.
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-## $
-
-Bind the smartResize method to $.fn()
-
-### copyToClipboard
+## copyToClipboard
 
 Copies a string to the clipboard. Must be called from within an event handler such as click.
 May return false if it failed, but this is not always
@@ -215,47 +143,67 @@ shown the first time the clipboard is used (per session).
 
 **Parameters**
 
--   `text`  
+-   `text` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** incoming text content
 
-### escapeHTML
+Returns **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean))** copied text, or a false result if there was an error
 
-Functions For Sanitising and Escaping Html
+## escapeHTML
+
+Escapes HTML, replacing special characters with encoded symbols.
 
 **Parameters**
 
--   `value`  
+-   `value` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** HTML in string form
 
-### sanitizeHTML
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the modified value
+
+## unescapeHTML
+
+Un-escapes HTML, replacing encoded symbols with special characters.
+
+**Parameters**
+
+-   `value` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** HTML in string form
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the modified value
+
+## sanitizeHTML
 
 Remove Script tags and all onXXX functions
 
 **Parameters**
 
--   `html`  
+-   `html` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** HTML in string form
 
-### actualChar
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the modified value
+
+## actualChar
+
+Get the actualy typed key from the event.
 
 **Parameters**
 
--   `e`  
+-   `e` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The event to check for the key.
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The actual key typed.
 
 ## uniqueIdCount
 
-`uniqueIdCount`
+uniqueIdCount is a baseline unique number that will be used when generating
+uniqueIds for elements and components.
 
 ## focusable
 
 From jQueryUI Core: <https://github.com/jquery/jquery-ui/blob/24756a978a977d7abbef5e5bce403837a01d964f/ui/jquery.ui.core.js#L93>
 Adapted from:  <http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus>
-Adds the ':focusable' selector to Sizzle to allow for the selection of elements that can currently be focused.
+Adds the ':focusable' selector to Sizzle to allow for the selection of elements
+that can currently be focused.
 
 **Parameters**
 
--   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** 
+-   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** the element being checked
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-## extend
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the element is focusable.
 
 ## parseSettings
 
@@ -264,15 +212,19 @@ and interprets it into options.
 
 **Parameters**
 
--   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** 
--   `attr` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+-   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** the element whose settings are being interpreted
+-   `attr` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** optional different attribute to parse for settings
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** a list of interpreted settings for this element
 
 ## parseOptions
 
 Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
-TODO: Remove in 4.4.1 ?
+
+**Meta**
+
+-   **deprecated**: TODO: Remove in 4.4.1 ?
+
 
 ## actualChar
 
@@ -281,16 +233,20 @@ character key was pressed.
 
 **Parameters**
 
--   `e`  
+-   `e` **jQuery.Event** jQuery-wrapped `keypress` event
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** text tcharacter
 
 ## equals
 
-Truthy equals
+Equate two values quickly in a truthy fashion
 
 **Parameters**
 
--   `a`  
--   `b`  
+-   `a` **any** first value
+-   `b` **any** second value
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether the two items compare in a truthy fashion.
 
 ## extend
 
@@ -305,37 +261,40 @@ The action of changing the xlink:href attribute to something else and back will 
 
 **Parameters**
 
--   `rootElement`  
+-   `rootElement` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** the base element
 
-Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+Returns **void** 
 
 ## getViewportSize
 
 Gets the current size of the viewport
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** width/height of the viewport
 
 ## getContainerScrollDistance
 
-Gets the various scrollable containers that an element is nested inside of, and returns their scrollHeight and scrollLeft values.
+Gets the various scrollable containers that an element is nested inside of, and returns
+ their scrollHeight and scrollLeft values.
 
 **Parameters**
 
--   `element`  
+-   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** the base element to check for containment
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** containing references to the container element and its top/left
 
 ## getHiddenSize
 
-Takes an element that is currently hidden by some means (FX: "display: none;") and gets its potential dimensions by checking a clone of the element that is NOT hidden.
+Takes an element that is currently hidden by some means (FX: "display: none;")
+ and gets its potential dimensions by checking a clone of the element that is NOT hidden.
 
 **Parameters**
 
 -   `el` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
 -   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
--   `parentElement` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
+-   `parentElement` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this
+     hidden element will be attached. (optional, default `undefined`)
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** containing various width/height properties of the element provided.
 
 ## isString
 
@@ -343,9 +302,9 @@ Checks if a specific input is a String
 
 **Parameters**
 
--   `value` **?** 
+-   `value` **any** an object of unknown type to check
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not a specific input is a String
 
 ## isNumber
 
@@ -353,9 +312,9 @@ Checks if a specific input is a Number
 
 **Parameters**
 
--   `value` **?** 
+-   `value` **any** an object of unknown type to check
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not a specific input is a Number
 
 ## safeSetSelection
 
@@ -365,9 +324,9 @@ cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
 
 **Parameters**
 
--   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** 
--   `startPos` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `endPos` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** the element to get selection
+-   `startPos` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** starting position of the text caret
+-   `endPos` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** ending position of the text caret
 
 ## mergeSettings
 
@@ -376,197 +335,52 @@ whose intention is to be set as options on a Soho component.
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
--   `incomingOptions` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** 
--   `defaultOptions` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))?** 
+-   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)?** the element to process for inline-settings
+-   `incomingOptions` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** desired settings
+-   `defaultOptions` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))?** optional base settings
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** processed settings
 
-## getAttributes
+## isHTML
 
-Returns an array containing an element's attributes.
-
-**Parameters**
-
--   `element`  
-
-## classNameExists
-
-Adding, removing, and testing for classes
+Test if a string is Html or not
 
 **Parameters**
 
--   `element`  
+-   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The string to test.
 
-## classNameHas
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if it is html.
 
-**Parameters**
+## convertToHTMLElement
 
--   `classNameString`  
--   `targetContents`  
-
-## hasClass
-
-**Parameters**
-
--   `el`  
--   `className`  
-
-## addClass
+Converts an element wrapped in a jQuery collection down to its original HTMLElement reference.
+If an HTMLElement is passed in, simply returns it.
+If anything besides HTMLElements or jQuery\[] is passed in, returns undefined;
 
 **Parameters**
 
--   `el`  
--   `className`  
+-   `item` **any** the item being evaluated
 
-## isElement
-
-Checks if an element is valid
-
-**Parameters**
-
--   `el` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being checked
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** represents all values normally contained by a DOMRect or ClientRect
-
-## getDimensions
-
-Runs the generic _getBoundingClientRect()_ method on an element, but returns its results
-as a plain object instead of a ClientRect
-
-**Parameters**
-
--   `el` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated
-
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
+Returns **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** the unwrapped item, or nothing.
 
 ## convertDelayToFPS
 
-Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second
+(FPS) numeric values.
 
 **Parameters**
 
--   `delay` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `delay` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** CPU Ticks
 
-Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Frames Per Second
 
 ## convertFPSToDelay
 
-Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second (FPS) numeric values.
+Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second
+(FPS) numeric values.
 
 **Parameters**
 
--   `fps`  
--   `delay` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `fps` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** (Frames Per Second)
 
-Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** fps
-
-## HideFocus
-
-HideFocus Behavior
-Only shows the focus state on key entry (tabs or arrows).
-
-**Parameters**
-
--   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate))** 
-
-Returns **[HideFocus](#hidefocus)** 
-
-## smoothScrollTo
-
-Allows for the smooth scrolling of an element's content area.
-
-**Parameters**
-
--   `el` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
--   `target` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance.
--   `duration` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
-
-Returns **$.Deferred** 
-
-## defer
-
-Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
-
-**Parameters**
-
--   `callback`  
--   `timer`  
-
-Returns **([requestAnimationFrame](https://developer.mozilla.org/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/docs/Web/API/WindowTimers/setTimeout))** 
-
-## Environment
-
-Type: [Environment](#environment)
-
-### set
-
-Builds run-time environment settings
-
-### addBrowserClasses
-
-Global Classes for browser, version and device as needed.
-
-### addGlobalResize
-
-Setup a global resize event trigger for controls to listen to
-
-### pasteEvent
-
-## set
-
-Automatically set up the environment by virtue of including this script
-
-## current
-
-Get the name of the current CSS breakpoint by checking the popuplated 'content' value of the
-
-<body> tag's `::after` pseudo-element.  These names should be reflected in the breakpoints object
-above.
-
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## isAbove
-
-**Parameters**
-
--   `breakpoint` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-## isBelow
-
-**Parameters**
-
--   `breakpoint` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-## compare
-
-Compares the last-stored breakpoint with a check on the "current" breakpoint to see if the
-breakpoint has changed.
-
-## isHidden
-
-Checks an element for Soho visibility classes and determines whether or not
-should be hidden based on those values at the current breakpoint.
-NOTE: this method does NOT determine if the element is ACTUALLY hidden with a
-`display: none;` or `visibility: hidden;` rule.  It determines whether or not a CSS
-visibility rule alone would hide the element.
-
-**Parameters**
-
--   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** 
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-## debounce
-
-Debounce method
-
-**Parameters**
-
--   `func`  
--   `threshold`  
--   `execAsap`  
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** delay in CPU ticks

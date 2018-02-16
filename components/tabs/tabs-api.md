@@ -2,43 +2,255 @@
 
 ### Table of Contents
 
+-   [TABS_DEFAULTS](#tabs_defaults)
 -   [Tabs](#tabs)
     -   [renderHelperMarkup](#renderhelpermarkup)
+    -   [setupEvents](#setupevents)
     -   [handleAddFocusData](#handleaddfocusdata)
+    -   [handleTabClick](#handletabclick)
+    -   [handleMoreButtonClick](#handlemorebuttonclick)
+    -   [handleTabFocus](#handletabfocus)
+    -   [handleMoreButtonFocus](#handlemorebuttonfocus)
+    -   [handleTabKeyDown](#handletabkeydown)
+    -   [handleDismissibleTabKeydown](#handledismissibletabkeydown)
+    -   [handleAppMenuTabKeydown](#handleappmenutabkeydown)
+    -   [handleMoreButtonKeydown](#handlemorebuttonkeydown)
+    -   [handlePanelKeydown](#handlepanelkeydown)
+    -   [handleAddButton](#handleaddbutton)
+    -   [handleAddButtonKeydown](#handleaddbuttonkeydown)
+    -   [handleOutboundLink](#handleoutboundlink)
+    -   [getPreviousTab](#getprevioustab)
+    -   [activatePreviousTab](#activateprevioustab)
     -   [renderEdgeFading](#renderedgefading)
     -   [callSource](#callsource)
+    -   [remove](#remove)
     -   [scrollTabList](#scrolltablist)
+    -   [hideFocusState](#hidefocusstate)
+    -   [positionFocusState](#positionfocusstate)
+    -   [checkFocusedElements](#checkfocusedelements)
+    -   [disableOtherTabs](#disableothertabs)
+    -   [disable](#disable)
+    -   [enable](#enable)
+    -   [closeDismissibleTab](#closedismissibletab)
+    -   [teardown](#teardown)
+    -   [destroy](#destroy)
+-   [bindFirst](#bindfirst)
+
+## TABS_DEFAULTS
+
+Component Default Settings
+
+**Properties**
+
+-   `addTabButton` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true, creates a button at the end
+    of the tab list that can be used to add an empty tab and panel
+-   `addTabButtonCallback` **(null | [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** if defined as a function, will
+    be used in-place of the default Tab Adding method
+-   `appMenuTrigger` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true, will force an App Menu
+    trigger to be present on Non-Vertical Tabs implementatations.
+-   `ajaxOptions` **(null | [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object))** if defined, will be used by any internal
+    Tabs AJAX calls as the desired request settings.
+-   `beforeActivate` **([undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** If defined as a function, fires
+    this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250).
+-   `containerElement` **(null | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** Defines a separate element
+    to be used for containing the tab panels.  Defaults to a `.tab-panel-container`
+    element that is created if it doesn't already exist.
+-   `changeTabOnHashChange` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, will change the selected
+    tab on invocation based on the URL that exists after the hash.
+-   `hashChangeCallback` **(null | [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** If defined as a function,
+    provides an external method for adjusting the current page hash used by these tabs.
+-   `lazyLoad` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, when using full URLs in tab HREFs,
+    or when using Ajax calls, tabs will be loaded as needed instead of the markup
+    all being established at once.
+-   `moduleTabsTooltips` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will display a tooltip on
+    Module Tabs with cut-off text content.
+-   `source` **(null | [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** If defined, will serve as a way of pulling
+    in external content to fill tabs.
+-   `sourceArguments` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** If a source method is defined, this
+    flexible object can be passed into the source method, and augmented with
+    parameters specific to the implementation.
+-   `tabCounts` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, Displays a modifiable count above each tab.
+-   `verticalResponsive` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If Vertical Tabs & true, will automatically
+    switch to Horizontal Tabs on smaller breakpoints.
 
 ## Tabs
 
 **Parameters**
 
--   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** the base element for this component
+-   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming settings
 
 ### renderHelperMarkup
 
 Adds/removes helper buttons and accessibility-centric markup, based on Tabs' configuration
 Designed to be run at any point in the Tabs lifecycle.
 
-Returns **this** 
+Returns **this** component instance
+
+### setupEvents
+
+Establishes the bound event listeners on all tabs elements
+
+Returns **this** component instance
 
 ### handleAddFocusData
 
-Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
-a change in focus, or a click.  Keystroke focus changes cause different visual situations
+Setup a mousedown event on tabs to determine in the focus handler whether
+or a not a keystroked cause a change in focus, or a click.  Keystroke focus
+changes cause different visual situations
 
 **Parameters**
 
--   `e` **$.Event** 
--   `elem` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+-   `e` **$.Event** incoming focus event
+-   `elem` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** element
 
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### handleTabClick
+
+Handler for Tab Click
+
+**Parameters**
+
+-   `e` **jQuery.Event** incoming click event
+-   `li` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** list item representing the clicked tab
+
+Returns **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** ? // TODO: why?
+
+### handleMoreButtonClick
+
+Handler for click events on the "More Tabs" popupmenu trigger
+
+**Parameters**
+
+-   `e` **jQuery.event** Event
+
+Returns **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** ?
+
+### handleTabFocus
+
+Handler for click events on the "More Tabs" popupmenu trigger
+
+**Parameters**
+
+-   `e` **jQuery.event** Event
+-   `a` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** represents an anchor tag
+
+Returns **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** ?
+
+### handleMoreButtonFocus
+
+Handler for focus events on the "More Tabs" popupmenu trigger
+
+**Parameters**
+
+-   `e` **jQuery.event** incoming focus event
+
+Returns **void** 
+
+### handleTabKeyDown
+
+Handler for keydown events on Tabs in the list
+
+**Parameters**
+
+-   `e` **jQuery.event** incoming keydown event
+
+Returns **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** ?
+
+### handleDismissibleTabKeydown
+
+Handler for keydown events on Dismissible tabs
+
+**Parameters**
+
+-   `e` **jQuery.event** incoming keydown event
+
+Returns **void** 
+
+### handleAppMenuTabKeydown
+
+Handler for keydown events on the "App Menu" tab (trigger button for the App Menu)
+
+**Parameters**
+
+-   `e` **jQuery.event** incoming keydown event
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** ?
+
+### handleMoreButtonKeydown
+
+Handler for keydown events on the "More Tabs" popupmenu trigger
+
+**Parameters**
+
+-   `e` **jQuery.event** incoming keydown event
+
+Returns **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** ?
+
+### handlePanelKeydown
+
+Handler for keydown events on the "More Tabs" popupmenu trigger
+
+**Parameters**
+
+-   `e` **jQuery.event** incoming keydown event
+
+Returns **void** 
+
+### handleAddButton
+
+Handles the Add Tab button being clicked
+
+Returns **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** ?
+
+### handleAddButtonKeydown
+
+**Parameters**
+
+-   `e` **jQuery.Event** incoming keydown event
+
+Returns **([undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined) \| [boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean))** ?
+
+### handleOutboundLink
+
+Changes the location in the browser address bar to force outbound links.
+
+**Parameters**
+
+-   `href` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** incoming href link
+-   `useRelativePath` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** don't prepend the full domain, port,
+    protocol, etc. to the HREF.
+
+Returns **void** 
+
+### getPreviousTab
+
+Takes a tab ID and returns a jquery object containing the previous available tab
+
+**Parameters**
+
+-   `tabId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the tab ID
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** jQuery-wrapped element reference for the tab
+
+### activatePreviousTab
+
+Takes a tab ID and returns a jquery object containing the previous available tab
+If an optional target Tab (li) is provided, use this to perform activation events
+
+**Parameters**
+
+-   `tabId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the tab ID
+-   `target` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** a reference to the previous tab in the list (before this one)
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** potentially-updated target
 
 ### renderEdgeFading
 
 Shows/Hides some tabsets' faded edges based on scrolling position, if applicable.
 
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
 ### callSource
 
@@ -46,11 +258,25 @@ Calls an options-provided source method to fetch content that will be displayed 
 
 **Parameters**
 
--   `href` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** string representing the target tab to load content under.
--   `isURL`  
--   `callback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** method that fires after a successful source call.
+-   `href` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** string representing the target tab to load content under.
+-   `isURL` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** detects whether or not the URL is actually an external /
+    call, or an ID for an existing tab in the page.
 
-Returns **([boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | $.Deferred)** true if source call was successful, false for failure/ignore, or a promise object that will fire callbacks in either "success" or "failure" scenarios.
+Returns **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | $.Deferred)** true if source call was successful, false for failure/ignore,
+or a promise object that will fire callbacks in either "success" or "failure" scenarios.
+
+### remove
+
+Removes a tab from the list and cleans up properly
+NOTE: Does not take advantage of _activatePreviousTab()_ due to specific needs
+of selecting certain Tabs/Anchors at certain times.
+
+**Parameters**
+
+-   `tabId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** tab ID that corresponds to a `.tab-panel` element's ID attribute
+-   `disableBeforeClose` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not tab closing can become veteoed
+
+Returns **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | this)** component instance
 
 ### scrollTabList
 
@@ -58,7 +284,80 @@ Wrapper for the Soho behavior _smoothScrollTo()_ that will determine scroll dist
 
 **Parameters**
 
--   `target` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the target <li> or <a> tag
--   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time it will take to scroll
+-   `target` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the target <li> or <a> tag
+-   `duration` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time it will take to scroll
 
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### hideFocusState
+
+Hides the focus state, if it's visible.
+
+Returns **void** 
+
+### positionFocusState
+
+Updates the position of the focus state, to the tab/button that currently has focus.
+
+**Parameters**
+
+-   `target` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the element that will receive the focus state
+-   `unhide` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if true, unhides the focus state if it's previously been hidden.
+
+Returns **void** 
+
+### checkFocusedElements
+
+Returns **void** 
+
+### disableOtherTabs
+
+Disables all tabs in the list
+
+Returns **void** 
+
+### disable
+
+Disables the entire Tab Component
+
+**Parameters**
+
+-   `isPartial` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not this disable call is a partial
+     disabling of the tabset
+
+Returns **void** 
+
+### enable
+
+Returns **void** 
+
+### closeDismissibleTab
+
+Pass-through for the `remove()` method, which gets used for removing a dismissible tab.
+
+**Parameters**
+
+-   `tabId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the ID of the target tab panel
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** ?
+
+### teardown
+
+Tears down this instance of the tabs component by removing events,
+other components, and extraneous markup.
+
+Returns **this** ?
+
+### destroy
+
+Destroys this component instance, removing its attachment from its parent element.
+
+Returns **void** 
+
+## bindFirst
+
+Overrides a similar method in the popupmenu code that controls escaping of
+this menu when pressing certain keys.  We override this here so that the
+controls act in a manner as if all tabs are still visible (for accessiblity
+reasons), meaning you can use left and right to navigate the popup menu options
+as if they were tabs.

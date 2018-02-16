@@ -296,7 +296,7 @@ ExpandableArea.prototype = {
   * @returns {void}
   */
   destroy() {
-    this.header.children('a').offTouchClick('expandablearea').off();
+    this.header.children('a').off();
     this.header.off();
     this.header
       .removeAttr('aria-controls')
@@ -323,7 +323,7 @@ ExpandableArea.prototype = {
   */
   handleEvents() {
     const self = this;
-    this.expander.onTouchClick('expandablearea').on('click.expandablearea', (e) => {
+    this.expander.on('click.expandablearea', (e) => {
       if (!self.isDisabled()) {
         e.preventDefault();
         self.toggleExpanded();

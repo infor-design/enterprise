@@ -1401,7 +1401,6 @@ Toolbar.prototype = {
    */
   unbind() {
     this.items
-      .offTouchClick('toolbar')
       .off('keydown.toolbar click.toolbar focus.toolbar blur.toolbar');
 
     this.more.off('keydown.toolbar beforeopen.toolbar selected.toolbar');

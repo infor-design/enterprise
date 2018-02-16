@@ -64,7 +64,7 @@
       toggler = $('#toggle-hidden-tabs');
     toggler.data('tabs-hidden', true);
 
-    toggler.onTouchClick('test').on('click.test', function() {
+    toggler.on('click.test', function() {
       var data = $(this).data('tabs-hidden');
       if (!data || data === false) {
         tabsAPI.hide('tab2');

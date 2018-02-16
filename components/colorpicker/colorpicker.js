@@ -570,7 +570,7 @@ ColorPicker.prototype = {
   */
   handleEvents() {
     const self = this;
-    this.icon.parent().onTouchClick().on('click.colorpicker', () => {
+    this.icon.parent().on('click.colorpicker', () => {
       self.toggleList();
     });
 

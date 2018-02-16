@@ -51,11 +51,11 @@
       b.toast({
         title: 'Dropdown Opened',
         message: 'The Dropdown Control on this page has opened'
-      })
+      });
     });
 
     // Toggle the Readonly attribute on the <select> tag
-    $('#readonly-toggle').onTouchClick('test').on('click.test', function() {
+    $('#readonly-toggle').on('click.test', function() {
       var attr = $('#readonly-dropdown').prop('readonly');
 
       if (attr) {

@@ -170,7 +170,7 @@
     var tabs = $('#programmatic-tabs');
 
 
-    $('#disable').onTouchClick('demo').on('click.demo', function() {
+    $('#disable').on('click.demo', function() {
       if (tabs.is('.is-disabled')) {
         return;
       }
@@ -180,7 +180,7 @@
       tabs.disable();
     });
 
-    $('#enable').onTouchClick('demo').on('click.demo', function() {
+    $('#enable').on('click.demo', function() {
       if (!tabs.is('.is-disabled')) {
         return;
       }

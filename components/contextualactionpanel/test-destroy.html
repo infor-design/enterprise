@@ -56,7 +56,7 @@
     var contextualApi = $('#contextual-panel-trigger').data('contextualactionpanel');
 
     function setupDestroy() {
-      $('#destroy-contextual').onTouchClick('test').on('click.test', function() {
+      $('#destroy-contextual').on('click.test', function() {
         contextualApi.destroy();
         $('#invoke-contextual').prop('disabled', false);
         $('#contextual-panel-trigger').prop('disabled', true);
@@ -73,7 +73,7 @@
 
     setupDestroy();
 
-    $('#invoke-contextual').onTouchClick('test').on('click.test', function() {
+    $('#invoke-contextual').on('click.test', function() {
       if (contextualApi !== undefined) {
         return;
       }
