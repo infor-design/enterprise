@@ -165,87 +165,6 @@ $.extend($.expr[':'], {
 });
 
 /**
- * Custom Touch Event Handler that simply passes Touch Event Handlers onto a Click Event Handler.
- * Used for avoiding the 300ms wait time that click events have in most mobile environments
- * if 'one' is defined, it only listens once.
- * @param {string} eventNamespace a namespace that can be used for routing
- *  touch events for a particular purpose to click events.
- * @param {string} [filter] adds an additional selector (in similar fashion to jQuery) that
- *  will be used to filter results down to a specific subset.
- * @param {boolean} [one] sets up touch events as `one` instead of `on`.
- * @returns {this} component elements
- */
-$.fn.onTouchClick = function (eventNamespace, filter, one) {
-  eventNamespace = (eventNamespace !== null || eventNamespace !== undefined ? `.${eventNamespace}` : '');
-  filter = (filter !== null || filter !== undefined ? filter : '');
-
-  return this.each(function () {
-    const self = $(this);
-    const listener = one ? 'one' : 'on';
-    const threshold = 10;
-    let thresholdReached = false;
-    let pos;
-
-    self[listener](`touchstart${eventNamespace}`, filter, (e) => {
-      pos = {
-        x: e.originalEvent.touches[0].pageX,
-        y: e.originalEvent.touches[0].pageY
-      };
-    });
-
-    self[listener](`touchmove${eventNamespace}`, filter, (e) => {
-      const newPos = {
-        x: e.originalEvent.touches[0].pageX,
-        y: e.originalEvent.touches[0].pageY
-      };
-
-      if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
-          (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
-        thresholdReached = true;
-      }
-    });
-
-    self[listener](`touchend${eventNamespace} touchcancel${eventNamespace}`, filter, function handleTouches(e) {
-      const elem = $(this);
-      if (thresholdReached) {
-        thresholdReached = false;
-        return;
-      }
-
-      setTimeout(() => {
-        thresholdReached = false;
-        e.preventDefault();
-
-        if (elem.attr('disabled')) {
-          return;
-        }
-
-        elem.trigger('click');
-      }, 0);
-    });
-
-    return self;
-  });
-};
-
-/**
- * Reverses the .onTouchClick() method and turns off a matching event listener.
- * @param {string} eventNamespace a namespace that can be used for routing
- *  touch events for a particular purpose to click events.
- * @param {string} [filter] adds an additional selector (in similar fashion to jQuery) that
- *  will be used to filter results down to a specific subset.
- * @returns {this} component elements
- */
-$.fn.offTouchClick = function (eventNamespace, filter) {
-  eventNamespace = (eventNamespace !== null || eventNamespace !== undefined ? `.${eventNamespace}` : '');
-  filter = (filter !== null || filter !== undefined ? filter : '');
-
-  return this.each(function () {
-    return $(this).off(`touchend${eventNamespace} touchcancel${eventNamespace} touchstart${eventNamespace} touchmove${eventNamespace}`, filter);
-  });
-};
-
-/**
  * Returns a key/value list of currently attached event listeners
  * @returns {object} containing list of event names as keys, and event listener functions as values.
  */
@@ -512,8 +431,8 @@ $.fn.clearable = function () {
   this.xButton.insertAfter(self.element);
 
   // Handle Events
-  this.xButton.offTouchClick('clearable').off()
-    .onTouchClick('clearable', '.clearable')
+  this.xButton
+    .off()
     .on('click.clearable', () => {
       self.element.val('').trigger('change').focus().trigger('cleared');
       self.checkContents();

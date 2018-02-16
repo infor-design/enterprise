@@ -239,7 +239,7 @@ ContextualActionPanel.prototype = {
 
     if (self.toolbar) {
       self.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
-        .onTouchClick('contextualactionpanel').on('click.contextualactionpanel', () => {
+        .on('click.contextualactionpanel', () => {
           self.handleToolbarSelected();
         });
     }
@@ -269,7 +269,7 @@ ContextualActionPanel.prototype = {
       'beforeopen.contextualactionpanel afterclose.contextualactionpanel');
 
     buttonset.children('*:not(.searchfield)')
-      .offTouchClick('contextualactionpanel').off('click.contextualactionpanel');
+      .off('click.contextualactionpanel');
 
     const menuButtons = buttonset.children('.btn-menu');
     menuButtons.each(function () {

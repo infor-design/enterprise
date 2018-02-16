@@ -725,7 +725,6 @@ Tabs.prototype = {
 
     // Setup the "more" function
     this.moreButton
-      .onTouchClick('tabs')
       .on('click.tabs', (e) => {
         self.handleMoreButtonClick(e);
       })
@@ -741,7 +740,6 @@ Tabs.prototype = {
 
     if (this.settings.addTabButton) {
       this.addTabButton
-        .onTouchClick('tabs')
         .on('click.tabs', () => {
           self.handleAddButton();
         })
@@ -761,12 +759,12 @@ Tabs.prototype = {
    */
   removeHelperMarkupEvents() {
     if (this.moreButton && this.moreButton.length) {
-      this.moreButton.offTouchClick('tabs')
+      this.moreButton
         .off('click.tabs keydown.tabs focus.tabs mousedown.tabs');
     }
 
     if (this.addTabButton && this.addTabButton.length) {
-      this.addTabButton.offTouchClick('tabs')
+      this.addTabButton
         .off('click.tabs keydown.tabs focus.tabs');
     }
 

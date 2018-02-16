@@ -136,7 +136,7 @@
     var tabsAPI = $('#tabs-with-counts').data('tabs'),
       active = tabsAPI.getActiveTab();
 
-    $('#update-tab-name').onTouchClick('test').on('click.test', function() {
+    $('#update-tab-name').on('click.test', function() {
       var name = $('#new-tab-name').val();
       if (!name || name === '') {
         return;
@@ -149,7 +149,7 @@
       $('#new-tab-name').val('');
     });
 
-    $('#update-tab-count').onTouchClick('test').on('click.test', function() {
+    $('#update-tab-count').on('click.test', function() {
       var updatedCount = $('#new-tab-count').val();
       if (!updatedCount || updatedCount === '') {
         return;

@@ -280,10 +280,9 @@ SearchField.prototype = {
       self.handleFocus(e);
     }).on('blur.searchfield', (e) => {
       self.handleBlur(e);
-    }).onTouchClick('searchfield', '.searchfield')
-      .on('click.searchfield', (e) => {
-        self.handleClick(e);
-      })
+    }).on('click.searchfield', (e) => {
+      self.handleClick(e);
+    })
       .on('keydown.searchfield', (e) => {
         self.handleKeydown(e);
       })

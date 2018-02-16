@@ -171,7 +171,7 @@
       api = tabs.data('tabs'),
       targetTab = $('a[href="#programmatic-tabs-form-elements"]').parent();
 
-    $('#disable').onTouchClick('demo').on('click.demo', function() {
+    $('#disable').on('click.demo', function() {
       if (targetTab.is('.is-disabled')) {
         return;
       }
@@ -181,7 +181,7 @@
       api.disableTab('programmatic-tabs-form-elements');
     });
 
-    $('#enable').onTouchClick('demo').on('click.demo', function() {
+    $('#enable').on('click.demo', function() {
       if (!targetTab.is('.is-disabled')) {
         return;
       }

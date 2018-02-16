@@ -115,7 +115,7 @@
 
 <script type="text/javascript">
   $('body').on('initialized', function() {
-    $('#update-tab-name').onTouchClick('test').on('click.test', function() {
+    $('#update-tab-name').on('click.test', function() {
       var name = $('#new-tab-name').val();
       if (!name || name === '') {
         return;

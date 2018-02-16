@@ -1503,8 +1503,7 @@ Dropdown.prototype = {
 
     self.list
       .removeClass('dropdown-tall')
-      .onTouchClick('list', 'li')
-      .on('click.list', 'li', listItemClickHandler)
+      .on('touchend.list click.list', 'li', listItemClickHandler)
       .on('mouseenter.list', 'li', function () {
         const target = $(this);
 
@@ -2480,7 +2479,7 @@ Dropdown.prototype = {
     });
 
     // Handle Label click
-    this.label.onTouchClick().on('click', () => {
+    this.label.on('click', () => {
       self.pseudoElem.focus();
     });
   }

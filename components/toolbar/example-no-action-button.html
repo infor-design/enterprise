@@ -52,7 +52,7 @@
 
 <script type="text/javascript">
   $('body').on('initialized', function() {
-    $('#destroy-toolbar').onTouchClick('test').on('click.test', function() {
+    $('#destroy-toolbar').on('click.test', function() {
       var data = $('#common-toolbar').data('toolbar');
       if (!data) {
         return false;
@@ -63,7 +63,7 @@
       $(this).prop('disabled', true);
     });
 
-    $('#invoke-toolbar').onTouchClick('test').on('click.test', function() {
+    $('#invoke-toolbar').on('click.test', function() {
       var data = $('#common-toolbar').data('toolbar');
       if (data) {
         return false;
