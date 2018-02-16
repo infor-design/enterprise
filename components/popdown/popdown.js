@@ -125,7 +125,6 @@ Popdown.prototype = {
     const self = this;
 
     this.trigger
-      .onTouchClick('popdown')
       .on('click.popdown', () => {
         self.toggle();
       })
@@ -371,7 +370,6 @@ Popdown.prototype = {
     }
 
     this.trigger
-      .offTouchClick('popdown')
       .off('updated.popdown click.popdown')
       .removeAttr('aria-controls')
       .removeAttr('aria-expanded');

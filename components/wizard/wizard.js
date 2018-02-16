@@ -179,7 +179,7 @@ Wizard.prototype = {
    * @returns {this} component instance
    */
   teardown() {
-    this.ticks.offTouchClick('wizard').off('click.wizard');
+    this.ticks.off('click.wizard');
     this.element.off('updated.wizard');
 
     this.ticks.remove();
@@ -289,7 +289,7 @@ Wizard.prototype = {
       self.updated();
     });
 
-    this.ticks.onTouchClick('wizard').on('click.wizard', function (e) {
+    this.ticks.on('click.wizard', function (e) {
       self.activate(e, $(this));
     });
 

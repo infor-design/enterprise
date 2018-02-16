@@ -162,10 +162,10 @@
     // Bind event to start
     $('#keycode-tester').on(settings.eventType + '.demo', keyEvent);
 
-    $('#clear-console').onTouchClick('demo').on('click.demo', clearOutput);
+    $('#clear-console').on('click.demo', clearOutput);
 
     // Change settings when radios are changed
-    $('[name="evttype"]').onTouchClick('demo').on('click.demo', function() {
+    $('[name="evttype"]').on('click.demo', function() {
       getSettings();
       clearOutput();
 
@@ -174,7 +174,7 @@
         .on(settings.eventType + '.demo', keyEvent);
     });
 
-    $('[name="trans"]').onTouchClick('demo').on('click.demo', function() {
+    $('[name="trans"]').on('click.demo', function() {
       getSettings();
       clearOutput();
     });

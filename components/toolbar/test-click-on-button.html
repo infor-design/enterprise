@@ -48,11 +48,11 @@
 
 <script type="text/javascript">
   $('body').on('initialized', function() {
-    $('#button-two').onTouchClick('test').on('click.test', function() {
+    $('#button-two').on('click.test', function() {
       $('body').toast({title: 'Button Clicked!', message: 'Your button click event works!'});
     });
 
-    $('#reinvoke-toolbar').onTouchClick('test').on('click.test', function() {
+    $('#reinvoke-toolbar').on('click.test', function() {
       $('#click-handler-toolbar').toolbar();
       $('body').toast({title: 'Toolbar Reinvoked!', message: 'The toolbar control on this page was reinvoked!'});
     });

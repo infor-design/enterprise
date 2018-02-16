@@ -282,7 +282,7 @@ Pager.prototype = {
         setTimeout(() => {
           parent.attr('tabindex', '0');
         }, 0);
-      // Handle pressing Enter on arrow icons and prevent pagerBar.onTouchClick from being triggered
+        // Handle pressing Enter on arrow icons and prevent pagerBar.click from being triggered
       } else if (key === 13) {
         const li = $(this).parent();
         e.preventDefault();

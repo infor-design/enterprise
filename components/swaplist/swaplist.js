@@ -929,9 +929,7 @@ SwapList.prototype = {
         }
         e.stopPropagation();
       })
-      .onTouchClick('swaplist', self.dragElements)
-
-    // Dragstart - initiate dragging
+      // Dragstart - initiate dragging
       .on(self.dragStart, self.dragElements, (e) => {
         e.stopImmediatePropagation();
         if (self.handle && !selections.isHandle) {

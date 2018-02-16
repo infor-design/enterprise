@@ -197,8 +197,8 @@ ListBuilder.prototype = {
 
     // TOP BUTTONS =============================================================
     const topButtonsClick = (btn, method) => {
-      btn.offTouchClick('listbuilder').off('click.listbuilder')
-        .onTouchClick('listbuilder').on('click.listbuilder', () => {
+      btn.off('click.listbuilder')
+        .on('click.listbuilder', () => {
           self[method]();
         });
     };

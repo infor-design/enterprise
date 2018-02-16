@@ -1025,7 +1025,7 @@ TimePicker.prototype = {
    */
   handleEvents() {
     const self = this;
-    this.trigger.onTouchClick('timepicker').on('click.timepicker', () => {
+    this.trigger.on('click.timepicker', () => {
       self.toggleTimePopup();
     });
 

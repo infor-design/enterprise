@@ -426,7 +426,6 @@ CirclePager.prototype = {
 
     // Previous button
     $('.btn-previous', this.element)
-      .onTouchClick('circlepager')
       .on('click.circlepager', (e) => {
         this.prev();
         e.stopImmediatePropagation();
@@ -434,7 +433,6 @@ CirclePager.prototype = {
 
     // Next button
     $('.btn-next', this.element)
-      .onTouchClick('circlepager')
       .on('click.circlepager', (e) => {
         this.next();
         e.stopImmediatePropagation();
