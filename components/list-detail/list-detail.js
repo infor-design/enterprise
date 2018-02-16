@@ -1,4 +1,5 @@
-import { utils, DOM } from '../utils/utils';
+import { utils } from '../utils/utils';
+import { DOM } from '../utils/dom';
 import { stringUtils } from '../utils/string';
 import { breakpoints } from '../utils/breakpoints';
 
@@ -266,7 +267,7 @@ ListDetail.prototype = {
     // Pass an event to the Detail Area's main element with some context about
     // what was clicked inside the list.
     if (this.detailArea) {
-      $(this.detailElement).triggerHandler('activate-screen', [section]);
+      $(this.detailElement).triggerHandler('activatescreen', [section]);
     }
   },
 
