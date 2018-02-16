@@ -7,7 +7,6 @@ import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../utils/animations';
-import '../initialize/initialize.jquery';
 import '../pager/pager.jquery';
 import '../popupmenu/popupmenu.jquery';
 import '../searchfield/searchfield.jquery';

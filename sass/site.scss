@@ -32,14 +32,8 @@ $color-code-border: #e1e8e8;
 }
 // scss-lint:disable VendorPrefix
 
-@font-face {font-family: 'ProximaNova-Regular';
-  src: url('/webfonts/ProximaNova-Regular.eot');
-  src: url('/webfonts/ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),
-       url('/webfonts/ProximaNova-Regular.woff') format('woff'),
-       url('/webfonts/ProximaNova-Regular.ttf') format('truetype');
-}
 
-$font-family: ProximaNova-Regular, helvetica, arial;
+$font-family: 'Source Sans Pro', Helvetica, Arial;
 
 html {
   font-size: 62.5%;
@@ -93,14 +87,13 @@ html {
 h1 {
   @include font-size(50);
   color: $black;
-  font-weight: lighter;
   line-height: 60px;
 }
 
 h2 {
   @include font-size(26);
   color: $black;
-  font-weight: lighter;
+  font-weight: 400;
   line-height: 42px;
 }
 
@@ -153,7 +146,6 @@ pre {
   background-color: $color-code-bg;
   border: 1px solid $color-code-border;
   border-radius: 2px;
-  letter-spacing: 1.17px;
   line-height: 24px;
   max-width: 100%;
   overflow: hidden;

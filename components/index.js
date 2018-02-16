@@ -2,6 +2,7 @@
 
 import * as debug from './utils/debug';
 import * as behaviors from './utils/behaviors';
+import './initialize/initialize.jquery';
 
 // Core ======================================= /
 // NOTE: Every item in the "Core" section is required for running the Soho library properly.
@@ -9,7 +10,8 @@ import * as behaviors from './utils/behaviors';
 // ============================================ /
 export { version } from '../package.json';
 export { debug };
-export { uniqueIdCount, utils, DOM } from './utils/utils';
+export { uniqueIdCount, utils } from './utils/utils';
+export { DOM } from './utils/dom';
 export { stringUtils as string } from './utils/string';
 export { breakpoints } from './utils/breakpoints';
 export { Locale } from './locale/locale';

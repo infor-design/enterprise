@@ -1,5 +1,6 @@
 import * as debug from '../utils/debug';
-import { utils, DOM } from '../utils/utils';
+import { utils } from '../utils/utils';
+import { DOM } from '../utils/dom';
 import { Locale } from '../locale/locale';
 
 // jQuery Components

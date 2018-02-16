@@ -1,4 +1,4 @@
-import { DOM } from '../utils/utils';
+import { DOM } from './dom';
 
 /**
  * HideFocus Behavior

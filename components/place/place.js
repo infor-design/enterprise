@@ -1,4 +1,5 @@
-import { utils, DOM } from '../utils/utils';
+import { utils } from '../utils/utils';
+import { DOM } from '../utils/dom';
 
 // Component Name
 const COMPONENT_NAME = 'place';

@@ -3626,7 +3626,7 @@ Datagrid.prototype = {
 
     const item = self.settings.dataset[row];
     self.element.trigger(eventName, [{
-      row: self.settings.dataset[row],
+      row,
       cell,
       item,
       originalEvent: e
