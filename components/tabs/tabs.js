@@ -1,5 +1,6 @@
 import * as debug from '../utils/debug';
-import { utils, DOM } from '../utils/utils';
+import { utils } from '../utils/utils';
+import { DOM } from '../utils/dom';
 import { breakpoints } from '../utils/breakpoints';
 import { stringUtils } from '../utils/string';
 import { Locale } from '../locale/locale';

@@ -160,6 +160,10 @@ Modal.prototype = {
     }
   },
 
+  /**
+   * Check if the submit button should be disabled based on validation status.
+   * @return {void}
+   */
   disableSubmit() {
     const body = this.element;
     const fields = body.find('[data-validate]:visible');
