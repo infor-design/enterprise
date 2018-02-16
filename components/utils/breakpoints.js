@@ -1,4 +1,4 @@
-import { DOM } from './utils';
+import { DOM } from './dom';
 
 // =================================================================
 // Soho JS-level Breakpoint Access

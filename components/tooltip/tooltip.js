@@ -3,7 +3,6 @@ import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
 // jQuery components
-import '../initialize/initialize.jquery';
 import '../place/place.jquery';
 
 // Component Name
