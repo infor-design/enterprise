@@ -881,6 +881,14 @@ ListView.prototype = {
   },
 
   /**
+   * @returns {jQuery[]} the currently selected ListView item, or an empty jQuery selector
+   *  if there are currently no items selected.
+   */
+  getSelected() {
+    return this.element.find('.is-selected');
+  },
+
+  /**
    * Refresh the list with any optioned options that might have been set.
    * @param {object} [settings] incoming settings
    * @returns {this} component instance
@@ -891,6 +899,22 @@ ListView.prototype = {
     }
     this.refresh(settings ? settings.dataset : null);
     return this;
+  },
+
+  /**
+   * Disables the functionality of a ListView.
+   * @returns {void}
+   */
+  disable() {
+    this.element.addClass('is-disabled');
+  },
+
+  /**
+  * Enables the functionality of a ListView.
+  * @returns {void}
+  */
+  enable() {
+    this.element.removeClass('is-disabled');
   },
 
   /**
@@ -1018,19 +1042,7 @@ ListView.prototype = {
     if (this.settings.selectable) {
       this.element.addClass('is-selectable');
 
-      const trigger = $('.list-detail-back-button, .list-detail-button').find('.app-header');
       const pattern = $(this.element).closest('.list-detail, .builder');
-
-      trigger.parent().on('click.listview', (e) => {
-        if (trigger.hasClass('go-back')) {
-          trigger.removeClass('go-back');
-          pattern.removeClass('show-detail');
-        }
-        e.stopPropagation();
-        e.stopImmediatePropagation();
-        e.preventDefault();
-        return false;
-      });
 
       this.element
         .off('click.listview', 'li, tr, input[checkbox]')
@@ -1063,8 +1075,7 @@ ListView.prototype = {
           }
 
           if (pattern.length > 0 && $(window).outerWidth() < 767 && !item.hasClass('is-disabled')) {
-            pattern.toggleClass('show-detail');
-            trigger.toggleClass('go-back');
+            self.element.trigger('drilldown', [item]);
           }
 
           isFocused = false;

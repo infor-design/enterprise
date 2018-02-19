@@ -55,5 +55,6 @@ export { Zoom } from './zoom/zoom';
 export { CompositeForm } from './compositeform/compositeform';
 export { Datagrid } from './datagrid/datagrid';
 export { Header } from './header/header';
+export { ListDetail } from './list-detail/list-detail';
 export { Lookup } from './lookup/lookup';
 export { MultiTabs } from './tabs-multi/multi-tabs';

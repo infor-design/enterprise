@@ -22,9 +22,9 @@ http://usalvlhlpool1.infor.com/4.4.0/components/
 - Change the d3 script to the new version `d3.v4.js`
 - The completion chart had a likely not widely used 'update' api. This was removed in favor of 'update(settings)' that all the other components use. You may need to refactor your update call to completion chart. See completion-chart/test-updated.html for an example
 - Some not widely used line chart examples time formatters. Some functions are renamed. See the examples or https://github.com/d3/d3-time/releases
-- The options for pie and label have changed. All the of label and formatter rules have different settings objects.
-And now you can control the tooltip, legend and lines independently. If using the labels option see examples for and docs for updates if you have any issues with pie or donut.
-* Projects will need to update to add the sohoxi-migrate-4.4.0.js script until global references are removed. Globals should be moved to the Soho. namespace fx Formatters -> Soho.Formatters (see SOHO-7457 for entire list).
+- The options for pie and label have changed. All the of label and formatter rules have different settings objects. Also, you can now control the tooltip, legend and lines independently. If using the labels option see examples for and docs for updates if you have any issues with pie or donut.
+- Projects will need to add the `sohoxi-migrate-4.4.0.js` script until global references in your code are replaced with `Soho.[global]`. Globals have be moved to the Soho namespace (fx: the "Formatters" global should be replaced with "Soho.Formatters").  See SOHO-7457 for the entire list.
+- *List/Detail Pattern* - a new javascript wrapper has been created for this pattern.  The javascript portion is opt-in, but we've moved some list/detail-specific "screen-shifting" code that used to be located in the ListView component into this new wrapper component.  If you depend on the "screen-shifting" that was previously located in ListView, please see the source code in `<project-root>/components/list-detail/list-detail.js` and correct your code to notify this component of which elements in your application contain the "list" and "detail" areas.
 
 ### <a name="version-4.4.0-behavior-changes">Behavior Changes</a>
 -

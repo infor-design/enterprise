@@ -540,6 +540,30 @@ utils.equals = function equals(a, b) {
 };
 
 /**
+ * Converts an element wrapped in a jQuery collection down to its original HTMLElement reference.
+ * If an HTMLElement is passed in, simply returns it.
+ * If anything besides HTMLElements or jQuery[] is passed in, returns undefined;
+ * @param {any} item the item being evaluated
+ * @returns {HTMLElement|undefined} the unwrapped item, or nothing.
+ */
+DOM.convertToHTMLElement = function convertToHTMLElement(item) {
+  if (item instanceof HTMLElement) {
+    return item;
+  }
+
+  if (item instanceof $) {
+    if (item.length) {
+      item = item[0];
+    } else {
+      item = undefined;
+    }
+    return item;
+  }
+
+  return undefined;
+};
+
+/**
  * Object deep copy
  * For now, alias jQuery.extend
  * Eventually we'll replace this with a non-jQuery extend method.

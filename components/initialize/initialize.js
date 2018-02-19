@@ -398,6 +398,13 @@ Initialize.prototype = {
         });
       }
 
+      // List/Detail Pattern
+      if ($.fn.listdetail) {
+        matchedItems(`.list-detail:not(${noinitExcludes})`).each(function() {
+          invokeWithInlineOptions($(this), 'listdetail');
+        });
+      }
+
       matchedItems('[data-translate="text"]').each(function () {
         const obj = $(this);
         obj.text(Locale.translate(obj.text()));

@@ -64,9 +64,9 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
 // Use "transition: transform ... ..." with all vendor prefixes
 // TODO: Find a way to mix this with the regular transition mixin
-@mixin transform-transition-list($transition-rule) {
+@mixin transform-transition-list($transition-rule, $additional-transitions-list...) {
   @each $prefix in $prefixes {
-    #{$prefix}transition: #{$prefix}transform $transition-rule;
+    #{$prefix}transition: #{$prefix}transform $transition-rule, $additional-transitions-list;
   }
 }
 
@@ -297,3 +297,11 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   flex-direction: $value;
 }
 // END: Flexbox
+
+// Re-usable box shadow statement for drawer-style stuff
+$box-shadow-on-color: rgba(0, 0, 0, .75);
+$box-shadow-off-color: rgba(0, 0, 0, 0);
+
+@mixin drawer-box-shadow() {
+  @include css3(box-shadow, 0 0 20px 1px $box-shadow-on-color);
+}

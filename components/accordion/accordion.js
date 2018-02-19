@@ -317,13 +317,6 @@ Accordion.prototype = {
       return false;
     }
 
-    function toggleExpander() {
-      if (pane.length) {
-        self.toggle(header);
-      }
-      anchor.focus();
-    }
-
     // Stop propagation here because we don't want to bubble up to the Header and
     // potentially click the it twice
     if (e) {
@@ -331,19 +324,34 @@ Accordion.prototype = {
     }
 
     /**
-    * If the anchor is a real link, follow the link and die here.
-    * This indicates the link has been followed.
-    *
-    * @event followlink
-    * @property {array} anchor - The anchor in an array
-    */
+     * If the anchor is a real link, follow the link and die here.
+     * This indicates the link has been followed.
+     *
+     * @event followlink
+     * @property {array} anchor - The anchor in an array
+     */
     if (followLink()) {
       this.element.trigger('followlink', [anchor]);
       return true;
     }
 
-    // If it's not a real link, try and toggle an expansion pane
-    toggleExpander();
+    // If it's not a real link, try and toggle an expansion pane.
+    if (pane.length) {
+      self.toggle(header);
+    }
+
+    // This flag is set by the List/Detail Pattern Wrapper.
+    // If this component is controlling a detail area, the anchor shouldn't focus,
+    // and it should trigger an event that will bubble to the pattern to give
+    // context to the detail area.
+    if (this.isControllingDetails) {
+      if (!pane.length) {
+        self.element.trigger('drilldown', [header[0]]);
+      }
+    } else {
+      anchor.focus();
+    }
+
     return true;
   },
 
@@ -567,6 +575,15 @@ Accordion.prototype = {
       .prev('.accordion-header');
 
     items.addClass('child-selected');
+  },
+
+  /**
+   * Gets the currently-selected Accordion Header, if applicable.
+   * @returns {jQuery[]} the currently selected Accoridon Header, or an empty jQuery selector
+   *  if there are currently no headers selected.
+   */
+  getSelected() {
+    return this.element.find('.is-selected');
   },
 
   /**

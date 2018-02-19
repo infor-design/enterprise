@@ -6,27 +6,52 @@
   font-size: 0;
   height: 100%;
 
-  .main,
-  .sidebar {
+  > .main,
+  > .sidebar {
     position: relative;
   }
 
-  .main {
+  > .main {
     background-color: $panel-bg-color;
     border-left: 0;
+    height: 100%;
 
     &.alternate {
       background-color: $body-bg-color;
     }
+
+    .main-content {
+      display: block;
+      height: 100%;
+      position: static;
+    }
+
+    .tab-panel-container {
+      height: calc(100% - 40px);
+    }
+
+    .tab-panel {
+      padding-top: 0;
+      position: relative;
+    }
   }
 
-  .sidebar {
+  > .sidebar {
     border-right: 0;
-    height: 100%;
+
+    .sidebar-content {
+      display: block;
+      height: 100%;
+      position: static;
+    }
 
     .listview,
     .listview-search {
       border-right: 1px solid $panel-border-color;
+    }
+
+    .accordion {
+      height: 100%;
     }
 
     .header {
@@ -73,7 +98,7 @@
     }
   }
 
-  .header + .sidebar {
+  > .header + .sidebar {
     height: calc(100% - 60px);
 
     .listview-search + .listview.paginated {
@@ -91,7 +116,6 @@
   }
 
   .toolbar {
-
     .searchfield-wrapper {
       width: 35px;
 
@@ -114,18 +138,76 @@
     }
   }
 
+  .panel-header {
+    height: auto;
+    padding-right: 0;
+
+    .toolbar {
+      margin-bottom: 0;
+    }
+  }
+
+  .card-header {
+    height: auto;
+    padding: 2px 15px 2px 20px;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    .list-detail-list-close-button {
+      display: none;
+    }
+
+    h2 {
+      margin: 7px 0;
+    }
+
+    button {
+      float: right;
+    }
+  }
+
+  &.bleeding-edge {
+    .list-detail-back-button {
+      opacity: 1;
+    }
+  }
+
 }
 
-.list-detail-back-button {
+.list-detail-back-button,
+.list-detail-list-close-button {
   display: none;
+}
+
+// RTL Styles
+html[dir='rtl'] {
+  .list-detail {
+    .panel-header {
+      padding-left: 0;
+    }
+  }
 }
 
 // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
 @include respond-to(phone) {
+  .list-detail-back-button,
+  .list-detail-list-close-button {
+    display: inline-block;
+  }
+
+  .card-header {
+    .list-detail-list-close-button {
+      display: inline-block;
+    }
+  }
 
   .list-detail {
-    .main,
-    .sidebar {
+    overflow: hidden;
+
+    > .main,
+    > .sidebar {
       @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
       position: absolute;
 
@@ -136,27 +218,52 @@
       }
     }
 
-    .main {
+    > .main {
       @include css3(transform, translateX(100%));
     }
 
-    .sidebar {
+    > .sidebar {
       @include css3(transform, translateX(0));
     }
 
-    &.show-detail {
-      .main {
+    &.bleeding-edge__phone {
+      > .main {
         @include css3(transform, translateX(0));
+        width: 100%;
       }
 
-      .sidebar {
-        @include css3(transform, translateX(-100%));
+      > .sidebar {
+        @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94),
+          box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
+        @include drawer-box-shadow;
+        max-width: 75%;
+        width: 275px;
+        z-index: 2;
       }
     }
-  }
 
-  .list-detail-back-button {
-    display: inline-block;
+    &.show-detail {
+      &:not(.bleeding-edge__phone, .bleeding-edge__tablet) {
+        > .main {
+          @include css3(transform, translateX(0));
+        }
+      }
+
+      > .sidebar {
+        @include css3(transform, translateX(-100%));
+      }
+
+      &.bleeding-edge__phone {
+        > .sidebar {
+          //@include css3(transform, translateX(-100%));
+          box-shadow: 0 0 0 1px $box-shadow-off-color;
+        }
+
+        .list-detail-back-button {
+          opacity: 1;
+        }
+      }
+    }
   }
 
   // Remove excess left-margin in this scenario
@@ -167,5 +274,55 @@
   //Make this color target specifically header
   .header .searchfield-wrapper:not(.context) input {
     color: $header-text-color;
+  }
+}
+
+@include respond-to(tabletdown) {
+  .list-detail.bleeding-edge__tablet {
+    overflow: hidden;
+
+    .card-header {
+      .list-detail-list-close-button {
+        display: inline-block;
+      }
+    }
+
+    .list-detail-back-button,
+    .list-detail-list-close-button {
+      display: inline-block;
+    }
+
+    > .main,
+    > .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      position: absolute;
+
+      &.scrollable,
+      &.scrollable-y {
+        height: 100%;
+        overflow: auto;
+      }
+    }
+
+    > .main {
+      @include css3(transform, translateX(0));
+      width: 100%;
+    }
+
+    > .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94),
+        box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
+      @include drawer-box-shadow;
+      max-width: 75%;
+      width: 275px;
+      z-index: 2;
+    }
+
+    &.show-detail {
+      > .sidebar {
+        @include css3(transform, translateX(-100%));
+        box-shadow: 0 0 0 1px $box-shadow-off-color;
+      }
+    }
   }
 }

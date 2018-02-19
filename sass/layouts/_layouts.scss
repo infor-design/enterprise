@@ -104,18 +104,25 @@ body.no-scroll {
 
     .listview {
       background-color: $body-bg-color;
-      height: calc(100% - 70px);
 
       &.paginated {
-        height: calc(100% - 108px);
+        height: calc(100% - 38px);
       }
     }
 
-    .listview-search + .listview {
+    .header + .listview {
+      height: calc(100% - 60px);
+
+      &.paginated {
+        height: calc(100% - 98px);
+      }
+    }
+
+    > .listview-search + .listview {
       height: calc(100% - 90px);
 
       &.paginated {
-        height: calc(100% - 140px);
+        height: calc(100% - 134px);
       }
     }
   }
@@ -297,7 +304,7 @@ body.no-scroll {
       .sidebar {
         display: block;
         // scss-lint:disable ImportantRule
-        width: 100% !important; //Override Inline Css
+        width: 100%; //Override Inline Css
         // scss-lint:enable ImportantRule
       }
     }

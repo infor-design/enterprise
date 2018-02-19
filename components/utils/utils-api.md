@@ -32,6 +32,7 @@
 -   [safeSetSelection](#safesetselection)
 -   [mergeSettings](#mergesettings)
 -   [isHTML](#ishtml)
+-   [convertToHTMLElement](#converttohtmlelement)
 -   [convertDelayToFPS](#convertdelaytofps)
 -   [convertFPSToDelay](#convertfpstodelay)
 
@@ -349,6 +350,18 @@ Test if a string is Html or not
 -   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The string to test.
 
 Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if it is html.
+
+## convertToHTMLElement
+
+Converts an element wrapped in a jQuery collection down to its original HTMLElement reference.
+If an HTMLElement is passed in, simply returns it.
+If anything besides HTMLElements or jQuery\[] is passed in, returns undefined;
+
+**Parameters**
+
+-   `item` **any** the item being evaluated
+
+Returns **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** the unwrapped item, or nothing.
 
 ## convertDelayToFPS
 
