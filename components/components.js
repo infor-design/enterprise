@@ -26,6 +26,7 @@ export { ExpandableArea } from './expandablearea/expandablearea';
 export { Modal } from './modal/modal';
 export { About } from './about/about';
 export { Line } from './line/line';
+export { ListBuilder } from './listbuilder/listbuilder';
 export { ListView } from './listview/listview';
 export { SohoMaskedInput as MaskedInput } from './mask/masked-input';
 export { Message } from './message/message';

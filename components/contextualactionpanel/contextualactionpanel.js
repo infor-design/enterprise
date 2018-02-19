@@ -327,6 +327,17 @@ ContextualActionPanel.prototype = {
   },
 
   /**
+   * Update the component and optionally apply new settings.
+   *
+   * @param  {object} settings the settings to update to.
+   * @returns {object} The plugin api for chaining.
+   */
+  updated(settings) {
+    this.settings = utils.mergeSettings(this.element, settings, this.settings);
+    return this;
+  },
+
+  /**
   * Destroy and remove added markup and events
   * @returns {void}
   */
