@@ -17,7 +17,7 @@ Soho.Locale.addCulture('ar-EG', {
       dateFormat: {
         separator: '/', // Infered
         timeSeparator: ':',
-        short: 'yyyy/M/d', // use four digit year
+        short: 'yyyy/M/dd', // use four digit year
         medium: 'yyyy/MM/dd',
         long: 'yyyy MMMM، d',
         full: 'EEEE، yyyy MMMM، d',
