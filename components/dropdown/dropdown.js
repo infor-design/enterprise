@@ -572,7 +572,7 @@ Dropdown.prototype = {
       const cssClasses = option.className;
       const toExclude = ['data-badge', 'data-badge-color', 'data-val', 'data-icon'];
       const attributesToCopy = self.getDataAttributes(attributes, toExclude);
-      const trueValue = value && value.value ? value.value : text;
+      const trueValue = value && 'value' in value ? value.value : text;
       const iconHtml = self.listIcon.hasIcons ? self.listIcon.items[index].html : '';
 
       if (cssClasses.indexOf('clear') > -1) {
