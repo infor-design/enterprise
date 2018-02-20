@@ -1,0 +1,15 @@
+// Radar (AKA Gap) Chart
+//==================================================//
+
+.chart-radar {
+
+  .chart-radar-grid-circle {
+    fill: $chart-line-color;
+    stroke: $chart-line-color;
+  }
+
+  .chart-radar-area {
+    cursor: pointer;
+  }
+
+}

@@ -41,7 +41,7 @@
             toolbar: { title: 'Products', actions: true, results: true, keywordFilter: false, personalize: true, filterRow: true, rowHeight: true },
             source: function (req, response) {
                console.log('lookup source', req);
-               var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+               var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
                if (req.sortId) {
                   url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
