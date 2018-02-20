@@ -52,6 +52,7 @@
           }
         },
         source: function(req, response) {
+          console.log(req, response);
           var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
           if (req.sortId) {
@@ -76,7 +77,7 @@
             response(res.data, req);
           });
         },
-        toolbar: {title: 'Data Grid Header Title', personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+        toolbar: {title: 'Data Grid Header Title',filterRow: true, personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
       }).on('selected', function (e, args) {
         console.log(args);
       });

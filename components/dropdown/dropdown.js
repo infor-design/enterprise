@@ -1187,7 +1187,7 @@ Dropdown.prototype = {
   /**
    * Handle the typeahead.
    * @private
-   * @param  {object} e The event object
+   * @param {object} e The event object
    */
   handleAutoComplete(e) {
     if (this.isLoading()) {
@@ -1197,7 +1197,7 @@ Dropdown.prototype = {
     const self = this;
     clearTimeout(this.timer);
 
-    if (!self.settings.source) {
+    if (!self.settings.source && !self.settings.noSearch) {
       return;
     }
 
@@ -1205,6 +1205,11 @@ Dropdown.prototype = {
     self.filterTerm += $.actualChar(e);
 
     this.timer = setTimeout(() => {
+      if (self.settings.noSearch) {
+        self.selectStartsWith(self.filterTerm);
+        return;
+      }
+
       if (!self.isOpen()) {
         self.searchInput.val(self.filterTerm);
         self.toggleList();
@@ -1392,6 +1397,12 @@ Dropdown.prototype = {
 
     if (!this.settings.multiple && this.initialFilter) {
       setTimeout(() => {
+        if (self.settings.noSearch) {
+          const selectedOptions = self.element[0].selectedOptions;
+          self.searchInput.val(selectedOptions.length > 0 ? selectedOptions[0].innerText : '');
+          return;
+        }
+
         self.searchInput.val(self.filterTerm);
         self.filterList(self.searchInput.val());
       }, 0);
@@ -2088,6 +2099,43 @@ Dropdown.prototype = {
   },
 
   /**
+   * Select the next item that starts with a given character (text of the option).
+   * @param {string} char - The starting letter to match for. (Case insensitive)
+   */
+  selectStartsWith(char) {
+    if (typeof char === 'string') {
+      const elem = this.element[0];
+      const selectedIndex = elem.selectedIndex;
+      this.filterTerm = '';
+
+      let newIdx = -1;
+
+      for (let i = 0; i < elem.options.length; i++) {
+        const option = elem.options[i];
+        // Check if its a match (Case insensitive)
+        const isMatch = option.innerText.toLowerCase().indexOf(char) === 0;
+
+        // If already a selected item that starts with it, find the next.
+        if (i === selectedIndex) {
+          continue;
+        }
+
+        if (isMatch) {
+          newIdx = i;
+          break;
+        }
+      }
+
+      // Set the selected element
+      if (newIdx > -1) {
+        elem.selectedIndex = newIdx;
+        this.updated();
+        this.element.trigger('change');
+      }
+    }
+  },
+
+  /**
    * Set the bade on the option from the config.
    * @private
    * @param {string} option - A string containing the value to look for. (Case insensitive)
@@ -2444,6 +2492,7 @@ Dropdown.prototype = {
       if (!self.settings.noSearch && e.keyCode !== 27) {
         self.toggleList();
       }
+
       self.handleAutoComplete(e);
     }).on('click.dropdown', (e) => {
       // landmark would like the click event to bubble up if ctrl and shift are pressed

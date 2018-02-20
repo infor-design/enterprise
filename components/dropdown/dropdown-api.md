@@ -8,6 +8,7 @@
     -   [close](#close)
     -   [isOpen](#isopen)
     -   [selectValue](#selectvalue)
+    -   [selectStartsWith](#selectstartswith)
     -   [disable](#disable)
     -   [isDisabled](#isdisabled)
     -   [enable](#enable)
@@ -75,6 +76,14 @@ Select an option by the value.
 **Parameters**
 
 -   `value` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A string containing the value to look for. (Case insensitive)
+
+### selectStartsWith
+
+Select the next item that starts with a given character (text of the option).
+
+**Parameters**
+
+-   `char` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The starting letter to match for. (Case insensitive)
 
 ### disable
 

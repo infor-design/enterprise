@@ -2,19 +2,17 @@
   <div class="six columns">
 
     <h2>Dropdown Test: No Searching/Filtering</h2>
-
     <p>
-      The dropdown control can have it's searching/filtering functionality disabled by way of setting the "noSearch" option to true.
+      The dropdown control can have it's autocomplete functionality disabled by way of setting
+      the "noSearch" option to true. In this mode you can type the first character to select.
+      Additionally, <a class="hyperlink" href="http://jira.infor.com/browse/HFC-3407" target="_blank">
+        there was a bug</a> in iOS that prevented this from working properly before
     </p>
-
-    <p><b>NOTE:</b> <a class="hyperlink" href="http://jira.infor.com/browse/HFC-3407" target="_blank">There was a bug</a> in iOS that prevented this from working properly before</p>
-
-    <p></p>
 
   </div>
 </div>
 
-<div class="row">
+<div class="row top-padding">
   <div class="twelve columns">
 
     <div class="field">
@@ -45,3 +43,9 @@
 
   </div>
 </div>
+
+<script>
+  $('#nosearch-dropdown').on('change', function () {
+    console.log($(this).val());
+  });
+</script>
