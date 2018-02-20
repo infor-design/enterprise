@@ -2,18 +2,72 @@
 
 ### Table of Contents
 
--   [DatePicker](#datepicker)
-    -   [isOpen](#isopen)
-    -   [open](#open)
-    -   [close](#close)
-    -   [setValue](#setvalue)
-    -   [enable](#enable)
+-   [DATEPICKER_DEFAULTS](#datepicker_defaults)
     -   [disable](#disable)
+-   [DatePicker](#datepicker)
+    -   [enable](#enable)
+    -   [disable](#disable-1)
     -   [readonly](#readonly)
-    -   [setToday](#settoday)
+    -   [getCurrentDate](#getcurrentdate)
     -   [updated](#updated)
+    -   [teardown](#teardown)
     -   [destroy](#destroy)
-    -   [handleEvents](#handleevents)
+-   [listopened](#listopened)
+-   [change](#change)
+-   [listclosed](#listclosed)
+-   [input](#input)
+
+## DATEPICKER_DEFAULTS
+
+Default DatePicker Options
+
+**Properties**
+
+-   `showTime` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the time selector will be shown.
+-   `timeFormat` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Format to use time section fx HH:mm,
+     defaults current locale settings.
+-   `minuteInterval` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** 
+-   `secondInterval` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** 
+-   `mode` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Time picker options: 'standard', 'range',
+     this controls the time picker.
+-   `roundToInterval` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** In time picker mode, if a non-matching
+     minutes value is entered,
+     rounds the minutes value to the nearest interval when the field is blurred.
+-   `dateFormat` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Defaults to current locale but can be
+     overriden to a specific format, like like 'yyyy-MM-dd' iso8601 format.
+-   `disable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Disabled Dates Build up. `{
+    'dates'     : [],
+    'minDate'   : '',
+    'maxDate'   : '',
+    'dayOfWeek' : [],
+    'isEnable' : false
+    }`
+-   `showMonthYearPicker` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the month and year will render
+     as dropdowns.
+-   `hideDays` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the days portion of the calendar will be hidden.
+     Usefull for Month/Year only formats.
+-   `customValidation` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the internal validation is disabled.
+-   `advanceMonths` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** The number of months in each direction to show in
+     the dropdown for months (when initially opening)
+-   `showLegend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true a legend is show to associate dates.
+-   `legend` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Legend Build up
+    for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
+    {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
+-   `calendarName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The name of the calendar to use in instance of
+    multiple calendars. At this time only ar-SA and ar-EG locales have either
+    'gregorian' or 'islamic-umalqura' as valid values.
+
+### disable
+
+Disabling of dates
+   dates: 'M/d/yyyy' or
+     ['M/d/yyyy'] or
+     ['M/d/yyyy', new Date('M/d/yyyy')] or
+     ['M/d/yyyy', new Date('M/d/yyyy'), new Date(yyyy,(M-0),d)]
+   minDate: 'M/d/yyyy'
+   maxDate: 'M/d/yyyy'
+   dayOfWeek: [2] or [0,6] - {0-sun, 1-mon, 2-tue, 3-wed, 4-thu, 5-fri, 6-sat}
+   isEnable: false or true
 
 ## DatePicker
 
@@ -21,80 +75,83 @@ A component to support date entry.
 
 **Parameters**
 
--   `showTime` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the time selector will be shown.
--   `timeFormat` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The format to use on the time section fx HH:mm, defaults to current locale's settings.
--   `mode` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Time picker mode: options: 'standard', 'range', this controls the avilable selections in the time picker.
--   `roundToInterval` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  In time picker mode, if a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
--   `dateFormat` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Defaults to current locale but can be overriden to a specific format
--   `disable` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Disabled Dates Build up. `{
-    'dates'     : [],
-    'minDate'   : '',
-    'maxDate'   : '',
-    'dayOfWeek' : [],
-    'isEnable' : false
-    }`
--   `showMonthYearPicker` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the month and year will render as dropdowns.
--   `hideDays` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
--   `customValidation` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the internal validation is disabled.
--   `advanceMonths` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  The number of months in each direction to show in the dropdown for months (when initially opening)
--   `showLegend` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true a legend is show to associate dates.
--   `legend` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
--   `calendarName` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The name of the calendar to use in instance of multiple calendars. At this time only ar-SA and ar-EG locales have either 'gregorian' or 'islamic-umalqura' as valid values.
-
-### isOpen
-
-Return whether or not the calendar div is open.
-
-### open
-
-Open the Calendar Popup.
-
-### close
-
-Close the calendar popup.
-
-### setValue
-
-Set the Formatted value in the input
-
-**Parameters**
-
--   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to set in date format.
--   `trigger` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true will trigger the change event.
+-   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
+-   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
 
 ### enable
 
 Set input to enabled.
 
+Returns **void** 
+
 ### disable
 
 Set input to disabled.
+
+Returns **void** 
 
 ### readonly
 
 Set input to readonly.
 
-### setToday
+Returns **void** 
 
-Set to todays date in current format.
+### getCurrentDate
+
+Get the current date from the field. In date format
+
+Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** the set date object
 
 ### updated
 
-Updates the component instance.  Can be used after being passed new settings.
-
-Returns **this** 
-
-### destroy
-
-Remove all events and reset back to default.
-
-### handleEvents
-
-This component fires the following events.
+Updates the component instance. Can be used after being passed new settings.
 
 **Parameters**
 
--   `listopened` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is opened
--   `listclosed` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the calendar popup is closed
--   `change` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by any means.
--   `input` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction.
+-   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+
+### teardown
+
+Removes event bindings from the instance.
+
+Returns **void** 
+
+### destroy
+
+Destroy and remove added markup, reset back to default
+
+Returns **void** 
+
+## listopened
+
+Fires as the calendar popup is opened.
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+
+## change
+
+Fires after the value in the input is changed by any means.
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+
+## listclosed
+
+Fires as the calendar popup is closed.
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+
+## input
+
+Fires after the value in the input is changed by user interaction.
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
