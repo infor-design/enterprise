@@ -1,7 +1,7 @@
-import { Dropdown } from '../../dropdown';
+import { Dropdown } from '../dropdown';
 
-const dropdownHTML = require('../../example-index.html');
-const svg = require('../../../icons/svg.html');
+const dropdownHTML = require('../example-index.html');
+const svg = require('../../icons/svg.html');
 
 let dropdownEl;
 let svgEl;
@@ -21,7 +21,6 @@ describe('Dropdown updates, events', () => {
     svgEl = document.body.querySelector('.svg-icons');
     dropdownEl.classList.add('no-init');
     dropdownObj = new Dropdown(dropdownEl);
-    dropdownObj.init();
   });
 
   afterEach(() => {
