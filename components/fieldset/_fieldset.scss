@@ -25,6 +25,14 @@ fieldset,
   + fieldset {
     margin-top: 30px;
   }
+
+  .row .column,
+  .row .columns {
+    margin-left: 0;
+    margin-right: 20px;
+    padding: 0;
+  }
+
 }
 
 .expandable-area .row:not(:first-child) fieldset {

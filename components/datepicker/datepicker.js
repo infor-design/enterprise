@@ -1208,11 +1208,11 @@ DatePicker.prototype = {
       });
 
       // Localize Month Name
-      this.yearFist = this.currentCalendar.dateFormat.year && this.currentCalendar.dateFormat.year.substr(1, 1) === 'y';
+      this.yearFirst = this.currentCalendar.dateFormat.year && this.currentCalendar.dateFormat.year.substr(1, 1) === 'y';
       this.header.find('.month').attr('data-month', month).text(`${monthName} `);
       this.header.find('.year').text(` ${year}`);
 
-      if (this.yearFist && !this.isIslamic) {
+      if (this.yearFirst && !this.isIslamic && !Locale.isRTL()) {
         elementDate.setFullYear(year);
         const translation = Locale.formatDate(elementDate, { date: 'year' });
         const justYear = translation.split(' ')[0];
@@ -1377,7 +1377,7 @@ DatePicker.prototype = {
         self.showMonth(self.currentMonth, self.currentYear, true);
       });
 
-    if (this.yearFist) {
+    if (this.yearFirst) {
       yearSpan.find('.dropdown-wrapper').css('left', '0');
       monthSpan.find('.dropdown-wrapper').css('left', '10px');
     }
@@ -1678,6 +1678,14 @@ DatePicker.prototype = {
     const h24 = `${h}:${m} + ${(this.isSeconds ? `:${s}` : '')}`;
 
     return isHours24 ? h24 : h12;
+  },
+
+  /**
+   * Get the current date from the field. In date format
+   * @returns {Date} the set date object
+   */
+  getCurrentDate() {
+    return this.currentDate;
   },
 
   /**

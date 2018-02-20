@@ -7,6 +7,7 @@
     -   [close](#close)
     -   [disable](#disable)
     -   [enable](#enable)
+    -   [updated](#updated)
     -   [destroy](#destroy)
 
 ## CONTEXTUALACTIONPANEL_DEFAULTS
@@ -46,6 +47,16 @@ Returns **void**
 Remove disabled attribute from the main component element.
 
 Returns **void** 
+
+### updated
+
+Update the component and optionally apply new settings.
+
+**Parameters**
+
+-   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** the settings to update to.
+
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The plugin api for chaining.
 
 ### destroy
 

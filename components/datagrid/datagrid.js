@@ -310,6 +310,7 @@ Datagrid.prototype = {
       $(this.element).removeClass('is-gridlist');
     }
 
+    this.isInitialRender = true;
     self.table.empty();
     self.clearHeaderCache();
     self.renderRows();
@@ -2744,7 +2745,7 @@ Datagrid.prototype = {
     this.totalWidth += col.hidden || lastColumn ? 0 : colWidth;
 
     // For the last column stretch it if it doesnt fit the area
-    if (lastColumn) {
+    if (lastColumn && this.isInitialRender) {
       const diff = this.elemWidth - this.totalWidth;
 
       if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
@@ -2758,6 +2759,7 @@ Datagrid.prototype = {
       } else if (!isNaN(this.totalWidth)) {
         this.table.css('width', this.totalWidth);
       }
+      this.isInitialRender = false;
     }
 
     if (!this.widthPercent && colWidth === undefined) {
@@ -3443,7 +3445,7 @@ Datagrid.prototype = {
     this.element.trigger('columnchange', [{ type: 'resizecolumn', index: idx, columns: this.settings.columns }]);
     this.saveColumns();
     this.saveUserSettings();
-    this.clearHeaderCache();
+    this.headerWidths[idx].width = width;
   },
 
   /**
