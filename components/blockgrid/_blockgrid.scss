@@ -6,6 +6,7 @@
   text-align: left;
 
   .block {
+    border: 1px solid transparent;
     border-radius: 3px;
     display: inline-block;
     margin: 20px 0 0 20px;
@@ -69,9 +70,11 @@
 
       input.checkbox {
         + label {
+          outline: none;
           position: absolute;
           right: 0;
           top: 7px;
+          z-index: 100;
         }
       }
     }

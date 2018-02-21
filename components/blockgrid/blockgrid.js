@@ -68,10 +68,7 @@ Blockgrid.prototype = {
 
     $('.block').hover((e) => {
       const blockEl = $(e.currentTarget);
-
-      if (s.selectable === 'multiple' || s.selectable === 'mixed') {
-        blockEl.find('.checkbox-label').css('display', 'block');
-      }
+      blockEl.find('.checkbox-label').css('display', 'block');
     }, (e) => {
       const blockEl = $(e.currentTarget);
       const cboxVal = blockEl.find('.checkbox')[0].checked;
@@ -80,22 +77,41 @@ Blockgrid.prototype = {
         blockEl.find('.checkbox-label').css('display', 'none');
       }
     }).on('click', (e) => {
-      const blockEl = $(e.currentTarget);
+      if (e.target.tagName !== 'LABEL' && e.target.tagName !== 'INPUT') {
+        const blockEl = $(e.currentTarget);
 
-      if (s.selectable === 'single' || s.selectable === 'mixed') {
-        $('.block').removeClass('is-activated');
-        if (blockEl) {
-          blockEl.addClass('is-activated');
+        if (s.selectable === 'single' || s.selectable === 'mixed') {
+          if (blockEl) {
+            if (s.selectable === 'single') {
+              $('.block').removeClass('is-activated');
+              blockEl.addClass('is-activated');
+              $('.block').find('.checkbox').prop('checked', false);
+              blockEl.find('.checkbox').prop('checked', true);
+              $('.block').find('.checkbox-label').css('display', 'none');
+              blockEl.find('.checkbox-label').css('display', 'block');
+            } else if (s.selectable === 'mixed' && !blockEl.hasClass('is-activated')) {
+              $('.block').removeClass('is-activated');
+              blockEl.addClass('is-activated');
+
+              $('.block').find('.checkbox-label').css('display', 'none');
+              blockEl.find('.checkbox-label').css('display', 'block');
+
+              $('.block.is-selected').find('.checkbox-label').css('display', 'block');
+            } else if (s.selectable === 'mixed' && blockEl.hasClass('is-activated')) {
+              blockEl.removeClass('is-activated');
+              blockEl.find('.checkbox-label').css('display', 'none');
+            }
+          }
         }
-      }
 
-      if (s.selectable === 'multiple') {
-        if (blockEl.hasClass('is-activated')) {
-          blockEl.removeClass('is-activated', 'is-selected');
-          blockEl.find('.checkbox').attr('checked', false);
-        } else {
-          blockEl.addClass('is-activated', 'is-selected');
-          blockEl.find('.checkbox').attr('checked', true);
+        if (s.selectable === 'multiple') {
+          if (blockEl.hasClass('is-activated')) {
+            blockEl.removeClass('is-activated', 'is-selected');
+            blockEl.find('.checkbox').prop('checked', false);
+          } else {
+            blockEl.addClass('is-activated', 'is-selected');
+            blockEl.find('.checkbox').prop('checked', true);
+          }
         }
       }
     });
@@ -106,12 +122,16 @@ Blockgrid.prototype = {
 
       if (!cboxVal) {
         blockEl.addClass('is-selected');
+        if (s.selectable === 'multiple') {
+          blockEl.addClass('is-activated');
+        }
       } else {
         blockEl.removeClass('is-selected');
         if (s.selectable === 'multiple') {
           blockEl.removeClass('is-activated');
         }
       }
+      e.stopPropagation();
     });
 
     this.element.on(`updated.${COMPONENT_NAME}`, () => {
