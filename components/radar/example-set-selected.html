@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Radar Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="radar-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+      <button class="btn-secondary" type="button" id="btn-set-selected">Set selected</button>
+  </div>
+  <div class="one column">&nbsp;</div>
+  <div class="two columns">
+      <button class="btn-secondary" type="button" id="btn-toggle-selecteion">Toggle selecteion</button>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+  var radarData = [{
+    data: [
+  		{name: 'Battery Life', value: 0.22},
+  		{name: 'Brand', value: 0.28},
+  		{name: 'Contract Cost', value: 0.29},
+  		{name: 'Design And Quality', value: 0.17},
+  		{name: 'Internet Connectivity', value: 0.22},
+  		{name: 'Large Screen', value: 0.02},
+  		{name: 'Price Of Device', value: 0.21}
+    ],
+    name: 'iPhone X',
+    id: '1'
+  }, {
+    data: [
+      {name: 'Battery Life', value: 0.27},
+      {name: 'Brand', value: 0.16},
+      {name: 'Contract Cost', value: 0.35},
+      {name: 'Design And Quality', value: 0.13},
+      {name: 'Internet Connectivity', value: 0.20},
+      {name: 'Large Screen', value: 0.13},
+      {name: 'Price Of Device', value: 0.35}
+    ],
+    name: 'Samsung',
+    id: '2'
+  }, {
+    data: [
+      {name: 'Battery Life', value: 0.26},
+      {name: 'Brand', value: 0.10},
+      {name: 'Contract Cost', value: 0.30},
+      {name: 'Design And Quality', value: 0.14},
+      {name: 'Internet Connectivity', value: 0.22},
+      {name: 'Large Screen', value: 0.04},
+      {name: 'Price Of Device', value: 0.41}
+    ],
+    name: 'Nokia Smartphone',
+    id: '3'
+  }];
+
+  var api = $('#radar-chart-example').chart({type: 'radar', dataset: radarData})
+    .on('selected', function (e, args) {
+      console.log(args);
+    })
+    .on('unselected', function (e, args) {
+      console.log(args);
+    }).data('chart');
+
+  var setOptions = function() {
+    // Use field "name" to select
+    options = {
+      fieldName: 'id',
+      fieldValue: 2
+    };
+
+    // Use index to select
+    // options = { index: 2 };
+
+    // Use jQuery object to select
+    // options = { elem: elem.find('.arc:eq(3)') };
+
+    // Use data to select
+    // options = { data: pieData[0].data[2] };
+  };
+
+  // Set selected
+  $('#btn-set-selected').on('click', function() {
+    setOptions();
+    api.setSelected(options);
+  });
+
+  // Toggle selecteion
+  $('#btn-toggle-selecteion').on('click', function() {
+    setOptions();
+    api.toggleSelected(options);
+  });
+
+
+});
+</script>

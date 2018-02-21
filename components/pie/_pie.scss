@@ -83,6 +83,11 @@
   }
 }
 
+
+.auto-height .chart-pie svg {
+  min-height: 240px;
+}
+
 // A bit different tooltip style
 .is-pie.tooltip {
   font-weight: normal;

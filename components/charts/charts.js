@@ -18,6 +18,43 @@ charts.tooltipSize = function tooltipSize(content) {
 };
 
 /**
+ * Format the value based on settings.
+ * @private
+ * @param  {object} data The data object.
+ * @param  {object} settings The sttings to use
+ * @returns {string} the formatted string.
+ */
+charts.formatToSettings = function formatToSettings(data, settings) {
+  const d = data.data ? data.data : data;
+
+  if (settings.show === 'value') {
+    return settings.formatter ? d3.format(settings.formatter)(d.value) : d.value;
+  }
+
+  if (settings.show === 'label') {
+    return d.name;
+  }
+
+  if (settings.show === 'label (percent)') {
+    return `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)`;
+  }
+
+  if (settings.show === 'label (value)') {
+    return `${d.name} (${settings.formatter ? d3.format(settings.formatter)(d.value) : d.value})`;
+  }
+
+  if (settings.show === 'percent') {
+    return `${isNaN(d.percentRound) ? 0 : d.percentRound}%`;
+  }
+
+  if (typeof settings.show === 'function') {
+    return settings.show(d);
+  }
+
+  return d.value;
+};
+
+/**
 * Add Toolbar to the page.
 * @private
 * @param {string} extraClass class to add (needed for pie)

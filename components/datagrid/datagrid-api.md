@@ -178,6 +178,10 @@ The Datagrid Component displays and process data in tabular format.
 
 Render or render both the header and row area.
 
+**Parameters**
+
+-   `isToggleFilter` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Check if toggle filter row
+
 ### addRow
 
 Add a row of data to the grid and dataset.

@@ -10,23 +10,56 @@ const COMPONENT_NAME = 'radar';
 * @namespace
 * @property {array} dataset The data to use in the radar
 * @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
-* @property {boolean} margin The margins of the SVG, you may want to adjust
+* @property {object} margin The margins of the SVG, you may want to adjust
 * depending on text location.
+* @property {number} levels How many levels or inner circles should there be drawn.
+* @property {number} maxValue What is the value that the biggest circle will represent
+* @property {number} labelFactor How far out than the outer circle should the labels be placed,
+* this may be useful to adjust for some labels.
+* @property {boolean} showCrosslines Set to false to hide the cross line axes.
+* @property {boolean} showAxisLabels Set to false to hide percent labels.
+* @property {number} wrapWidth The number of pixels after which a label needs to be
+* given a new line. You may want to change this based on label data.
+* @property {number} opacityArea The opacity of the area of the blob.
+* This is set to the correct Infor Style.
+* @property {number} dotRadius The size of the colored circles of each blog.
+* Set to zero to remove dots.
+* @property {number} opacityCircles The opacity of the circles of each blob 0 or .1 are good values.
+* This is set to the correct Infor Style.
+* @property {number} strokeWidth The width of the stroke around each blob.
+* This is set to the correct Infor Style.
+* @property {boolean} roundStrokes If true the area and stroke will follow a
+* round path (cardinal-closed).
+* @property {boolean} showCrosslines If false the axis lines will not be shown in the diagonals.
+* @property {boolean} showAxisLabels If false the axis labels will not be shown.
+* @property {array} colors An array of colors to use.
+* @property {boolean} showTooltips If false now tooltips will be shown even if
+* @property {object} tooltip A setting that controls the tooltip values and format.
+* @property {string} tooltip.show Controls what is visible in the tooltip, this can be value, label
+* or percent or custom function.
+* @property {object} tooltip.formatter The d3.formatter string.
 */
 const RADAR_DEFAULTS = {
   dataset: [],
   redrawOnResize: true,
-  margin: { top: 20, right: 20, bottom: 20, left: 20 },
-  levels: 5, // How many levels or inner circles should there be drawn
-  maxValue: 0, // What is the value that the biggest circle will represent
-  labelFactor: 1.25, // How far out than the outer circle should the labels be placed
-  wrapWidth: 60, // The number of pixels after which a label needs to be given a new line
-  opacityArea: 0.2, // The opacity of the area of the blob
-  dotRadius: 4, // The size of the colored circles of each blog
-  opacityCircles: 0, // The opacity of the circles of each blob 0 or .1 are good values
-  strokeWidth: 1, // The width of the stroke around each blob
-  roundStrokes: true, // If true the area and stroke will follow a round path (cardinal-closed)
-  color: d3.scaleOrdinal(charts.colorRange) // Color function
+  margin: { top: 40, right: 20, bottom: 40, left: 20 },
+  levels: 4,
+  maxValue: 0,
+  labelFactor: 1.2,
+  wrapWidth: 60,
+  opacityArea: 0.2,
+  dotRadius: 3,
+  opacityCircles: 0,
+  strokeWidth: 1,
+  roundStrokes: true,
+  showCrosslines: true,
+  showAxisLabels: true,
+  colors: charts.colorRange,
+  showTooltips: true,
+  tooltip: {
+    show: 'value', // value, label, label (value) or percent or custom function
+    formatter: '.0%' // or .0% ?
+  }
 };
 
 /**
@@ -84,8 +117,11 @@ Radar.prototype = {
     const settings = self.settings;
     const dims = {
       w: parseInt(this.element.parent().width(), 10), // Width of the circle
-      h: parseInt(this.element.parent().height() - 40, 10), // Height of the circle
+      h: parseInt(this.element.parent().height() - 110, 10), // Height of the circle
     };
+
+    let tooltipInterval;
+    const colors = d3.scaleOrdinal(self.settings.colors);
 
     // If the supplied maxValue is smaller than the actual one, replace by the max in the data
     const maxValue = Math.max(settings.maxValue, d3.max(data, i => d3.max(i.map(o => o.value))));
@@ -111,6 +147,8 @@ Radar.prototype = {
       .attr('width', dims.w + settings.margin.left + settings.margin.right)
       .attr('height', dims.h + settings.margin.top + settings.margin.bottom)
       .attr('class', 'chart-radar');
+
+    this.svg = svg; // Pointer for selection states
 
     // Append a g element
     const g = svg.append('g')
@@ -141,16 +179,18 @@ Radar.prototype = {
       .style('filter', settings.opacityCircles > 0 ? 'url(#glow)' : '');
 
     // Text indicating at what % each level is
-    axisGrid.selectAll('.axis-label')
-      .data(d3.range(1, (settings.levels + 1)).reverse())
-      .enter().append('text')
-      .attr('class', 'axis-label')
-      .attr('x', 4)
-      .attr('y', d => -d * radius / settings.levels)
-      .attr('dy', '0.4em')
-      .style('font-size', '10px')
-      .attr('fill', '#737373')
-      .text(d => Format(maxValue * d / settings.levels));
+    if (this.settings.showAxisLabels) {
+      axisGrid.selectAll('.axis-label')
+        .data(d3.range(1, (settings.levels + 1)).reverse())
+        .enter().append('text')
+        .attr('class', 'axis-label')
+        .attr('x', 4)
+        .attr('y', d => -d * radius / settings.levels)
+        .attr('dy', '0.4em')
+        .style('font-size', '10px')
+        .attr('fill', '#737373')
+        .text(d => Format(maxValue * d / settings.levels));
+    }
 
     // Draw the axes
 
@@ -161,15 +201,16 @@ Radar.prototype = {
       .append('g')
       .attr('class', 'axis');
 
-    // Append the lines
-    axis.append('line')
-      .attr('x1', 0)
-      .attr('y1', 0)
-      .attr('x2', (d, i) => rScale(maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2))
-      .attr('y2', (d, i) => rScale(maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2))
-      .attr('class', 'line')
-      .style('stroke', 'white')
-      .style('stroke-width', '2px');
+    // Append the cross lines
+    if (this.settings.showCrosslines) {
+      axis.append('line')
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('x2', (d, i) => rScale(maxValue * 1.05) * Math.cos(angleSlice * i - Math.PI / 2))
+        .attr('y2', (d, i) => rScale(maxValue * 1.05) * Math.sin(angleSlice * i - Math.PI / 2))
+        .attr('class', 'chart-radar-crossline')
+        .style('stroke-width', '1px');
+    }
 
     // Wraps SVG text http://bl.ocks.org/mbostock/7555321
     function wrap(node, width) {
@@ -239,23 +280,28 @@ Radar.prototype = {
       .append('path')
       .attr('class', 'chart-radar-area')
       .attr('d', d => radarLine(d))
-      .style('fill', (d, i) => settings.color(i))
+      .style('fill', (d, i) => colors(i))
       .style('fill-opacity', settings.opacityArea)
-      .on('mouseover', function () {
-        // Dim all blobs
-        d3.selectAll('.chart-radar-area')
-          .transition().duration(200)
-          .style('fill-opacity', 0.1);
-        // Bring back the hovered over blob
-        d3.select(this)
-          .transition().duration(200)
-          .style('fill-opacity', 0.2);
-      })
-      .on('mouseout', () => {
-        // Bring back all blobs
-        d3.selectAll('.chart-radar-area')
-          .transition().duration(200)
-          .style('fill-opacity', settings.opacityArea);
+      .on('click', function (d, i) {
+        // Handle Click to select
+        clearTimeout(tooltipInterval);
+
+        const selectElem = d3.select(this);
+        const isSelected = selectElem.classed('is-selected');
+        svg.selectAll('.is-selected').classed('is-selected', false);
+        svg.selectAll('.is-not-selected').classed('is-not-selected', false);
+
+        if (!isSelected) {
+          svg.selectAll('.chart-radar-area').classed('is-not-selected', true);
+          selectElem.classed('is-selected', true).classed('is-not-selected', false);
+          selectElem.style('fill-opacity', self.settings.opacityArea);
+        }
+
+        self.element.triggerHandler((isSelected ? 'selected' : 'unselected'), {
+          elem: selectElem.nodes(),
+          data: d,
+          index: i
+        });
       });
 
     // Create the outlines
@@ -263,7 +309,7 @@ Radar.prototype = {
       .attr('class', 'chart-radar-stroke')
       .attr('d', d => radarLine(d))
       .style('stroke-width', `${settings.strokeWidth}px`)
-      .style('stroke', (d, i) => settings.color(i))
+      .style('stroke', (d, i) => colors(i))
       .style('fill', 'none')
       .style('filter', settings.opacityCircles > 0 ? 'url(#glow)' : '');
 
@@ -276,7 +322,7 @@ Radar.prototype = {
       .attr('cx', (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
       .attr('cy', (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
       .style('fill', function () {
-        return settings.color($(this.parentNode).index() - 1);
+        return colors($(this.parentNode).index() - 1);
       })
       .style('fill-opacity', 0.7);
 
@@ -289,9 +335,9 @@ Radar.prototype = {
       .attr('class', 'chart-radar-circle-wrapper');
 
     // Set up the small tooltip for when you hover over a circle
-    const tooltip = g.append('text')
-      .attr('class', 'tooltip')
-      .style('opacity', 0);
+    if (settings.showTooltips) {
+      charts.appendTooltip('is-pie');
+    }
 
     // Append a set of invisible circles on top for the mouseover pop-up
     blobCircleWrapper.selectAll('.chart-radar-invisible-circle')
@@ -303,21 +349,34 @@ Radar.prototype = {
       .attr('cy', (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
       .style('fill', 'none')
       .style('pointer-events', 'all')
-      .on('mouseover', function (d) {
-        const newX = parseFloat(d3.select(this).attr('cx')) - 10;
-        const newY = parseFloat(d3.select(this).attr('cy')) - 10;
+      .on('mouseenter', function (d) {
+        const offset = $(this).offset();
+        let content = charts.formatToSettings(d, self.settings.tooltip);
 
-        tooltip
-          .attr('x', newX)
-          .attr('y', newY)
-          .text(Format(d.value))
-          .transition()
-          .duration(200)
-          .style('opacity', 1);
+        if (content.indexOf('<b>') === -1) {
+          content = content.replace('(', '<b>');
+          content = content.replace(')', '</b>');
+        }
+
+        const size = charts.tooltipSize(content);
+        let x = offset.left;
+        let y = offset.top;
+        const padding = 6;
+        x -= (size.width / 2) - padding;
+        y -= size.height + padding;
+
+        // Debounce it a bit
+        if (tooltipInterval != null) {
+          clearTimeout(tooltipInterval);
+        }
+
+        tooltipInterval = setTimeout(() => {
+          charts.showTooltip(x, y, content, 'top');
+        }, 300);
       })
-      .on('mouseout', () => {
-        tooltip.transition().duration(200)
-          .style('opacity', 0);
+      .on('mouseleave', () => {
+        clearTimeout(tooltipInterval);
+        charts.hideTooltip();
       });
   },
 
@@ -367,8 +426,32 @@ Radar.prototype = {
    * @param {object} o The selection data object
    * @param {boolean} isToggle If true toggle the current state.
    */
-  setSelected() {
+  setSelected(o, isToggle) {
+    let selector;
+    let arcIndex;
+    let selected = 0;
 
+    this.svg.selectAll('.chart-radar-area').each(function (d, i) {
+      if (!d) {
+        return;
+      }
+
+      if (selected < 1) {
+        if ((typeof o.fieldName !== 'undefined' &&
+              typeof o.fieldValue !== 'undefined' &&
+                o.fieldValue === d[o.fieldName]) ||
+            (typeof o.index !== 'undefined' && o.index === i) ||
+            (o.elem && $(this).is(o.elem))) {
+          selected++;
+          selector = d3.select(this);
+          arcIndex = i;
+        }
+      }
+    });
+
+    if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+      selector.on('click').call(selector.node(), selector.datum(), arcIndex);
+    }
   },
 
   /**

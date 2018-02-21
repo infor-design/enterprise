@@ -18,23 +18,23 @@ const COMPONENT_NAME = 'pie';
 * @property {boolean|string} animate true|false - will do or not do the animation.
 * 'initial' will do only first time the animation.
 * @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
-* @property {boolean} showTooltips If false now tooltips will be shown even if
 * there is tooltip values provided.
+* will not be shown. If you still want lines at the lower breakpoint you can set this to true
+* @property {boolean} hideCenterLabel If false the center label will not be shown.
 * @property {boolean} showLines If false connector lines wont be shown
 * @property {boolean} showLinesMobile This defaults to false, when false and under 450px the lines
-* will not be shown. If you still want lines at the lower breakpoint you can set this to true
-* @property {boolean} showLegend If false the legend will not be shown.
-* @property {boolean} hideCenterLabel If false the center label will not be shown.
-* @property {string} legendPlacement Where to locate the legend. This can be bottom or right at
-* the moment.
 * @property {object} lines A setting that controls the line values and format.
 * @property {string} line.show Controls the line value, this can be value, label or percent or
 * custom function.
 * @property {object} line.formatter The d3.formatter string.
+* @property {boolean} showLegend If false the legend will not be shown.
+* @property {string} legendPlacement Where to locate the legend. This can be bottom or right at
+* the moment.
 * @property {object} legend A setting that controls the legend values and format.
 * @property {string} legend.show Controls  what is visible in the legend , this can be value,
 * value (percent), label or percent or your own custom function.
 * @property {object} legend.formatter The d3.formatter string.
+* @property {boolean} showTooltips If false now tooltips will be shown even if
 * @property {object} tooltip A setting that controls the tooltip values and format.
 * @property {string} tooltip.show Controls what is visible in the tooltip, this can be value, label
 * or percent or custom function.
@@ -47,19 +47,19 @@ const PIE_DEFAULTS = {
   animate: true,
   redrawOnResize: true,
   hideCenterLabel: false,
-  showTooltips: true,
   showLines: true,
   showLinesMobile: false,
-  showLegend: true,
-  legendPlacement: 'right', // Can be bottom or right
   lines: {
     show: 'value', // value, label or percent or custom function
     formatter: '.0f'
   },
+  showLegend: true,
+  legendPlacement: 'right', // Can be bottom or right
   legend: {
     show: 'label (percent)', // value, label, label (percent) or percent or custom function
     formatter: '.0f'
   },
+  showTooltips: true,
   tooltip: {
     show: 'label (value)', // value, label, label (value) or percent or custom function
     formatter: '.0f'
@@ -214,7 +214,7 @@ Pie.prototype = {
 
     if (this.settings.showLegend) {
       const series = self.chartData.map(function (d) {
-        let name = self.formatToSettings(d, self.settings.legend);
+        let name = charts.formatToSettings(d, self.settings.legend);
 
         if (self.settings.legendFormatter) {
           name = `${d.name} (${d3.format(self.settings.legendFormatter)(d.value)})`;
@@ -400,7 +400,7 @@ Pie.prototype = {
           }
         };
 
-        const value = self.formatToSettings(d, self.settings.tooltip);
+        const value = charts.formatToSettings(d, self.settings.tooltip);
         content = d.data.tooltip || value;
         content = content.replace('{{percent}}', `${d.data.percentRound}%`);
         content = content.replace('{{value}}', d.value);
@@ -461,7 +461,7 @@ Pie.prototype = {
         .append('text')
         .attr('dy', '.35em')
         .text(function (d) {
-          return self.formatToSettings(d, self.settings.lines);
+          return charts.formatToSettings(d, self.settings.lines);
         })
         .merge(text)
         .transition()
@@ -564,43 +564,6 @@ Pie.prototype = {
         selector.on('click').call(selector.node(), selector.datum(), i);
       }
     });
-  },
-
-  /**
-   * Format the value based on settings.
-   * @private
-   * @param  {object} data The data object.
-   * @param  {object} settings The sttings to use
-   * @returns {string} the formatted string.
-   */
-  formatToSettings(data, settings) {
-    const d = data.data ? data.data : data;
-
-    if (settings.show === 'value') {
-      return settings.formatter ? d3.format(settings.formatter)(d.value) : d.value;
-    }
-
-    if (settings.show === 'label') {
-      return d.name;
-    }
-
-    if (settings.show === 'label (percent)') {
-      return `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)`;
-    }
-
-    if (settings.show === 'label (value)') {
-      return `${d.name} (${settings.formatter ? d3.format(settings.formatter)(d.value) : d.value})`;
-    }
-
-    if (settings.show === 'percent') {
-      return `${isNaN(d.percentRound) ? 0 : d.percentRound}%`;
-    }
-
-    if (typeof settings.show === 'function') {
-      return settings.show(d);
-    }
-
-    return d.value;
   },
 
   /**

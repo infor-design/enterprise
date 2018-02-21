@@ -1,5 +1,5 @@
+import axe from 'axe-core'; //eslint-disable-line
 import { Dropdown } from '../dropdown';
-import axe from 'axe-core';
 
 const axeOptions = {
   runOnly: {
@@ -48,7 +48,6 @@ describe('Dropdown ARIA', () => {
     expect(document.querySelector('[aria-controls="dropdown-list"]')).toBeTruthy();
     done();
   });
-
 
   it('Should be accessible on init (Section 508)', (done) => {
     axe.run(document.body, axeOptions, (err, { violations }) => {

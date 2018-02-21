@@ -6,7 +6,7 @@
         <div class="widget-header">
           <h2 class="widget-title">Taxes and Deductions</h2>
         </div>
-        <div class="widget-content">
+        <div class="widget-content" style="height: 400px">
           <div id="pie-chart-example" class="chart-container">
           </div>
         </div>
@@ -53,10 +53,7 @@ $('body').on('initialized', function () {
   $('#pie-chart-example').chart({
     type: 'pie',
     dataset: pieData,
-    labels: {
-      isTwoline: false,
-      contentsTop: 'name (percentage)'
-    }
+    showLines: false
   });
 
 });

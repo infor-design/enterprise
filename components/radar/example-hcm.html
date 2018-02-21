@@ -1,19 +1,22 @@
 
-# Radar Chart  [Learn More](#)
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Radar Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="radar-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
 
-## Configuration Options
+{{={{{ }}}=}}
 
-1. Radar Chart Main Example [View Example]( ../components/radar/example-index)
-
-## API Details
-
-{{api-details}}
-
-## Code Example
-
-This example shows how to invoke a pie bar chart with a dataset controlling the values.
-
-```javascript
+<script>
+$('body').on('initialized', function () {
 
   var radarData = [{
       data: [
@@ -43,24 +46,16 @@ This example shows how to invoke a pie bar chart with a dataset controlling the 
 			]
     }];
 
-  $('#radar-chart-example').chart({type: 'radar', dataset: radarData, showAxisLabels: false});
+  $('#radar-chart-example').chart({
+      type: 'radar',
+      dataset: radarData,
+      showAxisLabels: false,
+      showTooltips: true,
+      tooltip: {
+        show: 'label (value)', // value, label, label (value) or percent or custom function
+        formatter: '.0f'
+      }
+  });
 
-
-```
-
-## Accessibility
-
-The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing different contrast colors.
-
-## Code Tips
-
-You can control the size of the radar chart by setting the size of the parent element the radar chart lives in.
-This may include possibly using an inset margin in some cases.
-
-## Keyboard Shortcuts
-
-- None
-
-## Upgrading from 3.X
-
--   The radar chart was added in 4.4.0
+});
+</script>

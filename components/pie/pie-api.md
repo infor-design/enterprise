@@ -19,20 +19,20 @@
 -   `animate` **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** true|false - will do or not do the animation.
     'initial' will do only first time the animation.
 -   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, the component will not resize when resizing the page.
--   `showTooltips` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false now tooltips will be shown even if
     there is tooltip values provided.
+    will not be shown. If you still want lines at the lower breakpoint you can set this to true
+-   `hideCenterLabel` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the center label will not be shown.
 -   `showLines` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false connector lines wont be shown
 -   `showLinesMobile` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** This defaults to false, when false and under 450px the lines
-    will not be shown. If you still want lines at the lower breakpoint you can set this to true
+-   `lines` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** A setting that controls the line values and format.
 -   `showLegend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the legend will not be shown.
--   `hideCenterLabel` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the center label will not be shown.
 -   `legendPlacement` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Where to locate the legend. This can be bottom or right at
     the moment.
--   `lines` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** A setting that controls the line values and format.
 -   `legend` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** A setting that controls the legend values and format.
     -   `legend.show` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls  what is visible in the legend , this can be value,
         value (percent), label or percent or your own custom function.
     -   `legend.formatter` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The d3.formatter string.
+-   `showTooltips` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false now tooltips will be shown even if
 -   `tooltip` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** A setting that controls the tooltip values and format.
     -   `tooltip.show` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls what is visible in the tooltip, this can be value, label
         or percent or custom function.

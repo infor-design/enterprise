@@ -15,8 +15,34 @@
 
 -   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The data to use in the radar
 -   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, the component will not resize when resizing the page.
--   `margin` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** The margins of the SVG, you may want to adjust
+-   `margin` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The margins of the SVG, you may want to adjust
     depending on text location.
+-   `levels` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** How many levels or inner circles should there be drawn.
+-   `maxValue` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** What is the value that the biggest circle will represent
+-   `labelFactor` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** How far out than the outer circle should the labels be placed,
+    this may be useful to adjust for some labels.
+-   `showCrosslines` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to false to hide the cross line axes.
+-   `showAxisLabels` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to false to hide percent labels.
+-   `wrapWidth` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number of pixels after which a label needs to be
+    given a new line. You may want to change this based on label data.
+-   `opacityArea` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The opacity of the area of the blob.
+    This is set to the correct Infor Style.
+-   `dotRadius` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The size of the colored circles of each blog.
+    Set to zero to remove dots.
+-   `opacityCircles` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The opacity of the circles of each blob 0 or .1 are good values.
+    This is set to the correct Infor Style.
+-   `strokeWidth` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The width of the stroke around each blob.
+    This is set to the correct Infor Style.
+-   `roundStrokes` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the area and stroke will follow a
+    round path (cardinal-closed).
+-   `showCrosslines` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the axis lines will not be shown in the diagonals.
+-   `showAxisLabels` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the axis labels will not be shown.
+-   `colors` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of colors to use.
+-   `showTooltips` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false now tooltips will be shown even if
+-   `tooltip` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** A setting that controls the tooltip values and format.
+    -   `tooltip.show` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls what is visible in the tooltip, this can be value, label
+        or percent or custom function.
+    -   `tooltip.formatter` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The d3.formatter string.
 
 ## Radar
 
