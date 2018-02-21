@@ -256,9 +256,7 @@ ListDetail.prototype = {
     this.showDetail = true;
     this.element.classList.add('show-detail');
 
-    if (this.backElementIcon) {
-      this.backElementIcon.classList.add('go-back');
-    }
+    this.addBackElementIconContext();
 
     if (!this.isAboveBreakpoint()) {
       this.getListAPI().disable();
@@ -280,14 +278,32 @@ ListDetail.prototype = {
       return;
     }
 
-    if (this.backElementIcon) {
-      this.backElementIcon.classList.remove('go-back');
-    }
+    this.removeBackElementIconContext();
 
     this.getListAPI().enable();
 
     this.showDetail = false;
     this.element.classList.remove('show-detail');
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  addBackElementIconContext() {
+    if (this.showDetail && this.backElementIcon && !this.backElementIcon.classList.contains('go-back')) {
+      this.backElementIcon.classList.add('go-back');
+    }
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  removeBackElementIconContext() {
+    if (this.backElementIcon && this.backElementIcon.classList.contains('go-back')) {
+      this.backElementIcon.classList.remove('go-back');
+    }
   },
 
   /**
@@ -363,6 +379,13 @@ ListDetail.prototype = {
       }
     } else if (this.edgeBleed && this.showDetail && !this.listElement.classList.contains('is-disabled')) {
       listAPI.disable();
+    }
+
+    // Removes the `go-back` class from the hamburger icon if we're above the breakpoint.
+    if (this.isAboveBreakpoint()) {
+      this.removeBackElementIconContext();
+    } else {
+      this.addBackElementIconContext();
     }
 
     // Make sure the list is always re-enabled on desktop

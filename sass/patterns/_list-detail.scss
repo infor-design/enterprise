@@ -255,7 +255,6 @@ html[dir='rtl'] {
 
       &.bleeding-edge__phone {
         > .sidebar {
-          //@include css3(transform, translateX(-100%));
           box-shadow: 0 0 0 1px $box-shadow-off-color;
         }
 
