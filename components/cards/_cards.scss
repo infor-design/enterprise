@@ -365,3 +365,19 @@
 .empty-actions {
   padding: 0 0 40px;
 }
+
+
+// RTL Styles
+html[dir='rtl'] {
+
+  .card-header,
+  .widget-header {
+
+    > h2,
+    > h1,
+    > button {
+      float: right;
+    }
+  }
+
+}
