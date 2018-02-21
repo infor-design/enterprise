@@ -258,9 +258,14 @@ Datagrid.prototype = {
 
   /**
   * Render or render both the header and row area.
+  * @param {string} isToggleFilter Check if toggle filter row
   */
-  render() {
-    this.loadData(this.settings.dataset);
+  render(isToggleFilter) {
+    if (isToggleFilter) {
+      this.loadData(this.settings.dataset, { type: 'filterrow' });
+    } else {
+      this.loadData(this.settings.dataset);
+    }
   },
 
   /**
@@ -528,6 +533,13 @@ Datagrid.prototype = {
 
     if (!pagerInfo) {
       pagerInfo = {};
+    }
+
+    if (pagerInfo.type === 'filterrow') {
+      pagerInfo.activePage = this.pager.activePage || 1;
+      pagerInfo.pagesize = this.settings.pagesize;
+      pagerInfo.total = pagerInfo.total || -1;
+      pagerInfo.type = 'filterrow';
     }
 
     if (!pagerInfo.activePage) {
@@ -1122,7 +1134,7 @@ Datagrid.prototype = {
       this.settings.filterable = true;
 
       if (!this.filterRowRendered) {
-        this.render();
+        this.render('filterrow');
       }
 
       this.element.addClass('has-filterable-columns');
