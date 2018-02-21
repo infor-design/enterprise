@@ -525,48 +525,6 @@ ApplicationMenu.prototype = {
    * @returns {void}
    */
   filterResultsCallback(results, done) {
-    /*
-    const self = this;
-    let filteredParentHeaders = this.accordion.find('.has-filtered-children');
-    const filteredParentPanes = filteredParentHeaders.next('.accordion-pane');
-
-    this.accordionAPI.headers.removeClass('filtered has-filtered-children');
-    filteredParentPanes.addClass('no-transition');
-
-    if (!results || !results.length) {
-      this.accordionAPI.collapse(filteredParentHeaders);
-      this.accordionAPI.updated();
-      this.isFiltered = false;
-      this.element.triggerHandler('filtered', [results]);
-      filteredParentPanes.removeClass('no-transition');
-      done();
-      return;
-    }
-
-    let matchedHeaders = $();
-    results.map(function (item) {
-      matchedHeaders = matchedHeaders.add(item.element);
-
-      const parentPanes = $(item.element).parents('.accordion-pane');
-      parentPanes.each(function () {
-        this.style.display = '';
-        const parentHeaders = $(this).prev('.accordion-header').addClass('has-filtered-children');
-        filteredParentHeaders = filteredParentHeaders.not(parentHeaders);
-        self.accordionAPI.expand(parentHeaders);
-      });
-      return parentPanes;
-    });
-
-    const newPanes = matchedHeaders.next('.accordion-pane');
-
-    this.isFiltered = true;
-    newPanes.addClass('no-transition');
-    this.accordionAPI.headers.not(matchedHeaders).addClass('filtered');
-    this.accordionAPI.collapse(filteredParentHeaders);
-    this.accordionAPI.updated(matchedHeaders);
-    filteredParentPanes.add(newPanes).removeClass('no-transition');
-    */
-
     if (!results || !results.length) {
       this.accordionAPI.unfilter();
     } else {
