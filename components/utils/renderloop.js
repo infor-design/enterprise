@@ -41,10 +41,13 @@ RenderLoopItem.prototype = {
    * @param {object} opts incoming settings
    */
   setFuncs(opts) {
-    if (typeof opts.updateCallback !== 'function') {
+    if (typeof opts.updateCallback !== 'function' && typeof opts.timeoutCallback !== 'function') {
       throw new Error('cannot register callback to RenderLoop because callback is not a function');
     }
-    this.updateCallback = opts.updateCallback;
+
+    if (typeof opts.updateCallback === 'function') {
+      this.updateCallback = opts.updateCallback;
+    }
 
     if (typeof opts.timeoutCallback === 'function') {
       this.timeoutCallback = opts.timeoutCallback;

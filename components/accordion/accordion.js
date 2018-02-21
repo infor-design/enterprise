@@ -706,17 +706,27 @@ Accordion.prototype = {
       self.element.trigger('expand', [a]);
 
       /**
-      * Fires after a pane is expanded.
-      *
-      * @event afterexpand
-      * @property {object} event - The jquery event object
-      * @property {array} anchor - The anchor tag in an array.
-      */
-      pane.one('animateopencomplete', (e) => {
-        e.stopPropagation();
+       * Fires after a pane is expanded.
+       *
+       * @event afterexpand
+       * @param {jQuery.Event} [e] - The jquery event object
+       * @property {array} anchor - The anchor tag in an array.
+       */
+      function handleAfterExpand(e) {
+        if (e) {
+          e.stopPropagation();
+        }
         header.children('a').attr('aria-expanded', 'true');
+        pane.triggerHandler('afterexpand', [a]);
         self.element.trigger('afterexpand', [a]);
-      }).css('display', 'block').animateOpen();
+      }
+
+      if (pane.hasClass('no-transition')) {
+        pane.css('display', 'block');
+        handleAfterExpand();
+      } else {
+        pane.one('animateopencomplete', handleAfterExpand).css('display', 'block').animateOpen();
+      }
     }
 
     // Load from an external source, if applicable
@@ -776,23 +786,32 @@ Accordion.prototype = {
     *  Fires when collapsed a pane is initiated.
     *
     * @event collapse
-    * @property {object} event - The jquery event object
+    * @property {jQuery.Event} event - The jquery event object
     * @property {array} anchor - The anchor tag in an array.
     */
     self.element.trigger('collapse', [a]);
 
     /**
-    *  Fires after a pane is collapsed.
-    *
-    * @event aftercollapse
-    * @property {object} event - The jquery event object
-    * @property {array} anchor - The anchor tag in an array.
-    */
-    pane.one('animateclosedcomplete', (e) => {
-      e.stopPropagation();
+     * Fires after a pane is collapsed.
+     *
+     * @event aftercollapse
+     * @property {jQuery.Event} [e] - The jquery event object
+     * @property {array} anchor - The anchor tag in an array.
+     */
+    function handleAfterCollapse(e) {
+      if (e) {
+        e.stopPropagation();
+      }
       pane[0].style.display = 'none';
+      pane.triggerHandler('aftercollapse', [a]);
       self.element.trigger('aftercollapse', [a]);
-    }).animateClosed();
+    }
+
+    if (pane.hasClass('no-transition')) {
+      handleAfterCollapse();
+    } else {
+      pane.one('animateclosedcomplete', handleAfterCollapse).animateClosed();
+    }
   },
 
   /**
@@ -1069,6 +1088,111 @@ Accordion.prototype = {
   },
 
   /**
+   * @param {jQuery[]} headers element references representing accordion headers.
+   * @param {boolean} [doReset] if defined, causes the filtering system to reset.
+   */
+  filter(headers, doReset) {
+    if (!headers || !headers.length) {
+      return;
+    }
+
+    const self = this;
+
+    // Retain an internal storage of available filtered accordion headers.
+    if (!this.currentlyFiltered) {
+      this.currentlyFiltered = $();
+    }
+
+    if (doReset) {
+      this.headers.removeClass('filtered has-filtered-children is-expanded');
+      this.panes.css({
+        display: 'block',
+        height: 'auto'
+      });
+
+      this.currentlyFiltered = $();
+      this.build();
+    }
+
+    // If headers are included in the currentlyFiltered storage, removes the ones that
+    // have previously been filtered
+    const toFilter = headers.not(this.currentlyFiltered);
+    let panes = toFilter.next('.accordion-pane');
+    this.panes.addClass('no-transition');
+
+    // Store a list of all modified parent headers
+    let allParentHeaders = $();
+
+    // Perform filtering
+    this.headers.not(toFilter).addClass('filtered');
+    toFilter.each((i, header) => {
+      const parentPanes = $(header).parents('.accordion-pane');
+      if (parentPanes.length) {
+        panes = panes.add(parentPanes.filter((j, item) => panes.index(item) === -1));
+        // only add headers that weren't already in the collection
+        const parentHeaders = parentPanes.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
+        allParentHeaders = allParentHeaders.add(parentHeaders);
+      }
+    });
+
+    panes.one('afterexpand', () => {
+      setTimeout(() => {
+        self.panes.removeClass('no-transition').css({
+          display: 'block',
+          height: 'auto'
+        });
+        self.build();
+      }, 100);
+    });
+
+    allParentHeaders.addClass('has-filtered-children');
+    this.expand(allParentHeaders.add(panes.prev('.accordion-header')));
+
+    this.currentlyFiltered = this.currentlyFiltered.add(toFilter);
+  },
+
+  /**
+   * @param {jQuery[]} [headers] element references representing accordion headers.
+   *  If provided, will cause only specific items to become unfiltered.  If not
+   *  provided, removes all filtering from the accordion.
+   */
+  unfilter(headers) {
+    if (!this.currentlyFiltered.length) {
+      return;
+    }
+
+    if (!headers || !headers.length) {
+      headers = this.currentlyFiltered;
+    }
+
+    const panes = headers.next('.accordion-pane');
+    this.panes.addClass('no-transition');
+
+    // Store a list of all modified parent headers
+    let allParentHeaders = $();
+
+    this.headers.removeClass('filtered');
+    headers.each((i, header) => {
+      const parentPanes = $(header).parents('.accordion-pane');
+      if (parentPanes.length) {
+        const parentHeaders = parentPanes.prev('.accordion-header').filter((j, item) => allParentHeaders.index(item) === -1);
+        allParentHeaders = allParentHeaders.add(parentHeaders);
+      }
+    });
+
+    allParentHeaders.removeClass('has-filtered-children');
+    this.collapse(allParentHeaders);
+
+    panes.one('aftercollapse', () => {
+      this.panes.removeClass('no-transition');
+      this.build();
+    });
+    this.collapse(headers);
+
+    this.currentlyFiltered = this.currentlyFiltered.not(headers);
+  },
+
+  /**
   * Disable an accordion from events
   * @returns {void}
   */
@@ -1137,6 +1261,10 @@ Accordion.prototype = {
   teardown(headers) {
     let globalEventTeardown = false;
     let headerElems = headers;
+
+    if (this.currentlyFiltered) {
+      this.unfilter(this.currentlyFiltered);
+    }
 
     if (!headers || !(headers instanceof jQuery)) {
       headerElems = this.headers;
