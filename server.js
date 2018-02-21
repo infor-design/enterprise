@@ -1,5 +1,3 @@
-/* jshint node:true */
-
 const app = require('./app');
 /* eslint-disable import/no-extraneous-dependencies */
 const chalk = require('chalk');

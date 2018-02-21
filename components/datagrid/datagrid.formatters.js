@@ -1,5 +1,3 @@
-/* jshint esversion:6 */
-
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 
@@ -231,7 +229,7 @@ const formatters = {
       isChecked = col.isChecked(value);
     } else {
       // treat 1, true or '1' as checked
-      isChecked = (value === undefined ? false : value === true); // jshint ignore:line
+      isChecked = (value === undefined ? false : value === true);
     }
 
     // We add hidden Yes/No text so that the exported excel spreadsheet shows
@@ -245,7 +243,7 @@ const formatters = {
   },
 
   SelectionCheckbox(row, cell, value, col, item, api) {
-    let isChecked = (value === undefined ? false : value === true); // jshint ignore:line
+    let isChecked = (value === undefined ? false : value === true);
     if (!value) {
       isChecked = api.isNodeSelected(item);
     }
@@ -524,7 +522,7 @@ const formatters = {
     if (col.isChecked) {
       isChecked = col.isChecked(value);
     } else {
-      isChecked = (value === undefined ? false : value === true); // jshint ignore:line
+      isChecked = (value === undefined ? false : value === true);
     }
 
     const isEditable = col.editor && api.settings.editable;

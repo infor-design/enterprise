@@ -14,17 +14,17 @@ define([
     name: 'Everything',
 
     'Basic Tests': function() {
-      expect(true).to.be.true; // jshint ignore:line
+      expect(true).to.be.true;
     },
 
     'Does the DOM exist?': function() {
-      expect(window).to.exist; // jshint ignore:line
+      expect(window).to.exist;
     },
 
     'Dependencies': {
       'jQuery': {
         'Does jQuery exist?': function() {
-          expect($).to.exist; //jshint ignore:line
+          expect($).to.exist;
         },
 
         'Can we actually do stuff we jQuery?': function() {

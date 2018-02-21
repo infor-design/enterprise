@@ -15,7 +15,6 @@ module.exports = function (grunt) {
   // const revision = require('./build/configs/revision.js');
   // const stripCode = require('./build/configs/strip_code.js');
   const clean = require('./build/configs/clean.js');
-  // const jshint = require('./build/configs/jshint.js');
   // uglify = require('./build/configs/uglify.js');
   const dependencyBuilder = require('./build/dependencybuilder.js');
   const strBanner = require('./build/strbanner.js');
@@ -83,7 +82,6 @@ module.exports = function (grunt) {
     config,
     chokidar,
     clean,
-    // jshint,
     sass,
     meta,
     amdHeader,
@@ -109,7 +107,6 @@ module.exports = function (grunt) {
     'clean:dist',
     'clean:public',
     // 'revision',
-    // 'jshint',
     'sass',
     // 'copy:amd',
     // 'strip_code',
@@ -165,7 +162,7 @@ module.exports = function (grunt) {
     }
   });
 
-  // Don't do any uglify/minify/jshint while the Dev Watch is running.
+  // Don't do any uglify/minify while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
     'sass',
     /* 'copy:amd', */

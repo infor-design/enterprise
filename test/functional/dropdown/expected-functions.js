@@ -37,7 +37,7 @@ define([
             .findById('states-shdo')
               .getProperty('value')
               .then(function(val) {
-                expect(val).to.be.ok; // jshint ignore:line
+                expect(val).to.be.ok;
                 expect(val).to.equal('Alabama');
               })
               .end();

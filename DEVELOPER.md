@@ -14,7 +14,7 @@
  - code control
  - write unit tests
  - make sure all tests pass
- - run grunt to test jshint for the new control
+ - run grunt to test eslint for the new control
  - verify html is valid: https://addons.mozilla.org/en-US/firefox/addon/html-validator/
  - verify no automated accessibility errors http://squizlabs.github.io/HTML_CodeSniffer/
  - test your page with voice over https://www.apple.com/voiceover/info/guide/

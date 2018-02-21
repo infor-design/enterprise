@@ -525,7 +525,7 @@ Lookup.prototype = {
         continue;
       }
 
-      if (data[i][field] === value) { // jshint ignore:line
+      if (data[i][field] === value) {
         selectedRows.push(i);
       }
     }

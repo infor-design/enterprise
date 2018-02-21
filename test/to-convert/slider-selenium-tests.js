@@ -12,11 +12,9 @@ function setSliderValue(sliderId, value) {
   $(sliderId).data('slider').updateRange();
 }
 
-// jshint ignore:start
 function getSliderValue(sliderId) {
   return $(sliderId).data('slider').value();
 }
-// jshint ignore:end
 
 // Helper Function that is run before all of the tests in this suite that adds
 // ID attributes to certain Slider Handles & Ticks that we need to target for testings.

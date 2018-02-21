@@ -1,4 +1,3 @@
-/* jshint esversion:6 */
 import { utils } from '../utils/utils';
 
 /**
@@ -69,7 +68,7 @@ const groupBy = (function () {
 
   // Register an aggregator
   group.register = function (name, converter) {
-    group[name] = function (data, names, extra) { // jshint ignore:line
+    group[name] = function (data, names, extra) {
       const that = this;
       that.extra = extra;
       return group(data, names).map(converter, that);

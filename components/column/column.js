@@ -893,7 +893,7 @@ Column.prototype = {
             if ((typeof o.fieldName !== 'undefined' &&
                   typeof o.fieldValue !== 'undefined' &&
                     o.fieldValue === (isSingle && self.settings.isStacked ? d[0][o.fieldName] :
-                      d[o.fieldName])) ||
+                      d[o.fieldName])) || //eslint-disable-line
                 (typeof o.index !== 'undefined' && o.index === i) ||
                 (o.data && equals(o.data, dataset[gIdx].data[i])) ||
                 (o.elem && $(this).is(o.elem))) {

@@ -16,9 +16,7 @@
  *  @private
  */
 
-  // NOTE: jshint fails below due to a "redefinition" by the migration file.
-  // TODO: Figure out why
-  let Tmpl = {}; // jshint ignore:line
+  let Tmpl = {};
 
   Tmpl.Template = function (codeObj, text, compiler, options) {
     codeObj = codeObj || {};
@@ -177,7 +175,7 @@
 
   Tmpl.Template.prototype = {
     // render: replaced by generated code.
-    r: function (context, partials, indent) { return ''; }, // jshint ignore:line
+    r: function (context, partials, indent) { return ''; },
 
     // variable escaping
     v: TmplEscape,
@@ -433,7 +431,7 @@
 
     function addBuf() {
       if (buf.length > 0) {
-        tokens.push({tag: '_t', text: new String(buf)}); // jshint ignore:line
+        tokens.push({tag: '_t', text: new String(buf)});
         buf = '';
       }
     }
@@ -443,7 +441,7 @@
       for (var j = lineStart; j < tokens.length; j++) {
         isAllWhitespace =
           (Tmpl.tags[tokens[j].tag] < Tmpl.tags._v) ||
-          (tokens[j].tag == '_t' && tokens[j].text.match(rIsWhitespace) === null); // jshint ignore:line
+          (tokens[j].tag == '_t' && tokens[j].text.match(rIsWhitespace) === null);
         if (!isAllWhitespace) {
           return false;
         }
@@ -604,7 +602,7 @@
     return 'partials: {' + partials.join(',') + '}, subs: ' + stringifySubstitutions(codeObj.subs);
   }
 
-  Tmpl.stringify = function(codeObj, text, options) { // jshint ignore:line
+  Tmpl.stringify = function(codeObj, text, options) {
     return '{code: function (c,p,i) { ' + Tmpl.wrapMain(codeObj.code) + ' },' + stringifyPartials(codeObj) +  '}';
   };
 
@@ -629,7 +627,7 @@
 
   Tmpl.makeTemplate = function(codeObj, text, options) {
     var template = this.makePartials(codeObj);
-    template.code = new Function('c', 'p', 'i', this.wrapMain(codeObj.code)); // jshint ignore:line
+    template.code = new Function('c', 'p', 'i', this.wrapMain(codeObj.code));
     return new this.template(template, text, this, options);
   };
 
@@ -639,7 +637,7 @@
       template.partials[key] = this.makePartials(template.partials[key]);
     }
     for (key in codeObj.subs) {
-      template.subs[key] = new Function('c', 'p', 't', 'i', codeObj.subs[key]); // jshint ignore:line
+      template.subs[key] = new Function('c', 'p', 't', 'i', codeObj.subs[key]);
     }
     return template;
   };

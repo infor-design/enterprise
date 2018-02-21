@@ -39,7 +39,6 @@ require('./test/test-env.js');
 
 // setup assertion libraries to be global for all tests
 chai = require('chai'),
-/*jshint -W030 */
 should = chai.should();
 
 // Polyfill for .contains();

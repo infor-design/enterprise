@@ -15,12 +15,11 @@ define([
 
     setup: function() {
       var jsdom = require('jsdom').jsdom;
-      document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
-      window = document.defaultView;  // jshint ignore:line
+      document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>');
+      window = document.defaultView;
 
       require('components/locale/locale.js');
-      //Locale = window.Locale = {}; // jshint ignore:line
-      Soho = window.Soho = {}; // jshint ignore:line
+      Soho = window.Soho = {};
 
       // Load the Mask files we are testing
 

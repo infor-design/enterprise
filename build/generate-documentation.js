@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* jshint node:true */
 /* eslint-disable import/no-extraneous-dependencies, function-paren-newline,
   no-console, no-restricted-syntax, no-continue, no-loop-func, prefer-template */
 
