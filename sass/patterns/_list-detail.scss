@@ -236,9 +236,43 @@ html[dir='rtl'] {
         @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94),
           box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
         @include drawer-box-shadow;
-        max-width: 75%;
-        width: 275px;
         z-index: 2;
+      }
+
+      &.fixed {
+        > .sidebar {
+          max-width: 250px;
+        }
+      }
+
+      &.fixed-sm {
+        > .sidebar {
+          max-width: 275px;
+        }
+      }
+
+      &.fixed-mm {
+        > .sidebar {
+          max-width: 300px;
+        }
+      }
+
+      &.fixed-md {
+        > .sidebar {
+          max-width: 350px;
+        }
+      }
+
+      &.fixed-lg {
+        > .sidebar {
+          max-width: 400px;
+        }
+      }
+
+      &.fixed-xl {
+        > .sidebar {
+          max-width: 450px;
+        }
       }
     }
 
