@@ -127,7 +127,7 @@ ApplicationMenu.prototype = {
           return item.text || '';
         },
         resultIteratorCallback(item) {
-          item._highlightTarget = 'text';
+          item.highlightTarget = 'text';
           return item;
         },
         displayResultsCallback(results, done) {
@@ -525,16 +525,20 @@ ApplicationMenu.prototype = {
    * @returns {void}
    */
   filterResultsCallback(results, done) {
+    /*
     const self = this;
     let filteredParentHeaders = this.accordion.find('.has-filtered-children');
+    const filteredParentPanes = filteredParentHeaders.next('.accordion-pane');
 
     this.accordionAPI.headers.removeClass('filtered has-filtered-children');
+    filteredParentPanes.addClass('no-transition');
 
     if (!results || !results.length) {
       this.accordionAPI.collapse(filteredParentHeaders);
       this.accordionAPI.updated();
       this.isFiltered = false;
       this.element.triggerHandler('filtered', [results]);
+      filteredParentPanes.removeClass('no-transition');
       done();
       return;
     }
@@ -545,6 +549,7 @@ ApplicationMenu.prototype = {
 
       const parentPanes = $(item.element).parents('.accordion-pane');
       parentPanes.each(function () {
+        this.style.display = '';
         const parentHeaders = $(this).prev('.accordion-header').addClass('has-filtered-children');
         filteredParentHeaders = filteredParentHeaders.not(parentHeaders);
         self.accordionAPI.expand(parentHeaders);
@@ -552,10 +557,22 @@ ApplicationMenu.prototype = {
       return parentPanes;
     });
 
+    const newPanes = matchedHeaders.next('.accordion-pane');
+
     this.isFiltered = true;
+    newPanes.addClass('no-transition');
     this.accordionAPI.headers.not(matchedHeaders).addClass('filtered');
     this.accordionAPI.collapse(filteredParentHeaders);
     this.accordionAPI.updated(matchedHeaders);
+    filteredParentPanes.add(newPanes).removeClass('no-transition');
+    */
+
+    if (!results || !results.length) {
+      this.accordionAPI.unfilter();
+    } else {
+      const headers = $(results.map(item => item.element));
+      this.accordionAPI.filter(headers, true);
+    }
 
     this.element.triggerHandler('filtered', [results]);
     done();
