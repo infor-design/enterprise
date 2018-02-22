@@ -60,8 +60,8 @@ body.no-scroll {
 .two-column {
   font-size: 0;
 
-  .main,
-  .sidebar {
+  > .main,
+  > .sidebar {
     background-color: $panel-bg-color;
     display: inline-block;
 
@@ -80,7 +80,7 @@ body.no-scroll {
   }
 
   // scss-lint:disable ImportantRule
-  .main {
+  > .main {
     border-right: 1px solid $panel-border-color;
     height: 100%;
     width: calc(75%);
@@ -92,7 +92,7 @@ body.no-scroll {
   }
   // scss-lint:enable ImportantRule
 
-  .sidebar {
+  > .sidebar {
     background-color: $body-bg-color;
     border-right: 1px solid $panel-border-color;
     height: 100%;
@@ -134,68 +134,68 @@ body.no-scroll {
   &.fixed-md,
   &.fixed-lg,
   &.fixed-xl {
-    .main {
+    > .main {
       min-height: 100%;
       vertical-align: top;
     }
   }
 
   &.fixed {
-    .sidebar {
+    > .sidebar {
       width: 250px;
     }
 
-    .main {
+    > .main {
       width: calc(100% - 250px);
     }
   }
 
   &.fixed-sm {
-    .sidebar {
+    > .sidebar {
       width: 275px;
     }
 
-    .main {
+    > .main {
       width: calc(100% - 275px);
     }
   }
 
   &.fixed-mm {
-    .sidebar {
+    > .sidebar {
       width: 300px;
     }
 
-    .main {
+    > .main {
       width: calc(100% - 300px);
     }
   }
 
   &.fixed-md {
-    .sidebar {
+    > .sidebar {
       width: 350px;
     }
 
-    .main {
+    > .main {
       width: calc(100% - 350px);
     }
   }
 
   &.fixed-lg {
-    .sidebar {
+    > .sidebar {
       width: 400px;
     }
 
-    .main {
+    > .main {
       width: calc(100% - 400px);
     }
   }
 
   &.fixed-xl {
-    .sidebar {
+    > .sidebar {
       width: 450px;
     }
 
-    .main {
+    > .main {
       width: calc(100% - 450px);
     }
   }
@@ -305,8 +305,8 @@ body.no-scroll {
 
 @include respond-to(phone) {
   .two-column {
-    .main,
-    .sidebar {
+    > .main,
+    > .sidebar {
       display: block;
       width: 100%;
 
@@ -317,12 +317,12 @@ body.no-scroll {
       }
     }
 
-    .main {
+    > .main {
       border: 0;
       border-bottom: 1px solid $graphite02;
     }
 
-    .sidebar + .main {
+    > .sidebar + .main {
       border-bottom: 0;
       border-top: 1px solid $graphite02;
     }
@@ -335,8 +335,8 @@ body.no-scroll {
     &.fixed-md,
     &.fixed-lg,
     &.fixed-xl {
-      .main,
-      .sidebar {
+      > .main,
+      > .sidebar {
         display: block;
         // scss-lint:disable ImportantRule
         width: 100%; //Override Inline Css
@@ -346,8 +346,8 @@ body.no-scroll {
 
     // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
     &.builder {
-      .main,
-      .sidebar {
+      > .main,
+      > .sidebar {
         &.scrollable,
         &.scrollable-y {
           height: 100%;

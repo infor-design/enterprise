@@ -2,32 +2,29 @@
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
 
-  <div id="maincontent" class="two-column page-container fixed list-detail">
+  <div id="list-detail-container" class="two-column page-container fixed list-detail" data-options='{ "listElement": "#task-listview", "detailElement": "#maincontent", "backElement": "#header-hamburger" }'>
 
     <div class="sidebar " role="complementary">
-
-        <header class="header azure07">
-          <div class="toolbar">
-            <div class="title">
-              <h1>Deployments</h1>
-            </div>
-
-            <div class="buttonset">
-              <input class="searchfield" placeholder="Search">
-            </div>
-
+      <header class="header azure07">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Deployments</h1>
           </div>
-        </header>
 
-        <div class="paginated listview scrollable" id="task-listview" data-options="{'template': 'task-tmpl', 'source': '{{basepath}}api/inventory-tasks', 'pagesize': 10}"></div>
+          <div class="buttonset">
+            <input class="searchfield" placeholder="Search">
+          </div>
+        </div>
+      </header>
+      <div class="paginated listview scrollable" id="task-listview" data-options="{'template': 'task-tmpl', 'source': '{{basepath}}api/inventory-tasks', 'pagesize': 10}"></div>
     </div>
 
-    <div class="main scrollable" role="main">
+    <div id="maincontent" class="main scrollable" role="main">
 
       <header class="header azure07">
         <div class="toolbar">
           <div class="title">
-            <button class="btn-icon list-detail-back-button go-back" type="button">
+            <button id="header-hamburger" class="btn-icon list-detail-back-button go-back" type="button">
               <span class="audible">Show navigation</span>
               <span class="icon app-header">
                 <span class="one"></span>
