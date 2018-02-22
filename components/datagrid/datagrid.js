@@ -537,7 +537,7 @@ Datagrid.prototype = {
     }
 
     if (pagerInfo.type === 'filterrow') {
-      pagerInfo.activePage = this.pager.activePage || 1;
+      pagerInfo.activePage = this.pager && this.pager.activePage || 1;
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = pagerInfo.total || -1;
       pagerInfo.type = 'filterrow';
