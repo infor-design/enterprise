@@ -238,6 +238,9 @@ Accordion.prototype = {
       this.select(targetsToExpand.last());
     }
 
+    // Retain an internal storage of available filtered accordion headers.
+    this.currentlyFiltered = $();
+
     return this;
   },
 
@@ -1097,11 +1100,6 @@ Accordion.prototype = {
     }
 
     const self = this;
-
-    // Retain an internal storage of available filtered accordion headers.
-    if (!this.currentlyFiltered) {
-      this.currentlyFiltered = $();
-    }
 
     if (doReset) {
       this.headers.removeClass('filtered has-filtered-children is-expanded');
