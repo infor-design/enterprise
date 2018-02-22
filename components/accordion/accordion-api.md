@@ -75,7 +75,7 @@ Makes a header "selected" if its expander button or anchor tag is focused.
 
 -   `element` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** a jQuery object containing either an expander button or an anchor tag.
 
-Returns **void**
+Returns **void** 
 
 ### getSelected
 
@@ -122,7 +122,7 @@ Toggle the given Panel on the Accordion between expanded and collapsed.
 
 -   `header` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery header element.
 
-Returns **void**
+Returns **void** 
 
 ### expand
 
@@ -132,13 +132,13 @@ Expand the given Panel on the Accordion.
 
 -   `header` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery header element.
 
-Returns **void**
+Returns **void** 
 
 ### expandAll
 
 Expands all accordion headers, if possible.
 
-Returns **void**
+Returns **void** 
 
 ### collapse
 
@@ -148,13 +148,13 @@ Collapse the given Panel on the Accordion.
 
 -   `header` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery header element.
 
-Returns **void**
+Returns **void** 
 
 ### collapseAll
 
 Collapses all accordion headers.
 
-Returns **void**
+Returns **void** 
 
 ### callSource
 
@@ -189,7 +189,7 @@ Accordion Header.
 -   `noDescend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if it's normally possible to descend into a sub-accordion, prevent
     against descending.
 
-Returns **void**
+Returns **void** 
 
 ### nextHeader
 
@@ -203,7 +203,7 @@ Accordion Header.
 -   `noDescend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if it's normally possible to descend into a sub-accordion,
     prevent against descending.
 
-Returns **void**
+Returns **void** 
 
 ### ascend
 
@@ -216,7 +216,7 @@ If we're at the top level, jump out of the accordion to the last focusable eleme
 -   `direction` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** If -1, sets the position to be at the end of this set of
     headers instead of at the beginning.
 
-Returns **void**
+Returns **void** 
 
 ### descend
 
@@ -228,7 +228,7 @@ Selects the first Accordion Header in the child container of the current Accordi
 -   `direction` **integer** if -1, sets the position to be at the end of this set of
     headers instead of at the beginning.
 
-Returns **void**
+Returns **void** 
 
 ### focusOriginalType
 
@@ -239,7 +239,7 @@ Governed by the property "this.originalSelection".
 
 -   `header` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** a jQuery object containing an Accordion header.
 
-Returns **void**
+Returns **void** 
 
 ### filter
 
@@ -260,13 +260,13 @@ Returns **void**
 
 Disable an accordion from events
 
-Returns **void**
+Returns **void** 
 
 ### enable
 
 Enable a disabled accordion.
 
-Returns **void**
+Returns **void** 
 
 ### updated
 
@@ -288,13 +288,13 @@ Teardown process for accordion elements
 
 -   `headers` **jQuery?** The header elements to tear down (optional).
 
-Returns **void**
+Returns **void** 
 
 ### destroy
 
 Teardown and remove any added markup and events.
 
-Returns **void**
+Returns **void** 
 
 ## selected
 
