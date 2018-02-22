@@ -11,7 +11,7 @@ eslintrc.js
 
 The big advantage of using SublimeLinter is that your code can be linted as you type (before saving your changes) and any errors are highlighted immediately, which is considerably easier than saving the file, switching to a terminal, running a linter, reading through a list of errors, then switching back to Sublime Text to locate the errors!
 
-For Sublime users Install SublimeLinter and SublimeLinter-jsHint with Package Control and restart Sublime. Then right click in a js file and set SublimeLinter - Lint Mode - Background
+For Sublime users Install SublimeLinter with Package Control and restart Sublime. Then right click in a js file and set SublimeLinter - Lint Mode - Background
 
 For more info see:
 
@@ -21,10 +21,7 @@ Apparently other tools like Eclipse and Webstorm do this well too ( Contribution
 
 ## Atom linter
 
-Just like Sublime, the Atom editor has a linter plugin. For JSHint and ESLint there are https://github.com/AtomLinter/linter-eslint
-
-For now the jsHint linter is in place but may be removed https://atom.io/packages/linter-jshint
-
+Just like Sublime, the Atom editor has a linter plugin. For ESLint there are https://github.com/AtomLinter/linter-eslint
 
 ## Sass Linter
 

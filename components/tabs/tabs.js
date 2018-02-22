@@ -1096,7 +1096,7 @@ Tabs.prototype = {
         return false;
       case 38:
         targetLi = previousTab();
-        e.preventDefault(); // jshint ignore:line
+        e.preventDefault();
         break;
       case 37:
         targetLi = isRTL ? nextTab() : previousTab();
@@ -1104,7 +1104,7 @@ Tabs.prototype = {
         break;
       case 40:
         targetLi = nextTab();
-        e.preventDefault(); // jshint ignore:line
+        e.preventDefault();
         break;
       case 39:
         targetLi = isRTL ? previousTab() : nextTab();
@@ -1235,7 +1235,7 @@ Tabs.prototype = {
         break;
       case 13: // enter
       case 32: // spacebar
-        e.preventDefault(); // jshint ignore:line
+        e.preventDefault();
         break;
       case 39: // right
         if (isRTL) {
@@ -1393,7 +1393,7 @@ Tabs.prototype = {
         break;
       case 13: // enter
       case 32: // spacebar
-        e.preventDefault(); // jshint ignore:line
+        e.preventDefault();
         return this.handleAddButton();
       case 39: // right
         if (isRTL) {
@@ -1750,7 +1750,7 @@ Tabs.prototype = {
         self.renderVisiblePanel();
         // trigger reflow as display property is none for animation
         // eslint-disable-next-line
-        targetPanelElem.offsetHeight; // jshint ignore:line
+        targetPanelElem.offsetHeight;
 
         targetPanel.one(`${$.fn.transitionEndName()}.tabs`, () => {
           self.element.trigger('afteractivated', [a]);

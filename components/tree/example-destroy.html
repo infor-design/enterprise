@@ -21,7 +21,6 @@
 <script>
   var sampleData, treeApi;
 
-  /* jshint ignore:start */
   sampleData = [{
     "id": "node1",
     "text": "Node One"
@@ -31,7 +30,6 @@
     "open": false,
     "children": []
   }];
-  /* jshint ignore:end */
 
   var invoke = function () {
     treeApi = $('#json-tree').tree({dataset: sampleData, source: function (req, response) {

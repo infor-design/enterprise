@@ -393,7 +393,7 @@ ApplicationMenu.prototype = {
       this.menu[0].style.display = '';
       // next line forces a repaint
       // eslint-disable-next-line
-      this.menu[0].offsetHeight; // jshint ignore:line
+      this.menu[0].offsetHeight;
       this.menu.addClass('is-open');
     }
 
