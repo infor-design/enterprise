@@ -42,47 +42,7 @@
       opacity: .3;
     }
   }
-
-  // Right aligned Legend
-  &.has-right-legend {
-    align-content: center;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-
-    svg {
-      width: 75%;
-    }
-
-    .chart-legend {
-      border-top: 0;
-      margin: auto;
-      width: 36%;
-
-      .is-two-column {
-        display: flex;
-        float: none;
-        margin: 2px -5px;
-        padding: 4px;
-        width: 100%;
-      }
-
-      .chart-legend-color {
-        height: 15px;
-        margin: 0;
-        top: 0;
-      }
-
-      .chart-legend-item-text {
-        padding-left: 7px;
-        position: relative;
-        top: 2px;
-        white-space: pre-line;
-      }
-    }
-  }
 }
-
 
 .auto-height .chart-pie svg {
   min-height: 240px;
@@ -101,7 +61,8 @@
 // Slight Nudge
 @include respond-to(phone) {
   .chart-pie.has-right-legend .chart-legend {
-    width: 34%;
+    margin: 0;
+    width: 27%;
   }
 }
 

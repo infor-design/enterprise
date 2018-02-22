@@ -70,6 +70,46 @@
     margin: 30px;
   }
 
+  // Right aligned Legend
+  &.has-right-legend {
+    align-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    svg {
+      width: 75%;
+    }
+
+    .chart-legend {
+      border-top: 0;
+      margin: 30px;
+      width: 30%;
+
+      .is-two-column {
+        display: flex;
+        float: none;
+        margin: 2px -5px;
+        padding: 4px 5px 5px;
+        width: 100%;
+      }
+
+      .chart-legend-color {
+        height: 15px;
+        margin: 0;
+        top: 1px;
+        width: 15px;
+      }
+
+      .chart-legend-item-text {
+        padding-left: 7px;
+        position: relative;
+        top: 2px;
+        white-space: pre-line;
+      }
+    }
+  }
+
 }
 
 // Tooltip Swatch

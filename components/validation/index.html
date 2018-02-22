@@ -40,6 +40,18 @@
 };</code></pre>
 <p>Each type is style differntly and can be defined if the formValidation passes or errors based on the rules result. This is defined via the errorsForm on the validation type.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="ot">$</span>.<span class="ot">fn</span>.<span class="ot">validation</span>.<span class="ot">ValidationTypes</span>.<span class="fu">alert</span> = { <span class="dt">type</span>: <span class="st">&#39;alert&#39;</span>, <span class="dt">title</span>: <span class="st">&#39;Alert&#39;</span>, <span class="dt">errorsForm</span>: <span class="kw">false</span> };</code></pre>
+<h2 id="validation-rules">Validation Rules</h2>
+<p>There are a few built in validation rules you can use.</p>
+<ul>
+<li><code>required</code> - Test that the field has a value. This is triggered after entering and exiting a field without adding a value or optionally when submitting a form.</li>
+<li><code>date</code> - Basic test for a valid date. This is triggered after entering and exiting a field without adding a value or optionally when submitting a form.</li>
+<li><code>availableDate</code> - Basic test for a date being withing a range of valid dates. Used internally for date range contraining.</li>
+<li><code>email</code> - Basic test for a valid email address.</li>
+<li><code>enableSubmit</code> - Used on the signing form to check if the submit button can be enabled.</li>
+<li><code>passwordReq</code> - Checks basic password rules. Must be at least 10 characters which contain at least One lowercase letter. One uppercase letter. One numeric digit and one special character.</li>
+<li><code>time</code> - Checks that the time is valid in the time picker.</li>
+<li><code>test</code> - Used for testing only will only be valid if the input === 1 exactly.</li>
+</ul>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>On required fields always add an audible label for example</li>

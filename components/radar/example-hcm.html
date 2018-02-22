@@ -19,19 +19,22 @@
 $('body').on('initialized', function () {
 
   var radarData = [{
-      data: [
-			  [ // Resource
-          {name: 'Procedure Assistance', value: 3},
-          {name: 'Personnel Training', value: 2},
-          {name: 'Patient Support', value: 1},
-          {name: 'Patient Care', value: 0},
-          {name: 'Paperwork Admin', value: 1},
-          {name: 'Equipment Management', value: 3},
-          {name: 'Data Analysis', value: 4},
-          {name: 'Compliance', value: 4},
-          {name: 'Community Support', value: 2},
-          {name: 'Assess and Diagnose', value: 4}
-        ],[ // Position
+    data: [
+      {name: 'Procedure Assistance', value: 3},
+      {name: 'Personnel Training', value: 2},
+      {name: 'Patient Support', value: 1},
+      {name: 'Patient Care', value: 0},
+      {name: 'Paperwork Admin', value: 1},
+      {name: 'Equipment Management', value: 3},
+      {name: 'Data Analysis', value: 4},
+      {name: 'Compliance', value: 4},
+      {name: 'Community Support', value: 2},
+      {name: 'Assess and Diagnose', value: 4}
+    ],
+    name: 'Resource',
+    id: '1'
+  }, {
+    data: [
           {name: 'Procedure Assistance', value: 5},
           {name: 'Personnel Training', value: 4},
           {name: 'Patient Support', value: 3},
@@ -42,9 +45,10 @@ $('body').on('initialized', function () {
           {name: 'Compliance', value: 4},
           {name: 'Community Support', value: 5},
           {name: 'Assess and Diagnose', value: 3}
-        ]
-			]
-    }];
+    ],
+    name: 'Position',
+    id: '2'
+  }];
 
   $('#radar-chart-example').chart({
       type: 'radar',

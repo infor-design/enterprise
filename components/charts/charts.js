@@ -294,6 +294,10 @@ charts.handleElementClick = function (line, series, settings) {
   const elem = series[idx];
   let selector;
 
+  if (settings.type === 'radar') {
+    selector = d3.select(settings.svg.selectAll('.chart-radar-area').nodes()[idx]);
+  }
+
   if (settings.type === 'pie' || settings.type === 'donut') {
     selector = d3.select(settings.svg.selectAll('.slice').nodes()[idx]);
   } else if (settings.type === 'column-positive-negative') {
@@ -313,7 +317,7 @@ charts.handleElementClick = function (line, series, settings) {
     }
   }
 
-  if (['pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
+  if (['radar', 'pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
     'column-grouped', 'column-stacked', 'column-positive-negative'].indexOf(settings.type) !== -1) {
     charts.clickedLegend = true;
     selector.on('click').call(selector.node(), selector.datum(), idx, true);
