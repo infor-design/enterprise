@@ -2,7 +2,7 @@
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
 
-  <div id="maincontent" class="two-column page-container fixed list-detail">
+  <div id="list-detail-container" class="two-column page-container fixed list-detail" data-options='{ "listElement": "#task-listview", "detailElement": "#maincontent", "backElement": "#header-hamburger" }'>
 
     <div class="sidebar no-scroll" role="complementary">
       <header class="header is-personalizable">
@@ -19,15 +19,15 @@
         <input class="searchfield" placeholder="Search Tasks" name="list-detail-sidebar-search" id="list-detail-sidebar-search">
       </div>
 
-      <div class="paginated listview scrollable" id="task-listview" data-init="false"></div>
+      <div class="paginated listview scrollable" id="task-listview"></div>
     </div>
 
-    <div class="main no-scroll" role="main">
+    <div id="maincontent" class="main no-scroll" role="main">
 
       <header class="header is-personalizable">
         <div class="toolbar">
           <div class="title">
-            <button id="accordion-trigger" class="btn-icon list-detail-back-button" type="button">
+            <button id="header-hamburger" class="btn-icon list-detail-back-button" type="button">
               <span class="audible">Show navigation</span>
               <span class="icon app-header">
                 <span class="one"></span>

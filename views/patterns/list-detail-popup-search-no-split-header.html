@@ -3,12 +3,12 @@
   {{> includes/svg-inline-refs}}
 
   {{> includes/applicationmenu}}
-  <div id="maincontent" class="two-column page-container fixed list-detail">
+  <div id="list-detail-container" class="two-column page-container fixed list-detail" data-init="false">
 
     <header class="header is-personalizable">
       <div class="toolbar">
         <div class="title">
-          <button id="button1" type="button" class="btn-icon application-menu-trigger list-detail-button hide-focus" tabindex="0">
+          <button id="header-hamburger" type="button" class="btn-icon application-menu-trigger list-detail-button hide-focus" tabindex="0">
             <span class="audible">Show navigation</span>
             <span class="icon app-header">
               <span class="one"></span>
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    <div class="main no-scroll" role="main">
+    <div id="maincontent" class="main no-scroll" role="main">
 
       <div class="page-container scrollable">
         <div class="content" style="height: 1000px;"></div>
@@ -103,7 +103,14 @@
       },
       pagesize: 5,
       paging: true,
-      searchable: true});
+      searchable: true
+    });
+
+    $('#list-detail-container').listdetail({
+      listElement: '#task-listview',
+      detailElement: '#maincontent',
+      backElement: '#header-hamburger'
+    });
 
   });
 </script>
