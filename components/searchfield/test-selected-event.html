@@ -1,9 +1,8 @@
 <div class="row">
   <div class="six columns">
-
     <h2>Searchfield Test: Categories</h2>
     <p>Making sure the selected event fires (check the console after selecting from the list)</p>
-
+    <p>Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-5979" target="_blank">SOHO-5979</a></p>
   </div>
 </div>
 
@@ -12,22 +11,27 @@
 
     <div class="field">
       <label for="short-category-searchfield">Short Category Searchfield</label>
-      <!--<input id="short-category-searchfield" class="searchfield" data-options="{ categories: ['Animals', 'Baby', 'Clothing', 'Images', 'People', 'Places'] }"/>-->
-      <input id="short-category-searchfield" class="searchfield" 
-      data-options="[{name: 'Animals', id: 'animals', value: 'an', checked: true}, 
-                     {name: 'Baby', id: 'baby', value: 'ba', checked: false},     
+      <input id="short-category-searchfield" class="searchfield"
+      data-options="{ categories: [{name: 'Animals', id: 'animals', value: 'an', checked: true},
+                     {name: 'Baby', id: 'baby', value: 'ba', checked: false},
                      {name: 'Clothing', id: 'clothing', value: 'cl', checked: false},
                      {name: 'Images', id: 'images', value: 'im', checked: false},
                      {name: 'People', id: 'people', value: 'pe', checked: false},
-                     {name: 'Places', id: 'places', value: 'pl', checked: false}]"/>
+                     {name: 'Places', id: 'places', value: 'pl', checked: false}] }"/>
     </div>
 
   </div>
 </div>
 
 <script>
-  //console.log($('#short-category-searchfield'));
   $('#short-category-searchfield').on('selected', function (e, anchor) {
-    console.log(anchor);
+    if (typeof console !== undefined) {
+      console.log(anchor);
+    }
+
+    $('body').toast({
+      title: "Category Selected!",
+      message: "The <b>" + anchor.text().trim() + "</b> category was picked"
+    });
   });
 </script>
