@@ -1,29 +1,31 @@
 
 <div class="row">
   <div class="six columns">
+      <form id="test-form">
+        <input type="checkbox" class="checkbox"name="checkbox1"  id="checkbox1">
+        <label for="checkbox1" class="checkbox-label">Unchecked</label>
+        <br />
 
-      <input type="checkbox" class="checkbox" id="checkbox1">
-      <label for="checkbox1" class="checkbox-label">Unchecked</label>
-      <br />
+        <input type="checkbox" class="checkbox" id="checkbox2" checked>
+        <label for="checkbox2" class="checkbox-label" >Checked</label>
+        <br />
 
-      <input type="checkbox" class="checkbox" id="checkbox2" checked>
-      <label for="checkbox2" class="checkbox-label" >Checked</label>
-      <br />
+        <input type="checkbox" data-trackdirty="true"  class="checkbox" id="checkbox3" >
+        <label for="checkbox3" class="checkbox-label" >Dirty tracking</label>
+        <br />
 
-      <input type="checkbox" data-trackdirty="true"  class="checkbox" id="checkbox3" >
-      <label for="checkbox3" class="checkbox-label" >Dirty tracking</label>
-      <br />
+        <input type="checkbox" class="checkbox" id="checkbox4" disabled>
+        <label for="checkbox4" class="checkbox-label" >Disabled and unchecked</label>
+        <br />
 
-      <input type="checkbox" class="checkbox" id="checkbox4" disabled>
-      <label for="checkbox4" class="checkbox-label" >Disabled and unchecked</label>
-      <br />
+        <input type="checkbox" class="checkbox" id="checkbox5" disabled checked>
+        <label for="checkbox5" class="checkbox-label">Disabled and checked</label>
+        <br />
 
-      <input type="checkbox" class="checkbox" id="checkbox5" disabled checked>
-      <label for="checkbox5" class="checkbox-label">Disabled and checked</label>
-      <br />
+        <input type="checkbox" aria-checked="mixed" class="checkbox partial" checked id="checkbox8">
+        <label for="checkbox8" class="checkbox-label"><span class="audible">Partial (not accessible)</span>Partial</label>
 
-      <input type="checkbox" aria-checked="mixed" class="checkbox partial" checked id="checkbox8">
-      <label for="checkbox8" class="checkbox-label"><span class="audible">Partial (not accessible)</span>Partial</label>
+  </form>
 
   </div>
 </div>
@@ -33,7 +35,7 @@
     <h3 class="fieldset-title">Adjacent Checkboxes inside Form Fields</h3>
     <div id="checkboxes-in-fields">
       <div class="field">
-        <input type="checkbox" class="checkbox" id="checkbox-field-1">
+        <input type="checkbox" class="checkbox"  id="checkbox-field-1">
         <label for="checkbox-field-1" class="checkbox-label">Field Checkbox 1</label>
       </div>
 

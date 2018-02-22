@@ -16,8 +16,8 @@ const COMPONENT_NAME = 'modal';
 * @property {string} cssClass Append a css class to top level.
 * @property {boolean} autoFocus If true the first input will be focused.
 * @property {string} id Optionally tag a dialog with an id.
-* @property {number} id Optional extra height to add.
-* @property {number} id Optional extra width to add.
+* @property {number} frameHeight Optional extra height to add.
+* @property {number} frameWidth Optional extra width to add.
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -162,7 +162,7 @@ Modal.prototype = {
 
   /**
    * Check if the submit button should be disabled based on validation status.
-   * @return {void}
+   * @returns {void}
    */
   disableSubmit() {
     const body = this.element;

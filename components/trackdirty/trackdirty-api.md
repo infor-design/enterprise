@@ -2,19 +2,12 @@
 
 ### Table of Contents
 
--   [COMPONENT_NAME](#component_name)
 -   [TRACKDIRTY_DEFAULTS](#trackdirty_defaults)
 -   [Tag](#tag)
 -   [updated](#updated)
 -   [destroy](#destroy)
 -   [resetdirty](#resetdirty)
 -   [dirty](#dirty)
-
-## COMPONENT_NAME
-
-Component Name
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 ## TRACKDIRTY_DEFAULTS
 

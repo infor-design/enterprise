@@ -787,7 +787,6 @@ Datagrid.prototype = {
       self.headerRow = $(`<thead>${headerRow}</thead>`).appendTo(self.headerContainer.find('table'));
       self.element.prepend(self.headerContainer);
     } else {
-      self.headerContainer.find('table').css('width', this.totalWidth);
       self.headerRow.html(headerRow);
       self.headerColGroup.html(cols);
     }

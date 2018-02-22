@@ -5,6 +5,7 @@ import { Line, COMPONENT_NAME as LINE_NAME } from '../line/line';
 import { Column, COMPONENT_NAME as COLUMN_NAME } from '../column/column';
 import { Bar, COMPONENT_NAME as BAR_NAME } from '../bar/bar';
 import { Pie, COMPONENT_NAME as PIE_NAME } from '../pie/pie';
+import { Radar, COMPONENT_NAME as RADAR_NAME } from '../radar/radar';
 
 /*
 * jQuery Component Wrapper for Charts. It maps the singlular components
@@ -39,6 +40,17 @@ $.fn.chart = function (settings) {
       }
       const chartComponent = new Bullet(this, settings);
       this.data(BULLET_NAME, chartComponent);
+      this.data('chart', chartComponent); // Compatibility
+      break;
+    }
+    case 'radar': {
+      instance = this.data(RADAR_NAME);
+      if (instance) {
+        instance.updated(settings);
+        return this;
+      }
+      const chartComponent = new Radar(this, settings);
+      this.data(RADAR_NAME, chartComponent);
       this.data('chart', chartComponent); // Compatibility
       break;
     }

@@ -1,0 +1,20 @@
+
+<div class="row">
+  <div class="six columns">
+      <form id="test-form">
+        <input type="checkbox" class="checkbox" name="TransTypes" id="checkbox1" value="IN" checked="true"/>
+        <label for="checkbox1" class="checkbox-label">Internal</label>
+
+        <br />
+
+        <input type="checkbox" class="checkbox" name="TransTypes" id="checkbox2" value="BV" checked="true"/>
+        <label for="checkbox2" class="checkbox-label">Bullet</label>
+
+  </form>
+
+  </div>
+</div>
+
+<script>
+  console.log($('form').serialize());
+</script>

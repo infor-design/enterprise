@@ -15,21 +15,7 @@
 
 ### Settings
 
--   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true chart will not resize / update when resizing the page.
--   `labels` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An object with options to configure the labels of form `labels : {hideLabels: true}`
-- `labels: {hideLabels}` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Do not show labels
-- `labels: {isTwoline}` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Show the labels on two different lines
-- `labels: {contentsTop}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - Customize the top of two the labels, can be `'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'`. If only one label this setting will be used.
-- `labels: {contentsBottom}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - Customize the bottom of the two labels, can be `'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'`
-- `labels: {formatterTop}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - Use d3 Format on the top label, see http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
- (percentage)'`
-- `labels: {formatterBottom}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - Use d3 Format on the top label, see http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
- (percentage)'`
-- `labels: {colorTop}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - How to colorize the top label it can be one of `'default'|'color-as-arc'|'#000000'|'black'`
-- `labels: {colorBottom}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - How to colorize the bottom label it can be one of `'default'|'color-as-arc'|'#000000'|'black'`
-- `labels: {lineColor}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - How to colorize the line links can be one of `'default'|'color-as-arc'|'#000000'|'black'`
-- `labels: {lineWidth}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - How many pixels should the line be (default 2)
-- `labels: {linehideWhenMoreThanPercentage}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - If the percentage is less than this (default 10), hide the line.
+See the [Pie API]( ../components/pie) as this is just a pie setting.
 
 ## Code Example
 

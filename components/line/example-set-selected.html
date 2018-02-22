@@ -20,7 +20,7 @@
   </div>
   <div class="one column">&nbsp;</div>
   <div class="two columns">
-      <button class="btn-secondary" type="button" id="btn-toggle-selecteion">Toggle Selection</button>
+      <button class="btn-secondary" type="button" id="btn-toggle-selection">Toggle Selection</button>
   </div>
 </div>
 
@@ -140,8 +140,8 @@ $('body').on('initialized', function () {
     api.setSelected(options);
   });
 
-  // Toggle selecteion
-  $('#btn-toggle-selecteion').on('click', function() {
+  // Toggle selection
+  $('#btn-toggle-selection').on('click', function() {
     setOptions();
     api.toggleSelected(options);
   });

@@ -4,7 +4,6 @@
 
 -   [BULLET_DEFAULTS](#bullet_defaults)
 -   [Bullet](#bullet)
-    -   [init](#init)
     -   [updated](#updated)
     -   [destroy](#destroy)
 
@@ -12,10 +11,9 @@
 
 **Properties**
 
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The data to use in the chart.
 -   `animate` **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** true|false - will do or not do the animation.
     'initial' will do only first time the animation.
--   `tooltip` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Tooltip conetnts
+-   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, the component will not resize when resizing the page.
 
 ## Bullet
 
@@ -28,17 +26,15 @@ dashboards, the bullet graph serves as a replacement for dashboard gauges and me
 -   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
 -   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
 
-### init
-
-Do initialization, build up and / or add events ect.
-
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The bullet chart prototype for chaining.
-
 ### updated
 
 Handle updated settings and values.
 
-Returns **\[type]** [description]
+**Parameters**
+
+-   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings to use.
+
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
 
 ### destroy
 

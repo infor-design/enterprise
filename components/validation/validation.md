@@ -45,7 +45,7 @@ $('#username-field').removeError()
 
 ## Validation Types
 
-There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule, but error is used if it is not defined.  
+There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule, but error is used if it is not defined.
 
 ```javascript
 $.fn.validation.rules.customWarningRule = {
@@ -63,6 +63,20 @@ Each type is style differntly and can be defined if the formValidation passes or
 ```javascript
 $.fn.validation.ValidationTypes.alert = { type: 'alert', title: 'Alert', errorsForm: false };
 ```
+
+## Validation Rules
+
+There are a few built in validation rules you can use.
+
+- `required` - Test that the field has a value. This is triggered after entering and exiting a field without adding a value or optionally when submitting a form.
+- `date` - Basic test for a valid date. This is triggered after entering and exiting a field without adding a value or optionally when submitting a form.
+- `availableDate` - Basic test for a date being withing a range of valid dates. Used internally for date range contraining.
+- `email` - Basic test for a valid email address.
+- `enableSubmit` - Used on the signing form to check if the submit button can be enabled.
+- `passwordReq` - Checks basic password rules. Must be at least 10 characters which contain at least
+One lowercase letter. One uppercase letter. One numeric digit and one special character.
+- `time` - Checks that the time is valid in the time picker.
+- `test` - Used for testing only will only be valid if the input === 1 exactly.
 
 ## Accessibility
 

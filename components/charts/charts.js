@@ -18,6 +18,43 @@ charts.tooltipSize = function tooltipSize(content) {
 };
 
 /**
+ * Format the value based on settings.
+ * @private
+ * @param  {object} data The data object.
+ * @param  {object} settings The sttings to use
+ * @returns {string} the formatted string.
+ */
+charts.formatToSettings = function formatToSettings(data, settings) {
+  const d = data.data ? data.data : data;
+
+  if (settings.show === 'value') {
+    return settings.formatter ? d3.format(settings.formatter)(d.value) : d.value;
+  }
+
+  if (settings.show === 'label') {
+    return d.name;
+  }
+
+  if (settings.show === 'label (percent)') {
+    return `${d.name} (${isNaN(d.percentRound) ? 0 : d.percentRound}%)`;
+  }
+
+  if (settings.show === 'label (value)') {
+    return `${d.name} (${settings.formatter ? d3.format(settings.formatter)(d.value) : d.value})`;
+  }
+
+  if (settings.show === 'percent') {
+    return `${isNaN(d.percentRound) ? 0 : d.percentRound}%`;
+  }
+
+  if (typeof settings.show === 'function') {
+    return settings.show(d);
+  }
+
+  return d.value;
+};
+
+/**
 * Add Toolbar to the page.
 * @private
 * @param {string} extraClass class to add (needed for pie)
@@ -257,6 +294,10 @@ charts.handleElementClick = function (line, series, settings) {
   const elem = series[idx];
   let selector;
 
+  if (settings.type === 'radar') {
+    selector = d3.select(settings.svg.selectAll('.chart-radar-area').nodes()[idx]);
+  }
+
   if (settings.type === 'pie' || settings.type === 'donut') {
     selector = d3.select(settings.svg.selectAll('.slice').nodes()[idx]);
   } else if (settings.type === 'column-positive-negative') {
@@ -276,7 +317,7 @@ charts.handleElementClick = function (line, series, settings) {
     }
   }
 
-  if (['pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
+  if (['radar', 'pie', 'donut', 'column', 'bar', 'bar-stacked', 'bar-grouped', 'bar-normalized',
     'column-grouped', 'column-stacked', 'column-positive-negative'].indexOf(settings.type) !== -1) {
     charts.clickedLegend = true;
     selector.on('click').call(selector.node(), selector.datum(), idx, true);

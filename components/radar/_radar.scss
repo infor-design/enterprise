@@ -1,0 +1,57 @@
+// Radar (AKA Gap) Chart
+//==================================================//
+
+.chart-radar {
+
+  // The rings in the radar
+  .chart-radar-grid-circle {
+    fill: $chart-line-color;
+    stroke: $chart-line-color;
+  }
+
+  // The lines across the circle
+  .chart-radar-crossline {
+    stroke: $chart-line-color;
+  }
+
+  // Style the cursor on the actionable areas
+  .chart-radar-area,
+  .chart-radar-circle {
+    cursor: pointer;
+
+    // scss-lint:disable ImportantRule
+    &.is-selected {
+      fill-opacity: .45 !important;
+    }
+
+    &.is-not-selected {
+      fill-opacity: .05 !important;
+    }
+    // scss-lint:enable ImportantRule
+  }
+
+}
+
+// Move legend to bottom
+@include respond-to(phonedown) {
+  .chart-radar.has-right-legend {
+    display: block;
+
+    .chart-legend {
+      margin: -33px 0 0;
+      text-align: center;
+      width: 100%;
+
+      .is-two-column {
+        display: inline-block;
+        margin: 2px 0;
+        width: auto;
+      }
+
+      .chart-legend-color {
+        top: 0;
+      }
+    }
+
+  }
+}
