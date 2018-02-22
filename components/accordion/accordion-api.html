@@ -434,6 +434,43 @@ void
         </td>
       </tr>
       <tr>
+        <td>filter</td>
+        <td>
+          
+                
+                  <span>headers () = element references representing accordion headers.
+ </span>
+                
+                  <span>doReset () = if defined, causes the filtering system to reset.
+ </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>unfilter</td>
+        <td>
+          
+                
+                  <span>headers () = element references representing accordion headers.
+If provided, will cause only specific items to become unfiltered.  If not
+provided, removes all filtering from the accordion.
+ </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
         <td>disable</td>
         <td>
           
@@ -631,15 +668,6 @@ This indicates the link has been followed.
   
     
       <div>
-        <span>event (object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
         <span>anchor (array)
         
         = The anchor tag in an array.
@@ -662,7 +690,7 @@ This indicates the link has been followed.
   
     
       <div>
-        <span>event (object)
+        <span>event (jQuery.Event)
         
         = The jquery event object
 
@@ -693,7 +721,7 @@ This indicates the link has been followed.
   
     
       <div>
-        <span>event (object)
+        <span>e ()
         
         = The jquery event object
 

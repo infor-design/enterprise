@@ -10,12 +10,12 @@ define([
 
     setup: function() {
       var jsdom = require('jsdom').jsdom;
-      document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
-      window = document.defaultView;  // jshint ignore:line
+      document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>');
+      window = document.defaultView;
 
       //Load the Locale.js we are testing
       require('components/locale/locale.js');
-      Locale = window.Locale; // jshint ignore:line
+      Locale = window.Locale;
 
       //Load the Locales because Ajax doesnt work
       require('components/locale/cultures/en-US.js');

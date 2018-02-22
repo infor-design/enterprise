@@ -10,7 +10,7 @@ export const enableTimeLogging = false;
  */
 export function logTimeStart(label) {
   if (enableTimeLogging) {
-    console.time(label); // jshint ignore:line
+    console.time(label);
   }
 }
 
@@ -21,7 +21,7 @@ export function logTimeStart(label) {
  */
 export function logTimeEnd(label) {
   if (enableTimeLogging) {
-    console.timeEnd(label); // jshint ignore:line
+    console.timeEnd(label);
   }
 }
 

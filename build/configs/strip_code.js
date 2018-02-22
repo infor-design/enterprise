@@ -1,9 +1,9 @@
 module.exports = {
 
-  strip_code: { // jshint ignore:line
+  strip_code: {
     options: {
-      start_comment: 'start-amd-strip-block', // jshint ignore:line
-      end_comment: 'end-amd-strip-block' // jshint ignore:line
+      start_comment: 'start-amd-strip-block',
+      end_comment: 'end-amd-strip-block'
     },
     src: {
       src: 'temp/amd/*.js'

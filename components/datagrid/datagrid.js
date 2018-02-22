@@ -9,7 +9,7 @@ import { debounce } from '../utils/debounced-resize';
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
 // eslint-disable-next-line
-import { Editors } from '../datagrid/datagrid.editors'; // jshint ignore:line
+import { Editors } from '../datagrid/datagrid.editors';
 
 // The name of this component.
 const COMPONENT_NAME = 'datagrid';

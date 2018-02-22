@@ -1,4 +1,3 @@
-/* jshint esversion:6 */
 import { Environment as env } from '../utils/environment';
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';

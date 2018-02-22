@@ -10,7 +10,6 @@
 <script>
   var sampleData;
 
-  /* jshint ignore:start */
   sampleData = [{
     "@status":"est",
     "@id":"VE1QOkU1NDRCM0NBLUMwMDUtNDUxQS1CNjcxLUY2MkQzNDQ4MjFCRg==",
@@ -54,7 +53,6 @@
     "open":true
   }];
 
-  /* jshint ignore:end */
 
   $('#json-tree').tree({dataset: sampleData})
   .on('selected', function (e, args) {

@@ -1,5 +1,3 @@
-/* jshint esversion:6 */
-
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable consistent-return */
@@ -1275,10 +1273,8 @@ Editor.prototype = {
 
       if (clipboardData && clipboardData.types) {
         types = clipboardData.types;
-        // jshint undef:false
         if ((types instanceof DOMStringList && types.contains('text/html')) ||
             (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
-        // jshint undef:true
           if (self.isIeEdge) {
             pastedData = e.originalEvent.clipboardData.getData('text/plain');
           } else {

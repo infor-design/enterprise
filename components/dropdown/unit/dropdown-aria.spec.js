@@ -1,11 +1,21 @@
-import axe from 'axe-core'; //eslint-disable-line
+import axe from 'axe-core';
 import { Dropdown } from '../dropdown';
 
 const axeOptions = {
-  runOnly: {
-    type: 'tag',
-    values: ['section508']
-  }
+  rules: [
+    {
+      id: 'aria-allowed-attr',
+      enabled: false
+    },
+    {
+      id: 'aria-required-children',
+      enabled: false
+    },
+    {
+      id: 'aria-valid-attr-value',
+      enabled: false
+    }
+  ]
 };
 
 const dropdownHTML = require('../example-index.html');
@@ -29,6 +39,7 @@ describe('Dropdown ARIA', () => {
     svgEl = document.body.querySelector('.svg-icons');
     dropdownEl.classList.add('no-init');
     dropdownObj = new Dropdown(dropdownEl);
+    axe.configure(axeOptions);
     done();
   });
 
@@ -49,16 +60,16 @@ describe('Dropdown ARIA', () => {
     done();
   });
 
-  it('Should be accessible on init (Section 508)', (done) => {
-    axe.run(document.body, axeOptions, (err, { violations }) => {
+  it('Should be accessible on init with no WCAG 2AA violations', (done) => {
+    axe.run(document.body, (err, { violations }) => {
       expect(err).toBeFalsy();
       expect(violations.length).toEqual(0);
       done();
     });
   });
 
-  it('Should be accessible on open(Section 508)', (done) => {
-    axe.run(document.body, axeOptions, (err, { violations }) => {
+  it('Should be accessible on open with no WCAG 2AA violations', (done) => {
+    axe.run(document.body, (err, { violations }) => {
       dropdownObj.open();
       expect(err).toBeFalsy();
       expect(violations.length).toEqual(0);

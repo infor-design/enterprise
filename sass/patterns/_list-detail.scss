@@ -187,6 +187,14 @@ html[dir='rtl'] {
     .panel-header {
       padding-left: 0;
     }
+
+    .card-header {
+      padding: 2px 20px 2px 15px;
+
+      > button {
+        float: left;
+      }
+    }
   }
 }
 
@@ -236,9 +244,43 @@ html[dir='rtl'] {
         @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94),
           box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
         @include drawer-box-shadow;
-        max-width: 75%;
-        width: 275px;
         z-index: 2;
+      }
+
+      &.fixed {
+        > .sidebar {
+          max-width: 250px;
+        }
+      }
+
+      &.fixed-sm {
+        > .sidebar {
+          max-width: 275px;
+        }
+      }
+
+      &.fixed-mm {
+        > .sidebar {
+          max-width: 300px;
+        }
+      }
+
+      &.fixed-md {
+        > .sidebar {
+          max-width: 350px;
+        }
+      }
+
+      &.fixed-lg {
+        > .sidebar {
+          max-width: 400px;
+        }
+      }
+
+      &.fixed-xl {
+        > .sidebar {
+          max-width: 450px;
+        }
       }
     }
 
@@ -255,7 +297,6 @@ html[dir='rtl'] {
 
       &.bleeding-edge__phone {
         > .sidebar {
-          //@include css3(transform, translateX(-100%));
           box-shadow: 0 0 0 1px $box-shadow-off-color;
         }
 
@@ -274,6 +315,27 @@ html[dir='rtl'] {
   //Make this color target specifically header
   .header .searchfield-wrapper:not(.context) input {
     color: $header-text-color;
+  }
+
+  // RTL makes everything come in from the opposite side.
+  html[dir='rtl'] {
+    .list-detail {
+      > .main {
+        @include css3(transform, translateX(-100%));
+      }
+
+      &.show-detail {
+        > .sidebar {
+          @include css3(transform, translateX(100%));
+        }
+
+        &:not(.bleeding-edge__phone, .bleeding-edge__tablet) {
+          > .main {
+            @include css3(transform, translateX(0));
+          }
+        }
+      }
+    }
   }
 }
 
@@ -322,6 +384,19 @@ html[dir='rtl'] {
       > .sidebar {
         @include css3(transform, translateX(-100%));
         box-shadow: 0 0 0 1px $box-shadow-off-color;
+      }
+    }
+  }
+
+  // RTL makes everything come in from the opposite side.
+  html[dir='rtl'] {
+    .list-detail {
+      &.bleeding-edge__tablet {
+        &.show-detail {
+          > .sidebar {
+            @include css3(transform, translateX(100%));
+          }
+        }
       }
     }
   }

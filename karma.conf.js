@@ -4,9 +4,11 @@ module.exports = function (config) {
     frameworks: ['jasmine'],
     files: [
       'dist/css/light-theme.css',
+      'dist/css/light-theme.css.map',
       'dist/js/jquery-3.1.1.js',
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
+      'dist/js/cultures/en-US.js',
       'components/**/*.spec.js',
     ],
     exclude: [

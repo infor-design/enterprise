@@ -21,7 +21,6 @@
   "style-disabled": true,
   "id-class-value": "dash",
   "doctype-html5": true,
-  "jshint": {},
   "csslint": {
     "display-property-grouping": true,
     "known-properties": true

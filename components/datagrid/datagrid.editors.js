@@ -1,4 +1,3 @@
-/* jshint esversion:6 */
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 

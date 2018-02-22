@@ -238,7 +238,6 @@ Hierarchy.prototype = {
    */
   data(nodeId, currentDataObject, newDataObject, params) {
     /* eslint-disable no-use-before-define */
-    /* jshint latedef: nofunc */
     if (params === undefined) {
       params = {};
     }
@@ -251,7 +250,7 @@ Hierarchy.prototype = {
       s.newData = [];
     }
 
-    function addChildrenToObject(thisObj, thisParams) { // jshint ignore:line
+    function addChildrenToObject(thisObj, thisParams) {
       if (thisParams.insert) {
         delete thisObj.isLeaf;
         thisObj.isExpanded = true;
@@ -263,7 +262,7 @@ Hierarchy.prototype = {
       }
     }
 
-    function checkForChildren(self, thisObj, thisNewDataObject) { // jshint ignore:line
+    function checkForChildren(self, thisObj, thisNewDataObject) {
       Object.keys(thisObj).forEach((prop) => {
         if (prop === 'id' && nodeId === thisObj.id) {
           if (!thisObj.isLoaded && !thisObj.isRootNode) {
@@ -277,7 +276,7 @@ Hierarchy.prototype = {
       }
     }
 
-    function processData(self, thisObj, thisNewDataObject) { // jshint ignore:line
+    function processData(self, thisObj, thisNewDataObject) {
       if (thisObj.length === undefined) {
         checkForChildren(self, thisObj, thisNewDataObject);
       } else {
@@ -413,7 +412,6 @@ Hierarchy.prototype = {
   */
   render(data) {
     /* eslint-disable no-use-before-define */
-    /* jshint latedef: nofunc */
     const s = this.settings;
     const thisLegend = s.legend;
     const thisChildren = data.children;
@@ -510,7 +508,7 @@ Hierarchy.prototype = {
       }
     }
 
-    function subArrayChildren(self, obj, thisData) { // jshint ignore:line
+    function subArrayChildren(self, obj, thisData) {
       Object.keys(obj).forEach((prop) => {
         if (prop === 'children') {
           const nodeId = obj.id;

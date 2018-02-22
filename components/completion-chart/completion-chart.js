@@ -1,5 +1,4 @@
 /* eslint-disable no-loop-func */
-/* jshint esversion:6 */
 
 // Other Shared Imports
 import * as debug from '../utils/debug';

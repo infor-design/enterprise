@@ -111,9 +111,7 @@ $.fn.transitionEndName = function () {
  */
 function visible(element) {
   return $.expr.filters.visible(element) &&
-    !$(element).parents().addBack().filter(function () {
-      return $.css(this, 'visibility') === 'hidden';
-    }).length;
+    !$(element).parents().addBack().filter(function () { return $.css(this, 'visibility') === 'hidden'; }).length;
 }
 
 /**

@@ -21,6 +21,8 @@
     -   [ascend](#ascend)
     -   [descend](#descend)
     -   [focusOriginalType](#focusoriginaltype)
+    -   [filter](#filter)
+    -   [unfilter](#unfilter)
     -   [disable](#disable)
     -   [enable](#enable)
     -   [updated](#updated)
@@ -239,6 +241,21 @@ Governed by the property "this.originalSelection".
 
 Returns **void** 
 
+### filter
+
+**Parameters**
+
+-   `headers` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** element references representing accordion headers.
+-   `doReset` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if defined, causes the filtering system to reset.
+
+### unfilter
+
+**Parameters**
+
+-   `headers` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** element references representing accordion headers.
+     If provided, will cause only specific items to become unfiltered.  If not
+     provided, removes all filtering from the accordion.
+
 ### disable
 
 Disable an accordion from events
@@ -310,9 +327,12 @@ Fires when expanding a pane is initiated.
 
 Fires after a pane is expanded.
 
+**Parameters**
+
+-   `e` **jQuery.Event?** The jquery event object
+
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
 -   `anchor` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The anchor tag in an array.
 
 ## collapse
@@ -321,7 +341,7 @@ Fires when collapsed a pane is initiated.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `event` **jQuery.Event** The jquery event object
 -   `anchor` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The anchor tag in an array.
 
 ## aftercollapse
@@ -330,5 +350,5 @@ Fires after a pane is collapsed.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `e` **jQuery.Event?** The jquery event object
 -   `anchor` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The anchor tag in an array.

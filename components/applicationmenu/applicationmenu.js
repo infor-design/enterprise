@@ -127,7 +127,7 @@ ApplicationMenu.prototype = {
           return item.text || '';
         },
         resultIteratorCallback(item) {
-          item._highlightTarget = 'text';
+          item.highlightTarget = 'text';
           return item;
         },
         displayResultsCallback(results, done) {
@@ -393,7 +393,7 @@ ApplicationMenu.prototype = {
       this.menu[0].style.display = '';
       // next line forces a repaint
       // eslint-disable-next-line
-      this.menu[0].offsetHeight; // jshint ignore:line
+      this.menu[0].offsetHeight;
       this.menu.addClass('is-open');
     }
 
@@ -525,37 +525,12 @@ ApplicationMenu.prototype = {
    * @returns {void}
    */
   filterResultsCallback(results, done) {
-    const self = this;
-    let filteredParentHeaders = this.accordion.find('.has-filtered-children');
-
-    this.accordionAPI.headers.removeClass('filtered has-filtered-children');
-
     if (!results || !results.length) {
-      this.accordionAPI.collapse(filteredParentHeaders);
-      this.accordionAPI.updated();
-      this.isFiltered = false;
-      this.element.triggerHandler('filtered', [results]);
-      done();
-      return;
+      this.accordionAPI.unfilter();
+    } else {
+      const headers = $(results.map(item => item.element));
+      this.accordionAPI.filter(headers, true);
     }
-
-    let matchedHeaders = $();
-    results.map(function (item) {
-      matchedHeaders = matchedHeaders.add(item.element);
-
-      const parentPanes = $(item.element).parents('.accordion-pane');
-      parentPanes.each(function () {
-        const parentHeaders = $(this).prev('.accordion-header').addClass('has-filtered-children');
-        filteredParentHeaders = filteredParentHeaders.not(parentHeaders);
-        self.accordionAPI.expand(parentHeaders);
-      });
-      return parentPanes;
-    });
-
-    this.isFiltered = true;
-    this.accordionAPI.headers.not(matchedHeaders).addClass('filtered');
-    this.accordionAPI.collapse(filteredParentHeaders);
-    this.accordionAPI.updated(matchedHeaders);
 
     this.element.triggerHandler('filtered', [results]);
     done();
