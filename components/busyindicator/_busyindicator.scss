@@ -37,7 +37,7 @@ $busy-indicator-check-color: $inverse-color;
   @include opacity(1);
   display: inline-block;
   height: $busy-indicator-size;
-  margin: 8px;
+  margin: 2px;
   position: relative;
   vertical-align: middle;
   width: $busy-indicator-size;
