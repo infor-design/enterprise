@@ -122,6 +122,16 @@ Pager.prototype = {
       }
     }
 
+    if (listviewContainer && this.settings.showPageSizeSelector) {
+      this.isListVsTable = true;
+      this.settings.type = 'listvstable';
+      this.mainContainer = listviewContainer;
+
+      if (!this.settings.componentAPI) {
+        this.settings.componentAPI = this.element.data('listview');
+      }
+    }
+
     this.isRTL = Locale.isRTL();
 
     return this;
@@ -161,6 +171,20 @@ Pager.prototype = {
         '</li>';
       }
 
+      if (this.settings.type === 'listvstable') {
+        buttons = `${'<li class="pager-first">' +
+          '<a href="#" title="FirstPage">'}${$.createIcon({ icon: 'first-page' })
+        }<span class="audible">${Locale.translate('FirstPage')}</span>` +
+          '</a>' +
+        `</li>${
+          buttons
+        }<li class="pager-last">` +
+          `<a href="#" title="LastPage">${$.createIcon({ icon: 'last-page' })
+          }<span class="audible">${Locale.translate('LastPage')}</span>` +
+          '</a>' +
+        '</li>';
+      }
+
       this.pagerBar.html(buttons);
 
       this.pagerBar.children('li').children('a').button();
@@ -168,6 +192,10 @@ Pager.prototype = {
 
     if (this.isTable) {
       this.mainContainer.after(this.pagerBar);
+    } else if (this.isListVsTable) {
+      this.element.after(this.pagerBar);
+      $(this.pagerBar.find('.pager-prev')).css({ position: 'static' });
+      $(this.pagerBar.find('.pager-next')).css({ position: 'static' });
     } else if (this.settings.position === 'bottom') {
       this.element.after(this.pagerBar);
     } else {
@@ -425,7 +453,7 @@ Pager.prototype = {
     }
 
     // Add in fake pages
-    if (!this.isTable) {
+    if (!this.isTable && !this.isListVsTable) {
       let i;
       let thisClass;
       let thisText;
@@ -478,6 +506,71 @@ Pager.prototype = {
 
     // Add functionality to change page size.
     if (this.isTable && this.pagerBar.find('.btn-menu').length === 0 && self.settings.showPageSizeSelector) {
+      const pageSize = $('<li class="pager-pagesize"></li>');
+      const pageSizeButton = $(`${'<button type="button" class="btn-menu">' +
+        '<span>'}${Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize)}</span> ${
+        $.createIcon({ icon: 'dropdown' })
+      } </button>`).appendTo(pageSize);
+
+      pageSize.insertAfter(this.pagerBar.find('.pager-last'));
+
+      const menu = $('<ul class="popupmenu has-icons"></ul>');
+
+      for (let k = 0; k < self.settings.pagesizes.length; k++) {
+        const size = self.settings.pagesizes[k];
+        menu.append(`<li ${size === self.settings.pagesize ? ' class="is-checked"' : ''}><a href="#">${size}</a></li>`);
+      }
+
+      pageSizeButton.after(menu);
+
+      const popupOpts = {
+        placementOpts: {
+          parent: pageSizeButton,
+          parentXAlignment: (this.isRTL ? 'left' : 'right'),
+          strategies: ['flip']
+        }
+      };
+
+      pageSizeButton.popupmenu(popupOpts).on('selected.pager', (e, args) => {
+        const tag = args;
+        tag.closest('.popupmenu').find('.is-checked').removeClass('is-checked');
+        tag.parent('li').addClass('is-checked');
+        self.settings.pagesize = parseInt(tag.text(), 10);
+
+        if (self.settings.componentAPI) {
+          self.settings.componentAPI.settings.pagesize = self.settings.pagesize;
+        }
+        self.setActivePage(1, true, 'first');
+      });
+    }
+
+    if (this.isListVsTable && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
+      let text = Locale.translate('PageOf');
+      text = text.replace('{0}', `<input name="pager-pageno" value="${this.activePage}">`);
+      text = text.replace('{1}', `<span class="pager-total-pages">${pages || 1}</span>`);
+      $(`<li class="pager-count"><label>${text} </label>`).insertAfter(this.pagerBar.find('.pager-prev'));
+
+      // Setup interactivty with the numeric page input
+      let lastValue = null;
+
+      this.pagerBar.find('.pager-count input')
+        .on('focus', function () {
+          lastValue = $(this).val();
+        }).on('blur', function () {
+          if (lastValue !== $(this).val()) {
+            $(this).val(self.setActivePage(parseInt($(this).val(), 10), false, 'page'));
+          }
+        }).on('keydown', function (e) {
+          if (e.which === 13) {
+            self.setActivePage(parseInt($(this).val(), 10), false, 'page');
+
+            e.stopPropagation();
+            e.preventDefault();
+          }
+        });
+    }
+
+    if (this.isListVsTable && this.pagerBar.find('.btn-menu').length === 0 && self.settings.showPageSizeSelector) {
       const pageSize = $('<li class="pager-pagesize"></li>');
       const pageSizeButton = $(`${'<button type="button" class="btn-menu">' +
         '<span>'}${Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize)}</span> ${

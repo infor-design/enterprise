@@ -55,7 +55,8 @@ const LISTVIEW_DEFAULTS = {
   emptyMessage: null,
   source: null,
   forceToRenderOnEmptyDs: false,
-  disableItemDeactivation: false
+  disableItemDeactivation: false,
+  showPageSizeSelector: false
 };
 
 /**
@@ -125,7 +126,8 @@ ListView.prototype = {
       this.element.pager({
         componentAPI: this,
         pagesize: this.settings.pagesize,
-        source: this.settings.source
+        source: this.settings.source,
+        showPageSizeSelector: this.settings.showPageSizeSelector
       });
 
       this.pager = this.element.data('pager');
