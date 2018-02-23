@@ -912,6 +912,22 @@ Datagrid.prototype = {
           filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
 
           break;
+        case 'multiselect':
+          filterMarkup += `<select ${col.filterDisabled ? ' disabled' : ''}${col.filterType === 'select' ? ' class="dropdown"' : ' multiple class="multiselect"'}id="${filterId}">`;
+          if (col.options) {
+            if (col.filterType === 'select') {
+              filterMarkup += '<option></option>';
+            }
+
+            for (let i = 0; i < col.options.length; i++) {
+              const option = col.options[i];
+              const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+              filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+            }
+          }
+          filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
+
+          break;
         case 'time':
           filterMarkup += `<input ${col.filterDisabled ? ' disabled' : ''} type="text" class="timepicker" id="${filterId}"/>`;
           break;
@@ -1064,7 +1080,7 @@ Datagrid.prototype = {
     let btnMarkup = '';
 
     // Just the dropdown
-    if (col.filterType === 'contents' || col.filterType === 'select') {
+    if (col.filterType === 'contents' || col.filterType === 'select' || col.filterType === 'multiselect') {
       return '';
     }
 
@@ -1196,7 +1212,7 @@ Datagrid.prototype = {
           rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         }
 
-        if (columnDef.filterType === 'contents' || columnDef.filterType === 'select') {
+        if (columnDef.filterType === 'contents' || columnDef.filterType === 'select' || columnDef.filterType === 'multiselect') {
           rowValue = rowValue.toLowerCase();
         }
 
