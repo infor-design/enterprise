@@ -23,6 +23,8 @@ const COMPONENT_NAME = 'toolbar';
  * @property {boolean} favorButtonset If "resizeContainers" is true, setting this to
  *  true will try to display as many buttons as possible while resizing the toolbar.
  *  Setting to false attempts to show the entire title instead.
+ * @property {object} [moreMenuSettings] If defined, provides a toolbar-level method of
+ *  defining settings that will be applied to the More Actions button's popupmenu instance.
  * @property {boolean} noSearchfieldReinvoke If true, does not manage the lifecycle
  *  of an internal toolbarsearchfield automatically.  Allows an external controller
  *  to do it instead.
@@ -32,6 +34,7 @@ const TOOLBAR_DEFAULTS = {
   maxVisibleButtons: 3,
   resizeContainers: true,
   favorButtonset: true,
+  moreMenuSettings: undefined,
   noSearchfieldReinvoke: false,
 };
 
@@ -237,11 +240,11 @@ Toolbar.prototype = {
         .on('beforeopen.toolbar', () => {
           self.refreshMoreActionsMenu(self.moreMenu);
         })
-        .triggerHandler('updated');
+        .triggerHandler('updated', [this.settings.moreMenuSettings]);
     } else {
       const actionButtonOpts = utils.parseSettings(this.more[0]);
 
-      this.more.popupmenu($.extend({}, actionButtonOpts, {
+      this.more.popupmenu($.extend({}, actionButtonOpts, this.settings.moreMenuSettings, {
         trigger: 'click',
         menu: this.moreMenu
       })).on('beforeopen.toolbar', () => {
