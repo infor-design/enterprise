@@ -26,7 +26,7 @@ describe('Dropdown tests', () => {
     }
   });
 
-  it('Should scroll dropdown list when open then focus on arrow down', async (done) => {
+  it('Should arrow down to New York, and focus', async (done) => {
     try {
       await browser.waitForAngularEnabled(false);
       await browser.driver.get('http://localhost:4000/components/dropdown/example-index');
