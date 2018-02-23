@@ -439,7 +439,7 @@ const formatters = {
 
   Button(row, cell, value, col, item, api) {
     let text;
-    if (col.tex) {
+    if (col.text) {
       text = col.text;
     } else {
       text = (value === null || value === undefined || value === '') ? '' : value.toString();
@@ -543,11 +543,23 @@ const formatters = {
 
   TargetedAchievement(row, cell, value, col) {
     const perc = (100 * value);
+    let text = `${perc}%`;
     const ranges = formatters.ClassRange(row, cell, perc, col);
     const target = col.target;
-    const isWhite = perc > 55;// Maybe implement this later perc > 60;
+    let isWhite = perc > 60;
 
-    return `<div class="total bar chart-completion-target chart-targeted-achievement"><div class="target remaining bar" style="width: ${(target || 0)}%;"></div><div class="completed bar ${(col.ranges && ranges.classes ? ranges.classes : 'primary')}" style="width: ${perc}%;"></div>${(col.showPercentText ? `<div class="chart-targeted-text" ${(isWhite ? 'style="color: white"' : '')}>${perc}%</div></div>` : '')}`;
+    if (col.text) {
+      text = col.text;
+      col.showPercentText = true;
+      isWhite = perc > 75;
+    }
+
+    const barClass = (col.ranges && ranges.classes ? ranges.classes : 'primary');
+    return `<div class="total bar chart-completion-target chart-targeted-achievement">
+              <div class="target remaining bar" style="width: ${(target || 0)}%;"></div>
+              <div class="completed bar ${barClass}" style="width: ${perc}%;"></div>
+              ${(col.showPercentText ? `<div class="chart-targeted-text l-center" ${(isWhite ? 'style="color: white"' : '')}>${text}</div>
+            </div>` : '')}`;
   }
 
   // TODO Possible future Formatters
@@ -555,10 +567,10 @@ const formatters = {
   // Sparkline
   // Progress Indicator (n of 100%)
   // Process Indicator
-  // Currency
   // File Upload (Simple)
   // Menu Button
   // Color Picker (Low)
+  // Radio
 };
 
 export { formatters as Formatters };

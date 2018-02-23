@@ -86,6 +86,11 @@
     left: 50%;
     margin-top: -38px;
     position: relative;
+
+    &.l-center {
+      left: 0;
+      text-align: center;
+    }
   }
 
   .completed {
