@@ -40,7 +40,7 @@ breakpoints.isAbove = function isAbove(breakpoint) {
   }
 
   const windowWidth = $(window).width();
-  return windowWidth > bp;
+  return windowWidth > bp - 1;
 };
 
 /**
