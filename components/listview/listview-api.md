@@ -45,6 +45,8 @@ Listview Default Settings
 -   `content` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Html Template String
 -   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Audible Label (or use parent title)
 -   `paging` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, activates paging
+-   `pagingType` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The paging type to use, this can be 'list' (default)
+    or 'pageof' or 'firstlast'
 -   `pagesize` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** If paging is activated, sets the number of
      listview items available per page
 -   `searchable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, associates itself with a
@@ -63,6 +65,7 @@ Listview Default Settings
 -   `disableItemDeactivation` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true when an item is activated the
      user should not be able to deactivate it by clicking on the activated item. They
      can only select another row.
+-   `showPageSizeSelector` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the page size select will be shown when paging.
 
 ## ListView
 
@@ -98,6 +101,7 @@ Load Data from an external API
 
 -   `ds` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dataset to use or will use settings.dataset.
 -   `pagerInfo` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The pager settings to use (see pager api)
+-   `isResponse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag used to avoid dup source calls.
 
 Returns **void** 
 

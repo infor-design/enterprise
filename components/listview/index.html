@@ -84,6 +84,19 @@
       </tr>
       <tr>
         <td>
+          pagingType
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          The paging type to use, this can be 'list' (default)
+or 'pageof' or 'firstlast'
+
+        </td>
+      </tr>
+      <tr>
+        <td>
           pagesize
         </td>
         <td>
@@ -188,6 +201,18 @@ can only select another row.
 
         </td>
       </tr>
+      <tr>
+        <td>
+          showPageSizeSelector
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If true the page size select will be shown when paging.
+
+        </td>
+      </tr>
     </tbody>
   </table>
 
@@ -252,6 +277,9 @@ can only select another row.
  </span>
                 
                   <span>pagerInfo (object) = The pager settings to use (see pager api)
+ </span>
+                
+                  <span>isResponse (boolean) = Flag used to avoid dup source calls.
  </span>
                 
           

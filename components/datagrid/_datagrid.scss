@@ -3233,9 +3233,11 @@ html[dir='rtl'] {
 }
 
 .table-errors {
-  float: right;
   height: 35px;
   margin-left: 10px;
+  display: inline-block;
+  position: relative;
+  top: -9px;
 }
 
 //Ios Hacks

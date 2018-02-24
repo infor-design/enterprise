@@ -1,7 +1,7 @@
 <div class="row">
   <div class="six columns">
 
-    <h2>Listview Test:  Indeterminate Paging</h2>
+    <h2>Listview Test: Indeterminate Paging with More Options</h2>
     <p><a class="hyperlink" href="http://jira.infor.com/browse/HFC-3121" target="_blank">Related JIRA Ticket</a>.</p>
 
   </div>
@@ -43,6 +43,8 @@
     $('#projects-listview').listview({
       paging: true,
       pagesize: 10,
+      showPageSizeSelector: true,
+      pagingType: 'firstlast',
       source: function(req, response) {
         // Build the URL
         var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize,

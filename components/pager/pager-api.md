@@ -17,7 +17,13 @@
 
 -   `componentAPI` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If defined, becomes the definitive way to call methods on
     parent component.
--   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Different types of pagers: list, table and more
+-   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Different types of pagers
+    list - just shows next and Previous and a listing of pages
+    table - shows next and previous and first and last with a page number input and
+    page size selector used as the default for datagrid
+    pageof - also shows next and previous and first and last with a page number input and
+    page size selector used optionally for lists
+    firstlast - shows next and previous and first and last with option to set showPageSizeSelector
 -   `position` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Can be on 'bottom' or 'top'.
 -   `activePage` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Start on this page
 -   `hideOnOnePage` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, hides the pager if there is only one page worth of
