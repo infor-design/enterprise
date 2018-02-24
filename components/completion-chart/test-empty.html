@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="one-third column">
+    <div id="example-1" class="chart-container"></div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+
+  var dataset1 = [];
+  $('#example-1').chart({dataset: dataset1, type: 'completion-target'}).data('chart');
+
+});
+</script>

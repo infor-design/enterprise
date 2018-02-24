@@ -110,6 +110,11 @@
     }
   }
 
+  &.empty-message {
+    @include vertical-align();
+    margin-top: -20px;
+  }
+
 }
 
 // Tooltip Swatch
@@ -293,6 +298,7 @@
     &.completed {
       margin-bottom: 5px;
       margin-top: -25px;
+      max-width: 100%;
     }
   }
 

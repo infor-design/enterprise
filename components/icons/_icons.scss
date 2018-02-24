@@ -630,8 +630,8 @@ html[dir='rtl'] {
   width: 65px;
 }
 
-.empty-message .icon-empty-state {
-  fill: $icon-empty-bg-color; // Themable Empty Icons
+.is-graphite.icon-empty-state {
+  fill: $icon-empty-bg-color; // Grey Scale icon
 }
 
 // color defs

@@ -3,24 +3,23 @@
 ### Table of Contents
 
 -   [COMPLETION_CHART_DEFAULTS](#completion_chart_defaults)
--   [Bullet](#bullet)
--   [updated](#updated)
--   [destroy](#destroy)
+-   [CompletionChart](#completionchart)
+    -   [updated](#updated)
+    -   [destroy](#destroy)
 
 ## COMPLETION_CHART_DEFAULTS
 
-## Bullet
+## CompletionChart
 
-A bullet graph is a variation of a bar graph developed by Stephen Few.
-Seemingly inspired by the traditional thermometer charts and progress bars found in many
-dashboards, the bullet graph serves as a replacement for dashboard gauges and meters.
+A completion chart shows completion over a target value.
+Usually used to show progress as a percentage.
 
 **Parameters**
 
 -   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
 -   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
 
-## updated
+### updated
 
 Handle updated settings and values.
 
@@ -30,7 +29,7 @@ Handle updated settings and values.
 
 Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
 
-## destroy
+### destroy
 
 Teardown - Remove added markup and events.
 

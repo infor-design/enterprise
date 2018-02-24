@@ -66,8 +66,7 @@
 
     li {
       border: 1px solid transparent;
-      margin-bottom: 1px;
-      padding: 9px 20px;
+      padding: 9px 20px 8px;
       position: relative;
 
       &.arrange-dragging.is-touch {
@@ -165,4 +164,8 @@
     }
   }
 
+}
+
+.is-firefox .listbuilder .handle {
+  top: 5px;
 }

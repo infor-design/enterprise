@@ -3,10 +3,9 @@
 ### Table of Contents
 
 -   [DATEPICKER_DEFAULTS](#datepicker_defaults)
-    -   [disable](#disable)
 -   [DatePicker](#datepicker)
     -   [enable](#enable)
-    -   [disable](#disable-1)
+    -   [disable](#disable)
     -   [readonly](#readonly)
     -   [getCurrentDate](#getcurrentdate)
     -   [updated](#updated)
@@ -35,13 +34,21 @@ Default DatePicker Options
      rounds the minutes value to the nearest interval when the field is blurred.
 -   `dateFormat` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Defaults to current locale but can be
      overriden to a specific format, like like 'yyyy-MM-dd' iso8601 format.
--   `disable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Disabled Dates Build up. `{
-    'dates'     : [],
-    'minDate'   : '',
-    'maxDate'   : '',
-    'dayOfWeek' : [],
-    'isEnable' : false
-    }`
+-   `disable` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Disable dates in various ways.
+    For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
+    or be a Date() object or string that can be converted to a date with new Date().
+    -   `disable.dates` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Disable specific dates.
+        Example `{dates: ['12/31/2018', '01/01/2019'}`.
+    -   `disable.minDate` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date))** Disable up to a minimum date.
+        Example `{minDate: '12/31/2016'}`.
+    -   `disable.maxDate` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date))** Disable up to a maximum date.
+        Example `{minDate: '12/31/2019'}`.
+    -   `disable.dayOfWeek` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Disable a specific of days of the week 0-6.
+        Example `{dayOfWeek: [0,6]}`.
+    -   `disable.isEnable` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Defaults to false.
+        If true all the disable settings will be enabled and the rest will be disabled.
+        So you can inverse the settings.
+        For example if you have more non specific dates to disable then enable ect.
 -   `showMonthYearPicker` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the month and year will render
      as dropdowns.
 -   `hideDays` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the days portion of the calendar will be hidden.
@@ -56,18 +63,6 @@ Default DatePicker Options
 -   `calendarName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The name of the calendar to use in instance of
     multiple calendars. At this time only ar-SA and ar-EG locales have either
     'gregorian' or 'islamic-umalqura' as valid values.
-
-### disable
-
-Disabling of dates
-   dates: 'M/d/yyyy' or
-     ['M/d/yyyy'] or
-     ['M/d/yyyy', new Date('M/d/yyyy')] or
-     ['M/d/yyyy', new Date('M/d/yyyy'), new Date(yyyy,(M-0),d)]
-   minDate: 'M/d/yyyy'
-   maxDate: 'M/d/yyyy'
-   dayOfWeek: [2] or [0,6] - {0-sun, 1-mon, 2-tue, 3-wed, 4-thu, 5-fri, 6-sat}
-   isEnable: false or true
 
 ## DatePicker
 

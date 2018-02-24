@@ -102,11 +102,14 @@ overriden to a specific format, like like 'yyyy-MM-dd' iso8601 format.
           disable
         </td>
         <td>
-          boolean
+          object
         </td>
         <td>
-          Disabled Dates Build up. 
-<code>{ 'dates' : [], 'minDate' : '', 'maxDate' : '', 'dayOfWeek' : [], 'isEnable' : false }</code>
+          Disable dates in various ways.
+For example 
+<code>{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}</code>
+. Dates should be in format M/d/yyyy
+or be a Date() object or string that can be converted to a date with new Date().
 
         </td>
       </tr>

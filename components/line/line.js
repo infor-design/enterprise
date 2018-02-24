@@ -40,6 +40,13 @@ const COMPONENT_NAME = 'line';
 * the size on hover and stroke or even add a custom class.
 * Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`
 * @property {string} formatterString Use d3 format some examples can be found on http://bit.ly/1IKVhHh
+* @property {object} emptyMessage An empty message will be displayed when there is no chart data.
+* This accepts an object of the form emptyMessage:
+* `{title: 'No Data Available',
+*  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+*  button: {text: 'xxx', click: <function>}
+*  }`
+*  Set this to null for no message or will default to 'No Data Found with an icon.'
 */
 const LINE_DEFAULTS = {
   dataset: [],
@@ -48,7 +55,8 @@ const LINE_DEFAULTS = {
   showLegend: true,
   hideDots: false,
   animate: true,
-  redrawOnResize: true
+  redrawOnResize: true,
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
 /**
@@ -100,6 +108,12 @@ Line.prototype = {
     };
 
     this.element.addClass(`line-chart${self.settings.isBubble ? ' bubble' : ''}`);
+
+    // Handle Empty Data Set
+    if (self.settings.dataset.length === 0) {
+      self.element.emptymessage(self.settings.emptyMessage);
+      return this;
+    }
 
     const dots = {
       radius: 5,
@@ -751,7 +765,7 @@ Line.prototype = {
   },
 
   /**
-   * Teardown - Remove added markup and events.
+   * Remove added markup and events.
    * @returns {void}
    */
   destroy() {

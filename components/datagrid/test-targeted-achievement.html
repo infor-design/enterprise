@@ -23,7 +23,7 @@
       columns.push({ id: 'customerSatisfaction', name: 'With Primary Color', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, showPercentText: true , width: 200});
       columns.push({ id: 'customerSatisfaction2', name: 'With Alert Colors', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, ranges: [{'min': 0, 'max': 40, 'classes': 'error'}, {'value': 79, 'classes': 'good'}] , width: 200});
       columns.push({ id: 'customerSatisfaction3', name: 'To a Target', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, target: 80, width: 200});
-      columns.push({ id: 'customerSatisfaction3', name: 'Custom Text', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, text: 'Custom Text', tooltip: 'Custom Tooltip', width: 200});
+      columns.push({ id: 'customerSatisfaction3', name: 'Custom Text', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, text: 'Custom Text <% percent %>', tooltip: 'Custom Tooltip', width: 200});
       columns.push({ id: 'gap', name: ''});
 
       //Get some data via ajax
@@ -39,20 +39,6 @@
           enableTooltips: true,
           toolbar: {title: 'Bike Dealers', results: true, personalize: true, actions: true, rowHeight: true}
         });
-      });
-
-      return;
-
-      //Init and get the api for the grid
-      $('#datagrid').datagrid({
-        columns: columns,
-        dataset: data,
-        editable: true,
-        filterable: true,
-        toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
-      })
-      .on('cellchange', function (e, args) {
-        console.log(args.value);
       });
 
   });

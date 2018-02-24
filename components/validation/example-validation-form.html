@@ -70,28 +70,28 @@
             return false;
           },
           message: 'Custom Error',
-		  type: 'error'
+		      type: 'error'
         };
 
-		$.fn.validation.rules.customWarningRule = {
+    		$.fn.validation.rules.customWarningRule = {
           check: function (value) {
 
             return false;
           },
           message: 'Custom Warning',
-		  type: 'alert'
+          type: 'alert'
         };
 
-		$.fn.validation.rules.customInformationRule = {
+    		$.fn.validation.rules.customInformationRule = {
           check: function (value) {
 
             return false;
           },
           message: 'Custom Information',
-		  type: 'info'
+          type: 'info'
         };
 
-        $('#test').on('validated', function (e, isValid) {
+        $('#test-form').on('validated', function (e, isValid) {
 
           if (isValid) {
             // Do some stuff before it goes to postback/submit
@@ -105,19 +105,22 @@
           // Do some stuff other than highlighting what's required and obviously cancel the submit.
 
         }).on('error', function (e, args) {
-          console.log('Form Error',args);
+          console.log('error',args);
           $('#test1').prop('disabled', true);
         }).on('valid', function (e, args) {
           console.log('Form Corrected',args);
           $('#test1').prop('disabled', false);
+        }).on('isvalid', function (e, args) {
+          console.log('isvalid',args);
+          ///$('#test1').prop('disabled', false);
         });
 
         $('input, select, .editor').on('error', function (e, args) {
-          console.log('Field Error', args);
-          $('#test1').prop('disabled', true);
+          console.log('error', args);
         }).on('valid', function (e, args) {
-          console.log('Field Corrected', args);
-          $('#test1').prop('disabled', false);
+          console.log('valid', args);
+        }).on('isvalid', function (e, args) {
+          console.log('isvalid', args);
         });
 
       });

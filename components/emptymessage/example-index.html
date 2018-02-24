@@ -6,11 +6,25 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="twelve columns">
+    <div id="no-data-message2">
+    </div>
+  </div>
+</div>
+
 <script>
   $('body').on('initialized', function () {
     $('#no-data-message').emptymessage({
       title: 'No Data Available',
       icon: 'icon-empty-no-data'
+    });
+
+    $('#no-data-message2').emptymessage({
+      title: 'No New Alerts ',
+      icon: 'icon-empty-no-alerts',
+      info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do siusmod temp. ',
+      color: 'azure'
     });
   });
 </script>
