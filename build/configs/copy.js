@@ -34,7 +34,7 @@ module.exports = {
           }
         },
         { expand: true, flatten: true, src: ['components/locale/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['components/empty-widgets/svg-empty.html'], dest: 'dist/svg/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['components/emptymessage/svg-empty.html'], dest: 'dist/svg/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['components/charts/svg-patterns.html'], dest: 'dist/svg/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['components/icons/svg*.html'], dest: 'dist/svg/', filter: 'isFile' },
       ]

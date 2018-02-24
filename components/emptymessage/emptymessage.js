@@ -1,16 +1,27 @@
 /* eslint-disable consistent-return */
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
+import { Locale } from '../locale/locale';
 
 // The name of this component
 const COMPONENT_NAME = 'emptymessage';
 
-// Default Accordion Options
+/**
+* @namespace
+* @property {string} title The Main text to show.
+* @property {string} info Longer paragraph text to show
+* @property {string} icon The name of the icon to use.
+* See {@link ./icons/example-empty-widgets.html} for options.
+* @property {boolean} button The botton text and click event to add.
+* @property {string} color  Defaults to 'graphite' but can also be azure.
+* Later may be expanded to all personalization colors.
+*/
 const EMPTYMESSAGE_DEFAULTS = {
   title: null,
   info: null,
   icon: null,
-  button: null
+  button: null,
+  color: 'graphite' // or azure for now until personalization works
 };
 
 /**
@@ -45,15 +56,23 @@ EmptyMessage.prototype = {
     const opts = this.settings;
 
     if (opts.icon) {
-      $(`${'<div class="empty-icon">' +
-          '<svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">' +
-            '<use xlink:href="#'}${opts.icon}"></use>` +
-          '</svg>' +
-        '</div>').appendTo(this.element);
+      $(`<div class="empty-icon">
+          <svg class="icon-empty-state is-${this.settings.color}" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#${opts.icon}"></use>
+          </svg></div>`).appendTo(this.element);
     }
 
     if (opts.title) {
+      // Re-evaluate the text
+      if (opts.title === '[NoData]') {
+        opts.title = Locale ? Locale.translate('NoData') : 'No Data Available';
+      }
+
       $(`<div class="empty-title">${opts.title}</div>`).appendTo(this.element);
+    }
+
+    if (opts.info) {
+      $(`<div class="empty-info">${opts.info}</div>`).appendTo(this.element);
     }
 
     if (opts.button) {

@@ -20,7 +20,14 @@ const COMPONENT_NAME = 'column';
 * @property {string} format The d3 axis format
 * @property {string} formatterString Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @property {number} ticks The number of ticks to show.
-* */
+* @property {object} emptyMessage An empty message will be displayed when there is no chart data.
+* This accepts an object of the form emptyMessage:
+* `{title: 'No Data Available',
+*  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+*  button: {text: 'xxx', click: <function>}
+*  }`
+*  Set this to null for no message or will default to 'No Data Found with an icon.'
+*/
 const COLUMN_DEFAULTS = {
   dataset: [],
   isStacked: false,
@@ -28,7 +35,8 @@ const COLUMN_DEFAULTS = {
   animate: true,
   format: null,
   redrawOnResize: true,
-  ticks: 9
+  ticks: 9,
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
 /**
@@ -86,9 +94,16 @@ Column.prototype = {
     let datasetStacked;
     const dataset = this.settings.dataset;
     this.dataset = dataset;
+
+    // Handle Empty Data Set
+    if (dataset.length === 0) {
+      self.element.emptymessage(self.settings.emptyMessage);
+      return this;
+    }
+
     const parent = this.element.parent();
     const isRTL = Locale.isRTL();
-    const isPositiveNegative = (this.settings.type === 'column-positive-negative');
+    const isPositiveNegative = (this.settings.type === 'column-positive-negative' || 'positive-negative');
     const isSingle = (dataset.length === 1);
     this.isSingle = isSingle;
     const isGrouped = !(isSingle || !isSingle && self.settings.isStacked);

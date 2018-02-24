@@ -197,8 +197,13 @@ const Locale = {  // eslint-disable-line
       return undefined;
     }
 
-    // Convert if a string.
+    // Convert if a timezone string.
     if (!(value instanceof Date) && typeof value === 'string' && value.indexOf('Z') > -1) {
+      const tDate1 = new Date(value);
+      value = tDate1;
+    }
+
+    if (!(value instanceof Date) && typeof value === 'string' && value.indexOf('T') > -1) {
       const tDate1 = new Date(value);
       value = tDate1;
     }

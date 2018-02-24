@@ -14,8 +14,8 @@ const COMPONENT_NAME = 'applicationmenu';
 
 /**
 * @namespace
-* @property {string} breakpoint  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024),
-* or 'large' (+1280). Default is 'phone-to-tablet' (968)
+* @property {string} breakpoint  Can be 'tablet' or 'phone-to-tablet' (+767), 'phablet (+610)',
+* 'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
 * @property {boolean} filterable If true a search / filter option will be added.
 * @property {boolean} openOnLarge  If true, will automatically open the Application Menu when a
 * large screen-width breakpoint is met.

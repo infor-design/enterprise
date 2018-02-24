@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Empty Radar Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="radar-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    $('#radar-chart-example').chart({type: 'radar', dataset: [], emptyMessage: {color: 'azure'}});
+
+  });
+</script>

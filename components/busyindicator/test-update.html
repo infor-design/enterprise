@@ -2,7 +2,7 @@
 <div class="row">
   <div class="one-half column">
 
-    <form id="busy-form" class="busy" action="#" method="POST" data-options="{ 'displayDelay': 100, 'timeToComplete': 4000 }">
+    <form id="busy-form" class="busy" action="#" method="POST" data-options="{ 'displayDelay': 100, 'timeToComplete': 40000 }">
       <div class="field">
         <label for="busy-field-name">Name</label>
         <input type="text" id="busy-field-name" name="busy-field-name" value="" />
@@ -25,10 +25,17 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+    var form = $('#busy-form');
 
     $('#busy-form button[type="submit"]').click(function(e) {
       e.preventDefault();
-      $('#busy-form').trigger('start.busyindicator');
+      form.trigger('start.busyindicator');
+
+      var i = 0;
+      setInterval(function () {
+        i++;
+        form.data('busyindicator').updated({ text: 'New Text ' + i});
+      }, 2000);
     });
 
   });

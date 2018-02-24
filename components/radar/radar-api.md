@@ -47,6 +47,13 @@
 -   `showLegend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the legend will not be shown.
 -   `legendPlacement` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Where to locate the legend. This can be bottom or right at
     the moment.
+-   `emptyMessage` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An empty message will be displayed when there is no chart data.
+    This accepts an object of the form emptyMessage:
+    `{title: 'No Data Available',
+     info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+     button: {text: 'xxx', click: <function>}
+     }`
+     Set this to null for no message or will default to 'No Data Found with an icon.'
 
 ## Radar
 

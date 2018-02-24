@@ -4,6 +4,8 @@ import { Locale } from '../locale/locale';
 import { Environment as env } from '../utils/environment';
 
 // jQuery Components
+import '../mask/masked-input.jquery';
+import '../popover/popover.jquery';
 import '../validation/validation.jquery';
 
 // Component Name
@@ -24,13 +26,21 @@ const COMPONENT_NAME = 'datepicker';
  *  rounds the minutes value to the nearest interval when the field is blurred.
  * @property {string} dateFormat Defaults to current locale but can be
  *  overriden to a specific format, like like 'yyyy-MM-dd' iso8601 format.
- * @property {boolean} disable  Disabled Dates Build up. `{
- * 'dates'     : [],
- * 'minDate'   : '',
- * 'maxDate'   : '',
- * 'dayOfWeek' : [],
- * 'isEnable' : false
- * }`
+ * @property {object} disable Disable dates in various ways.
+ * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
+ * or be a Date() object or string that can be converted to a date with new Date().
+ * @property {array} disable.dates Disable specific dates.
+ * Example `{dates: ['12/31/2018', '01/01/2019'}`.
+ * @property {string|date} disable.minDate Disable up to a minimum date.
+ * Example `{minDate: '12/31/2016'}`.
+ * @property {string|date} disable.maxDate Disable up to a maximum date.
+ * Example `{minDate: '12/31/2019'}`.
+ * @property {array} disable.dayOfWeek Disable a specific of days of the week 0-6.
+ * Example `{dayOfWeek: [0,6]}`.
+ * @property {array} disable.isEnable Defaults to false.
+ * If true all the disable settings will be enabled and the rest will be disabled.
+ * So you can inverse the settings.
+ * For example if you have more non specific dates to disable then enable ect.
  * @property {boolean} showMonthYearPicker If true the month and year will render
  *  as dropdowns.
  * @property {boolean} hideDays If true the days portion of the calendar will be hidden.
@@ -55,16 +65,6 @@ const DATEPICKER_DEFAULTS = {
   roundToInterval: undefined,
   dateFormat: 'locale', // or can be a specific format
   placeholder: false,
-  /** Disabling of dates
-    *    dates: 'M/d/yyyy' or
-    *      ['M/d/yyyy'] or
-    *      ['M/d/yyyy', new Date('M/d/yyyy')] or
-    *      ['M/d/yyyy', new Date('M/d/yyyy'), new Date(yyyy,(M-0),d)]
-    *    minDate: 'M/d/yyyy'
-    *    maxDate: 'M/d/yyyy'
-    *    dayOfWeek: [2] or [0,6] - {0-sun, 1-mon, 2-tue, 3-wed, 4-thu, 5-fri, 6-sat}
-    *    isEnable: false or true
-    */
   disable: {
     dates: [],
     minDate: '',

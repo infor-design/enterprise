@@ -21,8 +21,8 @@ const COMPONENT_NAME = 'stepchart';
  * @property {string} inProgressColor The color to show in-progress steps. Defaults to ruby02.
  */
 const DEFAULT_STEPCHART_OPTIONS = {
-  steps: 7,
-  completed: 0,
+  steps: null,
+  completed: null,
   inProgress: null,
   iconType: null,
   completedText: null,
@@ -79,6 +79,12 @@ StepChart.prototype = {
       </svg>
     `;
 
+    const isEmpty = this.settings.completed === null && this.settings.steps === null;
+    if (isEmpty) {
+      this.settings.completed = 0;
+      this.settings.steps = 1;
+    }
+
     if (this.element.attr('data-options')) {
       this.settings = utils.parseSettings(this.element);
     }
@@ -115,6 +121,9 @@ StepChart.prototype = {
     completedText = completedText.replace('{0}', this.settings.completed);
     completedText = completedText.replace('{1}', this.settings.steps);
 
+    if (isEmpty) {
+      completedText = Locale ? Locale.translate('NoData') : 'No Data Available';
+    }
     const label = $(`<span class="step-chart-label">${completedText}</span>`);
 
     if (this.settings.steps === this.settings.completed) {

@@ -24,6 +24,10 @@
       display: block;
       height: 100%;
       position: static;
+
+      > .toolbar {
+        margin-top: 3px;
+      }
     }
 
     .tab-panel-container {
@@ -140,16 +144,11 @@
 
   .panel-header {
     height: auto;
-    padding-right: 0;
+    padding: 3px 0 1px 20px;
 
     .toolbar {
       margin-bottom: 0;
     }
-  }
-
-  .card-header {
-    height: auto;
-    padding: 2px 15px 2px 20px;
 
     > * {
       vertical-align: middle;
@@ -157,6 +156,7 @@
 
     .list-detail-list-close-button {
       display: none;
+      top: -1px;
     }
 
     h2 {
@@ -176,7 +176,6 @@
 
 }
 
-.list-detail-back-button,
 .list-detail-list-close-button {
   display: none;
 }

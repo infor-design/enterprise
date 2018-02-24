@@ -3,7 +3,8 @@
 
 ## Configuration Options
 
-1. Display an empty message [View Example]( ../components/emptymessage/example-index)
+1. Simple Empty Message [View Example]( ../components/emptymessage/example-index)
+1. Widget Examples [View Example]( ../components/emptymessage/example-widgets)
 
 {{api-details}}
 
@@ -15,11 +16,11 @@ Use an empty message when no data is present.
 
 $('.empty-message').emptymessage({
   title: 'No Records Available',
-  icon: 'icon-empty-no-data',
+  icon: 'icon-empty-no-data'
 });
 
 ```
 
 ## Responsive Guidelines
 
-- The empty message should be centered in the container.
+- The empty message will be centered in the container.

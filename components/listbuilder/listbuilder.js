@@ -2,6 +2,9 @@ import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
+// jQuery Components
+import '../listview/listview.jquery';
+
 // Component Name
 const COMPONENT_NAME = 'listbuilder';
 
@@ -66,6 +69,9 @@ const LISTBUILDER_DEFAULTS = {
 function ListBuilder(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, LISTBUILDER_DEFAULTS);
+  if (settings.dataset) {
+    this.settings.dataset = settings.dataset;
+  }
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);

@@ -102,6 +102,10 @@
     transition: width .2s ease 0s;
     width: 50%;
 
+    &.is-empty::after {
+      content: none;
+    }
+
     span {
       color: $chart-progressbar-completed-fill;
       font-weight: bold;
@@ -361,9 +365,7 @@
 // Position the Icon
 .chart-targeted-achievement {
   .icon-error {
-    margin-right: 8px;
-    right: -1px;
-    top: -2px;
+    top: -9px;
   }
 }
 
