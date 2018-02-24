@@ -1,5 +1,3 @@
-/* eslint-disable no-loop-func */
-
 // Other Shared Imports
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
@@ -12,16 +10,23 @@ const COMPONENT_NAME = 'completion-chart';
 /**
 * @namespace
 * @property {array} dataset.data The data to use in the chart (See examples)
+* @property {string} dataset.data.name - Required object with the title text
+* `{text: 'Available Credit'}`
+* @property {number} dataset.data.completed - Required data for the complete section
+* `{text: 'Spent', value: 50000, format: '$,.0f'}`
+* @property {array} dataset.data.remaining - Required data for the remaining section
+* `{text: 'Pending', value: 10000, format: '$,.0f'}`
+* @property {array} dataset.data.total - Optional data for the total section
+* `{value: 95000, format: '$,.0f'}`
 */
 const COMPLETION_CHART_DEFAULTS = {
   dataset: []
 };
 
 /**
- * A bullet graph is a variation of a bar graph developed by Stephen Few.
- * Seemingly inspired by the traditional thermometer charts and progress bars found in many
- * dashboards, the bullet graph serves as a replacement for dashboard gauges and meters.
- * @class Bullet
+ * A completion chart shows completion over a target value.
+ * Usually used to show progress as a percentage.
+ * @class CompletionChart
  * @param {string} element The plugin element for the constuctor
  * @param {string} settings The settings element.
  */
@@ -59,7 +64,17 @@ CompletionChart.prototype = {
    * @private
    */
   build() {
-    const chartData = this.settings.dataset[0];
+    let chartData = this.settings.dataset[0];
+
+    // Handle Empty Data Set
+    if (this.settings.dataset.length === 0) {
+      chartData = {};
+      chartData.data = [{
+        name: { text: Locale ? Locale.translate('NoData') : 'No Data Available' },
+        completed: { value: 0 },
+      }];
+    }
+
     const dataset = chartData.data[0];
     const isTarget = this.settings.type === 'completion-target';
     const isAchievment = this.settings.type === 'targeted-achievement';
@@ -110,9 +125,14 @@ CompletionChart.prototype = {
     };
 
     const updateWidth = function (elem, value, ds) {
-      const percent = toPercent(value, ds);
-      const w = percent > 100 ? 100 : (percent < 0 ? 0 : percent);  //eslint-disable-line
+      let percent = toPercent(value, ds);
+      percent = (percent < 0 ? 0 : percent);
+      const w = percent > 100 ? 100 : percent;
       elem[0].style.width = `${w}%`;
+
+      if (w === 0) {
+        elem[0].className += 'is-empty';
+      }
     };
 
     const updateTargetline = function (elem, value) {

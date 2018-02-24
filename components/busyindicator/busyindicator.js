@@ -64,6 +64,11 @@ BusyIndicator.prototype = {
     this.blockUI = blockUI !== undefined ? blockUI : this.settings.blockUI;
     if (!this.settings.overlayOnly) {
       this.loadingText = this.settings.text ? this.settings.text : Locale.translate('Loading');
+
+      // Support updating the label while open
+      if (this.label) {
+        this.label.text(this.loadingText);
+      }
     }
 
     const isDelayDefined = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20;

@@ -176,6 +176,7 @@ $.fn.chart = function (settings) {
     }
     case 'column':
     case 'column-grouped':
+    case 'positive-negative':
     case 'column-positive-negative': {
       instance = this.data(COLUMN_NAME);
       if (instance) {

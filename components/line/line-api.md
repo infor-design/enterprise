@@ -40,6 +40,13 @@
     the size on hover and stroke or even add a custom class.
     Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`
 -   `formatterString` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Use d3 format some examples can be found on <http://bit.ly/1IKVhHh>
+-   `emptyMessage` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An empty message will be displayed when there is no chart data.
+    This accepts an object of the form emptyMessage:
+    `{title: 'No Data Available',
+     info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+     button: {text: 'xxx', click: <function>}
+     }`
+     Set this to null for no message or will default to 'No Data Found with an icon.'
 
 ## Line
 
@@ -63,6 +70,6 @@ Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ### destroy
 
-Teardown - Remove added markup and events.
+Remove added markup and events.
 
 Returns **void** 

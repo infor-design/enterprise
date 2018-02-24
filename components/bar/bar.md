@@ -15,6 +15,7 @@
 10. Example showing defaulting a selected value  [View Example]( ../components/bar/example-selected)
 11. Example showing Get Selected value [View Example]( ../components/bar/example-get-selected)
 12. Example showing Set Selected value [View Example]( ../components/bar/example-set-selected)
+13. Example showing empty data set [View Example]( ../components/bar/test-empty)
 
 ## API Details
 
@@ -65,6 +66,7 @@ This example shows how to invoke a simple bar chart with a dataset controlling t
 color: '#1a1a1a'
 name: 'Component C'
 
+
 ```
 
 ## Code Tips
@@ -74,6 +76,7 @@ You can override the tooltip by passing in a specific tooltip text value.
 ```javascript
 
 {type: 'bar-grouped', dataset: dataset, tooltip: 'Tooltip by attribute'}
+
 
 ```
 

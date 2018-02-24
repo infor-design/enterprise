@@ -550,6 +550,14 @@ const formatters = {
 
     if (col.text) {
       text = col.text;
+      text = text.replace('{{value}}', value);
+      text = text.replace('<% value %>', value);
+      text = text.replace('<%value%>', value);
+
+      text = text.replace('{{percent}}', perc);
+      text = text.replace('<% percent %>', perc);
+      text = text.replace('<%percent%>', perc);
+
       col.showPercentText = true;
       isWhite = perc > 75;
     }

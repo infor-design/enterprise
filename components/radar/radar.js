@@ -2,6 +2,7 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { charts } from '../charts/charts';
+import { Locale } from '../locale/locale';
 
 // Settings and Options
 const COMPONENT_NAME = 'radar';
@@ -42,6 +43,13 @@ const COMPONENT_NAME = 'radar';
 * @property {boolean} showLegend If false the legend will not be shown.
 * @property {string} legendPlacement Where to locate the legend. This can be bottom or right at
 * the moment.
+* @property {object} emptyMessage An empty message will be displayed when there is no chart data.
+* This accepts an object of the form emptyMessage:
+* `{title: 'No Data Available',
+*  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+*  button: {text: 'xxx', click: <function>}
+*  }`
+*  Set this to null for no message or will default to 'No Data Found with an icon.'
 */
 const RADAR_DEFAULTS = {
   dataset: [],
@@ -66,7 +74,8 @@ const RADAR_DEFAULTS = {
   },
   axisFormatter: '.0%',
   showLegend: true,
-  legendPlacement: 'right'
+  legendPlacement: 'right',
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
 /**
@@ -133,6 +142,12 @@ Radar.prototype = {
       dims.w *= 0.75;
     }
     this.element.addClass('chart-radar');
+
+    // Handle Empty Data Set
+    if (data.length === 0) {
+      self.element.emptymessage(self.settings.emptyMessage);
+      return;
+    }
 
     let tooltipInterval;
     const colors = d3.scaleOrdinal(self.settings.colors);

@@ -26,6 +26,13 @@
 -   `ticks` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Settings for the chart ticks.
     Can set ticks: {format: d3Format, number: n}
 -   `showLines` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Show the in the axis lines or not.
+-   `emptyMessage` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An empty message will be displayed when there is no chart data.
+    This accepts an object of the form emptyMessage:
+    `{title: 'No Data Available',
+     info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+     button: {text: 'xxx', click: <function>}
+     }`
+     Set this to null for no message or will default to 'No Data Found with an icon.'
 
 ## Bar
 

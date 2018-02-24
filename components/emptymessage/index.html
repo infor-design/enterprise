@@ -1,11 +1,13 @@
 <h1 id="empty-message-learn-more">Empty Message <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol type="1">
-<li>Display an empty message <a href="../components/emptymessage/example-index">View Example</a></li>
+<li>Simple Empty Message <a href="../components/emptymessage/example-index">View Example</a></li>
+<li>Widget Examples <a href="../components/emptymessage/example-widgets">View Example</a></li>
 </ol>
   <section>
   
     
+
   <h2>Settings</h2>
   <table class="section-table">
     <thead>
@@ -14,9 +16,77 @@
       <th>Description</th>
     </thead>
     <tbody>
+      <tr>
+        <td>
+          title
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          The Main text to show.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          info
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Longer paragraph text to show
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          icon
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          The name of the icon to use.
+See 
+<a href="./icons/example-empty-widgets.html">./icons/example-empty-widgets.html</a>
+ for options.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          button
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          The botton text and click event to add.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          color
+        </td>
+        <td>
+          string
+        </td>
+        <td>
+          Defaults to 'graphite' but can also be azure.
+Later may be expanded to all personalization colors.
+
+        </td>
+      </tr>
     </tbody>
   </table>
 
+
+
+  
+    
 
 
   <h2>Methods</h2>
@@ -74,9 +144,9 @@ void
 <pre class="sourceCode javascript"><code class="sourceCode javascript">
 <span class="fu">$</span>(<span class="st">&#39;.empty-message&#39;</span>).<span class="fu">emptymessage</span>({
   <span class="dt">title</span>: <span class="st">&#39;No Records Available&#39;</span>,
-  <span class="dt">icon</span>: <span class="st">&#39;icon-empty-no-data&#39;</span>,
+  <span class="dt">icon</span>: <span class="st">&#39;icon-empty-no-data&#39;</span>
 });</code></pre>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <ul>
-<li>The empty message should be centered in the container.</li>
+<li>The empty message will be centered in the container.</li>
 </ul>

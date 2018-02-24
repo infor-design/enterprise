@@ -2,9 +2,22 @@
 
 ### Table of Contents
 
+-   [EMPTYMESSAGE_DEFAULTS](#emptymessage_defaults)
 -   [EmptyMessage](#emptymessage)
     -   [updated](#updated)
     -   [destroy](#destroy)
+
+## EMPTYMESSAGE_DEFAULTS
+
+**Properties**
+
+-   `title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The Main text to show.
+-   `info` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Longer paragraph text to show
+-   `icon` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The name of the icon to use.
+    See [./icons/example-empty-widgets.html](./icons/example-empty-widgets.html) for options.
+-   `button` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** The botton text and click event to add.
+-   `color` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Defaults to 'graphite' but can also be azure.
+    Later may be expanded to all personalization colors.
 
 ## EmptyMessage
 

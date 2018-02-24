@@ -731,9 +731,9 @@ charts.applyAltLabels = function (svg, dataArray, elem, selector, isNoEclipse) {
 
 /**
  * Trigger the right click event.
- * @param  {object}  container  The svg container.
- * @param  {object}  elem The element that was right clicked.
- * @param  {object}  d The data object
+ * @param  {object} container  The svg container.
+ * @param  {object} elem The element that was right clicked.
+ * @param  {object} d The data object
  */
 charts.triggerContextMenu = function (container, elem, d) {
   d3.event.preventDefault();

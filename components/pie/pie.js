@@ -671,8 +671,6 @@ Pie.prototype = {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
     if (settings && settings.dataset) {
       this.settings.dataset = settings.dataset;
-      this.updateData(this.settings.dataset);
-      return this;
     }
 
     this.element.empty();

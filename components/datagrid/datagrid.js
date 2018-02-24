@@ -2036,7 +2036,10 @@ Datagrid.prototype = {
     }
 
     // Init Inline Elements
-    self.tableBody.find('select.dropdown').dropdown();
+    const dropdowns = self.tableBody.find('select.dropdown');
+    if (dropdowns.dropdown) {
+      dropdowns.dropdown();
+    }
 
     // Commit Edits for inline editing
     self.tableBody.find('.dropdown-wrapper.is-inline').prev('select')
@@ -2048,7 +2051,10 @@ Datagrid.prototype = {
         self.updateCellNode(row.attr('aria-rowindex'), elem.closest('td').index(), newValue, false, true);
       });
 
-    self.tableBody.find('.spinbox').spinbox();
+    const spinboxes = self.tableBody.find('.spinbox');
+    if (spinboxes.spinbox) {
+      spinboxes.spinbox();
+    }
 
     // Set UI elements after dataload
     setTimeout(() => {
@@ -3594,12 +3600,6 @@ Datagrid.prototype = {
   * @param  {object} emptyMessage The update empty message config object.
   */
   setEmptyMessage(emptyMessage) {
-    // Re-evaluate the text
-    // TODO if (this.settings.emptyMessage.title === '[NoData]') {
-    // this.settings.emptyMessage.title = (Locale ?
-    // Locale.translate('NoData') : 'No Data Available');
-    // }
-
     if (!this.emptyMessage) {
       this.emptyMessageContainer = $('<div>');
       this.contentContainer.prepend(this.emptyMessageContainer);

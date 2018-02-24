@@ -24,6 +24,13 @@ const COMPONENT_NAME = 'bar';
 * @property {object} ticks Settings for the chart ticks.
 * Can set ticks: {format: d3Format, number: n}
 * @property {boolean} showLines Show the in the axis lines or not.
+* @property {object} emptyMessage An empty message will be displayed when there is no chart data.
+* This accepts an object of the form emptyMessage:
+* `{title: 'No Data Available',
+*  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+*  button: {text: 'xxx', click: <function>}
+*  }`
+*  Set this to null for no message or will default to 'No Data Found with an icon.'
 */
 const BAR_DEFAULTS = {
   dataset: [],
@@ -37,7 +44,8 @@ const BAR_DEFAULTS = {
   tooltip: null,
   useLogScale: false,
   ticks: null,
-  showLines: true
+  showLines: true,
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
 /**
@@ -121,6 +129,12 @@ Bar.prototype = {
 
     let dataset = this.settings.dataset;
     this.element.addClass('bar-chart');
+
+    // Handle Empty Data Set
+    if (dataset.length === 0) {
+      self.element.emptymessage(self.settings.emptyMessage);
+      return this;
+    }
 
     // const width = parseInt(this.element.parent().width(), 10) - margins.left - margins.right;
     const height = parseInt(this.element.parent().height(), 10) - margins.top - margins.bottom -
