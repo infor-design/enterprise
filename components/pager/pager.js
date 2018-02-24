@@ -16,7 +16,13 @@ const COMPONENT_NAME = 'pager';
 * @namespace
 * @property {string} componentAPI  If defined, becomes the definitive way to call methods on
 * parent component.
-* @property {string} type  Different types of pagers: list, table and more
+* @property {string} type  Different types of pagers
+* list - just shows next and Previous and a listing of pages
+* table - shows next and previous and first and last with a page number input and
+* page size selector used as the default for datagrid
+* pageof - also shows next and previous and first and last with a page number input and
+* page size selector used optionally for lists
+* firstlast - shows next and previous and first and last with option to set showPageSizeSelector
 * @property {string} position  Can be on 'bottom' or 'top'.
 * @property {number} activePage  Start on this page
 * @property {boolean} hideOnOnePage  If true, hides the pager if there is only one page worth of
@@ -112,10 +118,11 @@ Pager.prototype = {
 
     // If contained by a widget/card container, build some settings for that
     const listviewContainer = this.element.is('.listview');
-    if (listviewContainer.length) {
+    if (listviewContainer) {
       this.isTable = false;
-      this.settings.type = 'list';
-      this.mainContainer = listviewContainer;
+      this.isListView = true;
+      this.mainContainer = this.element;
+      this.isPageof = this.settings.type === 'pageof';
 
       if (!this.settings.componentAPI) {
         this.settings.componentAPI = this.element.data('listview');
@@ -147,7 +154,7 @@ Pager.prototype = {
           '</a>' +
         '</li>';
 
-      if (this.settings.type === 'table') {
+      if (this.settings.type === 'table' || this.settings.type === 'pageof' || this.settings.type === 'firstlast') {
         buttons = `${'<li class="pager-first">' +
           '<a href="#" title="FirstPage">'}${$.createIcon({ icon: 'first-page' })
         }<span class="audible">${Locale.translate('FirstPage')}</span>` +
@@ -166,12 +173,16 @@ Pager.prototype = {
       this.pagerBar.children('li').children('a').button();
     }
 
-    if (this.isTable) {
+    if (this.isTable || this.isPageof) {
       this.mainContainer.after(this.pagerBar);
     } else if (this.settings.position === 'bottom') {
       this.element.after(this.pagerBar);
     } else {
       this.element.before(this.pagerBar);
+    }
+
+    if (this.isListView) {
+      this.pagerBar.addClass('is-listview');
     }
 
     // Inside of Listviews, place the pager bar inside of the card/widget footer
@@ -255,7 +266,8 @@ Pager.prototype = {
       }
 
       // Go to the page via the index of the button
-      self.setActivePage($(this).parent().index() + (self.settings.type === 'table' ? -1 : 0), false, 'page');
+      self.setActivePage($(this).parent().index() + (self.settings.type === 'table' ||
+        self.settings.type === 'pageof' ? -1 : 0), false, 'page');
 
       return false;
     })
@@ -309,6 +321,11 @@ Pager.prototype = {
         if (li.is('.pager-last')) {
           self.setActivePage(self.pageCount(), false, 'last'); // TODO Calculate Last Page?
           return false;
+        }
+
+        // Go to the page via the index of the button
+        if (self.settings.type === 'list') {
+          self.setActivePage($(this).parent().index(), false, 'page');
         }
       }
 
@@ -425,7 +442,7 @@ Pager.prototype = {
     }
 
     // Add in fake pages
-    if (!this.isTable) {
+    if (!this.isTable && !this.isPageof) {
       let i;
       let thisClass;
       let thisText;
@@ -477,14 +494,18 @@ Pager.prototype = {
     }
 
     // Add functionality to change page size.
-    if (this.isTable && this.pagerBar.find('.btn-menu').length === 0 && self.settings.showPageSizeSelector) {
+    if (self.settings.showPageSizeSelector && this.pagerBar.find('.btn-menu').length === 0) {
       const pageSize = $('<li class="pager-pagesize"></li>');
       const pageSizeButton = $(`${'<button type="button" class="btn-menu">' +
         '<span>'}${Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize)}</span> ${
         $.createIcon({ icon: 'dropdown' })
       } </button>`).appendTo(pageSize);
 
-      pageSize.insertAfter(this.pagerBar.find('.pager-last'));
+      let last = this.pagerBar.find('.pager-last');
+      if (last.length === 0) {
+        last = this.pagerBar.find('.pager-next');
+      }
+      pageSize.insertAfter(last);
 
       const menu = $('<ul class="popupmenu has-icons"></ul>');
 
@@ -514,6 +535,32 @@ Pager.prototype = {
         }
         self.setActivePage(1, true, 'first');
       });
+    }
+
+    if (this.isPageof && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
+      let text = Locale.translate('PageOf');
+      text = text.replace('{0}', `<input name="pager-pageno" value="${this.activePage}">`);
+      text = text.replace('{1}', `<span class="pager-total-pages">${pages || 1}</span>`);
+      $(`<li class="pager-count"><label>${text} </label>`).insertAfter(this.pagerBar.find('.pager-prev'));
+
+      // Setup interactivty with the numeric page input
+      let lastValue = null;
+
+      this.pagerBar.find('.pager-count input')
+        .on('focus', function () {
+          lastValue = $(this).val();
+        }).on('blur', function () {
+          if (lastValue !== $(this).val()) {
+            $(this).val(self.setActivePage(parseInt($(this).val(), 10), false, 'page'));
+          }
+        }).on('keydown', function (e) {
+          if (e.which === 13) {
+            self.setActivePage(parseInt($(this).val(), 10), false, 'page');
+
+            e.stopPropagation();
+            e.preventDefault();
+          }
+        });
     }
 
     const pattern = (`${this._pageCount}`).replace(/\d/g, '#');

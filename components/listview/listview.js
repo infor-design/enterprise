@@ -20,6 +20,8 @@ const COMPONENT_NAME = 'listview';
  * @property {string} content Html Template String
  * @property {string} description Audible Label (or use parent title)
  * @property {boolean} paging If true, activates paging
+ * @property {string} pagingType The paging type to use, this can be 'list' (default)
+ * or 'pageof' or 'firstlast'
  * @property {number} pagesize If paging is activated, sets the number of
  *  listview items available per page
  * @property {boolean} searchable If true, associates itself with a
@@ -40,7 +42,8 @@ const COMPONENT_NAME = 'listview';
  * @property {boolean} disableItemDeactivation  If true when an item is activated the
  *  user should not be able to deactivate it by clicking on the activated item. They
  *  can only select another row.
- */
+ * @property {boolean} showPageSizeSelector  If true the page size select will be shown when paging.
+*/
 const LISTVIEW_DEFAULTS = {
   dataset: [],
   template: null,
@@ -55,7 +58,9 @@ const LISTVIEW_DEFAULTS = {
   emptyMessage: null,
   source: null,
   forceToRenderOnEmptyDs: false,
-  disableItemDeactivation: false
+  disableItemDeactivation: false,
+  showPageSizeSelector: false,
+  pagingType: 'list'
 };
 
 /**
@@ -125,7 +130,9 @@ ListView.prototype = {
       this.element.pager({
         componentAPI: this,
         pagesize: this.settings.pagesize,
-        source: this.settings.source
+        source: this.settings.source,
+        showPageSizeSelector: this.settings.showPageSizeSelector,
+        type: this.settings.pagingType || 'list'
       });
 
       this.pager = this.element.data('pager');
@@ -310,7 +317,7 @@ ListView.prototype = {
     }
 
     this.pager.updatePagingInfo(updatedPagerInfo);
-    this.pager.setActivePage(1, true);
+    // this.pager.setActivePage(1, true);
   },
 
   /**
@@ -329,9 +336,10 @@ ListView.prototype = {
    * Load Data from an external API
    * @param {object} ds  The dataset to use or will use settings.dataset.
    * @param {object} pagerInfo  The pager settings to use (see pager api)
+   * @param {boolean} isResponse Flag used to avoid dup source calls.
    * @returns {void}
    */
-  loadData(ds, pagerInfo) {
+  loadData(ds, pagerInfo, isResponse) {
     let ajaxDs = false;
     const self = this;
 
@@ -358,7 +366,7 @@ ListView.prototype = {
     // If paging is not active, and a source is present, attempt to retrieve
     // information from the datasource.
     // TODO: Potentially abstract this datasource concept out for use elsewhere
-    if ((s) || ajaxDs) {
+    if ((s || ajaxDs) && !isResponse) {
       switch (typeof s) {
         case 'function':
           s(pagerInfo, done);
