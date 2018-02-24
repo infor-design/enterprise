@@ -133,6 +133,11 @@ $subheader-height: 60px;
       position: absolute;
       text-overflow: clip;
 
+      button + span {
+        position: relative;
+        top: 2px;
+      }
+
       h1 {
         display: inline-block;
         max-width: 100%;
