@@ -2263,11 +2263,6 @@
 │  ├─ repository: https://github.com/gruntjs/grunt-contrib-cssmin
 │  ├─ publisher: Grunt Team
 │  └─ url: http://gruntjs.com/
-├─ grunt-contrib-jshint@1.0.0
-│  ├─ licenses: MIT
-│  ├─ repository: https://github.com/gruntjs/grunt-contrib-jshint
-│  ├─ publisher: Grunt Team
-│  └─ url: http://gruntjs.com/
 ├─ grunt-contrib-uglify@2.0.0
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/gruntjs/grunt-contrib-uglify
