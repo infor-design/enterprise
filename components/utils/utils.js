@@ -877,4 +877,22 @@ math.convertFPSToDelay = function convertFPSToDelay(fps) {
   return fps * 16.7;
 };
 
+/**
+ *  Determines whether the passed value is a finite number.
+ * @param {number} value The number
+ * @returns {boolean} If it is finite or not.
+ */
+math.isFinite = function isFinite(value) {
+  // 1. If Type(number) is not Number, return false.
+  if (typeof value !== 'number') {
+    return false;
+  }
+  // 2. If number is NaN, +∞, or −∞, return false.
+  if (value !== value || value === Infinity || value === -Infinity) { //eslint-disable-line
+    return false;
+  }
+  // 3. Otherwise, return true.
+  return true;
+};
+
 export { utils, math };
