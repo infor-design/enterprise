@@ -33,12 +33,12 @@ It is required to inline the svg icons in html markup in order to be able to cha
 
 ```html
 
-// As Button
+// As Icon Button
 <button class="btn-icon">
   <svg aria-hidden="true" focusable="false" role="presentation" class="icon">
      <use xlink:href="#icon-calendar"></use>
    </svg>
-   <span>Calendar</span>
+   <span class="audible">Calendar</span>
  </button>
 
 // With Button - Just Icon
@@ -51,7 +51,7 @@ It is required to inline the svg icons in html markup in order to be able to cha
 
 ## Accessibility
 
--   When used alone (icon with out text) an audible span should be used for screen readers to now what the button does.
+-   When used alone (icon with out text) an audible span should be added for screen readers.
 -   Tooltips should be shown on icons (but not on icons with text as it is redundant)
 
 ## Keyboard Shortcuts

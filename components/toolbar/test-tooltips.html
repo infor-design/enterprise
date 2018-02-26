@@ -1,0 +1,50 @@
+<div class="toolbar standalone" role="toolbar">
+  <div class="buttonset">
+
+    <button class="btn" type="button">
+      <span>Option #1</span>
+    </button>
+
+    <button class="btn" type="button">
+      <span>Option #2</span>
+    </button>
+
+    <button class="btn" type="button">
+      <span>Option #3</span>
+    </button>
+
+    <button class="btn-icon" title="Navigate to Start" type="button">
+      <svg aria-hidden="true" class="icon" role="presentation">
+        <use xlink:href="#icon-first-page"></use>
+      </svg>
+    </button>
+   <button class="btn-icon" title="Navigate back one page" type="button">
+      <svg aria-hidden="true" class="icon" role="presentation">
+        <use xlink:href="#icon-previous-page"></use>
+      </svg>
+    </button>
+    <button class="btn-icon" title="Navigate to page number" type="button">
+      <svg aria-hidden="true" class="icon" role="presentation">
+        <use xlink:href="#icon-quick-access"></use>
+      </svg>
+      <span class="audible">Quick Access</span>
+    </button>
+    <button class="btn-icon" title="Navigate to next page" type="button">
+      <svg aria-hidden="true" class="icon" role="presentation">
+        <use xlink:href="#icon-next-page"></use>
+      </svg>
+      <span class="audible">Next Page</span>
+    </button>
+    <button class="btn-icon" title="Navigate to End" type="button">
+      <span>Go To End</span>
+      <svg aria-hidden="true" class="icon" role="presentation">
+        <use xlink:href="#icon-last-page"></use>
+      </svg>
+    </button>
+
+</div>
+</div>
+
+<script>
+  $('[title]').tooltip();
+</script>

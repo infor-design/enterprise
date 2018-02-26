@@ -1,6 +1,7 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
+import { stringUtils } from '../utils/string';
 
 // jQuery Components
 import '../button/button.jquery';
@@ -507,11 +508,15 @@ Toolbar.prototype = {
     if (!item) {
       return '';
     }
-    const span = item.find('.audible');
+    let span = item.find('.audible');
     const title = item.attr('title');
     const tooltip = item.data('tooltip');
     const tooltipText = tooltip && typeof tooltip.content === 'string' ? tooltip.content : undefined;
 
+    if (item.is('.btn-icon')) {
+      // Icon buttons have implied audible text span can be used even tho not entirely valid
+      span = item.find('span');
+    }
     let popupLiText;
 
     if (span.length) {
@@ -519,7 +524,7 @@ Toolbar.prototype = {
     } else if (title !== '' && title !== undefined) {
       popupLiText = item.attr('title');
     } else {
-      popupLiText = tooltipText || item.text();
+      popupLiText = stringUtils.stripHTML(tooltipText || item.text());
     }
 
     return popupLiText;

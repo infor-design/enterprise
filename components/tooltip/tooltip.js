@@ -269,7 +269,6 @@ Tooltip.prototype = {
    */
   setContent(content, dontRender) {
     const self = this;
-    let specified;
     const settingsContent = this.settings.content;
     const noIncomingContent = (content === undefined || content === null);
     const noSettingsContent = (settingsContent === undefined || settingsContent === null);
@@ -358,9 +357,7 @@ Tooltip.prototype = {
 
     // Wrap tooltip content in <p> tags if there isn't already one present.
     // Only happens for non-jQuery markup.
-    if (!specified) {
-      this.content = `<p>${this.content}</p>`;
-    }
+    this.content = `<p>${this.content}</p>`;
 
     doRender();
     return true;
