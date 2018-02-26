@@ -98,12 +98,12 @@ Editor.prototype = {
       'New window': '_blank'
     };
 
-    for (const key of Object.keys(s.anchor.targets)) {
-      if ((s.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
-        s.anchor.target = s.anchor.targets[key];
-        s.anchor.defaultTarget = s.anchor.targets[key];
+    $.each(this.settings.anchor.targets, (key, val) => {
+      if ((this.settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
+        this.settings.anchor.target = val;
+        this.settings.anchor.defaultTarget = val;
       }
-    }
+    });
 
     if (!s.anchor.defaultTarget) {
       if (s.anchor.target && $.trim(s.anchor.target).length) {
@@ -846,14 +846,12 @@ Editor.prototype = {
     let targetOptions = '';
     let isTargetCustom = true;
 
-    for (const key of Object.keys(s.anchor.targets)) {
-      const val = s.anchor.targets[key];
+    $.each(s.anchor.targets, (key, val) => {
       targetOptions += `<option value="${val}">${key}</option>`;
-
-      if ((s.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
+      if ((this.settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
         isTargetCustom = false;
       }
-    }
+    });
 
     if (isTargetCustom) {
       targetOptions += `<option value="${s.anchor.target}">${s.anchor.target}</option>`;

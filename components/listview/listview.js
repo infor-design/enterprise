@@ -21,7 +21,7 @@ const COMPONENT_NAME = 'listview';
  * @property {string} description Audible Label (or use parent title)
  * @property {boolean} paging If true, activates paging
  * @property {string} pagingType The paging type to use, this can be 'list' (default)
- * or 'pageof' or 'firstlast'
+ * or 'table' or 'firstlast'
  * @property {number} pagesize If paging is activated, sets the number of
  *  listview items available per page
  * @property {boolean} searchable If true, associates itself with a
