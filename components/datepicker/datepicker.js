@@ -748,6 +748,11 @@ DatePicker.prototype = {
       this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
       this.timepickerContainer.find('dropdown').dropdown();
 
+      this.timepickerContainer.on('change.datepicker', () => {
+        this.currentDate = this.setTime(this.currentDate);
+        this.setValue(this.currentDate, true);
+      });
+
       // Wait for timepicker to initialize
       setTimeout(() => {
         this.timepicker.initValues = this.timepicker.getTimeFromField(this.time);
