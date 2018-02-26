@@ -8,7 +8,7 @@
   position: relative;
 
   // vertical line
-  &:before {
+  &::before {
     border-left: 1px dashed $timeline-line-color;
     bottom: 60px;
     content: '';
@@ -38,7 +38,7 @@
   position: relative;
 
   // micro-clearfix
-  &:after {
+  &::after {
     clear: both;
     content: '';
     display: table;
@@ -78,7 +78,7 @@
     }
 
     // line behind the indicator
-    &:after {
+    &::after {
       background-color: transparent;
       border-bottom: 1px dashed $timeline-line-color;
       content: '';
@@ -102,7 +102,7 @@
 
 @mixin mobile-timeline() {
   .timeline {
-    &:before {
+    &::before {
       bottom: 44px;
       left: 12.65em;
     }
@@ -146,7 +146,7 @@
 html[dir='rtl'] {
   .timeline {
     // vertical line
-    &:before {
+    &::before {
       border-left: 0;
       border-right: 1px dashed $timeline-line-color;
       left: auto;
@@ -178,7 +178,7 @@ html[dir='rtl'] {
 
   @media (min-width: $breakpoint-phone-to-tablet) {
     .timeline {
-      &:before {
+      &::before {
         left: auto;
         right: 12.65em;
       }

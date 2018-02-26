@@ -6,13 +6,13 @@
 
   + .icon,
   + .tooltip-description + .icon {
+    @include css3(user-select, none);
     cursor: pointer;
     fill: $trigger-icon-fill-color;
     height: 18px;
     margin-left: -32px;
     margin-top: 9px;
     position: absolute;
-    @include css3(user-select, none);
 
     &:hover {
       fill: $trigger-hover-color;
@@ -26,7 +26,15 @@
 
   ~ .icon-error {
     margin-left: -51px;
+    // scss-lint:disable ImportantRule
     right: auto !important;
+    // scss-lint:enable ImportantRule
+  }
+
+  &.error {
+    ~ .icon {
+      fill: $error-color;
+    }
   }
 
   &.is-open {
@@ -67,6 +75,7 @@
   background-color: rgba($white, 0);
 }
 
+// scss-lint:disable IdSelector
 #timepicker-period + .dropdown-wrapper {
   .dropdown {
     width: 68px;
@@ -124,6 +133,7 @@
   }
 
 }
+// scss-lint:enable IdSelector
 
 // Short Fields
 .field-short {
@@ -186,7 +196,9 @@ html[dir='rtl'] {
 
       ~ .icon-error {
         margin-left: inherit;
+        // scss-lint:disable ImportantRule
         margin-right: -38px !important;
+        // scss-lint:enable ImportantRule
       }
     }
   }
