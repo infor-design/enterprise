@@ -171,12 +171,12 @@ this
 </ol></li>
 </ol>
 <pre class="sourceCode html"><code class="sourceCode html">
-// As Button
+// As Icon Button
 <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-icon&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;svg</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="kw">&gt;</span>
      <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-calendar&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
    <span class="kw">&lt;/svg&gt;</span>
-   <span class="kw">&lt;span&gt;</span>Calendar<span class="kw">&lt;/span&gt;</span>
+   <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Calendar<span class="kw">&lt;/span&gt;</span>
  <span class="kw">&lt;/button&gt;</span>
 
 // With Button - Just Icon
@@ -186,7 +186,7 @@ this
 </code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>When used alone (icon with out text) an audible span should be used for screen readers to now what the button does.</li>
+<li>When used alone (icon with out text) an audible span should be added for screen readers.</li>
 <li>Tooltips should be shown on icons (but not on icons with text as it is redundant)</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>

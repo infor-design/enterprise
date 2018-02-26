@@ -5,6 +5,7 @@ import { excel } from '../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../utils/debounced-resize';
+import { stringUtils } from '../utils/string';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
@@ -2559,7 +2560,7 @@ Datagrid.prototype = {
       // Get formatted value (without html) so we have accurate string that
       // will display for this cell
       val = self.formatValue(columnDef.formatter, i, null, val, columnDef, row, self);
-      val = val.replace(/<\/?[^>]+(>|$)/g, '');
+      val = stringUtils.stripHTML(val);
 
       len = val.toString().length;
 
@@ -2567,7 +2568,7 @@ Datagrid.prototype = {
         for (let k = 0; k < row.values.length; k++) {
           let groupVal = this.fieldValue(row.values[k], columnDef.field);
           groupVal = self.formatValue(columnDef.formatter, i, null, groupVal, columnDef, row, self);
-          groupVal = groupVal.replace(/<\/?[^>]+(>|$)/g, '');
+          groupVal = stringUtils.stripHTML(groupVal);
 
           len = groupVal.toString().length;
           if (len > max) {
@@ -3816,7 +3817,7 @@ Datagrid.prototype = {
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
         rowNode = $(this).closest('tr');
-        dataRowIdx = self.dataRowIndex(rowNode);
+        dataRowIdx = self.visualRowIndex(rowNode);
 
         self.toggleRowDetail(dataRowIdx);
         self.toggleGroupChildren(rowNode);
