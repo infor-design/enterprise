@@ -120,6 +120,7 @@ ApplicationMenu.prototype = {
 
       const self = this;
       this.searchfield.searchfield({
+        clearable: true,
         source(term, done, args) {
           done(term, self.accordion.data('accordion').toData(true, true), args);
         },
