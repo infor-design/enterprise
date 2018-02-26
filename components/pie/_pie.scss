@@ -10,7 +10,8 @@
   }
 
   // Label and Line Colors
-  .tspan {
+  .tspan,
+  .lines circle {
     fill: $chart-font-color;
   }
 
