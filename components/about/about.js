@@ -120,10 +120,10 @@ About.prototype = {
 
     if (this.settings.deviceSpecs) {
       const specs = this.getDeviceSpecs();
-      const text = `<span class="browser">${Locale.translate('Browser')} : ${specs.browser}</span><br>' +
-          '<span class="platform">${Locale.translate('Platform')} : ${specs.os}</span><br>' +
-          '<span class="locale">${Locale.translate('Locale')} : ${specs.locale}</span><br>' +
-          '<span class="cookiesEnabled">${Locale.translate('CookiesEnabled')} : ${specs.cookiesEnabled}</span><br>`;
+      const text = `<span class="browser">${Locale.translate('Browser')} : ${specs.browser}</span><br>
+        <span class="platform">${Locale.translate('Platform')} : ${specs.os}</span><br>
+        <span class="locale">${Locale.translate('Locale')} : ${specs.locale}</span><br>
+        <span class="cookiesEnabled">${Locale.translate('CookiesEnabled')} : ${specs.cookiesEnabled}</span><br>`;
 
       $('<p></p>').html(text).appendTo(body);
     }
