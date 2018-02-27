@@ -685,8 +685,6 @@ Accordion.prototype = {
         expander.children('.audible').text(Locale.translate('Collapse'));
       }
 
-      //TODO: Need to be more granular about this stuff to make the filtering work 100%.
-      //FIX: catch all the collapse/expand promises and fire in order.
       const headerParents = header.parentsUntil(self.element).filter('.accordion-pane').prev('.accordion-header').add(header);
 
       // If we have the correct settings defined, close other accordion
@@ -829,8 +827,7 @@ Accordion.prototype = {
      * Fires after a pane is collapsed.
      *
      * @event aftercollapse
-     * @property {jQuery.Event} [e] - The jquery event object
-     * @property {array} anchor - The anchor tag in an array.
+     * @param {jQuery.Event} [e] - The jquery event object
      */
     function handleAfterCollapse(e) {
       if (e) {
