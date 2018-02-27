@@ -340,6 +340,9 @@ SwapList.prototype = {
         list.select($(list.selectedItems[i]));
       }
     }
+    if (list && list.element) {
+      list.element.find('li').attr('aria-selected', false).removeClass('is-selected');
+    }
   },
 
   /**
@@ -748,7 +751,7 @@ SwapList.prototype = {
       // Check if dragged element was selected or not
       if (list.selectedItems) {
         for (let i = 0, l = list.selectedItems.length; i < l; i++) {
-          if (target[0] === list.selectedItems[i]) {
+          if (target.is(list.selectedItems[i])) {
             isInSelection = true;
             return false;
           }
@@ -964,13 +967,13 @@ SwapList.prototype = {
         selections.items = list.selectedItems;
 
         /**
-      * Fires before moving an element allowing you to access the draggable item.
-      *
-      * @event beforeswap
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Array} items - List of selected items data
-      */
+          * Fires before moving an element allowing you to access the draggable item.
+          *
+          * @event beforeswap
+          * @type {Object}
+          * @property {Object} event - The jquery event object
+          * @property {Array} items - List of selected items data
+          */
         const result = self.element.triggerHandler('beforeswap', [selections.itemsData]);
         if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
           selections.dragged = null;
