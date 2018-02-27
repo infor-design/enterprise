@@ -616,11 +616,12 @@ Accordion.prototype = {
    * @returns {boolean} Whether or not the element is filtered.
    */
   isFiltered(header) {
-    if (!header) {
+    if (!header || !header.length) {
       return false;
     }
 
-    return header.hasClass('filtered');
+    const cl = header[0].classList;
+    return cl.contains('filtered') && !cl.contains('has-filtered-children');
   },
 
   /**
@@ -656,10 +657,12 @@ Accordion.prototype = {
   /**
   * Expand the given Panel on the Accordion.
   * @param {object} header The jquery header element.
+  * @param {boolean} dontCollapseHeaders if defined, will not collapse any open accordion headers
+  *  (generally used while filtering)
   * @returns {$.Deferred} resolved on the completion of an accoridon pane's
   *  collapse animation (or immediately, if animation is disabled).
   */
-  expand(header) {
+  expand(header, dontCollapseHeaders) {
     if (!header || !header.length) {
       return;
     }
@@ -688,20 +691,22 @@ Accordion.prototype = {
 
       // If we have the correct settings defined, close other accordion
       // headers that are not parents of this one.
-      if (self.settings.allowOnePane) {
+      const collapseDfds = [];
+      if (self.settings.allowOnePane && !dontCollapseHeaders) {
         self.headers.not(headerParents).each(function () {
           const h = $(this);
           if (self.isExpanded(h)) {
-            self.collapse(h);
+            collapseDfds.push(self.collapse(h));
           }
         });
       }
 
       // Expand all headers that are parents of this one, if applicable
+      const expandDfds = [];
       headerParents.not(header).each(function () {
         const h = $(this);
         if (!self.isExpanded(h)) {
-          self.expand(h);
+          expandDfds.push(self.expand(h));
         }
       });
 
@@ -730,7 +735,9 @@ Accordion.prototype = {
         header.children('a').attr('aria-expanded', 'true');
         pane.triggerHandler('afterexpand', [a]);
         self.element.trigger('afterexpand', [a]);
-        dfd.resolve();
+        $.when(...expandDfds, ...collapseDfds).done(() => {
+          dfd.resolve();
+        });
       }
 
       if (pane.hasClass('no-transition')) {
@@ -1142,7 +1149,7 @@ Accordion.prototype = {
 
     if (doReset) {
       const collapsePromise = this.collapseAll();
-      this.headers.removeClass('filtered has-filtered-children');
+      this.headers.removeClass('filtered has-filtered-children hide-focus');
 
       $.when(collapsePromise).then(() => {
         this.currentlyFiltered = $();
@@ -1173,7 +1180,7 @@ Accordion.prototype = {
     });
 
     allParentHeaders.addClass('has-filtered-children');
-    const expandPromise = this.expand(allParentHeaders.add(panes.prev('.accordion-header')));
+    const expandPromise = this.expand(allParentHeaders.add(panes.prev('.accordion-header')), true);
 
     $.when(expandPromise).done(() => {
       this.currentlyFiltered = this.currentlyFiltered.add(toFilter);
@@ -1194,8 +1201,6 @@ Accordion.prototype = {
     if (!headers || !headers.length) {
       headers = this.currentlyFiltered;
     }
-
-    const panes = headers.next('.accordion-pane');
 
     // Store a list of all modified parent headers
     let allParentHeaders = $();

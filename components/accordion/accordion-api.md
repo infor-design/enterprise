@@ -131,6 +131,8 @@ Expand the given Panel on the Accordion.
 **Parameters**
 
 -   `header` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery header element.
+-   `dontCollapseHeaders` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if defined, will not collapse any open accordion headers
+     (generally used while filtering)
 
 Returns **$.Deferred** resolved on the completion of an accoridon pane's
  collapse animation (or immediately, if animation is disabled).
