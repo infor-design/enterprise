@@ -175,17 +175,6 @@ Popdown.prototype = {
     // Setup events that happen on open
     // Needs to be on a timer to prevent automatic closing of popdown.
     setTimeout(() => {
-      // When focusing in on other important page elements, this Popdown instance will check to
-      // see if it contains those elements, and will close if it doesn't.
-      if (!setFocusinEvent) {
-        setFocusinEvent = true;
-        $(document).on('focusin.popdown', () => {
-          if (!self.hasFocus()) {
-            self.close();
-          }
-        });
-      }
-
       $('body').on('resize.popdown', () => {
         if (!self.hasFocus()) {
           self.close();
@@ -199,6 +188,17 @@ Popdown.prototype = {
             self.close();
           }
         });
+
+        // When focusing in on other important page elements, this Popdown instance will check to
+        // see if it contains those elements, and will close if it doesn't.
+        if (!setFocusinEvent) {
+          setFocusinEvent = true;
+          $(document).on('focusin.popdown', () => {
+            if (!self.hasFocus()) {
+              self.close();
+            }
+          });
+        }
       }
 
       self.isAnimating = false;
