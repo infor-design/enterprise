@@ -264,6 +264,9 @@ Autocomplete.prototype = {
     // building a popupmenu.
     if (typeof this.settings.displayResultsCallback === 'function') {
       this.settings.displayResultsCallback(modifiedFilterResults, () => {
+        /*if (!modifiedFilterResults.length) {
+          return;
+        }*/
         self.element.trigger('listopen', [modifiedFilterResults]);
       });
       return;
