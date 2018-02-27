@@ -120,6 +120,7 @@ ApplicationMenu.prototype = {
 
       const self = this;
       this.searchfield.searchfield({
+        clearable: true,
         source(term, done, args) {
           done(term, self.accordion.data('accordion').toData(true, true), args);
         },
@@ -527,10 +528,12 @@ ApplicationMenu.prototype = {
   filterResultsCallback(results, done) {
     if (!results || !results.length) {
       this.accordionAPI.unfilter();
-    } else {
-      const headers = $(results.map(item => item.element));
-      this.accordionAPI.filter(headers, true);
+      done();
+      return;
     }
+
+    const headers = $(results.map(item => item.element));
+    this.accordionAPI.filter(headers, true);
 
     this.element.triggerHandler('filtered', [results]);
     done();
