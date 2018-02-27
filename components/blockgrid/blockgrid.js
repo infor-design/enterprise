@@ -152,9 +152,9 @@ Blockgrid.prototype = {
 
     for (let i = 0; i < dslength; i++) {
       const data = s.dataset[i];
-      blockelements += `<div class="block selection" tabindex="1">
+      blockelements += `<div class="block selection" tabindex="0">
       <input type="checkbox" class="checkbox" id="checkbox${i}" idx="${i}">
-      <label for="checkbox${i}" class="checkbox-label" style="display:none;" tabindex="1"><span class="audible">Checked</span></label>
+      <label for="checkbox${i}" class="checkbox-label" style="display:none;" tabindex="0"><span class="audible">Checked</span></label>
       <img alt="Placeholder Image" src="${data.img}" class="image-round">
       <p> ${data.maintxt} <br> ${data.subtxt} </p></div>`;
     }
