@@ -46,7 +46,7 @@ Listview Default Settings
 -   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Audible Label (or use parent title)
 -   `paging` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, activates paging
 -   `pagingType` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The paging type to use, this can be 'list' (default)
-    or 'pageof' or 'firstlast'
+    or 'table' or 'firstlast'
 -   `pagesize` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** If paging is activated, sets the number of
      listview items available per page
 -   `searchable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, associates itself with a

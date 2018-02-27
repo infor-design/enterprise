@@ -35,6 +35,7 @@
 -   [convertToHTMLElement](#converttohtmlelement)
 -   [convertDelayToFPS](#convertdelaytofps)
 -   [convertFPSToDelay](#convertfpstodelay)
+-   [isFinite](#isfinite)
 
 ## bindFirst
 
@@ -384,3 +385,13 @@ Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second
 -   `fps` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** (Frames Per Second)
 
 Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** delay in CPU ticks
+
+## isFinite
+
+Determines whether the passed value is a finite number.
+
+**Parameters**
+
+-   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If it is finite or not.

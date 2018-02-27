@@ -45,6 +45,17 @@ stringUtils.containsHTML = function containsHTML(str) {
 };
 
 /**
+ * Takes a string and removes html tabs
+ * @param {string} str The string to parse
+ * @returns {string} The string minus html tags.
+ */
+stringUtils.stripHTML = function stripHTML(str) {
+  let newStr = str;
+  newStr = newStr.replace(/<\/?[^>]+(>|$)/g, '');
+  return newStr;
+};
+
+/**
  * Capitalizes the first letter of a string
  * @param {string} str the incoming text
  * @returns {string} the modified text

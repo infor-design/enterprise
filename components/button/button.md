@@ -32,14 +32,14 @@ All buttons are assumed to be icon + text. To add the icon you add the svg icon 
 
 <button type="button" class="btn-tertiary">
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-    <use xlink:href="#icon-filter"/>
+    <use xlink:href="#icon-filter"></use>
   </svg>
   <span>Action</span>
 </button>
 
 <button type="button" class="btn-icon">
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-    <use xlink:href="#icon-calendar"/>
+    <use xlink:href="#icon-calendar"></use>
   </svg>
   <span>Date</span>
 </button>

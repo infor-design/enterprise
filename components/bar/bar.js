@@ -1,6 +1,6 @@
 // Other Shared Imports
 import * as debug from '../utils/debug';
-import { utils } from '../utils/utils';
+import { utils, math } from '../utils/utils';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
@@ -542,11 +542,11 @@ Bar.prototype = {
         let scale = xScale(d.x);
         let scale0 = xScale(0);
 
-        if (isNaN(scale) || !Number.isFinite(scale)) {
+        if (isNaN(scale) || !math.isFinite(scale)) {
           scale = 0;
         }
 
-        if (isNaN(scale0) || !Number.isFinite(scale0)) {
+        if (isNaN(scale0) || !math.isFinite(scale0)) {
           scale0 = 0;
         }
 

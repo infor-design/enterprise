@@ -122,7 +122,6 @@ Pager.prototype = {
       this.isTable = false;
       this.isListView = true;
       this.mainContainer = this.element;
-      this.isPageof = this.settings.type === 'pageof';
 
       if (!this.settings.componentAPI) {
         this.settings.componentAPI = this.element.data('listview');
@@ -173,7 +172,7 @@ Pager.prototype = {
       this.pagerBar.children('li').children('a').button();
     }
 
-    if (this.isTable || this.isPageof) {
+    if (this.isTable) {
       this.mainContainer.after(this.pagerBar);
     } else if (this.settings.position === 'bottom') {
       this.element.after(this.pagerBar);
@@ -442,7 +441,7 @@ Pager.prototype = {
     }
 
     // Add in fake pages
-    if (!this.isTable && !this.isPageof) {
+    if (!this.isTable) {
       let i;
       let thisClass;
       let thisText;
@@ -535,32 +534,6 @@ Pager.prototype = {
         }
         self.setActivePage(1, true, 'first');
       });
-    }
-
-    if (this.isPageof && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
-      let text = Locale.translate('PageOf');
-      text = text.replace('{0}', `<input name="pager-pageno" value="${this.activePage}">`);
-      text = text.replace('{1}', `<span class="pager-total-pages">${pages || 1}</span>`);
-      $(`<li class="pager-count"><label>${text} </label>`).insertAfter(this.pagerBar.find('.pager-prev'));
-
-      // Setup interactivty with the numeric page input
-      let lastValue = null;
-
-      this.pagerBar.find('.pager-count input')
-        .on('focus', function () {
-          lastValue = $(this).val();
-        }).on('blur', function () {
-          if (lastValue !== $(this).val()) {
-            $(this).val(self.setActivePage(parseInt($(this).val(), 10), false, 'page'));
-          }
-        }).on('keydown', function (e) {
-          if (e.which === 13) {
-            self.setActivePage(parseInt($(this).val(), 10), false, 'page');
-
-            e.stopPropagation();
-            e.preventDefault();
-          }
-        });
     }
 
     const pattern = (`${this._pageCount}`).replace(/\d/g, '#');
