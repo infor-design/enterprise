@@ -1,15 +1,11 @@
 /* eslint-disable no-nested-ternary, no-useless-escape */
-/**
-  TODO: Re-implement this with proper scope.
 
-  // If there already exists a Locale object with a culturesPath use that path
-  // This allows manually setting the directory for the culture files to be retrieved from
-  var existingCulturePath = '';
-
-  if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
-    existingCulturePath = window.Locale.culturesPath;
-  }
-*/
+// If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
+// culture files. This allows manually setting the directory for the culture files.
+let existingCulturePath = '';
+if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.culturesPath === 'string') {
+  existingCulturePath = window.SohoConfig.culturesPath;
+}
 
 /**
 * The Locale component handles i18n
@@ -24,7 +20,7 @@ const Locale = {  // eslint-disable-line
 
   currentLocale: { name: '', data: {} }, // default
   cultures: {},
-  culturesPath: '', // existingCulturePath
+  culturesPath: existingCulturePath,
 
   /**
    * Sets the Lang in the Html Header
