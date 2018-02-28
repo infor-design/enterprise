@@ -356,7 +356,6 @@ Fires when collapsed a pane is initiated.
 
 Fires after a pane is collapsed.
 
-**Properties**
+**Parameters**
 
 -   `e` **jQuery.Event?** The jquery event object
--   `anchor` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The anchor tag in an array.

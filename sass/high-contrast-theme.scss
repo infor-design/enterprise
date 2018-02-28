@@ -773,6 +773,12 @@ $swaplist-border-color-hover: $font-color-highcontrast;
 $swaplist-text-color: $black;
 $swaplist-title-text-color: $black;
 
+// Block Grid
+$blockgrid-selected-bg-color: $selected-bg-color;
+$blockgrid-selected-border-color: $btn-focus-border-color;
+$blockgrid-hover-color: $listview-hover-bg-color;
+$blockgrid-focus-border-color: $primary-color;
+
 //================================================== //
 // Special Control Overrides
 @import 'controls';
