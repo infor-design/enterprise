@@ -636,7 +636,7 @@ $progress-border-color: $graphite06;
 $progress-bar-bg-color: $azure09;
 
 //Chart Progress Bar
-$chart-progressbar-bg-color: $graphite04;
+$chart-progressbar-bg-color: #767676;
 $chart-progressbar-bg-color-dark: $graphite05;
 $chart-progressbar-completed-fill: #2f6b0a;
 $chart-progressbar-target-fill: $graphite05;
@@ -787,4 +787,9 @@ $swaplist-title-text-color: $black;
 // Tree - add a line
 .tree a:not(.is-disabled):hover .tree-text {
   border-bottom: 1px solid;
+}
+
+// Override contrast text on high contrast
+.datagrid-cell-wrapper .chart-targeted-text {
+  color: $white;
 }

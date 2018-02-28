@@ -3,8 +3,13 @@
 
 ## Configuration Options
 
-1. Image Block Grid Example [View Example]( ../components/blockgrid/example-index)
-1. Image and Text Block Grid Example [View Example]( ../components/blockgrid/example-text)
+1. Blockgrid with images [View Example]( ../components/blockgrid/example-index)
+2. Blockgrid with image and text  [View Example]( ../components/blockgrid/example-text)
+3. Blockgrid with single selection [View Example]( ../components/blockgrid/example-singleselect)
+4. Blockgrid with multiselect select [View Example]( ../components/blockgrid/example-multiselect)
+5. Blockgrid with mixed selection select [View Example]( ../components/blockgrid/example-mixed-selection)
+
+{{api-details}}
 
 ## Code Example
 
@@ -15,19 +20,19 @@ The block grid will layout the elements across the parent width and flow to next
 
 <div class="row blockgrid l-center">
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff">
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff">
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff">
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff">
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
   </div>
   <div class="block">
-    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff">
+    <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
   </div>
 </div>
 
@@ -36,8 +41,8 @@ The block grid will layout the elements across the parent width and flow to next
 
 ## Accessibility
 
--  Note that tab order should be maintained and not changed with tabindex.
+Note that tab order should be maintained and not changed with an explicit tabindex.
 
 ## Code Tips
 
-The elements should be the same or very close in size (width/height). Due to constraints the bottom rows if not filled out are not ideally centered at this time.
+The elements should be the same or very close in size (width/height). Due to constraints the bottom rows are not ideally centered at this time if the counts are not even per row.

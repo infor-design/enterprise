@@ -705,7 +705,6 @@ Datagrid.prototype = {
     let headerColGroup = '<colgroup>';
     let cols = '';
     let uniqueId;
-    let hideNext = 0;
 
     // Handle Nested Headers
     const colGroups = this.settings.columnGroups;
@@ -740,18 +739,15 @@ Datagrid.prototype = {
       const isSelection = column.id === 'selectionCheckbox';
       const alignmentClass = (column.align === 'center' ? ` l-${column.align}-text` : '');// Disable right align for now as this was acting wierd
 
-      if (hideNext <= 0) {
-        headerRow += `<th scope="col" role="columnheader" class="${isSortable ? 'is-sortable' : ''}${isResizable ? ' is-resizable' : ''
-        }${column.hidden ? ' is-hidden' : ''}${column.filterType ? ' is-filterable' : ''
-        }${alignmentClass || ''}"${column.colspan ? ` colspan="${column.colspan}"` : ''
-        } id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''
-        }${column.headerTooltip ? `title="${column.headerTooltip}"` : ''
-        }${column.reorderable === false ? ' data-reorder="false"' : ''
-        }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
+      headerRow += `<th scope="col" role="columnheader" class="${isSortable ? 'is-sortable' : ''}${isResizable ? ' is-resizable' : ''
+      }${column.hidden ? ' is-hidden' : ''}${column.filterType ? ' is-filterable' : ''
+      }${alignmentClass || ''}" id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''
+      }${column.headerTooltip ? `title="${column.headerTooltip}"` : ''
+      }${column.reorderable === false ? ' data-reorder="false"' : ''
+      }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
 
-        headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}</span>`;
-        cols += `<col${this.calculateColumnWidth(column, j)}${column.colspan ? ` span="${column.colspan}"` : ''}${column.hidden ? ' class="is-hidden"' : ''}>`;
-      }
+      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}</span>`;
+      cols += `<col${this.calculateColumnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -767,14 +763,6 @@ Datagrid.prototype = {
           `<span class="sort-desc">${$.createIcon({ icon: 'dropdown' })}</div>`;
       }
 
-      // Skip the next column when using colspan
-      if (hideNext > 0) {
-        hideNext--;
-      }
-
-      if (column.colspan) {
-        hideNext = column.colspan - 1;
-      }
       headerRow += `</div>${self.filterRowHtml(column, j)}</th>`;
     }
     headerRow += '</tr>';
@@ -2265,7 +2253,6 @@ Datagrid.prototype = {
     const activePage = self.pager ? self.pager.activePage : 1;
     const pagesize = self.settings.pagesize;
     let rowHtml = '';
-    let spanNext = 0;
     let d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0;
     let depth = null;
     let d2;
@@ -2350,11 +2337,6 @@ Datagrid.prototype = {
         rowData,
         self
       );
-
-      if (skipColumns > 0) {
-        skipColumns -= skipColumns;
-        continue;
-      }
 
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
         col.readonly = true;
@@ -2445,15 +2427,16 @@ Datagrid.prototype = {
       if (this.recordCount === 0 || this.recordCount - ((activePage - 1) * pagesize) === 0) {
         colWidth = this.calculateColumnWidth(col, j);
 
-        self.bodyColGroupHtml += spanNext > 0 ? '' : `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}${col.colspan ? ` span="${col.colspan}"` : ''}></col>`;
+        self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
 
-        if (spanNext > 0) {
-          spanNext--;
-        }
         if (col.colspan) {
           this.hasColSpans = true;
-          spanNext = col.colspan - 1;
         }
+      }
+
+      if (skipColumns > 0) {
+        skipColumns -= 1;
+        continue;
       }
 
       // Run an optional function to calculate a colspan

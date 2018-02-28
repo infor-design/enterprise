@@ -5,8 +5,11 @@
 -   [BLOCKGRID_DEFAULTS](#blockgrid_defaults)
 -   [ComponentName](#componentname)
 -   [init](#init)
+-   [selectBlock](#selectblock)
 -   [updated](#updated)
 -   [destroy](#destroy)
+-   [selected](#selected)
+-   [unselected](#unselected)
 
 ## BLOCKGRID_DEFAULTS
 
@@ -15,7 +18,7 @@ Blockgrid Default Settings
 **Properties**
 
 -   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of data objects
--   `selectable` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls the selection Mode this may be:
+-   `selectable` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls the selection mode this can be:
     false, 'single' or 'multiple' or 'mixed'
 
 ## ComponentName
@@ -33,6 +36,16 @@ Do initialization, build up and / or add events ect.
 
 Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The Component prototype, useful for chaining.
 
+## selectBlock
+
+Run selection over a block item
+
+**Parameters**
+
+-   `activeBlock` **[element](https://developer.mozilla.org/docs/Web/API/Element)** Dom element to use
+-   `isCheckbox` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if a checkbox, used for mixed mode.
+-   `isKey` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if a key was used on the checkbox, used for mixed mode.
+
 ## updated
 
 Handle updated settings and values.
@@ -42,3 +55,21 @@ Returns **\[type]** [description]
 ## destroy
 
 Teardown - Remove added markup and events.
+
+## selected
+
+Fires when a block is selected
+
+**Properties**
+
+-   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+
+## unselected
+
+Fires when a block is unselected
+
+**Properties**
+
+-   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object

@@ -10,8 +10,8 @@
     border-radius: 3px;
     display: inline-block;
     margin: 20px 0 0 20px;
-    padding-top: 10px;
     padding-bottom: 10px;
+    padding-top: 10px;
     position: relative;
     text-align: center;
     vertical-align: top;
@@ -33,49 +33,81 @@
     }
 
     &.is-selected {
-      background-color: $selected-bg-color;
+      background-color: $blockgrid-selected-bg-color;
+      box-shadow: 0 0 0 1px $blockgrid-selected-bg-color;
     }
 
-    &.selection {
+    &.is-selectable {
+      border: 1px transparent solid;
+      border-radius: 3px;
+      outline: none;
 
       &.is-selected {
         background-color: transparent;
-        border: 2px $btn-focus-border-color solid;
+        border: 1px $blockgrid-selected-border-color solid;
+        box-shadow: 0 0 0 1px $blockgrid-selected-border-color;
 
         &:hover {
           background-color: transparent;
         }
+
+        input.checkbox + label {
+          display: block;
+        }
       }
 
       &.is-activated {
-        background-color: $selected-bg-color;
-        border: 1px $btn-active-bg-color solid;
+        background-color: $blockgrid-selected-bg-color;
 
         &.is-selected {
-          border: 2px $btn-focus-border-color solid;
+          border: 1px $blockgrid-selected-border-color solid;
+          box-shadow: 0 0 0 1px $blockgrid-selected-border-color;
+        }
+
+        &:hover {
+          background-color: $blockgrid-selected-bg-color;
         }
       }
 
       &:hover {
+        background-color: $blockgrid-hover-color;
         border-radius: 3px;
-        background-color: $listview-hover-bg-color;
         cursor: pointer;
+
+        input.checkbox + label {
+          display: block;
+        }
       }
 
       &:focus {
-        border-radius: 3px;
-        border: 1px $trigger-focus-color solid;
-        outline: none;
+        border: 1px $blockgrid-focus-border-color solid;
+        box-shadow: $focus-box-shadow;
+
+        input.checkbox + label {
+          display: block;
+        }
       }
 
-      input.checkbox {
+      &.has-focus {
+        border: 1px $blockgrid-focus-border-color solid;
+      }
+    }
+
+    // Position the checkbox on the top right and show on focus
+    input.checkbox {
+      &:focus {
         + label {
-          outline: none;
-          position: absolute;
-          right: 0;
-          top: 7px;
-          z-index: 100;
+          display: block;
         }
+      }
+
+      + label {
+        display: none;
+        outline: none;
+        position: absolute;
+        right: 0;
+        top: 7px;
+        z-index: 100;
       }
     }
   }
@@ -106,7 +138,7 @@
   }
 }
 
-//RTL Styles
+// RTL Styles
 html[dir='rtl'] {
 
   .blockgrid {
