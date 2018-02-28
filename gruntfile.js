@@ -12,10 +12,7 @@ module.exports = function (grunt) {
   const usebanner = require('./build/configs/usebanner.js');
   const compress = require('./build/configs/compress.js');
   const meta = require('./build/configs/meta.js');
-  // const revision = require('./build/configs/revision.js');
-  // const stripCode = require('./build/configs/strip_code.js');
   const clean = require('./build/configs/clean.js');
-  // uglify = require('./build/configs/uglify.js');
   const dependencyBuilder = require('./build/dependencybuilder.js');
   const strBanner = require('./build/strbanner.js');
   const controls = require('./build/controls.js');
@@ -72,6 +69,10 @@ module.exports = function (grunt) {
           componentName = componentName || '';
           return `npm run documentation ${componentName}`;
         }
+      },
+
+      minify: {
+        cmd: 'npm run minify'
       }
     },
 
@@ -87,9 +88,6 @@ module.exports = function (grunt) {
     amdHeader,
     copy,
     cssmin,
-    // revision,
-    // stripCode,
-    // uglify,
     usebanner,
     compress,
     run
@@ -97,7 +95,6 @@ module.exports = function (grunt) {
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
-  // require('load-grunt-parent-tasks')(grunt);
 
   grunt.registerTask('build', [
     'exec:build'
@@ -112,7 +109,7 @@ module.exports = function (grunt) {
     // 'strip_code',
     'build',
     // 'clean:amd',
-    // 'uglify',
+    'exec:minify',
     'cssmin',
     'copy:main',
     'compress',
@@ -120,20 +117,14 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('js', [
-    // 'revision',
     // 'copy:amd',
-    // 'strip_code',
-    // 'concat:basic'
     'build'
   ]);
 
   grunt.registerTask('js-uglify', [
-    // 'revision',
-    // 'copy:amd',
-    // 'strip_code',
     // 'concat:basic',
     'build',
-    // 'uglify'
+    'exec:minify'
   ]);
 
   grunt.registerTask('publish', [
@@ -141,6 +132,7 @@ module.exports = function (grunt) {
     'clean:public',
     'sass',
     'build',
+    'exec:minify',
     'cssmin',
     'copy:main',
     'compress',
@@ -166,7 +158,6 @@ module.exports = function (grunt) {
   grunt.registerTask('sohoxi-watch', [
     'sass',
     /* 'copy:amd', */
-    /* 'strip_code', */
     'build',
     /* 'clean:amd', */
     'copy:main',
