@@ -16,6 +16,7 @@ module.exports = function (grunt) {
   const dependencyBuilder = require('./build/dependencybuilder.js');
   const strBanner = require('./build/strbanner.js');
   const controls = require('./build/controls.js');
+  const revision = require('./build/configs/revision.js');
   const run = require('./build/configs/run.js');
 
   let selectedControls = dependencyBuilder(grunt);
@@ -29,35 +30,9 @@ module.exports = function (grunt) {
   }
 
   const config = {
-
     pkg: grunt.file.readJSON('package.json'),
 
     banner: bannerText,
-
-    concat: {
-      options: {
-        separator: '',
-        banner: '<%= banner %>' + '<%= amdHeader %>',
-        footer: '\n}));\n//# sourceURL=<%= pkg.shortName %>.js'
-      },
-      basic: {
-        files: {
-          'dist/js/<%= pkg.shortName %>.js': selectedControls
-        }
-      },
-      missingFiles: {
-        src: selectedControls,
-        dest: 'temp/missing-files.js',
-        filter(filepath) {
-          if (!grunt.file.exists(filepath)) {
-            grunt.fail.warn(`Could not find: ${filepath}`);
-            return false;
-          }
-          return true;
-        },
-        nonull: true
-      }
-    },
 
     exec: {
       build: {
@@ -75,9 +50,9 @@ module.exports = function (grunt) {
         cmd: 'npm run minify'
       }
     },
-
   };
 
+  // Build out the Grunt config object
   grunt.initConfig(Object.assign(
     {},
     config,
@@ -90,79 +65,72 @@ module.exports = function (grunt) {
     cssmin,
     usebanner,
     compress,
+    revision,
     run
   ));
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('build', [
-    'exec:build'
-  ]);
-
+  // Default Task:
+  // - Cleans up
+  // - Builds
+  // - Updates local documentation
+  // - Zips
   grunt.registerTask('default', [
     'clean:dist',
-    'clean:public',
-    // 'revision',
-    'sass',
-    // 'copy:amd',
-    // 'strip_code',
     'build',
-    // 'clean:amd',
+    'exec:documentation',
+    'compress'
+  ]);
+
+  // Main build task (Gets everything)
+  grunt.registerTask('build', [
+    'build:js:min',
+    'build:sass'
+  ]);
+
+  // Javascript Build Tasks
+  // The first one doesn't minify (expensive, time-wise)
+  grunt.registerTask('build:js', [
+    'exec:build',
+    'copy:main'
+  ]);
+  grunt.registerTask('build:js:min', [
+    'exec:build',
     'exec:minify',
+    'copy:main'
+  ]);
+
+  // SASS/CSS Build Task
+  grunt.registerTask('build:sass', [
+    'sass',
     'cssmin',
-    'copy:main',
-    'compress',
+    'revision',
     'usebanner'
   ]);
 
-  grunt.registerTask('js', [
-    // 'copy:amd',
-    'build'
-  ]);
-
-  grunt.registerTask('js-uglify', [
-    // 'concat:basic',
-    'build',
-    'exec:minify'
-  ]);
-
+  // Publish for NPM
   grunt.registerTask('publish', [
-    'clean:dist',
-    'clean:public',
-    'sass',
-    'build',
-    'exec:minify',
-    'cssmin',
-    'copy:main',
-    'compress',
-    'usebanner',
+    'default',
     'clean:publish',
     'copy:publish'
   ]);
 
-  // Swap "watch" for "chokidar"
+  // Watch Task
   grunt.registerTask('watch', [
     'chokidar'
   ]);
 
-  // Run the event to regen docs
+  // This event runs whenever Chokidar detects a file change.
+  // If one of the files is a Soho Component JS file, and has a documentation page, it will
+  // trigger a re-documentation of that component.
   grunt.event.on('chokidar', (action, filepath) => {
     if (filepath.indexOf('components') > -1 && (filepath.indexOf('.js') > -1 || filepath.indexOf('.md') > -1)) {
       const componentName = filepath.substr(filepath.lastIndexOf('/') + 1).replace('.js', '').replace('.md', '');
       grunt.task.run(`exec:documentation:${componentName}`);
     }
   });
-
-  // Don't do any uglify/minify while the Dev Watch is running.
-  grunt.registerTask('sohoxi-watch', [
-    'sass',
-    /* 'copy:amd', */
-    'build',
-    /* 'clean:amd', */
-    'copy:main',
-    'usebanner'
-  ]);
 };
 /* eslint-enable global-require, no-param-reassign,
   no-useless-concat, import/no-extraneous-dependencies */
