@@ -12,33 +12,43 @@
     data.push({
       img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
       maintxt: 'Sheena Taylor',
-      subtxt: 'Infor, SVP'
+      subtxt: 'Infor, Developer',
+      id: 1
     });
     data.push({
-      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
-      maintxt: 'Sheena Taylor',
-      subtxt: 'Infor, SVP'
+      img: 'https://randomuser.me/api/portraits/med/women/9.jpg',
+      maintxt: 'Jane Taylor',
+      subtxt: 'Infor, Developer',
+      id: 2
     });
     data.push({
-      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
-      maintxt: 'Sheena Taylor',
-      subtxt: 'Infor, SVP'
+      img: 'https://randomuser.me/api/portraits/med/women/10.jpg',
+      maintxt: 'Sam Smith',
+      subtxt: 'Infor, SVP',
+      id: 3
     });
     data.push({
-      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
-      maintxt: 'Sheena Taylor',
-      subtxt: 'Infor, SVP'
+      img: 'https://randomuser.me/api/portraits/med/women/11.jpg',
+      maintxt: 'Mary Pane',
+      subtxt: 'Infor, Developer',
+      id: 4
     });
     data.push({
-      img: 'https://randomuser.me/api/portraits/med/women/8.jpg',
-      maintxt: 'Sheena Taylor',
-      subtxt: 'Infor, SVP'
+      img: 'https://randomuser.me/api/portraits/med/women/12.jpg',
+      maintxt: 'Paula Paulson',
+      subtxt: 'Infor, Architect',
+      id: 5
     });
 
     $('#blockgrid').blockgrid({
       dataset: data,
       selectable: 'mixed'
+    }).on('selected', function (e, args) {
+      console.log(args);
+    }).on('activated', function (e, args) {
+      console.log(args);
     });
+
   });
 
 </script>
