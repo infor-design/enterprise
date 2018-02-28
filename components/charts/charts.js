@@ -114,7 +114,7 @@ charts.colorRange = ['#2578A9', '#8ED1C6', '#C7B4DB', '#5C5C5C', '#F2BC41', '#76
  * The colors as an array for placement
  * @type {Array}
  */
-charts.colors = d3 ? d3.scaleOrdinal().range(charts.colorRange) : [];
+charts.colors = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorRange) : [];
 
 /**
  * Calculate and return the correct color to use. Fx
