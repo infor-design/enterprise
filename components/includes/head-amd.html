@@ -37,7 +37,12 @@
     require([
       '{{basepath}}js/jquery-3.1.1.js',
       '{{basepath}}js/d3.v4.js',
-      '{{basepath}}js/sohoxi.js',
+      {{#minify}}
+        '{{basepath}}js/sohoxi.min.js',
+      {{/minify}}
+      {{^minify}}
+        '{{basepath}}js/sohoxi.js',
+      {{/minify}}
       '{{basepath}}js/sohoxi-migrate-4.4.0.js'
     ], function() {
     });
