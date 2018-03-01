@@ -877,7 +877,13 @@ Datagrid.prototype = {
               patternOptions: { decimalLimit: col.numberFormat.maximumFractionDigits }
             };
 
-            col.maskOptions = utils.extend(true, {}, integerDefaults, decimalDefaults, col.maskOptions);
+            col.maskOptions = utils.extend(
+              true,
+              {},
+              integerDefaults,
+              decimalDefaults,
+              col.maskOptions
+            );
           } else {
             col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
           }
