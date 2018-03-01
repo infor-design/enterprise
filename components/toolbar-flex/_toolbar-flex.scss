@@ -1,0 +1,17 @@
+.toolbar-container {
+  &.in-page {
+    height: 40px;
+  }
+}
+
+.flex-toolbar {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  height: 100%;
+}
+
+.toolbar-section {
+  flex-shrink: 1;
+  overflow: hidden;
+}
