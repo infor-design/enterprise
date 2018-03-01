@@ -386,14 +386,9 @@ $subheader-height: 60px;
     }
   }
 
-  .app-header {
-    height: 32px;
-    width: 32px;
-
-    &.icon {
-      > span {
-        background-color: $header-button-color;
-      }
+  .icon.app-header {
+    > span {
+      background-color: $header-button-color;
     }
   }
 

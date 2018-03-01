@@ -1,50 +1,142 @@
 <div class="row">
   <div class="six columns">
-    <h2>Flexible Toolbar Component</h2>
     <p>JIRA: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7475" target="_blank">SOHO-7475</a></p>
   </div>
 </div>
 
-<div class="row">
+<div class="row top-padding">
   <div class="twelve columns">
 
+    <!-- BEGIN Toolbar with All Buttons -->
     <div class="flex-toolbar">
-
-      <div class="toolbar-section">
-        <h2>Toolbar Title</h2>
+      <div class="toolbar-section title">
+        <h2>Really Long Sooper Dooper Toolbar Title</h2>
       </div>
 
-      <div class="toolbar-section">
+      <div class="toolbar-section buttonset">
         <button class="btn">
+          <span>Text Button</span>
+        </button>
+
+        <button class="btn-menu">
+          <span>Menu Button</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Item One</a></li>
+          <li><a href="#">Item Two</a></li>
+          <li><a href="#">Item Three</a></li>
+        </ul>
+
+        <button class="btn-icon">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-settings"></use>
           </svg>
           <span class="audible">Settings</span>
         </button>
 
-        <button class="btn">
+        <button class="btn-icon">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-trash"></use>
+            <use xlink:href="#icon-delete"></use>
           </svg>
           <span class="audible">Trash</span>
         </button>
       </div>
 
-      <div class="toolbar-section">
+      <div class="toolbar-section search">
         <div class="searchfield-wrapper">
-          <label for="toolbar-searchfield">Toolbar Search</label>
-          <input id="toolbar-searchfield" class="searchfield" placeholder="Search..."/>
+          <label for="toolbar-searchfield-01" class="audible">Toolbar Search</label>
+          <input id="toolbar-searchfield-01" class="searchfield" placeholder="Search..."/>
         </div>
       </div>
 
-      <div class="toolbar-section">
+      <div class="toolbar-section more">
         <button class="btn-actions">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-more"></use>
           </svg>
         </button>
+        <ul class="popupmenu">
+          <li><a href="#">Pre-defined Item #1</a></li>
+          <li><a href="#">Pre-defined Item #2</a></li>
+          <li><a href="#">Pre-defined Item #3</a></li>
+        </ul>
       </div>
     </div>
+    <!-- END Toolbar with All Buttons -->
+
+  </div>
+</div>
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <!-- BEGIN Toolbar similar to Header Toolbar -->
+    <div class="flex-toolbar">
+      <div class="toolbar-section">
+        <button class="btn-icon application-menu-trigger" type="button">
+          <span class="audible">Show navigation</span>
+          <span class="icon app-header">
+            <span class="one"></span>
+            <span class="two"></span>
+            <span class="three"></span>
+          </span>
+        </button>
+      </div>
+
+      <div class="toolbar-section title">
+        <h2>Toolbar Title</h2>
+      </div>
+
+      <div class="toolbar-section search">
+        <div class="searchfield-wrapper">
+          <label for="toolbar-searchfield-02" class="audible">Toolbar Search</label>
+          <input id="toolbar-searchfield-02" class="searchfield" placeholder="Search..."/>
+        </div>
+      </div>
+    </div>
+    <!-- END Toolbar similar to Header Toolbar -->
+
+  </div>
+</div>
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <!-- BEGIN Toolbar with Title Eyebrow -->
+    <div class="flex-toolbar">
+      <div class="toolbar-section">
+        <button class="btn-icon" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-bullet-steps"></use>
+          </svg>
+          <span class="audible">Workflow Steps</span>
+        </button>
+      </div>
+
+      <div class="toolbar-section title">
+        <h2 class="page-title">Page Title</h2>
+        <span class="section-title">Smaller Subsection Title with Details</span>
+      </div>
+
+      <div class="toolbar-section search">
+        <div class="searchfield-wrapper">
+          <label for="toolbar-searchfield-03" class="audible">Toolbar Search</label>
+          <input id="toolbar-searchfield-03" class="searchfield" placeholder="Search..."/>
+        </div>
+      </div>
+
+      <div class="toolbar-section more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Pre-defined Item #1</a></li>
+          <li><a href="#">Pre-defined Item #2</a></li>
+          <li><a href="#">Pre-defined Item #3</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- END Toolbar with Title Eyebrow -->
 
   </div>
 </div>
