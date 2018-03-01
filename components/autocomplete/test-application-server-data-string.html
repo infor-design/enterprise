@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Autocomplete Test: Application Server Data</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <div class="field">
+      <label for="autocomplete-default">Search</label>
+      <input type="text" autocomplete="off" class='autocomplete' data-init="false" placeholder="Type to Search" id="autocomplete-default">
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#autocomplete-default').autocomplete({
+    source: [
+      "Application Function Server",
+      "application server",
+      "Server Error '/' Application",
+      "Server Error '/ReportManager' Application",
+      "server error application"
+    ],
+    filterMode: 'startsWith'
+  });
+</script>

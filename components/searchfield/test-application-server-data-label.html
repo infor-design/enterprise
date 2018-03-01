@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Searchfield Test: Application Server Data</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <label for="searchfield">Search</label>
+      <input id="searchfield" name="searchfield" class="searchfield" data-init="false" placeholder="Type a search term"/>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#searchfield').searchfield({
+    clearable: true,
+    filterMode: 'startsWith',
+    source: [
+      { label: "Application Function Server" },
+      { label: "application server" },
+      { label: "Server Error '/' Application" },
+      { label: "Server Error '/ReportManager' Application" },
+      { label: "server error application" }
+    ]
+  });
+</script>
