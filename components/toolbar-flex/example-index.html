@@ -7,10 +7,10 @@
 <div class="row top-padding">
   <div class="twelve columns">
 
-    <!-- BEGIN Toolbar with All Buttons -->
+    <!-- BEGIN Toolbar with All Buttons (Buttonset Favoring) -->
     <div class="flex-toolbar">
       <div class="toolbar-section title">
-        <h2>Really Long Sooper Dooper Toolbar Title</h2>
+        <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
       </div>
 
       <div class="toolbar-section buttonset">
@@ -62,7 +62,69 @@
         </ul>
       </div>
     </div>
-    <!-- END Toolbar with All Buttons -->
+    <!-- END Toolbar with All Buttons (Buttonset Favoring) -->
+
+  </div>
+</div>
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <!-- BEGIN Toolbar with All Buttons (Title Favoring) -->
+    <div class="flex-toolbar">
+      <div class="toolbar-section title favor">
+        <h2>Incredibly Long Toolbar (Favor's Title)</h2>
+      </div>
+
+      <div class="toolbar-section buttonset">
+        <button class="btn">
+          <span>Text Button</span>
+        </button>
+
+        <button class="btn-menu">
+          <span>Menu Button</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Item One</a></li>
+          <li><a href="#">Item Two</a></li>
+          <li><a href="#">Item Three</a></li>
+        </ul>
+
+        <button class="btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span class="audible">Settings</span>
+        </button>
+
+        <button class="btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Trash</span>
+        </button>
+      </div>
+
+      <div class="toolbar-section search">
+        <div class="searchfield-wrapper">
+          <label for="toolbar-searchfield-01" class="audible">Toolbar Search</label>
+          <input id="toolbar-searchfield-01" class="searchfield" placeholder="Search..."/>
+        </div>
+      </div>
+
+      <div class="toolbar-section more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Pre-defined Item #1</a></li>
+          <li><a href="#">Pre-defined Item #2</a></li>
+          <li><a href="#">Pre-defined Item #3</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- END Toolbar with All Buttons (Title Favoring) -->
 
   </div>
 </div>

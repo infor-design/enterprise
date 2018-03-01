@@ -15,15 +15,19 @@
 .toolbar-section {
   white-space: nowrap;
 
+  // Allows certain sections to collapse.
+  // NOTE: Not all sections are collapsible.
   &.title,
   &.buttonset {
     flex-grow: 1;
+
+    &:not(.favor) {
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   &.title {
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-
     h1, h2, h3, h4, h5, h6, {
       display: inline-block;
     }
