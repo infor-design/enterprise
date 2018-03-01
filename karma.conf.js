@@ -1,5 +1,4 @@
 const getSpecs = (listSpec) => {
-  console.log(listSpec);
   if (listSpec) {
     return listSpec.split(',');
   }
@@ -23,7 +22,6 @@ module.exports = function (config) {
     ],
     preprocessors: {
       'components/**/*.spec.js': ['webpack', 'sourcemap'],
-      'dist/css/light-theme.css.map': ['webpack', 'sourcemap'],
       'dist/js/sohoxi.js': ['coverage']
     },
     webpack: {
@@ -51,10 +49,8 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
+    browsers: ['Chrome'],
     autoWatch: true,
-    browsers: [
-      'Chrome'
-    ],
     singleRun: false,
     concurrency: Infinity
   });
