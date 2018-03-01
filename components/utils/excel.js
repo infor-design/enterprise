@@ -163,7 +163,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
 
       // THEAD
       if (el.getAttribute('data-exportable') && el.getAttribute('data-exportable') === 'no') {
-        let id = parseInt(el.getAttribute('id').substr(el.getAttribute('id').length - 1)) - 1;
+        const id = parseInt(el.getAttribute('id').substr(el.getAttribute('id').length - 1), 10) - 1;
         nonExportables.push(id);
         elm.remove();
         return;
