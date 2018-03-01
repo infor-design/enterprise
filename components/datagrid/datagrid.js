@@ -876,9 +876,12 @@ Datagrid.prototype = {
             integerDefaults = {
               patternOptions: { decimalLimit: col.numberFormat.maximumFractionDigits }
             };
+
+            col.maskOptions = utils.extend(true, {}, integerDefaults, decimalDefaults, col.maskOptions);
+          } else {
+            col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
           }
 
-          col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" id="${filterId}" />`;
           break;
         }
