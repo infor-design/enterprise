@@ -1,3 +1,12 @@
+const getSpecs = (listSpec) => {
+  console.log(listSpec);
+  if (listSpec) {
+    return listSpec.split(',');
+  }
+
+  return ['components/**/*.spec.js'];
+};
+
 module.exports = function (config) {
   config.set({
     basePath: '',
@@ -8,8 +17,7 @@ module.exports = function (config) {
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
       'dist/js/cultures/en-US.js',
-      'components/**/*.spec.js',
-    ],
+    ].concat(getSpecs(process.env.KARMA_SPECS)),
     exclude: [
       'node_modules'
     ],
