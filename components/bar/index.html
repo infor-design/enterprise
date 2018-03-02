@@ -189,6 +189,32 @@ Can set ticks: {format: d3Format, number: n}
       </tr>
       <tr>
         <td>
+          labelFactor
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          How far out than the outer circle should the labels be placed,
+this may be useful to adjust for some labels.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          wrapWidth
+        </td>
+        <td>
+          number
+        </td>
+        <td>
+          The number of pixels after which a label needs to be
+given a new line. You may want to change this based on label data.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
           emptyMessage
         </td>
         <td>
@@ -259,9 +285,53 @@ void
   </table>
 
 
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>rendered
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>svg (array)
+        
+        = The svg object.
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the chart is complete done rendering, for customization.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
 
 <h2 id="dataset-settings">Dataset Settings</h2>
 <ul>

@@ -464,8 +464,11 @@ $datagrid-short-row-height: 23px;
   table {
     empty-cells: show;
   }
+}
 
+.full-height .datagrid-body {
   .empty-message {
+    @include vertical-align();
     display: none;
   }
 }

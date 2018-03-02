@@ -8,9 +8,8 @@ const excel = {};
 * @param {string} self The grid api to use (if customDs is not used)
 */
 excel.exportToCsv = function (fileName, customDs, self) {
-  fileName = `${fileName ||
-    this.element.closest('.datagrid-container').attr('id') ||
-    'datagrid'}.csv`;
+  const name = fileName || self.element.attr('id') || 'Export';
+  fileName = `${name}.csv`;
 
   let csvData = null;
   const cleanExtra = function (table) {

@@ -289,6 +289,31 @@ aggregatorOptions:
       </tr>
       <tr>
         <td>
+          spacerColumn
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          if true and the grid is not wide enough to fit the last column
+will get filled with an empty spacer column.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          stretchColumn
+        </td>
+        <td>
+          boolean
+        </td>
+        <td>
+          If 'last' the last column will stretch we will add more options.
+
+        </td>
+      </tr>
+      <tr>
+        <td>
           clickToSelect
         </td>
         <td>
@@ -580,19 +605,6 @@ the rowTemplate feature being needed.
       </tr>
       <tr>
         <td>
-          redrawOnResize
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If set to false we skip redraw logic on the resize
-of the page.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
           exportConvertNegative
         </td>
         <td>
@@ -835,7 +847,7 @@ the column definitions.
                   <span>pagerType (object) = The pager info object with information like activePage ect.
  </span>
                 
-                  <span>callback (function) = Thecall back functions
+                  <span>callback (function) = The call back functions
  </span>
                 
           
@@ -867,22 +879,20 @@ array
         </td>
       </tr>
       <tr>
-        <td>getColumnGroup</td>
+        <td>hideShowColumnGroups</td>
         <td>
           
                 
-                  <span>idx (object) = The index of the column group
+                  <span>show (boolean) = Hide and show the column group if it should be.
  </span>
                 
           
         </td>
         <td>
-          <p>Gets an if for the column group used for grouped headers.</p>
+          <p>Test if the group header should be closed and close / open it.</p>
 
         </td>
         <td>
-          The name of the column group
-string
         </td>
       </tr>
       <tr>

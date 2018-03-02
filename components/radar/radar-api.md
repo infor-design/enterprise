@@ -8,6 +8,7 @@
     -   [toggleSelected](#toggleselected)
     -   [updated](#updated)
     -   [destroy](#destroy)
+-   [rendered](#rendered)
 
 ## RADAR_DEFAULTS
 
@@ -21,10 +22,9 @@
 -   `maxValue` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** What is the value that the biggest circle will represent
 -   `labelFactor` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** How far out than the outer circle should the labels be placed,
     this may be useful to adjust for some labels.
--   `showCrosslines` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to false to hide the cross line axes.
--   `showAxisLabels` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to false to hide percent labels.
 -   `wrapWidth` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number of pixels after which a label needs to be
-    given a new line. You may want to change this based on label data.
+    given a new line. You may want to change this based on label data.-   @property {boolean} showCrosslines Set to false to hide the cross line axes.
+-   `showAxisLabels` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to false to hide percent labels.
 -   `opacityArea` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The opacity of the area of the blob.
     This is set to the correct Infor Style.
 -   `dotRadius` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The size of the colored circles of each blog.
@@ -97,3 +97,12 @@ Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 Teardown - Remove added markup and events.
 
 Returns **void** 
+
+## rendered
+
+Fires when the chart is complete done rendering, for customization.
+
+**Properties**
+
+-   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `svg` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The svg object.

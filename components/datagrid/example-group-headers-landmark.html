@@ -17,11 +17,14 @@
       rowHeight: 'short',
       indeterminate: true,
       columnGroups: getColumnGroups(),
-      source: datagridPagingFunction
+      source: datagridPagingFunction,
+      toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true, personalize: true}
     })
     .data('datagrid');
 
     function datagridPagingFunction(request, response) {
+
+
       // -------------------------------------------------------------------------------------------------
       // call async function to get first/last/previous/next page of data.
       // -------------------------------------------------------------------------------------------------
@@ -40,6 +43,12 @@
         // -------------------------------------------------------------------------------------------------
         request.firstPage = result.firstPage;
         request.lastPage = result.lastPage;
+
+        // You can do this but it will cause the header to jog a lot
+        // If you need this pre load it would be better to set hidden on the columns object
+        // grid.showColumn('activity');
+        // grid.hideColumn('productId');
+        // grid.hideColumn('productName');
 
         // -------------------------------------------------------------------------------------------------
         // put the new page of data back into the datagrid
@@ -86,12 +95,12 @@
     function getColumns() {
       if (!PAGING_COLUMNS) {
         PAGING_COLUMNS = [
-          { id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' },
-          { id: 'productId',   name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', width: 140, formatter: Formatters.Readonly                     },
-          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text',    width: 150, formatter: Formatters.Hyperlink                    },
-          { id: 'activity',    name: 'Activity',     field: 'activity',    sortable: false, filterType: 'text',    width: 125,                                      hidden: true  },
-          { id: 'quantity',    name: 'Quantity',     field: 'quantity',    sortable: false,                        width: 125                                                     },
-          { id: 'price',       name: 'Price',        field: 'price',       sortable: false, filterType: 'decimal', width: 125, formatter: Formatters.Decimal                      },
+          { id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' },
+          { id: 'activity',  hidden: true,  name: 'Activity',     field: 'activity',    sortable: false, filterType: 'text',                                        },
+          { id: 'productId',   name: 'Product Id',   field: 'productId',   sortable: false, filterType: 'integer', formatter: Formatters.Integer                     },
+          { id: 'productName', name: 'Product Name', field: 'productName', sortable: false, filterType: 'text',    formatter: Formatters.Hyperlink                    },
+          { id: 'quantity',    name: 'Quantity',     field: 'quantity',    sortable: false,                                                                             },
+          { id: 'price',       name: 'Price',        field: 'price',       sortable: false, filterType: 'decimal', formatter: Formatters.Decimal                      },
           { id: 'orderDate',   name: 'Order Date',   field: 'orderDate',   sortable: false, filterType: 'date',                formatter: Formatters.Date, dateFormat: 'M/d/yyyy' }
         ];
       }
@@ -102,8 +111,12 @@
     function getColumnGroups() {
       if (!COLUMN_GROUPS) {
         COLUMN_GROUPS = [
-          { colspan: 1, id: '',              name:    '' }, // selectcheckbox
-          { colspan: 2, id: 'product-stuff', name: 'Product Stuff' }
+          { colspan: 1, id: 'selectionCheckbox', name:    '' },
+          { colspan: 1, hidden: true, id: 'activity', name:    '' },
+          { colspan: 2, id: 'productId', name: 'Product Stuff' },
+          { colspan: 1, id: 'quantity', name:    '' },
+          { colspan: 1, id: 'price', name:    '' },
+          { colspan: 1, id: 'orderDate', name:    '' },
         ];
       }
       return COLUMN_GROUPS;
@@ -120,7 +133,6 @@
           { id: 5,  productId: 214225, productName: 'Compressor 6',  activity: 'Assemble Paint', quantity: 3.5,  price: 205.99,             status: 'Inactive', orderDate: '2015-01-06T06:00:00.000Z', action: 'Action', rated: .88  },
           { id: 6,  productId: 214226, productName: 'Compressor 7',  activity: 'Assemble Paint', quantity: 4,    price: 204.99,             status: 'Active',   orderDate: '2015-01-07T06:00:00.000Z', action: 'Action', rated: .54  },
           { id: 7,  productId: 214227, productName: 'Compressor 8',  activity: 'Assemble Paint', quantity: 4.5,  price: 203.99,             status: 'On Hold',  orderDate: '2015-01-08T06:00:00.000Z', action: 'Action', rated: .41  },
-/*
           { id: 8,  productId: 214228, productName: 'Compressor 9',  activity: 'Assemble Paint', quantity: 5,    price: 202.99,             status: 'On Hold',  orderDate: '2015-01-09T06:00:00.000Z', action: 'Action', rated: .21  },
           { id: 9,  productId: 214229, productName: 'Compressor 10', activity: 'Assemble Paint', quantity: 5.5,  price: 201.99,             status: 'Late',     orderDate: '2015-01-10T06:00:00.000Z', action: 'Action', rated: .23  },
           { id: 10, productId: 214230, productName: 'Compressor 1',  activity: 'Assemble Paint', quantity: 6,    price: 200.99,             status: 'Late',     orderDate: '2015-01-01T06:00:00.000Z', action: 'Action', rated: .76  },
@@ -213,7 +225,6 @@
           { id: 97, productId: 214317, productName: 'Compressor 8',  activity: 'Assemble Paint', quantity: 49.5, price: 113.99000000000001, status: 'On Hold',  orderDate: '2015-01-08T06:00:00.000Z', action: 'Action',rated:  .11  },
           { id: 98, productId: 214318, productName: 'Compressor 9',  activity: 'Assemble Paint', quantity: 50,   price: 112.99000000000001, status: 'On Hold',  orderDate: '2015-01-09T06:00:00.000Z', action: 'Action',rated:  .66  },
           { id: 99, productId: 214319, productName: 'Compressor 10', activity: 'Assemble Paint', quantity: 50.5, price: 111.99000000000001, status: 'On Hold',  orderDate: '2015-01-10T06:00:00.000Z', action: 'Action',rated:  .34  }
-*/
         ];
       }
 

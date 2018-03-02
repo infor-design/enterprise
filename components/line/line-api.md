@@ -6,6 +6,7 @@
 -   [Line](#line)
     -   [updated](#updated)
     -   [destroy](#destroy)
+-   [rendered](#rendered)
 
 ## LINE_DEFAULTS
 
@@ -73,3 +74,12 @@ Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 Remove added markup and events.
 
 Returns **void** 
+
+## rendered
+
+Fires when the chart is complete done rendering, for customization.
+
+**Properties**
+
+-   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `svg` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The svg object.

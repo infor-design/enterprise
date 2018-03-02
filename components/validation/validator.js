@@ -183,7 +183,7 @@ Validator.prototype = {
           }
 
           if (thisField.data('isValid') === false && e.type === 'blur') {
-            return;
+          //  return;
           }
           self.validate(field, true, e);
         }, 300);
