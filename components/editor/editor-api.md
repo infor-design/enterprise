@@ -2,6 +2,7 @@
 
 ### Table of Contents
 
+-   [EDITOR_DEFAULTS](#editor_defaults)
 -   [Editor](#editor)
     -   [switchToolbars](#switchtoolbars)
     -   [updated](#updated)
@@ -12,14 +13,17 @@
 -   [beforepaste](#beforepaste)
 -   [afterpaste](#afterpaste)
 
-## Editor
-
-The Editor Component is displays and edits markdown.
+## EDITOR_DEFAULTS
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `image` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Info object to populate the image dialog defaulting to `{url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
+-   `onLinkClick` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Call back for clicking on links to control link behavior.
+
+**Properties**
+
+-   `buttons` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An array with all the visible buttons in it.
+-   `excludeButtons` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An array with all the buttons in it to excloude
 -   `firstHeader` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Allows you to set if the first header inserted is
     a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
 -   `secondHeader` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Allows you to set if the second header inserted
@@ -32,7 +36,15 @@ The Editor Component is displays and edits markdown.
     and represents the styling class. target can be 'New window' or 'Same window',
     isClickable make the links appear clickable in the editor, showIsClickable will
     show a checkbox to allow the user to make clickable links in the link popup.
--   `image` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Info object to populate the image dialog defaulting to `{url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
+
+## Editor
+
+The Editor Component is displays and edits markdown.
+
+**Parameters**
+
+-   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
+-   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
 
 ### switchToolbars
 

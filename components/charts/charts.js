@@ -747,4 +747,57 @@ charts.triggerContextMenu = function (container, elem, d) {
   $(container).trigger(e, [elem, d]);
 };
 
+/**
+ * Wraps SVG text http://bl.ocks.org/mbostock/7555321
+ * @param {object} node  The svg element.
+ * @param {number}  width The width at which to wrap
+ * @param {object} labelFactor The dom element
+ */
+charts.wrap = function (node, width, labelFactor) {
+  if (!labelFactor) {
+    labelFactor = 1.27;
+  }
+
+  if (!width) {
+    labelFactor = 60;
+  }
+
+  node.each(function () {
+    const text = d3.select(this);
+    const words = text.text().split(/\s+/).reverse();
+    let word = '';
+    let line = [];
+    let lineNumber = 0;
+
+    if (words.length <= 1) {
+      return;
+    }
+
+    const lineHeight = labelFactor; // ems
+    const y = text.attr('y');
+    const x = text.attr('x');
+    const dy = parseFloat(text.attr('dy'));
+    let tspan = text.text(null).append('tspan')
+      .attr('x', x)
+      .attr('y', y)
+      .attr('dy', `${dy}em`);
+
+    while (word = words.pop()) {    //eslint-disable-line
+      line.push(word);
+      tspan.text(line.join(' '));
+
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(' '));
+        line = [word];
+        tspan = text.append('tspan')
+          .attr('x', x)
+          .attr('y', y)
+          .attr('dy', `${++lineNumber * lineHeight + dy}em`)
+          .text(word);
+      }
+    }
+  });
+};
+
 export { charts };

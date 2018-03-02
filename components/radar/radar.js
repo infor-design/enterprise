@@ -17,10 +17,10 @@ const COMPONENT_NAME = 'radar';
 * @property {number} maxValue What is the value that the biggest circle will represent
 * @property {number} labelFactor How far out than the outer circle should the labels be placed,
 * this may be useful to adjust for some labels.
-* @property {boolean} showCrosslines Set to false to hide the cross line axes.
-* @property {boolean} showAxisLabels Set to false to hide percent labels.
 * @property {number} wrapWidth The number of pixels after which a label needs to be
 * given a new line. You may want to change this based on label data.
+* * @property {boolean} showCrosslines Set to false to hide the cross line axes.
+* @property {boolean} showAxisLabels Set to false to hide percent labels.
 * @property {number} opacityArea The opacity of the area of the blob.
 * This is set to the correct Infor Style.
 * @property {number} dotRadius The size of the colored circles of each blog.
@@ -109,6 +109,15 @@ Radar.prototype = {
     this
       .build()
       .handleEvents();
+
+    /**
+    * Fires when the chart is complete done rendering, for customization.
+    * @event rendered
+    * @property {object} event - The jquery event object
+    * @property {array} svg - The svg object.
+    */
+    this.element.trigger('rendered', [this.svg]);
+
     return this;
   },
 
@@ -250,46 +259,6 @@ Radar.prototype = {
         .style('stroke-width', '1px');
     }
 
-    // Wraps SVG text http://bl.ocks.org/mbostock/7555321
-    function wrap(node, width, labelFactor) {
-      node.each(function () {
-        const text = d3.select(this);
-        const words = text.text().split(/\s+/).reverse();
-        let word = '';
-        let line = [];
-        let lineNumber = 0;
-
-        if (words.length <= 1) {
-          return;
-        }
-
-        const lineHeight = labelFactor; // ems
-        const y = text.attr('y');
-        const x = text.attr('x');
-        const dy = parseFloat(text.attr('dy'));
-        let tspan = text.text(null).append('tspan')
-          .attr('x', x)
-          .attr('y', y)
-          .attr('dy', `${dy}em`);
-
-        while (word = words.pop()) {    //eslint-disable-line
-          line.push(word);
-          tspan.text(line.join(' '));
-
-          if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(' '));
-            line = [word];
-            tspan = text.append('tspan')
-              .attr('x', x)
-              .attr('y', y)
-              .attr('dy', `${++lineNumber * lineHeight + dy}em`)
-              .text(word);
-          }
-        }
-      });
-    }
-
     // Append the labels at each axis
     axis.append('text')
       .attr('class', 'legend')
@@ -299,7 +268,7 @@ Radar.prototype = {
       .attr('x', (d, i) => rScale(maxValue * settings.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))
       .attr('y', (d, i) => rScale(maxValue * settings.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2))
       .text(d => d)
-      .call(wrap, settings.wrapWidth, settings.labelFactor);
+      .call(charts.wrap, settings.wrapWidth, settings.labelFactor);
 
     // Draw the radar chart blobs
 

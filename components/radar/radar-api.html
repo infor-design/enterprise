@@ -86,13 +86,17 @@ this may be useful to adjust for some labels.
       </tr>
       <tr>
         <td>
-          showCrosslines
+          wrapWidth
         </td>
         <td>
-          boolean
+          number
         </td>
         <td>
-          Set to false to hide the cross line axes.
+          The number of pixels after which a label needs to be
+given a new line. You may want to change this based on label data.
+<ul>
+<li>@property {boolean} showCrosslines Set to false to hide the cross line axes.</li>
+</ul>
 
         </td>
       </tr>
@@ -105,19 +109,6 @@ this may be useful to adjust for some labels.
         </td>
         <td>
           Set to false to hide percent labels.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          wrapWidth
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The number of pixels after which a label needs to be
-given a new line. You may want to change this based on label data.
 
         </td>
       </tr>
@@ -389,6 +380,50 @@ void
   </table>
 
 
+  
   </section>
 
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>rendered
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>svg (array)
+        
+        = The svg object.
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the chart is complete done rendering, for customization.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

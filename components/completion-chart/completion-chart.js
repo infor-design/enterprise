@@ -304,13 +304,12 @@ CompletionChart.prototype = {
 
       html.body.addClass(`chart-completion-target${isAchievment ? ' chart-targeted-achievement' : ''}`);
 
-      html.label = `${'' +
-      '<span class="label">' +
-        '<span class="name">'}${
-        dataset.completed.color && dataset.completed.color === 'error' ? $.createIcon({ icon: 'error', classes: 'icon-error' }) : ''
-      }${fixUndefined(dataset.name.text)}</span>` +
-        `<span class="l-pull-right total value">${totalText}</span>` +
-      '</span>';
+      html.label = `<span class="label">
+        <span class="name">
+          ${dataset.completed.color && dataset.completed.color === 'error' ? $.createIcon({ icon: 'error', classes: 'icon-error' }) : ''}
+          ${fixUndefined(dataset.name.text)}</span>
+        <span class="l-pull-right total value">${totalText}</span>
+      </span>`;
     } else {
       html.body.addClass('chart-completion');
       const name = fixUndefined(dataset.name.text);

@@ -92,6 +92,14 @@ Line.prototype = {
       this.settings.animate = false;
     }
 
+    /**
+    * Fires when the chart is complete done rendering, for customization.
+    * @event rendered
+    * @property {object} event - The jquery event object
+    * @property {array} svg - The svg object.
+    */
+    this.element.trigger('rendered', [this.svg]);
+
     return this;
   },
 

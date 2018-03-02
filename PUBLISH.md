@@ -1,63 +1,31 @@
-# Publish Notes
+# Dev Ops / Publishing Tasks and Notes
 
-## Prerequisites
+## Link the Private npm Registry
 To be able to publish to [npm.infor.com](http://npm.infor.com:4873) you need to add an authorized npm user on your system...
 
 ```bash
 npm adduser --registry http://npm.infor.com:4873 --scope=@infor
-```
-The username is admin and password is Ap5T7IPF2o, use your regular email address.
-
 npm set registry http://registry.npmjs.org
-
-## Checklist
-
-* Pull Down Latest
-
-```bash
-git pull
 ```
 
-* Update the verison number in the package.json. The [semver standard](http://semver.org/) is used for this purpose.
-* Create a git tag named _vX.X.X_, with the correct version number.
+The verdaccio username is admin and password is Ap5T7IPF2o, use your regular email address.
 
-```bash
-git tag 4.0.7
-```
 
-* Publish to [npm.infor.com](http://npm.infor.com:4873)
-
-```bash
-npm publish
-npm publish ./ --tag=develop
-
-```
-
-* Publish Just the Dist folder
-
-Update the info in dist/package.json
-
-```bash
-npm publish dist --tag dev
-npm publish dist --tag release/4.2.6
-npm publish dist
-```
-
-* Check Published Tags
+## Check Published npm Tags
 
 ```bash
 npm info @infor/sohoxi dist-tags
 npm view @infor/sohoxi versions
 ```
 
-* Delete a Tag
+## Delete a npm Tag
 
 ```bash
 npm adduser --registry http://npm.infor.com:4873 --scope=@infor
 npm dist-tag rm @infor/sohoxi develop
 ```
 
-* Merge a fix to a branch
+## Merge a fix to a branch
 
 ```bash
 git checkout release/4.2.0
@@ -65,36 +33,18 @@ git cherry-pick 802b102fda5420a0f714d9d0efa5eff635fe77d9 //from http://git.infor
 git push
 git checkout master
 ```
-# How To Publish with New Process
 
-- Update date and version and release notes link in PUBLISH.MD
-- Push Make release of current version in Jira
-- Run this process: http://wiki.infor.com:8080/confluence/display/HaL/SoHo+XI+Release+Builds
+## Set tools for AWS Publish
 
-Note: This part is not working
-http://bamboo.infor.com/browse/SOHO-NGV-16
-
-- Bump Change Log
-- Make sure new version in Jira
-- Update dev53
-- add label to successful build
-
-# How To Publish to AWS
-
-Only needed for debugging/publishing versions.
-
-- Setup now so you can run `grunt publish` and then `npm run publish-aws`. For some reason the && doesnt work here so need to run both commands.
 - Also install AWS for testing and configuring http://docs.aws.amazon.com/cli/latest/userguide/installing.html
 - Once installed run aws configure to enter the keys in the right spot http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
 
+# Steps for Cutting a Release
 
-# How To Make Release (4.3.4)
-
-## Info
-* Check ChangeLog.md is updated this info is distributed by email
+## Documentation
+* Check ChangeLog.md is updated
 * Create new version in Jira and mark current as released https://jira/plugins/servlet/project-config/SOHO/versions
 * Generate Release Notes http://bit.ly/2w6X8Xw
-* Add version to board
 
 ## Git Operations
 * Edit version in package.json and publish package.json (from 4.3.4-rc to 4.3.4 as an example)
@@ -140,7 +90,7 @@ Only needed for debugging/publishing versions.
 npm info @infor/sohoxi-angular dist-tags
 ```
 
-## Test Out Operations
+## Test Out Stuff
 * Test Npm packages and rebuild if you got it wrong
 ```
 npm info @infor/sohoxi dist-tags
@@ -170,57 +120,3 @@ docker rmi PID
 ```bash
 AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.3.3 -v
 ```
-
-## Notify
-- On Slack, MS Teams, And Dev's by Email ect.
-- Partners: Jeff Shoneman (PMA) <jeff@projectmanagementassociates.com>
-
-# How To Sync SoHo Staging Site to prod
-
-http://craftcms.stackexchange.com/questions/1079/migrating-a-whole-website-between-craft-instances
-
-## Test Sites
-http://usmvvwdev53
-smb://usmvvwdev53/c$
-
-http://soho.infor.com
-smb://usalvwsoho2/c$
-
-Remote desktop usalvwsoho2 or usmvvwdev53
-Login with Infor user/pass, contact Tim if no access
-
-* On local mac pull down branch and run grunt to get the dist folder assets
-* On destination server (remote desktop) open http://soho.infor.com/admin and download backup
-* On source server (remote desktop) copy the following to zip
-  * craft folder except app storage and config/license
-* put file on dropbox
-* On destination server (remote desktop) restore mysql backup
-* Optionally update dest with new js/css to public
-* restore the mysql back with
-  * mysql -u root -p
-  * show databases;
-  * drop database soho2;
-  * create database soho2;
-  * use soho2;
-  * run a
-* Open wwwroot/craft/templates/footer.html with notepad and bump the version to the latest
-* If jquery version changes, then open /inetpub/wwwroot/craft/templates/_layout*.html with notepad and bump jquery version
-* Open /inetpub/wwwroot/craft/templates/_layout*.html with notepad and update all query string version numbers. example: `/stylesheets/site.css?v4.2.1`
-* Change site locale from http://usmvvwdev53 and https://soho.infor.com
-
-# Tricky Permissions Notes
-
-**NOTE** If you copy in a new version of CraftCMS or of the craft dir, then make sure to check that Users group has Full Control access to /inetpub/wwwroot/craft/storage.
-
-Site error: `C:\inetpub\wwwroot\craft\storage isn't writable by PHP. Please fix that.`
-
-To Confirm Permissions:
-
-* Right click /inetpub/wwwroot/craft/storage and select Properties
-* Click Security tab > Advanced
-* Confirm that Users(USALVWSOHO2\Users) has Full Control Access
-* If not then:
-	* Click Change Permissions > Disable inheritance
-	* Double-click on Users(USALVWSOHO2\Users)
-	* Change Basic permissions: to Full Control and close
-	* Visit Site with non-admin user

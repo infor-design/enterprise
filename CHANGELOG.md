@@ -1,22 +1,27 @@
 ## <a name="version-4.4.0">4.4.0</a>
 
-Release Date: TBD
+Release Date: 2018-02-18
 
-Full Jira Release Notes: http://bit.ly/2D6PShK
+Full Jira Release Notes: http://bit.ly/2oCLCRp
 
 ### <a name="version-4.4.0-download-build-assets">Download Build Assets:</a>
 
 Build Server: http://bamboo.infor.com/browse/label/release-440
 Npm: http://npm.infor.com
-Angular Specific Change Log: http://git.infor.com/projects/SOHO/repos/angular-components/browse/CHANGELOG.md
+Angular Components Change Log: http://git.infor.com/projects/SOHO/repos/angular-components/browse/CHANGELOG.md
 
 ### <a name="version-4.4.0-download-build-assets">Demo Site</a>
 
 http://usalvlhlpool1.infor.com/4.4.0/components/
 
 ### <a name="version-4.4.0-key-new-features">Key New Features</a>
-- The Components are now built using Rollup and the internals are ES6 (but there is still a jQuery dependency)
+- We are now ES6. The Components are now built using Rollup and the internals are ES6, there is still a jquery dependency that will be graduall phased out.
 - The d3 version being used was updated from version 3 to version 4.0
+- Added new Radar Chart Component http://bit.ly/2t66XHu
+- Translations - Added 39 new translations and updated all missing translations
+- Added New Multi List Pattern http://bit.ly/2Flm8ln
+- Block Grid  - Added features to select elements (single, multi, mixed)
+- Side By Side Tabs - Added new side by side tabs pattern http://bit.ly/2F7XUr3
 
 ### <a name="version-4.4.0-corrections">Corrections to Your Code</a>
 - Change the d3 script to the new version `d3.v4.js`
@@ -29,15 +34,96 @@ http://usalvlhlpool1.infor.com/4.4.0/components/
 - *Two-Column Layouts* - New "fixed"-style two-column layout sizes have been added that required a semantic change of some existing sizes.  What used to be the `fixed-lg` size (450px sidebar) is now the `fixed-xl` size.  A new `fixed-lg` size has taken its place (400px sidebar).  We've also added `fixed-sm` (275px) and `fixed-mm` (300px) in-between for more granular column sizing options.
 
 ### <a name="version-4.4.0-behavior-changes">Behavior Changes</a>
--
+- Datepicker - When using the time version, the time will now update immediately when selected for better usability.
 
 ### <a name="version-4.4.0-improvements">Improvements</a>
--
+- Accordion - Added support for icons on sub item
+- Busy Indicator - Its now possible to set  border, font and icon color
+- Busy Indicator - Its now possible using the updated() method to set the text while the indicator is running.
+- Charts - Added support for empty messages when there is no data. If you pass in no data it will no longer error and will show an empty icon and message.
+- Datagrid - Made MaximumFractionDigits setting work on percent and decimal filters
+- Datagrid - Added a colspan option so that columns may be spanned. This can take either a column index or a function for doing it dynamically per row.
+- Datagrid - Enhanced TargetedAchievement Formatter to set text on it
+- Datagrid - Added events closefilterrow and openfilterrow
+- Datagrid - Added selectable option to select siblings in tree grid.
+- Datagrid - Added selectable option to not select children in tree grid.
+- Datagrid - Added multiselect filter type option
+- Datagrid - Added ability to set results counts on the toolbar
+- Dropdown - Added type to select on noSearch option
+- Trackdirty - Is now a component with a full lifecycle (destroy ect)
+- Testing - Added new test scaffolding for unit and functional testing. Using Jasmine, Karma, Protractor, Istanbul and browser stack. Working to more full test coverage.
 
 ### <a name="version-4.4.0-bug-fixes">Bug Fixes</a>
--
+- Angular - Updated jQuery types
+- Angular - Added a new Code Block, Custom Component Example
+- Angular Alerts - Added a way access the native element when using the error directive
+- Angular App Menu - Fixed rendering bugs
+- Angular Dropdown - Exposed showSelectAll
+- Angular Popdown - Exposed open method on popdown.
+- Angular Listview - Added beforeActivated event
+- Angular Modal - Fixed a bug that prevent modals from opening from CAP
+- Angular Slider - Fixed errant data on the value input
+- Angular Toolbar - Toolbar now allows you to pass in a SohoPopupMenuOptions object as a `moreMenuSettings` setting.
+- Angular Form - Fixed onValid event which was not getting triggered
+- Angular Toolbar - Fixed bug setting maxVisibleButton to one
+- Accordion - Improved contrast
+- App Menu - Fixed a bug that caused constant toggling at exactly 767 width
+- App Menu - Improved the search option, as it was missing some results.
+- App Menu - Fixed issue closing on Mac safari
+- Composite Form - Fixed touch events that were faulty on mobile, fixed missing tab overflow
+- Colorpicker - Fixed errors initializing on forms
+- Datagrid - Fixed an error exporting without specifying a file name
+- Datagrid - Fixed hide and showColumn to work with grouped headers
+- Datagrid - Fixed wrong rows returned in events when paging indeterminate
+- Datagrid - Fixed a problem opening popups on numeric filter columns
+- Datagrid - Fixed a bug opening popups on invalid date filters
+- Datagrid - Added a way to set the empty message dynamically.
+- Datagrid - Fixed problems with contents filter and an empty item
+- Datagrid - Fixed hover color on tall rows
+- Datagrid - Fixed checkbox rendering on contents filter in Edge
+- Datagrid - Fixed incorrect alignment on RTL columns
+- Datagrid - Fixed incorrectpoint icon in non select mode
+- Datagrid - Fixed bugs filtering with date and time in the filter
+- Datagrid - Fixed bugs in IE11 using context menus
+- Datagrid - Fixed bugs in IE11 using context menus
+- Datagrid - Fixed bugs in filter row that reset the list to contains
+- Datagrid - Fixed bug that caused filter row to clear on resize
+- Datagrid - Fixed tooltip direction on grid tooltips
+- Datagrid - Fixed several bugs that caused column alignment to come out wrong.
+- Datagrid - Added RTL fixes
+- Datepicker - Fixed in correctly shown arabic dates.
+- Datepicker - Fixed issues that caused incorrect dates when using Angular.js directives
+- Datepicker - Fixed invalid change event that fired on blur even if it didnt change.
+- Datepicker - Fixed incorrect height on months in IE11
+- Dropdown - Fixed issue with &quot; in it
+- Expandable Area - Fixed misalignment when nesting / using with fieldsets
+- Fileupload - Fixed misalignment on icon
+- Hierarchy - Fixed lazy loading and click events on mobile
+- Hierarchy - Fixed problem with data on the top node
+- Hierarchy - Fixed alignment issues
+- Lookup - Fixed an error when using single quotes in data-options
+- Lookup - Fixed RTL issues
+- Listview - Fixed a bug that caused links to not work on selectable lists
+- Listview - Allowed favorite to click without selecting
+- Listview - Added ability tio have all four pager buttons and page size selector
+- Popover - Fixed some icon alignment issues
+- Modal - Fixed missing padding when dropdowns are added.
+- Multiselect - Now trigger events when clicking Select All
+- Icons - Updated icon-save-new icon to look better
+- Icons - Added new icons for design mode, wrench and magic wand
+- Icons - Added new way to align icons in labels
+- Timepicker - Fixed a bug that caused timepicker to not be corrected once in error state
+- Timepicker - Made icon change color to red on error, like other components did.
+- Tabs - Fixed missing SVG's on IE11
+- Targeted Achievement Chart - Fixed the high contrast version to pass WCAG AAA
+- Toolbar - Fixed added <p> tags when ommitting audible spans on icon buttons
+- Searchfield - Fixed an error when using arrays for data passed in. Can now be object data or array based data.
+- Slider - Added readonly and destroy methods
+- Swap List - Fixed issue in that it was unusable when starting out empty
+- Validation - Fixed image bleed on the required icon
+- Validation - Fixed layout issue on validation messages
 
-(n Jira Issues Solved this release, Backlog Dev n, Design n, Unresolved n)
+(146 Jira Issues Solved this release, Backlog Dev 382, Design 96, Unresolved 499, Test Coverage 2% - Initial New Tool Added)
 
 ## <a name="version-4.3.4">4.3.4</a>
 
