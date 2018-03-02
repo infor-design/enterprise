@@ -16,7 +16,6 @@ module.exports = function (grunt) {
   const dependencyBuilder = require('./build/dependencybuilder.js');
   const strBanner = require('./build/strbanner.js');
   const controls = require('./build/controls.js');
-  const revision = require('./build/configs/revision.js');
   const run = require('./build/configs/run.js');
 
   let selectedControls = dependencyBuilder(grunt);
@@ -65,7 +64,6 @@ module.exports = function (grunt) {
     cssmin,
     usebanner,
     compress,
-    revision,
     run
   ));
 
@@ -106,7 +104,6 @@ module.exports = function (grunt) {
   grunt.registerTask('build:sass', [
     'sass',
     'cssmin',
-    'revision',
     'usebanner'
   ]);
 
