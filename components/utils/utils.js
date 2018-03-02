@@ -895,4 +895,16 @@ math.isFinite = function isFinite(value) {
   return true;
 };
 
+/**
+ * `Array.ForEach()`-style method that is also friendly to `NodeList` types.
+ * @param {Array|NodeList} array incoming items
+ * @param {function} callback the method to run
+ * @param {object} scope the context in which to run the method
+ */
+utils.forEach = function forEach(array, callback, scope) {
+  for (let i = 0; i < array.length; i++) {
+    callback.call(scope, array[i], i, array); // passes back stuff we need
+  }
+};
+
 export { utils, math };

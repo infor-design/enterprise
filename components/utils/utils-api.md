@@ -32,6 +32,7 @@
 -   [safeSetSelection](#safesetselection)
 -   [mergeSettings](#mergesettings)
 -   [isHTML](#ishtml)
+-   [forEach](#foreach)
 -   [convertToHTMLElement](#converttohtmlelement)
 -   [convertDelayToFPS](#convertdelaytofps)
 -   [convertFPSToDelay](#convertfpstodelay)
@@ -351,6 +352,16 @@ Test if a string is Html or not
 -   `string` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The string to test.
 
 Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if it is html.
+
+## forEach
+
+`Array.ForEach()`-style method that is also friendly to `NodeList` types.
+
+**Parameters**
+
+-   `array` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [NodeList](https://developer.mozilla.org/docs/Web/API/NodeList))** incoming items
+-   `callback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** the method to run
+-   `scope` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** the context in which to run the method
 
 ## convertToHTMLElement
 

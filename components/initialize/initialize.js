@@ -284,7 +284,9 @@ Initialize.prototype = {
 
         ['stepchart', '.step-chart'],
 
-        ['listview']
+        ['listview'],
+
+        ['toolbarflex', '.flex-toolbar']
       ];
 
       // Do initialization for all the simple controls
