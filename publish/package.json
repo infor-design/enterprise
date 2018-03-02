@@ -1,6 +1,6 @@
 {
   "name": "@infor/sohoxi",
-  "version": "4.4.0-rc",
+  "version": "4.4.0",
   "shortName": "sohoxi",
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
@@ -12,7 +12,7 @@
   "scripts": {
   },
   "dependencies": {
-    "d3": "^3.4.6",
+    "d3": "^4.13.0",
     "jquery": "^3.1.1"
   },
   "main": "dist/js/sohoxi.js",

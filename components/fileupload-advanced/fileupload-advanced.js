@@ -34,16 +34,16 @@ const FILEUPLOADADVANCED_DEFAULTS = {
   send: null, // Function to send files to server
 
   // Text strings
-  textDropArea: Locale.translate('TextDropArea'),
-  textDropAreaWithBrowse: Locale.translate('TextDropAreaWithBrowse'),
-  textBtnCancel: Locale.translate('TextBtnCancel'),
-  textBtnCloseError: Locale.translate('TextBtnCloseError'),
-  textBtnRemove: Locale.translate('TextBtnRemove'),
+  textDropArea: null,
+  textDropAreaWithBrowse: null,
+  textBtnCancel: null,
+  textBtnCloseError: null,
+  textBtnRemove: null,
 
   // Error strings
-  errorAllowedTypes: `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorAllowedTypes')}`,
-  errorMaxFileSize: `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorMaxFileSize')}`,
-  errorMaxFilesInProcess: `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorMaxFilesInProcess')}`
+  errorAllowedTypes: null,
+  errorMaxFileSize: null,
+  errorMaxFilesInProcess: null
 };
 
 /**
@@ -78,6 +78,16 @@ FileUploadAdvanced.prototype = {
     const s = this.settings;
     let html;
     let cssClassList = s.isStandalone ? s.standaloneClass : '';
+
+    // Re-evaluate strings
+    s.textDropArea = s.textDropArea || Locale.translate('TextDropArea');
+    s.textDropAreaWithBrowse = s.textDropAreaWithBrowse || Locale.translate('TextDropAreaWithBrowse');
+    s.textBtnCancel = s.textBtnCancel || Locale.translate('TextBtnCancel');
+    s.textBtnCloseError = s.textBtnCloseError || Locale.translate('TextBtnCloseError');
+    s.textBtnRemove = s.textBtnRemove || Locale.translate('TextBtnRemove');
+    s.errorAllowedTypes = s.errorAllowedTypes || `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorAllowedTypes')}`;
+    s.errorMaxFileSize = s.errorMaxFileSize || `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorMaxFileSize')}`;
+    s.errorMaxFilesInProcess = s.errorMaxFilesInProcess || `<em>${Locale.translate('Error')}</em>: ${Locale.translate('ErrorMaxFilesInProcess')}`;
 
     // Disabled
     if (this.element.is('.is-disabled')) {
