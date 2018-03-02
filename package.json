@@ -20,7 +20,7 @@
     "eslint:log": "eslint -c .eslintrc.js components -o eslint.log",
     "eslint:error-only": "eslint -c .eslintrc.js --quiet components",
     "build": "rollup -c",
-    "minify": "uglifyjs --compress --mangle --output dist/js/sohoxi.min.js -- dist/js/sohoxi.js",
+    "minify": "node ./build/minify.js",
     "install-globals": "npm install -g pandoc-bin grunt-cli documentation rollup",
     "watch": "grunt watch",
     "grunt": "grunt",
