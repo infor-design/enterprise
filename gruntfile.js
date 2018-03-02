@@ -95,6 +95,7 @@ module.exports = function (grunt) {
     'exec:build',
     'copy:main'
   ]);
+
   grunt.registerTask('build:js:min', [
     'exec:build',
     'exec:minify',

@@ -12,6 +12,12 @@ import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
 // eslint-disable-next-line
 import { Editors } from '../datagrid/datagrid.editors';
 
+// jQuery components
+import '../emptymessage/emptymessage';
+import '../pager/pager';
+import '../mask/masked-input';
+import '../drag/drag';
+
 // The name of this component.
 const COMPONENT_NAME = 'datagrid';
 
