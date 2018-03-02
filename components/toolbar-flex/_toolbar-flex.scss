@@ -23,13 +23,13 @@
 
     &:not(.favor) {
       overflow-x: hidden;
-      text-overflow: ellipsis;
+      overflow-y: auto;
     }
   }
 
   &.title {
     h1, h2, h3, h4, h5, h6, {
-      display: inline-block;
+      display: inline;
     }
 
     .page-title, .section-title {
@@ -46,10 +46,22 @@
     + .toolbar-section.buttonset {
       text-align: right;
     }
+
+    &:not(.favor) {
+      text-overflow: ellipsis;
+    }
   }
 
   + .toolbar-section.title {
     padding-left: 10px;
+  }
+
+  &.buttonset {
+    padding: 4px;
+
+    [class^="btn"] {
+      margin-right: 0;
+    }
   }
 
   &.search {
@@ -72,6 +84,10 @@ html[dir='rtl'] {
     + .toolbar-section.title {
       padding-left: 0;
       padding-right: 10px;
+    }
+
+    &.buttonset {
+      margin-left: 0;
     }
   }
 
