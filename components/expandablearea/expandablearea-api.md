@@ -2,24 +2,24 @@
 
 ### Table of Contents
 
--   [EXPANDABLEAREA_DEFAULTS](#expandablearea_defaults)
--   [ExpandableArea](#expandablearea)
-    -   [isDisabled](#isdisabled)
-    -   [isExpanded](#isexpanded)
-    -   [toggleExpanded](#toggleexpanded)
-    -   [open](#open)
-    -   [close](#close)
-    -   [disable](#disable)
-    -   [enable](#enable)
-    -   [destroy](#destroy)
-    -   [updated](#updated)
+-   [EXPANDABLEAREA_DEFAULTS][1]
+-   [ExpandableArea][2]
+    -   [isDisabled][3]
+    -   [isExpanded][4]
+    -   [toggleExpanded][5]
+    -   [open][6]
+    -   [close][7]
+    -   [disable][8]
+    -   [enable][9]
+    -   [destroy][10]
+    -   [updated][11]
 
 ## EXPANDABLEAREA_DEFAULTS
 
 **Properties**
 
--   `trigger` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Id of some other button to use as a trigger
--   `bottomBorder` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Change the border to bottom vs top (for some cases)
+-   `trigger` **[string][12]** Id of some other button to use as a trigger
+-   `bottomBorder` **[string][12]** Change the border to bottom vs top (for some cases)
 
 ## ExpandableArea
 
@@ -27,20 +27,20 @@
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][12]** The component element.
+-   `settings` **[string][12]** The component settings.
 
 ### isDisabled
 
 Return if the expandable area is current disable or not.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True or False depending on the disabled status.
+Returns **[boolean][13]** True or False depending on the disabled status.
 
 ### isExpanded
 
 Returns expanded status about the current expandable area
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True of alse depending on current expanded status.
+Returns **[boolean][13]** True of alse depending on current expanded status.
 
 ### toggleExpanded
 
@@ -78,6 +78,34 @@ Update the component and optionally apply new settings.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** the settings to update to.
+-   `settings` **[object][14]** the settings to update to.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The plugin api for chaining.
+Returns **[object][14]** The plugin api for chaining.
+
+[1]: #expandablearea_defaults
+
+[2]: #expandablearea
+
+[3]: #isdisabled
+
+[4]: #isexpanded
+
+[5]: #toggleexpanded
+
+[6]: #open
+
+[7]: #close
+
+[8]: #disable
+
+[9]: #enable
+
+[10]: #destroy
+
+[11]: #updated
+
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

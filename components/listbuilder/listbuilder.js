@@ -4,6 +4,7 @@ import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../listview/listview.jquery';
+import '../arrange/arrange.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'listbuilder';

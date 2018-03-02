@@ -2,26 +2,26 @@
 
 ### Table of Contents
 
--   [LISTBUILDER_DEFAULTS](#listbuilder_defaults)
--   [ListBuilder](#listbuilder)
-    -   [getDataByNode](#getdatabynode)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [selected](#selected)
--   [updated](#updated-1)
--   [beforeadd](#beforeadd)
--   [afteradd](#afteradd)
--   [beforegoup](#beforegoup)
--   [aftergoup](#aftergoup)
--   [beforegodown](#beforegodown)
--   [aftergodown](#aftergodown)
--   [beforeedit](#beforeedit)
--   [entereditmode](#entereditmode)
--   [exiteditmode](#exiteditmode)
--   [beforedelete](#beforedelete)
--   [afterdelete](#afterdelete)
+-   [LISTBUILDER_DEFAULTS][1]
+-   [ListBuilder][2]
+    -   [getDataByNode][3]
+    -   [enable][4]
+    -   [disable][5]
+    -   [updated][6]
+    -   [destroy][7]
+-   [selected][8]
+-   [updated][9]
+-   [beforeadd][10]
+-   [afteradd][11]
+-   [beforegoup][12]
+-   [aftergoup][13]
+-   [beforegodown][14]
+-   [aftergodown][15]
+-   [beforeedit][16]
+-   [entereditmode][17]
+-   [exiteditmode][18]
+-   [beforedelete][19]
+-   [afterdelete][20]
 
 ## LISTBUILDER_DEFAULTS
 
@@ -29,21 +29,21 @@ Default ListBuilder Options
 
 **Parameters**
 
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array of data
--   `handle` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The CSS Class of the handle element
--   `btnAdd` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** "Add" action button (takes a string representing a
+-   `dataset` **[array][21]** Array of data
+-   `handle` **[string][22]** The CSS Class of the handle element
+-   `btnAdd` **([string][22] \| [Array][21]&lt;jQuery>)** "Add" action button (takes a string representing a
      "data-action" attribute, or a jQuery-wrapped element reference).
--   `btnEdit` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** "Edit" action button (takes a string representing a
+-   `btnEdit` **([string][22] \| [Array][21]&lt;jQuery>)** "Edit" action button (takes a string representing a
      "data-action" attribute, or a jQuery-wrapped element reference).
--   `btnDelete` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** "Delete" action button (takes a string representing a
+-   `btnDelete` **([string][22] \| [Array][21]&lt;jQuery>)** "Delete" action button (takes a string representing a
      "data-action" attribute, or a jQuery-wrapped element reference).
--   `btnGoUp` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** "GoUp" action button (takes a string representing a
+-   `btnGoUp` **([string][22] \| [Array][21]&lt;jQuery>)** "GoUp" action button (takes a string representing a
      "data-action" attribute, or a jQuery-wrapped element reference).
--   `btnGoDown` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** "GoDown" action button (takes a string representing a
+-   `btnGoDown` **([string][22] \| [Array][21]&lt;jQuery>)** "GoDown" action button (takes a string representing a
      "data-action" attribute, or a jQuery-wrapped element reference).
--   `template` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** representing HTML content that builds a list
--   `templateNewItem` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** representing HTML content that builds a single list item
--   `templateItemContent` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** representing HTML content that replaces the inner content
+-   `template` **[string][22]** representing HTML content that builds a list
+-   `templateNewItem` **[string][22]** representing HTML content that builds a single list item
+-   `templateItemContent` **[string][22]** representing HTML content that replaces the inner content
      section of each item.
 
 ## ListBuilder
@@ -52,8 +52,8 @@ A list of items with add/remove/delete and sort functionality.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** The base element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings.
+-   `element` **([Array][21]&lt;jQuery> | [HTMLElement][23])** The base element.
+-   `settings` **[object][24]?** incoming settings.
 
 ### getDataByNode
 
@@ -61,9 +61,9 @@ Get data from dataset by node
 
 **Parameters**
 
--   `node` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** The HTML element to get data
+-   `node` **[Array][21]&lt;jQuery>** The HTML element to get data
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** node data
+Returns **[object][24]** node data
 
 ### enable
 
@@ -83,7 +83,7 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings.
+-   `settings` **[object][24]?** incoming settings.
 
 Returns **this** component instance
 
@@ -99,8 +99,8 @@ Fires when a item is selected.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this selected item
+-   `event` **[Object][24]** The jquery event object
+-   `data` **[Object][24]** Data for this selected item
 
 ## updated
 
@@ -108,8 +108,8 @@ Fires when a item is updated.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[Object][24]** The jquery event object
+-   `data` **[Object][24]** Data for this item
 
 ## beforeadd
 
@@ -117,7 +117,7 @@ Fires before add new item.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `event` **[Object][24]** The jquery event object
 
 ## afteradd
 
@@ -125,8 +125,8 @@ Fires after add new item.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this new item
+-   `event` **[Object][24]** The jquery event object
+-   `data` **[Object][24]** Data for this new item
 
 ## beforegoup
 
@@ -134,8 +134,8 @@ Fires before move up item.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[Object][24]** The jquery event object
+-   `data` **[Object][24]** Data for this item
 
 ## aftergoup
 
@@ -143,8 +143,8 @@ Fires after move up item.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[Object][24]** The jquery event object
+-   `data` **[Object][24]** Data for this item
 
 ## beforegodown
 
@@ -152,8 +152,8 @@ Fires before move down item.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[Object][24]** The jquery event object
+-   `data` **[Object][24]** Data for this item
 
 ## aftergodown
 
@@ -161,8 +161,8 @@ Fires after move down item.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[Object][24]** The jquery event object
+-   `data` **[Object][24]** Data for this item
 
 ## beforeedit
 
@@ -170,8 +170,8 @@ Fires before edit item.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[object][24]** The jquery event object
+-   `data` **[object][24]** Data for this item
 
 ## entereditmode
 
@@ -179,8 +179,8 @@ Fires when enter to edit mode.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[object][24]** The jquery event object
+-   `data` **[object][24]** Data for this item
 
 ## exiteditmode
 
@@ -188,8 +188,8 @@ Fires when exited to edit mode.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[object][24]** The jquery event object
+-   `data` **[object][24]** Data for this item
 
 ## beforedelete
 
@@ -197,8 +197,8 @@ Fires before delete item.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[object][24]** The jquery event object
+-   `data` **[object][24]** Data for this item
 
 ## afterdelete
 
@@ -206,5 +206,53 @@ Fires after delete item.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Data for this item
+-   `event` **[object][24]** The jquery event object
+-   `data` **[object][24]** Data for this item
+
+[1]: #listbuilder_defaults
+
+[2]: #listbuilder
+
+[3]: #getdatabynode
+
+[4]: #enable
+
+[5]: #disable
+
+[6]: #updated
+
+[7]: #destroy
+
+[8]: #selected
+
+[9]: #updated-1
+
+[10]: #beforeadd
+
+[11]: #afteradd
+
+[12]: #beforegoup
+
+[13]: #aftergoup
+
+[14]: #beforegodown
+
+[15]: #aftergodown
+
+[16]: #beforeedit
+
+[17]: #entereditmode
+
+[18]: #exiteditmode
+
+[19]: #beforedelete
+
+[20]: #afterdelete
+
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[23]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
