@@ -1,0 +1,45 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Grouped Bar Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-grouped-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [
+      {"data": [{"name":"Aug:17 Week-1", "value":8}, {"name":"Aug:17 Week-2","value":9},{"name":"Aug:17 Week-3","value": 4}],
+      "name":"Logins"},
+      {"data": [{"name":"Aug:17 Week-1","value":7}, {"name":"Aug:17 Week-2","value":14},{"name":"Aug:17 Week-3","value": 6}],
+      "name":"Logouts"},
+      {"data": [{"name":"Aug:17 Week-1","value":6}, {"name":"Aug:17 Week-2","value":11},{"name":"Aug:17 Week-3","value": 8}],
+      "name":"Timeouts"}];
+
+   $('#bar-grouped-example').chart({
+    type: 'bar-grouped',
+    dataset: dataset,
+    xAxis: {
+      formatText: function (d) {
+        var text = d.split(' '),
+          markup = '';
+
+        text.map(function (text, i) {
+          markup += '<tspan x="0" dy="' + ((i+1)*0.50) + 'em">'+ text.replace(':', ' ').replace('-', ' ') +'</tspan>';
+        });
+
+        return markup;
+      }
+    }
+   });
+
+});
+</script>

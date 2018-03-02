@@ -24,6 +24,10 @@ const COMPONENT_NAME = 'bar';
 * @property {object} ticks Settings for the chart ticks.
 * Can set ticks: {format: d3Format, number: n}
 * @property {boolean} showLines Show the in the axis lines or not.
+* @property {number} labelFactor How far out than the outer circle should the labels be placed,
+* this may be useful to adjust for some labels.
+* @property {number} wrapWidth The number of pixels after which a label needs to be
+* given a new line. You may want to change this based on label data.
 * @property {object} emptyMessage An empty message will be displayed when there is no chart data.
 * This accepts an object of the form emptyMessage:
 * `{title: 'No Data Available',
@@ -45,6 +49,8 @@ const BAR_DEFAULTS = {
   useLogScale: false,
   ticks: null,
   showLines: true,
+  labelFactor: 1.27,
+  wrapWidth: 60,
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
@@ -85,6 +91,13 @@ Bar.prototype = {
       this.settings.animate = false;
     }
 
+    /**
+    * Fires when the chart is complete done rendering, for customization.
+    * @event rendered
+    * @property {object} event - The jquery event object
+    * @property {array} svg - The svg object.
+    */
+    this.element.trigger('rendered', [this.svg]);
     return this;
   },
 

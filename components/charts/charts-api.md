@@ -15,6 +15,7 @@
 -   [labelsColide](#labelscolide)
 -   [applyAltLabels](#applyaltlabels)
 -   [triggerContextMenu](#triggercontextmenu)
+-   [wrap](#wrap)
 
 ## tooltipSize
 
@@ -142,3 +143,13 @@ Trigger the right click event.
 -   `container` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The svg container.
 -   `elem` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The element that was right clicked.
 -   `d` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The data object
+
+## wrap
+
+Wraps SVG text <http://bl.ocks.org/mbostock/7555321>
+
+**Parameters**
+
+-   `node` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The svg element.
+-   `width` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The width at which to wrap
+-   `labelFactor` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dom element
