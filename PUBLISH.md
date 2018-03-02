@@ -90,10 +90,12 @@ git checkout master
 ## Test Out Stuff
 * Test Npm packages and rebuild if you got it wrong
 ```
-npm info @infor/sohoxi dist-tags
 npm view @infor/sohoxi versions
-npm info @infor/sohoxi-angular dist-tags
 npm view @infor/sohoxi-angular versions
+
+npm info @infor/sohoxi-angular dist-tags
+npm info @infor/sohoxi dist-tags
+
 ```
 
 * Test New and old links for example:
