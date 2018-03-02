@@ -144,6 +144,8 @@
 -   `sizeColumnsEqually` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true make all the columns equal width
 -   `expandableRow` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true we append an expandable row area without
     the rowTemplate feature being needed.
+-   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to false we skip redraw logic on the resize
+    of the page.
 -   `exportConvertNegative` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true export data with trailing
     negative signs moved in front.
 -   `columnGroups` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of columns to use for grouped column headers.

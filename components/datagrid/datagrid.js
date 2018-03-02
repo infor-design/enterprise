@@ -93,6 +93,8 @@ const COMPONENT_NAME = 'datagrid';
 * @property {boolean} sizeColumnsEqually If true make all the columns equal width
 * @property {boolean} expandableRow If true we append an expandable row area without
 * the rowTemplate feature being needed.
+* @property {boolean} redrawOnResize If set to false we skip redraw logic on the resize
+* of the page.
 * @property {boolean} exportConvertNegative If set to true export data with trailing
 * negative signs moved in front.
 * @property {array} columnGroups An array of columns to use for grouped column headers.
@@ -170,6 +172,7 @@ const DATAGRID_DEFAULTS = {
   disableRowDeactivation: false,
   sizeColumnsEqually: false, // If true make all the columns equal width
   expandableRow: false, // Supply an empty expandable row template
+  redrawOnResize: false, // Run column redraw logic on resize
   exportConvertNegative: false, // Export data with trailing negative signs moved in front
   columnGroups: null, // The columns to use for grouped column headings
   treeGrid: false,
@@ -3929,6 +3932,19 @@ Datagrid.prototype = {
         if (height !== oldHeight) {
           oldHeight = this.scrollTop;
           self.renderRows();
+        }
+      });
+    }
+
+    // Handle Resize - Re do the columns
+    if (self.settings.redrawOnResize) {
+      let oldWidth = $('body')[0].offsetWidth;
+
+      $('body').on('resize.datagrid', function () {
+        const width = this.offsetWidth;
+        if (width !== oldWidth) {
+          oldWidth = width;
+          self.handleResize();
         }
       });
     }
