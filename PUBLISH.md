@@ -102,6 +102,13 @@ npm info @infor/sohoxi dist-tags
 http://usalvlhlpool1.infor.com/4.4.0/components/
 http://usalvlhlpool1.infor.com/4.5.0-rc/components/
 
+You may have to run this for new sites
+
+```
+curl -X POST -u hookandloop:hookandloop http://usalvlhlpool1/swarm/update_config
+```
+
+
 ## Deploy Site Operations
 
 * Delete the old version from pool server usalvlhlpool1
