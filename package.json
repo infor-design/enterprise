@@ -81,7 +81,6 @@
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-eslint": "^20.1.0",
     "grunt-exec": "^3.0.0",
-    "grunt-git-revision": "0.0.1",
     "grunt-mocha-cli": "^4.0.0",
     "grunt-nodemon": "^0.4.2",
     "grunt-sass": "^2.1.0",
@@ -103,10 +102,8 @@
     "moment": "^2.19.2",
     "node-pandoc": "^0.3.0",
     "pandoc": "^0.2.0",
-    "phantomjs": "^2.1.7",
     "protractor": "^5.3.0",
     "protractor-image-comparison": "^1.5.1",
-    "r2": "^2.0.0",
     "requirejs": "^2.2.0",
     "rollup": "^0.55.3",
     "rollup-plugin-babel": "^3.0.2",
@@ -118,6 +115,7 @@
     "uglify-es": "^3.3.9",
     "unoconv": "^0.1.2",
     "vinyl-write": "^0.2.2",
+    "r2": "^2.0.0",
     "webpack": "^3.11.0",
     "webpack-cli": "^2.0.4"
   }

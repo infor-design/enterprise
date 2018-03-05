@@ -2279,11 +2279,6 @@
 │  ├─ publisher: André Fiedler
 │  ├─ email: andre.fiedler@me.com
 │  └─ licenseFile: /Users/tmcconechy/Dev/develop/node_modules/grunt-documentation/LICENSE
-├─ grunt-git-revision@0.0.1
-│  ├─ licenses: MIT
-│  ├─ repository: https://github.com/unfold/grunt-git-revision
-│  ├─ publisher: Simen Brekken
-│  └─ email: simen@unfold.no
 ├─ grunt-jsdoc@2.1.0
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/krampstudio/grunt-jsdoc

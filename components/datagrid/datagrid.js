@@ -13,10 +13,11 @@ import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
 import { Editors } from '../datagrid/datagrid.editors';
 
 // jQuery components
-import '../emptymessage/emptymessage';
-import '../pager/pager';
-import '../mask/masked-input';
-import '../drag/drag';
+import '../utils/animations';
+import '../emptymessage/emptymessage.jquery';
+import '../pager/pager.jquery';
+import '../mask/masked-input.jquery';
+import '../drag/drag.jquery';
 
 // The name of this component.
 const COMPONENT_NAME = 'datagrid';
