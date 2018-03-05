@@ -3,13 +3,6 @@ const r2 = require('r2');
 const username = process.env.BROWSER_STACK_USERNAME;
 const accessKey = process.env.BROWSER_STACK_ACCESS_KEY;
 
-const isElementVisible = (document) => {
-  const ulRect = document.querySelector('ul[role="listbox"]').getBoundingClientRect();
-  const vtRect = document.querySelector('li[data-val="VT"]').getBoundingClientRect();
-  console.log(ulRect);
-  console.log(vtRect);
-};
-
 describe('Dropdown tests', () => {
   it('Should open dropdown list on click', async (done) => {
     try {
