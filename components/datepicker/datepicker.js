@@ -55,7 +55,9 @@ const COMPONENT_NAME = 'datepicker';
  * @property {string} calendarName The name of the calendar to use in instance of
  * multiple calendars. At this time only ar-SA and ar-EG locales have either
  * 'gregorian' or 'islamic-umalqura' as valid values.
- */
+ * @property {useUTC} useUTC If true the dates will use UTC format. This is only partially
+ * implemented https://jira.infor.com/browse/SOHO-3437
+*/
 const DATEPICKER_DEFAULTS = {
   showTime: false,
   timeFormat: undefined,
@@ -83,7 +85,8 @@ const DATEPICKER_DEFAULTS = {
     { name: 'Public Holiday', color: '#76B051', dates: [] },
     { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
   ],
-  calendarName: null
+  calendarName: null,
+  useUTC: false
 };
 
 /**

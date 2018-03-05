@@ -179,7 +179,7 @@ const Locale = {  // eslint-disable-line
 
   /**
   * Formats a Date Object and return it parsed in the current locale.
-  * @param {Date} value  The date to show in the current locale.
+  * @param {date} value  The date to show in the current locale.
   * @param {object} attribs  Additional formatting settings.
   * @returns {string} the formatted date.
   */
@@ -301,6 +301,22 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('nnn', 'den');
 
     return ret.trim();
+  },
+
+  /**
+  * Formats a Date Object and return it in UTC format
+  * @param {date} date The date to show in the current locale.
+  * @returns {date} the utc date
+  */
+  dateToUTC(date) {
+    return new Date(Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds()
+    ));
   },
 
   /**
