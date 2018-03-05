@@ -30,12 +30,11 @@
 
       var customGetColSpan = function (row, cell, value, col, item) {
         // simple example to show dynamic colspan on a row
-        if (row === 2) {
+        if (row === 3) {
           return 2;
-        } else if (row === 4) {
-          return 2;
-        } else if (row === 6) {
-          return 10;
+        }
+        if (row === 0) {
+          return 5;
         }
       };
 

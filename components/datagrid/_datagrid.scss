@@ -470,6 +470,12 @@ $datagrid-short-row-height: 23px;
   }
 }
 
+.full-height .datagrid-body {
+  .empty-message {
+    @include vertical-align();
+  }
+}
+
 // Grid Styling
 .datagrid {
   @include font-size(14);

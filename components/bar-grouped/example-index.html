@@ -63,24 +63,11 @@ $('body').on('initialized', function () {
         name: 'Component C'
       }];
 
-  //$('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset});
-
    $('#bar-grouped-example').chart({
     type: 'bar-grouped',
     dataset: dataset,
     tooltip: 'Tooltip by attribute'
    });
-
-  console.log($('#bar-grouped-example').data());
-
-  // $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
-  //   tooltip: function(response) {
-  //     //Ajax Call or async op
-  //     setTimeout(function () {
-  //       response('<strong>Tooltips Provide <br> Interesting Information</strong>');
-  //     }, 400);
-  //   }
-  // });
 
 });
 </script>

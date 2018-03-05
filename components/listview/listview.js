@@ -300,7 +300,7 @@ ListView.prototype = {
     this.element.trigger('rendered', [dataset]);
 
     // Handle refresh
-    this.element.off('updated').on('updated', (e, settings) => {
+    this.element.off('updated.listview').on('updated.listview', (e, settings) => {
       self.updated(settings);
     });
   },
@@ -931,7 +931,16 @@ ListView.prototype = {
    */
   teardown() {
     $('body').off('resize.listview');
-    this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview').empty();
+    this.element.prev('.listview-header').off('click.listview');
+    if (this.searchfield) {
+      this.searchfield.off('contents-checked.searchable-listview');
+    }
+    this.element.off('change.selectable-listview', '.listview-checkbox input');
+    this.element.off('contextmenu.listview dblclick.listview', 'li, tr');
+    this.element.off('click.listview', 'li, tr, input[checkbox]');
+    this.element.off('keydown.listview', 'li, tr, a');
+    this.element.off('focus.listview', 'li, tbody tr');
+    this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview updated.listview').empty();
     return this;
   },
 
@@ -961,90 +970,94 @@ ListView.prototype = {
     let isFocused = false;
     const isMultiple = self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed';
 
-    this.element.on('focus.listview', 'li, tbody tr', function (evt) {
-      const item = $(this);
+    this.element
+      .off('focus.listview', 'li, tbody tr')
+      .on('focus.listview', 'li, tbody tr', function (evt) {
+        const item = $(this);
 
-      // Ignore favorite clicks
-      if (evt.originalEvent && evt.originalEvent.target && $(evt.originalEvent.target).is('.icon-favorite')) {
-        return;
-      }
+        // Ignore favorite clicks
+        if (evt.originalEvent && evt.originalEvent.target && $(evt.originalEvent.target).is('.icon-favorite')) {
+          return;
+        }
 
-      // First element if disabled
-      if (item.is(':first-child') && item.hasClass('is-disabled')) {
-        const e = $.Event('keydown.listview');
+        // First element if disabled
+        if (item.is(':first-child') && item.hasClass('is-disabled')) {
+          const e = $.Event('keydown.listview');
 
-        e.keyCode = 40; // move down
-        isSelect = true;
-        item.trigger(e);
-      }
+          e.keyCode = 40; // move down
+          isSelect = true;
+          item.trigger(e);
+        }
 
-      if ((!isSelect) &&
-          (!item.hasClass('is-disabled')) &&
-          (self.settings.selectOnFocus) &&
-          (self.settings.selectable !== 'multiple') &&
-          (self.settings.selectable !== 'mixed')) {
-        self.select(item);
-        isSelect = true;
-        isFocused = true;
-      }
-    });
+        if ((!isSelect) &&
+            (!item.hasClass('is-disabled')) &&
+            (self.settings.selectOnFocus) &&
+            (self.settings.selectable !== 'multiple') &&
+            (self.settings.selectable !== 'mixed')) {
+          self.select(item);
+          isSelect = true;
+          isFocused = true;
+        }
+      });
 
     // Keyboard
-    this.element.on('keydown.listview', 'li, tr, a', function (e) {
-      const elem = $(this);
-      const item = elem.is('a') ? elem.closest('li') : $(this);
-      const list = item.is('a') ? item.closest('ul') : item.parent();
-      const key = e.keyCode || e.charCode || 0;
-      const metaKey = e.metaKey;
+    this.element
+      .off('keydown.listview', 'li, tr, a')
+      .on('keydown.listview', 'li, tr, a', function (e) {
+        const elem = $(this);
+        const item = elem.is('a') ? elem.closest('li') : $(this);
+        const list = item.is('a') ? item.closest('ul') : item.parent();
+        const key = e.keyCode || e.charCode || 0;
+        const metaKey = e.metaKey;
 
-      if (item.index() === 0 && e.keyCode === 38) {
-        return false;
-      }
-
-      if ((key === 40 || key === 38) && !metaKey) { // move down or up
-        const newItem = e.keyCode === 40 ? item.nextAll(':not(.is-disabled):visible:first') : item.prevAll(':not(.is-disabled):visible:first');
-
-        if (newItem.length && ($(e.target).is(item) || e.shiftKey || elem.is('a'))) {
-          self.focus(newItem);
+        if (item.index() === 0 && e.keyCode === 38) {
+          return false;
         }
-        e.preventDefault();
-        e.stopPropagation(); // prevent container from scrolling
-      }
 
-      if (key === 35 || (key === 40 && metaKey)) { // end
-        const last = list.children().last();
-        self.focus(last);
-        e.stopPropagation();
-        return false;
-      }
+        if ((key === 40 || key === 38) && !metaKey) { // move down or up
+          const newItem = e.keyCode === 40 ? item.nextAll(':not(.is-disabled):visible:first') : item.prevAll(':not(.is-disabled):visible:first');
 
-      if (key === 36 || (key === 38 && metaKey)) { // home
-        const first = list.children().first();
-        self.focus(first);
-        e.stopPropagation();
-        return false;
-      }
-
-      if (key === 32) { // Space to toggle selection
-        if ($(e.target).is(item)) {
-          if (isMultiple && e.shiftKey) {
-            self.selectItemsBetweenIndexes([self.lastSelectedItem, item.index()]);
-          } else {
-            self.select(item);
+          if (newItem.length && ($(e.target).is(item) || e.shiftKey || elem.is('a'))) {
+            self.focus(newItem);
           }
           e.preventDefault();
+          e.stopPropagation(); // prevent container from scrolling
         }
-      }
 
-      // If multiSelect is enabled, press Control+A to toggle select all items
-      if (isMultiple && ((e.ctrlKey || e.metaKey) && key === 65)) {
-        self.toggleAll();
-        self.focus(item);
-        e.preventDefault();
-      }
+        if (key === 35 || (key === 40 && metaKey)) { // end
+          const last = list.children().last();
+          self.focus(last);
+          e.stopPropagation();
+          return false;
+        }
 
-      return true;
-    });
+        if (key === 36 || (key === 38 && metaKey)) { // home
+          const first = list.children().first();
+          self.focus(first);
+          e.stopPropagation();
+          return false;
+        }
+
+        if (key === 32) { // Space to toggle selection
+          if ($(e.target).is(item)) {
+            if (isMultiple && e.shiftKey) {
+              self.selectItemsBetweenIndexes([self.lastSelectedItem, item.index()]);
+            } else {
+              self.select(item);
+            }
+            e.preventDefault();
+          }
+        }
+
+        // If multiSelect is enabled, press Control+A to toggle select all items
+        if (isMultiple && ((e.ctrlKey || e.metaKey) && key === 65)) {
+          self.toggleAll();
+          self.focus(item);
+          e.preventDefault();
+        }
+
+        return true;
+      });
 
     // Selection View Click/Touch
     if (this.settings.selectable) {
@@ -1143,42 +1156,48 @@ ListView.prototype = {
     }
 
     if (this.settings.selectable === 'multiple' || this.settings.selectable === 'mixed') {
-      this.element.on('change.selectable-listview', '.listview-checkbox input', function (e) {
-        $(this).parent().trigger('click');
-        e.stopPropagation();
-      });
+      this.element
+        .off('change.selectable-listview', '.listview-checkbox input')
+        .on('change.selectable-listview', '.listview-checkbox input', function (e) {
+          $(this).parent().trigger('click');
+          e.stopPropagation();
+        });
     }
 
     // For use with Searchfield
     if (this.settings.searchable) {
-      this.searchfield.on('contents-checked.searchable-listview', function (e) {
-        self.handleSearch(e, $(this));
-      });
+      this.searchfield
+        .off('contents-checked.searchable-listview')
+        .on('contents-checked.searchable-listview', function (e) {
+          self.handleSearch(e, $(this));
+        });
     }
 
     // If used with a Pager Control, listen for the end of the page and scroll
     // the Listview to the top
     if (this.element.data('pager')) {
-      this.element.on('afterpaging.listview', () => {
+      this.element.off('afterpaging.listview').on('afterpaging.listview', () => {
         self.element.scrollTop(0);
       });
     }
 
-    $('body').on('resize.listview', () => {
+    $('body').off('resize.listview').on('resize.listview', () => {
       self.handleResize();
     });
 
     // Animate open and Closed from the header
-    self.element.prev('.listview-header').on('click', function () {
-      const icon = $(this).find('.plus-minus');
-      if (icon.hasClass('active')) {
-        icon.removeClass('active');
-        self.element.animateClosed();
-      } else {
-        icon.addClass('active');
-        self.element.animateOpen();
-      }
-    });
+    self.element.prev('.listview-header')
+      .off('click.listview')
+      .on('click.listview', function () {
+        const icon = $(this).find('.plus-minus');
+        if (icon.hasClass('active')) {
+          icon.removeClass('active');
+          self.element.animateClosed();
+        } else {
+          icon.addClass('active');
+          self.element.animateOpen();
+        }
+      });
   }
 };
 

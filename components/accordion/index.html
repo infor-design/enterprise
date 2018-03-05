@@ -223,6 +223,10 @@ void
                   <span>header (object) = The jquery header element.
  </span>
                 
+                  <span>dontCollapseHeaders (boolean) = if defined, will not collapse any open accordion headers
+(generally used while filtering)
+ </span>
+                
           
         </td>
         <td>
@@ -230,8 +234,9 @@ void
 
         </td>
         <td>
-          
-void
+          resolved on the completion of an accoridon pane's
+collapse animation (or immediately, if animation is disabled).
+$.Deferred
         </td>
       </tr>
       <tr>
@@ -244,8 +249,9 @@ void
 
         </td>
         <td>
-          
-void
+          resolved when all the accordion panes being expanded
+complete their animations.
+$.Deferred
         </td>
       </tr>
       <tr>
@@ -263,8 +269,9 @@ void
 
         </td>
         <td>
-          
-void
+          resolved on the completion of an accoridon pane's
+collapse animation (or immediately, if animation is disabled).
+$.Deferred
         </td>
       </tr>
       <tr>
@@ -279,6 +286,9 @@ void
         <td>
           
 void
+          resolved when all the accordion panes being collapsed
+complete their animations.
+$.Deferred
         </td>
       </tr>
       <tr>
@@ -724,26 +734,6 @@ This indicates the link has been followed.
   <td>aftercollapse
   </td>
   <td>
-  
-    
-      <div>
-        <span>e ()
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>anchor (array)
-        
-        = The anchor tag in an array.
-
-        </span>
-        
-      </div>
-    
   
   </td>
   <td>Fires after a pane is collapsed.

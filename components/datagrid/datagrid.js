@@ -5,11 +5,19 @@ import { excel } from '../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
 import { debounce } from '../utils/debounced-resize';
+import { stringUtils } from '../utils/string';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
 // eslint-disable-next-line
 import { Editors } from '../datagrid/datagrid.editors';
+
+// jQuery components
+import '../utils/animations';
+import '../emptymessage/emptymessage.jquery';
+import '../pager/pager.jquery';
+import '../mask/masked-input.jquery';
+import '../drag/drag.jquery';
 
 // The name of this component.
 const COMPONENT_NAME = 'datagrid';
@@ -51,6 +59,9 @@ const COMPONENT_NAME = 'datagrid';
 * @property {object} groupable  Controls fields to use for data grouping Use Data
 * grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list',
 * aggregatorOptions: ['unitName1']}
+* @property {boolean} spacerColumn if true and the grid is not wide enough to fit the last column
+* will get filled with an empty spacer column.
+* @property {boolean} stretchColumn If 'last' the last column will stretch we will add more options.
 * @property {boolean} clickToSelect Controls if using a selection mode if you can
 * click the rows to select
 * @property {object} toolbar  Toggles and appends toolbar features fx..
@@ -139,6 +150,8 @@ const DATAGRID_DEFAULTS = {
   selectable: false, // false, 'single' or 'multiple' or 'siblings'
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
   groupable: null,
+  spacerColumn: false,
+  stretchColumn: 'last',
   clickToSelect: true,
   toolbar: false,
   initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
@@ -166,7 +179,7 @@ const DATAGRID_DEFAULTS = {
   disableRowDeactivation: false,
   sizeColumnsEqually: false, // If true make all the columns equal width
   expandableRow: false, // Supply an empty expandable row template
-  redrawOnResize: true, // Run column redraw logic on resize
+  redrawOnResize: false, // Run column redraw logic on resize
   exportConvertNegative: false, // Export data with trailing negative signs moved in front
   columnGroups: null, // The columns to use for grouped column headings
   treeGrid: false,
@@ -503,7 +516,7 @@ Datagrid.prototype = {
   * Trigger the source method to call to the backend on demand.
   *
   * @param {object} pagerType The pager info object with information like activePage ect.
-  * @param {function} callback Thecall back functions
+  * @param {function} callback The call back functions
   */
   triggerSource(pagerType, callback) {
     this.pager.pagerInfo = this.pager.pagerInfo || {};
@@ -659,6 +672,7 @@ Datagrid.prototype = {
 
   /**
   * Gets an if for the column group used for grouped headers.
+  * @private
   * @param {object} idx The index of the column group
   * @returns {string} The name of the column group
   */
@@ -667,6 +681,9 @@ Datagrid.prototype = {
     const colGroups = this.settings.columnGroups;
 
     for (let l = 0; l < colGroups.length; l++) {
+      if (colGroups[l].hidden) {
+        continue;
+      }
       total += colGroups[l].colspan;
 
       if (total >= idx) {
@@ -675,6 +692,147 @@ Datagrid.prototype = {
     }
 
     return '';
+  },
+
+  /**
+  * Gets an if for the column group used for grouped headers.
+  * @private
+  * @param {number} idx The index of the column group
+  * @param {boolean} show Did we show or hide the col.
+  */
+  updateColumnGroup(idx, show) {
+    const colGroups = this.settings.columnGroups;
+    if (!this.originalColGroups) {
+      this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
+    }
+
+    if (!colGroups) {
+      return;
+    }
+
+    let cnt = 0;
+    let lastSpanIdx = -1;
+    let skipNext = 0;
+
+    // Update the data object
+    for (let i = 0; i < colGroups.length; i++) {
+      if (skipNext > 0) {
+        if (idx === i && !show) {
+          colGroups[lastSpanIdx].colspan -= 1;
+          this.settings.columns[i].isSpanned = true;
+        }
+        skipNext -= 1;
+      }
+
+      if (idx === cnt || idx === 1 && i === 1) {
+        if (colGroups[i].colspan === 1 && !show) {
+          colGroups[i].hidden = true;
+        }
+
+        if (colGroups[i].colspan > 1 && !show) {
+          this.settings.columns[i].isSpanned = true;
+          colGroups[i].colspan -= 1;
+        }
+
+        // have to re-render here
+        if (this.settings.columns[i].isSpanned && show) {
+          this.settings.columnGroups = JSON.parse(JSON.stringify(this.originalColGroups));
+          this.render();
+        }
+
+        if (colGroups[i].colspan === 1 && show) {
+          delete colGroups[i].hidden;
+        }
+
+        if (colGroups[i].colspan > 1 && show) {
+          colGroups[i].colspan += 1;
+        }
+      }
+      cnt += colGroups[i].colspan;
+
+      if (colGroups[i].colspan > 1) {
+        lastSpanIdx = i;
+        skipNext = colGroups[i].colspan - 1;
+      }
+    }
+
+    // Update the dom
+    if (!this.colGroups) {
+      return;
+    }
+
+    const headGroups = this.colGroups.find('th').toArray();
+    cnt = 0;
+    lastSpanIdx = 0;
+    skipNext = 0;
+    for (let i = 0; i < headGroups.length; i++) {
+      const elem = headGroups[i];
+      const colspan = parseInt(elem.getAttribute('colspan'), 10);
+      cnt += colspan;
+
+      if (skipNext > 0) {
+        if (idx === i && !show) {
+          headGroups[lastSpanIdx].setAttribute('colspan', headGroups[lastSpanIdx].getAttribute('colspan') - 1);
+        }
+        skipNext -= 1;
+      }
+
+      if (idx === cnt - colspan || idx === 1 && i === 1) {
+        if (colspan === 1 && !show) {
+          elem.classList.add('hidden');
+        }
+
+        if (colspan > 1 && !show) {
+          elem.setAttribute('colspan', colspan - 1);
+        }
+
+        if (colspan === 1 && show) {
+          elem.classList.remove('hidden');
+        }
+
+        if (colspan > 1 && show) {
+          elem.setAttribute('colspan', colspan + 1);
+        }
+      }
+
+      if (colspan > 1) {
+        lastSpanIdx = i;
+        skipNext = colspan - 1;
+      }
+    }
+
+    this.hideShowColumnGroups(show);
+  },
+
+  /**
+   * Test if the group header should be closed and close / open it.
+   * @param {boolean} show Hide and show the column group if it should be.
+   */
+  hideShowColumnGroups(show) {
+    if (!this.colGroups) {
+      return;
+    }
+
+    const headGroups = this.colGroups.find('th').toArray();
+    const allEmpty = $(headGroups).filter(':not(.hidden)').text() === '';
+
+    let cnt = 0;
+    for (let i = 0; i < headGroups.length; i++) {
+      const elem = headGroups[i];
+      const colspan = parseInt(elem.getAttribute('colspan'), 10);
+      cnt += colspan;
+
+      // Find up to the index
+      if (i === headGroups.length - 1 && headGroups.length === cnt && !show && allEmpty) {
+        this.colGroups.addClass('hidden');
+        this.element.removeClass('has-group-headers');
+      }
+
+      if (i === headGroups.length - 1 && headGroups.length === cnt && show && !allEmpty) {
+        this.colGroups.removeClass('hidden');
+        this.element.addClass('has-group-headers');
+      }
+    }
   },
 
   /**
@@ -704,7 +862,6 @@ Datagrid.prototype = {
     let headerColGroup = '<colgroup>';
     let cols = '';
     let uniqueId;
-    let hideNext = 0;
 
     // Handle Nested Headers
     const colGroups = this.settings.columnGroups;
@@ -716,10 +873,11 @@ Datagrid.prototype = {
       headerRow += '<tr role="row" class="datagrid-header-groups">';
 
       for (let k = 0; k < colGroups.length; k++) {
+        const hiddenStr = colGroups[k].hidden || this.settings.columns[k].hidden ? 'class="hidden"' : '';
         total += parseInt(colGroups[k].colspan, 10);
         uniqueId = self.uniqueId(`-header-group-${k}`);
 
-        headerRow += `<th colspan="${colGroups[k].colspan}" id="${uniqueId}"><div class="datagrid-column-wrapper "><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+        headerRow += `<th ${hiddenStr}colspan="${colGroups[k].colspan}" id="${uniqueId}"><div class="datagrid-column-wrapper "><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
       }
 
       if (total < this.visibleColumns().length) {
@@ -739,18 +897,15 @@ Datagrid.prototype = {
       const isSelection = column.id === 'selectionCheckbox';
       const alignmentClass = (column.align === 'center' ? ` l-${column.align}-text` : '');// Disable right align for now as this was acting wierd
 
-      if (hideNext <= 0) {
-        headerRow += `<th scope="col" role="columnheader" class="${isSortable ? 'is-sortable' : ''}${isResizable ? ' is-resizable' : ''
-        }${column.hidden ? ' is-hidden' : ''}${column.filterType ? ' is-filterable' : ''
-        }${alignmentClass || ''}"${column.colspan ? ` colspan="${column.colspan}"` : ''
-        } id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''
-        }${column.headerTooltip ? `title="${column.headerTooltip}"` : ''
-        }${column.reorderable === false ? ' data-reorder="false"' : ''
-        }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
+      headerRow += `<th scope="col" role="columnheader" class="${isSortable ? 'is-sortable' : ''}${isResizable ? ' is-resizable' : ''
+      }${column.hidden ? ' is-hidden' : ''}${column.filterType ? ' is-filterable' : ''
+      }${alignmentClass || ''}" id="${id}" data-column-id="${column.id}"${column.field ? ` data-field="${column.field}"` : ''
+      }${column.headerTooltip ? `title="${column.headerTooltip}"` : ''
+      }${column.reorderable === false ? ' data-reorder="false"' : ''
+      }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
 
-        headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}</span>`;
-        cols += `<col${this.calculateColumnWidth(column, j)}${column.colspan ? ` span="${column.colspan}"` : ''}${column.hidden ? ' class="is-hidden"' : ''}>`;
-      }
+      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}</span>`;
+      cols += `<col${this.calculateColumnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -766,14 +921,6 @@ Datagrid.prototype = {
           `<span class="sort-desc">${$.createIcon({ icon: 'dropdown' })}</div>`;
       }
 
-      // Skip the next column when using colspan
-      if (hideNext > 0) {
-        hideNext--;
-      }
-
-      if (column.colspan) {
-        hideNext = column.colspan - 1;
-      }
       headerRow += `</div>${self.filterRowHtml(column, j)}</th>`;
     }
     headerRow += '</tr>';
@@ -789,6 +936,11 @@ Datagrid.prototype = {
     } else {
       self.headerRow.html(headerRow);
       self.headerColGroup.html(cols);
+    }
+
+    if (colGroups && self.headerRow) {
+      self.colGroups = self.headerRow.find('.datagrid-header-groups');
+      self.hideShowColumnGroups();
     }
 
     self.syncHeaderCheckbox(this.settings.dataset);
@@ -887,9 +1039,18 @@ Datagrid.prototype = {
             integerDefaults = {
               patternOptions: { decimalLimit: col.numberFormat.maximumFractionDigits }
             };
+
+            col.maskOptions = utils.extend(
+              true,
+              {},
+              integerDefaults,
+              decimalDefaults,
+              col.maskOptions
+            );
+          } else {
+            col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
           }
 
-          col.maskOptions = utils.extend(true, {}, decimalDefaults, col.maskOptions);
           filterMarkup += `<input${col.filterDisabled ? ' disabled' : ''} type="text" id="${filterId}" />`;
           break;
         }
@@ -2264,7 +2425,6 @@ Datagrid.prototype = {
     const activePage = self.pager ? self.pager.activePage : 1;
     const pagesize = self.settings.pagesize;
     let rowHtml = '';
-    let spanNext = 0;
     let d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0;
     let depth = null;
     let d2;
@@ -2349,11 +2509,6 @@ Datagrid.prototype = {
         rowData,
         self
       );
-
-      if (skipColumns > 0) {
-        skipColumns -= skipColumns;
-        continue;
-      }
 
       if (formatted.indexOf('<span class="is-readonly">') === 0) {
         col.readonly = true;
@@ -2444,15 +2599,16 @@ Datagrid.prototype = {
       if (this.recordCount === 0 || this.recordCount - ((activePage - 1) * pagesize) === 0) {
         colWidth = this.calculateColumnWidth(col, j);
 
-        self.bodyColGroupHtml += spanNext > 0 ? '' : `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}${col.colspan ? ` span="${col.colspan}"` : ''}></col>`;
+        self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
 
-        if (spanNext > 0) {
-          spanNext--;
-        }
         if (col.colspan) {
           this.hasColSpans = true;
-          spanNext = col.colspan - 1;
         }
+      }
+
+      if (skipColumns > 0) {
+        skipColumns -= 1;
+        continue;
       }
 
       // Run an optional function to calculate a colspan
@@ -2559,7 +2715,7 @@ Datagrid.prototype = {
       // Get formatted value (without html) so we have accurate string that
       // will display for this cell
       val = self.formatValue(columnDef.formatter, i, null, val, columnDef, row, self);
-      val = val.replace(/<\/?[^>]+(>|$)/g, '');
+      val = stringUtils.stripHTML(val);
 
       len = val.toString().length;
 
@@ -2567,7 +2723,7 @@ Datagrid.prototype = {
         for (let k = 0; k < row.values.length; k++) {
           let groupVal = this.fieldValue(row.values[k], columnDef.field);
           groupVal = self.formatValue(columnDef.formatter, i, null, groupVal, columnDef, row, self);
-          groupVal = groupVal.replace(/<\/?[^>]+(>|$)/g, '');
+          groupVal = stringUtils.stripHTML(groupVal);
 
           len = groupVal.toString().length;
           if (len > max) {
@@ -2775,10 +2931,14 @@ Datagrid.prototype = {
       width: (this.widthPercent ? colPercWidth : colWidth),
       widthPercent: this.widthPercent
     };
-    this.totalWidth += col.hidden || lastColumn ? 0 : colWidth;
+
+    if (col.id !== 'spacerColumn') {
+      this.totalWidth += col.hidden || lastColumn ? 0 : colWidth;
+    }
 
     // For the last column stretch it if it doesnt fit the area
-    if (lastColumn && this.isInitialRender) {
+    if (lastColumn && this.isInitialRender && this.settings.stretchColumn === 'last'
+      && !this.settings.spacerColumn) {
       const diff = this.elemWidth - this.totalWidth;
 
       if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
@@ -2787,6 +2947,23 @@ Datagrid.prototype = {
         this.totalWidth = this.elemWidth - 2;
       }
 
+      if (this.widthPercent) {
+        this.table.css('width', '100%');
+      } else if (!isNaN(this.totalWidth)) {
+        this.table.css('width', this.totalWidth);
+      }
+      this.isInitialRender = false;
+    }
+
+    if (lastColumn && this.isInitialRender && this.settings.spacerColumn) {
+      const diff = this.elemWidth - this.totalWidth;
+
+      if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
+        this.settings.columns.push({ id: 'spacerColumn', name: '', field: '', width: diff - 2 - colWidth });
+      }
+    }
+
+    if (lastColumn && this.settings.spacerColumn && this.isInitialRender) {
       if (this.widthPercent) {
         this.table.css('width', '100%');
       } else if (!isNaN(this.totalWidth)) {
@@ -3258,9 +3435,12 @@ Datagrid.prototype = {
     }
 
     this.settings.columns[idx].hidden = true;
-    this.headerRow.find('th').eq(idx).addClass('is-hidden');
+    this.headerNodes().eq(idx).addClass('is-hidden');
     this.tableBody.find(`td:nth-child(${idx + 1})`).addClass('is-hidden');
     this.headerColGroup.find('col').eq(idx).addClass('is-hidden');
+
+    // Shrink or remove colgroups
+    this.updateColumnGroup(idx, false);
 
     if (this.bodyColGroup) {
       this.bodyColGroup.find('col').eq(idx).addClass('is-hidden');
@@ -3296,12 +3476,16 @@ Datagrid.prototype = {
     }
 
     this.settings.columns[idx].hidden = false;
-    this.headerRow.find('th').eq(idx).removeClass('is-hidden');
+    this.headerNodes().eq(idx).removeClass('is-hidden');
     this.tableBody.find(`td:nth-child(${idx + 1})`).removeClass('is-hidden');
     this.headerColGroup.find('col').eq(idx).removeClass('is-hidden');
+
     if (this.bodyColGroup) {
       this.bodyColGroup.find('col').eq(idx).removeClass('is-hidden');
     }
+
+    // Shrink or add colgroups
+    this.updateColumnGroup(idx, true);
 
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
@@ -3794,8 +3978,8 @@ Datagrid.prototype = {
 
     // Prevent redirects
     this.table
-      .off('mouseup.datagrid touchstart.datagrid')
-      .on('mouseup.datagrid touchstart.datagrid', 'a', (e) => {
+      .off('click.datagrid')
+      .on('click.datagrid', 'a', (e) => {
         e.preventDefault();
       });
 
@@ -3816,7 +4000,7 @@ Datagrid.prototype = {
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
         rowNode = $(this).closest('tr');
-        dataRowIdx = self.dataRowIndex(rowNode);
+        dataRowIdx = self.visualRowIndex(rowNode);
 
         self.toggleRowDetail(dataRowIdx);
         self.toggleGroupChildren(rowNode);
@@ -4515,7 +4699,7 @@ Datagrid.prototype = {
   */
   isNodeSelected(node) {
     // As of 4.3.3, return the rows that have _selected = true
-    return node._selected === true;
+    return node ? node._selected === true : false;
   },
 
   /**

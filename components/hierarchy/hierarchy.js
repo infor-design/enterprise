@@ -1,6 +1,9 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
+// Jquery Imports
+import '../utils/animations';
+
 // The name of this component
 const COMPONENT_NAME = 'hierarchy';
 

@@ -8,9 +8,27 @@ import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
-// Default Settings
 const COMPONENT_NAME = 'editor';
 
+/**
+* @namespace
+* @property {string} buttons An array with all the visible buttons in it.
+* @property {string} excludeButtons An array with all the buttons in it to excloude
+* @property {string} firstHeader  Allows you to set if the first header inserted is
+ a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
+* @property {boolean} secondHeader  Allows you to set if the second header inserted
+ is a h3 or h4 element. You should set this to match the structure of the parent
+  page for accessibility
+* @property {string} pasteAsPlainText  If true, when you paste into the editor
+ the element will be unformatted to plain text.
+* @property {string} anchor  An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
+* the url is the default url to display. Class should normally stay hyperlink
+ and represents the styling class. target can be 'New window' or 'Same window',
+ isClickable make the links appear clickable in the editor, showIsClickable will
+show a checkbox to allow the user to make clickable links in the link popup.
+* @param {string} image  Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
+* @param {function} onLinkClick Call back for clicking on links to control link behavior.
+*/
 const EDITOR_DEFAULTS = {
   buttons: {
     editor: [
@@ -38,7 +56,8 @@ const EDITOR_DEFAULTS = {
   pasteAsPlainText: false,
   // anchor > target: 'Same window'|'New window'| any string value
   anchor: { url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false },
-  image: { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' }
+  image: { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' },
+  onLinkClick: null
 };
 
 /**
@@ -47,19 +66,6 @@ const EDITOR_DEFAULTS = {
 * @class Editor
 * @param {String} element The component element.
 * @param {String} settings The component settings.
-* @param {string} firstHeader  Allows you to set if the first header inserted is
- a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
-* @param {boolean} secondHeader  Allows you to set if the second header inserted
- is a h3 or h4 element. You should set this to match the structure of the parent
-  page for accessibility
-* @param {string} pasteAsPlainText  If true, when you paste into the editor
- the element will be unformatted to plain text.
-* @param {string} anchor  An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
-* the url is the default url to display. Class should normally stay hyperlink
- and represents the styling class. target can be 'New window' or 'Same window',
- isClickable make the links appear clickable in the editor, showIsClickable will
-show a checkbox to allow the user to make clickable links in the link popup.
-* @param {string} image  Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
 */
 function Editor(element, settings) {
   this.settings = utils.mergeSettings(element, settings, EDITOR_DEFAULTS);
@@ -1560,6 +1566,7 @@ Editor.prototype = {
   bindWindowActions() {
     const editorContainer = this.element.closest('.editor-container');
     const currentElement = this.getCurrentElement();
+    const self = this;
 
     this.element
     // Work around for Firefox with using keys was not focusing on first child in editor
@@ -1605,6 +1612,15 @@ Editor.prototype = {
         editorContainer.parent().find('.editor-toolbar').removeClass('error');
         editorContainer.parent().find('.editor-source').removeClass('error');
       });
+
+    if (self.settings.onLinkClick) {
+      editorContainer.on('click.editorlinks', 'a', (e) => {
+        self.settings.onLinkClick(e, this);
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        e.stopPropagation();
+      });
+    }
 
     // Attach Label
     const label = this.element.prevAll('.label');
@@ -1966,7 +1982,7 @@ Editor.prototype = {
     this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
     this.element.prev('.label').off('click.editor');
 
-    this.element.closest('.editor-container').off('focus.editor blur.editor');
+    this.element.closest('.editor-container').off('focus.editor blur.editor click.editorlinks');
 
     let state = this.colorpickerButtonState('foreColor');
     let cpBtn = state.cpBtn;

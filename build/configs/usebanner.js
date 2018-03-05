@@ -16,7 +16,8 @@ module.exports = {
           'dist/css/light-theme.css',
           'dist/css/light-theme.min.css',
           'dist/css/css-only.css',
-          'dist/css/css-only.min.css'
+          'dist/css/css-only.min.css',
+          'dist/js/sohoxi.min.js'
         ]
       }
     }

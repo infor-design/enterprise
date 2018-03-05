@@ -41,6 +41,8 @@ Component Default Settings
 -   `favorButtonset` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If "resizeContainers" is true, setting this to
      true will try to display as many buttons as possible while resizing the toolbar.
      Setting to false attempts to show the entire title instead.
+-   `moreMenuSettings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** If defined, provides a toolbar-level method of
+     defining settings that will be applied to the More Actions button's popupmenu instance.
 -   `noSearchfieldReinvoke` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, does not manage the lifecycle
      of an internal toolbarsearchfield automatically.  Allows an external controller
      to do it instead.

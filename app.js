@@ -90,6 +90,12 @@ const optionHandler = function (req, res, next) {
     res.opts.delay = req.query.delay;
   }
 
+  // Uses the minified version of the Soho library instead of the uncompressed version
+  if (req.query.minify && req.query.minify.length > 0) {
+    res.opts.minify = true;
+    console.log(`Using the minified version of "sohoxi.js"`);
+  }
+
   next();
 };
 

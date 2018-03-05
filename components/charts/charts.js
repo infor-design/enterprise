@@ -114,7 +114,7 @@ charts.colorRange = ['#2578A9', '#8ED1C6', '#C7B4DB', '#5C5C5C', '#F2BC41', '#76
  * The colors as an array for placement
  * @type {Array}
  */
-charts.colors = d3 ? d3.scaleOrdinal().range(charts.colorRange) : [];
+charts.colors = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorRange) : [];
 
 /**
  * Calculate and return the correct color to use. Fx
@@ -745,6 +745,59 @@ charts.triggerContextMenu = function (container, elem, d) {
   e.pageX = d3.event.pageX;
   e.pageY = d3.event.pageY;
   $(container).trigger(e, [elem, d]);
+};
+
+/**
+ * Wraps SVG text http://bl.ocks.org/mbostock/7555321
+ * @param {object} node  The svg element.
+ * @param {number}  width The width at which to wrap
+ * @param {object} labelFactor The dom element
+ */
+charts.wrap = function (node, width, labelFactor) {
+  if (!labelFactor) {
+    labelFactor = 1.27;
+  }
+
+  if (!width) {
+    labelFactor = 60;
+  }
+
+  node.each(function () {
+    const text = d3.select(this);
+    const words = text.text().split(/\s+/).reverse();
+    let word = '';
+    let line = [];
+    let lineNumber = 0;
+
+    if (words.length <= 1) {
+      return;
+    }
+
+    const lineHeight = labelFactor; // ems
+    const y = text.attr('y');
+    const x = text.attr('x');
+    const dy = parseFloat(text.attr('dy'));
+    let tspan = text.text(null).append('tspan')
+      .attr('x', x)
+      .attr('y', y)
+      .attr('dy', `${dy}em`);
+
+    while (word = words.pop()) {    //eslint-disable-line
+      line.push(word);
+      tspan.text(line.join(' '));
+
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(' '));
+        line = [word];
+        tspan = text.append('tspan')
+          .attr('x', x)
+          .attr('y', y)
+          .attr('dy', `${++lineNumber * lineHeight + dy}em`)
+          .text(word);
+      }
+    }
+  });
 };
 
 export { charts };

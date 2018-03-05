@@ -8,9 +8,8 @@ const excel = {};
 * @param {string} self The grid api to use (if customDs is not used)
 */
 excel.exportToCsv = function (fileName, customDs, self) {
-  fileName = `${fileName ||
-    this.element.closest('.datagrid-container').attr('id') ||
-    'datagrid'}.csv`;
+  const name = fileName || self.element.attr('id') || 'Export';
+  fileName = `${name}.csv`;
 
   let csvData = null;
   const cleanExtra = function (table) {
@@ -151,6 +150,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     '</html>';
 
   const cleanExtra = function (table) {
+    const nonExportables = [];
     $('tr, th, td, div, span', table).each(function () {
       const el = this;
       const elm = $(this);
@@ -158,6 +158,22 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
       if (elm.is('.is-hidden')) {
         elm.remove();
         return;
+      }
+
+      // THEAD
+      if (el.getAttribute('data-exportable') && el.getAttribute('data-exportable') === 'no') {
+        const id = parseInt(el.getAttribute('id').substr(el.getAttribute('id').length - 1), 10) - 1;
+        nonExportables.push(id);
+        elm.remove();
+        return;
+      }
+
+      // TBODY
+      if (el.cellIndex) {
+        if (nonExportables.length > 0 && nonExportables.includes(el.cellIndex)) {
+          elm.remove();
+          return;
+        }
       }
 
       $('.is-hidden, .is-draggable-target, .handle, .sort-indicator, .datagrid-filter-wrapper', el).remove();
@@ -169,7 +185,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
       // Excel Formulas Start with =SOMETHING
       const text = elm.text();
       if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '') {
-        elm.text(`'${text}`);
+        elm.text(`'${text}'`);
       }
     });
     return table;
@@ -187,7 +203,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
   };
 
   const appendRows = function (dataset, table) {
-    let tableHtml;
+    let tableHtml = '';
     const body = table.find('tbody').empty();
 
     for (let i = 0; i < dataset.length; i++) {

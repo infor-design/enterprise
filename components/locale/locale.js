@@ -1,15 +1,11 @@
 /* eslint-disable no-nested-ternary, no-useless-escape */
-/**
-  TODO: Re-implement this with proper scope.
 
-  // If there already exists a Locale object with a culturesPath use that path
-  // This allows manually setting the directory for the culture files to be retrieved from
-  var existingCulturePath = '';
-
-  if (window.Locale && window.Locale.hasOwnProperty('culturesPath')) {
-    existingCulturePath = window.Locale.culturesPath;
-  }
-*/
+// If `SohoConfig` exists with a `culturesPath` property, use that path for retrieving
+// culture files. This allows manually setting the directory for the culture files.
+let existingCulturePath = '';
+if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.culturesPath === 'string') {
+  existingCulturePath = window.SohoConfig.culturesPath;
+}
 
 /**
 * The Locale component handles i18n
@@ -24,7 +20,7 @@ const Locale = {  // eslint-disable-line
 
   currentLocale: { name: '', data: {} }, // default
   cultures: {},
-  culturesPath: '', // existingCulturePath
+  culturesPath: existingCulturePath,
 
   /**
    * Sets the Lang in the Html Header
@@ -183,7 +179,7 @@ const Locale = {  // eslint-disable-line
 
   /**
   * Formats a Date Object and return it parsed in the current locale.
-  * @param {Date} value  The date to show in the current locale.
+  * @param {date} value  The date to show in the current locale.
   * @param {object} attribs  Additional formatting settings.
   * @returns {string} the formatted date.
   */
@@ -305,6 +301,22 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('nnn', 'den');
 
     return ret.trim();
+  },
+
+  /**
+  * Formats a Date Object and return it in UTC format
+  * @param {date} date The date to show in the current locale.
+  * @returns {date} the utc date
+  */
+  dateToUTC(date) {
+    return new Date(Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds()
+    ));
   },
 
   /**
