@@ -63,7 +63,7 @@ Dev Needs to Learn
 - Click something and get result
 - Open a test page and find a value (id or aria)
 - Open a dropdown list and menu button
-- Select a menu button menu item ect..
+- Select a menu button menu item etc..
 - Themes
 - RTL
 
@@ -84,3 +84,10 @@ https://medium.com/@jamesjefferyuk/javascript-what-are-pure-functions-4d4d5392d4
 
 https://github.com/vuejs/vue/tree/dev/test/unit
 https://github.com/vuejs/vue/blob/dev/test/unit/karma.base.config.js#L32
+
+
+## Debugging Tests (Running Individually)
+ `KARMA_SPECS='components/dropdown/unit/dropdown-api.spec.js' npm run test:es6:local:unit` // Only runs API spec
+ `KARMA_SPECS='components/dropdown/unit/dropdown*.spec.js' npm run test:es6:local:unit` // Glob example
+
+ Use debugger statements in unit tests, and open Chrome DevTools

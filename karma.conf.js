@@ -1,16 +1,22 @@
+const getSpecs = (listSpec) => {
+  if (listSpec) {
+    return listSpec.split(',');
+  }
+
+  return ['components/**/*.spec.js'];
+};
+
 module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
     files: [
       'dist/css/light-theme.css',
-      'dist/css/light-theme.css.map',
       'dist/js/jquery-3.1.1.js',
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
       'dist/js/cultures/en-US.js',
-      'components/**/*.spec.js',
-    ],
+    ].concat(getSpecs(process.env.KARMA_SPECS)),
     exclude: [
       'node_modules'
     ],
@@ -43,10 +49,8 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
+    browsers: ['Chrome'],
     autoWatch: true,
-    browsers: [
-      'Chrome'
-    ],
     singleRun: false,
     concurrency: Infinity
   });
