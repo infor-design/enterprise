@@ -60,7 +60,7 @@ describe('Dropdown tests', () => {
     }
   });
 
-  it('Should scroll down to end of list, and expect VT to visible', async (done) => {
+  it('Should scroll down to end of list, and expect VT to be visible', async (done) => {
     try {
       await browser.waitForAngularEnabled(false);
       await browser.driver.get('http://localhost:4000/components/dropdown/example-index');
