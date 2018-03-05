@@ -3978,8 +3978,8 @@ Datagrid.prototype = {
 
     // Prevent redirects
     this.table
-      .off('mouseup.datagrid touchstart.datagrid')
-      .on('mouseup.datagrid touchstart.datagrid', 'a', (e) => {
+      .off('click.datagrid')
+      .on('click.datagrid', 'a', (e) => {
         e.preventDefault();
       });
 
