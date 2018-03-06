@@ -3,13 +3,6 @@ const r2 = require('r2');
 const username = process.env.BROWSER_STACK_USERNAME;
 const accessKey = process.env.BROWSER_STACK_ACCESS_KEY;
 
-const isElementVisible = (document) => {
-  const ulRect = document.querySelector('ul[role="listbox"]').getBoundingClientRect();
-  const vtRect = document.querySelector('li[data-val="VT"]').getBoundingClientRect();
-  console.log(ulRect);
-  console.log(vtRect);
-};
-
 describe('Dropdown tests', () => {
   it('Should open dropdown list on click', async (done) => {
     try {
@@ -60,7 +53,7 @@ describe('Dropdown tests', () => {
     }
   });
 
-  it('Should scroll down to end of list, and expect VT to be visible', async (done) => {
+  it('Should scroll down to end of list, VT should be visible', async (done) => {
     try {
       await browser.waitForAngularEnabled(false);
       await browser.driver.get('http://localhost:4000/components/dropdown/example-index');
@@ -68,16 +61,12 @@ describe('Dropdown tests', () => {
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(dropdownEl), 5000);
       await dropdownEl.click();
 
-      await browser.executeScript('document.querySelector("ul[role=\'listbox\']").scrollTo(0, 10000)');
+      await browser.executeScript('document.querySelector("ul[role=\'listbox\']").scrollTop = 10000');
       const dropdownElList = await element(by.css('ul[role="listbox"]'));
-      const newYorkOption = await element(by.css('li[data-val="NY"]'));
       const vermontOption = await element(by.css('li[data-val="VT"]'));
-      const posNY = await newYorkOption.getLocation();
       const posVT = await vermontOption.getLocation();
       const dropdownElListSize = await dropdownElList.getSize();
       const posDropdownElList = await dropdownElList.getLocation();
-      expect(posVT.y).toEqual(204);
-      expect(posNY.y).toEqual(-212);
       expect(posVT.y > posDropdownElList.y &&
         posVT.y < (posDropdownElList.y + dropdownElListSize.height)).toBeTruthy();
       done();

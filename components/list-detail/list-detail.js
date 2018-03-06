@@ -465,6 +465,8 @@ ListDetail.prototype = {
    * @returns {void}
    */
   teardown() {
+    $('body').off(`resize.${COMPONENT_NAME}`);
+
     $(this.element).off(`drilldown.${COMPONENT_NAME} drillup.${COMPONENT_NAME}`);
 
     if (this.backElement) {
