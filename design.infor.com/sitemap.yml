@@ -1,0 +1,13 @@
+sections:
+- name: Getting Started
+  slug: index
+- name: Components
+  pages:
+  - name: Elements
+    pages:
+    - name: Buttons
+      slug: button
+  - name: Blocks
+    pages:
+    - name: Data Grid
+      slug: grid
