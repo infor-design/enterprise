@@ -15,7 +15,7 @@ module.exports = function (config) {
       'dist/js/jquery-3.1.1.js',
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
-      'dist/js/cultures/en-US.js',
+      'dist/js/cultures/en-US.js'
     ].concat(getSpecs(process.env.KARMA_SPECS)),
     exclude: [
       'node_modules'

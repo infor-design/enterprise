@@ -274,7 +274,10 @@ selected to the left of the Dropdown field.
 
 <h2 id="code-example">Code Example</h2>
 <pre class="sourceCode html"><code class="sourceCode html">
-  <span class="kw">&lt;input</span><span class="ot"> class=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Search...&quot;</span><span class="kw">/&gt;</span>
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;searchfield&quot;</span><span class="kw">&gt;</span>Search<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> name=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> class=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> data-options=</span> <span class="st">&quot;{&#39;clearable&#39;: &#39;true&#39;}&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Type a search term&quot;</span><span class="kw">/&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
 </code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
@@ -282,4 +285,13 @@ selected to the left of the Dropdown field.
 </ul>
 <h2 id="accessibility">Accessibility</h2>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><em>Tab</em> Will tab into the search field in a forward direction.</li>
+<li><em>Shift Tab</em> Will tab out of the search field in a backward direction.</li>
+<li><em>Alt + Delete</em> (Mac) Will clear the contents of the field.</li>
+<li><em>Ctrl + Backspace</em> (PC) Will clear the contents of the field.</li>
+<li><em>Up / Down Arrow</em> When on a toolbar up and down will move to the next/previous object on the toolbar. This is done because the normal keys of left and right will navigate through the toolbar</li>
+<li><em>Left / Right Arrow</em> When on a toolbar left and right will navigate through the next/previous object on the toolbar. When a list is open it will navigate up and down a list.</li>
+<li><em>Enter</em> Should submit the search / form. You will need to handle this in your code.</li>
+</ul>
 <h2 id="states-and-variations">States and Variations</h2>
