@@ -3,6 +3,18 @@ const r2 = require('r2');
 const username = process.env.BROWSER_STACK_USERNAME;
 const accessKey = process.env.BROWSER_STACK_ACCESS_KEY;
 
+const browserStackErrorReporter = async (done, error) => {
+  const session = await browser.driver.getSession();
+  const sessionId = session.getId();
+  const url = `https://${username}:${accessKey}@api.browserstack.com/automate/sessions/${sessionId}.json`;
+  const obj = {
+    status: 'error',
+    reason: error.name
+  };
+  await r2.put(url, { json: obj }).json;
+  done.fail(error);
+};
+
 describe('Dropdown tests', () => {
   it('Should open dropdown list on click', async (done) => {
     try {
@@ -15,15 +27,7 @@ describe('Dropdown tests', () => {
       expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
       done();
     } catch (error) {
-      const session = await browser.driver.getSession();
-      const sessionId = session.getId();
-      const url = `https://${username}:${accessKey}@api.browserstack.com/automate/sessions/${sessionId}.json`;
-      const obj = {
-        status: 'error',
-        reason: error.name
-      };
-      await r2.put(url, { json: obj }).json;
-      done.fail(error);
+      await browserStackErrorReporter(done, error);
     }
   });
 
@@ -41,15 +45,7 @@ describe('Dropdown tests', () => {
       expect(newYorkOption.getAttribute('class')).toEqual('dropdown-option is-focused');
       done();
     } catch (error) {
-      const session = await browser.driver.getSession();
-      const sessionId = session.getId();
-      const url = `https://${username}:${accessKey}@api.browserstack.com/automate/sessions/${sessionId}.json`;
-      const obj = {
-        status: 'error',
-        reason: error.name
-      };
-      await r2.put(url, { json: obj }).json;
-      done.fail(error);
+      await browserStackErrorReporter(done, error);
     }
   });
 
@@ -71,15 +67,7 @@ describe('Dropdown tests', () => {
         posVT.y < (posDropdownElList.y + dropdownElListSize.height)).toBeTruthy();
       done();
     } catch (error) {
-      const session = await browser.driver.getSession();
-      const sessionId = session.getId();
-      const url = `https://${username}:${accessKey}@api.browserstack.com/automate/sessions/${sessionId}.json`;
-      const obj = {
-        status: 'error',
-        reason: error.name
-      };
-      await r2.put(url, { json: obj }).json;
-      done.fail(error);
+      await browserStackErrorReporter(done, error);
     }
   });
 });
