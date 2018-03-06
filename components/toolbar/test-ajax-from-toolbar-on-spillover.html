@@ -69,6 +69,16 @@
 
   </div>
 </div>
+<div class="row">
+  <div class="twelve columns">
+    <button type="button" id="change-ajax" class="btn">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-settings"></use>
+      </svg>
+      <span>Change Ajax Call</span>
+    </button>
+  </div>
+</div>
 
 <script type="text/javascript">
   var TOP_LEVEL_POPUPMENU_CONTENT = '' +
@@ -86,12 +96,24 @@
     '<li><a href="#">AJAX Sub-option #3</a></li>' +
     '<li><a href="#">AJAX Sub-option #4</a></li>';
 
+  var ALTERNATE_TOP_LEVEL_POPUPMENU_CONTENT = '' +
+    '<li><a href="#">Different AJAX Option #1</a></li>' +
+    '<li><a href="#">Different AJAX Option #2</a></li>' +
+    '<li><a href="#">Different AJAX Option #3</a></li>' +
+    '<li><a href="#">Different AJAX Option #4</a></li>';
+
   // Populate the menu with some fake content for the sake of testing the AJAX call.
   function popupmenuBeforeOpen(response, options) {
     if (options.contextElement) {
       return response( $(SUB_LEVEL_POPUPMENU_CONTENT) );
     }
     return response( $(TOP_LEVEL_POPUPMENU_CONTENT) );
+  }
+
+  // Populate the menu with some fake content for the sake of testing the AJAX call.
+  function popupmenuBeforeOpenTwo(response, options) {
+    console.log('Using different Popupmenu Content...');
+    return response( $(ALTERNATE_TOP_LEVEL_POPUPMENU_CONTENT) );
   }
 
   // Manually invoke the Toolbar.
@@ -115,4 +137,16 @@
     toolbarElem.toolbar(TOOLBAR_SETTINGS);
     toolbarAPI = toolbarElem.data('toolbar');
   }
+
+  // Swap out the More Menu's ajax call for a different one.
+  $('#change-ajax').on('click', function () {
+    if (toolbarAPI) {
+      toolbarAPI.updated({
+        maxVisibleButtons: 4,
+        moreMenuSettings: {
+          beforeOpen: popupmenuBeforeOpenTwo
+        }
+      });
+    }
+  });
 </script>
