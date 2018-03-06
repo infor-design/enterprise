@@ -5,6 +5,7 @@
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
   "license": "Runtime License",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git://git.infor.com/scm/soho/controls.git"
