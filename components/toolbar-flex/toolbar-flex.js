@@ -1,17 +1,8 @@
 import { utils } from '../utils/utils';
-// import { breakpoints } from '../utils/breakpoints';
+import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
 
 // Component Name
 const COMPONENT_NAME = 'toolbar-flex';
-
-// Toolbar Focusable Elem Selectors
-const TOOLBAR_ELEMENT_SELECTORS = [
-  'button',
-  'a[href]',
-  'input[type="checkbox"]',
-  'input[type="radio"]',
-  '.searchfield'
-];
 
 /**
  * Component Default Settings
@@ -33,13 +24,25 @@ function ToolbarFlex(element, settings) {
 
 ToolbarFlex.prototype = {
 
+  sections: [],
+
+  items: [],
+
   /**
    * @private
    * @returns {void}
    */
   init() {
     this.sections = this.element.querySelectorAll('.toolbar-section');
-    this.items = this.getElements();
+    this.items = this.getElements().map(item => new ToolbarFlexItem(item));
+
+    if (!this.items) {
+      return;
+    }
+
+    if (!this.selectedItem) {
+      this.selectedItem = this.items[0];
+    }
 
     this.handleEvents();
   },
@@ -50,23 +53,59 @@ ToolbarFlex.prototype = {
    */
   handleEvents() {
     $('body').on(`resize.${COMPONENT_NAME}`, () => this.handleResize);
+    this.element.addEventListener('keypress', this.handleItemKeypress.bind(this));
+  },
+
+  /**
+   *
+   */
+  handleItemKeypress(e) {
+
   },
 
   /**
    * Gets all the elements currently inside the Toolbar Markup.
+   * The array of items produced is ordered by Toolbar Section.
    * @returns {array} of Toolbar Items
    */
   getElements() {
     const items = [];
 
     utils.forEach(this.sections, (section) => {
-      const thisElems = section.querySelectorAll(TOOLBAR_ELEMENT_SELECTORS.join(', '));
-      utils.forEach(thisElems, (elem) => {
-        items.push(elem);
+      utils.forEach(TOOLBAR_ELEMENTS, (elemObj) => {
+        const thisElems = section.querySelectorAll(elemObj.selector);
+        utils.forEach(thisElems, (elem) => {
+          if (typeof elemObj.filter === 'function') {
+            if (!elemObj.filter(elem)) {
+              return;
+            }
+          }
+          items.push(elem);
+        }, this);
       }, this);
     }, this);
 
     return items;
+  },
+
+  get selectedItem() {
+    if (!this.items || !this.items.length) {
+      return undefined;
+    }
+
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].focusable) {
+        return this.items[i];
+      }
+    }
+    return undefined;
+  },
+
+  set selectedItem(item) {
+    for (let i = 0; i < this.items.length; i++) {
+      this.items[i].disableFocus();
+    }
+    item.enableFocus();
   },
 
   /**
@@ -87,6 +126,7 @@ ToolbarFlex.prototype = {
    */
   teardown() {
     $('body').off(`resize.${COMPONENT_NAME}`);
+    this.element.removeEventListener('keypress', this.handleItemKeypress.bind(this));
   },
 
   /**
