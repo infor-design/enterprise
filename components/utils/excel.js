@@ -1,3 +1,5 @@
+import { Environment as env } from '../utils/environment';
+
 /* eslint-disable import/prefer-default-export */
 const excel = {};
 
@@ -98,7 +100,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
   table = cleanExtra(table);
   csvData = formatCsv(table);
 
-  if (self.isIe) {
+  if (env.browser.name === 'ie') {
     if (window.navigator.msSaveBlob) {
       const blob = new Blob([csvData], {
         type: 'application/csv;charset=utf-8;'
@@ -170,7 +172,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
 
       // TBODY
       if (el.cellIndex) {
-        if (nonExportables.length > 0 && nonExportables.includes(el.cellIndex)) {
+        if (nonExportables.length > 0 && nonExportables.indexOf(el.cellIndex) !== -1) {
           elm.remove();
           return;
         }
@@ -241,8 +243,8 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     self.element.closest('.datagrid-container').attr('id') ||
     'datagrid'}.xls`;
 
-  if (this.isIe) {
-    if (this.isIe9) {
+  if (env.browser.name === 'ie') {
+    if (env.browser.version === '9') {
       const IEwindow = window.open();
       IEwindow.document.write(`sep=,\r\n${format(template, ctx)}`);
       IEwindow.document.close();

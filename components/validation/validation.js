@@ -124,19 +124,6 @@ function ValidationRules() {
         this.message = Locale.translate('UnavailableDate');
         let check = true;
 
-        // To avoid running into issues of Dates happening in different timezones,
-        // create the date as UTC
-        function createDateAsUTC(date) {
-          return new Date(Date.UTC(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
-            date.getHours(),
-            date.getMinutes(),
-            date.getSeconds()
-          ));
-        }
-
         if (value !== '') {
           if (self.rules.date.check(value, field)) { // if valid date
             let d;
@@ -144,12 +131,16 @@ function ValidationRules() {
             let l;
             let min;
             let max;
-            let d2 = createDateAsUTC(new Date(value));
             const options = field.data('datepicker').settings;
+            let d2 = options.useUTC ? Locale.dateToUTC(new Date(value)) : new Date(value);
 
             if (options) {
-              min = (createDateAsUTC(new Date(options.disable.minDate))).setHours(0, 0, 0, 0);
-              max = (createDateAsUTC(new Date(options.disable.maxDate))).setHours(0, 0, 0, 0);
+              min = (options.useUTC ?
+                Locale.dateToUTC(new Date(options.disable.minDate)).setHours(0, 0, 0, 0) :
+                new Date(options.disable.minDate).setHours(0, 0, 0, 0));
+              max = (options.useUTC ?
+                Locale.dateToUTC(new Date(options.disable.maxDate)).setHours(0, 0, 0, 0) :
+                new Date(options.disable.maxDate).setHours(0, 0, 0, 0));
 
               // dayOfWeek
               if (options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
@@ -168,7 +159,9 @@ function ValidationRules() {
                 options.disable.dates = [options.disable.dates];
               }
               for (i = 0, l = options.disable.dates.length; i < l; i++) {
-                d = new Date(options.disable.dates[i]);
+                d = options.useUTC ? Locale.dateToUTC(options.disable.dates[i]) :
+                  new Date(options.disable.dates[i]);
+
                 if (d2 === d.setHours(0, 0, 0, 0)) {
                   check = false;
                   break;

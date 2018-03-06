@@ -47,58 +47,67 @@ git checkout master
 * Generate Release Notes http://bit.ly/2w6X8Xw
 
 ## Git Operations
-* Edit version in package.json and publish package.json (from 4.3.4-rc to 4.3.4 as an example)
+* Edit version in package.json and publish package.json (from 4.4.0-rc to 4.4.0 as an example)
 * Push a PR
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests and make sure all merged
-* Merge  4.3.4-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
-* Git Tag the release from the 4.3.x branch
+* Merge  4.4.0-rc (the rc branch) back onto the 4.4.x (masterish branch) - Using a PR or Git Merge
+* Git Tag the release from the 4.4.x branch
 ```bash
- git tag 4.3.4
+ git tag 4.4.4
  git push origin --tags
 ```
-* Make the new branch off 4.3.x for the new version (4.4.0-rc)
-  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.4.0-rc branch as the default
+* Make the new branch off 4.4.x for the new version (4.5.0-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.5.0-rc branch as the default
   * set branch permissions
-* Delete the 4.3.4-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
+* Delete the 4.4.0-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
 
 ## Build Operations
 * Change the v-Next build http://bamboo.infor.com/chain/admin/config/editChainDetails.action?buildKey=SOHO-NEXT
-  * change the name to 4.4.0-RC (Version Next)
+  * change the name to Angular 4.5.0-RC (Version Next)
   * change the repo it points to
-  * checkout 4.4.0-rc and bump the versions in package.json and publish/package.json
+  * checkout 4.5.0-rc and bump the versions in package.json and publish/package.json
 * Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
   * change the versions in the build config
-  * Label the build release-434 for example http://bamboo.infor.com/browse/label/release-434
+  * Label the build release-440 for example http://bamboo.infor.com/browse/label/release-440
 
 ## Update version in @infor/sohoxi-angular
 * Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
 * Edit version in package.json and publish package.json (2) places
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and merge
-* Merge  4.3.4-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
-* Git Tag the release from the 4.3.x branch
+* Merge 4.5.0-rc (the rc branch) back onto the 4.4.x (masterish branch) - Using a PR or Git Merge
+* Git Tag the release from the 4.4.x branch
 ```bash
- git tag 4.3.4
+ git tag 4.4.0
  git push origin --tags
 ```
-* Make the new branch off 4.3.x for the new version (4.4.0-rc)
-  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.4.0-rc branch as the default
+* Make the new branch off 4.4.x for the new version (4.5.0-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.5.0-rc branch as the default
   * set branch permissions
-* Delete the 4.3.4-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
+* Delete the 4.4.0-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
 * Update the build to the next release
-* Test
-```bash
-npm info @infor/sohoxi-angular dist-tags
-```
+
 
 ## Test Out Stuff
 * Test Npm packages and rebuild if you got it wrong
 ```
-npm info @infor/sohoxi dist-tags
 npm view @infor/sohoxi versions
+npm view @infor/sohoxi-angular versions
+
+npm info @infor/sohoxi-angular dist-tags
+npm info @infor/sohoxi dist-tags
+
 ```
+
 * Test New and old links for example:
-http://usalvlhlpool1.infor.com/4.3.4/components/
-http://usalvlhlpool1.infor.com/4.4.0-rc/components/
+http://usalvlhlpool1.infor.com/4.4.0/components/
+http://usalvlhlpool1.infor.com/4.5.0-rc/components/
+
+You may have to run this for new sites
+
+```
+curl -X POST -u hookandloop:hookandloop http://usalvlhlpool1/swarm/update_config
+```
+
 
 ## Deploy Site Operations
 

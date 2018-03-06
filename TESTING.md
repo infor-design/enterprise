@@ -47,28 +47,49 @@ Targeting
 
 Regression testing is a type of software testing which verifies that software which was previously developed and tested still performs the same way after it was changed or interfaced with other software.
 
-QA Needs to Learn
-  - Git
-  - Writing Tests
-  - Designing Tests
-  - Running Tests (Commands)
+## Running and Debugging Tests
 
-Dev Needs to Learn
-  - Git
-  - Writing Unit Tests
-  - Running Tests (Commands)
+Run just the api spec, for debugging with Chrome. For debugging use statements in the unit tests, and open Chrome DevTools
+ `KARMA_SPECS='components/dropdown/unit/dropdown-api.spec.js' npm run test:es6:local:unit` // Only runs API spec
+
+Run several spec tests with a Glob, for debugging with Chrome.
+ `KARMA_SPECS='components/dropdown/unit/dropdown*.spec.js' npm run test:es6:local:unit` // Glob example
+
+Run several just an api test, headless.
+ `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run ci:test:es6:local:unit`
+
+## Debugging a Test
+1. Put a debugger; statement at a place in the code.
+2. Run the test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run test:es6:local:unit`
+3. open chrome tools
+4. refresh the page and the debugger will pop up
+
+## Watching a Test
+
+You may when building a test out want to watch it. You can leave the test running and as you change the file.
+The test will rerun.
+
+1. Run the targeted request test with a command like `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run test:es6:local:unit`
+3. Your test(s) will run.
+4. Keep the page open and console running
+5. Update your test and save
+6. Tests will run again.. Repeat..
+
+## Checking Coverage
+
+1. Run the test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run test:es6:local:unit`
+2. While the browser is open. Go to `cd coverage`
+3. Start a simple web server `python -m SimpleHTTPServer`
+4. Open up a browser and go to http://localhost:8000/ and browse in to the page
 
 ## Test Recipies
 
 - Click something and get result
 - Open a test page and find a value (id or aria)
 - Open a dropdown list and menu button
-- Select a menu button menu item ect..
+- Select a menu button menu item etc..
 - Themes
 - RTL
-
-## Repo with Start
-http://git.infor.com/projects/SOHO/repos/controls/compare/diff?targetBranch=refs%2Fheads%2FSOHO-6976-components-as-es6-components&sourceBranch=refs%2Fheads%2FSOHO-6976-test-poc&targetRepoId=1
 
 ## Testing Resources
 https://www.npmjs.com/browse/keyword/karma-adapter
@@ -76,7 +97,6 @@ https://medium.com/powtoon-engineering/a-complete-guide-to-testing-javascript-in
 
 https://codecraft.tv/courses/angular/unit-testing/jasmine-and-karma/
 https://github.com/dwyl/learn-istanbul
-
 
 https://developers.google.com/web/updates/2017/06/headless-karma-mocha-chai
 https://medium.com/@praveenjanakarajan/jasmine-or-mocha-66942388b196

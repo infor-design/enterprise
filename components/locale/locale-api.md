@@ -2,41 +2,42 @@
 
 ### Table of Contents
 
--   [Locale](#locale)
-    -   [updateLang](#updatelang)
-    -   [getCulturesPath](#getculturespath)
-    -   [addCulture](#addculture)
-    -   [set](#set)
-    -   [setCurrentLocale](#setcurrentlocale)
-    -   [formatDate](#formatdate)
-    -   [isValidDate](#isvaliddate)
-    -   [parseDate](#parsedate)
-    -   [formatNumber](#formatnumber)
-    -   [parseNumber](#parsenumber)
-    -   [translate](#translate)
-    -   [translateDayPeriod](#translatedayperiod)
-    -   [calendar](#calendar)
-    -   [getCalendar](#getcalendar)
-    -   [numbers](#numbers)
-    -   [pad](#pad)
-    -   [isRTL](#isrtl)
-    -   [toUpperCase](#touppercase)
-    -   [toLowerCase](#tolowercase)
-    -   [capitalize](#capitalize)
-    -   [capitalizeWords](#capitalizewords)
-    -   [flipIconsHorizontally](#flipiconshorizontally)
+-   [Locale][1]
+    -   [updateLang][2]
+    -   [getCulturesPath][3]
+    -   [addCulture][4]
+    -   [set][5]
+    -   [setCurrentLocale][6]
+    -   [formatDate][7]
+    -   [dateToUTC][8]
+    -   [isValidDate][9]
+    -   [parseDate][10]
+    -   [formatNumber][11]
+    -   [parseNumber][12]
+    -   [translate][13]
+    -   [translateDayPeriod][14]
+    -   [calendar][15]
+    -   [getCalendar][16]
+    -   [numbers][17]
+    -   [pad][18]
+    -   [isRTL][19]
+    -   [toUpperCase][20]
+    -   [toLowerCase][21]
+    -   [capitalize][22]
+    -   [capitalizeWords][23]
+    -   [flipIconsHorizontally][24]
 
 ## Locale
 
 The Locale component handles i18n
-Data From: <http://www.unicode.org/repos/cldr-aux/json/22.1/main/>
-For Docs See: <http://ibm.co/1nXyNxp>
+Data From: [http://www.unicode.org/repos/cldr-aux/json/22.1/main/][25]
+For Docs See: [http://ibm.co/1nXyNxp][26]
 
 **Properties**
 
--   `currentLocale` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The Currently Set Locale
--   `cultures` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Contains all currently-stored cultures.
--   `culturesPath` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the web-server's path to culture files.
+-   `currentLocale` **[string][27]** The Currently Set Locale
+-   `cultures` **[object][28]** Contains all currently-stored cultures.
+-   `culturesPath` **[string][27]** the web-server's path to culture files.
 
 ### updateLang
 
@@ -48,7 +49,7 @@ Returns **void**
 
 Get the path to the directory with the cultures
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path containing culture files.
+Returns **[string][27]** path containing culture files.
 
 ### addCulture
 
@@ -56,8 +57,8 @@ Internally stores a new culture file for future use.
 
 **Parameters**
 
--   `locale` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the 4-character Locale ID
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** translation data and locale-specific functions, such as calendars.
+-   `locale` **[string][27]** the 4-character Locale ID
+-   `data` **[object][28]** translation data and locale-specific functions, such as calendars.
 
 Returns **void** 
 
@@ -67,7 +68,7 @@ Set the currently used locale.
 
 **Parameters**
 
--   `locale` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The locale to fetch and set.
+-   `locale` **[string][27]** The locale to fetch and set.
 
 Returns **jQuery.Deferred** which is resolved once the locale culture is retrieved and set
 
@@ -77,8 +78,8 @@ Chooses a stored locale dataset and sets it as "current"
 
 **Parameters**
 
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the 4-character Locale ID
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** translation data and locale-specific functions, such as calendars.
+-   `name` **[string][27]** the 4-character Locale ID
+-   `data` **[object][28]** translation data and locale-specific functions, such as calendars.
 
 Returns **void** 
 
@@ -88,10 +89,20 @@ Formats a Date Object and return it parsed in the current locale.
 
 **Parameters**
 
--   `value` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date to show in the current locale.
--   `attribs` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Additional formatting settings.
+-   `value` **[date][29]** The date to show in the current locale.
+-   `attribs` **[object][28]** Additional formatting settings.
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the formatted date.
+Returns **[string][27]** the formatted date.
+
+### dateToUTC
+
+Formats a Date Object and return it in UTC format
+
+**Parameters**
+
+-   `date` **[date][29]** The date to show in the current locale.
+
+Returns **[date][29]** the utc date
 
 ### isValidDate
 
@@ -99,9 +110,9 @@ Check if the date is valid using the current locale to do so.
 
 **Parameters**
 
--   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The date to show in the current locale.
+-   `date` **[Date][29]** The date to show in the current locale.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the date is valid.
+Returns **[boolean][30]** whether or not the date is valid.
 
 ### parseDate
 
@@ -109,26 +120,26 @@ Take a date string written in the current locale and parse it into a Date Object
 
 **Parameters**
 
--   `dateString` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The string to parse in the current format
--   `dateFormat` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The source format fx yyyy-MM-dd
--   `isStrict` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true missing date parts will be considered
+-   `dateString` **[string][27]** The string to parse in the current format
+-   `dateFormat` **[string][27]** The source format fx yyyy-MM-dd
+-   `isStrict` **[boolean][30]** If true missing date parts will be considered
      invalid. If false the current month/day.
 
-Returns **([Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** updated date object, or nothing
+Returns **([Date][29] \| [undefined][31])** updated date object, or nothing
 
 ### formatNumber
 
 Format a decimal with thousands and padding in the current locale.
-<http://mzl.la/1MUOEWm>
+[http://mzl.la/1MUOEWm][32]
 
 **Parameters**
 
--   `number` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The source number.
--   `options` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Additional options.style can be decimal, currency, percent
+-   `number` **[number][33]** The source number.
+-   `options` **[boolean][30]** Additional options.style can be decimal, currency, percent
      and integer options.percentSign, options.minusSign, options.decimal,
      options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the formatted number.
+Returns **[string][27]** the formatted number.
 
 ### parseNumber
 
@@ -136,9 +147,9 @@ Take a Formatted Number and return a real number
 
 **Parameters**
 
--   `input` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The source number (as a string).
+-   `input` **[string][27]** The source number (as a string).
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the number as an actual Number type.
+Returns **[number][33]** the number as an actual Number type.
 
 ### translate
 
@@ -146,11 +157,11 @@ Overridable culture messages
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The key to search for on the string.
--   `showAsUndefined` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** causes a translated phrase to be "undefined"
+-   `key` **[string][27]** The key to search for on the string.
+-   `showAsUndefined` **[boolean][30]?** causes a translated phrase to be "undefined"
      instead of defaulting to the default locale's version of the string.
 
-Returns **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** a translated string, or nothing, depending on configuration
+Returns **([string][27] \| [undefined][31])** a translated string, or nothing, depending on configuration
 
 ### translateDayPeriod
 
@@ -158,15 +169,15 @@ Translate Day Period
 
 **Parameters**
 
--   `period` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** should be "am", "pm", "AM", "PM", or "i"
+-   `period` **[string][27]** should be "am", "pm", "AM", "PM", or "i"
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the translated day period.
+Returns **[string][27]** the translated day period.
 
 ### calendar
 
 Shortcut function to get 'first' calendar
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** containing calendar data.
+Returns **[object][28]** containing calendar data.
 
 ### getCalendar
 
@@ -174,15 +185,15 @@ Access the calendar array
 
 **Parameters**
 
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the name of the calendar (fx: "gregorian", "islamic-umalqura")
+-   `name` **[string][27]** the name of the calendar (fx: "gregorian", "islamic-umalqura")
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** containing calendar data
+Returns **[object][28]** containing calendar data
 
 ### numbers
 
 Shortcut function to get numbers
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** containing information for formatting numbers
+Returns **[object][28]** containing information for formatting numbers
 
 ### pad
 
@@ -190,17 +201,17 @@ TODO: Document this
 
 **Parameters**
 
--   `n` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ?
--   `width` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** ?
--   `z` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ?
+-   `n` **[string][27]** ?
+-   `width` **[number][33]** ?
+-   `z` **[string][27]** ?
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ?
+Returns **[string][27]** ?
 
 ### isRTL
 
 Describes whether or not this locale is read in "right-to-left" fashion.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not this locale is "right-to-left".
+Returns **[boolean][30]** whether or not this locale is "right-to-left".
 
 ### toUpperCase
 
@@ -210,9 +221,9 @@ pipe the string to `String.prototype.toUpperCase()`.
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string][27]** the incoming string
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** modified string
+Returns **[string][27]** modified string
 
 ### toLowerCase
 
@@ -222,9 +233,9 @@ pipe the string to `String.prototype.toLowerCase()`
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string][27]** the incoming string
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The localized string
+Returns **[string][27]** The localized string
 
 ### capitalize
 
@@ -234,9 +245,9 @@ for captializing the first letter of the string.
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string][27]** the incoming string
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the modified string
+Returns **[string][27]** the modified string
 
 ### capitalizeWords
 
@@ -246,9 +257,9 @@ will simply use a simple algorithm for captializing the first letter of the stri
 
 **Parameters**
 
--   `str` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the incoming string
+-   `str` **[string][27]** the incoming string
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the modified string
+Returns **[string][27]** the modified string
 
 ### flipIconsHorizontally
 
@@ -256,3 +267,69 @@ Modifies a specified list of icons by flipping them horizontally to make them
 compatible for RTL-based locales.
 
 Returns **void** 
+
+[1]: #locale
+
+[2]: #updatelang
+
+[3]: #getculturespath
+
+[4]: #addculture
+
+[5]: #set
+
+[6]: #setcurrentlocale
+
+[7]: #formatdate
+
+[8]: #datetoutc
+
+[9]: #isvaliddate
+
+[10]: #parsedate
+
+[11]: #formatnumber
+
+[12]: #parsenumber
+
+[13]: #translate
+
+[14]: #translatedayperiod
+
+[15]: #calendar
+
+[16]: #getcalendar
+
+[17]: #numbers
+
+[18]: #pad
+
+[19]: #isrtl
+
+[20]: #touppercase
+
+[21]: #tolowercase
+
+[22]: #capitalize
+
+[23]: #capitalizewords
+
+[24]: #flipiconshorizontally
+
+[25]: http://www.unicode.org/repos/cldr-aux/json/22.1/main/
+
+[26]: http://ibm.co/1nXyNxp
+
+[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[28]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
+
+[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[31]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+
+[32]: http://mzl.la/1MUOEWm
+
+[33]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
