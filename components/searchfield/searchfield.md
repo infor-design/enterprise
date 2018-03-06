@@ -23,7 +23,10 @@ Described below is the general API that is present in all searchfields.  There i
 
 ```html
 
-  <input class="searchfield" placeholder="Search..."/>
+<div class="field">
+  <label for="searchfield">Search</label>
+  <input id="searchfield" name="searchfield" class="searchfield" data-options= "{'clearable': 'true'}" placeholder="Type a search term"/>
+</div>
 
 
 ```
@@ -35,5 +38,14 @@ Described below is the general API that is present in all searchfields.  There i
 ## Accessibility
 
 ## Keyboard Shortcuts
+
+- *Tab* Will tab into the search field in a forward direction.
+- *Shift Tab* Will tab out of the search field in a backward direction.
+- *Alt + Delete* (Mac) Will clear the contents of the field.
+- *Ctrl + Backspace* (PC) Will clear the contents of the field.
+- *Up / Down Arrow* When on a toolbar up and down will move to the next/previous object on the toolbar.
+This is done because the normal keys of left and right will navigate through the toolbar
+- *Left / Right Arrow* When on a toolbar left and right will navigate through the next/previous object on the toolbar. When a list is open it will navigate up and down a list.
+- *Enter* Should submit the search / form. You will need to handle this in your code.
 
 ## States and Variations

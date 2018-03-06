@@ -270,9 +270,6 @@ SearchField.prototype = {
     }).on('click.searchfield', (e) => {
       self.handleClick(e);
     })
-      .on('keydown.searchfield', (e) => {
-        self.handleKeydown(e);
-      })
       .on('beforeopen.searchfield', (e, menu) => { // propagates from Autocomplete's Popupmenu
         self.handlePopupBeforeOpen(e, menu);
       })
@@ -472,20 +469,6 @@ SearchField.prototype = {
    */
   handleClick() {
     this.setAsActive();
-  },
-
-  /**
-   * Keydown event handler
-   * @private
-   * @param {jQuery.Event} e jQuery `keydown`
-   * @returns {void}
-   */
-  handleKeydown(e) {
-    const key = e.which;
-
-    if (key === 27) {
-      this.clear();
-    }
   },
 
   /**

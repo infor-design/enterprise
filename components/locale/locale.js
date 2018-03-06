@@ -911,7 +911,21 @@ const Locale = {  // eslint-disable-line
     }
 
     // Defaults to ISO 8601
-    return { dateFormat: 'yyyy-MM-dd', timeFormat: 'HH:mm:ss' };
+    return {
+      dateFormat: {
+        separator: '/',
+        timeSeparator: ':',
+        short: 'M/d/yyyy',
+        medium: 'MMM d, yyyy',
+        long: 'MMMM d, yyyy',
+        full: 'EEEE, MMMM d, y',
+        month: 'MMMM d',
+        year: 'MMMM yyyy',
+        timestamp: 'h:mm:ss a',
+        datetime: 'M/d/yyyy h:mm a'
+      },
+      timeFormat: 'HH:mm:ss'
+    };
   },
 
   /**

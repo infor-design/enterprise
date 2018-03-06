@@ -18,14 +18,13 @@ Title case follows the standards used in book titles: always capitalize the firs
 - Menu and navigation options (including context menu options and tree components)
 - Input field labels
 
-Sentence case uses standard capitalization rules for full sentences: only capitalize the first letter of the sentence, along with any proper nouns. Use sentence case for the following types of text:
+Sentence case uses standard capitalization rules for full sentences. Only capitalize the first letter of the sentence, along with any proper nouns. Use sentence case for the following types of text:
 
 - Radio button labels
 - Checkbox labels
 - Notification and error and warning messages
 - Normal Text
 - Instructions
-
 
 ## Singular vs. Plural
 
