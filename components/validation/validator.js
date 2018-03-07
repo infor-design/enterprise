@@ -498,7 +498,6 @@ Validator.prototype = {
           dfd.resolve();
         }
       } else if ($.grep(results, res => res === validationType.type).length === 0) {
-        //self.removeMessage(field, validationType.type);
         dfd.resolve();
 
         if (rule.positive) {
