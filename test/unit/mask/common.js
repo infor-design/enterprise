@@ -1,80 +1,3 @@
-/* eslint-disable */
-
-define([
-  'intern!object',
-  'intern/chai!expect',
-  'jsdom',
-], function(registerSuite, expect) {
-
-  var DEFAULT_SETTINGS = {
-    process: undefined,
-    pipe: undefined
-  };
-
-  registerSuite({
-
-    name: 'Mask API',
-
-    setup: function() {
-      var jsdom = require('jsdom').jsdom;
-      document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>');
-      window = document.defaultView;
-
-      require('components/locale/locale.js');
-      Soho = window.Soho = {};
-
-      // Load the Mask files we are testing
-
-      require('components/utils/utils.js');
-      require('components/mask/mask-api.js');
-      require('components/mask/mask-functions.js');
-      require('components/mask/masked-input.js');
-    },
-
-    //============================================
-    // Setup/Configuration
-    //============================================
-
-    // Sanity Test
-    'should exist': function() {
-      expect(window.Soho).to.exist;
-      expect(window.Soho.masks).to.exist;
-      expect(window.Soho.Mask).to.exist;
-    },
-
-    'can be invoked': function() {
-      var api = new Soho.Mask(DEFAULT_SETTINGS);
-
-      expect(api).to.exist;
-      expect(api).to.be.a('object');
-      expect(api).to.be.an.instanceof(Soho.Mask);
-
-      // Check default settings
-      expect(api.settings).to.exist;
-      expect(api.settings).to.be.a('object');
-
-      // has basic functions
-      expect(api.configure).to.be.a('function');
-      expect(api.process).to.be.a('function');
-    },
-
-    // Makes sure that a legacy Soho pattern mask is properly converted to an array.
-    'should convert a legacy Soho mask pattern string into a pattern array': function() {
-      var api = new Soho.Mask(DEFAULT_SETTINGS),
-        maskDefinitions = Soho.masks.LEGACY_DEFS;
-
-      // Credit Cards
-      var result = api._convertPatternFromString('####-####-####-####', maskDefinitions);
-      expect(result).to.exist;
-      expect(result).to.be.a('array');
-      expect(result).to.have.lengthOf(19);
-
-      // U.S. Phone Number
-      result = api._convertPatternFromString('(###) ###-####', maskDefinitions);
-      expect(result).to.exist;
-      expect(result).to.be.a('array');
-      expect(result).to.have.lengthOf(14);
-    },
 
     // Placeholder masks are used internally to figure out placement positions, and can be
     // used visually as the guide inside of an input field.
@@ -83,7 +6,7 @@ define([
         mask = [ /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/ ],
         result = api._convertMaskToPlaceholder(mask, Soho.masks.PLACEHOLDER_CHAR);
 
-      expect(result).to.exist;
+      expect(result).toBeDefined();
       expect(result).to.be.a('string');
       expect(result).to.equal('____-____-____-____');
     },
@@ -105,7 +28,7 @@ define([
       };
 
       var result = api.process(text, opts);
-      expect(result).to.exist;
+      expect(result).toBeDefined();
       expect(result).to.be.a('object');
       expect(result.conformedValue).to.be.a('string');
       expect(result.conformedValue).to.equal('0123-4567-8901-2345');
@@ -130,7 +53,7 @@ define([
         }
       };
       var result = api.process(textValue, opts);
-      expect(result).to.exist;
+      expect(result).toBeDefined();
       expect(result).to.be.a('object');
       expect(result.conformedValue).to.be.a('string');
       expect(result.conformedValue).to.equal('1,111,111,111');
@@ -205,7 +128,7 @@ define([
 
       var result = api._processCaretTraps(testMask);
 
-      expect(result).to.exist;
+      expect(result).toBeDefined();
       expect(result).to.be.an('object');
 
       expect(result).to.have.property('maskWithoutCaretTraps');
@@ -246,7 +169,7 @@ define([
 
       // Under normal conditions where there are no caret traps and automatic adjustments due
       // to character literals, this will remain the same as the input value.
-      expect(caretPos).to.exist;
+      expect(caretPos).toBeDefined();
       expect(caretPos).to.be.a('number');
       expect(caretPos).to.equal(1);
     },
@@ -280,7 +203,7 @@ define([
       var caretPos = api.adjustCaretPosition(adjustCaretOpts);
 
       // Caret should have moved one index forward to account for the dash added
-      expect(caretPos).to.exist;
+      expect(caretPos).toBeDefined();
       expect(caretPos).to.be.a('number');
       expect(caretPos).to.equal(5);
     },
@@ -323,21 +246,21 @@ define([
     },
 
     'sanity test': function() {
-      expect(window.Soho).to.exist;
-      expect(window.Soho.components).to.exist;
-      expect(window.Soho.components.MaskedInput).to.exist;
+      expect(window.Soho).toBeDefined();
+      expect(window.Soho.components).toBeDefined();
+      expect(window.Soho.components.MaskedInput).toBeDefined();
     },
 
     'can be invoked': function() {
       TEST_COMPONENT_API = new window.Soho.components.MaskedInput(TEST_INPUT);
       var api = TEST_COMPONENT_API;
 
-      expect(api).to.exist;
+      expect(api).toBeDefined();
       expect(api).to.be.instanceof(window.Soho.components.MaskedInput);
 
       // Check default settings
       expect(api.settings).to.be.an('object');
-      expect(api.settings.maskAPI).to.exist;
+      expect(api.settings.maskAPI).toBeDefined();
     },
 
     'handles translation of deprecated settings': function() {
@@ -351,7 +274,7 @@ define([
 
       var inputComponent = new window.Soho.components.MaskedInput(input);
 
-      expect(inputComponent.settings).to.exist;
+      expect(inputComponent.settings).toBeDefined();
       expect(inputComponent.settings).to.be.a('object');
       expect(inputComponent.settings).to.have.property('process', 'date');
 
@@ -500,5 +423,3 @@ define([
     }
 
   });
-
-});

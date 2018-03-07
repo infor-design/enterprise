@@ -64,6 +64,10 @@ Run several just an api test, headless.
 3. open chrome tools
 4. refresh the page and the debugger will pop up
 
+## Running all Tests Silently
+
+`npm run ci:test:es6:local:unit`
+
 ## Watching a Test
 
 You may when building a test out want to watch it. You can leave the test running and as you change the file.
@@ -92,15 +96,17 @@ The test will rerun.
 - RTL
 
 ## Testing Resources
+
+List of All "Matchers"
+https://jasmine.github.io/api/3.0/matchers.html
+
+Karma Adaptors
 https://www.npmjs.com/browse/keyword/karma-adapter
+
+Testing Overview
 https://medium.com/powtoon-engineering/a-complete-guide-to-testing-javascript-in-2017-a217b4cd5a2a
 
 https://codecraft.tv/courses/angular/unit-testing/jasmine-and-karma/
+
+Coverage
 https://github.com/dwyl/learn-istanbul
-
-https://developers.google.com/web/updates/2017/06/headless-karma-mocha-chai
-https://medium.com/@praveenjanakarajan/jasmine-or-mocha-66942388b196
-https://medium.com/@jamesjefferyuk/javascript-what-are-pure-functions-4d4d5392d49c
-
-https://github.com/vuejs/vue/tree/dev/test/unit
-https://github.com/vuejs/vue/blob/dev/test/unit/karma.base.config.js#L32

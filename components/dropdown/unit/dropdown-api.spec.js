@@ -31,7 +31,7 @@ describe('Dropdown API', () => {
   });
 
   it('Should be defined on jQuery object', () => {
-    expect(dropdownObj).toBeDefined();
+    expect(dropdownObj).toEqual(jasmine.any(jQuery));
   });
 
   it('Should open dropdown', () => {
