@@ -50,30 +50,30 @@ Regression testing is a type of software testing which verifies that software wh
 ## Running and Debugging Tests
 
 Run just the api spec, for debugging with Chrome. For debugging use statements in the unit tests, and open Chrome DevTools
- `KARMA_SPECS='components/dropdown/unit/dropdown-api.spec.js' npm run test:es6:local:unit` // Only runs API spec
+ `KARMA_SPECS='components/dropdown/unit/dropdown-api.spec.js' npm run local:unit` // Only runs API spec
 
 Run several spec tests with a Glob, for debugging with Chrome.
- `KARMA_SPECS='components/dropdown/unit/dropdown*.spec.js' npm run test:es6:local:unit` // Glob example
+ `KARMA_SPECS='components/dropdown/unit/dropdown*.spec.js' npm run local:unit` // Glob example
 
 Run several just an api test, headless.
- `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run ci:test:es6:local:unit`
+ `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run ci:local:unit`
 
 ## Debugging a Test
 1. Put a debugger; statement at a place in the code.
-2. Run the test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run test:es6:local:unit`
+2. Run the test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run local:unit`
 3. open chrome tools
 4. refresh the page and the debugger will pop up
 
 ## Running all Tests Silently
 
-`npm run ci:test:es6:local:unit`
+`npm run ci:local:unit`
 
 ## Watching a Test
 
 You may when building a test out want to watch it. You can leave the test running and as you change the file.
 The test will rerun.
 
-1. Run the targeted request test with a command like `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run test:es6:local:unit`
+1. Run the targeted request test with a command like `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run local:unit`
 3. Your test(s) will run.
 4. Keep the page open and console running
 5. Update your test and save
@@ -81,7 +81,7 @@ The test will rerun.
 
 ## Checking Coverage
 
-1. Run the test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run test:es6:local:unit`
+1. Run the test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run local:unit`
 2. While the browser is open. Go to `cd coverage`
 3. Start a simple web server `python -m SimpleHTTPServer`
 4. Open up a browser and go to http://localhost:8000/ and browse in to the page
