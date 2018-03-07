@@ -19,10 +19,6 @@ const TOOLBAR_ELEMENTS = [
   { type: 'toolbarsearchfield', selector: '.toolbarsearchfield' } // temporary
 ];
 
-const TOOLBAR_READONLY_TYPES = [
-  'checkbox', 'radio', 'searchfield'
-];
-
 /**
  * Default Settings
  * @namespace
@@ -75,12 +71,6 @@ ToolbarFlexItem.prototype = {
 
   type: undefined,
 
-  focusable: false,
-
-  visible: true,
-
-  disabled: false,
-
   /**
    * @private
    */
@@ -88,12 +78,29 @@ ToolbarFlexItem.prototype = {
 
   },
 
+  get focusable() {
+    if (this.disabled === true) {
+      return false;
+    }
+    return this.visible;
+  },
+
+  set focusable(boolean) {
+    if (boolean === true) {
+      if (this.disabled) {
+        this.disabled = false;
+      }
+      if (!this.visible) {
+        this.visible = true;
+      }
+    }
+  },
+
   /**
    * @returns {void}
    */
   show() {
     this.visible = true;
-    this.element.classList.remove('hidden');
   },
 
   /**
@@ -101,7 +108,24 @@ ToolbarFlexItem.prototype = {
    */
   hide() {
     this.visible = false;
+  },
+
+  /**
+   * @param {boolean} boolean whether or not the `hidden` class should be set.
+   */
+  set visible(boolean) {
+    if (boolean) {
+      this.element.classList.remove('hidden');
+      return;
+    }
     this.element.classList.add('hidden');
+  },
+
+  /**
+   * @returns {boolean} whether or not the Toolbar Item is visible.
+   */
+  get visible() {
+    return this.element.className.indexOf('hidden') === -1;
   },
 
   /**
@@ -109,48 +133,81 @@ ToolbarFlexItem.prototype = {
    */
   enable() {
     this.disabled = false;
-    this.element.disabled = false;
-    this.readonly = false;
-    this.element.readonly = false;
-  },
-
-  /**
-   * @returns {void}
-   */
-  disable() {
-    this.disabled = true;
-    this.element.disabled = true;
-    this.readonly = false;
-    this.element.readonly = false;
-  },
-
-  /**
-   * @returns {void}
-   */
-  readonly() {
-    if (TOOLBAR_READONLY_TYPES.indexOf(this.type) === -1) {
-      return; // TODO: throw error?
+    if (this.hasReadonly) {
+      this.readonly = false;
     }
-    this.disabled = false;
-    this.element.disabled = false;
-    this.readonly = true;
-    this.element.readonly = true;
   },
 
   /**
-   * @returns {void}
+   * @returns {boolean} whether or not the element is disabled
    */
-  enableFocus() {
-    this.focusable = true;
-    this.element.tabIndex = 0;
+  get disabled() {
+    return this.element.disabled;
   },
 
   /**
+   * @param {boolean} boolean, if provided, sets a disabled state on the toolbar item.
    * @returns {void}
    */
-  disableFocus() {
-    this.focusable = false;
+  set disabled(boolean) {
+    if (boolean) {
+      this.element.disabled = true;
+      this.readonly = false;
+    }
+  },
+
+  /**
+   * @returns {boolean} whether or not `readonly` as a property exists on this HTMLElement type.
+   */
+  get hasReadonly() {
+    return 'readonly' in this.element;
+  },
+
+  /**
+   * @returns {boolean} element's readonly prop
+   */
+  get readonly() {
+    if (!this.hasReadonly) {
+      return false;
+    }
+    return this.element.readonly;
+  },
+
+  /**
+   * @param {boolean} boolean, if provided, sets a readonly state on the toolbar item, if possible.
+   * @returns {void}
+   */
+  set readonly(boolean) {
+    if (!this.hasReadonly) {
+      return;
+    }
+
+    if (boolean) {
+      this.disabled = false;
+      this.element.disabled = false;
+      this.element.readonly = true;
+      return;
+    }
+
+    this.element.readonly = false;
+  },
+
+  get selected() {
+    return this.element.tabIndex === 0;
+  },
+
+  /**
+   * @param {boolean} boolean, if provided, sets a selected state on the toolbar item.
+   * @returns {void}
+   */
+  set selected(boolean) {
+    if (boolean) {
+      this.element.tabIndex = 0;
+      this.element.classList.add('is-selected');
+      return;
+    }
     this.element.tabIndex = -1;
+    this.element.classList.remove('is-selected');
   },
 
   /**
@@ -170,6 +227,7 @@ ToolbarFlexItem.prototype = {
    */
   teardown() {
     delete this.type;
+    delete this.selected;
     delete this.focusable;
     delete this.visible;
     delete this.disabled;
@@ -178,4 +236,4 @@ ToolbarFlexItem.prototype = {
 
 };
 
-export { ToolbarFlexItem, COMPONENT_NAME, TOOLBAR_ELEMENTS };
+export { ToolbarFlexItem, getToolbarItemType, COMPONENT_NAME, TOOLBAR_ELEMENTS };

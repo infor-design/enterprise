@@ -39,6 +39,11 @@ export function log(type, message) {
     return;
   }
 
+  if (!message && typeof type === 'string') {
+    message = type;
+    type = 'log';
+  }
+
   if (typeof !console[type] !== 'function') {  // eslint-disable-line
     type = 'log';
   }

@@ -1,5 +1,9 @@
 import { utils } from '../utils/utils';
-import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
+import { log } from '../utils/debug';
+import { TOOLBAR_ELEMENTS } from './toolbar-flex.item';
+
+// jQuery Components
+import './toolbar-flex.item.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'toolbar-flex';
@@ -34,12 +38,25 @@ ToolbarFlex.prototype = {
    */
   init() {
     this.sections = this.element.querySelectorAll('.toolbar-section');
-    this.items = this.getElements().map(item => new ToolbarFlexItem(item));
+    this.items = this.getElements().map((item) => {
+      $(item).toolbarflexitem();
+      return $(item).data('toolbarflexitem');
+    });
 
     if (!this.items) {
       return;
     }
 
+    // Check for a selected item
+    this.items.forEach((item) => {
+      if (item.selected) {
+        if (this.selectedItem === undefined) {
+          this.selectedItem = item;
+        } else {
+          item.selected = false;
+        }
+      }
+    });
     if (!this.selectedItem) {
       this.selectedItem = this.items[0];
     }
@@ -53,14 +70,39 @@ ToolbarFlex.prototype = {
    */
   handleEvents() {
     $('body').on(`resize.${COMPONENT_NAME}`, () => this.handleResize);
-    this.element.addEventListener('keypress', this.handleItemKeypress.bind(this));
+    this.element.addEventListener('keydown', this.handleKeydown.bind(this));
   },
 
   /**
-   *
+   * Event Handler for internal `keydown` events.
+   * @param {KeyboardEvent} e `keydown`
+   * @returns {void}
    */
-  handleItemKeypress(e) {
+  handleKeydown(e) {
+    const target = e.target;
 
+    // Toolbar Items get handled separately.
+    if ($(target).data('toolbarflexitem')) {
+      this.handleItemKeydown(e);
+      // return;
+    }
+  },
+
+  /**
+   * Event Handler for internal `keydown` events, specifically on Toolbar Items.
+   * @param {KeyboardEvent} e `keydown`
+   * @returns {void}
+   */
+  handleItemKeydown(e) {
+    const key = e.key;
+
+    if (key === 'ArrowLeft' || key === 'ArrowUp') {
+      this.navigate(-1);
+    }
+
+    if (key === 'ArrowRight' || key === 'ArrowDown') {
+      this.navigate(1);
+    }
   },
 
   /**
@@ -88,24 +130,86 @@ ToolbarFlex.prototype = {
     return items;
   },
 
+  /**
+   * @returns {ToolbarFlexItem|undefined} either a toolbar item, or undefined if one
+   *  wasn't previously selected.
+   */
   get selectedItem() {
-    if (!this.items || !this.items.length) {
-      return undefined;
+    if (this.trueSelectedItem) {
+      return this.trueSelectedItem;
     }
-
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].focusable) {
+      if (this.items[i].selected === true) {
         return this.items[i];
       }
     }
     return undefined;
   },
 
+  // Setter for SelectedItem
   set selectedItem(item) {
     for (let i = 0; i < this.items.length; i++) {
-      this.items[i].disableFocus();
+      this.items[i].selected = false;
     }
-    item.enableFocus();
+    item.selected = true;
+    this.trueSelectedItem = item;
+  },
+
+  // Flag for figuring out if a Toolbar's items are all completely unavailable for keyboard focus.
+  get hasFocusableItems() {
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].focusable === true) {
+        return true;
+      }
+    }
+    return false;
+  },
+
+  /**
+   * Navigates among toolbar items and gets a reference to a potential target for focus.
+   * @param {number} direction positive/negative value representing how many spaces to move
+   * @param {number} [currentIndex] the index to start checking from
+   *  the current focus either right/left respectively.
+   */
+  navigate(direction, currentIndex) {
+    if (this.hasFocusableItems === false) {
+      log('No focusable items');
+      return;
+    }
+
+    if (currentIndex === undefined) {
+      currentIndex = this.items.indexOf(this.selectedItem);
+    }
+
+    log(`Toolbar Navigation: ${direction} points away from index ${currentIndex}`);
+
+    while (direction !== 0) {
+      if (direction > 0) {
+        if (currentIndex === this.items.length - 1) {
+          currentIndex = 0;
+        } else {
+          currentIndex++;
+        }
+        --direction;
+      }
+      if (direction < 0) {
+        if (currentIndex === 0) {
+          currentIndex = this.items.length - 1;
+        } else {
+          --currentIndex;
+        }
+        direction++;
+      }
+    }
+
+    const targetItem = this.items[currentIndex];
+    if (targetItem.focusable === false) {
+      this.navigate(direction > 0 ? 1 : -1, currentIndex);
+      return;
+    }
+
+    this.selectedItem = targetItem;
+    this.selectedItem.element.focus();
   },
 
   /**
@@ -126,7 +230,7 @@ ToolbarFlex.prototype = {
    */
   teardown() {
     $('body').off(`resize.${COMPONENT_NAME}`);
-    this.element.removeEventListener('keypress', this.handleItemKeypress.bind(this));
+    this.element.removeEventListener('keydown', this.handleKeypress.bind(this));
   },
 
   /**
