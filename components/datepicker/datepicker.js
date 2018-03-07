@@ -1572,8 +1572,11 @@ DatePicker.prototype = {
     }
 
     // Check and fix two digit year for main input element
-    self.element.validateField();
-    if (self.element.isValid() && self.element.val().trim() !== '') {
+    const dateFormat = self.pattern;
+    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy');
+    const parsedDate = Locale.parseDate(self.element.val().trim(), dateFormat, isStrict);
+
+    if (parsedDate !== undefined && self.element.val().trim() !== '') {
       self.setValue(Locale.parseDate(self.element.val().trim(), self.pattern, false));
     }
   },

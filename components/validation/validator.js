@@ -475,7 +475,7 @@ Validator.prototype = {
     const value = self.value(field);
     const placeholder = field.attr('placeholder');
 
-    function manageResult(result, type) {
+    function manageResult(result, showTooltip, type) {
       // Only remove if "false", not any other value ie.. undefined
       if (rule.positive === false) {
         self.removePositive(field);
@@ -498,7 +498,6 @@ Validator.prototype = {
           dfd.resolve();
         }
       } else if ($.grep(results, res => res === validationType.type).length === 0) {
-        self.removeMessage(field, validationType.type);
         dfd.resolve();
 
         if (rule.positive) {
