@@ -5,6 +5,7 @@
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
   "license": "Runtime License",
+  "private": true,
   "scripts": {
     "start": "node server.js",
     "stop": "./bin/stop.sh",

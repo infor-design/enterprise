@@ -1,0 +1,14 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="timepicker-main" class="label">Timepicker</label>
+      <input id="timepicker-main" class="timepicker" data-init="false" type="text" data-options="{removePunctuation: true}" value="1:00 AM"/>
+    </div>
+  </div>
+</div>
+
+<script>
+  var stripedVal = $('#timepicker-main').timepicker().data('timepicker').value(true);
+  $('#timepicker-main').val(stripedVal);
+</script>
