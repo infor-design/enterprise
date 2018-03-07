@@ -200,8 +200,8 @@ Blockgrid.prototype = {
       blockelements += `<div class="block is-selectable" role="listitem" tabindex="0">
       <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" idx="${i}">
       <label for="checkbox${i}" class="checkbox-label"><span class="audible">${selectText}</span></label>
-      <img alt="Placeholder Image" src="${data.img}" class="image-round">
-      <p> ${data.maintxt} <br> ${data.subtxt} </p></div>`;
+      <img alt="Placeholder Image" src="${data.img || data.image}" class="image-round">
+      <p> ${data.maintxt || data.title} <br> ${data.subtxt || data.subtitle} </p></div>`;
     }
 
     this.element.attr('role', 'list').append(blockelements);
@@ -212,6 +212,8 @@ Blockgrid.prototype = {
    * @returns {[type]} [description]
    */
   updated() {
+    this.element.empty();
+
     return this
       .teardown()
       .init();

@@ -2,25 +2,25 @@
 
 ### Table of Contents
 
--   [MODAL_DEFAULTS](#modal_defaults)
--   [Modal](#modal)
-    -   [disableSubmit](#disablesubmit)
-    -   [open](#open)
-    -   [close](#close)
+-   [MODAL_DEFAULTS][1]
+-   [Modal][2]
+    -   [disableSubmit][3]
+    -   [open][4]
+    -   [close][5]
 
 ## MODAL_DEFAULTS
 
 **Properties**
 
--   `trigger` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The method of opening the dialog. Supports click, immediate.
--   `buttons` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of buttons that will sit in the toolbar's Buttonset area.
+-   `trigger` **[string][6]** The method of opening the dialog. Supports click, immediate.
+-   `buttons` **[array][7]** A list of buttons that will sit in the toolbar's Buttonset area.
 -   `isAlert` **isAlert** Adds alertdialog role for message dialogs.
 -   `content` **content** Ability to pass in dialog html content.
--   `cssClass` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Append a css class to top level.
--   `autoFocus` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the first input will be focused.
--   `id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Optionally tag a dialog with an id.
--   `frameHeight` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Optional extra height to add.
--   `frameWidth` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Optional extra width to add.
+-   `cssClass` **[string][6]** Append a css class to top level.
+-   `autoFocus` **[boolean][8]** If true the first input will be focused.
+-   `id` **[string][6]** Optionally tag a dialog with an id.
+-   `frameHeight` **[number][9]** Optional extra height to add.
+-   `frameWidth` **[number][9]** Optional extra width to add.
 
 ## Modal
 
@@ -28,8 +28,8 @@ Responsive and Accessible Modal Control
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][6]** The component element.
+-   `settings` **[string][6]** The component settings.
 
 ### disableSubmit
 
@@ -49,6 +49,24 @@ Close the modal.
 
 **Parameters**
 
--   `destroy` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Call the destroy method.
+-   `destroy` **[boolean][8]** Call the destroy method.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If the dialog was open returns false. If the dialog was closed is true.
+Returns **[boolean][8]** If the dialog was open returns false. If the dialog was closed is true.
+
+[1]: #modal_defaults
+
+[2]: #modal
+
+[3]: #disablesubmit
+
+[4]: #open
+
+[5]: #close
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

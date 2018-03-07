@@ -2,17 +2,12 @@
 
 ### Table of Contents
 
--   [FILEUPLOAD_DEFAULTS](#fileupload_defaults)
--   [FileUpload](#fileupload)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-    -   [disable](#disable)
-    -   [enable](#enable)
-    -   [readonly](#readonly)
-
-## FILEUPLOAD_DEFAULTS
-
-Default FileUpload Options
+-   [FileUpload][1]
+    -   [updated][2]
+    -   [destroy][3]
+    -   [disable][4]
+    -   [enable][5]
+    -   [readonly][6]
 
 ## FileUpload
 
@@ -20,8 +15,8 @@ A list of items with add/remove/delete and sort functionality.
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[String][7]** The component element.
+-   `settings` **[String][7]** The component settings.
 
 ### updated
 
@@ -29,9 +24,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[Object][8]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[Object][8]** The api
 
 ### destroy
 
@@ -56,3 +51,19 @@ Returns **void**
 Make the input readonly and disable the button.
 
 Returns **void** 
+
+[1]: #fileupload
+
+[2]: #updated
+
+[3]: #destroy
+
+[4]: #disable
+
+[5]: #enable
+
+[6]: #readonly
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

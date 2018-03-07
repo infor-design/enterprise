@@ -2,14 +2,14 @@
 
 ### Table of Contents
 
--   [BLOCKGRID_DEFAULTS](#blockgrid_defaults)
--   [ComponentName](#componentname)
--   [init](#init)
--   [selectBlock](#selectblock)
--   [updated](#updated)
--   [destroy](#destroy)
--   [selected](#selected)
--   [unselected](#unselected)
+-   [BLOCKGRID_DEFAULTS][1]
+-   [ComponentName][2]
+-   [init][3]
+-   [selectBlock][4]
+-   [updated][5]
+-   [destroy][6]
+-   [selected][7]
+-   [unselected][8]
 
 ## BLOCKGRID_DEFAULTS
 
@@ -17,8 +17,8 @@ Blockgrid Default Settings
 
 **Properties**
 
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of data objects
--   `selectable` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls the selection mode this can be:
+-   `dataset` **[array][9]** An array of data objects
+-   `selectable` **[string][10]** Controls the selection mode this can be:
     false, 'single' or 'multiple' or 'mixed'
 
 ## ComponentName
@@ -27,14 +27,14 @@ Component Name - Does this and that.
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
+-   `element` **[string][10]** The plugin element for the constuctor
+-   `settings` **[string][10]** The settings element.
 
 ## init
 
 Do initialization, build up and / or add events ect.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The Component prototype, useful for chaining.
+Returns **[object][11]** The Component prototype, useful for chaining.
 
 ## selectBlock
 
@@ -42,9 +42,9 @@ Run selection over a block item
 
 **Parameters**
 
--   `activeBlock` **[element](https://developer.mozilla.org/docs/Web/API/Element)** Dom element to use
--   `isCheckbox` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if a checkbox, used for mixed mode.
--   `isKey` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if a key was used on the checkbox, used for mixed mode.
+-   `activeBlock` **[element][12]** Dom element to use
+-   `isCheckbox` **[boolean][13]** True if a checkbox, used for mixed mode.
+-   `isKey` **[boolean][13]** True if a key was used on the checkbox, used for mixed mode.
 
 ## updated
 
@@ -62,8 +62,8 @@ Fires when a block is selected
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+-   `event` **[object][11]** The jquery event object
+-   `ui` **[object][11]** The dialog object
 
 ## unselected
 
@@ -71,5 +71,31 @@ Fires when a block is unselected
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+-   `event` **[object][11]** The jquery event object
+-   `ui` **[object][11]** The dialog object
+
+[1]: #blockgrid_defaults
+
+[2]: #componentname
+
+[3]: #init
+
+[4]: #selectblock
+
+[5]: #updated
+
+[6]: #destroy
+
+[7]: #selected
+
+[8]: #unselected
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[12]: https://developer.mozilla.org/docs/Web/API/Element
+
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
