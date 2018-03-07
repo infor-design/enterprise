@@ -1,19 +1,24 @@
 <div class="row">
 	<div class="twelve columns">
 
-		<button class="btn-secondary" type="button" id="add-context">Add Context</button><br><br>
+		<button class="btn-secondary" type="button" id="add-context">Show Modal</button><br/><br/>
 
-		<!-- "Context" Example -->
-		<div id="modal-add-context" style="display: none;">
+		<!-- Modal Example -->
+		<div id="modal-add-context" class="hidden">
 			<div class="field">
-				<label for="title">Title</label>
-				<input type="text" id="title" name="title" />
+				<label for="subject">Problem</label>
+				<input type="text" id="subject" name="subject" />
 			</div>
 
-			<div class="field">
-				<label for="first-name">First Name</label>
-				<input type="text" id="first-name" name="first-name" placeholder="Normal text Field">
-			</div>
+      <div class="field">
+        <label for="location" class="label">Location</label>
+        <select id="location" name="location" class="dropdown">
+          <option value="N">North</option>
+          <option value="S">South</option>
+          <option value="E">East</option>
+          <option value="W">West</option>
+        </select>
+      </div>
 
 			<div class="field">
 				<label for="description-max">Notes (maxlength)</label>

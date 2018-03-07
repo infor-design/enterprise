@@ -5,9 +5,7 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'fileupload';
 
-/**
- * Default FileUpload Options
- */
+// Placeholder for future options
 const FILEUPLOAD_DEFAULTS = {
 };
 
@@ -197,9 +195,8 @@ FileUpload.prototype = {
     if (typeof settings !== 'undefined') {
       this.settings = utils.mergeSettings(this.element, settings, FILEUPLOAD_DEFAULTS);
     }
-    return this
-      .unbind()
-      .init();
+    // Nothing to do here as there are no settings.
+    return this;
   },
 
   /**

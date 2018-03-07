@@ -4,7 +4,7 @@
   "shortName": "sohoxi",
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
-  "license": "UNLICENSED",
+  "license": "Runtime License",
   "publishConfig": {
     "scope": "@infor",
     "registry": "http://npm.infor.com:4873/"

@@ -1,6 +1,17 @@
 <div class="row">
   <div class="twelve columns">
-    <h1 class="section-title">Block Grid Single Selection</h1>
+    <div class="toolbar" role="toolbar">
+      <div class="title">Toolbar Title</div>
+      <div class="buttonset">
+
+        <button class="btn" id="update" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-update"></use>
+          </svg>
+          <span>Update</span>
+        </button>
+      </div>
+    </div>
     <div class="row blockgrid l-center" id="blockgrid">
   </div>
 </div>
@@ -40,12 +51,23 @@
       id: 5
     });
 
-    $('#blockgrid').blockgrid({
+    var bg = $('#blockgrid').blockgrid({
       dataset: data,
       selectable: 'single'
     }).on('selected', function (e, args) {
       console.log(args);
     });
+
+    $('#update').on('click', function () {
+      data[0].maintxt = 'Updated';
+      data[1].maintxt = 'Updated';
+      data[2].maintxt = 'Updated';
+      data[3].maintxt = 'Updated';
+      data[4].maintxt = 'Updated';
+      bg.data('blockgrid').settings.dataset = data;
+      bg.data('blockgrid').updated();
+    });
+
   });
 
 </script>

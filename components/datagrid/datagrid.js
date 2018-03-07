@@ -2739,6 +2739,16 @@ Datagrid.prototype = {
       }
     }
 
+    const hasTag = columnDef.formatter ?
+      columnDef.formatter.toString().indexOf('<span class="tag') > -1 : false;
+
+    const hasAlert = columnDef.formatter ?
+      columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
+
+    if (hasAlert) {
+      max += 10;
+    }
+
     // Use header text length as max if bigger than all data cells
     if (title.length > max) {
       max = title.length;
@@ -2757,9 +2767,15 @@ Datagrid.prototype = {
     context.font = '14px arial';
 
     const metrics = context.measureText(maxText);
-    const hasImages = columnDef.formatter ?
-      columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
-    let padding = (chooseHeader ? 60 + (hasImages ? 36 : 0) : 40 + (hasImages ? 36 : 0));
+    let padding = chooseHeader ? 35 : 40;
+
+    if (hasAlert && !chooseHeader) {
+      padding += 20;
+    }
+
+    if (hasTag && !chooseHeader) {
+      padding += 10;
+    }
 
     if (columnDef.filterType) {
       let minWidth = columnDef.filterType === 'date' ? 170 : 100;
