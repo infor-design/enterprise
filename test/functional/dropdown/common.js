@@ -1,3 +1,4 @@
+/* eslint-disable */
 define([
     'intern!object',
     'intern/chai!expect',

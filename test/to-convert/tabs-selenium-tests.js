@@ -1,3 +1,4 @@
+/* eslint-disable */
 /***************************
  * Tabs - Selenium Tests
  * These tests run using webdriverJS and Selenium, in a true browser environment
@@ -157,6 +158,11 @@ describe('Tabs [selenium]', function(){
         result.should.equal(true);
       })
       .call(done);
+  });
+
+  //From old conversion
+  it.skip('should have the currently selected tab\'s corresponding panel activated' {
+
   });
 
 });

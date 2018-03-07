@@ -475,7 +475,7 @@ Validator.prototype = {
     const value = self.value(field);
     const placeholder = field.attr('placeholder');
 
-    function manageResult(result, showTooltip, type) {
+    function manageResult(result, showResultTooltip, type) {
       // Only remove if "false", not any other value ie.. undefined
       if (rule.positive === false) {
         self.removePositive(field);
@@ -489,7 +489,7 @@ Validator.prototype = {
           return;
         }
 
-        self.addMessage(field, rule.message, rule.type, field.attr(`data-${validationType.type}-type`) !== 'tooltip', showTooltip);
+        self.addMessage(field, rule.message, rule.type, field.attr(`data-${validationType.type}-type`) !== 'tooltip', showResultTooltip);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
@@ -504,7 +504,7 @@ Validator.prototype = {
           // FIX: In Contextual Action Panel control not sure why but need to add error,
           // otherwise "icon-confirm" get misaligned,
           // so for this fix adding and then removing error here
-          self.addMessage(field, rule.message, rule.type, rule.inline, showTooltip);
+          self.addMessage(field, rule.message, rule.type, rule.inline, showResultTooltip);
           self.removeMessage(field, rule.type);
           dfd.resolve();
 
