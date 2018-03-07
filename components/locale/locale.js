@@ -852,6 +852,10 @@ const Locale = {  // eslint-disable-line
       return NaN;
     }
 
+    if (typeof input === 'number') {
+      numString = numString.toString();
+    }
+
     const group = numSettings ? numSettings.group : ',';
     const decimal = numSettings ? numSettings.decimal : '.';
     const percentSign = numSettings ? numSettings.percentSign : '%';

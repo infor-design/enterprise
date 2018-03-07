@@ -5,14 +5,6 @@
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
   "license": "Runtime License",
-  "repository": {
-    "type": "git",
-    "url": "git://git.infor.com/scm/soho/controls.git"
-  },
-  "publishConfig": {
-    "scope": "@infor",
-    "registry": "http://npm.infor.com:4873/"
-  },
   "scripts": {
     "start": "node server.js",
     "stop": "./bin/stop.sh",
@@ -45,10 +37,6 @@
   "dependencies": {
     "d3": "^4.13.0",
     "jquery": "^3.1.1"
-  },
-  "main": "dist/js/sohoxi",
-  "jspm": {
-    "main": "dist/js/sohoxi"
   },
   "devDependencies": {
     "axe-core": "^2.6.1",

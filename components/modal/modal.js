@@ -119,8 +119,8 @@ Modal.prototype = {
       } else {
         this.element.find('.modal-body').append(this.settings.content);
       }
-
       if (this.settings.content instanceof jQuery) {
+        this.settings.content.removeClass('hidden is-hidden');
         this.settings.content.show();
       }
     }
