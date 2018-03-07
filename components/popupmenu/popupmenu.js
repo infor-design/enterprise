@@ -464,9 +464,9 @@ PopupMenu.prototype = {
             break;
         }
       })
-      .on('updated.popupmenu', (e) => {
+      .on('updated.popupmenu', (e, settings) => {
         e.stopPropagation();
-        self.updated();
+        self.updated(settings);
       });
 
     // Media Query Listener to detect a menu closing on mobile devices that change orientation.
