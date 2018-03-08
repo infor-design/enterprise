@@ -10,6 +10,7 @@ function hyperlinkFilter(elem) {
 
 // Toolbar Focusable Element Selectors.
 // Any of these element/class types are valid toolbar items.
+// TODO: Designate between "button" and "menu button"
 const TOOLBAR_ELEMENTS = [
   { type: 'button', selector: 'button, input[type="button"]' },
   { type: 'hyperlink', selector: 'a[href]', filter: hyperlinkFilter },

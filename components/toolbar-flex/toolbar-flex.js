@@ -310,6 +310,9 @@ ToolbarFlex.prototype = {
     this.element.removeEventListener('click', this.handleClick.bind(this));
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
+
+    delete this.items;
+    delete this.sections;
   },
 
   /**
