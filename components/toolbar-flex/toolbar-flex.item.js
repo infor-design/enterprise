@@ -96,6 +96,55 @@ ToolbarFlexItem.prototype = {
     }
   },
 
+  get focused() {
+    return this.element.tabIndex === 0;
+  },
+
+  /**
+   * @param {boolean} boolean, if provided, sets a focused state on the toolbar item.
+   * @returns {void}
+   */
+  set focused(boolean) {
+    if (boolean) {
+      this.element.tabIndex = 0;
+      this.element.focus();
+      return;
+    }
+    this.element.tabIndex = -1;
+  },
+
+  get selected() {
+    return this.trueSelected;
+  },
+
+  /**
+   * @param {boolean} boolean, if provided, sets a selected state on the toolbar item.
+   * @returns {void}
+   */
+  set selected(boolean) {
+    if (boolean) {
+      this.trueSelected = true;
+      this.element.classList.add('is-selected');
+      this.triggerSelectedEvent();
+      return;
+    }
+    this.trueSelected = false;
+    this.element.classList.remove('is-selected');
+  },
+
+  /**
+   * @fires selected
+   * @returns {void}
+   */
+  triggerSelectedEvent() {
+    const eventArgs = [this];
+
+    // TODO: Pass additional stuff for certain scenarioes
+    // FX: if it's menu button, add an argument representing the menu button item that was picked.
+
+    $(this.element).trigger('selected', eventArgs);
+  },
+
   /**
    * @returns {void}
    */
@@ -190,24 +239,6 @@ ToolbarFlexItem.prototype = {
     }
 
     this.element.readonly = false;
-  },
-
-  get selected() {
-    return this.element.tabIndex === 0;
-  },
-
-  /**
-   * @param {boolean} boolean, if provided, sets a selected state on the toolbar item.
-   * @returns {void}
-   */
-  set selected(boolean) {
-    if (boolean) {
-      this.element.tabIndex = 0;
-      this.element.classList.add('is-selected');
-      return;
-    }
-    this.element.tabIndex = -1;
-    this.element.classList.remove('is-selected');
   },
 
   /**

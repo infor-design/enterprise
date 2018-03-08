@@ -206,3 +206,17 @@
 
   </div>
 </div>
+
+<script type="text/javascript">
+  $('.flex-toolbar').on('selected.test', function(e, item) {
+    var text = $(item.element).text().trim();
+
+    $('body').toast({
+      title: 'Toolbar Item Selected',
+      message: '<p>' +
+        'text content: "'+ text +'"<br/>' +
+        'item type: "'+ item.type +'"' +
+      '</p>'
+    });
+  });
+</script>
