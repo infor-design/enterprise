@@ -51,7 +51,7 @@ describe('Dropdown tests', () => {
     }
   });
 
-  it('Should scroll down to end of list, VT should be visible', async (done) => {
+  it('Should scroll down to end of list, and Vermont should be visible', async (done) => {
     try {
       await clickOnDropdown();
 
