@@ -252,6 +252,10 @@ Personalize.prototype = {
     if (css.length > 0) {
       const path = css.attr('href');
       thisTheme = path.substring(path.lastIndexOf('/') + 1).replace('.min.css', '').replace('.css', '').replace('-theme', '');
+
+      if (thisTheme.lastIndexOf('?') > -1) {
+        thisTheme = thisTheme.substring(0, thisTheme.lastIndexOf('?'));
+      }
     }
     return thisTheme;
   },
@@ -290,9 +294,12 @@ Personalize.prototype = {
       self.unBlockUi();
     });
 
+    const themePath = path ? path.substring(0, path.lastIndexOf('/')) : `${exports.theme}`;
+    const isMin = path ? path.indexOf('.min') > -1 : false;
+
     newCss.attr({
       id: originalCss.attr('id'),
-      href: `${path.substring(0, path.lastIndexOf('/'))}/${theme}-theme${path.indexOf('.min') > -1 ? '.min' : ''}.css`
+      href: `/${themePath}-theme${isMin ? '.min' : ''}.css`
     });
     originalCss.removeAttr('id');
     originalCss.after(newCss);
