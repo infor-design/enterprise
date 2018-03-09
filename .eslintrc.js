@@ -9,11 +9,17 @@
 module.exports = {
   // Only import some air bnb rules
   // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
-  'extends': 'airbnb-base',
+  'extends': [
+    'airbnb-base',
+    'plugin:jasmine/recommended'
+  ],
   'parserOptions': {
     'ecmaVersion': 8,
     'sourceType': 'module'
   },
+  'plugins': [
+    'jasmine'
+  ],
   'env': {
     'browser': true,
     'jquery': true,

@@ -36,36 +36,42 @@ describe('Dropdown API', () => {
 
   it('Should open dropdown', () => {
     dropdownObj.open();
+
     expect(dropdownObj.isOpen()).toBeTruthy();
     expect(document.body.querySelector('.dropdown.is-open')).toBeTruthy();
   });
 
   it('Should activate dropdown', () => {
     dropdownObj.activate();
+
     expect(dropdownObj.isOpen()).toBeFalsy();
     expect(document.body.querySelector('.dropdown.is-open')).toBeFalsy();
   });
 
   it('Should destroy dropdown', () => {
     dropdownObj.destroy();
+
     expect(dropdownObj.isOpen()).toBeFalsy();
     expect(document.body.querySelector('.dropdown.is-open')).toBeFalsy();
   });
 
   it('Should disable dropdown', () => {
     dropdownObj.disable();
+
     expect(document.body.querySelector('.dropdown.is-disabled')).toBeTruthy();
     expect(dropdownObj.isDisabled()).toBeTruthy();
   });
 
   it('Should enable dropdown', () => {
     dropdownObj.enable();
+
     expect(document.body.querySelector('.dropdown.is-disabled')).toBeFalsy();
     expect(dropdownObj.isDisabled()).toBeFalsy();
   });
 
   it('Should render dropdown readonly', () => {
     dropdownObj.readonly();
+
     expect(document.body.querySelector('.dropdown.is-readonly')).toBeTruthy();
     expect(dropdownObj.isDisabled()).toBeFalsy();
   });

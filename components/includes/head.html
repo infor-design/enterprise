@@ -36,6 +36,8 @@
 
   <script>
     var colors;
+    var theme;
+
     {{#colors}}
     colors = '{{colors}}'.split(',');
     console.log(colors);
@@ -50,8 +52,12 @@
 
     {{/colors}}
 
+    {{#theme}}
+    theme = '{{theme}}';
+    {{/theme}}
+
     //If Initialize isnt called need to defer this
-    $('html').personalize({colors: colors});
+    $('html').personalize({colors: colors, theme: theme});
   </script>
 
   <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme}}-theme.css" type="text/css"/>

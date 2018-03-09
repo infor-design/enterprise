@@ -756,6 +756,9 @@ Line.prototype = {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
     this.element.empty();
 
+    if (settings && settings.dataset) {
+      this.settings.dataset = settings.dataset;
+    }
     return this
       .teardown()
       .init();

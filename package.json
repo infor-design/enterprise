@@ -51,6 +51,7 @@
     "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jasmine": "^2.9.3",
     "express": "^4.13.4",
     "express-slash": "^2.0.1",
     "extend": "^3.0.0",
@@ -86,6 +87,7 @@
     "pandoc": "^0.2.0",
     "protractor": "^5.3.0",
     "protractor-image-comparison": "^1.5.1",
+    "r2": "^2.0.0",
     "rollup": "^0.55.3",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-json": "^2.3.0",
@@ -94,7 +96,6 @@
     "uglify-es": "^3.3.9",
     "unoconv": "^0.1.2",
     "vinyl-write": "^0.2.2",
-    "r2": "^2.0.0",
     "webpack": "^3.11.0",
     "webpack-cli": "^2.0.4"
   }
