@@ -102,12 +102,12 @@ Promise.all(setupPromises)
     logTaskStart('writing files');
 
     let writePromises = [writeSitemap()];
-    for (docName in allDocsObj) {
-      writePromises.push(writeJsonFile(docName));
+    for (compName in allDocsObj) {
+      writePromises.push(writeJsonFile(compName));
     }
 
     Promise.all(writePromises)
-      .catch(function(err) {
+      .catch(err => {
         console.error(chalk.red('Error!'), err);
       })
       .then(values => {
@@ -120,6 +120,11 @@ Promise.all(setupPromises)
 // -------------------------------------
 //   Functions
 // -------------------------------------
+
+/**
+ * Compiled the component's MD and DocJS
+ * @return {Promise}
+ */
 function compileComponents() {
   return new Promise((resolve, reject) => {
 
@@ -127,16 +132,16 @@ function compileComponents() {
     let compPromises = [];
     let compName = '';
 
-    glob(`${paths.components}/*/`, (err, components) => {
-      componentStats.total = components.length;
+    glob(`${paths.components}/*/`, (err, componentDirs) => {
+      componentStats.total = componentDirs.length;
 
-      for (compPath of components) {
-        compName = deriveComponentName(compPath);
+      for (compDir of componentDirs) {
+        compName = deriveComponentName(compDir);
 
         // For testing to only get one or two components
         if (argv.testMode && !testComponents.includes(compName)) continue;
 
-        if (!documentationExists(compName, compPath)) {
+        if (!documentationExists(compName)) {
           logTaskAction('Skipping', compName, 'yellow');
           componentStats.numSkipped++;
           continue;
@@ -148,8 +153,8 @@ function compileComponents() {
         });
 
         // note: comp path includes an ending "/"
-        compPromises.push(documentJsAsJson(compName, `${compPath}${compName}.js`));
-        compPromises.push(markdownToHtml(compName, `${compPath}${compName}.md`));
+        compPromises.push(documentJsAsJson(compName));
+        compPromises.push(markdownToHtml(`${compDir}${compName}.md`));
       }
 
       Promise.all(compPromises)
@@ -164,6 +169,10 @@ function compileComponents() {
   })
 }
 
+/**
+ * Compile all ids-website supporting MD files
+ * @return {Promise}
+ */
 function compileSupportingDocs() {
   return new Promise((resolve, reject) => {
 
@@ -180,7 +189,7 @@ function compileSupportingDocs() {
           description: 'All about ' + fileName,
         });
 
-        promises.push(markdownToHtml(fileName, filePath));
+        promises.push(markdownToHtml(filePath));
       }
 
       Promise.all(promises)
@@ -195,6 +204,10 @@ function compileSupportingDocs() {
   })
 }
 
+/**
+ * Remove any dist directories
+ * @return {Promise}
+ */
 function cleanDist() {
   return del([paths.dist])
     .then(res => {
@@ -205,6 +218,10 @@ function cleanDist() {
   );
 }
 
+/**
+ * Convert/write the sitemap.yml to sitemap.json into dist
+ * @return {Promise}
+ */
 function writeSitemap() {
   return new Promise((resolve, reject) => {
     let doc = '';
@@ -225,23 +242,29 @@ function writeSitemap() {
   });
 }
 
-function markdownToHtml(name, path) {
+/**
+ * Convert markdown into html
+ * @param  {string} filePath - the full file path
+ * @return {Promise}
+ */
+function markdownToHtml(filePath) {
+  let fileBasename = path.basename(filePath, '.md');
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf8', (err, data) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
         reject(err);
       } else {
         const fmData = frontMatter(data);
-        if (fmData.attributes.title) allDocsObj[name].title = fmData.attributes.title;
-        if (fmData.attributes.description) allDocsObj[name].description = fmData.attributes.description;
+        if (fmData.attributes.title) allDocsObj[fileBasename].title = fmData.attributes.title;
+        if (fmData.attributes.description) allDocsObj[fileBasename].description = fmData.attributes.description;
 
         marked(fmData.body, (err, content) => {
           if (err) {
             reject(err);
           } else {
             componentStats.numConverted++;
-            logTaskAction('Converting', name + '.md')
-            resolve(allDocsObj[name].body = content);
+            logTaskAction('Converting', fileBasename + '.md')
+            resolve(allDocsObj[fileBasename].body = content);
           }
         });
       }
@@ -249,48 +272,86 @@ function markdownToHtml(name, path) {
   });
 }
 
-function createDir(path) {
-  if (!fs.existsSync(path)) {
-    fs.mkdirSync(path);
-    logTaskAction('Created', path);
+/**
+ * Create a directory
+ * @param  {string} dirPath - the directory path
+ */
+function createDir(dirPath) {
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath);
+    logTaskAction('Created', dirPath);
   }
 }
 
-function documentationExists(name, path) {
-  return fs.existsSync(`${path}/${name}.md`);
+/**
+ * Check if the component (directory) has a documentation mardkdown file
+ * @param  {string} componentName - the name of the component
+ * @return {Boolean}
+ */
+function documentationExists(componentName) {
+  return fs.existsSync(`${paths.components}/${componentName}/${componentName}.md`);
 }
 
-function documentJsAsJson(name, path) {
-  return documentation.build([path], { extension: 'js', shallow: true })
+/**
+ * Run documentationJs on a file with JSON output
+ * @param  {string} componentName - the name of the component
+ * @return {Promise}
+
+ */
+function documentJsAsJson(componentName) {
+  const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
+  return documentation.build([compFilePath], { extension: 'js', shallow: true })
     .then(documentation.formats.json)
     .then(output => {
       componentStats.numDocumented++;
-      logTaskAction('Documented', name + '.js')
-      allDocsObj[name].api = JSON.parse(output);
+      logTaskAction('Documented', componentName + '.js')
+      allDocsObj[componentName].api = JSON.parse(output);
     });
 }
 
-function deriveComponentName(path) {
-  return path
+/**
+ * Derive the component name from its folder path
+ * @param {string} dirPath - the component's directory path
+ * @return {string} - the component's name
+ */
+function deriveComponentName(dirPath) {
+  return dirPath
     .replace(`${paths.components}/`, '')
     .slice(0, -1);
 }
 
+/**
+ * Console.log a staring action and track its start time
+ * @param {string} taskName - the unique name of the task
+ */
 function logTaskStart(taskName) {
   stopwatch[taskName] = Date.now();
   console.log('Starting', chalk.cyan(taskName), '...');
 }
 
+/**
+ * Console.log a finished action and display its run time
+ * @param {string} taskName - the name of the task that matches its start time
+ */
 function logTaskEnd(taskName) {
   console.log('Finished', chalk.cyan(taskName), `after ${chalk.magenta(timeElapsed(stopwatch[taskName]))}`);
 }
 
+/**
+ * Log an individual task's action
+ * @param {string} action - the action
+ * @param {string} desc - a brief description or more details
+ * @param {string} [color] - one of the chalk module's color aliases
+ */
 function logTaskAction(action, desc, color = 'green') {
   if (argv.verbose) {
     console.log('-', action, chalk[color](desc));
   }
 }
 
+/**
+ * Deploy the zipped bundle using a POST request
+ */
 function postZippedBundle() {
   const formData = require('form-data');
   const urls = {
@@ -332,6 +393,9 @@ function postZippedBundle() {
   });
 }
 
+/**
+ * Console.log statistics from the build
+ */
 function statsConclusion() {
   logTaskEnd('deploy');
   // did not use multiline string for formatting reasons
@@ -349,26 +413,38 @@ function statsConclusion() {
   console.log(str);
 }
 
+/**
+ * Calculate the difference in seconds
+ * @param {number} t - a time in milliseconds elapsed since January 1, 1970 00:00:00 UTC.
+ * @return {string}
+ */
 function timeElapsed(t) {
   const elapsed = ((Date.now() - t)/1000).toFixed(1);
   return elapsed + 's';
 }
 
-function writeJsonFile(fileName) {
+/**
+ * Write a json file for specified component
+ * @param {string} componentName - the name of the component
+ */
+function writeJsonFile(componentName) {
   return new Promise((resolve, reject) => {
-    const name = docName;
-    fs.writeFile(`${paths.distDocs}/${docName}.json`, JSON.stringify(allDocsObj[name]), 'utf8', err => {
+    const thisName = componentName;
+    fs.writeFile(`${paths.distDocs}/${thisName}.json`, JSON.stringify(allDocsObj[thisName]), 'utf8', err => {
       if (err) {
         reject(err);
       } else {
         componentStats.numWritten++;
-        logTaskAction('Created', name + '.json');
+        logTaskAction('Created', thisName + '.json');
         resolve();
       }
     });
   });
 }
 
+/**
+ * Zip the documentation files and call the method to POST
+ */
 function zipAndDeploy() {
   logTaskStart('zip json files');
 
