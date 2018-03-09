@@ -69,4 +69,21 @@ describe('Dropdown tests', () => {
       await browserStackErrorReporter(done, error);
     }
   });
+
+  if (browser.browserName.toLowerCase() === 'chrome') {
+    it('Should not visual regress', async (done) => {
+      try {
+        await browser.waitForAngularEnabled(false);
+        await browser.driver.get('http://localhost:4000/components/dropdown/example-index');
+        const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+        await browser.driver.wait(protractor.ExpectedConditions.presenceOf(dropdownEl), 5000);
+
+        expect(await browser.protractorImageComparison.checkScreen('dropdownPage')).toEqual(0);
+
+        done();
+      } catch (error) {
+        await browserStackErrorReporter(done, error);
+      }
+    });
+  }
 });

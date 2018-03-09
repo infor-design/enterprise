@@ -22,10 +22,15 @@ exports.config = {
       baselineFolder: './baseline/',
       screenshotPath: './.tmp/',
       autoSaveBaseline: true,
-      debug: true
+      debug: false
     });
+
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: true }
     }));
+
+    return browser.getProcessedConfig().then((cap) => {
+      browser.browserName = cap.capabilities.browserName;
+    });
   }
 };
