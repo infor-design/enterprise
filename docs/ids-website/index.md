@@ -1,6 +1,6 @@
 ---
 title: IDS JQuery Components
-description: SoHo Blah blah
+description: This describes the SOHO Controls
 ---
 
 ## Getting Started

@@ -243,7 +243,7 @@ function writeSitemap() {
 }
 
 /**
- * Convert markdown into html
+ * Convert markdown into html and parse any yaml frontMatter
  * @param  {string} filePath - the full file path
  * @return {Promise}
  */
