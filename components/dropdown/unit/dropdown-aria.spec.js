@@ -71,6 +71,7 @@ describe('Dropdown ARIA', () => {
   it('Should be accessible on open with no WCAG 2AA violations', (done) => {
     axe.run(document.body, (err, { violations }) => {
       dropdownObj.open();
+
       expect(err).toBeFalsy();
       expect(violations.length).toEqual(0);
       done();

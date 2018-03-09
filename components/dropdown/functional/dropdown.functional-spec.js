@@ -43,6 +43,7 @@ describe('Dropdown tests', () => {
       const newYorkOption = await element(by.css('li[data-val="NY"]'));
       await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
       await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+
       expect(newYorkOption.getAttribute('class')).toEqual('dropdown-option is-focused');
       done();
     } catch (error) {
@@ -50,7 +51,7 @@ describe('Dropdown tests', () => {
     }
   });
 
-  it('Should scroll down to end of list, VT should be visible', async (done) => {
+  it('Should scroll down to end of list, and Vermont should be visible', async (done) => {
     try {
       await clickOnDropdown();
 
@@ -60,6 +61,7 @@ describe('Dropdown tests', () => {
       const posVT = await vermontOption.getLocation();
       const dropdownElListSize = await dropdownElList.getSize();
       const posDropdownElList = await dropdownElList.getLocation();
+
       expect(posVT.y > posDropdownElList.y &&
         posVT.y < (posDropdownElList.y + dropdownElListSize.height)).toBeTruthy();
       done();
