@@ -42,7 +42,7 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   init() {
-    this.sections = this.element.querySelectorAll('.toolbar-section');
+    this.sections = Array.from(this.element.querySelectorAll('.toolbar-section'));
     this.items = this.getElements().map((item) => {
       $(item).toolbarflexitem();
       return $(item).data('toolbarflexitem');
@@ -153,20 +153,34 @@ ToolbarFlex.prototype = {
    */
   getElements() {
     const items = [];
+    let allSelectors = [];
 
-    utils.forEach(this.sections, (section) => {
-      utils.forEach(TOOLBAR_ELEMENTS, (elemObj) => {
-        const thisElems = section.querySelectorAll(elemObj.selector);
-        utils.forEach(thisElems, (elem) => {
-          if (typeof elemObj.filter === 'function') {
-            if (!elemObj.filter(elem)) {
-              return;
-            }
+    // Build a really big selector containing all possible matches
+    TOOLBAR_ELEMENTS.forEach((elemObj) => {
+      allSelectors.push(elemObj.selector);
+    });
+    allSelectors = allSelectors.join(', ');
+
+    // Get all possible Toolbar Element matches
+    const thisElems = Array.from(this.element.querySelectorAll(allSelectors));
+
+    // Check each element for each type of toolbar item.
+    // If there's a match, push to the item array.
+    thisElems.forEach((elem) => {
+      let defined = false;
+      TOOLBAR_ELEMENTS.forEach((elemObj) => {
+        if (defined || !$(elem).is(elemObj.selector)) {
+          return;
+        }
+        if (typeof elemObj.filter === 'function') {
+          if (!elemObj.filter(elem)) {
+            return;
           }
-          items.push(elem);
-        }, this);
-      }, this);
-    }, this);
+        }
+        defined = true;
+        items.push(elem);
+      });
+    });
 
     return items;
   },
