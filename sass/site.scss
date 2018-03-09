@@ -34,6 +34,7 @@ $color-code-border: #e1e8e8;
 
 
 $font-family: 'Source Sans Pro', Helvetica, Arial;
+$font-family-monospace: 'source code pro', monospace;
 
 html {
   font-size: 62.5%;
@@ -370,9 +371,9 @@ code.sourceCode span.er {
 // scss-lint:disable MergeableSelector
 code {
   @include font-size(16);
+  font-family: $font-family-monospace;
   background-color: $color-code-bg;
   border-radius: 2px;
-  letter-spacing: 1.17px;
   line-height: 24px;
 }
 // scss-lint:enable MergeableSelector

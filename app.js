@@ -96,6 +96,11 @@ const optionHandler = function (req, res, next) {
     console.log(`Using the minified version of "sohoxi.js"`);
   }
 
+  if (req.query.fontSourceSans && req.query.fontSourceSans.length > 0) {
+    res.opts.fontSourceSans = true;
+    console.log(`Using the source sans font`);
+  }
+
   next();
 };
 
