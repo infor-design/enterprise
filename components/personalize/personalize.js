@@ -13,10 +13,12 @@ const COMPONENT_NAME = 'personalize';
  * Component Defaults
  * @param {string} colors  The list of colors
  * @param {string} theme  The theme name (light, dark or high-contrast)
+ * @param {string} font Use the newer source sans font
  */
 const PERSONALIZE_DEFAULTS = {
   colors: '',
-  theme
+  theme,
+  font: ''
 };
 
 /**
@@ -51,6 +53,10 @@ Personalize.prototype = {
 
     if (this.settings.colors) {
       this.setColors(this.settings.colors);
+    }
+
+    if (this.settings.font) {
+      $('html').addClass(`font-${this.settings.font}`);
     }
 
     this.handleEvents();

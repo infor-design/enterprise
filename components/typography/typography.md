@@ -8,6 +8,29 @@ Typography styles in Soho do not have a Javascript API.
 
 1. [Main Example Page]( ../components/typography/example-index)
 
+## Font family
+
+The default font family is still for the moment. `font-family: Helvetica, Arial` However the Infor design
+team decided on a new font you can now work with as a preference. `'Source Sans Pro', Helvetica, Arial`
+
+To enable this font in the components first you need to add this link to the head of your pages.
+
+```html
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
+```
+
+After that you can either
+
+1. Add the class `font-source-sans` to the html tag.
+2. Or Pass it in to the personalize api....
+
+```javascript
+$('html').personalize({colors: ['80000'], theme: 'dark', font: 'source-sans'});
+```
+
+Also sample app can be run with this font by adding the `?font=source-sans` parameter to any page. For example
+[Main Example Page]( ../components/personalize/example-index.html?font=source-sans)
+
 ## Title Case vs. Sentence Case
 
 Title case follows the standards used in book titles: always capitalize the first and last word, and capitalize all other words in the text string except for articles (a, an, the) and prepositions (except if they are the first or last word). Use title case for the following types of text:

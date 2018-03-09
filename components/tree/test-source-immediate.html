@@ -33,11 +33,8 @@
   }];
 
 
-  //Can refer to the data set here
+  // Immediately Return from Source here. This caused a bug previously that the node would stay disabled.
   $('#json-tree').tree({dataset: [], source: function (req, response) {
-
-    setTimeout(function () {
-
       var nodes = [{
         "id": "node2.1",
         "text": "Node 2.1"
@@ -48,8 +45,6 @@
       }];
 
       response(nodes);
-    }, 1000);
-
   }});
 
   setTimeout(function () { $('#json-tree').data('tree').loadData(sampleData);} );

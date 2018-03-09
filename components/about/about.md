@@ -21,6 +21,7 @@ $('body').about({
   content: '<p>Fashionable application for fashionable customers.</p>'
 });
 
+
 ```
 
 ## Accessibility
@@ -29,7 +30,7 @@ $('body').about({
 
 ## Code Tips
 
-The about component example by default adds the current years copyright, and useful browser info. This should be useful info for support situations. Don't make your contents of the modal too overloaded with info. Also About dialogs do not need to be overly prominent in your application (for example as a splash screen). The typical placement is in a top level actions button menu item.
+The about component example by default adds the current year's copyright, and useful browser info. This should be useful info for support situations. Don't make your contents of the modal too overloaded with info. Also About dialogs do not need to be overly prominent in your application (for example as a splash screen). The typical placement is in a top level actions button menu item.
 
 ## Keyboard Shortcuts
 

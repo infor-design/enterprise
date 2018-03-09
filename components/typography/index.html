@@ -5,6 +5,17 @@
 <ol type="1">
 <li><a href="../components/typography/example-index">Main Example Page</a></li>
 </ol>
+<h2 id="font-family">Font family</h2>
+<p>The default font family is still for the moment. <code>font-family: Helvetica, Arial</code> However the Infor design team decided on a new font you can now work with as a preference. <code>'Source Sans Pro', Helvetica, Arial</code></p>
+<p>To enable this font in the components first you need to add this link to the head of your pages.</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;link</span><span class="ot"> href=</span><span class="st">&quot;https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600&quot;</span><span class="ot"> rel=</span><span class="st">&quot;stylesheet&quot;</span><span class="kw">/&gt;</span></code></pre>
+<p>After that you can either</p>
+<ol type="1">
+<li>Add the class <code>font-source-sans</code> to the html tag.</li>
+<li>Or Pass it in to the personalize api....</li>
+</ol>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;html&#39;</span>).<span class="fu">personalize</span>({<span class="dt">colors</span>: [<span class="st">&#39;80000&#39;</span>], <span class="dt">theme</span>: <span class="st">&#39;dark&#39;</span>, <span class="dt">font</span>: <span class="st">&#39;source-sans&#39;</span>});</code></pre>
+<p>Also sample app can be run with this font by adding the <code>?font=source-sans</code> parameter to any page. For example <a href="../components/personalize/example-index.html?font=source-sans">Main Example Page</a></p>
 <h2 id="title-case-vs.-sentence-case">Title Case vs. Sentence Case</h2>
 <p>Title case follows the standards used in book titles: always capitalize the first and last word, and capitalize all other words in the text string except for articles (a, an, the) and prepositions (except if they are the first or last word). Use title case for the following types of text:</p>
 <ul>
