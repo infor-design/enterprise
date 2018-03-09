@@ -1,13 +1,167 @@
 sections:
 - name: Getting Started
   slug: index
+- name: Identity
+  pages:
+  - name: Typography
+    slug: typography
+- name: Layouts
+  pages:
+  - name: Grid
+    slug: grid
 - name: Components
   pages:
   - name: Elements
     pages:
-    - name: Buttons
+    - name: About
+      slug: about
+    - name: Accordion
+      slug: accordion
+    - name: Alerts
+      slug: alerts
+    - name: Application Menu
+      slug: applicationmenu
+    - name: Area
+      slug: area
+    - name: Arrange
+      slug: arrange
+    - name: Autocomplete
+      slug: autocomplete
+    - name: Badges
+      slug: badges
+    - name: Blockgrid
+      slug: blockgrid
+    - name: Button
       slug: button
+      #    - name: Breadcrumb
+      #    - name: Busy Indicator
+      #    - name: Checkboxes
+      #    - name: Circle Pager
+      #    - name: Colors
+      #    - name: Color Picker
+      #    - name: Composite Form
+      #    - name: Contextual Action Panel
+      #    - name: Context Menu
+      #    - name: Counts
+      #    - name: Datepicker
+      #    - name: Drag
+      #    - name: Dropdown
+      #    - name: Editor (RichText)
+      #    - name: Empty Messages
+      #    - name: Expandable Area
+      #    - name: Favorites
+      #    - name: Fieldset
+      #    - name: Field Filter
+      #    - name: Field Options
+      #    - name: File Upload
+      #    - name: File Upload (Advanced)
+      #    - name: Form Functionality
+      #    - name: Header
+      #    - name: Hierarchy (Org Chart)
+      #    - name: HomePage
+      #    - name: Hyperlinks
+      #    - name: Icons (Svg)
+      #    - name: Initialize
+      #    - name: Input (Text)
+      #    - name: Images
+      #    - name: List Builder
+      #    - name: List Filter
+      #    - name: Locale
+      #    - name: Lookup
+      #    - name: Mask
+      #    - name: Masthead
+      #    - name: Menubutton
+      #    - name: Message
+      #    - name: Modal
+      #    - name: Multiselect
+      #    - name: Pager
+      #    - name: Popover
+      #    - name: Popupmenu
+      #    - name: Process Indicator
+      #    - name: Progress Indicator
+      #    - name: Radio Buttons
+      #    - name: Rating
+      #    - name: Searchfield
+      #    - name: Sign-In
+      #    - name: Skip Link
+      #    - name: Slider
+      #    - name: Spinbox
+      #    - name: Splitter
+      #    - name: Swaplist
+      #    - name: Switch
+      #    - name: Tabs
+      #    - name: Tabs (Header)
+      #    - name: Tabs (Module)
+      #    - name: Tabs (Vertical)
+      #    - name: Tag
+      #    - name: Text Input
+      #    - name: Timeline
+      #    - name: Timepicker
+      #    - name: Toast
+      #    - name: Toolbar
+      #    - name: Toolbar Searchfield
+      #    - name: Tooltip
+      #    - name: Tree
+      #    - name: Wizard
   - name: Blocks
     pages:
+    - name: Data Tiles
+      slug: cards
     - name: Data Grid
-      slug: grid
+      slug: datagrid
+    - name: Data List
+      slug: listview
+- name: Utilities
+  pages:
+  - name: Personalize
+    slug: personalize
+  - name: Place
+    slug: place
+  - name: Trackdirty
+    slug: trackdirty
+  - name: Visibility
+    slug: visibility
+  - name: Utils
+    slug: utils
+  - name: Validation
+    slug: validation
+  - name: Zoom
+    slug: zoom
+- name: Charts
+  pages:
+  - name: Getting Start with Charts
+    slug: charts
+  - name: Bar Chart
+    slug: bar
+  - name: Bar Chart (Grouped)
+    slug: bar-grouped
+  - name: Bar Chart (Stacked)
+    slug: bar-stacked
+  - name: Bubble
+    slug: bubble
+  - name: Bullet
+    slug: bullet
+  - name: Column Chart
+    slug: column
+  - name: Column Chart (Grouped)
+    slug: column-grouped
+  - name: Column Chart (Stacked)
+    slug: column-stacked
+  - name: Donut
+    slug: donut
+  - name: Targeted Achievement (Chart)
+    slug: targeted-achievement
+  - name: Line Chart
+    slug: line
+  - name: Pie Chart
+    slug: pie
+  - name: Positive/Negative Chart
+    slug: positive-negative
+  - name: Radar
+    slug: radar
+  - name: Sparkline
+    slug: sparkline
+  - name: Step Chart
+    slug: stepchart
+  - name: Completion Chart
+    slug: completion-chart
