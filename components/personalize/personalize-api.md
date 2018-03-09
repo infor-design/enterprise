@@ -2,18 +2,18 @@
 
 ### Table of Contents
 
--   [theme](#theme)
--   [PERSONALIZE_DEFAULTS](#personalize_defaults)
--   [Personalize](#personalize)
-    -   [validateHex](#validatehex)
-    -   [setColors](#setcolors)
-    -   [getLuminousColorShade](#getluminouscolorshade)
-    -   [setTheme](#settheme)
-    -   [blockUi](#blockui)
-    -   [unBlockUi](#unblockui)
-    -   [updated](#updated)
-    -   [teardown](#teardown)
-    -   [destroy](#destroy)
+-   [theme][1]
+-   [PERSONALIZE_DEFAULTS][2]
+-   [Personalize][3]
+    -   [validateHex][4]
+    -   [setColors][5]
+    -   [getLuminousColorShade][6]
+    -   [setTheme][7]
+    -   [blockUi][8]
+    -   [unBlockUi][9]
+    -   [updated][10]
+    -   [teardown][11]
+    -   [destroy][12]
 
 ## theme
 
@@ -25,8 +25,8 @@ Component Defaults
 
 **Parameters**
 
--   `colors` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The list of colors
--   `theme` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The theme name (light, dark or high-contrast)
+-   `colors` **[string][13]** The list of colors
+-   `theme` **[string][13]** The theme name (light, dark or high-contrast)
 
 ## Personalize
 
@@ -34,8 +34,8 @@ The personalization routines for setting custom company colors.
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `element` **([HTMLElement][14] \| [Array][15]&lt;jQuery>)** the base element
+-   `settings` **[object][16]?** incoming settings
 
 ### validateHex
 
@@ -43,9 +43,9 @@ Validates a string containing a hexadecimal number
 
 **Parameters**
 
--   `hex` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** : A hex color.
+-   `hex` **[string][13]** : A hex color.
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** a validated hexadecimal string.
+Returns **[string][13]** a validated hexadecimal string.
 
 ### setColors
 
@@ -53,7 +53,7 @@ Sets the personalization color(s)
 
 **Parameters**
 
--   `colors` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The original hex color as a string or an object with all the Colors
+-   `colors` **[array][15]** The original hex color as a string or an object with all the Colors
 
 Returns **this** component instance
 
@@ -63,11 +63,11 @@ Takes a color and performs a change in luminosity of that color programatically.
 
 **Parameters**
 
--   `hex` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The original Hexadecimal base color.
--   `lum` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A percentage used to set luminosity
+-   `hex` **[string][13]** The original Hexadecimal base color.
+-   `lum` **[string][13]** A percentage used to set luminosity
     change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** hexadecimal color.
+Returns **[string][13]** hexadecimal color.
 
 ### setTheme
 
@@ -75,7 +75,7 @@ Sets the current theme, blocking the ui during the change.
 
 **Parameters**
 
--   `incomingTheme` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Represents the file name of a color
+-   `incomingTheme` **[string][13]** Represents the file name of a color
     scheme (can be dark, light or high-contrast)
 
 ### blockUi
@@ -96,7 +96,7 @@ Handle Updating Settings
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][16]?** incoming settings
 
 Returns **this** component instance
 
@@ -112,3 +112,35 @@ Returns **this** component instance
 Teardown - Remove added markup and events
 
 Returns **void** 
+
+[1]: #theme
+
+[2]: #personalize_defaults
+
+[3]: #personalize
+
+[4]: #validatehex
+
+[5]: #setcolors
+
+[6]: #getluminouscolorshade
+
+[7]: #settheme
+
+[8]: #blockui
+
+[9]: #unblockui
+
+[10]: #updated
+
+[11]: #teardown
+
+[12]: #destroy
+
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[14]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

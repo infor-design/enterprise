@@ -706,6 +706,17 @@ Datagrid.prototype = {
       this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
     }
 
+    if (this.settings.groupable) {
+      // need to rerender here to get the colspans correct.
+      const groupHeaders = this.tableBody.find('.datagrid-rowgroup-header');
+      const newColspan = this.visibleColumns().length;
+
+      for (let i = 0; i < groupHeaders.length; i++) {
+        groupHeaders[i].children[0].setAttribute('colspan', newColspan);
+      }
+      return;
+    }
+
     if (!colGroups) {
       return;
     }
