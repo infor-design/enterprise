@@ -15,7 +15,7 @@ Angular Components Change Log: http://git.infor.com/projects/SOHO/repos/angular-
 http://usalvlhlpool1.infor.com/4.5.0/components/
 
 ### <a name="version-4.5.0-key-new-features">Key New Features</a>
--
+- Experimental new font added from IDS. You can enable the new font as explained on http://bit.ly/2p2sjjZ
 -
 
 ### <a name="version-4.5.0-corrections">Corrections to Your Code</a>

@@ -30,13 +30,14 @@
   <script src="{{basepath}}js/sohoxi.js?v=MTIuMC4wLjAuMQ"></script>
   <script src="../../js/cultures/{{locale}}.js"></script>-->
 
-  {{#fontSourceSans}}
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Source+Code+Pro" rel="stylesheet"/>
-  {{/fontSourceSans}}
+  {{#font}}
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
+  {{/font}}
 
   <script>
     var colors;
     var theme;
+    var font = '';
 
     {{#colors}}
     colors = '{{colors}}'.split(',');
@@ -55,9 +56,12 @@
     {{#theme}}
     theme = '{{theme}}';
     {{/theme}}
+    {{#font}}
+    font = '{{font}}';
+    {{/font}}
 
     //If Initialize isnt called need to defer this
-    $('html').personalize({colors: colors, theme: theme});
+    $('html').personalize({colors: colors, theme: theme, font: font});
   </script>
 
   <link rel="stylesheet" id="sohoxi-stylesheet" href="{{basepath}}css/{{theme}}-theme.css" type="text/css"/>

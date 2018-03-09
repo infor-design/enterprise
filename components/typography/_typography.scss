@@ -28,7 +28,7 @@ html {
     -webkit-overflow-scrolling: touch;
   }
 
-  &.font-source-sans {
+  &.font-source-sans body {
     font-family: $font-source-sans;
   }
 

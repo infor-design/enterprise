@@ -27,6 +27,7 @@ Component Defaults
 
 -   `colors` **[string][13]** The list of colors
 -   `theme` **[string][13]** The theme name (light, dark or high-contrast)
+-   `font` **[string][13]** Use the newer source sans font
 
 ## Personalize
 
