@@ -1915,6 +1915,28 @@ Datagrid.prototype = {
         // Move the elem in the data set
         const first = self.settings.dataset.splice(status.startIndex, 1)[0];
         self.settings.dataset.splice(status.endIndex, 0, first);
+
+        const swapRow = status.over;
+        const originalRow = status.start;
+
+        // If using expandable rows move the expandable row with it
+        const movedUp = status.endIndex < status.startIndex;
+        if (self.settings.rowTemplate || self.settings.expandableRow) {
+          if (movedUp) {
+            self.tableBody.find('tr').eq(status.startIndex + 1).insertAfter(originalRow);
+          } else {
+            self.tableBody.find('tr').eq(status.startIndex).insertAfter(originalRow);
+            originalRow.next().next().insertAfter(swapRow);
+          }
+        }
+
+        // Resequence the rows
+        const allRows = self.tableBody.find('tr:not(.datagrid-expandable-row)');
+        for (let i = 0; i < allRows.length; i++) {
+          allRows[i].setAttribute('data-index', i);
+          allRows[i].setAttribute('aria-rowindex', i + 1);
+        }
+
         // Fire an event
         self.element.trigger('rowreorder', [status]);
       });
@@ -2932,6 +2954,11 @@ Datagrid.prototype = {
     }
 
     if (col.id === 'rowStatus') {
+      colWidth = 62;
+      col.width = colWidth;
+    }
+
+    if (col.id === 'rowReorder') {
       colWidth = 62;
       col.width = colWidth;
     }
@@ -6393,7 +6420,7 @@ Datagrid.prototype = {
 
   // For the row node get the index - adjust for paging / invisible rowsCache
   visualRowIndex(row) {
-    return this.tableBody.find('tr:visible').index(row);
+    return this.tableBody.find('tr:visible:not(.is-hidden, .datagrid-expandable-row)').index(row);
   },
 
   visualRowNode(idx) {
