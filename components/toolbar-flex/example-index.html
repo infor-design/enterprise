@@ -211,14 +211,20 @@
 </div>
 
 <script type="text/javascript">
-  $('.flex-toolbar').on('selected.test', function(e, item) {
+  $('.flex-toolbar').on('selected.test', function(e, item, secondArg) {
     var text = $(item.element).text().trim();
+    var selectedItem;
+
+    if (secondArg) {
+      selectedItem = 'Selected Menu Item: ' + $(secondArg).text().trim() + '<br />';
+    }
 
     $('body').toast({
       title: 'Toolbar Item Selected',
       message: '<p>' +
         'text content: "<b>'+ text +'</b>"<br/>' +
         'item type: "<b>'+ item.type +'</b>"' +
+        (selectedItem ? '<br />' + selectedItem : '') +
       '</p>'
     });
   });

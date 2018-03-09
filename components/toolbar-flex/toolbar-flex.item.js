@@ -12,7 +12,8 @@ function hyperlinkFilter(elem) {
 // Any of these element/class types are valid toolbar items.
 // TODO: Designate between "button" and "menu button"
 const TOOLBAR_ELEMENTS = [
-  { type: 'button', selector: 'button, input[type="button"]' },
+  { type: 'button', selector: 'button:not(.btn-menu):not(.btn-actions), input[type="button"]:not(.btn-menu):not(.btn-actions)' },
+  { type: 'menubutton', selector: '.btn-menu, .btn-actions' },
   { type: 'hyperlink', selector: 'a[href]', filter: hyperlinkFilter },
   { type: 'checkbox', selector: 'input[type="checkbox"]' },
   { type: 'radio', selector: 'input[type="radio"]' },
@@ -66,6 +67,7 @@ function ToolbarFlexItem(element, settings) {
 
   // Internal flags
   this.type = getToolbarItemType(element);
+  this.init();
 }
 
 ToolbarFlexItem.prototype = {
@@ -76,7 +78,7 @@ ToolbarFlexItem.prototype = {
    * @private
    */
   init() {
-
+    this.handleEvents();
   },
 
   get focusable() {
@@ -127,10 +129,32 @@ ToolbarFlexItem.prototype = {
       this.trueSelected = true;
       this.element.classList.add('is-selected');
       this.triggerSelectedEvent();
+
+      if (this.selectedAnchor) {
+        delete this.selectedAnchor;
+      }
       return;
     }
     this.trueSelected = false;
     this.element.classList.remove('is-selected');
+  },
+
+  /**
+   * Retrieves an item's main Soho Component instance.
+   * @returns {object|undefined} Soho Component instance, if applicable
+   */
+  get componentAPI() {
+    let api;
+    if (this.type === 'menubutton') {
+      api = $(this.element).data('popupmenu');
+    }
+    if (this.type === 'hyperlink') {
+      api = $(this.element).data('hyperlink');
+    }
+    if (this.type === 'searchfield' || this.type === 'toolbarsearchfield') {
+      api = $(this.element).data('searchfield');
+    }
+    return api;
   },
 
   /**
@@ -140,8 +164,10 @@ ToolbarFlexItem.prototype = {
   triggerSelectedEvent() {
     const eventArgs = [this];
 
-    // TODO: Pass additional stuff for certain scenarioes
-    // FX: if it's menu button, add an argument representing the menu button item that was picked.
+    // MenuButton types pass the currently-selected anchor
+    if (this.type === 'menubutton' && this.selectedAnchor) {
+      eventArgs.push(this.selectedAnchor);
+    }
 
     $(this.element).trigger('selected', eventArgs);
   },
@@ -243,6 +269,27 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
+   * Sets up all event listeners for this element.
+   * @returns {void}
+   */
+  handleEvents() {
+    const self = this;
+
+    if (this.type === 'menubutton') {
+      // Listen to the Popupmenu's selected event
+      $(this.element).on(`selected.${COMPONENT_NAME}`, (e, anchor) => {
+        if (this.selectedAnchor) {
+          return;
+        }
+
+        e.stopPropagation();
+        self.selectedAnchor = anchor;
+        self.selected = true;
+      });
+    }
+  },
+
+  /**
    * @param {object} [settings] incoming settings
    */
   updated(settings) {
@@ -258,6 +305,8 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   teardown() {
+    $(this.element).off(`selected.${COMPONENT_NAME}`);
+
     delete this.type;
     delete this.selected;
     delete this.focusable;

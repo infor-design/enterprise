@@ -66,7 +66,15 @@ ToolbarFlex.prototype = {
       this.focusedItem = this.items[0];
     }
 
+    this.render();
     this.handleEvents();
+  },
+
+  /**
+   * @returns {void}
+   */
+  render() {
+    this.element.setAttribute('role', 'toolbar');
   },
 
   /**
@@ -76,6 +84,7 @@ ToolbarFlex.prototype = {
   handleEvents() {
     $('body').on(`resize.${COMPONENT_NAME}`, () => this.handleResize);
     this.element.addEventListener('keydown', this.handleKeydown.bind(this));
+    this.element.addEventListener('keyup', this.handleKeyup.bind(this));
     this.element.addEventListener('click', this.handleClick.bind(this));
 
     $(this.element).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
@@ -107,23 +116,52 @@ ToolbarFlex.prototype = {
    */
   handleItemKeydown(e) {
     const key = e.key;
+    const item = this.getItemFromElement(e.target);
 
     // NOTE: 'Enter' and 'SpaceBar' are purposely not handled on keydown, since
     // a `click` event will be fired on Toolbar items while pressing either of these keys.
+    if (key === 'Enter') {
+      this.clickByEnterKey = true;
+      return;
+    }
+
+    if (key === ' ') { // SpaceBar
+      if (item.type === 'hyperlink') {
+        this.select(e.target);
+      }
+      return;
+    }
 
     if (key === 'ArrowLeft' || key === 'ArrowUp') {
+      if (item.type === 'searchfield' && key === 'ArrowLeft') {
+        return;
+      }
       this.navigate(-1);
+      return;
     }
 
     if (key === 'ArrowRight' || key === 'ArrowDown') {
+      if (item.type === 'searchfield' && key === 'ArrowRight') {
+        return;
+      }
       this.navigate(1);
     }
   },
 
   /**
+   * Event Handler for internal `keyup` events
+   * @private
+   * @param {KeyboardEvent} e `keyup`
+   * @returns {void}
+   */
+  handleKeyup(e) {
+    this.clearClickByEnter(e);
+  },
+
+  /**
    * Event Handler for internal `click` events
    * @private
-   * @param {KeyboardEvent} e `click`
+   * @param {MouseEvent} e `click`
    * @returns {void}
    */
   handleClick(e) {
@@ -132,18 +170,35 @@ ToolbarFlex.prototype = {
     // Toolbar Items get handled separately.
     if ($(target).data('toolbarflexitem')) {
       this.handleItemClick(e);
-      // return;
     }
+
+    this.clearClickByEnter();
   },
 
   /**
    * Event Handler for internal `click` events, specifically on Toolbar Items.
    * @private
-   * @param {KeyboardEvent} e `click`
+   * @param {MouseEvent} e `click`
    * @returns {void}
    */
   handleItemClick(e) {
     this.select(e.target);
+  },
+
+  /**
+   * @private
+   * @param {Event} e incoming event of multiple types
+   * @returns {void}
+   */
+  clearClickByEnter(e) {
+    // Gets set in `this.handleItemKeydown` by pressing 'Enter'.
+    if (this.clickByEnterKey) {
+      // Prevents the enter key from triggering a `selected` event on the menu button.
+      if (this.type === 'menubutton') {
+        e.preventDefault();
+      }
+      delete this.clickByEnterKey;
+    }
   },
 
   /**
@@ -162,6 +217,8 @@ ToolbarFlex.prototype = {
     allSelectors = allSelectors.join(', ');
 
     // Get all possible Toolbar Element matches
+    // NOTE: Important that the toolbar items are picked up by the querySelector
+    // in their actual, physical DOM order.
     const thisElems = Array.from(this.element.querySelectorAll(allSelectors));
 
     // Check each element for each type of toolbar item.
@@ -294,6 +351,14 @@ ToolbarFlex.prototype = {
     const item = this.getItemFromElement(element);
 
     switch (item.type) {
+      case 'searchfield':
+      case 'menubutton': {
+        if (this.clickByEnterKey) {
+          return;
+        }
+        item.selected = true;
+        break;
+      }
       default:
         item.selected = true;
         break;
@@ -320,7 +385,8 @@ ToolbarFlex.prototype = {
    */
   teardown() {
     $('body').off(`resize.${COMPONENT_NAME}`);
-    this.element.removeEventListener('keydown', this.handleKeypress.bind(this));
+    this.element.removeEventListener('keydown', this.handleKeydown.bind(this));
+    this.element.removeEventListener('up', this.handleKeyup.bind(this));
     this.element.removeEventListener('click', this.handleClick.bind(this));
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
