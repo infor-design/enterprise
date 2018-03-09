@@ -49,13 +49,13 @@ marked.setOptions({
 // -------------------------------------
 //   Constants
 // -------------------------------------
-const websiteDirName = 'design.infor.com';
+const idsWebsitePath = 'docs/ids-website';
 const rootPath = process.cwd();
 const paths = {
   components:  `${rootPath}/components`,
-  src:         `${rootPath}/${websiteDirName}`,
-  dist:        `${rootPath}/${websiteDirName}/dist`,
-  distDocs:    `${rootPath}/${websiteDirName}/dist/docs`
+  src:         `${rootPath}/${idsWebsitePath}`,
+  dist:        `${rootPath}/${idsWebsitePath}/dist`,
+  distDocs:    `${rootPath}/${idsWebsitePath}/dist/docs`
 };
 const jsonTemplate = {
   title: '',

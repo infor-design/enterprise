@@ -5,12 +5,12 @@ dist/css
 dist/js
 dist/svg
 dist/all.zip
+docs/ids-website/dist/
+docs/ids-website/dist.zip
 documentation/
 public/svg/
 public/js/
 public/stylesheets/
-design.infor.com/dist/
-design.infor.com/dist.zip
 temp/
 views/docs
 publish/dist
