@@ -1,5 +1,7 @@
-
-# Pie Chart  [Learn More](#)
+---
+title: Pie Chart  
+description: This page describes Pie Chart.
+---
 
 ## Configuration Options
 
@@ -12,8 +14,6 @@
 7. Example showing Set Selected value [View Example]( ../components/pie/example-set-selected)
 
 ## API Details
-
-{{api-details}}
 
 ## Code Example
 

@@ -1,10 +1,11 @@
-# Trackdirty  [Learn More](https://soho.infor.com/index.php?p=component/trackdirty)
+---
+title: Trackdirty  
+description: This page describes Trackdirty.
+---
 
 ## Configuration Details
 
 1. Default Trackdirty Example [View Example]( ../components/trackdirty/example-index)
-
-{{api-details}}
 
 ## Code Example
 

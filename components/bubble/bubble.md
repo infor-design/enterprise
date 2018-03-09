@@ -1,5 +1,7 @@
-
-# Bubble Chart  [Learn More](#)
+---
+title: Bubble Chart  
+description: This page describes Bubble Chart.
+---
 
 ## Configuration Options
 

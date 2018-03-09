@@ -1,4 +1,7 @@
-# Tooltip Component [Learn More](https://soho.infor.com/index.php?p=component/tooltip)
+---
+title: Tooltip Component 
+description: This page describes Tooltip Component .
+---
 
 ## Important Notes
 
@@ -15,8 +18,6 @@ The [Popover]( ../components/popover) component shares a common API with the Too
 7. [Demo of the `setContent()` API method]( ../components/tooltip/example-setcontent-api)
 8. [Demo of AJAX-powered Tooltip Content]( ../components/tooltip/example-ajax-tooltip)
 9. [Using the `keepOpen` setting]( ../components/tooltip/example-keep-open)
-
-{{api-details}}
 
 ## Behavior Guidelines
 

@@ -1,11 +1,11 @@
-
-# Place  [Learn More](#)
+---
+title: Place  
+description: This page describes Place.
+---
 
 ## Configuration Options
 
 1. Test List [View Example]( ../components/place/list)
-
-{{api-details}}
 
 
 ## Description

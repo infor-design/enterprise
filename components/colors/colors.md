@@ -1,4 +1,7 @@
-# Color Palette Info [Learn More](#)
+---
+title: Color Palette Info 
+description: This page describes Color Palette Info .
+---
 
 ## Configuration Options
 

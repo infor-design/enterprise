@@ -1,5 +1,7 @@
-
-# Color Picker  [Learn More](#)
+---
+title: Color Picker  
+description: This page describes Color Picker.
+---
 
 ## Configuration Options
 
@@ -8,8 +10,6 @@
 2. Select the label not the Hex [View Example]( ../components/colorpicker/example-show-label)
 4. Test States [View Test]( ../components/colorpicker/test-states)
 5. Test it works on a Modal [View Test]( ../components/colorpicker/test-modal)
-
-{{api-details}}
 
 ## Code Example
 

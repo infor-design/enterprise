@@ -1,4 +1,7 @@
-# Badges  [Learn More](#)
+---
+title: Badges  
+description: This page describes Badges.
+---
 
 ## Configuration Options
 

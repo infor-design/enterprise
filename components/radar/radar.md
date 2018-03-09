@@ -1,13 +1,13 @@
-
-# Radar Chart  [Learn More](#)
+---
+title: Radar Chart  
+description: This page describes Radar Chart.
+---
 
 ## Configuration Options
 
 1. Radar Chart Main Example [View Example]( ../components/radar/example-index)
 
 ## API Details
-
-{{api-details}}
 
 ## Code Example
 

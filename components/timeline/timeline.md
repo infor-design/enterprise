@@ -1,4 +1,7 @@
-# Timeline Component [Learn More](#)
+---
+title: Timeline Component 
+description: This page describes Timeline Component .
+---
 
 ## Configuration options
 

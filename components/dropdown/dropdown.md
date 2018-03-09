@@ -1,5 +1,7 @@
-
-# Dropdown  [Learn More](#)
+---
+title: Dropdown  
+description: This page describes Dropdown.
+---
 
 ## Configuration Options
 
@@ -14,8 +16,6 @@
 9. Widths [View Example]( ../components/dropdown/example-widths.html)
 10. Data Attributes [View Example]( ../components/dropdown/example-with-data-attribute.html)
 11. Icons [View Example]( ../components/dropdown/example-icons.html)
-
-{{api-details}}
 
 ## Behavior Guidelines
 

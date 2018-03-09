@@ -1,5 +1,7 @@
-
-# Bar Chart (Stacked)  [Learn More](#)
+---
+title: Bar Chart (Stacked)  
+description: This page describes Bar Chart (Stacked).
+---
 
 ## Configuration Options
 

@@ -1,4 +1,7 @@
-# Vertical Tabs [Learn More](https://soho.infor.com/index.php?p=component/tabs)
+---
+title: Vertical Tabs 
+description: This page describes Vertical Tabs .
+---
 
 ## Configuration Options
 

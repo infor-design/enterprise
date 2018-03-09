@@ -1,4 +1,7 @@
-# Typography [Learn More](https://soho.infor.com/index.php?p=component/typography)
+---
+title: Typography 
+description: This page describes Typography .
+---
 
 ## API Details
 

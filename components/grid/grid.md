@@ -1,4 +1,7 @@
-# Grid  [Learn More](#)
+---
+title: Grid  
+description: This page describes Grid.
+---
 
 ## Configuration Options
 

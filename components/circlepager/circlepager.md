@@ -1,5 +1,7 @@
-
-# Circle Pager  [Learn More](#)
+---
+title: Circle Pager  
+description: This page describes Circle Pager.
+---
 
 ## Configuration Options
 
@@ -7,8 +9,6 @@
 2. Circle Pager on a Form [View Example]( ../components/circlepager/example-form)
 3. Circle Pager with more than one item per slide [View Example]( ../components/circlepager/example-more-slides)
 4. Circle Pager on a Tab Example [View Example]( ../components/circlepager/example-tabs)
-
-{{api-details}}
 
 ## Code Example
 

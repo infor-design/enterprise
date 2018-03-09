@@ -1,5 +1,7 @@
-
-# Editor (Rich Text)  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
+---
+title: Editor (Rich Text)  
+description: This page describes Editor (Rich Text).
+---
 
 ## Configuration Options
 
@@ -8,8 +10,6 @@
 3. Back Color Button (Experimental - Limited Browser Support) [View Example]( ../components/editor/example-with-backcolor)
 4. Clickable Links with Rich Text Editor Example [View Example]( ../components/editor/example-clickable-links)
 4. Rich Text Editor with Event Checking [View Example]( ../components/editor/example-with-events)
-
-{{api-details}}
 
 ## Code Example
 

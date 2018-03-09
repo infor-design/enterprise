@@ -1,12 +1,12 @@
-
-# Accordion  [Learn More](https://soho.infor.com/index.php?p=component/accordion)
+---
+title: Accordion  
+description: This page describes Accordion.
+---
 
 ## Configuration Options
 
 1. Basic Accordion [View Example]( ../components/accordion/example-index)
 2. Accordion Panels [View Example]( ../components/accordion/example-accordion-panels)
-
-{{api-details}}
 
 ## Code Example
 

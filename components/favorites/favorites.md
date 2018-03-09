@@ -1,4 +1,7 @@
-# Favorites  [Learn More](#)
+---
+title: Favorites  
+description: This page describes Favorites.
+---
 
 ## Configuration Options
 

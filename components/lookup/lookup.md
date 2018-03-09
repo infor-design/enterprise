@@ -1,5 +1,7 @@
-
-# Lookup  [Learn More](#)
+---
+title: Lookup  
+description: This page describes Lookup.
+---
 
 ## Configuration Options
 
@@ -11,8 +13,6 @@
 6. Editable Strict [View Example]( ../components/lookup/example-editable-strict)
 7. Custom Toolbar [View Example]( ../components/lookup/example-custom-toolbar)
 8. Custom Buttons [View Example]( ../components/lookup/example-custom-buttons)
-
-{{api-details}}
 
 ## Behavior Guidelines
 

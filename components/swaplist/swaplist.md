@@ -1,4 +1,7 @@
-# Swaplist Component [Learn More](https://soho.infor.com/index.php?p=component/swaplist)
+---
+title: Swaplist Component 
+description: This page describes Swaplist Component .
+---
 
 ## Configuration options
 
@@ -6,8 +9,6 @@
 2. Swaplist with Selected Items [View Example](../components/swaplist/example-selected.html)
 3. Swaplist with Filter/Search [View Example](../components/swaplist/example-search.html)
 4. Swaplist with Disable Dragging [View Example](../components/swaplist/example-disable-dragging.html)
-
-{{api-details}}
 
 ## Behavior Guidelines
 

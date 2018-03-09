@@ -1,5 +1,7 @@
-
-# Column Chart  [Learn More](#)
+---
+title: Column Chart  
+description: This page describes Column Chart.
+---
 
 ## Configuration Options
 
@@ -18,8 +20,6 @@
 13. Example showing Set Selected value [View Test]( ../components/column/example-set-selected)
 
 ## API Details
-
-{{api-details}}
 
 ## Dataset Settings
 

@@ -1,11 +1,11 @@
-
-# ListBuilder  [Learn More](#)
+---
+title: ListBuilder  
+description: This page describes ListBuilder.
+---
 
 ## Configuration Options
 
 1. Default List Builder Example [View Example]( ../components/listbuilder/example-index)
-
-{{api-details}}
 
 ## Code Example
 

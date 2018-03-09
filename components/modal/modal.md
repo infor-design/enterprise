@@ -1,4 +1,7 @@
-# Modal  [Learn More](#)
+---
+title: Modal  
+description: This page describes Modal.
+---
 
 ## Configuration Options
 
@@ -6,8 +9,6 @@
 2. Modal Event Handlers [View Example]( ../components/modal/example-events)
 3. Supplying Full Modal content [View Example]( ../components/modal/example-full-content)
 4. Validation (enabling buttons) Example [View Example]( ../components/modal/example-validation)
-
-{{api-details}}
 
 ## Behavior Guidelines
 

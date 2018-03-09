@@ -1,5 +1,7 @@
-
-# Cards  [Learn More](#)
+---
+title: Cards  
+description: This page describes Cards.
+---
 
 ## Configuration Options
 
@@ -12,8 +14,6 @@
 7. Datagrid With Pager (Bad Practice) [View Test]( ../components/cards/test-paging-datagrid)
 8. Toolbar In The Header [View Test]( ../components/cards/test-toolbar-header)
 8. 3 Cards per column [View Example]( ../components/cards/example-three-up)
-
-{{api-details}}
 
 ## Code Example
 

@@ -1,5 +1,7 @@
-
-# Datagrid [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
+---
+title: Datagrid 
+description: This page describes Datagrid .
+---
 
 ## Configuration Options
 
@@ -33,8 +35,6 @@
 29. Empty Message Area [View Example]( ../components/datagrid/example-empty-message.html)
 30. Expandable Cells [View Example]( ../components/datagrid/example-expandable-cells.html)
 31. Dynamic Column Spans [View Example]( ../components/datagrid/example-colspan.html)
-
-{{api-details}}
 
 ## Code Example
 

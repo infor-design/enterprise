@@ -1,5 +1,7 @@
-
-# HomePage  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
+---
+title: HomePage  
+description: This page describes HomePage.
+---
 
 ## Configuration Options
 
@@ -9,8 +11,6 @@
 4. Hero Widget 3 Columns [View Example]( ../components/homepage/example-hero-widget)
 5. Hero Widget 2 Column [View Example]( ../components/homepage/example-widget-two-column)
 6. More Test Layouts (replace a-o in url) [View Example]( ../components/homepage/example-scenario-a.html)
-
-{{api-details}}
 
 ## Code Example
 

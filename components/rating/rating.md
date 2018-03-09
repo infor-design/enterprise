@@ -1,11 +1,11 @@
-
-# Rating  [Learn More](#)
+---
+title: Rating  
+description: This page describes Rating.
+---
 
 ## Configuration Options
 
 1. Rating Example [View Example]( ../components/rating/example-index)
-
-{{api-details}}
 
 ## Code Example
 

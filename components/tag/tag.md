@@ -1,10 +1,11 @@
-# Tag Component [Learn More](#)
+---
+title: Tag Component 
+description: This page describes Tag Component .
+---
 
 ## Configuration Details
 
 1. [Common Tag Examples]( ../components/tag/example-index)
-
-{{api-details}}
 
 ## Code Example
 

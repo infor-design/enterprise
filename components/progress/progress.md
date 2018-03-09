@@ -1,11 +1,11 @@
-
-# Progress Indicator  [Learn More](#)
+---
+title: Progress Indicator  
+description: This page describes Progress Indicator.
+---
 
 ## Configuration Options
 
 1. Default Progress Indicator Example [View Example]( ../components/progress/example-index)
-
-{{api-details}}
 
 ## Code Example
 

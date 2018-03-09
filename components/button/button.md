@@ -1,4 +1,7 @@
-# Button  [Learn More](https://soho.infor.com/index.php?p=component/buttons)
+---
+title: Button  
+description: This page describes Button.
+---
 
 ## Configuration Options
 
@@ -8,8 +11,6 @@
 4. Form Call to Action Button [View Example]( ../components/button/example-secondary-border)
 5. Button with Icons [View Example]( ../components/button/example-with-icons)
 6. Toggle Buttons [View Example]( ../components/button/example-toggle-button)
-
-{{api-details}}
 
 ## Code Example
 

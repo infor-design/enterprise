@@ -1,5 +1,7 @@
-
-# Context Menu [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
+---
+title: Context Menu 
+description: This page describes Context Menu .
+---
 
 ## Configuration Options
 

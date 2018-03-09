@@ -1,5 +1,7 @@
-
-# Blockgrid  [Learn More](#)
+---
+title: Blockgrid  
+description: This page describes Blockgrid.
+---
 
 ## Configuration Options
 
@@ -8,8 +10,6 @@
 3. Blockgrid with single selection [View Example]( ../components/blockgrid/example-singleselect)
 4. Blockgrid with multiselect select [View Example]( ../components/blockgrid/example-multiselect)
 5. Blockgrid with mixed selection select [View Example]( ../components/blockgrid/example-mixed-selection)
-
-{{api-details}}
 
 ## Code Example
 

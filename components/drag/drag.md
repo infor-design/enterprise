@@ -1,12 +1,11 @@
-## Code Example
-
-# Drag Behavior  [Learn More](#)
+---
+title: Drag Behavior
+description: This page describes Drag Behavior.
+---
 
 ## Configuration Options
 
 1. Drag Examples [View Example]( ../components/drag/example-index)
-
-{{api-details}}
 
 ## Code Example
 

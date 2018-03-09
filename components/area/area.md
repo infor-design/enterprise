@@ -1,5 +1,7 @@
-
-# Area  [Learn More](#)
+---
+title: Area  
+description: This page describes Area.
+---
 
 ## Configuration Options
 

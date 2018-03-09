@@ -1,6 +1,7 @@
-# Validation  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
-
-### Functions and Utilities
+---
+title: Validation
+description: This page describes Validation.
+---
 
 ## Configuration Options
 

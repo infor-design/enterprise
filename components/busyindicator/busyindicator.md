@@ -1,5 +1,7 @@
-
-# Busy Indicator  [Learn More](#)
+---
+title: Busy Indicator  
+description: This page describes Busy Indicator.
+---
 
 ## Configuration Options
 
@@ -16,8 +18,6 @@
 11. Block Specific Area [View Test]( ../components/busyindicator/test-ajax-calls)
 12. In Font-size Zero [View Test]( ../components/busyindicator/test-contained-in-font-size-0)
 13. Delay before Display [View Test]( ../components/busyindicator/test-delayed-display.html)
-
-{{api-details}}
 
 ## Code Example
 

@@ -1,11 +1,12 @@
-# Step Chart  [Learn More](#)
+---
+title: Step Chart  
+description: This page describes Step Chart.
+---
 
 ## Configuration Options
 
 1. Step Chart Examples in a Card/Widget [View Example]( ../components/stepchart/example-index)
 1. Custom Colors [View Example]( ../components/stepchart/example-colors)
-
-{{api-details}}
 
 ## Behavior Guidelines
 

@@ -1,5 +1,7 @@
-
-# Column Chart (Grouped)  [Learn More](#)
+---
+title: Column Chart (Grouped)  
+description: This page describes Column Chart (Grouped).
+---
 
 ## Configuration Options
 

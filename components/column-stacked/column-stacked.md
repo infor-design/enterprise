@@ -1,5 +1,7 @@
-
-# Column Chart (Stacked)  [Learn More](#)
+---
+title: Column Chart (Stacked)  
+description: This page describes Column Chart (Stacked).
+---
 
 ## Configuration Options
 

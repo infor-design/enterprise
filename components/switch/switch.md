@@ -1,4 +1,7 @@
-# Switch Component [Learn More](https://soho.infor.com/index.php?p=component/switch)
+---
+title: Switch Component 
+description: This page describes Switch Component .
+---
 
 ## API Details
 

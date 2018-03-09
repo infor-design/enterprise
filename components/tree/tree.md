@@ -1,4 +1,7 @@
-# Tree Component [Learn More](#)
+---
+title: Tree Component 
+description: This page describes Tree Component .
+---
 
 ## Configuration Options
 
@@ -16,5 +19,3 @@
 12. Select Multiple [View Example]( ../components/tree/example-select-multiple)
 13. Sortable [View Example]( ../components/tree/example-sortable)
 14. Update Node [View Example]( ../components/tree/example-update-node)
-
-{{api-details}}

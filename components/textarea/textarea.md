@@ -1,10 +1,11 @@
-# Textarea Component [Learn More](#)
+---
+title: Textarea Component 
+description: This page describes Textarea Component .
+---
 
 ## Configuration Details
 
 1. [Text Area  Examples]( ../components/textarea/example-index)
-
-{{api-details}}
 
 ## Behavior Guidelines
 

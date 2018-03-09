@@ -1,5 +1,7 @@
-
-# Sparklines  [Learn More](#)
+---
+title: Sparklines  
+description: This page describes Sparklines.
+---
 
 ## Configuration Options
 
@@ -8,8 +10,6 @@
 3. Example showing Set Selected value [View Example]( ../components/sparkline/example-set-selected)
 
 ## API Details
-
-{{api-details}}
 
 ## Spark Line Chart Types
 

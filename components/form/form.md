@@ -1,5 +1,7 @@
-
-# Form Functionality  [Learn More](#)
+---
+title: Form Functionality  
+description: This page describes Form Functionality.
+---
 
 ## General Information
 
@@ -13,5 +15,3 @@ The forms plugins are a set of form related small utils and functionality contai
 4. Form Layouts [View Example]( ../components/form/example-forms)
 
 ## API Details
-
-{{api-details}}

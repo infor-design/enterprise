@@ -1,4 +1,7 @@
-# Icons  [Learn More](#)
+---
+title: Icons  
+description: This page describes Icons.
+---
 
 ## Configuration Options
 
@@ -15,8 +18,6 @@
 11. Caret Icons [View Example]( ../components/icons/example-caret)
 12. Checkmarks [View Example]( ../components/icons/example-checks)
 13. User Status [View Example]( ../components/icons/example-user-status)
-
-{{api-details}}
 
 ## Code Example
 

@@ -1,11 +1,12 @@
-# Toast Component [Learn More](https://soho.infor.com/index.php?p=component/toast-messages)
+---
+title: Toast Component 
+description: This page describes Toast Component .
+---
 
 ## Configuration Options
 
 1. [Common Configuration]( ../components/toast/example-index)
 1. [Demo of all Positions]( ../components/toast/example-positions)
-
-{{api-details}}
 
 ## Behavior Guidelines
 

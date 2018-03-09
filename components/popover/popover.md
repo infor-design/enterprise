@@ -1,4 +1,7 @@
-# Popover Component [Learn More](https://soho.infor.com/index.php?p=component/popover)
+---
+title: Popover Component 
+description: This page describes Popover Component .
+---
 
 ## Configuration Options
 

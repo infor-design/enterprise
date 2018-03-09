@@ -1,4 +1,7 @@
-# Toolbar Searchfield [Learn More](#)
+---
+title: Toolbar Searchfield 
+description: This page describes Toolbar Searchfield .
+---
 
 ## Important Notes
 
@@ -9,8 +12,6 @@ This is a specific component wrapper for searchfield components that reside insi
 1. [Common Configuration]( ../components/toolbarsearchfield/example-index.html)
 2. [Alternate In-Page Style]( ../components/toolbarsearchfield/example-alternate-style.html)
 3. [`collapsibleOnMobile` Setting Demo]( ../components/toolbarsearchfield/example-collapsible-on-mobile.html)
-
-{{api-details}}
 
 ## Code Example
 

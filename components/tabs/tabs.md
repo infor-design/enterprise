@@ -1,4 +1,7 @@
-# Tabs Component [Learn More](https://soho.infor.com/index.php?p=component/tabs)
+---
+title: Tabs Component 
+description: This page describes Tabs Component .
+---
 
 ## Configuration Options
 
@@ -9,8 +12,6 @@
 5. [`updateCount()` Demo]( ../components/tabs/example-update-count-api)
 6. [`changeTabOnHashChange` Setting with Callback Demo]( ../components/tabs/example-url-hash-change)
 7. [`beforeActivate` Callback example]( ../components/tabs/example-beforeactivate-callback)
-
-{{api-details}}
 
 ## Code Examples
 

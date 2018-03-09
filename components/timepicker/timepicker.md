@@ -1,4 +1,7 @@
-# Timepicker Component [Learn More](#)
+---
+title: Timepicker Component 
+description: This page describes Timepicker Component .
+---
 
 ## Configuration Options
 
@@ -9,8 +12,6 @@
 5. [Disabled Timepicker]( ../components/timepicker/example-disabled)
 6. [Timepicker with a Seconds Picker]( ../components/timepicker/example-seconds-picker)
 6. [Timepicker with Required Validation]( ../components/timepicker/example-with-validation)
-
-{{api-details}}
 
 ## Behavior Guidelines
 

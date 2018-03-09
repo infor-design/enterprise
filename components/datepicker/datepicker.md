@@ -1,4 +1,7 @@
-# Datepicker  [Learn More](https://soho.infor.com/index.php?p=component/buttons)
+---
+title: Datepicker  
+description: This page describes Datepicker.
+---
 
 ## Configuration Options
 
@@ -18,8 +21,6 @@
 13. Month/Year Picker [View Example]( ../components/datepicker/example-month-year-picker.html)
 14. Month/Year Only Selection [View Example]( ../components/datepicker/example-month-year-format.html)
 15. Range Selection [View Example]( ../components/datepicker/example-range.html)
-
-{{api-details}}
 
 ## Code Example
 

@@ -1,5 +1,7 @@
-
-# Bar Chart (Grouped)  [Learn More](#)
+---
+title: Bar Chart (Grouped)  
+description: This page describes Bar Chart (Grouped).
+---
 
 ## Configuration Options
 

@@ -1,5 +1,7 @@
-
-# Counts  [Learn More](#)
+---
+title: Counts  
+description: This page describes Counts.
+---
 
 ## Configuration Options
 

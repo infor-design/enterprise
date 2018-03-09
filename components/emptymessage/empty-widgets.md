@@ -1,5 +1,7 @@
-
-# Empty Widgets  [Learn More](#)
+---
+title: Empty Widgets  
+description: This page describes Empty Widgets.
+---
 
 ## Configuration Options
 

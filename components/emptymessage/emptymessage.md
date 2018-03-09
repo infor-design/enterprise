@@ -1,12 +1,12 @@
-
-# Empty Message [Learn More](#)
+---
+title: Empty Message 
+description: This page describes Empty Message .
+---
 
 ## Configuration Options
 
 1. Simple Empty Message [View Example]( ../components/emptymessage/example-index)
 1. Widget Examples [View Example]( ../components/emptymessage/example-widgets)
-
-{{api-details}}
 
 ## Code Example
 

@@ -1,5 +1,7 @@
-
-# Header  [Learn More](#)
+---
+title: Header  
+description: This page describes Header.
+---
 
 ## Configuration Options
 
@@ -12,8 +14,6 @@
 7. Record ID [View Example]( ../components/header/example-record-id)
 8. Expanded Search Field (Compact) [View Example]( ../components/header/example-searchfield-expanded)
 9. Expanded Search Field (Large) [View Example]( ../components/header/example-searchfield-large)
-
-{{api-details}}
 
 ## Code Example
 

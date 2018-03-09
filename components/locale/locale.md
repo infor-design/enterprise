@@ -1,12 +1,12 @@
-
-# Locale  [Learn More](#)
+---
+title: Locale  
+description: This page describes Locale.
+---
 
 ## Configuration Options
 
 1. Simple Number Example [View Example]( ../components/locale/test-locale)
 
-
-{{api-details}}
 
 
 ## Code Example - Initializing

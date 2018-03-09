@@ -1,5 +1,7 @@
-
-# Hyperlinks  [Learn More](#)
+---
+title: Hyperlinks  
+description: This page describes Hyperlinks.
+---
 
 ## Configuration Options
 

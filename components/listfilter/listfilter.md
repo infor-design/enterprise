@@ -1,11 +1,11 @@
-
-# List Filter  [Learn More](#)
+---
+title: List Filter  
+description: This page describes List Filter.
+---
 
 ## Configuration Options
 
 1. Multiselect Filter Types [View Example]( ../components/multiselect/test-filter-types)
-
-{{api-details}}
 
 ## Code Example
 

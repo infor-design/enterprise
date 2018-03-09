@@ -1,5 +1,7 @@
-
-# Hierarchy  [Learn More](#)
+---
+title: Hierarchy  
+description: This page describes Hierarchy.
+---
 
 ## Configuration Options
 
@@ -7,8 +9,6 @@
 2. Lazy Loading Example [View Example]( ../components/hierarchy/example-lazy-loading)
 3. Example Paging [View Example]( ../components/hierarchy/example-paging)
 4. Example Single Manager/Subordinate [View Example]( ../components/hierarchy/example-single)
-
-{{api-details}}
 
 ## Code Example
 

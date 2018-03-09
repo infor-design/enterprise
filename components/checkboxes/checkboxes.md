@@ -1,4 +1,7 @@
-# Checkboxes  [Learn More](#)
+---
+title: Checkboxes  
+description: This page describes Checkboxes.
+---
 
 ## Configuration Options
 

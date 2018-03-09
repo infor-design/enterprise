@@ -1,5 +1,7 @@
-
-# Alerts  [Learn More](https://soho.infor.com/index.php?p=component/accordion)
+---
+title: Alerts  
+description: This page describes Alerts.
+---
 
 ## Configuration Options
 

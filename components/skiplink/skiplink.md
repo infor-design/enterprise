@@ -1,4 +1,7 @@
-# Skiplink Component [Learn More](#)
+---
+title: Skiplink Component 
+description: This page describes Skiplink Component .
+---
 
 ## API Details
 

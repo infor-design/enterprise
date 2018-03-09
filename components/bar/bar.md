@@ -1,5 +1,7 @@
-
-# Bar Chart  [Learn More](#)
+---
+title: Bar Chart  
+description: This page describes Bar Chart.
+---
 
 ## Configuration Options
 
@@ -18,8 +20,6 @@
 13. Example showing empty data set [View Example]( ../components/bar/test-empty)
 
 ## API Details
-
-{{api-details}}
 
 ## Dataset Settings
 

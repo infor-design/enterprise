@@ -1,4 +1,7 @@
-# Searchfield  [Learn More](https://soho.infor.com/index.php?p=component/search-box)
+---
+title: Searchfield  
+description: This page describes Searchfield.
+---
 
 ## Important Notes
 
@@ -16,8 +19,6 @@ Described below is the general API that is present in all searchfields.  There i
 8. [Categories (Full Size)]( ../components/searchfield/example-categories-full.html)
 8. [Header Search Field (Compact)]( ../components/header/example-searchfield-expanded)
 9. [Header Search Field (Large)]( ../components/header/example-searchfield-large)
-
-{{api-details}}
 
 ## Code Example
 

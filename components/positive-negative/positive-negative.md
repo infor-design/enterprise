@@ -1,5 +1,7 @@
-
-# Positive-Negative Chart  [Learn More](#)
+---
+title: Positive-Negative Chart  
+description: This page describes Positive-Negative Chart.
+---
 
 ## Configuration Options
 

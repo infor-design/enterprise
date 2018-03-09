@@ -1,4 +1,7 @@
-# Module Tabs [Learn More](https://soho.infor.com/index.php?p=component/tabs)
+---
+title: Module Tabs 
+description: This page describes Module Tabs .
+---
 
 ## Configuration Options
 

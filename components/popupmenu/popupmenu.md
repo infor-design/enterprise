@@ -1,4 +1,7 @@
-# Popupmenu Component [Learn More](#)
+---
+title: Popupmenu Component 
+description: This page describes Popupmenu Component .
+---
 
 ## Configuration Options
 
@@ -7,8 +10,6 @@
 3. Popupmenu with single select [View Example]( ../components/popupmenu/example-selectable)
 4. Popupmenu with disabled submenus [View Example]( ../components/popupmenu/example-disabled-submenus)
 5. Popupmenu with icons [View Example]( ../components/popupmenu/example-icons)
-
-{{api-details}}
 
 ## Code Example
 

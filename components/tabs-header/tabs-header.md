@@ -1,4 +1,7 @@
-# Header Tabs [Learn More](https://soho.infor.com/index.php?p=component/tabs)
+---
+title: Header Tabs 
+description: This page describes Header Tabs .
+---
 
 ## Configuration Options
 

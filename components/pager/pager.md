@@ -1,4 +1,7 @@
-# Pager  [Learn More](#)
+---
+title: Pager  
+description: This page describes Pager.
+---
 
 ## Configuration Options
 
@@ -6,8 +9,6 @@
 2. Paging on the Listview Component [View Example]( ../components/listview/example-paging)
 3. Paging on the Datagrid Component [View Example]( ../components/datagrid/example-paging)
 4. Circle Pager Component [View Example]( ../components/circlepager/example-index)
-
-{{api-details}}
 
 ## Code Example
 

@@ -1,5 +1,7 @@
-
-# Donut Chart  [Learn More](#)
+---
+title: Donut Chart  
+description: This page describes Donut Chart.
+---
 
 ## Configuration Options
 

@@ -1,5 +1,7 @@
-
-# Masthead  [Learn More](#)
+---
+title: Masthead  
+description: This page describes Masthead.
+---
 
 ## Configuration Options
 

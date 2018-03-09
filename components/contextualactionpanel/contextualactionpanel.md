@@ -1,5 +1,7 @@
-
-# Contextual Action Panel  [Learn More](#)
+---
+title: Contextual Action Panel  
+description: This page describes Contextual Action Panel.
+---
 
 ## Configuration Options
 
@@ -13,8 +15,6 @@
 7. IFrame for Contents [View Test]( ../components/contextualactionpanel/test-iframe)
 8. Open on Grid Rows [View Test]( ../components/contextualactionpanel/test-trigger-immediate)
 9. Search Field / Keyboard Test [View Test]( ../components/contextualactionpanel/test-searchfield)
-
-{{api-details}}
 
 ## Code Example
 

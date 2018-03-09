@@ -1,5 +1,7 @@
-
-# Targeted Achievement Chart  [Learn More](#)
+---
+title: Targeted Achievement Chart
+description: This page describes Targeted Achievement Chart.
+---
 
 ## Configuration Options
 

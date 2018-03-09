@@ -1,4 +1,7 @@
-# Spinbox Component [Learn More](https://soho.infor.com/index.php?p=component/spin-box)
+---
+title: Spinbox Component 
+description: This page describes Spinbox Component .
+---
 
 ## Configuration Options
 
@@ -8,8 +11,6 @@
 4. Dirty Tracking [View Example](../components/spinbox/example-dirty-tracking)
 5. Disabled Spinbox [View Example](../components/spinbox/example-disabled)
 5. Spinbox with Required Validation [View Example](../components/spinbox/example-validation)
-
-{{api-details}}
 
 ## Behavior Guidelines
 
