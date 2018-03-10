@@ -86,6 +86,14 @@ SohoMaskedInput.prototype = {
           this.settings.pattern = masks.dateMask;
           break;
         }
+        case 'rangeDate': {
+          const datepicker = $(this.element).data('datepicker');
+          if ($.fn.datepicker && $(this.element).data('datepicker')) {
+            this.settings.patternOptions.format = datepicker.settings.format;
+          }
+          this.settings.pattern = masks.rangeDateMask;
+          break;
+        }
         default: {
           this.element.classList.remove(styleClasses.join(' '));
           break;

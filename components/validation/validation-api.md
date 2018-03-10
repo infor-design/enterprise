@@ -2,12 +2,10 @@
 
 ### Table of Contents
 
--   [ValidationRules][1]
+-   [ValidationRules](#validationrules)
 
 ## ValidationRules
 
 The validation rules object.
 This contains all base rules for validation that come bundled as part of Soho.
 These rules can be extended.
-
-[1]: #validationrules

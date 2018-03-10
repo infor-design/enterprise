@@ -166,6 +166,169 @@
       width: 36px;
     }
 
+    &.is-selected.range {
+      position: relative;
+      z-index: 5;
+    }
+
+    &.range-prev.include-disabled,
+    &.range-next.include-disabled,
+    &.range-prev,
+    &.range-next {
+      span {
+        background-color: $datepicker-hover-bg-color;
+        position: relative;
+        transition: none;
+        z-index: 1;
+
+        &::before {
+          content: '';
+          display: inline-block;
+          height: 36px;
+          position: absolute;
+          width: 43px;
+          z-index: -1;
+        }
+      }
+
+      &.is-disabled {
+        position: relative;
+        z-index: 2;
+      }
+
+      &:focus {
+        border-color: transparent;
+        box-shadow: none;
+      }
+    }
+
+    &.range-prev.include-disabled,
+    &.range-prev {
+      span {
+        border-radius: 50% 0 0 50%;
+
+        &::before {
+          background: radial-gradient(circle at 35px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+          left: 100%;
+        }
+      }
+
+      &:active,
+      &.is-selected {
+        z-index: 0;
+
+        span {
+          border-radius: 50%;
+
+          &::before {
+            background: radial-gradient(circle at 5px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+            left: 35%;
+          }
+        }
+      }
+
+      &:last-of-type {
+        span {
+          border-radius: 50%;
+
+          &::before {
+            background: none;
+          }
+        }
+      }
+    }
+
+    &.range-next.include-disabled,
+    &.range-next {
+      span {
+        border-radius: 0 50% 50% 0;
+
+        &::before {
+          background: radial-gradient(circle at 5px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+          left: -100%;
+        }
+      }
+
+      &:active,
+      &.is-selected {
+        z-index: 0;
+
+        span {
+          border-radius: 50%;
+
+          &::before {
+            background: radial-gradient(circle at 35px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+            left: -50%;
+          }
+        }
+      }
+
+      &:first-of-type {
+        span {
+          border-radius: 50%;
+
+          &::before {
+            background: none;
+          }
+        }
+      }
+    }
+
+    &.range-selection.include-disabled,
+    &.range-selection {
+      span {
+        background-color: $datepicker-selected-bg-color;
+        border-radius: 50% 0 0 50%;
+        color: $datepicker-selected-color;
+        position: relative;
+        transition: none;
+        z-index: 1;
+
+        &::before {
+          background: radial-gradient(circle at 35px 50%, transparent 50%, $datepicker-selected-bg-color 50%);
+          content: '';
+          display: inline-block;
+          height: 36px;
+          left: 100%;
+          position: absolute;
+          width: 43px;
+          z-index: -1;
+        }
+      }
+
+      &:hover {
+        span {
+          background-color: $datepicker-selected-bg-color;
+          color: $datepicker-selected-color;
+        }
+      }
+
+      &.is-today {
+        span {
+          background-color: $datepicker-selected-bg-color;
+          color: $datepicker-selected-color;
+        }
+      }
+
+      &:focus,
+      &.is-selected:focus {
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      + .range-selection.is-selected,
+      &.end-date,
+      &:last-of-type {
+        span {
+          border-radius: 50%;
+
+          &::before {
+            background: none;
+          }
+        }
+      }
+    }
+
     //Other month color
     &.alternate {
       span {
@@ -206,8 +369,15 @@
 
       span {
         background-color: $datepicker-disabled-bg-color;
+        border-radius: 50%;
         color: $datepicker-disabled-color;
         cursor: default;
+        position: relative;
+        z-index: 1;
+
+        &::before {
+          background: none;
+        }
       }
     }
 
@@ -433,15 +603,101 @@ html[dir='rtl'] {
     }
   }
 
+  // scss-lint:disable NestingDepth
   .calendar {
     td {
-      span {
-        margin-left: inherit;
-        margin-right: 1px;
+      &.range-prev.include-disabled,
+      &.range-prev {
+        span {
+          border-radius: 0 50% 50% 0;
+
+          &::before {
+            background: radial-gradient(circle at 5px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+            left: -100%;
+          }
+        }
+
+        &.is-selected {
+          span {
+            border-radius: 50%;
+
+            &::before {
+              background: radial-gradient(circle at 35px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+              left: 35%;
+            }
+          }
+        }
+
+        &:last-of-type {
+          span {
+            border-radius: 50%;
+
+            &::before {
+              background: none;
+            }
+          }
+        }
+      }
+
+      &.range-next.include-disabled,
+      &.range-next {
+        span {
+          border-radius: 50% 0 0 50%;
+
+          &::before {
+            background: radial-gradient(circle at 35px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+            left: 100%;
+          }
+        }
+
+        &.is-selected {
+          span {
+            border-radius: 50%;
+
+            &::before {
+              background: radial-gradient(circle at 5px 50%, transparent 50%, $datepicker-hover-bg-color 50%);
+              left: -50%;
+            }
+          }
+        }
+
+        &:first-of-type {
+          span {
+            border-radius: 50%;
+
+            &::before {
+              background: none;
+            }
+          }
+        }
+      }
+
+      &.range-selection.include-disabled,
+      &.range-selection {
+        span {
+          border-radius: 0 50% 50% 0;
+
+          &::before {
+            background: radial-gradient(circle at 5px 50%, transparent 50%, $datepicker-selected-bg-color 50%);
+            left: -100%;
+          }
+        }
+
+        + .range-selection.is-selected,
+        &.end-date,
+        &:last-of-type {
+          span {
+            border-radius: 50%;
+
+            &::before {
+              background: none;
+            }
+          }
+        }
       }
     }
   }
-
+  // scss-lint:enable NestingDepth
 
   //Footer Buttons
   .calendar-footer {
@@ -471,7 +727,6 @@ html[dir='rtl'] {
     }
   }
 }
-
 
 // IE Hack
 .ie9,
