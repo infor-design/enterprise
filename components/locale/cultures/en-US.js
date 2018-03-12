@@ -183,6 +183,7 @@ Soho.Locale.addCulture('en-US', {
     InvalidDate: { id: 'InvalidDate', value: 'Invalid Date', comment: 'validation message for wrong date format (short)' },
     InvalidTime: { id: 'InvalidTime', value: 'Invalid Time', comment: 'validation message for wrong time format' },
     Inventory: { id: 'Inventory', value: 'Inventory', comment: 'Icon button tooltop for Inventory Action' },
+    InRange: { id: 'InRange', value: 'In Range', comment: 'In Range in icons for filtering' },
     IsEmpty: { id: 'IsEmpty', value: 'Is Empty', comment: 'Is Empty in icons for filtering' },
     IsNotEmpty: { id: 'IsNotEmpty', value: 'Is Not Empty', comment: 'Is Not Empty in icons for filtering' },
     ItemsSelected: { id: 'ItemsSelected', value: 'Items selected', comment: 'Num of Items selected for swaplist' },

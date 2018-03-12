@@ -1,0 +1,77 @@
+
+<div class="row">
+  <div class="four columns">
+
+    <div class="field">
+      <label for="no-range" class="label">No Range</label>
+      <input id="no-range" name="no-range" class="datepicker" type="text">
+    </div>
+
+    <div class="field">
+      <label for="range-novalue" class="label">Range - No Initial value</label>
+      <input id="range-novalue" name="range-novalue" class="datepicker input-md" type="text" data-options="{range: {useRange: true}}">
+    </div>
+
+    <div class="field">
+      <label for="range-valuebyelem" class="label">Range - Initial value by Element value</label>
+      <input id="range-valuebyelem" name="range-valuebyelem" class="datepicker input-md" type="text" data-options="{range: {useRange: true}}" value="2/7/2018 - 2/22/2018">
+    </div>
+
+    <div class="field">
+      <label for="range-valuebysettings" class="label">Range - Initial value by Settings</label>
+      <input id="range-valuebysettings" name="range-valuebysettings" class="datepicker input-md" type="text" data-options="{range: {useRange: true, start: '2/5/2018', end: '2/28/2018'}}">
+    </div>
+
+    <div class="field">
+      <label for="range-disablenotincluded" class="label">Range - Disable Not included</label>
+      <input id="range-disablenotincluded" name="range-disablenotincluded" class="datepicker input-md" type="text" data-options="{disable: {dates: ['2/7/2018', '2/9/2018']}, range: {useRange: true, start: '2/5/2018', end: '2/28/2018'}}">
+    </div>
+
+    <div class="field">
+      <label for="range-disableincluded" class="label">Range - Disable included</label>
+      <input id="range-disableincluded" name="range-disableincluded" class="datepicker input-md" type="text" data-options="{disable: {dates: ['2/7/2018', '2/9/2018']}, range: {useRange: true, start: '2/5/2018', end: '2/28/2018', includeDisabled: true}}">
+    </div>
+
+    <div class="field">
+      <label for="range-selectforward" class="label">Range - Select Forward</label>
+      <input id="range-selectforward" name="range-selectforward" class="datepicker input-md" type="text" data-options="{range: {useRange: true, selectForward: true}}">
+    </div>
+
+    <div class="field">
+      <label for="range-selectbackward" class="label">Range - Select Backward</label>
+      <input id="range-selectbackward" name="range-selectbackward" class="datepicker input-md" type="text" data-options="{range: {useRange: true, selectBackward: true}}">
+    </div>
+
+    <div class="field">
+      <label for="range-maxdays" class="label">Range - Max (2) Days</label>
+      <input id="range-maxdays" name="range-maxdays" class="datepicker input-md" type="text" data-options="{range: {useRange: true, maxDays: 2}}">
+    </div>
+
+    <div class="field">
+      <label for="range-mindays" class="label">Range - Min (5) Days</label>
+      <input id="range-mindays" name="range-mindays" class="datepicker input-md" type="text" data-options="{range: {useRange: true, minDays: 5}}">
+    </div>
+
+    <div class="field">
+      <label for="range-monthyearpicker" class="label">Range - Month Year Picker</label>
+      <input id="range-monthyearpicker" name="range-monthyearpicker" class="datepicker input-md" type="text" data-options="{showMonthYearPicker: true, range: {useRange: true}}">
+    </div>
+
+    <div class="field">
+      <label for="range-withtime" class="label">Range - with Time</label>
+      <input id="range-withtime" name="range-withtime" class="datepicker input-lg" type="text" data-options="{showTime: true, range: {useRange: true}}">
+    </div>
+
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    $('.datepicker').on('change', function (e, args) {
+      console.log(args);
+    });
+
+  });
+</script>
