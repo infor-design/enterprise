@@ -164,6 +164,8 @@
     }
 
     &.dismissible {
+      padding-right: 35px;
+
       .icon {
         @include css3(transform, translateY(-50%));
         height: 14px;
@@ -676,8 +678,11 @@ html[dir='rtl'] {
     }
 
     .tab.dismissible {
+      padding-left: 35px;
+      padding-right: 0;
+
       a {
-        padding: 10px 10px 10px 34px;
+        padding: 10px 10px 10px 35px;
       }
 
       .icon {
