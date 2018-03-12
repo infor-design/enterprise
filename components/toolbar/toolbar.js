@@ -51,7 +51,7 @@ const TOOLBAR_DEFAULTS = {
  */
 function Toolbar(element, settings) {
   this.element = $(element);
-  this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+  this.settings = utils.mergeSettings(this.element[0], settings, TOOLBAR_DEFAULTS);
 
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
