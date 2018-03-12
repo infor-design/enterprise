@@ -19,7 +19,7 @@ const BLOCKGRID_DEFAULTS = {
 
 /**
  * Component Name - Does this and that.
- * @class ComponentName
+ * @class Blockgrid
  * @param {string} element The plugin element for the constuctor
  * @param {string} settings The settings element.
  */
@@ -39,6 +39,7 @@ Blockgrid.prototype = {
 
   /**
    * Do initialization, build up and / or add events ect.
+   * @private
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
@@ -110,7 +111,6 @@ Blockgrid.prototype = {
    * Run selection over a block item
    * @param {element} activeBlock Dom element to use
    * @param {boolean} isCheckbox True if a checkbox, used for mixed mode.
-   * @param {boolean} isKey True if a key was used on the checkbox, used for mixed mode.
   */
   selectBlock(activeBlock, isCheckbox) {
     const allBlocks = this.element.find('.block');
@@ -137,7 +137,7 @@ Blockgrid.prototype = {
         }
       }
 
-      this.element.triggerHandler('unselected', [this.selectedRows, 'deselect']);
+      this.element.triggerHandler('deselected', [{ selectedRows: this.selectedRows, action: 'deselect' }]);
       return;
     }
 
@@ -148,7 +148,7 @@ Blockgrid.prototype = {
       }
 
       this.selectedRows.push({ idx, data: this.settings.dataset[idx], elem: activeBlock });
-      action = isChecked ? 'unselected' : 'selected';
+      action = isChecked ? 'deselected' : 'selected';
     }
 
     if (this.settings.selectable === 'mixed' && !isCheckbox) {
@@ -179,7 +179,7 @@ Blockgrid.prototype = {
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */
-    this.element.triggerHandler(isChecked ? 'deselect' : 'selected', [this.selectedRows, action]);
+    this.element.triggerHandler(isChecked ? 'deselected' : 'selected', [{ selectedRows: this.selectedRows, action }]);
   },
 
   /**
@@ -200,8 +200,8 @@ Blockgrid.prototype = {
       blockelements += `<div class="block is-selectable" role="listitem" tabindex="0">
       <input type="checkbox" aria-hidden="true" role="presentation" class="checkbox" id="checkbox${i}" tabindex="${tabindex}" idx="${i}">
       <label for="checkbox${i}" class="checkbox-label"><span class="audible">${selectText}</span></label>
-      <img alt="Placeholder Image" src="${data.img}" class="image-round">
-      <p> ${data.maintxt} <br> ${data.subtxt} </p></div>`;
+      <img alt="Placeholder Image" src="${data.img || data.image}" class="image-round">
+      <p> ${data.maintxt || data.title} <br> ${data.subtxt || data.subtitle} </p></div>`;
     }
 
     this.element.attr('role', 'list').append(blockelements);
@@ -209,9 +209,16 @@ Blockgrid.prototype = {
 
   /**
    * Handle updated settings and values.
-   * @returns {[type]} [description]
+   * @param  {settings} settings The new settings to use.
+   * @returns {void}
    */
-  updated() {
+  updated(settings) {
+    this.settings = utils.mergeSettings(this.element, settings, this.settings);
+
+    if (settings && settings.dataset) {
+      this.settings.dataset = settings.dataset;
+    }
+
     return this
       .teardown()
       .init();

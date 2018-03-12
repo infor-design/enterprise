@@ -86,6 +86,14 @@ SohoMaskedInput.prototype = {
           this.settings.pattern = masks.dateMask;
           break;
         }
+        case 'rangeDate': {
+          const datepicker = $(this.element).data('datepicker');
+          if ($.fn.datepicker && $(this.element).data('datepicker')) {
+            this.settings.patternOptions.format = datepicker.settings.format;
+          }
+          this.settings.pattern = masks.rangeDateMask;
+          break;
+        }
         default: {
           this.element.classList.remove(styleClasses.join(' '));
           break;
@@ -244,17 +252,22 @@ SohoMaskedInput.prototype = {
     // Get a corrected caret position.
     processed.caretPos = api.adjustCaretPosition(adjustCaretOpts);
 
-    // Set the internal component state
-    this.state.previousMaskResult = finalValue;
-    this.state.previousPlaceholder = processed.placeholder;
-
     // Set state of the input field
     this.element.value = finalValue;
     utils.safeSetSelection(this.element, processed.caretPos);
 
+    // Return out if there was no visible change in the conformed result
+    // (causes state not to change, events not to fire)
+    if (this.state.previousMaskResult !== finalValue) {
+      return false;
+    }
+
     // Fire the 'write' event (backwards compat)
-    // TODO: Deprecate in v4.4.0?
-    $(this.element).trigger('write.mask', [processed.conformedValue]);
+    $(this.element).trigger('write.mask', [finalValue]);
+
+    // Set the internal component state
+    this.state.previousMaskResult = finalValue;
+    this.state.previousPlaceholder = processed.placeholder;
 
     // return event handler true/false
     return processed.maskResult;

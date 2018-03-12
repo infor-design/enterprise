@@ -706,6 +706,17 @@ Datagrid.prototype = {
       this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
     }
 
+    if (this.settings.groupable) {
+      // need to rerender here to get the colspans correct.
+      const groupHeaders = this.tableBody.find('.datagrid-rowgroup-header');
+      const newColspan = this.visibleColumns().length;
+
+      for (let i = 0; i < groupHeaders.length; i++) {
+        groupHeaders[i].children[0].setAttribute('colspan', newColspan);
+      }
+      return;
+    }
+
     if (!colGroups) {
       return;
     }
@@ -973,6 +984,38 @@ Datagrid.prototype = {
   filterRowRendered: false,
 
   /**
+  * Set filter datepicker with range/single date.
+  * @private
+  * @param {Object} input element to target datepicker.
+  * @param {String} operator filter type.
+  * @param {Object} options pass in to datepicker.
+  * @returns {void}
+  */
+  filterSetDatepicker(input, operator, options) {
+    const datepickerApi = input.data('datepicker');
+    const isRange = input.data('is-range');
+    options = options || {};
+
+    // Init datepicker
+    const initDatepicker = function () {
+      if (datepickerApi && typeof datepickerApi.destroy === 'function') {
+        datepickerApi.destroy();
+      }
+      input.datepicker(options);
+    };
+
+    // invoke datepicker
+    if ((!datepickerApi || !isRange) && operator === 'in-range') {
+      input.data('is-range', true);
+      options.range = { useRange: true };
+      initDatepicker();
+    } else if ((!datepickerApi || isRange) && operator !== 'in-range') {
+      input.removeData('is-range');
+      initDatepicker();
+    }
+  },
+
+  /**
   * Returns the markup for a specific filter row area.
   * @private
   * @param {object} columnDef The column object for the header
@@ -1128,7 +1171,17 @@ Datagrid.prototype = {
           utils.fixSVGIcons(menu);
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
-          .on('selected.datagrid-filter', () => {
+          .on('selected.datagrid-filter', (e, anchor) => {
+            const rowElem = anchor.closest('th[role="columnheader"]');
+            const col = self.columnById(rowElem.attr('data-column-id'))[0];
+
+            // Set datepicker with range/single date
+            if (col && col.filterType === 'date') {
+              const input = rowElem.find('input');
+              const svg = rowElem.find('.btn-filter .icon-dropdown:first');
+              const operator = svg.getIconName().replace('filter-', '');
+              self.filterSetDatepicker(input, operator);
+            }
             self.applyFilter();
           })
           .off('close.datagrid-filter')
@@ -1272,6 +1325,10 @@ Datagrid.prototype = {
       btnMarkup = btnMarkup.replace('{{icon}}', 'equals');
     }
 
+    if (col.filterType === 'date') {
+      btnMarkup += render('in-range', 'InRange');
+    }
+
     if (/\b(integer|decimal|date|time|percent)\b/g.test(col.filterType)) {
       btnMarkup += `${
         render('less-than', 'LessThan')
@@ -1346,6 +1403,7 @@ Datagrid.prototype = {
         let rowValue = self.fieldValue(rowData, columnDef.field);
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
+        let rangeData = null;
 
         // Percent filter type
         if (columnDef.filterType === 'percent') {
@@ -1383,57 +1441,76 @@ Datagrid.prototype = {
         }
 
         if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
-          conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format);
-          if (conditionValue) {
-            if (columnDef.filterType === 'time') {
-              // drop the day, month and year
-              conditionValue.setDate(1);
-              conditionValue.setMonth(0);
-              conditionValue.setYear(0);
-            }
-
-            conditionValue = conditionValue.getTime();
-          }
-
-          if (rowValue instanceof Date) {
-            // Copy date
-            rowValue = new Date(rowValue.getTime());
-            if (columnDef.filterType === 'time') {
-              // drop the day, month and year
-              rowValue.setDate(1);
-              rowValue.setMonth(0);
-              rowValue.setYear(0);
-            } else if (!(columnDef.editorOptions && columnDef.editorOptions.showTime)) {
-              // Drop any time component of the row data for the filter as it is a date only field
-              rowValue.setHours(0);
-              rowValue.setMinutes(0);
-              rowValue.setSeconds(0);
-              rowValue.setMilliseconds(0);
-            }
-            rowValue = rowValue.getTime();
-          } else if (typeof rowValue === 'string' && rowValue) {
-            if (!columnDef.sourceFormat) {
-              rowValue = Locale.parseDate(rowValue, { pattern: conditions[i].format });
-            } else {
-              rowValue = Locale.parseDate(rowValue, (typeof columnDef.sourceFormat === 'string' ? { pattern: columnDef.sourceFormat } : columnDef.sourceFormat));
-            }
-
-            if (rowValue) {
+          const getValues = (rValue, cValue) => {
+            cValue = Locale.parseDate(cValue, conditions[i].format);
+            if (cValue) {
               if (columnDef.filterType === 'time') {
                 // drop the day, month and year
-                rowValue.setDate(1);
-                rowValue.setMonth(0);
-                rowValue.setYear(0);
+                cValue.setDate(1);
+                cValue.setMonth(0);
+                cValue.setYear(0);
+              }
+
+              cValue = cValue.getTime();
+            }
+
+            if (rValue instanceof Date) {
+              // Copy date
+              rValue = new Date(rValue.getTime());
+              if (columnDef.filterType === 'time') {
+                // drop the day, month and year
+                rValue.setDate(1);
+                rValue.setMonth(0);
+                rValue.setYear(0);
               } else if (!(columnDef.editorOptions && columnDef.editorOptions.showTime)) {
                 // Drop any time component of the row data for the filter as it is a date only field
-                rowValue.setHours(0);
-                rowValue.setMinutes(0);
-                rowValue.setSeconds(0);
-                rowValue.setMilliseconds(0);
+                rValue.setHours(0);
+                rValue.setMinutes(0);
+                rValue.setSeconds(0);
+                rValue.setMilliseconds(0);
               }
-              rowValue = rowValue.getTime();
+              rValue = rValue.getTime();
+            } else if (typeof rValue === 'string' && rValue) {
+              if (!columnDef.sourceFormat) {
+                rValue = Locale.parseDate(rValue, { pattern: conditions[i].format });
+              } else {
+                rValue = Locale.parseDate(rValue, (typeof columnDef.sourceFormat === 'string' ? { pattern: columnDef.sourceFormat } : columnDef.sourceFormat));
+              }
+
+              if (rValue) {
+                if (columnDef.filterType === 'time') {
+                  // drop the day, month and year
+                  rValue.setDate(1);
+                  rValue.setMonth(0);
+                  rValue.setYear(0);
+                } else if (!(columnDef.editorOptions && columnDef.editorOptions.showTime)) {
+                  // Drop any time component of the row data for the filter
+                  // as it is a date only field
+                  rValue.setHours(0);
+                  rValue.setMinutes(0);
+                  rValue.setSeconds(0);
+                  rValue.setMilliseconds(0);
+                }
+                rValue = rValue.getTime();
+              }
             }
+            return { rValue, cValue };
+          };
+
+          let values = null;
+          if (conditions[i].operator === 'in-range') {
+            const datepickerApi = conditions[i].input.data('datepicker');
+            if (datepickerApi) {
+              rangeData = datepickerApi.settings.range.data;
+              if (rangeData && rangeData.start) {
+                values = getValues(rowValue, rangeData.start);
+              }
+            }
+          } else {
+            values = getValues(rowValue, conditions[i].value);
           }
+          rowValue = values ? values.rValue : rowValue;
+          conditionValue = values ? values.cValue : conditionValue;
         }
 
         switch (conditions[i].operator) {
@@ -1482,6 +1559,14 @@ Datagrid.prototype = {
           case 'is-not-empty':
             isMatch = (rowValue !== '');
             break;
+          case 'in-range':
+            isMatch = false;
+            if (rangeData && rangeData.startDate && rangeData.endDate) {
+              const d1 = rangeData.startDate.getTime();
+              const d2 = rangeData.endDate.getTime();
+              isMatch = rowValue >= d1 && rowValue <= d2;
+            }
+            break;
           case 'less-than':
             isMatch = (rowValue < conditionValue && rowValue !== '');
             break;
@@ -1495,7 +1580,6 @@ Datagrid.prototype = {
             isMatch = (rowValue >= conditionValue && rowValue !== '');
             break;
           case 'selected':
-
             if (columnDef && columnDef.isChecked) {
               isMatch = columnDef.isChecked(rowValue);
               break;
@@ -1653,7 +1737,8 @@ Datagrid.prototype = {
       const condition = {
         columnId: rowElem.attr('data-column-id'),
         operator: op,
-        value
+        value,
+        input
       };
 
       if (input.data('datepicker')) {
@@ -1915,6 +2000,28 @@ Datagrid.prototype = {
         // Move the elem in the data set
         const first = self.settings.dataset.splice(status.startIndex, 1)[0];
         self.settings.dataset.splice(status.endIndex, 0, first);
+
+        const swapRow = status.over;
+        const originalRow = status.start;
+
+        // If using expandable rows move the expandable row with it
+        const movedUp = status.endIndex < status.startIndex;
+        if (self.settings.rowTemplate || self.settings.expandableRow) {
+          if (movedUp) {
+            self.tableBody.find('tr').eq(status.startIndex + 1).insertAfter(originalRow);
+          } else {
+            self.tableBody.find('tr').eq(status.startIndex).insertAfter(originalRow);
+            originalRow.next().next().insertAfter(swapRow);
+          }
+        }
+
+        // Resequence the rows
+        const allRows = self.tableBody.find('tr:not(.datagrid-expandable-row)');
+        for (let i = 0; i < allRows.length; i++) {
+          allRows[i].setAttribute('data-index', i);
+          allRows[i].setAttribute('aria-rowindex', i + 1);
+        }
+
         // Fire an event
         self.element.trigger('rowreorder', [status]);
       });
@@ -2739,6 +2846,16 @@ Datagrid.prototype = {
       }
     }
 
+    const hasTag = columnDef.formatter ?
+      columnDef.formatter.toString().indexOf('<span class="tag') > -1 : false;
+
+    const hasAlert = columnDef.formatter ?
+      columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
+
+    if (hasAlert) {
+      max += 10;
+    }
+
     // Use header text length as max if bigger than all data cells
     if (title.length > max) {
       max = title.length;
@@ -2757,9 +2874,15 @@ Datagrid.prototype = {
     context.font = '14px arial';
 
     const metrics = context.measureText(maxText);
-    const hasImages = columnDef.formatter ?
-      columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
-    let padding = (chooseHeader ? 60 + (hasImages ? 36 : 0) : 40 + (hasImages ? 36 : 0));
+    let padding = chooseHeader ? 35 : 40;
+
+    if (hasAlert && !chooseHeader) {
+      padding += 20;
+    }
+
+    if (hasTag && !chooseHeader) {
+      padding += 10;
+    }
 
     if (columnDef.filterType) {
       let minWidth = columnDef.filterType === 'date' ? 170 : 100;
@@ -2916,6 +3039,11 @@ Datagrid.prototype = {
     }
 
     if (col.id === 'rowStatus') {
+      colWidth = 62;
+      col.width = colWidth;
+    }
+
+    if (col.id === 'rowReorder') {
       colWidth = 62;
       col.width = colWidth;
     }
@@ -3978,8 +4106,8 @@ Datagrid.prototype = {
 
     // Prevent redirects
     this.table
-      .off('mouseup.datagrid touchstart.datagrid')
-      .on('mouseup.datagrid touchstart.datagrid', 'a', (e) => {
+      .off('click.datagrid')
+      .on('click.datagrid', 'a', (e) => {
         e.preventDefault();
       });
 
@@ -6377,7 +6505,7 @@ Datagrid.prototype = {
 
   // For the row node get the index - adjust for paging / invisible rowsCache
   visualRowIndex(row) {
-    return this.tableBody.find('tr:visible').index(row);
+    return this.tableBody.find('tr:visible:not(.is-hidden, .datagrid-expandable-row)').index(row);
   },
 
   visualRowNode(idx) {

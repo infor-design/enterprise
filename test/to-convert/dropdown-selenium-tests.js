@@ -1,3 +1,4 @@
+/* eslint-disable */
 /***************************
  * Dropdown - Selenium Tests
  * These tests run using webdriverJS and Selenium, in a true browser environment
@@ -216,6 +217,10 @@ describe('Dropdown [selenium]', function(){
         value.should.equal('selectedByDefault');
       })
       .call(done);
+  });
+
+  it('should support being initialized as hidden', function(done) {
+
   });
 
 });

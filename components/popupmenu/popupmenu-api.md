@@ -2,23 +2,23 @@
 
 ### Table of Contents
 
--   [POPUPMENU_DEFAULTS](#popupmenu_defaults)
--   [PopupMenu](#popupmenu)
-    -   [isRTL](#isrtl)
-    -   [markupItems](#markupitems)
-    -   [getPositionFromEvent](#getpositionfromevent)
-    -   [position](#position)
-    -   [highlight](#highlight)
-    -   [select](#select)
-    -   [getSelected](#getselected)
-    -   [isInSelectableSection](#isinselectablesection)
-    -   [isInSingleSelectSection](#isinsingleselectsection)
-    -   [isInMultiselectSection](#isinmultiselectsection)
-    -   [detach](#detach)
-    -   [close](#close)
-    -   [teardown](#teardown)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
+-   [POPUPMENU_DEFAULTS][1]
+-   [PopupMenu][2]
+    -   [isRTL][3]
+    -   [markupItems][4]
+    -   [getPositionFromEvent][5]
+    -   [position][6]
+    -   [highlight][7]
+    -   [select][8]
+    -   [getSelected][9]
+    -   [isInSelectableSection][10]
+    -   [isInSingleSelectSection][11]
+    -   [isInMultiselectSection][12]
+    -   [detach][13]
+    -   [close][14]
+    -   [teardown][15]
+    -   [updated][16]
+    -   [destroy][17]
 
 ## POPUPMENU_DEFAULTS
 
@@ -26,23 +26,23 @@ Default Popupmenu Settings
 
 **Properties**
 
--   `menu` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Menu's ID Selector, or a jQuery object representing a menu
--   `trigger` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Action on which to trigger a menu can be: click,
+-   `menu` **[string][18]** Menu's ID Selector, or a jQuery object representing a menu
+-   `trigger` **[string][18]** Action on which to trigger a menu can be: click,
      rightClick, immediate ect
--   `autoFocus` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the focus will not focus the first list
+-   `autoFocus` **[boolean][19]** If false the focus will not focus the first list
      element. (At the cost of accessibility)
--   `attachToBody` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the menu will be moved out to the body.
+-   `attachToBody` **[boolean][19]** If true the menu will be moved out to the body.
      To be used in certin overflow situations.
--   `beforeOpen` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback that can be used for populating the
+-   `beforeOpen` **[function][20]** Callback that can be used for populating the
      contents of the menu.
--   `ariaListbox` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Switches aria to use listbox construct instead
+-   `ariaListbox` **[string][18]** Switches aria to use listbox construct instead
      of menu construct (internal)
--   `eventObj` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Can pass in the event object so you can do a right
+-   `eventObj` **[string][18]** Can pass in the event object so you can do a right
      click with immediate
--   `returnFocus` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If set to false, focus will not be returned to
+-   `returnFocus` **[string][18]** If set to false, focus will not be returned to
      the calling element. It usually should be for accessibility purposes.
--   `placementOpts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Gets passed to this control's Place behavior
--   `offset` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Can tweak the menu position in the x and y direction.
+-   `placementOpts` **[object][21]** Gets passed to this control's Place behavior
+-   `offset` **[object][21]** Can tweak the menu position in the x and y direction.
      Takes an object of form: `{x: 0, y: 0}`
 
 ## PopupMenu
@@ -51,20 +51,20 @@ Responsive Popup Menu Control aka Context Menu when doing a right click action.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `element` **([Array][22]&lt;jQuery> | [HTMLElement][23])** the base element
+-   `settings` **[object][21]?** incoming settings
 
 ### isRTL
 
 Checks whether or not Right-To-Left reading mode is active.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the reading/writing direction is RTL
+Returns **[boolean][19]** whether or not the reading/writing direction is RTL
 
 ### markupItems
 
 **Parameters**
 
--   `contextElement` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))?** the top-most element that will
+-   `contextElement` **([Array][22]&lt;jQuery> | [HTMLElement][23])?** the top-most element that will
      be modified (defaults to the top-level menu).
 
 Returns **void** 
@@ -77,7 +77,7 @@ Get the event position, handling browser cases (IE,FF) as well as SVG
 
 -   `e` **jQuery.Event** the mouse event to be checked for pageX/pageY
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** containing x/y coordinates
+Returns **[object][21]** containing x/y coordinates
 
 ### position
 
@@ -95,7 +95,7 @@ Places a highlighted visual state on an item inside the menu
 
 **Parameters**
 
--   `anchor` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the anchor tag representing the menu item.
+-   `anchor` **[Array][22]&lt;jQuery>** the anchor tag representing the menu item.
 
 Returns **void** 
 
@@ -105,15 +105,15 @@ Adds/removes checkmarks that are in selectable groups inside the Popupmenu
 
 **Parameters**
 
--   `anchor` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the anchor tag representing the menu item.
+-   `anchor` **[Array][22]&lt;jQuery>** the anchor tag representing the menu item.
 
-Returns **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** updated references to the anchor and its state.
+Returns **[array][22]** updated references to the anchor and its state.
 
 ### getSelected
 
 Gets references to top-level menu items that are currently selected.
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** elements inside the top-level menu that are selected.
+Returns **[Array][22]&lt;jQuery>** elements inside the top-level menu that are selected.
 
 ### isInSelectableSection
 
@@ -121,9 +121,9 @@ Determines whether or not an anchor resides inside of a selectable Popupmenu sec
 
 **Parameters**
 
--   `anchor` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the anchor tag being checked.
+-   `anchor` **[Array][22]&lt;jQuery>** the anchor tag being checked.
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** elements inside the top-level menu that are selected.
+Returns **[Array][22]&lt;jQuery>** elements inside the top-level menu that are selected.
 
 ### isInSingleSelectSection
 
@@ -131,9 +131,9 @@ Determines whether or not an anchor resides inside of a single-selectable Popupm
 
 **Parameters**
 
--   `anchor` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the anchor tag being checked.
+-   `anchor` **[Array][22]&lt;jQuery>** the anchor tag being checked.
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** elements inside the top-level menu that are selected
+Returns **[Array][22]&lt;jQuery>** elements inside the top-level menu that are selected
  within a single-selectable section.
 
 ### isInMultiselectSection
@@ -142,9 +142,9 @@ Determines whether or not an anchor resides inside of a multi-selectable Popupme
 
 **Parameters**
 
--   `anchor` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the anchor tag being checked.
+-   `anchor` **[Array][22]&lt;jQuery>** the anchor tag being checked.
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** elements inside the top-level menu that are selected
+Returns **[Array][22]&lt;jQuery>** elements inside the top-level menu that are selected
  within a multi-selectable section.
 
 ### detach
@@ -159,9 +159,9 @@ Close the open menu
 
 **Parameters**
 
--   `isCancelled` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Internally set option used if the operation is a cancel.
+-   `isCancelled` **[boolean][19]** Internally set option used if the operation is a cancel.
      Wont matter for manual api call.
--   `noFocus` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** Do not return focus to the calling element (fx a button)
+-   `noFocus` **[boolean][19]?** Do not return focus to the calling element (fx a button)
 
 ### teardown
 
@@ -175,7 +175,7 @@ Updates this Popupmenu instance with new settings
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][21]?** incoming settings
 
 Returns **this** component instance
 
@@ -184,3 +184,49 @@ Returns **this** component instance
 Teardown markup and detach all events.
 
 Returns **void** 
+
+[1]: #popupmenu_defaults
+
+[2]: #popupmenu
+
+[3]: #isrtl
+
+[4]: #markupitems
+
+[5]: #getpositionfromevent
+
+[6]: #position
+
+[7]: #highlight
+
+[8]: #select
+
+[9]: #getselected
+
+[10]: #isinselectablesection
+
+[11]: #isinsingleselectsection
+
+[12]: #isinmultiselectsection
+
+[13]: #detach
+
+[14]: #close
+
+[15]: #teardown
+
+[16]: #updated
+
+[17]: #destroy
+
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[23]: https://developer.mozilla.org/docs/Web/HTML/Element

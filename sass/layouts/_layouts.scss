@@ -324,7 +324,7 @@ body.no-scroll {
 
     > .sidebar + .main {
       border-bottom: 0;
-      border-top: 1px solid $graphite02;
+      border-top: 1px solid $panel-border-color;
     }
 
     // Undo fixed-widths
@@ -390,13 +390,13 @@ body.no-scroll {
     }
 
     .main {
-      border-bottom: 1px solid $graphite02;
+      border-bottom: 1px solid $panel-border-color;
       border-left: 0;
       border-right: 0;
     }
 
     .sidebar + .main {
-      border-top: 1px solid $graphite02;
+      border-top: 1px solid $panel-border-color;
     }
   }
 }

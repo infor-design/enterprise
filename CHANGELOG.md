@@ -1,3 +1,40 @@
+## <a name="version-4.5.0">4.5.0</a>
+
+Release Date: 2018-03-31
+
+Full Jira Release Notes: http://bit.ly/2oCLCRp
+
+### <a name="version-4.5.0-download-build-assets">Download Build Assets:</a>
+
+Build Server: http://bamboo.infor.com/browse/label/release-450
+Npm: http://npm.infor.com
+Angular Components Change Log: http://git.infor.com/projects/SOHO/repos/angular-components/browse/CHANGELOG.md
+
+### <a name="version-4.5.0-download-build-assets">Demo Site</a>
+
+http://usalvlhlpool1.infor.com/4.5.0/components/
+
+### <a name="version-4.5.0-key-new-features">Key New Features</a>
+- Experimental new font added from IDS. You can enable the new font as explained on http://bit.ly/2p2sjjZ
+-
+
+### <a name="version-4.5.0-corrections">Corrections to Your Code</a>
+-
+-
+
+### <a name="version-4.5.0-behavior-changes">Behavior Changes</a>
+- Search Field - ESC incorrectly cleared the field and was inconsistent. The proper key is ctrl + backspace (PC )/ alt + delete (mac) to clear all field contents. ESC no longer does anything.
+
+### <a name="version-4.5.0-improvements">Improvements</a>
+-
+-
+
+### <a name="version-4.5.0-bug-fixes">Bug Fixes</a>
+-
+-
+
+(X Jira Issues Solved this release, Backlog Dev X, Design X, Unresolved X, Test Coverage X% )
+
 ## <a name="version-4.4.0">4.4.0</a>
 
 Release Date: 2018-02-18

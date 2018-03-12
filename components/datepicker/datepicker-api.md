@@ -2,19 +2,19 @@
 
 ### Table of Contents
 
--   [DATEPICKER_DEFAULTS](#datepicker_defaults)
--   [DatePicker](#datepicker)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [readonly](#readonly)
-    -   [getCurrentDate](#getcurrentdate)
-    -   [updated](#updated)
-    -   [teardown](#teardown)
-    -   [destroy](#destroy)
--   [listopened](#listopened)
--   [change](#change)
--   [listclosed](#listclosed)
--   [input](#input)
+-   [DATEPICKER_DEFAULTS][1]
+-   [DatePicker][2]
+    -   [enable][3]
+    -   [disable][4]
+    -   [readonly][5]
+    -   [getCurrentDate][6]
+    -   [updated][7]
+    -   [teardown][8]
+    -   [destroy][9]
+-   [listopened][10]
+-   [change][11]
+-   [listclosed][12]
+-   [input][13]
 
 ## DATEPICKER_DEFAULTS
 
@@ -22,47 +22,59 @@ Default DatePicker Options
 
 **Properties**
 
--   `showTime` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the time selector will be shown.
--   `timeFormat` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Format to use time section fx HH:mm,
+-   `showTime` **[boolean][14]** If true the time selector will be shown.
+-   `timeFormat` **[string][15]?** Format to use time section fx HH:mm,
      defaults current locale settings.
--   `minuteInterval` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** 
--   `secondInterval` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** 
--   `mode` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Time picker options: 'standard', 'range',
+-   `minuteInterval` **[number][16]?** 
+-   `secondInterval` **[number][16]?** 
+-   `mode` **[string][15]?** Time picker options: 'standard', 'range',
      this controls the time picker.
--   `roundToInterval` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** In time picker mode, if a non-matching
+-   `roundToInterval` **[boolean][14]?** In time picker mode, if a non-matching
      minutes value is entered,
      rounds the minutes value to the nearest interval when the field is blurred.
--   `dateFormat` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Defaults to current locale but can be
+-   `dateFormat` **[string][15]** Defaults to current locale but can be
      overriden to a specific format, like like 'yyyy-MM-dd' iso8601 format.
--   `disable` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Disable dates in various ways.
+-   `disable` **[object][17]** Disable dates in various ways.
     For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
     or be a Date() object or string that can be converted to a date with new Date().
-    -   `disable.dates` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Disable specific dates.
+    -   `disable.dates` **[array][18]** Disable specific dates.
         Example `{dates: ['12/31/2018', '01/01/2019'}`.
-    -   `disable.minDate` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date))** Disable up to a minimum date.
+    -   `disable.minDate` **([string][15] \| [date][19])** Disable up to a minimum date.
         Example `{minDate: '12/31/2016'}`.
-    -   `disable.maxDate` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date))** Disable up to a maximum date.
+    -   `disable.maxDate` **([string][15] \| [date][19])** Disable up to a maximum date.
         Example `{minDate: '12/31/2019'}`.
-    -   `disable.dayOfWeek` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Disable a specific of days of the week 0-6.
+    -   `disable.dayOfWeek` **[array][18]** Disable a specific of days of the week 0-6.
         Example `{dayOfWeek: [0,6]}`.
-    -   `disable.isEnable` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Defaults to false.
+    -   `disable.isEnable` **[array][18]** Defaults to false.
         If true all the disable settings will be enabled and the rest will be disabled.
         So you can inverse the settings.
         For example if you have more non specific dates to disable then enable ect.
--   `showMonthYearPicker` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the month and year will render
+-   `showMonthYearPicker` **[boolean][14]** If true the month and year will render
      as dropdowns.
--   `hideDays` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the days portion of the calendar will be hidden.
+-   `hideDays` **[boolean][14]** If true the days portion of the calendar will be hidden.
      Usefull for Month/Year only formats.
--   `customValidation` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the internal validation is disabled.
--   `advanceMonths` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** The number of months in each direction to show in
+-   `customValidation` **[boolean][14]** If true the internal validation is disabled.
+-   `advanceMonths` **[boolean][14]** The number of months in each direction to show in
      the dropdown for months (when initially opening)
--   `showLegend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true a legend is show to associate dates.
--   `legend` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Legend Build up
+-   `showLegend` **[boolean][14]** If true a legend is show to associate dates.
+-   `legend` **[array][18]** Legend Build up
     for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
     {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
--   `calendarName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The name of the calendar to use in instance of
+-   `range` **[object][17]** Range between two dates with various options.
+    -   `range.useRange` **[boolean][14]** Use range of two dates options.
+    -   `range.start` **([string][15] \| [date][19])** Start date in range.
+    -   `range.end` **([string][15] \| [date][19])** End date in range.
+    -   `range.separator` **[string][15]** Visual separator between two dates.
+    -   `range.minDays` **[number][16]** Minimum days to be in range.
+    -   `range.maxDays` **[number][16]** Maximum days to be in range.
+    -   `range.selectForward` **[boolean][14]** Range only in forward direction.
+    -   `range.selectBackward` **[boolean][14]** Range only in backward direction.
+    -   `range.includeDisabled` **[boolean][14]** Include disable dates in range of dates.
+-   `calendarName` **[string][15]** The name of the calendar to use in instance of
     multiple calendars. At this time only ar-SA and ar-EG locales have either
     'gregorian' or 'islamic-umalqura' as valid values.
+-   `useUTC` **useUTC** If true the dates will use UTC format. This is only partially
+    implemented [https://jira.infor.com/browse/SOHO-3437][20]
 
 ## DatePicker
 
@@ -70,8 +82,8 @@ A component to support date entry.
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[String][15]** The component element.
+-   `settings` **[String][15]** The component settings.
 
 ### enable
 
@@ -95,7 +107,7 @@ Returns **void**
 
 Get the current date from the field. In date format
 
-Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** the set date object
+Returns **[Date][19]** the set date object
 
 ### updated
 
@@ -103,9 +115,9 @@ Updates the component instance. Can be used after being passed new settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[Object][17]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[Object][17]** The api
 
 ### teardown
 
@@ -125,7 +137,7 @@ Fires as the calendar popup is opened.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `event` **[Object][17]** The jquery event object
 
 ## change
 
@@ -133,7 +145,7 @@ Fires after the value in the input is changed by any means.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `event` **[Object][17]** The jquery event object
 
 ## listclosed
 
@@ -141,7 +153,7 @@ Fires as the calendar popup is closed.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `event` **[Object][17]** The jquery event object
 
 ## input
 
@@ -149,4 +161,44 @@ Fires after the value in the input is changed by user interaction.
 
 **Properties**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `event` **[Object][17]** The jquery event object
+
+[1]: #datepicker_defaults
+
+[2]: #datepicker
+
+[3]: #enable
+
+[4]: #disable
+
+[5]: #readonly
+
+[6]: #getcurrentdate
+
+[7]: #updated
+
+[8]: #teardown
+
+[9]: #destroy
+
+[10]: #listopened
+
+[11]: #change
+
+[12]: #listclosed
+
+[13]: #input
+
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
+
+[20]: https://jira.infor.com/browse/SOHO-3437

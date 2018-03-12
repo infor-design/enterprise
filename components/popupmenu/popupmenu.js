@@ -464,9 +464,9 @@ PopupMenu.prototype = {
             break;
         }
       })
-      .on('updated.popupmenu', (e) => {
+      .on('updated.popupmenu', (e, settings) => {
         e.stopPropagation();
-        self.updated();
+        self.updated(settings);
       });
 
     // Media Query Listener to detect a menu closing on mobile devices that change orientation.
@@ -1104,27 +1104,6 @@ PopupMenu.prototype = {
         }
       }
       return true;
-
-      /*
-      if (self.ajaxContent instanceof $) {
-        self.ajaxContent.off().remove();
-      }
-
-      if (content === false) {
-        return false;
-      }
-
-      self.ajaxContent = $(content);
-      targetMenu.append(self.ajaxContent);
-
-      self.wrapper.removeAttr('style');
-      self.markupItems();
-
-      if (doOpen) {
-        self.open(e, true);
-      }
-      return true;
-      */
     };
 
     const callbackOpts = {};
@@ -1181,6 +1160,7 @@ PopupMenu.prototype = {
     }
 
     this.position(e);
+    utils.fixSVGIcons(this.menu);
 
     if (this.element.closest('.header').length > 0) {
       this.menu.parent()[0].style.zIndex = '9001';

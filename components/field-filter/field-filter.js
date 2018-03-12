@@ -26,7 +26,12 @@ const FIELDFILTER_DEFAULTS = {
     `<label>${Locale.translate('FieldFilter')}</label>
     <select class="dropdown no-init">
       {{#dataset}}
-      <option value="{{value}}" data-icon="{{icon}}">{{text}}</option>
+        <option
+          {{#value}} value="{{value}}"{{/value}}
+          {{#selected}} selected{{/selected}}
+          {{#disabled}} class="is-disabled" disabled{{/disabled}}
+          {{#icon}} data-icon="{{icon}}"{{/icon}}
+        >{{text}}</option>
       {{/dataset}}
     </select>`
 };
@@ -52,6 +57,7 @@ FieldFilter.prototype = {
   init() {
     this.render();
     this.handleEvents();
+    this.setFiltered();
   },
 
   /**
@@ -135,31 +141,49 @@ FieldFilter.prototype = {
   },
 
   /**
+   * Set currently filtered item
+   * @private
+   * @returns {Object} The api
+   */
+  setFiltered() {
+    if (this.ddApi) {
+      const item = this.ddApi.element.find('option:selected');
+      this.filtered = this.getTriggerData(item);
+    }
+    return this;
+  },
+
+  /**
+   * Get currently triggerData for given item args
+   * @private
+   * @param {Object} args selected item.
+   * @returns {Object} The api
+   */
+  getTriggerData(args) {
+    const s = this.settings;
+    const dataset = s.dropdownOpts.source && this.ddApi ? this.ddApi.dataset : s.dataset;
+    return { idx: args.index(), item: args, data: dataset[args.index()] };
+  },
+
+  /**
    * Attach Events used by the Control
    * @private
    * @returns {Object} The api
    */
   handleEvents() {
-    const s = this.settings;
-
     this.ffdropdown
       .on(`listopened.${COMPONENT_NAME}`, () => {
         // drowpdownWidth - border (52)
         $('#dropdown-list ul').width(this.element.outerWidth() + 52);
       })
       .on(`selected.${COMPONENT_NAME}`, (e, args) => {
-        const dataset = s.dropdownOpts.source && this.ddApi ? this.ddApi.dataset : s.dataset;
-        const triggerData = {
-          idx: args.index(),
-          item: args,
-          data: dataset[args.index()]
-        };
         /**
         * Fires after the value in the dropdown is selected.
         * @event filtered
         * @property {object} event The jquery event object.
         * @property {object} data for selected item.
         */
+        const triggerData = this.getTriggerData(args);
         this.element.triggerHandler('filtered', [triggerData]);
       });
 

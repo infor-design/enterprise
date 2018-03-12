@@ -894,7 +894,7 @@ TimePicker.prototype = {
 
   /**
    * Getter method for retrieving the value of the Timepicker.
-   * @param {boolean} [removePunctuation] Gets rid of all the value's punctatuion on return.
+   * @param {boolean} removePunctuation Gets rid of all the value's punctuation on return.
    * @returns {string} the current timepicker value
    */
   value(removePunctuation) {
