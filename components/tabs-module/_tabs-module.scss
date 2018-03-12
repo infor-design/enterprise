@@ -173,6 +173,11 @@
         right: 10px;
         top: 50%;
       }
+
+      a {
+        padding: 10px 35px 10px 10px;
+      }
+
     }
 
     &.application-menu-trigger {
@@ -675,6 +680,10 @@ html[dir='rtl'] {
     .tab.dismissible {
       padding-left: 35px;
       padding-right: 0;
+
+      a {
+        padding: 10px 10px 10px 35px;
+      }
 
       .icon {
         left: 10px;
