@@ -164,6 +164,8 @@
     }
 
     &.dismissible {
+      padding-right: 35px;
+
       .icon {
         @include css3(transform, translateY(-50%));
         height: 14px;
@@ -171,11 +173,6 @@
         right: 10px;
         top: 50%;
       }
-
-      a {
-        padding: 10px 35px 10px 10px;
-      }
-
     }
 
     &.application-menu-trigger {
@@ -676,9 +673,8 @@ html[dir='rtl'] {
     }
 
     .tab.dismissible {
-      a {
-        padding: 10px 10px 10px 34px;
-      }
+      padding-left: 35px;
+      padding-right: 0;
 
       .icon {
         left: 10px;
