@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Toolbar Test: One Visible Button</h2>
+    <p>Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7591" target="_blank">SOHO-7591</a>.</p>
+    <p>
+      <b>NOTE:</b> The width of the toolbars below is always forced to 50% for demo purposes only.
+    </p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns" style="width: 50% !important;">
+
+    <div id="toolbar-regular-button" class="toolbar" data-options='{ "maxVisibleButtons": 1, "favorButtonset": false }'>
+      <div class="title">Regular Button</div>
+      <div class="buttonset">
+        <button id="regular-button" class="btn">Regular Button</button>
+      </div>
+    </div>
+
+    <div id="toolbar-icon-button" class="toolbar" data-options='{ "maxVisibleButtons": 1, "favorButtonset": false }'>
+      <div class="title">Icon Button</div>
+      <div class="buttonset">
+        <button id="icon-button" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span class="audible">Icon Button</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="toolbar-menu-button" class="toolbar" data-options='{ "maxVisibleButtons": 1, "favorButtonset": false }'>
+      <div class="title">Menu Button</div>
+      <div class="buttonset">
+        <button id="menu-button" class="btn-menu">Menu Button</button>
+        <ul class="popupmenu">
+          <li><a href="#">Item #1</a></li>
+          <li><a href="#">Item #2</a></li>
+          <li><a href="#">Item #3</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="toolbar-menu-button-icon" class="toolbar" data-options='{ "maxVisibleButtons": 1, "favorButtonset": false }'>
+      <div class="title">Menu Button with Icon</div>
+      <div class="buttonset">
+        <button id="menu-button-icon" class="btn-menu">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span>Menu Button with Icon</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Item #1</a></li>
+          <li><a href="#">Item #2</a></li>
+          <li><a href="#">Item #3</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
