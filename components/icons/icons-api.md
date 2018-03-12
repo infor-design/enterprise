@@ -32,7 +32,7 @@ Returns **[string][10]** a version of this icon's definition prefixed with the c
 
 ### getExistingUseTag
 
-Changes this icon instance's `use` setting to match an existing `<use> tag's`xlink:href\` attribute. In the event that a <use> tag pre-exists on an icon,
+Changes this icon instance's `use` setting to match an existing `<use>` tag's `xlink:href` attribute. In the event that a `<use>` tag pre-exists on an icon,
 we want to retain it, and simply replace the settings.
 
 Returns **this** component instance

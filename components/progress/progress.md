@@ -1,5 +1,5 @@
 ---
-title: Progress Indicator  
+title: Progress Indicator
 description: This page describes Progress Indicator.
 ---
 
@@ -15,7 +15,7 @@ Insert a block element such as a div in the dom with class progess-bar. Set the 
 
 <label id="pr-label1">Percent complete</label>
 <div class="progress">
-      <div class="progress-bar" data-value="50" id="progress-bar1" aria-labelledby="pr-label1"></div>
+    <div class="progress-bar" data-value="50" id="progress-bar1" aria-labelledby="pr-label1"></div>
 </div>
 
 
