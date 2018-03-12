@@ -2,7 +2,6 @@
 // Use styles to conver the tree to a stepped wizard
 //==================================================//
 
-
 .step-process-container {
 
   // Additional custom toolbar styles
@@ -85,10 +84,8 @@
         border-top: 1px solid transparent;
         cursor: pointer;
         display: block;
-        height: 45px;
-        line-height: 45px;
         margin-left: 0;
-        padding: 0 15px;
+        padding: 15px;
         position: relative;
 
         .icon {
@@ -169,6 +166,13 @@
   .btn-toggle-steps,
   .phone-visible {
     display: none;
+  }
+
+  // Remove default tree styling for step-process items.
+  .tree {
+    a {
+      line-height: normal;
+    }
   }
 }
 
