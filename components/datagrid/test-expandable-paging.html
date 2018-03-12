@@ -68,6 +68,7 @@
 
       grid.on('expandrow', function (e, args) {
         var container = $(args.detail).find('.datagrid-row-heading').text('More Info on Product ID ' + args.item.productId);
+        console.log(args);
       });
 
   });
