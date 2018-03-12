@@ -23,20 +23,24 @@ const setupButton = async (url, el) => {
 };
 
 describe('Button tests', () => {
-  it('Should open menu on return', async (done) => {
-    try {
-      await setupButton('http://localhost:4000/components/button/example-with-icons', '#menu-button-alone');
-      const buttonEl = await element(by.id('menu-button-alone'));
+  console.log(browser.browserName);
+  if (browser.browserName.toLowerCase() !== 'safari') {
+    it('Should open menu on return', async (done) => {
+      try {
+        await setupButton('http://localhost:4000/components/button/example-with-icons', '#menu-button-alone');
+        const buttonEl = await element(by.id('menu-button-alone'));
 
-      await buttonEl.sendKeys(protractor.Key.ENTER);
+        await buttonEl.sendKeys(protractor.Key.ENTER);
 
-      expect(await element(by.css('.btn-menu.is-open')).isDisplayed()).toBe(true);
-      expect(await element(by.css('button#menu-button-alone[aria-haspopup="true"]')).isDisplayed()).toBe(true);
-      done();
-    } catch (error) {
-      await browserStackErrorReporter(done, error);
-    }
-  });
+        expect(await buttonEl.getAttribute('class')).toContain('is-open');
+
+        expect(await element(by.css('button#menu-button-alone[aria-haspopup="true"]')).isDisplayed()).toBe(true);
+        done();
+      } catch (error) {
+        await browserStackErrorReporter(done, error);
+      }
+    });
+  }
 
   it('Should open menu on click', async (done) => {
     try {
@@ -45,11 +49,25 @@ describe('Button tests', () => {
 
       await buttonEl.click();
 
-      expect(await element(by.css('.btn-menu.is-open')).isDisplayed()).toBe(true);
+      expect(buttonEl.getAttribute('class')).toContain('is-open');
       expect(await element(by.css('button#menu-button-alone[aria-haspopup="true"]')).isDisplayed()).toBe(true);
       done();
     } catch (error) {
       await browserStackErrorReporter(done, error);
     }
   });
+
+  if (browser.browserName.toLowerCase() === 'chrome') {
+    it('Should not visual regress', async (done) => {
+      try {
+        await setupButton('http://localhost:4000/components/button/example-with-icons', '#menu-button-alone');
+
+        expect(await browser.protractorImageComparison.checkScreen('buttonPage')).toEqual(0);
+
+        done();
+      } catch (error) {
+        await browserStackErrorReporter(done, error);
+      }
+    });
+  }
 });

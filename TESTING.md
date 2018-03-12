@@ -24,17 +24,7 @@ Dave
 In computer programming, unit testing is a software testing method by which individual units of source code, sets of one or more computer program modules together with associated control data, usage ...
 
 ## Functional Testing
-
 Functional testing is a software testing process used within software development in which software is tested to ensure that it conforms with all requirements.
-
-## Integration Testing
-
-Integration testing is the phase in software testing in which individual software modules are combined and tested as a group
-
-  - Clicking on elements, looking on the page, accessibility
-  - Screen Shots
-
-## End to End Tests (e2e)
 
 Test whether the flow of an application is performing as designed from start to finish.
 
@@ -43,9 +33,13 @@ Targeting
   - By Property (aria properties)
       element(by.css('div[aria-controls=dropdown-list]'))
 
-## Regression testing
+It also may include integration testing which is the phase in software testing in which individual software modules are combined and tested as a group
 
-Regression testing is a type of software testing which verifies that software which was previously developed and tested still performs the same way after it was changed or interfaced with other software.
+  - Clicking on elements, looking on the page, accessibility
+  - Screen Shots
+
+
+It also maybe include regression testing, which is a type of software testing which verifies that software which was previously developed and tested still performs the same way after it was changed or interfaced with other software.
 
 ## Running and Debugging Tests
 
@@ -57,6 +51,14 @@ Run several spec tests with a Glob, for debugging with Chrome.
 
 Run several just an api test, headless.
  `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run ci:local:unit`
+
+To run BrowserStack you need to place your copy the following configuration, and place the keys in your path.
+
+One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #follwed  by the command`
+```sh
+export BROWSER_STACK_USERNAME=xxxxxxxxxxxxx
+export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
+```
 
 ## Debugging a Test
 1. Put a debugger; statement at a place in the code.

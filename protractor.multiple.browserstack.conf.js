@@ -1,17 +1,18 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 const browserstack = require('browserstack-local');
+const protractorImageComparison = require('protractor-image-comparison');
 
 exports.config = {
   allScriptsTimeout: 60000,
   specs: [
-    '**/e2e/*.e2e-spec.js'
+    '**/functional/*.functional-spec.js'
   ],
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
   commonCapabilities: {
     'browserstack.user': process.env.BROWSER_STACK_USERNAME,
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
-    'browserstack.debug': true,
+    'browserstack.debug': false,
     'browserstack.local': true,
     build: 'protractor-browserstack',
     name: 'Functional tests'
@@ -19,7 +20,7 @@ exports.config = {
   multiCapabilities: [
     {
       browserName: 'Chrome',
-      browser_version: '63'
+      browser_version: '65'
     },
     {
       browserName: 'Firefox',
@@ -53,9 +54,21 @@ exports.config = {
 
   onPrepare: () => {
     browser.ignoreSynchronization = true;
+
+    browser.protractorImageComparison = new protractorImageComparison({
+      baselineFolder: './baseline/',
+      screenshotPath: './.tmp/',
+      autoSaveBaseline: true,
+      debug: false
+    });
+
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: true }
     }));
+
+    return browser.getProcessedConfig().then((cap) => {
+      browser.browserName = cap.capabilities.browserName;
+    });
   },
 
   afterLaunch: () => {
