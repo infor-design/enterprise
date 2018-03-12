@@ -10,18 +10,18 @@ const COMPONENT_NAME = 'radar';
 /**
 * @namespace
 * @property {array} dataset The data to use in the radar
-* @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
+* @property {boolean} redrawOnResize If false, the component will not resize when resizing the page.
 * @property {object} margin The margins of the SVG, you may want to adjust
 * depending on text location.
 * @property {number} levels How many levels or inner circles should there be drawn.
 * @property {number} maxValue What is the value that the biggest circle will represent
 * @property {number} labelFactor How far out than the outer circle should the labels be placed,
-* this may be useful to adjust for some labels.
+* this may be useful to adjust for some charts.
 * @property {number} wrapWidth The number of pixels after which a label needs to be
 * given a new line. You may want to change this based on label data.
 * * @property {boolean} showCrosslines Set to false to hide the cross line axes.
 * @property {boolean} showAxisLabels Set to false to hide percent labels.
-* @property {number} opacityArea The opacity of the area of the blob.
+* @property {number} opacityArea The opacity value of the blobs.
 * This is set to the correct Infor Style.
 * @property {number} dotRadius The size of the colored circles of each blog.
 * Set to zero to remove dots.
@@ -35,7 +35,7 @@ const COMPONENT_NAME = 'radar';
 * @property {boolean} showAxisLabels If false the axis labels will not be shown.
 * @property {string} axisFormatter D3 formatter to use on the axis labels
 * @property {array} colors An array of colors to use.
-* @property {boolean} showTooltips If false now tooltips will be shown even if
+* @property {boolean} showTooltips If false no tooltips will be shown.
 * @property {object} tooltip A setting that controls the tooltip values and format.
 * @property {string} tooltip.show Controls what is visible in the tooltip, this can be value, label
 * or percent or custom function.
@@ -429,7 +429,6 @@ Radar.prototype = {
 
   /**
    * Get info on the currently selected lines.
-   * @private
    * @returns {object} An object with the matching data and reference to the triggering element.
    */
   getSelected() {
@@ -438,7 +437,6 @@ Radar.prototype = {
 
   /**
    * Get info on the currently selected lines.
-   * @private
    * @param {object} o The selection data object
    * @param {boolean} isToggle If true toggle the current state.
    */
@@ -508,14 +506,15 @@ Radar.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
+
     if (settings && settings.dataset) {
+      this.element.find('.chart-legend').remove();
       this.settings.dataset = settings.dataset;
       this.updateData(this.settings.dataset);
       return this;
     }
 
     this.element.empty();
-
     return this
       .teardown()
       .init();

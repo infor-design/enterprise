@@ -36,7 +36,7 @@
           boolean
         </td>
         <td>
-          If true, the component will not resize when resizing the page.
+          If false, the component will not resize when resizing the page.
 
         </td>
       </tr>
@@ -86,7 +86,7 @@ depending on text location.
         </td>
         <td>
           How far out than the outer circle should the labels be placed,
-this may be useful to adjust for some labels.
+this may be useful to adjust for some charts.
 
         </td>
       </tr>
@@ -126,7 +126,7 @@ given a new line. You may want to change this based on label data.
           number
         </td>
         <td>
-          The opacity of the area of the blob.
+          The opacity value of the blobs.
 This is set to the correct Infor Style.
 
         </td>
@@ -239,7 +239,7 @@ round path (cardinal-closed).
           boolean
         </td>
         <td>
-          If false now tooltips will be shown even if
+          If false no tooltips will be shown.
 
         </td>
       </tr>
@@ -327,6 +327,40 @@ Set this to null for no message or will default to 'No Data Found with an icon.'
         </td>
         <td>
           <p>Update the chart with a new dataset</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>getSelected</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get info on the currently selected lines.</p>
+
+        </td>
+        <td>
+          An object with the matching data and reference to the triggering element.
+object
+        </td>
+      </tr>
+      <tr>
+        <td>setSelected</td>
+        <td>
+          
+                
+                  <span>o (object) = The selection data object
+ </span>
+                
+                  <span>isToggle (boolean) = If true toggle the current state.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Get info on the currently selected lines.</p>
 
         </td>
         <td>
