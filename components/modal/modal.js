@@ -18,6 +18,7 @@ const COMPONENT_NAME = 'modal';
 * @property {string} id Optionally tag a dialog with an id.
 * @property {number} frameHeight Optional extra height to add.
 * @property {number} frameWidth Optional extra width to add.
+* @property {boolean} beforeShow Optional callback for before show
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -28,7 +29,8 @@ const MODAL_DEFAULTS = {
   autoFocus: true,
   id: null,
   frameHeight: 180,
-  frameWidth: 46
+  frameWidth: 46,
+  beforeShow: false
 };
 
 /**
@@ -117,10 +119,14 @@ Modal.prototype = {
         isAppended = true;
         this.element = this.settings.content.closest('.modal');
       } else {
+        if (this.settings.beforeShow) {
+          this.element.find('.modal-body').append($('<div class="field"><div id="modal-busyindicator" class="busy card"></div></div>'));
+        }
+
         this.element.find('.modal-body').append(this.settings.content);
       }
 
-      if (this.settings.content instanceof jQuery) {
+      if (this.settings.content instanceof jQuery && !this.settings.beforeShow) {
         this.settings.content.show();
       }
     }
@@ -142,6 +148,12 @@ Modal.prototype = {
     }
 
     utils.fixSVGIcons(this.element);
+
+    if (this.settings.beforeShow) {
+      const busyIndEl = $('#modal-busyindicator');
+      busyIndEl.busyindicator({}).data('busyindicator');
+      busyIndEl.trigger('start.busyindicator');
+    }
   },
 
   reStructure() {
@@ -339,6 +351,22 @@ Modal.prototype = {
     messageArea[0].style.maxHeight = `${h}px`;
     messageArea[0].style.overflow = 'auto';
     messageArea[0].style.width = `${messageArea.width()}px`;
+  },
+
+  /**
+  * Completes the busy indicator and removes it from body then shows content
+  * @returns {void}
+  */
+  endLoading() {
+    if (this.settings.beforeShow) {
+      $('#modal-busyindicator').trigger('complete.busyindicator');
+
+      $($('#modal-busyindicator')[0].parentElement).remove();
+
+      if (this.settings.content instanceof jQuery) {
+        this.settings.content.show();
+      }
+    }
   },
 
   /**
