@@ -20,10 +20,10 @@ const setupButton = async (url, el) => {
   await browser.driver.get(url);
   const buttonEl = await element(by.css(el));
   await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+  return buttonEl;
 };
 
 describe('Button tests', () => {
-  console.log(browser.browserName);
   if (browser.browserName.toLowerCase() !== 'safari') {
     it('Should open menu on return', async (done) => {
       try {
