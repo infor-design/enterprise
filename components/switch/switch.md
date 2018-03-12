@@ -18,13 +18,10 @@ The Switch Component is a CSS-only component, and has no specific Javascript API
 A Switch element is essentially a specially-styled [checkbox element]( ../components/checkboxes). Create an input element with `type="checkbox"` and `class="switch"`. Also create a label which is linked, and accurately describes the setting of the checkbox. Consider using a checkbox for most form layouts; Switch is primary for settings.
 
 ```html
-
 <div class="switch">
   <input type="checkbox" checked id="notifications" name="notifications" class="switch" />
   <label for="notifications">Allow notifications</label>
 </div>
-
-
 ```
 
 ## Accessibility

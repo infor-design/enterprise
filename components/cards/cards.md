@@ -20,7 +20,6 @@ description: This page describes Cards.
 Note that either the class `card` or `widget` can be used interchangeably. A card is just a div with class="card". Usually its used in conjunction with home pages or the responsive grid. It can also have a header object and a content area (with scrolling). By adding the classes as noted in the example. Also checkout the homepage examples and homepage component.
 
 ```html
-
 <div class="row">
   <div class="one-third column">
     <div class="card">
@@ -65,8 +64,6 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
     </div>
   </div>
 </div>
-
-
 ```
 
 ## Keyboard Shortcuts

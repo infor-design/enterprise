@@ -17,7 +17,6 @@ This example shows how to place several object (image placeholders) in side a bl
 The block grid will layout the elements across the parent width and flow to next line if need be.
 
 ```html
-
 <div class="row blockgrid l-center">
   <div class="block">
     <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
@@ -35,8 +34,6 @@ The block grid will layout the elements across the parent width and flow to next
     <img alt="Placeholder Image" src="http://placehold.it/200x200/d8d8d8/ffffff"/>
   </div>
 </div>
-
-
 ```
 
 ## Accessibility

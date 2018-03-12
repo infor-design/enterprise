@@ -23,13 +23,10 @@ Described below is the general API that is present in all searchfields.  There i
 ## Code Example
 
 ```html
-
 <div class="field">
   <label for="searchfield">Search</label>
   <input id="searchfield" name="searchfield" class="searchfield" data-options= "{'clearable': 'true'}" placeholder="Type a search term"/>
 </div>
-
-
 ```
 
 ## Implementation Tips

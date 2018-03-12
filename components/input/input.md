@@ -44,7 +44,6 @@ A standard Text Input is a basic input element with type="text". Password type c
 -   Enabled/Readonly
 
 ```html
-
 <div class="field">
   <label for="first-name">First Name</label>
   <input type="text" id="first-name" name="first-name" placeholder="Normal text Field">
@@ -79,8 +78,6 @@ A standard Text Input is a basic input element with type="text". Password type c
   <label for="department-code-trackdirty">Department Code</label>
   <input type="text" placeholder="Dirty Tracking" data-trackdirty="true" id="department-code-trackdirty" name="department-code-trackdirty">
 </div>
-
-
 ```
 
 ## Accessibility

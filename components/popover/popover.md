@@ -1,5 +1,5 @@
 ---
-title: Popover Component 
+title: Popover Component
 description: This page describes Popover Component .
 ---
 
@@ -21,7 +21,6 @@ This component shares a common API with the [Tooltip]( ../components/tooltip) Co
 Popover Components are generally created with a combination of a "trigger" element and a container element  which will be used inside of the popover.  Consider the following HTML:
 
 ```html
-
 <!-- This is the trigger element -->
 <button id="popover-trigger" class="btn-primary">
   <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -40,7 +39,6 @@ Popover Components are generally created with a combination of a "trigger" eleme
 The above HTML snippets will then be associated by the following Javascript code:
 
 ```javascript
-
 $('#popover-trigger').popover({
   content: $('#popover-contents'),
   placement: 'bottom',
@@ -48,8 +46,6 @@ $('#popover-trigger').popover({
     y: 10
   }
 });
-
-
 ```
 
 

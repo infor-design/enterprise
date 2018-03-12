@@ -1,5 +1,5 @@
 ---
-title: Column Chart  
+title: Column Chart
 description: This page describes Column Chart.
 ---
 
@@ -34,7 +34,6 @@ description: This page describes Column Chart.
 This example shows how to invoke a simple column chart with a dataset swith a value for each column. You can pass in a tooltip with a custom value, and also pass in 3 labels that are used at the various break points (L,M, S)
 
 ```javascript
-
 var dataset = [{
         data: [{
             name: 'Automotive',
@@ -76,8 +75,6 @@ var dataset = [{
       }];
 
 $('#column-bar-example').chart({type: 'column', dataset: dataset});
-
-
 ```
 
 ## Accessibility

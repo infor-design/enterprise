@@ -24,7 +24,6 @@ To create an Input Dialog, use the modal plugin. To provide content for the moda
 When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding.
 
 ```html
-
    <button class="btn" type="button" data-modal="modal-1">Add Context</button>
     <div class="modal" id="modal-1">
       <div class="modal-content">

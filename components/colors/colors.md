@@ -16,13 +16,10 @@ description: This page describes Color Palette Info .
 * Background Color Clases - If using the SoHo components, there are classes (background colors) for every color in the  palette that correspond to the table above. For example: azure06 or emerald01.
 
 ```html
-
 <p class="error-text">Error</p>
 <p class="warning-text">Warning</p>
 <p class="good-text">Good</p>
 <p class="info-text">Info</p>
-
-
 ```
 
 ## Accessibility

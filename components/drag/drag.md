@@ -12,10 +12,7 @@ description: This page describes Drag Behavior.
 The drag component is used internally in all components but its API my be useful for other situations. This basic example makes an element draggable and wont allow it to be dragged out of its direct parent.
 
 ```javascript
-
 $(draggableThing).drag({containment: 'parent'});
-
-
 ```
 
 ## Accessibility

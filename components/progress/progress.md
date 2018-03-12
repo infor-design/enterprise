@@ -12,24 +12,18 @@ description: This page describes Progress Indicator.
 Insert a block element such as a div in the dom with class progess-bar. Set the data-value attribute to set the current progress. Always include a visible label and set aria-labelledby to point to that label.
 
 ```html
-
 <label id="pr-label1">Percent complete</label>
 <div class="progress">
     <div class="progress-bar" data-value="50" id="progress-bar1" aria-labelledby="pr-label1"></div>
 </div>
-
-
 ```
 
 When the markup is established this is set, you can call the updated method or trigger the updated event to animate and notify the control.
 
 ```javascript
-
   $('#upd-progressbar').on('click', function () {
     $('#progress-bar1').attr('data-value', '100').trigger('updated');
   });
-
-
 ```
 
 ## Accessibility

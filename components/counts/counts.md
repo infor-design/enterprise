@@ -21,13 +21,10 @@ Instance Counts are simple css/html components with a count and title element. Y
 
 
 ```html
-
 <div class="instance-count ">
   <span class="count emerald07">40</span>
   <span class="title">Active Goals</span>
 </div>
-
-
 ```
 
 ## Accessibility

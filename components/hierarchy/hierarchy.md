@@ -1,5 +1,5 @@
 ---
-title: Hierarchy  
+title: Hierarchy
 description: This page describes Hierarchy.
 ---
 
@@ -15,7 +15,6 @@ description: This page describes Hierarchy.
 This example shows how to invoke the hierarchy component passing in data and legend info for matching.
 
 ```javascript
-
     var legendData = [
       { 'value' : 'FT', 'label' : 'Full Time'     },
       { 'value' : 'PT', 'label' : 'Part Time'     },
@@ -29,8 +28,6 @@ This example shows how to invoke the hierarchy component passing in data and leg
       legend: legendData,
       dataset: data
     });
-
-
 ```
 
 Required template HTML markup

@@ -15,7 +15,6 @@ An expandable area is a div with the *expandable-area* class. Inside that eleme
 Its possible to keep the area open by default by adding the class *is-expanded* to the *expandable-area*. You can also add a second pane with class *expandable-visible-panel.* This pane will always remain open.\
 
 ```html
-
     <div class="expandable-area">
       <div class="expandable-header">
         <span class="title">Procurement</span>
@@ -26,8 +25,6 @@ Its possible to keep the area open by default by adding the class *is-expanded* 
         </div>
       </div>
     </div>
-
-
 ```
 
 ## Keyboard Shortcuts

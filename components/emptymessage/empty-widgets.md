@@ -17,7 +17,6 @@ description: This page describes Empty Widgets.
 -   `card-empty-actions` -  If adding this section will contain some actions a person can do to resolve the empty situation such as reload ect. Should be preferably one action.
 
 ```html
-
 <div class="card-content">
   <div class="card-empty-icon">
     <svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">

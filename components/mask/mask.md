@@ -35,12 +35,9 @@ The following mask pattern characters are available by default:
 It's possible to create additional pattern characters by extending the Control's "definitions" option. The below example sets up a rule that will allow a pattern character of 'd' to only be replaced by lowercase letters between **a** and **e**.
 
 ```javascript
-
 $.extend($('#mask').data('mask').settings.definitions, {
   'd' : '[abcde]'
 });
-
-
 ```
 
 ## Code Example
@@ -50,10 +47,7 @@ $.extend($('#mask').data('mask').settings.definitions, {
 A Mask Control is created simply by adding a "data-mask" attribute to any input field. The "data-mask" attribute contains a pattern that will control the allowed text-entry into the input field.
 
 ```html
-
 <input data-mask="####-####-####-####" />
-
-
 ```
 
 ## Keyboard Shortcuts

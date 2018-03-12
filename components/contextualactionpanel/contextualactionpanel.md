@@ -1,5 +1,5 @@
 ---
-title: Contextual Action Panel  
+title: Contextual Action Panel
 description: This page describes Contextual Action Panel.
 ---
 
@@ -21,7 +21,6 @@ description: This page describes Contextual Action Panel.
 This example shows how to invoke a Contextual Action Panel (CAP) and pass in the content for the CAP body. The buttons option lets you customize the CAP's toolbar and functions.
 
 ```javascript
-
 $('body').contextualactionpanel({
   id: 'contextual-action-modal-id',
   title: 'Expenses: $50,000.00',
@@ -41,8 +40,6 @@ $('body').contextualactionpanel({
     }
   ]
 });
-
-
 ```
 
 ## Keyboard Shortcuts

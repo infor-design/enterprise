@@ -1,5 +1,5 @@
 ---
-title: Toast Component 
+title: Toast Component
 description: This page describes Toast Component .
 ---
 
@@ -17,14 +17,11 @@ description: This page describes Toast Component .
 The Toast component is a JS-based component that lets you send a quick feedback message to the user. The message will display and timeout after 6s, showing a progress bar with an option to immediately dismiss. To show a test message, call the toast function on the body element passing in the title and message content.
 
 ```javascript
-
 //Show a Visual Toast Message
 $('body').toast({
   title: 'Application Offline',
   message: 'This is a Toast message'
 });
-
-
 ```
 
 ## Accessibility

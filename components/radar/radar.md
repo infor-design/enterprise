@@ -1,5 +1,5 @@
 ---
-title: Radar Chart  
+title: Radar Chart
 description: This page describes Radar Chart.
 ---
 
@@ -14,7 +14,6 @@ description: This page describes Radar Chart.
 This example shows how to invoke a pie bar chart with a dataset controlling the values.
 
 ```javascript
-
   var radarData = [{
       data: [
 			  [ // Resource
@@ -44,8 +43,6 @@ This example shows how to invoke a pie bar chart with a dataset controlling the 
     }];
 
   $('#radar-chart-example').chart({type: 'radar', dataset: radarData, showAxisLabels: false});
-
-
 ```
 
 ## Accessibility

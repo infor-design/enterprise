@@ -1,5 +1,5 @@
 ---
-title: Header  
+title: Header
 description: This page describes Header.
 ---
 
@@ -21,8 +21,6 @@ A header element always contains a toolbar. The toolbar is composed of three par
 This is a simple configuration.
 
 ```html
-
-
 <header class="header is-personalizable">
   <div class="toolbar">
     <div class="title">
@@ -54,8 +52,6 @@ This is a simple configuration.
 
   </div>
 </header>
-
-
 ```
 
 ## Behavior Guidelines

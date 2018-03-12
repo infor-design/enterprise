@@ -12,7 +12,6 @@ description: This page describes Masthead.
 The masthead can be added to applications when not running inside mingle to add functionality that mingle would add that you need standalone. When running in mingle, detect and do not show the mast head.
 
 ```html
-
 <section class="masthead" role="banner">
   <div class="toolbar no-actions-button" data-options="{maxVisibleButtons: 6}">
     <div class="title">
@@ -64,8 +63,6 @@ The masthead can be added to applications when not running inside mingle to add 
     </div>
   </div>
 </section>
-
-
 ```
 
 ## Accessibility

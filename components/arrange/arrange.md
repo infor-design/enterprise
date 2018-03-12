@@ -12,7 +12,6 @@ description: This page describes Arrange.
 The arrange util is an internally used plugin thats used on components like the swaplist and datagrid row reorder. It is included and documented as it could be reused in certain situations.
 
 ```javascript
-
   element.arrange({
       placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
       handle: '.reorder-icon'

@@ -19,7 +19,6 @@ description: This page describes Alerts.
 Alerts are just specially classed icons. You can added alert icons by adding an svg element with the icon xlink:href pointing to the icon's id. You should also include an audible span for better accessibility.
 
 ```html
-
 <svg class="icon icon-alert" focusable="false" aria-hidden="true" role="presentation">
   <!-- Substitute icon-alert with any of the above icon types -->
   <use xlink:href="#icon-alert"></use>

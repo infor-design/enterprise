@@ -18,7 +18,6 @@ We add the class splitter-container which will cause all elements with content o
 A div with the class of splitter will become the split handle.
 
 ```html
-
 <div class="page-container two-column fixed splitter-container">
 
   <section class="main">
@@ -33,8 +32,6 @@ A div with the class of splitter will become the split handle.
   </nav>
 
 </div>
-
-
 ```
 
 ## Accessibility

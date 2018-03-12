@@ -1,5 +1,5 @@
 ---
-title: Area  
+title: Area
 description: This page describes Area.
 ---
 
@@ -22,7 +22,6 @@ This example shows how to invoke the area chart option using the charts componen
 we pass a dataset with x and y axis values to make three lines.
 
 ```javascript
-
 var dataset = [{
   data: [{
       name: 'Jan',
@@ -89,8 +88,6 @@ var dataset = [{
 }];
 
 $('#area-example').chart({type: 'area', dataset: dataset});
-
-
 ```
 
 ## Accessibility
@@ -98,11 +95,8 @@ $('#area-example').chart({type: 'area', dataset: dataset});
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
 
 ```javascript
-
 color: '#1a1a1a'
 name: 'Component C'
-
-
 ```
 
 ## Keyboard Shortcuts

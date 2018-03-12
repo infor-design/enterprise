@@ -1,5 +1,5 @@
 ---
-title: Bubble Chart  
+title: Bubble Chart
 description: This page describes Bubble Chart.
 ---
 
@@ -21,7 +21,6 @@ See the [line chart api]( ../components/line) for more details.
 This example shows how to invoke a bubble chart. The data for the bubble chart should be 3 dimensional. You pass and x and y value and a depth (z) which controls the bubbles size on the x and y axis. You may need to transform your data to use this approach.
 
 ```javascript
-
 var dataset = [{
   data: [{
     name: 'January',
@@ -211,8 +210,6 @@ var dataset = [{
 }];
 
 $('#line-example').chart({type: 'bubble', dataset: dataset});
-
-
 ```
 
 ## Accessibility

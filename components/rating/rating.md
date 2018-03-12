@@ -12,7 +12,6 @@ description: This page describes Rating.
 The Rating component can be used to either display a rating or allow the end user to select a rating. Half start ratings can be displayed but not set. You can implement the Rating control by using the below markup consisting of a block element (div) with class="rating", then any number of inputs followed by labels for the stars. The label element should contain an svg image with the star. An audible label should also be added for accessibility.
 
 ```html
-
 <div class="rating">
   <input type="radio" class="is-filled" name="rating-id1" id="one-star-id1">
   <label for="one-star-id1">
@@ -54,8 +53,6 @@ The Rating component can be used to either display a rating or allow the end use
     <span class="audible">5 out of 5 Stars</span>
   </label>
 </div>
-
-
 ```
 
 ## Implementation Tips

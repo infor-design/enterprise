@@ -1,5 +1,5 @@
 ---
-title: Datagrid 
+title: Datagrid
 description: This page describes Datagrid .
 ---
 
@@ -43,20 +43,15 @@ The Datagrid is created via JS or via direct html markup (css table styling). Yo
 A Read-Only Datagrid uses "Formatters" to render cell content. A number of these are listed in the api section, and it is possible to create your own.
 
 ```html
-
-
 <div class="row">
   <div class="twelve columns">
     <div id="datagrid">
     </div>
   </div>
 </div>
-
-
 ```
 
 ```javascript
-
 
   //Define Columns for the Grid.
   columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Formatters.Readonly});
@@ -67,8 +62,6 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
     columns: columns,
     dataset: data //Json Array
   });
-
-
 ```
 
 ## Column Settings (General)
@@ -152,8 +145,6 @@ Its possible to create your own custom formatter. The idea behind the formatter 
 var myCustom = function (row, cell, value, col) {
   return '<span class="my-custom"> Custom Formatter <b>' + value + '</b></span>';
 };
-
-
 ```
 
 The formatter is then linked to the column on the formatter setting. `columns.push({... formatter: myCustom});`. When the grid cell is rendered the formatter function is called and the following options are passed in.

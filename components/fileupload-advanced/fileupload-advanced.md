@@ -1,5 +1,5 @@
 ---
-title: File Upload Advanced  
+title: File Upload Advanced
 description: This page describes File Upload Advanced.
 ---
 
@@ -15,12 +15,8 @@ description: This page describes File Upload Advanced.
 The advanced file upload control just needs a div in which to draw its contents.
 
 ```html
-
-
-    <div class="fileupload-advanced">
-    </div>
-
-
+<div class="fileupload-advanced">
+</div>
 ```
 
 ## Implementation Tips
@@ -42,7 +38,7 @@ The advanced file upload control just needs a div in which to draw its contents.
 
 ## Responsive Guidelines
 
--   The div will size to parent but recomend default size.
+-   The div will size to parent but recommend default size.
 
 ## Upgrading from 3.X
 

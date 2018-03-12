@@ -13,7 +13,6 @@ description: This page describes About.
 This example shows how to invoke the about dialog on demand, passing in some content, version info and the product name and product line.
 
 ```javascript
-
 $('body').about({
   appName: 'My App Name',
   productName: 'My Product line',

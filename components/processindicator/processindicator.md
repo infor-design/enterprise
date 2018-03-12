@@ -16,7 +16,6 @@ TODO
 Here is an example of a compact process indicator. There are several classes in the stucture that control the output and status settings.
 
 ```html
-
 <div class="process-indicator compact">
   <div class="display">
     <span class="indicator lightest"></span>

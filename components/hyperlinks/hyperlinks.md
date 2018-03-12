@@ -18,10 +18,7 @@ description: This page describes Hyperlinks.
 A Hyperlink uses a standard anchor tag element and styles it with pure css. No JS is needed for this component. Use the normal attributes and events of a standard anchor tag (click, focus ect). Note that the disabled attribute is NOT valid html so should be avoided, however it's included for backwards compatibility and some use cases. Normally a disabled link would be a label/text. There is alternate classes for visited links and Back/Forward Links.
 
 ```html
-
 <a class="hyperlink" href="#">More Information Hyperlink</a>
-
-
 ```
 
 ## Accessibility

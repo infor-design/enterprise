@@ -28,13 +28,10 @@ A Spinbox is created from a standard type="text" input field by adding the class
 Touch and mobile keyboard are supported.
 
 ```html
-
 <div class="field">
   <label for="stepped-spinbox">Spinbox (init 0, min -99, max 99, step 3)</label>
   <input id="stepped-spinbox" name="stepped-spinbox" type="text" class="spinbox" min="-99" max="99" value="0" step="3"/>
 </div>
-
-
 ```
 
 ## Implementation Tips

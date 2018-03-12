@@ -16,7 +16,6 @@ An example of a default Wizard control with no extra settings. Classes are added
 An addition wizard can be used for header navigation. This is a full page pattern so must be shown on its own page. See here for [header wizard examples.](http://usalvwsoho2:4000/controls/grid)
 
 ```html
-
   <div class="wizard">
     <div class="wizard-header">
       <div class="bar">
@@ -36,8 +35,6 @@ An addition wizard can be used for header navigation. This is a full page patter
       </div>
     </div>
   </div>
-
-
 ```
 
 ## Keyboard Shortcuts

@@ -31,10 +31,7 @@ This example shows using a list with a [mustache template](https://mustache.gith
 The template shows the use of an if/else to show a is-disabled class. And also shows the use of the three text sizes available. Note that `dataset`}}` is required to loop over teh dataset option passed into the control.
 
 ```html
-
 <div class="listview" id="id-to-list" data-tmpl="id-to-task-tmpl" data-dataset="array or url"></div>
-
-
 ```
 
 ### Listview - Multiselect
@@ -42,7 +39,6 @@ The template shows the use of an if/else to show a is-disabled class. And also s
 Creating a Multiselect Listview also uses the listview component. API guidelines are listed on the basic list page. The only special option to create a multiselect list is to add data-selectable="multiple". When doing this, a checkbox is added. You can also create a listview-toolbar which will show buttons upon selection of one or more rows.
 
 ```html
-
 <div class="card">
   <div class="card-header">
     <h2 class="card-title">My Tasks</h2>
@@ -67,8 +63,6 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
     <div class="listview" id="multiselect-listview" data-options="{ template: 'multiselect-tmpl', selectable: 'multiple', dataset: 'demoTasks' }"></div>
   </div>
 </div>
-
-
 ```
 
 ## Keyboard Shortcuts

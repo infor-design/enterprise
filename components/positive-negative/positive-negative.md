@@ -1,5 +1,5 @@
 ---
-title: Positive-Negative Chart  
+title: Positive-Negative Chart
 description: This page describes Positive-Negative Chart.
 ---
 
@@ -29,7 +29,6 @@ description: This page describes Positive-Negative Chart.
 This example shows how to invoke a simple positive-negative chart with a dataset controlling the values.
 
 ```javascript
-
 var dataset = [{
   data: [{
       name: 'Jan',

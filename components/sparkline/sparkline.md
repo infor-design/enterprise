@@ -1,5 +1,5 @@
 ---
-title: Sparklines  
+title: Sparklines
 description: This page describes Sparklines.
 ---
 
@@ -24,7 +24,6 @@ description: This page describes Sparklines.
 This example shows how to invoke a simple single line sparkline. Multiple lines can be shown by passing multiple data points.
 
 ```javascript
-
 var singleLine = [{
   data: [25, 20, 55, 28, 41, 30, 50, 22, 16, 27],
   name: 'Inventory'
@@ -39,8 +38,6 @@ var twoLines = [{
 }];
 
 $('#sparkline-chart-example-1').chart({type: 'sparkline-dots-n-peak', dataset: singleLine});
-
-
 ```
 
 ## Accessibility

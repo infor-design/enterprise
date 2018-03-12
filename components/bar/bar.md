@@ -1,5 +1,5 @@
 ---
-title: Bar Chart  
+title: Bar Chart
 description: This page describes Bar Chart.
 ---
 
@@ -38,7 +38,6 @@ description: This page describes Bar Chart.
 This example shows how to invoke a simple bar chart with a dataset controlling the values.
 
 ```javascript
-
  var dataset = [{
       data: [{
           name: 'Category A',
@@ -62,11 +61,8 @@ This example shows how to invoke a simple bar chart with a dataset controlling t
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
 
 ```javascript
-
 color: '#1a1a1a'
 name: 'Component C'
-
-
 ```
 
 ## Code Tips
@@ -74,16 +70,12 @@ name: 'Component C'
 You can override the tooltip by passing in a specific tooltip text value.
 
 ```javascript
-
 {type: 'bar-grouped', dataset: dataset, tooltip: 'Tooltip by attribute'}
-
-
 ```
 
 Or if you have more dynamic requirements you can do this with an ajax callback.
 
 ```javascript
-
 $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
   tooltip: function(response) {
     //Ajax Call or async op

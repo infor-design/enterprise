@@ -19,7 +19,6 @@ The home page component needs js for its layout mechanism. Call the `.homepage()
 See also the card/widget examples [View Example]( ../components/cards) for widget structure.
 
 ```html
-
 <div class="homepage page-container scrollable" data-columns="3">
   <div class="content">
 
@@ -37,8 +36,6 @@ See also the card/widget examples [View Example]( ../components/cards) for widge
 
   </div>
 </div>
-
-
 ```
 
 ## Accessibility

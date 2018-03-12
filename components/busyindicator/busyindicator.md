@@ -1,5 +1,5 @@
 ---
-title: Busy Indicator  
+title: Busy Indicator
 description: This page describes Busy Indicator.
 ---
 
@@ -25,7 +25,6 @@ To use the busy indicator place it on a element with class = "busy". Keep in min
 You can provide the options inline in the data-options. This example is using the initializer. If you arent call `$('#busy-form').busyindicator()` to init the plugin.
 
 ```html
-
 <form id="busy-form" class="busy" action="#" method="POST" data-options="{ 'displayDelay': 100, 'timeToComplete': 4000 }">
   <div class="field">
     <label for="busy-field-name">Name</label>
@@ -49,7 +48,6 @@ You can provide the options inline in the data-options. This example is using th
 When a task happens that requires the indicator; you can trigger the event on the element to force this indicator to show.
 
 ```javascript
-
 $('#busy-form button[type="submit"]').click(function(e) {
   e.preventDefault();
   $('#busy-form').trigger('start.busyindicator');

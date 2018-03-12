@@ -1,5 +1,5 @@
 ---
-title: Bullet Chart  
+title: Bullet Chart
 description: This page describes Bullet Chart.
 ---
 
@@ -16,7 +16,6 @@ description: This page describes Bullet Chart.
 This example shows how to invoke the bullet chart as part of the charts component. We pass a dataset data points for each bar group we want to show.
 
 ```javascript
-
 var dataset1 = [{
     data: [
       {'title': 'Revenue','subtitle': 'US$, in thousands','ranges': [150, 225, 300, 400, 600], 'measures': [220,270], 'markers': [250],
@@ -28,8 +27,6 @@ var dataset1 = [{
   }];
 
 $('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
-
-
 ```
 
 ## Accessibility

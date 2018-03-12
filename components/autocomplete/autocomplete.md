@@ -17,7 +17,6 @@ description: This page describes Autocomplete.
 This example shows how to invoke the autocomplete and its starting markup. Remember to add autocomplete="off" as some browsers have their own autocomplete functionality that interferes.
 
 ```html
-
     <div class="field">
       <label for="autocomplete-default">States</label>
       <input type="text" autocomplete="off" class='autocomplete' id="autocomplete-default">
@@ -26,8 +25,6 @@ This example shows how to invoke the autocomplete and its starting markup. Remem
     <script>
       $('#autocomplete-default').autocomplete();
     </script>
-
-
 ```
 
 ## Keyboard Shortcuts

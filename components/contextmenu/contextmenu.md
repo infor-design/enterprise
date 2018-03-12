@@ -24,7 +24,6 @@ The popupmenu can be linked as a right click menu item by adding the attribute d
 This page focus on the right click popup menu (Context Menu).
 
 ```html
-
 <div class="field">
   <label for="input-menu">Label</label>
   <input type="text" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu">
@@ -50,8 +49,6 @@ This page focus on the right click popup menu (Context Menu).
   <li class="is-selectable is-checked"><a href="#">Conditional formatting</a></li>
   <li class="is-selectable"><a href="#">Data validation</a></li>
 </ul>
-
-
 ```
 
 ## Coding Tips

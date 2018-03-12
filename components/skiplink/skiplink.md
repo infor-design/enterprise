@@ -18,7 +18,6 @@ For more info on skip links see https://webaim.org/techniques/skipnav/
 Add this at the top of the page, make the href point to the id of the content area you would like to focus that would be considered the meat of the page.
 
 ```html
-
 <a class="skip-link" href="#maincontent">Skip to Main Content</a>
 
 ```

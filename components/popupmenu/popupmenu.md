@@ -22,7 +22,6 @@ The class popupmenu should be added to the ul elements at the top and submenu le
 Here is an example of a menu button using a popupmenu. This is also described on the menu button page as the components are linked.
 
 ```html
-
 <button class="btn-menu">
   <span>Normal Menu</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
@@ -34,8 +33,6 @@ Here is an example of a menu button using a popupmenu. This is also described on
   <li><a href="#">Menu Option #2</a></li>
   <li><a href="#">Menu Option #3</a></li>
 </ul>
-
-
 ```
 
 ## Accessibility

@@ -18,7 +18,6 @@ This is a specific component wrapper for searchfield components that reside insi
 *NOTE:* Toolbar Searchfields can only exist when a searchfield becomes invoked inside of a Toolbar element.  The minimum amount of markup for building a toolbar is present in the code sample below.  For more information about how to define and configure the Toolbar component, please see the [Toolbar API page]( ../components/toolbar/).
 
 ```html
-
   <div class="toolbar no-actions-button left-aligned">
     <div class="buttonset">
 
@@ -29,8 +28,6 @@ This is a specific component wrapper for searchfield components that reside insi
 
     </div>
   </div>
-
-
 ```
 
 ## Implementation Tips

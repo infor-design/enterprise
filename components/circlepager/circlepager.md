@@ -15,7 +15,6 @@ description: This page describes Circle Pager.
 This example shows how markup the circle pager. Then call `$(elem).circlepager()` to invoke. The structure of the circle pager is that you have a circlepager div followed by a slides container and then one slider per "page". The page content goes in the slide-content element.
 
 ```html
-
 <div class="circlepager example1">
   <div class="slides">
 
@@ -48,8 +47,6 @@ This example shows how markup the circle pager. Then call `$(elem).circlepager()
 
   </div>
 </div>
-
-
 ```
 
 ## Accessibility

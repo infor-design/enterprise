@@ -1,5 +1,5 @@
 ---
-title: Field Set  
+title: Field Set
 description: This page describes Field Set.
 ---
 
@@ -14,8 +14,6 @@ description: This page describes Field Set.
 A field set uses the standard html field set and legend element and simply adds css to style the legend element text. A field set is not expandable for that you could use the [expandable area component]( ../components/expandablearea). Here is an example showing a few input fields in a field set. Anything can go inside a field set but its usually something like input fields or data input fields.
 
 ```html
-
-
 <form action="#" method="post">
   <fieldset>
     <legend>Company Information</legend>
@@ -38,8 +36,6 @@ A field set uses the standard html field set and legend element and simply adds 
     <button class="btn-primary" type="submit">Submit</button>
   </fieldset>
 </form>
-
-
 ```
 
 ## Code Tip
@@ -47,7 +43,6 @@ A field set uses the standard html field set and legend element and simply adds 
 There are some added classes to style sections like field sets for cases you semantically don't require a fieldset. The `fieldset-title` element will make a text header, you should use a H element for this in the structure of your page. Then you can add a `<hr class="fieldset-hr">` element at the top of each subsequent section for a divider. This would be laid out like this example:
 
 ```html
-
 <div class="row">
   <div class="twelve columns">
     <h2 class="fieldset-title">Section One</h2>

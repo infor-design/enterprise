@@ -21,7 +21,6 @@ To save and get the data from the content editable, you should simply save and r
 
 
 ```html
-
  <div class="field">
       <span class="label">Comments</span>
       <div class="editor" role="textbox" aria-multiline="true" aria-label="Comments - Type To Replace Existing Content">

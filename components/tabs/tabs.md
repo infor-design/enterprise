@@ -25,7 +25,6 @@ The Tabs Control provides a clickable, touchable interface for accessing content
 - Inside the `<div class="tab-panel-container">`, a series of `<div>` tags should exist that matches the number of list items in the `<ul>`. Each one should have an ID that corresponds to one of the anchor tags in the `<ul>`.
 
 ```html
-
   <div id="tabs-normal" class="tab-container">
     <ul class="tab-list">
       <li><a href="#tabs-normal-contracts">Contracts</a></li>
@@ -57,8 +56,6 @@ The Tabs Control provides a clickable, touchable interface for accessing content
       <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
     </div>
   </div>
-
-
 ```
 
 ### Tabs - Counts Example
@@ -66,7 +63,6 @@ The Tabs Control provides a clickable, touchable interface for accessing content
 This is an example of what the Tabs Control looks like when you use the "tabCounts" option or "data-tab-counts" attribute. Additionally, in this example there are separator elements that break the tabs apart into visually-distinct groups.
 
 ```html
-
   <div id="tabs-counts" class="tab-container" data-tab-counts="true">
     <ul class="tab-list">
       <li><a href="#tabs-counts-pending">Pending</a></li>
@@ -110,8 +106,6 @@ This is an example of what the Tabs Control looks like when you use the "tabCoun
       <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular morph.<p>
     </div>
   </div>
-
-
 ```
 
 ### Tabs - Dismissible Example
@@ -119,7 +113,6 @@ This is an example of what the Tabs Control looks like when you use the "tabCoun
 It's possible to create Tabs and Panels that are dismissible. Dismissible Tabs/Panels will be removed from the Tabs Control when their close button is clicked/tapped.
 
 ```html
-
       <ul class="tab-list">
         <li><a href="#firefox">Firefox</a></li>
         <li><a href="#chrome">Chrome</a></li>
@@ -127,8 +120,6 @@ It's possible to create Tabs and Panels that are dismissible. Dismissible Tabs/P
         <li class="dismissible"><a href="#opera">Opera</a></li>
         <li class="dismissible"><a href="#safari">Safari</a></li>
       </ul>
-
-
 ```
 
 ### Tabs - Dropdown Example
@@ -136,7 +127,6 @@ It's possible to create Tabs and Panels that are dismissible. Dismissible Tabs/P
 It's possible to create a Tab that contains a Dropdown menu. In the case of a Dropdown Tab, the top-level "Tab" does not correspond to a Tab panel, but all of its children (any of the "dropdown" options) will be linked to a panel. When the Tabs Control's responsive design takes over and pushes a dropdown tab into the "More..." menu, the children of the Dropdown tab will be pushed into a submenu.
 
 ```html
-
     <ul class="tab-list">
         <li><a href="#information">Information</a></li>
         <li class="has-popupmenu">
@@ -156,8 +146,6 @@ It's possible to create a Tab that contains a Dropdown menu. In the case of a Dr
           </ul>
         </li>
     </ul>
-
-
 ```
 
 ## Keyboard Shortcuts

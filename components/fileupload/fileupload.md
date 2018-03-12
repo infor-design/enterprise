@@ -1,5 +1,5 @@
 ---
-title: File Upload  
+title: File Upload
 description: This page describes File Upload.
 ---
 
@@ -14,23 +14,19 @@ description: This page describes File Upload.
 The file upload control is based on a standard html input with type = "file". When the control initializer runs the file input gets enhanced styling with a icon button and acts similar to other input fields. File upload can be disabled, you can serialize the normal file input element as normal with the form element.
 
 ```html
+<div class="field">
+  <label class="fileupload">
+      <span class="audible">Upload a File</span>
+      <input type="file" name="file-input" />
+  </label>
+</div>
 
-
-    <div class="field">
-      <label class="fileupload">
-          <span class="audible">Upload a File</span>
-          <input type="file" name="file-input" />
-      </label>
-    </div>
-
-    <div class="field">
-      <label class="fileupload">
-          <span class="audible">Upload a File</span>
-          <input type="file"  name="file-name-disabled" disabled/>
-      </label>
-    </div>
-
-
+<div class="field">
+  <label class="fileupload">
+      <span class="audible">Upload a File</span>
+      <input type="file"  name="file-name-disabled" disabled/>
+  </label>
+</div>
 ```
 
 ## Implementation Tips

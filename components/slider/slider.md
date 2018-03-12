@@ -20,13 +20,10 @@ description: This page describes Slider Component .
 The Slider Control provides a clickable, touchable interface that interfaces with a standard HTML Input element with a "range" type attribute. Because of styling and functionality requirements, we use a stylized shadow widget which implements the range input's behavior and updates in sync with a hidden input element. This allows the input element to be serialized with the DOM like normal. The simplest way to use the Slider Control is to create markup containing: a field (for field and responsive form alignment), a label and an input element with a "range" type and a "slider" CSS class. For accessibility and implementation reasons the label is required.
 
 ```html
-
 <div class="field">
   <label for="slider-regular-example">Regular</label>
   <input id="slider-regular-example" name="slider-regular" class="slider" type="range"/>
 </div>
-
-
 ```
 
 ### Ranged Slider
@@ -34,13 +31,10 @@ The Slider Control provides a clickable, touchable interface that interfaces wit
 Example of a Slider Control that is configured to be a Range, with a lower value and a higher value. This Slider also displays the current value for the selected handle inside a tooltip.
 
 ```html
-
 <div class="field">
   <label for="slider-regular-example">Regular</label>
   <input id="slider-regular-example" name="slider-regular-example" class="slider" type="range" data-tooltip-content='[""]' data-tooltip-persist="true" />
 </div>
-
-
 ```
 
 ### Extra Ticks & Colors
@@ -48,7 +42,6 @@ Example of a Slider Control that is configured to be a Range, with a lower value
 This example shows how to properly implement a Slider Control with Ticks using HTML5 data attributes for settings.
 
 ```html
-
 <label for="slider-quality-example">Ticks &amp; Colors</label>
 <input id="slider-quality-example" name="slider-quality-example" class="slider" type="range" min="0" max="5" value="2" step="1" data-ticks='[
   {"value": 0, "description": "Very Poor", "color": "very-poor"},
@@ -58,8 +51,6 @@ This example shows how to properly implement a Slider Control with Ticks using H
   {"value": 4, "description": "Very Good", "color": "very-good"},
   {"value": 5, "description": "Superior", "color": "superior"}
 ]'/>
-
-
 ```
 
 ### Stepped Slider Example
@@ -67,7 +58,6 @@ This example shows how to properly implement a Slider Control with Ticks using H
 This is an example of a Slider that can only have values in increments of 10, with a minimum of -150 and a maximum of 150.
 
 ```html
-
 <div class="field">
   <label for="slider-stepped-example">Stepped</label>
   <input id="slider-stepped-example" name="slider-stepped" class="slider" type="range" step="5" data-ticks='[
@@ -75,8 +65,6 @@ This is an example of a Slider that can only have values in increments of 10, wi
     {"value": 100, "description": "Max"}
   ]'/>
 </div>
-
-
 ```
 
 ## Implementation Tips

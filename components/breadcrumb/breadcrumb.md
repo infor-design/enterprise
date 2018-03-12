@@ -15,7 +15,6 @@ This is an example showing a bread crumb pattern with four items. The current it
 This control is entirely html and css, to update you will need to implement the logic to replace the link elements in the hierarchy.
 
 ```html
-
 <nav class="breadcrumb">
   <ol aria-label="breadcrumb">
     <li>
@@ -30,8 +29,6 @@ This control is entirely html and css, to update you will need to implement the 
     <li class="current">Fourth Item <span class="audible">Current</span></li>
   </ol>
 </nav>
-
-
 ```
 
 ## Accessibility

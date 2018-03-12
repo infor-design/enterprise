@@ -22,7 +22,6 @@ If the arrow is missing in the markup it will be added.
 The popupmenu markup follows as per the [popupmenu]( ../components/popupmenu) , menu details.
 
 ```html
-
 <button class="btn-menu">
   <span>Normal Menu</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
@@ -34,8 +33,6 @@ The popupmenu markup follows as per the [popupmenu]( ../components/popupmenu) , 
   <li><a href="#">Menu Option #2</a></li>
   <li><a href="#">Menu Option #3</a></li>
 </ul>
-
-
 ```
 
 ## Accessibility

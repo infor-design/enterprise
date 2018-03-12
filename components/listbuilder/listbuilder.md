@@ -1,5 +1,5 @@
 ---
-title: ListBuilder  
+title: ListBuilder
 description: This page describes ListBuilder.
 ---
 
@@ -14,7 +14,6 @@ The list builder is structured as a listbuilder element that contains a [standar
 When initialized with the `$elem.listbuilder()` plugin you pass in a data set that ineracts with the list view template. The toolbar buttons are automatically mapped to add, edit , delete , up , down functions via the option settings.
 
 ```javascript
-
   <div class="listbuilder" >
     <div class="toolbar formatter-toolbar">
       ...
@@ -23,8 +22,6 @@ When initialized with the `$elem.listbuilder()` plugin you pass in a data set th
       <div class="listview"></div>
     </div>
   </div>
-
-
 ```
 
 ## Accessibility / Keyboard Shortcuts

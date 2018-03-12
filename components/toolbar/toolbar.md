@@ -19,7 +19,6 @@ description: This page describes Toolbar.
 ## Code Example
 
 ```html
-
   <div class="toolbar">
     <div class="title">
       Toolbar Title
@@ -50,8 +49,6 @@ description: This page describes Toolbar.
       </ul>
     </div>
   </div>
-
-
 ```
 
 ## Implementation Tips

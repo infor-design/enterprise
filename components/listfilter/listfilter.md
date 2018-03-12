@@ -1,5 +1,5 @@
 ---
-title: List Filter  
+title: List Filter
 description: This page describes List Filter.
 ---
 
@@ -12,7 +12,6 @@ description: This page describes List Filter.
 This is a component behavior used on [listview]( ../components/listview), [dropdown]( ../components/dropdown) and [multiselect]( ../components/multiselect) other components. However, its API may be useful in applications for filtering elements.
 
 ```javascript
-
 // Make a List filter object
 this.listfilter = new ListFilter({
   filterMode: 'contains'

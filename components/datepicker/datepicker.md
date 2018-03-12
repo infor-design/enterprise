@@ -29,13 +29,10 @@ The setup for a datepicker only involves creating and input with the class datep
 This plugin works around the Locale plugin which provides data for the calendar, including calendar format for [all supported locales](../components/locale).
 
 ```html
-
 <div class="field">
   <label for="date-field" class="label">Date Field</label>
   <input id="date-field" class="datepicker" name="date-field" type="text">
 </div>
-
-
 ```
 
 ## Behavior Guidelines

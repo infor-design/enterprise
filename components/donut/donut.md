@@ -1,5 +1,5 @@
 ---
-title: Donut Chart  
+title: Donut Chart
 description: This page describes Donut Chart.
 ---
 
@@ -24,7 +24,6 @@ See the [Pie API]( ../components/pie) as this is just a pie setting.
 This example shows how to invoke a dount bar chart with a dataset controlling the values.
 
 ```javascript
-
   var donutData = [{
     data: [{
         name: 'Component A',
@@ -39,8 +38,6 @@ This example shows how to invoke a dount bar chart with a dataset controlling th
   $('#pie-donut-example').chart({type: 'donut', dataset: donutData}).on('selected', function (e, elem, args) {
     console.log(e, elem, args);
   });
-
-
 ```
 
 ## Accessibility

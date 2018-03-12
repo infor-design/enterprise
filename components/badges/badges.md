@@ -17,10 +17,7 @@ description: This page describes Badges.
 A badge is a css only component that uses a span with the class badge. It is possible to add one of the classes : error, info or alert to associate the element with a status by color.  An audible span should always be included for accessibility, it should describe the alert status and/or count value in a meaningful way to a non-visual user. Also an class of `round` can be added to make a perfectly round badge (this only works for 1 or 2 digit numbers).
 
 ```html
-
 <span class="round info badge ">5</span>
-
-
 ```
 
 ## Accessibility

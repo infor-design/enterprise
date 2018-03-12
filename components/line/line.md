@@ -38,7 +38,6 @@ description: This page describes Line.
 This example shows how to invoke the line chart option in the charts component. In this example we pass a dataset with x and y axis values for three lines.
 
 ```javascript
-
 var dataset = [{
   data: [{
       name: 'Jan',
@@ -105,8 +104,6 @@ var dataset = [{
 }];
 
 $('#area-example').chart({type: 'line', dataset: dataset});
-
-
 ```
 
 ## Keyboard Shortcuts

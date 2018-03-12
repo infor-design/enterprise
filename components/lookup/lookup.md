@@ -1,5 +1,5 @@
 ---
-title: Lookup  
+title: Lookup
 description: This page describes Lookup.
 ---
 
@@ -27,13 +27,10 @@ description: This page describes Lookup.
 The lookup element is a simple text input field. Always include a matching label for accessibility. To initialize the lookup call the .lookup() plugin.
 
 ```html
-
 <div class="field">
   <label for="product-lookup" class="label">Products</label>
   <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text">
 </div>
-
-
 ```
 
 ### Lookup Example
@@ -41,7 +38,6 @@ The lookup element is a simple text input field. Always include a matching label
 The field is the field to be returned from the grid. You can also pass reasonable grid options to the lookup (not all features will work by design). The selectable option can be set to either `single` or `multiselect`. This defines the key difference between a Single Select Lookup and a Multi Select Lookup.
 
 ```javascript
-
 grid = $('#product-lookup').lookup({
   field: 'productId',
   options: {
@@ -54,8 +50,6 @@ grid = $('#product-lookup').lookup({
     }
   }
 });
-
-
 ```
 
 ## Accessibility

@@ -19,7 +19,6 @@ Create a select element with similar markup:
 The control is initialized through the page initializer `$('body').initialize('en-US');` or manually with `$('.multiselect').multiselect()`;
 
 ```html
-
 <div class="field">
   <label for="states" class="label">States</label>
   <select multiple id="states" name="states" data-maxselected="3" class="multiselect">
@@ -30,8 +29,6 @@ The control is initialized through the page initializer `$('body').initialize('e
     <option value="WY">Wyoming</option>
   </select>
 </div>
-
-
 ```
 
 

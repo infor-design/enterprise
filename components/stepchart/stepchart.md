@@ -18,24 +18,18 @@ description: This page describes Step Chart.
 You can initialize a step chart by putting a simple div in the page with data-options which contain any of the above options.
 
 ```html
-
 <div class="step-chart" data-options="{steps: 7, completed: 2, inProgress: 3, iconType: 'icon-error', extraText: '2 Days Overdue'}">
 </div>
-
-
 ```
 
 Or you can initialize the component using javascript, remove the data-options and initialize like a normal plugin.
 
 ```html
-
 $('#manual').stepchart({
   completed: 2,
   steps: 10,
   completedText: 'Amount Completed'
 });
-
-
 ```
 
 ## Accessibility

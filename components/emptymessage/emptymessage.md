@@ -1,5 +1,5 @@
 ---
-title: Empty Message 
+title: Empty Message
 description: This page describes Empty Message .
 ---
 
@@ -13,7 +13,6 @@ description: This page describes Empty Message .
 Use an empty message when no data is present.
 
 ```javascript
-
 $('.empty-message').emptymessage({
   title: 'No Records Available',
   icon: 'icon-empty-no-data'

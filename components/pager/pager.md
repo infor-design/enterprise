@@ -19,7 +19,6 @@ The auto initializer will search for ul elements with a `paginated` class and ad
 [Circle Pagination]( ../components/circlepager)
 
 ```html
-
     <ul class="paginated listview" data-options="{'pagesize': 10}">
       <li>Item One</li>
       <li>Item Two</li>
@@ -45,8 +44,6 @@ The auto initializer will search for ul elements with a `paginated` class and ad
       <li>Item Twenty Two</li>
       <li>Item Twenty Three</li>
     </ul>
-
-
 ```
 
 ## Accessibility

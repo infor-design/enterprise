@@ -17,7 +17,6 @@ This example shows a simple accordion with a single accordion header that contai
 Create accordion headers by using a block-level element with the "accordion-header" class. Place any number of these elements underneath the accordion element. Accordion headers require an a tag underneath with a blank href attribute. Optionally, use an icon svg tag with the "icon" CSS class, placed before the title element. Create accordion panes by using a block-level element with the "accordion-pane" CSS class. Place any number of these elements underneath and next to the "accordion-header" element that should open the pane. Place any number of block-level elements with the "accordion-header" CSS class underneath this "accordion-header". Optionally, place any number of block-level elements with the "accordion-content" CSS class underneath this "accordion-header". Inside this "accordion-content" element can be any HTML markup, including other controls.
 
 ```html
-
 <div class="accordion" data-demo-set-links="true">
   <div class="accordion-header">
     <svg class="icon" focusable="false" aria-hidden="true" role="presentation">

@@ -30,7 +30,6 @@ The basic drop down works similar to a standard Html select element, because of 
 The control is initialized through the page initializer \$('body').initialize('en-US'); or manually with `$('.dropdown').dropdown();`
 
 ```html
-
 <div class="field">
   <label for="states" class="label">States</label>
   <select id="states" name="states" class="dropdown">
@@ -41,8 +40,6 @@ The control is initialized through the page initializer \$('body').initialize('e
     <option value="WY">Wyoming</option>
   </select>
 </div>
-
-
 ```
 
 ## Accessibility

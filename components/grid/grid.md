@@ -1,5 +1,5 @@
 ---
-title: Grid  
+title: Grid
 description: This page describes Grid.
 ---
 
@@ -16,14 +16,10 @@ Soho uses a 12 column grid for most designs. For the 12 column grid define a row
 They should always add to 12. For example in this example we have a 2 column and 10 column element.
 
 ```html
-
-
 <div class="row">
   <div class="two columns">Content</div>
   <div class="ten columns">Content</div>
 </div>
-
-
 ```
 
 The simplified grid handles the basic 1,2,3,4 column layouts in a more semantic way. This example is the same as a six by six grid but uses the classes on-half ect. The following are supported `full, full-width, one-half, one-third, two-thirds, one-fourth, one-fifth`.
@@ -31,8 +27,6 @@ The simplified grid handles the basic 1,2,3,4 column layouts in a more semantic 
 You can also add class `one-half-mobile` and at the lowest breakpoint the grid will break down to two column instead of one.
 
 ```html
-
-
 <div class="row">
   <div class="one-half column">
     Content
@@ -42,8 +36,6 @@ You can also add class `one-half-mobile` and at the lowest breakpoint the grid w
     Content
   </div>
 </div>
-
-
 ```
 
 ## Breakpoints
@@ -60,8 +52,6 @@ $breakpoint-phone-to-tablet: 767px;
 $breakpoint-wide-tablet: 968px;
 $breakpoint-tablet-to-desktop: 1280px;
 $breakpoint-desktop-to-extralarge: 1600px;
-
-
 ```
 
 ## Accessibility

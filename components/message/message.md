@@ -1,5 +1,5 @@
 ---
-title: Message  
+title: Message
 description: This page describes Message.
 ---
 
@@ -12,7 +12,6 @@ description: This page describes Message.
 The Message component is a component that inserts a dialog in the page for showing modal type alerts and messages. Its contents will be removed when the dialog is closed. You have control over the message contents and buttons. The message is triggered by selecting the parent content (usually body) and executing the message() function with various options to create the message.
 
 ```javascript
-
       $('body').message({
           title: 'Application Error',
           isError: true,
@@ -25,8 +24,6 @@ The Message component is a component that inserts a dialog in the page for showi
               isDefault: true
           }]
       });
-
-
 ```
 
 ## Accessibility

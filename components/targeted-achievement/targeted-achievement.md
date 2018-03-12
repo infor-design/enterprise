@@ -22,7 +22,6 @@ description: This page describes Targeted Achievement Chart.
 This example shows how to invoke a simple target to achievement chart with a dataset with a value several of the key points of the chart.
 
 ```javascript
-
 var dataset1 = [{
   data: [{
     name: {text: 'Label A'},
@@ -33,8 +32,6 @@ var dataset1 = [{
 }];
 
 var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart');
-
-
 ```
 
 ## Accessibility

@@ -1,5 +1,5 @@
 ---
-title: Pie Chart  
+title: Pie Chart
 description: This page describes Pie Chart.
 ---
 
@@ -20,7 +20,6 @@ description: This page describes Pie Chart.
 This example shows how to invoke a pie bar chart with a dataset controlling the values.
 
 ```javascript
-
   var pieData = [{
       data: [{
           name: 'Component A',
