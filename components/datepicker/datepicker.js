@@ -724,7 +724,7 @@ DatePicker.prototype = {
           });
         }
 
-        this.popupClosestScrollable.add(this.popup).css('min-height', 'inherit');
+        this.popupClosestScrollable.add(this.popup).css('min-height', '');
         this.closeCalendar();
       });
 
