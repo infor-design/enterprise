@@ -1,3 +1,5 @@
+import { utils } from '../utils/utils';
+
 /**
  * Gets an accurate timestamp from
  * @private
@@ -107,7 +109,7 @@ RenderLoop.prototype = {
       // In some cases, items will be removed from the queue automatically.
       // In some cases, `update` events will be triggered on loop items, if they are
       // ready to be externally updated.
-      self.items.forEach((loopItem, ...args) => {
+      self.items.forEach((loopItem) => {
         // Remove if we've set the `doRemoveOnNextTick` flag.
         if (loopItem.doRemoveOnNextTick) {
           self.remove(loopItem);
@@ -147,12 +149,14 @@ RenderLoop.prototype = {
             }
           }
 
-          modifiedArgs = Array.prototype.slice.call(args);
-          modifiedArgs.push({
+          // Arguments produced for the updateCallback contain:
+          // [0] the current RenderLoopItem
+          // [1] overall timing values for the RenderLoop
+          modifiedArgs = [loopItem, {
             last,
             delta: deltaTime,
             now
-          });
+          }];
 
           loopItem.updateCallback.apply(null, modifiedArgs);
         }
