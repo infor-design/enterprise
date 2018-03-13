@@ -1,5 +1,3 @@
-import { utils } from '../utils/utils';
-
 /**
  * Gets an accurate timestamp from
  * @private
