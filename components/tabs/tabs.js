@@ -23,6 +23,8 @@ const COMPONENT_NAME = 'tabs';
  * be used in-place of the default Tab Adding method
  * @property {boolean} appMenuTrigger If set to true, will force an App Menu
  * trigger to be present on Non-Vertical Tabs implementatations.
+ * @property {string} appMenuTriggerText If defined, replaces the default "Menu" text used
+ * in the app menu trigger.
  * @property {null|object} ajaxOptions if defined, will be used by any internal
  * Tabs AJAX calls as the desired request settings.
  * @property {undefined|function} beforeActivate If defined as a function, fires
@@ -52,6 +54,7 @@ const TABS_DEFAULTS = {
   addTabButton: false,
   addTabButtonCallback: null,
   appMenuTrigger: false,
+  appMenuTriggerText: undefined,
   ajaxOptions: null,
   beforeActivate: undefined,
   containerElement: null,
@@ -485,10 +488,18 @@ Tabs.prototype = {
       // Backwards Compatibility for the original Application Menu codepath.
       if (this.isModuleTabs()) {
         if (!appMenuTrigger.length) {
-          appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
-            '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
-            '<span>Menu</span>' +
-            '</a></tab>');
+          appMenuTrigger = $(`
+            <li class="tab application-menu-trigger">
+              <a href="#">
+                <span class="icon app-header">
+                  <span class="one"></span>
+                  <span class="two"></span>
+                  <span class="three"></span>
+                </span>
+                <span>${this.settings.appMenuTriggerText || Locale.translate('AppMenuTriggerText')}</span>
+              </a>
+            </li>
+          `);
           this.tablist.prepend(appMenuTrigger);
         }
       } else if (this.isVerticalTabs() && appMenuTrigger.length) {
@@ -505,10 +516,12 @@ Tabs.prototype = {
     // Add Tab Button
     if (this.settings.addTabButton) {
       if (!this.addTabButton || !this.addTabButton.length) {
-        this.addTabButton = $(`${'<div class="add-tab-button" tabindex="0" role="button">' +
-          '<span aria-hidden="true" role="presentation">+</span>' +
-          '<span class="audible">'}${Locale.translate('AddNewTab')}</span>` +
-          '</div>');
+        this.addTabButton = $(`
+          <div class="add-tab-button" tabindex="0" role="button">
+            <span aria-hidden="true" role="presentation">+</span>
+            <span class="audible">${Locale.translate('AddNewTab')}</span>
+          </div>
+        `);
         this.addTabButton.insertAfter(this.moreButton);
         this.element.addClass('has-add-button');
       }

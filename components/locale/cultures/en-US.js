@@ -69,6 +69,7 @@ Soho.Locale.addCulture('en-US', {
     Amber: { id: 'Amber', value: 'Amber', comment: 'Color in our color pallette' },
     Amethyst: { id: 'Amethyst', value: 'Amethyst', comment: 'Color in our color pallette' },
     Apply: { id: 'Apply', value: 'Apply', comment: 'Text in a button to apply an action' },
+    AppMenuTriggerText: { id: 'AppMenuTriggerText', value: 'Menu', comment: 'Text in a special Module Tab used to trigger an Application Menu open or closed' },
     Attach: { id: 'Attach', value: 'Attach', comment: 'Attach' },
     Available: { id: 'Available', value: 'Available', comment: 'Button tooltip used in a list of movable items' },
     Azure: { id: 'Azure', value: 'Azure', comment: 'Color in our color pallette' },

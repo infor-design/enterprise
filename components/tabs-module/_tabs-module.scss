@@ -632,9 +632,16 @@
         }
       }
     }
-
   }
+}
 
+// Make the tab-panel-container stretch to the full height of the page-container
+.page-container {
+  .tab-container.module-tabs {
+    + .tab-panel-container {
+      height: calc(100% - 36px);
+    }
+  }
 }
 
 .masthead + .tab-container.module-tabs {
