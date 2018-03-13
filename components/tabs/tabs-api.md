@@ -48,6 +48,8 @@ Component Default Settings
     be used in-place of the default Tab Adding method
 -   `appMenuTrigger` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true, will force an App Menu
     trigger to be present on Non-Vertical Tabs implementatations.
+-   `appMenuTriggerText` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If defined, replaces the default "Menu" text used
+    in the app menu trigger.
 -   `ajaxOptions` **(null | [object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object))** if defined, will be used by any internal
     Tabs AJAX calls as the desired request settings.
 -   `beforeActivate` **([undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** If defined as a function, fires
