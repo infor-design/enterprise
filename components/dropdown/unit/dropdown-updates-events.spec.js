@@ -77,7 +77,7 @@ describe('Dropdown updates, events', () => {
     expect(dropdownObj.settings).toEqual(settings);
   });
 
-  it('Should update set settings via parameters', () => {
+  it('Should update set settings via parameter', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
