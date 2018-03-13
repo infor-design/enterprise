@@ -23,107 +23,69 @@ import '../drag/drag.jquery';
 const COMPONENT_NAME = 'datagrid';
 
 /**
-* @namespace
-* @property {boolean} actionableMode If actionableMode is "true, tab and shift tab
-* behave like left and right arrow key, if the cell is editable it goes in and out of edit mode.
-* F2 - toggles actionableMode "true" and "false"
-* @property {boolean} cellNavigation If cellNavigation is "false, will show border
-* around whole row on focus
-* @property {boolean} rowNavigation If rowNavigation is "false, will NOT show border
-* around the row
-* @property {boolean} alternateRowShading Sets shading for readonly grids
-* @property {array} columns An array of columns (see column options)
-* @property {array} dataset An array of data objects
-* @property {boolean} columnReorder Allow Column reorder
-* @property {boolean} saveColumns Save Column Reorder and resize
-* @property {object} saveUserSettings Save one or all of the following to local
-* storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true,
-* filter: true
-* @property {boolean} editable Enable editing in the grid, requires column editors.
-* @property {boolean} isList Makes the grid have readonly "list" styling
-* @property {string} menuId  &nbsp;-&nbspId of the menu to use for a row level right click
-* context menu
-* @property {string} menuSelected Callback for the grid level context menu
-* @property {string} menuBeforeOpen Callback for the grid level beforeopen menu event
-* @property {string} headerMenuId Id of the menu to use for a header right click
-* context menu
-* @property {string} headerMenuSelected Callback for the header level context menu
-* @property {string} headerMenuBeforeOpen Callback for the header level beforeopen
-* menu event
-* @property {string} uniqueId Unique ID to use as local storage reference and internal
-* variable names
-* @property {string} rowHeight Controls the height of the rows / number visible rows.
-* May be (short, medium or normal)
-* @property {string} selectable Controls the selection Mode this may be:
-* false, 'single' or 'multiple' or 'mixed' or 'siblings'
-* @property {object} groupable  Controls fields to use for data grouping Use Data
-* grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list',
-* aggregatorOptions: ['unitName1']}
-* @property {boolean} spacerColumn if true and the grid is not wide enough to fit the last column
-* will get filled with an empty spacer column.
-* @property {boolean} stretchColumn If 'last' the last column will stretch we will add more options.
-* @property {boolean} clickToSelect Controls if using a selection mode if you can
-* click the rows to select
-* @property {object} toolbar  Toggles and appends toolbar features fx..
-* @property {Boolean} selectChildren Can prevent selecting of all child nodes on multiselect
-* {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true,
-* rowHeight: true, views: true}
-* @property {boolean} initializeToolbar Set to false if you will initialize the
-* toolbar yourself
-* @property {boolean} paging Enable paging mode
-* @property {number} pagesize Number of rows per page
-* @property {array} pagesizes Array of page sizes to show in the page size dropdown.
-* @property {boolean} indeterminate Disable the ability to go to a specific page when paging.
-* @property {Function} source  Callback function for paging
-* @property {boolean} hidePagerOnOnePage  If true, hides the pager if there's only
-* one page worth of results.
-* @property {boolean} filterable Enable Column Filtering, This will require column
-* filterTypes as well.
-* @property {boolean} disableClientFilter Disable Filter Logic client side and let your
-* server do it
-* @property {boolean} disableClientSort Disable Sort Logic client side and let your
-* server do it
-* @property {string} resultsText Can provide a custom function to adjust results text
-*  on the toolbar
-* @property {boolean} showFilterTotal Paging results display filter count, change to
-*  false to not show filtered count
-* @property {boolean} rowReorder If set you can reorder rows. Requires rowReorder
-*  formatter
-* @property {boolean} showDirty  If true the dirty indicator will be shown on the rows
-* @property {boolean} showSelectAllCheckBox Allow to hide the checkbox header
-* (true to show, false to hide)
-* @property {boolean} allowOneExpandedRow Controls if you cna expand more than one
-* expandable row.
-* @property {boolean} enableTooltips Process tooltip logic at a cost of performance
-* @property {boolean} disableRowDeactivation if a row is activated the user should not
-*  be able to deactivate it by clicking on the activated row
-* @property {boolean} sizeColumnsEqually If true make all the columns equal width
-* @property {boolean} expandableRow If true we append an expandable row area without
-* the rowTemplate feature being needed.
-* @property {boolean} redrawOnResize If set to false we skip redraw logic on the resize
-* of the page.
-* @property {boolean} exportConvertNegative If set to true export data with trailing
-* negative signs moved in front.
-* @property {array} columnGroups An array of columns to use for grouped column headers.
-* @property {boolean} treeGrid: If true a tree grid is expected so addition
-* calculations will be used to calculate of the row children
-* @property {Function} onPostRenderCell A call back function that will fire and send
-* you the cell container and related information for any cells cells with a component attribute in
-* the column definition.
-* @property {Function} onDestroyCell A call back that goes along with onPostRenderCel
-* and will fire when this cell is destroyed and you need noification of that.
-* @property {Function} onEditCell A callback that fires when a cell is edited, the
-* editor object is passed in to the function
-* @property {Function} onExpandRow A callback function that fires when expanding rows.
-* To be used when expandableRow is true. The function gets eventData about the row and grid and a
-* response function callback. Call the response function with markup to append and delay opening
-* the row.
-* @property {object} emptyMessage An empty message will be displayed when there is no
-* rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available',
-* info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-* button: {text: 'xxx', click: <function>}} set this to null for no message or will default to
-* 'No Data Found with an icon.'
-*/
+ * The Datagrid Component displays and process data in tabular format.
+ * @class Datagrid
+ * @constructor
+ *
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object}   [settings] The component settings.
+ * @param {boolean}  [settings.actionableMode=false] If actionableMode is "true, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+ * @param {boolean}  [settings.cellNavigation=true] If cellNavigation is "false, will show border around whole row on focus
+ * @param {boolean}  [settings.rowNavigation=true] If rowNavigation is "false, will NOT show border around the row
+ * @param {boolean}  [settings.alternateRowShading=false] Sets shading for readonly grids
+ * @param {array}    [settings.columns=[]] An array of columns (see column options)
+ * @param {array}    [settings.dataset=[]] An array of data objects
+ * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
+ * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize
+ * @param {object}   [settings.saveUserSettings={columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true}] Save one or all of the following to local storage
+ * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
+ * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
+ * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
+ * @param {string}   [settings.menuSelected=null] Callback for the grid level context menu
+ * @param {string}   [settings.menuBeforeOpen=null] Callback for the grid level beforeopen menu event
+ * @param {string}   [settings.headerMenuId=null] Id of the menu to use for a header right click context menu
+ * @param {string}   [settings.headerMenuSelected=false] Callback for the header level context menu
+ * @param {string}   [settings.headerMenuBeforeOpen=false] Callback for the header level beforeopen menu event
+ * @param {string}   [settings.uniqueId=null] Unique ID to use as local storage reference and internal variable names
+ * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
+ * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
+ * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
+ * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
+ * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch we will add more options.
+ * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
+ * @param {object}   [settings.toolbar=false]  Toggles and appends toolbar features fx..
+ * @param {Boolean}  [settings.selectChildren=true] Can prevent selecting of all child nodes on multiselect `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
+ * @param {boolean}  [settings.initializeToolbar=true] Set to false if you will initialize the toolbar yourself
+ * @param {boolean}  [settings.paging=false] Enable paging mode
+ * @param {number}   [settings.pagesize=25] Number of rows per page
+ * @param {array}    [settings.pagesizes=[10, 25, 50, 75]] Array of page sizes to show in the page size dropdown.
+ * @param {boolean}  [settings.indeterminate=false] Disable the ability to go to a specific page when paging.
+ * @param {Function} [settings.source=false]  Callback function for paging
+ * @param {boolean}  [settings.hidePagerOnOnePage=false]  If true, hides the pager if there's only one page worth of results.
+ * @param {boolean}  [settings.filterable=false] Enable Column Filtering, This will require column filterTypes as well.
+ * @param {boolean}  [settings.disableClientFilter=false] Disable Filter Logic client side and let your server do it
+ * @param {boolean}  [settings.disableClientSort=false] Disable Sort Logic client side and let your server do it
+ * @param {string}   [settings.resultsText=null] Can provide a custom function to adjust results text on the toolbar
+ * @param {boolean}  [settings.showFilterTotal=true] Paging results display filter count, change to false to not show filtered count
+ * @param {boolean}  [settings.rowReorder=false] If set you can reorder rows. Requires rowReorder formatter
+ * @param {boolean}  [settings.showDirty=false]  If true the dirty indicator will be shown on the rows
+ * @param {boolean}  [settings.showSelectAllCheckBox=true] Allow to hide the checkbox header (true to show, false to hide)
+ * @param {boolean}  [settings.allowOneExpandedRow=true] Controls if you cna expand more than one expandable row.
+ * @param {boolean}  [settings.enableTooltips=false] Process tooltip logic at a cost of performance
+ * @param {boolean}  [settings.disableRowDeactivation=false] if a row is activated the user should not  be able to deactivate it by clicking on the activated row
+ * @param {boolean}  [settings.sizeColumnsEqually=false] If true make all the columns equal width
+ * @param {boolean}  [settings.expandableRow=false] If true we append an expandable row area without the rowTemplate feature being needed.
+ * @param {boolean}  [settings.redrawOnResize=false] If set to false we skip redraw logic on the resize of the page.
+ * @param {boolean}  [settings.exportConvertNegative=false] If set to true export data with trailing negative signs moved in front.
+ * @param {array}    [settings.columnGroups=null] An array of columns to use for grouped column headers.
+ * @param {boolean}  [settings.treeGrid=false] If true a tree grid is expected so addition calculations will be used to calculate of the row children
+ * @param {Function} [settings.onPostRenderCell=null] A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
+ * @param {Function} [settings.onDestroyCell=null] A call back that goes along with onPostRenderCel and will fire when this cell is destroyed and you need noification of that.
+ * @param {Function} [settings.onEditCell=null] A callback that fires when a cell is edited, the editor object is passed in to the function
+ * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+ * @param {object}   [settings.emptyMessage={title:'No Data Available', infor: '', icon: 'icon-empty-no-data'}] An empty message will be displayed when there is no rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message or will default to 'No Data Found with an icon.'
+ */
+
 const DATAGRID_DEFAULTS = {
   // F2 - toggles actionableMode "true" and "false"
   // If actionableMode is "true, tab and shift tab behave like left and right arrow key,
@@ -190,13 +152,6 @@ const DATAGRID_DEFAULTS = {
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
-/**
- * The Datagrid Component displays and process data in tabular format.
- * @class Datagrid
- * @constructor
- * @param {jQuery[]|HTMLElement} element The component element.
- * @param {object} settings The component settings.
- */
 function Datagrid(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DATAGRID_DEFAULTS);
   this.element = $(element);
@@ -244,10 +199,9 @@ Datagrid.prototype = {
     this.handleEvents();
     this.handleKeys();
 
-    /**
-    * Fires when the grid is complete done rendering
-    *
+   /**
     * @event close
+    * @memberof Datagrid
     * @property {object} event - The jquery event object
     * @property {array} ui - An array with references to the domElement, header and pagerBar
     */
