@@ -97,7 +97,7 @@ Toast.prototype = {
       timeoutCallback() {
         self.remove(toast);
       },
-      updateCallback(data) {
+      updateCallback(data, secondArg) {
         percentage = ((data.duration - data.elapsedTime) / maxHideTime) * 100;
 
         if (Locale.isRTL()) {
