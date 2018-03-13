@@ -73,6 +73,9 @@
           if (req.type !== 'filterrow') {
             console.log('source fired');
           }
+          if (req.type !== 'initial') {
+            console.log('initial fired');
+          }
         },
         toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
       }).on('openfilterrow', function() {

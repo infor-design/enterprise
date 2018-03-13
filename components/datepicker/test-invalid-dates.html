@@ -11,23 +11,27 @@
 </div>
 
 <script>
-  "use strict";
-  var locale = 'en-US';
-  var api;
-  var datepicker;
 
-  Locale.set(locale).done(function() {
-     datepicker = $('#date-field').datepicker({
-      'disable':{
-        'dates': [],
-        'dayOfWeek': '[0,6]',
-        'maxDate': new Date('2018', 2, 8 )
-      }}).on('change.datepicker', function(a, b) {
-        console.log(api.currentDate)
-      });
+  $('body').on('initialized', function () {
 
-      var api = datepicker.data('datepicker');
-      api.setValue(new Date());
+    "use strict";
+    var locale = 'en-US';
+    var api;
+    var datepicker;
+
+    Locale.set(locale).done(function() {
+       datepicker = $('#date-field').datepicker({
+        'disable':{
+          'dates': [],
+          'dayOfWeek': '[0,6]',
+          'maxDate': new Date('2018', 2, 8 )
+        }}).on('change.datepicker', function(a, b) {
+          console.log(api.currentDate)
+        });
+
+        var api = datepicker.data('datepicker');
+        api.setValue(new Date());
+    });
   });
 
 </script>
