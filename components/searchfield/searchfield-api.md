@@ -2,70 +2,70 @@
 
 ### Table of Contents
 
--   [SEARCHFIELD_DEFAULTS][1]
--   [Searchfield][2]
--   [hasCategories][3]
--   [hasGoButton][4]
--   [hasFocus][5]
--   [setCategoryButtonText][6]
--   [calculateSearchfieldWidth][7]
--   [isToolbarSearchfield][8]
--   [getCategories][9]
--   [getSelectedCategories][10]
--   [getCategoryData][11]
--   [updateCategories][12]
--   [setCategories][13]
--   [hasCategoryButton][14]
--   [clear][15]
--   [updated][16]
--   [enable][17]
--   [disable][18]
--   [destroy][19]
+-   [SEARCHFIELD_DEFAULTS](#searchfield_defaults)
+-   [Searchfield](#searchfield)
+-   [hasCategories](#hascategories)
+-   [hasGoButton](#hasgobutton)
+-   [hasFocus](#hasfocus)
+-   [setCategoryButtonText](#setcategorybuttontext)
+-   [calculateSearchfieldWidth](#calculatesearchfieldwidth)
+-   [isToolbarSearchfield](#istoolbarsearchfield)
+-   [getCategories](#getcategories)
+-   [getSelectedCategories](#getselectedcategories)
+-   [getCategoryData](#getcategorydata)
+-   [updateCategories](#updatecategories)
+-   [setCategories](#setcategories)
+-   [hasCategoryButton](#hascategorybutton)
+-   [clear](#clear)
+-   [updated](#updated)
+-   [enable](#enable)
+-   [disable](#disable)
+-   [destroy](#destroy)
 
 ## SEARCHFIELD_DEFAULTS
 
 **Properties**
 
--   `resultsCallback` **[function][20]** Callback function for getting typahead results on search.
--   `allResultsCallback` **[function][20]** Callback function for getting "all results".
--   `showAllResults` **[boolean][21]** If true the show all results link is showin in the list.
--   `showGoButton` **[boolean][21]** If true a go button is associated.
--   `goButtonCopy` **[string][22]** The text to use on the go button.
--   `goButtonAction` **[function][20]** If defined as a function, will fire this callback on
+-   `resultsCallback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback function for getting typahead results on search.
+-   `allResultsCallback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback function for getting "all results".
+-   `showAllResults` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the show all results link is showin in the list.
+-   `showGoButton` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true a go button is associated.
+-   `goButtonCopy` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The text to use on the go button.
+-   `goButtonAction` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** If defined as a function, will fire this callback on
     the Go Button "click"
--   `categories` **[array][23]** If defined as an array, displays a dropdown containing
+-   `categories` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** If defined as an array, displays a dropdown containing
     categories that can be used to filter results.
--   `categoryMultiselect` **[boolean][21]** If true, creates a multiselectable categories list.
--   `showCategoryText` **[boolean][21]** If true, will show any available categories that are
+-   `categoryMultiselect` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, creates a multiselectable categories list.
+-   `showCategoryText` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, will show any available categories that are
     selected to the left of the Dropdown field.
--   `source` **[function][20]** Callback function for getting type ahead results.
--   `template` **[string][22]** The html template to use for the search list
--   `clearable` **[boolean][21]** Add an X to clear.
+-   `source` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback function for getting type ahead results.
+-   `template` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The html template to use for the search list
+-   `clearable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Add an X to clear.
 
 ## Searchfield
 
 **Parameters**
 
--   `element` **([Array][23]&lt;jQuery> | [HTMLElement][24])** the base searchfield element
--   `settings` **[object][25]?** incoming settings
+-   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the base searchfield element
+-   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
 
 ## hasCategories
 
 Reveals whether or not categories are active on this searchfield.
 
-Returns **[boolean][21]** whether or not categories are active on this searchfield.
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not categories are active on this searchfield.
 
 ## hasGoButton
 
 Detects the existence of a "Go" button added to the main searchfield API
 
-Returns **[boolean][21]** whether or not a "Go" button is present
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not a "Go" button is present
 
 ## hasFocus
 
 Detects whether or not the Searchfield has focus.
 
-Returns **[boolean][21]** whether or not the Searchfield has focus.
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the Searchfield has focus.
 
 ## setCategoryButtonText
 
@@ -74,10 +74,10 @@ name, or a translated "[x] Selected." string.
 
 **Parameters**
 
--   `textContent` **[string][22]?** Optional incoming text that will be subtituted for the
+-   `textContent` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Optional incoming text that will be subtituted for the
     selected element count.
 
-Returns **[undefined][26]** 
+Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
 ## calculateSearchfieldWidth
 
@@ -89,7 +89,7 @@ NOTE: this method must be run AFTER changes to DOM elements (text/size changes) 
 
 Detects whether or not this component is a Toolbar Searchfield
 
-Returns **[boolean][21]** whether or not this component is a Toolbar Searchfield
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not this component is a Toolbar Searchfield
 
 ## getCategories
 
@@ -109,18 +109,18 @@ Gets the currently selected categories as data.
 
 **Parameters**
 
--   `onlyReturnSelected` **[boolean][21]** If set to true, will only return
+-   `onlyReturnSelected` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true, will only return
      checked list items. (optional, default `false`)
 
-Returns **[Array][23]&lt;[Object][25]>** data -
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** data -
 
-Returns **[string][22]** name - Category name
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** name - Category name
 
-Returns **([string][22] \| [number][27])** id - Category element's ID (if applicable)
+Returns **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** id - Category element's ID (if applicable)
 
-Returns **([string][22] \| [number][27])** value - Category element's value (if applicable)
+Returns **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** value - Category element's value (if applicable)
 
-Returns **[boolean][21]** [checked=true] - Category's selection status
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** [checked=true] - Category's selection status
 
 ## updateCategories
 
@@ -128,13 +128,13 @@ Updates just the categories setting and rerenders the category list.
 
 **Parameters**
 
--   `categories` **[Array][23]&lt;[Object][25]>** Array of category object definitions.
-    -   `categories[].name` **[string][22]** Category name.
--   `id` **([string][22] \| [number][27])?** Category element's ID (if applicable).
--   `value` **([string][22] \| [number][27])?** Category element's value (if applicable).
--   `checked` **[boolean][21]** Category's selection status (optional, default `true`)
+-   `categories` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
+    -   `categories[].name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
+-   `id` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
+-   `value` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
+-   `checked` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
 
-Returns **[undefined][26]** 
+Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
 ## setCategories
 
@@ -142,19 +142,19 @@ Creates a new set of categories on the Searchfield and rerenders it.
 
 **Parameters**
 
--   `categories` **[Array][23]&lt;[Object][25]>** Array of category object definitions.
-    -   `categories[].name` **[string][22]** Category name.
--   `id` **([string][22] \| [number][27])?** Category element's ID (if applicable).
--   `value` **([string][22] \| [number][27])?** Category element's value (if applicable).
--   `checked` **[boolean][21]** Category's selection status (optional, default `true`)
+-   `categories` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** Array of category object definitions.
+    -   `categories[].name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Category name.
+-   `id` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's ID (if applicable).
+-   `value` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))?** Category element's value (if applicable).
+-   `checked` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Category's selection status (optional, default `true`)
 
-Returns **[undefined][26]** 
+Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
 ## hasCategoryButton
 
 Determines whether or not a Category Trigger exists.
 
-Returns **[boolean][21]** whether or not a Category Trigger exists.
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not a Category Trigger exists.
 
 ## clear
 
@@ -169,7 +169,7 @@ triggered by calling the "updated.searchfield" event on the searchfield element.
 
 **Parameters**
 
--   `settings` **[object][25]?** incoming settings
+-   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
 
 Returns **void** 
 
@@ -191,61 +191,7 @@ Destroys the Searchfield and removes all jQuery component instancing.
 
 **Parameters**
 
--   `dontDestroyToolbarSearchfield` **[boolean][21]** if true, will not pass through
+-   `dontDestroyToolbarSearchfield` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through
      and destroy a linked instance of the Toolbar Searchfield component.
 
-Returns **[undefined][26]** 
-
-[1]: #searchfield_defaults
-
-[2]: #searchfield
-
-[3]: #hascategories
-
-[4]: #hasgobutton
-
-[5]: #hasfocus
-
-[6]: #setcategorybuttontext
-
-[7]: #calculatesearchfieldwidth
-
-[8]: #istoolbarsearchfield
-
-[9]: #getcategories
-
-[10]: #getselectedcategories
-
-[11]: #getcategorydata
-
-[12]: #updatecategories
-
-[13]: #setcategories
-
-[14]: #hascategorybutton
-
-[15]: #clear
-
-[16]: #updated
-
-[17]: #enable
-
-[18]: #disable
-
-[19]: #destroy
-
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[24]: https://developer.mozilla.org/docs/Web/HTML/Element
-
-[25]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
-
-[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
