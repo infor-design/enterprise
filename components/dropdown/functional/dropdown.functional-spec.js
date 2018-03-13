@@ -1,4 +1,27 @@
+const AxeBuilder = require('axe-webdriverjs');
 const r2 = require('r2');
+
+// Light Theme color contrast is not WCAG 2AA, #fff on #368ac0, focused item on a open dropdown
+const axeOptions = {
+  rules: [
+    {
+      id: 'aria-allowed-attr',
+      enabled: false
+    },
+    {
+      id: 'aria-required-children',
+      enabled: false
+    },
+    {
+      id: 'aria-valid-attr-value',
+      enabled: false
+    },
+    {
+      id: 'color-contrast',
+      enabled: false
+    }
+  ]
+};
 
 const username = process.env.BROWSER_STACK_USERNAME;
 const accessKey = process.env.BROWSER_STACK_ACCESS_KEY;
@@ -70,6 +93,26 @@ describe('Dropdown tests', () => {
     }
   });
 
+  // Disable IE11: Async timeout errors
+  if (browser.browserName.toLowerCase() !== 'ie') {
+    it('Should be accessible on init with no WCAG 2AA violations', async (done) => {
+      try {
+        await clickOnDropdown();
+
+        const res = await AxeBuilder(browser.driver)
+          .configure(axeOptions)
+          .exclude('header')
+          .analyze();
+
+        expect(res.violations.length).toEqual(0);
+        done();
+      } catch (error) {
+        done.fail('Failed: error sent');
+        await browserStackErrorReporter(done, error);
+      }
+    });
+  }
+
   if (browser.browserName.toLowerCase() === 'chrome') {
     it('Should not visual regress', async (done) => {
       try {
@@ -86,4 +129,5 @@ describe('Dropdown tests', () => {
       }
     });
   }
+
 });

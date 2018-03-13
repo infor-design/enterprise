@@ -248,9 +248,11 @@ describe('Mask API', () => {
     expect(caretPos).toEqual(5);
   });
 
-  // xit('Should be able to translate a string into a mask from an alternate locale', () => {
-  // TODO: SOHO-6294
-  // 1. Grab French currency locale?
-  // 2. run _conformToMask_ directly with mask, etc
-  // });
+  /*
+   *it('Should be able to translate a string into a mask from an alternate locale', () => {
+   *  TODO: SOHO-6294
+   *  1. Grab French currency locale?
+   *  2. run _conformToMask_ directly with mask, etc
+   *});
+   */
 });
