@@ -1378,6 +1378,7 @@ Datagrid.prototype = {
       this.headerRow.find('.datagrid-filter-wrapper').show();
 
       this.element.triggerHandler('openfilterrow');
+      this.attachFilterRowEvents();
     }
   },
 
