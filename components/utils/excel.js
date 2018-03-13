@@ -100,7 +100,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
   table = cleanExtra(table);
   csvData = formatCsv(table);
 
-  if (env.browser.name === 'ie') {
+  if (env.browser.name === 'ie' || env.browser.name === 'edge') {
     if (window.navigator.msSaveBlob) {
       const blob = new Blob([csvData], {
         type: 'application/csv;charset=utf-8;'
@@ -243,14 +243,8 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     self.element.closest('.datagrid-container').attr('id') ||
     'datagrid'}.xls`;
 
-  if (env.browser.name === 'ie') {
-    if (env.browser.version === '9') {
-      const IEwindow = window.open();
-      IEwindow.document.write(`sep=,\r\n${format(template, ctx)}`);
-      IEwindow.document.close();
-      IEwindow.document.execCommand('SaveAs', true, fileName);
-      IEwindow.close();
-    } else if (window.navigator.msSaveBlob) {
+  if (env.browser.name === 'ie' || env.browser.name === 'edge') {
+    if (window.navigator.msSaveBlob) {
       const blob = new Blob([format(template, ctx)], {
         type: 'application/csv;charset=utf-8;'
       });

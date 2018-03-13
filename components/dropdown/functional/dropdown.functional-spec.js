@@ -129,5 +129,4 @@ describe('Dropdown tests', () => {
       }
     });
   }
-
 });

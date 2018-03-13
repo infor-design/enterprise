@@ -300,12 +300,12 @@ Personalize.prototype = {
       self.unBlockUi();
     });
 
-    const themePath = path ? path.substring(0, path.lastIndexOf('/')) : `${exports.theme}`;
+    const themePath = path ? path.substring(0, path.lastIndexOf('/')) : '';
     const isMin = path ? path.indexOf('.min') > -1 : false;
 
     newCss.attr({
       id: originalCss.attr('id'),
-      href: `/${themePath}-theme${isMin ? '.min' : ''}.css`
+      href: `${themePath}/${exports.theme}-theme${isMin ? '.min' : ''}.css`
     });
     originalCss.removeAttr('id');
     originalCss.after(newCss);
