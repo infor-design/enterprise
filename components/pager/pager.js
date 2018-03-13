@@ -741,7 +741,7 @@ Pager.prototype = {
 
       // Make an ajax call and wait
       self.element.trigger('paging', request);
-      const elements = self.getPageableElements();
+      const elements = self.getPageableElements().not('.is-hidden');
 
       // Render page objects
       if (!self.settings.source) {

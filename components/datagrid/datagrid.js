@@ -2244,7 +2244,11 @@ Datagrid.prototype = {
         continue;  //eslint-disable-line
       }
 
-      tableHtml += self.rowHtml(s.dataset[i], s.treeGrid ? this.recordCount : i, i);
+      tableHtml += self.rowHtml(
+        s.dataset[i],
+        (s.treeGrid || s.filterable) ? this.recordCount : i,
+        i
+      );
 
       this.recordCount++;
     }
@@ -4128,8 +4132,8 @@ Datagrid.prototype = {
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
         rowNode = $(this).closest('tr');
-        dataRowIdx = self.visualRowIndex(rowNode);
-
+        dataRowIdx = self.settings.treeGrid ?
+          self.dataRowIndex(rowNode) : self.visualRowIndex(rowNode);
         self.toggleRowDetail(dataRowIdx);
         self.toggleGroupChildren(rowNode);
         self.toggleChildren(e, dataRowIdx);
@@ -6778,7 +6782,11 @@ Datagrid.prototype = {
    */
   toggleRowDetail(dataRowIndex) {
     const self = this;
-    const rowElement = self.visualRowNode(dataRowIndex);
+    let rowElement = self.visualRowNode(dataRowIndex);
+    if (self.settings.paging && (self.settings.rowTemplate || self.settings.expandableRow)) {
+      dataRowIndex += ((self.pager.activePage - 1) * self.settings.pagesize);
+      rowElement = self.dataRowNode(dataRowIndex);
+    }
     const expandRow = rowElement.next();
     const expandButton = rowElement.find('.datagrid-expand-btn');
     const detail = expandRow.find('.datagrid-row-detail');
@@ -6842,8 +6850,6 @@ Datagrid.prototype = {
       expandRow.addClass('is-expanded');
       expandButton.addClass('is-expanded')
         .find('.plus-minus').addClass('active');
-
-      expandRow.css('display', 'table-row');
 
       // Optionally Contstrain the width
       expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
