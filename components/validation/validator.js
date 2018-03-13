@@ -868,7 +868,9 @@ Validator.prototype = {
     const hasTooltip = field.attr(`data-${type}-type`) || !!tooltipAPI;
     const hasError = field.getMessage({ type: 'error' });
 
-    this.inputs.filter('input, textarea').off('focus.validate');
+    if (this.inputs) {
+      this.inputs.filter('input, textarea').off('focus.validate');
+    }
     field.removeClass(type);
     field.removeData(`data-${type}message`);
 
