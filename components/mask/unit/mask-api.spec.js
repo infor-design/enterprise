@@ -37,12 +37,14 @@ describe('Mask API', () => {
 
     // Credit Cards
     let result = api._convertPatternFromString('####-####-####-####', maskDefinitions);
+
     expect(result).toBeDefined();
     expect(result).toEqual(jasmine.any(Array));
     expect(result.length).toEqual(19);
 
     // U.S. Phone Number
     result = api._convertPatternFromString('(###) ###-####', maskDefinitions);
+
     expect(result).toBeDefined();
     expect(result).toEqual(jasmine.any(Array));
     expect(result.length).toEqual(14);
@@ -73,6 +75,7 @@ describe('Mask API', () => {
     };
 
     const result = api.process(text, opts);
+
     expect(result).toBeDefined();
     expect(result).toEqual(jasmine.any(Object));
     expect(result.conformedValue).toEqual(jasmine.any(String));
@@ -97,6 +100,7 @@ describe('Mask API', () => {
       }
     };
     let result = api.process(textValue, opts);
+
     expect(result).toBeDefined();
     expect(result).toEqual(jasmine.any(Object));
     expect(result.conformedValue).toEqual(jasmine.any(String));
@@ -106,12 +110,14 @@ describe('Mask API', () => {
     opts.patternOptions.allowDecimal = true;
     textValue = '2222222222.33';
     result = api.process(textValue, opts);
+
     expect(result.conformedValue).toEqual('2,222,222,222.33');
 
     // Handle Negative numbers
     opts.patternOptions.allowNegative = true;
     textValue = '-4444444444.55';
     result = api.process(textValue, opts);
+
     expect(result.conformedValue).toEqual('-4,444,444,444.55');
 
     // Handle Numbers with a prefix (currency)
@@ -120,6 +126,7 @@ describe('Mask API', () => {
     opts.patternOptions.prefix = '$';
     textValue = '2345';
     result = api.process(textValue, opts);
+
     expect(result.conformedValue).toEqual('$2,345');
 
     // Handle Numbers with a suffix (percent)
@@ -128,6 +135,7 @@ describe('Mask API', () => {
     opts.patternOptions.suffix = '%';
     textValue = '100';
     result = api.process(textValue, opts);
+
     expect(result.conformedValue).toEqual('100%');
   });
 
@@ -150,6 +158,7 @@ describe('Mask API', () => {
       }
     };
     const result = api.process(textValue, opts);
+
     expect(result.maskResult).toBeFalsy();
   });
 
@@ -239,9 +248,9 @@ describe('Mask API', () => {
     expect(caretPos).toEqual(5);
   });
 
-  xit('Should be able to translate a string into a mask from an alternate locale', () => {
-    // TODO: SOHO-6294
-    // 1. Grab French currency locale?
-    // 2. run _conformToMask_ directly with mask, etc
-  });
+  // xit('Should be able to translate a string into a mask from an alternate locale', () => {
+  // TODO: SOHO-6294
+  // 1. Grab French currency locale?
+  // 2. run _conformToMask_ directly with mask, etc
+  // });
 });

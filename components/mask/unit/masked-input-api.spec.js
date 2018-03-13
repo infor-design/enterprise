@@ -50,6 +50,7 @@ describe('Mask Input Field Api', () => {
   it('Should be able to safely get a string value from an input field', () => {
     // Test `_getSafeRawValue()_`
     TEST_COMPONENT_API = new window.Soho.components.MaskedInput(TEST_INPUT);
+
     expect(TEST_COMPONENT_API._getSafeRawValue('straight up text')).toEqual('straight up text');
     expect(TEST_COMPONENT_API._getSafeRawValue(300)).toEqual('300');
     expect(TEST_COMPONENT_API._getSafeRawValue(`${300}4545`)).toEqual('3004545');
@@ -68,6 +69,7 @@ describe('Mask Input Field Api', () => {
     const inputComponent1 = new window.Soho.components.MaskedInput(input1, {
       pattern: '(###) ###-####'
     });
+
     expect(inputComponent1.settings.pattern).toBeDefined();
     expect(input1.value).toEqual('(123) 456-7890');
 
@@ -90,6 +92,7 @@ describe('Mask Input Field Api', () => {
         }
       }
     });
+
     expect(inputComponent2.settings.patternOptions).toBeDefined();
     expect(inputComponent2.settings.patternOptions.integerLimit).toBeDefined();
     expect(inputComponent2.settings.patternOptions.integerLimit).toEqual(7);
@@ -182,6 +185,7 @@ describe('Mask Input Field Api', () => {
         suffix: '-'
       }
     });
+
     expect(inputComponent.settings.patternOptions.symbols).toBeDefined();
     expect(inputComponent.settings.patternOptions.symbols.thousands).toEqual('٬');
     expect(inputComponent.settings.patternOptions.symbols.negative).toEqual('-');
