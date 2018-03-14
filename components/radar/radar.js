@@ -314,7 +314,23 @@ Radar.prototype = {
           data: d,
           index: i
         };
-        self.element.triggerHandler((isSelected ? 'unselected' : 'selected'), triggerData);
+
+        /**
+        * Fires when the chart is complete done rendering, for customization.
+        * @event selected
+        * @property {object} data - The data element attached
+        * @property {HTMLElement} elem - The dom element
+        * @property {number} index - The index for this blob.
+        */
+
+        /**
+        * Fires when the chart is complete done rendering, for customization.
+        * @event deselected
+        * @property {object} data - The data element attached
+        * @property {HTMLElement} elem - The dom element
+        * @property {number} index - The index for this blob.
+        */
+        self.element.triggerHandler((isSelected ? 'deselected' : 'selected'), triggerData);
 
         charts.selected = !isSelected ? triggerData : [];
       });
