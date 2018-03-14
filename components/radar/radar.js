@@ -129,7 +129,6 @@ Radar.prototype = {
   build() {
     this.updateData(this.settings.dataset);
     this.setInitialSelected();
-    this.element.trigger('rendered');
     return this;
   },
 
