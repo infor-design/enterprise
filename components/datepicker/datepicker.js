@@ -12,62 +12,66 @@ import '../validation/validation.jquery';
 const COMPONENT_NAME = 'datepicker';
 
 /**
- * Default DatePicker Options
- * @namespace
- * @property {boolean} showTime If true the time selector will be shown.
- * @property {string} [timeFormat] Format to use time section fx HH:mm,
+ * A component to support date entry.
+ * @class DatePicker
+ * @constructor
+ *
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object} [settings] The component settings.
+ * @param {boolean} [settings.showTime=false] If true the time selector will be shown.
+ * @param {string} [settings.timeFormat] Format to use time section fx HH:mm,
  *  defaults current locale settings.
- * @property {number} [minuteInterval]
- * @property {number} [secondInterval]
- * @property {string} [mode] Time picker options: 'standard', 'range',
+ * @param {number} [settings.minuteInterval]
+ * @param {number} [settings.secondInterval]
+ * @param {string} [settings.mode] Time picker options: 'standard', 'range',
  *  this controls the time picker.
- * @property {boolean} [roundToInterval] In time picker mode, if a non-matching
+ * @param {boolean} [settings.roundToInterval] In time picker mode, if a non-matching
  *  minutes value is entered,
  *  rounds the minutes value to the nearest interval when the field is blurred.
- * @property {string} dateFormat Defaults to current locale but can be
- *  overriden to a specific format, like like 'yyyy-MM-dd' iso8601 format.
- * @property {object} disable Disable dates in various ways.
+ * @param {string} [settings.dateFormat='locale'] Defaults to current locale but can be
+ * @param {string} [settings.placeholder=false] Text to show in input element while empty.
+ * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
- * @property {array} disable.dates Disable specific dates.
+ * @param {array} [settings.disable.dates] Disable specific dates.
  * Example `{dates: ['12/31/2018', '01/01/2019'}`.
- * @property {string|date} disable.minDate Disable up to a minimum date.
+ * @param {string|date} [settings.disable.minDate] Disable up to a minimum date.
  * Example `{minDate: '12/31/2016'}`.
- * @property {string|date} disable.maxDate Disable up to a maximum date.
+ * @param {string|date} [settings.disable.maxDate] Disable up to a maximum date.
  * Example `{minDate: '12/31/2019'}`.
- * @property {array} disable.dayOfWeek Disable a specific of days of the week 0-6.
+ * @param {array} [settings.disable.dayOfWeek] Disable a specific of days of the week 0-6.
  * Example `{dayOfWeek: [0,6]}`.
- * @property {array} disable.isEnable Defaults to false.
+ * @param {boolean} [settings.disable.isEnable=false] Inverse the disable settings.
  * If true all the disable settings will be enabled and the rest will be disabled.
  * So you can inverse the settings.
  * For example if you have more non specific dates to disable then enable ect.
- * @property {boolean} showMonthYearPicker If true the month and year will render
- *  as dropdowns.
- * @property {boolean} hideDays If true the days portion of the calendar will be hidden.
+ * @param {boolean} [settings.showLegend=false] If true a legend is show to associate dates.
+ * @param {boolean} [settings.customValidation=false] If true the internal validation is disabled.
+ * @param {boolean} [settings.showMonthYearPicker=false] If true the month and year will render as dropdowns.
+ * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden.
  *  Usefull for Month/Year only formats.
- * @property {boolean} customValidation If true the internal validation is disabled.
- * @property {boolean} advanceMonths The number of months in each direction to show in
+ * @param {number} [settings.advanceMonths=5] The number of months in each direction to show in
  *  the dropdown for months (when initially opening)
- * @property {boolean} showLegend If true a legend is show to associate dates.
- * @property {array} legend  Legend Build up
+ * @param {array} [settings.legend]  Legend Build up
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
- * @property {object} range Range between two dates with various options.
- * @property {boolean} range.useRange Use range of two dates options.
- * @property {string|date} range.start Start date in range.
- * @property {string|date} range.end End date in range.
- * @property {string} range.separator Visual separator between two dates.
- * @property {number} range.minDays Minimum days to be in range.
- * @property {number} range.maxDays Maximum days to be in range.
- * @property {boolean} range.selectForward Range only in forward direction.
- * @property {boolean} range.selectBackward Range only in backward direction.
- * @property {boolean} range.includeDisabled Include disable dates in range of dates.
- * @property {string} calendarName The name of the calendar to use in instance of
+ * @param {object} [settings.range] Range between two dates with various options.
+ * @param {boolean} [settings.range.useRange=false] Use range of two dates options.
+ * @param {string|date} [settings.range.start] Start date in range.
+ * @param {string|date} [settings.range.end] End date in range.
+ * @param {string} [settings.range.separator=' - '] Visual separator between two dates.
+ * @param {number} [settings.range.minDays=0] Minimum days to be in range.
+ * @param {number} [settings.range.maxDays=0] Maximum days to be in range.
+ * @param {boolean} [settings.range.selectForward=false] Range only in forward direction.
+ * @param {boolean} [settings.range.selectBackward=false] Range only in backward direction.
+ * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
+ * @param {string} [settings.calendarName] The name of the calendar to use in instance of
  * multiple calendars. At this time only ar-SA and ar-EG locales have either
  * 'gregorian' or 'islamic-umalqura' as valid values.
- * @property {useUTC} useUTC If true the dates will use UTC format. This is only partially
+ * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
-*/
+ */
+
 const DATEPICKER_DEFAULTS = {
   showTime: false,
   timeFormat: undefined,
@@ -110,12 +114,6 @@ const DATEPICKER_DEFAULTS = {
   useUTC: false
 };
 
-/**
- * A component to support date entry.
- * @class DatePicker
- * @param {String} element The component element.
- * @param {String} settings The component settings.
- */
 function DatePicker(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, DATEPICKER_DEFAULTS);
@@ -617,7 +615,7 @@ DatePicker.prototype = {
     * Fires as the calendar popup is opened.
     *
     * @event listopened
-    * @type {Object}
+    * @memberof DatePicker
     * @property {Object} event - The jquery event object
     */
     this.element.addClass('is-active is-open').trigger('listopened');
@@ -919,7 +917,7 @@ DatePicker.prototype = {
         * Fires after the value in the input is changed by any means.
         *
         * @event change
-        * @type {Object}
+        * @memberof DatePicker
         * @property {Object} event - The jquery event object
         */
         self.element.val('').trigger('change').trigger('input');
@@ -1128,7 +1126,7 @@ DatePicker.prototype = {
       * Fires as the calendar popup is closed.
       *
       * @event listclosed
-      * @type {Object}
+      * @memberof DatePicker
       * @property {Object} event - The jquery event object
       */
       this.element.trigger('listclosed');
@@ -1975,7 +1973,7 @@ DatePicker.prototype = {
       * Fires after the value in the input is changed by user interaction.
       *
       * @event input
-      * @type {Object}
+      * @memberof DatePicker
       * @property {Object} event - The jquery event object
       */
       if (s.range.useRange) {
@@ -2348,6 +2346,7 @@ DatePicker.prototype = {
 
   /**
    * Removes event bindings from the instance.
+   * @private
    * @returns {void}
    */
   teardown() {

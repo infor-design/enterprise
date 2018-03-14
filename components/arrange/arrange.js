@@ -6,14 +6,18 @@ import { utils } from '../utils/utils';
 const COMPONENT_NAME = 'arrange';
 
 /**
- * Default Arrange Options
- * @namespace
- * @param {string} handle The CSS class name of the handle element to connect
- * @param {string} itemsSelector The CSS selector to match all the sortable elements.
- * @param {string} [connectWith] Optional CSS Selector to connect with when using two lists
- * @param {string} placeholder The html for the element that appears while dragging
- * @param {string} placeholderCssClass The class to add to the ghost element that is being dragged.
- */
+* The Arrange Component allows touch and drag support to sort UI items.
+* @class Arrange
+* @constructor
+*
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+* @param {string} [settings.handle] The CSS class name of the handle element to connect
+* @param {string} [settings.itemsSelector] The CSS selector to match all the sortable elements.
+* @param {string} [settings.connectWith] Optional CSS Selector to connect with when using two lists
+* @param {string} [placeholder.settings] The html for the element that appears while dragging
+* @param {string} [settings.placeholderCssClass='arrange-placeholder'] The class to add to the ghost element that is being dragged.
+*/
 const ARRANGE_DEFAULTS = {
   handle: null, // The Class of the handle element
   itemsSelector: null,
@@ -22,14 +26,6 @@ const ARRANGE_DEFAULTS = {
   placeholderCssClass: 'arrange-placeholder'
 };
 
-/**
-* The Arrange Component allows touch and drag support to sort UI items.
-*
-* @class Arrange
-* @constructor
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function Arrange(element, settings) {
   this.settings = utils.mergeSettings(element, settings, ARRANGE_DEFAULTS);
 
@@ -216,7 +212,7 @@ Arrange.prototype = {
              customize the draggable item.
             *
             * @event beforearrange
-            * @type {Object}
+            * @memberof Arrange
             * @property {Object} event - The jquery event object
             * @property {Object} status - Status for this item
             */
@@ -269,7 +265,7 @@ Arrange.prototype = {
               * Fires after moving an element allowing you do any follow up updating.
               *
               * @event arrangeupdate
-              * @type {Object}
+              * @memberof Arrange
               * @property {Object} event - The jquery event object
               * @property {Object} status - Status for this item
               */
