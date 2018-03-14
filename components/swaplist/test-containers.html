@@ -124,32 +124,8 @@
   // $('body').initialize("en-GB").on('initialized', function () {
     $('#fieldsSL').swaplist({available: available, selected: selected, searchable: true});
 
-    var getContainer = function(items) {
-      if (typeof items[0] === 'object' && items[0].node) {
-        var card = items[0].node.closest('.card');
-        if (card.is('.available')) {
-          return 'available';
-        } else if (card.is('.selected')) {
-          return 'selected';
-        } else if (card.is('.full-access')) {
-          return 'full-access';
-        }
-        }
-        return null;
-    }
-
-    $('#fieldsSL').on('beforeswap', function (e, items) {
-        var container = getContainer(items);
-        if (container) {
-          console.log('Moved from: ' + container, items);
-        }
-    });
-
-    $('#fieldsSL').on("swapupdate", function(e, items) {
-        var container = getContainer(items);
-        if (container) {
-          console.log('Moved to: ' + container, items);
-        }
+    $('#fieldsSL').on("swapupdate", function(e, args) {
+      console.log('Moved: ', args);
     });
   });
 </script>

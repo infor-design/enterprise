@@ -97,8 +97,8 @@
       selectedContainer = '.card.selected';
 
       // On swap update
-      api.element.on('swapupdate', function (e, items) {
-        console.log(items);
+      api.element.on('swapupdate', function (e, args) {
+        console.log(args);
       });
 
     // Wait for Listview availability
@@ -108,7 +108,7 @@
 
       // Get selected items
       console.log(api.getItems(selectedContainer));
-    }, 0);
+    }, 300);
 
   });
 </script>
