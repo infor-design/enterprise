@@ -51,6 +51,20 @@
 
   }
 
+  .has-close-button {
+    display: inline-block;
+    width: calc(100% - 105px);
+  }
+
+  .close-button {
+    display: inline-block;
+
+    .btn {
+      margin: 7px 5px 3px 0;
+      vertical-align: middle;
+    }
+  }
+
   .buttonset {
     [class^="btn"]:last-child {
       margin-right: 1px;
