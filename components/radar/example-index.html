@@ -58,10 +58,10 @@ $('body').on('initialized', function () {
 
   $('#radar-chart-example').chart({type: 'radar', dataset: radarData})
     .on('selected', function (e, args) {
-      console.log(args);
+      console.log('selected', args);
     })
     .on('unselected', function (e, args) {
-      console.log(args);
+      console.log('unselected', args);
     });
 
 });
