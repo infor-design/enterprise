@@ -470,6 +470,12 @@ $datagrid-short-row-height: 23px;
   }
 }
 
+.full-height .datagrid-body {
+  .empty-message {
+    @include vertical-align();
+  }
+}
+
 // Grid Styling
 .datagrid {
   @include font-size(14);
@@ -2490,8 +2496,20 @@ td .btn-actions {
     padding: 5px 0 2px 5px  !important;
   }
 
-  .short-rowheight th .datagrid-checkbox {
-    top: -2px;
+  .short-rowheight {
+    th .datagrid-checkbox {
+      top: -2px;
+    }
+
+    .datagrid tbody tr.arrange-dragging td {
+      height: $datagrid-short-header-height;
+    }
+  }
+
+  .medium-rowheight {
+    .datagrid tbody tr.arrange-dragging td {
+      height: $datagrid-short-header-height;
+    }
   }
   // scss-lint:enable ImportantRule
 
@@ -2574,6 +2592,10 @@ td .btn-actions {
       }
     }
 
+    tbody tr.arrange-dragging td {
+      @include font-size(14);
+      height: $datagrid-row-height;
+    }
   }
 }
 

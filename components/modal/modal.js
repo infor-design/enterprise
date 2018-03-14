@@ -127,6 +127,7 @@ Modal.prototype = {
       }
 
       if (this.settings.content instanceof jQuery && !this.settings.beforeShow) {
+        this.settings.content.removeClass('hidden is-hidden');
         this.settings.content.show();
       }
     }

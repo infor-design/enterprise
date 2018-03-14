@@ -17,7 +17,7 @@ $.fn.isValid = function () {
  */
 $.fn.validateField = function () {
   const field = $(this);
-  const api = field.data('Validator') || field.data('validate');
+  const api = Soho.components.Validator.prototype;  //eslint-disable-line
 
   if (api && api.validate) {
     api.validate(field, false, 0);

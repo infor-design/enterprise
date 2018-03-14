@@ -63,9 +63,9 @@ Mac and IOS (not windows) (R-1)
 
 ### Running The App
 * `cd` into project folder fx `cd 4.4.0`
-* Run `grunt` to compile initial assets
+* Run `npx grunt` to compile initial assets
 * Run `node server` to start the web server
-* Make a new terminal window and cd into project folder and run `grunt watch`
+* Make a new terminal window and cd into project folder and run `npx grunt watch`
 * Go to `http://localhost:4000/`
 * Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload
 

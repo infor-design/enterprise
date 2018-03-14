@@ -144,10 +144,15 @@
 
   .panel-header {
     height: auto;
-    padding: 3px 0 1px 20px;
+    padding: 0 0 1px 13px;
 
     .toolbar {
+      height: 42px;
       margin-bottom: 0;
+
+      .title {
+        padding: 3px 0 0;
+      }
     }
 
     > * {
@@ -157,14 +162,19 @@
     .list-detail-back-button.secondary,
     .list-detail-list-close-button {
       display: none;
-      top: -1px;
+      right: 2px;
+      top: 1px;
     }
 
     h2 {
-      margin: 7px 0;
+      margin: 0;
     }
 
-    button {
+    > h2 {
+      margin: 8px 0;
+    }
+
+    > button {
       float: right;
     }
   }
@@ -187,6 +197,10 @@ html[dir='rtl'] {
   .list-detail {
     .panel-header {
       padding-left: 0;
+
+      .toolbar .title {
+        padding-right: 0;
+      }
     }
 
     .card-header {

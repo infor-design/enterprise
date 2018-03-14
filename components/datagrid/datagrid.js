@@ -12,6 +12,13 @@ import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
 // eslint-disable-next-line
 import { Editors } from '../datagrid/datagrid.editors';
 
+// jQuery components
+import '../utils/animations';
+import '../emptymessage/emptymessage.jquery';
+import '../pager/pager.jquery';
+import '../mask/masked-input.jquery';
+import '../drag/drag.jquery';
+
 // The name of this component.
 const COMPONENT_NAME = 'datagrid';
 
@@ -52,6 +59,9 @@ const COMPONENT_NAME = 'datagrid';
 * @property {object} groupable  Controls fields to use for data grouping Use Data
 * grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list',
 * aggregatorOptions: ['unitName1']}
+* @property {boolean} spacerColumn if true and the grid is not wide enough to fit the last column
+* will get filled with an empty spacer column.
+* @property {boolean} stretchColumn If 'last' the last column will stretch we will add more options.
 * @property {boolean} clickToSelect Controls if using a selection mode if you can
 * click the rows to select
 * @property {object} toolbar  Toggles and appends toolbar features fx..
@@ -140,6 +150,8 @@ const DATAGRID_DEFAULTS = {
   selectable: false, // false, 'single' or 'multiple' or 'siblings'
   selectChildren: true, // can prevent selecting of all child nodes on multiselect
   groupable: null,
+  spacerColumn: false,
+  stretchColumn: 'last',
   clickToSelect: true,
   toolbar: false,
   initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
@@ -167,7 +179,7 @@ const DATAGRID_DEFAULTS = {
   disableRowDeactivation: false,
   sizeColumnsEqually: false, // If true make all the columns equal width
   expandableRow: false, // Supply an empty expandable row template
-  redrawOnResize: true, // Run column redraw logic on resize
+  redrawOnResize: false, // Run column redraw logic on resize
   exportConvertNegative: false, // Export data with trailing negative signs moved in front
   columnGroups: null, // The columns to use for grouped column headings
   treeGrid: false,
@@ -504,7 +516,7 @@ Datagrid.prototype = {
   * Trigger the source method to call to the backend on demand.
   *
   * @param {object} pagerType The pager info object with information like activePage ect.
-  * @param {function} callback Thecall back functions
+  * @param {function} callback The call back functions
   */
   triggerSource(pagerType, callback) {
     this.pager.pagerInfo = this.pager.pagerInfo || {};
@@ -660,6 +672,7 @@ Datagrid.prototype = {
 
   /**
   * Gets an if for the column group used for grouped headers.
+  * @private
   * @param {object} idx The index of the column group
   * @returns {string} The name of the column group
   */
@@ -668,6 +681,9 @@ Datagrid.prototype = {
     const colGroups = this.settings.columnGroups;
 
     for (let l = 0; l < colGroups.length; l++) {
+      if (colGroups[l].hidden) {
+        continue;
+      }
       total += colGroups[l].colspan;
 
       if (total >= idx) {
@@ -676,6 +692,158 @@ Datagrid.prototype = {
     }
 
     return '';
+  },
+
+  /**
+  * Gets an if for the column group used for grouped headers.
+  * @private
+  * @param {number} idx The index of the column group
+  * @param {boolean} show Did we show or hide the col.
+  */
+  updateColumnGroup(idx, show) {
+    const colGroups = this.settings.columnGroups;
+    if (!this.originalColGroups) {
+      this.originalColGroups = JSON.parse(JSON.stringify(colGroups));
+    }
+
+    if (this.settings.groupable) {
+      // need to rerender here to get the colspans correct.
+      const groupHeaders = this.tableBody.find('.datagrid-rowgroup-header');
+      const newColspan = this.visibleColumns().length;
+
+      for (let i = 0; i < groupHeaders.length; i++) {
+        groupHeaders[i].children[0].setAttribute('colspan', newColspan);
+      }
+      return;
+    }
+
+    if (!colGroups) {
+      return;
+    }
+
+    let cnt = 0;
+    let lastSpanIdx = -1;
+    let skipNext = 0;
+
+    // Update the data object
+    for (let i = 0; i < colGroups.length; i++) {
+      if (skipNext > 0) {
+        if (idx === i && !show) {
+          colGroups[lastSpanIdx].colspan -= 1;
+          this.settings.columns[i].isSpanned = true;
+        }
+        skipNext -= 1;
+      }
+
+      if (idx === cnt || idx === 1 && i === 1) {
+        if (colGroups[i].colspan === 1 && !show) {
+          colGroups[i].hidden = true;
+        }
+
+        if (colGroups[i].colspan > 1 && !show) {
+          this.settings.columns[i].isSpanned = true;
+          colGroups[i].colspan -= 1;
+        }
+
+        // have to re-render here
+        if (this.settings.columns[i].isSpanned && show) {
+          this.settings.columnGroups = JSON.parse(JSON.stringify(this.originalColGroups));
+          this.render();
+        }
+
+        if (colGroups[i].colspan === 1 && show) {
+          delete colGroups[i].hidden;
+        }
+
+        if (colGroups[i].colspan > 1 && show) {
+          colGroups[i].colspan += 1;
+        }
+      }
+      cnt += colGroups[i].colspan;
+
+      if (colGroups[i].colspan > 1) {
+        lastSpanIdx = i;
+        skipNext = colGroups[i].colspan - 1;
+      }
+    }
+
+    // Update the dom
+    if (!this.colGroups) {
+      return;
+    }
+
+    const headGroups = this.colGroups.find('th').toArray();
+    cnt = 0;
+    lastSpanIdx = 0;
+    skipNext = 0;
+    for (let i = 0; i < headGroups.length; i++) {
+      const elem = headGroups[i];
+      const colspan = parseInt(elem.getAttribute('colspan'), 10);
+      cnt += colspan;
+
+      if (skipNext > 0) {
+        if (idx === i && !show) {
+          headGroups[lastSpanIdx].setAttribute('colspan', headGroups[lastSpanIdx].getAttribute('colspan') - 1);
+        }
+        skipNext -= 1;
+      }
+
+      if (idx === cnt - colspan || idx === 1 && i === 1) {
+        if (colspan === 1 && !show) {
+          elem.classList.add('hidden');
+        }
+
+        if (colspan > 1 && !show) {
+          elem.setAttribute('colspan', colspan - 1);
+        }
+
+        if (colspan === 1 && show) {
+          elem.classList.remove('hidden');
+        }
+
+        if (colspan > 1 && show) {
+          elem.setAttribute('colspan', colspan + 1);
+        }
+      }
+
+      if (colspan > 1) {
+        lastSpanIdx = i;
+        skipNext = colspan - 1;
+      }
+    }
+
+    this.hideShowColumnGroups(show);
+  },
+
+  /**
+   * Test if the group header should be closed and close / open it.
+   * @param {boolean} show Hide and show the column group if it should be.
+   */
+  hideShowColumnGroups(show) {
+    if (!this.colGroups) {
+      return;
+    }
+
+    const headGroups = this.colGroups.find('th').toArray();
+    const allEmpty = $(headGroups).filter(':not(.hidden)').text() === '';
+
+    let cnt = 0;
+    for (let i = 0; i < headGroups.length; i++) {
+      const elem = headGroups[i];
+      const colspan = parseInt(elem.getAttribute('colspan'), 10);
+      cnt += colspan;
+
+      // Find up to the index
+      if (i === headGroups.length - 1 && headGroups.length === cnt && !show && allEmpty) {
+        this.colGroups.addClass('hidden');
+        this.element.removeClass('has-group-headers');
+      }
+
+      if (i === headGroups.length - 1 && headGroups.length === cnt && show && !allEmpty) {
+        this.colGroups.removeClass('hidden');
+        this.element.addClass('has-group-headers');
+      }
+    }
   },
 
   /**
@@ -716,10 +884,11 @@ Datagrid.prototype = {
       headerRow += '<tr role="row" class="datagrid-header-groups">';
 
       for (let k = 0; k < colGroups.length; k++) {
+        const hiddenStr = colGroups[k].hidden || this.settings.columns[k].hidden ? 'class="hidden"' : '';
         total += parseInt(colGroups[k].colspan, 10);
         uniqueId = self.uniqueId(`-header-group-${k}`);
 
-        headerRow += `<th colspan="${colGroups[k].colspan}" id="${uniqueId}"><div class="datagrid-column-wrapper "><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
+        headerRow += `<th ${hiddenStr}colspan="${colGroups[k].colspan}" id="${uniqueId}"><div class="datagrid-column-wrapper "><span class="datagrid-header-text">${colGroups[k].name}</span></div></th>`;
       }
 
       if (total < this.visibleColumns().length) {
@@ -780,6 +949,11 @@ Datagrid.prototype = {
       self.headerColGroup.html(cols);
     }
 
+    if (colGroups && self.headerRow) {
+      self.colGroups = self.headerRow.find('.datagrid-header-groups');
+      self.hideShowColumnGroups();
+    }
+
     self.syncHeaderCheckbox(this.settings.dataset);
 
     if (this.settings.enableTooltips) {
@@ -808,6 +982,38 @@ Datagrid.prototype = {
   * Flag used to determine if the header is rendered or not.
   */
   filterRowRendered: false,
+
+  /**
+  * Set filter datepicker with range/single date.
+  * @private
+  * @param {Object} input element to target datepicker.
+  * @param {String} operator filter type.
+  * @param {Object} options pass in to datepicker.
+  * @returns {void}
+  */
+  filterSetDatepicker(input, operator, options) {
+    const datepickerApi = input.data('datepicker');
+    const isRange = input.data('is-range');
+    options = options || {};
+
+    // Init datepicker
+    const initDatepicker = function () {
+      if (datepickerApi && typeof datepickerApi.destroy === 'function') {
+        datepickerApi.destroy();
+      }
+      input.datepicker(options);
+    };
+
+    // invoke datepicker
+    if ((!datepickerApi || !isRange) && operator === 'in-range') {
+      input.data('is-range', true);
+      options.range = { useRange: true };
+      initDatepicker();
+    } else if ((!datepickerApi || isRange) && operator !== 'in-range') {
+      input.removeData('is-range');
+      initDatepicker();
+    }
+  },
 
   /**
   * Returns the markup for a specific filter row area.
@@ -965,7 +1171,17 @@ Datagrid.prototype = {
           utils.fixSVGIcons(menu);
         }).popupmenu(popupOpts)
           .off('selected.datagrid-filter')
-          .on('selected.datagrid-filter', () => {
+          .on('selected.datagrid-filter', (e, anchor) => {
+            const rowElem = anchor.closest('th[role="columnheader"]');
+            const col = self.columnById(rowElem.attr('data-column-id'))[0];
+
+            // Set datepicker with range/single date
+            if (col && col.filterType === 'date') {
+              const input = rowElem.find('input');
+              const svg = rowElem.find('.btn-filter .icon-dropdown:first');
+              const operator = svg.getIconName().replace('filter-', '');
+              self.filterSetDatepicker(input, operator);
+            }
             self.applyFilter();
           })
           .off('close.datagrid-filter')
@@ -1109,6 +1325,10 @@ Datagrid.prototype = {
       btnMarkup = btnMarkup.replace('{{icon}}', 'equals');
     }
 
+    if (col.filterType === 'date') {
+      btnMarkup += render('in-range', 'InRange');
+    }
+
     if (/\b(integer|decimal|date|time|percent)\b/g.test(col.filterType)) {
       btnMarkup += `${
         render('less-than', 'LessThan')
@@ -1158,6 +1378,7 @@ Datagrid.prototype = {
       this.headerRow.find('.datagrid-filter-wrapper').show();
 
       this.element.triggerHandler('openfilterrow');
+      this.attachFilterRowEvents();
     }
   },
 
@@ -1183,6 +1404,7 @@ Datagrid.prototype = {
         let rowValue = self.fieldValue(rowData, columnDef.field);
         let rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
         let conditionValue = conditions[i].value.toString().toLowerCase();
+        let rangeData = null;
 
         // Percent filter type
         if (columnDef.filterType === 'percent') {
@@ -1220,57 +1442,76 @@ Datagrid.prototype = {
         }
 
         if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
-          conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format);
-          if (conditionValue) {
-            if (columnDef.filterType === 'time') {
-              // drop the day, month and year
-              conditionValue.setDate(1);
-              conditionValue.setMonth(0);
-              conditionValue.setYear(0);
-            }
-
-            conditionValue = conditionValue.getTime();
-          }
-
-          if (rowValue instanceof Date) {
-            // Copy date
-            rowValue = new Date(rowValue.getTime());
-            if (columnDef.filterType === 'time') {
-              // drop the day, month and year
-              rowValue.setDate(1);
-              rowValue.setMonth(0);
-              rowValue.setYear(0);
-            } else if (!(columnDef.editorOptions && columnDef.editorOptions.showTime)) {
-              // Drop any time component of the row data for the filter as it is a date only field
-              rowValue.setHours(0);
-              rowValue.setMinutes(0);
-              rowValue.setSeconds(0);
-              rowValue.setMilliseconds(0);
-            }
-            rowValue = rowValue.getTime();
-          } else if (typeof rowValue === 'string' && rowValue) {
-            if (!columnDef.sourceFormat) {
-              rowValue = Locale.parseDate(rowValue, { pattern: conditions[i].format });
-            } else {
-              rowValue = Locale.parseDate(rowValue, (typeof columnDef.sourceFormat === 'string' ? { pattern: columnDef.sourceFormat } : columnDef.sourceFormat));
-            }
-
-            if (rowValue) {
+          const getValues = (rValue, cValue) => {
+            cValue = Locale.parseDate(cValue, conditions[i].format);
+            if (cValue) {
               if (columnDef.filterType === 'time') {
                 // drop the day, month and year
-                rowValue.setDate(1);
-                rowValue.setMonth(0);
-                rowValue.setYear(0);
+                cValue.setDate(1);
+                cValue.setMonth(0);
+                cValue.setYear(0);
+              }
+
+              cValue = cValue.getTime();
+            }
+
+            if (rValue instanceof Date) {
+              // Copy date
+              rValue = new Date(rValue.getTime());
+              if (columnDef.filterType === 'time') {
+                // drop the day, month and year
+                rValue.setDate(1);
+                rValue.setMonth(0);
+                rValue.setYear(0);
               } else if (!(columnDef.editorOptions && columnDef.editorOptions.showTime)) {
                 // Drop any time component of the row data for the filter as it is a date only field
-                rowValue.setHours(0);
-                rowValue.setMinutes(0);
-                rowValue.setSeconds(0);
-                rowValue.setMilliseconds(0);
+                rValue.setHours(0);
+                rValue.setMinutes(0);
+                rValue.setSeconds(0);
+                rValue.setMilliseconds(0);
               }
-              rowValue = rowValue.getTime();
+              rValue = rValue.getTime();
+            } else if (typeof rValue === 'string' && rValue) {
+              if (!columnDef.sourceFormat) {
+                rValue = Locale.parseDate(rValue, { pattern: conditions[i].format });
+              } else {
+                rValue = Locale.parseDate(rValue, (typeof columnDef.sourceFormat === 'string' ? { pattern: columnDef.sourceFormat } : columnDef.sourceFormat));
+              }
+
+              if (rValue) {
+                if (columnDef.filterType === 'time') {
+                  // drop the day, month and year
+                  rValue.setDate(1);
+                  rValue.setMonth(0);
+                  rValue.setYear(0);
+                } else if (!(columnDef.editorOptions && columnDef.editorOptions.showTime)) {
+                  // Drop any time component of the row data for the filter
+                  // as it is a date only field
+                  rValue.setHours(0);
+                  rValue.setMinutes(0);
+                  rValue.setSeconds(0);
+                  rValue.setMilliseconds(0);
+                }
+                rValue = rValue.getTime();
+              }
             }
+            return { rValue, cValue };
+          };
+
+          let values = null;
+          if (conditions[i].operator === 'in-range') {
+            const datepickerApi = conditions[i].input.data('datepicker');
+            if (datepickerApi) {
+              rangeData = datepickerApi.settings.range.data;
+              if (rangeData && rangeData.start) {
+                values = getValues(rowValue, rangeData.start);
+              }
+            }
+          } else {
+            values = getValues(rowValue, conditions[i].value);
           }
+          rowValue = values ? values.rValue : rowValue;
+          conditionValue = values ? values.cValue : conditionValue;
         }
 
         switch (conditions[i].operator) {
@@ -1319,6 +1560,14 @@ Datagrid.prototype = {
           case 'is-not-empty':
             isMatch = (rowValue !== '');
             break;
+          case 'in-range':
+            isMatch = false;
+            if (rangeData && rangeData.startDate && rangeData.endDate) {
+              const d1 = rangeData.startDate.getTime();
+              const d2 = rangeData.endDate.getTime();
+              isMatch = rowValue >= d1 && rowValue <= d2;
+            }
+            break;
           case 'less-than':
             isMatch = (rowValue < conditionValue && rowValue !== '');
             break;
@@ -1332,7 +1581,6 @@ Datagrid.prototype = {
             isMatch = (rowValue >= conditionValue && rowValue !== '');
             break;
           case 'selected':
-
             if (columnDef && columnDef.isChecked) {
               isMatch = columnDef.isChecked(rowValue);
               break;
@@ -1490,7 +1738,8 @@ Datagrid.prototype = {
       const condition = {
         columnId: rowElem.attr('data-column-id'),
         operator: op,
-        value
+        value,
+        input
       };
 
       if (input.data('datepicker')) {
@@ -1752,6 +2001,28 @@ Datagrid.prototype = {
         // Move the elem in the data set
         const first = self.settings.dataset.splice(status.startIndex, 1)[0];
         self.settings.dataset.splice(status.endIndex, 0, first);
+
+        const swapRow = status.over;
+        const originalRow = status.start;
+
+        // If using expandable rows move the expandable row with it
+        const movedUp = status.endIndex < status.startIndex;
+        if (self.settings.rowTemplate || self.settings.expandableRow) {
+          if (movedUp) {
+            self.tableBody.find('tr').eq(status.startIndex + 1).insertAfter(originalRow);
+          } else {
+            self.tableBody.find('tr').eq(status.startIndex).insertAfter(originalRow);
+            originalRow.next().next().insertAfter(swapRow);
+          }
+        }
+
+        // Resequence the rows
+        const allRows = self.tableBody.find('tr:not(.datagrid-expandable-row)');
+        for (let i = 0; i < allRows.length; i++) {
+          allRows[i].setAttribute('data-index', i);
+          allRows[i].setAttribute('aria-rowindex', i + 1);
+        }
+
         // Fire an event
         self.element.trigger('rowreorder', [status]);
       });
@@ -1974,7 +2245,11 @@ Datagrid.prototype = {
         continue;  //eslint-disable-line
       }
 
-      tableHtml += self.rowHtml(s.dataset[i], s.treeGrid ? this.recordCount : i, i);
+      tableHtml += self.rowHtml(
+        s.dataset[i],
+        (s.treeGrid || s.filterable) ? this.recordCount : i,
+        i
+      );
 
       this.recordCount++;
     }
@@ -2576,6 +2851,16 @@ Datagrid.prototype = {
       }
     }
 
+    const hasTag = columnDef.formatter ?
+      columnDef.formatter.toString().indexOf('<span class="tag') > -1 : false;
+
+    const hasAlert = columnDef.formatter ?
+      columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
+
+    if (hasAlert) {
+      max += 10;
+    }
+
     // Use header text length as max if bigger than all data cells
     if (title.length > max) {
       max = title.length;
@@ -2594,9 +2879,15 @@ Datagrid.prototype = {
     context.font = '14px arial';
 
     const metrics = context.measureText(maxText);
-    const hasImages = columnDef.formatter ?
-      columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false;
-    let padding = (chooseHeader ? 60 + (hasImages ? 36 : 0) : 40 + (hasImages ? 36 : 0));
+    let padding = chooseHeader ? 35 : 40;
+
+    if (hasAlert && !chooseHeader) {
+      padding += 20;
+    }
+
+    if (hasTag && !chooseHeader) {
+      padding += 10;
+    }
 
     if (columnDef.filterType) {
       let minWidth = columnDef.filterType === 'date' ? 170 : 100;
@@ -2757,6 +3048,11 @@ Datagrid.prototype = {
       col.width = colWidth;
     }
 
+    if (col.id === 'rowReorder') {
+      colWidth = 62;
+      col.width = colWidth;
+    }
+
     if (col.id === 'drilldown') {
       colWidth = 78;
       col.width = colWidth;
@@ -2768,10 +3064,14 @@ Datagrid.prototype = {
       width: (this.widthPercent ? colPercWidth : colWidth),
       widthPercent: this.widthPercent
     };
-    this.totalWidth += col.hidden || lastColumn ? 0 : colWidth;
+
+    if (col.id !== 'spacerColumn') {
+      this.totalWidth += col.hidden || lastColumn ? 0 : colWidth;
+    }
 
     // For the last column stretch it if it doesnt fit the area
-    if (lastColumn && this.isInitialRender) {
+    if (lastColumn && this.isInitialRender && this.settings.stretchColumn === 'last'
+      && !this.settings.spacerColumn) {
       const diff = this.elemWidth - this.totalWidth;
 
       if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
@@ -2780,6 +3080,23 @@ Datagrid.prototype = {
         this.totalWidth = this.elemWidth - 2;
       }
 
+      if (this.widthPercent) {
+        this.table.css('width', '100%');
+      } else if (!isNaN(this.totalWidth)) {
+        this.table.css('width', this.totalWidth);
+      }
+      this.isInitialRender = false;
+    }
+
+    if (lastColumn && this.isInitialRender && this.settings.spacerColumn) {
+      const diff = this.elemWidth - this.totalWidth;
+
+      if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
+        this.settings.columns.push({ id: 'spacerColumn', name: '', field: '', width: diff - 2 - colWidth });
+      }
+    }
+
+    if (lastColumn && this.settings.spacerColumn && this.isInitialRender) {
       if (this.widthPercent) {
         this.table.css('width', '100%');
       } else if (!isNaN(this.totalWidth)) {
@@ -3251,9 +3568,12 @@ Datagrid.prototype = {
     }
 
     this.settings.columns[idx].hidden = true;
-    this.headerRow.find('th').eq(idx).addClass('is-hidden');
+    this.headerNodes().eq(idx).addClass('is-hidden');
     this.tableBody.find(`td:nth-child(${idx + 1})`).addClass('is-hidden');
     this.headerColGroup.find('col').eq(idx).addClass('is-hidden');
+
+    // Shrink or remove colgroups
+    this.updateColumnGroup(idx, false);
 
     if (this.bodyColGroup) {
       this.bodyColGroup.find('col').eq(idx).addClass('is-hidden');
@@ -3289,12 +3609,16 @@ Datagrid.prototype = {
     }
 
     this.settings.columns[idx].hidden = false;
-    this.headerRow.find('th').eq(idx).removeClass('is-hidden');
+    this.headerNodes().eq(idx).removeClass('is-hidden');
     this.tableBody.find(`td:nth-child(${idx + 1})`).removeClass('is-hidden');
     this.headerColGroup.find('col').eq(idx).removeClass('is-hidden');
+
     if (this.bodyColGroup) {
       this.bodyColGroup.find('col').eq(idx).removeClass('is-hidden');
     }
+
+    // Shrink or add colgroups
+    this.updateColumnGroup(idx, true);
 
     // Handle colSpans if present on the column
     if (this.hasColSpans) {
@@ -3787,8 +4111,8 @@ Datagrid.prototype = {
 
     // Prevent redirects
     this.table
-      .off('mouseup.datagrid touchstart.datagrid')
-      .on('mouseup.datagrid touchstart.datagrid', 'a', (e) => {
+      .off('click.datagrid')
+      .on('click.datagrid', 'a', (e) => {
         e.preventDefault();
       });
 
@@ -3809,8 +4133,8 @@ Datagrid.prototype = {
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
         rowNode = $(this).closest('tr');
-        dataRowIdx = self.visualRowIndex(rowNode);
-
+        dataRowIdx = self.settings.treeGrid ?
+          self.dataRowIndex(rowNode) : self.visualRowIndex(rowNode);
         self.toggleRowDetail(dataRowIdx);
         self.toggleGroupChildren(rowNode);
         self.toggleChildren(e, dataRowIdx);
@@ -4508,7 +4832,7 @@ Datagrid.prototype = {
   */
   isNodeSelected(node) {
     // As of 4.3.3, return the rows that have _selected = true
-    return node._selected === true;
+    return node ? node._selected === true : false;
   },
 
   /**
@@ -6186,7 +6510,7 @@ Datagrid.prototype = {
 
   // For the row node get the index - adjust for paging / invisible rowsCache
   visualRowIndex(row) {
-    return this.tableBody.find('tr:visible').index(row);
+    return this.tableBody.find('tr:visible:not(.is-hidden, .datagrid-expandable-row)').index(row);
   },
 
   visualRowNode(idx) {
@@ -6459,7 +6783,11 @@ Datagrid.prototype = {
    */
   toggleRowDetail(dataRowIndex) {
     const self = this;
-    const rowElement = self.visualRowNode(dataRowIndex);
+    let rowElement = self.visualRowNode(dataRowIndex);
+    if (self.settings.paging && (self.settings.rowTemplate || self.settings.expandableRow)) {
+      dataRowIndex += ((self.pager.activePage - 1) * self.settings.pagesize);
+      rowElement = self.dataRowNode(dataRowIndex);
+    }
     const expandRow = rowElement.next();
     const expandButton = rowElement.find('.datagrid-expand-btn');
     const detail = expandRow.find('.datagrid-row-detail');
@@ -6523,8 +6851,6 @@ Datagrid.prototype = {
       expandRow.addClass('is-expanded');
       expandButton.addClass('is-expanded')
         .find('.plus-minus').addClass('active');
-
-      expandRow.css('display', 'table-row');
 
       // Optionally Contstrain the width
       expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());

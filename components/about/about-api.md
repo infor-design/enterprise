@@ -2,28 +2,28 @@
 
 ### Table of Contents
 
--   [ABOUT_DEFAULTS](#about_defaults)
--   [About](#about)
-    -   [getDeviceSpecs](#getdevicespecs)
-    -   [updated](#updated)
-    -   [close](#close)
-    -   [destroy](#destroy)
--   [close](#close-1)
--   [afterclose](#afterclose)
--   [beforeopen](#beforeopen)
+-   [ABOUT_DEFAULTS][1]
+-   [About][2]
+    -   [getDeviceSpecs][3]
+    -   [updated][4]
+    -   [close][5]
+    -   [destroy][6]
+-   [close][7]
+-   [afterclose][8]
+-   [beforeopen][9]
 
 ## ABOUT_DEFAULTS
 
 **Properties**
 
--   `appName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The Main Application Name to display in the header.
--   `content` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional text content to display at the top.
--   `copyrightYear` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The year displayed in the copyright, defaults to current year.
--   `deviceSpecs` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Determines whether or not to display device
+-   `appName` **[string][10]** The Main Application Name to display in the header.
+-   `content` **[string][10]** Additional text content to display at the top.
+-   `copyrightYear` **[string][10]** The year displayed in the copyright, defaults to current year.
+-   `deviceSpecs` **[boolean][11]** Determines whether or not to display device
     information. This information includes Browser, Platform, Locale and if Cookies are Enabled.
--   `productName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional product name information to display.
--   `useDefaultCopyright` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Add the Legal Approved Infor Copy Right Text.
--   `version` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Semantic Version Number for example (4.0.0).
+-   `productName` **[string][10]** Additional product name information to display.
+-   `useDefaultCopyright` **[boolean][11]** Add the Legal Approved Infor Copy Right Text.
+-   `version` **[string][10]** Semantic Version Number for example (4.0.0).
 
 ## About
 
@@ -31,14 +31,14 @@ The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
--   `element` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The component element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** The component settings.
+-   `element` **[object][12]** The component element.
+-   `settings` **[object][12]?** The component settings.
 
 ### getDeviceSpecs
 
 Return the browser specs. Currently returns browse, os, cookiesEnabled and locale
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The specs of the browser.
+Returns **[string][10]** The specs of the browser.
 
 ### updated
 
@@ -46,9 +46,9 @@ Update the component and optionally apply new settings.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** the settings to update to.
+-   `settings` **[object][12]** the settings to update to.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The plugin api for chaining.
+Returns **[object][12]** The plugin api for chaining.
 
 ### close
 
@@ -68,8 +68,8 @@ Fires when the dialog is closing.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+-   `event` **[object][12]** The jquery event object
+-   `ui` **[object][12]** The dialog object
 
 ## afterclose
 
@@ -77,8 +77,8 @@ Fires after the dialog is done closing and removed.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+-   `event` **[object][12]** The jquery event object
+-   `ui` **[object][12]** The dialog object
 
 ## beforeopen
 
@@ -86,5 +86,29 @@ Fires when the about dialog is opening, allowing you to veto by returning false.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
--   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+-   `event` **[object][12]** The jquery event object.
+-   `ui` **[object][12]** The dialog object
+
+[1]: #about_defaults
+
+[2]: #about
+
+[3]: #getdevicespecs
+
+[4]: #updated
+
+[5]: #close
+
+[6]: #destroy
+
+[7]: #close-1
+
+[8]: #afterclose
+
+[9]: #beforeopen
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

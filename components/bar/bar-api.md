@@ -6,6 +6,7 @@
 -   [Bar](#bar)
     -   [updated](#updated)
     -   [destroy](#destroy)
+-   [rendered](#rendered)
 
 ## BAR_DEFAULTS
 
@@ -26,6 +27,10 @@
 -   `ticks` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Settings for the chart ticks.
     Can set ticks: {format: d3Format, number: n}
 -   `showLines` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Show the in the axis lines or not.
+-   `labelFactor` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** How far out than the outer circle should the labels be placed,
+    this may be useful to adjust for some labels.
+-   `wrapWidth` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number of pixels after which a label needs to be
+    given a new line. You may want to change this based on label data.
 -   `emptyMessage` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An empty message will be displayed when there is no chart data.
     This accepts an object of the form emptyMessage:
     `{title: 'No Data Available',
@@ -60,3 +65,12 @@ Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 Teardown - Remove added markup and events.
 
 Returns **void** 
+
+## rendered
+
+Fires when the chart is complete done rendering, for customization.
+
+**Properties**
+
+-   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `svg` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The svg object.

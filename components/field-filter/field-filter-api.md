@@ -2,26 +2,26 @@
 
 ### Table of Contents
 
--   [FIELDFILTER_DEFAULTS](#fieldfilter_defaults)
--   [FieldFilter](#fieldfilter)
-    -   [readonly](#readonly)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [filtered](#filtered)
+-   [FIELDFILTER_DEFAULTS][1]
+-   [FieldFilter][2]
+    -   [readonly][3]
+    -   [enable][4]
+    -   [disable][5]
+    -   [updated][6]
+    -   [destroy][7]
+-   [filtered][8]
 
 ## FIELDFILTER_DEFAULTS
 
 **Parameters**
 
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array of data
--   `template` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An Html String with the mustache template for the view./\*\*
+-   `dataset` **[array][9]** Array of data
+-   `template` **[string][10]** An Html String with the mustache template for the view./\*\*
     Default FieldFilter Options
 
 **Properties**
 
--   `dropdownOpts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Gets passed to this control's dropdown
+-   `dropdownOpts` **[object][11]** Gets passed to this control's dropdown
 
 ## FieldFilter
 
@@ -29,26 +29,26 @@ Ability to have a dropdown next to the field.
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[String][10]** The component element.
+-   `settings` **[String][10]** The component settings.
 
 ### readonly
 
 Set component to readonly.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[Object][11]** The api
 
 ### enable
 
 Set component to enabled.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[Object][11]** The api
 
 ### disable
 
 Set component to disabled.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[Object][11]** The api
 
 ### updated
 
@@ -56,9 +56,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[Object][11]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[Object][11]** The api
 
 ### destroy
 
@@ -72,5 +72,27 @@ Fires after the value in the dropdown is selected.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** for selected item.
+-   `event` **[object][11]** The jquery event object.
+-   `data` **[object][11]** for selected item.
+
+[1]: #fieldfilter_defaults
+
+[2]: #fieldfilter
+
+[3]: #readonly
+
+[4]: #enable
+
+[5]: #disable
+
+[6]: #updated
+
+[7]: #destroy
+
+[8]: #filtered
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

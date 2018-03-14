@@ -34,6 +34,7 @@ $color-code-border: #e1e8e8;
 
 
 $font-family: 'Source Sans Pro', Helvetica, Arial;
+$font-family-monospace: 'source code pro', monospace;
 
 html {
   font-size: 62.5%;
@@ -369,12 +370,19 @@ code.sourceCode span.er {
 
 // scss-lint:disable MergeableSelector
 code {
-  @include font-size(16);
+  @include font-size(14);
+  border-radius: .25rem .25rem 0 0;
+  border: 1px solid #e1e8e8;
+  font-family: $font-family-monospace;
   background-color: $color-code-bg;
-  border-radius: 2px;
-  letter-spacing: 1.17px;
   line-height: 24px;
+  padding: 0 4px;
+
+  &.sourceCode {
+    border: none;
+  }
 }
+
 // scss-lint:enable MergeableSelector
 // scss-lint:enable SelectorFormat, ColorVariable
 

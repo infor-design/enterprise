@@ -1,0 +1,37 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="date-field" class="label">Date Picker</label>
+      <input id="date-field" data-init="false" class="datepicker" name="date-field" type="text"/>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+  $('body').on('initialized', function () {
+
+    "use strict";
+    var locale = 'en-US';
+    var api;
+    var datepicker;
+
+    Locale.set(locale).done(function() {
+       datepicker = $('#date-field').datepicker({
+        'disable':{
+          'dates': [],
+          'dayOfWeek': '[0,6]',
+          'maxDate': new Date('2018', 2, 8 )
+        }}).on('change.datepicker', function(a, b) {
+          console.log(api.currentDate)
+        });
+
+        var api = datepicker.data('datepicker');
+        api.setValue(new Date());
+    });
+  });
+
+</script>

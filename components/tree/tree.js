@@ -3,6 +3,9 @@ import { utils } from '../utils/utils';
 import { Environment as env } from '../utils/environment';
 import { Locale } from '../locale/locale';
 
+// Jquery Functions
+import '../utils/animations';
+
 // The name of this component.
 const COMPONENT_NAME = 'tree';
 
@@ -656,9 +659,9 @@ Tree.prototype = {
           };
 
           const args = { node, data: node.data('jsonData') };
-          self.settings.source(args, response);
           node.addClass('is-loading');
           self.loading = true;
+          self.settings.source(args, response);
 
           return;
         }
@@ -711,9 +714,9 @@ Tree.prototype = {
       };
 
       const args = { node: nodeTarget, data: nodeTarget.data('jsonData') };
-      self.settings.source(args, response);
       nodeTarget.addClass('is-loading');
       self.loading = true;
+      self.settings.source(args, response);
 
       return;
     }

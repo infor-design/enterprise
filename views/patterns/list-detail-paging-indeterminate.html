@@ -13,7 +13,7 @@
             </div>
 
             <div class="buttonset">
-              <input class="searchfield" placeholder="Search">
+              <input class="searchfield" placeholder="Search"/>
             </div>
 
           </div>
@@ -44,7 +44,6 @@
       </header>
 
       <div class="content" style="height: 1000px;">
-
       </div>
 
     </div>
@@ -55,6 +54,8 @@
     $('#task-listview').listview({
       paging: true,
       pagesize: 20,
+      pagingType: 'firstlast',
+      showPageSizeSelector: true,
       source: function(req, response) {
         // Build the URL
         var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;

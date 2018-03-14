@@ -344,8 +344,8 @@ Header.prototype = {
     const self = this;
 
     this.element
-      .on('updated.header', () => {
-        self.updated();
+      .on('updated.header', (e, settings) => {
+        self.updated(settings);
       })
       .on('reset.header', () => {
         self.reset();

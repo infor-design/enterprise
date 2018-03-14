@@ -10,18 +10,18 @@ const COMPONENT_NAME = 'radar';
 /**
 * @namespace
 * @property {array} dataset The data to use in the radar
-* @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
+* @property {boolean} redrawOnResize If false, the component will not resize when resizing the page.
 * @property {object} margin The margins of the SVG, you may want to adjust
 * depending on text location.
 * @property {number} levels How many levels or inner circles should there be drawn.
 * @property {number} maxValue What is the value that the biggest circle will represent
 * @property {number} labelFactor How far out than the outer circle should the labels be placed,
-* this may be useful to adjust for some labels.
-* @property {boolean} showCrosslines Set to false to hide the cross line axes.
-* @property {boolean} showAxisLabels Set to false to hide percent labels.
+* this may be useful to adjust for some charts.
 * @property {number} wrapWidth The number of pixels after which a label needs to be
 * given a new line. You may want to change this based on label data.
-* @property {number} opacityArea The opacity of the area of the blob.
+* * @property {boolean} showCrosslines Set to false to hide the cross line axes.
+* @property {boolean} showAxisLabels Set to false to hide percent labels.
+* @property {number} opacityArea The opacity value of the blobs.
 * This is set to the correct Infor Style.
 * @property {number} dotRadius The size of the colored circles of each blog.
 * Set to zero to remove dots.
@@ -35,7 +35,7 @@ const COMPONENT_NAME = 'radar';
 * @property {boolean} showAxisLabels If false the axis labels will not be shown.
 * @property {string} axisFormatter D3 formatter to use on the axis labels
 * @property {array} colors An array of colors to use.
-* @property {boolean} showTooltips If false now tooltips will be shown even if
+* @property {boolean} showTooltips If false no tooltips will be shown.
 * @property {object} tooltip A setting that controls the tooltip values and format.
 * @property {string} tooltip.show Controls what is visible in the tooltip, this can be value, label
 * or percent or custom function.
@@ -109,6 +109,15 @@ Radar.prototype = {
     this
       .build()
       .handleEvents();
+
+    /**
+    * Fires when the chart is complete done rendering, for customization.
+    * @event rendered
+    * @property {object} event - The jquery event object
+    * @property {array} svg - The svg object.
+    */
+    this.element.trigger('rendered', [this.svg]);
+
     return this;
   },
 
@@ -250,46 +259,6 @@ Radar.prototype = {
         .style('stroke-width', '1px');
     }
 
-    // Wraps SVG text http://bl.ocks.org/mbostock/7555321
-    function wrap(node, width, labelFactor) {
-      node.each(function () {
-        const text = d3.select(this);
-        const words = text.text().split(/\s+/).reverse();
-        let word = '';
-        let line = [];
-        let lineNumber = 0;
-
-        if (words.length <= 1) {
-          return;
-        }
-
-        const lineHeight = labelFactor; // ems
-        const y = text.attr('y');
-        const x = text.attr('x');
-        const dy = parseFloat(text.attr('dy'));
-        let tspan = text.text(null).append('tspan')
-          .attr('x', x)
-          .attr('y', y)
-          .attr('dy', `${dy}em`);
-
-        while (word = words.pop()) {    //eslint-disable-line
-          line.push(word);
-          tspan.text(line.join(' '));
-
-          if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan.text(line.join(' '));
-            line = [word];
-            tspan = text.append('tspan')
-              .attr('x', x)
-              .attr('y', y)
-              .attr('dy', `${++lineNumber * lineHeight + dy}em`)
-              .text(word);
-          }
-        }
-      });
-    }
-
     // Append the labels at each axis
     axis.append('text')
       .attr('class', 'legend')
@@ -299,7 +268,7 @@ Radar.prototype = {
       .attr('x', (d, i) => rScale(maxValue * settings.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))
       .attr('y', (d, i) => rScale(maxValue * settings.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2))
       .text(d => d)
-      .call(wrap, settings.wrapWidth, settings.labelFactor);
+      .call(charts.wrap, settings.wrapWidth, settings.labelFactor);
 
     // Draw the radar chart blobs
 
@@ -460,7 +429,6 @@ Radar.prototype = {
 
   /**
    * Get info on the currently selected lines.
-   * @private
    * @returns {object} An object with the matching data and reference to the triggering element.
    */
   getSelected() {
@@ -469,7 +437,6 @@ Radar.prototype = {
 
   /**
    * Get info on the currently selected lines.
-   * @private
    * @param {object} o The selection data object
    * @param {boolean} isToggle If true toggle the current state.
    */
@@ -539,14 +506,15 @@ Radar.prototype = {
    */
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
+
     if (settings && settings.dataset) {
+      this.element.find('.chart-legend').remove();
       this.settings.dataset = settings.dataset;
       this.updateData(this.settings.dataset);
       return this;
     }
 
     this.element.empty();
-
     return this
       .teardown()
       .init();

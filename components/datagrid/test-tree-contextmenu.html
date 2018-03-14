@@ -1,0 +1,66 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<ul id="grid-actions-menu" class="popupmenu">
+  <li><a href="#">Action One</a></li>
+  <li><a href="#">Action Two</a></li>
+  <li><a href="#">Action Three</a>
+    <ul class="popupmenu">
+      <li><a href="#">Action Four</a></li>
+      <li><a href="#">Action Five</a></li>
+    </ul>
+  </li>
+</ul>
+
+<ul id="grid-header-menu" class="popupmenu">
+  <li><a href="#">Split</a></li>
+  <li><a href="#">Sort</a></li>
+  <li><a href="#">Hide</a></li>
+</ul>
+
+<script>
+  $('body').one('initialized', function () {
+    var columns = [];
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+    columns.push({ id: 'time', name: 'Time', field: 'time'});
+
+    //Get some data via ajax
+    var url = '{{basepath}}api/tree-tasks';
+
+    $.getJSON(url, function(data) {
+
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        selectable: 'multiple',
+        treeGrid: true,
+        toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true},
+        menuId: 'grid-actions-menu',
+        headerMenuId: 'grid-header-menu',
+        selectChildren: false,
+        menuSelected: function (e, args) {
+          console.log('header item selected', args);
+        }
+      })
+        .on('selected', function (e, args, action) {
+          console.log(args, action);
+        })
+        .on('contextmenu', function (e, args) {
+          console.log('contextmenu fired', args);
+          alert(args.row)
+        });
+
+    });
+
+  });
+</script>

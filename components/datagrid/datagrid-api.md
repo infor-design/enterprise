@@ -12,7 +12,7 @@
     -   [updateDataset](#updatedataset)
     -   [triggerSource](#triggersource)
     -   [visibleColumns](#visiblecolumns)
-    -   [getColumnGroup](#getcolumngroup)
+    -   [hideShowColumnGroups](#hideshowcolumngroups)
     -   [filterRowRendered](#filterrowrendered)
     -   [toggleFilterRow](#togglefilterrow)
     -   [applyFilter](#applyfilter)
@@ -103,6 +103,9 @@
 -   `groupable` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Controls fields to use for data grouping Use Data
     grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list',
     aggregatorOptions: ['unitName1']}
+-   `spacerColumn` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true and the grid is not wide enough to fit the last column
+    will get filled with an empty spacer column.
+-   `stretchColumn` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If 'last' the last column will stretch we will add more options.
 -   `clickToSelect` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Controls if using a selection mode if you can
     click the rows to select
 -   `toolbar` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Toggles and appends toolbar features fx..
@@ -229,7 +232,7 @@ Trigger the source method to call to the backend on demand.
 **Parameters**
 
 -   `pagerType` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The pager info object with information like activePage ect.
--   `callback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Thecall back functions
+-   `callback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The call back functions
 
 ### visibleColumns
 
@@ -241,15 +244,13 @@ Returns an array with all visible columns.
 
 Returns **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array with the visible columns.
 
-### getColumnGroup
+### hideShowColumnGroups
 
-Gets an if for the column group used for grouped headers.
+Test if the group header should be closed and close / open it.
 
 **Parameters**
 
--   `idx` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The index of the column group
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The name of the column group
+-   `show` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Hide and show the column group if it should be.
 
 ### filterRowRendered
 

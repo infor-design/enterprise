@@ -13,8 +13,11 @@
         <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
         <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
 
-        <button type="button" class="btn">
-          <span>Add All</span>
+        <button type="button" class="btn" id="export">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-export-spreadsheet"></use>
+          </svg>
+          <span>Export</span>
         </button>
       </div>
 
@@ -74,12 +77,17 @@
             columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
 
             //Init and get the api for the grid
-            $('#datagrid').datagrid({
+            grid = $('#datagrid').datagrid({
                 columns: columns,
                 idProperty:'officeId',
                 dataset: data,
                 selectable: 'single',
                 toolbar: {keyword: true, results: true}
+            });
+
+
+            $('#export').on('click', function () {
+              grid.data('datagrid').exportToCsv();
             });
 
         });

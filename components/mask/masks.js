@@ -356,6 +356,25 @@ masks.dateMask = function dateMask(rawValue, options) {
 };
 
 /**
+ * Soho Range Date Mask Function
+ * @param {string} rawValue the un-formatted value that will eventually be masked.
+ * @param {object} options masking options
+ * @returns {array} representing a mask that will match a formatted date.
+ */
+masks.rangeDateMask = function (rawValue, options) {
+  const parts = rawValue.split(options.delimeter);
+  const delimiterArr = options.delimeter.split('');
+  const firstDate = masks.dateMask(parts[0], options);
+  let secondDate = [];
+
+  if (parts[1]) {
+    secondDate = masks.dateMask(parts[1], options);
+  }
+
+  return firstDate.concat(delimiterArr.concat(secondDate));
+};
+
+/**
  * Generates a pipe function that can be applied to a Mask API that will correct
  * shorthand numeric dates.
  * NOTE: DOES NOT WORK FOR DATES WITH ALPHABETIC CONTENT. Do not use this if your

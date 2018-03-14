@@ -9,11 +9,17 @@
 module.exports = {
   // Only import some air bnb rules
   // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
-  'extends': 'airbnb-base',
+  'extends': [
+    'airbnb-base',
+    'plugin:jasmine/recommended'
+  ],
   'parserOptions': {
     'ecmaVersion': 8,
     'sourceType': 'module'
   },
+  'plugins': [
+    'jasmine'
+  ],
   'env': {
     'browser': true,
     'jquery': true,
@@ -129,7 +135,12 @@ module.exports = {
     // - Mask
     // - Validation
     // https://eslint.org/docs/rules/no-continue
-    'no-continue': ['off']
+    'no-continue': ['off'],
+
+    // Forbid the use of extraneous packages
+    // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md
+    // paths are treated both as absolute paths, and relative to process.cwd()
+    'import/no-extraneous-dependencies': ['off']
 
   },
   'globals': {

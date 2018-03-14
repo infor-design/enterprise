@@ -4,7 +4,7 @@ import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
 
 // jQuery components
-import '../icons/icons';
+import '../icons/icons.jquery';
 import '../utils/animations';
 import '../utils/behaviors';
 

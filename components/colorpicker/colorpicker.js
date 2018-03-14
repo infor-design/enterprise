@@ -220,8 +220,9 @@ ColorPicker.prototype = {
   getHexFromLabel(label) {
     for (let i = 0; i < this.settings.colors.length; i++) {
       const data = this.settings.colors[i];
+      const translated = Locale.translate(data.label, true);
 
-      if (label === data.label + data.number) {
+      if (label === data.label + data.number || label === translated + data.number) {
         let hex = data.value;
         if (hex.substr(0, 1) !== '#') {
           hex = `#${hex}`;
@@ -390,7 +391,7 @@ ColorPicker.prototype = {
     const menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
     const activeTheme = personalization.currentTheme;
     const isBorderAll = (this.settings.themes[activeTheme].border === 'all');
-    const isChecked = this.settings.themes[activeTheme].checkmark;
+    const checkThemes = this.settings.themes[activeTheme].checkmark;
     let checkmarkClass = '';
 
     for (let i = 0, l = this.settings.colors.length; i < l; i++) {
@@ -414,9 +415,9 @@ ColorPicker.prototype = {
 
       if (elemValue && (`${elemValue}`).toLowerCase().replace('#', '') === (`${colorValue}`).toLowerCase()) {
         // Set checkmark color class
-        if (isChecked) {
+        if (checkThemes) {
           /* eslint-disable no-loop-func */
-          $.each(isChecked, (k, v) => {
+          $.each(checkThemes, (k, v) => {
             // checkmark: {'one': [1, 2], 'two': [3, 10]}
             // will add class "checkmark-one", where current colors number is in range [1 to 3]
             // and will add class "checkmark-two", where current colors number is in range [3 to 10]
@@ -586,6 +587,10 @@ ColorPicker.prototype = {
 
     this.element.on('keyup.colorpicker blur.colorpicker paste.colorpicker change.colorpicker', function () {
       const val = $(this).val();
+      if (self.settings.showLabel) {
+        self.setColor($(this).attr('value'), val);
+        return;
+      }
       self.setColor(val);
     });
 

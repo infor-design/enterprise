@@ -13,10 +13,12 @@ const COMPONENT_NAME = 'personalize';
  * Component Defaults
  * @param {string} colors  The list of colors
  * @param {string} theme  The theme name (light, dark or high-contrast)
+ * @param {string} font Use the newer source sans font
  */
 const PERSONALIZE_DEFAULTS = {
   colors: '',
-  theme
+  theme,
+  font: ''
 };
 
 /**
@@ -51,6 +53,10 @@ Personalize.prototype = {
 
     if (this.settings.colors) {
       this.setColors(this.settings.colors);
+    }
+
+    if (this.settings.font) {
+      $('html').addClass(`font-${this.settings.font}`);
     }
 
     this.handleEvents();
@@ -252,6 +258,10 @@ Personalize.prototype = {
     if (css.length > 0) {
       const path = css.attr('href');
       thisTheme = path.substring(path.lastIndexOf('/') + 1).replace('.min.css', '').replace('.css', '').replace('-theme', '');
+
+      if (thisTheme.lastIndexOf('?') > -1) {
+        thisTheme = thisTheme.substring(0, thisTheme.lastIndexOf('?'));
+      }
     }
     return thisTheme;
   },
@@ -290,9 +300,12 @@ Personalize.prototype = {
       self.unBlockUi();
     });
 
+    const themePath = path ? path.substring(0, path.lastIndexOf('/')) : '';
+    const isMin = path ? path.indexOf('.min') > -1 : false;
+
     newCss.attr({
       id: originalCss.attr('id'),
-      href: `${path.substring(0, path.lastIndexOf('/'))}/${theme}-theme${path.indexOf('.min') > -1 ? '.min' : ''}.css`
+      href: `${themePath}/${exports.theme}-theme${isMin ? '.min' : ''}.css`
     });
     originalCss.removeAttr('id');
     originalCss.after(newCss);

@@ -52,10 +52,22 @@ const COMPONENT_NAME = 'datepicker';
  * @property {array} legend  Legend Build up
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
+ * @property {object} range Range between two dates with various options.
+ * @property {boolean} range.useRange Use range of two dates options.
+ * @property {string|date} range.start Start date in range.
+ * @property {string|date} range.end End date in range.
+ * @property {string} range.separator Visual separator between two dates.
+ * @property {number} range.minDays Minimum days to be in range.
+ * @property {number} range.maxDays Maximum days to be in range.
+ * @property {boolean} range.selectForward Range only in forward direction.
+ * @property {boolean} range.selectBackward Range only in backward direction.
+ * @property {boolean} range.includeDisabled Include disable dates in range of dates.
  * @property {string} calendarName The name of the calendar to use in instance of
  * multiple calendars. At this time only ar-SA and ar-EG locales have either
  * 'gregorian' or 'islamic-umalqura' as valid values.
- */
+ * @property {useUTC} useUTC If true the dates will use UTC format. This is only partially
+ * implemented https://jira.infor.com/browse/SOHO-3437
+*/
 const DATEPICKER_DEFAULTS = {
   showTime: false,
   timeFormat: undefined,
@@ -83,7 +95,19 @@ const DATEPICKER_DEFAULTS = {
     { name: 'Public Holiday', color: '#76B051', dates: [] },
     { name: 'Weekends', color: '#EFA836', dayOfWeek: [] }
   ],
-  calendarName: null
+  range: {
+    useRange: false, // true - if datepicker using range dates
+    start: '', // Start date '03/05/2018'
+    end: '', // End date '03/21/2018'
+    separator: ' - ', // separator string between two dates
+    minDays: 0, // Minimum days
+    maxDays: 0, // Maximum days
+    selectForward: false, // Only in forward direction
+    selectBackward: false, // Only in backward direction
+    includeDisabled: false // if true range will include disable dates in it
+  },
+  calendarName: null,
+  useUTC: false
 };
 
 /**
@@ -159,38 +183,80 @@ DatePicker.prototype = {
    * @returns {void}
    */
   handleKeys(elem) {
+    const s = this.settings;
     // Handle Keys while popup is open
     if (elem.is('#calendar-popup')) {
       elem.off('keydown.datepicker').on('keydown.datepicker', '.calendar-table', (e) => {
-        let handled = false;
         const key = e.keyCode || e.charCode || 0;
+        const cell = $(e.target);
+        const allCell = this.days.find('td:visible');
+        const allCellLength = allCell.length;
+        let idx = null;
+        let selector = null;
+        let handled = false;
 
         // Arrow Down: select same day of the week in the next week
         if (key === 40) {
           handled = true;
-          this.currentDate.setDate(this.currentDate.getDate() + 7);
-          this.insertDate(this.currentDate);
+          if (s.range.useRange) {
+            idx = allCell.index(e.target) + 7;
+            selector = allCell.eq(idx);
+            if (idx < allCellLength) {
+              this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+              this.activeTabindex(selector, true);
+            }
+          } else {
+            this.currentDate.setDate(this.currentDate.getDate() + 7);
+            this.insertDate(this.currentDate);
+          }
         }
 
         // Arrow Up: select same day of the week in the previous week
         if (key === 38) {
           handled = true;
-          this.currentDate.setDate(this.currentDate.getDate() - 7);
-          this.insertDate(this.currentDate);
+          if (s.range.useRange) {
+            idx = allCell.index(e.target) - 7;
+            selector = allCell.eq(idx);
+            if (idx > -1) {
+              this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+              this.activeTabindex(selector, true);
+            }
+          } else {
+            this.currentDate.setDate(this.currentDate.getDate() - 7);
+            this.insertDate(this.currentDate);
+          }
         }
 
         // Arrow Left
         if (key === 37) {
           handled = true;
-          this.currentDate.setDate(this.currentDate.getDate() - 1);
-          this.insertDate(this.currentDate);
+          if (s.range.useRange) {
+            idx = allCell.index(e.target) - 1;
+            selector = allCell.eq(idx);
+            if (idx > -1) {
+              this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+              this.activeTabindex(selector, true);
+            }
+          } else {
+            this.currentDate.setDate(this.currentDate.getDate() - 1);
+            this.insertDate(this.currentDate);
+          }
         }
 
         // Arrow Right
         if (key === 39) {
           handled = true;
-          this.currentDate.setDate(this.currentDate.getDate() + 1);
-          this.insertDate(this.currentDate);
+          if (s.range.useRange) {
+            idx = allCell.index(e.target) + 1;
+            selector = allCell.eq(idx);
+            if (idx < allCellLength) {
+              this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
+              this.activeTabindex(selector, true);
+            }
+          } else {
+            this.currentDate.setDate(this.currentDate.getDate() + 1);
+            this.insertDate(this.currentDate);
+          }
         }
 
         // Page Up Selects Same Day Prev Month
@@ -246,9 +312,18 @@ DatePicker.prototype = {
 
         // Space or Enter closes Date Picker, selecting the Date
         if (key === 32 || key === 13) {
-          this.closeCalendar();
-          this.element.focus();
           handled = true;
+          if (s.range.useRange) {
+            if (!s.range.first || (s.range.first && !s.range.first.date)) {
+              allCell.removeClass('is-selected');
+            }
+            const d = this.getCellDate(cell);
+            this.currentDate = new Date(d.year, d.month, d.day);
+            this.insertDate(this.currentDate);
+          } else {
+            this.closeCalendar();
+            this.element.focus();
+          }
         }
 
         // Tab closes Date Picker and goes to next field on the modal
@@ -277,7 +352,11 @@ DatePicker.prototype = {
 
         // Tab closes Date Picker and goes to next field on the modal
         if (key === 9) {
-          this.containFocus(e);
+          if (s.range.useRange && $(e.target).is('.next')) {
+            this.days.find('td:visible:last').attr('tabindex', 0).focus();
+          } else {
+            this.containFocus(e);
+          }
           e.stopPropagation();
           e.preventDefault();
           return false;
@@ -376,7 +455,7 @@ DatePicker.prototype = {
     elem.focus();
 
     if (elem.is('td')) {
-      elem.addClass('is-selected');
+      elem.addClass(`is-selected${(this.settings.range.useRange ? ' range' : '')}`);
       this.currentDate.setDate(elem.text());
       this.currentDate.setMonth(this.calendar.find('.month').attr('data-month'));
       this.insertDate(this.currentDate);
@@ -426,28 +505,12 @@ DatePicker.prototype = {
     };
     let validation = 'date availableDate';
     let events = { date: 'change blur enter', availableDate: 'change blur' };
-    let mask = this.pattern;
 
-    if (mask) {
-      mask = mask.toLowerCase()
-        .replace(/yyyy/g, '####')
-        .replace(/mmmm/g, '*********')
-        .replace(/mmm/g, '***')
-        .replace(/mm/g, '##')
-        .replace(/dd/g, '##')
-        .replace(/hh/g, '##')
-        .replace(/ss/g, '##')
-        .replace(/[mdh]/g, '##')
-        .replace(/[a]/g, 'am');
-    }
-
-    // TO DO - Time seperator
-    // '##/##/#### ##:## am' -or- ##/##/#### ##:##' -or- ##/##/####'
-    // '##/##/#### ##:##:## am' -or- ##/##/#### ##:##:##'
-    if (s.showTime) {
-      if (this.show24Hours) {
-        mask = mask.substr(0, (this.isSeconds ? 19 : 16));
-      }
+    if (s.range.useRange) {
+      maskOptions.process = 'rangeDate';
+      maskOptions.patternOptions.delimeter = s.range.separator;
+      validation = 'rangeDate';
+      events = { rangeDate: 'change blur' };
     }
 
     if (customValidation === 'required' && !customEvents) {
@@ -467,15 +530,34 @@ DatePicker.prototype = {
 
     this.element.mask(maskOptions);
 
-    if (!this.settings.customValidation) {
+    if (!s.customValidation) {
       this.element.attr({
         'data-validate': validation,
         'data-validation-events': JSON.stringify(events)
       }).validate();
     }
 
-    if (this.settings.placeholder && (!this.element.attr('placeholder') || this.element.attr('placeholder') === 'M / D / YYYY')) {
-      this.element.attr('placeholder', this.pattern);
+    this.setPlaceholder();
+  },
+
+  /**
+   * Set placeholder
+   * @private
+   * @returns {void}
+   */
+  setPlaceholder() {
+    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
+    const s = this.settings;
+    let placeholder = this.pattern;
+
+    if (s.placeholder && (!this.element.attr('placeholder') ||
+      this.element.attr('placeholder') === 'M / D / YYYY')) {
+      if (s.range.useRange) {
+        placeholder = s.range.first && s.range.first.date ?
+          formatDate(s.range.first.date) + s.range.separator + this.pattern :
+          this.pattern + s.range.separator + this.pattern;
+      }
+      this.element.attr('placeholder', placeholder);
     }
   },
 
@@ -724,7 +806,7 @@ DatePicker.prototype = {
           });
         }
 
-        this.popupClosestScrollable.add(this.popup).css('min-height', 'inherit');
+        this.popupClosestScrollable.add(this.popup).css('min-height', '');
         this.closeCalendar();
       });
 
@@ -750,7 +832,7 @@ DatePicker.prototype = {
 
       this.timepickerContainer.on('change.datepicker', () => {
         this.currentDate = this.setTime(this.currentDate);
-        this.setValue(this.currentDate, true);
+        this.setValue(this.currentDate, true, true);
       });
 
       // Wait for timepicker to initialize
@@ -785,35 +867,17 @@ DatePicker.prototype = {
       if (td.hasClass('is-disabled')) {
         self.activeTabindex(td, true);
       } else {
-        self.days.find('.is-selected')
-          .removeClass('is-selected')
-          .removeAttr('aria-selected');
+        if (!(s.range.useRange && s.range.first)) {
+          self.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected');
+        }
 
         const cell = $(this);
-        const day = parseInt(cell.addClass('is-selected').attr('aria-selected', 'true').text(), 10);
-        let month = parseInt(self.header.find('.month').attr('data-month'), 10);
-        let year = parseInt(self.header.find('.year').text(), 10);
+        cell.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
 
-        if (s.showMonthYearPicker) {
-          year = parseInt(self.header.find('.year select').val(), 10);
-          month = parseInt(self.header.find('.month select').val(), 10);
-        }
-
-        if (cell.hasClass('prev-month')) {
-          if (month === 0) {
-            month = 11;
-            year--;
-          } else {
-            month--;
-          }
-        } else if (cell.hasClass('next-month')) {
-          if (month === 11) {
-            month = 0;
-            year++;
-          } else {
-            month++;
-          }
-        }
+        const cellDate = self.getCellDate(cell);
+        const day = cellDate.day;
+        const month = cellDate.month;
+        const year = cellDate.year;
 
         self.currentDate = new Date(year, month, day);
 
@@ -821,21 +885,30 @@ DatePicker.prototype = {
           self.currentDateIslamic[0] = year;
           self.currentDateIslamic[1] = month;
           self.currentDateIslamic[2] = day;
-          self.currentYear = self.currentDateIslamic[0];
-          self.currentMonth = self.currentDateIslamic[1];
-          self.currentDay = self.currentDateIslamic[2];
-          self.currentDate = self.conversions.toGregorian(
-            self.currentDateIslamic[0],
-            self.currentDateIslamic[1],
-            self.currentDateIslamic[2]
-          );
+          self.currentYear = year;
+          self.currentMonth = month;
+          self.currentDay = day;
+          self.currentDate = self.conversions.toGregorian(year, month, day);
         }
 
         self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
-        self.closeCalendar();
-        self.element.focus();
+
+        if (s.range.useRange) {
+          self.isFocusAfterClose = true;
+        } else {
+          self.closeCalendar();
+          self.element.focus();
+        }
       }
     });
+
+    if (s.range.useRange) {
+      this.days
+        .off('mouseover.datepicker')
+        .on('mouseover.datepicker', 'td', function () {
+          self.setRangeOnCell(this);
+        });
+    }
 
     // Calendar Footer Events
     this.footer.off('click.datepicker').on('click.datepicker', 'button', function (e) {
@@ -864,23 +937,25 @@ DatePicker.prototype = {
           self.currentDateIslamic[0] = year;
           self.currentDateIslamic[1] = month;
           self.currentDateIslamic[2] = 1;
-          self.currentYear = self.currentDateIslamic[0];
-          self.currentMonth = self.currentDateIslamic[1];
-          self.currentDay = self.currentDateIslamic[2];
-          self.currentDate = self.conversions.toGregorian(
-            self.currentDateIslamic[0],
-            self.currentDateIslamic[1],
-            self.currentDateIslamic[2]
-          );
+          self.currentYear = year;
+          self.currentMonth = month;
+          self.currentDay = 1;
+          self.currentDate = self.conversions.toGregorian(year, month, 1);
         }
 
         self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
-        self.closeCalendar();
+        if (s.range.useRange) {
+          self.isFocusAfterClose = false;
+        } else {
+          self.closeCalendar();
+        }
       }
 
       if (btn.hasClass('is-today')) {
         self.setToday();
-        self.closeCalendar();
+        if (!s.range.useRange) {
+          self.closeCalendar();
+        }
       }
       self.element.focus();
       e.preventDefault();
@@ -888,12 +963,131 @@ DatePicker.prototype = {
 
     // Change Month Events
     this.header.off('click.datepicker').on('click.datepicker', 'button', function () {
-      self.showMonth(self.currentMonth + ($(this).hasClass('next') ? 1 : -1), self.currentYear);
+      const isNext = $(this).is('.next');
+      const range = {};
+
+      if (s.range.useRange) {
+        if (isNext) {
+          range.date = new Date(self.currentYear, (self.currentMonth + 1), (self.days.find('.next-month:visible').length + 1));
+        } else {
+          range.date = new Date(self.currentYear, self.currentMonth, 1);
+          range.date.setDate(range.date.getDate() - (self.days.find('.prev-month:visible').length + 1));
+        }
+      }
+
+      self.showMonth(self.currentMonth + (isNext ? 1 : -1), self.currentYear);
+
+      if (s.range.useRange) {
+        range.formatedDate = Locale.formatDate(range.date, { date: 'full' });
+        range.cell = self.days.find(`[aria-label="${range.formatedDate}"]`);
+        self.setRangeOnCell(s.range.second ? false : range.cell);
+      }
     });
+
+    if (s.range.useRange) {
+      this.header
+        .off('mouseover.datepicker')
+        .on('mouseover.datepicker', 'button', function () {
+          if (s.range.extra) {
+            self.setRangeOnCell($(this).is('.next') ? s.range.extra.maxCell : s.range.extra.minCell);
+          }
+        })
+        .off('focus.datepicker')
+        .on('focus.datepicker', 'button:not(.hide-focus)', function () {
+          if (s.range.extra) {
+            self.setRangeOnCell($(this).is('.next') ? s.range.extra.maxCell : s.range.extra.minCell);
+          }
+        });
+    }
 
     setTimeout(() => {
       self.setFocusAfterOpen();
     }, 200);
+  },
+
+  /**
+   * Set range on given cell -or- current month/year.
+   * @private
+   * @param {Object} cell to set range.
+   * @returns {void}
+   */
+  setRangeOnCell(cell) {
+    const self = this;
+    const s = this.settings;
+
+    if (s.range.useRange && s.range.first && !s.range.second) {
+      const first = s.range.first;
+      const extra = s.range.extra;
+      const len = extra.cellLength - 1;
+      const firstCell = first.rowIdx + first.cellIdx + (len * first.rowIdx);
+      cell = $(cell);// First date selected cell element
+
+      if (cell.length && !cell.is('.is-disabled, .is-selected')) {
+        const row = cell.closest('tr');
+        const cellIdx = cell.index();
+        const rowIdx = row.index();
+        const thisCell = rowIdx + cellIdx + (len * rowIdx);
+        const d = self.getCellDate(cell);
+        const cellDate = new Date(d.year, d.month, d.day);
+        const max = this.getDifferenceToDate(s.range.first.date, s.range.maxDays);
+
+        self.days.find('td:visible').each(function (i) {
+          const thisTd = $(this);
+          if (cellDate > s.range.first.date && !s.range.selectBackward &&
+            (!s.range.maxDays || (s.range.maxDays > 0 && cellDate.getTime() <= max.aftertime)) &&
+            ((i > firstCell && i <= thisCell) || (cellDate > extra.max && i <= thisCell))) {
+            thisTd.addClass('range-next');
+          } else if (cellDate < s.range.first.date && !s.range.selectForward &&
+            (!s.range.maxDays || (s.range.maxDays > 0 && cellDate.getTime() >= max.beforetime)) &&
+            ((i < firstCell && i >= thisCell) || (cellDate < extra.min && i >= thisCell))) {
+            thisTd.addClass('range-prev');
+          } else {
+            thisTd.removeClass('range-next range-prev');
+          }
+        });
+      } else if (!cell.length) {
+        self.days.find('td').removeClass('range-next range-prev');
+      }
+    }
+    if (!cell && s.range.second) {
+      self.setRangeSelected();
+    }
+  },
+
+  /**
+   * Get date from given cell.
+   * @private
+   * @param {Object} cell to get date.
+   * @returns {Object} as: year, month, day
+   */
+  getCellDate(cell) {
+    const s = this.settings;
+    const day = parseInt(cell.text(), 10);
+    let month = parseInt(this.header.find('.month').attr('data-month'), 10);
+    let year = parseInt(this.header.find('.year').text(), 10);
+
+    if (s.showMonthYearPicker) {
+      year = parseInt(this.header.find('.year select').val(), 10);
+      month = parseInt(this.header.find('.month select').val(), 10);
+    }
+
+    if (cell.hasClass('prev-month')) {
+      if (month === 0) {
+        month = 11;
+        year--;
+      } else {
+        month--;
+      }
+    } else if (cell.hasClass('next-month')) {
+      if (month === 11) {
+        month = 0;
+        year++;
+      } else {
+        month++;
+      }
+    }
+
+    return { year, month, day };
   },
 
   /**
@@ -911,6 +1105,10 @@ DatePicker.prototype = {
    * @returns {void}
    */
   closeCalendar() {
+    // Remove range entries
+    const cell = this.days && this.days.length ? this.days.find('td.is-selected') : null;
+    this.resetRange(cell);
+
     // Close timepicker
     if (this.settings.showTime && this.timepickerControl && this.timepickerControl.isOpen()) {
       this.timepickerControl.closeTimePopup();
@@ -996,7 +1194,7 @@ DatePicker.prototype = {
     if ((dateIsDisabled && !s.disable.isEnable) || (!dateIsDisabled && s.disable.isEnable)) {
       elem
         .addClass('is-disabled').attr('aria-disabled', 'true')
-        .removeClass('is-selected').removeAttr('aria-selected');
+        .removeClass('is-selected range').removeAttr('aria-selected');
     }
   },
 
@@ -1142,14 +1340,27 @@ DatePicker.prototype = {
    * @returns {void}
    */
   setFocusAfterOpen() {
+    const s = this.settings;
     if (!this.calendar) {
       return;
     }
-    this.activeTabindex(this.calendar.find('.is-selected'), true);
 
-    if (this.settings.hideDays) {
+    if (s.hideDays) {
       this.calendar.find('div.dropdown:first').focus();
+      return;
     }
+
+    if (s.range.useRange) {
+      if (s.range.first && s.range.first.label &&
+        (!s.range.second || s.range.second && !s.range.second.date)) {
+        this.setRangeFirstPart(s.range.first.date);
+      }
+      this.setRangeSelected();
+      if (s.range.second && s.range.first.date && s.range.second.date) {
+        this.element.val(this.getRangeValue());
+      }
+    }
+    this.activeTabindex(this.calendar.find('.is-selected'), true);
   },
 
   /**
@@ -1241,8 +1452,9 @@ DatePicker.prototype = {
     let exMonth;
     let exDay;
 
+    const s = this.settings;
     this.days.find('td').each(function (i) {
-      const th = $(this).removeClass('alternate prev-month next-month is-selected is-today');
+      const th = $(this).removeClass('alternate prev-month next-month is-selected range is-today');
       th.removeAttr('aria-selected');
 
       if (i < leadDays) {
@@ -1261,7 +1473,7 @@ DatePicker.prototype = {
         // Add Selected Class to Selected Date
         if (self.isIslamic) {
           if (year === elementDate[0] && month === elementDate[1] && dayCnt === elementDate[2]) {
-            th.addClass('is-selected').attr('aria-selected', 'true');
+            th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
           }
         } else {
           const tHours = elementDate.getHours();
@@ -1271,7 +1483,7 @@ DatePicker.prototype = {
           if ((new Date(year, month, dayCnt))
             .setHours(tHours, tMinutes, tSeconds, 0) === elementDate
               .setHours(tHours, tMinutes, tSeconds, 0)) {
-            th.addClass('is-selected').attr('aria-selected', 'true');
+            th.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr('aria-selected', 'true');
           }
         }
 
@@ -1396,6 +1608,7 @@ DatePicker.prototype = {
    * @returns {void}
    */
   insertDate(date, isReset) {
+    const s = this.settings;
     const month = (date instanceof Array ? date[1] : date.getMonth());
     const year = (date instanceof Array ? date[0] : date.getFullYear());
     const day = (date instanceof Array ? date[2] : date.getDate()).toString();
@@ -1431,8 +1644,12 @@ DatePicker.prototype = {
       }
 
       this.setValue(date, true);
-      this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
-      dateTd.addClass('is-selected').attr({ 'aria-selected': true });
+      if (s.range.useRange) {
+        this.days.find('.is-selected').removeAttr('aria-selected').removeAttr('tabindex');
+      } else {
+        this.days.find('.is-selected').removeClass('is-selected range').removeAttr('aria-selected').removeAttr('tabindex');
+      }
+      dateTd.addClass(`is-selected${(s.range.useRange ? ' range' : '')}`).attr({ 'aria-selected': true });
       this.activeTabindex(dateTd, true);
     }
   },
@@ -1507,9 +1724,11 @@ DatePicker.prototype = {
    * @private
    * @param {Object} date The date to set in date format.
    * @param {Boolean} trigger If true will trigger the change event.
+   * @param {Boolean} isTime will pass to set range.
    * @returns {void}
    */
-  setValue(date, trigger) {
+  setValue(date, trigger, isTime) {
+    const s = this.settings;
     // TODO Document this as the way to get the date
     this.currentDate = date;
 
@@ -1519,11 +1738,107 @@ DatePicker.prototype = {
       date = new Date(date[0], date[1], date[2]);
     }
 
-    this.element.val(Locale.formatDate(date, { pattern: this.pattern }));
+    if (s.range.useRange) {
+      if (!isTime) {
+        this.setRangeToElem(date, false);
+      }
+    } else {
+      this.element.val(Locale.formatDate(date, { pattern: this.pattern }));
+    }
 
     if (trigger) {
-      this.element.trigger('change').trigger('input');
+      if (s.range.useRange) {
+        if (!isTime) {
+          this.element
+            .trigger('change', [s.range.data])
+            .trigger('input', [s.range.data]);
+        }
+      } else {
+        this.element.trigger('change').trigger('input');
+      }
     }
+  },
+
+  /**
+   * Set the range value from the field
+   * @private
+   * @returns {void}
+   */
+  setRangeValueFromField() {
+    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
+    const parseDate = d => Locale.parseDate(d, this.pattern, false);
+    const getTime = d => ((d && typeof d.getTime === 'function') ? d.getTime() : (new Date()).getTime());
+    const alignDates = (dates) => {
+      let d1 = parseDate(dates[0]);
+      let d2 = parseDate(dates[1]);
+      if (d1 && d2) {
+        d1 = getTime(d1);
+        d2 = getTime(d2);
+        return (d1 > d2) ? [dates[1], dates[0]] : [dates[0], dates[1]];
+      }
+      return dates;
+    };
+    const s = this.settings;
+    const field = {};
+
+    field.value = s.range.value || this.element.val().trim();
+    field.isEmpty = field.value === '';
+
+    // Field value dates
+    if (!field.isEmpty && field.value.indexOf(s.range.separator) > -1) {
+      field.dates = alignDates(field.value.split(s.range.separator));
+    } else if (!field.isEmpty && field.value.indexOf(s.range.separator.slice(0, -1)) > -1) {
+      field.dates = field.value.split(s.range.separator.slice(0, -1));
+    }
+
+    // Start/End dates
+    if (!s.range.data && s.range.start && s.range.end && field.isEmpty) {
+      let dates;
+      if (typeof s.range.start === 'string' && typeof s.range.end === 'string') {
+        dates = alignDates([s.range.start, s.range.end]);
+      } else if (typeof s.range.start !== 'string' && typeof s.range.end === 'string') {
+        dates = alignDates([formatDate(s.range.start), s.range.end]);
+      } else if (typeof s.range.start === 'string' && typeof s.range.end !== 'string') {
+        dates = alignDates([s.range.start, formatDate(s.range.end)]);
+      } else {
+        dates = alignDates([formatDate(s.range.start), formatDate(s.range.end)]);
+      }
+      s.range.start = formatDate(dates[0]);
+      s.range.end = formatDate(dates[1]);
+    }
+
+    s.range.first = s.range.first || {};
+    s.range.second = s.range.second || {};
+
+    // Start date
+    if (s.range.data && s.range.data.startDate) {
+      s.range.first.date = s.range.data.startDate;
+    } else if (s.range.start && typeof s.range.start === 'string') {
+      s.range.first.date = parseDate(s.range.start);
+    } else if (field.dates) {
+      s.range.first.date = parseDate(field.dates[0]);
+    }
+
+    // End date
+    if (s.range.data && s.range.data.endDate) {
+      s.range.second.date = s.range.data.endDate;
+    } else if (s.range.end && typeof s.range.end === 'string') {
+      s.range.second.date = parseDate(s.range.end);
+    } else if (field.dates) {
+      s.range.second.date = parseDate(field.dates[1]);
+    }
+
+    this.setRangeSelected();
+
+    if (field.isEmpty || (!field.isEmpty && !s.range.data)) {
+      const value = formatDate(s.range.first.date);
+      if (value) {
+        this.element.val(value);
+      }
+    } else {
+      return false;
+    }
+    return true;
   },
 
   /**
@@ -1532,7 +1847,16 @@ DatePicker.prototype = {
    * @returns {void}
    */
   setValueFromField() {
+    const s = this.settings;
     this.setCurrentCalendar();
+
+    if (s.range.useRange && ((this.element.val().trim() !== '') ||
+      (s.range.start && s.range.end) ||
+      (s.range.data && s.range.data.startDate && s.range.data.endDate))) {
+      if (!this.setRangeValueFromField()) {
+        return;
+      }
+    }
 
     const self = this;
     const fieldValue = this.element.val();
@@ -1569,9 +1893,16 @@ DatePicker.prototype = {
     }
 
     // Check and fix two digit year for main input element
-    self.element.validateField();
-    if (self.element.isValid() && self.element.val().trim() !== '') {
+    const dateFormat = self.pattern;
+    const isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy');
+    const parsedDate = Locale.parseDate(self.element.val().trim(), dateFormat, isStrict);
+
+    if (parsedDate !== undefined && self.element.val().trim() !== '' && !s.range.useRange) {
       self.setValue(Locale.parseDate(self.element.val().trim(), self.pattern, false));
+    }
+
+    if (s.range.useRange && s.range.first.date && !s.range.second.date) {
+      this.setRangeToElem(this.currentDate, true);
     }
   },
 
@@ -1607,6 +1938,7 @@ DatePicker.prototype = {
    * @returns {void}
    */
   setToday() {
+    const s = this.settings;
     this.currentDate = new Date();
 
     if (this.element.val() === '') {
@@ -1634,6 +1966,11 @@ DatePicker.prototype = {
     if (this.isOpen()) {
       this.insertDate(this.isIslamic ? this.currentDateIslamic : this.currentDate, true);
     } else {
+      if (s.range.useRange) {
+        this.setRangeToElem(this.currentDate);
+      } else {
+        this.element.val(Locale.formatDate(this.currentDate, { pattern: this.pattern }));
+      }
       /**
       * Fires after the value in the input is changed by user interaction.
       *
@@ -1641,7 +1978,13 @@ DatePicker.prototype = {
       * @type {Object}
       * @property {Object} event - The jquery event object
       */
-      this.element.val(Locale.formatDate(this.currentDate, { pattern: this.pattern })).trigger('change').trigger('input');
+      if (s.range.useRange) {
+        this.element
+          .trigger('change', [s.range.data])
+          .trigger('input', [s.range.data]);
+      } else {
+        this.element.trigger('change').trigger('input');
+      }
     }
   },
 
@@ -1660,6 +2003,7 @@ DatePicker.prototype = {
     hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
     hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;
 
+    date = new Date(date);
     date.setHours(hours, minutes, seconds);
     return date;
   },
@@ -1691,6 +2035,278 @@ DatePicker.prototype = {
    */
   getCurrentDate() {
     return this.currentDate;
+  },
+
+  /**
+   * Reset range values
+   * @private
+   * @param {Object} cell to keep selection.
+   * @returns {void}
+   */
+  resetRange(cell) {
+    if (this.settings.range.useRange) {
+      delete this.settings.range.first;
+      delete this.settings.range.second;
+      delete this.settings.range.extra;
+      if (this.days && this.days.length) {
+        this.days.find('td').removeClass('range range-next range-prev range-selection end-date is-selected');
+      }
+      if (cell) {
+        cell.addClass('is-selected');
+      }
+    }
+  },
+
+  /**
+   * Set range selected value
+   * @private
+   * @returns {void}
+   */
+  setRangeSelected() {
+    const self = this;
+    const s = this.settings;
+    const dateObj = d => new Date(d.year, d.month, d.day);
+
+    if (s.range.useRange && s.range.second && s.range.second.date &&
+      this.days && this.days.length) {
+      this.days.find('td').removeClass('range range-next range-prev range-selection end-date is-selected');
+      this.days.find('td:visible').each(function () {
+        const cell = $(this);
+        const isDisabled = cell.is('.is-disabled') && !s.range.includeDisabled;
+        const includeDisabled = cell.is('.is-disabled') && s.range.includeDisabled;
+        const includeDisableClass = includeDisabled ? ' include-disabled' : '';
+        const getTime = (d) => {
+          d = new Date(d);
+          d.setHours(0, 0, 0);
+          return d.getTime();
+        };
+        const date = getTime(dateObj(self.getCellDate(cell)));
+        const d1 = getTime(s.range.first.date);
+        const d2 = getTime(s.range.second.date);
+
+        if ((date === d1 || date === d2) && !isDisabled) {
+          cell.addClass(`is-selected${includeDisableClass}${d1 !== d2 ? ` range-selection${date === d2 ? ' end-date' : ''}` : ''}`);
+        } else if ((date > d1 && date < d2) && !isDisabled) {
+          cell.addClass(`range-selection${includeDisableClass}`);
+        }
+      });
+    }
+  },
+
+  /**
+   * Set range first part
+   * @private
+   * @param {Object} date .
+   * @returns {void}
+   */
+  setRangeFirstPart(date) {
+    const s = this.settings;
+    const dateObj = d => new Date(d.year, d.month, d.day);
+    const labelDate = d => Locale.formatDate(d, { date: 'full' });
+    const minCell = this.days.find('td:visible:first');
+    const maxCell = this.days.find('td:visible:last');
+    const label = labelDate(date);
+    const cell = this.days.find(`[aria-label="${label}"]`);
+    const row = cell.closest('tr');
+    this.currentDate = date;
+
+    s.range.first = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+    s.range.extra = {
+      minCell,
+      maxCell,
+      min: dateObj(this.getCellDate(minCell)),
+      max: dateObj(this.getCellDate(maxCell)),
+      cellLength: row.children('td').length
+    };
+  },
+
+  /**
+   * Set range value to element
+   * @private
+   * @param {Object} date .
+   * @param {Boolean} isSingleDate .
+   * @returns {void}
+   */
+  setRangeToElem(date, isSingleDate) {
+    const s = this.settings;
+    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
+    const labelDate = d => Locale.formatDate(d, { date: 'full' });
+    let value = formatDate(date);
+    let handled = false;
+
+    // Closed calendar
+    if (!this.isOpen() && !isSingleDate) {
+      handled = true;
+      const d = date || new Date();
+      this.currentMonth = d.getMonth();
+      this.currentYear = d.getFullYear();
+      this.currentDay = d.getDate();
+      this.currentDate = d;
+
+      s.range.first = s.range.first || {};
+      s.range.second = s.range.second || {};
+      s.range.first.date = d;
+      s.range.second.date = d;
+      value = this.getRangeValue();
+    } else {
+      // Opened calendar
+      const label = labelDate(date);
+      let cell = this.days.find(`[aria-label="${label}"]`);
+      let row = cell.closest('tr');
+
+      if (s.range.second) {
+        this.resetRange(cell);
+      }
+
+      const time = {};
+      if (s.range.first) {
+        time.date = date.getTime();
+        time.firstdate = s.range.first.date.getTime();
+        time.min = this.getDifferenceToDate(s.range.first.date, s.range.minDays);
+        time.max = this.getDifferenceToDate(s.range.first.date, s.range.maxDays);
+      }
+
+      if (!s.range.first || isSingleDate) {
+        this.setRangeFirstPart(date);
+        value = this.getRangeValue();
+        this.setPlaceholder();
+      } else if (!s.range.second &&
+        (s.range.selectBackward && time.date > time.firstdate) ||
+        (s.range.selectForward && time.date < time.firstdate) ||
+        ((s.range.maxDays > 0) && (time.date > time.max.aftertime) ||
+        (time.date < time.max.beforetime))) {
+        this.resetRange(cell);
+        this.setRangeFirstPart(date);
+        value = this.getRangeValue();
+        this.setPlaceholder();
+      } else {
+        // Set second part for range
+        handled = true;
+        this.currentDate = date;
+        // minDays
+        if (s.range.minDays > 0) {
+          if (time.date > time.firstdate && time.date < time.min.aftertime) {
+            date = time.min.after;
+          } else if (time.date < time.firstdate && time.date > time.min.beforetime) {
+            date = time.min.before;
+          }
+          cell = this.days.find(`[aria-label="${label}"]`);
+          row = cell.closest('tr');
+        }
+        if (time.date > time.firstdate) {
+          s.range.second = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+        } else {
+          s.range.second = s.range.first;
+          s.range.first = { date, label, cell, row, rowIdx: row.index(), cellIdx: cell.index() };
+        }
+        value = this.getRangeValue();
+      }
+    }
+
+    // Set range value(first only or both parts) on element
+    this.element.val(value);
+
+    // Set data to use in triggerHandler
+    if (!handled) {
+      s.range.data = {
+        value,
+        dates: [s.range.first.date],
+        startDate: s.range.first.date,
+        start: formatDate(s.range.first.date)
+      };
+    } else {
+      s.range.data = {
+        value,
+        dates: this.getDateRange(s.range.first.date, s.range.second.date),
+        startDate: s.range.first.date,
+        start: formatDate(s.range.first.date),
+        endDate: s.range.second.date,
+        end: formatDate(s.range.second.date)
+      };
+
+      this.closeCalendar();
+      if (this.isFocusAfterClose) {
+        delete this.isFocusAfterClose;
+        this.element.focus();
+      }
+    }
+  },
+
+  /**
+   * Get array of dates between two dates
+   * @private
+   * @param {Object} startDate .
+   * @param {Object} endDate .
+   * @param {Boolean} includeDisabled .
+   * @returns {Array} dates between two dates
+   */
+  getDateRange(startDate, endDate, includeDisabled) {
+    const dates = [];
+    const current = new Date(startDate);
+
+    includeDisabled = typeof includeDisabled !== 'undefined' ? includeDisabled : this.settings.range.includeDisabled;
+
+    while (endDate.getTime() >= current.getTime()) {
+      if (includeDisabled || (!includeDisabled &&
+        !this.isDateDisabled(current.getFullYear(), current.getMonth(), current.getDate()))) {
+        dates.push(new Date(current));
+      }
+      current.setDate(current.getDate() + 1);
+    }
+    return dates;
+  },
+
+  /**
+   * Get difference to given date
+   * @private
+   * @param {Object} date .
+   * @param {Number} days .
+   * @param {Boolean} includeDisabled .
+   * @returns {Object} before/after difference to given date
+   */
+  getDifferenceToDate(date, days, includeDisabled) {
+    const difference = {};
+    const move = (d, daystomove, isNext) => {
+      d = new Date(d);
+      while (daystomove > 0) {
+        d.setDate(d.getDate() + (isNext ? 1 : -1));
+        if (includeDisabled || (!includeDisabled &&
+          !this.isDateDisabled(d.getFullYear(), d.getMonth(), d.getDate()))) {
+          daystomove--;
+          difference[isNext ? 'after' : 'before'] = new Date(d);
+        }
+      }
+      if (isNext && difference.after) {
+        difference.aftertime = difference.after.getTime();
+      } else if (difference.before) {
+        difference.beforetime = difference.before.getTime();
+      }
+    };
+    includeDisabled = typeof includeDisabled !== 'undefined' ? includeDisabled : this.settings.range.includeDisabled;
+    move(date, days); // previous
+    move(date, days, true); // next
+    return difference;
+  },
+
+  /**
+   * Get range value to insert in element
+   * @private
+   * @returns {String} range dates to display in element
+   */
+  getRangeValue() {
+    const s = this.settings;
+    const formatDate = d => Locale.formatDate(d, { pattern: this.pattern });
+    if (s.range.useRange &&
+      s.range.first && s.range.first.date &&
+      s.range.second && s.range.second.date) {
+      return `${formatDate(s.range.first.date) + s.range.separator + formatDate(s.range.second.date)}`;
+    } else if (s.range.useRange &&
+      s.range.first && s.range.first.date) {
+      return s.placeholder ?
+        `${formatDate(s.range.first.date) + s.range.separator + this.pattern}` :
+        formatDate(s.range.first.date);
+    }
+    return '';
   },
 
   /**
@@ -1742,6 +2358,7 @@ DatePicker.prototype = {
     this.element.off('blur.datepicker');
     this.trigger.remove();
     this.element.attr('data-mask', '');
+    this.element.removeAttr('placeholder');
 
     if (this.calendar && this.calendar.length) {
       this.calendar.remove();
@@ -1751,12 +2368,14 @@ DatePicker.prototype = {
       this.popup.remove();
     }
 
-    const api = this.element.data('mask');
-    if (api) {
-      api.destroy();
+    const maskApi = this.element.data('mask');
+    if (maskApi) {
+      maskApi.destroy();
     }
 
     this.element.off('keydown.datepicker blur.validate change.validate keyup.validate focus.validate');
+
+    this.element.removeAttr('data-validate').removeData('validate validationEvents');
 
     return this;
   },
@@ -1777,6 +2396,7 @@ DatePicker.prototype = {
    */
   handleEvents() {
     const self = this;
+    const s = this.settings;
 
     this.trigger.on('click.datepicker', () => {
       if (self.isOpen()) {
@@ -1797,6 +2417,15 @@ DatePicker.prototype = {
         }
       });
     });
+
+    // Set initialize value
+    if (!this.isOpen() && s.range.useRange && !s.range.first) {
+      this.setRangeValueFromField();
+      const value = this.getRangeValue();
+      if (value) {
+        this.element.val(value);
+      }
+    }
   }
 
 };
