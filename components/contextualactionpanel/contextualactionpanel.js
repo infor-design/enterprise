@@ -71,7 +71,7 @@ ContextualActionPanel.prototype = {
   */
   build() {
     const self = this;
-    
+
     // Build the Content
     if (this.panel.length === 0) {
       if (this.settings.content instanceof jQuery) {
@@ -148,7 +148,7 @@ ContextualActionPanel.prototype = {
       }
 
       if (this.settings.showCloseButton) {
-        this.closer = $('<div class="close-button"><button name="btn-close" class="btn" type="button"><svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg><span>Close</span></button></div>');
+        this.closer = $('<div class="close-button"><button class="btn" type="button"><svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg><span>Close</span></button></div>');
         this.closer.appendTo(this.header);
 
         this.toolbar.addClass('has-close-button');
@@ -177,7 +177,7 @@ ContextualActionPanel.prototype = {
     });
 
     this.buttons = this.panel.find('.buttonset').children('button');
-    this.closeButton = this.panel.find('.modal-header').find('.close-button').children([name="btn-close"]);
+    this.closeButton = this.panel.find('.modal-header').find('.close-button').children('button');
 
     if (!this.toolbar) {
       this.toolbar = this.panel.find('.toolbar');
@@ -246,10 +246,10 @@ ContextualActionPanel.prototype = {
       });
 
     if (self.settings.showCloseButton) {
-      self.panel.find('.modal-header').find('.close-button').children([name="btn-close"])
+      self.panel.find('.modal-header').find('.close-button').children('button')
         .on('click.contextualactionpanel', () => {
           self.handleToolbarSelected();
-      });
+        });
     }
 
     return this;
@@ -292,12 +292,12 @@ ContextualActionPanel.prototype = {
     }
 
     const children = self.panel.find('.modal-body').children();
-    children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
+    children.first().unwrap().unwrap();
 
     self.element.removeAttr('data-modal');
 
     if (self.settings.showCloseButton) {
-      self.panel.find('.modal-header').find('.close-button').children([name="btn-close"])
+      self.panel.find('.modal-header').find('.close-button').children('button')
         .off('click.contextualactionpanel');
     }
 
