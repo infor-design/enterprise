@@ -2,47 +2,47 @@
 
 ### Table of Contents
 
--   [DROPDOWN_DEFAULTS](#dropdown_defaults)
--   [Dropdown](#dropdown)
-    -   [open](#open)
-    -   [close](#close)
-    -   [isOpen](#isopen)
-    -   [selectValue](#selectvalue)
-    -   [selectStartsWith](#selectstartswith)
-    -   [disable](#disable)
-    -   [isDisabled](#isdisabled)
-    -   [enable](#enable)
-    -   [readonly](#readonly)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [listopened](#listopened)
--   [listclosed](#listclosed)
--   [change](#change)
--   [input](#input)
+-   [DROPDOWN_DEFAULTS][1]
+-   [Dropdown][2]
+    -   [open][3]
+    -   [close][4]
+    -   [isOpen][5]
+    -   [selectValue][6]
+    -   [selectStartsWith][7]
+    -   [disable][8]
+    -   [isDisabled][9]
+    -   [enable][10]
+    -   [readonly][11]
+    -   [updated][12]
+    -   [destroy][13]
+-   [listopened][14]
+-   [listclosed][15]
+-   [change][16]
+-   [input][17]
 
 ## DROPDOWN_DEFAULTS
 
 **Properties**
 
--   `closeOnSelect` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** When an option is selected, the list will close if set to
+-   `closeOnSelect` **[boolean][18]** When an option is selected, the list will close if set to
     "true".  List stays open if "false".
--   `cssClass` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Append an optional css class to dropdown-list
--   `filterMode` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Search mode to use between 'startsWith' and 'contains', false
+-   `cssClass` **[string][19]** Append an optional css class to dropdown-list
+-   `filterMode` **[string][19]** Search mode to use between 'startsWith' and 'contains', false
      will not allow client side filter
--   `noSearch` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, disables the ability of the user to enter text in the
+-   `noSearch` **[boolean][18]** If true, disables the ability of the user to enter text in the
      Search Input field in the open combo box
--   `showEmptyGroupHeaders` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, displays optgroup headers in the list even
+-   `showEmptyGroupHeaders` **[boolean][18]** If true, displays optgroup headers in the list even
      if no selectable options are present underneath.
--   `source` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** A function that can do an ajax call.
--   `sourceArguments` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If a source method is defined, this flexible object can be
+-   `source` **[boolean][18]** A function that can do an ajax call.
+-   `sourceArguments` **[boolean][18]** If a source method is defined, this flexible object can be
      passed into the source method, and augmented with parameters specific to the implementation.
--   `reloadSourceOnOpen` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true, will always perform an ajax call whenever
+-   `reloadSourceOnOpen` **[boolean][18]** If set to true, will always perform an ajax call whenever
      the list is opened.  If false, the first AJAX call's results are cached.
--   `empty` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Initialize Empty Value
--   `delay` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Typing buffer delay in ms
--   `maxWidth` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** If set the width of the dropdown is limited to this pixel width. Fx
+-   `empty` **[boolean][18]** Initialize Empty Value
+-   `delay` **[boolean][18]** Typing buffer delay in ms
+-   `maxWidth` **[number][20]** If set the width of the dropdown is limited to this pixel width. Fx
      300 for the 300 px size fields. Default is size of the largest data.
--   `placementOpts` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Gets passed to this control's Place behavior
+-   `placementOpts` **[object][21]** Gets passed to this control's Place behavior
 
 ## Dropdown
 
@@ -50,8 +50,8 @@ The Dropdown allows users to select from a list. Like an Html Select.
 
 **Parameters**
 
--   `element` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The component element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** The component settings.
+-   `element` **[object][21]** The component element.
+-   `settings` **[object][21]?** The component settings.
 
 ### open
 
@@ -67,7 +67,7 @@ Returns **void**
 
 Return true/false depending on if the list is open.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** The current state (open = true).
+Returns **[boolean][18]** The current state (open = true).
 
 ### selectValue
 
@@ -75,7 +75,7 @@ Select an option by the value.
 
 **Parameters**
 
--   `value` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A string containing the value to look for. (Case insensitive)
+-   `value` **[string][19]** A string containing the value to look for. (Case insensitive)
 
 ### selectStartsWith
 
@@ -83,7 +83,7 @@ Select the next item that starts with a given character (text of the option).
 
 **Parameters**
 
--   `char` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The starting letter to match for. (Case insensitive)
+-   `char` **[string][19]** The starting letter to match for. (Case insensitive)
 
 ### disable
 
@@ -93,7 +93,7 @@ Disable the input element.
 
 Returns true if the dropdown is disabled.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if the element is disabled.
+Returns **[boolean][18]** True if the element is disabled.
 
 ### enable
 
@@ -109,7 +109,7 @@ Tear down events and restore to original state.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings object to use.
+-   `settings` **[object][21]** The settings object to use.
 
 Returns **void** 
 
@@ -123,8 +123,8 @@ Fires as the dropdown list is opened.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+-   `event` **[object][21]** The jquery event object
+-   `ui` **[object][21]** The dialog object
 
 ## listclosed
 
@@ -132,8 +132,8 @@ Fires as the dropdown list is closed
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+-   `event` **[object][21]** The jquery event object
+-   `ui` **[object][21]** The dialog object
 
 ## change
 
@@ -141,7 +141,7 @@ Fires after the value in the input is changed by any means.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `event` **[object][21]** The jquery event object
 
 ## input
 
@@ -149,4 +149,46 @@ Fires after the value in the input is changed by user interaction.
 
 **Properties**
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `event` **[object][21]** The jquery event object
+
+[1]: #dropdown_defaults
+
+[2]: #dropdown
+
+[3]: #open
+
+[4]: #close
+
+[5]: #isopen
+
+[6]: #selectvalue
+
+[7]: #selectstartswith
+
+[8]: #disable
+
+[9]: #isdisabled
+
+[10]: #enable
+
+[11]: #readonly
+
+[12]: #updated
+
+[13]: #destroy
+
+[14]: #listopened
+
+[15]: #listclosed
+
+[16]: #change
+
+[17]: #input
+
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

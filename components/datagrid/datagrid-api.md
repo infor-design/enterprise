@@ -2,168 +2,168 @@
 
 ### Table of Contents
 
--   [DATAGRID_DEFAULTS][1]
--   [Datagrid][2]
-    -   [render][3]
-    -   [addRow][4]
-    -   [pagerRefresh][5]
-    -   [removeRow][6]
-    -   [removeSelected][7]
-    -   [updateDataset][8]
-    -   [triggerSource][9]
-    -   [visibleColumns][10]
-    -   [hideShowColumnGroups][11]
-    -   [filterRowRendered][12]
-    -   [toggleFilterRow][13]
-    -   [applyFilter][14]
-    -   [clearFilter][15]
-    -   [setFilterConditions][16]
-    -   [filterConditions][17]
-    -   [fieldValue][18]
-    -   [formatValue][19]
-    -   [calculateTextWidth][20]
-    -   [calculateColumnWidth][21]
-    -   [updateRow][22]
-    -   [updateColumns][23]
-    -   [saveColumns][24]
-    -   [saveUserSettings][25]
-    -   [restoreColumns][26]
-    -   [restoreUserSettings][27]
-    -   [resetColumns][28]
-    -   [hideColumn][29]
-    -   [showColumn][30]
-    -   [exportToCsv][31]
-    -   [exportToExcel][32]
-    -   [setEmptyMessage][33]
-    -   [cellNode][34]
-    -   [rowHeight][35]
-    -   [keywordSearch][36]
-    -   [selectRow][37]
-    -   [activateRow][38]
-    -   [toggleRowActivation][39]
-    -   [toggleRowSelection][40]
-    -   [unselectRow][41]
-    -   [setNodeStatus][42]
-    -   [selectedRows][43]
-    -   [selectRows][44]
-    -   [columnById][45]
-    -   [columnIdxById][46]
-    -   [showCellError][47]
-    -   [resetRowStatus][48]
-    -   [dirtyRows][49]
-    -   [showRowError][50]
-    -   [validateRow][51]
-    -   [validateAll][52]
-    -   [columnSettings][53]
-    -   [updateCell][54]
-    -   [toggleRowDetail][55]
-    -   [sortFunction][56]
-    -   [defaultFormatter][57]
-    -   [renderPager][58]
-    -   [resetPager][59]
-    -   [destroy][60]
-    -   [updated][61]
--   [close][62]
+-   [DATAGRID_DEFAULTS](#datagrid_defaults)
+-   [Datagrid](#datagrid)
+    -   [render](#render)
+    -   [addRow](#addrow)
+    -   [pagerRefresh](#pagerrefresh)
+    -   [removeRow](#removerow)
+    -   [removeSelected](#removeselected)
+    -   [updateDataset](#updatedataset)
+    -   [triggerSource](#triggersource)
+    -   [visibleColumns](#visiblecolumns)
+    -   [hideShowColumnGroups](#hideshowcolumngroups)
+    -   [filterRowRendered](#filterrowrendered)
+    -   [toggleFilterRow](#togglefilterrow)
+    -   [applyFilter](#applyfilter)
+    -   [clearFilter](#clearfilter)
+    -   [setFilterConditions](#setfilterconditions)
+    -   [filterConditions](#filterconditions)
+    -   [fieldValue](#fieldvalue)
+    -   [formatValue](#formatvalue)
+    -   [calculateTextWidth](#calculatetextwidth)
+    -   [calculateColumnWidth](#calculatecolumnwidth)
+    -   [updateRow](#updaterow)
+    -   [updateColumns](#updatecolumns)
+    -   [saveColumns](#savecolumns)
+    -   [saveUserSettings](#saveusersettings)
+    -   [restoreColumns](#restorecolumns)
+    -   [restoreUserSettings](#restoreusersettings)
+    -   [resetColumns](#resetcolumns)
+    -   [hideColumn](#hidecolumn)
+    -   [showColumn](#showcolumn)
+    -   [exportToCsv](#exporttocsv)
+    -   [exportToExcel](#exporttoexcel)
+    -   [setEmptyMessage](#setemptymessage)
+    -   [cellNode](#cellnode)
+    -   [rowHeight](#rowheight)
+    -   [keywordSearch](#keywordsearch)
+    -   [selectRow](#selectrow)
+    -   [activateRow](#activaterow)
+    -   [toggleRowActivation](#togglerowactivation)
+    -   [toggleRowSelection](#togglerowselection)
+    -   [unselectRow](#unselectrow)
+    -   [setNodeStatus](#setnodestatus)
+    -   [selectedRows](#selectedrows)
+    -   [selectRows](#selectrows)
+    -   [columnById](#columnbyid)
+    -   [columnIdxById](#columnidxbyid)
+    -   [showCellError](#showcellerror)
+    -   [resetRowStatus](#resetrowstatus)
+    -   [dirtyRows](#dirtyrows)
+    -   [showRowError](#showrowerror)
+    -   [validateRow](#validaterow)
+    -   [validateAll](#validateall)
+    -   [columnSettings](#columnsettings)
+    -   [updateCell](#updatecell)
+    -   [toggleRowDetail](#togglerowdetail)
+    -   [sortFunction](#sortfunction)
+    -   [defaultFormatter](#defaultformatter)
+    -   [renderPager](#renderpager)
+    -   [resetPager](#resetpager)
+    -   [destroy](#destroy)
+    -   [updated](#updated)
+-   [close](#close)
 
 ## DATAGRID_DEFAULTS
 
 **Properties**
 
--   `actionableMode` **[boolean][63]** If actionableMode is "true, tab and shift tab
+-   `actionableMode` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If actionableMode is "true, tab and shift tab
     behave like left and right arrow key, if the cell is editable it goes in and out of edit mode.
     F2 - toggles actionableMode "true" and "false"
--   `cellNavigation` **[boolean][63]** If cellNavigation is "false, will show border
+-   `cellNavigation` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If cellNavigation is "false, will show border
     around whole row on focus
--   `rowNavigation` **[boolean][63]** If rowNavigation is "false, will NOT show border
+-   `rowNavigation` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If rowNavigation is "false, will NOT show border
     around the row
--   `alternateRowShading` **[boolean][63]** Sets shading for readonly grids
--   `columns` **[array][64]** An array of columns (see column options)
--   `dataset` **[array][64]** An array of data objects
--   `columnReorder` **[boolean][63]** Allow Column reorder
--   `saveColumns` **[boolean][63]** Save Column Reorder and resize
--   `saveUserSettings` **[object][65]** Save one or all of the following to local
+-   `alternateRowShading` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Sets shading for readonly grids
+-   `columns` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of columns (see column options)
+-   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of data objects
+-   `columnReorder` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Allow Column reorder
+-   `saveColumns` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Save Column Reorder and resize
+-   `saveUserSettings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Save one or all of the following to local
     storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true,
     filter: true
--   `editable` **[boolean][63]** Enable editing in the grid, requires column editors.
--   `isList` **[boolean][63]** Makes the grid have readonly "list" styling
--   `menuId` **[string][66]**  - Id of the menu to use for a row level right click
+-   `editable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Enable editing in the grid, requires column editors.
+-   `isList` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Makes the grid have readonly "list" styling
+-   `menuId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  - Id of the menu to use for a row level right click
     context menu
--   `menuSelected` **[string][66]** Callback for the grid level context menu
--   `menuBeforeOpen` **[string][66]** Callback for the grid level beforeopen menu event
--   `headerMenuId` **[string][66]** Id of the menu to use for a header right click
+-   `menuSelected` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Callback for the grid level context menu
+-   `menuBeforeOpen` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Callback for the grid level beforeopen menu event
+-   `headerMenuId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Id of the menu to use for a header right click
     context menu
--   `headerMenuSelected` **[string][66]** Callback for the header level context menu
--   `headerMenuBeforeOpen` **[string][66]** Callback for the header level beforeopen
+-   `headerMenuSelected` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Callback for the header level context menu
+-   `headerMenuBeforeOpen` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Callback for the header level beforeopen
     menu event
--   `uniqueId` **[string][66]** Unique ID to use as local storage reference and internal
+-   `uniqueId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Unique ID to use as local storage reference and internal
     variable names
--   `rowHeight` **[string][66]** Controls the height of the rows / number visible rows.
+-   `rowHeight` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls the height of the rows / number visible rows.
     May be (short, medium or normal)
--   `selectable` **[string][66]** Controls the selection Mode this may be:
+-   `selectable` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls the selection Mode this may be:
     false, 'single' or 'multiple' or 'mixed' or 'siblings'
--   `groupable` **[object][65]** Controls fields to use for data grouping Use Data
+-   `groupable` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Controls fields to use for data grouping Use Data
     grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list',
     aggregatorOptions: ['unitName1']}
--   `spacerColumn` **[boolean][63]** if true and the grid is not wide enough to fit the last column
+-   `spacerColumn` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true and the grid is not wide enough to fit the last column
     will get filled with an empty spacer column.
--   `stretchColumn` **[boolean][63]** If 'last' the last column will stretch we will add more options.
--   `clickToSelect` **[boolean][63]** Controls if using a selection mode if you can
+-   `stretchColumn` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If 'last' the last column will stretch we will add more options.
+-   `clickToSelect` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Controls if using a selection mode if you can
     click the rows to select
--   `toolbar` **[object][65]** Toggles and appends toolbar features fx..
--   `selectChildren` **[Boolean][63]** Can prevent selecting of all child nodes on multiselect
+-   `toolbar` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Toggles and appends toolbar features fx..
+-   `selectChildren` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Can prevent selecting of all child nodes on multiselect
     {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true,
     rowHeight: true, views: true}
--   `initializeToolbar` **[boolean][63]** Set to false if you will initialize the
+-   `initializeToolbar` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to false if you will initialize the
     toolbar yourself
--   `paging` **[boolean][63]** Enable paging mode
--   `pagesize` **[number][67]** Number of rows per page
--   `pagesizes` **[array][64]** Array of page sizes to show in the page size dropdown.
--   `indeterminate` **[boolean][63]** Disable the ability to go to a specific page when paging.
--   `source` **[Function][68]** Callback function for paging
--   `hidePagerOnOnePage` **[boolean][63]** If true, hides the pager if there's only
+-   `paging` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Enable paging mode
+-   `pagesize` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Number of rows per page
+-   `pagesizes` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array of page sizes to show in the page size dropdown.
+-   `indeterminate` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Disable the ability to go to a specific page when paging.
+-   `source` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback function for paging
+-   `hidePagerOnOnePage` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, hides the pager if there's only
     one page worth of results.
--   `filterable` **[boolean][63]** Enable Column Filtering, This will require column
+-   `filterable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Enable Column Filtering, This will require column
     filterTypes as well.
--   `disableClientFilter` **[boolean][63]** Disable Filter Logic client side and let your
+-   `disableClientFilter` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Disable Filter Logic client side and let your
     server do it
--   `disableClientSort` **[boolean][63]** Disable Sort Logic client side and let your
+-   `disableClientSort` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Disable Sort Logic client side and let your
     server do it
--   `resultsText` **[string][66]** Can provide a custom function to adjust results text
+-   `resultsText` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Can provide a custom function to adjust results text
      on the toolbar
--   `showFilterTotal` **[boolean][63]** Paging results display filter count, change to
+-   `showFilterTotal` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Paging results display filter count, change to
      false to not show filtered count
--   `rowReorder` **[boolean][63]** If set you can reorder rows. Requires rowReorder
+-   `rowReorder` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set you can reorder rows. Requires rowReorder
      formatter
--   `showDirty` **[boolean][63]** If true the dirty indicator will be shown on the rows
--   `showSelectAllCheckBox` **[boolean][63]** Allow to hide the checkbox header
+-   `showDirty` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the dirty indicator will be shown on the rows
+-   `showSelectAllCheckBox` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Allow to hide the checkbox header
     (true to show, false to hide)
--   `allowOneExpandedRow` **[boolean][63]** Controls if you cna expand more than one
+-   `allowOneExpandedRow` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Controls if you cna expand more than one
     expandable row.
--   `enableTooltips` **[boolean][63]** Process tooltip logic at a cost of performance
--   `disableRowDeactivation` **[boolean][63]** if a row is activated the user should not
+-   `enableTooltips` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Process tooltip logic at a cost of performance
+-   `disableRowDeactivation` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if a row is activated the user should not
      be able to deactivate it by clicking on the activated row
--   `sizeColumnsEqually` **[boolean][63]** If true make all the columns equal width
--   `expandableRow` **[boolean][63]** If true we append an expandable row area without
+-   `sizeColumnsEqually` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true make all the columns equal width
+-   `expandableRow` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true we append an expandable row area without
     the rowTemplate feature being needed.
--   `redrawOnResize` **[boolean][63]** If set to false we skip redraw logic on the resize
+-   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to false we skip redraw logic on the resize
     of the page.
--   `exportConvertNegative` **[boolean][63]** If set to true export data with trailing
+-   `exportConvertNegative` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to true export data with trailing
     negative signs moved in front.
--   `columnGroups` **[array][64]** An array of columns to use for grouped column headers.
--   `treeGrid` **[boolean][63]** : If true a tree grid is expected so addition
+-   `columnGroups` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of columns to use for grouped column headers.
+-   `treeGrid` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** : If true a tree grid is expected so addition
     calculations will be used to calculate of the row children
--   `onPostRenderCell` **[Function][68]** A call back function that will fire and send
+-   `onPostRenderCell` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** A call back function that will fire and send
     you the cell container and related information for any cells cells with a component attribute in
     the column definition.
--   `onDestroyCell` **[Function][68]** A call back that goes along with onPostRenderCel
+-   `onDestroyCell` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** A call back that goes along with onPostRenderCel
     and will fire when this cell is destroyed and you need noification of that.
--   `onEditCell` **[Function][68]** A callback that fires when a cell is edited, the
+-   `onEditCell` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** A callback that fires when a cell is edited, the
     editor object is passed in to the function
--   `onExpandRow` **[Function][68]** A callback function that fires when expanding rows.
+-   `onExpandRow` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** A callback function that fires when expanding rows.
     To be used when expandableRow is true. The function gets eventData about the row and grid and a
     response function callback. Call the response function with markup to append and delay opening
     the row.
--   `emptyMessage` **[object][65]** An empty message will be displayed when there is no
+-   `emptyMessage` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An empty message will be displayed when there is no
     rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available',
     info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
     button: {text: 'xxx', click: <function>}} set this to null for no message or will default to
@@ -175,8 +175,8 @@ The Datagrid Component displays and process data in tabular format.
 
 **Parameters**
 
--   `element` **([Array][64]&lt;jQuery> | [HTMLElement][69])** The component element.
--   `settings` **[object][65]** The component settings.
+-   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** The component element.
+-   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The component settings.
 
 ### render
 
@@ -184,7 +184,7 @@ Render or render both the header and row area.
 
 **Parameters**
 
--   `isToggleFilter` **[string][66]** Check if toggle filter row
+-   `isToggleFilter` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Check if toggle filter row
 
 ### addRow
 
@@ -192,8 +192,8 @@ Add a row of data to the grid and dataset.
 
 **Parameters**
 
--   `data` **[object][65]** An data row object
--   `location` **[string][66]** Where to add the row. This can be 'top' or leave off for 'bottom'
+-   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An data row object
+-   `location` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Where to add the row. This can be 'top' or leave off for 'bottom'
 
 ### pagerRefresh
 
@@ -201,7 +201,7 @@ Refresh the pager based on the current page and dataset.
 
 **Parameters**
 
--   `location` **[object][65]** Deprecated - Can be set to 'top' or left off for bottom pager.
+-   `location` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Deprecated - Can be set to 'top' or left off for bottom pager.
 
 ### removeRow
 
@@ -209,8 +209,8 @@ Remove a row of data to the grid and dataset.
 
 **Parameters**
 
--   `row` **[number][67]** The row index
--   `nosync` **[boolean][63]** Dont sync the selected rows.
+-   `row` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index
+-   `nosync` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Dont sync the selected rows.
 
 ### removeSelected
 
@@ -222,9 +222,9 @@ Send in a new data set to display in the datagrid.
 
 **Parameters**
 
--   `dataset` **[object][65]** The array of objects to show in the grid. Should match
+-   `dataset` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The array of objects to show in the grid. Should match
     the column definitions.
--   `pagerInfo` **[object][65]** The pager info object with information like activePage ect.
+-   `pagerInfo` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The pager info object with information like activePage ect.
 
 ### triggerSource
 
@@ -232,8 +232,8 @@ Trigger the source method to call to the backend on demand.
 
 **Parameters**
 
--   `pagerType` **[object][65]** The pager info object with information like activePage ect.
--   `callback` **[function][68]** The call back functions
+-   `pagerType` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The pager info object with information like activePage ect.
+-   `callback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The call back functions
 
 ### visibleColumns
 
@@ -241,9 +241,9 @@ Returns an array with all visible columns.
 
 **Parameters**
 
--   `skipBuiltIn` **[boolean][63]** If true then built in columns like selectionCheckbox are skipped.
+-   `skipBuiltIn` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true then built in columns like selectionCheckbox are skipped.
 
-Returns **[array][64]** An array with the visible columns.
+Returns **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array with the visible columns.
 
 ### hideShowColumnGroups
 
@@ -251,7 +251,7 @@ Test if the group header should be closed and close / open it.
 
 **Parameters**
 
--   `show` **[boolean][63]** Hide and show the column group if it should be.
+-   `show` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Hide and show the column group if it should be.
 
 ### filterRowRendered
 
@@ -267,7 +267,7 @@ Apply the Filter with the currently selected conditions, or the ones passed in.
 
 **Parameters**
 
--   `conditions` **[object][65]** An array of objects with the filter conditions.
+-   `conditions` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An array of objects with the filter conditions.
 
 ### clearFilter
 
@@ -279,13 +279,13 @@ Set the Filter Conditions on the UI Only.
 
 **Parameters**
 
--   `conditions` **[object][65]** An array of objects with the filter conditions.
+-   `conditions` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An array of objects with the filter conditions.
 
 ### filterConditions
 
 Get filter conditions in array from whats set in the UI.
 
-Returns **[array][64]** An array with the currently showing filter conditions.
+Returns **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array with the currently showing filter conditions.
 
 ### fieldValue
 
@@ -293,8 +293,8 @@ Return the value in a field, taking into account nested objects. Fx obj.field.id
 
 **Parameters**
 
--   `obj` **[object][65]** The object to use
--   `field` **[string][66]** The field as a string fx 'field' or 'obj.field.id'
+-   `obj` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The object to use
+-   `field` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The field as a string fx 'field' or 'obj.field.id'
 
 Returns **any** The current value in the field.
 
@@ -304,13 +304,13 @@ The default cell formatters thats used when no formatter is provided.
 
 **Parameters**
 
--   `formatter` **[function][68]** The formatter function.
--   `row` **[number][67]** The row index.
--   `cell` **[number][67]** The cell index.
--   `fieldValue` **[string][66]** The current field value.
--   `columnDef` **[object][65]** The column settings.
--   `rowData` **[object][65]** The current row data.
--   `api` **[object][65]** The grid API reference.
+-   `formatter` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The formatter function.
+-   `row` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index.
+-   `cell` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The cell index.
+-   `fieldValue` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The current field value.
+-   `columnDef` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The column settings.
+-   `rowData` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The current row data.
+-   `api` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The grid API reference.
 
 Returns **void** 
 
@@ -321,14 +321,14 @@ Except use all column values and compare the text width of the header as max
 
 **Parameters**
 
--   `columnDef` **[object][65]** The column to check.
+-   `columnDef` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The column to check.
 
-Returns **[number][67]** The text width.
+Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The text width.
 
 ### calculateColumnWidth
 
 Calculate the width for a column (upfront with no rendering)
-Simulates [https://www.w3.org/TR/CSS21/tables.html#width-layout][70]
+Simulates <https://www.w3.org/TR/CSS21/tables.html#width-layout>
 
 **Parameters**
 
@@ -343,8 +343,8 @@ Refresh one row in the grid
 
 **Parameters**
 
--   `idx` **[number][67]** The row index to update.
--   `data` **[object][65]** The data object.
+-   `idx` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index to update.
+-   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The data object.
 
 Returns **void** 
 
@@ -354,8 +354,8 @@ Given a new column set update the rows and reload
 
 **Parameters**
 
--   `columns` **[array][64]** The array with columns to use.
--   `columnGroups` **[array][64]** The array with new columns groups to use.
+-   `columns` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The array with columns to use.
+-   `columnGroups` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The array with new columns groups to use.
 
 Returns **void** 
 
@@ -377,7 +377,7 @@ Restore the columns from a provided list or local storage
 
 **Parameters**
 
--   `cols` **[array][64]** The columns list to restore, if you saved the settings manually.
+-   `cols` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The columns list to restore, if you saved the settings manually.
 
 ### restoreUserSettings
 
@@ -385,7 +385,7 @@ Restore the user settings from local Storage or as passed in.
 
 **Parameters**
 
--   `settings` **[object][65]** The object containing the settings to use.
+-   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The object containing the settings to use.
 
 Returns **void** 
 
@@ -399,7 +399,7 @@ Hide a column.
 
 **Parameters**
 
--   `id` **[string][66]** The id of the column to hide.
+-   `id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the column to hide.
 
 ### showColumn
 
@@ -407,7 +407,7 @@ Show a hidden column.
 
 **Parameters**
 
--   `id` **[string][66]** The id of the column to show.
+-   `id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The id of the column to show.
 
 ### exportToCsv
 
@@ -416,8 +416,8 @@ Consider Deprecated use excel.exportToCsv
 
 **Parameters**
 
--   `fileName` **[string][66]** The desired export filename in the download.
--   `customDs` **[string][66]** An optional customized version of the data to use.
+-   `fileName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The desired export filename in the download.
+-   `customDs` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An optional customized version of the data to use.
 
 ### exportToExcel
 
@@ -427,9 +427,9 @@ Consider Deprecated use excel.exportToExcel
 
 **Parameters**
 
--   `fileName` **[string][66]** The desired export filename in the download.
--   `worksheetName` **[string][66]** A name to give the excel worksheet tab.
--   `customDs` **[string][66]** An optional customized version of the data to use.
+-   `fileName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The desired export filename in the download.
+-   `worksheetName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A name to give the excel worksheet tab.
+-   `customDs` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An optional customized version of the data to use.
 
 ### setEmptyMessage
 
@@ -437,7 +437,7 @@ Set the content dynamically on the empty message area.
 
 **Parameters**
 
--   `emptyMessage` **[object][65]** The update empty message config object.
+-   `emptyMessage` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The update empty message config object.
 
 ### cellNode
 
@@ -445,11 +445,11 @@ Returns the cell dom node.
 
 **Parameters**
 
--   `row` **[number][67]** The row index.
--   `cell` **[number][67]** The cell index.
--   `includeGroups` **[boolean][63]** If true groups are taken into account.
+-   `row` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index.
+-   `cell` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The cell index.
+-   `includeGroups` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true groups are taken into account.
 
-Returns **[object][65]** The dom node
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dom node
 
 ### rowHeight
 
@@ -457,7 +457,7 @@ Get or Set the Row Height.
 
 **Parameters**
 
--   `height` **[string][66]** The row height to use, can be 'short', 'normal' or 'medium'
+-   `height` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The row height to use, can be 'short', 'normal' or 'medium'
 
 ### keywordSearch
 
@@ -465,7 +465,7 @@ Search a Term across all columns
 
 **Parameters**
 
--   `term` **[string][66]** The term to search for.
+-   `term` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The term to search for.
 
 ### selectRow
 
@@ -473,9 +473,9 @@ Toggle selection on a single row
 
 **Parameters**
 
--   `idx` **[number][67]** The row index to select
--   `nosync` **[boolean][63]** Do sync the header
--   `noTrigger` **[boolean][63]** Do not trigger events.
+-   `idx` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index to select
+-   `nosync` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Do sync the header
+-   `noTrigger` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Do not trigger events.
 
 Returns **void** 
 
@@ -485,7 +485,7 @@ Activate a row when in mixed selection mode
 
 **Parameters**
 
--   `idx` **[number][67]** The index.
+-   `idx` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The index.
 
 ### toggleRowActivation
 
@@ -493,7 +493,7 @@ Toggle the current activation state from on to off.
 
 **Parameters**
 
--   `idx` **[number][67]** The row to toggle
+-   `idx` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row to toggle
 
 Returns **void** 
 
@@ -503,7 +503,7 @@ Toggle the current selection state from on to off.
 
 **Parameters**
 
--   `idx` **[number][67]** The row to select/unselect
+-   `idx` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row to select/unselect
 
 Returns **void** 
 
@@ -529,7 +529,7 @@ Set the current status on the row status column
 
 Get the currently selected rows.
 
-Returns **[array][64]** An array containing the selected rows
+Returns **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array containing the selected rows
 
 ### selectRows
 
@@ -538,8 +538,8 @@ Set the selected rows by passing the row index or an array of row indexes.
 **Parameters**
 
 -   `row` **number/array** A row index or array of row indexes to select.
--   `nosync` **[boolean][63]** Dont sync the header.
--   `selectAll` **[boolean][63]** Internally used.
+-   `nosync` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Dont sync the header.
+-   `selectAll` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Internally used.
 
 Returns **void** 
 
@@ -549,9 +549,9 @@ Get the column object by id
 
 **Parameters**
 
--   `id` **[number][67]** The column id to find
+-   `id` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The column id to find
 
-Returns **[object][65]** The corresponding column.
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The corresponding column.
 
 ### columnIdxById
 
@@ -559,9 +559,9 @@ Get the column index from the col's id
 
 **Parameters**
 
--   `id` **[number][67]** The column id to find
+-   `id` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The column id to find
 
-Returns **[object][65]** The corresponding columns current position.
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The corresponding columns current position.
 
 ### showCellError
 
@@ -569,10 +569,10 @@ Show the cell errors.
 
 **Parameters**
 
--   `row` **[number][67]** The row index.
--   `cell` **[number][67]** The cell index.
--   `message` **[string][66]** The message text.
--   `type` **[string][66]** The message type (infor, error, alert )
+-   `row` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index.
+-   `cell` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The cell index.
+-   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The message text.
+-   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The message type (infor, error, alert )
 
 Returns **void** 
 
@@ -586,7 +586,7 @@ Returns **void**
 
 Get the currently dirty rows.
 
-Returns **[array][64]** An array of dirty rows.
+Returns **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of dirty rows.
 
 ### showRowError
 
@@ -594,9 +594,9 @@ Show an error on a row.
 
 **Parameters**
 
--   `row` **[number][67]** The row index.
--   `message` **[string][66]** The row description.
--   `type` **[string][66]** The error type.
+-   `row` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index.
+-   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The row description.
+-   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The error type.
 
 Returns **void** 
 
@@ -606,7 +606,7 @@ Validate all visible cells in a row if they have validation on the column
 
 **Parameters**
 
--   `row` **[number][67]** The row index.
+-   `row` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index.
 
 Returns **void** 
 
@@ -616,7 +616,7 @@ Validate all rows and cells in the entire gridif they have validation on the col
 
 **Parameters**
 
--   `row` **[number][67]** The row index.
+-   `row` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index.
 
 Returns **void** 
 
@@ -626,10 +626,10 @@ Get the settings for a column by index.
 
 **Parameters**
 
--   `idx` **[number][67]** The column index.
--   `onlyVisible` **[boolean][63]** If only the visible columns should be included.
+-   `idx` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The column index.
+-   `onlyVisible` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If only the visible columns should be included.
 
-Returns **[array][64]** The settings array
+Returns **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The settings array
 
 ### updateCell
 
@@ -637,8 +637,8 @@ Update one cell with a specific value
 
 **Parameters**
 
--   `row` **[number][67]** The row index.
--   `cell` **[number][67]** The cell index.
+-   `row` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row index.
+-   `cell` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The cell index.
 -   `value` **any** The value to use.
 
 Returns **void** 
@@ -649,7 +649,7 @@ Expand Detail Row Or Tree Row
 
 **Parameters**
 
--   `dataRowIndex` **[number][67]** The row to toggle
+-   `dataRowIndex` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The row to toggle
 
 Returns **void** 
 
@@ -659,10 +659,10 @@ Overridable function to conduct array sorting
 
 **Parameters**
 
--   `id` **[string][66]** The matching field/id in the array to sort on
--   `ascending` **[boolean][63]** Determines direction of the sort.
+-   `id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The matching field/id in the array to sort on
+-   `ascending` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Determines direction of the sort.
 
-Returns **[boolean][63]** If found.
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If found.
 
 ### defaultFormatter
 
@@ -670,11 +670,11 @@ The default formatter to use (just plain text). When no formatter is specified.
 
 **Parameters**
 
--   `row` **[number][67]** The rowindex
--   `cell` **[number][67]** The cell index
+-   `row` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The rowindex
+-   `cell` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The cell index
 -   `value` **any** The data value
 
-Returns **[string][66]** The html string
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The html string
 
 ### renderPager
 
@@ -682,9 +682,9 @@ Add the pager and paging functionality.
 
 **Parameters**
 
--   `pagingInfo` **[string][66]** The paging object with activePage ect used by pager.js
--   `isResponse` **[boolean][63]** Internal flag used to prevent callbacks from rexecuting.
--   `callback` **[function][68]** The callback function.
+-   `pagingInfo` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The paging object with activePage ect used by pager.js
+-   `isResponse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Internal flag used to prevent callbacks from rexecuting.
+-   `callback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The callback function.
 
 ### resetPager
 
@@ -692,13 +692,13 @@ Reset the pager to the first page.
 
 **Parameters**
 
--   `type` **[string][66]** The action type, which gets sent to the source callback.
+-   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The action type, which gets sent to the source callback.
 
 ### destroy
 
 Unwrap the grid back to a simple div, and destory all events and pointers.
 
-Returns **[object][65]** The plugin api for chaining.
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The plugin api for chaining.
 
 ### updated
 
@@ -706,9 +706,9 @@ Update the datagrid and optionally apply new settings.
 
 **Parameters**
 
--   `settings` **[object][65]** the settings to update to.
+-   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** the settings to update to.
 
-Returns **[object][65]** The plugin api for chaining.
+Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The plugin api for chaining.
 
 ## close
 
@@ -716,145 +716,5 @@ Fires when the grid is complete done rendering
 
 **Properties**
 
--   `event` **[object][65]** The jquery event object
--   `ui` **[array][64]** An array with references to the domElement, header and pagerBar
-
-[1]: #datagrid_defaults
-
-[2]: #datagrid
-
-[3]: #render
-
-[4]: #addrow
-
-[5]: #pagerrefresh
-
-[6]: #removerow
-
-[7]: #removeselected
-
-[8]: #updatedataset
-
-[9]: #triggersource
-
-[10]: #visiblecolumns
-
-[11]: #hideshowcolumngroups
-
-[12]: #filterrowrendered
-
-[13]: #togglefilterrow
-
-[14]: #applyfilter
-
-[15]: #clearfilter
-
-[16]: #setfilterconditions
-
-[17]: #filterconditions
-
-[18]: #fieldvalue
-
-[19]: #formatvalue
-
-[20]: #calculatetextwidth
-
-[21]: #calculatecolumnwidth
-
-[22]: #updaterow
-
-[23]: #updatecolumns
-
-[24]: #savecolumns
-
-[25]: #saveusersettings
-
-[26]: #restorecolumns
-
-[27]: #restoreusersettings
-
-[28]: #resetcolumns
-
-[29]: #hidecolumn
-
-[30]: #showcolumn
-
-[31]: #exporttocsv
-
-[32]: #exporttoexcel
-
-[33]: #setemptymessage
-
-[34]: #cellnode
-
-[35]: #rowheight
-
-[36]: #keywordsearch
-
-[37]: #selectrow
-
-[38]: #activaterow
-
-[39]: #togglerowactivation
-
-[40]: #togglerowselection
-
-[41]: #unselectrow
-
-[42]: #setnodestatus
-
-[43]: #selectedrows
-
-[44]: #selectrows
-
-[45]: #columnbyid
-
-[46]: #columnidxbyid
-
-[47]: #showcellerror
-
-[48]: #resetrowstatus
-
-[49]: #dirtyrows
-
-[50]: #showrowerror
-
-[51]: #validaterow
-
-[52]: #validateall
-
-[53]: #columnsettings
-
-[54]: #updatecell
-
-[55]: #togglerowdetail
-
-[56]: #sortfunction
-
-[57]: #defaultformatter
-
-[58]: #renderpager
-
-[59]: #resetpager
-
-[60]: #destroy
-
-[61]: #updated
-
-[62]: #close
-
-[63]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[64]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[65]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[66]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[67]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[68]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[69]: https://developer.mozilla.org/docs/Web/HTML/Element
-
-[70]: https://www.w3.org/TR/CSS21/tables.html#width-layout
+-   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+-   `ui` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array with references to the domElement, header and pagerBar
