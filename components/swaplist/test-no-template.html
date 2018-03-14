@@ -101,8 +101,8 @@
 
     // On swap update ==========================================================
     var api1 = $('#example-todolist').data('swaplist');
-    api1.element.on('swapupdate', function (e, items) {
-      // console.log(items);
+    api1.element.on('swapupdate', function (e, args) {
+      // console.log(args);
       // console.log(api1.getAvailable());
       console.log(api1.getSelected());
     });
