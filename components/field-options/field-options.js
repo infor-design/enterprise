@@ -6,18 +6,17 @@ import { Environment as env } from '../utils/environment';
 const COMPONENT_NAME = 'fieldoptions';
 
 /**
- * Default FieldOptions Options
- */
+* A control bind next to another component to add some extra functionality.
+* @class FieldOptions
+* @constructor
+*
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+*/
+
 const FIELDOPTIONS_DEFAULTS = {
 };
 
-/**
-* A list of items with add/remove/delete and sort functionality.
-*
-* @class FieldOptions
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function FieldOptions(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, FIELDOPTIONS_DEFAULTS);

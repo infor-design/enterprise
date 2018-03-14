@@ -11,14 +11,18 @@ import '../dropdown/dropdown.jquery';
 const COMPONENT_NAME = 'fieldfilter';
 
 /**
-* @namespace
-* @param {array} dataset  Array of data
-* @property {object} dropdownOpts  Gets passed to this control's dropdown
-* @param {string} template An Html String with the mustache template for the view.
+* Ability to have a dropdown next to the field.
+*
+* @class FieldFilter
+* @constructor
+*
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+* @param {array} [settings.dataset]  Array of data
+* @param {object} [settings.dropdownOpts]  Gets passed to this control's dropdown
+* @param {string} [settings.template] An Html String with the mustache template for the view.
+*/
 
-/**
- * Default FieldFilter Options
- */
 const FIELDFILTER_DEFAULTS = {
   dataset: [],
   dropdownOpts: {}, // Dropdown custom settings
@@ -35,14 +39,6 @@ const FIELDFILTER_DEFAULTS = {
       {{/dataset}}
     </select>`
 };
-
-/**
-* Ability to have a dropdown next to the field.
-*
-* @class FieldFilter
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function FieldFilter(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, FIELDFILTER_DEFAULTS);
@@ -180,6 +176,7 @@ FieldFilter.prototype = {
         /**
         * Fires after the value in the dropdown is selected.
         * @event filtered
+        * @memberof FieldFilter
         * @property {object} event The jquery event object.
         * @property {object} data for selected item.
         */
