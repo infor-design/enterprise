@@ -18,7 +18,7 @@ const COMPONENT_NAME = 'modal';
 * @property {string} id Optionally tag a dialog with an id.
 * @property {number} frameHeight Optional extra height to add.
 * @property {number} frameWidth Optional extra width to add.
-* @property {callback} beforeShow Optional callback for before show
+* @property {function} beforeShow Optional callback for before show
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
