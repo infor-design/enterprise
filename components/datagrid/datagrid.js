@@ -6784,7 +6784,8 @@ Datagrid.prototype = {
   toggleRowDetail(dataRowIndex) {
     const self = this;
     let rowElement = self.visualRowNode(dataRowIndex);
-    if (self.settings.paging && (self.settings.rowTemplate || self.settings.expandableRow)) {
+    if (!rowElement.length && self.settings.paging &&
+      (self.settings.rowTemplate || self.settings.expandableRow)) {
       dataRowIndex += ((self.pager.activePage - 1) * self.settings.pagesize);
       rowElement = self.dataRowNode(dataRowIndex);
     }
