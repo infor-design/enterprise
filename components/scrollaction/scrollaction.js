@@ -4,9 +4,7 @@ import { utils } from '../utils/utils';
 // Component Name
 const COMPONENT_NAME = 'scrollaction';
 
-/**
- * Default ScrollAction Options
- */
+// Default ScrollAction Options
 const SCROLLACTION_DEFAULTS = {
   scrollActionTarget: '.js-scroll-target', // The element to add a class to based on scrolling logic
   classToAdd: 'scrolled-down' // The class added to the target element
@@ -16,9 +14,9 @@ const SCROLLACTION_DEFAULTS = {
 * A component that applies a class based on scroll direction
 * @class ScrollAction
 * @param {String} element The component element.
-* @param {Object} settings The component settings.
-* @param {String} scrollActionTarget The selector of the element to add the class to
-* @param {String} classToAdd The class name
+* @param {Object} [settings] The component settings.
+* @param {String} [scrollActionTarget='.js-scroll-target'] The selector of the element to add the class to.
+* @param {String} [classToAdd ='scrolled-down'] The class name to use when toggling.
 */
 function ScrollAction(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SCROLLACTION_DEFAULTS);

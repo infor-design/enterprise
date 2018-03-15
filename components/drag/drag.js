@@ -31,7 +31,6 @@ const COMPONENT_NAME = 'drag';
  * @param {Object} [settings.containmentOffset={left: 0, top: 0}] How close to the containment object should we be allowed
  * to drag in position form. `{left: 0, top: 0}`
 */
-
 const DRAG_DEFAULTS = {
   axis: null,
   clone: false,

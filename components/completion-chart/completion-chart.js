@@ -11,7 +11,7 @@ const COMPONENT_NAME = 'completion-chart';
 * A completion chart shows completion over a target value. Usually used to show progress as a percentage.
 * @class CompletionChart
 * @param {string} element The plugin element for the constuctor
-* @param {string} settings The settings element.
+* @param {string} [settings] The settings element.
 *
 * @param {array} [settings.dataset.data] The data to use in the chart (See examples)
 * @param {string} [settings.dataset.data.name] - Required object with the title text `{text: 'Available Credit'}`

@@ -14,7 +14,7 @@ const COMPONENT_NAME = 'line';
  * points called 'markers' connected by straight line segments.
  * @class Line
  * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
+ * @param {string} [settings] The settings element.
  *
  * @param {array} [settings.dataset=[]] The data to use in the line/area/bubble.
  * @param {function|string} [settings.tooltip] A custom tooltip or tooltip renderer function

@@ -1,9 +1,7 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
-/**
- * Current "theme" string
- */
+// Current "theme" string
 let theme = 'light'; //eslint-disable-line
 
 // Component name as referenced by jQuery/event namespace/etc
@@ -27,6 +25,9 @@ const PERSONALIZE_DEFAULTS = {
  * @class Personalize
  * @param {HTMLElement|jQuery[]} element the base element
  * @param {object} [settings] incoming settings
+ * @param {string} [settings.colors]  The list of colors
+ * @param {string} [settings.theme='light'] The theme name (light, dark or high-contrast)
+ * @param {string} [settings.font='Helvetica'] Use the newer source sans font
  */
 function Personalize(element, settings) {
   this.element = $(element);

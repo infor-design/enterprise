@@ -16,7 +16,6 @@ const COMPONENT_NAME = 'circlepager';
  * @param {Integer} [settings.startingSlide] First showing slide/group, an 0-based integer
  * @param {boolean} [settings.loop=false] Setting loop: true will loop back after next/previous reached to end
  */
-
 const CIRCLEPAGER_DEFAULTS = {
   slidesToShow: 1,
   startingSlide: null,

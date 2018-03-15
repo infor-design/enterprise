@@ -10,16 +10,17 @@ const COMPONENT_NAME = 'colorpicker';
  * The ColorPicker Component is a trigger field with a listing colors that can be selected.
  * @class ColorPicker
  * @param {jQuery[]|HTMLElement} element The plugin element for the constuctor
- * @param {object} settings The settings element.
- * 
+ * @param {object} [settings] The settings element.
  * @param {string} [settings.themes={}] Themes available for ColorPicker
- * @param {string} [settings.colors=[]] An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
+ * @param {string} [settings.colors=[]] An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
+ * that can be used to populate the color grid.
  * @param {string} [settings.showLabel=false]  Show the label if true vs the hex value if false.
- * @param {string} [settings.editable=true]  If false, the field is readonly and transparent. I.E. The value cannot be typed only editable by selecting.
- * @param {string} [settings.uppercase=true] If false, lower case hex is allowed. If true upper case hex is allowed. If showLabel is true this setting is ignored.
+ * @param {string} [settings.editable=true]  If false, the field is readonly and transparent. I.E. The value
+ * cannot be typed only editable by selecting.
+ * @param {string} [settings.uppercase=true] If false, lower case hex is allowed. If true upper case hex is allowed.
+ * If showLabel is true this setting is ignored.
  * @param {string} [settings.colorOnly=false] If true the field will be shrunk to only show the color portion.
  */
-
 const COLORPICKER_DEFAULTS = {
   // Theme key: MUST match with theme file name (ie: [filename: 'light-theme.css' -> 'light-theme'])
 

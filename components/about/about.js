@@ -10,7 +10,6 @@ const COMPONENT_NAME = 'about';
  * @class About
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
- *
  * @param {string} [settings.appName='Infor Application Name'] The Main Application Name to display in the header.
  * @param {string} [settings.content] Additional text content to display at the top.
  * @param {string} [settings.copyrightYear=new Date().getFullYear()] The year displayed in the copyright, defaults to current year.

@@ -15,9 +15,8 @@ const COMPONENT_NAME = 'applicationmenu';
 /**
  * The Application Menu provides access to all the functions, pages, and forms in an application.
  * @class ApplicationMenu
- * @param {[type]} element The element that gets the plugin established on it.
- * @param {[type]} [settings] The settings to use on this instance.
- *
+ * @param {object} element The element that gets the plugin established on it.
+ * @param {object} [settings] The settings to use on this instance.
  * @param {string} [settings.breakpoint='phone-to-tablet'] Can be 'tablet' or 'phone-to-tablet' (+767),
  * 'phablet (+610)', 'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
  * @param {boolean} [settings.filterable=false] If true a search / filter option will be added.

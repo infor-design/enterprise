@@ -16,17 +16,21 @@ const COMPONENT_NAME = 'editor';
 * @class Editor
 * @param {String} element The component element.
 * @param {String} settings The component settings.
-*
-* @param {string} [settings.buttons = { editor: [ 'header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'strikethrough', 'separator', 'foreColor', 'backColor', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist', 'unorderedlist', 'separator', 'anchor', 'separator', 'image', 'separator', 'source' ], source: [ 'visual' ] }] An array with all the visible buttons in it.
+* @param {string} [settings.buttons =
+* { editor: [ 'header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'strikethrough',
+* 'separator', 'foreColor', 'backColor', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist',
+* 'unorderedlist', 'separator', 'anchor', 'separator', 'image', 'separator', 'source' ], source: [ 'visual' ] }]
+* An array with all the visible buttons in it.
 * @param {string} [settings.excludeButtons = { editor: ['backColor'], source: [] }] An array with all the buttons in it to excloude
-* @param {string} [settings.firstHeader = 'h3'] Allows you to set if the first header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
-* @param {boolean} [settings.secondHeader = 'h4'] Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
+* @param {string} [settings.firstHeader = 'h3'] Allows you to set if the first header inserted is a h3 or h4 element.
+* You should set this to match the structure of the parent page for accessibility
+* @param {boolean} [settings.secondHeader = 'h4'] Allows you to set if the second header inserted is a h3 or
+* h4 element. You should set this to match the structure of the parent page for accessibility
 * @param {string} [settings.pasteAsPlainText = false] If true, when you paste into the editor the element will be unformatted to plain text.
 * @param {string} [settings.anchor = { url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false }] An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
 * @param {string} [settings.image = { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
 * @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
 */
-
 const EDITOR_DEFAULTS = {
   buttons: {
     editor: [

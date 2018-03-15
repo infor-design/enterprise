@@ -15,7 +15,6 @@ const COMPONENT_NAME = 'datepicker';
  * A component to support date entry.
  * @class DatePicker
  * @constructor
- *
  * @param {jQuery[]|HTMLElement} element The component element.
  * @param {object} [settings] The component settings.
  * @param {boolean} [settings.showTime=false] If true the time selector will be shown.
@@ -71,7 +70,6 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
  */
-
 const DATEPICKER_DEFAULTS = {
   showTime: false,
   timeFormat: undefined,

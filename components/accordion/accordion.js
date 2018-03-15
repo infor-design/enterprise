@@ -19,7 +19,6 @@ const COMPONENT_NAME = 'accordion';
  * @class Accordion
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
- *
  * @param {string} [settings.allowOnePane=true] If set to true, allows only one pane of the Accordion to be open at a
  * time.  If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
  * @param {string} [settings.displayChevron=true]  Displays a "Chevron" icon that sits off to the right-most

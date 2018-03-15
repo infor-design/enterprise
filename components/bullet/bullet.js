@@ -14,14 +14,12 @@ const COMPONENT_NAME = 'bullet';
  * dashboards, the bullet graph serves as a replacement for dashboard gauges and meters.
  * @class Bullet
  * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
- * 
+ * @param {string} [settings] The settings element.
  * @param {array} [settings.dataset.data] The data to use in the chart.
+ * @param {array} [settings.dataset.data.tooltip] Tooltip contents for each point.
  * @param {boolean|string} [settings.animate=true] true|false - will do or not do the animation, 'initial' will do only first time the animation.
- * @param {array} [settings.dataset.data.tooltip] Tooltip conents for each point.
  * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page.
  */
-
 const BULLET_DEFAULTS = {
   dataset: [],
   animate: true,

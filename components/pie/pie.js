@@ -70,7 +70,7 @@ const PIE_DEFAULTS = {
  * to the quantity it represents.
  * @class Pie
  * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
+ * @param {string} [settings] The settings element.
  */
 function Pie(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PIE_DEFAULTS);

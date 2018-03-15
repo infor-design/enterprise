@@ -9,10 +9,9 @@ const COMPONENT_NAME = 'message';
 
 /**
  * The Message Component is used to show warning / error messages.
- * @class About
+ * @class Message
  * @param {object} element The component element.
- * @param {object} settings The component settings.
- *
+ * @param {object} [settings] The component settings.
  * @param {string} [settings.title='Message Title']  Title text or content shown in the message
  * @param {boolean} [settings.isError=false]  If true, will show title styled as an error with an error icon
  * @param {string} [settings.message='Message Summary']  The message content or text
@@ -21,7 +20,6 @@ const COMPONENT_NAME = 'message';
  * @param {string} [settings.cssClass=null]  Extra Class to add to the dialog for customization.
  * @param {string} [settings.returnFocus=null]  JQuery Element selector to focus on return
  */
-
 const MESSAGE_DEFAULTS = {
   title: 'Message Title',
   isError: false,
@@ -116,9 +114,6 @@ Message.prototype = {
     }
   },
 
-  /**
-  * Tear Down and destroy events. However the message will destroy itself on close.
-  */
   destroy() {
     const modalData = this.message.data('modal');
     if (modalData !== undefined) {

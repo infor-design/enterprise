@@ -15,7 +15,7 @@ const COMPONENT_NAME = 'column';
 * comparisons among items.
 * @class Column
 * @param {string} element The plugin element for the constuctor
-* @param {string} settings The settings element.
+* @param {string} [settings] The settings element.
 *
 * @param {array} [settings.dataset = []] The data to use in the line/area/bubble.
 * @param {boolean} [settings.isStacked = false] Set to true if its a stacked column chart

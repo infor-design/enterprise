@@ -21,18 +21,22 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * @class Dropdown
 * @param {object} element The component element.
 * @param {object} [settings] The component settings.
-*
 * @param {boolean} [settings.closeOnSelect = true]  When an option is selected, the list will close if set to "true".  List stays open if "false".
 * @param {string} [settings.cssClass = null]  Append an optional css class to dropdown-list
 * @param {string} [settings.filterMode = 'contains']  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
-* @param {boolean} [settings.noSearch = false]  If true, disables the ability of the user to enter text in the Search Input field in the open combo box
-* @param {boolean} [settings.showEmptyGroupHeaders = false]  If true, displays optgroup headers in the list even if no selectable options are present underneath.
+* @param {boolean} [settings.noSearch = false]  If true, disables the ability of the user to enter text
+* in the Search Input field in the open combo box
+* @param {boolean} [settings.showEmptyGroupHeaders = false]  If true, displays optgroup headers in the list
+* even if no selectable options are present underneath.
 * @param {boolean} [settings.source]  A function that can do an ajax call.
-* @param {boolean} [settings.sourceArguments = {}]  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
-* @param {boolean} [settings.reloadSourceOnOpen = false]  If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
+* @param {boolean} [settings.sourceArguments = {}]  If a source method is defined, this flexible object can be
+* passed into the source method, and augmented with parameters specific to the implementation.
+* @param {boolean} [settings.reloadSourceOnOpen = false]  If set to true, will always perform an ajax call
+* whenever the list is opened.  If false, the first AJAX call's results are cached.
 * @param {boolean} [settings.empty = false]  Initialize Empty Value
 * @param {boolean} [settings.delay = 300]  Typing buffer delay in ms
-* @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
+* @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width.
+* Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
 */
 

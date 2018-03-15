@@ -84,7 +84,7 @@ const RADAR_DEFAULTS = {
  * from the same poin
  * @class Radar
  * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
+ * @param {string} [settings] The settings element.
  */
 function Radar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, RADAR_DEFAULTS);

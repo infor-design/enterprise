@@ -32,7 +32,7 @@ const SPARKLINE_DEFAULTS = {
  * Sparklines are a compact way to show trends.
  * @class Sparkline
  * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
+ * @param {string} [settings] The settings element.
  */
 function Sparkline(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SPARKLINE_DEFAULTS);

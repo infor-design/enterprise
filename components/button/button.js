@@ -12,13 +12,11 @@ const COMPONENT_NAME = 'button';
  * Soho Button Element
  * @class Button
  * @param {string} element The component element.
- * @param {string} settings The component settings.
- * 
+ * @param {string} [settings] The component settings.
  * @param {string} [settings.toggleOnIcon=null]  The icon to use for on state on toggle buttons
  * @param {string} [settings.toggleOffIcon=null]  The icon to use for off state on toggle buttons
  * @param {string} [settings.replaceText=false]  If true the selection will be used to replace the content
  */
-
 const BUTTON_DEFAULTS = {
   toggleOnIcon: null,
   toggleOffIcon: null,

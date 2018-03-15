@@ -10,16 +10,15 @@ const COMPONENT_NAME = 'busyindicator';
  * wait for that request to be processed before continuing with the current task.
  * @class BusyIndicator
  * @param {object} element The plugin starting element.
- * @param {object} settings The settings to use.
- * 
+ * @param {object} [settings] The settings to use.
  * @param {string} [settings.blockUI=true] makes the element that Busy Indicator is invoked on unusable while it's displayed.
  * @param {string} [settings.text=null] Custom Text To Show or Will Show Localized Loading....
  * @param {string} [settings.displayDelay=1000] Number in miliseconds to pass before the markup is displayed. If 0, displays immediately.
  * @param {boolean} [settings.timeToComplete=0] fires the 'complete' trigger at a certain timing interval. If 0, goes indefinitely.
- * @param {string} [settings.transparentOverlay=false] If true, allows the "blockUI" setting to display an overlay that prevents interaction, but appears transparent instead of gray.
+ * @param {string} [settings.transparentOverlay=false] If true, allows the "blockUI" setting to display
+ * an overlay that prevents interaction, but appears transparent instead of gray.
  * @param {string} [settings.overlayOnly=false] If true, the busy indicator will only be the overlay.
  */
-
 const BUSYINDICATOR_DEFAULTS = {
   blockUI: true,
   text: null,

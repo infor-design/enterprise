@@ -15,13 +15,11 @@ const COMPONENT_NAME = 'compositeform';
 * @constructor
 * @param {jQuery[]|HTMLElement} element The component element.
 * @param {object} [settings] The component settings.
-*
 * @param {string} [settings.breakpoint = 'phone-to-tablet'] Defines the breakpoint at which the composite form will change into its responsive mode
 * @param {string} [settings.trigger = null] Expandable area trigger selector. Passed to expandable area.
 * @param {string} [settings.expandedText = Locale.translate('ShowLess')] Text to use for the expand button (Default localized)
 * @param {string} [settings.collapsedText = Locale.translate('ShowMore')] Text to use for the collapse button (Default localized)
 */
-
 const COMPOSITEFORM_DEFAULTS = {
   breakpoint: 'phone-to-tablet',
   trigger: null,
