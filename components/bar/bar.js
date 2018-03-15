@@ -8,34 +8,31 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'bar';
 
 /**
-* @namespace
-* @property {array} dataset The data to use in the line/area/bubble.
-* @property {boolean} isStacked Default is a single or stacked chart.
-* @property {boolean} isNormalized If true its a 100% bar chart
-* @property {boolean} isGrouped If true its a grouped bar chart
-* @property {boolean} showLegend If false the legend will not be shown.
-* @property {boolean|string} animate true|false - will do or not do the animation.
-* 'initial' will do only first time the animation.
-* @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
-* @property {string} formatterString Use d3 format some examples can be found on http://bit.ly/1IKVhHh
-* @property {string} format The d3 axis format
-* @property {string} tooltip A tooltip for the whole chart
-* @property {boolean} useLogScale If true log scale is enabled.
-* @property {object} ticks Settings for the chart ticks.
-* Can set ticks: {format: d3Format, number: n}
-* @property {boolean} showLines Show the in the axis lines or not.
-* @property {number} labelFactor How far out than the outer circle should the labels be placed,
-* this may be useful to adjust for some labels.
-* @property {number} wrapWidth The number of pixels after which a label needs to be
-* given a new line. You may want to change this based on label data.
-* @property {object} emptyMessage An empty message will be displayed when there is no chart data.
-* This accepts an object of the form emptyMessage:
-* `{title: 'No Data Available',
-*  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-*  button: {text: 'xxx', click: <function>}
-*  }`
-*  Set this to null for no message or will default to 'No Data Found with an icon.'
-*/
+ * A bar chart or bar graph is a chart or graph that presents categorical data with rectangular bars
+ * with heights or lengths proportional to the values that they represent. This is adapated from
+ * http://jsfiddle.net/datashaman/rBfy5/2/
+ * @class Bar
+ * @param {string} element The plugin element for the constuctor
+ * @param {string} settings The settings element.
+ * 
+ * @param {array} [settings.dataset=[]] The data to use in the line/area/bubble.
+ * @param {boolean} [settings.isStacked=true] Default is a single or stacked chart.
+ * @param {boolean} [settings.isNormalized=false] If true its a 100% bar chart
+ * @param {boolean} [settings.isGrouped=false] If true its a grouped bar chart
+ * @param {boolean} [settings.showLegend=true] If false the legend will not be shown.
+ * @param {boolean|string} [settings.animate=true] true|false - will do or not do the animation, 'initial' will do only first time the animation.
+ * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page.
+ * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
+ * @param {string} [settings.format=true] The d3 axis format
+ * @param {string} [settings.tooltip=null] A tooltip for the whole chart
+ * @param {boolean} [settings.useLogScale=false] If true log scale is enabled.
+ * @param {object} [settings.ticks=null] Settings for the chart ticks. Can set ticks: {format: d3Format, number: n}
+ * @param {boolean} [settings.showLines=true] Show the in the axis lines or not.
+ * @param {number} [settings.labelFactor=1.27] How far out than the outer circle should the labels be placed, this may be useful to adjust for some labels.
+ * @param {number} [settings.wrapWidth=60] The number of pixels after which a label needs to be given a new line. You may want to change this based on label data.
+ * @param {object} [settings.emptyMessage={ title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }] An empty message will be displayed when there is no chart data. This accepts an object of the form emptyMessage: `{title: 'No Data Available',  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',  button: {text: 'xxx', click: <function>}  }` Set this to null for no message or will default to 'No Data Found with an icon.'
+ */
+
 const BAR_DEFAULTS = {
   dataset: [],
   isStacked: true,
@@ -54,14 +51,6 @@ const BAR_DEFAULTS = {
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
-/**
- * A bar chart or bar graph is a chart or graph that presents categorical data with rectangular bars
- * with heights or lengths proportional to the values that they represent. This is adapated from
- * http://jsfiddle.net/datashaman/rBfy5/2/
- * @class Bar
- * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
- */
 function Bar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, BAR_DEFAULTS);
   if (settings && settings.dataset) {
@@ -94,8 +83,9 @@ Bar.prototype = {
     /**
     * Fires when the chart is complete done rendering, for customization.
     * @event rendered
-    * @property {object} event - The jquery event object
-    * @property {array} svg - The svg object.
+    * @memberof Bar
+    * @param {object} event - The jquery event object
+    * @param {array} svg - The svg object.
     */
     this.element.trigger('rendered', [this.svg]);
     return this;
