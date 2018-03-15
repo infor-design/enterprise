@@ -6,11 +6,22 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'homepage';
 
 /**
- * Homepage Default Settings
- * @namespace
- * @property {boolean} animate  Disable animation during resize
- * @property {number} columns  Display in 3 (default) or 4 column layout
- */
+* The Homepage handles card layout at multiple breakpoints.
+*
+* @class Homepage
+* @constructor
+* @param {String} element The component element.
+* @param {String} settings The component settings.
+*
+* @param {boolean} [settings.animate] Disable animation during resize
+* @param {number} [settings.columns] Display in 3 (default) or 4 column layout
+* @param {string} [settings.easing]
+* @param {number} [settings.gutterSize]
+* @param {number} [settings.widgetWidth]
+* @param {number} [settings.widgetHeight]
+* @param {number} [settings.timeout]
+*/
+
 const HOMEPAGE_DEFAULTS = {
   animate: true,
   columns: 3,
@@ -21,13 +32,6 @@ const HOMEPAGE_DEFAULTS = {
   timeout: 100 // Private
 };
 
-/**
-* The Homepage handles card layout at multiple breakpoints.
-* @class Homepage
-* @constructor
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function Homepage(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HOMEPAGE_DEFAULTS);
 
@@ -380,8 +384,9 @@ Homepage.prototype = {
     * Fires after the page is resized and layout is set.
     * Can be used for any special adjustments.
     * @event resize
+    * @memberof Homepage
     * @type {Object}
-    * @property {Object} event - The jquery event object
+    * @param {Object} event - The jquery event object
     */
     self.element.triggerHandler('resize', self.settings.columns);
   },
