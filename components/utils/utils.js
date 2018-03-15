@@ -22,6 +22,7 @@ $.fn.bindFirst = function (name, fn) {
 };
 
 /**
+ * @private
  * uniqueIdCount is a baseline unique number that will be used when generating
  * uniqueIds for elements and components.
  */
