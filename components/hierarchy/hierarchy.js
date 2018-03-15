@@ -8,15 +8,24 @@ import '../utils/animations';
 const COMPONENT_NAME = 'hierarchy';
 
 /**
-* @namespace
-* @property {string} legend  Pass in custom markdown for the legend structure.
-* @property {string} legendKey  Key to use for the legend matching
-* @property {string} dataset  Hierarchical Data to display
-* @property {boolean} newData  New data to be appended into dataset
-* @property {string} templateId  Additional product name information to display
-* @property {boolean} mobileView  If true will only show mobile view, default using device info.
-* @property {string} beforeExpand  A callback that fires before node expansion of a node.
+* The displays customizable hierarchical data such as an org chart.
+*
+* @class Hierarchy
+* @param {string} element The component element.
+* @param {string} settings The component settings.
+*
+* @param {string} [settings.legend] Pass in custom markdown for the legend structure.
+* @param {string} [settings.legendKey] Key to use for the legend matching
+* @param {string} [settings.dataset=[]] Hierarchical Data to display
+* @param {boolean} [settings.newData=[]] New data to be appended into dataset
+* @param {string} [settings.templateId] Additional product name information to display
+* @param {boolean} [settings.mobileView=false] If true will only show mobile view, default using device info.
+* @param {number} [settings.leafHeight=null] Set the height of the leaf
+* @param {number} [settings.leafWidth=null] Set the width of the leaf
+* @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
+* @param {boolean} [settings.paging=false] If true show pagination.
 */
+
 const HIERARCHY_DEFAULTS = {
   legend: [],
   legendKey: '',
@@ -30,13 +39,6 @@ const HIERARCHY_DEFAULTS = {
   paging: false
 };
 
-/**
-* The displays customizable hierarchical data such as an org chart.
-*
-* @class Hierarchy
-* @param {string} element The component element.
-* @param {string} settings The component settings.
-*/
 function Hierarchy(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HIERARCHY_DEFAULTS);
 
@@ -121,8 +123,9 @@ Hierarchy.prototype = {
     /**
     * Fires when node is selected
     * @event selected
-    * @property {object} event - The jquery event object
-    * @property {object} eventInfo - More info to identify the node.
+    * @memberof Hierarchy
+    * @param {object} event - The jquery event object
+    * @param {object} eventInfo - More info to identify the node.
     */
     self.element.on('mousedown', '.leaf, .back button', function (e) {
       const leaf = $(this);
@@ -358,9 +361,10 @@ Hierarchy.prototype = {
     * Fires when leaf expanded.
     *
     * @event expanded
+    * @memberof Hierarchy
     * @type {Object}
-    * @property {Object} event - The jquery event object
-    * @property {Array} args [nodeData, dataset]
+    * @param {Object} event - The jquery event object
+    * @param {Array} args [nodeData, dataset]
     */
     this.element.trigger('expanded', [nodeData, s.dataset]);
 
@@ -391,9 +395,10 @@ Hierarchy.prototype = {
       * Fires when leaf collapsed.
       *
       * @event collapsed
+      * @memberof Hierarchy
       * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Array} args [nodeData, dataset]
+      * @param {Object} event - The jquery event object
+      * @param {Array} args [nodeData, dataset]
       */
       this.element.trigger('collapsed', [nodeData, s.dataset]);
     });

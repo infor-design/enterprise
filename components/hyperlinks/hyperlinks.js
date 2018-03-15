@@ -1,22 +1,19 @@
 import { utils } from '../utils/utils';
 import { HideFocus } from '../utils/behaviors';
 
-// Component Name
 const COMPONENT_NAME = 'hyperlink';
-
-/**
- * Component Default Settings
- * @namespace
- */
-const HYPERLINK_DEFAULTS = {};
 
 /**
  * Soho component wrapper for Hyperlinks.
  * @class Hyperlink
+ *
  * @param {HTMLElement} element the base Hyperlink element
  * @param {object} [settings] incoming settings
  * @returns {this} component instance
  */
+
+const HYPERLINK_DEFAULTS = {};
+
 function Hyperlink(element, settings) {
   return this.init(element, settings);
 }
@@ -39,10 +36,20 @@ Hyperlink.prototype = {
     return this;
   },
 
+  /**
+   * Attach Events used by the Hyperlinks
+   * @private
+   * @returns {this}
+   */
   handleEvents() {
     return this;
   },
 
+  /**
+   * Resync the UI and Settings.
+   * @param {Object} settings The settings to apply.
+   * @returns {Object} The api
+   */
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
@@ -53,6 +60,10 @@ Hyperlink.prototype = {
       .init();
   },
 
+  /**
+   * Removes the events and pseudo-markup created by the hyperlinks
+   * @returns {this} component instance
+   */
   teardown() {
     return this;
   }
