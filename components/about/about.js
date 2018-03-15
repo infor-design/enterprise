@@ -4,8 +4,6 @@ import { Locale } from '../locale/locale';
 
 const COMPONENT_NAME = 'about';
 
-
-
 /**
  * The About Dialog Component is displays information regarding the application.
  *
@@ -16,12 +14,12 @@ const COMPONENT_NAME = 'about';
  * @param {string} [settings.appName='Infor Application Name'] The Main Application Name to display in the header.
  * @param {string} [settings.content] Additional text content to display at the top.
  * @param {string} [settings.copyrightYear=new Date().getFullYear()] The year displayed in the copyright, defaults to current year.
- * @param {boolean} [settings.deviceSpecs=true] Determines whether or not to display device information. This information includes Browser, Platform, Locale and if Cookies are Enabled.
+ * @param {boolean} [settings.deviceSpecs=true] Determines whether or not to display device information.
+ * This information includes Browser, Platform, Locale and if Cookies are Enabled.
  * @param {string} [settings.productName] Additional product name information to display.
  * @param {boolean} [settings.useDefaultCopyright=true] Add the Legal Approved Infor Copy Right Text.
  * @param {string} [settings.version] Semantic Version Number for example (4.0.0).
  */
-
 const ABOUT_DEFAULTS = {
   appName: 'Infor Application Name',
   content: undefined,

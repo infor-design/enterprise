@@ -21,7 +21,6 @@ const COMPONENT_NAME = 'homepage';
 * @param {number} [settings.widgetHeight]
 * @param {number} [settings.timeout]
 */
-
 const HOMEPAGE_DEFAULTS = {
   animate: true,
   columns: 3,

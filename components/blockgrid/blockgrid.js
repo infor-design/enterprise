@@ -9,7 +9,7 @@ const COMPONENT_NAME = 'blockgrid';
  * Component Name - Does this and that.
  * @class Blockgrid
  * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
+ * @param {string} [settings] The settings element.
  * @param {array} [settings.dataset=[]] An array of data objects
  * @param {string} [settings.selectable=false] Controls the selection mode this can be:
  * false, 'single' or 'multiple' or 'mixed'
@@ -151,6 +151,22 @@ Blockgrid.prototype = {
       const isActivated = activeBlock.hasClass('is-activated');
       allBlocks.removeClass('is-activated');
 
+      /**
+      * Fires when a block is selected
+      *
+      * @event deactivated
+      * @memberof Blockgrid
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
+      */
+      /**
+      * Fires when a block is unselected
+      *
+      * @event activated
+      * @memberof Blockgrid
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
+      */
       if (isActivated) {
         activeBlock.removeClass('is-activated');
         this.element.triggerHandler('deactivated', [{ row: idx, item: this.settings.dataset[idx] }]);

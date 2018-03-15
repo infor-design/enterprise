@@ -284,6 +284,13 @@ Arrange.prototype = {
             let overIndex;
             e.preventDefault();
 
+            /**
+            * Fires after finishing an arrange action.
+            *
+            * @event dragend
+            * @memberof ApplicationMenu
+            * @param {object} event - The jquery event object
+            */
             if (e.type === 'drop') {
               e.stopPropagation();
               self.dragging.trigger('dragend.arrange');

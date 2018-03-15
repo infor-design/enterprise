@@ -13,8 +13,7 @@ const COMPONENT_NAME = 'bar';
  * http://jsfiddle.net/datashaman/rBfy5/2/
  * @class Bar
  * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
- * 
+ * @param {string} [settings] The settings element.
  * @param {array} [settings.dataset=[]] The data to use in the line/area/bubble.
  * @param {boolean} [settings.isStacked=true] Default is a single or stacked chart.
  * @param {boolean} [settings.isNormalized=false] If true its a 100% bar chart
@@ -28,11 +27,21 @@ const COMPONENT_NAME = 'bar';
  * @param {boolean} [settings.useLogScale=false] If true log scale is enabled.
  * @param {object} [settings.ticks=null] Settings for the chart ticks. Can set ticks: {format: d3Format, number: n}
  * @param {boolean} [settings.showLines=true] Show the in the axis lines or not.
- * @param {number} [settings.labelFactor=1.27] How far out than the outer circle should the labels be placed, this may be useful to adjust for some labels.
- * @param {number} [settings.wrapWidth=60] The number of pixels after which a label needs to be given a new line. You may want to change this based on label data.
- * @param {object} [settings.emptyMessage={ title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }] An empty message will be displayed when there is no chart data. This accepts an object of the form emptyMessage: `{title: 'No Data Available',  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',  button: {text: 'xxx', click: <function>}  }` Set this to null for no message or will default to 'No Data Found with an icon.'
+ * @param {number} [settings.labelFactor=1.27] How far out than the outer circle should the labels be placed, this
+ * may be useful to adjust for some labels.
+ * @param {number} [settings.wrapWidth=60] The number of pixels after which a label needs to be given a new line.
+ * You may want to change this based on label data.
+ * @param {object} [settings.emptyMessage={
+ *  title: (Locale ? Locale.translate('NoData') : 'No Data Available'),
+ *   info: '',
+ *  icon: 'icon-empty-no-data' }]
+ * An empty message will be displayed when there is no chart data. This accepts an object of the form emptyMessage:
+ * `{title: 'No Data Available',
+ *  info: 'Make a selection on the list above to see results'
+ *  icon: 'icon-empty-no-data',
+ *  button: {text: 'xxx', click: <function>}  }`
+ * Set this to null for no message or will default to 'No Data Found with an icon.'
  */
-
 const BAR_DEFAULTS = {
   dataset: [],
   isStacked: true,

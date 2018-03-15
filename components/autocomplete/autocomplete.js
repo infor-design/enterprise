@@ -13,44 +13,6 @@ import '../popupmenu/popupmenu.jquery';
 // The Name of this components
 const COMPONENT_NAME = 'autocomplete';
 
-/**
-* The Autocomplete control provides an easier means of searching through a large amount of data by filtering down the results based on keyboard input from the user.
-* @class Autocomplete
-* @param {object} element The component element.
-* @param {object} settings The component settings.
-
-* @param {string} [settings.source=[]] Defines the data to use, must be specified.
-* @param {string} [settings.sourceArguments={}] If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
-* @param {boolean} [settings.template If defined, use this to draw the contents of each search result instead of the default draw routine.
-* @param {string} [settings.filterMode='startsWith'] The matching algorithm, startsWith and contains are supported - false will not filter client side
-* @param {boolean} [settings.delay=300] The delay between key strokes on the keypad before it thinks you stopped typing
-* @param {string} [settings.width=null] Width of the open auto complete menu
-* @param {string} [settings.offset=null] For the open menu, the left or top offset
-* @param {string} [settings.autoSelectFirstItem=false] Whether or not to select he first item in the list to be selected
-* @param {function} [settings.resultsCallback] If defined, does not produce the results of the Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback function.
-* @param {boolean} [settings.highlightMatchedText=true] The highlightMatchText property.
-* @param {function} [settings.highlightCallback=DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK] The highlightCallback property.
-* @param {function} [settings.resultIteratorCallback=DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK] The resultIteratorCallback property.
-* @param {function} [settings.displayResultsCallback] The displayResultsCallback property.
-* @param {function} [settings.searchableTextCallbackDEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK] The searchableTextCallback property.
-*/
-
-const AUTOCOMPLETE_DEFAULTS = {
-  source: [],
-  sourceArguments: {},
-  template: undefined,
-  filterMode: 'startsWith',
-  delay: 300,
-  width: null,
-  offset: null,
-  autoSelectFirstItem: false,
-  highlightMatchedText: true,
-  highlightCallback: DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK,
-  resultIteratorCallback: DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK,
-  displayResultsCallback: undefined,
-  searchableTextCallback: DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK
-};
-
 /*
  * Default Autocomplete Result Item Template.  This can be modified to add data points that
  * will be populated by adding properties to the object created
@@ -138,6 +100,46 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
   }
 
   return item;
+};
+
+
+/**
+* The Autocomplete control provides an easier means of searching through a large amount of data by filtering
+* down the results based on keyboard input from the user.
+* @class Autocomplete
+* @param {object} element The component element.
+* @param {object} [settings] The component settings.
+* @param {string} [settings.source=[]] Defines the data to use, must be specified.
+* @param {string} [settings.sourceArguments={}] If a source method is defined, this flexible object can be passed
+* into the source method, and augmented with parameters specific to the implementation.
+* @param {boolean} [settings.template If defined, use this to draw the contents of each search result instead of the default draw routine.
+* @param {string} [settings.filterMode='startsWith'] The matching algorithm, startsWith and contains are supported - false will not filter client side
+* @param {boolean} [settings.delay=300] The delay between key strokes on the keypad before it thinks you stopped typing
+* @param {string} [settings.width=null] Width of the open auto complete menu
+* @param {string} [settings.offset=null] For the open menu, the left or top offset
+* @param {string} [settings.autoSelectFirstItem=false] Whether or not to select he first item in the list to be selected
+* @param {function} [settings.resultsCallback] If defined, does not produce the results of the Autocomplete
+* inside a popupmenu, instead piping them to a process defined inside this callback function.
+* @param {boolean} [settings.highlightMatchedText=true] The highlightMatchText property.
+* @param {function} [settings.highlightCallback] The highlightCallback property.
+* @param {function} [settings.resultIteratorCallback] The resultIteratorCallback property.
+* @param {function} [settings.displayResultsCallback] The displayResultsCallback property.
+* @param {function} [settings.searchableTextCallback] The searchableTextCallback property.
+*/
+const AUTOCOMPLETE_DEFAULTS = {
+  source: [],
+  sourceArguments: {},
+  template: undefined,
+  filterMode: 'startsWith',
+  delay: 300,
+  width: null,
+  offset: null,
+  autoSelectFirstItem: false,
+  highlightMatchedText: true,
+  highlightCallback: DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK,
+  resultIteratorCallback: DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK,
+  displayResultsCallback: undefined,
+  searchableTextCallback: DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK
 };
 
 function Autocomplete(element, settings) {

@@ -16,14 +16,14 @@ const COMPONENT_NAME = 'applicationmenu';
  * The Application Menu provides access to all the functions, pages, and forms in an application.
  * @class ApplicationMenu
  * @param {[type]} element The element that gets the plugin established on it.
- * @param {[type]} settings The settings to use on this instance.
- * 
- * @param {string} [settings.breakpoint='phone-to-tablet'] Can be 'tablet' or 'phone-to-tablet' (+767), 'phablet (+610)', 'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
+ * @param {[type]} [settings] The settings to use on this instance.
+ *
+ * @param {string} [settings.breakpoint='phone-to-tablet'] Can be 'tablet' or 'phone-to-tablet' (+767),
+ * 'phablet (+610)', 'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
  * @param {boolean} [settings.filterable=false] If true a search / filter option will be added.
  * @param {boolean} [settings.openOnLarge=false]  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
  * @param {array} [settings.triggers=[]]  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
  */
-
 const APPLICATIONMENU_DEFAULTS = {
   breakpoint: 'phone-to-tablet',
   filterable: false,
@@ -359,6 +359,13 @@ ApplicationMenu.prototype = {
         self.userClosed = undefined;
       }
 
+      /**
+      * Fires the menu is opened
+      *
+      * @event applicationmenuopen
+      * @memberof ApplicationMenu
+      * @param {object} event - The jquery event object
+      */
       if (!openedByClass) {
         self.isAnimating = false;
         self.element.trigger('applicationmenuopen');
@@ -455,6 +462,13 @@ ApplicationMenu.prototype = {
         self.userClosed = true;
       }
 
+      /**
+      * Fires the menu is closed
+      *
+      * @event applicationmenuclose
+      * @memberof ApplicationMenu
+      * @param {object} event - The jquery event object
+      */
       self.element.trigger('applicationmenuclose');
       $('body').triggerHandler('resize');
     }
