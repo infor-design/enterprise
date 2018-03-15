@@ -11,18 +11,7 @@ import '../tooltip/tooltip.jquery';
 // Component Name
 const COMPONENT_NAME = 'slider';
 
-/**
- * Slider Component Defaults
- * @namespace
- * @property {array} value
- * @property {number} min
- * @property {number} max
- * @property {boolean} range
- * @property {undefined|Number} step
- * @property {array} ticks
- * @property {undefined|Array} tooltipContent
- * @property {boolean} persistTooltip
- */
+// The Component Defaults
 const SLIDER_DEFAULTS = {
   value: [50],
   min: 0,
@@ -37,9 +26,16 @@ const SLIDER_DEFAULTS = {
 /**
  * Touch Enabled/Responsive and Accessible Slider Control
  * @class Slider
- * @constructor
- * @param {jQuery[]|HTMLElement} element the base element
+ * @param {jQuery[]|HTMLElement} element The DOM element
  * @param {object} [settings] incoming settings
+ * @param {array} [settings.value = [50]] An array with the slider values. Or one if a single value slider.
+ * @param {number} [settings.min = 0] The minimum slider value.
+ * @param {number} [settings.max = 100] The maximum slider value.
+ * @param {boolean} [settings.range = false] If true a range slider with two selectors is formed.
+ * @param {undefined|Number} [settings.step] If added will be the number of slider steps to use.
+ * @param {array} [settings.ticks = []] An array of the ticks to use for the steps
+ * @param {undefined|Array} [settings.tooltipContent] Special customizable tooltip content.
+ * @param {boolean} [settings.persistTooltip = false] If true the tooltip will stay visible.
  */
 function Slider(element, settings) {
   this.element = $(element);
@@ -364,6 +360,7 @@ Slider.prototype = {
 
   /**
    * User is interacting with the Slider Range (not the handle or ticks)
+   * @private
    * @param {jQuery.Event} e jQuery `click` event
    * @returns {void}
    */
@@ -445,6 +442,7 @@ Slider.prototype = {
 
   /**
    * Activates one of the slider handles
+   * @private
    * @param {jQuery[]} handle element representing a slider handle
    */
   activateHandle(handle) {
@@ -453,6 +451,7 @@ Slider.prototype = {
 
   /**
    * Deactivates one of the slider handles
+   * @private
    * @param {jQuery[]} handle element representing a slider handle
    */
   deactivateHandle(handle) {
@@ -461,6 +460,7 @@ Slider.prototype = {
 
   /**
    * Enables the ability to drag one of the slider handles.
+   * @private
    * @param {jQuery[]} handle element representing a slider handle
    */
   enableHandleDrag(handle) {
@@ -511,6 +511,15 @@ Slider.prototype = {
         rangeVal = Math.round(rangeVal / self.settings.step) * self.settings.step;
       }
 
+      /**
+      * Fires while the slider is being slid.
+      * @event sliding
+      * @memberof Slider
+      * @property {object} event The jquery event object
+      * @property {object} args Extra event information.
+      * @property {HTMLElement} args.handle The slider handle DOM element.
+      * @property {number} args.value The current range value.
+      */
       if (!e.defaultPrevented) {
         self.value(thisHandle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
         self.updateRange();
@@ -520,6 +529,22 @@ Slider.prototype = {
     }
 
     // Add/Remove Classes for canceling animation of handles on the draggable's events.
+    /**
+    * Fires while the slider is being slid.
+    * @event slidestart
+    * @memberof Slider
+    * @property {object} event The jquery event object
+    * @property {object} args Extra event information.
+    * @property {HTMLElement} args.handle The slider handle DOM element.
+    */
+    /**
+     * Fires while the slider is being slid.
+     * @event slidestop
+     * @memberof Slider
+     * @property {object} event The jquery event object
+     * @property {object} args Extra event information.
+     * @property {HTMLElement} args.handle The slider handle DOM element.
+     */
     handle.drag(draggableOptions)
       .on('drag.slider', (e, args) => {
         updateHandleFromDraggable(e, $(e.currentTarget), args);
@@ -538,6 +563,7 @@ Slider.prototype = {
 
   /**
    * Disables the dragging of a handle.
+   * @private
    * @param {jQuery[]} handle element representing a slider handle
    */
   disableHandleDrag(handle) {
@@ -585,6 +611,7 @@ Slider.prototype = {
 
   /**
    * Handles Slider Component's keystrokes
+   * @private
    * @param {jQuery.Event} e jQuery `keydown` event
    * @param {this} self reference to this component instance
    */
@@ -711,6 +738,7 @@ Slider.prototype = {
 
   /**
    * Changes the position of the bar and handles based on their values.
+   * @private
    */
   updateRange() {
     const self = this;
@@ -814,6 +842,7 @@ Slider.prototype = {
   /**
    * Allows a handle to animate to a new position if the difference in value is greater
    *  than 3% of the size of the range.
+   * @private
    * @param {jQuery[]} handle element representing a slider handle
    * @param {number} originalVal the value before it was modified
    * @param {number} updatedVal the target value
@@ -881,6 +910,7 @@ Slider.prototype = {
 
   /**
    * Gets a string-based hex value for the closest tick's defined color.
+   * @private
    * @returns {string} hex value representing a color
    */
   getColorClosestToValue() {
@@ -988,6 +1018,7 @@ Slider.prototype = {
   /**
    * Returns a value with prefixed/suffixed text content.
    * Used by the tooltip and default ticks to get potential identifiers like $ and %.
+   * @private
    * @param {string} content the original tooltip content
    * @returns {string} prepended/appended text that will be displayed inside the tooltip
    */
@@ -1121,6 +1152,7 @@ Slider.prototype = {
 
   /**
    * Removes the events and pseudo-markup created by the slider
+   * @private
    * @returns {this} component instance
    */
   teardown() {
@@ -1144,15 +1176,9 @@ Slider.prototype = {
   },
 
   /**
-   * @fires Slider#events
-   * @listens mousedown
-   * @listens click
-   * @listens keydown
-   * @listens keyup
-   * @listens touchend
-   * @listens touchcancel
-   * @listens updated
-   * @returns {this} component instance
+   * Handle component events.
+   * @private
+   * @returns {void}
    */
   bindEvents() {
     const self = this;

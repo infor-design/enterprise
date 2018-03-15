@@ -9,19 +9,7 @@ import '../utils/animations';
 // The name of this component.
 const COMPONENT_NAME = 'tree';
 
-/**
- * @namespace
- * @property {string} selectable 'single' or 'multiple'.
- * @property {boolean} hideCheckboxes Only applies when `selectable` is set to 'multiple'.
- * @property {null|string} menuId if defined, will be used to identify a Context Menu by ID
- * attribute in which to add nodes.
- * @property {boolean} useStepUI if `true`, turns this tree instance into a "Stepped" tree.
- * @property {string} folderIconOpen the icon used when a tree folder node is open.
- * @property {string} folderIconClosed the icon used when a tree folder node is closed.
- * @property {boolean} sortable if `true`, allows nodes to become sortable.
- * @property {null|function} onBeforeSelect if defined as a function, fires that function as a
- * callback before the selection on a node occurs.
- */
+// The Component Defaults
 const TREE_DEFAULTS = {
   selectable: 'single', // ['single'|'multiple']
   hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
@@ -36,10 +24,20 @@ const TREE_DEFAULTS = {
 };
 
 /**
-* Thetree Component displays a hierarchical list.
-* @param {string} element The component element.
-* @param {string} settings The component settings.
-* @class Datagrid
+* The tree Component displays a hierarchical list.
+* @class Tree
+* @param {object} element The component element.
+* @param {object} [settings] The component settings.
+* @param {string} [settings.selectable = 'single'] 'single' or 'multiple'.
+* @param {boolean} [settings.hideCheckboxes = false] Only applies when `selectable` is set to 'multiple'.
+* @param {null|string} [settings.menuId] if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
+* @param {boolean} [settings.useStepUI = false] if `true`, turns this tree instance into a "Stepped" tree.
+* @param {string} [settings.folderIconOpen = 'open-folder']  the icon used when a tree folder node is open.
+* @param {string} [settings.folderIconClosed = 'closed-folder'] the icon used when a tree folder node is closed.
+* @param {boolean} [settings.sortable = false] if `true`, allows nodes to become sortable.
+* @param {null|function} [settings.onBeforeSelect] If defined as a function, fires that function as a callback before the selection on a node occurs.
+* @param {null|function} [settings.onExpand] If defined as a function, fires that function as a node is expanded.
+* @param {null|function} [settings.onCollapse] If defined as a function, fires that function as a node is collapsed.
 */
 function Tree(element, settings) {
   this.element = $(element);
@@ -74,7 +72,8 @@ Tree.prototype = {
 
   /**
    * Init Tree from ul, li, a markup structure in DOM
-   */
+   * @private
+  */
   initTree() {
     const self = this;
     const s = this.settings;
@@ -101,7 +100,8 @@ Tree.prototype = {
 
   /**
    * Init selected notes
-   */
+   * @private
+  */
   initSelected() {
     const self = this;
     this.element.find('li').each(function () {
@@ -111,6 +111,7 @@ Tree.prototype = {
 
   /**
    * Focus the first tree node
+   * @private
    */
   focusFirst() {
     this.element.find('a:first').attr('tabindex', '0');
@@ -119,7 +120,7 @@ Tree.prototype = {
   /**
    * Set focus
    * @private
-   * @param {Object} node .
+   * @param {object} node .
    * @returns {void}
    */
   setFocus(node) {
@@ -129,7 +130,7 @@ Tree.prototype = {
   /**
    * From the LI, Read props and add stuff
    * @private
-   * @param {Object} a an anchor tag reference wrapped in a jQuery object.
+   * @param {object} a an anchor tag reference wrapped in a jQuery object.
    * @returns {void}
    */
   decorateNode(a) {
@@ -261,7 +262,7 @@ Tree.prototype = {
   /**
    * Sets the correct icon to use on a particular SVG element.
    * @private
-   * @param {Object} svg an SVG element reference wrapped in a jQuery object
+   * @param {object} svg an SVG element reference wrapped in a jQuery object
    * @param {String} icon the ID of a Soho Icon type.
    * @returns {void}
    */
@@ -273,7 +274,7 @@ Tree.prototype = {
 
   /**
    * Expands a collection of tree nodes.
-   * @param {Object} nodes - a jQuery-wrapped collection of tree node elements.
+   * @param {object} nodes - a jQuery-wrapped collection of tree node elements.
    If left undefined, this will automatically use all `ul[role=group]` elements.
    * @returns {void}
    */
@@ -294,7 +295,7 @@ Tree.prototype = {
 
   /**
    * Collapses a collection of tree nodes.
-   * @param {Object} nodes - a jQuery-wrapped collection of tree node elements.
+   * @param {object} nodes - a jQuery-wrapped collection of tree node elements.
    If left undefined, this will automatically use all `ul[role=group]` elements.
    * @returns {void}
    */
@@ -323,7 +324,7 @@ Tree.prototype = {
   /**
    * Check if an object is an instance of a jQuery object
    * @private
-   * @param {Object} obj the object being tested.
+   * @param {object} obj the object being tested.
    * @returns {Boolean} true if jQuery
    */
   isjQuery(obj) {
@@ -343,7 +344,7 @@ Tree.prototype = {
   /**
    * Selects a tree node by [jquery selector] -or- [jquery object]
    * @private
-   * @param {Object} selector uses a string that represents a jQuery-wrapped
+   * @param {object} selector uses a string that represents a jQuery-wrapped
    element's ID attribute, or a jQuery-wrapped reference to the element itself.
    * @returns {void}
    */
@@ -359,7 +360,7 @@ Tree.prototype = {
   /**
    * Deselects a tree node
    * @private
-   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {Boolean} focus - if defined, causes the node to become focused.
    * @returns {void}
    */
@@ -390,12 +391,14 @@ Tree.prototype = {
     setTimeout(() => {
       const jsonData = node.data('jsonData') || {};
       /**
-      * Fires on un select node.
-      *
+      * Fires when the node is deselected.
+      * @memberof Tree
       * @event unselected
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} data and node element
+      * @type {object}
+      * @property {object} event - The jquery event object
+      * @property {object} args for node element, item
+      * @property {HTMLElement} args.node The DOM Element.
+      * @property {HTMLElement} args.data The JSON data attached to the node.
       */
       self.element.triggerHandler('unselected', { node, data: jsonData });
     }, 0);
@@ -404,7 +407,7 @@ Tree.prototype = {
   /**
    * Selects a tree node
    * @private
-   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {Boolean} focus - if defined, causes the node to become focused.
    * @returns {void}
    */
@@ -434,9 +437,9 @@ Tree.prototype = {
   },
 
   /**
-   * ?
+   * Select the node when finished
    * @private
-   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {Boolean} focus - if defined, causes the node to become focused.
    * @returns {void}
    */
@@ -471,13 +474,15 @@ Tree.prototype = {
     setTimeout(() => {
       const jsonData = node.data('jsonData') || {};
       /**
-      * Fires on select node.
-      *
-      * @event selected
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} data and node element
-      */
+       * Fires when the node is selected.
+       * @memberof Tree
+       * @event unselected
+       * @type {object}
+       * @property {object} event - The jquery event object
+       * @property {object} args for node element, item
+       * @property {HTMLElement} args.node The DOM Element.
+       * @property {HTMLElement} args.data The JSON data attached to the node.
+       */
       self.element.triggerHandler('selected', { node, data: jsonData });
     }, 0);
   },
@@ -485,7 +490,7 @@ Tree.prototype = {
   /**
    * Deselects a tree node
    * @private
-   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @returns {void}
    */
   setNodeStatus(node) {
@@ -532,7 +537,7 @@ Tree.prototype = {
   /**
    * Get's a tree node's current 'selected' status
    * @private
-   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {Boolean} isFirstSkipped - ?
    * @returns {Boolean} status as true|false|'mixed'
    */
@@ -569,7 +574,7 @@ Tree.prototype = {
   /**
    * Changes a node's selected status to its opposite form.
    * @private
-   * @param {Object} node - a jQuery-wrapped element reference to a tree node.
+   * @param {object} node - a jQuery-wrapped element reference to a tree node.
    * @param {Boolean} isFirstSkipped - ?
    * @returns {void}
    */
@@ -670,7 +675,12 @@ Tree.prototype = {
     }
   },
 
-  // Access the node
+  /**
+   * Access The Node
+   * @private
+   * @param  {object} next The next element.
+   * @param  {object} node The DOM element.
+   */
   accessNode(next, node) {
     const self = this;
 
@@ -688,6 +698,12 @@ Tree.prototype = {
     node.attr('aria-expanded', node.attr('aria-expanded') !== 'true');
   },
 
+  /**
+   * Open The Node
+   * @private
+   * @param  {object} nextTarget The next tree element
+   * @param  {object} nodeTarget The DOM element to open.
+   */
   openNode(nextTarget, nodeTarget) {
     const self = this;
     const nodeData = nodeTarget.data('jsonData');
@@ -723,6 +739,12 @@ Tree.prototype = {
     self.accessNode(nextTarget, nodeTarget);
   },
 
+  /**
+   * Close The Node
+   * @private
+   * @param  {object} nextTarget The next tree element
+   * @param  {object} nodeTarget The DOM element to open.
+   */
   closeNode(nextTarget, nodeTarget) {
     const self = this;
     self.setTreeIcon(nodeTarget.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
@@ -912,7 +934,7 @@ Tree.prototype = {
 
   /**
    * Handle Loading JSON.
-   * @param {Object} dataset - to load.
+   * @param {object} dataset - to load.
    * @returns {void}
    */
   loadData(dataset) {// eslint-disable-line
@@ -1003,7 +1025,7 @@ Tree.prototype = {
 
   /**
    * Get selected nodes.
-   * @returns {Object} selected nodes
+   * @returns {object} selected nodes
    */
   getSelectedNodes() {
     let node;
@@ -1155,9 +1177,9 @@ Tree.prototype = {
 
   /**
    * Add a node and all its related markup.
-   * @param {Object} nodeData to add.
-   * @param {Object} location in tree.
-   * @returns {Object} li added
+   * @param {object} nodeData to add.
+   * @param {object} location in tree.
+   * @returns {object} li added
    */
   addNode(nodeData, location) {
     let li = $('<li></li>');
@@ -1293,7 +1315,7 @@ Tree.prototype = {
 
   /**
    * Update fx rename a node.
-   * @param {Object} nodeData to update.
+   * @param {object} nodeData to update.
    * @returns {void}
    */
   updateNode(nodeData) {
@@ -1417,7 +1439,7 @@ Tree.prototype = {
 
   /**
    * Delete a node from the dataset or tree.
-   * @param {Object} nodeData to delete.
+   * @param {object} nodeData to delete.
    * @returns {void}
    */
   removeNode(nodeData) {
@@ -1449,23 +1471,28 @@ Tree.prototype = {
       e.preventDefault();
       $(e.currentTarget).popupmenu({ menuId, eventObj: e, trigger: 'immediate', attachToBody: true }).off('selected').on('selected', (event, args) => {
         /**
-        * Fires when the menu item select.
+        * Fires when the an attached context menu item is selected.
         *
         * @event menuselect
-        * @type {Object}
-        * @property {Object} event - The jquery event object
-        * @property {Object} data for node element, item
+        * @memberof Tree
+        * @type {object}
+        * @property {object} event - The jquery event object
+        * @property {object} args for node element, item
+        * @property {HTMLElement} args.node The DOM Element.
+        * @property {object} data.item The attached node data.
         */
         self.element.triggerHandler('menuselect', { node, item: args });
       });
 
       /**
-      * Fires when the menu open.
-      * menu options - use it to update the menu as needed
+      * Fires when the attached context menu is opened. Use it to update the menu as needed
+      * @memberof Tree
       * @event menuopen
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} data for node element, menu
+      * @type {object}
+      * @property {object} event - The jquery event object
+      * @property {object} args for node element, item
+      * @property {HTMLElement} args.menu The menu item
+      * @property {HTMLElement} args.node The DOM Element.
       */
       self.element.triggerHandler('menuopen', { menu: $(`#${menuId}`), node });
       return false;
@@ -1782,7 +1809,7 @@ Tree.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     if (this.settings.sortable) {
@@ -1803,8 +1830,8 @@ Tree.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

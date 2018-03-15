@@ -5,19 +5,7 @@ import { Locale } from '../locale/locale';
 // Name of this component
 const COMPONENT_NAME = 'textarea';
 
-/**
-* @namespace
-* @property {boolean} autoGrow Will automatically expand the text area to fit the contents.
-* @property {boolean} autoGrowAnimate Will animate the text area growing.
-* @property {integer} autoGrowAnimateSpeed The speed of the animation.
-* @property {boolean} characterCounter Displays a counter that counts down from the maximum
-* length allowed.
-* @property {boolean} printable Determines whether or not the text area can be displayed on a
-* printed page.
-* @property {null|String} charRemainingText  Text that will be used in place of the "remaining"
-* text.
-* @property {null|String} charMaxText  Text that will be used in place of the "Max" text.
-*/
+// Component Options
 const TEXTAREA_DEFAULTS = {
   autoGrow: false,
   autoGrowAnimate: true,
@@ -32,7 +20,18 @@ const TEXTAREA_DEFAULTS = {
 * The Textarea Component wraps a standard HTML Textarea element and provides additional features.
 * @class Textarea
 * @param {object} element The component element.
-* @param {object} settings The component settings.
+* @param {object} [settings] The component settings.
+* @param {boolean} [settings.autoGrow = false] Will automatically expand the textarea to fit the contents when typing.
+* @param {boolean} [settings.autoGrowAnimate  = true] Will animate the textarea grow.
+* @param {number} [settings.autoGrowAnimateSpeed = 200] The speed of the animation.
+* @param {boolean} [settings.characterCounter = true] Displays a counter that counts down from the maximum
+* length allowed.
+* @param {boolean} [settings.printable = true] Determines whether or not the text area can be displayed on a
+* printed page.
+* @param {null|String} [settings.charRemainingText = 'Characters Left']  Text that will be used in place of the "remaining"
+* text defaulting to a localized 'Characters Left'.
+* @param {null|String} [settings.charMaxText = 'Character count maximum of']  Text that will be used in place of the "Max" text.
+* Defaults to a localized Version of 'Character count maximum of'.
 */
 function Textarea(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TEXTAREA_DEFAULTS);
@@ -81,6 +80,7 @@ Textarea.prototype = {
 
   /**
    * Determines if the text is selected.
+   * @private
    * @param  {object}  input The input dom element (jQuery)
    * @returns {boolean} True if the text is selected in the input.
    */
@@ -95,6 +95,7 @@ Textarea.prototype = {
 
   /**
    * Checks a keycode value and determines if it belongs to a printable character.
+   * @private
    * @param {number} keycode - a number representing an ASCII keycode value
    * @returns {boolean} Returns true if the key is a printable one.
    */
@@ -264,12 +265,11 @@ Textarea.prototype = {
 
   /**
    *  This component fires the following events.
-   *
    * @fires Textarea#events
    * @param {object} keyup  Fires when the button is clicked (if enabled).
    * @param {object} focus  Fires when the menu is focused.
-   * @param {object} keypress  &nbsp;-&nbsp;
-   * @param {object} blur  &nbsp;-&nbsp;
+   * @param {object} keypress  Fires when pressing a key.
+   * @param {object} blur  Fires when leaving the field.
    */
   handleEvents() {
     const self = this;

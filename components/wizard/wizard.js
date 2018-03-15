@@ -7,20 +7,18 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'wizard';
 
-/**
- * Component Default Settings
- * @namespace
- * @property {jQuery[]} ticks  Defines the data to use, must be specified.
- */
+// Component Default Settings
 const WIZARD_DEFAULTS = {
   ticks: null
 };
 
 /**
+ * A horizontal form based wizard component.
  * @class Wizard
  * @constructor
  * @param {jQuery[]|HTMLElement} element the Wizard container
  * @param {object} [settings] incoming settings
+ * @param {jQuery[]} [settings.ticks]  Defines the data to use, must be specified.
  */
 function Wizard(element, settings) {
   this.element = $(element);
@@ -72,6 +70,7 @@ Wizard.prototype = {
 
   /**
    * Builds the HTML Markup that draws out defined Wizard tick marks.
+   * @private
    * @returns {this} component instance
    */
   buildTicks() {
@@ -143,6 +142,7 @@ Wizard.prototype = {
 
   /**
    * Re-renders the Wizard Range with updated ticks
+   * @private
    * @returns {this} component instance
    */
   updateRange() {
@@ -176,6 +176,7 @@ Wizard.prototype = {
   },
 
   /**
+   * @private
    * @returns {this} component instance
    */
   teardown() {
@@ -245,7 +246,14 @@ Wizard.prototype = {
       return this;
     }
 
-    // Cancel selection by returning a 'beforeactivate' handler as 'false'
+    /**
+     * Fires before a step is activated/pressed. You can cancel selection by returning a 'beforeactivate'
+     * handler as 'false'
+    * @event beforeactivate
+    * @memberof Datagrid
+    * @property {object} event - The jquery event object
+    * @property {HTMLElement} tick - The tick (link) that was activated.
+    */
     const canNav = this.element.triggerHandler('beforeactivate', [tick]);
     if (canNav === false) {
       return this;
@@ -258,9 +266,25 @@ Wizard.prototype = {
       .addClass('complete');
 
     this.updateRange();
+
+    /**
+     * Fires while a step is activated/pressed.
+     * handler as 'false'
+    * @event activated
+    * @memberof Datagrid
+    * @property {object} event - The jquery event object
+    * @property {HTMLElement} tick - The tick (link) that was activated.
+    */
     this.element.trigger('activated', [tick]);
 
-    // Timeout allows animation to finish
+    /**
+     * Fires after a step is activated/pressed. And the new Dom is loaded.
+     * handler as 'false'
+    * @event activated
+    * @memberof Datagrid
+    * @property {object} event - The jquery event object
+    * @property {HTMLElement} tick - The tick (link) that was activated.
+    */
     setTimeout(() => {
       self.element.trigger('afteractivated', [tick]);
     }, 300);
@@ -278,6 +302,7 @@ Wizard.prototype = {
 
   /**
    * This component listens to the following events:
+   * @private
    * @listens updated custom updated event
    * @listens click jQuery click event
    * @returns {this} component instance

@@ -9,16 +9,7 @@ import { Locale } from '../locale/locale';
 // Settings and Options
 const COMPONENT_NAME = 'sparkline';
 
-/**
-* @namespace
-* @property {array} dataset The data to use in the sparklines.
-* @property {string} name  The name of the data used in the accessibility label and tooltip.
-* @property {array} colors An array of color sequences in hex format fx #1D5F8A.
-* @property {boolean} isDots Shows dots on the data points.
-* @property {boolean} isPeakDot Highlights the top value as peak with a special dot.
-* @property {boolean} isMinMax Shows a continuous shading to highlight the min and max values.
-* @property {boolean} isMedianRange Adds a median range display.
-*/
+// The Component Defaults
 const SPARKLINE_DEFAULTS = {
   dataset: [],
   colors: ['#1D5F8A', '#999999', '#bdbdbd', '#d8d8d8'],
@@ -32,7 +23,14 @@ const SPARKLINE_DEFAULTS = {
  * Sparklines are a compact way to show trends.
  * @class Sparkline
  * @param {string} element The plugin element for the constuctor
- * @param {string} [settings] The settings element.
+ * @param {string} settings The settings element.
+ * @param {array} [settings.dataset] The data to use in the sparklines.
+ * @param {array} [settings.colors = ['#1D5F8A', '#999999', '#bdbdbd', '#d8d8d8']] An array of color sequences in hex format fx #1D5F8A,
+ * defaulting to the correct standard colors.
+ * @param {boolean} [settings.isDots = false] Shows dots on the data points.
+ * @param {boolean} [settings.isPeakDot = false] Highlights the top value as peak with a special dot.
+ * @param {boolean} [settings.isMinMax  = false] Shows a continuous shading to highlight the min and max values.
+ * @param {boolean} [settings.isMedianRange  = false] Adds a median range display.
  */
 function Sparkline(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SPARKLINE_DEFAULTS);
@@ -60,8 +58,8 @@ Sparkline.prototype = {
 
   /**
    * Build the Sparkline Chart.
-   * @returns {object} The sparkline prototype for chaining.
    * @private
+   * @returns {object} The sparkline prototype for chaining.
    */
   build() {
     // chartData, options
@@ -267,7 +265,15 @@ Sparkline.prototype = {
             this.settings.isMinMax && min === d) ? (dotsize + 1) : dotsize);
       });
 
-    this.element.trigger('rendered');
+    /**
+    * Fires when the sparkline is fully renders.
+    *
+    * @event close
+    * @memberof About
+    * @property {object} event - The jquery event object
+    * @property {object} ui - The svg element.
+    */
+    this.element.trigger('rendered', svg);
     return this;
   },
 
@@ -313,8 +319,8 @@ Sparkline.prototype = {
 
   /**
    * Simple Teardown - remove events & rebuildable markup.
-   * @returns {object} The Component prototype, useful for chaining.
    * @private
+   * @returns {object} The Component prototype, useful for chaining.
    */
   teardown() {
     this.element.off(`updated.${COMPONENT_NAME}`);
