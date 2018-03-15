@@ -7,18 +7,7 @@ import '../dropdown/dropdown.jquery';
 // Component Name
 const COMPONENT_NAME = 'multiselect';
 
-/**
- * Multiselect Component Defaults
- * @namespace
- * @property {string} filterMode  The search mode to use, can be 'contains' or 'startsWith'
- * @property {number} maxSelected  The max number of items which can be selected
- * @property {string} moveSelected   Move selected options in each group to just underneath
- *  their corresponding group headers.
- * @property {boolean} showEmptyGroupHeaders  If true groups with no items will still show
- *  the empty group header.
- * @property {boolean} showSelectAll  Show the select all text/option.
- * @property {Function} source  The calback for ajax.
- */
+// Component Defaults
 const MULTISELECT_DEFAULTS = {
   filterMode: 'contains',
   maxSelected: undefined,
@@ -34,6 +23,12 @@ const MULTISELECT_DEFAULTS = {
  * @constructor
  * @param {jQuery[]|HTMLElement} element the base element
  * @param {object} [settings] incoming settings
+ * @property {string} [settings.filterMode = 'contains']  The search mode to use, can be 'contains' or 'startsWith'
+ * @property {number} [settings.maxSelected = null]  The max number of items which can be selected
+ * @property {string} [settings.moveSelected = 'all']   Move selected options in each group to just underneath their corresponding group headers.
+ * @property {boolean} [settings.showEmptyGroupHeaders = false]  If true groups with no items will still show the empty group header.
+ * @property {boolean} [settings.showSelectAll = false]  Show the select all button and text .
+ * @property {function} [settings.source]  The calback for ajax.
  */
 function MultiSelect(element, settings) {
   this.settings = utils.mergeSettings(element, settings, MULTISELECT_DEFAULTS);

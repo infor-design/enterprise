@@ -36,7 +36,7 @@ const TREE_DEFAULTS = {
 };
 
 /**
-* Thetree Component displays a hierarchical list.
+* The tree Component displays a hierarchical list.
 * @param {string} element The component element.
 * @param {string} settings The component settings.
 * @class Datagrid

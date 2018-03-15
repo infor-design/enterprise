@@ -10,8 +10,8 @@ import '../toolbar/toolbar.jquery';
 import '../wizard/wizard.jquery';
 
 /**
- * Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
- * @class @
+ * Special Header with Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
+ * @class @Header
  * @constructor
  * @param {HTMLElement|jQuery[]} element the base element
  * @param {object} [settings] incoming settings

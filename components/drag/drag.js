@@ -28,7 +28,7 @@ const COMPONENT_NAME = 'drag';
  * @param {string} [settings.obstacle] jQuery Selector of object(s) that you cannot drag into,
  * @param {boolean} [settings.underElements=false] If set to true will return list of elements that are
  * underneath the drag element
- * @param {Object} [settings.containmentOffset={left: 0, top: 0}] How close to the containment object should we be allowed
+ * @param {object} [settings.containmentOffset={left: 0, top: 0}] How close to the containment object should we be allowed
  * to drag in position form. `{left: 0, top: 0}`
 */
 const DRAG_DEFAULTS = {

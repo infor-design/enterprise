@@ -261,8 +261,8 @@ About.prototype = {
     *
     * @event beforeopen
     * @memberof About
-    * @property {object} event - The jquery event object.
-    * @property {object} ui - The dialog object
+    * @property {object} event The jquery event object.
+    * @property {object} ui The dialog object
     */
     this.modal.data('modal').element.on('beforeopen.about', () => {
       this.modal.find('.modal-body').scrollTop(0);
