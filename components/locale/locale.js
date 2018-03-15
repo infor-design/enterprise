@@ -12,9 +12,11 @@ if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.culturesPa
 * Data From: http://www.unicode.org/repos/cldr-aux/json/22.1/main/
 * For Docs See: http://ibm.co/1nXyNxp
 * @class Locale
-* @property {string} currentLocale  The Currently Set Locale
-* @property {object} cultures  Contains all currently-stored cultures.
-* @property {string} culturesPath  the web-server's path to culture files.
+* @constructor
+*
+* @param {string} currentLocale  The Currently Set Locale
+* @param {object} cultures  Contains all currently-stored cultures.
+* @param {string} culturesPath  the web-server's path to culture files.
 */
 const Locale = {  // eslint-disable-line
 
@@ -104,7 +106,7 @@ const Locale = {  // eslint-disable-line
   /**
    * Set the currently used locale.
    * @param {string} locale The locale to fetch and set.
-   * @returns {jQuery.Deferred} which is resolved once the locale culture is retrieved and set
+   * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
    */
   set(locale) {
     const self = this;
@@ -179,8 +181,8 @@ const Locale = {  // eslint-disable-line
 
   /**
   * Formats a Date Object and return it parsed in the current locale.
-  * @param {date} value  The date to show in the current locale.
-  * @param {object} attribs  Additional formatting settings.
+  * @param {date} value The date to show in the current locale.
+  * @param {object} attribs Additional formatting settings.
   * @returns {string} the formatted date.
   */
   formatDate(value, attribs) {
@@ -321,7 +323,7 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Check if the date is valid using the current locale to do so.
-   * @param {Date} date  The date to show in the current locale.
+   * @param {date} date  The date to show in the current locale.
    * @returns {boolean} whether or not the date is valid.
    */
   isValidDate(date) {
@@ -341,7 +343,7 @@ const Locale = {  // eslint-disable-line
    * @param {string} dateFormat  The source format fx yyyy-MM-dd
    * @param {boolean} isStrict  If true missing date parts will be considered
    *  invalid. If false the current month/day.
-   * @returns {Date|undefined} updated date object, or nothing
+   * @returns {date|undefined} updated date object, or nothing
    */
   parseDate(dateString, dateFormat, isStrict) {
     const thisLocaleCalendar = this.calendar();
@@ -703,10 +705,10 @@ const Locale = {  // eslint-disable-line
   /**
   * Format a decimal with thousands and padding in the current locale.
   * http://mzl.la/1MUOEWm
-  * @param {number} number  The source number.
-  * @param {boolean} options  Additional options.style can be decimal, currency, percent
-  *  and integer options.percentSign, options.minusSign, options.decimal,
-  *  options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+  * @param {number} number The source number.
+  * @param {object} options Additional options.style can be decimal, currency,
+   percent and integer options.percentSign, options.minusSign, options.decimal,
+   options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
   * @returns {string} the formatted number.
   */
   formatNumber(number, options) {
@@ -873,8 +875,8 @@ const Locale = {  // eslint-disable-line
   /**
    * Overridable culture messages
    * @param {string} key  The key to search for on the string.
-   * @param {boolean} [showAsUndefined] causes a translated phrase to be "undefined"
-   *  instead of defaulting to the default locale's version of the string.
+   * @param {boolean} [showAsUndefined] causes a translated phrase to be
+    instead of defaulting to the default locale's version of the string.
    * @returns {string|undefined} a translated string, or nothing, depending on configuration
    */
   translate(key, showAsUndefined) {
