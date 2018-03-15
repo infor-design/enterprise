@@ -8,21 +8,20 @@ import '../utils/animations';
 const COMPONENT_NAME = 'expandablearea';
 
 /**
-* @namespace
-* @property {string} trigger  Id of some other button to use as a trigger
-* @property {string} bottomBorder  Change the border to bottom vs top (for some cases)
+* [ExpandableArea description]
+* @class ExpandableArea
+* @param {string} element The component element.
+* @param {string} settings The component settings.
+*
+* @param {string} [settings.trigger = null]  Id of some other button to use as a trigger
+* @param {string} [settings.bottomBorder = false]  Change the border to bottom vs top (for some cases)
 */
+
 const EXPANDABLEAREA_DEFAULTS = {
   trigger: null,
   bottomBorder: false
 };
 
-/**
-* [ExpandableArea description]
-* @class ExpandableArea
-* @param {string} element The component element.
-* @param {string} settings The component settings.
-*/
 function ExpandableArea(element, settings) {
   this.settings = utils.mergeSettings(element, settings, EXPANDABLEAREA_DEFAULTS);
   this.element = $(element);
