@@ -9,29 +9,31 @@ import '../place/place.jquery';
 const COMPONENT_NAME = 'tooltip';
 
 /**
- * Tooltip Component Default Settings
- * @namespace
- * @property {string|function} [content] Takes title attribute or feed content.
- *  Can be a string or jQuery markup
- * @property {object} [offset={top: 10, left: 10}] - How much room to leave
- * @property {string} [placement=top|bottom|right|offset]
- * @property {string} [trigger=hover] - supports click and immediate and hover
- *  (and maybe in future focus)
- * @property {string} [title] - Title for Infor Tips
- * @property {string} [beforeShow] - Call back for ajax tooltip
- * @property {string} [popover] - force it to be a popover (no content)
- * @property {string} [closebutton] - Show X close button next to title in popover
- * @property {boolean} [isError=false] - Add error classes
- * @property {boolean} [isErrorColor=false] - Add error color only not description
- * @property {string} [tooltipElement] - ID selector for an alternate element to use
- *  to contain the tooltip classes
- * @property {object} [parentElement=this.element] - jQuery-wrapped element that gets
- *  passed to the 'place' behavior as the element to place the tooltip against.
- * @property {boolean} [keepOpen=false] - Forces the tooltip to stay open in situations
- *  where it would normally close.
- * @property {string} [extraClass] - Extra css class
- * @property {string} [maxWidth] - Toolip max width
+ * Tooltip and Popover Control
+ * @class Tooltip
+ * @constructor
+ *
+ * @param {htmlelement|jquery[]} element The component element.
+ * @param {object} [settings] The component settings.
+ * @param {string|function} [settings.content] Takes title attribute or feed content. Can be a string or jQuery markup.
+ * @param {object} [settings.offset={top: 10, left: 10}] How much room to leave.
+ * @param {string} [settings.placement='top'] Supports 'top'|'bottom'|'right'|'offset'.
+ * @param {string} [settings.trigger='hover'] Supports click and immediate and hover (and maybe in future focus).
+ * @param {string} [settings.title] Title for Infor Tips.
+ * @param {string} [settings.beforeShow] Call back for ajax tooltip.
+ * @param {string} [settings.popover] force it to be a popover (no content).
+ * @param {string} [settings.closebutton] Show X close button next to title in popover.
+ * @param {boolean} [settings.isError=false] Add error classes.
+ * @param {boolean} [settings.isErrorColor=false] Add error color only not description.
+ * @param {string} [settings.tooltipElement] ID selector for an alternate element to use to contain the tooltip classes.
+ * @param {object} [settings.parentElement] jQuery-wrapped element that gets.
+  passed to the 'place' behavior as the element to place the tooltip against.
+ * @param {boolean} [settings.keepOpen=false] Forces the tooltip to stay open in situations where it would normally close.
+ * @param {string} [settings.extraClass] Extra css class.
+ * @param {object} [settings.placementOpt] Placement options.
+ * @param {string} [settings.maxWidth] Toolip max width.
  */
+
 const TOOLTIP_DEFAULTS = {
   content: null,
   offset: { top: 10, left: 10 },
@@ -51,12 +53,6 @@ const TOOLTIP_DEFAULTS = {
   maxWidth: null
 };
 
-/**
- * Tooltip and Popover Control
- * @constructor
- * @param {HTMLElement|jQuery[]} element the base element
- * @param {object|function} [settings] incoming settings
- */
 function Tooltip(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TOOLTIP_DEFAULTS);
   this.element = $(element);
@@ -150,9 +146,8 @@ Tooltip.prototype = {
   },
 
   /**
-   * @param {jQuery[]|string} content HTML or String-based content.
-   * @param {string} [thisClass] optional, additional CSS class that gets appeneded to any
-   *  anchor tags inside of the content.
+   * @param {jquery[]|string} content HTML or String-based content.
+   * @param {string} [thisClass] optional, additional CSS class that gets appeneded to any anchor tags inside of the content.
    * @returns {string} the appended content
    */
   addClassToLinks(content, thisClass) {
@@ -167,8 +162,7 @@ Tooltip.prototype = {
   },
 
   /**
-   * Gets a reference to the element being used for the tooltip and positions
-   *  it in the correct spot on the page.
+   * Gets a reference to the element being used for the tooltip and positions it in the correct spot on the page.
    * @private
    * @returns {void}
    */
@@ -261,10 +255,10 @@ Tooltip.prototype = {
 
   /**
    * Sets the content used inside the Tooltip element.
-   * @param {jQuery[]|string|function} content incoming content to be set
-   * @param {boolean} dontRender causes the tooltip to prevent a visual refresh after
-   *  changing its content, meaning it will keep the previous content visible until
-   *  this tooltip is closed or manually re-drawn.
+   * @private
+   * @param {jquery[]|string|function} content incoming content to be set
+   * @param {boolean} dontRender causes the tooltip to prevent a visual refresh
+    after changing its content, meaning it will keep the previous content visible until this tooltip is closed or manually re-drawn.
    * @returns {boolean} whether or not the render was successful
    */
   setContent(content, dontRender) {
@@ -365,6 +359,7 @@ Tooltip.prototype = {
 
   /**
    * Renders internal content either as a Tooltip or Popover.
+   * @private
    * @returns {void}
    */
   render() {
@@ -529,6 +524,14 @@ Tooltip.prototype = {
       return;
     }
 
+    /**
+     * Fires before show the tooltip.
+     *
+     * @event beforeshow
+     * @memberof Tooltip
+     * @property {Object} event - The jquery event object
+     * @property {Object} tooltip - instance
+     */
     okToShow = this.element.triggerHandler('beforeshow', [this.tooltip]);
     if (okToShow === false) {
       return;
@@ -543,6 +546,14 @@ Tooltip.prototype = {
 
     this.position();
     utils.fixSVGIcons(this.tooltip);
+    /**
+     * Fires on show the tooltip.
+     *
+     * @event show
+     * @memberof Tooltip
+     * @property {Object} event - The jquery event object
+     * @property {Object} tooltip - instance
+     */
     this.element.trigger('show', [this.tooltip]);
 
     setTimeout(() => {
@@ -607,6 +618,14 @@ Tooltip.prototype = {
           self.hide();
         });
       }
+      /**
+       * Fires after show the tooltip.
+       *
+       * @event aftershow
+       * @memberof Tooltip
+       * @property {Object} event - The jquery event object
+       * @property {Object} tooltip - instance
+       */
       self.element.trigger('aftershow', [self.tooltip]);
     }, 400);
   },
@@ -638,8 +657,8 @@ Tooltip.prototype = {
    * Placement behavior's "afterplace" handler.
    * DO NOT USE FOR ADDITIONAL POSITIONING.
    * @private
-   * @param {jQuery.Event} e custom `afterPlace` event
-   * @param {PlacementObject} placementObj object containing placement settings
+   * @param {jquery.event} e custom `afterPlace` event
+   * @param {placementobject} placementObj object containing placement settings
    * @returns {void}
    */
   handleAfterPlace(e, placementObj) {
@@ -723,6 +742,14 @@ Tooltip.prototype = {
       $('body').off('resize.tooltip');
     }
 
+    /**
+     * Fires when hide the tooltip.
+     *
+     * @event hide
+     * @memberof Tooltip
+     * @property {Object} event - The jquery event object
+     * @property {Object} tooltip - instance
+     */
     this.element.trigger('hide', [this.tooltip]);
   },
 
@@ -764,6 +791,7 @@ Tooltip.prototype = {
 
   /**
    * Tears down this component instance, removing all internal flags and unbinding events.
+   * @private
    * @returns {this} component instance
    */
   teardown() {
