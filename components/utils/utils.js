@@ -22,6 +22,7 @@ $.fn.bindFirst = function (name, fn) {
 };
 
 /**
+ * @private
  * uniqueIdCount is a baseline unique number that will be used when generating
  * uniqueIds for elements and components.
  */
@@ -123,6 +124,7 @@ function visible(element) {
  * Adapted from:  http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus
  * Adds the ':focusable' selector to Sizzle to allow for the selection of elements
  * that can currently be focused.
+ * @private
  * @param {HTMLElement} element the element being checked
  * @returns {boolean} whether or not the element is focusable.
  */
@@ -186,6 +188,7 @@ const utils = {};
 /**
  * Grabs an attribute from an HTMLElement containing stringified JSON syntax,
  * and interprets it into options.
+ * @private
  * @param {HTMLElement} element the element whose settings are being interpreted
  * @param {string} [attr] optional different attribute to parse for settings
  * @returns {object} a list of interpreted settings for this element
@@ -459,6 +462,7 @@ $.fn.clearable = function () {
 
 /**
  * Replacement for String.fromCharCode() that takes meta keys into account when determining which
+ * @private
  * character key was pressed.
  * @param {jQuery.Event} e jQuery-wrapped `keypress` event
  * @returns {string} text tcharacter
@@ -543,6 +547,7 @@ $.actualChar = function (e) {
 
 /**
  * Equate two values quickly in a truthy fashion
+ * @private
  * @param {any} a first value
  * @param {any} b second value
  * @returns {boolean} whether the two items compare in a truthy fashion.
@@ -555,6 +560,7 @@ utils.equals = function equals(a, b) {
  * Converts an element wrapped in a jQuery collection down to its original HTMLElement reference.
  * If an HTMLElement is passed in, simply returns it.
  * If anything besides HTMLElements or jQuery[] is passed in, returns undefined;
+ * @private
  * @param {any} item the item being evaluated
  * @returns {HTMLElement|undefined} the unwrapped item, or nothing.
  */
@@ -576,15 +582,17 @@ DOM.convertToHTMLElement = function convertToHTMLElement(item) {
 };
 
 /**
- * Object deep copy
+ * Object deep copy.
  * For now, alias jQuery.extend
  * Eventually we'll replace this with a non-jQuery extend method.
+ * @private
  */
 utils.extend = $.extend;
 
 /**
  * Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
  * The action of changing the xlink:href attribute to something else and back will fix the problem.
+ * @private
  * @param {HTMLElement} rootElement the base element
  * @returns {void}
  */
@@ -617,6 +625,7 @@ utils.fixSVGIcons = function fixSVGIcons(rootElement) {
 
 /**
  * Gets the current size of the viewport
+ * @private
  * @returns {object} width/height of the viewport
  */
 utils.getViewportSize = function getViewportSize() {
@@ -629,6 +638,7 @@ utils.getViewportSize = function getViewportSize() {
 /**
  * Gets the various scrollable containers that an element is nested inside of, and returns
  *  their scrollHeight and scrollLeft values.
+ * @private
  * @param {HTMLElement} element the base element to check for containment
  * @returns {object} containing references to the container element and its top/left
  */
@@ -669,6 +679,7 @@ utils.getContainerScrollDistance = function getContainerScrollDistance(element) 
 /**
  * Takes an element that is currently hidden by some means (FX: "display: none;")
  *  and gets its potential dimensions by checking a clone of the element that is NOT hidden.
+ * @private
  * @param {HTMLElement|SVGElement|jQuery[]} el The element being manipulated.
  * @param {object} options incoming options.
  * @param {jQuery[]} [parentElement=undefined] the parent element where a clone of this
@@ -765,6 +776,7 @@ $.fn.getHiddenSize = function (options) {
 
 /**
  * Checks if a specific input is a String
+ * @private
  * @param {any} value an object of unknown type to check
  * @returns {boolean} whether or not a specific input is a String
  */
@@ -774,6 +786,7 @@ utils.isString = function isString(value) {
 
 /**
  * Checks if a specific input is a Number
+ * @private
  * @param {any} value an object of unknown type to check
  * @returns {boolean} whether or not a specific input is a Number
  */
@@ -785,6 +798,7 @@ utils.isNumber = function isNumber(value) {
  * Safely changes the position of a text caret inside of an editable element.
  * In most cases, will call "setSelectionRange" on an editable element immediately, but in some
  * cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
+ * @private
  * @param {HTMLElement} element the element to get selection
  * @param {number} startPos starting position of the text caret
  * @param {number} endPos ending position of the text caret
@@ -832,6 +846,7 @@ function resolveFunctionBasedSettings(o) {
 /**
  * Merges various sets of options into a single object,
  * whose intention is to be set as options on a Soho component.
+ * @private
  * @param {HTMLElement|SVGElement|jQuery[]} [element] the element to process for inline-settings
  * @param {Object|function} incomingOptions desired settings
  * @param {Object|function} [defaultOptions] optional base settings
@@ -857,6 +872,7 @@ utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOp
 
 /**
  * Test if a string is Html or not
+ * @private
  * @param  {string} string The string to test.
  * @returns {boolean} True if it is html.
  */
@@ -869,6 +885,7 @@ const math = {};
 /**
  * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second
  * (FPS) numeric values.
+ * @private
  * @param {number} delay CPU Ticks
  * @returns {number} Frames Per Second
  */
@@ -882,6 +899,7 @@ math.convertDelayToFPS = function convertDelayToFPS(delay) {
 /**
  * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second
  * (FPS) numeric values.
+ * @private
  * @param {number} fps (Frames Per Second)
  * @returns {number} delay in CPU ticks
  */
@@ -894,6 +912,7 @@ math.convertFPSToDelay = function convertFPSToDelay(fps) {
 
 /**
  *  Determines whether the passed value is a finite number.
+ * @private
  * @param {number} value The number
  * @returns {boolean} If it is finite or not.
  */

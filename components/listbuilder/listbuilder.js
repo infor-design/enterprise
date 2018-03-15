@@ -141,7 +141,7 @@ ListBuilder.prototype = {
    * Extract node data
    * @private
    * @param {jQuery[]} node element to be checked for data
-   * @returns {Object} data from the node.
+   * @returns {object} data from the node.
    */
   extractNodeData(node) {
     const data = { node, text: $.trim($('.item-content', node).text()) };
@@ -246,9 +246,9 @@ ListBuilder.prototype = {
          * Fires when a item is selected.
          * @event selected
          * @memberof ListBuilder
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this selected item
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this selected item
          */
         this.element.triggerHandler('selected', [data]);
       });
@@ -261,9 +261,9 @@ ListBuilder.prototype = {
          * Fires when a item is updated.
          * @event updated
          * @memberof ListBuilder
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this item
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this item
          */
         this.element.triggerHandler('updated', [updatedData]);
       });
@@ -285,8 +285,8 @@ ListBuilder.prototype = {
      *
      * @event beforeadd
      * @memberof ListBuilder
-     * @type {Object}
-     * @property {Object} event - The jquery event object
+     * @type {object}
+     * @property {object} event - The jquery event object
      */
     $.when(this.element.triggerHandler('beforeadd')).done(() => {
       let li;
@@ -319,9 +319,9 @@ ListBuilder.prototype = {
        * Fires after add new item.
        * @event afteradd
        * @memberof ListBuilder
-       * @type {Object}
-       * @property {Object} event - The jquery event object
-       * @property {Object} data - Data for this new item
+       * @type {object}
+       * @property {object} event - The jquery event object
+       * @property {object} data - Data for this new item
        */
       self.element.triggerHandler('afteradd', [data]);
     });
@@ -343,9 +343,9 @@ ListBuilder.prototype = {
          * Fires before move up item.
          * @event beforegoup
          * @memberof ListBuilder
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this item
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this item
          */
         $.when(self.element.triggerHandler('beforegoup', [data])).done(() => {
           const prev = node.prev();
@@ -359,9 +359,9 @@ ListBuilder.prototype = {
            * Fires after move up item.
            * @event aftergoup
            * @memberof ListBuilder
-           * @type {Object}
-           * @property {Object} event - The jquery event object
-           * @property {Object} data - Data for this item
+           * @type {object}
+           * @property {object} event - The jquery event object
+           * @property {object} data - Data for this item
            */
           self.element.triggerHandler('aftergoup', [data]);
         });
@@ -384,9 +384,9 @@ ListBuilder.prototype = {
          * Fires before move down item.
          * @event beforegodown
          * @memberof ListBuilder
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this item
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this item
          */
         $.when(self.element.triggerHandler('beforegodown', [data])).done(() => {
           const next = node.next();
@@ -400,9 +400,9 @@ ListBuilder.prototype = {
            * Fires after move down item.
            * @event aftergodown
            * @memberof ListBuilder
-           * @type {Object}
-           * @property {Object} event - The jquery event object
-           * @property {Object} data - Data for this item
+           * @type {object}
+           * @property {object} event - The jquery event object
+           * @property {object} data - Data for this item
            */
           self.element.triggerHandler('aftergodown', [data]);
         });

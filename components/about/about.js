@@ -6,7 +6,6 @@ const COMPONENT_NAME = 'about';
 
 /**
  * The About Dialog Component is displays information regarding the application.
- *
  * @class About
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
@@ -16,7 +15,7 @@ const COMPONENT_NAME = 'about';
  * @param {boolean} [settings.deviceSpecs=true] Determines whether or not to display device information.
  * This information includes Browser, Platform, Locale and if Cookies are Enabled.
  * @param {string} [settings.productName] Additional product name information to display.
- * @param {boolean} [settings.useDefaultCopyright=true] Add the Legal Approved Infor Copy Right Text.
+ * @param {boolean} [settings.useDefaultCopyright=true] Add the Legal Approved Infor Copyright Text.
  * @param {string} [settings.version] Semantic Version Number for example (4.0.0).
  */
 const ABOUT_DEFAULTS = {
@@ -200,7 +199,6 @@ About.prototype = {
 
     /**
     * Fires when the dialog is closing.
-    *
     * @event close
     * @memberof About
     * @property {object} event - The jquery event object
@@ -212,7 +210,6 @@ About.prototype = {
 
     /**
     * Fires after the dialog is done closing and removed.
-    *
     * @event afterclose
     * @memberof About
     * @property {object} event - The jquery event object
@@ -261,8 +258,8 @@ About.prototype = {
     *
     * @event beforeopen
     * @memberof About
-    * @property {object} event - The jquery event object.
-    * @property {object} ui - The dialog object
+    * @property {object} event The jquery event object.
+    * @property {object} ui The dialog object
     */
     this.modal.data('modal').element.on('beforeopen.about', () => {
       this.modal.find('.modal-body').scrollTop(0);

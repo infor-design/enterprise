@@ -7,7 +7,6 @@
   <section>
   
     
-
   <h2>Settings</h2>
   <table class="section-table">
     <thead>
@@ -16,98 +15,9 @@
       <th>Description</th>
     </thead>
     <tbody>
-      <tr>
-        <td>
-          appName
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The Main Application Name to display in the header.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          content
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Additional text content to display at the top.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          copyrightYear
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The year displayed in the copyright, defaults to current year.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          deviceSpecs
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Determines whether or not to display device
-information. This information includes Browser, Platform, Locale and if Cookies are Enabled.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          productName
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Additional product name information to display.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          useDefaultCopyright
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Add the Legal Approved Infor Copy Right Text.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          version
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Semantic Version Number for example (4.0.0).
-
-        </td>
-      </tr>
     </tbody>
   </table>
 
-
-
-  
-    
 
 
   <h2>Methods</h2>
@@ -184,117 +94,9 @@ void
   </table>
 
 
-  
-  
-  
   </section>
 
-  <section>
-    <h2>Events</h2>
-    <table class="section-table">
-      <thead>
-        <th>Name</th>
-        <th>Args</th>
-        <th>Description</th>
-      </thead>
-      <tbody>
-      
-        <tr>
-  <td>close
-  </td>
-  <td>
   
-    
-      <div>
-        <span>event (object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>ui (object)
-        
-        = The dialog object
-
-        </span>
-        
-      </div>
-    
-  
-  </td>
-  <td>Fires when the dialog is closing.
-</td>
-</tr>
-
-      
-        <tr>
-  <td>afterclose
-  </td>
-  <td>
-  
-    
-      <div>
-        <span>event (object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>ui (object)
-        
-        = The dialog object
-
-        </span>
-        
-      </div>
-    
-  
-  </td>
-  <td>Fires after the dialog is done closing and removed.
-</td>
-</tr>
-
-      
-        <tr>
-  <td>beforeopen
-  </td>
-  <td>
-  
-    
-      <div>
-        <span>event (object)
-        
-        = The jquery event object.
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>ui (object)
-        
-        = The dialog object
-
-        </span>
-        
-      </div>
-    
-  
-  </td>
-  <td>Fires when the about dialog is opening, allowing you to veto by returning false.
-</td>
-</tr>
-
-      
-      </tbody>
-    </table>
-  </section>
 
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke the about dialog on demand, passing in some content, version info and the product name and product line.</p>

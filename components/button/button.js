@@ -170,7 +170,7 @@ Button.prototype = {
 
   /**
    * Update the component with new settings.
-   * @param  {[type]} settings The settings you would like to modify.
+   * @param  {object} settings The settings you would like to modify.
    * @returns {object} The api.
    */
   updated(settings) {

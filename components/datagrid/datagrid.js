@@ -2990,8 +2990,8 @@ Datagrid.prototype = {
   /**
    * Calculate the width for a column (upfront with no rendering)
    * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
-   * @param  {[type]} col The column object to use
-   * @param  {[type]} index The column index
+   * @param {object} col The column object to use
+   * @param {number} index The column index
    * @returns {void}
    */
   calculateColumnWidth(col, index) {
@@ -5296,9 +5296,9 @@ Datagrid.prototype = {
 
   /**
   * De-select a selected row.
-  * @param  {[type]} idx The row index
-  * @param  {[type]} nosync Do not sync the header
-  * @param  {[type]} noTrigger Do not trgger any events
+  * @param  {number} idx The row index
+  * @param  {boolean} nosync Do not sync the header
+  * @param  {boolean} noTrigger Do not trgger any events
   */
   unselectRow(idx, nosync, noTrigger) {
     const self = this;
@@ -5392,7 +5392,7 @@ Datagrid.prototype = {
 
   /**
    * Set the current status on the row status column
-   * @param {[type]} node The node to set the status on
+   * @param {HTMLElement} node The node to set the status on
    */
   setNodeStatus(node) {
     const self = this;

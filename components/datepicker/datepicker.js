@@ -560,7 +560,7 @@ DatePicker.prototype = {
   /**
    * Check if the calendar div is open or not
    * @private
-   * @returns {Boolean} whether or not the calendar div is open.
+   * @returns {boolean} whether or not the calendar div is open.
    */
   isOpen() {
     return (this.popup && this.popup.is(':visible') &&
@@ -579,9 +579,9 @@ DatePicker.prototype = {
   /**
    * Check if file type allowed
    * @private
-   * @param {Object} elem to set fouus
-   * @param {Boolean} isFocus true if need to set foucs
-   * @returns {Object} element passed in
+   * @param {object} elem to set fouus
+   * @param {boolean} isFocus true if need to set foucs
+   * @returns {object} element passed in
    */
   activeTabindex(elem, isFocus) {
     $('td', this.days).removeAttr('tabindex');
@@ -614,7 +614,7 @@ DatePicker.prototype = {
     *
     * @event listopened
     * @memberof DatePicker
-    * @property {Object} event - The jquery event object
+    * @property {object} event - The jquery event object
     */
     this.element.addClass('is-active is-open').trigger('listopened');
 
@@ -916,7 +916,7 @@ DatePicker.prototype = {
         *
         * @event change
         * @memberof DatePicker
-        * @property {Object} event - The jquery event object
+        * @property {object} event - The jquery event object
         */
         self.element.val('').trigger('change').trigger('input');
         self.currentDate = null;
@@ -1004,7 +1004,7 @@ DatePicker.prototype = {
   /**
    * Set range on given cell -or- current month/year.
    * @private
-   * @param {Object} cell to set range.
+   * @param {object} cell to set range.
    * @returns {void}
    */
   setRangeOnCell(cell) {
@@ -1053,8 +1053,8 @@ DatePicker.prototype = {
   /**
    * Get date from given cell.
    * @private
-   * @param {Object} cell to get date.
-   * @returns {Object} as: year, month, day
+   * @param {object} cell to get date.
+   * @returns {object} as: year, month, day
    */
   getCellDate(cell) {
     const s = this.settings;
@@ -1125,7 +1125,7 @@ DatePicker.prototype = {
       *
       * @event listclosed
       * @memberof DatePicker
-      * @property {Object} event - The jquery event object
+      * @property {object} event - The jquery event object
       */
       this.element.trigger('listclosed');
       this.element.removeClass('is-active is-open');
@@ -1135,10 +1135,10 @@ DatePicker.prototype = {
   /**
    * Check through the options to see if the date is disabled
    * @private
-   * @param {String} year to check.
-   * @param {String} month to check.
-   * @param {String} date to check.
-   * @returns {Boolean} true if the date is disabled
+   * @param {string} year to check.
+   * @param {string} month to check.
+   * @param {string} date to check.
+   * @returns {boolean} true if the date is disabled
    */
   isDateDisabled(year, month, date) {
     const s = this.settings;
@@ -1176,10 +1176,10 @@ DatePicker.prototype = {
   /**
    * Set disable Date
    * @private
-   * @param {Object} elem to set.
-   * @param {String} year to check.
-   * @param {String} month to check.
-   * @param {String} date to check.
+   * @param {object} elem to set.
+   * @param {string} year to check.
+   * @param {string} month to check.
+   * @param {string} date to check.
    * @returns {void}
    */
   setDisabled(elem, year, month, date) {
@@ -1228,10 +1228,10 @@ DatePicker.prototype = {
   /**
    * Set Color for the Legend settings
    * @private
-   * @param {Object} elem to set.
-   * @param {String} year to check.
-   * @param {String} month to check.
-   * @param {String} date to check.
+   * @param {object} elem to set.
+   * @param {string} year to check.
+   * @param {string} month to check.
+   * @param {string} date to check.
    * @returns {void}
    */
   setLegendColor(elem, year, month, date) {
@@ -1269,9 +1269,9 @@ DatePicker.prototype = {
    * Convert the provided hex to an RGBA for states
    * This may be later moved into a colors file along with getLuminousColorShade
    * @private
-   * @param {String} hex to set.
-   * @param {String} opacity to check.
-   * @returns {String} converted rgba
+   * @param {string} hex to set.
+   * @param {string} opacity to check.
+   * @returns {string} converted rgba
    */
   hexToRgba(hex, opacity) {
     let c;
@@ -1292,10 +1292,10 @@ DatePicker.prototype = {
   /**
    * Process Color Options to get the date color
    * @private
-   * @param {String} year .
-   * @param {String} month .
-   * @param {String} date .
-   * @returns {String} date color
+   * @param {string} year .
+   * @param {string} month .
+   * @param {string} date .
+   * @returns {string} date color
    */
   /* eslint-disable consistent-return */
   getLegendColor(year, month, date) {
@@ -1362,9 +1362,9 @@ DatePicker.prototype = {
   /**
    * Update the calendar to show the month
    * @private
-   * @param {Number} month zero based.
-   * @param {Number} year .
-   * @param {Number} skipYear .
+   * @param {number} month zero based.
+   * @param {number} year .
+   * @param {number} skipYear .
    * @returns {void}
    */
   showMonth(month, year, skipYear) {
@@ -1526,8 +1526,8 @@ DatePicker.prototype = {
   /**
    * Append month year picker
    * @private
-   * @param {Number} month .
-   * @param {Number} year .
+   * @param {number} month .
+   * @param {number} year .
    * @returns {void}
    */
   appendMonthYearPicker(month, year) {
@@ -1599,8 +1599,8 @@ DatePicker.prototype = {
   /**
    * Put the date in the field and select on the calendar
    * @private
-   * @param {Object} date .
-   * @param {Boolean} isReset .
+   * @param {object} date .
+   * @param {boolean} isReset .
    * @returns {void}
    */
   insertDate(date, isReset) {
@@ -1653,8 +1653,8 @@ DatePicker.prototype = {
   /**
    * Convert a string to boolean
    * @private
-   * @param {String} val .
-   * @returns {Boolean} Converted value
+   * @param {string} val .
+   * @returns {boolean} Converted value
    */
   getBoolean(val) {
     const num = +val;
@@ -1664,9 +1664,9 @@ DatePicker.prototype = {
   /**
    * Find first day of the week for a given month
    * @private
-   * @param {Number} year .
-   * @param {Number} month .
-   * @returns {Number} day
+   * @param {number} year .
+   * @param {number} month .
+   * @returns {number} day
    */
   firstDayOfMonth(year, month) {
     if (this.isIslamic) {
@@ -1679,8 +1679,8 @@ DatePicker.prototype = {
   /**
    * Get islamic year index
    * @private
-   * @param {Number} islamicYear .
-   * @returns {Number} index
+   * @param {number} islamicYear .
+   * @returns {number} index
    */
   islamicYearIndex(islamicYear) {
     const yearIdx = islamicYear - 1318;
@@ -1693,9 +1693,9 @@ DatePicker.prototype = {
   /**
    * Find the date of the Month (29, 30, 31 ect)
    * @private
-   * @param {Number} year .
-   * @param {Number} month .
-   * @returns {Number} date
+   * @param {number} year .
+   * @param {number} month .
+   * @returns {number} date
    */
   daysInMonth(year, month) {
     if (this.isIslamic) {
@@ -1718,9 +1718,9 @@ DatePicker.prototype = {
   /**
    * Set the Formatted value in the input
    * @private
-   * @param {Object} date The date to set in date format.
-   * @param {Boolean} trigger If true will trigger the change event.
-   * @param {Boolean} isTime will pass to set range.
+   * @param {object} date The date to set in date format.
+   * @param {boolean} trigger If true will trigger the change event.
+   * @param {boolean} isTime will pass to set range.
    * @returns {void}
    */
   setValue(date, trigger, isTime) {
@@ -1972,7 +1972,7 @@ DatePicker.prototype = {
       *
       * @event input
       * @memberof DatePicker
-      * @property {Object} event - The jquery event object
+      * @property {object} event - The jquery event object
       */
       if (s.range.useRange) {
         this.element
@@ -1987,7 +1987,7 @@ DatePicker.prototype = {
   /**
    * Set time
    * @private
-   * @param {Object} date .
+   * @param {object} date .
    * @returns {void}
    */
   setTime(date) {
@@ -2007,9 +2007,9 @@ DatePicker.prototype = {
   /**
    * Get Time String
    * @private
-   * @param {Object} date .
-   * @param {Boolean} isHours24 .
-   * @returns {String} time
+   * @param {object} date .
+   * @param {boolean} isHours24 .
+   * @returns {string} time
    */
   getTimeString(date, isHours24) {
     const twodigit = function (number) {
@@ -2036,7 +2036,7 @@ DatePicker.prototype = {
   /**
    * Reset range values
    * @private
-   * @param {Object} cell to keep selection.
+   * @param {object} cell to keep selection.
    * @returns {void}
    */
   resetRange(cell) {
@@ -2092,7 +2092,7 @@ DatePicker.prototype = {
   /**
    * Set range first part
    * @private
-   * @param {Object} date .
+   * @param {object} date .
    * @returns {void}
    */
   setRangeFirstPart(date) {
@@ -2119,8 +2119,8 @@ DatePicker.prototype = {
   /**
    * Set range value to element
    * @private
-   * @param {Object} date .
-   * @param {Boolean} isSingleDate .
+   * @param {object} date .
+   * @param {boolean} isSingleDate .
    * @returns {void}
    */
   setRangeToElem(date, isSingleDate) {
@@ -2231,10 +2231,10 @@ DatePicker.prototype = {
   /**
    * Get array of dates between two dates
    * @private
-   * @param {Object} startDate .
-   * @param {Object} endDate .
-   * @param {Boolean} includeDisabled .
-   * @returns {Array} dates between two dates
+   * @param {object} startDate .
+   * @param {object} endDate .
+   * @param {boolean} includeDisabled .
+   * @returns {array} dates between two dates
    */
   getDateRange(startDate, endDate, includeDisabled) {
     const dates = [];
@@ -2255,10 +2255,10 @@ DatePicker.prototype = {
   /**
    * Get difference to given date
    * @private
-   * @param {Object} date .
-   * @param {Number} days .
-   * @param {Boolean} includeDisabled .
-   * @returns {Object} before/after difference to given date
+   * @param {object} date .
+   * @param {number} days .
+   * @param {boolean} includeDisabled .
+   * @returns {object} before/after difference to given date
    */
   getDifferenceToDate(date, days, includeDisabled) {
     const difference = {};
@@ -2287,7 +2287,7 @@ DatePicker.prototype = {
   /**
    * Get range value to insert in element
    * @private
-   * @returns {String} range dates to display in element
+   * @returns {string} range dates to display in element
    */
   getRangeValue() {
     const s = this.settings;
@@ -2309,9 +2309,9 @@ DatePicker.prototype = {
    * Change the order for execution jquery events were bound
    * http://stackoverflow.com/questions/2360655/jquery-event-handlers-always-execute-in-order-they-were-bound-any-way-around-t
    * @private
-   * @param {Object} elements .
-   * @param {String} names .
-   * @param {Number} newIndex .
+   * @param {object} elements .
+   * @param {string} names .
+   * @param {number} newIndex .
    * @returns {void}
    */
   changeEventOrder(elements, names, newIndex) {
@@ -2330,8 +2330,8 @@ DatePicker.prototype = {
 
   /**
    * Updates the component instance. Can be used after being passed new settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

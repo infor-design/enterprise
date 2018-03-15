@@ -2102,7 +2102,11 @@ Tabs.prototype = {
   },
 
   /**
+   *
+   * Update the hash in the link.
    * @private
+   * @param  {HTMLElement} href The Dom Element.
+   * @returns {void}
    */
   changeHash(href) {
     if (!this.settings.changeTabOnHashChange) {

@@ -8,25 +8,7 @@ import '../listview/listview.jquery';
 // The name of this component
 const COMPONENT_NAME = 'swaplist';
 
-/**
-* @namespace
-* @param {boolean} searchable If true, associates itself with a Searchfield/Autocomplete
-*  and allows itself to be filtered
-* @param {array} available An array containing items for the available bucket.
-* @param {array} selected An array containing items for the selected bucket.
-* @param {array} additional An array containing items for the additional bucket.
-* @param {string} availableClass A class name linking the available root element.
-* @param {string} selectedClass A class name linking the selected root element.
-* @param {string} additionalClass A class name linking the additional root element.
-* @param {string} availableBtn A class name linking the available button element.
-* @param {string} selectedBtnLeft A class name linking the move left button element.
-* @param {string} selectedBtnRight A class name linking the move right button element.
-* @param {string} additionalBtn A class name linking the additional button element.
-* @param {string} template An Html String with the mustache template for the view.
-* @param {object} draggable An object containing boolean key/value to make container/s
-*  disable for dragging and moving items. Supported keys with draggable are "available",
-*  "selected", "additional".
-*/
+// The Component Defaults
 const SWAPLIST_DEFAULTS = {
   // Searchable
   searchable: false,
@@ -73,10 +55,25 @@ const SWAPLIST_DEFAULTS = {
 
 /**
 * The SwapList Component creates a list of options that can be picked and organized.
-*
 * @class SwapList
-* @param {String} element The component element.
-* @param {String} settings The component settings.
+* @param {object} element The component element.
+* @param {object} [settings] The component settings.
+* @param {boolean} [settings.searchable = false] If true, associates itself with a Searchfield/Autocomplete
+*  and allows itself to be filtered
+* @param {array} [settings.available] An array containing items for the available bucket.
+* @param {array} [settings.selected] An array containing items for the selected bucket.
+* @param {array} [settings.additional] An array containing items for the additional bucket.
+* @param {string} [settings.availableClass = '.available'] A class name linking the available root element.
+* @param {string} [settings.selectedClass = '.selected'] A class name linking the selected root element.
+* @param {string} [settings.additionalClass = '.full-access'] A class name linking the additional root element.
+* @param {string} [settings.availableBtn = '.btn-moveto-selected'] A class name linking the available button element.
+* @param {string} [settings.selectedBtnLeft = '.btn-moveto-left'] A class name linking the move left button element.
+* @param {string} [settings.selectedBtnRight = '.btn-moveto-right'] A class name linking the move right button element.
+* @param {string} [settings.additionalBtn = '.btn-moveto-selected'] A class name linking the additional button element.
+* @param {string} [settings.template] An Html String with the mustache template for the view.
+* @param {object} [settings.draggable] An object containing boolean key/value to make container/s
+*  disable for dragging and moving items. Supported keys with draggable are "available",
+*  "selected", "additional".
 */
 function SwapList(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SWAPLIST_DEFAULTS);
@@ -688,11 +685,11 @@ SwapList.prototype = {
         if (this.selections.items.length) {
           /**
           * Fires when any bucket has its content changed.
-          *
           * @event swapupdate
-          * @type {Object}
-          * @property {Object} event - The jquery event object
-          * @property {Array} items - List of items data
+          * @memberof SwapList
+          * @type {object}
+          * @property {object} event - The jquery event object
+          * @property {array} items - List of items data
           */
           this.element.triggerHandler('swapupdate', [this.selections.itemsData]);
         }
@@ -968,11 +965,11 @@ SwapList.prototype = {
 
         /**
           * Fires before moving an element allowing you to access the draggable item.
-          *
           * @event beforeswap
-          * @type {Object}
-          * @property {Object} event - The jquery event object
-          * @property {Array} items - List of selected items data
+          * @memberof SwapList
+          * @type {object}
+          * @property {object} event - The jquery event object
+          * @property {array} items - List of selected items data
           */
         const result = self.element.triggerHandler('beforeswap', [selections.itemsData]);
         if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {

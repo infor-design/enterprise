@@ -14,8 +14,8 @@ const COMPONENT_NAME = 'editor';
 * The Editor Component is displays and edits markdown.
 *
 * @class Editor
-* @param {String} element The component element.
-* @param {String} [settings] The component settings.
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
 * @param {string} [settings.buttons =
 * { editor: [ 'header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'strikethrough',
 * 'separator', 'foreColor', 'backColor', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist',
@@ -1305,9 +1305,9 @@ Editor.prototype = {
       *
       * @event beforepaste
       * @memberof Editor
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {String} pastedData .
+      * @type {object}
+      * @property {object} event - The jquery event object
+      * @property {string} pastedData .
       */
       $.when(self.element.triggerHandler('beforepaste', [{ pastedData: self.pastedData }])).done(() => {
         if (self.pastedData && !e.defaultPrevented) {
@@ -1327,9 +1327,9 @@ Editor.prototype = {
         *
         * @event afterpaste
         * @memberof Editor
-        * @type {Object}
-        * @property {Object} event - The jquery event object
-        * @property {String} pastedData .
+        * @type {object}
+        * @property {object} event - The jquery event object
+        * @property {string} pastedData .
         */
         self.element.triggerHandler('afterpaste', [{ pastedData: self.pastedData }]);
         self.pastedData = null;
@@ -2008,8 +2008,8 @@ Editor.prototype = {
 
   /**
    * Updates the component instance.  Can be used after being passed new settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

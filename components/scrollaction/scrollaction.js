@@ -13,10 +13,10 @@ const SCROLLACTION_DEFAULTS = {
 /**
 * A component that applies a class based on scroll direction
 * @class ScrollAction
-* @param {String} element The component element.
-* @param {Object} [settings] The component settings.
-* @param {String} [scrollActionTarget='.js-scroll-target'] The selector of the element to add the class to.
-* @param {String} [classToAdd ='scrolled-down'] The class name to use when toggling.
+* @param {string} element The component element.
+* @param {object} [settings] The component settings.
+* @param {string} [scrollActionTarget='.js-scroll-target'] The selector of the element to add the class to.
+* @param {string} [classToAdd ='scrolled-down'] The class name to use when toggling.
 */
 function ScrollAction(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SCROLLACTION_DEFAULTS);
@@ -37,7 +37,7 @@ ScrollAction.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     const s = this.settings;
@@ -50,8 +50,8 @@ ScrollAction.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

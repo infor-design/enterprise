@@ -70,7 +70,7 @@ ComponentName.prototype = {
 
   /**
    * Handle updated settings and values.
-   * @returns {[type]} [description]
+   * @returns {object} [description]
    */
   updated() {
     return this

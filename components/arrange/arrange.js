@@ -48,10 +48,10 @@ Arrange.prototype = {
   /**
    * Get Element By Touch In List
    * @private
-   * @param {Object} list element.
-   * @param {Number} x value.
-   * @param {Number} y value.
-   * @returns {Object} item found in list
+   * @param {object} list element.
+   * @param {number} x value.
+   * @param {number} y value.
+   * @returns {object} item found in list
    */
   getElementByTouchInList(list, x, y) {
     let returns = false;
@@ -72,8 +72,8 @@ Arrange.prototype = {
   /**
    * Dragg touch element
    * @private
-   * @param {Object} e as event.
-   * @param {Object} elm as element.
+   * @param {object} e as event.
+   * @param {object} elm as element.
    * @returns {void}
    */
   dragTouchElement(e, elm) {
@@ -85,7 +85,7 @@ Arrange.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     this.items
@@ -102,8 +102,8 @@ Arrange.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
@@ -213,8 +213,8 @@ Arrange.prototype = {
             *
             * @event beforearrange
             * @memberof Arrange
-            * @property {Object} event - The jquery event object
-            * @property {Object} status - Status for this item
+            * @property {object} event - The jquery event object
+            * @property {object} status - Status for this item
             */
             const result = self.element.triggerHandler('beforearrange', status);
             if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
@@ -266,8 +266,8 @@ Arrange.prototype = {
               *
               * @event arrangeupdate
               * @memberof Arrange
-              * @property {Object} event - The jquery event object
-              * @property {Object} status - Status for this item
+              * @property {object} event - The jquery event object
+              * @property {object} status - Status for this item
               */
               self.element.triggerHandler('arrangeupdate', status);
             }

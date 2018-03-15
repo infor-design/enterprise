@@ -183,8 +183,8 @@ FileUploadAdvanced.prototype = {
         *
         * @event filesdroped
         * @memberof FileUploadAdvanced
-        * @property {Object} event - The jquery event object
-        * @property {Array} files - List of files droped
+        * @property {object} event - The jquery event object
+        * @property {array} files - List of files droped
         */
         self.element.triggerHandler('filesdroped', [files]);
 
@@ -269,8 +269,8 @@ FileUploadAdvanced.prototype = {
       *
       * @event beforecreatestatus
       * @memberof FileUploadAdvanced
-      * @property {Object} event - The jquery event object
-      * @property {Object} file - file to set the status
+      * @property {object} event - The jquery event object
+      * @property {object} file - file to set the status
       */
       this.element.triggerHandler('beforecreatestatus', [files[i]]);
       /* global FormData */
@@ -285,8 +285,8 @@ FileUploadAdvanced.prototype = {
       *
       * @event aftercreatestatus
       * @memberof FileUploadAdvanced
-      * @property {Object} event - The jquery event object
-      * @property {Object} file - file to set the status
+      * @property {object} event - The jquery event object
+      * @property {object} file - file to set the status
       */
       this.element.triggerHandler('aftercreatestatus', [files[i]]);
 
@@ -347,8 +347,8 @@ FileUploadAdvanced.prototype = {
       *
       * @event fileprogress
       * @memberof FileUploadAdvanced
-      * @property {Object} event - The jquery event object
-      * @property {Object} status - `{ file, progress }`
+      * @property {object} event - The jquery event object
+      * @property {object} status - `{ file, progress }`
       */
       this.element.triggerHandler('fileprogress', [{ file, progress }]);
       progressBar.attr('data-value', progress).triggerHandler('updated');
@@ -362,8 +362,8 @@ FileUploadAdvanced.prototype = {
         *
         * @event fileaborted
         * @memberof FileUploadAdvanced
-        * @property {Object} event - The jquery event object
-        * @property {Object} file - aborted
+        * @property {object} event - The jquery event object
+        * @property {object} file - aborted
         */
         this.element.triggerHandler('fileaborted', [file]);
         jqxhr.abort();
@@ -403,8 +403,8 @@ FileUploadAdvanced.prototype = {
       *
       * @event filecompleteuploading
       * @memberof FileUploadAdvanced
-      * @property {Object} event - The jquery event object
-      * @property {Object} file uploaded
+      * @property {object} event - The jquery event object
+      * @property {object} file uploaded
       */
       self.element.triggerHandler('filecompleteuploading', [file]);
     };
@@ -441,8 +441,8 @@ FileUploadAdvanced.prototype = {
   /**
    * Show error on ui
    * @private
-   * @param {String} error to display
-   * @param {Object} file contains the error.
+   * @param {string} error to display
+   * @param {object} file contains the error.
    * @returns {void}
    */
   showError(error, file) {
@@ -495,8 +495,8 @@ FileUploadAdvanced.prototype = {
   /**
    * Check if file type allowed
    * @private
-   * @param {String} fileName to check types
-   * @returns {Boolean} true if allowed to uploaded
+   * @param {string} fileName to check types
+   * @returns {boolean} true if allowed to uploaded
    */
   isFileTypeAllowed(fileName) {
     const fileExtensions = this.settings.allowedTypes.toLowerCase().split(/[\s|]+/g);
@@ -510,8 +510,8 @@ FileUploadAdvanced.prototype = {
   /**
    * Helper function that formats the file sizes
    * @private
-   * @param {Number} bytes to be formated
-   * @returns {String} formated to use in ui
+   * @param {number} bytes to be formated
+   * @returns {string} formated to use in ui
    */
   formatFileSize(bytes) {
     const scale = {
@@ -572,8 +572,8 @@ FileUploadAdvanced.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
