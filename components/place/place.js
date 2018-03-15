@@ -35,6 +35,7 @@ const PLACEMENT_OBJECT_SETTING_KEYS = [
  * Object that contains coordinates along with temporary, changeable properties.
  * This object gets passed around the Place Behavior and modified during each phase of positioning.
  * This object is also passed to all callbacks and event listeners for further modification.
+ * @private
  * @param {object} [placementOptions] object containing settings for placement
  * @returns {void}
  */
@@ -111,7 +112,7 @@ PlacementObject.prototype = {
 };
 
 /**
- * Place Behavior Constructor. This is the actual "thing" that is tied to a Placeable Element.
+ * The Place API which handles internal placement of popups, menus ect.
  * @class Place
  * @param {HTMLElement|jQuery[]} element the base element being placed
  * @param {object} [settings] incoming settings

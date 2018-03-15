@@ -120,24 +120,22 @@ Tag.prototype = {
 
       /**
       * Fires when the tag is clicked (if enabled).
-      *
       * @event click
+      * @memberof Tag
       * @type {object}
       * @property {object} event - The jquery event object
       */
-      // Handle Click
       btnDismissable.on('click.tag', (event) => {
         this.remove(event, this.element);
       });
 
       /**
       * Fires when the tag is focused.
-      *
       * @event keydown
+      * @memberof Tag
       * @type {object}
       * @property {object} event - The jquery event object
       */
-      // Handle Keyboard
       this.element.on('keydown.tag', function (event) {
         const e = event || window.event;
         if (e.keyCode === 8) { // Backspace

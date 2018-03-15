@@ -58,7 +58,7 @@ FieldFilter.prototype = {
   /**
    * Render the template against the dataset.
    * @private
-   * @param {Array} dataset  The dataset to use
+   * @param {array} dataset  The dataset to use
    * @returns {void}
    */
   render(dataset) {
@@ -138,7 +138,7 @@ FieldFilter.prototype = {
   /**
    * Set currently filtered item
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   setFiltered() {
     if (this.ddApi) {
@@ -151,8 +151,8 @@ FieldFilter.prototype = {
   /**
    * Get currently triggerData for given item args
    * @private
-   * @param {Object} args selected item.
-   * @returns {Object} The api
+   * @param {object} args selected item.
+   * @returns {object} The api
    */
   getTriggerData(args) {
     const s = this.settings;
@@ -163,7 +163,7 @@ FieldFilter.prototype = {
   /**
    * Attach Events used by the Control
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   handleEvents() {
     this.ffdropdown
@@ -188,7 +188,7 @@ FieldFilter.prototype = {
 
   /**
   * Set component to readonly.
-  * @returns {Object} The api
+  * @returns {object} The api
   */
   readonly() {
     this.ffdropdown.readonly();
@@ -197,7 +197,7 @@ FieldFilter.prototype = {
 
   /**
   * Set component to enabled.
-  * @returns {Object} The api
+  * @returns {object} The api
   */
   enable() {
     this.ffdropdown.enable();
@@ -206,7 +206,7 @@ FieldFilter.prototype = {
 
   /**
   * Set component to disabled.
-  * @returns {Object} The api
+  * @returns {object} The api
   */
   disable() {
     this.ffdropdown.disable();
@@ -216,7 +216,7 @@ FieldFilter.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     this.ffdropdown.off(`.${COMPONENT_NAME}`);
@@ -232,8 +232,8 @@ FieldFilter.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

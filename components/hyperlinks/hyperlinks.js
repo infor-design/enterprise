@@ -39,7 +39,7 @@ Hyperlink.prototype = {
   /**
    * Attach Events used by the Hyperlinks
    * @private
-   * @returns {this}
+   * @returns {this} The component api for chaining.
    */
   handleEvents() {
     return this;
@@ -47,8 +47,8 @@ Hyperlink.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (settings) {

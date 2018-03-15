@@ -965,11 +965,11 @@ SwapList.prototype = {
 
         /**
           * Fires before moving an element allowing you to access the draggable item.
-          *
           * @event beforeswap
-          * @type {Object}
-          * @property {Object} event - The jquery event object
-          * @property {Array} items - List of selected items data
+          * @memberof SwapList
+          * @type {object}
+          * @property {object} event - The jquery event object
+          * @property {array} items - List of selected items data
           */
         const result = self.element.triggerHandler('beforeswap', [selections.itemsData]);
         if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {

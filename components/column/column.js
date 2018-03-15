@@ -25,7 +25,15 @@ const COMPONENT_NAME = 'column';
 * @param {string} [settings.format = null] The d3 axis format
 * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @param {number} [settings.ticks = 9] The number of ticks to show.
-* @param {object} [settings.emptyMessage = { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }] An empty message will be displayed when there is no chart data. This accepts an object of the form emptyMessage: `{ title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function> } }` Set this to null for no message or will default to 'No Data Found with an icon.'
+* @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
+* An empty message will be displayed when there is no chart data. This accepts an object of the form
+* `emptyMessage: {
+*   title: 'No Data Available',
+*   info: 'Make a selection on the list above to see results',
+*   icon: 'icon-empty-no-data',
+*   button: {text: 'xxx', click: <function>
+*   }`
+* Set this to null for no message or will default to 'No Data Found with an icon.'
 */
 
 const COLUMN_DEFAULTS = {

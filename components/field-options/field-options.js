@@ -35,7 +35,7 @@ FieldOptions.prototype = {
   /**
    * Set all elements used by the Control
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   setElements() {
     this.isFirefox = env.browser.name === 'firefox';
@@ -76,7 +76,7 @@ FieldOptions.prototype = {
   /**
    * Attach Events used by the Control
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   handleEvents() {
     const datepicker = this.element.data('datepicker');
@@ -353,7 +353,7 @@ FieldOptions.prototype = {
 
   /**
   * Set component to enabled.
-  * @returns {Object} The api
+  * @returns {object} The api
   */
   enable() {
     this.trigger.prop('disabled', false);
@@ -362,7 +362,7 @@ FieldOptions.prototype = {
 
   /**
   * Set component to disabled.
-  * @returns {Object} The api
+  * @returns {object} The api
   */
   disable() {
     this.trigger.prop('disabled', true);
@@ -372,7 +372,7 @@ FieldOptions.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     $(document)
@@ -389,8 +389,8 @@ FieldOptions.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

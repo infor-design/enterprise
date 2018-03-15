@@ -263,7 +263,7 @@ Tree.prototype = {
    * Sets the correct icon to use on a particular SVG element.
    * @private
    * @param {object} svg an SVG element reference wrapped in a jQuery object
-   * @param {String} icon the ID of a Soho Icon type.
+   * @param {string} icon the ID of a Soho Icon type.
    * @returns {void}
    */
   setTreeIcon(svg, icon) {
@@ -325,7 +325,7 @@ Tree.prototype = {
    * Check if an object is an instance of a jQuery object
    * @private
    * @param {object} obj the object being tested.
-   * @returns {Boolean} true if jQuery
+   * @returns {boolean} true if jQuery
    */
   isjQuery(obj) {
     // TODO: Move this to a Soho utility object?
@@ -334,7 +334,7 @@ Tree.prototype = {
 
   /**
    * Selects a tree node specifically using it's ID attribute.
-   * @param {String} id - the ID string to use.
+   * @param {string} id - the ID string to use.
    * @returns {void}
    */
   selectNodeById(id) {
@@ -361,7 +361,7 @@ Tree.prototype = {
    * Deselects a tree node
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
-   * @param {Boolean} focus - if defined, causes the node to become focused.
+   * @param {boolean} focus - if defined, causes the node to become focused.
    * @returns {void}
    */
   unSelectedNode(node, focus) {
@@ -408,7 +408,7 @@ Tree.prototype = {
    * Selects a tree node
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
-   * @param {Boolean} focus - if defined, causes the node to become focused.
+   * @param {boolean} focus - if defined, causes the node to become focused.
    * @returns {void}
    */
   selectNode(node, focus) {
@@ -440,7 +440,7 @@ Tree.prototype = {
    * Select the node when finished
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
-   * @param {Boolean} focus - if defined, causes the node to become focused.
+   * @param {boolean} focus - if defined, causes the node to become focused.
    * @returns {void}
    */
   selectNodeFinish(node, focus) {
@@ -538,8 +538,8 @@ Tree.prototype = {
    * Get's a tree node's current 'selected' status
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
-   * @param {Boolean} isFirstSkipped - ?
-   * @returns {Boolean} status as true|false|'mixed'
+   * @param {boolean} isFirstSkipped - ?
+   * @returns {boolean} status as true|false|'mixed'
    */
   getSelectedStatus(node, isFirstSkipped) {
     let total = 0;
@@ -575,7 +575,7 @@ Tree.prototype = {
    * Changes a node's selected status to its opposite form.
    * @private
    * @param {object} node - a jQuery-wrapped element reference to a tree node.
-   * @param {Boolean} isFirstSkipped - ?
+   * @param {boolean} isFirstSkipped - ?
    * @returns {void}
    */
   toggleNode(node) {

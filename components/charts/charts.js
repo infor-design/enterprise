@@ -11,7 +11,7 @@ charts.isIEEdge = $('html').hasClass('ie-edge');
  * Get the current height and widthe of the tooltip.
  * @private
  * @param  {string} content The tooltip content.
- * @returns {[type]} Object with the height and width.
+ * @returns {object} Object with the height and width.
  */
 charts.tooltipSize = function tooltipSize(content) {
   this.tooltip.find('.tooltip-content').html(content);
@@ -108,7 +108,7 @@ charts.removeTooltip = function removeTooltip() {
 /**
  * The color sequences to use across charts
  * @private
- * @type {Array}
+ * @type {array}
  */
 charts.colorRange = ['#2578A9', '#8ED1C6', '#C7B4DB', '#5C5C5C', '#F2BC41', '#76B051', '#B94E4E',
   '#8DC9E6', '#DB7726', '#317C73', '#EB9D9D', '#737373', '#89BF65', '#C7B4DB',
@@ -117,7 +117,7 @@ charts.colorRange = ['#2578A9', '#8ED1C6', '#C7B4DB', '#5C5C5C', '#F2BC41', '#76
 /**
  * The colors as an array for placement
  * @private
- * @type {Array}
+ * @type {array}
  */
 charts.colors = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorRange) : [];
 

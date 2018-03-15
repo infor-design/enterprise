@@ -27,8 +27,8 @@ const SEARCHFIELD_DEFAULTS = {
 };
 
 /**
- * @class Searchfield
- * @constructor
+ * The search field component.
+ * @class SearchField
  * @param {jQuery[]|HTMLElement} element the base searchfield element
  * @param {object} [settings] incoming settings
  * @param {function} [settings.resultsCallback] Callback function for getting typahead results on search.

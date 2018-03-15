@@ -102,7 +102,6 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
   return item;
 };
 
-
 /**
 * The Autocomplete control provides an easier means of searching through a large amount of data by filtering
 * down the results based on keyboard input from the user.

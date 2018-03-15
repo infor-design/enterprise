@@ -9,23 +9,21 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'popdown';
 
 /**
- * Component Defaults
- * @namespace
- * @property {boolean} keepOpenIf true, will keep the Popdown open after clicking
- * out until the Trigger element is clicked, or until another pop-open element is opened.
- * @property {jQuery[]} [trigger] If defined, provides a way to place the popdown
- * against an alternate element.
- */
+ * The PopDown Component can be used to open an animated popdown from a button. This may in the future
+ * be derecated to one thing. Popup vs Popdown vs Tooltip.
+ * @class Popdown
+ * @deprecated
+ * @param {object} element The component element.
+ * @param {object} [settings] The component settings.
+ * @property {boolean} [settings.keepOpen = false] If true, will keep the Popdown open after clicking out until the Trigger
+ * element is clicked, or until another pop-open element is opened.
+ * @property {jQuery[]} [settings.trigger] If defined, provides a way to place the popdown against an alternate element.
+*/
 const POPDOWN_DEFAULTS = {
   keepOpen: false,
   trigger: undefined
 };
 
-/**
- * @constructor
- * @param {jQuery[]} element the base element
- * @param {Object} [settings] incoming settings
- */
 function Popdown(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, POPDOWN_DEFAULTS);
@@ -141,6 +139,7 @@ Popdown.prototype = {
 
   /**
    * Detects whether or not the Popdown has focus.
+   * @private
    * @returns {boolean} whether or not the element is currently focused.
    */
   hasFocus() {
@@ -155,10 +154,17 @@ Popdown.prototype = {
     return false;
   },
 
+  /**
+   * Determines whether or not the popdown is open.
+   * @returns {boolean} returns current state.
+   */
   isOpen() {
     return this.trigger.attr('aria-expanded') === 'true';
   },
 
+  /**
+   * Open the popdown.
+   */
   open() {
     if (this.isAnimating) {
       return;
@@ -205,6 +211,9 @@ Popdown.prototype = {
     }, 400);
   },
 
+  /**
+   * Close the popdown.
+   */
   close() {
     if (this.isAnimating) {
       return;
@@ -227,6 +236,9 @@ Popdown.prototype = {
     }, 400);
   },
 
+  /**
+   * Toggle the popdown.
+   */
   toggle() {
     if (this.isOpen()) {
       this.close();
@@ -235,13 +247,19 @@ Popdown.prototype = {
     this.open();
   },
 
-  // Detaches Popdown Element and places at the body tag root, or at the root of the nearest
-  // scrollable parent.
+  /**
+   * Detaches Popdown Element and places at the body tag root, or at the root of the nearest scrollable parent.
+   * @private
+   */
   place() {
     this.scrollparent = $('body');
     this.popdown.detach().appendTo(this.scrollparent);
   },
 
+  /**
+   * Set the right popdown position.
+   * @private
+   */
   position() {
     const parent = {
       offset: {
@@ -352,6 +370,11 @@ Popdown.prototype = {
     }
   },
 
+  /**
+   * Update the popdown and refresh with new settings
+   * @param  {object} settings The new settings
+   * @returns {object} The component api.
+   */
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
@@ -364,6 +387,11 @@ Popdown.prototype = {
     return this;
   },
 
+  /**
+   * Release Events
+   * @private
+   * @returns {object} The component api.
+   */
   teardown() {
     if (this.isOpen()) {
       this.close();
@@ -383,7 +411,9 @@ Popdown.prototype = {
     return this;
   },
 
-  // Teardown - Remove added markup and events
+  /**
+   * Teardown - Remove added markup and events
+   */
   destroy() {
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);

@@ -220,8 +220,8 @@ Splitter.prototype = {
    * Resize the panel vertically
    * @private
    * @param {object} splitter element.
-   * @param {Number} top value.
-   * @param {Number} parentHeight value.
+   * @param {number} top value.
+   * @param {number} parentHeight value.
    * @returns {void}
    */
   resizeTop(splitter, top, parentHeight) {
@@ -236,7 +236,7 @@ Splitter.prototype = {
    * Resize the panel to the Left
    * @private
    * @param {object} splitter element.
-   * @param {Number} leftArg value.
+   * @param {number} leftArg value.
    * @returns {void}
    */
   resizeLeft(splitter, leftArg) {
@@ -253,7 +253,7 @@ Splitter.prototype = {
    * Resize the panel to the Right
    * @private
    * @param {object} splitter element.
-   * @param {Number} w - width value.
+   * @param {number} w - width value.
    * @returns {void}
    */
   resizeRight(splitter, w) {
@@ -265,7 +265,7 @@ Splitter.prototype = {
   /**
    * Preferably use the id, but if none that make one based on the url and count
    * @private
-   * @returns {String} uniqueId
+   * @returns {string} uniqueId
    */
   uniqueId() {
     return this.element.attr('id') ||
@@ -275,8 +275,8 @@ Splitter.prototype = {
   /**
    * Split to
    * @private
-   * @param {Number} split value.
-   * @param {Number} parentHeight value.
+   * @param {number} split value.
+   * @param {number} parentHeight value.
    * @returns {void}
    */
   splitTo(split, parentHeight) {
@@ -361,6 +361,7 @@ Splitter.prototype = {
       * Fires when the component updates.
       *
       * @event updated
+      * @memberof Splitter
       * @type {object}
       * @property {object} event - The jquery event object
       */
@@ -372,7 +373,8 @@ Splitter.prototype = {
       * Fires when a key is pressed while the component is focused.
       *
       * @event keydown
-      * @type {Object}
+      * @memberof Splitter
+      * @type {object}
       * @property {object} event - The jquery event object
       */
       .on(`keydown.${COMPONENT_NAME}`, (e) => {

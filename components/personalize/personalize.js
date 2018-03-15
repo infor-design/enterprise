@@ -327,6 +327,7 @@ Personalize.prototype = {
 
   /**
    * Builds a temporary page overlay that prevents end users from experiencing FOUC
+   * @private
    * @returns {void}
    */
   blockUi() {
@@ -354,6 +355,7 @@ Personalize.prototype = {
 
   /**
    * Removes a temporary page overlay built by `blockUi()`
+   * @private
    * @returns {void}
    */
   unBlockUi() {
@@ -383,6 +385,7 @@ Personalize.prototype = {
   /**
    * Simple Teardown - remove events & rebuildable markup.
    * Ideally this will do non-destructive things that make it possible to easily rebuild
+   * @private
    * @returns {this} component instance
    */
   teardown() {

@@ -529,8 +529,8 @@ Tooltip.prototype = {
      *
      * @event beforeshow
      * @memberof Tooltip
-     * @property {Object} event - The jquery event object
-     * @property {Object} tooltip - instance
+     * @property {object} event - The jquery event object
+     * @property {object} tooltip - instance
      */
     okToShow = this.element.triggerHandler('beforeshow', [this.tooltip]);
     if (okToShow === false) {
@@ -551,8 +551,8 @@ Tooltip.prototype = {
      *
      * @event show
      * @memberof Tooltip
-     * @property {Object} event - The jquery event object
-     * @property {Object} tooltip - instance
+     * @property {object} event - The jquery event object
+     * @property {object} tooltip - instance
      */
     this.element.trigger('show', [this.tooltip]);
 
@@ -623,8 +623,8 @@ Tooltip.prototype = {
        *
        * @event aftershow
        * @memberof Tooltip
-       * @property {Object} event - The jquery event object
-       * @property {Object} tooltip - instance
+       * @property {object} event - The jquery event object
+       * @property {object} tooltip - instance
        */
       self.element.trigger('aftershow', [self.tooltip]);
     }, 400);
@@ -747,8 +747,8 @@ Tooltip.prototype = {
      *
      * @event hide
      * @memberof Tooltip
-     * @property {Object} event - The jquery event object
-     * @property {Object} tooltip - instance
+     * @property {object} event - The jquery event object
+     * @property {object} tooltip - instance
      */
     this.element.trigger('hide', [this.tooltip]);
   },

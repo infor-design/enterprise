@@ -23,12 +23,12 @@ const MULTISELECT_DEFAULTS = {
  * @constructor
  * @param {jQuery[]|HTMLElement} element the base element
  * @param {object} [settings] incoming settings
- * @property {string} [settings.filterMode = 'contains']  The search mode to use, can be 'contains' or 'startsWith'
- * @property {number} [settings.maxSelected = null]  The max number of items which can be selected
- * @property {string} [settings.moveSelected = 'all']   Move selected options in each group to just underneath their corresponding group headers.
- * @property {boolean} [settings.showEmptyGroupHeaders = false]  If true groups with no items will still show the empty group header.
- * @property {boolean} [settings.showSelectAll = false]  Show the select all button and text .
- * @property {function} [settings.source]  The calback for ajax.
+ * @param {string} [settings.filterMode = 'contains']  The search mode to use, can be 'contains' or 'startsWith'
+ * @param {number} [settings.maxSelected = null]  The max number of items which can be selected
+ * @param {string} [settings.moveSelected = 'all']   Move selected options in each group to just underneath their corresponding group headers.
+ * @param {boolean} [settings.showEmptyGroupHeaders = false]  If true groups with no items will still show the empty group header.
+ * @param {boolean} [settings.showSelectAll = false]  Show the select all button and text .
+ * @param {function} [settings.source]  The calback for ajax.
  */
 function MultiSelect(element, settings) {
   this.settings = utils.mergeSettings(element, settings, MULTISELECT_DEFAULTS);

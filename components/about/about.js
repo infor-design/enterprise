@@ -199,7 +199,6 @@ About.prototype = {
 
     /**
     * Fires when the dialog is closing.
-    *
     * @event close
     * @memberof About
     * @property {object} event - The jquery event object
@@ -211,7 +210,6 @@ About.prototype = {
 
     /**
     * Fires after the dialog is done closing and removed.
-    *
     * @event afterclose
     * @memberof About
     * @property {object} event - The jquery event object

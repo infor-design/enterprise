@@ -785,8 +785,8 @@ PopupMenu.prototype = {
        *
        * @event selected
        * @memberof PopupMenu
-       * @property {Object} event - The jquery event object
-       * @property {Object} selected anchor
+       * @property {object} event - The jquery event object
+       * @property {object} selected anchor
        */
       this.element.triggerHandler('selected', selectionResult);
     }
@@ -1129,8 +1129,8 @@ PopupMenu.prototype = {
      *
      * @event beforeopen
      * @memberof PopupMenu
-     * @property {Object} event - The jquery event object
-     * @property {Object} this menu instance
+     * @property {object} event - The jquery event object
+     * @property {object} this menu instance
      */
     let canOpen = this.element.triggerHandler('beforeopen', [this.menu]);
     if (canOpen === false) {
@@ -1230,8 +1230,8 @@ PopupMenu.prototype = {
        *
        * @event open
        * @memberof PopupMenu
-       * @property {Object} event - The jquery event object
-       * @property {Object} this menu instance
+       * @property {object} event - The jquery event object
+       * @property {object} this menu instance
        */
       self.element.triggerHandler('open', [self.menu]);
 
@@ -1314,8 +1314,8 @@ PopupMenu.prototype = {
          *
          * @event afteropen
          * @memberof PopupMenu
-         * @property {Object} event - The jquery event object
-         * @property {Object} this menu instance
+         * @property {object} event - The jquery event object
+         * @property {object} this menu instance
          */
         self.element.triggerHandler('afteropen', [self.menu]);
       }, 1);
@@ -1648,8 +1648,8 @@ PopupMenu.prototype = {
      *
      * @event close
      * @memberof PopupMenu
-     * @property {Object} event - The jquery event object
-     * @property {Object} close by cancelled
+     * @property {object} event - The jquery event object
+     * @property {object} close by cancelled
      */
     this.element.removeClass('is-open').triggerHandler('close', [isCancelled]);
     this.detach();
