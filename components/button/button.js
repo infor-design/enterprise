@@ -9,25 +9,22 @@ import '../icons/icons.jquery';
 const COMPONENT_NAME = 'button';
 
 /**
-* @namespace
-* @property {string} toggleOnIcon  The icon to use for on state on toggle buttons
-* @property {string} toggleOffIcon  The icon to use for off state on toggle buttons
-* @property {string} replaceText  If true the selection will be used to replace the content
-* in the button.
-*/
+ * Soho Button Element
+ * @class Button
+ * @param {string} element The component element.
+ * @param {string} settings The component settings.
+ * 
+ * @param {string} [settings.toggleOnIcon=null]  The icon to use for on state on toggle buttons
+ * @param {string} [settings.toggleOffIcon=null]  The icon to use for off state on toggle buttons
+ * @param {string} [settings.replaceText=false]  If true the selection will be used to replace the content
+ */
+
 const BUTTON_DEFAULTS = {
   toggleOnIcon: null,
   toggleOffIcon: null,
   replaceText: false
 };
 
-/**
- * Soho Button Element
- * @class Button
- * @param {string} element The component element.
- * @param {string} settings The component settings.
- * @constructor
- */
 function Button(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings, BUTTON_DEFAULTS);
@@ -204,13 +201,15 @@ Button.prototype = {
   *  Fires when the button is clicked (if enabled).
   *
   * @event click
-  * @property {object} event - The jquery event object
+  * @memberof Button
+  * @param {object} event - The jquery event object
   */
   /**
   * Fires when the button is focused.
   *
   * @event focus
-  * @property {object} event - The jquery event object
+  * @memberof Button
+  * @param {object} event - The jquery event object
   */
 };
 

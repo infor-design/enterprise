@@ -8,17 +8,22 @@ import '../button/button.jquery';
 const COMPONENT_NAME = 'modal';
 
 /**
-* @namespace
-* @property {string} trigger The method of opening the dialog. Supports click, immediate.
-* @property {array} buttons  A list of buttons that will sit in the toolbar's Buttonset area.
-* @property {isAlert} isAlert Adds alertdialog role for message dialogs.
-* @property {content} content Ability to pass in dialog html content.
-* @property {string} cssClass Append a css class to top level.
-* @property {boolean} autoFocus If true the first input will be focused.
-* @property {string} id Optionally tag a dialog with an id.
-* @property {number} frameHeight Optional extra height to add.
-* @property {number} frameWidth Optional extra width to add.
+* Responsive and Accessible Modal Control
+* @class Modal
+* @param {string} element The component element.
+* @param {string} settings The component settings.
+*
+* @param {string} [settings.trigger='click'] The method of opening the dialog. Supports click, immediate.
+* @param {array} [settings.buttons=null]  A list of buttons that will sit in the toolbar's Buttonset area.
+* @param {isAlert} [settings.isAlert=false] Adds alertdialog role for message dialogs.
+* @param {content} [settings.content=null] Ability to pass in dialog html content.
+* @param {string} [settings.cssClass=null] Append a css class to top level.
+* @param {boolean} [settings.autoFocus=true] If true the first input will be focused.
+* @param {string} [settings.id=null] Optionally tag a dialog with an id.
+* @param {number} [settings.frameHeight=180] Optional extra height to add.
+* @param {number} [settings.frameWidth=46] Optional extra width to add.
 */
+
 const MODAL_DEFAULTS = {
   trigger: 'click',
   buttons: null,
@@ -31,12 +36,6 @@ const MODAL_DEFAULTS = {
   frameWidth: 46
 };
 
-/**
-* Responsive and Accessible Modal Control
-* @class Modal
-* @param {string} element The component element.
-* @param {string} settings The component settings.
-*/
 function Modal(element, settings) {
   this.settings = utils.mergeSettings(element, settings, MODAL_DEFAULTS);
   this.element = $(element);

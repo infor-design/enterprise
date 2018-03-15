@@ -9,27 +9,25 @@ import { charts } from '../charts/charts';
 const COMPONENT_NAME = 'bullet';
 
 /**
-* @namespace
-* @property {array} dataset.data The data to use in the chart.
-* @property {boolean|string} animate true|false - will do or not do the animation.
-* 'initial' will do only first time the animation.
-* @property {array} dataset.data.tooltip Tooltip conents for each point.
-* @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
-*/
-const BULLET_DEFAULTS = {
-  dataset: [],
-  animate: true,
-  redrawOnResize: true
-};
-
-/**
  * A bullet graph is a variation of a bar graph developed by Stephen Few.
  * Seemingly inspired by the traditional thermometer charts and progress bars found in many
  * dashboards, the bullet graph serves as a replacement for dashboard gauges and meters.
  * @class Bullet
  * @param {string} element The plugin element for the constuctor
  * @param {string} settings The settings element.
+ * 
+ * @param {array} [settings.dataset.data] The data to use in the chart.
+ * @param {boolean|string} [settings.animate=true] true|false - will do or not do the animation, 'initial' will do only first time the animation.
+ * @param {array} [settings.dataset.data.tooltip] Tooltip conents for each point.
+ * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page.
  */
+
+const BULLET_DEFAULTS = {
+  dataset: [],
+  animate: true,
+  redrawOnResize: true
+};
+
 function Bullet(element, settings) {
   this.settings = utils.mergeSettings(element, settings, BULLET_DEFAULTS);
   if (settings && settings.dataset) {

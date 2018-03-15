@@ -13,27 +13,24 @@ import '../tooltip/tooltip.jquery';
 const COMPONENT_NAME = 'pager';
 
 /**
-* @namespace
+* The Pager Component supports paging on lists.
+* @class Pager
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+*
 * @property {string} componentAPI  If defined, becomes the definitive way to call methods on
 * parent component.
-* @property {string} type  Different types of pagers
-* list - just shows next and Previous and a listing of pages
-* table - shows next and previous and first and last with a page number input and
-* page size selector used as the default for datagrid
-* pageof - also shows next and previous and first and last with a page number input and
-* page size selector used optionally for lists
-* firstlast - shows next and previous and first and last with option to set showPageSizeSelector
+* @property {string} type  Different types of pagers list - just shows next and Previous and a listing of pages table - shows next and previous and first and last with a page number input and page size selector used as the default for datagrid pageof - also shows next and previous and first and last with a page number input and page size selector used optionally for lists firstlast - shows next and previous and first and last with option to set showPageSizeSelector
 * @property {string} position  Can be on 'bottom' or 'top'.
 * @property {number} activePage  Start on this page
-* @property {boolean} hideOnOnePage  If true, hides the pager if there is only one page worth of
-* results.
+* @property {boolean} hideOnOnePage  If true, hides the pager if there is only one page worth of results.
 * @property {Function} source  Call Back Function for Pager Data Source
 * @property {number} pagesize  Can be calculated or a specific number
 * @property {array} pagesizes  Array of numbers of the page size selector
 * @property {boolean} showPageSizeSelector  If false will not show page size selector
 * @property {boolean} indeterminate  If true will not show anything that lets you go to a specific
-* page.
 */
+
 const PAGER_DEFAULTS = {
   componentAPI: undefined,
   type: 'list',
@@ -48,14 +45,6 @@ const PAGER_DEFAULTS = {
 };
 
 const PAGER_NON_NUMBER_BUTTON_SELECTOR = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
-
-/**
-* The Pager Component supports paging on lists.
-* @class Pager
-* @param {jQuery[]|HTMLElement} element The component element.
-* @param {object} [settings] The component settings.
-*
-*/
 function Pager(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PAGER_DEFAULTS);
   this.settings.dataset = settings.dataset; // by pass deep copy
