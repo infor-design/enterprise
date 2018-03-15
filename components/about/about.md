@@ -1,12 +1,13 @@
 ---
 title: About
 description: This page describes About.
+demo:
+  pages:
+  - name: Default About Example
+    slug: example-index
+  - name: Close Event Demo
+    slug: test-close-event
 ---
-
-## Configuration Options
-
-1. Default About Example [View Example]( ../components/about/example-index)
-2. Close Event Demo [View Example]( ../components/about/test-close-event)
 
 ## Code Example
 
@@ -25,7 +26,7 @@ $('body').about({
 
 ## Accessibility
 
--   [Modal](../components/modal) guidelines apply as this is essentially a specific modal dialog.
+- [Modal](./modal) guidelines apply as this is essentially a specific modal dialog.
 
 ## Code Tips
 
@@ -33,9 +34,9 @@ The about component example by default adds the current year's copyright, and us
 
 ## Keyboard Shortcuts
 
--   **Esc:** If pressed while open will close the about component and return focus to the triggering element
+- <kbd>Esc</kbd>: If pressed while open will close the about component and return focus to the triggering element
 
 ## Upgrading from 3.X
 
--   Replace .inforAboutDialog() with .about()
--   Many of the names of the settings (fx productName -> appName) to have changed map them to the new settings.
+- Replace `.inforAboutDialog()` with `.about()`
+- Many of the names of the settings (e.g. `productName` to `appName`) to have changed so must be updated to the new settings.

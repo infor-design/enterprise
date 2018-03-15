@@ -25,10 +25,6 @@ sections:
       slug: alerts
     - name: Application Menu
       slug: applicationmenu
-    - name: Area
-      slug: area
-    - name: Arrange
-      slug: arrange
     - name: Autocomplete
       slug: autocomplete
     - name: Badges
@@ -173,6 +169,8 @@ sections:
       slug: toolbar
 - name: Utilities
   pages:
+  - name: Arrange
+    slug: arrange
   - name: Drag
     slug: drag
   - name: Initialize
@@ -201,6 +199,8 @@ sections:
   pages:
   - name: Getting Start with Charts
     slug: charts
+  - name: Area
+    slug: area
   - name: Bar Chart
     slug: bar
   - name: Bar Chart (Grouped)
