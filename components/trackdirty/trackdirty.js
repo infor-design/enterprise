@@ -5,17 +5,15 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'trackdirty';
 
-/**
- * Default Trackdirty Options
- */
+// Default Trackdirty Options
 const TRACKDIRTY_DEFAULTS = {
 };
 
 /**
 * Track changes on the inputs passed in the jQuery selector and show a dirty indicator
-* @class Tag
-* @param {String} element The component element.
-* @param {String} settings The component settings.
+* @class Trackdirty
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
 */
 function Trackdirty(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TRACKDIRTY_DEFAULTS);

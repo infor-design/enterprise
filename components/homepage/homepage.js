@@ -11,8 +11,7 @@ const COMPONENT_NAME = 'homepage';
 * @class Homepage
 * @constructor
 * @param {String} element The component element.
-* @param {String} settings The component settings.
-*
+* @param {String} [settings] The component settings.
 * @param {boolean} [settings.animate] Disable animation during resize
 * @param {number} [settings.columns] Display in 3 (default) or 4 column layout
 * @param {string} [settings.easing]

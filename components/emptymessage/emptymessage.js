@@ -10,15 +10,13 @@ const COMPONENT_NAME = 'emptymessage';
 * The Empty Message is a message with an icon that can be used when no data is present.
 * @class EmptyMessage
 * @param {object} element The component element.
-* @param {object} settings The component settings.
-*
+* @param {object} [settings] The component settings.
 * @param {string} [settings.title = null] The Main text to show.
 * @param {string} [settings.info = null] Longer paragraph text to show
 * @param {string} [settings.icon = null] The name of the icon to use. See {@link ./icons/example-empty-widgets.html} for options.
 * @param {boolean} [settings.button = null] The botton text and click event to add.
 * @param {string} [settings.color = 'graphite']  Defaults to 'graphite' but can also be azure. Later may be expanded to all personalization colors.
 */
-
 const EMPTYMESSAGE_DEFAULTS = {
   title: null,
   info: null,

@@ -12,8 +12,7 @@ const COMPONENT_NAME = 'hierarchy';
 *
 * @class Hierarchy
 * @param {string} element The component element.
-* @param {string} settings The component settings.
-*
+* @param {string} [settings] The component settings.
 * @param {string} [settings.legend] Pass in custom markdown for the legend structure.
 * @param {string} [settings.legendKey] Key to use for the legend matching
 * @param {string} [settings.dataset=[]] Hierarchical Data to display
@@ -25,7 +24,6 @@ const COMPONENT_NAME = 'hierarchy';
 * @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
 * @param {boolean} [settings.paging=false] If true show pagination.
 */
-
 const HIERARCHY_DEFAULTS = {
   legend: [],
   legendKey: '',

@@ -9,15 +9,13 @@ import '../components.jquery';
 // The name of this component
 const COMPONENT_NAME = 'initialize';
 
-/**
- * Component Defaults
- */
+// Component Defaults
 const INITIALIZE_DEFAULTS = {
   locale: null
 };
 
 /**
- * Page Bootstrapper
+ * Page Bootstrapper, will initialize all components on a page with default settings.
  * @class Initialize
  * @constructor
  * @param {jQuery[]|HTMLElement} element the root element to initialize
@@ -66,7 +64,7 @@ Initialize.prototype = {
 
   /**
    * Initializes all Soho components inside the root element provided.
-   * @returns {this} component instance
+    * @returns {this} component instance
    */
   initAll() {
     const self = this;

@@ -4,10 +4,7 @@ import { utils } from '../utils/utils';
 // Component Name
 const COMPONENT_NAME = 'rating';
 
-/**
- * Default Rating Options
- * @namespace
- */
+// Default Rating Options
 const RATING_DEFAULTS = {
 };
 

@@ -3,8 +3,17 @@
 // ====================================================
 
 /**
+* A Series for Form based utilites and helpers.
+* @class FormUtils
+* @constructor
+*/
+function FormUtils() { //eslint-disable-line
+}
+
+/**
  * Make elements in the jQuery selector disabled if they support the prop disabled.
  * Or has a disable method.
+ * @memberof FormUtils
  * @returns {jQuery[]} processed, jQuery-wrapped elements
  */
 $.fn.disable = function () {
@@ -24,6 +33,7 @@ $.fn.disable = function () {
 /**
  * Make elements in the jQuery selector enabled if they support the prop disabled.
  * Or has a enable method.
+ * @memberof FormUtils
  * @returns {jQuery[]} processed, jQuery-wrapped elements
  */
 $.fn.enable = function () {
@@ -43,6 +53,7 @@ $.fn.enable = function () {
 /**
  * Make elements in the jQuery selector readonly if they support the prop readonly.
  * Or has a readonly method.
+ * @memberof FormUtils
  * @returns {jQuery[]} processed, jQuery-wrapped elements
  */
 $.fn.readonly = function () {
