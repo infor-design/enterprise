@@ -5,6 +5,7 @@ import { DOM } from './dom';
 /**
  * Used for changing the stacking order of jQuery events.  This is needed to override certain
  * Events invoked by other plugins http://stackoverflow.com/questions/2360655
+ * @private
  * @param {string} name the event name
  * @param {function} fn callback function that will be called during the supplied event name
  * @returns {void}
@@ -29,6 +30,7 @@ export let uniqueIdCount = 0; // eslint-disable-line
 /**
  * Generates a unique ID for an element based on the element's configuration, any
  * Soho components that are generated against it, and provided prefixes/suffixes.
+ * @private
  * @param {string} [className] CSS classname (will be interpreted automatically
  *  if it's not provided)
  * @param {string} [prefix] optional prefix
@@ -55,6 +57,7 @@ $.fn.uniqueId = function (className, prefix, suffix) {
  * Detect whether or not a text string represents a valid CSS property.  This check
  * includes an attempt at checking for vendor-prefixed versions of the CSS property
  * provided.
+ * @private
  * @param {string} prop a possible CSS property
  * @returns {string|null} If the property exists, it will be returned in string format.
  *  If the property doesn't exist, a null result is returned.
@@ -88,6 +91,7 @@ $.fn.cssPropSupport = function (prop) {
 
 /**
  * Returns the name of the TransitionEnd event.
+ * @private
  * @returns {string} a (possibly) vendor-adjusted CSS transition property name.
  */
 $.fn.transitionEndName = function () {
@@ -164,6 +168,7 @@ $.extend($.expr[':'], {
 
 /**
  * Returns a key/value list of currently attached event listeners
+ * @private
  * @returns {object} containing list of event names as keys, and event listener functions as values.
  */
 $.fn.listEvents = function () {
@@ -239,6 +244,7 @@ utils.parseSettings = function parseSettings(element, attr) {
 
 /**
  * Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
+ * @private
  * @deprecated
  * TODO: Remove in 4.4.1 ?
  */
@@ -247,6 +253,7 @@ utils.parseOptions = utils.parseSettings;
 /**
 * jQuery Behavior Wrapper for `utils.parseOptions`.
 * @deprecated
+* @private
 * @param {HTMLElement|jQuery[]} element the element whose options are being parsed
 * @param {string} [attr] an optional alternate attribute name to use when obtaining settings
 * @returns {Object|Object[]} an object representation of parsed settings.
@@ -283,6 +290,7 @@ $.fn.parseOptions = function (element, attr) {
  * then can be listen events as:
  * [ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]
  * or can access as [ timer.cancel(); -or- timer.pause(); -or- timer.resume(); ]
+ * @private
  * @param {function} [callback] method that will run on each timer update
  * @param {number} delay amount of time between timer ticks
  * @returns {object} containing methods that can be run on the timer
@@ -339,6 +347,7 @@ $.fn.timer = function (callback, delay) {
  * No Safari support, as of (Nov. 2015). Returns false.
  * IE: The clipboard feature may be disabled by an adminstrator. By default a prompt is
  * shown the first time the clipboard is used (per session).
+ * @private
  * @param {string} text incoming text content
  * @returns {string|boolean} copied text, or a false result if there was an error
  */
@@ -365,6 +374,7 @@ $.copyToClipboard = function (text) { // eslint-disable-line
 
 /**
  * Escapes HTML, replacing special characters with encoded symbols.
+ * @private
  * @param {string} value HTML in string form
  * @returns {string} the modified value
  */
@@ -379,6 +389,7 @@ $.escapeHTML = function (value) {
 
 /**
  * Un-escapes HTML, replacing encoded symbols with special characters.
+ * @private
  * @param {string} value HTML in string form
  * @returns {string} the modified value
  */
@@ -393,6 +404,7 @@ $.unescapeHTML = function (value) {
 
 /**
  * Remove Script tags and all onXXX functions
+ * @private
  * @param {string} html HTML in string form
  * @returns {string} the modified value
  */
@@ -405,6 +417,7 @@ $.sanitizeHTML = function (html) {
 
 /**
  * Clearable (Shows an X to clear)
+ * @private
  */
 $.fn.clearable = function () {
   const self = this;
@@ -520,6 +533,7 @@ utils.actualChar = function (e) {
 
 /**
  * Get the actualy typed key from the event.
+ * @private
  * @param  {object} e The event to check for the key.
  * @returns {string} The actual key typed.
  */
@@ -741,6 +755,7 @@ utils.getHiddenSize = function getHiddenSize(el, options) {
 
 /**
  * Binds the Soho Util _getHiddenSize()_ to a jQuery selector
+ * @private
  * @param {object} options - incoming options
  * @returns {object} hidden size
  */

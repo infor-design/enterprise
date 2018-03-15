@@ -13,7 +13,6 @@ const COMPONENT_NAME = 'fieldoptions';
 * @param {jQuery[]|HTMLElement} element The component element.
 * @param {object} [settings] The component settings.
 */
-
 const FIELDOPTIONS_DEFAULTS = {
 };
 
