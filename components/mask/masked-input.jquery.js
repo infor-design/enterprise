@@ -22,5 +22,7 @@ $.fn.maskedinput = function (settings) {
 
 /**
  * Backwards Compatibility with the old Mask
+ * @param {object} [settings] incoming settings
+ * @returns {jQuery[]} elements to be acted on.
  */
 $.fn.mask = $.fn.maskedinput;
