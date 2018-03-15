@@ -2,28 +2,11 @@
 
 ### Table of Contents
 
--   [ABOUT_DEFAULTS][1]
--   [About][2]
-    -   [getDeviceSpecs][3]
-    -   [updated][4]
-    -   [close][5]
-    -   [destroy][6]
--   [close][7]
--   [afterclose][8]
--   [beforeopen][9]
-
-## ABOUT_DEFAULTS
-
-**Properties**
-
--   `appName` **[string][10]** The Main Application Name to display in the header.
--   `content` **[string][10]** Additional text content to display at the top.
--   `copyrightYear` **[string][10]** The year displayed in the copyright, defaults to current year.
--   `deviceSpecs` **[boolean][11]** Determines whether or not to display device
-    information. This information includes Browser, Platform, Locale and if Cookies are Enabled.
--   `productName` **[string][10]** Additional product name information to display.
--   `useDefaultCopyright` **[boolean][11]** Add the Legal Approved Infor Copy Right Text.
--   `version` **[string][10]** Semantic Version Number for example (4.0.0).
+-   [About][1]
+    -   [getDeviceSpecs][2]
+    -   [updated][3]
+    -   [close][4]
+    -   [destroy][5]
 
 ## About
 
@@ -31,14 +14,22 @@ The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
--   `element` **[object][12]** The component element.
--   `settings` **[object][12]?** The component settings.
+-   `element` **[object][6]** The component element.
+-   `settings` **[object][6]?** The component settings.
+    -   `settings.appName` **[string][7]** The Main Application Name to display in the header. (optional, default `'Infor Application Name'`)
+    -   `settings.content` **[string][7]?** Additional text content to display at the top.
+    -   `settings.copyrightYear` **[string][7]** The year displayed in the copyright, defaults to current year. (optional, default `newDate().getFullYear()`)
+    -   `settings.deviceSpecs` **[boolean][8]** Determines whether or not to display device information.
+        This information includes Browser, Platform, Locale and if Cookies are Enabled. (optional, default `true`)
+    -   `settings.productName` **[string][7]?** Additional product name information to display.
+    -   `settings.useDefaultCopyright` **[boolean][8]** Add the Legal Approved Infor Copyright Text. (optional, default `true`)
+    -   `settings.version` **[string][7]?** Semantic Version Number for example (4.0.0).
 
 ### getDeviceSpecs
 
 Return the browser specs. Currently returns browse, os, cookiesEnabled and locale
 
-Returns **[string][10]** The specs of the browser.
+Returns **[string][7]** The specs of the browser.
 
 ### updated
 
@@ -46,9 +37,9 @@ Update the component and optionally apply new settings.
 
 **Parameters**
 
--   `settings` **[object][12]** the settings to update to.
+-   `settings` **[object][6]** the settings to update to.
 
-Returns **[object][12]** The plugin api for chaining.
+Returns **[object][6]** The plugin api for chaining.
 
 ### close
 
@@ -62,53 +53,18 @@ Teardown and remove any added markup and events.
 
 Returns **void** 
 
-## close
+[1]: #about
 
-Fires when the dialog is closing.
+[2]: #getdevicespecs
 
-**Properties**
+[3]: #updated
 
--   `event` **[object][12]** The jquery event object
--   `ui` **[object][12]** The dialog object
+[4]: #close
 
-## afterclose
+[5]: #destroy
 
-Fires after the dialog is done closing and removed.
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-**Properties**
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
--   `event` **[object][12]** The jquery event object
--   `ui` **[object][12]** The dialog object
-
-## beforeopen
-
-Fires when the about dialog is opening, allowing you to veto by returning false.
-
-**Properties**
-
--   `event` **[object][12]** The jquery event object.
--   `ui` **[object][12]** The dialog object
-
-[1]: #about_defaults
-
-[2]: #about
-
-[3]: #getdevicespecs
-
-[4]: #updated
-
-[5]: #close
-
-[6]: #destroy
-
-[7]: #close-1
-
-[8]: #afterclose
-
-[9]: #beforeopen
-
-[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

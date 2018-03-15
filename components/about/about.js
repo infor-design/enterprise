@@ -15,7 +15,7 @@ const COMPONENT_NAME = 'about';
  * @param {boolean} [settings.deviceSpecs=true] Determines whether or not to display device information.
  * This information includes Browser, Platform, Locale and if Cookies are Enabled.
  * @param {string} [settings.productName] Additional product name information to display.
- * @param {boolean} [settings.useDefaultCopyright=true] Add the Legal Approved Infor Copy Right Text.
+ * @param {boolean} [settings.useDefaultCopyright=true] Add the Legal Approved Infor Copyright Text.
  * @param {string} [settings.version] Semantic Version Number for example (4.0.0).
  */
 const ABOUT_DEFAULTS = {
