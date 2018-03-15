@@ -5,18 +5,15 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'signin';
 
-/**
- * Default SignIn Options
- * @namespace
- */
+// Default SignIn Options
 const SIGNIN_DEFAULTS = {
 };
 
 /**
-*
+* The sign in page component.
 * @class SignIn
-* @param {String} element The component element.
-* @param {String} settings The component settings.
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
 */
 function SignIn(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SIGNIN_DEFAULTS);

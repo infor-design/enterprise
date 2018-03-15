@@ -22,7 +22,6 @@ const COMPONENT_NAME = 'fieldfilter';
 * @param {object} [settings.dropdownOpts]  Gets passed to this control's dropdown
 * @param {string} [settings.template] An Html String with the mustache template for the view.
 */
-
 const FIELDFILTER_DEFAULTS = {
   dataset: [],
   dropdownOpts: {}, // Dropdown custom settings

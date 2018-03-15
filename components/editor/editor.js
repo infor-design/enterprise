@@ -15,7 +15,7 @@ const COMPONENT_NAME = 'editor';
 *
 * @class Editor
 * @param {String} element The component element.
-* @param {String} settings The component settings.
+* @param {String} [settings] The component settings.
 * @param {string} [settings.buttons =
 * { editor: [ 'header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'strikethrough',
 * 'separator', 'foreColor', 'backColor', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist',
