@@ -6,7 +6,6 @@ const COMPONENT_NAME = 'about';
 
 /**
  * The About Dialog Component is displays information regarding the application.
- *
  * @class About
  * @param {object} element The component element.
  * @param {object} [settings] The component settings.
