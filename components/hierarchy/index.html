@@ -6,111 +6,216 @@
 <li>Example Paging <a href="../components/hierarchy/example-paging">View Example</a></li>
 <li>Example Single Manager/Subordinate <a href="../components/hierarchy/example-single">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.legend
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Pass in custom markdown for the legend structure.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.legendKey
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Key to use for the legend matching
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset
+    </td>
+    <td>
+      <span>[]</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Hierarchical Data to display
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.newData
+    </td>
+    <td>
+      <span>[]</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      New data to be appended into dataset
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.templateId
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Additional product name information to display
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.mobileView
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true will only show mobile view, default using device info.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.leafHeight
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Set the height of the leaf
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.leafWidth
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Set the width of the leaf
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.beforeExpand
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      A callback that fires before node expansion of a node.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.paging
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true show pagination.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          legend
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Pass in custom markdown for the legend structure.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          legendKey
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Key to use for the legend matching
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          dataset
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Hierarchical Data to display
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          newData
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          New data to be appended into dataset
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          templateId
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Additional product name information to display
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          mobileView
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true will only show mobile view, default using device info.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          beforeExpand
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          A callback that fires before node expansion of a node.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -125,7 +230,7 @@
         <td>
           
                 
-                  <span>settings (Object) = The settings to apply.
+                  <span>settings (object) = The settings to apply.
  </span>
                 
           
@@ -136,7 +241,7 @@
         </td>
         <td>
           The api
-Object
+object
         </td>
       </tr>
       <tr>
@@ -157,11 +262,7 @@ void
   </table>
 
 
-  
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -177,26 +278,6 @@ void
   </td>
   <td>
   
-    
-      <div>
-        <span>event (object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>eventInfo (object)
-        
-        = More info to identify the node.
-
-        </span>
-        
-      </div>
-    
-  
   </td>
   <td>Fires when node is selected
 </td>
@@ -208,28 +289,6 @@ void
   </td>
   <td>
   
-    
-      <div>
-        <span>event (Object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>args (Array)
-        
-        = [
-nodeData, dataset
-]
-
-        </span>
-        
-      </div>
-    
-  
   </td>
   <td>Fires when leaf expanded.
 </td>
@@ -240,28 +299,6 @@ nodeData, dataset
   <td>collapsed
   </td>
   <td>
-  
-    
-      <div>
-        <span>event (Object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>args (Array)
-        
-        = [
-nodeData, dataset
-]
-
-        </span>
-        
-      </div>
-    
   
   </td>
   <td>Fires when leaf collapsed.

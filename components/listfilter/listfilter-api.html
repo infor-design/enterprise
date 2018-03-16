@@ -1,24 +1,120 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.caseSensitive
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Set to true if searches ARE case sensitive
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.filterMode
+    </td>
+    <td>
+      <span>&#39;startsWith&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Type of search can current be either 'startsWith' or 'contains'
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.highlightMatchedText
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Inserts markup that appears to highlight text
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.highlightCallback
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      If defined, will execute this code for highlighting text
+instead of the built-in highlighting code
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.searchableTextCallback
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      If defined, will take each
+filterable item passed and return user-defined, searchable text content
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -56,7 +152,7 @@ or an array/jQuery of items that matched the filter.
         <td>
           
                 
-                  <span>settings () = incoming settings
+                  <span>settings (object) = incoming settings
  </span>
                 
           
@@ -67,7 +163,7 @@ or an array/jQuery of items that matched the filter.
         </td>
         <td>
           component instance
-this
+object
         </td>
       </tr>
       <tr>
@@ -80,7 +176,7 @@ this
         </td>
         <td>
           component instance
-this
+object
         </td>
       </tr>
     </tbody>
@@ -88,5 +184,4 @@ this
 
 
   </section>
-
   

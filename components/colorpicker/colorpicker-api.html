@@ -1,87 +1,152 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      The plugin element for the constuctor
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The settings element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.themes
+    </td>
+    <td>
+      <span>{}</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Themes available for ColorPicker
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.colors
+    </td>
+    <td>
+      <span>[]</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
+that can be used to populate the color grid.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showLabel
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Show the label if true vs the hex value if false.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.editable
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If false, the field is readonly and transparent. I.E. The value
+cannot be typed only editable by selecting.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.uppercase
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If false, lower case hex is allowed. If true upper case hex is allowed.
+If showLabel is true this setting is ignored.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.colorOnly
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If true the field will be shrunk to only show the color portion.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          colors
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          An array of objects of the form.
-{label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showLabel
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Show the label if true vs the hex value if false.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          editable
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If false, the field is readonly and transparent.
-I.E. The value cannot be typed only editable by selecting.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          uppercase
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If false, lower case hex is allowed.
-If true upper case hex is allowed. If showLabel is true this setting is ignored.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          colorOnly
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If true the field will be shrunk to only show the color portion.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -260,5 +325,4 @@ object
 
 
   </section>
-
   

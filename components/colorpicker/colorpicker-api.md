@@ -2,33 +2,17 @@
 
 ### Table of Contents
 
--   [COLORPICKER_DEFAULTS][1]
--   [ColorPicker][2]
-    -   [getHexFromLabel][3]
-    -   [getLabelFromHex][4]
-    -   [toggleList][5]
-    -   [setColor][6]
-    -   [enable][7]
-    -   [disable][8]
-    -   [readonly][9]
-    -   [isDisabled][10]
-    -   [updated][11]
-    -   [destroy][12]
-
-## COLORPICKER_DEFAULTS
-
-Colorpicker Default Settings
-
-**Properties**
-
--   `colors` **[string][13]** An array of objects of the form.
-    {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
--   `showLabel` **[string][13]** Show the label if true vs the hex value if false.
--   `editable` **[string][13]** If false, the field is readonly and transparent.
-    I.E. The value cannot be typed only editable by selecting.
--   `uppercase` **[string][13]** If false, lower case hex is allowed.
-    If true upper case hex is allowed. If showLabel is true this setting is ignored.
--   `colorOnly` **[string][13]** If true the field will be shrunk to only show the color portion.
+-   [ColorPicker][1]
+    -   [getHexFromLabel][2]
+    -   [getLabelFromHex][3]
+    -   [toggleList][4]
+    -   [setColor][5]
+    -   [enable][6]
+    -   [disable][7]
+    -   [readonly][8]
+    -   [isDisabled][9]
+    -   [updated][10]
+    -   [destroy][11]
 
 ## ColorPicker
 
@@ -36,8 +20,17 @@ The ColorPicker Component is a trigger field with a listing colors that can be s
 
 **Parameters**
 
--   `element` **([Array][14]&lt;jQuery> | [HTMLElement][15])** The plugin element for the constuctor
--   `settings` **[object][16]** The settings element.
+-   `element` **([Array][12]&lt;jQuery> | [HTMLElement][13])** The plugin element for the constuctor
+-   `settings` **[object][14]?** The settings element.
+    -   `settings.themes` **[string][15]** Themes available for ColorPicker (optional, default `{}`)
+    -   `settings.colors` **[string][15]** An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
+        that can be used to populate the color grid. (optional, default `[]`)
+    -   `settings.showLabel` **[string][15]** Show the label if true vs the hex value if false. (optional, default `false`)
+    -   `settings.editable` **[string][15]** If false, the field is readonly and transparent. I.E. The value
+        cannot be typed only editable by selecting. (optional, default `true`)
+    -   `settings.uppercase` **[string][15]** If false, lower case hex is allowed. If true upper case hex is allowed.
+        If showLabel is true this setting is ignored. (optional, default `true`)
+    -   `settings.colorOnly` **[string][15]** If true the field will be shrunk to only show the color portion. (optional, default `false`)
 
 ### getHexFromLabel
 
@@ -45,7 +38,7 @@ Get the hex value based on a label. Does not handle duplicates.
 
 **Parameters**
 
--   `label` **[string][13]** The label to search for in the color labels.
+-   `label` **[string][15]** The label to search for in the color labels.
 
 Returns **void** 
 
@@ -56,7 +49,7 @@ Can pass with or without the #
 
 **Parameters**
 
--   `hex` **[string][13]** The hex to search for in the color set.
+-   `hex` **[string][15]** The hex to search for in the color set.
 
 Returns **void** 
 
@@ -72,8 +65,8 @@ Set the visible color in the field
 
 **Parameters**
 
--   `hex` **[string][13]** The hex value to use (can have the # or not).
--   `label` **[string][13]** The text to display
+-   `hex` **[string][15]** The hex value to use (can have the # or not).
+-   `label` **[string][15]** The text to display
 
 Returns **void** 
 
@@ -107,44 +100,42 @@ Update the component and optionally apply new settings.
 
 **Parameters**
 
--   `settings` **[object][16]** the settings to update to.
+-   `settings` **[object][14]** the settings to update to.
 
-Returns **[object][16]** The plugin api for chaining.
+Returns **[object][14]** The plugin api for chaining.
 
 ### destroy
 
 Detach events and restore DOM to default.
 
-Returns **[object][16]** The plugin api (this).
+Returns **[object][14]** The plugin api (this).
 
-[1]: #colorpicker_defaults
+[1]: #colorpicker
 
-[2]: #colorpicker
+[2]: #gethexfromlabel
 
-[3]: #gethexfromlabel
+[3]: #getlabelfromhex
 
-[4]: #getlabelfromhex
+[4]: #togglelist
 
-[5]: #togglelist
+[5]: #setcolor
 
-[6]: #setcolor
+[6]: #enable
 
-[7]: #enable
+[7]: #disable
 
-[8]: #disable
+[8]: #readonly
 
-[9]: #readonly
+[9]: #isdisabled
 
-[10]: #isdisabled
+[10]: #updated
 
-[11]: #updated
+[11]: #destroy
 
-[12]: #destroy
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[13]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[15]: https://developer.mozilla.org/docs/Web/HTML/Element
-
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

@@ -2,20 +2,9 @@
 
 ### Table of Contents
 
--   [HOMEPAGE_DEFAULTS](#homepage_defaults)
--   [Homepage](#homepage)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [resize](#resize)
-
-## HOMEPAGE_DEFAULTS
-
-Homepage Default Settings
-
-**Properties**
-
--   `animate` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Disable animation during resize
--   `columns` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Display in 3 (default) or 4 column layout
+-   [Homepage][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Homepage
 
@@ -23,8 +12,15 @@ The Homepage handles card layout at multiple breakpoints.
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[HTMLElement][4]** The component element.
+-   `settings` **[object][5]?** The component settings.
+    -   `settings.animate` **[boolean][6]?** Disable animation during resize
+    -   `settings.columns` **[number][7]?** Display in 3 (default) or 4 column layout
+    -   `settings.easing` **[string][8]?** 
+    -   `settings.gutterSize` **[number][7]?** 
+    -   `settings.widgetWidth` **[number][7]?** 
+    -   `settings.widgetHeight` **[number][7]?** 
+    -   `settings.timeout` **[number][7]?** 
 
 ### updated
 
@@ -32,9 +28,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][5]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][5]** The api
 
 ### destroy
 
@@ -42,11 +38,18 @@ Destroy this component instance and remove the link from its base element.
 
 Returns **void** 
 
-## resize
+[1]: #homepage
 
-Fires after the page is resized and layout is set.
-Can be used for any special adjustments.
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+[4]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

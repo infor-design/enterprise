@@ -2,52 +2,9 @@
 
 ### Table of Contents
 
--   [LINE_DEFAULTS][1]
--   [Line][2]
-    -   [updated][3]
-    -   [destroy][4]
--   [rendered][5]
-
-## LINE_DEFAULTS
-
-**Properties**
-
--   `dataset` **[array][6]** The data to use in the line/area/bubble.
--   `tooltip` **([function][7] \| [string][8])** A custom tooltip or tooltip renderer function
-    for the whole chart.
--   `isArea` **[string][8]** Render as an area chart.
--   `isBubble` **[string][8]** Render as a bubble chart.
--   `showLegend` **[string][8]** If false the label will not be shown.
--   `xAxis` **[object][9]** A series of options for the xAxis
-    -   `xAxis.rotate` **[number][10]** Rotate the elements on the x axis.
-        Recommend -65 deg but this can be tweaked depending on look.
-    -   `xAxis.ticks` **[object][9]** Data to control the number of ticks and y axis format.
-        For example `{number: 5, format: ',.1s'}` would show only 5 yaxis points and format the
-        data to show 1K, 1M, 1G ect.. This uses the d3 formatter.
-    -   `xAxis.formatText` **[function][7]** A function that passes the text element and a counter.
-        You can return a formatted svg markup element to replace the current element.
-        For example you could use tspans to wrap the strings or color them.
--   `yAxis` **[object][9]** A series of options for the yAxis
-    -   `yAxis.formatter` **[function][7]** A d3 formatter for the yAxis points.
--   `yAxis` **[object][9]** A series of options for the yAxis
--   `hideDots` **[boolean][11]** If true no dots are shown
--   `axisLabels` **[array][6]** Option to a label to one of the four sides. For Example
-    `{left: 'Left axis label', top: 'Top axis label',
-    right: 'Right axis label', bottom: 'Bottom axis label'}`
--   `animate` **([boolean][11] \| [string][8])** true|false - will do or not do the animation.
-    'initial' will do only first time the animation.
--   `redrawOnResize` **[boolean][11]** If true, the component will not resize when resizing the page.
--   `dots` **[object][9]** Option to customize the dot behavior. You can set the dot size (radius),
-    the size on hover and stroke or even add a custom class.
-    Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`
--   `formatterString` **[string][8]** Use d3 format some examples can be found on [http://bit.ly/1IKVhHh][12]
--   `emptyMessage` **[object][9]** An empty message will be displayed when there is no chart data.
-    This accepts an object of the form emptyMessage:
-    `{title: 'No Data Available',
-     info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-     button: {text: 'xxx', click: <function>}
-     }`
-     Set this to null for no message or will default to 'No Data Found with an icon.'
+-   [Line][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Line
 
@@ -56,8 +13,44 @@ points called 'markers' connected by straight line segments.
 
 **Parameters**
 
--   `element` **[string][8]** The plugin element for the constuctor
--   `settings` **[string][8]** The settings element.
+-   `element` **[string][4]** The plugin element for the constuctor
+-   `settings` **[string][4]?** The settings element.
+    -   `settings.dataset` **[array][5]** The data to use in the line/area/bubble. (optional, default `[]`)
+    -   `settings.tooltip` **([function][6] \| [string][4])?** A custom tooltip or tooltip renderer function
+        for the whole chart.
+    -   `settings.isArea` **[string][4]?** Render as an area chart.
+    -   `settings.isBubble` **[string][4]** Render as a bubble chart. (optional, default `false`)
+    -   `settings.showLegend` **[string][4]** If false the label will not be shown. (optional, default `true`)
+    -   `settings.xAxis` **[object][7]?** A series of options for the xAxis
+        -   `settings.xAxis.rotate` **[number][8]?** Rotate the elements on the x axis.
+            Recommend -65 deg but this can be tweaked depending on look.
+        -   `settings.xAxis.ticks` **[object][7]?** Data to control the number of ticks and y axis format.
+            For example `{number: 5, format: ',.1s'}` would show only 5 yaxis points and format the
+            data to show 1K, 1M, 1G ect.. This uses the d3 formatter.
+        -   `settings.xAxis.formatText` **[function][6]?** A function that passes the text element and a counter.
+            You can return a formatted svg markup element to replace the current element.
+            For example you could use tspans to wrap the strings or color them.
+    -   `settings.yAxis` **[object][7]?** A series of options for the yAxis
+        -   `settings.yAxis.formatter` **[function][6]?** A d3 formatter for the yAxis points.
+    -   `settings.yAxis` **[object][7]?** A series of options for the yAxis
+    -   `settings.hideDots` **[boolean][9]** If true no dots are shown (optional, default `false`)
+    -   `settings.axisLabels` **[array][5]?** Option to a label to one of the four sides. For Example
+        `{left: 'Left axis label', top: 'Top axis label',
+        right: 'Right axis label', bottom: 'Bottom axis label'}`
+    -   `settings.animate` **([boolean][9] \| [string][4])?** true|false - will do or not do the animation.
+        'initial' will do only first time the animation.
+    -   `settings.redrawOnResize` **[boolean][9]** If true, the component will not resize when resizing the page. (optional, default `true`)
+    -   `settings.dots` **[object][7]?** Option to customize the dot behavior. You can set the dot size (radius),
+        the size on hover and stroke or even add a custom class.
+        Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`
+    -   `settings.formatterString` **[string][4]?** Use d3 format some examples can be found on [http://bit.ly/1IKVhHh][10]
+    -   `settings.emptyMessage` **[object][7]?** An empty message will be displayed when there is no chart data.
+        This accepts an object of the form emptyMessage:
+        `{title: 'No Data Available',
+         info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+         button: {text: 'xxx', click: <function>}
+         }`
+         Set this to null for no message or will default to 'No Data Found with an icon.'
 
 ### updated
 
@@ -65,9 +58,9 @@ Handle updated settings and values.
 
 **Parameters**
 
--   `settings` **[object][9]** The new settings to use.
+-   `settings` **[object][7]** The new settings to use.
 
-Returns **[object][9]** The api for chaining.
+Returns **[object][7]** The api for chaining.
 
 ### destroy
 
@@ -75,35 +68,22 @@ Remove added markup and events.
 
 Returns **void** 
 
-## rendered
+[1]: #line
 
-Fires when the chart is complete done rendering, for customization.
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[object][9]** The jquery event object
--   `svg` **[array][6]** The svg object.
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[1]: #line_defaults
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[2]: #line
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[3]: #updated
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[4]: #destroy
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[5]: #rendered
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[12]: http://bit.ly/1IKVhHh
+[10]: http://bit.ly/1IKVhHh

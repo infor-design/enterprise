@@ -8,64 +8,104 @@
 <li>Button with Icons <a href="../components/button/example-with-icons">View Example</a></li>
 <li>Toggle Buttons <a href="../components/button/example-toggle-button">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.toggleOnIcon
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The icon to use for on state on toggle buttons
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.toggleOffIcon
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The icon to use for off state on toggle buttons
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.replaceText
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If true the selection will be used to replace the content
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          toggleOnIcon
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The icon to use for on state on toggle buttons
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          toggleOffIcon
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The icon to use for off state on toggle buttons
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          replaceText
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If true the selection will be used to replace the content
-in the button.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -80,7 +120,7 @@ in the button.
         <td>
           
                 
-                  <span>settings () = The settings you would like to modify.
+                  <span>settings (object) = The settings you would like to modify.
  </span>
                 
           
@@ -113,7 +153,6 @@ void
 
 
   </section>
-
   
 
 <h2 id="code-example">Code Example</h2>

@@ -2,217 +2,101 @@
 
 ### Table of Contents
 
--   [TABS_DEFAULTS][1]
--   [Tabs][2]
-    -   [renderHelperMarkup][3]
-    -   [setupEvents][4]
-    -   [handleAddFocusData][5]
-    -   [handleTabClick][6]
-    -   [handleMoreButtonClick][7]
-    -   [handleTabFocus][8]
-    -   [handleMoreButtonFocus][9]
-    -   [handleTabKeyDown][10]
-    -   [handleDismissibleTabKeydown][11]
-    -   [handleAppMenuTabKeydown][12]
-    -   [handleMoreButtonKeydown][13]
-    -   [handlePanelKeydown][14]
-    -   [handleAddButton][15]
-    -   [handleAddButtonKeydown][16]
-    -   [handleOutboundLink][17]
-    -   [getPreviousTab][18]
-    -   [activatePreviousTab][19]
-    -   [renderEdgeFading][20]
-    -   [callSource][21]
-    -   [remove][22]
-    -   [scrollTabList][23]
-    -   [hideFocusState][24]
-    -   [positionFocusState][25]
-    -   [checkFocusedElements][26]
-    -   [disableOtherTabs][27]
-    -   [disable][28]
-    -   [enable][29]
-    -   [closeDismissibleTab][30]
-    -   [teardown][31]
-    -   [destroy][32]
--   [bindFirst][33]
-
-## TABS_DEFAULTS
-
-Component Default Settings
-
-**Properties**
-
--   `addTabButton` **[boolean][34]** If set to true, creates a button at the end
-    of the tab list that can be used to add an empty tab and panel
--   `addTabButtonCallback` **(null | [function][35])** if defined as a function, will
-    be used in-place of the default Tab Adding method
--   `appMenuTrigger` **[boolean][34]** If set to true, will force an App Menu
-    trigger to be present on Non-Vertical Tabs implementatations.
--   `appMenuTriggerText` **[string][36]** If defined, replaces the default "Menu" text used
-    in the app menu trigger.
--   `ajaxOptions` **(null | [object][37])** if defined, will be used by any internal
-    Tabs AJAX calls as the desired request settings.
--   `beforeActivate` **([undefined][38] \| [function][35])** If defined as a function, fires
-    this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250).
--   `containerElement` **(null | [string][36] \| [Array][39]&lt;jQuery>)** Defines a separate element
-    to be used for containing the tab panels.  Defaults to a `.tab-panel-container`
-    element that is created if it doesn't already exist.
--   `changeTabOnHashChange` **[boolean][34]** If true, will change the selected
-    tab on invocation based on the URL that exists after the hash.
--   `hashChangeCallback` **(null | [function][35])** If defined as a function,
-    provides an external method for adjusting the current page hash used by these tabs.
--   `lazyLoad` **[boolean][34]** if true, when using full URLs in tab HREFs,
-    or when using Ajax calls, tabs will be loaded as needed instead of the markup
-    all being established at once.
--   `moduleTabsTooltips` **[boolean][34]** if true, will display a tooltip on
-    Module Tabs with cut-off text content.
--   `source` **(null | [function][35])** If defined, will serve as a way of pulling
-    in external content to fill tabs.
--   `sourceArguments` **[object][37]** If a source method is defined, this
-    flexible object can be passed into the source method, and augmented with
-    parameters specific to the implementation.
--   `tabCounts` **[boolean][34]** If true, Displays a modifiable count above each tab.
--   `verticalResponsive` **[boolean][34]** If Vertical Tabs & true, will automatically
-    switch to Horizontal Tabs on smaller breakpoints.
+-   [Tabs][1]
+    -   [handleOutboundLink][2]
+    -   [hasAnimatedBar][3]
+    -   [hasSquareFocusState][4]
+    -   [hasMoreButton][5]
+    -   [isInResponsiveMode][6]
+    -   [isModuleTabs][7]
+    -   [isVerticalTabs][8]
+    -   [isResponsiveVerticalTabs][9]
+    -   [isHeaderTabs][10]
+    -   [isScrollableTabs][11]
+    -   [isHidden][12]
+    -   [isNested][13]
+    -   [isActive][14]
+    -   [isNestedInLayoutTabs][15]
+    -   [isTab][16]
+    -   [isAnchor][17]
+    -   [getAnchor][18]
+    -   [getPanel][19]
+    -   [getPreviousTab][20]
+    -   [activatePreviousTab][21]
+    -   [isURL][22]
+    -   [activate][23]
+    -   [callSource][24]
+    -   [resizeNestedTabs][25]
+    -   [add][26]
+    -   [remove][27]
+    -   [createTabPanel][28]
+    -   [checkPopupMenuItems][29]
+    -   [hide][30]
+    -   [show][31]
+    -   [disableTab][32]
+    -   [enableTab][33]
+    -   [rename][34]
+    -   [updateCount][35]
+    -   [getActiveTab][36]
+    -   [getVisibleTabs][37]
+    -   [getOverflowTabs][38]
+    -   [select][39]
+    -   [buildPopupMenu][40]
+    -   [isTabOverflowed][41]
+    -   [findLastVisibleTab][42]
+    -   [findFirstVisibleTab][43]
+    -   [focusBar][44]
+    -   [defocusBar][45]
+    -   [scrollTabList][46]
+    -   [hideFocusState][47]
+    -   [positionFocusState][48]
+    -   [checkFocusedElements][49]
+    -   [updated][50]
+    -   [disableOtherTabs][51]
+    -   [disable][52]
+    -   [enable][53]
+    -   [closeDismissibleTab][54]
+    -   [teardown][55]
+    -   [destroy][56]
 
 ## Tabs
 
 **Parameters**
 
--   `element` **([HTMLElement][40] \| [Array][39]&lt;jQuery>)** the base element for this component
--   `settings` **[object][37]** incoming settings
-
-### renderHelperMarkup
-
-Adds/removes helper buttons and accessibility-centric markup, based on Tabs' configuration
-Designed to be run at any point in the Tabs lifecycle.
-
-Returns **this** component instance
-
-### setupEvents
-
-Establishes the bound event listeners on all tabs elements
-
-Returns **this** component instance
-
-### handleAddFocusData
-
-Setup a mousedown event on tabs to determine in the focus handler whether
-or a not a keystroked cause a change in focus, or a click.  Keystroke focus
-changes cause different visual situations
-
-**Parameters**
-
--   `e` **$.Event** incoming focus event
--   `elem` **[Array][39]&lt;jQuery>** element
-
-Returns **[undefined][38]** 
-
-### handleTabClick
-
-Handler for Tab Click
-
-**Parameters**
-
--   `e` **jQuery.Event** incoming click event
--   `li` **[Array][39]&lt;jQuery>** list item representing the clicked tab
-
-Returns **([boolean][34] \| [undefined][38])** ? // TODO: why?
-
-### handleMoreButtonClick
-
-Handler for click events on the "More Tabs" popupmenu trigger
-
-**Parameters**
-
--   `e` **jQuery.event** Event
-
-Returns **([boolean][34] \| [undefined][38])** ?
-
-### handleTabFocus
-
-Handler for click events on the "More Tabs" popupmenu trigger
-
-**Parameters**
-
--   `e` **jQuery.event** Event
--   `a` **[Array][39]&lt;jQuery>** represents an anchor tag
-
-Returns **([boolean][34] \| [undefined][38])** ?
-
-### handleMoreButtonFocus
-
-Handler for focus events on the "More Tabs" popupmenu trigger
-
-**Parameters**
-
--   `e` **jQuery.event** incoming focus event
-
-Returns **void** 
-
-### handleTabKeyDown
-
-Handler for keydown events on Tabs in the list
-
-**Parameters**
-
--   `e` **jQuery.event** incoming keydown event
-
-Returns **([boolean][34] \| [undefined][38])** ?
-
-### handleDismissibleTabKeydown
-
-Handler for keydown events on Dismissible tabs
-
-**Parameters**
-
--   `e` **jQuery.event** incoming keydown event
-
-Returns **void** 
-
-### handleAppMenuTabKeydown
-
-Handler for keydown events on the "App Menu" tab (trigger button for the App Menu)
-
-**Parameters**
-
--   `e` **jQuery.event** incoming keydown event
-
-Returns **[boolean][34]** ?
-
-### handleMoreButtonKeydown
-
-Handler for keydown events on the "More Tabs" popupmenu trigger
-
-**Parameters**
-
--   `e` **jQuery.event** incoming keydown event
-
-Returns **([boolean][34] \| [undefined][38])** ?
-
-### handlePanelKeydown
-
-Handler for keydown events on the "More Tabs" popupmenu trigger
-
-**Parameters**
-
--   `e` **jQuery.event** incoming keydown event
-
-Returns **void** 
-
-### handleAddButton
-
-Handles the Add Tab button being clicked
-
-Returns **([boolean][34] \| [undefined][38])** ?
-
-### handleAddButtonKeydown
-
-**Parameters**
-
--   `e` **jQuery.Event** incoming keydown event
-
-Returns **([undefined][38] \| [boolean][34])** ?
+-   `element` **([HTMLElement][57] \| [Array][58]&lt;jQuery>)** the base element for this component
+-   `settings` **[object][59]** incoming settings
+    -   `settings.addTabButton` **[boolean][60]** If set to true, creates a button at the end
+        of the tab list that can be used to add an empty tab and panel (optional, default `false`)
+    -   `settings.addTabButtonCallback` **[function][61]** if defined as a function, will
+        be used in-place of the default Tab Adding method (optional, default `null`)
+    -   `settings.appMenuTrigger` **[boolean][60]** If set to true, will force an App Menu
+        trigger to be present on Non-Vertical Tabs implementatations. (optional, default `false`)
+    -   `settings.appMenuTriggerText` **[string][62]** If defined, replaces the default "Menu" text used
+        in the app menu trigger. (optional, default `undefined`)
+    -   `settings.ajaxOptions` **[object][59]** if defined, will be used by any internal
+        Tabs AJAX calls as the desired request settings. (optional, default `undefined`)
+    -   `settings.beforeActivate` **[function][61]** If defined as a function, fires
+        this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250). (optional, default `undefined`)
+    -   `settings.containerElement` **([string][62] | jQuery)** Defines a separate element
+        to be used for containing the tab panels.  Defaults to a `.tab-panel-container`
+        element that is created if it doesn't already exist. (optional, default `null`)
+    -   `settings.changeTabOnHashChange` **[boolean][60]** If true, will change the selected
+        tab on invocation based on the URL that exists after the hash. (optional, default `false`)
+    -   `settings.hashChangeCallback` **[function][61]** If defined as a function,
+        provides an external method for adjusting the current page hash used by these tabs. (optional, default `null`)
+    -   `settings.lazyLoad` **[boolean][60]** if true, when using full URLs in tab HREFs,
+        or when using Ajax calls, tabs will be loaded as needed instead of the markup
+        all being established at once. (optional, default `true`)
+    -   `settings.moduleTabsTooltips` **[boolean][60]** if true, will display a tooltip on
+        Module Tabs with cut-off text content. (optional, default `false`)
+    -   `settings.source` **[function][61]** If defined, will serve as a way of pulling
+        in external content to fill tabs. (optional, default `null`)
+    -   `settings.sourceArguments` **[object][59]** If a source method is defined, this
+        flexible object can be passed into the source method, and augmented with
+        parameters specific to the implementation. (optional, default `{}`)
+    -   `settings.tabCounts` **[boolean][60]** If true, Displays a modifiable count above each tab. (optional, default `false`)
+    -   `settings.verticalResponsive` **[boolean][60]** If Vertical Tabs & true, will automatically
+        switch to Horizontal Tabs on smaller breakpoints. (optional, default `false`)
 
 ### handleOutboundLink
 
@@ -220,11 +104,133 @@ Changes the location in the browser address bar to force outbound links.
 
 **Parameters**
 
--   `href` **[string][36]** incoming href link
--   `useRelativePath` **[boolean][34]** don't prepend the full domain, port,
+-   `href` **[string][62]** incoming href link
+-   `useRelativePath` **[boolean][60]** don't prepend the full domain, port,
     protocol, etc. to the HREF.
 
 Returns **void** 
+
+### hasAnimatedBar
+
+Determines whether or not this tabset's tab list should display an animated selected state on a tab.
+
+Returns **[boolean][60]** whether or not the animated selected state should display.
+
+### hasSquareFocusState
+
+Determines whether or not this tabset's tab list should display a square focus state on a tab.
+
+Returns **[boolean][60]** whether or not the square focus state should display.
+
+### hasMoreButton
+
+Determines whether or not this tabset currently has a "More Tabs" spillover button.
+
+Returns **[boolean][60]** whether or not the "More Tabs" button is currently displayed.
+
+### isInResponsiveMode
+
+Determines whether or not this normally "vertical" tabset is in an optional "horizontal" responsive mode
+
+Returns **[boolean][60]** whether or not the responsive mode is active.
+
+### isModuleTabs
+
+Determines whether or not this tabset is currently operating as Module Tabs
+
+Returns **[boolean][60]** whether or not this is a Module tabset.
+
+### isVerticalTabs
+
+Determines whether or not this tabset is currently operating as Vertical Tabs
+
+Returns **[boolean][60]** whether or not this is a Vertical tabset.
+
+### isResponsiveVerticalTabs
+
+Determines whether or not this tabset is Vertical Tabs with a responsive, horizontal capability
+
+Returns **[boolean][60]** whether or not this is a Vertical tabset.
+
+### isHeaderTabs
+
+Determines whether or not this tabset is currently operating as Header Tabs
+
+Returns **[boolean][60]** whether or not this is a Header tabset.
+
+### isScrollableTabs
+
+Determines whether or not this tabset is showing tabs that allow for selection via horizontal scrolling.
+
+Returns **[boolean][60]** whether or not horizontal scrolling is possible.
+
+### isHidden
+
+Determines whether or not this tabset is currently hidden
+
+Returns **[boolean][60]** whether or not this tabset is hidden.
+
+### isNested
+
+Determines whether or not this tabset is nested inside a parent Tab Panel
+
+Returns **[boolean][60]** whether or not this tabset is nested.
+
+### isActive
+
+Determines whether or not a particular tab panel is currently the active (displayed) tab panel
+
+**Parameters**
+
+-   `href` **[string][62]** representing the HTML "id" attribute of a corresponding tab panel
+
+Returns **[boolean][60]** whether or not the tab panel is active.
+
+### isNestedInLayoutTabs
+
+Determines whether or not this tabset is nested inside a "Layout"-style of Tab container
+
+Returns **[boolean][60]** whether or not this tabset is nested.
+
+### isTab
+
+Determines if an object is an HTML List Item representing a tab
+
+**Parameters**
+
+-   `obj` **[object][59]** incoming object
+
+Returns **[boolean][60]** whether or not the item is a tab
+
+### isAnchor
+
+Determines if an object is an HTML Anchor Tag representing a tab's actionable element
+
+**Parameters**
+
+-   `obj` **[object][59]** incoming object
+
+Returns **[boolean][60]** whether or not the item is an anchor tag
+
+### getAnchor
+
+Gets a reference to an Anchor tag.
+
+**Parameters**
+
+-   `href` **([string][62] | jQuery)** either a string that can be used as a Tab ID, or an actual jQuery wrapped Anchor Tag.
+
+Returns **jQuery** the Anchor tag
+
+### getPanel
+
+Gets a reference to a Tab panel.
+
+**Parameters**
+
+-   `href` **([string][62] | jQuery)** either a string that can be used as a Tab ID, or an actual jQuery wrapped Anchor Tag.
+
+Returns **jQuery** the Anchor tag
 
 ### getPreviousTab
 
@@ -232,9 +238,9 @@ Takes a tab ID and returns a jquery object containing the previous available tab
 
 **Parameters**
 
--   `tabId` **[string][36]** the tab ID
+-   `tabId` **[string][62]** the tab ID
 
-Returns **[Array][39]&lt;jQuery>** jQuery-wrapped element reference for the tab
+Returns **[Array][58]&lt;jQuery>** jQuery-wrapped element reference for the tab
 
 ### activatePreviousTab
 
@@ -243,16 +249,30 @@ If an optional target Tab (li) is provided, use this to perform activation event
 
 **Parameters**
 
--   `tabId` **[string][36]** the tab ID
--   `target` **[Array][39]&lt;jQuery>?** a reference to the previous tab in the list (before this one)
+-   `tabId` **[string][62]** the tab ID
+-   `target` **[Array][58]&lt;jQuery>?** a reference to the previous tab in the list (before this one)
 
-Returns **[Array][39]&lt;jQuery>** potentially-updated target
+Returns **[Array][58]&lt;jQuery>** potentially-updated target
 
-### renderEdgeFading
+### isURL
 
-Shows/Hides some tabsets' faded edges based on scrolling position, if applicable.
+Determines whether or not a string has an outbound URL, instead of a hash (#) that would match up to a Tab ID.
 
-Returns **[undefined][38]** 
+**Parameters**
+
+-   `href` **[string][62]** a string that may or may not contain a URL
+
+Returns **[boolean][60]** whether or not the incoming string is a URL
+
+### activate
+
+Causes a new tab panel to become active.  Will also trigger AJAX calls on unloaded tab panels, if necessary.
+
+**Parameters**
+
+-   `href` **[string][62]** a string that either matches up to a Tab ID, or an outbound link to grab AJAX content from.
+
+Returns **void** 
 
 ### callSource
 
@@ -260,12 +280,35 @@ Calls an options-provided source method to fetch content that will be displayed 
 
 **Parameters**
 
--   `href` **[string][36]** string representing the target tab to load content under.
--   `isURL` **[boolean][34]** detects whether or not the URL is actually an external /
+-   `href` **[string][62]** string representing the target tab to load content under.
+-   `isURL` **[boolean][60]** detects whether or not the URL is actually an external /
     call, or an ID for an existing tab in the page.
 
-Returns **([boolean][34] | $.Deferred)** true if source call was successful, false for failure/ignore,
+Returns **([boolean][60] | $.Deferred)** true if source call was successful, false for failure/ignore,
 or a promise object that will fire callbacks in either "success" or "failure" scenarios.
+
+### resizeNestedTabs
+
+Causes `handleResize()` to be fired on any Tab components that are nested inside of this tab component's panels.
+
+Returns **void** 
+
+### add
+
+Adds a new tab into the list and properly binds all of its events
+
+**Parameters**
+
+-   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
+-   `options` **[object][59]** incoming options for the new tab.
+    -   `options.name` **[string][62]** the text title of the new tab. (optional, default `undefined`)
+    -   `options.doActivate` **[boolean][60]** if true, causes the newly-added tab to become activated and focused. (optional, default `false`)
+    -   `options.isDismissible` **[boolean][60]** if true, causes the tab to become dismissible (closable) with an "X" button. (optional, default `false`)
+    -   `options.isDropdown` **[boolean][60]** if true, causes the tab to become a dropdown tab. (optional, default `false`)
+    -   `options.content` **[string][62]** representing HTML markup that will be added inside of the new tab panel. (optional, default `undefined`)
+-   `atIndex` **[number][63]?** if defined, inserts the tab at a particular number index in the tab list.  Defaults to the last tab in the list.
+
+Returns **this** component instance
 
 ### remove
 
@@ -275,10 +318,172 @@ of selecting certain Tabs/Anchors at certain times.
 
 **Parameters**
 
--   `tabId` **[string][36]** tab ID that corresponds to a `.tab-panel` element's ID attribute
--   `disableBeforeClose` **[boolean][34]** whether or not tab closing can become veteoed
+-   `tabId` **[string][62]** tab ID that corresponds to a `.tab-panel` element's ID attribute
+-   `disableBeforeClose` **[boolean][60]** whether or not tab closing can become veteoed
 
-Returns **([boolean][34] | this)** component instance
+Returns **([boolean][60] | this)** component instance
+
+### createTabPanel
+
+Adds a new tab into the list and properly binds all of its events
+
+**Parameters**
+
+-   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
+-   `content` **[string][62]** representing HTML markup that will be added inside of the new tab panel. (optional, default `undefined`)
+-   `doInsert` **[boolean][60]** if true, actually appends the new content to the tab panel. (optional, default `false`)
+
+Returns **this** component instance
+
+### checkPopupMenuItems
+
+**Parameters**
+
+-   `tab` **jQuery** the tab to be checked for popupmenu items.
+
+Returns **[Array][58]&lt;jQuery>** a list of avaiable popupmenu items
+
+### hide
+
+Hides a tab
+
+**Parameters**
+
+-   `e` **jQuery.Event** the jQuery Event
+-   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
+
+Returns **this** component instance
+
+### show
+
+Shows a tab
+
+**Parameters**
+
+-   `e` **jQuery.Event** the jQuery Event
+-   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
+
+Returns **this** component instance
+
+### disableTab
+
+Disables an individual tab
+
+**Parameters**
+
+-   `e` **jQuery.Event** the jQuery Event
+-   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
+
+Returns **this** component instance
+
+### enableTab
+
+Enables an individual tab
+
+**Parameters**
+
+-   `e` **jQuery.Event** the jQuery Event
+-   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
+
+Returns **this** component instance
+
+### rename
+
+Renames a tab and resets the focusable bar/animation.
+
+**Parameters**
+
+-   `e` **jQuery.Event** the jQuery Event
+-   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
+-   `name` **[string][62]** the new tab name
+
+Returns **void** 
+
+### updateCount
+
+For tabs with counts, updates the count and resets the focusable bar/animation
+
+**Parameters**
+
+-   `e` **jQuery.Event** the jQuery Event
+-   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
+-   `count` **([number][63] \| [string][62])** the new tab count
+
+Returns **void** 
+
+### getActiveTab
+
+returns the currently active tab
+
+Returns **jQuery** the currently active tab
+
+### getVisibleTabs
+
+returns all visible tabs
+
+Returns **[Array][58]&lt;jQuery>** all visible tabs
+
+### getOverflowTabs
+
+returns a list of all tabs that are currenly in the "More Tabs" overflow menu.
+
+Returns **[Array][58]&lt;jQuery>** all overflowed tabs
+
+### select
+
+Selects a Tab
+
+**Parameters**
+
+-   `href` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
+
+Returns **void** 
+
+### buildPopupMenu
+
+Selects a Tab
+
+**Parameters**
+
+-   `startingHref` **[string][62]** a string representing the HTML `href` attribute of the popupmenu item to be selected.
+
+Returns **void** 
+
+### isTabOverflowed
+
+Used for checking if a particular tab (in the form of a jquery-wrapped list item)
+is spilled into the overflow area of the tablist container <UL>.
+
+**Parameters**
+
+-   `li` **jQuery** tab list item
+
+Returns **[boolean][60]** whether or not the tab is overflowed.
+
+### findLastVisibleTab
+
+Returns **jQuery** representing the last visible tab.
+
+### findFirstVisibleTab
+
+Returns **void** 
+
+### focusBar
+
+Moves the animated "selected" state bar to a new tab
+
+**Parameters**
+
+-   `li` **jQuery** the new tab list item
+-   `callback` **[function][61]** fires after the animation is completed.
+
+Returns **void** 
+
+### defocusBar
+
+Clears the animated "selected" state bar away.
+
+Returns **void** 
 
 ### scrollTabList
 
@@ -286,10 +491,10 @@ Wrapper for the Soho behavior _smoothScrollTo()_ that will determine scroll dist
 
 **Parameters**
 
--   `target` **[Array][39]&lt;jQuery>** the target <li> or <a> tag
--   `duration` **[number][41]** the time it will take to scroll
+-   `target` **[Array][58]&lt;jQuery>** the target <li> or <a> tag
+-   `duration` **[number][63]** the time it will take to scroll
 
-Returns **[undefined][38]** 
+Returns **[undefined][64]** 
 
 ### hideFocusState
 
@@ -303,14 +508,24 @@ Updates the position of the focus state, to the tab/button that currently has fo
 
 **Parameters**
 
--   `target` **([Array][39]&lt;jQuery> | [HTMLElement][40])** the element that will receive the focus state
--   `unhide` **[boolean][34]?** if true, unhides the focus state if it's previously been hidden.
+-   `target` **([Array][58]&lt;jQuery> | [HTMLElement][57])** the element that will receive the focus state
+-   `unhide` **[boolean][60]?** if true, unhides the focus state if it's previously been hidden.
 
 Returns **void** 
 
 ### checkFocusedElements
 
 Returns **void** 
+
+### updated
+
+Causes the entire tabset to reset with new settings.
+
+**Parameters**
+
+-   `settings` **[object][59]?** incoming settings
+
+Returns **this** component instance
 
 ### disableOtherTabs
 
@@ -324,12 +539,14 @@ Disables the entire Tab Component
 
 **Parameters**
 
--   `isPartial` **[boolean][34]** whether or not this disable call is a partial
+-   `isPartial` **[boolean][60]** whether or not this disable call is a partial
      disabling of the tabset
 
 Returns **void** 
 
 ### enable
+
+Enables the entire Tabs component
 
 Returns **void** 
 
@@ -339,9 +556,9 @@ Pass-through for the `remove()` method, which gets used for removing a dismissib
 
 **Parameters**
 
--   `tabId` **[string][36]** the ID of the target tab panel
+-   `tabId` **[string][62]** the ID of the target tab panel
 
-Returns **[boolean][34]** ?
+Returns **[boolean][60]** ?
 
 ### teardown
 
@@ -356,92 +573,130 @@ Destroys this component instance, removing its attachment from its parent elemen
 
 Returns **void** 
 
-## bindFirst
+[1]: #tabs
 
-Overrides a similar method in the popupmenu code that controls escaping of
-this menu when pressing certain keys.  We override this here so that the
-controls act in a manner as if all tabs are still visible (for accessiblity
-reasons), meaning you can use left and right to navigate the popup menu options
-as if they were tabs.
+[2]: #handleoutboundlink
 
-[1]: #tabs_defaults
+[3]: #hasanimatedbar
 
-[2]: #tabs
+[4]: #hassquarefocusstate
 
-[3]: #renderhelpermarkup
+[5]: #hasmorebutton
 
-[4]: #setupevents
+[6]: #isinresponsivemode
 
-[5]: #handleaddfocusdata
+[7]: #ismoduletabs
 
-[6]: #handletabclick
+[8]: #isverticaltabs
 
-[7]: #handlemorebuttonclick
+[9]: #isresponsiveverticaltabs
 
-[8]: #handletabfocus
+[10]: #isheadertabs
 
-[9]: #handlemorebuttonfocus
+[11]: #isscrollabletabs
 
-[10]: #handletabkeydown
+[12]: #ishidden
 
-[11]: #handledismissibletabkeydown
+[13]: #isnested
 
-[12]: #handleappmenutabkeydown
+[14]: #isactive
 
-[13]: #handlemorebuttonkeydown
+[15]: #isnestedinlayouttabs
 
-[14]: #handlepanelkeydown
+[16]: #istab
 
-[15]: #handleaddbutton
+[17]: #isanchor
 
-[16]: #handleaddbuttonkeydown
+[18]: #getanchor
 
-[17]: #handleoutboundlink
+[19]: #getpanel
 
-[18]: #getprevioustab
+[20]: #getprevioustab
 
-[19]: #activateprevioustab
+[21]: #activateprevioustab
 
-[20]: #renderedgefading
+[22]: #isurl
 
-[21]: #callsource
+[23]: #activate
 
-[22]: #remove
+[24]: #callsource
 
-[23]: #scrolltablist
+[25]: #resizenestedtabs
 
-[24]: #hidefocusstate
+[26]: #add
 
-[25]: #positionfocusstate
+[27]: #remove
 
-[26]: #checkfocusedelements
+[28]: #createtabpanel
 
-[27]: #disableothertabs
+[29]: #checkpopupmenuitems
 
-[28]: #disable
+[30]: #hide
 
-[29]: #enable
+[31]: #show
 
-[30]: #closedismissibletab
+[32]: #disabletab
 
-[31]: #teardown
+[33]: #enabletab
 
-[32]: #destroy
+[34]: #rename
 
-[33]: #bindfirst
+[35]: #updatecount
 
-[34]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[36]: #getactivetab
 
-[35]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[37]: #getvisibletabs
 
-[36]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[38]: #getoverflowtabs
 
-[37]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[39]: #select
 
-[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+[40]: #buildpopupmenu
 
-[39]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[41]: #istaboverflowed
 
-[40]: https://developer.mozilla.org/docs/Web/HTML/Element
+[42]: #findlastvisibletab
 
-[41]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[43]: #findfirstvisibletab
+
+[44]: #focusbar
+
+[45]: #defocusbar
+
+[46]: #scrolltablist
+
+[47]: #hidefocusstate
+
+[48]: #positionfocusstate
+
+[49]: #checkfocusedelements
+
+[50]: #updated
+
+[51]: #disableothertabs
+
+[52]: #disable
+
+[53]: #enable
+
+[54]: #closedismissibletab
+
+[55]: #teardown
+
+[56]: #destroy
+
+[57]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[58]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[59]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[60]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[61]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[62]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[63]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[64]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined

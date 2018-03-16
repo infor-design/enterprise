@@ -33,7 +33,7 @@ The Locale component handles i18n
 Data From: [http://www.unicode.org/repos/cldr-aux/json/22.1/main/][25]
 For Docs See: [http://ibm.co/1nXyNxp][26]
 
-**Properties**
+**Parameters**
 
 -   `currentLocale` **[string][27]** The Currently Set Locale
 -   `cultures` **[object][28]** Contains all currently-stored cultures.
@@ -70,7 +70,7 @@ Set the currently used locale.
 
 -   `locale` **[string][27]** The locale to fetch and set.
 
-Returns **jQuery.Deferred** which is resolved once the locale culture is retrieved and set
+Returns **jquery.deferred** which is resolved once the locale culture is retrieved and set
 
 ### setCurrentLocale
 
@@ -110,7 +110,7 @@ Check if the date is valid using the current locale to do so.
 
 **Parameters**
 
--   `date` **[Date][29]** The date to show in the current locale.
+-   `date` **[date][29]** The date to show in the current locale.
 
 Returns **[boolean][30]** whether or not the date is valid.
 
@@ -125,7 +125,7 @@ Take a date string written in the current locale and parse it into a Date Object
 -   `isStrict` **[boolean][30]** If true missing date parts will be considered
      invalid. If false the current month/day.
 
-Returns **([Date][29] \| [undefined][31])** updated date object, or nothing
+Returns **([date][29] \| [undefined][31])** updated date object, or nothing
 
 ### formatNumber
 
@@ -135,9 +135,9 @@ Format a decimal with thousands and padding in the current locale.
 **Parameters**
 
 -   `number` **[number][33]** The source number.
--   `options` **[boolean][30]** Additional options.style can be decimal, currency, percent
-     and integer options.percentSign, options.minusSign, options.decimal,
-     options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
+-   `options` **[object][28]** Additional options.style can be decimal, currency,
+    percent and integer options.percentSign, options.minusSign, options.decimal,
+    options.group options.minimumFractionDigits (0), options.maximumFractionDigits (3)
 
 Returns **[string][27]** the formatted number.
 
@@ -158,8 +158,8 @@ Overridable culture messages
 **Parameters**
 
 -   `key` **[string][27]** The key to search for on the string.
--   `showAsUndefined` **[boolean][30]?** causes a translated phrase to be "undefined"
-     instead of defaulting to the default locale's version of the string.
+-   `showAsUndefined` **[boolean][30]?** causes a translated phrase to be
+    instead of defaulting to the default locale's version of the string.
 
 Returns **([string][27] \| [undefined][31])** a translated string, or nothing, depending on configuration
 

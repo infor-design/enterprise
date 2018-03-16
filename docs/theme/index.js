@@ -98,9 +98,14 @@ module.exports = function (comments, config) {
   sharedImports.imports.renderEvent = _.template(fs.readFileSync(path.join(__dirname, 'event._'), 'utf8'), sharedImports);
   sharedImports.imports.renderSetting = _.template(fs.readFileSync(path.join(__dirname, 'setting._'), 'utf8'), sharedImports);
   const pageTemplate = _.template(fs.readFileSync(path.join(__dirname, 'index._'), 'utf8'), sharedImports);
-  const events = comments[0].members.events;
-  const settings = comments[0].tags;
-  console.log(settings);
+  let events = [];
+  if (comments[0] && comments[0].members) {
+    events = comments[0].members.events;
+  }
+  let settings = [];
+  if (comments[0] && comments[0].tags) {
+    settings = comments[0].tags;
+  }
 
   // push assets into the pipeline as well.
   const file = new Vinyl({

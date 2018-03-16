@@ -2,25 +2,18 @@
 
 ### Table of Contents
 
--   [TAG_DEFAULTS](#tag_defaults)
--   [Tag](#tag)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [beforetagremove](#beforetagremove)
--   [aftertagremove](#aftertagremove)
--   [click](#click)
--   [keydown](#keydown)
-
-## TAG_DEFAULTS
-
-Default Tag Options
+-   [Tag][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Tag
 
+Implements functionality on tag objects, such as closing tabs.
+
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][4]** The component element.
+-   `settings` **[string][4]** The component settings.
 
 ### updated
 
@@ -28,9 +21,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][5]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][5]** The api
 
 ### destroy
 
@@ -38,36 +31,12 @@ Destroy this component instance and remove the link from its base element.
 
 Returns **void** 
 
-## beforetagremove
+[1]: #tag
 
-Fires before tag remove.
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `The` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** event used for removing and element
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-## aftertagremove
-
-Fires after tag remove.
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `The` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** event used for removing
-
-## click
-
-Fires when the tag is clicked (if enabled).
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
-
-## keydown
-
-Fires when the tag is focused.
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

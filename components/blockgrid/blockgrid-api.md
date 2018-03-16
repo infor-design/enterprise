@@ -2,23 +2,10 @@
 
 ### Table of Contents
 
--   [BLOCKGRID_DEFAULTS][1]
--   [Blockgrid][2]
-    -   [selectBlock][3]
-    -   [updated][4]
-    -   [destroy][5]
--   [selected][6]
--   [unselected][7]
-
-## BLOCKGRID_DEFAULTS
-
-Blockgrid Default Settings
-
-**Properties**
-
--   `dataset` **[array][8]** An array of data objects
--   `selectable` **[string][9]** Controls the selection mode this can be:
-    false, 'single' or 'multiple' or 'mixed'
+-   [Blockgrid][1]
+    -   [selectBlock][2]
+    -   [updated][3]
+    -   [destroy][4]
 
 ## Blockgrid
 
@@ -26,8 +13,11 @@ Component Name - Does this and that.
 
 **Parameters**
 
--   `element` **[string][9]** The plugin element for the constuctor
--   `settings` **[string][9]** The settings element.
+-   `element` **[string][5]** The plugin element for the constuctor
+-   `settings` **[string][5]?** The settings element.
+    -   `settings.dataset` **[array][6]** An array of data objects (optional, default `[]`)
+    -   `settings.selectable` **[string][5]** Controls the selection mode this can be:
+        false, 'single' or 'multiple' or 'mixed' (optional, default `false`)
 
 ### selectBlock
 
@@ -35,8 +25,8 @@ Run selection over a block item
 
 **Parameters**
 
--   `activeBlock` **[element][10]** Dom element to use
--   `isCheckbox` **[boolean][11]** True if a checkbox, used for mixed mode.
+-   `activeBlock` **[element][7]** Dom element to use
+-   `isCheckbox` **[boolean][8]** True if a checkbox, used for mixed mode.
 
 ### updated
 
@@ -52,44 +42,18 @@ Returns **void**
 
 Teardown - Remove added markup and events.
 
-## selected
+[1]: #blockgrid
 
-Fires when a block is selected
+[2]: #selectblock
 
-**Properties**
+[3]: #updated
 
--   `event` **[object][12]** The jquery event object
--   `ui` **[object][12]** The dialog object
+[4]: #destroy
 
-## unselected
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-Fires when a block is unselected
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-**Properties**
+[7]: https://developer.mozilla.org/docs/Web/API/Element
 
--   `event` **[object][12]** The jquery event object
--   `ui` **[object][12]** The dialog object
-
-[1]: #blockgrid_defaults
-
-[2]: #blockgrid
-
-[3]: #selectblock
-
-[4]: #updated
-
-[5]: #destroy
-
-[6]: #selected
-
-[7]: #unselected
-
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[10]: https://developer.mozilla.org/docs/Web/API/Element
-
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

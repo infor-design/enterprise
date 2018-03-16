@@ -23,7 +23,6 @@ const COMPONENT_NAME = 'modal';
 * @param {number} [settings.frameHeight=180] Optional extra height to add.
 * @param {number} [settings.frameWidth=46] Optional extra width to add.
 */
-
 const MODAL_DEFAULTS = {
   trigger: 'click',
   buttons: null,
@@ -366,6 +365,13 @@ Modal.prototype = {
       this.sizeInner();
     }
 
+    /**
+    * Fires when the modal is about to open. You can return false to abort opening.
+    * @event beforeopen
+    * @memberof Modal
+    * @property {object} event - The jquery event object
+    * @property {object} ui - The dialog object
+    */
     elemCanOpen = this.element.triggerHandler('beforeopen', [this]);
     $('body').triggerHandler('beforeopen', [this]);
     this.isCancelled = false;
@@ -480,6 +486,14 @@ Modal.prototype = {
     function focusElement(self) {
       let focusElem = self.element.find(':focusable').not('.modal-header .searchfield').first();
       self.keepFocus();
+
+      /**
+      * Fires when the modal opens.
+      * @event open
+      * @memberof Modal
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
+      */
       self.element.trigger('open', [self]);
 
       if (focusElem.length === 0) {
@@ -532,6 +546,13 @@ Modal.prototype = {
       focusElement(this);
     }, 200);
 
+    /**
+    * Fires after the modal has opened.
+    * @event afteropen
+    * @memberof Modal
+    * @property {object} event - The jquery event object
+    * @property {object} ui - The dialog object
+    */
     setTimeout(() => {
       this.element.trigger('afteropen');
     }, 300);

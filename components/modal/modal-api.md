@@ -2,25 +2,10 @@
 
 ### Table of Contents
 
--   [MODAL_DEFAULTS][1]
--   [Modal][2]
-    -   [disableSubmit][3]
-    -   [open][4]
-    -   [close][5]
-
-## MODAL_DEFAULTS
-
-**Properties**
-
--   `trigger` **[string][6]** The method of opening the dialog. Supports click, immediate.
--   `buttons` **[array][7]** A list of buttons that will sit in the toolbar's Buttonset area.
--   `isAlert` **isAlert** Adds alertdialog role for message dialogs.
--   `content` **content** Ability to pass in dialog html content.
--   `cssClass` **[string][6]** Append a css class to top level.
--   `autoFocus` **[boolean][8]** If true the first input will be focused.
--   `id` **[string][6]** Optionally tag a dialog with an id.
--   `frameHeight` **[number][9]** Optional extra height to add.
--   `frameWidth` **[number][9]** Optional extra width to add.
+-   [Modal][1]
+    -   [disableSubmit][2]
+    -   [open][3]
+    -   [close][4]
 
 ## Modal
 
@@ -28,8 +13,17 @@ Responsive and Accessible Modal Control
 
 **Parameters**
 
--   `element` **[string][6]** The component element.
--   `settings` **[string][6]** The component settings.
+-   `element` **[string][5]** The component element.
+-   `settings` **[string][5]** The component settings.
+    -   `settings.trigger` **[string][5]** The method of opening the dialog. Supports click, immediate. (optional, default `'click'`)
+    -   `settings.buttons` **[array][6]** A list of buttons that will sit in the toolbar's Buttonset area. (optional, default `null`)
+    -   `settings.isAlert` **isAlert** Adds alertdialog role for message dialogs. (optional, default `false`)
+    -   `settings.content` **content** Ability to pass in dialog html content. (optional, default `null`)
+    -   `settings.cssClass` **[string][5]** Append a css class to top level. (optional, default `null`)
+    -   `settings.autoFocus` **[boolean][7]** If true the first input will be focused. (optional, default `true`)
+    -   `settings.id` **[string][5]** Optionally tag a dialog with an id. (optional, default `null`)
+    -   `settings.frameHeight` **[number][8]** Optional extra height to add. (optional, default `180`)
+    -   `settings.frameWidth` **[number][8]** Optional extra width to add. (optional, default `46`)
 
 ### disableSubmit
 
@@ -49,24 +43,22 @@ Close the modal.
 
 **Parameters**
 
--   `destroy` **[boolean][8]** Call the destroy method.
+-   `destroy` **[boolean][7]** Call the destroy method.
 
-Returns **[boolean][8]** If the dialog was open returns false. If the dialog was closed is true.
+Returns **[boolean][7]** If the dialog was open returns false. If the dialog was closed is true.
 
-[1]: #modal_defaults
+[1]: #modal
 
-[2]: #modal
+[2]: #disablesubmit
 
-[3]: #disablesubmit
+[3]: #open
 
-[4]: #open
+[4]: #close
 
-[5]: #close
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

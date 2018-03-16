@@ -1,117 +1,185 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.buttons
+    </td>
+    <td>
+      <span>{editor:[&#39;header1&#39;,&#39;header2&#39;,&#39;separator&#39;,&#39;bold&#39;,&#39;italic&#39;,&#39;underline&#39;,&#39;strikethrough&#39;,
+&#39;separator&#39;,&#39;foreColor&#39;,&#39;backColor&#39;,&#39;separator&#39;,&#39;justifyLeft&#39;,&#39;justifyCenter&#39;,&#39;justifyRight&#39;,&#39;separator&#39;,&#39;quote&#39;,&#39;orderedlist&#39;,
+&#39;unorderedlist&#39;,&#39;separator&#39;,&#39;anchor&#39;,&#39;separator&#39;,&#39;image&#39;,&#39;separator&#39;,&#39;source&#39;],source:[&#39;visual&#39;]}</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      An array with all the visible buttons in it.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.excludeButtons
+    </td>
+    <td>
+      <span>{editor:[&#39;backColor&#39;],source:[]}</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      An array with all the buttons in it to excloude
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.firstHeader
+    </td>
+    <td>
+      <span>&#39;h3&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Allows you to set if the first header inserted is a h3 or h4 element.
+You should set this to match the structure of the parent page for accessibility
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.secondHeader
+    </td>
+    <td>
+      <span>&#39;h4&#39;</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Allows you to set if the second header inserted is a h3 or
+h4 element. You should set this to match the structure of the parent page for accessibility
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pasteAsPlainText
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If true, when you paste into the editor the element will be unformatted to plain text.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.anchor
+    </td>
+    <td>
+      <span>{url:&#39;http://www.example.com&#39;,class:&#39;hyperlink&#39;,target:&#39;New window&#39;,isClickable:false,showIsClickable:false}</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.image
+    </td>
+    <td>
+      <span>{url:&#39;http://lorempixel.com/output/cats-q-c-300-200-3.jpg&#39;}</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.onLinkClick
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      Call back for clicking on links to control link behavior.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          buttons
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          An array with all the visible buttons in it.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          excludeButtons
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          An array with all the buttons in it to excloude
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          firstHeader
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Allows you to set if the first header inserted is
-a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          secondHeader
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Allows you to set if the second header inserted
-is a h3 or h4 element. You should set this to match the structure of the parent
-page for accessibility
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          pasteAsPlainText
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If true, when you paste into the editor
-the element will be unformatted to plain text.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          anchor
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          An object with settings related to controlling link behavior when inserted example: 
-<code>{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},</code>
-
-the url is the default url to display. Class should normally stay hyperlink
-and represents the styling class. target can be 'New window' or 'Same window',
-isClickable make the links appear clickable in the editor, showIsClickable will
-show a checkbox to allow the user to make clickable links in the link popup.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -140,7 +208,7 @@ void
         <td>
           
                 
-                  <span>settings (Object) = The settings to apply.
+                  <span>settings (object) = The settings to apply.
  </span>
                 
           
@@ -151,7 +219,7 @@ void
         </td>
         <td>
           The api
-Object
+object
         </td>
       </tr>
       <tr>
@@ -214,10 +282,7 @@ void
   </table>
 
 
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -235,7 +300,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -244,7 +309,7 @@ void
       </div>
     
       <div>
-        <span>pastedData (String)
+        <span>pastedData (string)
         
         = .
 
@@ -266,7 +331,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -275,7 +340,7 @@ void
       </div>
     
       <div>
-        <span>pastedData (String)
+        <span>pastedData (string)
         
         = .
 

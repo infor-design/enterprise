@@ -2,22 +2,10 @@
 
 ### Table of Contents
 
--   [SPARKLINE_DEFAULTS](#sparkline_defaults)
--   [Sparkline](#sparkline)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## SPARKLINE_DEFAULTS
-
-**Properties**
-
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The data to use in the sparklines.
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The name of the data used in the accessibility label and tooltip.
--   `colors` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of color sequences in hex format fx #1D5F8A.
--   `isDots` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Shows dots on the data points.
--   `isPeakDot` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Highlights the top value as peak with a special dot.
--   `isMinMax` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Shows a continuous shading to highlight the min and max values.
--   `isMedianRange` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Adds a median range display.
+-   [Sparkline][1]
+    -   [updated][2]
+    -   [destroy][3]
+-   [close][4]
 
 ## Sparkline
 
@@ -25,8 +13,15 @@ Sparklines are a compact way to show trends.
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
+-   `element` **[string][5]** The plugin element for the constuctor
+-   `settings` **[string][5]** The settings element.
+    -   `settings.dataset` **[array][6]?** The data to use in the sparklines.
+    -   `settings.colors` **[array][6]** An array of color sequences in hex format fx #1D5F8A,
+        defaulting to the correct standard colors. (optional, default `['#1D5F8A','#999999','#bdbdbd','#d8d8d8']`)
+    -   `settings.isDots` **[boolean][7]** Shows dots on the data points. (optional, default `false`)
+    -   `settings.isPeakDot` **[boolean][7]** Highlights the top value as peak with a special dot. (optional, default `false`)
+    -   `settings.isMinMax` **[boolean][7]** Shows a continuous shading to highlight the min and max values. (optional, default `false`)
+    -   `settings.isMedianRange` **[boolean][7]** Adds a median range display. (optional, default `false`)
 
 ### updated
 
@@ -34,12 +29,37 @@ Handle updated settings and values.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings object
+-   `settings` **[object][8]** The new settings object
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
+Returns **[object][8]** The api for chaining.
 
 ### destroy
 
 Teardown - Remove added markup and events.
 
 Returns **void** 
+
+## close
+
+Fires when the sparkline is fully renders.
+
+**Properties**
+
+-   `event` **[object][8]** The jquery event object
+-   `ui` **[object][8]** The svg element.
+
+[1]: #sparkline
+
+[2]: #updated
+
+[3]: #destroy
+
+[4]: #close
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

@@ -2,19 +2,9 @@
 
 ### Table of Contents
 
--   [BUTTON_DEFAULTS](#button_defaults)
--   [Button](#button)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## BUTTON_DEFAULTS
-
-**Properties**
-
--   `toggleOnIcon` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The icon to use for on state on toggle buttons
--   `toggleOffIcon` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The icon to use for off state on toggle buttons
--   `replaceText` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If true the selection will be used to replace the content
-    in the button.
+-   [Button][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Button
 
@@ -22,8 +12,11 @@ Soho Button Element
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][4]** The component element.
+-   `settings` **[string][4]?** The component settings.
+    -   `settings.toggleOnIcon` **[string][4]** The icon to use for on state on toggle buttons (optional, default `null`)
+    -   `settings.toggleOffIcon` **[string][4]** The icon to use for off state on toggle buttons (optional, default `null`)
+    -   `settings.replaceText` **[string][4]** If true the selection will be used to replace the content (optional, default `false`)
 
 ### updated
 
@@ -31,12 +24,22 @@ Update the component with new settings.
 
 **Parameters**
 
--   `settings` **\[type]** The settings you would like to modify.
+-   `settings` **[object][5]** The settings you would like to modify.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api.
+Returns **[object][5]** The api.
 
 ### destroy
 
 Teardown and remove any added markup and events.
 
 Returns **void** 
+
+[1]: #button
+
+[2]: #updated
+
+[3]: #destroy
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

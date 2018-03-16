@@ -16,142 +16,207 @@
 <li>Example showing Set Selected value <a href="../components/column/example-set-selected">View Test</a></li>
 </ol>
 <h2 id="api-details">API Details</h2>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The plugin element for the constuctor
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The settings element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset
+    </td>
+    <td>
+      <span>[]</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      The data to use in the line/area/bubble.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.isStacked
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Set to true if its a stacked column chart
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showLegend
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If false the legend will not be shown.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.animate
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      true|false - will do or not do the animation. 'initial' will do only first time the animation.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.redrawOnResize
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, the component will not resize when resizing the page.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.format
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The d3 axis format
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.formatterString
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Use d3 format some examples can be found on http://bit.ly/1IKVhHh
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.ticks
+    </td>
+    <td>
+      <span>9</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The number of ticks to show.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.emptyMessage
+    </td>
+    <td>
+      <span>{title:&#39;No Data&#39;,info:,icon:&#39;icon-empty-no-data&#39;}</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      An empty message will be displayed when there is no chart data. This accepts an object of the form
+`emptyMessage: {
+  title: 'No Data Available',
+  info: 'Make a selection on the list above to see results',
+  icon: 'icon-empty-no-data',
+  button: {text: 'xxx', click: <function>
+  }`
+Set this to null for no message or will default to 'No Data Found with an icon.'
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          dataset
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          The data to use in the line/area/bubble.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          isStacked
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Set to true if its a stacked column chart
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showLegend
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If false the legend will not be shown.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          animate
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          true|false - will do or not do the animation.
-'initial' will do only first time the animation.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          redrawOnResize
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, the component will not resize when resizing the page.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          format
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The d3 axis format
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          formatterString
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Use d3 format some examples can be found on 
-<a href="http://bit.ly/1IKVhHh">http://bit.ly/1IKVhHh</a>
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          ticks
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The number of ticks to show.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          emptyMessage
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          An empty message will be displayed when there is no chart data.
-This accepts an object of the form emptyMessage:
-
-<code>{title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: &#x3C;function>} }</code>
-
-Set this to null for no message or will default to 'No Data Found with an icon.'
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -199,7 +264,6 @@ void
 
 
   </section>
-
   
 
 <h2 id="dataset-settings">Dataset Settings</h2>
