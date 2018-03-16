@@ -5,39 +5,73 @@
 <li><a href="../components/wizard/example-in-page">Disabled Tick Clicks</a></li>
 <li><a href="../components/wizard/example-set-selected">Programmatic Tick Selection</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      the Wizard container
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.ticks
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Defines the data to use, must be specified.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          ticks
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          Defines the data to use, must be specified.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -48,54 +82,13 @@
     </thead>
     <tbody>
       <tr>
-        <td>buildTicks</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Builds the HTML Markup that draws out defined Wizard tick marks.</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
-        <td>updateRange</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Re-renders the Wizard Range with updated ticks</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
         <td>updated</td>
         <td>
           
                 
-                  <span>settings () = incoming settings
+                  <span>settings (object) = incoming settings
  </span>
                 
-          
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
-        <td>teardown</td>
-        <td>
           
         </td>
         <td>
@@ -142,26 +135,14 @@ this
         <td>
         </td>
       </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>This component listens to the following events:</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
     </tbody>
   </table>
 
 
+  
+  
+  
   </section>
-
   
 
 <h2 id="code-example">Code Example</h2>

@@ -6,18 +6,19 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'busyindicator';
 
 /**
-* @namespace
-* @property {string} blockUI  makes the element that Busy Indicator is invoked on unusable while
-*  it's displayed.
-* @property {string} text  Custom Text To Show or Will Show Localized Loading....
-* @property {string} displayDelay  umber in miliseconds to pass before the markup is displayed.
-* If 0, displays immediately.
-* @property {boolean} timeToComplete  fires the 'complete' trigger at a certain timing interval.
-* If 0, goes indefinitely.
-* @property {string} transparentOverlay  If true, allows the "blockUI" setting to display an overlay
-* that prevents interaction, but appears transparent instead of gray.
-* @property {string} overlayOnly  If true, the busy indicator will only be the overlay.
-*/
+ * A Busy Indicator notifies the user that the system is processing a request, and that they must
+ * wait for that request to be processed before continuing with the current task.
+ * @class BusyIndicator
+ * @param {object} element The plugin starting element.
+ * @param {object} [settings] The settings to use.
+ * @param {string} [settings.blockUI=true] makes the element that Busy Indicator is invoked on unusable while it's displayed.
+ * @param {string} [settings.text=null] Custom Text To Show or Will Show Localized Loading....
+ * @param {string} [settings.displayDelay=1000] Number in miliseconds to pass before the markup is displayed. If 0, displays immediately.
+ * @param {boolean} [settings.timeToComplete=0] fires the 'complete' trigger at a certain timing interval. If 0, goes indefinitely.
+ * @param {string} [settings.transparentOverlay=false] If true, allows the "blockUI" setting to display
+ * an overlay that prevents interaction, but appears transparent instead of gray.
+ * @param {string} [settings.overlayOnly=false] If true, the busy indicator will only be the overlay.
+ */
 const BUSYINDICATOR_DEFAULTS = {
   blockUI: true,
   text: null,
@@ -27,13 +28,6 @@ const BUSYINDICATOR_DEFAULTS = {
   overlayOnly: false
 };
 
-/**
- * A Busy Indicator notifies the user that the system is processing a request, and that they must
- * wait for that request to be processed before continuing with the current task.
- * @class BusyIndicator
- * @param {object} element The plugin starting element.
- * @param {object} settings The settings to use.
- */
 function BusyIndicator(element, settings) {
   this.settings = utils.mergeSettings(element, settings, BUSYINDICATOR_DEFAULTS);
   this.element = $(element);
@@ -378,7 +372,8 @@ BusyIndicator.prototype = {
     *  Fires when the indicator starts / shows.
     *
     * @event start
-    * @property {object} event - The jquery event object.
+    * @memberof BusyIndicator
+    * @param {object} event - The jquery event object.
     */
     self.element.on('start.busyindicator', (e) => {
       e.stopPropagation();
@@ -389,8 +384,9 @@ BusyIndicator.prototype = {
          * Fires when the indicator is "started"
          *
          * @event complete
-         * @property {object} event - The jquery event object.
-         * @property {object} ui - The dialog object
+         * @memberof BusyIndicator
+         * @param {object} event - The jquery event object.
+         * @param {object} ui - The dialog object
          */
         this.element.on('complete.busyindicator', (e) => {
           e.stopPropagation();
@@ -400,7 +396,8 @@ BusyIndicator.prototype = {
       /**
       * Sync the UI/Settings. Fx chnaging the text in the DOM.
       * @event updated
-      * @property {object} event - The jquery event object.
+      * @memberof BusyIndicator
+      * @param {object} event - The jquery event object.
       */
       .on('updated.busyindicator', () => {
         this.close(true);

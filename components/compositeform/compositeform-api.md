@@ -2,24 +2,13 @@
 
 ### Table of Contents
 
--   [COMPOSITEFORM_DEFAULTS](#compositeform_defaults)
--   [CompositeForm](#compositeform)
-    -   [handleEvents](#handleevents)
-    -   [checkResponsive](#checkresponsive)
-    -   [setExpanderText](#setexpandertext)
-    -   [isSideOriented](#issideoriented)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## COMPOSITEFORM_DEFAULTS
-
-**Properties**
-
--   `breakpoint` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Defines the breakpoint at which the composite form will change
-     into its responsive mode
--   `trigger` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Expandable area trigger selector. Passed to expandable area.
--   `expandedText` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Text to use for the expand button (Default localized)
--   `collapsedText` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Text to use for the collapse button (Default localized)
+-   [CompositeForm][1]
+    -   [handleEvents][2]
+    -   [checkResponsive][3]
+    -   [setExpanderText][4]
+    -   [isSideOriented][5]
+    -   [updated][6]
+    -   [destroy][7]
 
 ## CompositeForm
 
@@ -27,8 +16,12 @@ CompositeForm is a specialized responsive form component.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** The component element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** The component settings.
+-   `element` **([Array][8]&lt;jQuery> | [HTMLElement][9])** The component element.
+-   `settings` **[object][10]?** The component settings.
+    -   `settings.breakpoint` **[string][11]** Defines the breakpoint at which the composite form will change into its responsive mode (optional, default `'phone-to-tablet'`)
+    -   `settings.trigger` **[string][11]** Expandable area trigger selector. Passed to expandable area. (optional, default `null`)
+    -   `settings.expandedText` **[string][11]** Text to use for the expand button (Default localized) (optional, default `Locale.translate('ShowLess')`)
+    -   `settings.collapsedText` **[string][11]** Text to use for the collapse button (Default localized) (optional, default `Locale.translate('ShowMore')`)
 
 ### handleEvents
 
@@ -36,15 +29,15 @@ Sets up event handlers for this control and its sub-elements
 
 **Parameters**
 
--   `expanderText` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the text content
+-   `expanderText` **[string][11]** the text content
 
-Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+Returns **[undefined][12]** 
 
 ### checkResponsive
 
 Checks if we've passed the breakpoint for switching into Responsive mode.
 
-Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+Returns **[undefined][12]** 
 
 ### setExpanderText
 
@@ -52,24 +45,50 @@ Sets the text content of the Composite Form's Expandable Area Expander.
 
 **Parameters**
 
--   `expanderText` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the text content
+-   `expanderText` **[string][11]** the text content
 
-Returns **[undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+Returns **[undefined][12]** 
 
 ### isSideOriented
 
 Determines if this component is configured for "on-side" orientation of the Summary area.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If the component is currently side oriented.
+Returns **[boolean][13]** If the component is currently side oriented.
 
 ### updated
 
 Re-invokes the Composite Form
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The component API for chaining.
+Returns **[object][10]** The component API for chaining.
 
 ### destroy
 
 Destroys the component instance by removing it from its associated element.
 
 Returns **void** 
+
+[1]: #compositeform
+
+[2]: #handleevents
+
+[3]: #checkresponsive
+
+[4]: #setexpandertext
+
+[5]: #issideoriented
+
+[6]: #updated
+
+[7]: #destroy
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[9]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

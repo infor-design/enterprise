@@ -2,28 +2,9 @@
 
 ### Table of Contents
 
--   [TOAST_DEFAULTS][1]
--   [Toast][2]
-    -   [show][3]
-    -   [remove][4]
-    -   [updated][5]
-    -   [destroy][6]
-
-## TOAST_DEFAULTS
-
-Default Settings for Toast
-
-**Properties**
-
--   `title` **[string][7]** text that is displayed in the Toast's title.
--   `message` **[string][7]** text/HTML that's displayed in the Toast's body.
--   `position` **[string][7]** text that propagates into CSS classes that
-     position the Toast in specific places. top left, bottom left, bottom right (center??)
--   `audibleOnly` **[boolean][8]** if true, causes the toast to be invisble on the screen,
-    but still read out lout by screen readers.
--   `progressBar` **[boolean][8]** causes the toast to have a visible progress bar that
-     will be completely disappeared when the toast should be removed.
--   `timeout` **[number][9]** the amount of time the toast should be present on-screen.
+-   [Toast][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Toast
 
@@ -32,30 +13,22 @@ Toast Component.  This component produces small, temporary messages in
 
 **Parameters**
 
--   `element` **[HTMLElement][10]** the target location for the Toast message
--   `settings` **[object][11]?** incoming settings
-
-### show
-
-Show a Single Toast Message
-
-Returns **void** 
-
-### remove
-
-Remove the Message and Animate
-
-**Parameters**
-
--   `toast` **([Array][12]&lt;jQuery> | [HTMLElement][10])** the toast message to be removed
-
-Returns **void** 
+-   `element` **[HTMLElement][4]** the target location for the Toast message
+-   `settings` **[object][5]?** incoming settings
+    -   `settings.title` **[string][6]** Text that is displayed in the Toast's title. (optional, default `'(Title)'`)
+    -   `settings.message` **[string][6]** Text/HTML that's displayed in the Toast's body. (optional, default `'(Content)'`)
+    -   `settings.position` **[string][6]** text that propagates into CSS classes that position the Toast in specific places
+        Can be top left, bottom left, bottom rightx (optional, default `'top right'`)
+    -   `settings.audibleOnly` **[boolean][7]** if true, causes the toast to be invisble on the screen, but still read out lout by screen readers. (optional, default `false`)
+    -   `settings.progressBar` **[boolean][7]** causes the toast to have a visible progress bar that will be completely
+        disappeared when the toast should be removed. (optional, default `true`)
+    -   `settings.timeout` **[number][8]** the amount of time the toast should be present on-screen. (optional, default `6000`)
 
 ### updated
 
 **Parameters**
 
--   `settings` **[object][11]?** incoming settings
+-   `settings` **[object][5]?** incoming settings
 
 Returns **void** 
 
@@ -65,26 +38,18 @@ Teardown
 
 Returns **void** 
 
-[1]: #toast_defaults
+[1]: #toast
 
-[2]: #toast
+[2]: #updated
 
-[3]: #show
+[3]: #destroy
 
-[4]: #remove
+[4]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-[5]: #updated
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[6]: #destroy
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[10]: https://developer.mozilla.org/docs/Web/HTML/Element
-
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

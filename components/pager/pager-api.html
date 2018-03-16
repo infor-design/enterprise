@@ -1,153 +1,217 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.componentAPI
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If defined, becomes the definitive way to call methods on
+parent component.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.type
+    </td>
+    <td>
+      <span>&#39;list&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Different types of pagers list - just shows next and Previous and a listing of pages table
+shows next and previous and first and last with a page number input and page size selector used as the default
+for datagrid pageof - also shows next and previous and first and last with a page number input and page size selector used optionally for
+lists firstlast - shows next and previous and first and last with option to set showPageSizeSelector
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.position
+    </td>
+    <td>
+      <span>&#39;bottom&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Can be on 'bottom' or 'top'.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.activePage
+    </td>
+    <td>
+      <span>1</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Start on this page
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.hideOnOnePage
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, hides the pager if there is only one page worth of results.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.source
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Function
+    </td>
+    <td>
+      Call Back Function for Pager Data Source
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pagesize
+    </td>
+    <td>
+      <span>15</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Can be calculated or a specific number
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pagesizes
+    </td>
+    <td>
+      <span>[15,25,50,75]</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      Array of numbers of the page size selector
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showPageSizeSelector
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If false will not show page size selector
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.indeterminate
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true will not show anything that lets you go to a specific
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          componentAPI
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If defined, becomes the definitive way to call methods on
-parent component.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          type
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Different types of pagers
-list - just shows next and Previous and a listing of pages
-table - shows next and previous and first and last with a page number input and
-page size selector used as the default for datagrid
-pageof - also shows next and previous and first and last with a page number input and
-page size selector used optionally for lists
-firstlast - shows next and previous and first and last with option to set showPageSizeSelector
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          position
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Can be on 'bottom' or 'top'.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          activePage
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          Start on this page
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          hideOnOnePage
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, hides the pager if there is only one page worth of
-results.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          source
-        </td>
-        <td>
-          Function
-        </td>
-        <td>
-          Call Back Function for Pager Data Source
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          pagesize
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          Can be calculated or a specific number
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          pagesizes
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          Array of numbers of the page size selector
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showPageSizeSelector
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If false will not show page size selector
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          indeterminate
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true will not show anything that lets you go to a specific
-page.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -197,26 +261,6 @@ page.
         <td>
           
 void
-        </td>
-      </tr>
-      <tr>
-        <td>renderPages</td>
-        <td>
-          
-                
-                  <span>op (object) = The paging operation.
- </span>
-                
-                  <span>callback (function) = The pager callback.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Render a page of items.</p>
-
-        </td>
-        <td>
         </td>
       </tr>
       <tr>
@@ -274,5 +318,109 @@ void
 
 
   </section>
-
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>beforepaging
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>request (function)
+        
+        = The paging request info
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires just before changing page. Returning false from the request function will cancel paging.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afterpaging
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>pagingInfo (object)
+        
+        = The paging info object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after changing paging has completed.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>paging
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>request (object)
+        
+        = The paging request object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when change page.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

@@ -8,14 +8,21 @@ import '../utils/animations';
 const COMPONENT_NAME = 'hierarchy';
 
 /**
-* @namespace
-* @property {string} legend  Pass in custom markdown for the legend structure.
-* @property {string} legendKey  Key to use for the legend matching
-* @property {string} dataset  Hierarchical Data to display
-* @property {boolean} newData  New data to be appended into dataset
-* @property {string} templateId  Additional product name information to display
-* @property {boolean} mobileView  If true will only show mobile view, default using device info.
-* @property {string} beforeExpand  A callback that fires before node expansion of a node.
+* The displays customizable hierarchical data such as an org chart.
+*
+* @class Hierarchy
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
+* @param {string} [settings.legend] Pass in custom markdown for the legend structure.
+* @param {string} [settings.legendKey] Key to use for the legend matching
+* @param {string} [settings.dataset=[]] Hierarchical Data to display
+* @param {boolean} [settings.newData=[]] New data to be appended into dataset
+* @param {string} [settings.templateId] Additional product name information to display
+* @param {boolean} [settings.mobileView=false] If true will only show mobile view, default using device info.
+* @param {number} [settings.leafHeight=null] Set the height of the leaf
+* @param {number} [settings.leafWidth=null] Set the width of the leaf
+* @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
+* @param {boolean} [settings.paging=false] If true show pagination.
 */
 const HIERARCHY_DEFAULTS = {
   legend: [],
@@ -30,13 +37,6 @@ const HIERARCHY_DEFAULTS = {
   paging: false
 };
 
-/**
-* The displays customizable hierarchical data such as an org chart.
-*
-* @class Hierarchy
-* @param {string} element The component element.
-* @param {string} settings The component settings.
-*/
 function Hierarchy(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HIERARCHY_DEFAULTS);
 
@@ -121,8 +121,9 @@ Hierarchy.prototype = {
     /**
     * Fires when node is selected
     * @event selected
-    * @property {object} event - The jquery event object
-    * @property {object} eventInfo - More info to identify the node.
+    * @memberof Hierarchy
+    * @param {object} event - The jquery event object
+    * @param {object} eventInfo - More info to identify the node.
     */
     self.element.on('mousedown', '.leaf, .back button', function (e) {
       const leaf = $(this);
@@ -179,8 +180,8 @@ Hierarchy.prototype = {
   /**
    * Check if event is add
    * @private
-   * @param {String} eventType is add
-   * @returns {Boolean} true if add event
+   * @param {string} eventType is add
+   * @returns {boolean} true if add event
    */
   isAddEvent(eventType) {
     return eventType === 'add';
@@ -189,8 +190,8 @@ Hierarchy.prototype = {
   /**
    * Check if event is expand
    * @private
-   * @param {String} eventType is expand
-   * @returns {Boolean} true if expand event
+   * @param {string} eventType is expand
+   * @returns {boolean} true if expand event
    */
   isExpandEvent(eventType) {
     return eventType === 'expand';
@@ -199,8 +200,8 @@ Hierarchy.prototype = {
   /**
    * Check if event is collapse
    * @private
-   * @param {String} eventType is collapse
-   * @returns {Boolean} true if collapse event
+   * @param {string} eventType is collapse
+   * @returns {boolean} true if collapse event
    */
   isCollapseEvent(eventType) {
     return eventType === 'collapse';
@@ -209,8 +210,8 @@ Hierarchy.prototype = {
   /**
    * Check if event is select
    * @private
-   * @param {String} eventType is select
-   * @returns {Boolean} true if select event
+   * @param {string} eventType is select
+   * @returns {boolean} true if select event
    */
   isSelectedEvent(eventType) {
     return eventType === 'select';
@@ -219,9 +220,9 @@ Hierarchy.prototype = {
   /**
    * Check to see if lazy load is allowed
    * @private
-   * @param {Object} data contains info
-   * @param {String} eventType is expand
-   * @returns {Boolean} true if lazy load is allowed
+   * @param {object} data contains info
+   * @param {string} eventType is expand
+   * @returns {boolean} true if lazy load is allowed
    */
   allowLazyLoad(data, eventType) {
     if (data === undefined || eventType === undefined) {
@@ -233,11 +234,11 @@ Hierarchy.prototype = {
   /**
    * Process data attached through jquery data
    * @private
-   * @param {String} nodeId .
-   * @param {String} currentDataObject .
-   * @param {String} newDataObject .
-   * @param {String} params .
-   * @returns {Object} data
+   * @param {string} nodeId .
+   * @param {string} currentDataObject .
+   * @param {string} newDataObject .
+   * @param {string} params .
+   * @returns {object} data
    */
   data(nodeId, currentDataObject, newDataObject, params) {
     /* eslint-disable no-use-before-define */
@@ -304,7 +305,7 @@ Hierarchy.prototype = {
   /**
    * Add data as children for the given nodeId.
    * @private
-   * @param {String} nodeId .
+   * @param {string} nodeId .
    * @param {object} currentDataObject info
    * @param {object} newDataObject .
    * @returns {void}
@@ -358,9 +359,10 @@ Hierarchy.prototype = {
     * Fires when leaf expanded.
     *
     * @event expanded
-    * @type {Object}
-    * @property {Object} event - The jquery event object
-    * @property {Array} args [nodeData, dataset]
+    * @memberof Hierarchy
+    * @type {object}
+    * @param {object} event - The jquery event object
+    * @param {array} args [nodeData, dataset]
     */
     this.element.trigger('expanded', [nodeData, s.dataset]);
 
@@ -391,9 +393,10 @@ Hierarchy.prototype = {
       * Fires when leaf collapsed.
       *
       * @event collapsed
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Array} args [nodeData, dataset]
+      * @memberof Hierarchy
+      * @type {object}
+      * @param {object} event - The jquery event object
+      * @param {array} args [nodeData, dataset]
       */
       this.element.trigger('collapsed', [nodeData, s.dataset]);
     });
@@ -546,7 +549,7 @@ Hierarchy.prototype = {
   /**
   * Checks to see if children have children
   * @private
-  * @returns {Boolean} true if have children
+  * @returns {boolean} true if have children
   */
   isSingleChildWithChildren() {
     const s = this.settings;
@@ -698,8 +701,8 @@ Hierarchy.prototype = {
   /**
    * Check to see if particular node is a leaf
    * @private
-   * @param {Object} dataNode contains data info
-   * @returns {Boolean} whether or not a particular node is a leaf
+   * @param {object} dataNode contains data info
+   * @returns {boolean} whether or not a particular node is a leaf
    */
   isLeaf(dataNode) {
     const s = this.settings;
@@ -723,10 +726,10 @@ Hierarchy.prototype = {
    * Handle all leaf state here,
    * get the current state via .data() and re-attach the new state
    * @private
-   * @param {String} leaf .
-   * @param {String} isRoot .
-   * @param {String} nodeData .
-   * @param {String} eventType .
+   * @param {string} leaf .
+   * @param {string} isRoot .
+   * @param {string} nodeData .
+   * @param {string} eventType .
    * @returns {void}
    */
   updateState(leaf, isRoot, nodeData, eventType) {
@@ -806,8 +809,8 @@ Hierarchy.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

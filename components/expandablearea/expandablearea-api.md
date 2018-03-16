@@ -2,45 +2,39 @@
 
 ### Table of Contents
 
--   [EXPANDABLEAREA_DEFAULTS][1]
--   [ExpandableArea][2]
-    -   [isDisabled][3]
-    -   [isExpanded][4]
-    -   [toggleExpanded][5]
-    -   [open][6]
-    -   [close][7]
-    -   [disable][8]
-    -   [enable][9]
-    -   [destroy][10]
-    -   [updated][11]
-
-## EXPANDABLEAREA_DEFAULTS
-
-**Properties**
-
--   `trigger` **[string][12]** Id of some other button to use as a trigger
--   `bottomBorder` **[string][12]** Change the border to bottom vs top (for some cases)
+-   [ExpandableArea][1]
+    -   [isDisabled][2]
+    -   [isExpanded][3]
+    -   [toggleExpanded][4]
+    -   [open][5]
+    -   [close][6]
+    -   [disable][7]
+    -   [enable][8]
+    -   [destroy][9]
+    -   [updated][10]
 
 ## ExpandableArea
 
-[ExpandableArea description]
+An expandable pane / area.
 
 **Parameters**
 
--   `element` **[string][12]** The component element.
--   `settings` **[string][12]** The component settings.
+-   `element` **[string][11]** The component element.
+-   `settings` **[string][11]?** The component settings.
+    -   `settings.trigger` **[string][11]** Id of some other button to use as a trigger (optional, default `null`)
+    -   `settings.bottomBorder` **[string][11]** Change the border to bottom vs top (for some cases) (optional, default `false`)
 
 ### isDisabled
 
 Return if the expandable area is current disable or not.
 
-Returns **[boolean][13]** True or False depending on the disabled status.
+Returns **[boolean][12]** True or False depending on the disabled status.
 
 ### isExpanded
 
 Returns expanded status about the current expandable area
 
-Returns **[boolean][13]** True of alse depending on current expanded status.
+Returns **[boolean][12]** True of alse depending on current expanded status.
 
 ### toggleExpanded
 
@@ -78,34 +72,32 @@ Update the component and optionally apply new settings.
 
 **Parameters**
 
--   `settings` **[object][14]** the settings to update to.
+-   `settings` **[object][13]** the settings to update to.
 
-Returns **[object][14]** The plugin api for chaining.
+Returns **[object][13]** The plugin api for chaining.
 
-[1]: #expandablearea_defaults
+[1]: #expandablearea
 
-[2]: #expandablearea
+[2]: #isdisabled
 
-[3]: #isdisabled
+[3]: #isexpanded
 
-[4]: #isexpanded
+[4]: #toggleexpanded
 
-[5]: #toggleexpanded
+[5]: #open
 
-[6]: #open
+[6]: #close
 
-[7]: #close
+[7]: #disable
 
-[8]: #disable
+[8]: #enable
 
-[9]: #enable
+[9]: #destroy
 
-[10]: #destroy
+[10]: #updated
 
-[11]: #updated
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

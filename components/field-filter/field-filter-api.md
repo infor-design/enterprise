@@ -2,26 +2,12 @@
 
 ### Table of Contents
 
--   [FIELDFILTER_DEFAULTS][1]
--   [FieldFilter][2]
-    -   [readonly][3]
-    -   [enable][4]
-    -   [disable][5]
-    -   [updated][6]
-    -   [destroy][7]
--   [filtered][8]
-
-## FIELDFILTER_DEFAULTS
-
-**Parameters**
-
--   `dataset` **[array][9]** Array of data
--   `template` **[string][10]** An Html String with the mustache template for the view./\*\*
-    Default FieldFilter Options
-
-**Properties**
-
--   `dropdownOpts` **[object][11]** Gets passed to this control's dropdown
+-   [FieldFilter][1]
+    -   [readonly][2]
+    -   [enable][3]
+    -   [disable][4]
+    -   [updated][5]
+    -   [destroy][6]
 
 ## FieldFilter
 
@@ -29,26 +15,29 @@ Ability to have a dropdown next to the field.
 
 **Parameters**
 
--   `element` **[String][10]** The component element.
--   `settings` **[String][10]** The component settings.
+-   `element` **([Array][7]&lt;jQuery> | [HTMLElement][8])** The component element.
+-   `settings` **[object][9]?** The component settings.
+    -   `settings.dataset` **[array][7]?** Array of data
+    -   `settings.dropdownOpts` **[object][9]?** Gets passed to this control's dropdown
+    -   `settings.template` **[string][10]?** An Html String with the mustache template for the view.
 
 ### readonly
 
 Set component to readonly.
 
-Returns **[Object][11]** The api
+Returns **[object][9]** The api
 
 ### enable
 
 Set component to enabled.
 
-Returns **[Object][11]** The api
+Returns **[object][9]** The api
 
 ### disable
 
 Set component to disabled.
 
-Returns **[Object][11]** The api
+Returns **[object][9]** The api
 
 ### updated
 
@@ -56,9 +45,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object][11]** The settings to apply.
+-   `settings` **[object][9]** The settings to apply.
 
-Returns **[Object][11]** The api
+Returns **[object][9]** The api
 
 ### destroy
 
@@ -66,33 +55,22 @@ Teardown process for this plugin
 
 Returns **void** 
 
-## filtered
+[1]: #fieldfilter
 
-Fires after the value in the dropdown is selected.
+[2]: #readonly
 
-**Properties**
+[3]: #enable
 
--   `event` **[object][11]** The jquery event object.
--   `data` **[object][11]** for selected item.
+[4]: #disable
 
-[1]: #fieldfilter_defaults
+[5]: #updated
 
-[2]: #fieldfilter
+[6]: #destroy
 
-[3]: #readonly
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[4]: #enable
+[8]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-[5]: #disable
-
-[6]: #updated
-
-[7]: #destroy
-
-[8]: #filtered
-
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
 [10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

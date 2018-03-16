@@ -2,49 +2,12 @@
 
 ### Table of Contents
 
--   [LISTBUILDER_DEFAULTS][1]
--   [ListBuilder][2]
-    -   [getDataByNode][3]
-    -   [enable][4]
-    -   [disable][5]
-    -   [updated][6]
-    -   [destroy][7]
--   [selected][8]
--   [updated][9]
--   [beforeadd][10]
--   [afteradd][11]
--   [beforegoup][12]
--   [aftergoup][13]
--   [beforegodown][14]
--   [aftergodown][15]
--   [beforeedit][16]
--   [entereditmode][17]
--   [exiteditmode][18]
--   [beforedelete][19]
--   [afterdelete][20]
-
-## LISTBUILDER_DEFAULTS
-
-Default ListBuilder Options
-
-**Parameters**
-
--   `dataset` **[array][21]** Array of data
--   `handle` **[string][22]** The CSS Class of the handle element
--   `btnAdd` **([string][22] \| [Array][21]&lt;jQuery>)** "Add" action button (takes a string representing a
-     "data-action" attribute, or a jQuery-wrapped element reference).
--   `btnEdit` **([string][22] \| [Array][21]&lt;jQuery>)** "Edit" action button (takes a string representing a
-     "data-action" attribute, or a jQuery-wrapped element reference).
--   `btnDelete` **([string][22] \| [Array][21]&lt;jQuery>)** "Delete" action button (takes a string representing a
-     "data-action" attribute, or a jQuery-wrapped element reference).
--   `btnGoUp` **([string][22] \| [Array][21]&lt;jQuery>)** "GoUp" action button (takes a string representing a
-     "data-action" attribute, or a jQuery-wrapped element reference).
--   `btnGoDown` **([string][22] \| [Array][21]&lt;jQuery>)** "GoDown" action button (takes a string representing a
-     "data-action" attribute, or a jQuery-wrapped element reference).
--   `template` **[string][22]** representing HTML content that builds a list
--   `templateNewItem` **[string][22]** representing HTML content that builds a single list item
--   `templateItemContent` **[string][22]** representing HTML content that replaces the inner content
-     section of each item.
+-   [ListBuilder][1]
+    -   [getDataByNode][2]
+    -   [enable][3]
+    -   [disable][4]
+    -   [updated][5]
+    -   [destroy][6]
 
 ## ListBuilder
 
@@ -52,8 +15,24 @@ A list of items with add/remove/delete and sort functionality.
 
 **Parameters**
 
--   `element` **([Array][21]&lt;jQuery> | [HTMLElement][23])** The base element.
--   `settings` **[object][24]?** incoming settings.
+-   `element` **([Array][7]&lt;jQuery> | [HTMLElement][8])** The base element.
+-   `settings` **[object][9]?** incoming settings.
+    -   `settings.dataset` **[array][7]?** Array of data
+    -   `settings.handle` **[string][10]?** The CSS Class of the handle element
+    -   `settings.btnAdd` **([string][10] \| [Array][7]&lt;jQuery>)?** "Add" action button (takes a string representing a
+         "data-action" attribute, or a jQuery-wrapped element reference).
+    -   `settings.btnEdit` **([string][10] \| [Array][7]&lt;jQuery>)?** "Edit" action button (takes a string representing a
+         "data-action" attribute, or a jQuery-wrapped element reference).
+    -   `settings.btnDelete` **([string][10] \| [Array][7]&lt;jQuery>)?** "Delete" action button (takes a string representing a
+         "data-action" attribute, or a jQuery-wrapped element reference).
+    -   `settings.btnGoUp` **([string][10] \| [Array][7]&lt;jQuery>)?** "GoUp" action button (takes a string representing a
+         "data-action" attribute, or a jQuery-wrapped element reference).
+    -   `settings.btnGoDown` **([string][10] \| [Array][7]&lt;jQuery>)?** "GoDown" action button (takes a string representing a
+         "data-action" attribute, or a jQuery-wrapped element reference).
+    -   `settings.template` **[string][10]?** representing HTML content that builds a list
+    -   `settings.templateNewItem` **[string][10]?** representing HTML content that builds a single list item
+    -   `settings.templateItemContent` **[string][10]?** representing HTML content that replaces the inner content
+         section of each item.
 
 ### getDataByNode
 
@@ -61,9 +40,9 @@ Get data from dataset by node
 
 **Parameters**
 
--   `node` **[Array][21]&lt;jQuery>** The HTML element to get data
+-   `node` **[Array][7]&lt;jQuery>** The HTML element to get data
 
-Returns **[object][24]** node data
+Returns **[object][9]** node data
 
 ### enable
 
@@ -83,7 +62,7 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[object][24]?** incoming settings.
+-   `settings` **[object][9]?** incoming settings.
 
 Returns **this** component instance
 
@@ -93,166 +72,22 @@ Teardown process for this plugin
 
 Returns **void** 
 
-## selected
+[1]: #listbuilder
 
-Fires when a item is selected.
+[2]: #getdatabynode
 
-**Properties**
+[3]: #enable
 
--   `event` **[Object][24]** The jquery event object
--   `data` **[Object][24]** Data for this selected item
+[4]: #disable
 
-## updated
+[5]: #updated
 
-Fires when a item is updated.
+[6]: #destroy
 
-**Properties**
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
--   `event` **[Object][24]** The jquery event object
--   `data` **[Object][24]** Data for this item
+[8]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-## beforeadd
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-Fires before add new item.
-
-**Properties**
-
--   `event` **[Object][24]** The jquery event object
-
-## afteradd
-
-Fires after add new item.
-
-**Properties**
-
--   `event` **[Object][24]** The jquery event object
--   `data` **[Object][24]** Data for this new item
-
-## beforegoup
-
-Fires before move up item.
-
-**Properties**
-
--   `event` **[Object][24]** The jquery event object
--   `data` **[Object][24]** Data for this item
-
-## aftergoup
-
-Fires after move up item.
-
-**Properties**
-
--   `event` **[Object][24]** The jquery event object
--   `data` **[Object][24]** Data for this item
-
-## beforegodown
-
-Fires before move down item.
-
-**Properties**
-
--   `event` **[Object][24]** The jquery event object
--   `data` **[Object][24]** Data for this item
-
-## aftergodown
-
-Fires after move down item.
-
-**Properties**
-
--   `event` **[Object][24]** The jquery event object
--   `data` **[Object][24]** Data for this item
-
-## beforeedit
-
-Fires before edit item.
-
-**Properties**
-
--   `event` **[object][24]** The jquery event object
--   `data` **[object][24]** Data for this item
-
-## entereditmode
-
-Fires when enter to edit mode.
-
-**Properties**
-
--   `event` **[object][24]** The jquery event object
--   `data` **[object][24]** Data for this item
-
-## exiteditmode
-
-Fires when exited to edit mode.
-
-**Properties**
-
--   `event` **[object][24]** The jquery event object
--   `data` **[object][24]** Data for this item
-
-## beforedelete
-
-Fires before delete item.
-
-**Properties**
-
--   `event` **[object][24]** The jquery event object
--   `data` **[object][24]** Data for this item
-
-## afterdelete
-
-Fires after delete item.
-
-**Properties**
-
--   `event` **[object][24]** The jquery event object
--   `data` **[object][24]** Data for this item
-
-[1]: #listbuilder_defaults
-
-[2]: #listbuilder
-
-[3]: #getdatabynode
-
-[4]: #enable
-
-[5]: #disable
-
-[6]: #updated
-
-[7]: #destroy
-
-[8]: #selected
-
-[9]: #updated-1
-
-[10]: #beforeadd
-
-[11]: #afteradd
-
-[12]: #beforegoup
-
-[13]: #aftergoup
-
-[14]: #beforegodown
-
-[15]: #aftergodown
-
-[16]: #beforeedit
-
-[17]: #entereditmode
-
-[18]: #exiteditmode
-
-[19]: #beforedelete
-
-[20]: #afterdelete
-
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[23]: https://developer.mozilla.org/docs/Web/HTML/Element
-
-[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

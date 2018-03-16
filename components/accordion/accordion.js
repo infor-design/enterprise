@@ -11,14 +11,6 @@ import '../utils/behaviors';
 // Component Name
 const COMPONENT_NAME = 'accordion';
 
-// Default Accordion Options
-const ACCORDION_DEFAULTS = {
-  allowOnePane: true,
-  displayChevron: true,
-  rerouteOnLinkClick: true,
-  source: null
-};
-
 /**
  * The Accordion is a grouped set of collapsible panels used to navigate sections of
  * related content. Each panel consists of two levels: the top level identifies the
@@ -26,17 +18,21 @@ const ACCORDION_DEFAULTS = {
  *
  * @class Accordion
  * @param {object} element The component element.
- * @param {object} settings The component settings.
- * @param {string} allowOnePane If set to true, allows only one pane of the
- *  Accordion to be open at a time.  If an Accordion pane is open, and that pane
- *  contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
- * @param {string} displayChevron  Displays a "Chevron" icon that sits off to the
- * right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
- * @param {string} rerouteOnLinkClick  Can be set to false if routing
- * is externally handled
- * @param {boolean} source  A callback function that when implemented
- * provided a call back for "ajax loading" of tab contents on open.
+ * @param {object} [settings] The component settings.
+ * @param {string} [settings.allowOnePane=true] If set to true, allows only one pane of the Accordion to be open at a
+ * time.  If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
+ * @param {string} [settings.displayChevron=true]  Displays a "Chevron" icon that sits off to the right-most
+ * side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.
+ * @param {string} [settings.rerouteOnLinkClick=true]  Can be set to false if routing is externally handled
+ * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
  */
+const ACCORDION_DEFAULTS = {
+  allowOnePane: true,
+  displayChevron: true,
+  rerouteOnLinkClick: true,
+  source: null
+};
+
 function Accordion(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, ACCORDION_DEFAULTS);
@@ -301,8 +297,9 @@ Accordion.prototype = {
     * Fires when a panel is opened.
     *
     * @event selected
-    * @property {object} event - The jquery event object
-    * @property {object} header - The header object
+    * @memberof Accordion
+    * @param {object} event - The jquery event object
+    * @param {object} header - The header object
     */
     this.element.trigger('selected', header);
 
@@ -335,7 +332,8 @@ Accordion.prototype = {
      * This indicates the link has been followed.
      *
      * @event followlink
-     * @property {array} anchor - The anchor in an array
+     * @memberof Accordion
+     * @param {array} anchor - The anchor in an array
      */
     if (followLink()) {
       this.element.trigger('followlink', [anchor]);
@@ -714,8 +712,9 @@ Accordion.prototype = {
       * Fires when expanding a pane is initiated.
       *
       * @event expand
-      * @property {object} event - The jquery event object
-      * @property {array} anchor - The anchor tag in an array.
+      * @memberof Accordion
+      * @param {object} event - The jquery event object
+      * @param {array} anchor - The anchor tag in an array.
       */
       self.element.trigger('expand', [a]);
 
@@ -723,8 +722,9 @@ Accordion.prototype = {
        * Fires after a pane is expanded.
        *
        * @event afterexpand
+       * @memberof Accordion
        * @param {jQuery.Event} [e] - The jquery event object
-       * @property {array} anchor - The anchor tag in an array.
+       * @param {array} anchor - The anchor tag in an array.
        */
       function handleAfterExpand(e) {
         if (e) {
@@ -818,8 +818,9 @@ Accordion.prototype = {
     *  Fires when collapsed a pane is initiated.
     *
     * @event collapse
-    * @property {jQuery.Event} event - The jquery event object
-    * @property {array} anchor - The anchor tag in an array.
+    * @memberof Accordion
+    * @param {jQuery.Event} event - The jquery event object
+    * @param {array} anchor - The anchor tag in an array.
     */
     self.element.trigger('collapse', [a]);
 
@@ -827,6 +828,7 @@ Accordion.prototype = {
      * Fires after a pane is collapsed.
      *
      * @event aftercollapse
+     * @memberof Accordion
      * @param {jQuery.Event} [e] - The jquery event object
      */
     function handleAfterCollapse(e) {

@@ -6,14 +6,18 @@ import { utils } from '../utils/utils';
 const COMPONENT_NAME = 'arrange';
 
 /**
- * Default Arrange Options
- * @namespace
- * @param {string} handle The CSS class name of the handle element to connect
- * @param {string} itemsSelector The CSS selector to match all the sortable elements.
- * @param {string} [connectWith] Optional CSS Selector to connect with when using two lists
- * @param {string} placeholder The html for the element that appears while dragging
- * @param {string} placeholderCssClass The class to add to the ghost element that is being dragged.
- */
+* The Arrange Component allows touch and drag support to sort UI items.
+* @class Arrange
+* @constructor
+*
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+* @param {string} [settings.handle] The CSS class name of the handle element to connect
+* @param {string} [settings.itemsSelector] The CSS selector to match all the sortable elements.
+* @param {string} [settings.connectWith] Optional CSS Selector to connect with when using two lists
+* @param {string} [placeholder.settings] The html for the element that appears while dragging
+* @param {string} [settings.placeholderCssClass='arrange-placeholder'] The class to add to the ghost element that is being dragged.
+*/
 const ARRANGE_DEFAULTS = {
   handle: null, // The Class of the handle element
   itemsSelector: null,
@@ -22,14 +26,6 @@ const ARRANGE_DEFAULTS = {
   placeholderCssClass: 'arrange-placeholder'
 };
 
-/**
-* The Arrange Component allows touch and drag support to sort UI items.
-*
-* @class Arrange
-* @constructor
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function Arrange(element, settings) {
   this.settings = utils.mergeSettings(element, settings, ARRANGE_DEFAULTS);
 
@@ -52,10 +48,10 @@ Arrange.prototype = {
   /**
    * Get Element By Touch In List
    * @private
-   * @param {Object} list element.
-   * @param {Number} x value.
-   * @param {Number} y value.
-   * @returns {Object} item found in list
+   * @param {object} list element.
+   * @param {number} x value.
+   * @param {number} y value.
+   * @returns {object} item found in list
    */
   getElementByTouchInList(list, x, y) {
     let returns = false;
@@ -76,8 +72,8 @@ Arrange.prototype = {
   /**
    * Dragg touch element
    * @private
-   * @param {Object} e as event.
-   * @param {Object} elm as element.
+   * @param {object} e as event.
+   * @param {object} elm as element.
    * @returns {void}
    */
   dragTouchElement(e, elm) {
@@ -89,7 +85,7 @@ Arrange.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     this.items
@@ -106,8 +102,8 @@ Arrange.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
@@ -216,9 +212,9 @@ Arrange.prototype = {
              customize the draggable item.
             *
             * @event beforearrange
-            * @type {Object}
-            * @property {Object} event - The jquery event object
-            * @property {Object} status - Status for this item
+            * @memberof Arrange
+            * @property {object} event - The jquery event object
+            * @property {object} status - Status for this item
             */
             const result = self.element.triggerHandler('beforearrange', status);
             if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
@@ -269,9 +265,9 @@ Arrange.prototype = {
               * Fires after moving an element allowing you do any follow up updating.
               *
               * @event arrangeupdate
-              * @type {Object}
-              * @property {Object} event - The jquery event object
-              * @property {Object} status - Status for this item
+              * @memberof Arrange
+              * @property {object} event - The jquery event object
+              * @property {object} status - Status for this item
               */
               self.element.triggerHandler('arrangeupdate', status);
             }
@@ -288,6 +284,13 @@ Arrange.prototype = {
             let overIndex;
             e.preventDefault();
 
+            /**
+            * Fires after finishing an arrange action.
+            *
+            * @event dragend
+            * @memberof ApplicationMenu
+            * @param {object} event - The jquery event object
+            */
             if (e.type === 'drop') {
               e.stopPropagation();
               self.dragging.trigger('dragend.arrange');

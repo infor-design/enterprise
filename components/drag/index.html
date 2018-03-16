@@ -4,145 +4,206 @@
 <ol type="1">
 <li>Drag Examples <a href="../components/drag/example-index">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.axis
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Constrains dragging to either axis. Possible values: null, 'x', 'y'
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.clone
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Set to true to clone the object to drag. In many situations this is
+ needed to break out of layout.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.cloneCssClass
+    </td>
+    <td>
+      <span>&#39;is-clone&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Css class added to clone element (defaults is 'is-clone')
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.clonePosIsFixed
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true cloned object will use css style "position: fixed"
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.cloneAppendTo
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Selector to append to for the clone
+['body'|'parent'|'jquery object'] default:'body'
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.containment
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Constrains dragging to within the bounds of the specified element
+ or region. Possible values: "parent", "document", "window".
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.obstacle
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      jQuery Selector of object(s) that you cannot drag into,
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.underElements
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If set to true will return list of elements that are
+underneath the drag element
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.containmentOffset
+    </td>
+    <td>
+      <span>{left:0,top:0}</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      How close to the containment object should we be allowed
+to drag in position form. `{left: 0, top: 0}`
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          axis
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Constrains dragging to either axis. Possible values: null, 'x', 'y'
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          clone
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Set to true to clone the object to drag. In many situations this is
-needed to break out of layout.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          cloneCssClass
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Css class added to clone element (defaults is 'is-clone')
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          clonePosIsFixed
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true cloned object will use css style "position: fixed"
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          cloneAppendTo
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Selector to append to for the clone
-
-[
-'body'|'parent'|'jquery object'
-]
- default:'body'
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          containment
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Constrains dragging to within the bounds of the specified element
-or region. Possible values: "parent", "document", "window".
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          obstacle
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          jQuery Selector of object(s) that you cannot drag into,
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          underElements
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If set to true will return list of elements that are
-underneath the drag element
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          containmentOffset
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          How close to the containment object should we be allowed
-to drag in position form. 
-<code>{left: 0, top: 0}</code>
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -205,11 +266,7 @@ to drag in position form.
   </table>
 
 
-  
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">

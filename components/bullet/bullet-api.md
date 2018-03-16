@@ -2,18 +2,9 @@
 
 ### Table of Contents
 
--   [BULLET_DEFAULTS](#bullet_defaults)
--   [Bullet](#bullet)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## BULLET_DEFAULTS
-
-**Properties**
-
--   `animate` **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** true|false - will do or not do the animation.
-    'initial' will do only first time the animation.
--   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, the component will not resize when resizing the page.
+-   [Bullet][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Bullet
 
@@ -23,8 +14,10 @@ dashboards, the bullet graph serves as a replacement for dashboard gauges and me
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
+-   `element` **[string][4]** The plugin element for the constuctor
+-   `settings` **[string][4]?** The settings element.
+    -   `settings.animate` **([boolean][5] \| [string][4])** true|false - will do or not do the animation, 'initial' will do only first time the animation. (optional, default `true`)
+    -   `settings.redrawOnResize` **[boolean][5]** If true, the component will not resize when resizing the page. (optional, default `true`)
 
 ### updated
 
@@ -32,12 +25,24 @@ Handle updated settings and values.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings to use.
+-   `settings` **[object][6]** The new settings to use.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
+Returns **[object][6]** The api for chaining.
 
 ### destroy
 
 Teardown - Remove added markup and events.
 
 Returns **void** 
+
+[1]: #bullet
+
+[2]: #updated
+
+[3]: #destroy
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

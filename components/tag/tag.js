@@ -5,18 +5,15 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'tag';
 
-/**
- * Default Tag Options
- * @namespace
- */
+// Default Tag Options
 const TAG_DEFAULTS = {
 };
 
 /**
-*
+* Implements functionality on tag objects, such as closing tabs.
 * @class Tag
-* @param {String} element The component element.
-* @param {String} settings The component settings.
+* @param {string} element The component element.
+* @param {string} settings The component settings.
 */
 function Tag(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TAG_DEFAULTS);
@@ -38,8 +35,8 @@ Tag.prototype = {
   /**
    * Remove the tag from the DOM
    * @private
-   * @param {Object} event Type.
-   * @param {String} el The element.
+   * @param {object} event Type.
+   * @param {string} el The element.
    * @returns {void}
    */
   remove(event, el) {
@@ -50,9 +47,10 @@ Tag.prototype = {
     * Fires before tag remove.
     *
     * @event beforetagremove
-    * @type {Object}
-    * @property {Object} event - The jquery event object
-    * @property {Object} The event used for removing and element
+    * @memberof Tag
+    * @type {object}
+    * @property {object} event - The jquery event object
+    * @property {object} The event used for removing and element
     */
     this.element.triggerHandler('beforetagremove', { event, element: el });
     el.remove();
@@ -61,9 +59,9 @@ Tag.prototype = {
     * Fires after tag remove.
     *
     * @event aftertagremove
-    * @type {Object}
-    * @property {Object} event - The jquery event object
-    * @property {Object} The event used for removing
+    * @memberof Tag
+    * @type {object}
+    * @property {object} event - The jquery event object
     */
     parent.triggerHandler('aftertagremove', { event });
   },
@@ -71,7 +69,7 @@ Tag.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     this.element.off('keydown.tag');
@@ -81,8 +79,8 @@ Tag.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
@@ -122,24 +120,22 @@ Tag.prototype = {
 
       /**
       * Fires when the tag is clicked (if enabled).
-      *
       * @event click
-      * @type {Object}
-      * @property {Object} event - The jquery event object
+      * @memberof Tag
+      * @type {object}
+      * @property {object} event - The jquery event object
       */
-      // Handle Click
       btnDismissable.on('click.tag', (event) => {
         this.remove(event, this.element);
       });
 
       /**
       * Fires when the tag is focused.
-      *
       * @event keydown
-      * @type {Object}
-      * @property {Object} event - The jquery event object
+      * @memberof Tag
+      * @type {object}
+      * @property {object} event - The jquery event object
       */
-      // Handle Keyboard
       this.element.on('keydown.tag', function (event) {
         const e = event || window.event;
         if (e.keyCode === 8) { // Backspace

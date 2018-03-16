@@ -2,70 +2,23 @@
 
 ### Table of Contents
 
--   [LISTVIEW_DEFAULTS](#listview_defaults)
--   [ListView](#listview)
-    -   [render](#render)
-    -   [refresh](#refresh)
-    -   [loadData](#loaddata)
-    -   [toggleAll](#toggleall)
-    -   [resetSearch](#resetsearch)
-    -   [focus](#focus)
-    -   [remove](#remove)
-    -   [clear](#clear)
-    -   [removeAllSelected](#removeallselected)
-    -   [clearAllSelected](#clearallselected)
-    -   [sortFunction](#sortfunction)
-    -   [deselect](#deselect)
-    -   [unselect](#unselect)
-    -   [select](#select)
-    -   [toggleItemActivation](#toggleitemactivation)
-    -   [activateItem](#activateitem)
-    -   [activatedItem](#activateditem)
-    -   [deactivateItem](#deactivateitem)
-    -   [getSelected](#getselected)
-    -   [updated](#updated)
-    -   [disable](#disable)
-    -   [enable](#enable)
-    -   [teardown](#teardown)
-    -   [destroy](#destroy)
-    -   [handleEvents](#handleevents)
-
-## LISTVIEW_DEFAULTS
-
-Listview Default Settings
-
-**Parameters**
-
--   `forceToRenderOnEmptyDs` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true list will render as an empty
-    list with ul tag, but not any li tags in it.
-
-**Properties**
-
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Array of data to feed the template
--   `content` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Html Template String
--   `description` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Audible Label (or use parent title)
--   `paging` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, activates paging
--   `pagingType` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The paging type to use, this can be 'list' (default)
-    or 'table' or 'firstlast'
--   `pagesize` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** If paging is activated, sets the number of
-     listview items available per page
--   `searchable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, associates itself with a
-    Searchfield/Autocomplete and allows itself to be filtered
--   `selectable` **([String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean))** selection mode, can be false, 'single' or
-     'multiple' or 'mixed'
--   `selectOnFocus` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the first item in the list will be
-     selected as it is focused.
--   `showCheckboxes` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false will not show checkboxes used with
-     multiple selection mode only
--   `hoverable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the list element will show a hover action
-     to indicate its actionable.
--   `source` **([Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function) \| [String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** If source is a string then it serves as the url
-     for an ajax call that returns the dataset. If its a function it is a call back for
-     getting the data asyncronously.
--   `disableItemDeactivation` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true when an item is activated the
-     user should not be able to deactivate it by clicking on the activated item. They
-     can only select another row.
--   `showPageSizeSelector` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the page size select will be shown when paging.
+-   [ListView][1]
+    -   [loadData][2]
+    -   [toggleAll][3]
+    -   [remove][4]
+    -   [clear][5]
+    -   [removeAllSelected][6]
+    -   [clearAllSelected][7]
+    -   [deselect][8]
+    -   [unselect][9]
+    -   [select][10]
+    -   [activatedItem][11]
+    -   [deactivateItem][12]
+    -   [getSelected][13]
+    -   [updated][14]
+    -   [disable][15]
+    -   [enable][16]
+    -   [destroy][17]
 
 ## ListView
 
@@ -73,25 +26,26 @@ Creates lists of small pieces of relevant, actionable information.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-### render
-
-Render the template against the dataset.
-
-**Parameters**
-
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The dataset to use
--   `pagerInfo` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Pager instructions
-
-### refresh
-
-Get the Data Source. Can be an array, Object or Url and render the list.
-
-**Parameters**
-
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** contains a potential new dataset to display inside the listview.
+-   `element` **([Array][18]&lt;jquery> | [htmlelement][19])** the base element
+-   `settings` **[object][20]?** incoming settings
+    -   `settings.dataset` **[array][18]?** Array of data to feed the template
+    -   `settings.template` **[string][21]?** Html Template String
+    -   `settings.description` **[string][21]?** Audible Label (or use parent title)
+    -   `settings.paging` **[boolean][22]** If true, activates paging (optional, default `false`)
+    -   `settings.pagesize` **[number][23]** If paging is activated, sets the number of listview items available per page (optional, default `10`)
+    -   `settings.pagingType` **[string][21]** The paging type to use, this can be 'list', 'table' or 'firstlast' (optional, default `'list'`)
+    -   `settings.searchable` **[boolean][22]** If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered (optional, default `false`)
+    -   `settings.selectable` **([string][21] \| [boolean][22])** selection mode, can be false, 'single', 'multiple' or 'mixed' (optional, default `'single'`)
+    -   `settings.selectOnFocus` **[boolean][22]** If true the first item in the list will be selected as it is focused. (optional, default `true`)
+    -   `settings.showCheckboxes` **[boolean][22]** If false will not show checkboxes used with multiple selection mode only (optional, default `true`)
+    -   `settings.hoverable` **[boolean][22]** If true the list element will show a hover action to indicate its actionable. (optional, default `true`)
+    -   `settings.emptyMessage` **[string][21]?** Text to go in emptyMessage.
+    -   `settings.source` **([function][24] \| [string][21])?** If source is a string then it serves as
+        the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+    -   `settings.forceToRenderOnEmptyDs` **[boolean][22]** If true list will render as an empty list with ul tag, but not any li tags in it. (optional, default `false`)
+    -   `settings.disableItemDeactivation` **[boolean][22]** If true when an item is
+        activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row. (optional, default `false`)
+    -   `settings.showPageSizeSelector` **[boolean][22]** If true the page size select will be shown when paging. (optional, default `false`)
 
 ### loadData
 
@@ -99,9 +53,9 @@ Load Data from an external API
 
 **Parameters**
 
--   `ds` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dataset to use or will use settings.dataset.
--   `pagerInfo` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The pager settings to use (see pager api)
--   `isResponse` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag used to avoid dup source calls.
+-   `ds` **[object][20]** The dataset to use or will use settings.dataset.
+-   `pagerInfo` **[object][20]** The pager settings to use (see pager api)
+-   `isResponse` **[boolean][22]** Flag used to avoid dup source calls.
 
 Returns **void** 
 
@@ -111,29 +65,13 @@ Toggle all items from selected to deselected, useful for multi/mixed selection
 
 Returns **void** 
 
-### resetSearch
-
-Reset the current search parameters and highlight.
-
-Returns **void** 
-
-### focus
-
-Focus the provided list item with the keyboard
-
-**Parameters**
-
--   `item` **jQuery** The list item (as jQuery) to focus
-
-Returns **void** 
-
 ### remove
 
 Remove the given list item.
 
 **Parameters**
 
--   `li` **(jQuery | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** Either the actually jQuery list element or a zero based index
+-   `li` **(jquery | [number][23])** Either the actually jQuery list element or a zero based index
 
 Returns **void** 
 
@@ -155,25 +93,13 @@ Deselect all selected items.
 
 Returns **void** 
 
-### sortFunction
-
-Overridable function to conduct sorting
-
-**Parameters**
-
--   `field` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The field in the dataset to sort on.
--   `reverse` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If true sort descending.
--   `primer` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** A sorting primer function.
-
-Returns **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** a customized sorting algorithm
-
 ### deselect
 
 Deselect the given list item.
 
 **Parameters**
 
--   `li` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** Either the actually jQuery list element or a zero based index
+-   `li` **([Array][18]&lt;jquery> | [number][23])** Either the actually jQuery list element or a zero based index
 
 ### unselect
 
@@ -181,7 +107,7 @@ Deprivated - use `deselect()`
 
 **Parameters**
 
--   `li` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** a list item
+-   `li` **([Array][18]&lt;jquery> | [number][23])** a list item
 
 Returns **void** 
 
@@ -196,49 +122,29 @@ Select the given list item.
 
 **Parameters**
 
--   `li` **(jQuery | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** Either the actually jQuery list element or a zero based index
--   `noTrigger` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Do not trigger the selected event.
-
-### toggleItemActivation
-
-Toggle acivation state on the list item
-
-**Parameters**
-
--   `li` **jQuery** The jQuery list element.
-
-Returns **void** 
-
-### activateItem
-
-Set item to activated, unactivate others and fire an event.
-
-**Parameters**
-
--   `li` **(jQuery | [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** The jQuery list element or the index.
-
-Returns **void** 
+-   `li` **(jquery | [number][23])** Either the actually jQuery list element or a zero based index
+-   `noTrigger` **[boolean][22]** Do not trigger the selected event.
 
 ### activatedItem
 
 Return an object containing info about the currently activated item.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An object containing the active row's index, dom element and data.
+Returns **[object][20]** An object containing the active row's index, dom element and data.
 
 ### deactivateItem
 
-Set item to deactivated, uand fire an event.
+Set item to deactivated, and fire an event.
 
 **Parameters**
 
--   `li` **(jQuery | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** The jQuery list element. The li element or the index.
+-   `li` **(jquery | [number][23])** The jQuery list element. The li element or the index.
      If null the currently activated one will be deactivated.
 
 Returns **void** 
 
 ### getSelected
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the currently selected ListView item, or an empty jQuery selector
+Returns **[Array][18]&lt;jquery>** the currently selected ListView item, or an empty jQuery selector
  if there are currently no items selected.
 
 ### updated
@@ -247,9 +153,9 @@ Refresh the list with any optioned options that might have been set.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][20]?** incoming settings
 
-Returns **this** component instance
+Returns **[object][20]** component instance
 
 ### disable
 
@@ -263,18 +169,56 @@ Enables the functionality of a ListView.
 
 Returns **void** 
 
-### teardown
-
-Detatch all bound events.
-
-Returns **this** component instance
-
 ### destroy
 
 Detatch all events and tear down data object
 
 Returns **void** 
 
-### handleEvents
+[1]: #listview
 
-This component fires the following events.
+[2]: #loaddata
+
+[3]: #toggleall
+
+[4]: #remove
+
+[5]: #clear
+
+[6]: #removeallselected
+
+[7]: #clearallselected
+
+[8]: #deselect
+
+[9]: #unselect
+
+[10]: #select
+
+[11]: #activateditem
+
+[12]: #deactivateitem
+
+[13]: #getselected
+
+[14]: #updated
+
+[15]: #disable
+
+[16]: #enable
+
+[17]: #destroy
+
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[19]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function

@@ -1,10 +1,8 @@
 import { Locale } from '../locale/locale';
 
-/**
- * The validation rules object.
- * This contains all base rules for validation that come bundled as part of Soho.
- * These rules can be extended.
- */
+// The validation rules object.
+// This contains all base rules for validation that come bundled as part of Soho.
+// These rules can be extended.
 function ValidationRules() {
   const self = this;
 

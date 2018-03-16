@@ -11,21 +11,185 @@
 <li>Expanded Search Field (Compact) <a href="../components/header/example-searchfield-expanded">View Example</a></li>
 <li>Expanded Search Field (Large) <a href="../components/header/example-searchfield-large">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      the base element
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.demoOptions
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Used to enable/disable default SoHo Xi options for demo purposes
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.useBackButton
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, displays a back button next to the title in the header toolbar
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.useBreadcrumb
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, displays a breadcrumb on drilldown
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.usePopupmenu
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, changes the Header Title into a popupmenu that can change the current page
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.tabs
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      If defined as an array of Tab objects, displays a series of tabs that represent application sections
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.wizardTicks
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.useAlternate
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, use alternate background/text color for sub-navigation areas
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.addScrollClass
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true a class will be added as the page scrolls up and down
+to the header for manipulation. Eg: Docs Page.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-
-
-  
-    
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -35,76 +199,6 @@
       <th>Returns</th>
     </thead>
     <tbody>
-      <tr>
-        <td>buildBreadcrumb</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Used for adding a Breadcrumb Element to the Header</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>adjustBreadcrumb</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Builds Breadcrumb markup that reflects the current state of the application</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>buildTabs</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Builds Header Tabs</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>buildWizard</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Builds a Header Wizard</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>buildPopupmenu</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Builds a Popupmenu in place of the usual Title text, to allow for context swapping.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
       <tr>
         <td>handleEvents</td>
         <td>
@@ -117,85 +211,6 @@ void
         <td>
           component instance
 this
-        </td>
-      </tr>
-      <tr>
-        <td>handleBreadcrumbClick</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = <code>click</code>
- event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handles click events on Breadcrumb elements</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>initPageChanger</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = <code>click</code>
- event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Sets up the <code>selected</code> events on the More Actions area of the header, which can include
-Menu Options for changing the current theme, persoanlization colors, and language locale.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>drilldown</td>
-        <td>
-          
-                
-                  <span>viewTitle (string) = text contents to put in place of the title area.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Drills deeper into a breadcrumb structure while updating the Header title to reflect state.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>drillup</td>
-        <td>
-          
-                
-                  <span>viewTitle (string) = text contents to put in place of the title area.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Moves up into a breadcrumb structure while updating the Header title to reflect state.</p>
-
-        </td>
-        <td>
-          
-void
         </td>
       </tr>
       <tr>
@@ -213,95 +228,11 @@ this
         </td>
       </tr>
       <tr>
-        <td>removeButton</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Removes a previously-built Button pattern from the Header.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>removeBreadcrumb</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Removes a previously-built Breadcrumb structure from the Header.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>removeTabs</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Removes a previously-built Header Tabs pattern from the Header.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>removeWizard</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Removes a previously-built Header Wizard pattern from the Header.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>removePopupmenu</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Removes a previously-built Popupmenu pattern from the Header's title.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>unbind</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Removes bound events from the Header</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
         <td>updated</td>
         <td>
           
                 
-                  <span>settings () = incoming settings.
+                  <span>settings (object) = incoming settings.
  </span>
                 
           
@@ -334,7 +265,6 @@ void
 
 
   </section>
-
   
 
 <h2 id="code-example">Code Example</h2>

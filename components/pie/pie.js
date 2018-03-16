@@ -9,35 +9,38 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'pie';
 
 /**
-* @namespace
-* @property {array} dataset The data to use in the line/area/bubble.
-* @property {boolean} isDonut If true it renders as a donut chart.
-* @property {number} animationSpeed Controls the animation speed
-* @property {boolean|string} animate true|false - will do or not do the animation.
-* 'initial' will do only first time the animation.
-* @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
-* there is tooltip values provided.
-* will not be shown. If you still want lines at the lower breakpoint you can set this to true
-* @property {boolean} hideCenterLabel If false the center label will not be shown.
-* @property {boolean} showLines If false connector lines wont be shown
-* @property {boolean} showLinesMobile This defaults to false, when false and under 450px the lines
-* @property {object} lines A setting that controls the line values and format.
-* @property {string} line.show Controls the line value, this can be value, label or percent or
-* custom function.
-* @property {object} line.formatter The d3.formatter string.
-* @property {boolean} showLegend If false the legend will not be shown.
-* @property {string} legendPlacement Where to locate the legend. This can be bottom or right at
-* the moment.
-* @property {object} legend A setting that controls the legend values and format.
-* @property {string} legend.show Controls  what is visible in the legend , this can be value,
-* value (percent), label or percent or your own custom function.
-* @property {object} legend.formatter The d3.formatter string.
-* @property {boolean} showTooltips If false now tooltips will be shown even if
-* @property {object} tooltip A setting that controls the tooltip values and format.
-* @property {string} tooltip.show Controls what is visible in the tooltip, this can be value, label
-* or percent or custom function.
-* @property {object} tooltip.formatter The d3.formatter string.
-*/
+ * A pie chart (or a circle chart) is a circular statistical graphic which is divided
+  into slices to illustrate numerical proportion. In a pie chart, the arc length of each slice is proportional to the quantity it represents.
+ * @class Pie
+ * @constructor
+ *
+ * @param {jquery[]|htmlelement} element The plugin element for the constuctor
+ * @param {object} [settings] The component settings.
+ * @param {array} [settings.dataset] The data to use in the line/area/bubble.
+ * @param {boolean} [settings.isDonut=false] If true it renders as a donut chart.
+ * @param {number} [settings.animationSpeed=600] Controls the animation speed
+ * @param {boolean|string} [settings.animate=true] true|false - will do or not do the animation and 'initial' will do only first time the animation.
+ * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page. There is tooltip values provided.
+  It will not be shown. If you still want lines at the lower breakpoint you can set this to true
+ * @param {boolean} [settings.hideCenterLabel=false] If false the center label will not be shown.
+ * @param {boolean} [settings.showLines=true] If false connector lines wont be shown
+ * @param {boolean} [settings.showLinesMobile=false] This defaults to false, when false and under 450px the lines
+ * @param {object} [settings.lines] A setting that controls the line values and format.
+ * @param {string} [settings.line.show='value'] Controls the line value, this can be value, label or percent or custom function.
+ * @param {string} [settings.line.formatter='.0f'] The d3.formatter string.
+ * @param {boolean} [settings.showLegend=true] If false the legend will not be shown.
+ * @param {string} [settings.legendPlacement='right'] Where to locate the legend. This can be bottom or right at the moment.
+ * @param {object} [settings.legend] A setting that controls the legend values and format.
+ * @param {string} [settings.legend.show='label (percent)'] Controls what is visible
+  in the legend, this can be value, value (percent), label or percent or your own custom function.
+ * @param {string} [settings.legend.formatter='.0f'] The d3.formatter string.
+ * @param {boolean} [settings.showTooltips=true] If false now tooltips will be shown
+ * @param {object} [settings.tooltip] A setting that controls the tooltip values and format.
+ * @param {string} [settings.tooltip.show='label (value)'] Controls what is visible in
+  the tooltip, this can be value, label or percent or custom function.
+ * @param {string} [settings.tooltip.formatter='.0f'] The d3.formatter string.
+ */
+
 const PIE_DEFAULTS = {
   dataset: [],
   isDonut: false,
@@ -64,14 +67,6 @@ const PIE_DEFAULTS = {
   }
 };
 
-/**
- * A pie chart (or a circle chart) is a circular statistical graphic which is divided into slices
- * to illustrate numerical proportion. In a pie chart, the arc length of each slice is proportional
- * to the quantity it represents.
- * @class Pie
- * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
- */
 function Pie(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PIE_DEFAULTS);
   if (settings && settings.dataset) {
@@ -102,11 +97,12 @@ Pie.prototype = {
     }
 
     /**
-    * Fires when the chart is complete done rendering, for customization.
-    * @event rendered
-    * @property {object} event - The jquery event object
-    * @property {array} svg - The svg object.
-    */
+     * Fires when the chart is complete done rendering, for customization.
+     * @event rendered
+     * @memberof Pie
+     * @property {object} event - The jquery event object
+     * @property {object} svg - The svg object.
+     */
     this.element.trigger('rendered', [this.svg]);
 
     return this;
@@ -114,8 +110,8 @@ Pie.prototype = {
 
   /**
    * Build the Component.
-   * @returns {object} The component prototype for chaining.
    * @private
+   * @returns {object} The component prototype for chaining.
    */
   build() {
     const self = this;
@@ -271,6 +267,7 @@ Pie.prototype = {
   /**
    * Add the center label for donut chart.
    * @private
+   * @returns {void}
    */
   addCenterLabel() {
     const self = this;
@@ -313,6 +310,7 @@ Pie.prototype = {
   /**
    * Update the chart with a new dataset
    * @param  {object} data The data to use.
+   * @returns {void}
    */
   updateData(data) {
     // Pie Slices
@@ -353,6 +351,15 @@ Pie.prototype = {
         });
 
         if (isSelected) {
+          /**
+           * Fires when arc/slice is selected.
+           * @event selected
+           * @memberof Pie
+           * @property {object} event - The jquery event object
+           * @property {object} selected arc/slice.
+           * @property {object} data of selected arc/slice.
+           * @property {number} index of selected arc/slice.
+           */
           self.element.triggerHandler('selected', [d3.select(this).nodes(), {}, i]);
         }
       })
@@ -554,6 +561,7 @@ Pie.prototype = {
   /**
    * Set the initially selected elements
    * @private
+   * @returns {void}
    */
   setInitialSelected() {
     let selected = 0;
@@ -646,6 +654,7 @@ Pie.prototype = {
   /**
    * Get info on the currently selected lines.
    * @param {object} options The selected info object.
+   * @returns {void}
    */
   toggleSelected(options) {
     this.setSelected(options, true);

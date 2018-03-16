@@ -8,51 +8,169 @@
 <li>Hero Widget 2 Column <a href="../components/homepage/example-widget-two-column">View Example</a></li>
 <li>More Test Layouts (replace a-o in url) <a href="../components/homepage/example-scenario-a.html">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      HTMLElement
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.animate
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Disable animation during resize
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.columns
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Display in 3 (default) or 4 column layout
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.easing
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.gutterSize
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.widgetWidth
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.widgetHeight
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.timeout
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          animate
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Disable animation during resize
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          columns
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          Display in 3 (default) or 4 column layout
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -67,7 +185,7 @@
         <td>
           
                 
-                  <span>settings (Object) = The settings to apply.
+                  <span>settings (object) = The settings to apply.
  </span>
                 
           
@@ -78,7 +196,7 @@
         </td>
         <td>
           The api
-Object
+object
         </td>
       </tr>
       <tr>
@@ -99,9 +217,7 @@ void
   </table>
 
 
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -116,17 +232,6 @@ void
   <td>resize
   </td>
   <td>
-  
-    
-      <div>
-        <span>event (Object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
   
   </td>
   <td>Fires after the page is resized and layout is set.

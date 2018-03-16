@@ -4,14 +4,7 @@ import { utils } from '../utils/utils';
 // component name
 const COMPONENT_NAME = 'icon';
 
-/**
- * Default Component Settings
- * @namespace
- * @property {string} use the type of icon that will appear.
- *  (gets added to the `<use>` tag's `xlink:href` property)
- * @property {boolean} focusable whether or not this icon gets a `tabIndex` and
- *  becomes a focusable element on the page.
- */
+// Default Options
 const ICON_DEFAULTS = {
   use: 'user-profile', // Match this to one of the SoHo Xi icons, prefixed with an ID of '#icon-'
   focusable: false
@@ -24,6 +17,10 @@ const ICON_DEFAULTS = {
  * @constructor
  * @param {jQuery[]|HTMLElement} element the base element
  * @param {object} [settings] incoming settings
+ * @param {string} [settings.use = 'user-profile'] the type of icon that will appear.
+ *  (gets added to the `<use>` tag's `xlink:href` property)
+ * @param {boolean} [settings.focusable = false] whether or not this icon gets a `tabIndex` and
+ *  becomes a focusable element on the page.
  */
 function Icon(element, settings) {
   this.settings = utils.mergeSettings(element, settings, ICON_DEFAULTS);
@@ -82,6 +79,7 @@ Icon.prototype = {
   },
 
   /**
+   * Gets the currently used base tag.
    * @returns {string} a version of this icon's definition prefixed with the current base tag's URL.
    */
   getBasedUseTag() {

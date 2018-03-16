@@ -38,8 +38,8 @@ https://github.com/documentationjs/documentation/tree/master/src/default_theme h
     * Fires when the dialog is closing.
     *
     * @event close
-    * @property {Object} event - The jquery event object
-    * @property {Object} ui - The dialog object
+    * @property {object} event - The jquery event object
+    * @property {object} ui - The dialog object
     */
 ```
 -  I added a jsdoc linter it complains about somethings mainly the return type which should be

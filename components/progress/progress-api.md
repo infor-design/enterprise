@@ -2,15 +2,10 @@
 
 ### Table of Contents
 
--   [PROGRESS_DEFAULTS](#progress_defaults)
--   [Progress](#progress)
-    -   [update](#update)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## PROGRESS_DEFAULTS
-
-Default Progress Options
+-   [Progress][1]
+    -   [update][2]
+    -   [updated][3]
+    -   [destroy][4]
 
 ## Progress
 
@@ -18,8 +13,8 @@ A list of items with add/remove/delete and sort functionality.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** The component element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** The component settings.
+-   `element` **([Array][5]&lt;jQuery> | [HTMLElement][6])** The component element.
+-   `settings` **[object][7]?** The component settings.
 
 ### update
 
@@ -27,7 +22,7 @@ Update the progress bar.
 
 **Parameters**
 
--   `value` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The percent value to use to fill. 0-100
+-   `value` **[string][8]** The percent value to use to fill. 0-100
 
 Returns **void** 
 
@@ -37,12 +32,26 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][7]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][7]** The api
 
 ### destroy
 
 Teardown and remove any added markup and events.
 
-Returns **void** 
+[1]: #progress
+
+[2]: #update
+
+[3]: #updated
+
+[4]: #destroy
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[6]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

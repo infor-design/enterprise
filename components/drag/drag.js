@@ -3,25 +3,33 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
+// TODO: Resize: http://stackoverflow.com/questions/8258232/resize-an-html-element-using-touches
+// Similar: https://github.com/desandro/draggabilly
+
 // The name of this plugin
 const COMPONENT_NAME = 'drag';
 
 /**
-* @namespace
-* @property {string} axis  Constrains dragging to either axis. Possible values: null, 'x', 'y'
-* @property {boolean} clone Set to true to clone the object to drag. In many situations this is
-*  needed to break out of layout.
-* @property {string} cloneCssClass Css class added to clone element (defaults is 'is-clone')
-* @property {boolean} clonePosIsFixed If true cloned object will use css style "position: fixed"
-* @property {string} cloneAppendTo Selector to append to for the clone
-* ['body'|'parent'|'jquery object'] default:'body'
-* @property {boolean} containment Constrains dragging to within the bounds of the specified element
-*  or region. Possible values: "parent", "document", "window".
-* @property {string} obstacle jQuery Selector of object(s) that you cannot drag into,
-* @property {boolean} underElements If set to true will return list of elements that are
-* underneath the drag element
-* @property {string} containmentOffset How close to the containment object should we be allowed
-* to drag in position form. `{left: 0, top: 0}`
+ * Drag/Drop functions with touch support.
+ * @class Drag
+ * @constructor
+ *
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object} [settings] The component settings.
+ * @param {string} [settings.axis]  Constrains dragging to either axis. Possible values: null, 'x', 'y'
+ * @param {boolean} [settings.clone=false] Set to true to clone the object to drag. In many situations this is
+ *  needed to break out of layout.
+ * @param {string} [settings.cloneCssClass='is-clone'] Css class added to clone element (defaults is 'is-clone')
+ * @param {boolean} [settings.clonePosIsFixed=false] If true cloned object will use css style "position: fixed"
+ * @param {string} [settings.cloneAppendTo] Selector to append to for the clone
+ * ['body'|'parent'|'jquery object'] default:'body'
+ * @param {boolean} [settings.containment=false] Constrains dragging to within the bounds of the specified element
+ *  or region. Possible values: "parent", "document", "window".
+ * @param {string} [settings.obstacle] jQuery Selector of object(s) that you cannot drag into,
+ * @param {boolean} [settings.underElements=false] If set to true will return list of elements that are
+ * underneath the drag element
+ * @param {object} [settings.containmentOffset={left: 0, top: 0}] How close to the containment object should we be allowed
+ * to drag in position form. `{left: 0, top: 0}`
 */
 const DRAG_DEFAULTS = {
   axis: null,
@@ -35,14 +43,6 @@ const DRAG_DEFAULTS = {
   containmentOffset: { left: 0, top: 0 }
 };
 
-/**
- * Drag/Drop functions with touch support.
- * TODO: Resize: http://stackoverflow.com/questions/8258232/resize-an-html-element-using-touches
- * Similar: https://github.com/desandro/draggabilly
- * @class Drag
- * @param {object} element The component element.
- * @param {object} settings The component settings.
- */
 function Drag(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, DRAG_DEFAULTS);
@@ -77,6 +77,7 @@ Drag.prototype = {
     /**
     * Fires after the drag is completed. Use this to remove / set drag feedback off.
     * @event dragend
+    * @memberof Drag
     * @property {object} event - The jquery event object.
     * @property {object} ui - The dialog object
     */
@@ -215,6 +216,7 @@ Drag.prototype = {
     * Fires (many times) while dragging is occuring. Use this for DOM feedback but
     * be careful about what you do in here for performance.
     * @event drag
+    * @memberof Drag
     * @property {object} event - The jquery event object.
     * @property {object} ui - The dialog object
     */
@@ -310,6 +312,7 @@ Drag.prototype = {
         * When the dragging is initiated. Use this to customize/style
         * the drag/drop objects in the DOM.
         * @event dragstart
+        * @memberof Drag
         * @property {object} event - The jquery event object.
         * @property {object} ui - The dialog object
         */

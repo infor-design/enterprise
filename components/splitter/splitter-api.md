@@ -2,35 +2,24 @@
 
 ### Table of Contents
 
--   [SPLITTER_DEFAULTS](#splitter_defaults)
--   [Splitter](#splitter)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [split](#split)
--   [updated](#updated-1)
--   [keydown](#keydown)
-
-## SPLITTER_DEFAULTS
-
-Default Splitter Options
-
-**Properties**
-
--   `axis` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** x or y
--   `side` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** left or right
--   `resize` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** immediate,
--   `containment` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)?** can be document, or a parent element
--   `save` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `maxWidth` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-    -   `maxWidth.left` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** 'auto' or a pixel value
-    -   `maxWidth.right` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** 'auto' or a pixel value
+-   [Splitter][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Splitter
 
+Splitter Component
+
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][4]** The component element.
+-   `settings` **[string][4]?** The component settings.
+    -   `settings.axis` **[string][4]** The axis on which to split x or y (optional, default `'x'`)
+    -   `settings.side` **[string][4]** Which side to dock to 'left' or 'right'. (optional, default `'left'`)
+    -   `settings.resize` **[string][4]** When to resize, during the drag 'immediate' or 'end' (optional, default `'immediate'`)
+    -   `settings.containment` **([HTMLElement][5] \| [Array][6]&lt;jQuery>)** When to stop the splitter, this can be document, or a parent element (optional, default `null`)
+    -   `settings.save` **[boolean][7]** If true the split size will automatically be saved for next time (optional, default `true`)
+    -   `settings.maxWidth` **[object][8]** Ability to stop dragging at a max left or right size. (optional, default `{left:'auto',right:'auto'}`)
 
 ### updated
 
@@ -38,9 +27,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][8]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][8]** The api
 
 ### destroy
 
@@ -48,27 +37,18 @@ Destroy and remove added markup, all events
 
 Returns **void** 
 
-## split
+[1]: #splitter
 
-Fires when split.
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `split` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** value
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-## updated
+[5]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-Fires when the component updates.
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-**Properties**
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
-
-## keydown
-
-Fires when a key is pressed while the component is focused.
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

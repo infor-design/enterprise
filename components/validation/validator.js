@@ -457,7 +457,7 @@ Validator.prototype = {
    * @param {boolean} showTooltip whether or not this field should display its
    *  validation message in a tooltip
    * @param {jQuery.Event} e the `validate` event
-   * @returns {Array} of jQuery deferred objects
+   * @returns {array} of jQuery deferred objects
    */
   validate(field, showTooltip, e) {
     field.data(`handleEvent${[(e.type || '')]}`, null);

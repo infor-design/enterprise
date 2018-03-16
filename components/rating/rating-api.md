@@ -2,23 +2,18 @@
 
 ### Table of Contents
 
--   [RATING_DEFAULTS](#rating_defaults)
--   [Rating](#rating)
-    -   [readonly](#readonly)
-    -   [enable](#enable)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## RATING_DEFAULTS
-
-Default Rating Options
+-   [Rating][1]
+    -   [readonly][2]
+    -   [enable][3]
+    -   [updated][4]
+    -   [destroy][5]
 
 ## Rating
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** The component element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** The component settings.
+-   `element` **([Array][6]&lt;jQuery> | [HTMLElement][7])** The component element.
+-   `settings` **[object][8]?** The component settings.
 
 ### readonly
 
@@ -38,12 +33,28 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][8]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][8]** The api
 
 ### destroy
 
 Destroy and remove added markup, all events
 
 Returns **void** 
+
+[1]: #rating
+
+[2]: #readonly
+
+[3]: #enable
+
+[4]: #updated
+
+[5]: #destroy
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[7]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

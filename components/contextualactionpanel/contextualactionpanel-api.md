@@ -2,24 +2,12 @@
 
 ### Table of Contents
 
--   [CONTEXTUALACTIONPANEL_DEFAULTS](#contextualactionpanel_defaults)
--   [ContextualActionPanel](#contextualactionpanel)
-    -   [close](#close)
-    -   [disable](#disable)
-    -   [enable](#enable)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## CONTEXTUALACTIONPANEL_DEFAULTS
-
-**Properties**
-
--   `id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The id to use for the CAP, or defaults to generated.
--   `buttons` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** A list of buttons that will sit in the toolbar's Buttonset area.
--   `title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** String that sits in the toolbar's title field.
--   `content` **content** Pass content through to CAP.
--   `initializeContent` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Initialize content before opening with defaults.
--   `trigger` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Can be 'click' or 'immediate'.
+-   [ContextualActionPanel][1]
+    -   [close][2]
+    -   [disable][3]
+    -   [enable][4]
+    -   [updated][5]
+    -   [destroy][6]
 
 ## ContextualActionPanel
 
@@ -27,8 +15,14 @@ A more complex modal for complex in page interactions.
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][7]** The component element.
+-   `settings` **[string][7]** The component settings.
+    -   `settings.id` **[string][7]** The id to use for the CAP, or defaults to generated. (optional, default `` `contextual-action-modal-cnt` ``)
+    -   `settings.buttons` **[array][8]** A list of buttons that will sit in the toolbar's Buttonset area. (optional, default `null`)
+    -   `settings.title` **[string][7]** String that sits in the toolbar's title field. (optional, default `'Contextual Action Panel'`)
+    -   `settings.content` **content** Pass content through to CAP. (optional, default `null`)
+    -   `settings.initializeContent` **[boolean][9]** Initialize content before opening with defaults. (optional, default `true`)
+    -   `settings.trigger` **[string][7]** Can be 'click' or 'immediate'. (optional, default `'click'`)
 
 ### close
 
@@ -54,12 +48,32 @@ Update the component and optionally apply new settings.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** the settings to update to.
+-   `settings` **[object][10]** the settings to update to.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The plugin api for chaining.
+Returns **[object][10]** The plugin api for chaining.
 
 ### destroy
 
 Destroy and remove added markup and events
 
 Returns **void** 
+
+[1]: #contextualactionpanel
+
+[2]: #close
+
+[3]: #disable
+
+[4]: #enable
+
+[5]: #updated
+
+[6]: #destroy
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

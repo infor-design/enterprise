@@ -1,18 +1,101 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      the base element
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.colors
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The list of colors
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.theme
+    </td>
+    <td>
+      <span>&#39;light&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The theme name (light, dark or high-contrast)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.font
+    </td>
+    <td>
+      <span>&#39;Helvetica&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Use the newer source sans font
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-
-
-  
-    
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -22,25 +105,6 @@
       <th>Returns</th>
     </thead>
     <tbody>
-      <tr>
-        <td>validateHex</td>
-        <td>
-          
-                
-                  <span>hex (string) = : A hex color.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Validates a string containing a hexadecimal number</p>
-
-        </td>
-        <td>
-          a validated hexadecimal string.
-string
-        </td>
-      </tr>
       <tr>
         <td>setColors</td>
         <td>
@@ -58,29 +122,6 @@ string
         <td>
           component instance
 this
-        </td>
-      </tr>
-      <tr>
-        <td>getLuminousColorShade</td>
-        <td>
-          
-                
-                  <span>hex (string) = The original Hexadecimal base color.
- </span>
-                
-                  <span>lum (string) = A percentage used to set luminosity
-change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Takes a color and performs a change in luminosity of that color programatically.</p>
-
-        </td>
-        <td>
-          hexadecimal color.
-string
         </td>
       </tr>
       <tr>
@@ -102,60 +143,17 @@ scheme (can be dark, light or high-contrast)
         </td>
       </tr>
       <tr>
-        <td>blockUi</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Builds a temporary page overlay that prevents end users from experiencing FOUC</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>unBlockUi</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Removes a temporary page overlay built by <code>blockUi()</code></p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
         <td>updated</td>
         <td>
           
                 
-                  <span>settings () = incoming settings
+                  <span>settings (object) = incoming settings
  </span>
                 
           
         </td>
         <td>
           <p>Handle Updating Settings</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
-        <td>teardown</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Simple Teardown - remove events &#x26; rebuildable markup.
-Ideally this will do non-destructive things that make it possible to easily rebuild</p>
 
         </td>
         <td>
@@ -182,5 +180,4 @@ void
 
 
   </section>
-
   

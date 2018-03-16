@@ -14,42 +14,39 @@ import '../searchfield/searchfield.jquery';
 const COMPONENT_NAME = 'listview';
 
 /**
- * Listview Default Settings
- * @namespace
- * @property {array} dataset Array of data to feed the template
- * @property {string} content Html Template String
- * @property {string} description Audible Label (or use parent title)
- * @property {boolean} paging If true, activates paging
- * @property {string} pagingType The paging type to use, this can be 'list' (default)
- * or 'table' or 'firstlast'
- * @property {number} pagesize If paging is activated, sets the number of
- *  listview items available per page
- * @property {boolean} searchable If true, associates itself with a
- * Searchfield/Autocomplete and allows itself to be filtered
- * @property {String|Boolean} selectable selection mode, can be false, 'single' or
- *  'multiple' or 'mixed'
- * @property {boolean} selectOnFocus If true the first item in the list will be
- *  selected as it is focused.
- * @property {boolean} showCheckboxes If false will not show checkboxes used with
- *  multiple selection mode only
- * @property {boolean} hoverable If true the list element will show a hover action
- *  to indicate its actionable.
- * @property {Function|String} source If source is a string then it serves as the url
- *  for an ajax call that returns the dataset. If its a function it is a call back for
- *  getting the data asyncronously.
- * @param {Boolean} forceToRenderOnEmptyDs If true list will render as an empty
- * list with ul tag, but not any li tags in it.
- * @property {boolean} disableItemDeactivation  If true when an item is activated the
- *  user should not be able to deactivate it by clicking on the activated item. They
- *  can only select another row.
- * @property {boolean} showPageSizeSelector  If true the page size select will be shown when paging.
-*/
+ * Creates lists of small pieces of relevant, actionable information.
+ * @class ListView
+ * @constructor
+ *
+ * @param {jquery[]|htmlelement} element the base element
+ * @param {object} [settings] incoming settings
+ * @param {array} [settings.dataset] Array of data to feed the template
+ * @param {string} [settings.template] Html Template String
+ * @param {string} [settings.description] Audible Label (or use parent title)
+ * @param {boolean} [settings.paging=false] If true, activates paging
+ * @param {number} [settings.pagesize=10] If paging is activated, sets the number of listview items available per page
+ * @param {string} [settings.pagingType='list'] The paging type to use, this can be 'list', 'table' or 'firstlast'
+ * @param {boolean} [settings.searchable=false] If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+ * @param {string|boolean} [settings.selectable='single'] selection mode, can be false, 'single', 'multiple' or 'mixed'
+ * @param {boolean} [settings.selectOnFocus=true] If true the first item in the list will be selected as it is focused.
+ * @param {boolean} [settings.showCheckboxes=true] If false will not show checkboxes used with multiple selection mode only
+ * @param {boolean} [settings.hoverable=true] If true the list element will show a hover action to indicate its actionable.
+ * @param {string} [settings.emptyMessage] Text to go in emptyMessage.
+ * @param {function|string} [settings.source] If source is a string then it serves as
+  the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+ * @param {boolean} [settings.forceToRenderOnEmptyDs=false] If true list will render as an empty list with ul tag, but not any li tags in it.
+ * @param {boolean} [settings.disableItemDeactivation=false] If true when an item is
+  activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
+ * @param {boolean} [settings.showPageSizeSelector=false] If true the page size select will be shown when paging.
+ */
+
 const LISTVIEW_DEFAULTS = {
   dataset: [],
   template: null,
   description: null,
   paging: false,
   pagesize: 10,
+  pagingType: 'list',
   searchable: false,
   selectable: 'single',
   selectOnFocus: true,
@@ -59,16 +56,9 @@ const LISTVIEW_DEFAULTS = {
   source: null,
   forceToRenderOnEmptyDs: false,
   disableItemDeactivation: false,
-  showPageSizeSelector: false,
-  pagingType: 'list'
+  showPageSizeSelector: false
 };
 
-/**
- * Creates lists of small pieces of relevant, actionable information.
- * @class ListView
- * @param {jQuery[]|HTMLElement} element the base element
- * @param {object} [settings] incoming settings
- */
 function ListView(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, LISTVIEW_DEFAULTS);
@@ -207,6 +197,7 @@ ListView.prototype = {
 
   /**
    * Render the template against the dataset.
+   * @private
    * @param {array} dataset  The dataset to use
    * @param {object} pagerInfo  Pager instructions
    */
@@ -297,6 +288,14 @@ ListView.prototype = {
 
     // TODO: Invoke the "element" here after we write an updated method.
     this.element.children().initialize();
+    /**
+     * Fires after the listbox is fully rendered.
+     *
+     * @event rendered
+     * @memberof ListView
+     * @property {object} event - The jquery event object
+     * @property {array} dataset .
+     */
     this.element.trigger('rendered', [dataset]);
 
     // Handle refresh
@@ -322,6 +321,7 @@ ListView.prototype = {
 
   /**
    * Get the Data Source. Can be an array, Object or Url and render the list.
+   * @private
    * @param {array} dataset contains a potential new dataset to display inside the listview.
    */
   refresh(dataset) {
@@ -477,8 +477,8 @@ ListView.prototype = {
   * For instances of Listview that are paired with a Searchfield
   * NOTE: Search functionality is called from "js/listfilter.js"
   * @private
-  * @param {jQuery.Event} e custom jQuery `contents-checked` event.
-  * @param {jQuery[]} searchfield the element representing a searchfield.
+  * @param {jquery.event} e custom jQuery `contents-checked` event.
+  * @param {jquery[]} searchfield the element representing a searchfield.
   * @returns {void}
   */
   handleSearch(e, searchfield) {
@@ -508,6 +508,7 @@ ListView.prototype = {
 
   /**
    * Reset the current search parameters and highlight.
+   * @private
    * @returns {void}
    */
   resetSearch() {
@@ -520,7 +521,8 @@ ListView.prototype = {
 
   /**
    * Focus the provided list item with the keyboard
-   * @param {jQuery} item  The list item (as jQuery) to focus
+   * @private
+   * @param {jquery} item  The list item (as jQuery) to focus
    * @returns {void}
    */
   focus(item) {
@@ -545,7 +547,7 @@ ListView.prototype = {
 
   /**
    * Remove the given list item.
-   * @param {jQuery|Number} li  Either the actually jQuery list element or a zero based index
+   * @param {jquery|number} li Either the actually jQuery list element or a zero based index
    * @returns {void}
    */
   remove(li) {
@@ -650,12 +652,21 @@ ListView.prototype = {
 
     this.list.sort = { field };
     this.list.sort[field] = { reverse };
-
+    /**
+     * Fires after sorted.
+     *
+     * @event sorted
+     * @memberof ListView
+     * @property {object} event - The jquery event object
+     * @property {object} this.element
+     * @property {string} this.list.sort
+     */
     this.element.trigger('sorted', [this.element, this.list.sort]);
   },
 
   /**
   * Overridable function to conduct sorting
+  * @private
   * @param {string} field  The field in the dataset to sort on.
   * @param {string} reverse  If true sort descending.
   * @param {function} primer  A sorting primer function.
@@ -688,7 +699,7 @@ ListView.prototype = {
 
   /**
   * Deselect the given list item.
-  * @param {jQuery[]|Number} li  Either the actually jQuery list element or a zero based index
+  * @param {jquery[]|number} li  Either the actually jQuery list element or a zero based index
   */
   deselect(li) {
     if (typeof li === 'number') {
@@ -702,7 +713,7 @@ ListView.prototype = {
   /**
    * Deprivated - use `deselect()`
    * @deprecated as of v4.3.0
-   * @param {jQuery[]|number} li a list item
+   * @param {jquery[]|number} li a list item
    * @returns {void}
    */
   unselect(li) {
@@ -711,7 +722,7 @@ ListView.prototype = {
 
   /**
    * Select the given list item.
-   * @param {jQuery|Number} li Either the actually jQuery list element or a zero based index
+   * @param {jquery|number} li Either the actually jQuery list element or a zero based index
    * @param {boolean} noTrigger Do not trigger the selected event.
    */
   select(li, noTrigger) {
@@ -760,9 +771,25 @@ ListView.prototype = {
 
     if (!noTrigger) {
       const triggerStr = isChecked ? 'unselected' : 'selected';
+      /**
+       * Fires when a item is selected.
+       *
+       * @event selected
+       * @memberof ListView
+       * @property {object} event - The jquery event object
+       * @property {object} selected items and item info
+       */
       this.element.triggerHandler(triggerStr, { selectedItems: this.selectedItems, elem: li });
 
       if (triggerStr === 'unselected') {
+        /**
+         * Fires when a item is deselected.
+         *
+         * @event deselected
+         * @memberof ListView
+         * @property {object} event - The jquery event object
+         * @property {object} selected items and item info
+         */
         this.element.triggerHandler('deselected', { selectedItems: this.selectedItems, elem: li });
       }
     }
@@ -807,7 +834,8 @@ ListView.prototype = {
 
   /**
    * Toggle acivation state on the list item
-   * @param {jQuery} li The jQuery list element.
+   * @private
+   * @param {jquery} li The jQuery list element.
    * @returns {void}
    */
   toggleItemActivation(li) {
@@ -825,7 +853,8 @@ ListView.prototype = {
 
   /**
    * Set item to activated, unactivate others and fire an event.
-   * @param {jQuery|number} li The jQuery list element or the index.
+   * @private
+   * @param {jquery|number} li The jQuery list element or the index.
    * @returns {void}
    */
   activateItem(li) {
@@ -837,7 +866,14 @@ ListView.prototype = {
       li = this.element.find('ul').children().eq(li);
     }
     this.deactivateItem(active);
-
+    /**
+     * Fires before activate item.
+     *
+     * @event beforeactivate
+     * @memberof ListView
+     * @property {object} event - The jquery event object
+     * @property {object} args index, elem, data
+     */
     elemCanActivate = this.element.triggerHandler('beforeactivate', [{ index: idx, elem: li, data: this.settings.dataset[idx] }]);
 
     if (elemCanActivate === false) {
@@ -845,6 +881,14 @@ ListView.prototype = {
     }
     li.addClass('is-activated');
 
+    /**
+     * Fires after activate item.
+     *
+     * @event itemactivated
+     * @memberof ListView
+     * @property {object} event - The jquery event object
+     * @property {object} args index, elem, data
+     */
     this.element.triggerHandler('itemactivated', [{ index: idx, elem: li, data: this.settings.dataset[idx] }]);
   },
 
@@ -864,8 +908,8 @@ ListView.prototype = {
   },
 
   /**
-   * Set item to deactivated, uand fire an event.
-   * @param {jQuery|Number} li The jQuery list element. The li element or the index.
+   * Set item to deactivated, and fire an event.
+   * @param {jquery|number} li The jQuery list element. The li element or the index.
    *  If null the currently activated one will be deactivated.
    * @returns {void}
    */
@@ -885,11 +929,19 @@ ListView.prototype = {
       return;
     }
 
+    /**
+     * Fires after deactivated item.
+     *
+     * @event itemdeactivated
+     * @memberof ListView
+     * @property {object} event - The jquery event object
+     * @property {object} args index, elem, data
+     */
     this.element.triggerHandler('itemdeactivated', [{ index: idx, elem: li, data: this.settings.dataset[idx] }]);
   },
 
   /**
-   * @returns {jQuery[]} the currently selected ListView item, or an empty jQuery selector
+   * @returns {jquery[]} the currently selected ListView item, or an empty jQuery selector
    *  if there are currently no items selected.
    */
   getSelected() {
@@ -899,7 +951,7 @@ ListView.prototype = {
   /**
    * Refresh the list with any optioned options that might have been set.
    * @param {object} [settings] incoming settings
-   * @returns {this} component instance
+   * @returns {object} component instance
    */
   updated(settings) {
     if (settings) {
@@ -927,7 +979,8 @@ ListView.prototype = {
 
   /**
    * Detatch all bound events.
-   * @returns {this} component instance
+   * @private
+   * @returns {object} component instance
    */
   teardown() {
     $('body').off('resize.listview');
@@ -954,16 +1007,10 @@ ListView.prototype = {
   },
 
   /**
-   * This component fires the following events.
-   * @fires ListBox#events
-   * @listens selected  Fires when a item is selected
-   * @listens unselected  Fires when a item is deselected (deprecated)
-   * @listens deselected  Fires when a item is deselected
-   * @listens rendered  Fires after the listbox is fully rendered
-   * @listens focus
-   * @listens keydown
-   * @listens click
-   */
+    * Attach Events used by the Control
+    * @private
+    * @returns {void}
+    */
   handleEvents() {
     const self = this;
     let isSelect = false;

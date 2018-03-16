@@ -66,14 +66,6 @@ const DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK = function resultIterator(it
   return dataset;
 };
 
-/*
-  * @param {string} item
-  * @param {object} options
-  * @param {string} [options.alias]
-  * @param {string} options.filterMode
-  * @param {string} options.term
-  * @returns {string}
-  */
 const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, options) {
   let targetProp = item;
   let hasAlias = false;
@@ -111,24 +103,27 @@ const DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, op
 };
 
 /**
-* @namespace
-* @property {string} source Defines the data to use, must be specified.
-* @property {string} sourceArguments If a source method is defined, this flexible
-* object can be passed into the source method, and augmented with parameters specific to the
-* implementation.
-* @property {boolean} template If defined, use this to draw the contents of each
-* search result instead of the default draw routine.
-* @property {string} filterMode The matching algorithm, startsWith and contains
-* are supported - false will not filter client side
-* @property {boolean} delay The delay between key strokes on the keypad before it
-* thinks you stopped typing
-* @property {string} width Width of the open auto complete menu
-* @property {string} offset For the open menu, the left or top offset
-* @property {string} autoSelectFirstItem Whether or not to select he first item in the
-* list to be selected
-* @property {function} resultsCallback If defined, does not produce the results of the
-* Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback
-* function.
+* The Autocomplete control provides an easier means of searching through a large amount of data by filtering
+* down the results based on keyboard input from the user.
+* @class Autocomplete
+* @param {object} element The component element.
+* @param {object} [settings] The component settings.
+* @param {string} [settings.source=[]] Defines the data to use, must be specified.
+* @param {string} [settings.sourceArguments={}] If a source method is defined, this flexible object can be passed
+* into the source method, and augmented with parameters specific to the implementation.
+* @param {boolean} [settings.template If defined, use this to draw the contents of each search result instead of the default draw routine.
+* @param {string} [settings.filterMode='startsWith'] The matching algorithm, startsWith and contains are supported - false will not filter client side
+* @param {boolean} [settings.delay=300] The delay between key strokes on the keypad before it thinks you stopped typing
+* @param {string} [settings.width=null] Width of the open auto complete menu
+* @param {string} [settings.offset=null] For the open menu, the left or top offset
+* @param {string} [settings.autoSelectFirstItem=false] Whether or not to select he first item in the list to be selected
+* @param {function} [settings.resultsCallback] If defined, does not produce the results of the Autocomplete
+* inside a popupmenu, instead piping them to a process defined inside this callback function.
+* @param {boolean} [settings.highlightMatchedText=true] The highlightMatchText property.
+* @param {function} [settings.highlightCallback] The highlightCallback property.
+* @param {function} [settings.resultIteratorCallback] The resultIteratorCallback property.
+* @param {function} [settings.displayResultsCallback] The displayResultsCallback property.
+* @param {function} [settings.searchableTextCallback] The searchableTextCallback property.
 */
 const AUTOCOMPLETE_DEFAULTS = {
   source: [],
@@ -146,14 +141,6 @@ const AUTOCOMPLETE_DEFAULTS = {
   searchableTextCallback: DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK
 };
 
-/**
-* The Autocomplete control provides an easier means of searching through a large amount of data by
-* filtering down the results based on keyboard input from the user.
-*
-* @class Autocomplete
-* @param {string} element The api element.
-* @param {string} settings The settings element.
-*/
 function Autocomplete(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, AUTOCOMPLETE_DEFAULTS);
@@ -330,8 +317,9 @@ Autocomplete.prototype = {
     * Fires after the menu is populated with its contents.
     *
     * @event populated
-    * @property {object} event - The jquery event object
-    * @property {object} filterResult - The results of the filtering
+    * @memberof Autocomplete
+    * @param {object} event - The jquery event object
+    * @param {object} filterResult - The results of the filtering
     */
     this.element.trigger('populated', [filterResult]).focus();
 
@@ -503,7 +491,8 @@ Autocomplete.prototype = {
       *  Fires after the input (and menu) both loose focus
       *
       * @event safe-blur
-      * @property {object} event The input event object
+      * @memberof Autocomplete
+      * @param {object} event The input event object
       */
       self.element.trigger('safe-blur');
     }, 0);
@@ -530,8 +519,9 @@ Autocomplete.prototype = {
       *  Fires when the ajax request (source option) is completed
       *
       * @event requestend
-      * @property {object} event The input event object
-      * @property {array} An array containing the searchTerm and call back function
+      * @memberof Autocomplete
+      * @param {object} event The input event object
+      * @param {array} An array containing the searchTerm and call back function
       */
       self.element.trigger('requestend', [searchTerm, response]);
 
@@ -561,8 +551,9 @@ Autocomplete.prototype = {
       * Fires when the ajax request (source option) is initiated
       *
       * @event requeststart
-      * @property {object} event The input event object
-      * @property {array} event An array with the buffer in it
+      * @memberof Autocomplete
+      * @param {object} event The input event object
+      * @param {array} event An array with the buffer in it
       */
       self.element.trigger('requeststart', [buffer]);
 
@@ -782,8 +773,9 @@ Autocomplete.prototype = {
       /**
       * Fires when the menu is opened.
       * @event listopen
-      * @property {object} event - The jquery event object
-      * @property {object} ui - The dialog object
+      * @memberof Autocomplete
+      * @param {object} event - The jquery event object
+      * @param {object} ui - The dialog object
       */
       .off('listopen.autocomplete')
       .on('listopen.autocomplete', () => {
@@ -793,7 +785,8 @@ Autocomplete.prototype = {
       * Comes from Searchfields wrapping an autocomplete - resets
       * a filtered autocomplete back to normal.
       * @event listopen
-      * @property {object} event - The jquery event object
+      * @memberof Autocomplete
+      * @param {object} event - The jquery event object
       */
       .off('resetfilter.autocomplete')
       .on('resetfilter.autocomplete', () => {

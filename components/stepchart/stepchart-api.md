@@ -2,29 +2,9 @@
 
 ### Table of Contents
 
--   [DEFAULT_STEPCHART_OPTIONS](#default_stepchart_options)
--   [StepChart](#stepchart)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## DEFAULT_STEPCHART_OPTIONS
-
-StepChart Default Options
-
-**Properties**
-
--   `steps` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number of steps to show.
--   `completed` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number of steps complete (linear).
--   `inProgress` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number of the in progress step (linear).
--   `iconType` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** The icon to display fx. 'icon-error', 'icon-confirm'
--   `completedText` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The completed text or uses a localized 'N of N Steps complete'.
-     You can use {0} and {1} to replace n of n in the string.
--   `extraText` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** The additional text to show on the right. Defaults to none. You
-     can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
--   `completedColor` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The color to show completed steps. Defaults to primary color.
--   `allCompletedColor` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The color to steps when all are completed. Defaults to
-     primary color.
--   `inProgressColor` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The color to show in-progress steps. Defaults to ruby02.
+-   [StepChart][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## StepChart
 
@@ -32,10 +12,19 @@ The Step Chart Component is displays visual info on step completion.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** The base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-Returns **this** component instance
+-   `element` **([Array][4]&lt;jQuery> | [HTMLElement][5])** The base element
+-   `settings` **[object][6]?** incoming settings
+    -   `settings.steps` **[number][7]** The number of steps to show. (optional, default `null`)
+    -   `settings.completed` **[number][7]** The number of steps complete (linear). (optional, default `null`)
+    -   `settings.inProgress` **[number][7]** The number of the in progress step (linear). (optional, default `null`)
+    -   `settings.iconType` **[boolean][8]** The icon to display fx. 'icon-error', 'icon-confirm' (optional, default `null`)
+    -   `settings.completedText` **[string][9]** The completed text or uses a localized 'N of N Steps complete'.
+         You can use {0} and {1} to replace n of n in the string. (optional, default `null`)
+    -   `settings.extraText` **[boolean][8]** The additional text to show on the right. Defaults to none. You
+         can use {0} to replace with the steps remaining count and {1} to replace the number of steps. (optional, default `''`)
+    -   `settings.completedColor` **[string][9]** The color to show completed steps. Defaults to primary color. (optional, default `null`)
+    -   `settings.allCompletedColor` **[string][9]** The color to steps when all are completed. Defaults to primary color. (optional, default `null`)
+-   `i` **[string][9]** \[settings.nProgressColor The color to show in-progress steps. Defaults to ruby02.
 
 ### updated
 
@@ -43,12 +32,30 @@ Handle updated settings and values.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings to use.
+-   `settings` **[object][6]** The new settings to use.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
+Returns **[object][6]** The api for chaining.
 
 ### destroy
 
 Tear down and remove.
 
 Returns **this** component instance
+
+[1]: #stepchart
+
+[2]: #updated
+
+[3]: #destroy
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[5]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

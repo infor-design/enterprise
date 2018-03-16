@@ -2,32 +2,11 @@
 
 ### Table of Contents
 
--   [theme][1]
--   [PERSONALIZE_DEFAULTS][2]
--   [Personalize][3]
-    -   [validateHex][4]
-    -   [setColors][5]
-    -   [getLuminousColorShade][6]
-    -   [setTheme][7]
-    -   [blockUi][8]
-    -   [unBlockUi][9]
-    -   [updated][10]
-    -   [teardown][11]
-    -   [destroy][12]
-
-## theme
-
-Current "theme" string
-
-## PERSONALIZE_DEFAULTS
-
-Component Defaults
-
-**Parameters**
-
--   `colors` **[string][13]** The list of colors
--   `theme` **[string][13]** The theme name (light, dark or high-contrast)
--   `font` **[string][13]** Use the newer source sans font
+-   [Personalize][1]
+    -   [setColors][2]
+    -   [setTheme][3]
+    -   [updated][4]
+    -   [destroy][5]
 
 ## Personalize
 
@@ -35,18 +14,11 @@ The personalization routines for setting custom company colors.
 
 **Parameters**
 
--   `element` **([HTMLElement][14] \| [Array][15]&lt;jQuery>)** the base element
--   `settings` **[object][16]?** incoming settings
-
-### validateHex
-
-Validates a string containing a hexadecimal number
-
-**Parameters**
-
--   `hex` **[string][13]** : A hex color.
-
-Returns **[string][13]** a validated hexadecimal string.
+-   `element` **([HTMLElement][6] \| [Array][7]&lt;jQuery>)** the base element
+-   `settings` **[object][8]?** incoming settings
+    -   `settings.colors` **[string][9]?** The list of colors
+    -   `settings.theme` **[string][9]** The theme name (light, dark or high-contrast) (optional, default `'light'`)
+    -   `settings.font` **[string][9]** Use the newer source sans font (optional, default `'Helvetica'`)
 
 ### setColors
 
@@ -54,21 +26,9 @@ Sets the personalization color(s)
 
 **Parameters**
 
--   `colors` **[array][15]** The original hex color as a string or an object with all the Colors
+-   `colors` **[array][7]** The original hex color as a string or an object with all the Colors
 
 Returns **this** component instance
-
-### getLuminousColorShade
-
-Takes a color and performs a change in luminosity of that color programatically.
-
-**Parameters**
-
--   `hex` **[string][13]** The original Hexadecimal base color.
--   `lum` **[string][13]** A percentage used to set luminosity
-    change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
-
-Returns **[string][13]** hexadecimal color.
 
 ### setTheme
 
@@ -76,20 +36,8 @@ Sets the current theme, blocking the ui during the change.
 
 **Parameters**
 
--   `incomingTheme` **[string][13]** Represents the file name of a color
+-   `incomingTheme` **[string][9]** Represents the file name of a color
     scheme (can be dark, light or high-contrast)
-
-### blockUi
-
-Builds a temporary page overlay that prevents end users from experiencing FOUC
-
-Returns **void** 
-
-### unBlockUi
-
-Removes a temporary page overlay built by `blockUi()`
-
-Returns **void** 
 
 ### updated
 
@@ -97,14 +45,7 @@ Handle Updating Settings
 
 **Parameters**
 
--   `settings` **[object][16]?** incoming settings
-
-Returns **this** component instance
-
-### teardown
-
-Simple Teardown - remove events & rebuildable markup.
-Ideally this will do non-destructive things that make it possible to easily rebuild
+-   `settings` **[object][8]?** incoming settings
 
 Returns **this** component instance
 
@@ -114,34 +55,20 @@ Teardown - Remove added markup and events
 
 Returns **void** 
 
-[1]: #theme
+[1]: #personalize
 
-[2]: #personalize_defaults
+[2]: #setcolors
 
-[3]: #personalize
+[3]: #settheme
 
-[4]: #validatehex
+[4]: #updated
 
-[5]: #setcolors
+[5]: #destroy
 
-[6]: #getluminouscolorshade
+[6]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-[7]: #settheme
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[8]: #blockui
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[9]: #unblockui
-
-[10]: #updated
-
-[11]: #teardown
-
-[12]: #destroy
-
-[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[14]: https://developer.mozilla.org/docs/Web/HTML/Element
-
-[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

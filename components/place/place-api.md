@@ -2,56 +2,38 @@
 
 ### Table of Contents
 
--   [DEFAULT_PLACE_SETTINGS](#default_place_settings)
--   [PlacementObject](#placementobject)
--   [Place](#place)
-    -   [render](#render)
-    -   [place](#place-1)
-    -   [getContainer](#getcontainer)
-    -   [checkBleeds](#checkbleeds)
-
-## DEFAULT_PLACE_SETTINGS
-
-**Properties**
-
--   `bleedFromContainer` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, allows positioned content to bleed
-     outside of a defined container.
--   `callback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** If defined, provides extra placement adjustments
-     after the main calculation is performed.
--   `container` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)?** If defined, contains the placement of the
-     element to the boundaries of a specific container element.
--   `parent` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)?** If defined, will be used as the reference
-     element for placement this element.
--   `parentXAlignment` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Only used for parent-based placement.
-     Determines the X-coordinate alignment of the placed element against its parent.
--   `parentYAlignment` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Only used for parent-based placement.
-     Determines the Y-coordinate alignment of the placed element against its parent.
--   `placement` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** If defined, changes the direction in which
-     placement of the element happens
--   `strategies` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** Determines the "strategy" for alternatively
-     placing the element if it doesn't fit in the defined boundaries.  Only matters
-     when "parent" is a defined setting.  It's possible to define multiple strategies
-     and execute them in order.
-
-## PlacementObject
-
-Object that contains coordinates along with temporary, changeable properties.
-This object gets passed around the Place Behavior and modified during each phase of positioning.
-This object is also passed to all callbacks and event listeners for further modification.
-
-**Parameters**
-
--   `placementOptions` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** object containing settings for placement
+-   [Place][1]
+    -   [render][2]
+    -   [place][3]
+    -   [getContainer][4]
+    -   [checkBleeds][5]
 
 ## Place
 
-Place Behavior Constructor
-This is the actual "thing" that is tied to a Placeable Element.
+The Place API which handles internal placement of popups, menus ect.
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** the base element being placed
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `element` **([HTMLElement][6] \| [Array][7]&lt;jQuery>)** the base element being placed
+-   `settings` **[object][8]?** incoming settings
+    -   `settings.bleedFromContainer` **[boolean][9]** If true, allows positioned content to bleed
+         outside of a defined container. (optional, default `false`)
+    -   `settings.callback` **[function][10]?** If defined, provides extra placement adjustments
+         after the main calculation is performed.
+    -   `settings.container` **[HTMLElement][6]?** If defined, contains the placement of the
+         element to the boundaries of a specific container element.
+    -   `settings.parent` **[HTMLElement][6]?** If defined, will be used as the reference
+         element for placement this element.
+    -   `settings.parentXAlignment` **[string][11]** Only used for parent-based placement.
+         Determines the X-coordinate alignment of the placed element against its parent. (optional, default `'center'`)
+    -   `settings.parentYAlignment` **[string][11]** Only used for parent-based placement.
+         Determines the Y-coordinate alignment of the placed element against its parent. (optional, default `'center'`)
+    -   `settings.placement` **[string][11]** If defined, changes the direction in which
+         placement of the element happens (optional, default `'bottom'`)
+    -   `settings.strategies` **[Array][7]&lt;[string][11]>** Determines the "strategy" for alternatively
+         placing the element if it doesn't fit in the defined boundaries.  Only matters
+         when "parent" is a defined setting.  It's possible to define multiple strategies
+         and execute them in order. (optional, default `['nudge']`)
 
 ### render
 
@@ -59,7 +41,7 @@ Actually renders an element with coordinates inside the DOM
 
 **Parameters**
 
--   `placementObj` **[PlacementObject](#placementobject)** settings for the placement routine
+-   `placementObj` **PlacementObject** settings for the placement routine
 
 Returns **void** 
 
@@ -71,7 +53,7 @@ will use the pre-defined settings.
 
 **Parameters**
 
--   `placementObj` **[PlacementObject](#placementobject)** settings for the placement routine
+-   `placementObj` **PlacementObject** settings for the placement routine
 
 Returns **void** 
 
@@ -81,9 +63,9 @@ Gets a parent container element.
 
 **Parameters**
 
--   `placementObj` **[PlacementObject](#placementobject)** settings for the placement routine
+-   `placementObj` **PlacementObject** settings for the placement routine
 
-Returns **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** container element
+Returns **([HTMLElement][6] \| [Array][7]&lt;jQuery>)** container element
 
 ### checkBleeds
 
@@ -92,6 +74,28 @@ Element must fit within the boundaries of the page or it's current scrollable pa
 
 **Parameters**
 
--   `placementObj` **[PlacementObject](#placementobject)** settings for the placement routine.
+-   `placementObj` **PlacementObject** settings for the placement routine.
 
-Returns **[PlacementObject](#placementobject)** modified placementObject with updated settings.
+Returns **PlacementObject** modified placementObject with updated settings.
+
+[1]: #place
+
+[2]: #render
+
+[3]: #place-1
+
+[4]: #getcontainer
+
+[5]: #checkbleeds
+
+[6]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

@@ -2,24 +2,18 @@
 
 ### Table of Contents
 
--   [SIGNIN_DEFAULTS](#signin_defaults)
--   [SignIn](#signin)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [keypress](#keypress)
--   [blur](#blur)
--   [change](#change)
-
-## SIGNIN_DEFAULTS
-
-Default SignIn Options
+-   [SignIn][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## SignIn
 
+The sign in page component.
+
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][4]** The component element.
+-   `settings` **[string][4]?** The component settings.
 
 ### updated
 
@@ -27,9 +21,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][5]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][5]** The api
 
 ### destroy
 
@@ -37,26 +31,12 @@ Destroy this component instance and remove the link from its base element.
 
 Returns **void** 
 
-## keypress
+[1]: #signin
 
-Fires when keypress.
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-## blur
-
-Fires when blur.
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
-
-## change
-
-Fires when change.
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

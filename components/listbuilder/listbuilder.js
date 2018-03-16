@@ -10,25 +10,30 @@ import '../arrange/arrange.jquery';
 const COMPONENT_NAME = 'listbuilder';
 
 /**
- * Default ListBuilder Options
- * @namespace
- * @param {array} dataset  Array of data
- * @param {string} handle  The CSS Class of the handle element
- * @param {string|jQuery[]} btnAdd  "Add" action button (takes a string representing a
+ * A list of items with add/remove/delete and sort functionality.
+ * @class ListBuilder
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element The base element.
+ * @param {object} [settings] incoming settings.
+ *
+ * @param {array} [settings.dataset]  Array of data
+ * @param {string} [settings.handle]  The CSS Class of the handle element
+ * @param {string|jQuery[]} [settings.btnAdd]  "Add" action button (takes a string representing a
  *  "data-action" attribute, or a jQuery-wrapped element reference).
- * @param {string|jQuery[]} btnEdit  "Edit" action button (takes a string representing a
+ * @param {string|jQuery[]} [settings.btnEdit]  "Edit" action button (takes a string representing a
  *  "data-action" attribute, or a jQuery-wrapped element reference).
- * @param {string|jQuery[]} btnDelete  "Delete" action button (takes a string representing a
+ * @param {string|jQuery[]} [settings.btnDelete]  "Delete" action button (takes a string representing a
  *  "data-action" attribute, or a jQuery-wrapped element reference).
- * @param {string|jQuery[]} btnGoUp  "GoUp" action button (takes a string representing a
+ * @param {string|jQuery[]} [settings.btnGoUp]  "GoUp" action button (takes a string representing a
  *  "data-action" attribute, or a jQuery-wrapped element reference).
- * @param {string|jQuery[]} btnGoDown  "GoDown" action button (takes a string representing a
+ * @param {string|jQuery[]} [settings.btnGoDown]  "GoDown" action button (takes a string representing a
  *  "data-action" attribute, or a jQuery-wrapped element reference).
- * @param {string} template  representing HTML content that builds a list
- * @param {string} templateNewItem  representing HTML content that builds a single list item
- * @param {string} templateItemContent  representing HTML content that replaces the inner content
+ * @param {string} [settings.template]  representing HTML content that builds a list
+ * @param {string} [settings.templateNewItem]  representing HTML content that builds a single list item
+ * @param {string} [settings.templateItemContent]  representing HTML content that replaces the inner content
  *  section of each item.
  */
+
 const LISTBUILDER_DEFAULTS = {
   dataset: [],
   handle: '.handle',
@@ -60,13 +65,6 @@ const LISTBUILDER_DEFAULTS = {
   templateItemContent: '<p>{{text}}</p>'
 };
 
-/**
- * A list of items with add/remove/delete and sort functionality.
- * @class ListBuilder
- * @constructor
- * @param {jQuery[]|HTMLElement} element The base element.
- * @param {object} [settings] incoming settings.
- */
 function ListBuilder(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, LISTBUILDER_DEFAULTS);
@@ -143,7 +141,7 @@ ListBuilder.prototype = {
    * Extract node data
    * @private
    * @param {jQuery[]} node element to be checked for data
-   * @returns {Object} data from the node.
+   * @returns {object} data from the node.
    */
   extractNodeData(node) {
     const data = { node, text: $.trim($('.item-content', node).text()) };
@@ -247,9 +245,10 @@ ListBuilder.prototype = {
         /**
          * Fires when a item is selected.
          * @event selected
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this selected item
+         * @memberof ListBuilder
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this selected item
          */
         this.element.triggerHandler('selected', [data]);
       });
@@ -261,9 +260,10 @@ ListBuilder.prototype = {
         /**
          * Fires when a item is updated.
          * @event updated
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this item
+         * @memberof ListBuilder
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this item
          */
         this.element.triggerHandler('updated', [updatedData]);
       });
@@ -284,8 +284,9 @@ ListBuilder.prototype = {
      * Fires before add new item.
      *
      * @event beforeadd
-     * @type {Object}
-     * @property {Object} event - The jquery event object
+     * @memberof ListBuilder
+     * @type {object}
+     * @property {object} event - The jquery event object
      */
     $.when(this.element.triggerHandler('beforeadd')).done(() => {
       let li;
@@ -317,9 +318,10 @@ ListBuilder.prototype = {
       /**
        * Fires after add new item.
        * @event afteradd
-       * @type {Object}
-       * @property {Object} event - The jquery event object
-       * @property {Object} data - Data for this new item
+       * @memberof ListBuilder
+       * @type {object}
+       * @property {object} event - The jquery event object
+       * @property {object} data - Data for this new item
        */
       self.element.triggerHandler('afteradd', [data]);
     });
@@ -340,9 +342,10 @@ ListBuilder.prototype = {
         /**
          * Fires before move up item.
          * @event beforegoup
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this item
+         * @memberof ListBuilder
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this item
          */
         $.when(self.element.triggerHandler('beforegoup', [data])).done(() => {
           const prev = node.prev();
@@ -355,9 +358,10 @@ ListBuilder.prototype = {
           /**
            * Fires after move up item.
            * @event aftergoup
-           * @type {Object}
-           * @property {Object} event - The jquery event object
-           * @property {Object} data - Data for this item
+           * @memberof ListBuilder
+           * @type {object}
+           * @property {object} event - The jquery event object
+           * @property {object} data - Data for this item
            */
           self.element.triggerHandler('aftergoup', [data]);
         });
@@ -379,9 +383,10 @@ ListBuilder.prototype = {
         /**
          * Fires before move down item.
          * @event beforegodown
-         * @type {Object}
-         * @property {Object} event - The jquery event object
-         * @property {Object} data - Data for this item
+         * @memberof ListBuilder
+         * @type {object}
+         * @property {object} event - The jquery event object
+         * @property {object} data - Data for this item
          */
         $.when(self.element.triggerHandler('beforegodown', [data])).done(() => {
           const next = node.next();
@@ -394,9 +399,10 @@ ListBuilder.prototype = {
           /**
            * Fires after move down item.
            * @event aftergodown
-           * @type {Object}
-           * @property {Object} event - The jquery event object
-           * @property {Object} data - Data for this item
+           * @memberof ListBuilder
+           * @type {object}
+           * @property {object} event - The jquery event object
+           * @property {object} data - Data for this item
            */
           self.element.triggerHandler('aftergodown', [data]);
         });
@@ -437,6 +443,7 @@ ListBuilder.prototype = {
       /**
        * Fires before edit item.
        * @event beforeedit
+       * @memberof ListBuilder
        * @type {object}
        * @property {object} event - The jquery event object
        * @property {object} data - Data for this item
@@ -463,6 +470,7 @@ ListBuilder.prototype = {
         /**
          * Fires when enter to edit mode.
          * @event entereditmode
+         * @memberof ListBuilder
          * @type {object}
          * @property {object} event - The jquery event object
          * @property {object} data - Data for this item
@@ -496,6 +504,7 @@ ListBuilder.prototype = {
     /**
      * Fires when exited to edit mode.
      * @event exiteditmode
+     * @memberof ListBuilder
      * @type {object}
      * @property {object} event - The jquery event object
      * @property {object} data - Data for this item
@@ -517,6 +526,7 @@ ListBuilder.prototype = {
         /**
          * Fires before delete item.
          * @event beforedelete
+         * @memberof ListBuilder
          * @type {object}
          * @property {object} event - The jquery event object
          * @property {object} data - Data for this item
@@ -529,6 +539,7 @@ ListBuilder.prototype = {
           /**
            * Fires after delete item.
            * @event afterdelete
+           * @memberof ListBuilder
            * @type {object}
            * @property {object} event - The jquery event object
            * @property {object} data - Data for this item
