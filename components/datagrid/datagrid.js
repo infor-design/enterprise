@@ -939,7 +939,7 @@ Datagrid.prototype = {
     headerColGroup += `${cols}</colgroup>`;
 
     if (self.headerRow === undefined) {
-      self.headerContainer = $(`<div class="datagrid-header"><table role="grid"></table></div>`);
+      self.headerContainer = $('<div class="datagrid-header"><table role="grid"></table></div>');
       self.headerTable = self.headerContainer.find('table');
       self.headerTable.width(this.headerTableWidth());
       self.headerColGroup = $(headerColGroup).appendTo(self.headerTable);
@@ -2992,10 +2992,7 @@ Datagrid.prototype = {
 
       return ` style="width: ${cacheWidths.width}${cacheWidths.widthPercent ? '%' : 'px'}"`;
     }
-    else
-    {
-      return calculateColumnWidth(col, index);
-    }
+    return this.calculateColumnWidth(col, index);
   },
 
   /**
@@ -3132,18 +3129,21 @@ Datagrid.prototype = {
       if (this.settings.stretchColumn === 'last') {
         if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
           colWidth = diff - 2 - 10; // borders and last edge padding
-          this.headerWidths[index] = { id: col.id, width: colWidth, widthPercent: this.widthPercent };
+          this.headerWidths[index] = {
+            id: col.id,
+            width: colWidth,
+            widthPercent: this.widthPercent
+          };
           this.totalWidth = this.elemWidth - 2;
         }
-      }
-      else {
+      } else {
         this.headerWidths[index] = { id: col.id, width: colWidth, widthPercent: this.widthPercent };
         this.totalWidth += col.hidden ? 0 : colWidth;
-        const diff = this.elemWidth - this.totalWidth;
-        let stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
-        if ((diff > 0) && !stretchColumn[0].widthPercent) {
-          stretchColumn[0].width += diff - 2;
-          this.totalWidth += diff - 2;
+        const diff2 = this.elemWidth - this.totalWidth;
+        const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
+        if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
+          stretchColumn[0].width += diff2 - 2;
+          this.totalWidth += diff2 - 2;
         }
       }
 
@@ -3152,7 +3152,6 @@ Datagrid.prototype = {
       } else if (!isNaN(this.totalWidth)) {
         this.table.css('width', this.totalWidth);
       }
-
 
       this.isInitialRender = false;
     }
@@ -4158,11 +4157,10 @@ Datagrid.prototype = {
     if (self.settings.redrawOnResize) {
       let oldWidth = self.element.outerWidth();
 
-      $('body').on('resize.datagrid', function () {
+      $('body').on('resize.datagrid', () => {
         const width = self.element.outerWidth();
         if (width !== oldWidth) {
           oldWidth = width;
-
           self.handleResize();
         }
       });
