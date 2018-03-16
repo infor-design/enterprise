@@ -16,203 +16,419 @@
 <li>Sortable <a href="../components/tree/example-sortable">View Example</a></li>
 <li>Update Node <a href="../components/tree/example-update-node">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.selectable
+    </td>
+    <td>
+      <span>&#39;single&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      'single' or 'multiple'.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.hideCheckboxes
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Only applies when `selectable` is set to 'multiple'.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.menuId
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.useStepUI
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if `true`, turns this tree instance into a "Stepped" tree.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.folderIconOpen
+    </td>
+    <td>
+      <span>&#39;open-folder&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      the icon used when a tree folder node is open.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.folderIconClosed
+    </td>
+    <td>
+      <span>&#39;closed-folder&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      the icon used when a tree folder node is closed.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.sortable
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if `true`, allows nodes to become sortable.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.onBeforeSelect
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      If defined as a function, fires that function as a callback before the selection on a node occurs.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.onExpand
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      If defined as a function, fires that function as a node is expanded.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.onCollapse
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      If defined as a function, fires that function as a node is collapsed.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
+  <h2>Methods</h2>
   <table class="section-table">
     <thead>
       <th>Name</th>
-      <th>Type</th>
+      <th>Parameters</th>
       <th>Description</th>
+      <th>Returns</th>
     </thead>
     <tbody>
       <tr>
+        <td>expandAll</td>
         <td>
-          selectable
+          
+                
+                  <span>nodes (object) = a jQuery-wrapped collection of tree node elements.
+If left undefined, this will automatically use all 
+<code>ul[role=group]</code>
+ elements.
+ </span>
+                
+          
         </td>
         <td>
-          string
-        </td>
-        <td>
-          'single' or 'multiple'.
+          <p>Expands a collection of tree nodes.</p>
 
+        </td>
+        <td>
+          
+void
         </td>
       </tr>
       <tr>
+        <td>collapseAll</td>
         <td>
-          hideCheckboxes
+          
+                
+                  <span>nodes (object) = a jQuery-wrapped collection of tree node elements.
+If left undefined, this will automatically use all 
+<code>ul[role=group]</code>
+ elements.
+ </span>
+                
+          
         </td>
         <td>
-          boolean
-        </td>
-        <td>
-          Only applies when 
-<code>selectable</code>
- is set to 'multiple'.
+          <p>Collapses a collection of tree nodes.</p>
 
+        </td>
+        <td>
+          
+void
         </td>
       </tr>
       <tr>
+        <td>selectNodeById</td>
         <td>
-          menuId
+          
+                
+                  <span>id (string) = the ID string to use.
+ </span>
+                
+          
         </td>
+        <td>
+          <p>Selects a tree node specifically using it's ID attribute.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>loadData</td>
+        <td>
+          
+                
+                  <span>dataset (object) = to load.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Handle Loading JSON.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>getSelectedNodes</td>
         <td>
           
         </td>
         <td>
-          if defined, will be used to identify a Context Menu by ID
-attribute in which to add nodes.
+          <p>Get selected nodes.</p>
 
+        </td>
+        <td>
+          selected nodes
+object
         </td>
       </tr>
       <tr>
+        <td>addNode</td>
         <td>
-          useStepUI
+          
+                
+                  <span>nodeData (object) = to add.
+ </span>
+                
+                  <span>location (object) = in tree.
+ </span>
+                
+          
         </td>
         <td>
-          boolean
-        </td>
-        <td>
-          if 
-<code>true</code>
-, turns this tree instance into a "Stepped" tree.
+          <p>Add a node and all its related markup.</p>
 
+        </td>
+        <td>
+          li added
+object
         </td>
       </tr>
       <tr>
+        <td>updateNode</td>
         <td>
-          folderIconOpen
+          
+                
+                  <span>nodeData (object) = to update.
+ </span>
+                
+          
         </td>
         <td>
-          string
-        </td>
-        <td>
-          the icon used when a tree folder node is open.
+          <p>Update fx rename a node.</p>
 
+        </td>
+        <td>
+          
+void
         </td>
       </tr>
       <tr>
+        <td>removeNode</td>
         <td>
-          folderIconClosed
+          
+                
+                  <span>nodeData (object) = to delete.
+ </span>
+                
+          
         </td>
         <td>
-          string
-        </td>
-        <td>
-          the icon used when a tree folder node is closed.
+          <p>Delete a node from the dataset or tree.</p>
 
+        </td>
+        <td>
+          
+void
         </td>
       </tr>
       <tr>
+        <td>updated</td>
         <td>
-          sortable
+          
+                
+                  <span>settings (object) = The settings to apply.
+ </span>
+                
+          
         </td>
         <td>
-          boolean
-        </td>
-        <td>
-          if 
-<code>true</code>
-, allows nodes to become sortable.
+          <p>Resync the UI and Settings.</p>
 
+        </td>
+        <td>
+          The api
+object
         </td>
       </tr>
       <tr>
-        <td>
-          onBeforeSelect
-        </td>
+        <td>destroy</td>
         <td>
           
         </td>
         <td>
-          if defined as a function, fires that function as a
-callback before the selection on a node occurs.
+          <p>Destroy this component instance and remove the link from its base element.</p>
 
+        </td>
+        <td>
+          
+void
         </td>
       </tr>
     </tbody>
   </table>
 
 
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-  
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -230,7 +446,7 @@ callback before the selection on a node occurs.
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -239,29 +455,43 @@ callback before the selection on a node occurs.
       </div>
     
       <div>
-        <span>data (Object)
+        <span>args (object)
         
-        = and node element
+        = for node element, item
 
         </span>
+        
+          <ul>
+            
+              <li><code>args.node</code> HTMLElement
+                
+                <p>The DOM Element.</p>
+</li>
+            
+              <li><code>args.data</code> HTMLElement
+                
+                <p>The JSON data attached to the node.</p>
+</li>
+            
+          </ul>
         
       </div>
     
   
   </td>
-  <td>Fires on un select node.
+  <td>Fires when the node is deselected.
 </td>
 </tr>
 
       
         <tr>
-  <td>selected
+  <td>unselected
   </td>
   <td>
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -270,17 +500,31 @@ callback before the selection on a node occurs.
       </div>
     
       <div>
-        <span>data (Object)
+        <span>args (object)
         
-        = and node element
+        = for node element, item
 
         </span>
+        
+          <ul>
+            
+              <li><code>args.node</code> HTMLElement
+                
+                <p>The DOM Element.</p>
+</li>
+            
+              <li><code>args.data</code> HTMLElement
+                
+                <p>The JSON data attached to the node.</p>
+</li>
+            
+          </ul>
         
       </div>
     
   
   </td>
-  <td>Fires on select node.
+  <td>Fires when the node is selected.
 </td>
 </tr>
 
@@ -292,7 +536,7 @@ callback before the selection on a node occurs.
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -301,17 +545,26 @@ callback before the selection on a node occurs.
       </div>
     
       <div>
-        <span>data (Object)
+        <span>args (object)
         
         = for node element, item
 
         </span>
         
+          <ul>
+            
+              <li><code>args.node</code> HTMLElement
+                
+                <p>The DOM Element.</p>
+</li>
+            
+          </ul>
+        
       </div>
     
   
   </td>
-  <td>Fires when the menu item select.
+  <td>Fires when the an attached context menu item is selected.
 </td>
 </tr>
 
@@ -323,7 +576,7 @@ callback before the selection on a node occurs.
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -332,18 +585,31 @@ callback before the selection on a node occurs.
       </div>
     
       <div>
-        <span>data (Object)
+        <span>args (object)
         
-        = for node element, menu
+        = for node element, item
 
         </span>
+        
+          <ul>
+            
+              <li><code>args.menu</code> HTMLElement
+                
+                <p>The menu item</p>
+</li>
+            
+              <li><code>args.node</code> HTMLElement
+                
+                <p>The DOM Element.</p>
+</li>
+            
+          </ul>
         
       </div>
     
   
   </td>
-  <td>Fires when the menu open.
-menu options - use it to update the menu as needed
+  <td>Fires when the attached context menu is opened. Use it to update the menu as needed
 </td>
 </tr>
 

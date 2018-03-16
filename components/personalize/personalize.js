@@ -1,20 +1,13 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
-/**
- * Current "theme" string
- */
+// Current "theme" string
 let theme = 'light'; //eslint-disable-line
 
 // Component name as referenced by jQuery/event namespace/etc
 const COMPONENT_NAME = 'personalize';
 
-/**
- * Component Defaults
- * @param {string} colors  The list of colors
- * @param {string} theme  The theme name (light, dark or high-contrast)
- * @param {string} font Use the newer source sans font
- */
+// Component Defaults
 const PERSONALIZE_DEFAULTS = {
   colors: '',
   theme,
@@ -27,7 +20,10 @@ const PERSONALIZE_DEFAULTS = {
  * @class Personalize
  * @param {HTMLElement|jQuery[]} element the base element
  * @param {object} [settings] incoming settings
- */
+ * @param {string} [settings.colors]  The list of colors
+ * @param {string} [settings.theme='light'] The theme name (light, dark or high-contrast)
+ * @param {string} [settings.font='Helvetica'] Use the newer source sans font
+*/
 function Personalize(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, PERSONALIZE_DEFAULTS);
@@ -85,7 +81,8 @@ Personalize.prototype = {
 
   /**
    * Validates a string containing a hexadecimal number
-   * @param {string} hex: A hex color.
+   * @private
+   * @param {string} hex A hex color.
    * @returns {string} a validated hexadecimal string.
    */
   validateHex(hex) {
@@ -98,6 +95,11 @@ Personalize.prototype = {
     return `#${hex}`;
   },
 
+  /**
+   * Validates a string containing a hexadecimal number
+   * @private
+   * @param {object} cssRules The rules to append.
+   */
   appendStyleSheet(cssRules) {
     let sheet = document.getElementById('soho-personalization');
     if (sheet) {
@@ -113,6 +115,12 @@ Personalize.prototype = {
     document.head.appendChild(sheet);
   },
 
+  /**
+   * Generate a style sheet to append in the page.
+   * @private
+   * @param {array} colors The rules to append.
+   * @returns {string} The string of css to append.
+   */
   getColorStyleSheet(colors) {
     if (!colors) {
       colors = {};
@@ -221,6 +229,7 @@ Personalize.prototype = {
 
   /**
   * Takes a color and performs a change in luminosity of that color programatically.
+  * @private
   * @param {string} hex  The original Hexadecimal base color.
   * @param {string} lum  A percentage used to set luminosity
   * change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
@@ -251,6 +260,11 @@ Personalize.prototype = {
     'high-contrast'
   ],
 
+  /**
+   * Detect the current theme based on the style sheet.
+   * @private
+   * @returns {string} The current theme.
+   */
   getThemeFromStylesheet() {
     const css = $('#stylesheet, #sohoxi-stylesheet');
     let thisTheme = '';
@@ -313,6 +327,7 @@ Personalize.prototype = {
 
   /**
    * Builds a temporary page overlay that prevents end users from experiencing FOUC
+   * @private
    * @returns {void}
    */
   blockUi() {
@@ -340,6 +355,7 @@ Personalize.prototype = {
 
   /**
    * Removes a temporary page overlay built by `blockUi()`
+   * @private
    * @returns {void}
    */
   unBlockUi() {
@@ -369,6 +385,7 @@ Personalize.prototype = {
   /**
    * Simple Teardown - remove events & rebuildable markup.
    * Ideally this will do non-destructive things that make it possible to easily rebuild
+   * @private
    * @returns {this} component instance
    */
   teardown() {

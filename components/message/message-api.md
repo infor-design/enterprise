@@ -2,31 +2,30 @@
 
 ### Table of Contents
 
--   [MESSAGE_DEFAULTS](#message_defaults)
--   [About](#about)
--   [destroy](#destroy)
+-   [Message][1]
 
-## MESSAGE_DEFAULTS
-
-**Properties**
-
--   `title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Title text or content shown in the message
--   `isError` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, will show title styled as an error with an error icon
--   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The message content or text
--   `width` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Pass a specific with or defaults to auto
--   `buttons` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Array of buttons to add to the message (see modal examples as well)
--   `cssClass` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Extra Class to add to the dialog for customization.
--   `returnFocus` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** JQuery Element selector to focus on return
-
-## About
+## Message
 
 The Message Component is used to show warning / error messages.
 
 **Parameters**
 
--   `element` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The component element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The component settings.
+-   `element` **[object][2]** The component element.
+-   `settings` **[object][2]?** The component settings.
+    -   `settings.title` **[string][3]** Title text or content shown in the message (optional, default `'Message Title'`)
+    -   `settings.isError` **[boolean][4]** If true, will show title styled as an error with an error icon (optional, default `false`)
+    -   `settings.message` **[string][3]** The message content or text (optional, default `'Message Summary'`)
+    -   `settings.width` **[number][5]** Pass a specific with or defaults to auto (optional, default `'auto'`)
+    -   `settings.buttons` **[object][2]** Array of buttons to add to the message (see modal examples as well) (optional, default `null`)
+    -   `settings.cssClass` **[string][3]** Extra Class to add to the dialog for customization. (optional, default `null`)
+    -   `settings.returnFocus` **[string][3]** JQuery Element selector to focus on return (optional, default `null`)
 
-## destroy
+[1]: #message
 
-Tear Down and destroy events. However the message will destroy itself on close.
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

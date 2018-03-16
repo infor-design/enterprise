@@ -2,15 +2,9 @@
 
 ### Table of Contents
 
--   [STEPPROCESS_DEFAULTS][1]
--   [Stepprocess][2]
-    -   [updated][3]
-    -   [destroy][4]
--   [selected][5]
-
-## STEPPROCESS_DEFAULTS
-
-Default Stepprocess Options
+-   [Stepprocess][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Stepprocess
 
@@ -18,22 +12,22 @@ A Stepprocess/wizard control
 
 **Parameters**
 
--   `element` **[String][6]** The component element.
--   `settings` **[String][6]** The component settings.
--   `linearProgression` **[boolean][7]** The Main Application Name to display
-    in the header. (Defaults to false)
--   `folderIconOpen` **[string][6]** A specific folder open icon. (Defaults to 'caret-up')
--   `folderIconClosed` **[string][6]** A specific folder close icon. (Defaults to 'caret-down')
--   `stepList` **[boolean][7]** Determines whether or not to display device
-    information (Browser, Platform, Locale, Cookies Enabled).
--   `stepLi` **[string][6]** jQuery selector for the step elements.
--   `stepLink` **[boolean][7]** jQuery selector for the step link elements.
--   `stepFolder` **[string][6]** jQuery selector for the step folder elements.
--   `btnPrev` **[string][6]** jQuery selector for the previous step button.
--   `btnNext` **[string][6]** jQuery selector for the next step button.
--   `beforeSelectStep` **[Function][8]** A callback (function or promise)
-    that gives args: stepLink (the step link element) and isStepping
-    (whether we are prev/next'ing or not).
+-   `element` **[string][4]** The component element.
+-   `settings` **[string][4]?** The component settings.
+    -   `settings.linearProgression` **[boolean][5]** The Main Application Name to display
+        in the header. (Defaults to false) (optional, default `false`)
+    -   `settings.folderIconOpen` **[string][4]** A specific folder open icon. (Defaults to 'caret-up') (optional, default `'caret-up'`)
+    -   `settings.folderIconClosed` **[string][4]** A specific folder close icon. (Defaults to 'caret-down') (optional, default `'caret-down'`)
+    -   `settings.stepList` **[boolean][5]** Determines whether or not to display device
+        information (Browser, Platform, Locale, Cookies Enabled). (optional, default `'#step-list'`)
+    -   `settings.stepLi` **[string][4]** jQuery selector for the step elements. (optional, default `'.js-step'`)
+    -   `settings.stepLink` **[boolean][5]** jQuery selector for the step link elements. (optional, default `'.js-step-link'`)
+    -   `settings.stepFolder` **[string][4]** jQuery selector for the step folder elements. (optional, default `'.js-step-folder'`)
+    -   `settings.btnPrev` **[string][4]** jQuery selector for the previous step button. (optional, default `'.js-step-link-prev'`)
+    -   `settings.btnNext` **[string][4]** jQuery selector for the next step button. (optional, default `'.js-step-link-prev'`)
+    -   `settings.beforeSelectStep` **[function][6]?** A callback (function or promise)
+        that gives args: stepLink (the step link element) and isStepping
+        (whether we are prev/next'ing or not).
 
 ### updated
 
@@ -41,9 +35,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object][9]** The settings to apply.
+-   `settings` **[object][7]** The settings to apply.
 
-Returns **[Object][9]** The api
+Returns **[object][7]** The api
 
 ### destroy
 
@@ -51,29 +45,16 @@ Destroy this component instance and remove the link from its base element.
 
 Returns **void** 
 
-## selected
+[1]: #stepprocess
 
-Fires when selected step link.
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[Object][9]** The jquery event object
--   `stepLink` **[Object][9]** element
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[1]: #stepprocess_defaults
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[2]: #stepprocess
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[3]: #updated
-
-[4]: #destroy
-
-[5]: #selected
-
-[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

@@ -4,22 +4,7 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'stepchart';
 
-/**
- * StepChart Default Options
- * @namespace
- * @property {number} steps The number of steps to show.
- * @property {number} completed The number of steps complete (linear).
- * @property {number} inProgress The number of the in progress step (linear).
- * @property {boolean} iconType The icon to display fx. 'icon-error', 'icon-confirm'
- * @property {string} completedText The completed text or uses a localized 'N of N Steps complete'.
- *  You can use {0} and {1} to replace n of n in the string.
- * @property {boolean} extraText The additional text to show on the right. Defaults to none. You
- *  can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
- * @property {string} completedColor The color to show completed steps. Defaults to primary color.
- * @property {string} allCompletedColor The color to steps when all are completed. Defaults to
- *  primary color.
- * @property {string} inProgressColor The color to show in-progress steps. Defaults to ruby02.
- */
+// Default component options
 const DEFAULT_STEPCHART_OPTIONS = {
   steps: null,
   completed: null,
@@ -38,7 +23,17 @@ const DEFAULT_STEPCHART_OPTIONS = {
  * @constructor
  * @param {jQuery[]|HTMLElement} element The base element
  * @param {object} [settings] incoming settings
- * @returns {this} component instance
+ * @param {number} [settings.steps = null] The number of steps to show.
+ * @param {number} [settings.completed = null] The number of steps complete (linear).
+ * @param {number} [settings.inProgress = null] The number of the in progress step (linear).
+ * @param {boolean} [settings.iconType = null] The icon to display fx. 'icon-error', 'icon-confirm'
+ * @param {string} [settings.completedText = null] The completed text or uses a localized 'N of N Steps complete'.
+ *  You can use {0} and {1} to replace n of n in the string.
+ * @param {boolean} [settings.extraText = ''] The additional text to show on the right. Defaults to none. You
+ *  can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
+ * @param {string} [settings.completedColor = null] The color to show completed steps. Defaults to primary color.
+ * @param {string} [settings.allCompletedColor = null] The color to steps when all are completed. Defaults to primary color.
+ * @param {string} i[settings.nProgressColor The color to show in-progress steps. Defaults to ruby02.
  */
 function StepChart(element, settings) {
   return this.init(element, settings);

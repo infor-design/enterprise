@@ -4,18 +4,7 @@ import { utils } from '../utils/utils';
 // Component Name
 const COMPONENT_NAME = 'splitter';
 
-/**
- * Default Splitter Options
- * @namespace
- * @property {string} axis x or y
- * @property {string} side left or right
- * @property {string} resize immediate,
- * @property {HTMLElement|jQuery[]} [containment] can be document, or a parent element
- * @property {boolean} save
- * @property {object} maxWidth
- * @property {string|number} maxWidth.left 'auto' or a pixel value
- * @property {string|number} maxWidth.right 'auto' or a pixel value
- */
+// Default Splitter Options
 const SPLITTER_DEFAULTS = {
   axis: 'x',
   side: 'left', // or right
@@ -29,11 +18,17 @@ const SPLITTER_DEFAULTS = {
 };
 
 /**
-*
+* Splitter Component
 * @class Splitter
 * @constructor
-* @param {String} element The component element.
-* @param {String} settings The component settings.
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
+* @param {string} [settings.axis = 'x'] The axis on which to split x or y
+* @param {string} [settings.side = 'left'] Which side to dock to 'left' or 'right'.
+* @param {string} [settings.resize = 'immediate'] When to resize, during the drag 'immediate' or 'end'
+* @param {HTMLElement|jQuery[]} [settings.containment = null] When to stop the splitter, this can be document, or a parent element
+* @param {boolean} [settings.save = true] If true the split size will automatically be saved for next time
+* @param {object} [settings.maxWidth = {left: 'auto', right: 'auto'}] Ability to stop dragging at a max left or right size.
 */
 function Splitter(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SPLITTER_DEFAULTS);
@@ -224,9 +219,9 @@ Splitter.prototype = {
   /**
    * Resize the panel vertically
    * @private
-   * @param {Object} splitter element.
-   * @param {Number} top value.
-   * @param {Number} parentHeight value.
+   * @param {object} splitter element.
+   * @param {number} top value.
+   * @param {number} parentHeight value.
    * @returns {void}
    */
   resizeTop(splitter, top, parentHeight) {
@@ -240,8 +235,8 @@ Splitter.prototype = {
   /**
    * Resize the panel to the Left
    * @private
-   * @param {Object} splitter element.
-   * @param {Number} leftArg value.
+   * @param {object} splitter element.
+   * @param {number} leftArg value.
    * @returns {void}
    */
   resizeLeft(splitter, leftArg) {
@@ -257,8 +252,8 @@ Splitter.prototype = {
   /**
    * Resize the panel to the Right
    * @private
-   * @param {Object} splitter element.
-   * @param {Number} w - width value.
+   * @param {object} splitter element.
+   * @param {number} w - width value.
    * @returns {void}
    */
   resizeRight(splitter, w) {
@@ -270,7 +265,7 @@ Splitter.prototype = {
   /**
    * Preferably use the id, but if none that make one based on the url and count
    * @private
-   * @returns {String} uniqueId
+   * @returns {string} uniqueId
    */
   uniqueId() {
     return this.element.attr('id') ||
@@ -280,8 +275,8 @@ Splitter.prototype = {
   /**
    * Split to
    * @private
-   * @param {Number} split value.
-   * @param {Number} parentHeight value.
+   * @param {number} split value.
+   * @param {number} parentHeight value.
    * @returns {void}
    */
   splitTo(split, parentHeight) {
@@ -304,12 +299,11 @@ Splitter.prototype = {
     }
 
     /**
-    * Fires when split.
-    *
+    * Fires when after the split occurs. Allowing you to sync any ui.
     * @event split
-    * @type {Object}
-    * @property {Object} event - The jquery event object
-    * @property {Number} split value
+    * @memberof Splitter
+    * @property {object} event The jquery event object
+    * @property {number} split value
     */
     this.element.trigger('split', [split]);
     this.docBody.triggerHandler('resize', [self]);
@@ -326,7 +320,7 @@ Splitter.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     this.element.off(`updated.${COMPONENT_NAME}`);
@@ -335,8 +329,8 @@ Splitter.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
@@ -367,8 +361,9 @@ Splitter.prototype = {
       * Fires when the component updates.
       *
       * @event updated
-      * @type {Object}
-      * @property {Object} event - The jquery event object
+      * @memberof Splitter
+      * @type {object}
+      * @property {object} event - The jquery event object
       */
       .on(`updated.${COMPONENT_NAME}`, () => {
         this.updated();
@@ -378,8 +373,9 @@ Splitter.prototype = {
       * Fires when a key is pressed while the component is focused.
       *
       * @event keydown
-      * @type {Object}
-      * @property {Object} event - The jquery event object
+      * @memberof Splitter
+      * @type {object}
+      * @property {object} event - The jquery event object
       */
       .on(`keydown.${COMPONENT_NAME}`, (e) => {
         // Space will toggle selection

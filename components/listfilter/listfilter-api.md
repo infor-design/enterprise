@@ -2,25 +2,10 @@
 
 ### Table of Contents
 
--   [LISTFILTER_DEFAULTS](#listfilter_defaults)
--   [ListFilter](#listfilter)
-    -   [filter](#filter)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## LISTFILTER_DEFAULTS
-
-ListFilter default settings
-
-**Parameters**
-
--   `caseSensitive` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to true if searches ARE case sensitive
--   `filterMode` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Type of search can current be either 'startsWith' or 'contains'
--   `highlightMatchedText` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Inserts markup that appears to highlight text
--   `highlightCallback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** If defined, will execute this code for highlighting text
-    instead of the built-in highlighting code
--   `searchableTextCallback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** If defined, will take each filterable item passed and
-    return user-defined, searchable text content
+-   [ListFilter][1]
+    -   [filter][2]
+    -   [updated][3]
+    -   [destroy][4]
 
 ## ListFilter
 
@@ -28,7 +13,14 @@ Abstracted search/filter for use in other controls
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][5]?** incoming settings
+    -   `settings.caseSensitive` **[boolean][6]** Set to true if searches ARE case sensitive (optional, default `false`)
+    -   `settings.filterMode` **[string][7]** Type of search can current be either 'startsWith' or 'contains' (optional, default `'startsWith'`)
+    -   `settings.highlightMatchedText` **[boolean][6]** Inserts markup that appears to highlight text (optional, default `false`)
+    -   `settings.highlightCallback` **[function][8]?** If defined, will execute this code for highlighting text
+        instead of the built-in highlighting code
+    -   `settings.searchableTextCallback` **[function][8]?** If defined, will take each
+        filterable item passed and return user-defined, searchable text content
 
 ### filter
 
@@ -36,10 +28,10 @@ Run the filter on the list for the given search term.
 
 **Parameters**
 
--   `list` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The array to search.
--   `term` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The term to look for.
+-   `list` **[array][9]** The array to search.
+-   `term` **[string][7]** The term to look for.
 
-Returns **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** false if filtering failed,
+Returns **([boolean][6] \| [array][9] \| [Array][9]&lt;jquery>)** false if filtering failed,
  or an array/jQuery of items that matched the filter.
 
 ### updated
@@ -48,10 +40,28 @@ Updates the ListFilter with new settings
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][5]?** incoming settings
 
-Returns **this** component instance
+Returns **[object][5]** component instance
 
 ### destroy
 
-Returns **this** component instance
+Returns **[object][5]** component instance
+
+[1]: #listfilter
+
+[2]: #filter
+
+[3]: #updated
+
+[4]: #destroy
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array

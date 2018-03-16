@@ -5,18 +5,15 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'signin';
 
-/**
- * Default SignIn Options
- * @namespace
- */
+// Default SignIn Options
 const SIGNIN_DEFAULTS = {
 };
 
 /**
-*
+* The sign in page component.
 * @class SignIn
-* @param {String} element The component element.
-* @param {String} settings The component settings.
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
 */
 function SignIn(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SIGNIN_DEFAULTS);
@@ -37,8 +34,8 @@ SignIn.prototype = {
   /**
    * Checks a keyboard event for a CAPS LOCK modifier.
    * @private
-   * @param {Object} e jQuery.Event
-   * @returns {Boolean} true if caps lock
+   * @param {object} e jQuery.Event
+   * @returns {boolean} true if caps lock
    */
   isCapslock(e) {
     e = e || window.event;
@@ -69,7 +66,7 @@ SignIn.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     $('body').off('keypress.signin blur.signin change.signin');
@@ -78,8 +75,8 @@ SignIn.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
@@ -112,13 +109,6 @@ SignIn.prototype = {
     document.msCapsLockWarningOff = true;
 
     this.element
-      /**
-      * Fires when keypress.
-      *
-      * @event keypress
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      */
       .on('keypress.signin', '[type="password"]', function (e) {
         const field = $(this);
         const fieldParent = field.parent('.field');
@@ -133,27 +123,11 @@ SignIn.prototype = {
           iconCapslock.remove();
         }
       })
-
-      /**
-      * Fires when blur.
-      *
-      * @event blur
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      */
       .on('blur.signin change.signin', '[type="password"]', function () {
         const field = $(this);
         const fieldParent = field.closest('.field');
         const iconCapslock = $('.icon-capslock', fieldParent);
 
-        /**
-        * Fires when change.
-        *
-        * @event change
-        * @type {Object}
-        * @property {Object} event - The jquery event object
-        */
-        // Wait for error class to be added
         setTimeout(() => {
           if (iconCapslock && iconCapslock.length) {
             if (field.hasClass('error')) {

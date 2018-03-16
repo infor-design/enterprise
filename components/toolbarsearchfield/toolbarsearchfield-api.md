@@ -2,170 +2,54 @@
 
 ### Table of Contents
 
--   [TBSF_DEFAULTS](#tbsf_defaults)
--   [ToolbarSearchfield](#toolbarsearchfield)
-    -   [build](#build)
-    -   [hasFocus](#hasfocus)
-    -   [hasCategories](#hascategories)
-    -   [hasGoButton](#hasgobutton)
-    -   [handleFocus](#handlefocus)
-    -   [handleFocusOut](#handlefocusout)
-    -   [isSearchfieldElement](#issearchfieldelement)
-    -   [handleOutsideClick](#handleoutsideclick)
-    -   [handleKeydown](#handlekeydown)
-    -   [handleOutsideKeydown](#handleoutsidekeydown)
-    -   [handlePopupBeforeOpen](#handlepopupbeforeopen)
-    -   [getFillSize](#getfillsize)
-    -   [isActive](#isactive)
-    -   [isOpen](#isopen)
-    -   [adjustOnBreakpoint](#adjustonbreakpoint)
-    -   [expand](#expand)
-    -   [collapse](#collapse)
-    -   [updated](#updated)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [teardown](#teardown)
-    -   [destroy](#destroy)
-    -   [handleEvents](#handleevents)
-
-## TBSF_DEFAULTS
-
-Component Default Settings
-
-**Properties**
-
--   `clearable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If "true", provides an "x" button on the right
-     edge that clears the field
--   `collapsible` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If "true", allows the field to expand/collapse
-     on larger breakpoints when focused/blurred respectively
--   `collapsibleOnMobile` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, overrides `collapsible` only
-     on mobile settings.
+-   [ToolbarSearchfield][1]
+    -   [hasFocus][2]
+    -   [hasCategories][3]
+    -   [hasGoButton][4]
+    -   [handleFocus][5]
+    -   [expand][6]
+    -   [collapse][7]
+    -   [updated][8]
+    -   [enable][9]
+    -   [disable][10]
+    -   [destroy][11]
+    -   [handleEvents][12]
 
 ## ToolbarSearchfield
 
 Searchfield Component Wrapper that extends normal Searchfield functionality
  and provides collapse/expand behavior.  For use inside of Toolbars.
 
-Type: [ToolbarSearchfield](#toolbarsearchfield)
-
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-### build
-
-Creates and manages any markup the control needs to function.
-
-Returns **this** component instance
+-   `element` **([HTMLElement][13] \| [Array][14]&lt;jQuery>)** the base element
+-   `settings` **[object][15]?** incoming settings
+    -   `settings.clearable` **[boolean][16]** If "true", provides an "x" button on the right edge that clears the field (optional, default `true`)
+    -   `settings.collapsible` **[boolean][16]** If "true", allows the field to expand/collapse on larger breakpoints when
+        focused/blurred respectively (optional, default `true`)
+    -   `settings.collapsibleOnMobile` **[boolean][16]** If true, overrides `collapsible` only on mobile settings. (optional, default `true`)
 
 ### hasFocus
 
 Detects whether or not the Toolbar Searchfield has focus.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the Toolbar Searchfield has focus.
+Returns **[boolean][16]** whether or not the Toolbar Searchfield has focus.
 
 ### hasCategories
 
 Detects the existence of a "Categories" button added to the searchfield
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not a categories button exists.
+Returns **[boolean][16]** whether or not a categories button exists.
 
 ### hasGoButton
 
 Detects the existence of a "Go" button added to the main searchfield API
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not a "Go" button exists.
+Returns **[boolean][16]** whether or not a "Go" button exists.
 
 ### handleFocus
 
 Handles the focus of the searchfield.
-
-Returns **void** 
-
-### handleFocusOut
-
-Handles the "focusout" event
-
-Returns **void** 
-
-### isSearchfieldElement
-
-Detects whether or not an element is part of this instance of the Searchfield component
-
-**Parameters**
-
--   `element` **[HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element)** the element being checked.
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the element provided is part of this Searchfield component
-
-### handleOutsideClick
-
-Event Handler for dealing with global (document) level clicks.
-
-**Parameters**
-
--   `e` **jQuery.Event** `click` event
-
-Returns **void** 
-
-### handleKeydown
-
-Handles Keydown Events
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery-wrapped Keydown event.
-
-Returns **void** 
-
-### handleOutsideKeydown
-
-Handles global (document) level keydown events that are established to help
-collapse/de-highlight searchfields on a timer.
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery-wrapped Keydown event
-
-Returns **void** 
-
-### handlePopupBeforeOpen
-
-Event Handler for the Popupmenu Component's custom `beforeopen` event.
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery-wrapped `beforeopen` Event
--   `menu` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** reference to the popupmenu
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** the ability to cancel the menu's opening.
-
-### getFillSize
-
-Retrieves the distance between a left and right boundary.
-Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.
-
-**Parameters**
-
--   `leftBoundary` **([Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** left boundary in pixels
--   `rightBoundary` **([Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** right boundary in pixels
-
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the fill size area
-
-### isActive
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not one of the components inside of this searchfield
- is the document's "active" element.
-
-### isOpen
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not this searchfield instance is currently expanded.
-
-### adjustOnBreakpoint
-
-Makes necessary adjustments to the DOM surrounding the Searchfield element to accommodate
-breakpoint changes.
 
 Returns **void** 
 
@@ -175,7 +59,7 @@ Expands the Searchfield
 
 **Parameters**
 
--   `noFocus` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If defined, causes the searchfield component not to become focused
+-   `noFocus` **[boolean][16]?** If defined, causes the searchfield component not to become focused
      at the end of the expand method. Its default functionality is that it will become focused.
 
 Returns **void** 
@@ -193,7 +77,7 @@ Rebuilds key parts of the control that otherwise wouldn't automatically update.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][15]?** incoming settings
 
 Returns **this** component instance
 
@@ -209,23 +93,49 @@ Disables the Searchfield
 
 Returns **void** 
 
-### teardown
-
-Tears down events, properties, etc. and resets the control to "factory" state
-
-Returns **this** component instance
-
 ### destroy
 
 Removes the entire control from the DOM and from this element's internal data
 
 **Parameters**
 
--   `dontDestroySearchfield` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy
+-   `dontDestroySearchfield` **[boolean][16]** if true, will not pass through and destroy
     a linked instance of the Searchfield component.
 
 ### handleEvents
 
-This component fires the following events.
+Removes the entire control from the DOM and from this element's internal data
 
-Returns **this** component instance
+Returns **void** 
+
+[1]: #toolbarsearchfield
+
+[2]: #hasfocus
+
+[3]: #hascategories
+
+[4]: #hasgobutton
+
+[5]: #handlefocus
+
+[6]: #expand
+
+[7]: #collapse
+
+[8]: #updated
+
+[9]: #enable
+
+[10]: #disable
+
+[11]: #destroy
+
+[12]: #handleevents
+
+[13]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

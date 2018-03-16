@@ -1,49 +1,86 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The plugin element for the constuctor
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The settings element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset
+    </td>
+    <td>
+      <span>[]</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      An array of data objects
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.selectable
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Controls the selection mode this can be:
+false, 'single' or 'multiple' or 'mixed'
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          dataset
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An array of data objects
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          selectable
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Controls the selection mode this can be:
-false, 'single' or 'multiple' or 'mixed'
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -108,10 +145,7 @@ void
   </table>
 
 
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -121,6 +155,68 @@ void
         <th>Description</th>
       </thead>
       <tbody>
+      
+        <tr>
+  <td>deactivated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a block is selected
+</td>
+</tr>
+
+      
+        <tr>
+  <td>activated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a block is unselected
+</td>
+</tr>
+
       
         <tr>
   <td>selected

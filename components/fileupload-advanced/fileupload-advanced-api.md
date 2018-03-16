@@ -2,41 +2,14 @@
 
 ### Table of Contents
 
--   [FILEUPLOADADVANCED_DEFAULTS](#fileuploadadvanced_defaults)
--   [FileUploadAdvanced](#fileuploadadvanced)
-    -   [handleFileUpload](#handlefileupload)
-    -   [createStatus](#createstatus)
-    -   [sendFileToServer](#sendfiletoserver)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [filesdroped](#filesdroped)
--   [beforecreatestatus](#beforecreatestatus)
--   [aftercreatestatus](#aftercreatestatus)
--   [fileprogress](#fileprogress)
--   [fileaborted](#fileaborted)
--   [filecompleteuploading](#filecompleteuploading)
-
-## FILEUPLOADADVANCED_DEFAULTS
-
-Default FileUploadAdvanced Options
-
-**Properties**
-
--   `isStandalone` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** On page(true)|on modal(false), used for some visual style only.
--   `allowedTypes` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Restrict file types(ie. 'jpg|png|gif') ['*' all types]
--   `maxFilesInProcess` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Max number of files can be uploaded
--   `maxFileSize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Max file size in bytes, -1 for unlimited
--   `fileName` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Variable name to read from server
--   `isDisabled` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Make control disabled
--   `showBrowseButton` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Add way to browse files to upload
--   `send` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Method for send file to upload
--   `textDropArea` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Text to show in drop area
--   `textDropAreaWithBrowse` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Text to show in drop area when browse option true
--   `textBtnCancel` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Hidden text for cancel button
--   `textBtnCloseError` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Hidden text for error close button
--   `textBtnRemove` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Hidden text for remove button
+-   [FileUploadAdvanced][1]
+    -   [handleFileUpload][2]
+    -   [createStatus][3]
+    -   [sendFileToServer][4]
+    -   [enable][5]
+    -   [disable][6]
+    -   [updated][7]
+    -   [destroy][8]
 
 ## FileUploadAdvanced
 
@@ -44,8 +17,25 @@ A trigger field for uploading a single file.
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **([Array][9]&lt;jQuery> | [HTMLElement][10])** The component element.
+-   `settings` **[object][11]?** The component settings.
+    -   `settings.isStandalone` **[boolean][12]** On page(true)|on modal(false), used for some visual style only. (optional, default `true`)
+    -   `settings.standaloneClass` **[string][13]** Css class if on page. (optional, default `'standalone'`)
+    -   `settings.allowedTypes` **[string][13]** Restrict file types(ie. 'jpg|png|gif') ['*' all types] (optional, default `'*'`)
+    -   `settings.maxFilesInProcess` **[number][14]** Max number of files can be uploaded (optional, default `99999`)
+    -   `settings.maxFileSize` **[number][14]** Max file size in bytes, -1 for unlimited (optional, default `-1`)
+    -   `settings.fileName` **[string][13]** Variable name to read from server (optional, default `'myfile'`)
+    -   `settings.isDisabled` **[boolean][12]** Make control disabled (optional, default `false`)
+    -   `settings.showBrowseButton` **[boolean][12]** Add way to browse files to upload (optional, default `true`)
+    -   `settings.send` **[Function][15]?** Method for send file to upload
+    -   `settings.textDropArea` **[string][13]?** Text to show in drop area
+    -   `settings.textDropAreaWithBrowse` **[string][13]?** Text to show in drop area when browse option true
+    -   `settings.textBtnCancel` **[string][13]?** Hidden text for cancel button
+    -   `settings.textBtnCloseError` **[string][13]?** Hidden text for error close button
+    -   `settings.textBtnRemove` **[string][13]?** Hidden text for remove button
+    -   `settings.errorAllowedTypes` **[string][13]?** Error text for allowed types
+    -   `settings.errorMaxFileSize` **[string][13]?** Error text for max file size
+    -   `settings.errorMaxFilesInProcess` **[string][13]?** Error text for max files in process
 
 ### handleFileUpload
 
@@ -53,7 +43,7 @@ Read the file contents using HTML5 FormData()
 
 **Parameters**
 
--   `files` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** File object containing uploaded files.
+-   `files` **[object][11]** File object containing uploaded files.
 
 Returns **void** 
 
@@ -63,9 +53,9 @@ Create status object
 
 **Parameters**
 
--   `file` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** to create progress status.
+-   `file` **[object][11]** to create progress status.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** contains file and status methods to access.
+Returns **[object][11]** contains file and status methods to access.
 
 ### sendFileToServer
 
@@ -73,8 +63,8 @@ Function you can implement to send data to the server.
 
 **Parameters**
 
--   `formData` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Contains the form data / file data.
--   `status` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Status of the upload operation
+-   `formData` **[object][11]** Contains the form data / file data.
+-   `status` **[object][11]** Status of the upload operation
 
 Returns **void** 
 
@@ -96,9 +86,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][11]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][11]** The api
 
 ### destroy
 
@@ -106,56 +96,32 @@ Destroy and remove added markup, all events
 
 Returns **void** 
 
-## filesdroped
+[1]: #fileuploadadvanced
 
-Fires when file/s drag and droped to drop area.
+[2]: #handlefileupload
 
-**Properties**
+[3]: #createstatus
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `files` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of files droped
+[4]: #sendfiletoserver
 
-## beforecreatestatus
+[5]: #enable
 
-Fires before create the progress status object.
+[6]: #disable
 
-**Properties**
+[7]: #updated
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `file` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** file to set the status
+[8]: #destroy
 
-## aftercreatestatus
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-Fires after create the progress status object.
+[10]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-**Properties**
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `file` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** file to set the status
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-## fileprogress
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-Fires when file progress status changes.
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `status` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** `{ file, progress }`
-
-## fileaborted
-
-Fires when file aborted.
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `file` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** aborted
-
-## filecompleteuploading
-
-Fires when file complete uploading.
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `file` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** uploaded
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function

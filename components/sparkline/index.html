@@ -6,111 +6,153 @@
 <li>Example showing Set Selected value <a href="../components/sparkline/example-set-selected">View Example</a></li>
 </ol>
 <h2 id="api-details">API Details</h2>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The plugin element for the constuctor
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The settings element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      The data to use in the sparklines.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.colors
+    </td>
+    <td>
+      <span>[&#39;#1D5F8A&#39;,&#39;#999999&#39;,&#39;#bdbdbd&#39;,&#39;#d8d8d8&#39;]</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      An array of color sequences in hex format fx #1D5F8A,
+defaulting to the correct standard colors.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.isDots
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Shows dots on the data points.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.isPeakDot
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Highlights the top value as peak with a special dot.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.isMinMax
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Shows a continuous shading to highlight the min and max values.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.isMedianRange
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Adds a median range display.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          dataset
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          The data to use in the sparklines.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          name
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The name of the data used in the accessibility label and tooltip.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          colors
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An array of color sequences in hex format fx #1D5F8A.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          isDots
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Shows dots on the data points.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          isPeakDot
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Highlights the top value as peak with a special dot.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          isMinMax
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Shows a continuous shading to highlight the min and max values.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          isMedianRange
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Adds a median range display.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -157,8 +199,8 @@ void
   </table>
 
 
+  
   </section>
-
   
 
 <h2 id="spark-line-chart-types">Spark Line Chart Types</h2>

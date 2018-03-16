@@ -6,19 +6,7 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'toast';
 
-/**
- * Default Settings for Toast
- * @namespace
- * @property {string} title text that is displayed in the Toast's title.
- * @property {string} message text/HTML that's displayed in the Toast's body.
- * @property {string} position text that propagates into CSS classes that
- *  position the Toast in specific places. top left, bottom left, bottom right (center??)
- * @property {boolean} audibleOnly if true, causes the toast to be invisble on the screen,
- * but still read out lout by screen readers.
- * @property {boolean} progressBar causes the toast to have a visible progress bar that
- *  will be completely disappeared when the toast should be removed.
- * @property {number} timeout the amount of time the toast should be present on-screen.
- */
+// Default Component Settings
 const TOAST_DEFAULTS = {
   title: '(Title)',
   message: '(Content)',
@@ -34,6 +22,14 @@ const TOAST_DEFAULTS = {
  * @constructor
  * @param {HTMLElement} element the target location for the Toast message
  * @param {object} [settings] incoming settings
+ * @param {string} [settings.title = '(Title)'] Text that is displayed in the Toast's title.
+ * @param {string} [settings.message = '(Content)' ] Text/HTML that's displayed in the Toast's body.
+ * @param {string} [settings.position = 'top right'] text that propagates into CSS classes that position the Toast in specific places
+ * Can be top left, bottom left, bottom rightx
+ * @param {boolean} [settings.audibleOnly = false] if true, causes the toast to be invisble on the screen, but still read out lout by screen readers.
+ * @param {boolean} [settings.progressBar = true] causes the toast to have a visible progress bar that will be completely
+ * disappeared when the toast should be removed.
+ * @param {number} [settings.timeout = 6000] the amount of time the toast should be present on-screen.
  */
 function Toast(element, settings) {
   this.element = $(element);
@@ -56,6 +52,7 @@ Toast.prototype = {
 
   /**
    * Show a Single Toast Message
+   * @private
    * @returns {void}
    */
   show() {
@@ -136,6 +133,7 @@ Toast.prototype = {
 
   /**
    * Remove the Message and Animate
+   * @private
    * @param {jQuery[]|HTMLElement} toast the toast message to be removed
    * @returns {void}
    */

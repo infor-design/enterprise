@@ -2,22 +2,18 @@
 
 ### Table of Contents
 
--   [COMPLETION_CHART_DEFAULTS](#completion_chart_defaults)
--   [CompletionChart](#completionchart)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## COMPLETION_CHART_DEFAULTS
+-   [CompletionChart][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## CompletionChart
 
-A completion chart shows completion over a target value.
-Usually used to show progress as a percentage.
+A completion chart shows completion over a target value. Usually used to show progress as a percentage.
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
+-   `element` **[string][4]** The plugin element for the constuctor
+-   `settings` **[string][4]?** The settings element.
 
 ### updated
 
@@ -25,12 +21,22 @@ Handle updated settings and values.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings object
+-   `settings` **[object][5]** The new settings object
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
+Returns **[object][5]** The api for chaining.
 
 ### destroy
 
 Teardown - Remove added markup and events.
 
 Returns **void** 
+
+[1]: #completionchart
+
+[2]: #updated
+
+[3]: #destroy
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

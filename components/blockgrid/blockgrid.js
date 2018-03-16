@@ -6,10 +6,12 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'blockgrid';
 
 /**
- * Blockgrid Default Settings
- * @namespace
- * @property {array} dataset An array of data objects
- * @property {string} selectable Controls the selection mode this can be:
+ * Component Name - Does this and that.
+ * @class Blockgrid
+ * @param {string} element The plugin element for the constuctor
+ * @param {string} [settings] The settings element.
+ * @param {array} [settings.dataset=[]] An array of data objects
+ * @param {string} [settings.selectable=false] Controls the selection mode this can be:
  * false, 'single' or 'multiple' or 'mixed'
  */
 const BLOCKGRID_DEFAULTS = {
@@ -17,12 +19,6 @@ const BLOCKGRID_DEFAULTS = {
   selectable: false // false, 'single' or 'multiple' or mixed
 };
 
-/**
- * Component Name - Does this and that.
- * @class Blockgrid
- * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
- */
 function Blockgrid(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings, BLOCKGRID_DEFAULTS);
@@ -155,6 +151,22 @@ Blockgrid.prototype = {
       const isActivated = activeBlock.hasClass('is-activated');
       allBlocks.removeClass('is-activated');
 
+      /**
+      * Fires when a block is selected
+      *
+      * @event deactivated
+      * @memberof Blockgrid
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
+      */
+      /**
+      * Fires when a block is unselected
+      *
+      * @event activated
+      * @memberof Blockgrid
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
+      */
       if (isActivated) {
         activeBlock.removeClass('is-activated');
         this.element.triggerHandler('deactivated', [{ row: idx, item: this.settings.dataset[idx] }]);
@@ -169,6 +181,7 @@ Blockgrid.prototype = {
     * Fires when a block is selected
     *
     * @event selected
+    * @memberof Blockgrid
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */
@@ -176,6 +189,7 @@ Blockgrid.prototype = {
     * Fires when a block is unselected
     *
     * @event unselected
+    * @memberof Blockgrid
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */

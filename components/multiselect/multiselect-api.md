@@ -2,27 +2,11 @@
 
 ### Table of Contents
 
--   [MULTISELECT_DEFAULTS](#multiselect_defaults)
--   [MultiSelect](#multiselect)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## MULTISELECT_DEFAULTS
-
-Multiselect Component Defaults
-
-**Properties**
-
--   `filterMode` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The search mode to use, can be 'contains' or 'startsWith'
--   `maxSelected` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The max number of items which can be selected
--   `moveSelected` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Move selected options in each group to just underneath
-     their corresponding group headers.
--   `showEmptyGroupHeaders` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true groups with no items will still show
-     the empty group header.
--   `showSelectAll` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Show the select all text/option.
--   `source` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** The calback for ajax.
+-   [MultiSelect][1]
+    -   [enable][2]
+    -   [disable][3]
+    -   [updated][4]
+    -   [destroy][5]
 
 ## MultiSelect
 
@@ -30,8 +14,14 @@ The MultiSelect Component allows selecting multiple items from a list
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `element` **([Array][6]&lt;jQuery> | [HTMLElement][7])** the base element
+-   `settings` **[object][8]?** incoming settings
+    -   `settings.filterMode` **[string][9]** The search mode to use, can be 'contains' or 'startsWith' (optional, default `'contains'`)
+    -   `settings.maxSelected` **[number][10]** The max number of items which can be selected (optional, default `null`)
+    -   `settings.moveSelected` **[string][9]** Move selected options in each group to just underneath their corresponding group headers. (optional, default `'all'`)
+    -   `settings.showEmptyGroupHeaders` **[boolean][11]** If true groups with no items will still show the empty group header. (optional, default `false`)
+    -   `settings.showSelectAll` **[boolean][11]** Show the select all button and text . (optional, default `false`)
+    -   `settings.source` **[function][12]?** The calback for ajax.
 
 ### enable
 
@@ -51,7 +41,7 @@ Trigger a rebuild due to settings change
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][8]?** incoming settings
 
 Returns **void** 
 
@@ -60,3 +50,27 @@ Returns **void**
 Remove added markup and events
 
 Returns **void** 
+
+[1]: #multiselect
+
+[2]: #enable
+
+[3]: #disable
+
+[4]: #updated
+
+[5]: #destroy
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[7]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function

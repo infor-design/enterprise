@@ -2,44 +2,19 @@
 
 ### Table of Contents
 
--   [LOOKUP_DEFAULTS](#lookup_defaults)
--   [Lookup](#lookup)
-    -   [openDialog](#opendialog)
-    -   [createModal](#createmodal)
-    -   [createGrid](#creategrid)
-    -   [selectGridRows](#selectgridrows)
-    -   [selectRowByValue](#selectrowbyvalue)
-    -   [insertRows](#insertrows)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [readonly](#readonly)
-    -   [isDisabled](#isdisabled)
-    -   [isReadonly](#isreadonly)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## LOOKUP_DEFAULTS
-
-Default Lookup Settings
-
-**Properties**
-
--   `click` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Provide a special function to run when the dialog opens to
-    customize the interaction entirely.
--   `field` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Field name to return from the dataset or can be a function
-    which returns a string on logic
--   `title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Dialog title to show, or befault shows  field label + "Lookup"
--   `buttons` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** Pass dialog buttons or Cancel / Apply
--   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Options to pass to the datagrid
--   `beforeShow` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Call back that executes async before the lookup is opened.
--   `modalContent` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Custom modal markup can be sent in here
--   `editable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Can the user type text in the field
--   `autoApply` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If set to false the dialog wont apply the value on
-    clicking a value.
--   `validator` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** A function that fires to let you validate form
-    items on open and select
--   `autoWidth` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the field will grow/change in size based
-    on the content selected.
+-   [Lookup][1]
+    -   [createModal][2]
+    -   [createGrid][3]
+    -   [selectGridRows][4]
+    -   [selectRowByValue][5]
+    -   [insertRows][6]
+    -   [enable][7]
+    -   [disable][8]
+    -   [readonly][9]
+    -   [isDisabled][10]
+    -   [isReadonly][11]
+    -   [updated][12]
+    -   [destroy][13]
 
 ## Lookup
 
@@ -47,18 +22,19 @@ Input element that opens a dialog with a list for selection.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-### openDialog
-
-Create and Open the Dialog
-
-**Parameters**
-
--   `e` **jQuery.Event** click or keyup event
-
-Returns **void** 
+-   `element` **([Array][14]&lt;jquery> | [htmlelement][15])** the base element
+-   `settings` **[object][16]?** incoming settings
+    -   `settings.click` **[function][17]?** Provide a special function to run when the dialog opens to customize the interaction entirely.
+    -   `settings.field` **[string][18]** Field name to return from the dataset or can be a function which returns a string on logic (optional, default `'id'`)
+    -   `settings.title` **[string][18]?** Dialog title to show, or befault shows  field label + "Lookup"
+    -   `settings.buttons` **[array][14]?** Pass dialog buttons or Cancel / Apply
+    -   `settings.options` **[object][16]?** Options to pass to the datagrid
+    -   `settings.beforeShow` **[function][17]?** Call back that executes async before the lookup is opened.
+    -   `settings.modalContent` **[string][18]?** Custom modal markup can be sent in here
+    -   `settings.editable` **[boolean][19]** Can the user type text in the field (optional, default `true`)
+    -   `settings.autoApply` **[boolean][19]** If set to false the dialog wont apply the value on clicking a value. (optional, default `true`)
+    -   `settings.validator` **[function][17]?** A function that fires to let you validate form items on open and select
+    -   `settings.autoWidth` **[boolean][19]** If true the field will grow/change in size based on the content selected. (optional, default `false`)
 
 ### createModal
 
@@ -72,7 +48,7 @@ Overridable Function in which we create the grid on the current UI dialog.
 
 **Parameters**
 
--   `grid` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** jQuery wrapped element containing a pre-invoked datagrid instance
+-   `grid` **[Array][14]&lt;jquery>** jQuery wrapped element containing a pre-invoked datagrid instance
 
 Returns **void** 
 
@@ -82,7 +58,7 @@ Given a field value, select the row
 
 **Parameters**
 
--   `val` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming value from the grid row
+-   `val` **[object][16]** incoming value from the grid row
 
 Returns **void** 
 
@@ -92,8 +68,8 @@ Find the row and select it based on select value / function / field value
 
 **Parameters**
 
--   `field` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the ID of the field whose value is to be returned.
--   `value` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the value to set.
+-   `field` **[string][18]** the ID of the field whose value is to be returned.
+-   `value` **[string][18]** the value to set.
 
 Returns **void** 
 
@@ -123,11 +99,15 @@ Returns **void**
 
 ### isDisabled
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the Input is disabled
+Input is disabled or not
+
+Returns **[boolean][19]** whether or not the Input is disabled
 
 ### isReadonly
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the Input is readonly
+Input is readonly or not
+
+Returns **[boolean][19]** whether or not the Input is readonly
 
 ### updated
 
@@ -135,7 +115,7 @@ Updates the lookup instance with new settings
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming settings
+-   `settings` **[object][16]** incoming settings
 
 Returns **void** 
 
@@ -144,3 +124,41 @@ Returns **void**
 Teardown events and objects.
 
 Returns **void** 
+
+[1]: #lookup
+
+[2]: #createmodal
+
+[3]: #creategrid
+
+[4]: #selectgridrows
+
+[5]: #selectrowbyvalue
+
+[6]: #insertrows
+
+[7]: #enable
+
+[8]: #disable
+
+[9]: #readonly
+
+[10]: #isdisabled
+
+[11]: #isreadonly
+
+[12]: #updated
+
+[13]: #destroy
+
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[15]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

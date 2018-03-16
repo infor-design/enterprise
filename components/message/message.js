@@ -8,15 +8,18 @@ import '../modal/modal';
 const COMPONENT_NAME = 'message';
 
 /**
-* @namespace
-* @property {string} title  Title text or content shown in the message
-* @property {boolean} isError  If true, will show title styled as an error with an error icon
-* @property {string} message  The message content or text
-* @property {number} width  Pass a specific with or defaults to auto
-* @property {object} buttons  Array of buttons to add to the message (see modal examples as well)
-* @property {string} cssClass  Extra Class to add to the dialog for customization.
-* @property {string} returnFocus  JQuery Element selector to focus on return
-*/
+ * The Message Component is used to show warning / error messages.
+ * @class Message
+ * @param {object} element The component element.
+ * @param {object} [settings] The component settings.
+ * @param {string} [settings.title='Message Title']  Title text or content shown in the message
+ * @param {boolean} [settings.isError=false]  If true, will show title styled as an error with an error icon
+ * @param {string} [settings.message='Message Summary']  The message content or text
+ * @param {number} [settings.width='auto']  Pass a specific with or defaults to auto
+ * @param {object} [settings.buttons=null]  Array of buttons to add to the message (see modal examples as well)
+ * @param {string} [settings.cssClass=null]  Extra Class to add to the dialog for customization.
+ * @param {string} [settings.returnFocus=null]  JQuery Element selector to focus on return
+ */
 const MESSAGE_DEFAULTS = {
   title: 'Message Title',
   isError: false,
@@ -27,12 +30,6 @@ const MESSAGE_DEFAULTS = {
   returnFocus: null
 };
 
-/**
- * The Message Component is used to show warning / error messages.
- * @class About
- * @param {object} element The component element.
- * @param {object} settings The component settings.
- */
 function Message(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings, MESSAGE_DEFAULTS);
@@ -117,9 +114,6 @@ Message.prototype = {
     }
   },
 
-  /**
-  * Tear Down and destroy events. However the message will destroy itself on close.
-  */
   destroy() {
     const modalData = this.message.data('modal');
     if (modalData !== undefined) {

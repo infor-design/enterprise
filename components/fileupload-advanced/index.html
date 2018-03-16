@@ -4,186 +4,329 @@
 <li>Advanced File Upload Example <a href="../components/fileupload-advanced/example-index">View Example</a></li>
 <li>Default File Upload Example <a href="../components/fileupload/example-index">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.isStandalone
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      On page(true)|on modal(false), used for some visual style only.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.standaloneClass
+    </td>
+    <td>
+      <span>&#39;standalone&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Css class if on page.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.allowedTypes
+    </td>
+    <td>
+      <span>&#39;*&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Restrict file types(ie. 'jpg|png|gif') ['*' all types]
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.maxFilesInProcess
+    </td>
+    <td>
+      <span>99999</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Max number of files can be uploaded
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.maxFileSize
+    </td>
+    <td>
+      <span>-1</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Max file size in bytes, -1 for unlimited
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.fileName
+    </td>
+    <td>
+      <span>&#39;myfile&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Variable name to read from server
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.isDisabled
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Make control disabled
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showBrowseButton
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Add way to browse files to upload
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.send
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Function
+    </td>
+    <td>
+      Method for send file to upload
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.textDropArea
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Text to show in drop area
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.textDropAreaWithBrowse
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Text to show in drop area when browse option true
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.textBtnCancel
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Hidden text for cancel button
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.textBtnCloseError
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Hidden text for error close button
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.textBtnRemove
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Hidden text for remove button
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.errorAllowedTypes
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Error text for allowed types
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.errorMaxFileSize
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Error text for max file size
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.errorMaxFilesInProcess
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Error text for max files in process
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          isStandalone
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          On page(true)|on modal(false), used for some visual style only.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          allowedTypes
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Restrict file types(ie. 'jpg|png|gif') 
-[
-'*' all types
-]
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          maxFilesInProcess
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Max number of files can be uploaded
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          maxFileSize
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Max file size in bytes, -1 for unlimited
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          fileName
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Variable name to read from server
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          isDisabled
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Make control disabled
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showBrowseButton
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Add way to browse files to upload
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          send
-        </td>
-        <td>
-          Function
-        </td>
-        <td>
-          Method for send file to upload
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textDropArea
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Text to show in drop area
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textDropAreaWithBrowse
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Text to show in drop area when browse option true
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textBtnCancel
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Hidden text for cancel button
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textBtnCloseError
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Hidden text for error close button
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          textBtnRemove
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Hidden text for remove button
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -286,7 +429,7 @@ void
         <td>
           
                 
-                  <span>settings (Object) = The settings to apply.
+                  <span>settings (object) = The settings to apply.
  </span>
                 
           
@@ -297,7 +440,7 @@ void
         </td>
         <td>
           The api
-Object
+object
         </td>
       </tr>
       <tr>
@@ -318,14 +461,7 @@ void
   </table>
 
 
-  
-  
-  
-  
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -343,7 +479,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -352,7 +488,7 @@ void
       </div>
     
       <div>
-        <span>files (Array)
+        <span>files (array)
         
         = List of files droped
 
@@ -374,7 +510,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -383,7 +519,7 @@ void
       </div>
     
       <div>
-        <span>file (Object)
+        <span>file (object)
         
         = file to set the status
 
@@ -405,7 +541,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -414,7 +550,7 @@ void
       </div>
     
       <div>
-        <span>file (Object)
+        <span>file (object)
         
         = file to set the status
 
@@ -436,7 +572,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -445,7 +581,7 @@ void
       </div>
     
       <div>
-        <span>status (Object)
+        <span>status (object)
         
         = <code>{ file, progress }</code>
 
@@ -467,7 +603,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -476,7 +612,7 @@ void
       </div>
     
       <div>
-        <span>file (Object)
+        <span>file (object)
         
         = aborted
 
@@ -498,7 +634,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -507,7 +643,7 @@ void
       </div>
     
       <div>
-        <span>file (Object)
+        <span>file (object)
         
         = uploaded
 

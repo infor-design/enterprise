@@ -2,51 +2,38 @@
 
 ### Table of Contents
 
--   [AUTOCOMPLETE_DEFAULTS](#autocomplete_defaults)
--   [Autocomplete](#autocomplete)
-    -   [resetFilters](#resetfilters)
-    -   [updated](#updated)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [destroy](#destroy)
--   [populated](#populated)
--   [safe-blur](#safe-blur)
--   [requestend](#requestend)
--   [requeststart](#requeststart)
--   [listopen](#listopen)
--   [listopen](#listopen-1)
-
-## AUTOCOMPLETE_DEFAULTS
-
-**Properties**
-
--   `source` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Defines the data to use, must be specified.
--   `sourceArguments` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If a source method is defined, this flexible
-    object can be passed into the source method, and augmented with parameters specific to the
-    implementation.
--   `template` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If defined, use this to draw the contents of each
-    search result instead of the default draw routine.
--   `filterMode` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The matching algorithm, startsWith and contains
-    are supported - false will not filter client side
--   `delay` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** The delay between key strokes on the keypad before it
-    thinks you stopped typing
--   `width` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Width of the open auto complete menu
--   `offset` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** For the open menu, the left or top offset
--   `autoSelectFirstItem` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Whether or not to select he first item in the
-    list to be selected
--   `resultsCallback` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** If defined, does not produce the results of the
-    Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback
-    function.
+-   [Autocomplete][1]
+    -   [resetFilters][2]
+    -   [updated][3]
+    -   [enable][4]
+    -   [disable][5]
+    -   [destroy][6]
 
 ## Autocomplete
 
-The Autocomplete control provides an easier means of searching through a large amount of data by
-filtering down the results based on keyboard input from the user.
+The Autocomplete control provides an easier means of searching through a large amount of data by filtering
+down the results based on keyboard input from the user.
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The api element.
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
+-   `element` **[object][7]** The component element.
+-   `settings` **[object][7]?** The component settings.
+    -   `settings.source` **[string][8]** Defines the data to use, must be specified. (optional, default `[]`)
+    -   `settings.sourceArguments` **[string][8]** If a source method is defined, this flexible object can be passed
+        into the source method, and augmented with parameters specific to the implementation. (optional, default `{}`)
+    -   `settings.filterMode` **[string][8]** The matching algorithm, startsWith and contains are supported - false will not filter client side (optional, default `'startsWith'`)
+    -   `settings.delay` **[boolean][9]** The delay between key strokes on the keypad before it thinks you stopped typing (optional, default `300`)
+    -   `settings.width` **[string][8]** Width of the open auto complete menu (optional, default `null`)
+    -   `settings.offset` **[string][8]** For the open menu, the left or top offset (optional, default `null`)
+    -   `settings.autoSelectFirstItem` **[string][8]** Whether or not to select he first item in the list to be selected (optional, default `false`)
+    -   `settings.resultsCallback` **[function][10]?** If defined, does not produce the results of the Autocomplete
+        inside a popupmenu, instead piping them to a process defined inside this callback function.
+    -   `settings.highlightMatchedText` **[boolean][9]** The highlightMatchText property. (optional, default `true`)
+    -   `settings.highlightCallback` **[function][10]?** The highlightCallback property.
+    -   `settings.resultIteratorCallback` **[function][10]?** The resultIteratorCallback property.
+    -   `settings.displayResultsCallback` **[function][10]?** The displayResultsCallback property.
+    -   `settings.searchableTextCallback` **[function][10]?** The searchableTextCallback property.
+-   `boolean`  If defined, use this to draw the contents of each search result instead of the default draw routine.
 
 ### resetFilters
 
@@ -60,7 +47,7 @@ Update the component with new settings.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings object to use.
+-   `settings` **[object][7]** The new settings object to use.
 
 Returns **void** 
 
@@ -82,55 +69,22 @@ Teardown and remove any added markup and events.
 
 Returns **void** 
 
-## populated
+[1]: #autocomplete
 
-Fires after the menu is populated with its contents.
+[2]: #resetfilters
 
-**Properties**
+[3]: #updated
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `filterResult` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The results of the filtering
+[4]: #enable
 
-## safe-blur
+[5]: #disable
 
-Fires after the input (and menu) both loose focus
+[6]: #destroy
 
-**Properties**
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The input event object
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-## requestend
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-Fires when the ajax request (source option) is completed
-
-**Properties**
-
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The input event object
--   `An` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** array containing the searchTerm and call back function
-
-## requeststart
-
-Fires when the ajax request (source option) is initiated
-
-**Properties**
-
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The input event object
--   `event` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array with the buffer in it
-
-## listopen
-
-Fires when the menu is opened.
-
-**Properties**
-
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
-
-## listopen
-
-Comes from Searchfields wrapping an autocomplete - resets
-a filtered autocomplete back to normal.
-
-**Properties**
-
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function

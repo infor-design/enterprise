@@ -286,7 +286,7 @@ function createDir(dirPath) {
 /**
  * Check if the component (directory) has a documentation mardkdown file
  * @param  {string} componentName - the name of the component
- * @return {Boolean}
+ * @return {boolean}
  */
 function documentationExists(componentName) {
   return fs.existsSync(`${paths.components}/${componentName}/${componentName}.md`);
