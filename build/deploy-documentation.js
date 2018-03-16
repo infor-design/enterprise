@@ -2,11 +2,17 @@
 /* eslint-disable import/no-extraneous-dependencies, function-paren-newline,
   no-console, no-restricted-syntax, no-continue, no-loop-func, prefer-template */
 
-
 /**
- * @fileoverview This script documents components with documentationjs,
- * converts their self-named markdown files into html, writes the
- * data as json files, zips it, and POSTs it to the website api.
+ * @fileoverview This script does:
+ * 1. Coverts components jsdoc comments into html
+ * 2. Converts their self-named markdown files into html string
+ * (both of these pieces of data are stored in an global object
+ * for each component)
+ * 3. Pending the "--site" flag specified, it writes each component in the object as:
+ *   - HTML files in static/ for local serving (this is the default)
+ *   or
+ *   - JSON files in dist/, zips them, and POSTs them to the specified
+ *     ids-website server
  *
  * @example `node ./build/deploy-documentation.js`
  *
@@ -50,10 +56,12 @@ marked.setOptions({
 //   Constants
 // -------------------------------------
 const idsWebsitePath = 'docs/ids-website';
+const localWebsitePath = 'docs/local-website';
 const rootPath = process.cwd();
 const paths = {
   components:  `${rootPath}/components`,
   src:         `${rootPath}/${idsWebsitePath}`,
+  static:      `${paths.rootPath}/${paths.localWebsitePath}`,
   dist:        `${rootPath}/${idsWebsitePath}/dist`,
   distDocs:    `${rootPath}/${idsWebsitePath}/dist/docs`
 };
@@ -62,6 +70,13 @@ const jsonTemplate = {
   description: '',
   body: '',
   api: ''
+};
+const serverUris = {
+  static: paths.static,
+  local: 'http://localhost/api/docs/',
+  localDebug: 'http://localhost:9002/api/docs/',
+  staging: 'http://staging.design.infor.com/api/docs/',
+  prod: 'https://design.infor.com/api/docs/'
 };
 const packageJson = require(`${rootPath}/publish/package.json`);
 const testComponents = [
@@ -72,6 +87,7 @@ const testComponents = [
 // -------------------------------------
 //   Variables
 // -------------------------------------
+const allDocsObj = {};
 let componentStats = {
   numDocumented: 0,
   numConverted: 0,
@@ -79,17 +95,19 @@ let componentStats = {
   numSkipped: 0,
   total: 0,
 };
-const allDocsObj = {};
+const deployTo = 'static';
+const stopwatch = {};
 let numArchivesSent = 0;
-let stopwatch = {};
 
 // -------------------------------------
 //   Main
 // -------------------------------------
 logTaskStart('deploy');
 
+if (arvg.site)
+
 const setupPromises = [
-  cleanDist(),
+  cleanAll(),
   compileSupportingDocs(),
   compileComponents()
 ];
@@ -101,9 +119,13 @@ Promise.all(setupPromises)
   .then(values => {
     logTaskStart('writing files');
 
-    let writePromises = [writeSitemap()];
+    let writePromises = [writeSitemapToDist()];
     for (compName in allDocsObj) {
-      writePromises.push(writeJsonFile(compName));
+      if (argv.site === 'static') {
+        writePromises.push(writeHtmlFile(compName));
+      } else {
+        writePromises.push(writeJsonFile(compName));
+      }
     }
 
     Promise.all(writePromises)
@@ -153,7 +175,7 @@ function compileComponents() {
         });
 
         // note: comp path includes an ending "/"
-        compPromises.push(documentJsAsJson(compName));
+        compPromises.push(documentJsToHtml(compName));
         compPromises.push(markdownToHtml(`${compDir}${compName}.md`));
       }
 
@@ -171,6 +193,7 @@ function compileComponents() {
 
 /**
  * Compile all ids-website supporting MD files
+ * and store the output string in an object
  * @return {Promise}
  */
 function compileSupportingDocs() {
@@ -205,15 +228,15 @@ function compileSupportingDocs() {
 }
 
 /**
- * Remove any dist directories
+ * Remove any "built" directories/files
  * @return {Promise}
  */
-function cleanDist() {
-  return del([paths.dist])
+function cleanAll() {
+  let dirsArr = [paths.static, paths.dist, paths.distDocs];
+  return del([paths.dist, paths.static])
     .then(res => {
       logTaskAction('Clean', paths.dist);
-      createDir(paths.dist);
-      createDir(paths.distDocs);
+      createDirs(dirsArr);
     }
   );
 }
@@ -222,7 +245,7 @@ function cleanDist() {
  * Convert/write the sitemap.yml to sitemap.json into dist
  * @return {Promise}
  */
-function writeSitemap() {
+function writeSitemapToDist() {
   return new Promise((resolve, reject) => {
     let doc = '';
     try {
@@ -244,6 +267,8 @@ function writeSitemap() {
 
 /**
  * Convert markdown into html and parse any yaml frontMatter
+ * and store the output html string in the component
+ * object property
  * @param  {string} filePath - the full file path
  * @return {Promise}
  */
@@ -256,7 +281,6 @@ function markdownToHtml(filePath) {
       } else {
         const fmData = frontMatter(data);
         if (fmData.attributes.title) allDocsObj[fileBasename].title = fmData.attributes.title;
-        if (fmData.attributes.demo) allDocsObj[fileBasename].demo = fmData.attributes.demo;
         if (fmData.attributes.description) allDocsObj[fileBasename].description = fmData.attributes.description;
 
         marked(fmData.body, (err, content) => {
@@ -274,18 +298,21 @@ function markdownToHtml(filePath) {
 }
 
 /**
- * Create a directory
- * @param  {string} dirPath - the directory path
+ * Create directories if they exist
+ * @param  {array} arrPaths - the directory path(s)
  */
-function createDir(dirPath) {
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath);
-    logTaskAction('Created', dirPath);
+function createDirs(arrPaths) {
+  for (path in arrPaths) {
+    if (!fs.existsSync(path)) {
+      fs.mkdirSync(path);
+      logTaskAction('Created', path);
+    }
   }
 }
 
 /**
- * Check if the component (directory) has a documentation mardkdown file
+ * Check if the component (directory) has a
+ * self-named documentation mardkdown file
  * @param  {string} componentName - the name of the component
  * @return {boolean}
  */
@@ -295,18 +322,18 @@ function documentationExists(componentName) {
 
 /**
  * Run documentationJs on a file with JSON output
+ * and save that in the components object property
  * @param  {string} componentName - the name of the component
  * @return {Promise}
-
  */
-function documentJsAsJson(componentName) {
+function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
   return documentation.build([compFilePath], { extension: 'js', shallow: true })
-    .then(documentation.formats.json)
+    .then(documentation.formats.html({ theme: 'default_theme' }))
     .then(output => {
       componentStats.numDocumented++;
       logTaskAction('Documented', componentName + '.js')
-      allDocsObj[componentName].api = JSON.parse(output);
+      allDocsObj[componentName].api = output;
     });
 }
 
@@ -355,19 +382,14 @@ function logTaskAction(action, desc, color = 'green') {
  */
 function postZippedBundle() {
   const formData = require('form-data');
-  const urls = {
-    local: 'http://localhost/api/docs/',
-    localDebug: 'http://localhost:9002/api/docs/',
-    staging: 'http://staging.design.infor.com/api/docs/',
-    prod: 'https://design.infor.com/api/docs/'
-  };
+
 
   let envAlias = 'local';
   if (argv.site) {
-    if (Object.keys(urls).includes(argv.site)) {
+    if (Object.keys(serverUris).includes(argv.site)) {
       envAlias = argv.site;
     } else {
-      console.log(chalk.red(`Site "${argv.site}" not found!`), '\n"--site" options are', Object.keys(urls).join(', '));
+      console.log(chalk.red(`Site "${argv.site}" not found!`), '\n"--site" options are', Object.keys(serverUris).join(', '));
       console.log(`Defaulting to "${envAlias}" api`)
     }
   }
@@ -377,7 +399,7 @@ function postZippedBundle() {
   let form = new formData();
   form.append('file', fs.createReadStream(`${paths.dist}.zip`));
   form.append('root_path', `ids-jquery/${packageJson.version}`);
-  form.submit(urls[envAlias], (err, res) => {
+  form.submit(serverUris[envAlias], (err, res) => {
     if (err) {
       console.error(err);
     } else {
@@ -444,6 +466,25 @@ function writeJsonFile(componentName) {
 }
 
 /**
+ * Write an HTML file for specified component
+ * @param {string} componentName - the name of the component
+ */
+function writeJsonFile(componentName) {
+  return new Promise((resolve, reject) => {
+    const thisName = componentName;
+    fs.writeFile(`${paths.distDocs}/${thisName}.json`, JSON.stringify(allDocsObj[thisName]), 'utf8', err => {
+      if (err) {
+        reject(err);
+      } else {
+        componentStats.numWritten++;
+        logTaskAction('Created', thisName + '.json');
+        resolve();
+      }
+    });
+  });
+}
+
+/**
  * Zip the documentation files and call the method to POST
  */
 function zipAndDeploy() {
@@ -467,7 +508,7 @@ function zipAndDeploy() {
     } else {
       postZippedBundle();
     }
-  });
+  })
 
   // This event is fired when the data source is drained no matter what was the data source.
   // It is not part of this library but rather from the NodeJS Stream API.
