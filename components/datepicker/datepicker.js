@@ -147,6 +147,7 @@ DatePicker.prototype = {
     this.setCurrentCalendar();
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.conversions = this.currentCalendar.conversions;
+    this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
   },
 
   /**
@@ -524,7 +525,11 @@ DatePicker.prototype = {
       }
     }
 
-    this.element.mask(maskOptions);
+    if (this.isFullMonth) {
+      this.pattern = this.settings.dateFormat;
+    } else {
+      this.element.mask(maskOptions);
+    }
 
     if (!s.customValidation) {
       this.element.attr({
