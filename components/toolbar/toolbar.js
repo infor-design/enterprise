@@ -31,7 +31,7 @@ const COMPONENT_NAME = 'toolbar';
  * @param {boolean} [settings.favorButtonset=true] If "resizeContainers" is true, setting this to
  *  true will try to display as many buttons as possible while resizing the toolbar.
  *  Setting to false attempts to show the entire title instead.
- * @param {object} [settings.moreMenuSettings=undefined] If defined, provides a toolbar-level method of
+ * @param {object} [settings.moreMenuSettings] If defined, provides a toolbar-level method of
  *  defining settings that will be applied to the More Actions button's popupmenu instance.
  * @param {boolean} [settings.noSearchfieldReinvoke=false] If true, does not manage the lifecycle
  *  of an internal toolbarsearchfield automatically.  Allows an external controller

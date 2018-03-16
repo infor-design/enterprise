@@ -682,7 +682,7 @@ utils.getContainerScrollDistance = function getContainerScrollDistance(element) 
  * @private
  * @param {HTMLElement|SVGElement|jQuery[]} el The element being manipulated.
  * @param {object} options incoming options.
- * @param {jQuery[]} [parentElement=undefined] the parent element where a clone of this
+ * @param {jQuery[]} [parentElement] the parent element where a clone of this
  *  hidden element will be attached.
  * @returns {object} containing various width/height properties of the element provided.
  */

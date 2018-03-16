@@ -71,12 +71,12 @@
         be used in-place of the default Tab Adding method (optional, default `null`)
     -   `settings.appMenuTrigger` **[boolean][60]** If set to true, will force an App Menu
         trigger to be present on Non-Vertical Tabs implementatations. (optional, default `false`)
-    -   `settings.appMenuTriggerText` **[string][62]** If defined, replaces the default "Menu" text used
-        in the app menu trigger. (optional, default `undefined`)
-    -   `settings.ajaxOptions` **[object][59]** if defined, will be used by any internal
-        Tabs AJAX calls as the desired request settings. (optional, default `undefined`)
-    -   `settings.beforeActivate` **[function][61]** If defined as a function, fires
-        this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250). (optional, default `undefined`)
+    -   `settings.appMenuTriggerText` **[string][62]?** If defined, replaces the default "Menu" text used
+        in the app menu trigger.
+    -   `settings.ajaxOptions` **[object][59]?** if defined, will be used by any internal
+        Tabs AJAX calls as the desired request settings.
+    -   `settings.beforeActivate` **[function][61]?** If defined as a function, fires
+        this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250).
     -   `settings.containerElement` **([string][62] | jQuery)** Defines a separate element
         to be used for containing the tab panels.  Defaults to a `.tab-panel-container`
         element that is created if it doesn't already exist. (optional, default `null`)
@@ -301,11 +301,11 @@ Adds a new tab into the list and properly binds all of its events
 
 -   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
 -   `options` **[object][59]** incoming options for the new tab.
-    -   `options.name` **[string][62]** the text title of the new tab. (optional, default `undefined`)
+    -   `options.name` **[string][62]?** the text title of the new tab.
     -   `options.doActivate` **[boolean][60]** if true, causes the newly-added tab to become activated and focused. (optional, default `false`)
     -   `options.isDismissible` **[boolean][60]** if true, causes the tab to become dismissible (closable) with an "X" button. (optional, default `false`)
     -   `options.isDropdown` **[boolean][60]** if true, causes the tab to become a dropdown tab. (optional, default `false`)
-    -   `options.content` **[string][62]** representing HTML markup that will be added inside of the new tab panel. (optional, default `undefined`)
+    -   `options.content` **[string][62]?** representing HTML markup that will be added inside of the new tab panel.
 -   `atIndex` **[number][63]?** if defined, inserts the tab at a particular number index in the tab list.  Defaults to the last tab in the list.
 
 Returns **this** component instance
@@ -330,7 +330,7 @@ Adds a new tab into the list and properly binds all of its events
 **Parameters**
 
 -   `tabId` **[string][62]** a string representing the HTML `id` attribute of the new tab panel.
--   `content` **[string][62]** representing HTML markup that will be added inside of the new tab panel. (optional, default `undefined`)
+-   `content` **[string][62]?** representing HTML markup that will be added inside of the new tab panel.
 -   `doInsert` **[boolean][60]** if true, actually appends the new content to the tab panel. (optional, default `false`)
 
 Returns **this** component instance

@@ -29,11 +29,11 @@ const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs
  * be used in-place of the default Tab Adding method
  * @param {boolean} [settings.appMenuTrigger=false] If set to true, will force an App Menu
  * trigger to be present on Non-Vertical Tabs implementatations.
- * @param {string} [settings.appMenuTriggerText=undefined] If defined, replaces the default "Menu" text used
+ * @param {string} [settings.appMenuTriggerText] If defined, replaces the default "Menu" text used
  * in the app menu trigger.
- * @param {object} [settings.ajaxOptions=undefined] if defined, will be used by any internal
+ * @param {object} [settings.ajaxOptions] if defined, will be used by any internal
  * Tabs AJAX calls as the desired request settings.
- * @param {function} [settings.beforeActivate=undefined] If defined as a function, fires
+ * @param {function} [settings.beforeActivate] If defined as a function, fires
  * this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250).
  * @param {string|jQuery} [settings.containerElement=null] Defines a separate element
  * to be used for containing the tab panels.  Defaults to a `.tab-panel-container`
@@ -2190,11 +2190,11 @@ Tabs.prototype = {
    * Adds a new tab into the list and properly binds all of its events
    * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
    * @param {object} options incoming options for the new tab.
-   * @param {string} [options.name=undefined] the text title of the new tab.
+   * @param {string} [options.name] the text title of the new tab.
    * @param {boolean} [options.doActivate=false] if true, causes the newly-added tab to become activated and focused.
    * @param {boolean} [options.isDismissible=false] if true, causes the tab to become dismissible (closable) with an "X" button.
    * @param {boolean} [options.isDropdown=false] if true, causes the tab to become a dropdown tab.
-   * @param {string} [options.content=undefined] representing HTML markup that will be added inside of the new tab panel.
+   * @param {string} [options.content] representing HTML markup that will be added inside of the new tab panel.
    * @param {number} [atIndex] if defined, inserts the tab at a particular number index in the tab list.  Defaults to the last tab in the list.
    * @returns {this} component instance
    */
@@ -2535,7 +2535,7 @@ Tabs.prototype = {
   /**
    * Adds a new tab into the list and properly binds all of its events
    * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
-   * @param {string} [content=undefined] representing HTML markup that will be added inside of the new tab panel.
+   * @param {string} [content] representing HTML markup that will be added inside of the new tab panel.
    * @param {boolean} [doInsert=false] if true, actually appends the new content to the tab panel.
    * @returns {this} component instance
    */
