@@ -1696,8 +1696,10 @@ PopupMenu.prototype = {
       if (searchfield.length) {
         insertTarget = searchfield.first();
       }
-
-      if (this.menu && insertTarget) {
+      if (this.settings.attachToBody && insertTarget) {
+        this.menu.unwrap();
+      }
+      if (this.menu && insertTarget && !this.settings.attachToBody) {
         this.menu.insertAfter(insertTarget);
       }
     }
