@@ -126,7 +126,6 @@ Radar.prototype = {
   build() {
     this.updateData(this.settings.dataset);
     this.setInitialSelected();
-    this.element.trigger('rendered');
     return this;
   },
 
@@ -225,9 +224,10 @@ Radar.prototype = {
         .attr('fill', '#737373')
         .text((d) => {
           let text = '';
+          const roundedVal = Math.round(maxValue * 10) / 10;
 
           if (settings.axisFormatter.indexOf('%') > -1) {
-            text = d3.format(settings.axisFormatter)(maxValue * d / settings.levels);
+            text = d3.format(settings.axisFormatter)(roundedVal * d / settings.levels);
           } else {
             text = d3.format(settings.axisFormatter)(d / settings.levels);
           }
@@ -311,7 +311,23 @@ Radar.prototype = {
           data: d,
           index: i
         };
-        self.element.triggerHandler((isSelected ? 'selected' : 'unselected'), triggerData);
+
+        /**
+        * Fires when the chart is complete done rendering, for customization.
+        * @event selected
+        * @property {object} data - The data element attached
+        * @property {HTMLElement} elem - The dom element
+        * @property {number} index - The index for this blob.
+        */
+
+        /**
+        * Fires when the chart is complete done rendering, for customization.
+        * @event deselected
+        * @property {object} data - The data element attached
+        * @property {HTMLElement} elem - The dom element
+        * @property {number} index - The index for this blob.
+        */
+        self.element.triggerHandler((isSelected ? 'deselected' : 'selected'), triggerData);
 
         charts.selected = !isSelected ? triggerData : [];
       });
@@ -336,7 +352,24 @@ Radar.prototype = {
       .style('fill', function () {
         return colors($(this.parentNode).index() - 1);
       })
-      .style('fill-opacity', 0.6)
+      .style('fill-opacity', 0.6);
+
+    // Wrapper for the invisible circles on top
+    const blobCircleWrapper = g.selectAll('.radar-circle-wrapper')
+      .data(data.map(i => i.data))
+      .enter().append('g')
+      .attr('class', 'radar-circle-wrapper');
+
+      // Append a set of invisible circles on top for the mouseover pop-up
+    blobCircleWrapper.selectAll('.radar-invisible-circle')
+      .data(d => d)
+      .enter().append('circle')
+      .attr('class', 'radar-invisible-circle')
+      .attr('r', settings.dotRadius * 1.5)
+      .attr('cx', (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
+      .attr('cy', (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
+      .style('fill', 'none')
+      .style('pointer-events', 'all')
       .on('mouseenter', function (d) {
         if (!settings.showTooltips) {
           return;

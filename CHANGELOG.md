@@ -29,6 +29,10 @@ http://usalvlhlpool1.infor.com/4.5.0/components/
 -
 -
 
+### <a name="version-4.5.0-breaking-changes">Breaking Changes</a>
+- Swaplist - changed custom events `beforeswap and swapupdate` data from `Array: list-items-moved` to `Object: from: container-info, to: container-info and items: list-items-moved` to use data more reliable way by the (SOHO-7407).
+-
+
 ### <a name="version-4.5.0-bug-fixes">Bug Fixes</a>
 -
 -

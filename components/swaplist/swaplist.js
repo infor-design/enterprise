@@ -302,7 +302,11 @@ SwapList.prototype = {
     this.unselectElements(list);
 
     if (this.selections.items.length) {
-      const result = this.element.triggerHandler('beforeswap', [this.selections.itemsData]);
+      this.selections.move = {
+        items: this.selections.itemsData,
+        from: this.getContainer(this.selections.itemsData)
+      };
+      const result = this.element.triggerHandler('beforeswap', [this.selections.move]);
       if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
         return;
       }
@@ -324,6 +328,31 @@ SwapList.prototype = {
         // Fix: not sure why it added selected class and attribute on focus
         .removeAttr('aria-selected').removeClass('is-selected');
     }
+  },
+
+  /**
+   * Get container info from given list items
+   * @private
+   * @param {Array} items to get container info.
+   * @returns {Object} container info (jQuery container element, css-class)
+   */
+  getContainer(items) {
+    const s = this.settings;
+
+    if (typeof items[0] === 'object' && items[0].node) {
+      const container = items[0].node.closest('.card');
+      let cssClass = '';
+
+      if (container.is(s.availableClass)) {
+        cssClass = s.availableClass;
+      } else if (container.is(s.selectedClass)) {
+        cssClass = s.selectedClass;
+      } else if (container.is(s.additionalClass)) {
+        cssClass = s.additionalClass;
+      }
+      return { container, class: cssClass };
+    }
+    return null;
   },
 
   /**
@@ -683,6 +712,9 @@ SwapList.prototype = {
         this.updateAttributes($('.listview', this.selections.owner));
         this.updateAttributes($('.listview', this.selections.droptarget));
         if (this.selections.items.length) {
+          this.selections.move = $.extend(true, this.selections.move, {
+            to: this.getContainer(this.selections.itemsData)
+          });
           /**
           * Fires when any bucket has its content changed.
           * @event swapupdate
@@ -691,7 +723,7 @@ SwapList.prototype = {
           * @property {object} event - The jquery event object
           * @property {array} items - List of items data
           */
-          this.element.triggerHandler('swapupdate', [this.selections.itemsData]);
+          this.element.triggerHandler('swapupdate', [this.selections.move]);
         }
       }
       this.clearDropeffects();
@@ -963,6 +995,11 @@ SwapList.prototype = {
 
         selections.items = list.selectedItems;
 
+        self.selections.move = {
+          items: self.selections.itemsData,
+          from: self.getContainer(self.selections.itemsData)
+        };
+
         /**
           * Fires before moving an element allowing you to access the draggable item.
           * @event beforeswap
@@ -971,7 +1008,7 @@ SwapList.prototype = {
           * @property {object} event - The jquery event object
           * @property {array} items - List of selected items data
           */
-        const result = self.element.triggerHandler('beforeswap', [selections.itemsData]);
+        const result = self.element.triggerHandler('beforeswap', [self.selections.move]);
         if ((typeof result === 'boolean' && !result) || (typeof result === 'string' && result.toLowerCase() === 'false')) {
           selections.dragged = null;
           return;
@@ -1028,7 +1065,7 @@ SwapList.prototype = {
         if (!selections.dragged) {
           return;
         }
-        self.element.triggerHandler('draggingswap', [selections.itemsData]);
+        self.element.triggerHandler('draggingswap', [selections.move]);
         selections.related = e.target;
         $('ul, li', self.element).removeClass('over');
         $(e.target).closest('ul, li').addClass('over');
@@ -1079,7 +1116,7 @@ SwapList.prototype = {
           }
           self.draggTouchElement(e, selections.placeholderTouch);
 
-          self.element.triggerHandler('draggingswap', [selections.itemsData]);
+          self.element.triggerHandler('draggingswap', [selections.move]);
           selections.related = overItem;
           $('ul, li', this.element).removeClass('over');
           overItem.closest('ul, li').addClass('over');

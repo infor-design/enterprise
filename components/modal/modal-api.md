@@ -33,9 +33,12 @@ Returns **void**
 
 ### open
 
+\*
 Open the modal via the api.
 
-Returns **void** 
+**Parameters**
+
+-   `ajaxReturn` **[boolean][7]** Flag used internally to denote its an ajax result return.
 
 ### close
 

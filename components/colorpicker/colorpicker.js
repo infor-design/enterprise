@@ -255,6 +255,22 @@ ColorPicker.prototype = {
   },
 
   /**
+  * Get the currently set hex value.
+  * @returns {string} A string containing the hex
+  */
+  getHexValue() {
+    return this.element.attr('value');
+  },
+
+  /**
+  * Get the currently set label value.
+  * @returns {string} A string containing the hex
+  */
+  getLabelValue() {
+    return this.settings.showLabel ? this.element.val() : this.getLabelFromHex(this.element.val());
+  },
+
+  /**
   * Add the necessary aria for accessibility.
   * @private
   * @returns {void}

@@ -2270,12 +2270,14 @@ Datagrid.prototype = {
         continue;  //eslint-disable-line
       }
 
-      tableHtml += self.rowHtml(
-        s.dataset[i],
-        (s.treeGrid || s.filterable) ? this.recordCount : i,
-        i
-      );
+      let currentCount = i;
+      if (s.treeGrid) {
+        currentCount = this.recordCount;
+      } else if (s.filterable) {
+        currentCount = i - this.filteredCount;
+      }
 
+      tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
       this.recordCount++;
     }
 
@@ -6979,7 +6981,8 @@ Datagrid.prototype = {
   toggleRowDetail(dataRowIndex) {
     const self = this;
     let rowElement = self.visualRowNode(dataRowIndex);
-    if (self.settings.paging && (self.settings.rowTemplate || self.settings.expandableRow)) {
+    if (!rowElement.length && self.settings.paging &&
+      (self.settings.rowTemplate || self.settings.expandableRow)) {
       dataRowIndex += ((self.pager.activePage - 1) * self.settings.pagesize);
       rowElement = self.dataRowNode(dataRowIndex);
     }
@@ -7330,6 +7333,7 @@ Datagrid.prototype = {
 
   /**
   * Unwrap the grid back to a simple div, and destory all events and pointers.
+  * @returns {object} The plugin api for chaining.
   */
   destroy() {
     // Remove the toolbar, clean the div out and remove the pager
@@ -7364,8 +7368,29 @@ Datagrid.prototype = {
     $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
     this.contentContainer.off().remove();
     $('body').off('resize.vtable resize.datagrid');
-  }
+    return this;
+  },
 
+  /**
+  * Update the datagrid and optionally apply new settings.
+  * @param  {object} settings the settings to update to.
+  * @returns {object} The plugin api for chaining.
+  */
+  updated(settings) {
+    this.settings = utils.mergeSettings(this.element, settings, this.settings);
+
+    if (settings.dataset) {
+      this.settings.dataset = settings.dataset;
+    }
+
+    if (settings.columns) {
+      this.settings.columns = settings.columns;
+    }
+
+    this.render();
+
+    return this;
+  }
 };
 
 export { Datagrid, COMPONENT_NAME };

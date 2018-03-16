@@ -22,7 +22,8 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
   title: 'Contextual Action Panel', //
   content: null, //
   initializeContent: true, // initialize content before opening
-  trigger: 'click'
+  trigger: 'click',
+  showCloseButton: true
 };
 
 function ContextualActionPanel(element, settings) {
@@ -144,6 +145,13 @@ ContextualActionPanel.prototype = {
         this.toolbar.prepend(toolbarTitle);
       }
 
+      if (this.settings.showCloseButton) {
+        this.closer = $('<div class="close-button"><button class="btn" type="button"><svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg><span>Close</span></button></div>');
+        this.closer.appendTo(this.header);
+
+        this.toolbar.addClass('has-close-button');
+      }
+
       let toolbarButtonset = this.toolbar.find('.buttonset');
       if (!toolbarButtonset.length) {
         toolbarButtonset = $('<div class="buttonset"></div>');
@@ -167,7 +175,7 @@ ContextualActionPanel.prototype = {
     });
 
     this.buttons = this.panel.find('.buttonset').children('button');
-    this.closeButton = this.buttons.filter('.btn-close, [name="close"], .icon-close');
+    this.closeButton = this.panel.find('.modal-header').find('.close-button').children('button');
 
     if (!this.toolbar) {
       this.toolbar = this.panel.find('.toolbar');
@@ -235,8 +243,8 @@ ContextualActionPanel.prototype = {
         self.teardown();
       });
 
-    if (self.toolbar) {
-      self.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
+    if (self.settings.showCloseButton) {
+      self.panel.find('.modal-header').find('.close-button').children('button')
         .on('click.contextualactionpanel', () => {
           self.handleToolbarSelected();
         });
@@ -282,9 +290,14 @@ ContextualActionPanel.prototype = {
     }
 
     const children = self.panel.find('.modal-body').children();
-    children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
+    children.first().unwrap().unwrap();
 
     self.element.removeAttr('data-modal');
+
+    if (self.settings.showCloseButton) {
+      self.panel.find('.modal-header').find('.close-button').children('button')
+        .off('click.contextualactionpanel');
+    }
 
     // Trigger an afterclose event on the Contextual Action Panel's trigger element
     // (different from the panel, which is already removed).
