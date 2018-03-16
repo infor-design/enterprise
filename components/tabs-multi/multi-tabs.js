@@ -6,11 +6,7 @@ import '../tabs/tabs.jquery';
 // Component Name
 const COMPONENT_NAME = 'multitabs';
 
-/**
- * Default Settings for MultiTabs
- * @namespace
- * @property {Array<HTMLElement>} tabContainers
- */
+// Default Settings for MultiTabs
 const MULTITABS_DEFAULTS = {
   tabContainers: []
 };
@@ -24,7 +20,7 @@ const TAB_CONTAINER_NAMES = ['primary', 'secondary', 'tertiary'];
  * @class MultiTabs
  * @param {jQuery[]|HTMLElement} element base element
  * @param {object} [settings] incoming settings
- * @returns {this} component instance
+ * @param {array} [settings.tabContainers] contains pre-set tab containers
  */
 function MultiTabs(element, settings) {
   this.element = $(element);
@@ -38,8 +34,8 @@ function MultiTabs(element, settings) {
 
 MultiTabs.prototype = {
   /**
-   * @private
    * Extra initializing steps
+   * @private
    * @returns {void}
    */
   init() {
@@ -129,6 +125,7 @@ MultiTabs.prototype = {
    * @param {string} tabId the ID of the tab panel (and HREF attribute of the tab) being moved.
    * @param {string} targetTabContainerName name of the tab container that will receive the panel.
    * @param {boolean} [doActivate] optionally activtes the tab after it's moved.
+   * @returns {void}
    */
   move(tabId, targetTabContainerName, doActivate) {
     if (!tabId || !targetTabContainerName) {
@@ -167,9 +164,9 @@ MultiTabs.prototype = {
   },
 
   /**
-   * @private
    * Uses the internal name of the tab container to either get a reference to an existing
    *  Tab container, or a null reference.
+   * @private
    * @param {string} name - the internal name used for this tabs instance
    * @returns {jQuery[]|undefined} a tab container reference
    */
@@ -191,8 +188,8 @@ MultiTabs.prototype = {
   },
 
   /**
-   * @private
    * Gets all currently-setup tab containers in a jQuery selector.
+   * @private
    * @returns {jQuery[]} a jQuery-based collection of all available tab containers
    */
   getFilterableTabContainers() {
@@ -230,6 +227,7 @@ MultiTabs.prototype = {
    * @param {function} callback the callback function to be executed
    * @param {array} [additionalArgs] any additional arguments to be run in the
    *  context of the callback.
+   * @returns {void}
    */
   performOnAllContainers(callback, additionalArgs) {
     const self = this;
@@ -256,8 +254,9 @@ MultiTabs.prototype = {
   },
 
   /**
-   * @private
    * Re-adjust Module-tab containers' tab widths/alignments so everything lines up.
+   * @private
+   * @returns {void}
    */
   adjustModuleTabContainers() {
     this.performOnAllContainers((propname, container) => {
@@ -271,6 +270,7 @@ MultiTabs.prototype = {
   /**
    * Temporarily removes a tabset from view without destroying it.
    * @param {jQuery[]|string} tabContainer the tab container to be hidden.
+   * @returns {void}
    */
   hideTabsInstance(tabContainer) {
     tabContainer = this.checkForValidTabContainer(tabContainer);
@@ -281,6 +281,7 @@ MultiTabs.prototype = {
   /**
    * Re-displays a tabset that has temporarily been removed from view.
    * @param {jQuery[]|string} tabContainer the tab container to be shown.
+   * @returns {void}
    */
   showTabsInstance(tabContainer) {
     tabContainer = this.checkForValidTabContainer(tabContainer);
@@ -292,6 +293,7 @@ MultiTabs.prototype = {
    * Destroys a tabs instance and removes it from the queue.
    * NOTE: This only happens if the tabContainer is a part of this instance of Multitabs.
    * @param {jQuery[]} tabContainer the tab container to be destroyed.
+   * @returns {void}
    */
   destroyTabsInstance(tabContainer) {
     if (!(tabContainer instanceof $) || !tabContainer.data('tabs') || typeof tabContainer.data('tabs').destroy !== 'function') {
@@ -334,6 +336,7 @@ MultiTabs.prototype = {
   /**
    * Update this multi-tabs instance with new settings
    * @param {object} [settings] incoming settings.
+   * @returns {void}
    */
   updated(settings) {
     if (settings) {
@@ -356,6 +359,7 @@ MultiTabs.prototype = {
 
   /**
    * Destroys a Multitabs instance
+   * @returns {void}
    */
   destroy() {
     this.teardown();

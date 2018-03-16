@@ -9,11 +9,35 @@ import { SohoMaskAPI } from './mask-api';
 const COMPONENT_NAME = 'mask';
 
 /**
- * Default Masked Input field options
- * @namespace
+ * Component Wrapper for input elements that gives them the ability to become "masked".
+ * @class SohoMaskedInput
+ * @constructor
+ * @param {HTMLInputElement} element regular HTML Input Element (not wrapped with jQuery)
+ * @param {SohoMaskedInputOptions} [settings] incoming settings
+ *
+ * @param {object} [settings.definitions=false] if defined, passes additional string-based pattern match "types".
+ * @param {boolean} [settings.guide=false] if true, causes a guide to show inside the input field, represented by the placeholder,
+ *  that demonstrates how the mask can be filled in.
+ * @param {boolean} [settings.keepCharacterPositions=false] if defined alongside of `settings.guide`, will allow indiviual characters
+ *  to be removed from the mask without moving the positions of other characters that have been written into the field.
+ *  Works well with things like credit card or phone numbers, which have sections that are separate from each other.
+ * @param {array|function|string} [settings.pattern=undefined] the pattern that is used by the mask for determining input to keep or throw out.
+ *  Arrays of strings representing individual characters, and regex matching individual characters, is the perferred way of supplying a pattern.
+ *  For some `settings.process` types (date/time/number), a function that dynamically generates a mask is automatically used.
+ *  It's also possible to define a custom mask function and supply it here. The legacy string style is also supported.
+ * @param {object} [settings.patternOptions=undefined] If using a function to define `settings.pattern`, any options that must be passed
+ *  to the masking function can be supplied in this object.
+ * @param {string} [settings.placeholderChar='_'] If using the `settings.guide`, will be used as the placeholder
+ *  for characters that are not yet typed.
+ * @param {function} [settings.pipe=undefined] provides a way of adjusting the masked content, caret position,
+ *  etc after the input field has been processed by the mask API.
+ * @param {string} [settings.process=undefined] can be defined as a quick way to create certain complex masks.  Defaults to the regular pattern mask,
+ *  but can automatically configure the field for "date", "time", and "number"
+ * @param {boolean} [settings.processOnBlur=true] if defined, causes the mask API to process this input field whenever it becomes blurred.
+ * @param {boolean} [settings.processOnInitialize=true] if defined, causes the mask API to process this input field when the component is initialized.
+ * @returns {SohoMaskedInput} component instance
  */
 const DEFAULT_MASKED_INPUT_OPTIONS = {
-  autocorrect: false,
   definitions: undefined,
   guide: false,
   maskAPI: SohoMaskAPI,
@@ -27,14 +51,6 @@ const DEFAULT_MASKED_INPUT_OPTIONS = {
   processOnInitialize: true
 };
 
-/**
- * Component Wrapper for input elements that gives them the ability to become "masked".
- * @class SohoMaskedInput
- * @constructor
- * @param {HTMLInputElement} element regular HTML Input Element (not wrapped with jQuery)
- * @param {SohoMaskedInputOptions} [settings] incoming settings
- * @returns {SohoMaskedInput} component instance
- */
 function SohoMaskedInput(element, settings) {
   this.element = element;
 
@@ -262,7 +278,13 @@ SohoMaskedInput.prototype = {
       return false;
     }
 
-    // Fire the 'write' event (backwards compat)
+    /**
+     * Fire the 'write' event
+     * @event write
+     * @memberof SohoMaskedInput
+     * @param {jQuery.Event} e the event object
+     * @param {string} finalValue the final, masked value
+     */
     $(this.element).trigger('write.mask', [finalValue]);
 
     // Set the internal component state
