@@ -315,6 +315,7 @@ Radar.prototype = {
         /**
         * Fires when the chart is complete done rendering, for customization.
         * @event selected
+        * @memberof Radar
         * @property {object} data - The data element attached
         * @property {HTMLElement} elem - The dom element
         * @property {number} index - The index for this blob.
@@ -323,6 +324,7 @@ Radar.prototype = {
         /**
         * Fires when the chart is complete done rendering, for customization.
         * @event deselected
+        * @memberof Radar
         * @property {object} data - The data element attached
         * @property {HTMLElement} elem - The dom element
         * @property {number} index - The index for this blob.

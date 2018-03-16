@@ -21,47 +21,49 @@
     -   [fieldValue][17]
     -   [formatValue][18]
     -   [calculateTextWidth][19]
-    -   [calculateColumnWidth][20]
-    -   [updateRow][21]
-    -   [updateColumns][22]
-    -   [saveColumns][23]
-    -   [saveUserSettings][24]
-    -   [restoreColumns][25]
-    -   [restoreUserSettings][26]
-    -   [resetColumns][27]
-    -   [hideColumn][28]
-    -   [showColumn][29]
-    -   [exportToCsv][30]
-    -   [exportToExcel][31]
-    -   [setEmptyMessage][32]
-    -   [cellNode][33]
-    -   [rowHeight][34]
-    -   [keywordSearch][35]
-    -   [selectRow][36]
-    -   [activateRow][37]
-    -   [toggleRowActivation][38]
-    -   [toggleRowSelection][39]
-    -   [unselectRow][40]
-    -   [setNodeStatus][41]
-    -   [selectedRows][42]
-    -   [selectRows][43]
-    -   [columnById][44]
-    -   [columnIdxById][45]
-    -   [showCellError][46]
-    -   [resetRowStatus][47]
-    -   [dirtyRows][48]
-    -   [showRowError][49]
-    -   [validateRow][50]
-    -   [validateAll][51]
-    -   [columnSettings][52]
-    -   [updateCell][53]
-    -   [toggleRowDetail][54]
-    -   [sortFunction][55]
-    -   [defaultFormatter][56]
-    -   [renderPager][57]
-    -   [resetPager][58]
-    -   [destroy][59]
-    -   [updated][60]
+    -   [columnWidth][20]
+    -   [calculateColumnWidths][21]
+    -   [calculateColumnWidth][22]
+    -   [updateRow][23]
+    -   [updateColumns][24]
+    -   [saveColumns][25]
+    -   [saveUserSettings][26]
+    -   [restoreColumns][27]
+    -   [restoreUserSettings][28]
+    -   [resetColumns][29]
+    -   [hideColumn][30]
+    -   [showColumn][31]
+    -   [exportToCsv][32]
+    -   [exportToExcel][33]
+    -   [setEmptyMessage][34]
+    -   [cellNode][35]
+    -   [rowHeight][36]
+    -   [keywordSearch][37]
+    -   [selectRow][38]
+    -   [activateRow][39]
+    -   [toggleRowActivation][40]
+    -   [toggleRowSelection][41]
+    -   [unselectRow][42]
+    -   [setNodeStatus][43]
+    -   [selectedRows][44]
+    -   [selectRows][45]
+    -   [columnById][46]
+    -   [columnIdxById][47]
+    -   [showCellError][48]
+    -   [resetRowStatus][49]
+    -   [dirtyRows][50]
+    -   [showRowError][51]
+    -   [validateRow][52]
+    -   [validateAll][53]
+    -   [columnSettings][54]
+    -   [updateCell][55]
+    -   [toggleRowDetail][56]
+    -   [sortFunction][57]
+    -   [defaultFormatter][58]
+    -   [renderPager][59]
+    -   [resetPager][60]
+    -   [destroy][61]
+    -   [updated][62]
 
 ## Datagrid
 
@@ -69,73 +71,73 @@ The Datagrid Component displays and process data in tabular format.
 
 **Parameters**
 
--   `element` **([Array][61]&lt;jQuery> | [HTMLElement][62])** The component element.
--   `settings` **[object][63]?** The component settings.
-    -   `settings.actionableMode` **[boolean][64]** If actionableMode is "true, tab and shift tab behave like left
+-   `element` **([Array][63]&lt;jQuery> | [HTMLElement][64])** The component element.
+-   `settings` **[object][65]?** The component settings.
+    -   `settings.actionableMode` **[boolean][66]** If actionableMode is "true, tab and shift tab behave like left
         and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false" (optional, default `false`)
-    -   `settings.cellNavigation` **[boolean][64]** If cellNavigation is "false, will show border around whole row on focus (optional, default `true`)
-    -   `settings.rowNavigation` **[boolean][64]** If rowNavigation is "false, will NOT show border around the row (optional, default `true`)
-    -   `settings.alternateRowShading` **[boolean][64]** Sets shading for readonly grids (optional, default `false`)
-    -   `settings.columns` **[array][61]** An array of columns (see column options) (optional, default `[]`)
-    -   `settings.dataset` **[array][61]** An array of data objects (optional, default `[]`)
-    -   `settings.columnReorder` **[boolean][64]** Allow Column reorder (optional, default `false`)
-    -   `settings.saveColumns` **[boolean][64]** Save Column Reorder and resize (optional, default `false`)
-    -   `settings.saveUserSettings` **[object][63]** Save one or all of the following to local storage (optional, default `{columns:true,rowHeight:true,sortOrder:true,pagesize:true,activePage:true,filter:true}`)
-    -   `settings.editable` **[boolean][64]** Enable editing in the grid, requires column editors. (optional, default `false`)
-    -   `settings.isList` **[boolean][64]** Makes the grid have readonly "list" styling (optional, default `false`)
-    -   `settings.menuId` **[string][65]** ID of the menu to use for a row level right click context menu (optional, default `null`)
-    -   `settings.menuSelected` **[string][65]** Callback for the grid level context menu (optional, default `null`)
-    -   `settings.menuBeforeOpen` **[string][65]** Callback for the grid level beforeopen menu event (optional, default `null`)
-    -   `settings.headerMenuId` **[string][65]** Id of the menu to use for a header right click context menu (optional, default `null`)
-    -   `settings.headerMenuSelected` **[string][65]** Callback for the header level context menu (optional, default `false`)
-    -   `settings.headerMenuBeforeOpen` **[string][65]** Callback for the header level beforeopen menu event (optional, default `false`)
-    -   `settings.uniqueId` **[string][65]** Unique ID to use as local storage reference and internal variable names (optional, default `null`)
-    -   `settings.rowHeight` **[string][65]** Controls the height of the rows / number visible rows. May be (short, medium or normal) (optional, default `normal`)
-    -   `settings.selectable` **[string][65]** Controls the selection Mode this may be: false, 'single' or
+    -   `settings.cellNavigation` **[boolean][66]** If cellNavigation is "false, will show border around whole row on focus (optional, default `true`)
+    -   `settings.rowNavigation` **[boolean][66]** If rowNavigation is "false, will NOT show border around the row (optional, default `true`)
+    -   `settings.alternateRowShading` **[boolean][66]** Sets shading for readonly grids (optional, default `false`)
+    -   `settings.columns` **[array][63]** An array of columns (see column options) (optional, default `[]`)
+    -   `settings.dataset` **[array][63]** An array of data objects (optional, default `[]`)
+    -   `settings.columnReorder` **[boolean][66]** Allow Column reorder (optional, default `false`)
+    -   `settings.saveColumns` **[boolean][66]** Save Column Reorder and resize (optional, default `false`)
+    -   `settings.saveUserSettings` **[object][65]** Save one or all of the following to local storage (optional, default `{columns:true,rowHeight:true,sortOrder:true,pagesize:true,activePage:true,filter:true}`)
+    -   `settings.editable` **[boolean][66]** Enable editing in the grid, requires column editors. (optional, default `false`)
+    -   `settings.isList` **[boolean][66]** Makes the grid have readonly "list" styling (optional, default `false`)
+    -   `settings.menuId` **[string][67]** ID of the menu to use for a row level right click context menu (optional, default `null`)
+    -   `settings.menuSelected` **[string][67]** Callback for the grid level context menu (optional, default `null`)
+    -   `settings.menuBeforeOpen` **[string][67]** Callback for the grid level beforeopen menu event (optional, default `null`)
+    -   `settings.headerMenuId` **[string][67]** Id of the menu to use for a header right click context menu (optional, default `null`)
+    -   `settings.headerMenuSelected` **[string][67]** Callback for the header level context menu (optional, default `false`)
+    -   `settings.headerMenuBeforeOpen` **[string][67]** Callback for the header level beforeopen menu event (optional, default `false`)
+    -   `settings.uniqueId` **[string][67]** Unique ID to use as local storage reference and internal variable names (optional, default `null`)
+    -   `settings.rowHeight` **[string][67]** Controls the height of the rows / number visible rows. May be (short, medium or normal) (optional, default `normal`)
+    -   `settings.selectable` **[string][67]** Controls the selection Mode this may be: false, 'single' or
         'multiple' or 'mixed' or 'siblings' (optional, default `false`)
-    -   `settings.groupable` **[object][63]** Controls fields to use for data grouping Use Data grouping,
+    -   `settings.groupable` **[object][65]** Controls fields to use for data grouping Use Data grouping,
         e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}` (optional, default `null`)
-    -   `settings.spacerColumn` **[boolean][64]** if true and the grid is not wide enough to fit the last
+    -   `settings.spacerColumn` **[boolean][66]** if true and the grid is not wide enough to fit the last
         column will get filled with an empty spacer column. (optional, default `false`)
-    -   `settings.stretchColumn` **[boolean][64]** If 'last' the last column will stretch we will add more options. (optional, default `'last'`)
-    -   `settings.clickToSelect` **[boolean][64]** Controls if using a selection mode if you can click the rows to select (optional, default `true`)
-    -   `settings.toolbar` **[object][63]** Toggles and appends toolbar features fx.. (optional, default `false`)
-    -   `settings.selectChildren` **[boolean][64]** Can prevent selecting of all child nodes on multiselect
+    -   `settings.stretchColumn` **[boolean][66]** If 'last' the last column will stretch we will add more options. (optional, default `'last'`)
+    -   `settings.clickToSelect` **[boolean][66]** Controls if using a selection mode if you can click the rows to select (optional, default `true`)
+    -   `settings.toolbar` **[object][65]** Toggles and appends toolbar features fx.. (optional, default `false`)
+    -   `settings.selectChildren` **[boolean][66]** Can prevent selecting of all child nodes on multiselect
         `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}` (optional, default `true`)
-    -   `settings.initializeToolbar` **[boolean][64]** Set to false if you will initialize the toolbar yourself (optional, default `true`)
-    -   `settings.paging` **[boolean][64]** Enable paging mode (optional, default `false`)
-    -   `settings.pagesize` **[number][66]** Number of rows per page (optional, default `25`)
-    -   `settings.pagesizes` **[array][61]** Array of page sizes to show in the page size dropdown. (optional, default `[10,25,50,75]`)
-    -   `settings.indeterminate` **[boolean][64]** Disable the ability to go to a specific page when paging. (optional, default `false`)
-    -   `settings.source` **[Function][67]** Callback function for paging (optional, default `false`)
-    -   `settings.hidePagerOnOnePage` **[boolean][64]** If true, hides the pager if there's only one page worth of results. (optional, default `false`)
-    -   `settings.filterable` **[boolean][64]** Enable Column Filtering, This will require column filterTypes as well. (optional, default `false`)
-    -   `settings.disableClientFilter` **[boolean][64]** Disable Filter Logic client side and let your server do it (optional, default `false`)
-    -   `settings.disableClientSort` **[boolean][64]** Disable Sort Logic client side and let your server do it (optional, default `false`)
-    -   `settings.resultsText` **[string][65]** Can provide a custom function to adjust results text on the toolbar (optional, default `null`)
-    -   `settings.showFilterTotal` **[boolean][64]** Paging results display filter count, change to false to not show filtered count (optional, default `true`)
-    -   `settings.rowReorder` **[boolean][64]** If set you can reorder rows. Requires rowReorder formatter (optional, default `false`)
-    -   `settings.showDirty` **[boolean][64]** If true the dirty indicator will be shown on the rows (optional, default `false`)
-    -   `settings.showSelectAllCheckBox` **[boolean][64]** Allow to hide the checkbox header (true to show, false to hide) (optional, default `true`)
-    -   `settings.allowOneExpandedRow` **[boolean][64]** Controls if you cna expand more than one expandable row. (optional, default `true`)
-    -   `settings.enableTooltips` **[boolean][64]** Process tooltip logic at a cost of performance (optional, default `false`)
-    -   `settings.disableRowDeactivation` **[boolean][64]** if a row is activated the user should not be able to
+    -   `settings.initializeToolbar` **[boolean][66]** Set to false if you will initialize the toolbar yourself (optional, default `true`)
+    -   `settings.paging` **[boolean][66]** Enable paging mode (optional, default `false`)
+    -   `settings.pagesize` **[number][68]** Number of rows per page (optional, default `25`)
+    -   `settings.pagesizes` **[array][63]** Array of page sizes to show in the page size dropdown. (optional, default `[10,25,50,75]`)
+    -   `settings.indeterminate` **[boolean][66]** Disable the ability to go to a specific page when paging. (optional, default `false`)
+    -   `settings.source` **[Function][69]** Callback function for paging (optional, default `false`)
+    -   `settings.hidePagerOnOnePage` **[boolean][66]** If true, hides the pager if there's only one page worth of results. (optional, default `false`)
+    -   `settings.filterable` **[boolean][66]** Enable Column Filtering, This will require column filterTypes as well. (optional, default `false`)
+    -   `settings.disableClientFilter` **[boolean][66]** Disable Filter Logic client side and let your server do it (optional, default `false`)
+    -   `settings.disableClientSort` **[boolean][66]** Disable Sort Logic client side and let your server do it (optional, default `false`)
+    -   `settings.resultsText` **[string][67]** Can provide a custom function to adjust results text on the toolbar (optional, default `null`)
+    -   `settings.showFilterTotal` **[boolean][66]** Paging results display filter count, change to false to not show filtered count (optional, default `true`)
+    -   `settings.rowReorder` **[boolean][66]** If set you can reorder rows. Requires rowReorder formatter (optional, default `false`)
+    -   `settings.showDirty` **[boolean][66]** If true the dirty indicator will be shown on the rows (optional, default `false`)
+    -   `settings.showSelectAllCheckBox` **[boolean][66]** Allow to hide the checkbox header (true to show, false to hide) (optional, default `true`)
+    -   `settings.allowOneExpandedRow` **[boolean][66]** Controls if you cna expand more than one expandable row. (optional, default `true`)
+    -   `settings.enableTooltips` **[boolean][66]** Process tooltip logic at a cost of performance (optional, default `false`)
+    -   `settings.disableRowDeactivation` **[boolean][66]** if a row is activated the user should not be able to
         deactivate it by clicking on the activated row (optional, default `false`)
-    -   `settings.sizeColumnsEqually` **[boolean][64]** If true make all the columns equal width (optional, default `false`)
-    -   `settings.expandableRow` **[boolean][64]** If true we append an expandable row area without the rowTemplate feature being needed. (optional, default `false`)
-    -   `settings.redrawOnResize` **[boolean][64]** If set to false we skip redraw logic on the resize of the page. (optional, default `false`)
-    -   `settings.exportConvertNegative` **[boolean][64]** If set to true export data with trailing negative signs moved in front. (optional, default `false`)
-    -   `settings.columnGroups` **[array][61]** An array of columns to use for grouped column headers. (optional, default `null`)
-    -   `settings.treeGrid` **[boolean][64]** If true a tree grid is expected so addition calculations will be used to calculate of the row children (optional, default `false`)
-    -   `settings.onPostRenderCell` **[Function][67]** A call back function that will fire and send you the cell
+    -   `settings.sizeColumnsEqually` **[boolean][66]** If true make all the columns equal width (optional, default `false`)
+    -   `settings.expandableRow` **[boolean][66]** If true we append an expandable row area without the rowTemplate feature being needed. (optional, default `false`)
+    -   `settings.redrawOnResize` **[boolean][66]** If set to false we skip redraw logic on the resize of the page. (optional, default `false`)
+    -   `settings.exportConvertNegative` **[boolean][66]** If set to true export data with trailing negative signs moved in front. (optional, default `false`)
+    -   `settings.columnGroups` **[array][63]** An array of columns to use for grouped column headers. (optional, default `null`)
+    -   `settings.treeGrid` **[boolean][66]** If true a tree grid is expected so addition calculations will be used to calculate of the row children (optional, default `false`)
+    -   `settings.onPostRenderCell` **[Function][69]** A call back function that will fire and send you the cell
         container and related information for any cells cells with a component attribute in the column definition. (optional, default `null`)
-    -   `settings.onDestroyCell` **[Function][67]** A call back that goes along with onPostRenderCel and will
+    -   `settings.onDestroyCell` **[Function][69]** A call back that goes along with onPostRenderCel and will
         fire when this cell is destroyed and you need noification of that. (optional, default `null`)
-    -   `settings.onEditCell` **[Function][67]** A callback that fires when a cell is edited, the editor object is passed in to the function (optional, default `null`)
-    -   `settings.onExpandRow` **[Function][67]** A callback function that fires when expanding rows. To be used.
+    -   `settings.onEditCell` **[Function][69]** A callback that fires when a cell is edited, the editor object is passed in to the function (optional, default `null`)
+    -   `settings.onExpandRow` **[Function][69]** A callback function that fires when expanding rows. To be used.
         when expandableRow is true. The function gets eventData about the row and grid and a response function callback.
         Call the response function with markup to append and delay opening the row. (optional, default `null`)
-    -   `settings.emptyMessage` **[object][63]** An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
+    -   `settings.emptyMessage` **[object][65]** An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
         emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
         icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
         or will default to 'No Data Found with an icon.' (optional, default `{title:'No Data Available',infor:'',icon:'icon-empty-no-data'}`)
@@ -146,7 +148,7 @@ Render or render both the header and row area.
 
 **Parameters**
 
--   `isToggleFilter` **[string][65]** Check if toggle filter row
+-   `isToggleFilter` **[string][67]** Check if toggle filter row
 
 ### addRow
 
@@ -154,8 +156,8 @@ Add a row of data to the grid and dataset.
 
 **Parameters**
 
--   `data` **[object][63]** An data row object
--   `location` **[string][65]** Where to add the row. This can be 'top' or leave off for 'bottom'
+-   `data` **[object][65]** An data row object
+-   `location` **[string][67]** Where to add the row. This can be 'top' or leave off for 'bottom'
 
 ### pagerRefresh
 
@@ -163,7 +165,7 @@ Refresh the pager based on the current page and dataset.
 
 **Parameters**
 
--   `location` **[object][63]** Deprecated - Can be set to 'top' or left off for bottom pager.
+-   `location` **[object][65]** Deprecated - Can be set to 'top' or left off for bottom pager.
 
 ### removeRow
 
@@ -171,8 +173,8 @@ Remove a row of data to the grid and dataset.
 
 **Parameters**
 
--   `row` **[number][66]** The row index
--   `nosync` **[boolean][64]** Dont sync the selected rows.
+-   `row` **[number][68]** The row index
+-   `nosync` **[boolean][66]** Dont sync the selected rows.
 
 ### removeSelected
 
@@ -184,9 +186,9 @@ Send in a new data set to display in the datagrid.
 
 **Parameters**
 
--   `dataset` **[object][63]** The array of objects to show in the grid. Should match
+-   `dataset` **[object][65]** The array of objects to show in the grid. Should match
     the column definitions.
--   `pagerInfo` **[object][63]** The pager info object with information like activePage ect.
+-   `pagerInfo` **[object][65]** The pager info object with information like activePage ect.
 
 ### triggerSource
 
@@ -194,8 +196,8 @@ Trigger the source method to call to the backend on demand.
 
 **Parameters**
 
--   `pagerType` **[object][63]** The pager info object with information like activePage ect.
--   `callback` **[function][67]** The call back functions
+-   `pagerType` **[object][65]** The pager info object with information like activePage ect.
+-   `callback` **[function][69]** The call back functions
 
 ### visibleColumns
 
@@ -203,9 +205,9 @@ Returns an array with all visible columns.
 
 **Parameters**
 
--   `skipBuiltIn` **[boolean][64]** If true then built in columns like selectionCheckbox are skipped.
+-   `skipBuiltIn` **[boolean][66]** If true then built in columns like selectionCheckbox are skipped.
 
-Returns **[array][61]** An array with the visible columns.
+Returns **[array][63]** An array with the visible columns.
 
 ### hideShowColumnGroups
 
@@ -213,7 +215,7 @@ Test if the group header should be closed and close / open it.
 
 **Parameters**
 
--   `show` **[boolean][64]** Hide and show the column group if it should be.
+-   `show` **[boolean][66]** Hide and show the column group if it should be.
 
 ### filterRowRendered
 
@@ -229,7 +231,7 @@ Apply the Filter with the currently selected conditions, or the ones passed in.
 
 **Parameters**
 
--   `conditions` **[object][63]** An array of objects with the filter conditions.
+-   `conditions` **[object][65]** An array of objects with the filter conditions.
 
 ### clearFilter
 
@@ -241,13 +243,13 @@ Set the Filter Conditions on the UI Only.
 
 **Parameters**
 
--   `conditions` **[object][63]** An array of objects with the filter conditions.
+-   `conditions` **[object][65]** An array of objects with the filter conditions.
 
 ### filterConditions
 
 Get filter conditions in array from whats set in the UI.
 
-Returns **[array][61]** An array with the currently showing filter conditions.
+Returns **[array][63]** An array with the currently showing filter conditions.
 
 ### fieldValue
 
@@ -255,8 +257,8 @@ Return the value in a field, taking into account nested objects. Fx obj.field.id
 
 **Parameters**
 
--   `obj` **[object][63]** The object to use
--   `field` **[string][65]** The field as a string fx 'field' or 'obj.field.id'
+-   `obj` **[object][65]** The object to use
+-   `field` **[string][67]** The field as a string fx 'field' or 'obj.field.id'
 
 Returns **any** The current value in the field.
 
@@ -266,13 +268,13 @@ The default cell formatters thats used when no formatter is provided.
 
 **Parameters**
 
--   `formatter` **[function][67]** The formatter function.
--   `row` **[number][66]** The row index.
--   `cell` **[number][66]** The cell index.
--   `fieldValue` **[string][65]** The current field value.
--   `columnDef` **[object][63]** The column settings.
--   `rowData` **[object][63]** The current row data.
--   `api` **[object][63]** The grid API reference.
+-   `formatter` **[function][69]** The formatter function.
+-   `row` **[number][68]** The row index.
+-   `cell` **[number][68]** The cell index.
+-   `fieldValue` **[string][67]** The current field value.
+-   `columnDef` **[object][65]** The column settings.
+-   `rowData` **[object][65]** The current row data.
+-   `api` **[object][65]** The grid API reference.
 
 Returns **void** 
 
@@ -283,19 +285,36 @@ Except use all column values and compare the text width of the header as max
 
 **Parameters**
 
--   `columnDef` **[object][63]** The column to check.
+-   `columnDef` **[object][65]** The column to check.
 
-Returns **[number][66]** The text width.
+Returns **[number][68]** The text width.
+
+### columnWidth
+
+Return the width for a column (upfront with no rendering)
+Simulates [https://www.w3.org/TR/CSS21/tables.html#width-layout][70]
+
+**Parameters**
+
+-   `col` **\[type]** The column object to use
+-   `index` **\[type]** The column index
+
+Returns **void** 
+
+### calculateColumnWidths
+
+Calculate the width for all the columns
+Simulates [https://www.w3.org/TR/CSS21/tables.html#width-layout][70]
 
 ### calculateColumnWidth
 
 Calculate the width for a column (upfront with no rendering)
-Simulates [https://www.w3.org/TR/CSS21/tables.html#width-layout][68]
+Simulates [https://www.w3.org/TR/CSS21/tables.html#width-layout][70]
 
 **Parameters**
 
--   `col` **[object][63]** The column object to use
--   `index` **[number][66]** The column index
+-   `col` **[object][65]** The column object to use
+-   `index` **[number][68]** The column index
 
 Returns **void** 
 
@@ -305,8 +324,8 @@ Refresh one row in the grid
 
 **Parameters**
 
--   `idx` **[number][66]** The row index to update.
--   `data` **[object][63]** The data object.
+-   `idx` **[number][68]** The row index to update.
+-   `data` **[object][65]** The data object.
 
 Returns **void** 
 
@@ -316,8 +335,8 @@ Given a new column set update the rows and reload
 
 **Parameters**
 
--   `columns` **[array][61]** The array with columns to use.
--   `columnGroups` **[array][61]** The array with new columns groups to use.
+-   `columns` **[array][63]** The array with columns to use.
+-   `columnGroups` **[array][63]** The array with new columns groups to use.
 
 Returns **void** 
 
@@ -339,7 +358,7 @@ Restore the columns from a provided list or local storage
 
 **Parameters**
 
--   `cols` **[array][61]** The columns list to restore, if you saved the settings manually.
+-   `cols` **[array][63]** The columns list to restore, if you saved the settings manually.
 
 ### restoreUserSettings
 
@@ -347,7 +366,7 @@ Restore the user settings from local Storage or as passed in.
 
 **Parameters**
 
--   `settings` **[object][63]** The object containing the settings to use.
+-   `settings` **[object][65]** The object containing the settings to use.
 
 Returns **void** 
 
@@ -361,7 +380,7 @@ Hide a column.
 
 **Parameters**
 
--   `id` **[string][65]** The id of the column to hide.
+-   `id` **[string][67]** The id of the column to hide.
 
 ### showColumn
 
@@ -369,7 +388,7 @@ Show a hidden column.
 
 **Parameters**
 
--   `id` **[string][65]** The id of the column to show.
+-   `id` **[string][67]** The id of the column to show.
 
 ### exportToCsv
 
@@ -378,8 +397,8 @@ Consider Deprecated use excel.exportToCsv
 
 **Parameters**
 
--   `fileName` **[string][65]** The desired export filename in the download.
--   `customDs` **[string][65]** An optional customized version of the data to use.
+-   `fileName` **[string][67]** The desired export filename in the download.
+-   `customDs` **[string][67]** An optional customized version of the data to use.
 
 ### exportToExcel
 
@@ -389,9 +408,9 @@ Consider Deprecated use excel.exportToExcel
 
 **Parameters**
 
--   `fileName` **[string][65]** The desired export filename in the download.
--   `worksheetName` **[string][65]** A name to give the excel worksheet tab.
--   `customDs` **[string][65]** An optional customized version of the data to use.
+-   `fileName` **[string][67]** The desired export filename in the download.
+-   `worksheetName` **[string][67]** A name to give the excel worksheet tab.
+-   `customDs` **[string][67]** An optional customized version of the data to use.
 
 ### setEmptyMessage
 
@@ -399,7 +418,7 @@ Set the content dynamically on the empty message area.
 
 **Parameters**
 
--   `emptyMessage` **[object][63]** The update empty message config object.
+-   `emptyMessage` **[object][65]** The update empty message config object.
 
 ### cellNode
 
@@ -407,11 +426,11 @@ Returns the cell dom node.
 
 **Parameters**
 
--   `row` **[number][66]** The row index.
--   `cell` **[number][66]** The cell index.
--   `includeGroups` **[boolean][64]** If true groups are taken into account.
+-   `row` **[number][68]** The row index.
+-   `cell` **[number][68]** The cell index.
+-   `includeGroups` **[boolean][66]** If true groups are taken into account.
 
-Returns **[object][63]** The dom node
+Returns **[object][65]** The dom node
 
 ### rowHeight
 
@@ -419,7 +438,7 @@ Get or Set the Row Height.
 
 **Parameters**
 
--   `height` **[string][65]** The row height to use, can be 'short', 'normal' or 'medium'
+-   `height` **[string][67]** The row height to use, can be 'short', 'normal' or 'medium'
 
 ### keywordSearch
 
@@ -427,7 +446,7 @@ Search a Term across all columns
 
 **Parameters**
 
--   `term` **[string][65]** The term to search for.
+-   `term` **[string][67]** The term to search for.
 
 ### selectRow
 
@@ -435,9 +454,9 @@ Toggle selection on a single row
 
 **Parameters**
 
--   `idx` **[number][66]** The row index to select
--   `nosync` **[boolean][64]** Do sync the header
--   `noTrigger` **[boolean][64]** Do not trigger events.
+-   `idx` **[number][68]** The row index to select
+-   `nosync` **[boolean][66]** Do sync the header
+-   `noTrigger` **[boolean][66]** Do not trigger events.
 
 Returns **void** 
 
@@ -447,7 +466,7 @@ Activate a row when in mixed selection mode
 
 **Parameters**
 
--   `idx` **[number][66]** The index.
+-   `idx` **[number][68]** The index.
 
 ### toggleRowActivation
 
@@ -455,7 +474,7 @@ Toggle the current activation state from on to off.
 
 **Parameters**
 
--   `idx` **[number][66]** The row to toggle
+-   `idx` **[number][68]** The row to toggle
 
 Returns **void** 
 
@@ -465,7 +484,7 @@ Toggle the current selection state from on to off.
 
 **Parameters**
 
--   `idx` **[number][66]** The row to select/unselect
+-   `idx` **[number][68]** The row to select/unselect
 
 Returns **void** 
 
@@ -475,9 +494,9 @@ De-select a selected row.
 
 **Parameters**
 
--   `idx` **[number][66]** The row index
--   `nosync` **[boolean][64]** Do not sync the header
--   `noTrigger` **[boolean][64]** Do not trgger any events
+-   `idx` **[number][68]** The row index
+-   `nosync` **[boolean][66]** Do not sync the header
+-   `noTrigger` **[boolean][66]** Do not trgger any events
 
 ### setNodeStatus
 
@@ -485,13 +504,13 @@ Set the current status on the row status column
 
 **Parameters**
 
--   `node` **[HTMLElement][62]** The node to set the status on
+-   `node` **[HTMLElement][64]** The node to set the status on
 
 ### selectedRows
 
 Get the currently selected rows.
 
-Returns **[array][61]** An array containing the selected rows
+Returns **[array][63]** An array containing the selected rows
 
 ### selectRows
 
@@ -500,8 +519,8 @@ Set the selected rows by passing the row index or an array of row indexes.
 **Parameters**
 
 -   `row` **number/array** A row index or array of row indexes to select.
--   `nosync` **[boolean][64]** Dont sync the header.
--   `selectAll` **[boolean][64]** Internally used.
+-   `nosync` **[boolean][66]** Dont sync the header.
+-   `selectAll` **[boolean][66]** Internally used.
 
 Returns **void** 
 
@@ -511,9 +530,9 @@ Get the column object by id
 
 **Parameters**
 
--   `id` **[number][66]** The column id to find
+-   `id` **[number][68]** The column id to find
 
-Returns **[object][63]** The corresponding column.
+Returns **[object][65]** The corresponding column.
 
 ### columnIdxById
 
@@ -521,9 +540,9 @@ Get the column index from the col's id
 
 **Parameters**
 
--   `id` **[number][66]** The column id to find
+-   `id` **[number][68]** The column id to find
 
-Returns **[object][63]** The corresponding columns current position.
+Returns **[object][65]** The corresponding columns current position.
 
 ### showCellError
 
@@ -531,10 +550,10 @@ Show the cell errors.
 
 **Parameters**
 
--   `row` **[number][66]** The row index.
--   `cell` **[number][66]** The cell index.
--   `message` **[string][65]** The message text.
--   `type` **[string][65]** The message type (infor, error, alert )
+-   `row` **[number][68]** The row index.
+-   `cell` **[number][68]** The cell index.
+-   `message` **[string][67]** The message text.
+-   `type` **[string][67]** The message type (infor, error, alert )
 
 Returns **void** 
 
@@ -548,7 +567,7 @@ Returns **void**
 
 Get the currently dirty rows.
 
-Returns **[array][61]** An array of dirty rows.
+Returns **[array][63]** An array of dirty rows.
 
 ### showRowError
 
@@ -556,9 +575,9 @@ Show an error on a row.
 
 **Parameters**
 
--   `row` **[number][66]** The row index.
--   `message` **[string][65]** The row description.
--   `type` **[string][65]** The error type.
+-   `row` **[number][68]** The row index.
+-   `message` **[string][67]** The row description.
+-   `type` **[string][67]** The error type.
 
 Returns **void** 
 
@@ -568,7 +587,7 @@ Validate all visible cells in a row if they have validation on the column
 
 **Parameters**
 
--   `row` **[number][66]** The row index.
+-   `row` **[number][68]** The row index.
 
 Returns **void** 
 
@@ -578,7 +597,7 @@ Validate all rows and cells in the entire gridif they have validation on the col
 
 **Parameters**
 
--   `row` **[number][66]** The row index.
+-   `row` **[number][68]** The row index.
 
 Returns **void** 
 
@@ -588,10 +607,10 @@ Get the settings for a column by index.
 
 **Parameters**
 
--   `idx` **[number][66]** The column index.
--   `onlyVisible` **[boolean][64]** If only the visible columns should be included.
+-   `idx` **[number][68]** The column index.
+-   `onlyVisible` **[boolean][66]** If only the visible columns should be included.
 
-Returns **[array][61]** The settings array
+Returns **[array][63]** The settings array
 
 ### updateCell
 
@@ -599,8 +618,8 @@ Update one cell with a specific value
 
 **Parameters**
 
--   `row` **[number][66]** The row index.
--   `cell` **[number][66]** The cell index.
+-   `row` **[number][68]** The row index.
+-   `cell` **[number][68]** The cell index.
 -   `value` **any** The value to use.
 
 Returns **void** 
@@ -611,7 +630,7 @@ Expand Detail Row Or Tree Row
 
 **Parameters**
 
--   `dataRowIndex` **[number][66]** The row to toggle
+-   `dataRowIndex` **[number][68]** The row to toggle
 
 Returns **void** 
 
@@ -621,10 +640,10 @@ Overridable function to conduct array sorting
 
 **Parameters**
 
--   `id` **[string][65]** The matching field/id in the array to sort on
--   `ascending` **[boolean][64]** Determines direction of the sort.
+-   `id` **[string][67]** The matching field/id in the array to sort on
+-   `ascending` **[boolean][66]** Determines direction of the sort.
 
-Returns **[boolean][64]** If found.
+Returns **[boolean][66]** If found.
 
 ### defaultFormatter
 
@@ -632,11 +651,11 @@ The default formatter to use (just plain text). When no formatter is specified.
 
 **Parameters**
 
--   `row` **[number][66]** The rowindex
--   `cell` **[number][66]** The cell index
+-   `row` **[number][68]** The rowindex
+-   `cell` **[number][68]** The cell index
 -   `value` **any** The data value
 
-Returns **[string][65]** The html string
+Returns **[string][67]** The html string
 
 ### renderPager
 
@@ -644,9 +663,9 @@ Add the pager and paging functionality.
 
 **Parameters**
 
--   `pagingInfo` **[string][65]** The paging object with activePage ect used by pager.js
--   `isResponse` **[boolean][64]** Internal flag used to prevent callbacks from rexecuting.
--   `callback` **[function][67]** The callback function.
+-   `pagingInfo` **[string][67]** The paging object with activePage ect used by pager.js
+-   `isResponse` **[boolean][66]** Internal flag used to prevent callbacks from rexecuting.
+-   `callback` **[function][69]** The callback function.
 
 ### resetPager
 
@@ -654,13 +673,13 @@ Reset the pager to the first page.
 
 **Parameters**
 
--   `type` **[string][65]** The action type, which gets sent to the source callback.
+-   `type` **[string][67]** The action type, which gets sent to the source callback.
 
 ### destroy
 
 Unwrap the grid back to a simple div, and destory all events and pointers.
 
-Returns **[object][63]** The plugin api for chaining.
+Returns **[object][65]** The plugin api for chaining.
 
 ### updated
 
@@ -668,9 +687,9 @@ Update the datagrid and optionally apply new settings.
 
 **Parameters**
 
--   `settings` **[object][63]** the settings to update to.
+-   `settings` **[object][65]** the settings to update to.
 
-Returns **[object][63]** The plugin api for chaining.
+Returns **[object][65]** The plugin api for chaining.
 
 [1]: #datagrid
 
@@ -710,100 +729,104 @@ Returns **[object][63]** The plugin api for chaining.
 
 [19]: #calculatetextwidth
 
-[20]: #calculatecolumnwidth
+[20]: #columnwidth
 
-[21]: #updaterow
+[21]: #calculatecolumnwidths
 
-[22]: #updatecolumns
+[22]: #calculatecolumnwidth
 
-[23]: #savecolumns
+[23]: #updaterow
 
-[24]: #saveusersettings
+[24]: #updatecolumns
 
-[25]: #restorecolumns
+[25]: #savecolumns
 
-[26]: #restoreusersettings
+[26]: #saveusersettings
 
-[27]: #resetcolumns
+[27]: #restorecolumns
 
-[28]: #hidecolumn
+[28]: #restoreusersettings
 
-[29]: #showcolumn
+[29]: #resetcolumns
 
-[30]: #exporttocsv
+[30]: #hidecolumn
 
-[31]: #exporttoexcel
+[31]: #showcolumn
 
-[32]: #setemptymessage
+[32]: #exporttocsv
 
-[33]: #cellnode
+[33]: #exporttoexcel
 
-[34]: #rowheight
+[34]: #setemptymessage
 
-[35]: #keywordsearch
+[35]: #cellnode
 
-[36]: #selectrow
+[36]: #rowheight
 
-[37]: #activaterow
+[37]: #keywordsearch
 
-[38]: #togglerowactivation
+[38]: #selectrow
 
-[39]: #togglerowselection
+[39]: #activaterow
 
-[40]: #unselectrow
+[40]: #togglerowactivation
 
-[41]: #setnodestatus
+[41]: #togglerowselection
 
-[42]: #selectedrows
+[42]: #unselectrow
 
-[43]: #selectrows
+[43]: #setnodestatus
 
-[44]: #columnbyid
+[44]: #selectedrows
 
-[45]: #columnidxbyid
+[45]: #selectrows
 
-[46]: #showcellerror
+[46]: #columnbyid
 
-[47]: #resetrowstatus
+[47]: #columnidxbyid
 
-[48]: #dirtyrows
+[48]: #showcellerror
 
-[49]: #showrowerror
+[49]: #resetrowstatus
 
-[50]: #validaterow
+[50]: #dirtyrows
 
-[51]: #validateall
+[51]: #showrowerror
 
-[52]: #columnsettings
+[52]: #validaterow
 
-[53]: #updatecell
+[53]: #validateall
 
-[54]: #togglerowdetail
+[54]: #columnsettings
 
-[55]: #sortfunction
+[55]: #updatecell
 
-[56]: #defaultformatter
+[56]: #togglerowdetail
 
-[57]: #renderpager
+[57]: #sortfunction
 
-[58]: #resetpager
+[58]: #defaultformatter
 
-[59]: #destroy
+[59]: #renderpager
 
-[60]: #updated
+[60]: #resetpager
 
-[61]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[61]: #destroy
 
-[62]: https://developer.mozilla.org/docs/Web/HTML/Element
+[62]: #updated
 
-[63]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[63]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[64]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[64]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-[65]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[65]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[66]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[66]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[67]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[67]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[68]: https://www.w3.org/TR/CSS21/tables.html#width-layout
+[68]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[69]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[70]: https://www.w3.org/TR/CSS21/tables.html#width-layout

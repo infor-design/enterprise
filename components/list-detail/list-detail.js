@@ -12,7 +12,7 @@ const LIST_DETAIL_EDGE_BLEED_BREAKPOINTS = [
 ];
 
 /**
- * @class List/Detail Settings
+ * @class ListDetail
  * @param {string} element The plugin element for the constuctor
  * @param {string} [settings] The settings element.
  * @param {HTMLElement} [settings.backElement] defines a trigger button that will be used to "drill up" from the detail

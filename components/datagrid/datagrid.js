@@ -909,7 +909,7 @@ Datagrid.prototype = {
       }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
 
       headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}</span>`;
-      cols += `<col${this.calculateColumnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
+      cols += `<col${this.columnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -932,12 +932,14 @@ Datagrid.prototype = {
     headerColGroup += `${cols}</colgroup>`;
 
     if (self.headerRow === undefined) {
-      self.headerContainer = $(`<div class="datagrid-header"><table role="grid" ${this.headerTableWidth()}></table></div>`);
+      self.headerContainer = $('<div class="datagrid-header"><table role="grid"></table></div>');
       self.headerTable = self.headerContainer.find('table');
+      self.headerTable.width(this.headerTableWidth());
       self.headerColGroup = $(headerColGroup).appendTo(self.headerTable);
       self.headerRow = $(`<thead>${headerRow}</thead>`).appendTo(self.headerContainer.find('table'));
       self.element.prepend(self.headerContainer);
     } else {
+      self.headerTable.width(this.headerTableWidth());
       self.headerRow.html(headerRow);
       self.headerColGroup.html(cols);
     }
@@ -2745,7 +2747,7 @@ Datagrid.prototype = {
       let colWidth = '';
 
       if (this.recordCount === 0 || this.recordCount - ((activePage - 1) * pagesize) === 0) {
-        colWidth = this.calculateColumnWidth(col, j);
+        colWidth = this.columnWidth(col, j);
 
         self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
 
@@ -2950,9 +2952,9 @@ Datagrid.prototype = {
     this.setScrollClass();
 
     if (cacheWidths.widthPercent) {
-      return 'style = "width: 100%"';
+      return '100%';
     } else if (!isNaN(this.totalWidth)) {
-      return `style = "width: ${parseFloat(this.totalWidth)}px"`;
+      return `${parseFloat(this.totalWidth)}px`;
     }
 
     return '';
@@ -2987,6 +2989,57 @@ Datagrid.prototype = {
     this.totalWidth = 0;
     this.elemWidth = 0;
     this.lastColumn = null;
+    this.isInitialRender = true;
+    this.calculateColumnWidths();
+  },
+
+  /**
+   * Return the width for a column (upfront with no rendering)
+   * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   * @param  {[type]} col The column object to use
+   * @param  {[type]} index The column index
+   * @returns {void}
+   */
+  columnWidth(col, index) {
+    if (!this.elemWidth) {
+      this.elemWidth = this.element.outerWidth();
+
+      if (this.elemWidth === 0) { // handle on invisible tab container
+        this.elemWidth = this.element.closest('.tab-container').outerWidth();
+      }
+      if (!this.elemWidth || this.elemWidth === 0) { // handle on invisible modal
+        this.elemWidth = this.element.closest('.modal-contents').outerWidth();
+      }
+
+      this.widthSpecified = false;
+    }
+
+    // use cache
+    if (this.headerWidths[index]) {
+      const cacheWidths = this.headerWidths[index];
+
+      if (cacheWidths.width === 'default') {
+        return '';
+      }
+
+      if (this.widthSpecified && !cacheWidths.width) {
+        return '';
+      }
+
+      return ` style="width: ${cacheWidths.width}${cacheWidths.widthPercent ? '%' : 'px'}"`;
+    }
+    return this.calculateColumnWidth(col, index);
+  },
+
+  /**
+   * Calculate the width for all the columns
+   * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   */
+  calculateColumnWidths() {
+    for (let i = 0; i < this.settings.columns.length; i++) {
+      const col = this.settings.columns[i];
+      this.calculateColumnWidth(col, i);
+    }
   },
 
   /**
@@ -3106,14 +3159,28 @@ Datagrid.prototype = {
     }
 
     // For the last column stretch it if it doesnt fit the area
-    if (lastColumn && this.isInitialRender && this.settings.stretchColumn === 'last'
-      && !this.settings.spacerColumn) {
+    if (lastColumn && this.isInitialRender && !this.settings.spacerColumn) {
       const diff = this.elemWidth - this.totalWidth;
 
-      if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
-        colWidth = diff - 2 - 10; // borders and last edge padding
+      if (this.settings.stretchColumn === 'last') {
+        if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
+          colWidth = diff - 2 - 10; // borders and last edge padding
+          this.headerWidths[index] = {
+            id: col.id,
+            width: colWidth,
+            widthPercent: this.widthPercent
+          };
+          this.totalWidth = this.elemWidth - 2;
+        }
+      } else {
         this.headerWidths[index] = { id: col.id, width: colWidth, widthPercent: this.widthPercent };
-        this.totalWidth = this.elemWidth - 2;
+        this.totalWidth += col.hidden ? 0 : colWidth;
+        const diff2 = this.elemWidth - this.totalWidth;
+        const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
+        if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
+          stretchColumn[0].width += diff2 - 2;
+          this.totalWidth += diff2 - 2;
+        }
       }
 
       if (this.widthPercent) {
@@ -3121,6 +3188,7 @@ Datagrid.prototype = {
       } else if (!isNaN(this.totalWidth)) {
         this.table.css('width', this.totalWidth);
       }
+
       this.isInitialRender = false;
     }
 
@@ -4146,10 +4214,10 @@ Datagrid.prototype = {
 
     // Handle Resize - Re do the columns
     if (self.settings.redrawOnResize) {
-      let oldWidth = $('body')[0].offsetWidth;
+      let oldWidth = self.element.outerWidth();
 
-      $('body').on('resize.datagrid', function () {
-        const width = this.offsetWidth;
+      $('body').on('resize.datagrid', () => {
+        const width = self.element.outerWidth();
         if (width !== oldWidth) {
           oldWidth = width;
           self.handleResize();
