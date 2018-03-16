@@ -18,6 +18,7 @@ const COMPONENT_NAME = 'modal';
 * @property {string} id Optionally tag a dialog with an id.
 * @property {number} frameHeight Optional extra height to add.
 * @property {number} frameWidth Optional extra width to add.
+* @property {function} beforeShow Optional callback for before show
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -28,7 +29,8 @@ const MODAL_DEFAULTS = {
   autoFocus: true,
   id: null,
   frameHeight: 180,
-  frameWidth: 46
+  frameWidth: 46,
+  beforeShow: null
 };
 
 /**
@@ -80,7 +82,7 @@ Modal.prototype = {
     }
 
     // ensure is appended to body for new dom tree
-    if (this.settings.content) {
+    if (this.settings.content || this.settings.beforeShow) {
       this.settings.trigger = this.settings.content instanceof jQuery ? this.settings.trigger : 'immediate';
       this.appendContent();
       setTimeout(() => {
@@ -119,10 +121,15 @@ Modal.prototype = {
       } else {
         this.element.find('.modal-body').append(this.settings.content);
       }
-      if (this.settings.content instanceof jQuery) {
+
+      if (this.settings.content instanceof jQuery && !this.settings.beforeShow) {
         this.settings.content.removeClass('hidden is-hidden');
         this.settings.content.show();
       }
+    }
+
+    if (this.settings.beforeShow) {
+      this.element.find('.modal-body').append($('<div class="field"><div id="modal-busyindicator" class="busy card"></div></div>'));
     }
 
     if (!isAppended) {
@@ -142,6 +149,12 @@ Modal.prototype = {
     }
 
     utils.fixSVGIcons(this.element);
+
+    if (this.settings.beforeShow) {
+      const busyIndEl = $('#modal-busyindicator');
+      busyIndEl.busyindicator({}).data('busyindicator');
+      busyIndEl.trigger('start.busyindicator');
+    }
   },
 
   reStructure() {
@@ -341,11 +354,41 @@ Modal.prototype = {
     messageArea[0].style.width = `${messageArea.width()}px`;
   },
 
+  callSource() {
+    if (typeof this.settings.beforeShow !== 'function') {
+      return;
+    }
+
+    const self = this;
+    const response = function(content) {
+      if (content === false) {
+        return false;
+      }
+
+      $('#modal-busyindicator').trigger('complete.busyindicator');
+
+      if (!(content instanceof jQuery)) {
+        content = $(content);
+      }
+
+      self.element.find('.modal-body').empty();
+      self.element.find('.modal-body').append(content);
+
+      content.show();
+
+      return true;
+    };
+
+    const callBackOpts = {};
+    this.settings.beforeShow(response, callBackOpts);
+    self.open(true);
+  },
+
   /**
   * Open the modal via the api.
   * @returns {void}
   */
-  open() {
+  open(ajaxReturn) {
     let messageArea = null;
     let elemCanOpen = true;
 
@@ -375,6 +418,14 @@ Modal.prototype = {
       this.overlay.remove();
       this.root[0].style.display = 'none';
       return;
+    }
+
+    if (!ajaxReturn) {
+      this.callSource();
+
+      if (this.settings.beforeShow) {
+        return;
+      }
     }
 
     // Look for other nested dialogs and adjust the zindex.
