@@ -43,8 +43,8 @@ and the second level provides the associated options.
     -   `settings.favorButtonset` **[boolean][24]** If "resizeContainers" is true, setting this to
          true will try to display as many buttons as possible while resizing the toolbar.
          Setting to false attempts to show the entire title instead. (optional, default `true`)
-    -   `settings.moreMenuSettings` **[object][23]** If defined, provides a toolbar-level method of
-         defining settings that will be applied to the More Actions button's popupmenu instance. (optional, default `undefined`)
+    -   `settings.moreMenuSettings` **[object][23]?** If defined, provides a toolbar-level method of
+         defining settings that will be applied to the More Actions button's popupmenu instance.
     -   `settings.noSearchfieldReinvoke` **[boolean][24]** If true, does not manage the lifecycle
          of an internal toolbarsearchfield automatically.  Allows an external controller
          to do it instead. (optional, default `false`)

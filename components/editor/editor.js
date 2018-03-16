@@ -376,7 +376,7 @@ Editor.prototype = {
   },
 
   triggerClick(e, btn) {
-    $(`button[data-action="' + ${btn} + '"]`, this.toolbar).trigger('click.editor');
+    $(`button[data-action="${btn}"]`, this.toolbar).trigger('click.editor');
   },
 
   setupKeyboardEvents() {
