@@ -41,6 +41,7 @@ const glob = require('glob');
 const marked = require('marked');
 const path = require('path');
 const yaml = require('js-yaml');
+const streamArray = require('stream-array');
 
 // Set Marked options
 marked.setOptions({
@@ -61,7 +62,7 @@ const rootPath = process.cwd();
 const paths = {
   components:  `${rootPath}/components`,
   src:         `${rootPath}/${idsWebsitePath}`,
-  static:      `${paths.rootPath}/${paths.localWebsitePath}`,
+  static:      `${rootPath}/${localWebsitePath}`,
   dist:        `${rootPath}/${idsWebsitePath}/dist`,
   distDocs:    `${rootPath}/${idsWebsitePath}/dist/docs`
 };
@@ -87,7 +88,7 @@ const testComponents = [
 // -------------------------------------
 //   Variables
 // -------------------------------------
-const allDocsObj = {};
+let allDocsObj = {};
 let componentStats = {
   numDocumented: 0,
   numConverted: 0,
@@ -95,16 +96,14 @@ let componentStats = {
   numSkipped: 0,
   total: 0,
 };
-const deployTo = 'static';
-const stopwatch = {};
+let deployTo = 'static';
+let stopwatch = {};
 let numArchivesSent = 0;
 
 // -------------------------------------
 //   Main
 // -------------------------------------
 logTaskStart('deploy');
-
-if (arvg.site)
 
 const setupPromises = [
   cleanAll(),
@@ -232,8 +231,11 @@ function compileSupportingDocs() {
  * @return {Promise}
  */
 function cleanAll() {
-  let dirsArr = [paths.static, paths.dist, paths.distDocs];
+  const dirsArr = [paths.static, paths.dist, paths.distDocs, `${paths.static}/tmp`];
   return del([paths.dist, paths.static])
+    .catch(err => {
+      console.error(chalk.red('Error!'), err);
+    })
     .then(res => {
       logTaskAction('Clean', paths.dist);
       createDirs(dirsArr);
@@ -302,7 +304,7 @@ function markdownToHtml(filePath) {
  * @param  {array} arrPaths - the directory path(s)
  */
 function createDirs(arrPaths) {
-  for (path in arrPaths) {
+  for (let path of arrPaths) {
     if (!fs.existsSync(path)) {
       fs.mkdirSync(path);
       logTaskAction('Created', path);
@@ -328,12 +330,25 @@ function documentationExists(componentName) {
  */
 function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
+  const vfs = require('vinyl-fs');
+
+  const vinylToString = require('vinyl-contents-tostring');
+  const mapStream = require('map-stream');
+
+
   return documentation.build([compFilePath], { extension: 'js', shallow: true })
-    .then(documentation.formats.html({ theme: 'default_theme' }))
-    .then(output => {
-      componentStats.numDocumented++;
-      logTaskAction('Documented', componentName + '.js')
-      allDocsObj[componentName].api = output;
+    .then(comments => {
+      documentation.formats.html(comments, { theme: `./docs/default-theme` })
+        .then(output => {
+          return output
+            .map((file, cb) => {
+              vinylToString(file).then(contents => {
+
+              });
+            })
+        }, err => {
+          console.error(chalk.red('Error!'), err);
+        })
     });
 }
 
@@ -448,25 +463,6 @@ function timeElapsed(t) {
 
 /**
  * Write a json file for specified component
- * @param {string} componentName - the name of the component
- */
-function writeJsonFile(componentName) {
-  return new Promise((resolve, reject) => {
-    const thisName = componentName;
-    fs.writeFile(`${paths.distDocs}/${thisName}.json`, JSON.stringify(allDocsObj[thisName]), 'utf8', err => {
-      if (err) {
-        reject(err);
-      } else {
-        componentStats.numWritten++;
-        logTaskAction('Created', thisName + '.json');
-        resolve();
-      }
-    });
-  });
-}
-
-/**
- * Write an HTML file for specified component
  * @param {string} componentName - the name of the component
  */
 function writeJsonFile(componentName) {
