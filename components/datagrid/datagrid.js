@@ -1367,10 +1367,7 @@ Datagrid.prototype = {
       this.element.triggerHandler('closefilterrow');
     } else {
       this.settings.filterable = true;
-
-      if (!this.filterRowRendered) {
-        this.render('filterrow');
-      }
+      this.filterRowRendered = true;
 
       this.element.addClass('has-filterable-columns');
 
