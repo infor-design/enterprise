@@ -171,25 +171,25 @@
 
 <h2 id="code-example">Code Example</h2>
 <p>The Message component is a component that inserts a dialog in the page for showing modal type alerts and messages. Its contents will be removed when the dialog is closed. You have control over the message contents and buttons. The message is triggered by selecting the parent content (usually body) and executing the message() function with various options to create the message.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-      <span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">message</span>({
-          <span class="dt">title</span>: <span class="st">&#39;Application Error&#39;</span>,
-          <span class="dt">isError</span>: <span class="kw">true</span>,
-          <span class="dt">message</span>: <span class="st">&#39;This application has experienced a system error due. Please restart the application in order to proceed.&#39;</span>,
-          <span class="dt">buttons</span>: [{
-              <span class="dt">text</span>: <span class="st">&#39;Restart Now&#39;</span>,
-              <span class="dt">click</span>: <span class="kw">function</span>() {
-                  <span class="fu">$</span>(<span class="kw">this</span>).<span class="fu">data</span>(<span class="st">&#39;modal&#39;</span>).<span class="fu">close</span>();
-              },
-              <span class="dt">isDefault</span>: <span class="kw">true</span>
-          }]
-      });
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">      <span class="at">$</span>(<span class="st">&#39;body&#39;</span>).<span class="at">message</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">          <span class="dt">title</span><span class="op">:</span> <span class="st">&#39;Application Error&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">          <span class="dt">isError</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">          <span class="dt">message</span><span class="op">:</span> <span class="st">&#39;This application has experienced a system error due. Please restart the application in order to proceed.&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">          <span class="dt">buttons</span><span class="op">:</span> [<span class="op">{</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">              <span class="dt">text</span><span class="op">:</span> <span class="st">&#39;Restart Now&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">              <span class="dt">click</span><span class="op">:</span> <span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">                  <span class="at">$</span>(<span class="kw">this</span>).<span class="at">data</span>(<span class="st">&#39;modal&#39;</span>).<span class="at">close</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">              <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">              <span class="dt">isDefault</span><span class="op">:</span> <span class="kw">true</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">          <span class="op">}</span>]</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">      <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>has role=&quot;alertdialog&quot;</li>
-<li>has aria-modal=&quot;true&quot;</li>
-<li>aria-labelledby points to the title element's id</li>
+<li>has role=“alertdialog”</li>
+<li>has aria-modal=“true”</li>
+<li>aria-labelledby points to the title element’s id</li>
 <li>aria-describedby points to the message text</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>

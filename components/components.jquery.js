@@ -39,7 +39,7 @@ import './fileupload-advanced/fileupload-advanced.jquery';
 import './homepage/homepage.jquery';
 import './listbuilder/listbuilder.jquery';
 import './listview/listview.jquery';
-import './mask/masked-input.jquery';
+import './mask/mask-input.jquery';
 import './message/message.jquery';
 import './modal/modal.jquery';
 import './multiselect/multiselect.jquery';

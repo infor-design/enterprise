@@ -809,12 +809,12 @@ void
 <h2 id="code-example">Code Example</h2>
 <p>The setup for a datepicker only involves creating and input with the class datepicker. You can optionally set a placeholder to the fields, format. This will get adjusted by the plugin based on the current locale. Remember to always associate a label with the input field.</p>
 <p>This plugin works around the Locale plugin which provides data for the calendar, including calendar format for <a href="../components/locale">all supported locales</a>.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;date-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Date Field<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;date-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;datepicker&quot;</span><span class="ot"> name=</span><span class="st">&quot;date-field&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;date-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Date Field<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;date-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;datepicker&quot;</span><span class="ot"> name=</span><span class="st">&quot;date-field&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <ul>
 <li>We by rule, always use four-digit date in all locales for short date</li>
@@ -825,13 +825,13 @@ void
 <li>Always associate labels to the input field</li>
 <li>Add an aria label to the calendar element</li>
 <li>Add aria-selected=true to selected day</li>
-<li>Add instructional information &quot;use down arrow to select&quot; to the input as an audible label</li>
+<li>Add instructional information “use down arrow to select” to the input as an audible label</li>
 <li>Each calendar item should have an audible label to announce the day of week will arrowing through days</li>
 <li>One other similar (ish) example for comparison http://oaa-accessibility.org/example/15/</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li><strong>Tab</strong> - like other widgets, the Date Picker widget receives focus to become active by tabbing into it. A second tab will take the user out of the Date Picker widget. Focus is initially placed on today's date when the calendar is opened.</li>
+<li><strong>Tab</strong> - like other widgets, the Date Picker widget receives focus to become active by tabbing into it. A second tab will take the user out of the Date Picker widget. Focus is initially placed on today’s date when the calendar is opened.</li>
 <li><strong>Shift+Tab</strong> reverses the direction of the tab order. Once in the widget, a Shift+Tab will take the user to the previous focusable element in the tab order</li>
 <li><strong>Arrow Up and Down</strong> goes to the same day of the week in the previous or next week respectively. If the user advances past the end of the month they continue into the next or previous month as appropriate</li>
 <li><strong>Arrow Left and Right</strong> advances one day to the next, also in a continuum. Visually, focus is moved from day to day and wraps from row to row in a grid of days and weeks</li>
@@ -844,7 +844,7 @@ void
 <li><strong>Page Down</strong> moves to the same date in the next month</li>
 <li><strong>Enter Key</strong> submits the form</li>
 <li><strong>Escape</strong> in the case of a popup date picker, closes the widget without any action</li>
-<li><strong>T</strong> inserts today's date</li>
+<li><strong>T</strong> inserts today’s date</li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
 <ul>
@@ -863,5 +863,5 @@ void
 <li>Change inforDateField to class datepicker</li>
 <li>Optionally set the placeholder and / or data-mask</li>
 <li>Use the initializer</li>
-<li>Wrap the input and label in a class=&quot;field&quot; element</li>
+<li>Wrap the input and label in a class=“field” element</li>
 </ul>

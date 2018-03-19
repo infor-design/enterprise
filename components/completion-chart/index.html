@@ -187,22 +187,22 @@ void
 <p>Format used the <a href="https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format">D3 formatter (v3)</a></p>
 <h2 id="code-example">Code Example</h2>
 <p>A completion chart shows completion over a target value. Usually used to show progress as a percentage. Create a div in which to host the chart. To make one create a div to a given width.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;example-2&quot;</span><span class="ot"> class=</span><span class="st">&quot;chart-container&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;example-2&quot;</span><span class="ot"> class=</span><span class="st">&quot;chart-container&quot;</span><span class="kw">&gt;&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a></code></pre></div>
 <p>Initialize the Completion Chart out of the charts package with <code>type: 'completion-target'</code>. Pass in objects for the sections such as the text , completed area and remaining bar.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="kw">var</span> dataset1 = [{
-  <span class="dt">data</span>: [{
-    <span class="dt">name</span>: {<span class="dt">text</span>: <span class="st">&#39;Available Credit&#39;</span>},
-    <span class="dt">completed</span>: {<span class="dt">text</span>: <span class="st">&#39;Spent&#39;</span>, <span class="dt">value</span>: <span class="dv">50000</span>, <span class="dt">format</span>: <span class="st">&#39;$,.0f&#39;</span>},
-    <span class="dt">remaining</span>: {<span class="dt">text</span>: <span class="st">&#39;Pending&#39;</span>, <span class="dt">value</span>: <span class="dv">10000</span>, <span class="dt">format</span>: <span class="st">&#39;$,.0f&#39;</span>},
-    <span class="dt">total</span>: {<span class="dt">value</span>: <span class="dv">95000</span>, <span class="dt">format</span>: <span class="st">&#39;$,.0f&#39;</span>},
-  }]
-}];
-
-<span class="fu">$</span>(<span class="st">&#39;#example-1&#39;</span>).<span class="fu">chart</span>({<span class="dt">dataset</span>: dataset1, <span class="dt">type</span>: <span class="st">&#39;completion-target&#39;</span>}).<span class="fu">data</span>(<span class="st">&#39;chart&#39;</span>);
-</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">var</span> dataset1 <span class="op">=</span> [<span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="dt">data</span><span class="op">:</span> [<span class="op">{</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">name</span><span class="op">:</span> <span class="op">{</span><span class="dt">text</span><span class="op">:</span> <span class="st">&#39;Available Credit&#39;</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">completed</span><span class="op">:</span> <span class="op">{</span><span class="dt">text</span><span class="op">:</span> <span class="st">&#39;Spent&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">50000</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> <span class="st">&#39;$,.0f&#39;</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dt">remaining</span><span class="op">:</span> <span class="op">{</span><span class="dt">text</span><span class="op">:</span> <span class="st">&#39;Pending&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">10000</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> <span class="st">&#39;$,.0f&#39;</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="dt">total</span><span class="op">:</span> <span class="op">{</span><span class="dt">value</span><span class="op">:</span> <span class="dv">95000</span><span class="op">,</span> <span class="dt">format</span><span class="op">:</span> <span class="st">&#39;$,.0f&#39;</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="op">}</span>]</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="op">}</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="at">$</span>(<span class="st">&#39;#example-1&#39;</span>).<span class="at">chart</span>(<span class="op">{</span><span class="dt">dataset</span><span class="op">:</span> dataset1<span class="op">,</span> <span class="dt">type</span><span class="op">:</span> <span class="st">&#39;completion-target&#39;</span><span class="op">}</span>).<span class="at">data</span>(<span class="st">&#39;chart&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <p>Accessibility work is needed on this component.</p>
 <ul>
@@ -219,7 +219,7 @@ void
 </ul>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <ul>
-<li>Will size to the parent's withd</li>
+<li>Will size to the parent’s withd</li>
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>

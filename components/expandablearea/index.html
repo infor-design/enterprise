@@ -373,22 +373,23 @@ object
 
 <h2 id="code-example">Code Example</h2>
 <p>An expandable area is a div with the <em>expandable-area</em> class. Inside that element would be a header with a title and a pane. The pane has the class <em>expandable-pane</em> and is the area that will hide and show.</p>
-<p>Its possible to keep the area open by default by adding the class <em>is-expanded</em> to the <em>expandable-area</em>. You can also add a second pane with class <em>expandable-visible-panel.</em> This pane will always remain open.<br /></p>
-<pre class="sourceCode html"><code class="sourceCode html">
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;expandable-area&quot;</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;expandable-header&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;title&quot;</span><span class="kw">&gt;</span>Procurement<span class="kw">&lt;/span&gt;</span>
-      <span class="kw">&lt;/div&gt;</span>
-      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;expandable-pane&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;content&quot;</span><span class="kw">&gt;</span>
-          Ubiquitous out-of-the-box, scalable; communities disintermediate beta-test, enable utilize markets dynamic infomediaries virtual data-driven synergistic aggregate infrastructures, &quot;cross-platform, feeds bleeding-edge tagclouds.&quot; Platforms extend interactive B2C benchmark proactive, embrace e-markets, transition generate peer-to-peer.
-        <span class="kw">&lt;/div&gt;</span>
-      <span class="kw">&lt;/div&gt;</span>
-    <span class="kw">&lt;/div&gt;</span>
-</code></pre>
+<p>Its possible to keep the area open by default by adding the class <em>is-expanded</em> to the <em>expandable-area</em>. You can also add a second pane with class <em>expandable-visible-panel.</em> This pane will always remain open.<br />
+</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;expandable-area&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;expandable-header&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;title&quot;</span><span class="kw">&gt;</span>Procurement<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">      <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;expandable-pane&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;content&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">          Ubiquitous out-of-the-box, scalable; communities disintermediate beta-test, enable utilize markets dynamic infomediaries virtual data-driven synergistic aggregate infrastructures, &quot;cross-platform, feeds bleeding-edge tagclouds.&quot; Platforms extend interactive B2C benchmark proactive, embrace e-markets, transition generate peer-to-peer.</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">        <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">      <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">    <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"></a></code></pre></div>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li>Press <strong>Tab</strong> to focus the Expandable Area's link.</li>
+<li>Press <strong>Tab</strong> to focus the Expandable Area’s link.</li>
 <li>Press <strong>Enter</strong> to expand the area or collapse it</li>
 <li>If the content pane is open, pressing <strong>Tab</strong> or <strong>Shift + Tab</strong> will focus the next/previous focusable element inside the content pane.</li>
 <li>If the content pane is closed, or focus is on the last focusable element inside the content pane, pressing <strong>Tab</strong> once more will leave the content pane and focus the next focusable element on the page.</li>
@@ -400,9 +401,9 @@ object
 <li>Collapsed</li>
 <li>Expanded</li>
 </ul>
-<p>During initialization, the Expandable Area's base element $('.expandable-area') is checked for the css class 'is-expanded'. If found, the Expandable Area content pane will open automatically.</p>
+<p>During initialization, the Expandable Area’s base element $(‘.expandable-area’) is checked for the css class ‘is-expanded’. If found, the Expandable Area content pane will open automatically.</p>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
-<p>The Expandable Area will automatically stretch to fill 100% of it's parent element's width.</p>
+<p>The Expandable Area will automatically stretch to fill 100% of it’s parent element’s width.</p>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
 <li>Expandable Area and Field Set are separated</li>

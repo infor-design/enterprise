@@ -3,16 +3,16 @@ import { utils } from '../utils/utils';
 import { masks } from './masks';
 
 /**
- * @class SohoMaskAPI
+ * @class MaskAPI
  * @constructor
  * @param {object} [settings] incoming settings
  */
-function SohoMaskAPI(settings) {
+function MaskAPI(settings) {
   this.configure(settings);
   return this;
 }
 
-SohoMaskAPI.prototype = {
+MaskAPI.prototype = {
 
   /**
    * Configure the API for an incoming mask request.
@@ -770,4 +770,4 @@ SohoMaskAPI.prototype = {
 
 };
 
-export { SohoMaskAPI };
+export { MaskAPI };
