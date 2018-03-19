@@ -4276,7 +4276,6 @@ Datagrid.prototype = {
         self.toggleRowDetail(dataRowIdx);
         self.toggleGroupChildren(rowNode);
         self.toggleChildren(e, dataRowIdx);
-        return false; //eslint-disable-line
       }
 
       const isSelectionCheckbox = target.is('.datagrid-selection-checkbox') ||
