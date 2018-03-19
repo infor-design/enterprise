@@ -5,13 +5,6 @@ import { breakpoints } from '../utils/breakpoints';
 
 // Component Name
 const COMPONENT_NAME = 'listdetail';
-
-// Available Soho Elements to be used as the list
-const LIST_DETAIL_SUPPORTED_LIST_TYPES = [
-  'accordion',
-  'listview'
-];
-
 // Available breakpoint types for Edge Bleeding
 const LIST_DETAIL_EDGE_BLEED_BREAKPOINTS = [
   'phone',
@@ -19,21 +12,20 @@ const LIST_DETAIL_EDGE_BLEED_BREAKPOINTS = [
 ];
 
 /**
- * Default List/Detail Settings
- * @namespace
- * @property {HTMLElement} [backElement] defines a trigger button that will be used
- *  to "drill up" from the detail back to the list on the responsive view of this pattern.
- * @property {boolean} [edgeBleed] if true, will show an interactive edge of the "list" element
- *  while the detail view is active.  Clicking the left edge (or a button in the left edge) will
- *  cause the "drillup" operation to occur while making the list active.
- * @property {string} [edgeBleedBreakpoint] Defines the breakpoint where the responsive
- *  "edge bleeding" style will occur.
- * @property {HTMLElement} listElement the base element for the Soho component that will
- *  be used as the "List" to be chosen from.  Must implement a Soho Accordion or Listview element.
- * @property {HTMLElement} [listCloseElement]  defines a trigger button element that can be used
- *  to collapse a bleeding-edge list drawer.
- * @property {HTMLElement} detailElement the base element for the Soho component that will
- *  be used as "detail" or content area that can change based on what is picked from the list.
+ * @class ListDetail
+ * @param {string} element The plugin element for the constuctor
+ * @param {string} [settings] The settings element.
+ * @param {HTMLElement} [settings.backElement] defines a trigger button that will be used to "drill up" from the detail
+ * back to the list on the responsive view of this pattern.
+ * @param {boolean} [settings.edgeBleed=false] if true, will show an interactive edge of the "list" element while the
+ * detail view is active.  Clicking the left edge (or a button in the left edge) will cause the "drillup" operation to occur
+ * while making the list active.
+ * @param {string} [settings.edgeBleedBreakpoint='phone'] Defines the breakpoint where the responsive "edge bleeding" style will occur.
+ * @param {HTMLElement} [settings.listElement] the base element for the Soho component that will be used as the "List" to be chosen from.
+ * Must implement a Soho Accordion or Listview element.
+ * @param {HTMLElement} [settings.listCloseElement]  defines a trigger button element that can be used to collapse a bleeding-edge list drawer.
+ * @param {HTMLElement} [settings.detailElement] the base element for the Soho component that will be used as "detail" or content area that can
+ * change based on what is picked from the list.
  */
 const LIST_DETAIL_DEFAULTS = {
   backElement: undefined,
@@ -43,6 +35,12 @@ const LIST_DETAIL_DEFAULTS = {
   listCloseElement: undefined,
   detailElement: undefined
 };
+
+// Available Soho Elements to be used as the list
+const LIST_DETAIL_SUPPORTED_LIST_TYPES = [
+  'accordion',
+  'listview'
+];
 
 /**
  * Gets the type of list component

@@ -1,223 +1,311 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      the base element for this component
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.addTabButton
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If set to true, creates a button at the end
+of the tab list that can be used to add an empty tab and panel
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.addTabButtonCallback
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      if defined as a function, will
+be used in-place of the default Tab Adding method
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.appMenuTrigger
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If set to true, will force an App Menu
+trigger to be present on Non-Vertical Tabs implementatations.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.appMenuTriggerText
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If defined, replaces the default "Menu" text used
+in the app menu trigger.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.ajaxOptions
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      if defined, will be used by any internal
+Tabs AJAX calls as the desired request settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.beforeActivate
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      If defined as a function, fires
+this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250).
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.containerElement
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Defines a separate element
+to be used for containing the tab panels.  Defaults to a `.tab-panel-container`
+element that is created if it doesn't already exist.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.changeTabOnHashChange
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, will change the selected
+tab on invocation based on the URL that exists after the hash.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.hashChangeCallback
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      If defined as a function,
+provides an external method for adjusting the current page hash used by these tabs.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.lazyLoad
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if true, when using full URLs in tab HREFs,
+or when using Ajax calls, tabs will be loaded as needed instead of the markup
+all being established at once.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.moduleTabsTooltips
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if true, will display a tooltip on
+Module Tabs with cut-off text content.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.source
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      If defined, will serve as a way of pulling
+in external content to fill tabs.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.sourceArguments
+    </td>
+    <td>
+      <span>{}</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      If a source method is defined, this
+flexible object can be passed into the source method, and augmented with
+parameters specific to the implementation.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.tabCounts
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, Displays a modifiable count above each tab.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.verticalResponsive
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If Vertical Tabs & true, will automatically
+switch to Horizontal Tabs on smaller breakpoints.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          addTabButton
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If set to true, creates a button at the end
-of the tab list that can be used to add an empty tab and panel
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          addTabButtonCallback
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          if defined as a function, will
-be used in-place of the default Tab Adding method
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          appMenuTrigger
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If set to true, will force an App Menu
-trigger to be present on Non-Vertical Tabs implementatations.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          appMenuTriggerText
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If defined, replaces the default "Menu" text used
-in the app menu trigger.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          ajaxOptions
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          if defined, will be used by any internal
-Tabs AJAX calls as the desired request settings.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          beforeActivate
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          If defined as a function, fires
-this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250).
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          containerElement
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          Defines a separate element
-to be used for containing the tab panels.  Defaults to a 
-<code>.tab-panel-container</code>
-
-element that is created if it doesn't already exist.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          changeTabOnHashChange
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, will change the selected
-tab on invocation based on the URL that exists after the hash.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          hashChangeCallback
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          If defined as a function,
-provides an external method for adjusting the current page hash used by these tabs.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          lazyLoad
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          if true, when using full URLs in tab HREFs,
-or when using Ajax calls, tabs will be loaded as needed instead of the markup
-all being established at once.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          moduleTabsTooltips
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          if true, will display a tooltip on
-Module Tabs with cut-off text content.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          source
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          If defined, will serve as a way of pulling
-in external content to fill tabs.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          sourceArguments
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          If a source method is defined, this
-flexible object can be passed into the source method, and augmented with
-parameters specific to the implementation.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          tabCounts
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, Displays a modifiable count above each tab.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          verticalResponsive
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If Vertical Tabs &#x26; true, will automatically
-switch to Horizontal Tabs on smaller breakpoints.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -227,268 +315,6 @@ switch to Horizontal Tabs on smaller breakpoints.
       <th>Returns</th>
     </thead>
     <tbody>
-      <tr>
-        <td>renderHelperMarkup</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Adds/removes helper buttons and accessibility-centric markup, based on Tabs' configuration
-Designed to be run at any point in the Tabs lifecycle.</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
-        <td>setupEvents</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Establishes the bound event listeners on all tabs elements</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
-        <td>handleAddFocusData</td>
-        <td>
-          
-                
-                  <span>e ($.Event) = incoming focus event
- </span>
-                
-                  <span>elem () = element
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Setup a mousedown event on tabs to determine in the focus handler whether
-or a not a keystroked cause a change in focus, or a click.  Keystroke focus
-changes cause different visual situations</p>
-
-        </td>
-        <td>
-          
-
-        </td>
-      </tr>
-      <tr>
-        <td>handleTabClick</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = incoming click event
- </span>
-                
-                  <span>li () = list item representing the clicked tab
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handler for Tab Click</p>
-
-        </td>
-        <td>
-          ? // TODO: why?
-
-        </td>
-      </tr>
-      <tr>
-        <td>handleMoreButtonClick</td>
-        <td>
-          
-                
-                  <span>e (jQuery.event) = Event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handler for click events on the "More Tabs" popupmenu trigger</p>
-
-        </td>
-        <td>
-          ?
-
-        </td>
-      </tr>
-      <tr>
-        <td>handleTabFocus</td>
-        <td>
-          
-                
-                  <span>e (jQuery.event) = Event
- </span>
-                
-                  <span>a () = represents an anchor tag
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handler for click events on the "More Tabs" popupmenu trigger</p>
-
-        </td>
-        <td>
-          ?
-
-        </td>
-      </tr>
-      <tr>
-        <td>handleMoreButtonFocus</td>
-        <td>
-          
-                
-                  <span>e (jQuery.event) = incoming focus event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handler for focus events on the "More Tabs" popupmenu trigger</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>handleTabKeyDown</td>
-        <td>
-          
-                
-                  <span>e (jQuery.event) = incoming keydown event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handler for keydown events on Tabs in the list</p>
-
-        </td>
-        <td>
-          ?
-
-        </td>
-      </tr>
-      <tr>
-        <td>handleDismissibleTabKeydown</td>
-        <td>
-          
-                
-                  <span>e (jQuery.event) = incoming keydown event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handler for keydown events on Dismissible tabs</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>handleAppMenuTabKeydown</td>
-        <td>
-          
-                
-                  <span>e (jQuery.event) = incoming keydown event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handler for keydown events on the "App Menu" tab (trigger button for the App Menu)</p>
-
-        </td>
-        <td>
-          ?
-boolean
-        </td>
-      </tr>
-      <tr>
-        <td>handleMoreButtonKeydown</td>
-        <td>
-          
-                
-                  <span>e (jQuery.event) = incoming keydown event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handler for keydown events on the "More Tabs" popupmenu trigger</p>
-
-        </td>
-        <td>
-          ?
-
-        </td>
-      </tr>
-      <tr>
-        <td>handlePanelKeydown</td>
-        <td>
-          
-                
-                  <span>e (jQuery.event) = incoming keydown event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Handler for keydown events on the "More Tabs" popupmenu trigger</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>handleAddButton</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Handles the Add Tab button being clicked</p>
-
-        </td>
-        <td>
-          ?
-
-        </td>
-      </tr>
-      <tr>
-        <td>handleAddButtonKeydown</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = incoming keydown event
- </span>
-                
-          
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          ?
-
-        </td>
-      </tr>
       <tr>
         <td>handleOutboundLink</td>
         <td>
@@ -513,6 +339,269 @@ void
         </td>
       </tr>
       <tr>
+        <td>hasAnimatedBar</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset's tab list should display an animated selected state on a tab.</p>
+
+        </td>
+        <td>
+          whether or not the animated selected state should display.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>hasSquareFocusState</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset's tab list should display a square focus state on a tab.</p>
+
+        </td>
+        <td>
+          whether or not the square focus state should display.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>hasMoreButton</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset currently has a "More Tabs" spillover button.</p>
+
+        </td>
+        <td>
+          whether or not the "More Tabs" button is currently displayed.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isInResponsiveMode</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this normally "vertical" tabset is in an optional "horizontal" responsive mode</p>
+
+        </td>
+        <td>
+          whether or not the responsive mode is active.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isModuleTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset is currently operating as Module Tabs</p>
+
+        </td>
+        <td>
+          whether or not this is a Module tabset.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isVerticalTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset is currently operating as Vertical Tabs</p>
+
+        </td>
+        <td>
+          whether or not this is a Vertical tabset.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isResponsiveVerticalTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset is Vertical Tabs with a responsive, horizontal capability</p>
+
+        </td>
+        <td>
+          whether or not this is a Vertical tabset.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isHeaderTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset is currently operating as Header Tabs</p>
+
+        </td>
+        <td>
+          whether or not this is a Header tabset.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isScrollableTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset is showing tabs that allow for selection via horizontal scrolling.</p>
+
+        </td>
+        <td>
+          whether or not horizontal scrolling is possible.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isHidden</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset is currently hidden</p>
+
+        </td>
+        <td>
+          whether or not this tabset is hidden.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isNested</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset is nested inside a parent Tab Panel</p>
+
+        </td>
+        <td>
+          whether or not this tabset is nested.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isActive</td>
+        <td>
+          
+                
+                  <span>href (string) = representing the HTML "id" attribute of a corresponding tab panel
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Determines whether or not a particular tab panel is currently the active (displayed) tab panel</p>
+
+        </td>
+        <td>
+          whether or not the tab panel is active.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isNestedInLayoutTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Determines whether or not this tabset is nested inside a "Layout"-style of Tab container</p>
+
+        </td>
+        <td>
+          whether or not this tabset is nested.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isTab</td>
+        <td>
+          
+                
+                  <span>obj (object) = incoming object
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Determines if an object is an HTML List Item representing a tab</p>
+
+        </td>
+        <td>
+          whether or not the item is a tab
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>isAnchor</td>
+        <td>
+          
+                
+                  <span>obj (object) = incoming object
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Determines if an object is an HTML Anchor Tag representing a tab's actionable element</p>
+
+        </td>
+        <td>
+          whether or not the item is an anchor tag
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>getAnchor</td>
+        <td>
+          
+                
+                  <span>href () = either a string that can be used as a Tab ID, or an actual jQuery wrapped Anchor Tag.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Gets a reference to an Anchor tag.</p>
+
+        </td>
+        <td>
+          the Anchor tag
+jQuery
+        </td>
+      </tr>
+      <tr>
+        <td>getPanel</td>
+        <td>
+          
+                
+                  <span>href () = either a string that can be used as a Tab ID, or an actual jQuery wrapped Anchor Tag.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Gets a reference to a Tab panel.</p>
+
+        </td>
+        <td>
+          the Anchor tag
+jQuery
+        </td>
+      </tr>
+      <tr>
         <td>getPreviousTab</td>
         <td>
           
@@ -528,7 +617,7 @@ void
         </td>
         <td>
           jQuery-wrapped element reference for the tab
-
+Array
         </td>
       </tr>
       <tr>
@@ -551,21 +640,45 @@ If an optional target Tab (li) is provided, use this to perform activation event
         </td>
         <td>
           potentially-updated target
-
+Array
         </td>
       </tr>
       <tr>
-        <td>renderEdgeFading</td>
+        <td>isURL</td>
         <td>
+          
+                
+                  <span>href (string) = a string that may or may not contain a URL
+ </span>
+                
           
         </td>
         <td>
-          <p>Shows/Hides some tabsets' faded edges based on scrolling position, if applicable.</p>
+          <p>Determines whether or not a string has an outbound URL, instead of a hash (#) that would match up to a Tab ID.</p>
+
+        </td>
+        <td>
+          whether or not the incoming string is a URL
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>activate</td>
+        <td>
+          
+                
+                  <span>href (string) = a string that either matches up to a Tab ID, or an outbound link to grab AJAX content from.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Causes a new tab panel to become active.  Will also trigger AJAX calls on unloaded tab panels, if necessary.</p>
 
         </td>
         <td>
           
-
+void
         </td>
       </tr>
       <tr>
@@ -590,6 +703,47 @@ call, or an ID for an existing tab in the page.
           true if source call was successful, false for failure/ignore,
 or a promise object that will fire callbacks in either "success" or "failure" scenarios.
 
+        </td>
+      </tr>
+      <tr>
+        <td>resizeNestedTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Causes <code>handleResize()</code> to be fired on any Tab components that are nested inside of this tab component's panels.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>add</td>
+        <td>
+          
+                
+                  <span>tabId (string) = a string representing the HTML 
+<code>id</code>
+ attribute of the new tab panel.
+ </span>
+                
+                  <span>options (object) = incoming options for the new tab.
+ </span>
+                
+                  <span>atIndex (number) = if defined, inserts the tab at a particular number index in the tab list.  Defaults to the last tab in the list.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Adds a new tab into the list and properly binds all of its events</p>
+
+        </td>
+        <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -619,11 +773,372 @@ of selecting certain Tabs/Anchors at certain times.</p>
         </td>
       </tr>
       <tr>
+        <td>createTabPanel</td>
+        <td>
+          
+                
+                  <span>tabId (string) = a string representing the HTML 
+<code>id</code>
+ attribute of the new tab panel.
+ </span>
+                
+                  <span>content (string) = representing HTML markup that will be added inside of the new tab panel.
+ </span>
+                
+                  <span>doInsert (boolean) = if true, actually appends the new content to the tab panel.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Adds a new tab into the list and properly binds all of its events</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>checkPopupMenuItems</td>
+        <td>
+          
+                
+                  <span>tab (jQuery) = the tab to be checked for popupmenu items.
+ </span>
+                
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          a list of avaiable popupmenu items
+Array
+        </td>
+      </tr>
+      <tr>
+        <td>hide</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = the jQuery Event
+ </span>
+                
+                  <span>tabId (string) = a string representing the HTML 
+<code>id</code>
+ attribute of the new tab panel.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Hides a tab</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>show</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = the jQuery Event
+ </span>
+                
+                  <span>tabId (string) = a string representing the HTML 
+<code>id</code>
+ attribute of the new tab panel.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Shows a tab</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>disableTab</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = the jQuery Event
+ </span>
+                
+                  <span>tabId (string) = a string representing the HTML 
+<code>id</code>
+ attribute of the new tab panel.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Disables an individual tab</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>enableTab</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = the jQuery Event
+ </span>
+                
+                  <span>tabId (string) = a string representing the HTML 
+<code>id</code>
+ attribute of the new tab panel.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Enables an individual tab</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>rename</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = the jQuery Event
+ </span>
+                
+                  <span>tabId (string) = a string representing the HTML 
+<code>id</code>
+ attribute of the new tab panel.
+ </span>
+                
+                  <span>name (string) = the new tab name
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Renames a tab and resets the focusable bar/animation.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>updateCount</td>
+        <td>
+          
+                
+                  <span>e (jQuery.Event) = the jQuery Event
+ </span>
+                
+                  <span>tabId (string) = a string representing the HTML 
+<code>id</code>
+ attribute of the new tab panel.
+ </span>
+                
+                  <span>count () = the new tab count
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>For tabs with counts, updates the count and resets the focusable bar/animation</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>getActiveTab</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>returns the currently active tab</p>
+
+        </td>
+        <td>
+          the currently active tab
+jQuery
+        </td>
+      </tr>
+      <tr>
+        <td>getVisibleTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>returns all visible tabs</p>
+
+        </td>
+        <td>
+          all visible tabs
+Array
+        </td>
+      </tr>
+      <tr>
+        <td>getOverflowTabs</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>returns a list of all tabs that are currenly in the "More Tabs" overflow menu.</p>
+
+        </td>
+        <td>
+          all overflowed tabs
+Array
+        </td>
+      </tr>
+      <tr>
+        <td>select</td>
+        <td>
+          
+                
+                  <span>href (string) = a string representing the HTML 
+<code>id</code>
+ attribute of the new tab panel.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Selects a Tab</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>buildPopupMenu</td>
+        <td>
+          
+                
+                  <span>startingHref (string) = a string representing the HTML 
+<code>href</code>
+ attribute of the popupmenu item to be selected.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Selects a Tab</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>isTabOverflowed</td>
+        <td>
+          
+                
+                  <span>li (jQuery) = tab list item
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Used for checking if a particular tab (in the form of a jquery-wrapped list item)
+is spilled into the overflow area of the tablist container <UL>.</p>
+
+        </td>
+        <td>
+          whether or not the tab is overflowed.
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>findLastVisibleTab</td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          representing the last visible tab.
+jQuery
+        </td>
+      </tr>
+      <tr>
+        <td>findFirstVisibleTab</td>
+        <td>
+          
+        </td>
+        <td>
+          
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>focusBar</td>
+        <td>
+          
+                
+                  <span>li (jQuery) = the new tab list item
+ </span>
+                
+                  <span>callback (function) = fires after the animation is completed.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Moves the animated "selected" state bar to a new tab</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>defocusBar</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Clears the animated "selected" state bar away.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
         <td>scrollTabList</td>
         <td>
           
                 
-                  <span>target () = the target 
+                  <span>target (Array) = the target 
 <li>
  or 
 <a>
@@ -666,7 +1181,7 @@ void
                   <span>target () = the element that will receive the focus state
  </span>
                 
-                  <span>unhide () = if true, unhides the focus state if it's previously been hidden.
+                  <span>unhide (boolean) = if true, unhides the focus state if it's previously been hidden.
  </span>
                 
           
@@ -691,6 +1206,25 @@ void
         <td>
           
 void
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Causes the entire tabset to reset with new settings.</p>
+
+        </td>
+        <td>
+          component instance
+this
         </td>
       </tr>
       <tr>
@@ -733,7 +1267,8 @@ void
           
         </td>
         <td>
-          
+          <p>Enables the entire Tabs component</p>
+
         </td>
         <td>
           
@@ -792,11 +1327,82 @@ void
   </table>
 
 
-  
-    
-
-
-
   </section>
-
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>beforeactivated
+  </td>
+  <td>
   
+  </td>
+  <td>Fires when an attempt at activating a tab is started
+</td>
+</tr>
+
+      
+        <tr>
+  <td>activated
+  </td>
+  <td>
+  
+  </td>
+  <td>Fires when a new tab has been activated
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afteractivated
+  </td>
+  <td>
+  
+  </td>
+  <td>Fires when a new tab has been completely activated, and the activation process is done
+</td>
+</tr>
+
+      
+        <tr>
+  <td>hash-change
+  </td>
+  <td>
+  
+  </td>
+  <td></td>
+</tr>
+
+      
+        <tr>
+  <td>close
+  </td>
+  <td>
+  
+  </td>
+  <td>Fires when a tab is removed from the tabset
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afterclose
+  </td>
+  <td>
+  
+  </td>
+  <td>Fires after a tab is completely removed from the tabset, and the close process has completed.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

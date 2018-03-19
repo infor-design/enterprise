@@ -8,9 +8,7 @@ import '../utils/animations';
 // Component Name
 const COMPONENT_NAME = 'stepprocess';
 
-/**
- * Default Stepprocess Options
- */
+// Default Stepprocess Options
 const STEPPROCESS_DEFAULTS = {
   linearProgression: false,
   folderIconOpen: 'caret-up',
@@ -28,20 +26,20 @@ const STEPPROCESS_DEFAULTS = {
 * A Stepprocess/wizard control
 *
 * @class Stepprocess
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-* @param {boolean} linearProgression The Main Application Name to display
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
+* @param {boolean} [settings.linearProgression = false] The Main Application Name to display
  in the header. (Defaults to false)
-* @param {string} folderIconOpen A specific folder open icon. (Defaults to 'caret-up')
-* @param {string} folderIconClosed A specific folder close icon. (Defaults to 'caret-down')
-* @param {boolean} stepList Determines whether or not to display device
+* @param {string} [settings.folderIconOpen = 'caret-up'] A specific folder open icon. (Defaults to 'caret-up')
+* @param {string} [settings.folderIconClosed =  'caret-down'] A specific folder close icon. (Defaults to 'caret-down')
+* @param {boolean} [settings.stepList = '#step-list'] Determines whether or not to display device
  information (Browser, Platform, Locale, Cookies Enabled).
-* @param {string} stepLi jQuery selector for the step elements.
-* @param {boolean} stepLink jQuery selector for the step link elements.
-* @param {string} stepFolder jQuery selector for the step folder elements.
-* @param {string} btnPrev jQuery selector for the previous step button.
-* @param {string} btnNext jQuery selector for the next step button.
-* @param {Function} beforeSelectStep  A callback (function or promise)
+* @param {string} [settings.stepLi = '.js-step'] jQuery selector for the step elements.
+* @param {boolean} [settings.stepLink =  '.js-step-link'] jQuery selector for the step link elements.
+* @param {string} [settings.stepFolder = '.js-step-folder'] jQuery selector for the step folder elements.
+* @param {string} [settings.btnPrev = '.js-step-link-prev'] jQuery selector for the previous step button.
+* @param {string} [settings.btnNext = '.js-step-link-prev'] jQuery selector for the next step button.
+* @param {function} [settings.beforeSelectStep] A callback (function or promise)
  that gives args: stepLink (the step link element) and isStepping
   (whether we are prev/next'ing or not).
 */
@@ -57,6 +55,10 @@ function Stepprocess(element, settings) {
 // Stepprocess Methods
 Stepprocess.prototype = {
 
+  /**
+   * Init stepprocess
+   * @private
+   */
   init() {
     this.stepListJq = $(this.settings.stepList);
     this.initStepprocess();
@@ -85,7 +87,7 @@ Stepprocess.prototype = {
   /**
    * Set initial attributes on each step its counterparts
    * @private
-   * @param  {Object} step - The step element to decorate
+   * @param  {object} step - The step element to decorate
    * @returns {void}
    */
   decorateNode(step) {
@@ -156,7 +158,7 @@ Stepprocess.prototype = {
   /**
    * Set initial attributes on each step its counterparts
    * @private
-   * @param  {Object} step - The step element
+   * @param  {object} step - The step element
    * @returns {void}
    */
   folderClose(step) {
@@ -186,7 +188,7 @@ Stepprocess.prototype = {
   /**
    * Folder open
    * @private
-   * @param  {Object} step - The step element
+   * @param  {object} step - The step element
    * @returns {void}
    */
   folderOpen(step) {
@@ -217,7 +219,7 @@ Stepprocess.prototype = {
   /**
    * Folder toggle
    * @private
-   * @param  {Object} stepLink - Description
+   * @param  {object} stepLink - Description
    * @returns {void}
    */
   folderToggle(stepLink) {
@@ -236,7 +238,7 @@ Stepprocess.prototype = {
   /**
    * Get selected step
    * @private
-   * @returns {Object} selected step
+   * @returns {object} selected step
    */
   getSelectedStep() {
     return $(`${this.settings.stepLi}.is-selected`, this.stepListJq);
@@ -245,8 +247,8 @@ Stepprocess.prototype = {
   /**
    * Get next node
    * @private
-   * @param  {Object} stepLink - The step link element
-   * @returns {Object} node
+   * @param  {object} stepLink - The step link element
+   * @returns {object} node
    */
   getNextNode(stepLink) {
     const s = this.settings;
@@ -280,7 +282,7 @@ Stepprocess.prototype = {
    * Get the next step in the tree
    * (not to be confused with getNextNode, which includes folders)
    * @private
-   * @returns {Object} next step
+   * @returns {object} next step
    */
   getNextStep() {
     const curStepJq = this.getSelectedStep();
@@ -314,8 +316,8 @@ Stepprocess.prototype = {
   /**
    * Get the previous node
    * @private
-   * @param  {Object} stepLink - The step link element
-   * @returns {Object} previous node
+   * @param  {object} stepLink - The step link element
+   * @returns {object} previous node
    */
   getPreviousNode(stepLink) {
     const s = this.settings;
@@ -345,8 +347,8 @@ Stepprocess.prototype = {
    * Get the previous step in the tree
    * (not to be confused with getPreviousNode, which includes folders)
    * @private
-   * @param  {Object} stepLink - The step link element
-   * @returns {Object} previous step
+   * @param  {object} stepLink - The step link element
+   * @returns {object} previous step
    */
   getPreviousStep() {
     const s = this.settings;
@@ -537,8 +539,8 @@ Stepprocess.prototype = {
   /**
    * Checks if given step element is folder.
    * @private
-   * @param {Object} step - The step element
-   * @returns {Boolean} true if folder
+   * @param {object} step - The step element
+   * @returns {boolean} true if folder
    */
   isFolder(step) {
     return $(step).hasClass('folder');
@@ -547,8 +549,8 @@ Stepprocess.prototype = {
   /**
    * Checks if given step element is in folder.
    * @private
-   * @param {Object} step - The step element
-   * @returns {Boolean} true is in folder
+   * @param {object} step - The step element
+   * @returns {boolean} true is in folder
    */
   isInFolder(step) {
     return $(step).closest(this.settings.stepFolder, this.stepListJq).length;
@@ -557,8 +559,8 @@ Stepprocess.prototype = {
   /**
    * Checks if given step folder is open.
    * @private
-   * @param {Object} stepFolder element
-   * @returns {Boolean} true is open
+   * @param {object} stepFolder element
+   * @returns {boolean} true is open
    */
   isOpen(stepFolder) {
     return $(stepFolder).hasClass('is-open');
@@ -567,7 +569,7 @@ Stepprocess.prototype = {
   /**
    * Set focus on given step link.
    * @private
-   * @param {Object} stepLink element
+   * @param {object} stepLink element
    * @returns {void}
    */
   setFocus(stepLink) {
@@ -577,8 +579,8 @@ Stepprocess.prototype = {
   /**
    * Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing.
    * @private
-   * @param {Object} svg element.
-   * @param {String} icon to set.
+   * @param {object} svg element.
+   * @param {string} icon to set.
    * @returns {void}
    */
   setIcon(svg, icon) {
@@ -589,8 +591,8 @@ Stepprocess.prototype = {
   /**
    * Select a step
    * @private
-   * @param  {Object} stepLink - The jquery object for the step link element
-   * @param  {String} linearDirection - [none|previous|next] Which direction we are traveling
+   * @param  {object} stepLink - The jquery object for the step link element
+   * @param  {string} linearDirection - [none|previous|next] Which direction we are traveling
    * @returns {void}
    */
   selectStep(stepLink, linearDirection) {
@@ -628,8 +630,8 @@ Stepprocess.prototype = {
   /**
    * Finishes selecting a step
    * @private
-   * @param  {Object} stepLink - Description
-   * @param  {String} [linearDirection=previous|next] - Description
+   * @param  {object} stepLink - Description
+   * @param  {string} [linearDirection=previous|next] - Description
    * @returns {void}
    */
   selectStepFinish(stepLink, linearDirection) {
@@ -675,11 +677,11 @@ Stepprocess.prototype = {
     setTimeout(() => {
       /**
       * Fires when selected step link.
-      *
       * @event selected
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} stepLink element
+      * @memberof Stepprocess
+      * @type {object}
+      * @property {object} event - The jquery event object
+      * @property {object} stepLink element
       */
       self.element.triggerHandler('selected', stepLink);
     }, 0);
@@ -688,7 +690,7 @@ Stepprocess.prototype = {
   /**
    * Un selected node
    * @private
-   * @param {Object} step - The step element to decorate
+   * @param {object} step - The step element to decorate
    * @returns {void}
    */
   unSelectedNode(step) {
@@ -777,7 +779,7 @@ Stepprocess.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     this.stepListJq.off('updated.stepprocess click.stepprocess focus.stepprocess keydown.stepprocess keypress.stepprocess').empty();
@@ -786,8 +788,8 @@ Stepprocess.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

@@ -2,40 +2,13 @@
 
 ### Table of Contents
 
--   [EDITOR_DEFAULTS](#editor_defaults)
--   [Editor](#editor)
-    -   [switchToolbars](#switchtoolbars)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-    -   [disable](#disable)
-    -   [enable](#enable)
-    -   [readonly](#readonly)
--   [beforepaste](#beforepaste)
--   [afterpaste](#afterpaste)
-
-## EDITOR_DEFAULTS
-
-**Parameters**
-
--   `image` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Info object to populate the image dialog defaulting to `{url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
--   `onLinkClick` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Call back for clicking on links to control link behavior.
-
-**Properties**
-
--   `buttons` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An array with all the visible buttons in it.
--   `excludeButtons` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An array with all the buttons in it to excloude
--   `firstHeader` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Allows you to set if the first header inserted is
-    a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
--   `secondHeader` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Allows you to set if the second header inserted
-    is a h3 or h4 element. You should set this to match the structure of the parent
-    page for accessibility
--   `pasteAsPlainText` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If true, when you paste into the editor
-    the element will be unformatted to plain text.
--   `anchor` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
-    the url is the default url to display. Class should normally stay hyperlink
-    and represents the styling class. target can be 'New window' or 'Same window',
-    isClickable make the links appear clickable in the editor, showIsClickable will
-    show a checkbox to allow the user to make clickable links in the link popup.
+-   [Editor][1]
+    -   [switchToolbars][2]
+    -   [updated][3]
+    -   [destroy][4]
+    -   [disable][5]
+    -   [enable][6]
+    -   [readonly][7]
 
 ## Editor
 
@@ -43,8 +16,20 @@ The Editor Component is displays and edits markdown.
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][8]** The component element.
+-   `settings` **[string][8]?** The component settings.
+    -   `settings.buttons` **[string][8]** An array with all the visible buttons in it. (optional, default `{editor:['header1','header2','separator','bold','italic','underline','strikethrough',
+        'separator','foreColor','backColor','separator','justifyLeft','justifyCenter','justifyRight','separator','quote','orderedlist',
+        'unorderedlist','separator','anchor','separator','image','separator','source'],source:['visual']}`)
+    -   `settings.excludeButtons` **[string][8]** An array with all the buttons in it to excloude (optional, default `{editor:['backColor'],source:[]}`)
+    -   `settings.firstHeader` **[string][8]** Allows you to set if the first header inserted is a h3 or h4 element.
+        You should set this to match the structure of the parent page for accessibility (optional, default `'h3'`)
+    -   `settings.secondHeader` **[boolean][9]** Allows you to set if the second header inserted is a h3 or
+        h4 element. You should set this to match the structure of the parent page for accessibility (optional, default `'h4'`)
+    -   `settings.pasteAsPlainText` **[string][8]** If true, when you paste into the editor the element will be unformatted to plain text. (optional, default `false`)
+    -   `settings.anchor` **[string][8]** An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup. (optional, default `{url:'http://www.example.com',class:'hyperlink',target:'New window',isClickable:false,showIsClickable:false}`)
+    -   `settings.image` **[string][8]** Info object to populate the image dialog defaulting to `{url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}` (optional, default `{url:'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`)
+    -   `settings.onLinkClick` **[function][10]** Call back for clicking on links to control link behavior. (optional, default `null`)
 
 ### switchToolbars
 
@@ -58,9 +43,9 @@ Updates the component instance.  Can be used after being passed new settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][11]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][11]** The api
 
 ### destroy
 
@@ -86,20 +71,24 @@ Make the editable area readonly.
 
 Returns **void** 
 
-## beforepaste
+[1]: #editor
 
-Fires before paste.
+[2]: #switchtoolbars
 
-**Properties**
+[3]: #updated
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `pastedData` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** .
+[4]: #destroy
 
-## afterpaste
+[5]: #disable
 
-Fires after paste.
+[6]: #enable
 
-**Properties**
+[7]: #readonly
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `pastedData` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** .
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

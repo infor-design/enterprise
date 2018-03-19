@@ -2,14 +2,9 @@
 
 ### Table of Contents
 
--   [SCROLLACTION_DEFAULTS](#scrollaction_defaults)
--   [ScrollAction](#scrollaction)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## SCROLLACTION_DEFAULTS
-
-Default ScrollAction Options
+-   [ScrollAction][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## ScrollAction
 
@@ -17,10 +12,10 @@ A component that applies a class based on scroll direction
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The component settings.
--   `scrollActionTarget` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The selector of the element to add the class to
--   `classToAdd` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The class name
+-   `element` **[string][4]** The component element.
+-   `settings` **[object][5]?** The component settings.
+-   `scrollActionTarget` **[string][4]** The selector of the element to add the class to. (optional, default `'.js-scroll-target'`)
+-   `classToAdd` **[string][4]** The class name to use when toggling. (optional, default `'scrolled-down'`)
 
 ### updated
 
@@ -28,12 +23,22 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][5]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][5]** The api
 
 ### destroy
 
 Destroy this component instance and remove the link from its base element.
 
 Returns **void** 
+
+[1]: #scrollaction
+
+[2]: #updated
+
+[3]: #destroy
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

@@ -7,9 +7,9 @@ const COMPONENT_NAME = 'zoom';
 
 /**
 * The Zoom Component is used to manage zoom on mobile devices.
-* @class Accordion
+* @class Zoom
 * @param {object} element The component element.
-* @param {object} settings The component settings.
+* @param {object} [settings] The component settings.
 */
 function Zoom(element, settings) {
   this.element = $(element);

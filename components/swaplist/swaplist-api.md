@@ -2,36 +2,12 @@
 
 ### Table of Contents
 
--   [SWAPLIST_DEFAULTS](#swaplist_defaults)
--   [SwapList](#swaplist)
-    -   [getAvailable](#getavailable)
-    -   [getSelected](#getselected)
-    -   [getAdditional](#getadditional)
-    -   [updateDataset](#updatedataset)
-    -   [destroy](#destroy)
--   [swapupdate](#swapupdate)
--   [beforeswap](#beforeswap)
-
-## SWAPLIST_DEFAULTS
-
-**Parameters**
-
--   `searchable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, associates itself with a Searchfield/Autocomplete
-     and allows itself to be filtered
--   `available` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array containing items for the available bucket.
--   `selected` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array containing items for the selected bucket.
--   `additional` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array containing items for the additional bucket.
--   `availableClass` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A class name linking the available root element.
--   `selectedClass` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A class name linking the selected root element.
--   `additionalClass` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A class name linking the additional root element.
--   `availableBtn` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A class name linking the available button element.
--   `selectedBtnLeft` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A class name linking the move left button element.
--   `selectedBtnRight` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A class name linking the move right button element.
--   `additionalBtn` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A class name linking the additional button element.
--   `template` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An Html String with the mustache template for the view.
--   `draggable` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An object containing boolean key/value to make container/s
-     disable for dragging and moving items. Supported keys with draggable are "available",
-     "selected", "additional".
+-   [SwapList][1]
+    -   [getAvailable][2]
+    -   [getSelected][3]
+    -   [getAdditional][4]
+    -   [updateDataset][5]
+    -   [destroy][6]
 
 ## SwapList
 
@@ -39,26 +15,42 @@ The SwapList Component creates a list of options that can be picked and organize
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[object][7]** The component element.
+-   `settings` **[object][7]?** The component settings.
+    -   `settings.searchable` **[boolean][8]** If true, associates itself with a Searchfield/Autocomplete
+         and allows itself to be filtered (optional, default `false`)
+    -   `settings.available` **[array][9]?** An array containing items for the available bucket.
+    -   `settings.selected` **[array][9]?** An array containing items for the selected bucket.
+    -   `settings.additional` **[array][9]?** An array containing items for the additional bucket.
+    -   `settings.availableClass` **[string][10]** A class name linking the available root element. (optional, default `'.available'`)
+    -   `settings.selectedClass` **[string][10]** A class name linking the selected root element. (optional, default `'.selected'`)
+    -   `settings.additionalClass` **[string][10]** A class name linking the additional root element. (optional, default `'.full-access'`)
+    -   `settings.availableBtn` **[string][10]** A class name linking the available button element. (optional, default `'.btn-moveto-selected'`)
+    -   `settings.selectedBtnLeft` **[string][10]** A class name linking the move left button element. (optional, default `'.btn-moveto-left'`)
+    -   `settings.selectedBtnRight` **[string][10]** A class name linking the move right button element. (optional, default `'.btn-moveto-right'`)
+    -   `settings.additionalBtn` **[string][10]** A class name linking the additional button element. (optional, default `'.btn-moveto-selected'`)
+    -   `settings.template` **[string][10]?** An Html String with the mustache template for the view.
+    -   `settings.draggable` **[object][7]?** An object containing boolean key/value to make container/s
+         disable for dragging and moving items. Supported keys with draggable are "available",
+         "selected", "additional".
 
 ### getAvailable
 
 Get the current representative dataset with only the available elements in it.
 
-Returns **([object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array))** dataset
+Returns **([object][7] \| [array][9])** dataset
 
 ### getSelected
 
 Get the current representative dataset with only the selected elements in it.
 
-Returns **([object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array))** dataset
+Returns **([object][7] \| [array][9])** dataset
 
 ### getAdditional
 
 Get the current representative dataset with only the additional elements in it.
 
-Returns **([object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array))** dataset
+Returns **([object][7] \| [array][9])** dataset
 
 ### updateDataset
 
@@ -66,7 +58,7 @@ Updates the internal datasets and refresh the ui.
 
 **Parameters**
 
--   `ds` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The updated dataset(s) of the form.
+-   `ds` **[object][7]** The updated dataset(s) of the form.
      `{available: [], selected: [], additional: []}`
 
 Returns **void** 
@@ -77,20 +69,22 @@ Destroys this instance of the swaplist component and removes its link to its bas
 
 Returns **void** 
 
-## swapupdate
+[1]: #swaplist
 
-Fires when any bucket has its content changed.
+[2]: #getavailable
 
-**Properties**
+[3]: #getselected
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `items` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of items data
+[4]: #getadditional
 
-## beforeswap
+[5]: #updatedataset
 
-Fires before moving an element allowing you to access the draggable item.
+[6]: #destroy
 
-**Properties**
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `items` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of selected items data
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

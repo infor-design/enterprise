@@ -4,10 +4,7 @@ import { utils } from '../utils/utils';
 // Component Name
 const COMPONENT_NAME = 'rating';
 
-/**
- * Default Rating Options
- * @namespace
- */
+// Default Rating Options
 const RATING_DEFAULTS = {
 };
 
@@ -54,8 +51,8 @@ Rating.prototype = {
   /**
    * Set the value
    * @private
-   * @param {Number} value to pass in.
-   * @returns {Number} current value
+   * @param {number} value to pass in.
+   * @returns {number} current value
    */
   val(value) {
     if (!value) {
@@ -116,7 +113,7 @@ Rating.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     this.element.find('input').off(`change.${COMPONENT_NAME}`);
@@ -125,8 +122,8 @@ Rating.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

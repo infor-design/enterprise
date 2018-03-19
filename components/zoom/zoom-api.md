@@ -2,43 +2,55 @@
 
 ### Table of Contents
 
--   [Accordion](#accordion)
--   [enableZoom](#enablezoom)
--   [disableZoom](#disablezoom)
--   [updated](#updated)
--   [destroy](#destroy)
+-   [Zoom][1]
+    -   [enableZoom][2]
+    -   [disableZoom][3]
+    -   [updated][4]
+    -   [destroy][5]
 
-## Accordion
+## Zoom
 
 The Zoom Component is used to manage zoom on mobile devices.
 
 **Parameters**
 
--   `element` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The component element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The component settings.
+-   `element` **[object][6]** The component element.
+-   `settings` **[object][6]?** The component settings.
 
-## enableZoom
+### enableZoom
 
 Enable zoom by un-setting the meta tag.
 
 Returns **void** 
 
-## disableZoom
+### disableZoom
 
 Disable zoom by setting the meta tag.
 
 Returns **void** 
 
-## updated
+### updated
 
 Handle Updating Settings
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to update to.
+-   `settings` **[object][6]** The settings to update to.
 
 Returns **this** component instance
 
-## destroy
+### destroy
 
 Teardown - Remove added markup and events
+
+[1]: #zoom
+
+[2]: #enablezoom
+
+[3]: #disablezoom
+
+[4]: #updated
+
+[5]: #destroy
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

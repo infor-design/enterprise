@@ -10,24 +10,7 @@ import '../popupmenu/popupmenu.jquery';
 // Name of this component
 const COMPONENT_NAME = 'searchfield';
 
-/**
-* @namespace
-* @property {function} resultsCallback Callback function for getting typahead results on search.
-* @property {function} allResultsCallback Callback function for getting "all results".
-* @property {boolean} showAllResults If true the show all results link is showin in the list.
-* @property {boolean} showGoButton If true a go button is associated.
-* @property {string} goButtonCopy The text to use on the go button.
-* @property {function} goButtonAction If defined as a function, will fire this callback on
-* the Go Button "click"
-* @property {array} categories If defined as an array, displays a dropdown containing
-* categories that can be used to filter results.
-* @property {boolean} categoryMultiselect If true, creates a multiselectable categories list.
-* @property {boolean} showCategoryText If true, will show any available categories that are
-* selected to the left of the Dropdown field.
-* @property {function} source Callback function for getting type ahead results.
-* @property {string} template The html template to use for the search list
-* @property {boolean} clearable Add an X to clear.
-*/
+// Search Field Defaults
 const SEARCHFIELD_DEFAULTS = {
   resultsCallback: undefined,
   allResultsCallback: undefined,
@@ -44,10 +27,23 @@ const SEARCHFIELD_DEFAULTS = {
 };
 
 /**
- * @class Searchfield
- * @constructor
+ * The search field component.
+ * @class SearchField
  * @param {jQuery[]|HTMLElement} element the base searchfield element
  * @param {object} [settings] incoming settings
+ * @param {function} [settings.resultsCallback] Callback function for getting typahead results on search.
+ * @param {function} [settings.allResultsCallback] Callback function for getting "all results".
+ * @param {boolean} [settings.showAllResults = true] If true the show all results link is showin in the list.
+ * @param {boolean} [settings.showGoButton = false] If true a go button is associated.
+ * @param {string} [settings.goButtonCopy] The text to use on the go button.
+ * @param {function} [settings.goButtonAction] If defined as a function, will fire this callback on the Go Button "click"
+ * @param {array} [settings.categories] If defined as an array, displays a dropdown containing categories that can be used to filter results.
+ * @param {boolean} [settings.categoryMultiselect = false]  If true, creates a multiselectable categories list.
+ * @param {boolean} [settings.showCategoryText = false]  If true, will show any available categories that are selected
+ * to the left of the Dropdown field.
+ * @param {function} [settings.source] Callback function for getting type ahead results.
+ * @param {string} [settings.template] The html template to use for the search list
+ * @param {boolean} [settings.clearable = false]  Add an X to clear.
  */
 function SearchField(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SEARCHFIELD_DEFAULTS);
@@ -561,6 +557,7 @@ SearchField.prototype = {
    * Ensures that the size of the Searchfield Wrapper does not change whenever a category
    * is chosen from a category searchfield.
    * NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
+   * @private
    */
   calculateSearchfieldWidth() {
     if (this.isToolbarSearchfield()) {
@@ -594,6 +591,7 @@ SearchField.prototype = {
 
   /**
    * Detects whether or not this component is a Toolbar Searchfield
+   * @private
    * @returns {boolean} whether or not this component is a Toolbar Searchfield
    */
   isToolbarSearchfield() {
@@ -784,6 +782,7 @@ SearchField.prototype = {
 
   /**
    * Determines whether or not a Category Trigger exists.
+   * @private
    * @returns {boolean} whether or not a Category Trigger exists.
    */
   hasCategoryButton() {
@@ -808,8 +807,8 @@ SearchField.prototype = {
   },
 
   /**
-   * Adds a link at the bottom of a searchfield with more than (0) results that can
-   *  be used to link out to a larger display of search results.
+   * Adds a link at the bottom of a searchfield with more than (0) results that can be used to link out to a
+   * larger display of search results.
    * @private
    * @returns {void}
    */

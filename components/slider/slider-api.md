@@ -2,48 +2,20 @@
 
 ### Table of Contents
 
--   [SLIDER_DEFAULTS](#slider_defaults)
--   [Slider](#slider)
-    -   [handleRangeClick](#handlerangeclick)
-    -   [activateHandle](#activatehandle)
-    -   [deactivateHandle](#deactivatehandle)
-    -   [enableHandleDrag](#enablehandledrag)
-    -   [disableHandleDrag](#disablehandledrag)
-    -   [getIncrement](#getincrement)
-    -   [handleKeys](#handlekeys)
-    -   [increaseValue](#increasevalue)
-    -   [decreaseValue](#decreasevalue)
-    -   [updateRange](#updaterange)
-    -   [checkHandleDifference](#checkhandledifference)
-    -   [updateTooltip](#updatetooltip)
-    -   [getColorClosestToValue](#getcolorclosesttovalue)
-    -   [value](#value)
-    -   [getModifiedTextValue](#getmodifiedtextvalue)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [readonly](#readonly)
-    -   [isDisabled](#isdisabled)
-    -   [isVertical](#isvertical)
-    -   [setValue](#setvalue)
-    -   [updated](#updated)
-    -   [teardown](#teardown)
-    -   [destroy](#destroy)
-    -   [bindEvents](#bindevents)
-
-## SLIDER_DEFAULTS
-
-Slider Component Defaults
-
-**Properties**
-
--   `value` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** 
--   `min` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `max` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
--   `range` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `step` **([undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined) \| [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** 
--   `ticks` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** 
--   `tooltipContent` **([undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array))** 
--   `persistTooltip` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+-   [Slider][1]
+    -   [getIncrement][2]
+    -   [increaseValue][3]
+    -   [decreaseValue][4]
+    -   [updateTooltip][5]
+    -   [value][6]
+    -   [enable][7]
+    -   [disable][8]
+    -   [readonly][9]
+    -   [isDisabled][10]
+    -   [isVertical][11]
+    -   [setValue][12]
+    -   [updated][13]
+    -   [destroy][14]
 
 ## Slider
 
@@ -51,65 +23,22 @@ Touch Enabled/Responsive and Accessible Slider Control
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-### handleRangeClick
-
-User is interacting with the Slider Range (not the handle or ticks)
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `click` event
-
-Returns **void** 
-
-### activateHandle
-
-Activates one of the slider handles
-
-**Parameters**
-
--   `handle` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** element representing a slider handle
-
-### deactivateHandle
-
-Deactivates one of the slider handles
-
-**Parameters**
-
--   `handle` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** element representing a slider handle
-
-### enableHandleDrag
-
-Enables the ability to drag one of the slider handles.
-
-**Parameters**
-
--   `handle` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** element representing a slider handle
-
-### disableHandleDrag
-
-Disables the dragging of a handle.
-
-**Parameters**
-
--   `handle` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** element representing a slider handle
+-   `element` **([Array][15]&lt;jQuery> | [HTMLElement][16])** The DOM element
+-   `settings` **[object][17]?** incoming settings
+    -   `settings.value` **[array][15]** An array with the slider values. Or one if a single value slider. (optional, default `[50]`)
+    -   `settings.min` **[number][18]** The minimum slider value. (optional, default `0`)
+    -   `settings.max` **[number][18]** The maximum slider value. (optional, default `100`)
+    -   `settings.range` **[boolean][19]** If true a range slider with two selectors is formed. (optional, default `false`)
+    -   `settings.step` **([undefined][20] \| [Number][18])?** If added will be the number of slider steps to use.
+    -   `settings.ticks` **[array][15]** An array of the ticks to use for the steps (optional, default `[]`)
+    -   `settings.tooltipContent` **([undefined][20] \| [Array][15])?** Special customizable tooltip content.
+    -   `settings.persistTooltip` **[boolean][19]** If true the tooltip will stay visible. (optional, default `false`)
 
 ### getIncrement
 
 Gets a 10% increment/decrement as a value within the range of minimum and maximum values.
 
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** nearest 10% increment
-
-### handleKeys
-
-Handles Slider Component's keystrokes
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `keydown` event
--   `self` **this** reference to this component instance
+Returns **[number][18]** nearest 10% increment
 
 ### increaseValue
 
@@ -119,9 +48,9 @@ Also visually updates the handle on the visual part of the slider.
 **Parameters**
 
 -   `e` **jQuery.Event** jQuery `click` or `keydown` event.
--   `handle` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** represents a slider handle element.
--   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** target value - will be automatically determined if not passed.
--   `increment` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** an integer that will be used as the amount to increment.
+-   `handle` **[Array][15]&lt;jQuery>** represents a slider handle element.
+-   `value` **[number][18]?** target value - will be automatically determined if not passed.
+-   `increment` **[number][18]?** an integer that will be used as the amount to increment.
 
 ### decreaseValue
 
@@ -131,24 +60,9 @@ Also visually updates the handle on the visual part of the slider.
 **Parameters**
 
 -   `e` **jQuery.Event** jQuery `click` or `keydown` event.
--   `handle` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** element representing a slider handle.
--   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** target value - will be automatically determined if not passed.
--   `decrement` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** an integer that will be used as the amount to decrement.
-
-### updateRange
-
-Changes the position of the bar and handles based on their values.
-
-### checkHandleDifference
-
-Allows a handle to animate to a new position if the difference in value is greater
- than 3% of the size of the range.
-
-**Parameters**
-
--   `handle` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** element representing a slider handle
--   `originalVal` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the value before it was modified
--   `updatedVal` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the target value
+-   `handle` **[Array][15]&lt;jQuery>** element representing a slider handle.
+-   `value` **[number][18]?** target value - will be automatically determined if not passed.
+-   `decrement` **[number][18]?** an integer that will be used as the amount to decrement.
 
 ### updateTooltip
 
@@ -157,13 +71,7 @@ If no handle argument is passed, this method simply hides both handles' tooltips
 
 **Parameters**
 
--   `handle` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** element representing a slider handle.
-
-### getColorClosestToValue
-
-Gets a string-based hex value for the closest tick's defined color.
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** hex value representing a color
+-   `handle` **[Array][15]&lt;jQuery>?** element representing a slider handle.
 
 ### value
 
@@ -172,21 +80,10 @@ NOTE:  Does not visually update the range.  Use _setValue()_ to do both in one s
 
 **Parameters**
 
--   `minVal` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the smaller handle's value
--   `maxVal` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** the larger handle's value, if applicable
+-   `minVal` **[number][18]** the smaller handle's value
+-   `maxVal` **[number][18]?** the larger handle's value, if applicable
 
-Returns **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** both currently set handle values
-
-### getModifiedTextValue
-
-Returns a value with prefixed/suffixed text content.
-Used by the tooltip and default ticks to get potential identifiers like $ and %.
-
-**Parameters**
-
--   `content` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the original tooltip content
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** prepended/appended text that will be displayed inside the tooltip
+Returns **[array][15]** both currently set handle values
 
 ### enable
 
@@ -210,13 +107,13 @@ Returns **this** component instance
 
 Detects whether or not this slider is disabled
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not this slider is disabled
+Returns **[boolean][19]** whether or not this slider is disabled
 
 ### isVertical
 
 Detects whether or not this slider is vertical
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not this slider is vertical
+Returns **[boolean][19]** whether or not this slider is vertical
 
 ### setValue
 
@@ -225,10 +122,10 @@ animates the range handles, if applicable.
 
 **Parameters**
 
--   `lowVal` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the value for the lower slider handle.
--   `highVal` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** the value for the upper slider handle, if applicable.
+-   `lowVal` **[number][18]** the value for the lower slider handle.
+-   `highVal` **[number][18]?** the value for the upper slider handle, if applicable.
 
-Returns **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** the newly set values
+Returns **[array][15]** the newly set values
 
 ### updated
 
@@ -238,13 +135,7 @@ with fresh settings.
 
 **Parameters**
 
--   `settings` **([object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))?** incoming settings
-
-Returns **this** component instance
-
-### teardown
-
-Removes the events and pseudo-markup created by the slider
+-   `settings` **([object][17] \| [function][21])?** incoming settings
 
 Returns **this** component instance
 
@@ -252,6 +143,44 @@ Returns **this** component instance
 
 Destroys the slider component instance and unlinks it from its base element.
 
-### bindEvents
+[1]: #slider
 
-Returns **this** component instance
+[2]: #getincrement
+
+[3]: #increasevalue
+
+[4]: #decreasevalue
+
+[5]: #updatetooltip
+
+[6]: #value
+
+[7]: #enable
+
+[8]: #disable
+
+[9]: #readonly
+
+[10]: #isdisabled
+
+[11]: #isvertical
+
+[12]: #setvalue
+
+[13]: #updated
+
+[14]: #destroy
+
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[16]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function

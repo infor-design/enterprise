@@ -8,28 +8,22 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'completion-chart';
 
 /**
-* @namespace
-* @property {array} dataset.data The data to use in the chart (See examples)
-* @property {string} dataset.data.name - Required object with the title text
-* `{text: 'Available Credit'}`
-* @property {number} dataset.data.completed - Required data for the complete section
-* `{text: 'Spent', value: 50000, format: '$,.0f'}`
-* @property {array} dataset.data.remaining - Required data for the remaining section
-* `{text: 'Pending', value: 10000, format: '$,.0f'}`
-* @property {array} dataset.data.total - Optional data for the total section
-* `{value: 95000, format: '$,.0f'}`
+* A completion chart shows completion over a target value. Usually used to show progress as a percentage.
+* @class CompletionChart
+* @param {string} element The plugin element for the constuctor
+* @param {string} [settings] The settings element.
+*
+* @param {array} [settings.dataset.data] The data to use in the chart (See examples)
+* @param {string} [settings.dataset.data.name] - Required object with the title text `{text: 'Available Credit'}`
+* @param {number} [settings.dataset.data.completed] - Required data for the complete section `{text: 'Spent', value: 50000, format: '$,.0f'}`
+* @param {array} [settings.dataset.data.remaining] - Required data for the remaining section `{text: 'Pending', value: 10000, format: '$,.0f'}`
+* @param {array} [settings.dataset.data.total] - Optional data for the total section `{value: 95000, format: '$,.0f'}`
 */
+
 const COMPLETION_CHART_DEFAULTS = {
   dataset: []
 };
 
-/**
- * A completion chart shows completion over a target value.
- * Usually used to show progress as a percentage.
- * @class CompletionChart
- * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
- */
 function CompletionChart(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPLETION_CHART_DEFAULTS);
   if (settings && settings.dataset) {

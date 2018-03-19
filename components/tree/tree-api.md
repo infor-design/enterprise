@@ -2,236 +2,158 @@
 
 ### Table of Contents
 
--   [TREE_DEFAULTS][1]
--   [Datagrid][2]
--   [initTree][3]
--   [initSelected][4]
--   [focusFirst][5]
--   [expandAll][6]
--   [collapseAll][7]
--   [selectNodeById][8]
--   [loadData][9]
--   [getSelectedNodes][10]
--   [addNode][11]
--   [updateNode][12]
--   [removeNode][13]
--   [updated][14]
--   [destroy][15]
--   [unselected][16]
--   [selected][17]
--   [menuselect][18]
--   [menuopen][19]
+-   [Tree][1]
+    -   [expandAll][2]
+    -   [collapseAll][3]
+    -   [selectNodeById][4]
+    -   [loadData][5]
+    -   [getSelectedNodes][6]
+    -   [addNode][7]
+    -   [updateNode][8]
+    -   [removeNode][9]
+    -   [updated][10]
+    -   [destroy][11]
 
-## TREE_DEFAULTS
+## Tree
 
-**Properties**
-
--   `selectable` **[string][20]** 'single' or 'multiple'.
--   `hideCheckboxes` **[boolean][21]** Only applies when `selectable` is set to 'multiple'.
--   `menuId` **(null | [string][20])** if defined, will be used to identify a Context Menu by ID
-    attribute in which to add nodes.
--   `useStepUI` **[boolean][21]** if `true`, turns this tree instance into a "Stepped" tree.
--   `folderIconOpen` **[string][20]** the icon used when a tree folder node is open.
--   `folderIconClosed` **[string][20]** the icon used when a tree folder node is closed.
--   `sortable` **[boolean][21]** if `true`, allows nodes to become sortable.
--   `onBeforeSelect` **(null | [function][22])** if defined as a function, fires that function as a
-    callback before the selection on a node occurs.
-
-## Datagrid
-
-Thetree Component displays a hierarchical list.
+The tree Component displays a hierarchical list.
 
 **Parameters**
 
--   `element` **[string][20]** The component element.
--   `settings` **[string][20]** The component settings.
+-   `element` **[object][12]** The component element.
+-   `settings` **[object][12]?** The component settings.
+    -   `settings.selectable` **[string][13]** 'single' or 'multiple'. (optional, default `'single'`)
+    -   `settings.hideCheckboxes` **[boolean][14]** Only applies when `selectable` is set to 'multiple'. (optional, default `false`)
+    -   `settings.menuId` **(null | [string][13])?** if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
+    -   `settings.useStepUI` **[boolean][14]** if `true`, turns this tree instance into a "Stepped" tree. (optional, default `false`)
+    -   `settings.folderIconOpen` **[string][13]** the icon used when a tree folder node is open. (optional, default `'open-folder'`)
+    -   `settings.folderIconClosed` **[string][13]** the icon used when a tree folder node is closed. (optional, default `'closed-folder'`)
+    -   `settings.sortable` **[boolean][14]** if `true`, allows nodes to become sortable. (optional, default `false`)
+    -   `settings.onBeforeSelect` **(null | [function][15])?** If defined as a function, fires that function as a callback before the selection on a node occurs.
+    -   `settings.onExpand` **(null | [function][15])?** If defined as a function, fires that function as a node is expanded.
+    -   `settings.onCollapse` **(null | [function][15])?** If defined as a function, fires that function as a node is collapsed.
 
-## initTree
-
-Init Tree from ul, li, a markup structure in DOM
-
-## initSelected
-
-Init selected notes
-
-## focusFirst
-
-Focus the first tree node
-
-## expandAll
+### expandAll
 
 Expands a collection of tree nodes.
 
 **Parameters**
 
--   `nodes` **[Object][23]** a jQuery-wrapped collection of tree node elements.
+-   `nodes` **[object][12]** a jQuery-wrapped collection of tree node elements.
     If left undefined, this will automatically use all `ul[role=group]` elements.
 
 Returns **void** 
 
-## collapseAll
+### collapseAll
 
 Collapses a collection of tree nodes.
 
 **Parameters**
 
--   `nodes` **[Object][23]** a jQuery-wrapped collection of tree node elements.
+-   `nodes` **[object][12]** a jQuery-wrapped collection of tree node elements.
     If left undefined, this will automatically use all `ul[role=group]` elements.
 
 Returns **void** 
 
-## selectNodeById
+### selectNodeById
 
 Selects a tree node specifically using it's ID attribute.
 
 **Parameters**
 
--   `id` **[String][20]** the ID string to use.
+-   `id` **[string][13]** the ID string to use.
 
 Returns **void** 
 
-## loadData
+### loadData
 
 Handle Loading JSON.
 
 **Parameters**
 
--   `dataset` **[Object][23]** to load.
+-   `dataset` **[object][12]** to load.
 
 Returns **void** 
 
-## getSelectedNodes
+### getSelectedNodes
 
 Get selected nodes.
 
-Returns **[Object][23]** selected nodes
+Returns **[object][12]** selected nodes
 
-## addNode
+### addNode
 
 Add a node and all its related markup.
 
 **Parameters**
 
--   `nodeData` **[Object][23]** to add.
--   `location` **[Object][23]** in tree.
+-   `nodeData` **[object][12]** to add.
+-   `location` **[object][12]** in tree.
 
-Returns **[Object][23]** li added
+Returns **[object][12]** li added
 
-## updateNode
+### updateNode
 
 Update fx rename a node.
 
 **Parameters**
 
--   `nodeData` **[Object][23]** to update.
+-   `nodeData` **[object][12]** to update.
 
 Returns **void** 
 
-## removeNode
+### removeNode
 
 Delete a node from the dataset or tree.
 
 **Parameters**
 
--   `nodeData` **[Object][23]** to delete.
+-   `nodeData` **[object][12]** to delete.
 
 Returns **void** 
 
-## updated
+### updated
 
 Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object][23]** The settings to apply.
+-   `settings` **[object][12]** The settings to apply.
 
-Returns **[Object][23]** The api
+Returns **[object][12]** The api
 
-## destroy
+### destroy
 
 Destroy this component instance and remove the link from its base element.
 
 Returns **void** 
 
-## unselected
+[1]: #tree
 
-Fires on un select node.
+[2]: #expandall
 
-**Properties**
+[3]: #collapseall
 
--   `event` **[Object][23]** The jquery event object
--   `data` **[Object][23]** and node element
+[4]: #selectnodebyid
 
-## selected
+[5]: #loaddata
 
-Fires on select node.
+[6]: #getselectednodes
 
-**Properties**
+[7]: #addnode
 
--   `event` **[Object][23]** The jquery event object
--   `data` **[Object][23]** and node element
+[8]: #updatenode
 
-## menuselect
+[9]: #removenode
 
-Fires when the menu item select.
+[10]: #updated
 
-**Properties**
+[11]: #destroy
 
--   `event` **[Object][23]** The jquery event object
--   `data` **[Object][23]** for node element, item
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-## menuopen
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-Fires when the menu open.
-menu options - use it to update the menu as needed
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-**Properties**
-
--   `event` **[Object][23]** The jquery event object
--   `data` **[Object][23]** for node element, menu
-
-[1]: #tree_defaults
-
-[2]: #datagrid
-
-[3]: #inittree
-
-[4]: #initselected
-
-[5]: #focusfirst
-
-[6]: #expandall
-
-[7]: #collapseall
-
-[8]: #selectnodebyid
-
-[9]: #loaddata
-
-[10]: #getselectednodes
-
-[11]: #addnode
-
-[12]: #updatenode
-
-[13]: #removenode
-
-[14]: #updated
-
-[15]: #destroy
-
-[16]: #unselected
-
-[17]: #selected
-
-[18]: #menuselect
-
-[19]: #menuopen
-
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function

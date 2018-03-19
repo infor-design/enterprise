@@ -5,16 +5,136 @@
 <li>All Completion Chart Examples <a href="../components/completion-chart/example-variations">View Example</a></li>
 <li>Range of Colors for Completion Chart <a href="../components/completion-chart/example-colors">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The plugin element for the constuctor
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The settings element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset.data
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      The data to use in the chart (See examples)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset.data.name
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Required object with the title text `{text: 'Available Credit'}`
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset.data.completed
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Required data for the complete section `{text: 'Spent', value: 50000, format: '$,.0f'}`
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset.data.remaining
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      Required data for the remaining section `{text: 'Pending', value: 10000, format: '$,.0f'}`
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset.data.total
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      Optional data for the total section `{value: 95000, format: '$,.0f'}`
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -62,7 +182,6 @@ void
 
 
   </section>
-
   
 
 <p>Format used the <a href="https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format">D3 formatter (v3)</a></p>

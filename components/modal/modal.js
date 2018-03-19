@@ -8,16 +8,20 @@ import '../button/button.jquery';
 const COMPONENT_NAME = 'modal';
 
 /**
-* @namespace
-* @property {string} trigger The method of opening the dialog. Supports click, immediate.
-* @property {array} buttons  A list of buttons that will sit in the toolbar's Buttonset area.
-* @property {isAlert} isAlert Adds alertdialog role for message dialogs.
-* @property {content} content Ability to pass in dialog html content.
-* @property {string} cssClass Append a css class to top level.
-* @property {boolean} autoFocus If true the first input will be focused.
-* @property {string} id Optionally tag a dialog with an id.
-* @property {number} frameHeight Optional extra height to add.
-* @property {number} frameWidth Optional extra width to add.
+* Responsive and Accessible Modal Control
+* @class Modal
+* @param {string} element The component element.
+* @param {string} settings The component settings.
+*
+* @param {string} [settings.trigger='click'] The method of opening the dialog. Supports click, immediate.
+* @param {array} [settings.buttons=null]  A list of buttons that will sit in the toolbar's Buttonset area.
+* @param {isAlert} [settings.isAlert=false] Adds alertdialog role for message dialogs.
+* @param {content} [settings.content=null] Ability to pass in dialog html content.
+* @param {string} [settings.cssClass=null] Append a css class to top level.
+* @param {boolean} [settings.autoFocus=true] If true the first input will be focused.
+* @param {string} [settings.id=null] Optionally tag a dialog with an id.
+* @param {number} [settings.frameHeight=180] Optional extra height to add.
+* @param {number} [settings.frameWidth=46] Optional extra width to add.
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
@@ -28,15 +32,10 @@ const MODAL_DEFAULTS = {
   autoFocus: true,
   id: null,
   frameHeight: 180,
-  frameWidth: 46
+  frameWidth: 46,
+  beforeShow: null
 };
 
-/**
-* Responsive and Accessible Modal Control
-* @class Modal
-* @param {string} element The component element.
-* @param {string} settings The component settings.
-*/
 function Modal(element, settings) {
   this.settings = utils.mergeSettings(element, settings, MODAL_DEFAULTS);
   this.element = $(element);
@@ -80,7 +79,7 @@ Modal.prototype = {
     }
 
     // ensure is appended to body for new dom tree
-    if (this.settings.content) {
+    if (this.settings.content || this.settings.beforeShow) {
       this.settings.trigger = this.settings.content instanceof jQuery ? this.settings.trigger : 'immediate';
       this.appendContent();
       setTimeout(() => {
@@ -119,10 +118,15 @@ Modal.prototype = {
       } else {
         this.element.find('.modal-body').append(this.settings.content);
       }
-      if (this.settings.content instanceof jQuery) {
+
+      if (this.settings.content instanceof jQuery && !this.settings.beforeShow) {
         this.settings.content.removeClass('hidden is-hidden');
         this.settings.content.show();
       }
+    }
+
+    if (this.settings.beforeShow) {
+      this.element.find('.modal-body').append($('<div class="field"><div id="modal-busyindicator" class="busy card"></div></div>'));
     }
 
     if (!isAppended) {
@@ -142,6 +146,12 @@ Modal.prototype = {
     }
 
     utils.fixSVGIcons(this.element);
+
+    if (this.settings.beforeShow) {
+      const busyIndEl = $('#modal-busyindicator');
+      busyIndEl.busyindicator({}).data('busyindicator');
+      busyIndEl.trigger('start.busyindicator');
+    }
   },
 
   reStructure() {
@@ -341,11 +351,42 @@ Modal.prototype = {
     messageArea[0].style.width = `${messageArea.width()}px`;
   },
 
+  callSource() {
+    if (typeof this.settings.beforeShow !== 'function') {
+      return;
+    }
+
+    const self = this;
+    const response = function (content) {
+      if (content === false) {
+        return false;
+      }
+
+      $('#modal-busyindicator').trigger('complete.busyindicator');
+
+      if (!(content instanceof jQuery)) {
+        content = $(content);
+      }
+
+      self.element.find('.modal-body').empty();
+      self.element.find('.modal-body').append(content);
+
+      content.show();
+
+      return true;
+    };
+
+    const callBackOpts = {};
+    this.settings.beforeShow(response, callBackOpts);
+    self.open(true);
+  },
+
   /**
-  * Open the modal via the api.
-  * @returns {void}
-  */
-  open() {
+   * *
+   * Open the modal via the api.
+   * @param {boolean} ajaxReturn Flag used internally to denote its an ajax result return.
+   */
+  open(ajaxReturn) {
     let messageArea = null;
     let elemCanOpen = true;
 
@@ -367,6 +408,13 @@ Modal.prototype = {
       this.sizeInner();
     }
 
+    /**
+    * Fires when the modal is about to open. You can return false to abort opening.
+    * @event beforeopen
+    * @memberof Modal
+    * @property {object} event - The jquery event object
+    * @property {object} ui - The dialog object
+    */
     elemCanOpen = this.element.triggerHandler('beforeopen', [this]);
     $('body').triggerHandler('beforeopen', [this]);
     this.isCancelled = false;
@@ -375,6 +423,14 @@ Modal.prototype = {
       this.overlay.remove();
       this.root[0].style.display = 'none';
       return;
+    }
+
+    if (!ajaxReturn) {
+      this.callSource();
+
+      if (this.settings.beforeShow) {
+        return;
+      }
     }
 
     // Look for other nested dialogs and adjust the zindex.
@@ -481,6 +537,14 @@ Modal.prototype = {
     function focusElement(self) {
       let focusElem = self.element.find(':focusable').not('.modal-header .searchfield').first();
       self.keepFocus();
+
+      /**
+      * Fires when the modal opens.
+      * @event open
+      * @memberof Modal
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
+      */
       self.element.trigger('open', [self]);
 
       if (focusElem.length === 0) {
@@ -533,6 +597,13 @@ Modal.prototype = {
       focusElement(this);
     }, 200);
 
+    /**
+    * Fires after the modal has opened.
+    * @event afteropen
+    * @memberof Modal
+    * @property {object} event - The jquery event object
+    * @property {object} ui - The dialog object
+    */
     setTimeout(() => {
       this.element.trigger('afteropen');
     }, 300);

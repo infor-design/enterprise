@@ -10,12 +10,15 @@ import '../expandablearea/expandablearea.jquery';
 const COMPONENT_NAME = 'compositeform';
 
 /**
-* @namespace
-* @property {string} breakpoint  Defines the breakpoint at which the composite form will change
-*  into its responsive mode
-* @property {string} trigger  Expandable area trigger selector. Passed to expandable area.
-* @property {string} expandedText  Text to use for the expand button (Default localized)
-* @property {string} collapsedText  Text to use for the collapse button (Default localized)
+* CompositeForm is a specialized responsive form component.
+* @class CompositeForm
+* @constructor
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+* @param {string} [settings.breakpoint = 'phone-to-tablet'] Defines the breakpoint at which the composite form will change into its responsive mode
+* @param {string} [settings.trigger = null] Expandable area trigger selector. Passed to expandable area.
+* @param {string} [settings.expandedText = Locale.translate('ShowLess')] Text to use for the expand button (Default localized)
+* @param {string} [settings.collapsedText = Locale.translate('ShowMore')] Text to use for the collapse button (Default localized)
 */
 const COMPOSITEFORM_DEFAULTS = {
   breakpoint: 'phone-to-tablet',
@@ -24,13 +27,6 @@ const COMPOSITEFORM_DEFAULTS = {
   collapsedText: Locale.translate('ShowMore'),
 };
 
-/**
- * CompositeForm is a specialized responsive form component.
- * @class CompositeForm
- * @constructor
- * @param {jQuery[]|HTMLElement} element The component element.
- * @param {object} [settings] The component settings.
- */
 function CompositeForm(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPOSITEFORM_DEFAULTS);
   this.element = $(element);

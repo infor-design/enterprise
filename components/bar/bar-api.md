@@ -2,53 +2,46 @@
 
 ### Table of Contents
 
--   [BAR_DEFAULTS](#bar_defaults)
--   [Bar](#bar)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [rendered](#rendered)
-
-## BAR_DEFAULTS
-
-**Properties**
-
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The data to use in the line/area/bubble.
--   `isStacked` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Default is a single or stacked chart.
--   `isNormalized` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true its a 100% bar chart
--   `isGrouped` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true its a grouped bar chart
--   `showLegend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the legend will not be shown.
--   `animate` **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** true|false - will do or not do the animation.
-    'initial' will do only first time the animation.
--   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, the component will not resize when resizing the page.
--   `formatterString` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Use d3 format some examples can be found on <http://bit.ly/1IKVhHh>
--   `format` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The d3 axis format
--   `tooltip` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A tooltip for the whole chart
--   `useLogScale` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true log scale is enabled.
--   `ticks` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Settings for the chart ticks.
-    Can set ticks: {format: d3Format, number: n}
--   `showLines` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Show the in the axis lines or not.
--   `labelFactor` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** How far out than the outer circle should the labels be placed,
-    this may be useful to adjust for some labels.
--   `wrapWidth` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number of pixels after which a label needs to be
-    given a new line. You may want to change this based on label data.
--   `emptyMessage` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An empty message will be displayed when there is no chart data.
-    This accepts an object of the form emptyMessage:
-    `{title: 'No Data Available',
-     info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-     button: {text: 'xxx', click: <function>}
-     }`
-     Set this to null for no message or will default to 'No Data Found with an icon.'
+-   [Bar][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Bar
 
 A bar chart or bar graph is a chart or graph that presents categorical data with rectangular bars
 with heights or lengths proportional to the values that they represent. This is adapated from
-<http://jsfiddle.net/datashaman/rBfy5/2/>
+[http://jsfiddle.net/datashaman/rBfy5/2/][4]
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
+-   `element` **[string][5]** The plugin element for the constuctor
+-   `settings` **[string][5]?** The settings element.
+    -   `settings.dataset` **[array][6]** The data to use in the line/area/bubble. (optional, default `[]`)
+    -   `settings.isStacked` **[boolean][7]** Default is a single or stacked chart. (optional, default `true`)
+    -   `settings.isNormalized` **[boolean][7]** If true its a 100% bar chart (optional, default `false`)
+    -   `settings.isGrouped` **[boolean][7]** If true its a grouped bar chart (optional, default `false`)
+    -   `settings.showLegend` **[boolean][7]** If false the legend will not be shown. (optional, default `true`)
+    -   `settings.animate` **([boolean][7] \| [string][5])** true|false - will do or not do the animation, 'initial' will do only first time the animation. (optional, default `true`)
+    -   `settings.redrawOnResize` **[boolean][7]** If true, the component will not resize when resizing the page. (optional, default `true`)
+    -   `settings.formatterString` **[string][5]?** Use d3 format some examples can be found on [http://bit.ly/1IKVhHh][8]
+    -   `settings.format` **[string][5]** The d3 axis format (optional, default `true`)
+    -   `settings.tooltip` **[string][5]** A tooltip for the whole chart (optional, default `null`)
+    -   `settings.useLogScale` **[boolean][7]** If true log scale is enabled. (optional, default `false`)
+    -   `settings.ticks` **[object][9]** Settings for the chart ticks. Can set ticks: {format: d3Format, number: n} (optional, default `null`)
+    -   `settings.showLines` **[boolean][7]** Show the in the axis lines or not. (optional, default `true`)
+    -   `settings.labelFactor` **[number][10]** How far out than the outer circle should the labels be placed, this
+        may be useful to adjust for some labels. (optional, default `1.27`)
+    -   `settings.wrapWidth` **[number][10]** The number of pixels after which a label needs to be given a new line.
+        You may want to change this based on label data. (optional, default `60`)
+    -   `settings.emptyMessage` **[object][9]** An empty message will be displayed when there is no chart data. This accepts an object of the form emptyMessage:
+        `{title: 'No Data Available',
+         info: 'Make a selection on the list above to see results'
+         icon: 'icon-empty-no-data',
+         button: {text: 'xxx', click: <function>}  }`
+        Set this to null for no message or will default to 'No Data Found with an icon.' (optional, default `{
+        title:(Locale?Locale.translate('NoData'):'No Data Available'),
+        info:'',
+        icon:'icon-empty-no-data'}`)
 
 ### updated
 
@@ -56,9 +49,9 @@ Handle updated settings and values.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings to use.
+-   `settings` **[object][9]** The new settings to use.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
+Returns **[object][9]** The api for chaining.
 
 ### destroy
 
@@ -66,11 +59,22 @@ Teardown - Remove added markup and events.
 
 Returns **void** 
 
-## rendered
+[1]: #bar
 
-Fires when the chart is complete done rendering, for customization.
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `svg` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The svg object.
+[4]: http://jsfiddle.net/datashaman/rBfy5/2/
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[8]: http://bit.ly/1IKVhHh
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

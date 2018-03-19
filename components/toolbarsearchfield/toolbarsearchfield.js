@@ -10,16 +10,7 @@ import '../searchfield/searchfield';
 // Component Name
 const COMPONENT_NAME = 'toolbarsearchfield';
 
-/**
- * Component Default Settings
- * @namespace
- * @property {boolean} clearable   If "true", provides an "x" button on the right
- *  edge that clears the field
- * @property {boolean} collapsible   If "true", allows the field to expand/collapse
- *  on larger breakpoints when focused/blurred respectively
- * @property {boolean} collapsibleOnMobile  If true, overrides `collapsible` only
- *  on mobile settings.
- */
+// Component Defaults
 const TBSF_DEFAULTS = {
   clearable: true,
   collapsible: true,
@@ -34,9 +25,13 @@ const MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
  * Searchfield Component Wrapper that extends normal Searchfield functionality
  *  and provides collapse/expand behavior.  For use inside of Toolbars.
  *
- * @class {ToolbarSearchfield}
+ * @class ToolbarSearchfield
  * @param {HTMLElement|jQuery[]} element the base element
  * @param {object} [settings] incoming settings
+ * @param {boolean} [settings.clearable = true] If "true", provides an "x" button on the right edge that clears the field
+ * @param {boolean} [settings.collapsible = true] If "true", allows the field to expand/collapse on larger breakpoints when
+ * focused/blurred respectively
+ * @param {boolean} [settings.collapsibleOnMobile = true] If true, overrides `collapsible` only on mobile settings.
  */
 function ToolbarSearchfield(element, settings) {
   this.element = $(element);
@@ -62,6 +57,7 @@ ToolbarSearchfield.prototype = {
 
   /**
    * Creates and manages any markup the control needs to function.
+   * @private
    * @returns {this} component instance
    */
   build() {
@@ -225,6 +221,7 @@ ToolbarSearchfield.prototype = {
 
   /**
    * Handles the "focusout" event
+   * @private
    * @returns {void}
    */
   handleFocusOut() {
@@ -237,6 +234,7 @@ ToolbarSearchfield.prototype = {
 
   /**
    * Detects whether or not an element is part of this instance of the Searchfield component
+   * @private
    * @param {HTMLElement} element the element being checked.
    * @returns {boolean} whether or not the element provided is part of this Searchfield component
    */
@@ -258,6 +256,7 @@ ToolbarSearchfield.prototype = {
 
   /**
    * Event Handler for dealing with global (document) level clicks.
+   * @private
    * @param {jQuery.Event} e `click` event
    * @returns {void}
    */
@@ -273,6 +272,7 @@ ToolbarSearchfield.prototype = {
 
   /**
    * Handles Keydown Events
+   * @private
    * @param {jQuery.Event} e - jQuery-wrapped Keydown event.
    * @returns {void}
    */
@@ -287,6 +287,7 @@ ToolbarSearchfield.prototype = {
   /**
    * Handles global (document) level keydown events that are established to help
    * collapse/de-highlight searchfields on a timer.
+   * @private
    * @param {jQuery.Event} e jQuery-wrapped Keydown event
    * @returns {void}
    */
@@ -302,6 +303,7 @@ ToolbarSearchfield.prototype = {
 
   /**
    * Event Handler for the Popupmenu Component's custom `beforeopen` event.
+   * @private
    * @param {jQuery.Event} e jQuery-wrapped `beforeopen` Event
    * @param {jQuery[]} menu reference to the popupmenu
    * @returns {boolean} the ability to cancel the menu's opening.
@@ -322,6 +324,7 @@ ToolbarSearchfield.prototype = {
   /**
    * Retrieves the distance between a left and right boundary.
    * Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.
+   * @private
    * @param {Number|jQuery[]} leftBoundary left boundary in pixels
    * @param {Number|jQuery[]} rightBoundary right boundary in pixels
    * @returns {number} the fill size area
@@ -527,6 +530,7 @@ ToolbarSearchfield.prototype = {
   },
 
   /**
+   * @private
    * @returns {boolean} whether or not one of the components inside of this searchfield
    *  is the document's "active" element.
    */
@@ -535,6 +539,7 @@ ToolbarSearchfield.prototype = {
   },
 
   /**
+   * @private
    * @returns {boolean} whether or not this searchfield instance is currently expanded.
    */
   isOpen() {
@@ -544,6 +549,7 @@ ToolbarSearchfield.prototype = {
   /**
    * Makes necessary adjustments to the DOM surrounding the Searchfield element to accommodate
    * breakpoint changes.
+   * @private
    * @returns {void}
    */
   adjustOnBreakpoint() {
@@ -883,6 +889,7 @@ ToolbarSearchfield.prototype = {
 
   /**
    * Tears down events, properties, etc. and resets the control to "factory" state
+   * @private
    * @returns {this} component instance
    */
   teardown() {
@@ -921,19 +928,57 @@ ToolbarSearchfield.prototype = {
   },
 
   /**
-   * This component fires the following events.
-   * @fires ToolbarSearchfield#events
-   * @listens mousedown Fires when the searchfield is clicked (if enabled).
-   * @listens focusin Fires when the searchfield is focused.
-   * @listens keydown Fires when a key is pressed inside of the searchfield.
-   * @listens collapse Fires when a `collapse` event is triggered externally on the searchfield.
-   * @listens beforeopen Fires when a `beforeopen` event is triggered on the
-   *  searchfield's optional categories menubutton.
-   * @listens navigate Fires when a `navigate` event is triggered on the
-   *  searchfield's parent toolbar.
-   * @listens keydown Fires when a `keydown` event is triggered at the `document` level.
-   * @listens resize Fires when a `resize` event is triggered at the `body` level.
-   * @returns {this} component instance
+  * Fires when the searchfield is clicked (if enabled).
+  * @event mousedown
+  * @memberof ToolbarSearchfield
+  * @property {object} event - The jquery event object
+  * /
+  /**
+  * Fires when the searchfield is focused.
+  * @event focusin
+  * @memberof ToolbarSearchfield
+  * @property {object} event - The jquery event object
+  * /
+  /**
+  * Fires when a key is pressed inside of the searchfield.
+  * @event keydown
+  * @memberof ToolbarSearchfield
+  * @property {object} event - The jquery event object
+  */
+  /**
+  *  Fires when a `collapse` event is triggered externally on the searchfield.
+  * @event collapse
+  * @memberof ToolbarSearchfield
+  * @property {object} event - The jquery event object
+  */
+  /**
+  *  Fires when a `beforeopen` event is triggered on the searchfield's optional categories menubutton.
+  * @event beforeopen
+  * @memberof ToolbarSearchfield
+  * @property {object} event - The jquery event object
+  */
+  /**
+  * Fires when a `navigate` event is triggered on the searchfield's parent toolbar.
+  * @event navigate
+  * @memberof ToolbarSearchfield
+  * @property {object} event - The jquery event object
+  */
+  /**
+  * Fires when a `keydown` event is triggered at the `document` level.
+  * @event keydown
+  * @memberof ToolbarSearchfield
+  * @property {object} event - The jquery event object
+  */
+  /**
+   * Fires when a `resize` event is triggered at the `body` level.
+   * @event resize
+   * @memberof ToolbarSearchfield
+   * @property {object} event - The jquery event object
+   */
+
+  /**
+   * Removes the entire control from the DOM and from this element's internal data
+   * @returns {void}
    */
   handleEvents() {
     const self = this;

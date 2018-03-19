@@ -5,6 +5,7 @@ import { DOM } from './dom';
 /**
  * Used for changing the stacking order of jQuery events.  This is needed to override certain
  * Events invoked by other plugins http://stackoverflow.com/questions/2360655
+ * @private
  * @param {string} name the event name
  * @param {function} fn callback function that will be called during the supplied event name
  * @returns {void}
@@ -21,6 +22,7 @@ $.fn.bindFirst = function (name, fn) {
 };
 
 /**
+ * @private
  * uniqueIdCount is a baseline unique number that will be used when generating
  * uniqueIds for elements and components.
  */
@@ -29,6 +31,7 @@ export let uniqueIdCount = 0; // eslint-disable-line
 /**
  * Generates a unique ID for an element based on the element's configuration, any
  * Soho components that are generated against it, and provided prefixes/suffixes.
+ * @private
  * @param {string} [className] CSS classname (will be interpreted automatically
  *  if it's not provided)
  * @param {string} [prefix] optional prefix
@@ -55,6 +58,7 @@ $.fn.uniqueId = function (className, prefix, suffix) {
  * Detect whether or not a text string represents a valid CSS property.  This check
  * includes an attempt at checking for vendor-prefixed versions of the CSS property
  * provided.
+ * @private
  * @param {string} prop a possible CSS property
  * @returns {string|null} If the property exists, it will be returned in string format.
  *  If the property doesn't exist, a null result is returned.
@@ -88,6 +92,7 @@ $.fn.cssPropSupport = function (prop) {
 
 /**
  * Returns the name of the TransitionEnd event.
+ * @private
  * @returns {string} a (possibly) vendor-adjusted CSS transition property name.
  */
 $.fn.transitionEndName = function () {
@@ -119,6 +124,7 @@ function visible(element) {
  * Adapted from:  http://stackoverflow.com/questions/7668525/is-there-a-jquery-selector-to-get-all-elements-that-can-get-focus
  * Adds the ':focusable' selector to Sizzle to allow for the selection of elements
  * that can currently be focused.
+ * @private
  * @param {HTMLElement} element the element being checked
  * @returns {boolean} whether or not the element is focusable.
  */
@@ -164,6 +170,7 @@ $.extend($.expr[':'], {
 
 /**
  * Returns a key/value list of currently attached event listeners
+ * @private
  * @returns {object} containing list of event names as keys, and event listener functions as values.
  */
 $.fn.listEvents = function () {
@@ -181,6 +188,7 @@ const utils = {};
 /**
  * Grabs an attribute from an HTMLElement containing stringified JSON syntax,
  * and interprets it into options.
+ * @private
  * @param {HTMLElement} element the element whose settings are being interpreted
  * @param {string} [attr] optional different attribute to parse for settings
  * @returns {object} a list of interpreted settings for this element
@@ -239,6 +247,7 @@ utils.parseSettings = function parseSettings(element, attr) {
 
 /**
  * Deprecate `utils.parseOptions` in favor of `utils.parseSettings`
+ * @private
  * @deprecated
  * TODO: Remove in 4.4.1 ?
  */
@@ -247,6 +256,7 @@ utils.parseOptions = utils.parseSettings;
 /**
 * jQuery Behavior Wrapper for `utils.parseOptions`.
 * @deprecated
+* @private
 * @param {HTMLElement|jQuery[]} element the element whose options are being parsed
 * @param {string} [attr] an optional alternate attribute name to use when obtaining settings
 * @returns {Object|Object[]} an object representation of parsed settings.
@@ -283,6 +293,7 @@ $.fn.parseOptions = function (element, attr) {
  * then can be listen events as:
  * [ $(timer.event).on('update', function(e, data){console.log(data.counter)}); ]
  * or can access as [ timer.cancel(); -or- timer.pause(); -or- timer.resume(); ]
+ * @private
  * @param {function} [callback] method that will run on each timer update
  * @param {number} delay amount of time between timer ticks
  * @returns {object} containing methods that can be run on the timer
@@ -339,6 +350,7 @@ $.fn.timer = function (callback, delay) {
  * No Safari support, as of (Nov. 2015). Returns false.
  * IE: The clipboard feature may be disabled by an adminstrator. By default a prompt is
  * shown the first time the clipboard is used (per session).
+ * @private
  * @param {string} text incoming text content
  * @returns {string|boolean} copied text, or a false result if there was an error
  */
@@ -365,6 +377,7 @@ $.copyToClipboard = function (text) { // eslint-disable-line
 
 /**
  * Escapes HTML, replacing special characters with encoded symbols.
+ * @private
  * @param {string} value HTML in string form
  * @returns {string} the modified value
  */
@@ -379,6 +392,7 @@ $.escapeHTML = function (value) {
 
 /**
  * Un-escapes HTML, replacing encoded symbols with special characters.
+ * @private
  * @param {string} value HTML in string form
  * @returns {string} the modified value
  */
@@ -393,6 +407,7 @@ $.unescapeHTML = function (value) {
 
 /**
  * Remove Script tags and all onXXX functions
+ * @private
  * @param {string} html HTML in string form
  * @returns {string} the modified value
  */
@@ -405,6 +420,7 @@ $.sanitizeHTML = function (html) {
 
 /**
  * Clearable (Shows an X to clear)
+ * @private
  */
 $.fn.clearable = function () {
   const self = this;
@@ -446,6 +462,7 @@ $.fn.clearable = function () {
 
 /**
  * Replacement for String.fromCharCode() that takes meta keys into account when determining which
+ * @private
  * character key was pressed.
  * @param {jQuery.Event} e jQuery-wrapped `keypress` event
  * @returns {string} text tcharacter
@@ -520,6 +537,7 @@ utils.actualChar = function (e) {
 
 /**
  * Get the actualy typed key from the event.
+ * @private
  * @param  {object} e The event to check for the key.
  * @returns {string} The actual key typed.
  */
@@ -529,6 +547,7 @@ $.actualChar = function (e) {
 
 /**
  * Equate two values quickly in a truthy fashion
+ * @private
  * @param {any} a first value
  * @param {any} b second value
  * @returns {boolean} whether the two items compare in a truthy fashion.
@@ -541,6 +560,7 @@ utils.equals = function equals(a, b) {
  * Converts an element wrapped in a jQuery collection down to its original HTMLElement reference.
  * If an HTMLElement is passed in, simply returns it.
  * If anything besides HTMLElements or jQuery[] is passed in, returns undefined;
+ * @private
  * @param {any} item the item being evaluated
  * @returns {HTMLElement|undefined} the unwrapped item, or nothing.
  */
@@ -562,15 +582,17 @@ DOM.convertToHTMLElement = function convertToHTMLElement(item) {
 };
 
 /**
- * Object deep copy
+ * Object deep copy.
  * For now, alias jQuery.extend
  * Eventually we'll replace this with a non-jQuery extend method.
+ * @private
  */
 utils.extend = $.extend;
 
 /**
  * Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
  * The action of changing the xlink:href attribute to something else and back will fix the problem.
+ * @private
  * @param {HTMLElement} rootElement the base element
  * @returns {void}
  */
@@ -603,6 +625,7 @@ utils.fixSVGIcons = function fixSVGIcons(rootElement) {
 
 /**
  * Gets the current size of the viewport
+ * @private
  * @returns {object} width/height of the viewport
  */
 utils.getViewportSize = function getViewportSize() {
@@ -615,6 +638,7 @@ utils.getViewportSize = function getViewportSize() {
 /**
  * Gets the various scrollable containers that an element is nested inside of, and returns
  *  their scrollHeight and scrollLeft values.
+ * @private
  * @param {HTMLElement} element the base element to check for containment
  * @returns {object} containing references to the container element and its top/left
  */
@@ -655,9 +679,10 @@ utils.getContainerScrollDistance = function getContainerScrollDistance(element) 
 /**
  * Takes an element that is currently hidden by some means (FX: "display: none;")
  *  and gets its potential dimensions by checking a clone of the element that is NOT hidden.
+ * @private
  * @param {HTMLElement|SVGElement|jQuery[]} el The element being manipulated.
  * @param {object} options incoming options.
- * @param {jQuery[]} [parentElement=undefined] the parent element where a clone of this
+ * @param {jQuery[]} [parentElement] the parent element where a clone of this
  *  hidden element will be attached.
  * @returns {object} containing various width/height properties of the element provided.
  */
@@ -741,6 +766,7 @@ utils.getHiddenSize = function getHiddenSize(el, options) {
 
 /**
  * Binds the Soho Util _getHiddenSize()_ to a jQuery selector
+ * @private
  * @param {object} options - incoming options
  * @returns {object} hidden size
  */
@@ -750,6 +776,7 @@ $.fn.getHiddenSize = function (options) {
 
 /**
  * Checks if a specific input is a String
+ * @private
  * @param {any} value an object of unknown type to check
  * @returns {boolean} whether or not a specific input is a String
  */
@@ -759,6 +786,7 @@ utils.isString = function isString(value) {
 
 /**
  * Checks if a specific input is a Number
+ * @private
  * @param {any} value an object of unknown type to check
  * @returns {boolean} whether or not a specific input is a Number
  */
@@ -770,6 +798,7 @@ utils.isNumber = function isNumber(value) {
  * Safely changes the position of a text caret inside of an editable element.
  * In most cases, will call "setSelectionRange" on an editable element immediately, but in some
  * cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
+ * @private
  * @param {HTMLElement} element the element to get selection
  * @param {number} startPos starting position of the text caret
  * @param {number} endPos ending position of the text caret
@@ -817,6 +846,7 @@ function resolveFunctionBasedSettings(o) {
 /**
  * Merges various sets of options into a single object,
  * whose intention is to be set as options on a Soho component.
+ * @private
  * @param {HTMLElement|SVGElement|jQuery[]} [element] the element to process for inline-settings
  * @param {Object|function} incomingOptions desired settings
  * @param {Object|function} [defaultOptions] optional base settings
@@ -842,6 +872,7 @@ utils.mergeSettings = function mergeSettings(element, incomingOptions, defaultOp
 
 /**
  * Test if a string is Html or not
+ * @private
  * @param  {string} string The string to test.
  * @returns {boolean} True if it is html.
  */
@@ -854,6 +885,7 @@ const math = {};
 /**
  * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second
  * (FPS) numeric values.
+ * @private
  * @param {number} delay CPU Ticks
  * @returns {number} Frames Per Second
  */
@@ -867,6 +899,7 @@ math.convertDelayToFPS = function convertDelayToFPS(delay) {
 /**
  * Convert `setTimeout/Interval` delay values (CPU ticks) into frames-per-second
  * (FPS) numeric values.
+ * @private
  * @param {number} fps (Frames Per Second)
  * @returns {number} delay in CPU ticks
  */
@@ -879,6 +912,7 @@ math.convertFPSToDelay = function convertFPSToDelay(fps) {
 
 /**
  *  Determines whether the passed value is a finite number.
+ * @private
  * @param {number} value The number
  * @returns {boolean} If it is finite or not.
  */

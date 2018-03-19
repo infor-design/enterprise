@@ -1,0 +1,45 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Customer Id', field: 'id', filterType: 'text'});
+      columns.push({ id: 'type', name: 'Type', field: 'type', filterType: 'text'});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'firstname', name: 'First Name', field: 'firstname', filterType: 'text'});
+      columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname', filterType: 'text'});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone', filterType: 'text'});
+      columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases', filterType: 'text'});
+
+      //Get some data via ajax
+      var url = '{{basepath}}api/accounts';
+
+      $.getJSON(url, function(res) {
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          filterable: true,
+          groupable: {
+            fields: ['type'],
+            expanded: true,
+            aggregator: 'sum' //sum, averge, max ect
+          },
+          toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
+        });
+      });
+ });
+
+</script>

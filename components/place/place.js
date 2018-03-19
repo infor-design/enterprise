@@ -4,27 +4,7 @@ import { DOM } from '../utils/dom';
 // Component Name
 const COMPONENT_NAME = 'place';
 
-/**
- * @namespace
- * @property {boolean} bleedFromContainer If true, allows positioned content to bleed
- *  outside of a defined container.
- * @property {function} [callback] If defined, provides extra placement adjustments
- *  after the main calculation is performed.
- * @property {HTMLElement} [container] If defined, contains the placement of the
- *  element to the boundaries of a specific container element.
- * @property {HTMLElement} [parent] If defined, will be used as the reference
- *  element for placement this element.
- * @property {string} [parentXAlignment] Only used for parent-based placement.
- *  Determines the X-coordinate alignment of the placed element against its parent.
- * @property {string} [parentYAlignment] Only used for parent-based placement.
- *  Determines the Y-coordinate alignment of the placed element against its parent.
- * @property {string} [placement] If defined, changes the direction in which
- *  placement of the element happens
- * @property {string[]} strategies Determines the "strategy" for alternatively
- *  placing the element if it doesn't fit in the defined boundaries.  Only matters
- *  when "parent" is a defined setting.  It's possible to define multiple strategies
- *  and execute them in order.
- */
+// Default Component Options
 const DEFAULT_PLACE_SETTINGS = {
   bleedFromContainer: false,
   callback: null,
@@ -55,8 +35,9 @@ const PLACEMENT_OBJECT_SETTING_KEYS = [
  * Object that contains coordinates along with temporary, changeable properties.
  * This object gets passed around the Place Behavior and modified during each phase of positioning.
  * This object is also passed to all callbacks and event listeners for further modification.
- * @constructor
- * @param {object} placementOptions object containing settings for placement
+ * @private
+ * @param {object} [placementOptions] object containing settings for placement
+ * @returns {void}
  */
 function PlacementObject(placementOptions) {
   const self = this;
@@ -131,11 +112,28 @@ PlacementObject.prototype = {
 };
 
 /**
- * Place Behavior Constructor
- * This is the actual "thing" that is tied to a Placeable Element.
- * @constructor
+ * The Place API which handles internal placement of popups, menus ect.
+ * @class Place
  * @param {HTMLElement|jQuery[]} element the base element being placed
  * @param {object} [settings] incoming settings
+ * @param {boolean} [settings.bleedFromContainer = false] If true, allows positioned content to bleed
+ *  outside of a defined container.
+ * @param {function} [settings.callback] If defined, provides extra placement adjustments
+ *  after the main calculation is performed.
+ * @param {HTMLElement} [settings.container] If defined, contains the placement of the
+ *  element to the boundaries of a specific container element.
+ * @param {HTMLElement} [settings.parent] If defined, will be used as the reference
+ *  element for placement this element.
+ * @param {string} [settings.parentXAlignment = 'center'] Only used for parent-based placement.
+ *  Determines the X-coordinate alignment of the placed element against its parent.
+ * @param {string} [settings.parentYAlignment = 'center'] Only used for parent-based placement.
+ *  Determines the Y-coordinate alignment of the placed element against its parent.
+ * @param {string} [settings.placement = 'bottom'] If defined, changes the direction in which
+ *  placement of the element happens
+ * @param {string[]} [settings.strategies = ['nudge']] Determines the "strategy" for alternatively
+ *  placing the element if it doesn't fit in the defined boundaries.  Only matters
+ *  when "parent" is a defined setting.  It's possible to define multiple strategies
+ *  and execute them in order.
  */
 function Place(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DEFAULT_PLACE_SETTINGS);

@@ -11,14 +11,17 @@ import '../dropdown/dropdown.jquery';
 const COMPONENT_NAME = 'fieldfilter';
 
 /**
-* @namespace
-* @param {array} dataset  Array of data
-* @property {object} dropdownOpts  Gets passed to this control's dropdown
-* @param {string} template An Html String with the mustache template for the view.
-
-/**
- * Default FieldFilter Options
- */
+* Ability to have a dropdown next to the field.
+*
+* @class FieldFilter
+* @constructor
+*
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+* @param {array} [settings.dataset]  Array of data
+* @param {object} [settings.dropdownOpts]  Gets passed to this control's dropdown
+* @param {string} [settings.template] An Html String with the mustache template for the view.
+*/
 const FIELDFILTER_DEFAULTS = {
   dataset: [],
   dropdownOpts: {}, // Dropdown custom settings
@@ -35,14 +38,6 @@ const FIELDFILTER_DEFAULTS = {
       {{/dataset}}
     </select>`
 };
-
-/**
-* Ability to have a dropdown next to the field.
-*
-* @class FieldFilter
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function FieldFilter(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, FIELDFILTER_DEFAULTS);
@@ -63,7 +58,7 @@ FieldFilter.prototype = {
   /**
    * Render the template against the dataset.
    * @private
-   * @param {Array} dataset  The dataset to use
+   * @param {array} dataset  The dataset to use
    * @returns {void}
    */
   render(dataset) {
@@ -143,7 +138,7 @@ FieldFilter.prototype = {
   /**
    * Set currently filtered item
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   setFiltered() {
     if (this.ddApi) {
@@ -156,8 +151,8 @@ FieldFilter.prototype = {
   /**
    * Get currently triggerData for given item args
    * @private
-   * @param {Object} args selected item.
-   * @returns {Object} The api
+   * @param {object} args selected item.
+   * @returns {object} The api
    */
   getTriggerData(args) {
     const s = this.settings;
@@ -168,7 +163,7 @@ FieldFilter.prototype = {
   /**
    * Attach Events used by the Control
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   handleEvents() {
     this.ffdropdown
@@ -180,6 +175,7 @@ FieldFilter.prototype = {
         /**
         * Fires after the value in the dropdown is selected.
         * @event filtered
+        * @memberof FieldFilter
         * @property {object} event The jquery event object.
         * @property {object} data for selected item.
         */
@@ -192,7 +188,7 @@ FieldFilter.prototype = {
 
   /**
   * Set component to readonly.
-  * @returns {Object} The api
+  * @returns {object} The api
   */
   readonly() {
     this.ffdropdown.readonly();
@@ -201,7 +197,7 @@ FieldFilter.prototype = {
 
   /**
   * Set component to enabled.
-  * @returns {Object} The api
+  * @returns {object} The api
   */
   enable() {
     this.ffdropdown.enable();
@@ -210,7 +206,7 @@ FieldFilter.prototype = {
 
   /**
   * Set component to disabled.
-  * @returns {Object} The api
+  * @returns {object} The api
   */
   disable() {
     this.ffdropdown.disable();
@@ -220,7 +216,7 @@ FieldFilter.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     this.ffdropdown.off(`.${COMPONENT_NAME}`);
@@ -236,8 +232,8 @@ FieldFilter.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

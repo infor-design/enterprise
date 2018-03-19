@@ -9,24 +9,31 @@ import '../popupmenu/popupmenu.jquery';
 import '../toolbarsearchfield/toolbarsearchfield.jquery';
 import '../tooltip/tooltip.jquery';
 
-// Component Names
+// Component Name
 const COMPONENT_NAME = 'toolbar';
 
 /**
- * Component Default Settings
- * @namespace
- * @property {boolean} rightAligned Will always attempt to right-align the contents of
+ * The Toolbar Component manages various levels of application navigation.
+ * It contains a group of buttons that functionally related content. Each panel
+ * consists of two levels: the top level identifies the category or section header,
+ * and the second level provides the associated options.
+ *
+ * @class Toolbar
+ * @param {HTMLElement|jQuery[]} element the base Toolbar element
+ * @param {object} [settings] incoming settings
+ *
+ * @param {boolean} [settings.rightAligned=false] Will always attempt to right-align the contents of
  *  the toolbar. By default if there is no title it will left align. This forces right alignment.
- * @property {number} maxVisibleButtons Total amount of buttons that can be present, not
+ * @param {number} [settings.maxVisibleButtons=3] Total amount of buttons that can be present, not
  *  including the More button.
- * @property {boolean} resizeContainers If true, uses Javascript to size the Title and
+ * @param {boolean} [settings.resizeContainers=true] If true, uses Javascript to size the Title and
  *  Buttonset elements in a way that shows as much of the Title area as possible.
- * @property {boolean} favorButtonset If "resizeContainers" is true, setting this to
+ * @param {boolean} [settings.favorButtonset=true] If "resizeContainers" is true, setting this to
  *  true will try to display as many buttons as possible while resizing the toolbar.
  *  Setting to false attempts to show the entire title instead.
- * @property {object} [moreMenuSettings] If defined, provides a toolbar-level method of
+ * @param {object} [settings.moreMenuSettings] If defined, provides a toolbar-level method of
  *  defining settings that will be applied to the More Actions button's popupmenu instance.
- * @property {boolean} noSearchfieldReinvoke If true, does not manage the lifecycle
+ * @param {boolean} [settings.noSearchfieldReinvoke=false] If true, does not manage the lifecycle
  *  of an internal toolbarsearchfield automatically.  Allows an external controller
  *  to do it instead.
  */
@@ -39,16 +46,6 @@ const TOOLBAR_DEFAULTS = {
   noSearchfieldReinvoke: false,
 };
 
-/**
- * The Toolbar Component manages various levels of application navigation.
- * It contains a group of buttons that functionally related content. Each panel
- * consists of two levels: the top level identifies the category or section header,
- * and the second level provides the associated options.
- *
- * @class Toolbar
- * @param {HTMLElement|jQuery[]} element the base Toolbar element
- * @param {object} [settings] incoming settings
- */
 function Toolbar(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, TOOLBAR_DEFAULTS);
@@ -287,6 +284,13 @@ Toolbar.prototype = {
     this.adjustMenuItemVisibility();
     this.handleResize();
 
+    /**
+     * Fires when the Toolbar has completely rendered all its DOM elements.
+     *
+     * @event rendered
+     * @memberof Toolbar
+     * @param {jQuery.Event} e the jQuery Event object
+     */
     this.element.triggerHandler('rendered');
 
     const searchfieldWrapper = this.buttonset.find('.searchfield-wrapper, .toolbar-searchfield-wrapper');
@@ -301,6 +305,7 @@ Toolbar.prototype = {
    * Builds a single "More Actions Menu" item from a source toolbar item.
    * Also sets up linkage between the menu item and the original toolbar item to
    * allow events/properties to propagate when the More Actions item is acted upon.
+   * @private
    * @param {jQuery[]} item the source item from the toolbar.
    * @returns {jQuery[]} a jQuery-wrapped <li> representing a More Actions menu
    *  implementation of the toolbar item.
@@ -440,7 +445,7 @@ Toolbar.prototype = {
    * Refreshes the More Actions Menu items' text content, icons, states, and submenu content
    * based on changes made directly to their counterpart elements in the Toolbar.  Can also
    * optionally refresh only part of the menu.
-   * @param {jQuery[]} menu - the menu/submenu to be refreshed.
+   * @param {jQuery[]} menu the menu/submenu to be refreshed.
    */
   refreshMoreActionsMenu(menu) {
     const self = this;
@@ -501,8 +506,8 @@ Toolbar.prototype = {
    * 1. span contents (.audible), then
    * 2. button title attribute, then
    * 3. tooltip text (if applicable)
-   * @param {jQuery[]} item - the item being evaluated.
-   * @returns {string} - the complete text representation.
+   * @param {jQuery[]} item the item being evaluated.
+   * @returns {string} the complete text representation.
    */
   getItemText(item) {
     if (!item) {
@@ -614,7 +619,7 @@ Toolbar.prototype = {
    * Event Handler for the Soho Popupmenu's custom 'show-submenu' event, specifically for
    * the case of a menu button that's been spilled over into this Toolbar's More Actions menu.
    * @param {jQuery.Event} e custom `show-submenu` jQuery event
-   * @param {jQuery[]} li - the `li.submenu` element.
+   * @param {jQuery[]} li the `li.submenu` element.
    */
   handleTransferToMenuButtonItem(e, li) {
     const originalMenuButton = li.children('a').data('original-button');
@@ -636,7 +641,6 @@ Toolbar.prototype = {
   /**
    * Event handler for the Soho `selected` event on toolbar items
    * @private
-   * @listens {jQuery.Event}
    * @param {jQuery.Event} e custom `selected` event
    * @param {jQuery[]} anchor a reference to the anchor that was selected
    * @returns {void}
@@ -926,7 +930,7 @@ Toolbar.prototype = {
 
   /**
    * Changes the "active" button on the toolbar.
-   * @param {number} direction - can be `-1` (previous), `1` (next), or `0` (remain on current).
+   * @param {number} direction can be `-1` (previous), `1` (next), or `0` (remain on current).
    * @returns {void}
    */
   navigate(direction) {
@@ -1055,6 +1059,15 @@ Toolbar.prototype = {
 
     if (!noFocus) {
       this.activeButton[0].focus();
+
+      /**
+       * Fires when the Toolbar's currently `active` element has changed.
+       *
+       * @event navigate
+       * @memberof Toolbar
+       * @param {jQuery.Event} e the jQuery Event object
+       * @param {jQuery} activeButton a reference to the new active button.
+       */
       this.element.triggerHandler('navigate', [this.activeButton]);
     }
   },
@@ -1070,13 +1083,20 @@ Toolbar.prototype = {
       return;
     }
 
+    /**
+     * Fires when a Toolbar item is selected.
+     *
+     * @event selected
+     * @memberof Toolbar
+     * @property {jQuery.Event} e the jQuery event object
+     * @property {jQuery[]} itemLink a reference to the corresponding toolbar item, wrapped in a jQuery selector
+     */
     this.element.triggerHandler('selected', [elem]);
   },
 
   /**
    * Assembles and returns a list of all buttons inside the Buttonset element.
-   * @private
-   * @returns {array} of b
+   * @returns {array} of elements inside the buttonset
    */
   getButtonsetButtons() {
     const buttons = [];
@@ -1096,11 +1116,8 @@ Toolbar.prototype = {
   /**
    * Gets and Iterates through a list of toolbar items and determines which are
    * currently overflowed, and which are visible.
-   * @param {array} buttons - an Array of jQuery-wrapped elements that represents toolbar items.
-   * @returns {VisibilitySortedToolbarItems}
-   * @returns {VisibilitySortedToolbarItems.Array} visible - An array containing all visible items.
-   * @returns {VisibilitySortedToolbarItems.Array} hidden - An array containing all
-   *  hidden (overflowed) items.
+   * @param {array} buttons an Array of jQuery-wrapped elements that represents toolbar items.
+   * @returns {object} containing a `visible` items array, and a `hidden` items array.
    */
   getVisibleButtons(buttons) {
     const self = this;
@@ -1136,7 +1153,8 @@ Toolbar.prototype = {
   /**
    * Gets and Iterates through the full list of Toolbar Items and determines which
    *  ones should currently be present in the More Actions menu.
-   * @param {object} items - an object (normally generated by `_.getVisibleButtons()`)
+   * @private
+   * @param {object} items an object (normally generated by `_.getVisibleButtons()`)
    *  containing arrays of currently visible and hidden buttons, along with some meta-data.
    * @returns {void}
    */
@@ -1439,8 +1457,9 @@ Toolbar.prototype = {
 
   /**
    * Tears down a More Actions Menu item.
-   * @param {jQuery[]} item - the existing <li> from inside the More Actions menu.
-   * @param {boolean} doRemove - if defined, causes the list item to be removed from
+   * @private
+   * @param {jQuery[]} item the existing <li> from inside the More Actions menu.
+   * @param {boolean} doRemove if defined, causes the list item to be removed from
    *  the more actions menu.
    */
   teardownMoreActionsMenuItem(item, doRemove) {

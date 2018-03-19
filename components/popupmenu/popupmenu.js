@@ -11,27 +11,29 @@ import '../place/place.jquery';
 const COMPONENT_NAME = 'popupmenu';
 
 /**
- * Default Popupmenu Settings
- * @namespace
- * @property {string} menu  Menu's ID Selector, or a jQuery object representing a menu
- * @property {string} trigger  Action on which to trigger a menu can be: click,
- *  rightClick, immediate ect
- * @property {boolean} autoFocus  If false the focus will not focus the first list
- *  element. (At the cost of accessibility)
- * @property {boolean} attachToBody  If true the menu will be moved out to the body.
- *  To be used in certin overflow situations.
- * @property {function} beforeOpen  Callback that can be used for populating the
- *  contents of the menu.
- * @property {string} ariaListbox   Switches aria to use listbox construct instead
- *  of menu construct (internal)
- * @property {string} eventObj  Can pass in the event object so you can do a right
- *  click with immediate
- * @property {string} returnFocus  If set to false, focus will not be returned to
- *  the calling element. It usually should be for accessibility purposes.
- * @property {object} placementOpts  Gets passed to this control's Place behavior
- * @property {object} offset  Can tweak the menu position in the x and y direction.
- *  Takes an object of form: `{x: 0, y: 0}`
+ * Responsive Popup Menu Control aka Context Menu when doing a right click action.
+ * @class PopupMenu
+ *
+ * @constructor
+ * @param {jquery[]|htmlelement} element The component element.
+ * @param {object} [settings] The component settings.
+ * @param {string} [settings.menu]  Menu's ID Selector, or a jQuery object representing a menu.
+ * @param {string} [settings.trigger='click']  Action on which to trigger a menu can be: click, rightClick, immediate ect.
+ * @param {boolean} [settings.autoFocus=true]  If false the focus will not focus the first list element. (At the cost of accessibility).
+ * @param {boolean} [settings.attachToBody=false]  If true the menu will be moved out to the body. To be used in certin overflow situations.
+ * @param {function} [settings.beforeOpen]  Callback that can be used for populating the contents of the menu.
+ * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
+ * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
+ * @param {string} [settings.returnFocus]  If set to false, focus will not be
+  returned to the calling element. It usually should be for accessibility purposes.
+ * @param {object} [settings.placementOpts=new PlacementObject({
+   containerOffsetX: 10,
+   containerOffsetY: 10,
+   strategies: ['flip', 'shrink']
+})] Gets passed to this control's Place behavior.
+ * @param {object} [settings.offset={x: 0, y: 0}] Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`.
  */
+
 const POPUPMENU_DEFAULTS = {
   menu: null,
   trigger: 'click',
@@ -53,13 +55,6 @@ const POPUPMENU_DEFAULTS = {
   }
 };
 
-/**
- * Responsive Popup Menu Control aka Context Menu when doing a right click action.
- * @class PopupMenu
- * @constructor
- * @param {jQuery[]|HTMLElement} element the base element
- * @param {object} [settings] incoming settings
- */
 function PopupMenu(element, settings) {
   this.settings = utils.mergeSettings(element, settings, POPUPMENU_DEFAULTS);
   this.element = $(element);
@@ -785,6 +780,14 @@ PopupMenu.prototype = {
       }
 
       selectionResult.push(true);
+      /**
+       * Fires on selected.
+       *
+       * @event selected
+       * @memberof PopupMenu
+       * @property {object} event - The jquery event object
+       * @property {object} selected anchor
+       */
       this.element.triggerHandler('selected', selectionResult);
     }
 
@@ -1121,7 +1124,14 @@ PopupMenu.prototype = {
 
   open(e, ajaxReturn) {
     const self = this;
-
+    /**
+     * Fires before open.
+     *
+     * @event beforeopen
+     * @memberof PopupMenu
+     * @property {object} event - The jquery event object
+     * @property {object} this menu instance
+     */
     let canOpen = this.element.triggerHandler('beforeopen', [this.menu]);
     if (canOpen === false) {
       return;
@@ -1215,6 +1225,14 @@ PopupMenu.prototype = {
         self.close();
       });
 
+      /**
+       * Fires on open.
+       *
+       * @event open
+       * @memberof PopupMenu
+       * @property {object} event - The jquery event object
+       * @property {object} this menu instance
+       */
       self.element.triggerHandler('open', [self.menu]);
 
       if (self.settings.trigger === 'rightClick') {
@@ -1291,6 +1309,14 @@ PopupMenu.prototype = {
         }
 
         self.highlight(selection);
+        /**
+         * Fires after open.
+         *
+         * @event afteropen
+         * @memberof PopupMenu
+         * @property {object} event - The jquery event object
+         * @property {object} this menu instance
+         */
         self.element.triggerHandler('afteropen', [self.menu]);
       }, 1);
     }
@@ -1617,6 +1643,14 @@ PopupMenu.prototype = {
     $(document).off(`keydown.popupmenu.${this.id} click.popupmenu.${this.id} mousemove.popupmenu.${this.id}`);
     this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu mouseenter.popupmenu mouseleave.popupmenu');
 
+    /**
+     * Fires when close.
+     *
+     * @event close
+     * @memberof PopupMenu
+     * @property {object} event - The jquery event object
+     * @property {object} close by cancelled
+     */
     this.element.removeClass('is-open').triggerHandler('close', [isCancelled]);
     this.detach();
 
@@ -1662,8 +1696,10 @@ PopupMenu.prototype = {
       if (searchfield.length) {
         insertTarget = searchfield.first();
       }
-
-      if (this.menu && insertTarget) {
+      if (this.settings.attachToBody && insertTarget) {
+        this.menu.unwrap();
+      }
+      if (this.menu && insertTarget && !this.settings.attachToBody) {
         this.menu.insertAfter(insertTarget);
       }
     }

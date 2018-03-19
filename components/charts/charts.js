@@ -9,8 +9,9 @@ charts.isIEEdge = $('html').hasClass('ie-edge');
 
 /**
  * Get the current height and widthe of the tooltip.
+ * @private
  * @param  {string} content The tooltip content.
- * @returns {[type]} Object with the height and width.
+ * @returns {object} Object with the height and width.
  */
 charts.tooltipSize = function tooltipSize(content) {
   this.tooltip.find('.tooltip-content').html(content);
@@ -79,8 +80,9 @@ charts.appendTooltip = function appendTooltip(extraClass) {
   }
 };
 
-/*
+/**
  * Hide the visible tooltip.
+ * @private
  * @returns {void}
  */
 charts.hideTooltip = function hideTooltip() {
@@ -92,8 +94,9 @@ charts.hideTooltip = function hideTooltip() {
   });
 };
 
-/*
+/**
  * Remove the tooltip from the DOM
+ * @private
  * @returns {void}
  */
 charts.removeTooltip = function removeTooltip() {
@@ -104,7 +107,8 @@ charts.removeTooltip = function removeTooltip() {
 
 /**
  * The color sequences to use across charts
- * @type {Array}
+ * @private
+ * @type {array}
  */
 charts.colorRange = ['#2578A9', '#8ED1C6', '#C7B4DB', '#5C5C5C', '#F2BC41', '#76B051', '#B94E4E',
   '#8DC9E6', '#DB7726', '#317C73', '#EB9D9D', '#737373', '#89BF65', '#C7B4DB',
@@ -112,13 +116,15 @@ charts.colorRange = ['#2578A9', '#8ED1C6', '#C7B4DB', '#5C5C5C', '#F2BC41', '#76
 
 /**
  * The colors as an array for placement
- * @type {Array}
+ * @private
+ * @type {array}
  */
 charts.colors = typeof d3 !== 'undefined' ? d3.scaleOrdinal().range(charts.colorRange) : [];
 
 /**
  * Calculate and return the correct color to use. Fx
  * error, alert, alertYellow, good, neutral or hex.
+ * @private
  * @param  {number} i The line/bar object index.
  * @param  {string} chartType The type of chart.
  * @param  {object} data The data for this element.
@@ -165,6 +171,7 @@ charts.chartColor = function chartColor(i, chartType, data) {
 
 /**
  * Show Tooltip
+ * @private
  * @param  {number} x The x position.
  * @param  {number} y The y position.
  * @param  {string} content The tooltip contents.
@@ -195,6 +202,7 @@ charts.showTooltip = function (x, y, content, arrow) {
 
 /**
  * Add the legend to the Chart Container.
+ * @private
  * @param  {array} series The groups series object.
  * @param  {string} chartType The type of chart.
  * @param  {object} settings The chart setting
@@ -285,6 +293,7 @@ charts.addLegend = function (series, chartType, settings, container) {
 
 /**
  * Helper Function to Select from legend click
+ * @private
  * @param {object} line The element that was clicked.
  * @param {array} series The data series.
  * @param {object} settings [description]
@@ -333,6 +342,7 @@ charts.selected = [];
 
 /**
  * Select the element and fire the event, make the inverse selector opace.
+ * @private
  * @param  {object} element The DOM element
  * @param  {object} inverse The opposite selection.
  * @param  {array} data  The data object
@@ -357,6 +367,7 @@ charts.selectElement = function (element, inverse, data, container) {
 /**
  * Style bars as selected or unselected
  * TODO: Refactor into individual components;
+ * @private
  * @param  {object} o The object to handle.
  */
 charts.setSelectedElement = function (o) {
@@ -578,6 +589,7 @@ charts.setSelectedElement = function (o) {
 
 /**
  * Set the select element based on provided options and fire the events.
+ * @private
  * @param {object} o An object with various
  * @param {boolean} isToggle If the select is a toggle of the state
  * @param {object} internals An object passing in chart internals
@@ -677,6 +689,7 @@ charts.setSelected = function (o, isToggle, internals) {
 
 /**
  * Check if the labels collide.
+ * @private
  * @param {object} svg The svg dom element.
  * @returns {boolean} True if the labels collide.
 */
@@ -709,6 +722,7 @@ charts.labelsColide = function (svg) {
 
 /**
  * Apply a different length label
+ * @private
  * @param  {object}  svg  The svg element.
  * @param  {array}  dataArray The data.
  * @param  {object}  elem The dom element
@@ -731,6 +745,7 @@ charts.applyAltLabels = function (svg, dataArray, elem, selector, isNoEclipse) {
 
 /**
  * Trigger the right click event.
+ * @private
  * @param  {object} container  The svg container.
  * @param  {object} elem The element that was right clicked.
  * @param  {object} d The data object
@@ -749,6 +764,7 @@ charts.triggerContextMenu = function (container, elem, d) {
 
 /**
  * Wraps SVG text http://bl.ocks.org/mbostock/7555321
+ * @private
  * @param {object} node  The svg element.
  * @param {number}  width The width at which to wrap
  * @param {object} labelFactor The dom element

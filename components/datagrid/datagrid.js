@@ -23,107 +23,83 @@ import '../drag/drag.jquery';
 const COMPONENT_NAME = 'datagrid';
 
 /**
-* @namespace
-* @property {boolean} actionableMode If actionableMode is "true, tab and shift tab
-* behave like left and right arrow key, if the cell is editable it goes in and out of edit mode.
-* F2 - toggles actionableMode "true" and "false"
-* @property {boolean} cellNavigation If cellNavigation is "false, will show border
-* around whole row on focus
-* @property {boolean} rowNavigation If rowNavigation is "false, will NOT show border
-* around the row
-* @property {boolean} alternateRowShading Sets shading for readonly grids
-* @property {array} columns An array of columns (see column options)
-* @property {array} dataset An array of data objects
-* @property {boolean} columnReorder Allow Column reorder
-* @property {boolean} saveColumns Save Column Reorder and resize
-* @property {object} saveUserSettings Save one or all of the following to local
-* storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true,
-* filter: true
-* @property {boolean} editable Enable editing in the grid, requires column editors.
-* @property {boolean} isList Makes the grid have readonly "list" styling
-* @property {string} menuId  &nbsp;-&nbspId of the menu to use for a row level right click
-* context menu
-* @property {string} menuSelected Callback for the grid level context menu
-* @property {string} menuBeforeOpen Callback for the grid level beforeopen menu event
-* @property {string} headerMenuId Id of the menu to use for a header right click
-* context menu
-* @property {string} headerMenuSelected Callback for the header level context menu
-* @property {string} headerMenuBeforeOpen Callback for the header level beforeopen
-* menu event
-* @property {string} uniqueId Unique ID to use as local storage reference and internal
-* variable names
-* @property {string} rowHeight Controls the height of the rows / number visible rows.
-* May be (short, medium or normal)
-* @property {string} selectable Controls the selection Mode this may be:
-* false, 'single' or 'multiple' or 'mixed' or 'siblings'
-* @property {object} groupable  Controls fields to use for data grouping Use Data
-* grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list',
-* aggregatorOptions: ['unitName1']}
-* @property {boolean} spacerColumn if true and the grid is not wide enough to fit the last column
-* will get filled with an empty spacer column.
-* @property {boolean} stretchColumn If 'last' the last column will stretch we will add more options.
-* @property {boolean} clickToSelect Controls if using a selection mode if you can
-* click the rows to select
-* @property {object} toolbar  Toggles and appends toolbar features fx..
-* @property {Boolean} selectChildren Can prevent selecting of all child nodes on multiselect
-* {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true,
-* rowHeight: true, views: true}
-* @property {boolean} initializeToolbar Set to false if you will initialize the
-* toolbar yourself
-* @property {boolean} paging Enable paging mode
-* @property {number} pagesize Number of rows per page
-* @property {array} pagesizes Array of page sizes to show in the page size dropdown.
-* @property {boolean} indeterminate Disable the ability to go to a specific page when paging.
-* @property {Function} source  Callback function for paging
-* @property {boolean} hidePagerOnOnePage  If true, hides the pager if there's only
-* one page worth of results.
-* @property {boolean} filterable Enable Column Filtering, This will require column
-* filterTypes as well.
-* @property {boolean} disableClientFilter Disable Filter Logic client side and let your
-* server do it
-* @property {boolean} disableClientSort Disable Sort Logic client side and let your
-* server do it
-* @property {string} resultsText Can provide a custom function to adjust results text
-*  on the toolbar
-* @property {boolean} showFilterTotal Paging results display filter count, change to
-*  false to not show filtered count
-* @property {boolean} rowReorder If set you can reorder rows. Requires rowReorder
-*  formatter
-* @property {boolean} showDirty  If true the dirty indicator will be shown on the rows
-* @property {boolean} showSelectAllCheckBox Allow to hide the checkbox header
-* (true to show, false to hide)
-* @property {boolean} allowOneExpandedRow Controls if you cna expand more than one
-* expandable row.
-* @property {boolean} enableTooltips Process tooltip logic at a cost of performance
-* @property {boolean} disableRowDeactivation if a row is activated the user should not
-*  be able to deactivate it by clicking on the activated row
-* @property {boolean} sizeColumnsEqually If true make all the columns equal width
-* @property {boolean} expandableRow If true we append an expandable row area without
-* the rowTemplate feature being needed.
-* @property {boolean} redrawOnResize If set to false we skip redraw logic on the resize
-* of the page.
-* @property {boolean} exportConvertNegative If set to true export data with trailing
-* negative signs moved in front.
-* @property {array} columnGroups An array of columns to use for grouped column headers.
-* @property {boolean} treeGrid: If true a tree grid is expected so addition
-* calculations will be used to calculate of the row children
-* @property {Function} onPostRenderCell A call back function that will fire and send
-* you the cell container and related information for any cells cells with a component attribute in
-* the column definition.
-* @property {Function} onDestroyCell A call back that goes along with onPostRenderCel
-* and will fire when this cell is destroyed and you need noification of that.
-* @property {Function} onEditCell A callback that fires when a cell is edited, the
-* editor object is passed in to the function
-* @property {Function} onExpandRow A callback function that fires when expanding rows.
-* To be used when expandableRow is true. The function gets eventData about the row and grid and a
-* response function callback. Call the response function with markup to append and delay opening
-* the row.
-* @property {object} emptyMessage An empty message will be displayed when there is no
-* rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available',
-* info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-* button: {text: 'xxx', click: <function>}} set this to null for no message or will default to
-* 'No Data Found with an icon.'
-*/
+ * The Datagrid Component displays and process data in tabular format.
+ * @class Datagrid
+ * @constructor
+ *
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object}   [settings] The component settings.
+ * @param {boolean}  [settings.actionableMode=false] If actionableMode is "true, tab and shift tab behave like left
+ * and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+ * @param {boolean}  [settings.cellNavigation=true] If cellNavigation is "false, will show border around whole row on focus
+ * @param {boolean}  [settings.rowNavigation=true] If rowNavigation is "false, will NOT show border around the row
+ * @param {boolean}  [settings.alternateRowShading=false] Sets shading for readonly grids
+ * @param {array}    [settings.columns=[]] An array of columns (see column options)
+ * @param {array}    [settings.dataset=[]] An array of data objects
+ * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
+ * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize
+ * @param {object}   [settings.saveUserSettings= {columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true}]
+ * Save one or all of the following to local storage
+ * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
+ * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
+ * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
+ * @param {string}   [settings.menuSelected=null] Callback for the grid level context menu
+ * @param {string}   [settings.menuBeforeOpen=null] Callback for the grid level beforeopen menu event
+ * @param {string}   [settings.headerMenuId=null] Id of the menu to use for a header right click context menu
+ * @param {string}   [settings.headerMenuSelected=false] Callback for the header level context menu
+ * @param {string}   [settings.headerMenuBeforeOpen=false] Callback for the header level beforeopen menu event
+ * @param {string}   [settings.uniqueId=null] Unique ID to use as local storage reference and internal variable names
+ * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
+ * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or
+ * 'multiple' or 'mixed' or 'siblings'
+ * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping,
+ * e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
+ * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last
+ * column will get filled with an empty spacer column.
+ * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch we will add more options.
+ * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
+ * @param {object}   [settings.toolbar=false]  Toggles and appends toolbar features fx..
+ * @param {boolean}  [settings.selectChildren=true] Can prevent selecting of all child nodes on multiselect
+ * `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
+ * @param {boolean}  [settings.initializeToolbar=true] Set to false if you will initialize the toolbar yourself
+ * @param {boolean}  [settings.paging=false] Enable paging mode
+ * @param {number}   [settings.pagesize=25] Number of rows per page
+ * @param {array}    [settings.pagesizes=[10, 25, 50, 75]] Array of page sizes to show in the page size dropdown.
+ * @param {boolean}  [settings.indeterminate=false] Disable the ability to go to a specific page when paging.
+ * @param {Function} [settings.source=false]  Callback function for paging
+ * @param {boolean}  [settings.hidePagerOnOnePage=false]  If true, hides the pager if there's only one page worth of results.
+ * @param {boolean}  [settings.filterable=false] Enable Column Filtering, This will require column filterTypes as well.
+ * @param {boolean}  [settings.disableClientFilter=false] Disable Filter Logic client side and let your server do it
+ * @param {boolean}  [settings.disableClientSort=false] Disable Sort Logic client side and let your server do it
+ * @param {string}   [settings.resultsText=null] Can provide a custom function to adjust results text on the toolbar
+ * @param {boolean}  [settings.showFilterTotal=true] Paging results display filter count, change to false to not show filtered count
+ * @param {boolean}  [settings.rowReorder=false] If set you can reorder rows. Requires rowReorder formatter
+ * @param {boolean}  [settings.showDirty=false]  If true the dirty indicator will be shown on the rows
+ * @param {boolean}  [settings.showSelectAllCheckBox=true] Allow to hide the checkbox header (true to show, false to hide)
+ * @param {boolean}  [settings.allowOneExpandedRow=true] Controls if you cna expand more than one expandable row.
+ * @param {boolean}  [settings.enableTooltips=false] Process tooltip logic at a cost of performance
+ * @param {boolean}  [settings.disableRowDeactivation=false] if a row is activated the user should not be able to
+ * deactivate it by clicking on the activated row
+ * @param {boolean}  [settings.sizeColumnsEqually=false] If true make all the columns equal width
+ * @param {boolean}  [settings.expandableRow=false] If true we append an expandable row area without the rowTemplate feature being needed.
+ * @param {boolean}  [settings.redrawOnResize=false] If set to false we skip redraw logic on the resize of the page.
+ * @param {boolean}  [settings.exportConvertNegative=false] If set to true export data with trailing negative signs moved in front.
+ * @param {array}    [settings.columnGroups=null] An array of columns to use for grouped column headers.
+ * @param {boolean}  [settings.treeGrid=false] If true a tree grid is expected so addition calculations will be used to calculate of the row children
+ * @param {Function} [settings.onPostRenderCell=null] A call back function that will fire and send you the cell
+ * container and related information for any cells cells with a component attribute in the column definition.
+ * @param {Function} [settings.onDestroyCell=null] A call back that goes along with onPostRenderCel and will
+ * fire when this cell is destroyed and you need noification of that.
+ * @param {Function} [settings.onEditCell=null] A callback that fires when a cell is edited, the editor object is passed in to the function
+ * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used.
+ * when expandableRow is true. The function gets eventData about the row and grid and a response function callback.
+ * Call the response function with markup to append and delay opening the row.
+ * @param {object}   [settings.emptyMessage={title:'No Data Available', infor: '', icon: 'icon-empty-no-data'}]
+ * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
+ * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
+ * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
+ * or will default to 'No Data Found with an icon.'
+ */
 const DATAGRID_DEFAULTS = {
   // F2 - toggles actionableMode "true" and "false"
   // If actionableMode is "true, tab and shift tab behave like left and right arrow key,
@@ -190,13 +166,6 @@ const DATAGRID_DEFAULTS = {
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
-/**
- * The Datagrid Component displays and process data in tabular format.
- * @class Datagrid
- * @constructor
- * @param {jQuery[]|HTMLElement} element The component element.
- * @param {object} settings The component settings.
- */
 function Datagrid(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DATAGRID_DEFAULTS);
   this.element = $(element);
@@ -245,9 +214,9 @@ Datagrid.prototype = {
     this.handleKeys();
 
     /**
-    * Fires when the grid is complete done rendering
-    *
-    * @event close
+     * Fires after the grid is rendered.
+    * @event rendered
+    * @memberof Datagrid
     * @property {object} event - The jquery event object
     * @property {array} ui - An array with references to the domElement, header and pagerBar
     */
@@ -443,9 +412,21 @@ Datagrid.prototype = {
       self.setActiveCell(row, cell);
 
       rowNode = self.tableBody.find(`tr[aria-rowindex="${row + 1}"]`);
-      args = { row, cell, target: rowNode, value: data, oldValue: [] };
+      args = { row, cell, target: rowNode, value: data, oldValue: {} };
 
       self.pagerRefresh(location);
+
+      /**
+       * Fires after a row is added via the api.
+      * @event addrow
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {number} args.row The row index
+      * @property {number} args.cell The cell index
+      * @property {HTMLElement} args.target The html element.
+      * @property {object} args.value - An object all the row data.
+      * @property {object} args.oldValue - Always an empty object added for consistent api.
+      */
       self.element.triggerHandler('addrow', args);
     }, 10);
   },
@@ -485,7 +466,19 @@ Datagrid.prototype = {
     this.unselectRow(row, nosync);
     this.settings.dataset.splice(row, 1);
     this.renderRows();
-    this.element.trigger('rowremove', { row, cell: null, target: rowNode, value: [], oldValue: rowData });
+
+    /**
+    *  Fires after a row is removed via the api
+    * @event rowremove
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Object with the arguments
+    * @property {number} args.row The row index
+    * @property {number} args.cell The cell index
+    * @property {HTMLElement} args.target The row node that is being dragged.
+    * @property {HTMLElement} args.item The dragged rows data.
+    */
+    this.element.trigger('rowremove', { row, cell: null, target: rowNode, item: rowData, oldValue: rowData });
   },
 
   /**
@@ -916,7 +909,7 @@ Datagrid.prototype = {
       }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
 
       headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}</span>`;
-      cols += `<col${this.calculateColumnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
+      cols += `<col${this.columnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
 
       if (isSelection) {
         if (self.settings.showSelectAllCheckBox) {
@@ -939,12 +932,14 @@ Datagrid.prototype = {
     headerColGroup += `${cols}</colgroup>`;
 
     if (self.headerRow === undefined) {
-      self.headerContainer = $(`<div class="datagrid-header"><table role="grid" ${this.headerTableWidth()}></table></div>`);
+      self.headerContainer = $('<div class="datagrid-header"><table role="grid"></table></div>');
       self.headerTable = self.headerContainer.find('table');
+      self.headerTable.width(this.headerTableWidth());
       self.headerColGroup = $(headerColGroup).appendTo(self.headerTable);
       self.headerRow = $(`<thead>${headerRow}</thead>`).appendTo(self.headerContainer.find('table'));
       self.element.prepend(self.headerContainer);
     } else {
+      self.headerTable.width(this.headerTableWidth());
       self.headerRow.html(headerRow);
       self.headerColGroup.html(cols);
     }
@@ -986,9 +981,9 @@ Datagrid.prototype = {
   /**
   * Set filter datepicker with range/single date.
   * @private
-  * @param {Object} input element to target datepicker.
-  * @param {String} operator filter type.
-  * @param {Object} options pass in to datepicker.
+  * @param {object} input element to target datepicker.
+  * @param {string} operator filter type.
+  * @param {object} options pass in to datepicker.
   * @returns {void}
   */
   filterSetDatepicker(input, operator, options) {
@@ -1363,6 +1358,12 @@ Datagrid.prototype = {
       this.filterRowRendered = false;
       this.element.removeClass('has-filterable-columns');
 
+      /**
+      *  Fires after the filter row is closed by the user.
+      * @event closefilterrow
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      */
       this.element.triggerHandler('closefilterrow');
     } else {
       this.settings.filterable = true;
@@ -1377,6 +1378,12 @@ Datagrid.prototype = {
       this.headerRow.find('.is-filterable').addClass('is-filterable');
       this.headerRow.find('.datagrid-filter-wrapper').show();
 
+      /**
+      * Fires after the filter row is opened by the user.
+      * @event openfilterrow
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      */
       this.element.triggerHandler('openfilterrow');
       this.attachFilterRowEvents();
     }
@@ -1631,6 +1638,16 @@ Datagrid.prototype = {
       this.renderRows();
     }
     this.setSearchActivePage();
+
+    /**
+    * Fires after a filter action ocurs
+    * @event filtered
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Object with the arguments
+    * @property {number} args.op The filter operation, this can be 'apply', 'clear'
+    * @property {object} args.conditions An object with all the condition data.
+    */
     this.element.trigger('filtered', { op: 'apply', conditions });
     this.resetPager('filtered');
     this.saveUserSettings();
@@ -2023,7 +2040,17 @@ Datagrid.prototype = {
           allRows[i].setAttribute('aria-rowindex', i + 1);
         }
 
-        // Fire an event
+        /**
+        * Fires after a row is moved via the rowReorder option.
+        * @event rowremove
+        * @memberof Datagrid
+        * @property {object} event The jquery event object
+        * @property {object} status Object with row reorder info
+        * @property {number} status.endIndex The ending row index
+        * @property {number} status.startIndex The starting row index
+        * @property {HTMLElement} status.over The row object that was dragged over.
+        * @property {HTMLElement} status.start The starting row object.
+        */
         self.element.trigger('rowreorder', [status]);
       });
   },
@@ -2245,12 +2272,14 @@ Datagrid.prototype = {
         continue;  //eslint-disable-line
       }
 
-      tableHtml += self.rowHtml(
-        s.dataset[i],
-        (s.treeGrid || s.filterable) ? this.recordCount : i,
-        i
-      );
+      let currentCount = i;
+      if (s.treeGrid) {
+        currentCount = this.recordCount;
+      } else if (s.filterable) {
+        currentCount = i - this.filteredCount;
+      }
 
+      tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
       this.recordCount++;
     }
 
@@ -2353,6 +2382,15 @@ Datagrid.prototype = {
         self.syncSelectedUI();
       }
 
+      /**
+      * Fires after the entire grid is rendered.
+      * @event rowremove
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {HTMLElement} body Object table body area
+      * @property {HTMLElement} header Object table header area
+      * @property {HTMLElement} pager Object pager body area
+      */
       self.element.trigger('afterrender', { body: self.tableBody, header: self.headerRow, pager: self.pagerBar });
     }, 0);
   },
@@ -2709,7 +2747,7 @@ Datagrid.prototype = {
       let colWidth = '';
 
       if (this.recordCount === 0 || this.recordCount - ((activePage - 1) * pagesize) === 0) {
-        colWidth = this.calculateColumnWidth(col, j);
+        colWidth = this.columnWidth(col, j);
 
         self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
 
@@ -2914,9 +2952,9 @@ Datagrid.prototype = {
     this.setScrollClass();
 
     if (cacheWidths.widthPercent) {
-      return 'style = "width: 100%"';
+      return '100%';
     } else if (!isNaN(this.totalWidth)) {
-      return `style = "width: ${parseFloat(this.totalWidth)}px"`;
+      return `${parseFloat(this.totalWidth)}px`;
     }
 
     return '';
@@ -2951,13 +2989,64 @@ Datagrid.prototype = {
     this.totalWidth = 0;
     this.elemWidth = 0;
     this.lastColumn = null;
+    this.isInitialRender = true;
+    this.calculateColumnWidths();
+  },
+
+  /**
+   * Return the width for a column (upfront with no rendering)
+   * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   * @param  {[type]} col The column object to use
+   * @param  {[type]} index The column index
+   * @returns {void}
+   */
+  columnWidth(col, index) {
+    if (!this.elemWidth) {
+      this.elemWidth = this.element.outerWidth();
+
+      if (this.elemWidth === 0) { // handle on invisible tab container
+        this.elemWidth = this.element.closest('.tab-container').outerWidth();
+      }
+      if (!this.elemWidth || this.elemWidth === 0) { // handle on invisible modal
+        this.elemWidth = this.element.closest('.modal-contents').outerWidth();
+      }
+
+      this.widthSpecified = false;
+    }
+
+    // use cache
+    if (this.headerWidths[index]) {
+      const cacheWidths = this.headerWidths[index];
+
+      if (cacheWidths.width === 'default') {
+        return '';
+      }
+
+      if (this.widthSpecified && !cacheWidths.width) {
+        return '';
+      }
+
+      return ` style="width: ${cacheWidths.width}${cacheWidths.widthPercent ? '%' : 'px'}"`;
+    }
+    return this.calculateColumnWidth(col, index);
+  },
+
+  /**
+   * Calculate the width for all the columns
+   * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   */
+  calculateColumnWidths() {
+    for (let i = 0; i < this.settings.columns.length; i++) {
+      const col = this.settings.columns[i];
+      this.calculateColumnWidth(col, i);
+    }
   },
 
   /**
    * Calculate the width for a column (upfront with no rendering)
    * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
-   * @param  {[type]} col The column object to use
-   * @param  {[type]} index The column index
+   * @param {object} col The column object to use
+   * @param {number} index The column index
    * @returns {void}
    */
   calculateColumnWidth(col, index) {
@@ -3070,14 +3159,28 @@ Datagrid.prototype = {
     }
 
     // For the last column stretch it if it doesnt fit the area
-    if (lastColumn && this.isInitialRender && this.settings.stretchColumn === 'last'
-      && !this.settings.spacerColumn) {
+    if (lastColumn && this.isInitialRender && !this.settings.spacerColumn) {
       const diff = this.elemWidth - this.totalWidth;
 
-      if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
-        colWidth = diff - 2 - 10; // borders and last edge padding
+      if (this.settings.stretchColumn === 'last') {
+        if ((diff > 0) && (diff > colWidth) && !this.widthPercent && !col.width) {
+          colWidth = diff - 2 - 10; // borders and last edge padding
+          this.headerWidths[index] = {
+            id: col.id,
+            width: colWidth,
+            widthPercent: this.widthPercent
+          };
+          this.totalWidth = this.elemWidth - 2;
+        }
+      } else {
         this.headerWidths[index] = { id: col.id, width: colWidth, widthPercent: this.widthPercent };
-        this.totalWidth = this.elemWidth - 2;
+        this.totalWidth += col.hidden ? 0 : colWidth;
+        const diff2 = this.elemWidth - this.totalWidth;
+        const stretchColumn = $.grep(this.headerWidths, e => e.id === this.settings.stretchColumn);
+        if ((diff2 > 0) && !stretchColumn[0].widthPercent) {
+          stretchColumn[0].width += diff2 - 2;
+          this.totalWidth += diff2 - 2;
+        }
       }
 
       if (this.widthPercent) {
@@ -3085,6 +3188,7 @@ Datagrid.prototype = {
       } else if (!isNaN(this.totalWidth)) {
         this.table.css('width', this.totalWidth);
       }
+
       this.isInitialRender = false;
     }
 
@@ -3278,6 +3382,16 @@ Datagrid.prototype = {
     this.renderRows();
     this.renderHeader();
     this.resetPager('updatecolumns');
+
+    /**
+    * Fires after the entire grid is rendered.
+    * @event columnchange
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {HTMLElement} args Additional arguments
+    * @property {string} args.type Info on the type of column change action, can be 'updatecolumns', 'hidecolumn', 'showcolumn', 'resizecolumn'
+    * @property {object} args.columns The columns object
+    */
     this.element.trigger('columnchange', [{ type: 'updatecolumns', columns: this.settings.columns }]);
     this.saveColumns();
     this.saveUserSettings();
@@ -3303,7 +3417,20 @@ Datagrid.prototype = {
    * @returns {void}
    */
   saveUserSettings() {
-    // Emit Event
+    /**
+    * Fires after settings are changed in some way
+    * @event settingschanged
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {number} args.rowHeight The current row height
+    * @property {object} args.columns The columns object
+    * @property {string} args.sortOrder The current sort column.
+    * @property {number} args.pagesize The current page size
+    * @property {boolean} args.showPageSizeSelector If the page size selector is shown.
+    * @property {number} args.activePage The currently active page.
+    * @property {string} args.filter Info on the type of column change action, can be 'updatecolumns'
+    */
     this.element.trigger('settingschanged', [{
       rowHeight: this.settings.rowHeight,
       columns: this.settings.columns,
@@ -4087,10 +4214,10 @@ Datagrid.prototype = {
 
     // Handle Resize - Re do the columns
     if (self.settings.redrawOnResize) {
-      let oldWidth = $('body')[0].offsetWidth;
+      let oldWidth = self.element.outerWidth();
 
-      $('body').on('resize.datagrid', function () {
-        const width = this.offsetWidth;
+      $('body').on('resize.datagrid', () => {
+        const width = self.element.outerWidth();
         if (width !== oldWidth) {
           oldWidth = width;
           self.handleResize();
@@ -4127,6 +4254,17 @@ Datagrid.prototype = {
         return;
       }
 
+      /**
+      * Fires after a row is clicked.
+      * @event click
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Additional arguments
+      * @property {number} args.row The current row height
+      * @property {number} args.cell The columns object
+      * @property {object} args.item The current sort column.
+      * @property {object} args.originalEvent The original event object.
+      */
       self.triggerRowEvent('click', e, true);
       self.setActiveCell(target.closest('td'));
 
@@ -4219,11 +4357,32 @@ Datagrid.prototype = {
       }
     });
 
+    /**
+    * Fires after a row is double clicked.
+    * @event dblclick
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {number} args.row The current row height
+    * @property {number} args.cell The columns object
+    * @property {object} args.item The current sort column.
+    * @property {object} args.originalEvent The original event object.
+    */
     tbody.off('dblclick.datagrid').on('dblclick.datagrid', 'tr', (e) => {
       self.triggerRowEvent('dblclick', e, true);
     });
 
-    // Handle Context Menu Option
+    /**
+    * Fires after a row has a right click action.
+    * @event contextmenu
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {number} args.row The current row height
+    * @property {number} args.cell The columns object
+    * @property {object} args.item The current sort column.
+    * @property {object} args.originalEvent The original event object.
+    */
     tbody.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tr', (e) => {
       if (!self.isSubscribedTo(e, 'contextmenu')) {
         return;
@@ -4810,6 +4969,18 @@ Datagrid.prototype = {
     this.selectRows(rows, true, true);
     this.dontSyncUi = false;
     this.syncSelectedUI();
+
+    /**
+    * Fires after a row is selected.
+    * @event contextmenu
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {array} args.selectedRows An array of selected rows.
+    * @property {string} args.trigger The action can be 'selectall', 'deselectall', 'select', 'deselect'
+    * @property {object} args.item The current sort column.
+    * @property {object} args.originalEvent The original event object.
+    */
     this.element.triggerHandler('selected', [this.selectedRows(), 'selectall']);
   },
 
@@ -5102,6 +5273,15 @@ Datagrid.prototype = {
       rowIndex = idx;
     }
 
+    /**
+    * Fires after a row is deactivated in mixed selection mode.
+    * @event rowdeactivated
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {array} args.row An array of selected rows.
+    * @property {object} args.item The current sort column.
+    */
     if (isActivated) {
       if (!this.settings.disableRowDeactivation) {
         row.removeClass('is-rowactivated');
@@ -5130,7 +5310,15 @@ Datagrid.prototype = {
         }
       }
 
-      // Activate new row
+      /**
+      * Fires after a row is activated in mixed selection mode.
+      * @event rowactivated
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Additional arguments
+      * @property {array} args.row An array of selected rows.
+      * @property {object} args.item The current sort column.
+      */
       row.addClass('is-rowactivated');
       if (this.settings.dataset[rowIndex]) { // May have changed page
         this.settings.dataset[rowIndex]._rowactivated = true;
@@ -5178,9 +5366,9 @@ Datagrid.prototype = {
 
   /**
   * De-select a selected row.
-  * @param  {[type]} idx The row index
-  * @param  {[type]} nosync Do not sync the header
-  * @param  {[type]} noTrigger Do not trgger any events
+  * @param  {number} idx The row index
+  * @param  {boolean} nosync Do not sync the header
+  * @param  {boolean} noTrigger Do not trgger any events
   */
   unselectRow(idx, nosync, noTrigger) {
     const self = this;
@@ -5274,7 +5462,7 @@ Datagrid.prototype = {
 
   /**
    * Set the current status on the row status column
-   * @param {[type]} node The node to set the status on
+   * @param {HTMLElement} node The node to set the status on
    */
   setNodeStatus(node) {
     const self = this;
@@ -5980,6 +6168,21 @@ Datagrid.prototype = {
     }
     this.editor.val(cellValue);
     this.editor.focus();
+
+    /**
+    * Fires after a cell goes into edit mode.
+    * @event entereditmode
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {number} args.row An array of selected rows.
+    * @property {number} args.cell An array of selected rows.
+    * @property {object} args.item The current sort column.
+    * @property {HTMLElement} args.target The cell html element that was entered.
+    * @property {any} args.value The cell value.
+    * @property {object} args.column The column object
+    * @property {object} args.editor The editor object.
+    */
     this.element.triggerHandler('entereditmode', [{ row: idx, cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor }]);
 
     return true;  //eslint-disable-line
@@ -6029,6 +6232,22 @@ Datagrid.prototype = {
     // Save the Cell Edit back to the data set
     this.updateCellNode(rowIndex, cell, newValue, false, isInline);
     const value = this.fieldValue(rowData, col.field);
+
+    /**
+    * Fires after a cell goes out of edit mode.
+    * @event exiteditmode
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {number} args.row An array of selected rows.
+    * @property {number} args.cell An array of selected rows.
+    * @property {object} args.item The current sort column.
+    * @property {HTMLElement} args.target The cell html element that was entered.
+    * @property {any} args.value The cell value.
+    * @property {any} args.oldValue The previous cell value.
+    * @property {object} args.column The column object
+    * @property {object} args.editor The editor object.
+    */
     this.element.triggerHandler('exiteditmode', [{
       row: rowIndex,
       cell,
@@ -6499,6 +6718,19 @@ Datagrid.prototype = {
       args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
         this.settings.treeDepth[row].node : rowData;
 
+      /**
+      * Fires when a cell value is changed via the editor.
+      * @event cellchange
+      * @memberof Datagrid
+      * @property {object} event The jquery event object
+      * @property {object} args Additional arguments
+      * @property {number} args.row An array of selected rows.
+      * @property {number} args.cell An array of selected rows.
+      * @property {HTMLElement} args.target The cell html element that was entered.
+      * @property {any} args.value The cell value.
+      * @property {any} args.oldValue The previous cell value.
+      * @property {object} args.column The column object
+      */
       this.element.trigger('cellchange', args);
       this.wasJustUpdated = true;
 
@@ -6661,6 +6893,16 @@ Datagrid.prototype = {
       self.activeCell.node.addClass('is-active');
     }
 
+    /**
+    * Fires when a cell is focued.
+    * @event activecellchange
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {HTMLElement} args.node  The cell element that was entered.
+    * @property {number} args.cell The selected cell
+    * @property {number} args.row The selected row
+    */
     self.element.trigger('activecellchange', [{ node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell }]);
   },
 
@@ -6771,6 +7013,29 @@ Datagrid.prototype = {
       self.setAlternateRowShading();
     };
 
+    /**
+    * Fires when a row is collapsed to show its detail.
+    * @event collapserow
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {object} args.self The grid api.
+    * @property {number} args.row The selected row index
+    * @property {object} args.item The selected row data.
+    * @property {array} args.children The selected rows children (tree grid)
+    */
+
+    /**
+    * Fires when a row is expanded to show its detail.
+    * @event expandrow
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {object} args.self The grid api.
+    * @property {number} args.row The selected row index
+    * @property {object} args.item The selected row data.
+    * @property {array} args.children The selected rows children (tree grid)
+    */
     $.when(self.element.triggerHandler(isExpanded ? 'collapserow' : 'expandrow', args)).done(() => {
       toggleExpanded();
     });

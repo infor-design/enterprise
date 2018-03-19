@@ -1,741 +1,947 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.actionableMode
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If actionableMode is "true, tab and shift tab behave like left
+and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.cellNavigation
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If cellNavigation is "false, will show border around whole row on focus
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.rowNavigation
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If rowNavigation is "false, will NOT show border around the row
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.alternateRowShading
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Sets shading for readonly grids
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.columns
+    </td>
+    <td>
+      <span>[]</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      An array of columns (see column options)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset
+    </td>
+    <td>
+      <span>[]</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      An array of data objects
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.columnReorder
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Allow Column reorder
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.saveColumns
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Save Column Reorder and resize
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.saveUserSettings
+    </td>
+    <td>
+      <span>{columns:true,rowHeight:true,sortOrder:true,pagesize:true,activePage:true,filter:true}</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Save one or all of the following to local storage
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.editable
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Enable editing in the grid, requires column editors.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.isList
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Makes the grid have readonly "list" styling
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.menuId
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      ID of the menu to use for a row level right click context menu
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.menuSelected
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Callback for the grid level context menu
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.menuBeforeOpen
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Callback for the grid level beforeopen menu event
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.headerMenuId
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Id of the menu to use for a header right click context menu
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.headerMenuSelected
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Callback for the header level context menu
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.headerMenuBeforeOpen
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Callback for the header level beforeopen menu event
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.uniqueId
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Unique ID to use as local storage reference and internal variable names
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.rowHeight
+    </td>
+    <td>
+      <span>normal</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Controls the height of the rows / number visible rows. May be (short, medium or normal)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.selectable
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Controls the selection Mode this may be: false, 'single' or
+'multiple' or 'mixed' or 'siblings'
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.groupable
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Controls fields to use for data grouping Use Data grouping,
+e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.spacerColumn
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if true and the grid is not wide enough to fit the last
+column will get filled with an empty spacer column.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.stretchColumn
+    </td>
+    <td>
+      <span>&#39;last&#39;</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If 'last' the last column will stretch we will add more options.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.clickToSelect
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Controls if using a selection mode if you can click the rows to select
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.toolbar
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Toggles and appends toolbar features fx..
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.selectChildren
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Can prevent selecting of all child nodes on multiselect
+`{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.initializeToolbar
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Set to false if you will initialize the toolbar yourself
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.paging
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Enable paging mode
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pagesize
+    </td>
+    <td>
+      <span>25</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Number of rows per page
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pagesizes
+    </td>
+    <td>
+      <span>[10,25,50,75]</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      Array of page sizes to show in the page size dropdown.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.indeterminate
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Disable the ability to go to a specific page when paging.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.source
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      Function
+    </td>
+    <td>
+      Callback function for paging
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.hidePagerOnOnePage
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, hides the pager if there's only one page worth of results.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.filterable
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Enable Column Filtering, This will require column filterTypes as well.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disableClientFilter
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Disable Filter Logic client side and let your server do it
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disableClientSort
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Disable Sort Logic client side and let your server do it
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.resultsText
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Can provide a custom function to adjust results text on the toolbar
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showFilterTotal
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Paging results display filter count, change to false to not show filtered count
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.rowReorder
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If set you can reorder rows. Requires rowReorder formatter
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showDirty
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the dirty indicator will be shown on the rows
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showSelectAllCheckBox
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Allow to hide the checkbox header (true to show, false to hide)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.allowOneExpandedRow
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Controls if you cna expand more than one expandable row.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.enableTooltips
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Process tooltip logic at a cost of performance
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disableRowDeactivation
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if a row is activated the user should not be able to
+deactivate it by clicking on the activated row
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.sizeColumnsEqually
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true make all the columns equal width
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.expandableRow
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true we append an expandable row area without the rowTemplate feature being needed.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.redrawOnResize
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If set to false we skip redraw logic on the resize of the page.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.exportConvertNegative
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If set to true export data with trailing negative signs moved in front.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.columnGroups
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      An array of columns to use for grouped column headers.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.treeGrid
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true a tree grid is expected so addition calculations will be used to calculate of the row children
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.onPostRenderCell
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      Function
+    </td>
+    <td>
+      A call back function that will fire and send you the cell
+container and related information for any cells cells with a component attribute in the column definition.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.onDestroyCell
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      Function
+    </td>
+    <td>
+      A call back that goes along with onPostRenderCel and will
+fire when this cell is destroyed and you need noification of that.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.onEditCell
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      Function
+    </td>
+    <td>
+      A callback that fires when a cell is edited, the editor object is passed in to the function
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.onExpandRow
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      Function
+    </td>
+    <td>
+      A callback function that fires when expanding rows. To be used.
+when expandableRow is true. The function gets eventData about the row and grid and a response function callback.
+Call the response function with markup to append and delay opening the row.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.emptyMessage
+    </td>
+    <td>
+      <span>{title:&#39;No Data Available&#39;,infor:&#39;&#39;,icon:&#39;icon-empty-no-data&#39;}</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
+emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
+icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
+or will default to 'No Data Found with an icon.'
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          actionableMode
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If actionableMode is "true, tab and shift tab
-behave like left and right arrow key, if the cell is editable it goes in and out of edit mode.
-F2 - toggles actionableMode "true" and "false"
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          cellNavigation
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If cellNavigation is "false, will show border
-around whole row on focus
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          rowNavigation
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If rowNavigation is "false, will NOT show border
-around the row
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          alternateRowShading
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Sets shading for readonly grids
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          columns
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An array of columns (see column options)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          dataset
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An array of data objects
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          columnReorder
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Allow Column reorder
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          saveColumns
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Save Column Reorder and resize
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          saveUserSettings
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          Save one or all of the following to local
-storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true,
-filter: true
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          editable
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Enable editing in the grid, requires column editors.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          isList
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Makes the grid have readonly "list" styling
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          menuId
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-           
--
- 
-Id of the menu to use for a row level right click
-context menu
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          menuSelected
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Callback for the grid level context menu
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          menuBeforeOpen
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Callback for the grid level beforeopen menu event
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          headerMenuId
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Id of the menu to use for a header right click
-context menu
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          headerMenuSelected
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Callback for the header level context menu
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          headerMenuBeforeOpen
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Callback for the header level beforeopen
-menu event
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          uniqueId
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Unique ID to use as local storage reference and internal
-variable names
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          rowHeight
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Controls the height of the rows / number visible rows.
-May be (short, medium or normal)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          selectable
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Controls the selection Mode this may be:
-false, 'single' or 'multiple' or 'mixed' or 'siblings'
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          groupable
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          Controls fields to use for data grouping Use Data
-grouping fx. {fields: 
-[
-'incidentId'
-]
-, supressRow: true, aggregator: 'list',
-aggregatorOptions: 
-[
-'unitName1'
-]
-}
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          spacerColumn
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          if true and the grid is not wide enough to fit the last column
-will get filled with an empty spacer column.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          stretchColumn
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If 'last' the last column will stretch we will add more options.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          clickToSelect
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Controls if using a selection mode if you can
-click the rows to select
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          toolbar
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          Toggles and appends toolbar features fx..
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          selectChildren
-        </td>
-        <td>
-          Boolean
-        </td>
-        <td>
-          Can prevent selecting of all child nodes on multiselect
-{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true,
-rowHeight: true, views: true}
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          initializeToolbar
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Set to false if you will initialize the
-toolbar yourself
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          paging
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Enable paging mode
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          pagesize
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          Number of rows per page
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          pagesizes
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          Array of page sizes to show in the page size dropdown.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          indeterminate
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Disable the ability to go to a specific page when paging.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          source
-        </td>
-        <td>
-          Function
-        </td>
-        <td>
-          Callback function for paging
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          hidePagerOnOnePage
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, hides the pager if there's only
-one page worth of results.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          filterable
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Enable Column Filtering, This will require column
-filterTypes as well.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          disableClientFilter
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Disable Filter Logic client side and let your
-server do it
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          disableClientSort
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Disable Sort Logic client side and let your
-server do it
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          resultsText
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Can provide a custom function to adjust results text
-on the toolbar
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showFilterTotal
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Paging results display filter count, change to
-false to not show filtered count
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          rowReorder
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If set you can reorder rows. Requires rowReorder
-formatter
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showDirty
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the dirty indicator will be shown on the rows
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showSelectAllCheckBox
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Allow to hide the checkbox header
-(true to show, false to hide)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          allowOneExpandedRow
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Controls if you cna expand more than one
-expandable row.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          enableTooltips
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Process tooltip logic at a cost of performance
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          disableRowDeactivation
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          if a row is activated the user should not
-be able to deactivate it by clicking on the activated row
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          sizeColumnsEqually
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true make all the columns equal width
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          expandableRow
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true we append an expandable row area without
-the rowTemplate feature being needed.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          redrawOnResize
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If set to false we skip redraw logic on the resize
-of the page.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          exportConvertNegative
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If set to true export data with trailing
-negative signs moved in front.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          columnGroups
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An array of columns to use for grouped column headers.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          treeGrid
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          : If true a tree grid is expected so addition
-calculations will be used to calculate of the row children
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          onPostRenderCell
-        </td>
-        <td>
-          Function
-        </td>
-        <td>
-          A call back function that will fire and send
-you the cell container and related information for any cells cells with a component attribute in
-the column definition.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          onDestroyCell
-        </td>
-        <td>
-          Function
-        </td>
-        <td>
-          A call back that goes along with onPostRenderCel
-and will fire when this cell is destroyed and you need noification of that.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          onEditCell
-        </td>
-        <td>
-          Function
-        </td>
-        <td>
-          A callback that fires when a cell is edited, the
-editor object is passed in to the function
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          onExpandRow
-        </td>
-        <td>
-          Function
-        </td>
-        <td>
-          A callback function that fires when expanding rows.
-To be used when expandableRow is true. The function gets eventData about the row and grid and a
-response function callback. Call the response function with markup to append and delay opening
-the row.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          emptyMessage
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          An empty message will be displayed when there is no
-rows in the grid. This accepts an object of the form emptyMessage: {title: 'No Data Available',
-info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-button: {text: 'xxx', click: 
-<function>
-}} set this to null for no message or will default to
-'No Data Found with an icon.'
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -1072,7 +1278,7 @@ number
         </td>
       </tr>
       <tr>
-        <td>calculateColumnWidth</td>
+        <td>columnWidth</td>
         <td>
           
                 
@@ -1080,6 +1286,42 @@ number
  </span>
                 
                   <span>index () = The column index
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Return the width for a column (upfront with no rendering)
+Simulates <a href="https://www.w3.org/TR/CSS21/tables.html#width-layout">https://www.w3.org/TR/CSS21/tables.html#width-layout</a></p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+      <tr>
+        <td>calculateColumnWidths</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Calculate the width for all the columns
+Simulates <a href="https://www.w3.org/TR/CSS21/tables.html#width-layout">https://www.w3.org/TR/CSS21/tables.html#width-layout</a></p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>calculateColumnWidth</td>
+        <td>
+          
+                
+                  <span>col (object) = The column object to use
+ </span>
+                
+                  <span>index (number) = The column index
  </span>
                 
           
@@ -1455,13 +1697,13 @@ void
         <td>
           
                 
-                  <span>idx () = The row index
+                  <span>idx (number) = The row index
  </span>
                 
-                  <span>nosync () = Do not sync the header
+                  <span>nosync (boolean) = Do not sync the header
  </span>
                 
-                  <span>noTrigger () = Do not trgger any events
+                  <span>noTrigger (boolean) = Do not trgger any events
  </span>
                 
           
@@ -1478,7 +1720,7 @@ void
         <td>
           
                 
-                  <span>node () = The node to set the status on
+                  <span>node (HTMLElement) = The node to set the status on
  </span>
                 
           
@@ -1876,9 +2118,7 @@ object
   </table>
 
 
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -1890,7 +2130,7 @@ object
       <tbody>
       
         <tr>
-  <td>close
+  <td>rendered
   </td>
   <td>
   
@@ -1915,7 +2155,1072 @@ object
     
   
   </td>
-  <td>Fires when the grid is complete done rendering
+  <td>Fires after the grid is rendered.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>addrow
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is added via the api.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>rowremove
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Object with the arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.row</code> number
+                
+                <p>The row index</p>
+</li>
+            
+              <li><code>args.cell</code> number
+                
+                <p>The cell index</p>
+</li>
+            
+              <li><code>args.target</code> HTMLElement
+                
+                <p>The row node that is being dragged.</p>
+</li>
+            
+              <li><code>args.item</code> HTMLElement
+                
+                <p>The dragged rows data.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is removed via the api
+</td>
+</tr>
+
+      
+        <tr>
+  <td>rowremove
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>status (object)
+        
+        = Object with row reorder info
+
+        </span>
+        
+          <ul>
+            
+              <li><code>status.endIndex</code> number
+                
+                <p>The ending row index</p>
+</li>
+            
+              <li><code>status.startIndex</code> number
+                
+                <p>The starting row index</p>
+</li>
+            
+              <li><code>status.over</code> HTMLElement
+                
+                <p>The row object that was dragged over.</p>
+</li>
+            
+              <li><code>status.start</code> HTMLElement
+                
+                <p>The starting row object.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is moved via the rowReorder option.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>rowremove
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>body (HTMLElement)
+        
+        = Object table body area
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>header (HTMLElement)
+        
+        = Object table header area
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>pager (HTMLElement)
+        
+        = Object pager body area
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the entire grid is rendered.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>closefilterrow
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the filter row is closed by the user.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>openfilterrow
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the filter row is opened by the user.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>filtered
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Object with the arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.op</code> number
+                
+                <p>The filter operation, this can be 'apply', 'clear'</p>
+</li>
+            
+              <li><code>args.conditions</code> object
+                
+                <p>An object with all the condition data.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a filter action ocurs
+</td>
+</tr>
+
+      
+        <tr>
+  <td>columnchange
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (HTMLElement)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.type</code> string
+                
+                <p>Info on the type of column change action, can be 'updatecolumns', 'hidecolumn', 'showcolumn', 'resizecolumn'</p>
+</li>
+            
+              <li><code>args.columns</code> object
+                
+                <p>The columns object</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the entire grid is rendered.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>settingschanged
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.rowHeight</code> number
+                
+                <p>The current row height</p>
+</li>
+            
+              <li><code>args.columns</code> object
+                
+                <p>The columns object</p>
+</li>
+            
+              <li><code>args.sortOrder</code> string
+                
+                <p>The current sort column.</p>
+</li>
+            
+              <li><code>args.pagesize</code> number
+                
+                <p>The current page size</p>
+</li>
+            
+              <li><code>args.showPageSizeSelector</code> boolean
+                
+                <p>If the page size selector is shown.</p>
+</li>
+            
+              <li><code>args.activePage</code> number
+                
+                <p>The currently active page.</p>
+</li>
+            
+              <li><code>args.filter</code> string
+                
+                <p>Info on the type of column change action, can be 'updatecolumns'</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after settings are changed in some way
+</td>
+</tr>
+
+      
+        <tr>
+  <td>click
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.row</code> number
+                
+                <p>The current row height</p>
+</li>
+            
+              <li><code>args.cell</code> number
+                
+                <p>The columns object</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The current sort column.</p>
+</li>
+            
+              <li><code>args.originalEvent</code> object
+                
+                <p>The original event object.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is clicked.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>dblclick
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.row</code> number
+                
+                <p>The current row height</p>
+</li>
+            
+              <li><code>args.cell</code> number
+                
+                <p>The columns object</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The current sort column.</p>
+</li>
+            
+              <li><code>args.originalEvent</code> object
+                
+                <p>The original event object.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is double clicked.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>contextmenu
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.row</code> number
+                
+                <p>The current row height</p>
+</li>
+            
+              <li><code>args.cell</code> number
+                
+                <p>The columns object</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The current sort column.</p>
+</li>
+            
+              <li><code>args.originalEvent</code> object
+                
+                <p>The original event object.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row has a right click action.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>contextmenu
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.selectedRows</code> array
+                
+                <p>An array of selected rows.</p>
+</li>
+            
+              <li><code>args.trigger</code> string
+                
+                <p>The action can be 'selectall', 'deselectall', 'select', 'deselect'</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The current sort column.</p>
+</li>
+            
+              <li><code>args.originalEvent</code> object
+                
+                <p>The original event object.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is selected.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>rowdeactivated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.row</code> array
+                
+                <p>An array of selected rows.</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The current sort column.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is deactivated in mixed selection mode.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>rowactivated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.row</code> array
+                
+                <p>An array of selected rows.</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The current sort column.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is activated in mixed selection mode.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>entereditmode
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.row</code> number
+                
+                <p>An array of selected rows.</p>
+</li>
+            
+              <li><code>args.cell</code> number
+                
+                <p>An array of selected rows.</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The current sort column.</p>
+</li>
+            
+              <li><code>args.target</code> HTMLElement
+                
+                <p>The cell html element that was entered.</p>
+</li>
+            
+              <li><code>args.value</code> any
+                
+                <p>The cell value.</p>
+</li>
+            
+              <li><code>args.column</code> object
+                
+                <p>The column object</p>
+</li>
+            
+              <li><code>args.editor</code> object
+                
+                <p>The editor object.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a cell goes into edit mode.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>exiteditmode
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.row</code> number
+                
+                <p>An array of selected rows.</p>
+</li>
+            
+              <li><code>args.cell</code> number
+                
+                <p>An array of selected rows.</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The current sort column.</p>
+</li>
+            
+              <li><code>args.target</code> HTMLElement
+                
+                <p>The cell html element that was entered.</p>
+</li>
+            
+              <li><code>args.value</code> any
+                
+                <p>The cell value.</p>
+</li>
+            
+              <li><code>args.oldValue</code> any
+                
+                <p>The previous cell value.</p>
+</li>
+            
+              <li><code>args.column</code> object
+                
+                <p>The column object</p>
+</li>
+            
+              <li><code>args.editor</code> object
+                
+                <p>The editor object.</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a cell goes out of edit mode.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>cellchange
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.row</code> number
+                
+                <p>An array of selected rows.</p>
+</li>
+            
+              <li><code>args.cell</code> number
+                
+                <p>An array of selected rows.</p>
+</li>
+            
+              <li><code>args.target</code> HTMLElement
+                
+                <p>The cell html element that was entered.</p>
+</li>
+            
+              <li><code>args.value</code> any
+                
+                <p>The cell value.</p>
+</li>
+            
+              <li><code>args.oldValue</code> any
+                
+                <p>The previous cell value.</p>
+</li>
+            
+              <li><code>args.column</code> object
+                
+                <p>The column object</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a cell value is changed via the editor.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>activecellchange
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.node</code> HTMLElement
+                
+                <p>The cell element that was entered.</p>
+</li>
+            
+              <li><code>args.cell</code> number
+                
+                <p>The selected cell</p>
+</li>
+            
+              <li><code>args.row</code> number
+                
+                <p>The selected row</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a cell is focued.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>collapserow
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.self</code> object
+                
+                <p>The grid api.</p>
+</li>
+            
+              <li><code>args.row</code> number
+                
+                <p>The selected row index</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The selected row data.</p>
+</li>
+            
+              <li><code>args.children</code> array
+                
+                <p>The selected rows children (tree grid)</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a row is collapsed to show its detail.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>expandrow
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = Additional arguments
+
+        </span>
+        
+          <ul>
+            
+              <li><code>args.self</code> object
+                
+                <p>The grid api.</p>
+</li>
+            
+              <li><code>args.row</code> number
+                
+                <p>The selected row index</p>
+</li>
+            
+              <li><code>args.item</code> object
+                
+                <p>The selected row data.</p>
+</li>
+            
+              <li><code>args.children</code> array
+                
+                <p>The selected rows children (tree grid)</p>
+</li>
+            
+          </ul>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a row is expanded to show its detail.
 </td>
 </tr>
 

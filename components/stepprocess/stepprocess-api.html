@@ -1,13 +1,217 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.linearProgression
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      The Main Application Name to display
+in the header. (Defaults to false)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.folderIconOpen
+    </td>
+    <td>
+      <span>&#39;caret-up&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      A specific folder open icon. (Defaults to 'caret-up')
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.folderIconClosed
+    </td>
+    <td>
+      <span>&#39;caret-down&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      A specific folder close icon. (Defaults to 'caret-down')
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.stepList
+    </td>
+    <td>
+      <span>&#39;#step-list&#39;</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Determines whether or not to display device
+information (Browser, Platform, Locale, Cookies Enabled).
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.stepLi
+    </td>
+    <td>
+      <span>&#39;.js-step&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      jQuery selector for the step elements.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.stepLink
+    </td>
+    <td>
+      <span>&#39;.js-step-link&#39;</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      jQuery selector for the step link elements.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.stepFolder
+    </td>
+    <td>
+      <span>&#39;.js-step-folder&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      jQuery selector for the step folder elements.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.btnPrev
+    </td>
+    <td>
+      <span>&#39;.js-step-link-prev&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      jQuery selector for the previous step button.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.btnNext
+    </td>
+    <td>
+      <span>&#39;.js-step-link-prev&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      jQuery selector for the next step button.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.beforeSelectStep
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      A callback (function or promise)
+that gives args: stepLink (the step link element) and isStepping
+(whether we are prev/next'ing or not).
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -22,7 +226,7 @@
         <td>
           
                 
-                  <span>settings (Object) = The settings to apply.
+                  <span>settings (object) = The settings to apply.
  </span>
                 
           
@@ -33,7 +237,7 @@
         </td>
         <td>
           The api
-Object
+object
         </td>
       </tr>
       <tr>
@@ -54,9 +258,7 @@ void
   </table>
 
 
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -74,7 +276,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -83,7 +285,7 @@ void
       </div>
     
       <div>
-        <span>stepLink (Object)
+        <span>stepLink (object)
         
         = element
 

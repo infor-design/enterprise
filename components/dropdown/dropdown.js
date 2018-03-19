@@ -13,28 +13,33 @@ import '../tooltip/tooltip.jquery';
 // Name of this component.
 const COMPONENT_NAME = 'dropdown';
 
+// Dropdown Settings and Options
+const moveSelectedOpts = ['none', 'all', 'group'];
+
 /**
-* @namespace
-* @property {boolean} closeOnSelect  When an option is selected, the list will close if set to
-* "true".  List stays open if "false".
-* @property {string} cssClass  Append an optional css class to dropdown-list
-* @property {string} filterMode  Search mode to use between 'startsWith' and 'contains', false
-*  will not allow client side filter
-* @property {boolean} noSearch  If true, disables the ability of the user to enter text in the
-*  Search Input field in the open combo box
-* @property {boolean} showEmptyGroupHeaders  If true, displays optgroup headers in the list even
-*  if no selectable options are present underneath.
-* @property {boolean} source  A function that can do an ajax call.
-* @property {boolean} sourceArguments  If a source method is defined, this flexible object can be
-*  passed into the source method, and augmented with parameters specific to the implementation.
-* @property {boolean} reloadSourceOnOpen  If set to true, will always perform an ajax call whenever
-*  the list is opened.  If false, the first AJAX call's results are cached.
-* @property {boolean} empty  Initialize Empty Value
-* @property {boolean} delay  Typing buffer delay in ms
-* @property {number} maxWidth If set the width of the dropdown is limited to this pixel width. Fx
-*  300 for the 300 px size fields. Default is size of the largest data.
-* @property {object} placementOpts  Gets passed to this control's Place behavior
+* The Dropdown allows users to select from a list. Like an Html Select.
+* @class Dropdown
+* @param {object} element The component element.
+* @param {object} [settings] The component settings.
+* @param {boolean} [settings.closeOnSelect = true]  When an option is selected, the list will close if set to "true".  List stays open if "false".
+* @param {string} [settings.cssClass = null]  Append an optional css class to dropdown-list
+* @param {string} [settings.filterMode = 'contains']  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
+* @param {boolean} [settings.noSearch = false]  If true, disables the ability of the user to enter text
+* in the Search Input field in the open combo box
+* @param {boolean} [settings.showEmptyGroupHeaders = false]  If true, displays optgroup headers in the list
+* even if no selectable options are present underneath.
+* @param {boolean} [settings.source]  A function that can do an ajax call.
+* @param {boolean} [settings.sourceArguments = {}]  If a source method is defined, this flexible object can be
+* passed into the source method, and augmented with parameters specific to the implementation.
+* @param {boolean} [settings.reloadSourceOnOpen = false]  If set to true, will always perform an ajax call
+* whenever the list is opened.  If false, the first AJAX call's results are cached.
+* @param {boolean} [settings.empty = false]  Initialize Empty Value
+* @param {boolean} [settings.delay = 300]  Typing buffer delay in ms
+* @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width.
+* Fx 300 for the 300 px size fields. Default is size of the largest data.
+* @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
 */
+
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
   cssClass: null,
@@ -55,16 +60,6 @@ const DROPDOWN_DEFAULTS = {
   placementOpts: null
 };
 
-// Dropdown Settings and Options
-const moveSelectedOpts = ['none', 'all', 'group'];
-
-/**
-* The Dropdown allows users to select from a list. Like an Html Select.
- * @class Dropdown
- * @param {object} element The component element.
- * @param {object} [settings] The component settings.
- *
- */
 function Dropdown(element, settings) {
   this.settings = utils.mergeSettings(element, settings, DROPDOWN_DEFAULTS);
   this.element = $(element);
@@ -1432,6 +1427,7 @@ Dropdown.prototype = {
     *  Fires as the dropdown list is opened.
     *
     * @event listopened
+    * @memberof Dropdown
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */
@@ -1769,6 +1765,7 @@ Dropdown.prototype = {
     * Fires as the dropdown list is closed
     *
     * @event listclosed
+    * @memberof Dropdown
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */
@@ -2061,6 +2058,7 @@ Dropdown.prototype = {
     /**
     * Fires after the value in the input is changed by any means.
     * @event change
+    * @memberof Dropdown
     * @property {object} event The jquery event object
     */
     if (!noTrigger) {
@@ -2071,6 +2069,7 @@ Dropdown.prototype = {
     /**
     * Fires after the value in the input is changed by user interaction.
     * @event input
+    * @memberof Dropdown
     * @property {object} event The jquery event object
     */
 
