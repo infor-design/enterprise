@@ -1,17 +1,17 @@
-import { SohoMaskedInput, COMPONENT_NAME } from './masked-input';
+import { MaskInput, COMPONENT_NAME } from './mask-input';
 
 /**
  * Wrap Mask as a jQuery component, and attach the factory function to $.fn
  * @param {object} [settings] incoming settings
  * @returns {jQuery[]} elements to be acted on.
  */
-$.fn.maskedinput = function (settings) {
+$.fn.maskinput = function (settings) {
   return this.each(function () {
     let instance = $.data(this, COMPONENT_NAME);
     if (instance) {
       instance.updated(settings);
     } else {
-      instance = $.data(this, COMPONENT_NAME, new SohoMaskedInput(this, settings));
+      instance = $.data(this, COMPONENT_NAME, new MaskInput(this, settings));
       instance.destroy = function () {
         this.teardown();
         $.removeData(this.element, COMPONENT_NAME);
@@ -25,4 +25,5 @@ $.fn.maskedinput = function (settings) {
  * @param {object} [settings] incoming settings
  * @returns {jQuery[]} elements to be acted on.
  */
-$.fn.mask = $.fn.maskedinput;
+$.fn.maskedinput = $.fn.maskinput;
+$.fn.mask = $.fn.maskinput;

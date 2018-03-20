@@ -8,7 +8,7 @@
 <li><a href="../components/searchfield/example-different-template.html">Different Template</a></li>
 <li><a href="../components/searchfield/example-go-button.html">Searchfield + Go Button</a></li>
 <li><a href="../components/searchfield/example-clearable.html"><code>clearable</code> Setting Demonstration</a></li>
-<li><a href="../components/searchfield/example-no-all-results-link.html">No &quot;All Results For <code>x</code>&quot; Link</a></li>
+<li><a href="../components/searchfield/example-no-all-results-link.html">No “All Results For <code>x</code>” Link</a></li>
 <li><a href="../components/searchfield/example-categories-short.html">Categories (Compact Size)</a></li>
 <li><a href="../components/searchfield/example-categories-full.html">Categories (Full Size)</a></li>
 <li><a href="../components/header/example-searchfield-expanded">Header Search Field (Compact)</a></li>
@@ -534,12 +534,12 @@ and destroy a linked instance of the Toolbar Searchfield component.
   
 
 <h2 id="code-example">Code Example</h2>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;searchfield&quot;</span><span class="kw">&gt;</span>Search<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> name=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> class=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> data-options=</span> <span class="st">&quot;{&#39;clearable&#39;: &#39;true&#39;}&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Type a search term&quot;</span><span class="kw">/&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;searchfield&quot;</span><span class="kw">&gt;</span>Search<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> name=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> class=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> data-options=</span> <span class="st">&quot;{&#39;clearable&#39;: &#39;true&#39;}&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Type a search term&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>Defining the <code>source</code> setting on Searchfield will cause it to invoke an <a href="../components/autocomplete">Autocomplete</a>. The source is not directly handled by the Searchfield component, and is passed directly into this new Autocomplete instance.</li>

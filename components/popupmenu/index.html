@@ -675,19 +675,19 @@ void
 <p>The structure of the menu is a ul element with li elements containing links for each of the rows in the menu. An other ul element can be added to create a submenu. But try to only one level of submenus for accessibility and usability reasons.</p>
 <p>The class popupmenu should be added to the ul elements at the top and submenu level. You can create rows as space separators for grouping with the tag with the class <code>separator</code>. You can create rows as groups with titles as well with the class group.</p>
 <p>Here is an example of a menu button using a popupmenu. This is also described on the menu button page as the components are linked.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-menu&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;span&gt;</span>Normal Menu<span class="kw">&lt;/span&gt;</span>
-  <span class="kw">&lt;svg</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon icon-dropdown&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-dropdown&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
-  <span class="kw">&lt;/svg&gt;</span>
-<span class="kw">&lt;/button&gt;</span>
-<span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
-  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
-  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #3<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
-<span class="kw">&lt;/ul&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-menu&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;span&gt;</span>Normal Menu<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;svg</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon icon-dropdown&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-dropdown&quot;</span><span class="kw">&gt;&lt;/use&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="kw">&lt;/svg&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">&lt;/button&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Menu Option #3<span class="kw">&lt;/a&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">&lt;/ul&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Make sure to always focus the triggering element when closing</li>
@@ -706,7 +706,7 @@ void
 <ul>
 <li>Posts the Popup Menu Widget When it is used as a <a href="http://en.wikipedia.org/wiki/Context_menu">Contextual Menu</a></li>
 <li>Place input focus on the first available menuitem in the Popup Menu</li>
-<li><strong>Note:</strong> The Browser's Contextual Menu pops up if the element with input focus does not have a Popup Menu attached</li>
+<li><strong>Note:</strong> The Browser’s Contextual Menu pops up if the element with input focus does not have a Popup Menu attached</li>
 </ul></li>
 <li><strong>ESC</strong>
 <ul>

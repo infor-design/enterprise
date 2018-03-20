@@ -1,0 +1,24 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Mask Test: Legacy Patterns with Custom Defintions</h2>
+    <p>Mirrors the example given in the <a class="hyperlink" href="index.html#creating-custom-pattern-characters">Mask Documentation</a></p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="three columns">
+    <div class="field">
+      <label for="equals-conversion">Converts `=` into `[abcde]`</label>
+      <input id="equals-conversion" data-init="false" placeholder='====='/>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#equals-conversion').mask({
+    pattern: '=====',
+    definitions: {
+      '=': '[abcde]'
+    }
+  });
+</script>

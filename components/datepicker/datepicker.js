@@ -4,7 +4,7 @@ import { Locale } from '../locale/locale';
 import { Environment as env } from '../utils/environment';
 
 // jQuery Components
-import '../mask/masked-input.jquery';
+import '../mask/mask-input.jquery';
 import '../popover/popover.jquery';
 import '../validation/validation.jquery';
 

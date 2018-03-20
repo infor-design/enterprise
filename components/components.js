@@ -29,7 +29,7 @@ export { About } from './about/about';
 export { Line } from './line/line';
 export { ListBuilder } from './listbuilder/listbuilder';
 export { ListView } from './listview/listview';
-export { SohoMaskedInput as MaskedInput } from './mask/masked-input';
+export { MaskInput } from './mask/mask-input';
 export { Message } from './message/message';
 export { MultiSelect } from './multiselect/multiselect';
 export { Pager } from './pager/pager';

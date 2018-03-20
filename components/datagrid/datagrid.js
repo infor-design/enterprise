@@ -16,7 +16,7 @@ import { Editors } from '../datagrid/datagrid.editors';
 import '../utils/animations';
 import '../emptymessage/emptymessage.jquery';
 import '../pager/pager.jquery';
-import '../mask/masked-input.jquery';
+import '../mask/mask-input.jquery';
 import '../drag/drag.jquery';
 
 // The name of this component.

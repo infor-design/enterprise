@@ -455,17 +455,17 @@ a filtered autocomplete back to normal.
   </section>
 
 <h2 id="code-example">Code Example</h2>
-<p>This example shows how to invoke the autocomplete and its starting markup. Remember to add autocomplete=&quot;off&quot; as some browsers have their own autocomplete functionality that interferes.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;autocomplete-default&quot;</span><span class="kw">&gt;</span>States<span class="kw">&lt;/label&gt;</span>
-      <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> autocomplete=</span><span class="st">&quot;off&quot;</span><span class="ot"> class=</span><span class="st">&#39;autocomplete&#39;</span><span class="ot"> id=</span><span class="st">&quot;autocomplete-default&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;/div&gt;</span>
-
-    <span class="kw">&lt;script&gt;</span>
-      <span class="fu">$</span>(<span class="st">&#39;#autocomplete-default&#39;</span>).<span class="fu">autocomplete</span>();
-    &lt;<span class="ot">/script&gt;</span>
-</code></pre>
+<p>This example shows how to invoke the autocomplete and its starting markup. Remember to add autocomplete=“off” as some browsers have their own autocomplete functionality that interferes.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">      <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;autocomplete-default&quot;</span><span class="kw">&gt;</span>States<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">      <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> autocomplete=</span><span class="st">&quot;off&quot;</span><span class="ot"> class=</span><span class="st">&#39;autocomplete&#39;</span><span class="ot"> id=</span><span class="st">&quot;autocomplete-default&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="kw">&lt;script&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">      <span class="at">$</span>(<span class="st">&#39;#autocomplete-default&#39;</span>).<span class="at">autocomplete</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="kw">&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"></a></code></pre></div>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
 <li><strong>Arrow Down</strong> When closed will display the list of choices, if open will move down to the next item in the last. At the bottom it should wrap around to the top again.</li>
