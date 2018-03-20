@@ -12,7 +12,7 @@
           section: member,
           renderSection: renderSection,
           renderParamProperty: renderParamProperty,
-     	  nested: true
+          nested: true
         }) %>
       </div>
     </div>

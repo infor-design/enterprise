@@ -38,10 +38,11 @@ const documentation = require('documentation');
 const frontMatter = require('front-matter');
 const fs = require('fs');
 const glob = require('glob');
+const mapStream = require('map-stream');
 const marked = require('marked');
 const path = require('path');
+const vinylToString = require('vinyl-contents-tostring');
 const yaml = require('js-yaml');
-const streamArray = require('stream-array');
 
 // Set Marked options
 marked.setOptions({
@@ -61,6 +62,7 @@ const localWebsitePath = 'docs/local-website';
 const rootPath = process.cwd();
 const paths = {
   components:  `${rootPath}/components`,
+  docjs:       `${rootPath}/docs/documentationjs`,
   src:         `${rootPath}/${idsWebsitePath}`,
   static:      `${rootPath}/${localWebsitePath}`,
   dist:        `${rootPath}/${idsWebsitePath}/dist`,
@@ -105,6 +107,10 @@ let numArchivesSent = 0;
 // -------------------------------------
 logTaskStart('deploy');
 
+if (argv.site && Object.keys(serverUris).includes(argv.site)) {
+  deployTo = argv.site;
+}
+
 const setupPromises = [
   cleanAll(),
   compileSupportingDocs(),
@@ -118,9 +124,13 @@ Promise.all(setupPromises)
   .then(values => {
     logTaskStart('writing files');
 
-    let writePromises = [writeSitemapToDist()];
+    let writePromises = [];
+    if (deployTo !== 'static') {
+      writePromises.push(writeSitemapToDist());
+    }
+
     for (compName in allDocsObj) {
-      if (argv.site === 'static') {
+      if (deployTo === 'static') {
         writePromises.push(writeHtmlFile(compName));
       } else {
         writePromises.push(writeJsonFile(compName));
@@ -231,40 +241,23 @@ function compileSupportingDocs() {
  * @return {Promise}
  */
 function cleanAll() {
-  const dirsArr = [paths.static, paths.dist, paths.distDocs, `${paths.static}/tmp`];
-  return del([paths.dist, paths.static])
+  const toDel = [];
+
+  if (deployTo === 'static') {
+    toDel.push(`${paths.static}/*.html`)
+  } else {
+    toDel.push(paths.dist, paths.distDocs);
+  }
+
+  return del(toDel)
     .catch(err => {
       console.error(chalk.red('Error!'), err);
     })
     .then(res => {
       logTaskAction('Clean', paths.dist);
-      createDirs(dirsArr);
+      createDirs([paths.dist, paths.distDocs, `${paths.static}`]);
     }
   );
-}
-
-/**
- * Convert/write the sitemap.yml to sitemap.json into dist
- * @return {Promise}
- */
-function writeSitemapToDist() {
-  return new Promise((resolve, reject) => {
-    let doc = '';
-    try {
-      doc = yaml.safeLoad(fs.readFileSync(`${paths.src}/sitemap.yml`, 'utf8'));
-    } catch (e) {
-      reject(e);
-    }
-
-    fs.writeFile(`${paths.dist}/sitemap.json`, JSON.stringify(doc), 'utf8', err => {
-      if (err) {
-        reject(err);
-      } else {
-        logTaskAction('Created', 'sitemap.json');
-        resolve();
-      }
-    });
-  });
 }
 
 /**
@@ -332,20 +325,17 @@ function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
   const vfs = require('vinyl-fs');
 
-  const vinylToString = require('vinyl-contents-tostring');
-  const mapStream = require('map-stream');
-
-
   return documentation.build([compFilePath], { extension: 'js', shallow: true })
     .then(comments => {
-      documentation.formats.html(comments, { theme: `./docs/default-theme` })
+      documentation.formats.html(comments, { theme: `${paths.docjs}/theme-ids-website` })
         .then(output => {
-          return output
-            .map((file, cb) => {
-              vinylToString(file).then(contents => {
-
-              });
-            })
+          return output.map((file) => {
+            return vinylToString(file, 'utf8').then(contents => {
+              componentStats.numDocumented++;
+              logTaskAction('Documented', componentName + '.js')
+              allDocsObj[componentName].api = contents;
+            });
+          })
         }, err => {
           console.error(chalk.red('Error!'), err);
         })
@@ -462,6 +452,26 @@ function timeElapsed(t) {
 }
 
 /**
+ * Write a html file for specified component
+ * @param {string} componentName - the name of the component
+ */
+function writeHtmlFile(componentName) {
+  return new Promise((resolve, reject) => {
+    const thisName = componentName;
+    const content = allDocsObj[thisName].api + '<br/><hr><br/>' + allDocsObj[thisName].body;
+    fs.writeFile(`${paths.static}/${thisName}.html`, content, 'utf8', err => {
+      if (err) {
+        reject(err);
+      } else {
+        componentStats.numWritten++;
+        logTaskAction('Created', thisName + '.html');
+        resolve();
+      }
+    });
+  });
+}
+
+/**
  * Write a json file for specified component
  * @param {string} componentName - the name of the component
  */
@@ -474,6 +484,30 @@ function writeJsonFile(componentName) {
       } else {
         componentStats.numWritten++;
         logTaskAction('Created', thisName + '.json');
+        resolve();
+      }
+    });
+  });
+}
+
+/**
+ * Convert/write the sitemap.yml to sitemap.json into dist
+ * @return {Promise}
+ */
+function writeSitemapToDist() {
+  return new Promise((resolve, reject) => {
+    let doc = '';
+    try {
+      doc = yaml.safeLoad(fs.readFileSync(`${paths.src}/sitemap.yml`, 'utf8'));
+    } catch (e) {
+      reject(e);
+    }
+
+    fs.writeFile(`${paths.dist}/sitemap.json`, JSON.stringify(doc), 'utf8', err => {
+      if (err) {
+        reject(err);
+      } else {
+        logTaskAction('Created', 'sitemap.json');
         resolve();
       }
     });
