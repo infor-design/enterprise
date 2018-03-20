@@ -1449,9 +1449,14 @@ Toolbar.prototype = {
       }
     }
 
-    this.moreMenu.children('li').each(function () {
+    const moreMenuChildren = this.moreMenu.children('li');
+    moreMenuChildren.each(function () {
       self.teardownMoreActionsMenuItem($(this), true);
     });
+
+    // Remove AJAX-ified menu items.
+    moreMenuChildren.not(this.defaultMenuItems).remove();
+
     return this;
   },
 
