@@ -1997,8 +1997,6 @@ Datagrid.prototype = {
       return;
     }
 
-    // const container = this.tableBody;
-    // this.element.children().not('[data-arrange-exclude="true"]')
     this.tableBody.children().filter(function () {
       return $(this).find('.datagrid-reorder-icon').length < 1;
     }).attr('data-arrange-exclude', true);
