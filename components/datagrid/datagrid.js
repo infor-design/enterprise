@@ -1615,13 +1615,29 @@ Datagrid.prototype = {
       let dataset;
       let isFiltered;
       let i;
+      let ii;
       let len;
+      let len2;
 
       if (this.settings.treeGrid) {
         dataset = this.settings.treeDepth;
         for (i = 0, len = dataset.length; i < len; i++) {
           isFiltered = !checkRow(dataset[i].node);
           dataset[i].node.isFiltered = isFiltered;
+        }
+      } else if (this.settings.groupable) {
+        for (i = 0, len = this.settings.dataset.length; i < len; i++) {
+          let isGroupFiltered = true;
+          for (ii = 0, len2 = this.settings.dataset[i].values.length; ii < len2; ii++) {
+            isFiltered = !checkRow(this.settings.dataset[i].values[ii]);
+            this.settings.dataset[i].values[ii].isFiltered = isFiltered;
+
+            if (!isFiltered) {
+              isGroupFiltered = false;
+            }
+          }
+
+          this.settings.dataset[i].isFiltered = isGroupFiltered;
         }
       } else {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
@@ -2256,9 +2272,11 @@ Datagrid.prototype = {
 
         // Now Push Groups
         for (let k = 0; k < s.dataset[i].values.length; k++) {
-          tableHtml += self.rowHtml(s.dataset[i].values[k], this.recordCount, i);
-          this.recordCount++;
-          self.groupArray.push({ group: i, node: k });
+          if (!s.dataset[i].values[k].isFiltered) {
+            tableHtml += self.rowHtml(s.dataset[i].values[k], this.recordCount, i);
+            this.recordCount++;
+            self.groupArray.push({ group: i, node: k });
+          }
         }
 
         // Now Push summary rowHtml
