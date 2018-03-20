@@ -213,7 +213,8 @@ Toolbar.prototype = {
       this.moreMenu = popupMenuInstance.menu;
     }
 
-    this.defaultMenuItems = this.moreMenu.children('li:not(.separator)').length > 0;
+    this.defaultMenuItems = this.moreMenu.children('li:not(.separator)');
+    this.hasDefaultMenuItems = this.defaultMenuItems.length > 0;
 
     function menuItemFilter() {
       return $(this).parent('.buttonset, .inline').length;
@@ -233,19 +234,18 @@ Toolbar.prototype = {
 
     // Setup an Event Listener that will refresh the contents of the More Actions
     // Menu's items each time the menu is opened.
+    const menuButtonSettings = utils.extend({}, this.settings.moreMenuSettings, {
+      trigger: 'click',
+      menu: this.moreMenu
+    }, (this.hasDefaultMenuItems ? { predefined: this.defaultMenuItems } : {}));
     if (popupMenuInstance) {
       this.more
         .on('beforeopen.toolbar', () => {
           self.refreshMoreActionsMenu(self.moreMenu);
         })
-        .triggerHandler('updated', [this.settings.moreMenuSettings]);
+        .triggerHandler('updated', [menuButtonSettings]);
     } else {
-      const actionButtonOpts = utils.parseSettings(this.more[0]);
-
-      this.more.popupmenu($.extend({}, actionButtonOpts, this.settings.moreMenuSettings, {
-        trigger: 'click',
-        menu: this.moreMenu
-      })).on('beforeopen.toolbar', () => {
+      this.more.popupmenu(menuButtonSettings).on('beforeopen.toolbar', () => {
         self.refreshMoreActionsMenu(self.moreMenu);
       });
     }
@@ -1316,7 +1316,7 @@ Toolbar.prototype = {
     const hiddenOverflowItems = overflowItems.not('.hidden');
 
     let method = 'removeClass';
-    if (this.defaultMenuItems || hiddenOverflowItems.length > 0) {
+    if (this.hasDefaultMenuItems || hiddenOverflowItems.length > 0) {
       method = 'addClass';
     }
 

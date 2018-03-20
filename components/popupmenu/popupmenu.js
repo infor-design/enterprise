@@ -32,6 +32,7 @@ const COMPONENT_NAME = 'popupmenu';
    strategies: ['flip', 'shrink']
 })] Gets passed to this control's Place behavior.
  * @param {object} [settings.offset={x: 0, y: 0}] Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`.
+ * @param {jQuery[]} [settings.predefined=$()] containing references to menu items that should be passed to the "predefined" hash.
  */
 
 const POPUPMENU_DEFAULTS = {
@@ -52,7 +53,8 @@ const POPUPMENU_DEFAULTS = {
   offset: {
     x: 0,
     y: 0
-  }
+  },
+  predefined: $()
 };
 
 function PopupMenu(element, settings) {
@@ -116,6 +118,10 @@ PopupMenu.prototype = {
     if (!this.id) {
       this.id = (parseInt($('.popupmenu-wrapper').length, 10) + 1).toString();
     }
+
+    // Set a reference collection for containing "pre-defined" menu items that should never
+    // be replaced during an AJAX call.
+    this.predefinedItems = $().add(this.settings.predefined);
   },
 
   /**
@@ -1083,7 +1089,11 @@ PopupMenu.prototype = {
 
     const response = function (content) {
       const existingMenuItems = targetMenu.children();
-      existingMenuItems.off().remove();
+
+      existingMenuItems
+        .filter((i, item) => self.predefinedItems.index(item) === -1)
+        .off()
+        .remove();
 
       if (content === false) {
         return false;
@@ -1678,6 +1688,8 @@ PopupMenu.prototype = {
     if (this.ajaxContent) {
       this.ajaxContent.off().remove();
     }
+
+    this.predefinedItems = $();
 
     this.menu.parent().off('contextmenu.popupmenu');
     if (this.element.hasClass('btn-actions')) {
