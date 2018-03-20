@@ -42,6 +42,7 @@ Responsive Popup Menu Control aka Context Menu when doing a right click action.
         strategies:['flip','shrink']
         })`)
     -   `settings.offset` **[object][19]** Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`. (optional, default `{x:0,y:0}`)
+    -   `settings.predefined` **[Array][17]&lt;jQuery>** containing references to menu items that should be passed to the "predefined" hash. (optional, default `$()`)
 
 ### isRTL
 

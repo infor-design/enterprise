@@ -93,8 +93,8 @@
   }
 
   $('body').on('initialized', function() {
-    var more = $('#predefined-more'),
-      api = more.data('popupmenu');
+    var more = $('#predefined-more');
+    var api = more.data('popupmenu');
 
     if (api) {
       api.settings.beforeOpen = popupmenuBeforeOpen;
