@@ -3265,28 +3265,28 @@ object
 
 <h2 id="code-example">Code Example</h2>
 <p>The Datagrid is created via JS or via direct html markup (css table styling). You should pass an array of objects in to the grid on the dataset object. Also pass the columns array for the column information. There are a number of events described in the events and api section, as well as the column settings.</p>
-<p>A Read-Only Datagrid uses “Formatters” to render cell content. A number of these are listed in the api section, and it is possible to create your own.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;row&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;twelve columns&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;datagrid&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="co">//Define Columns for the Grid.</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="va">columns</span>.<span class="at">push</span>(<span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;productId&#39;</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Product Id&#39;</span><span class="op">,</span> <span class="dt">field</span><span class="op">:</span> <span class="st">&#39;productId&#39;</span><span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="st">&#39;50%&#39;</span><span class="op">,</span> <span class="dt">formatter</span><span class="op">:</span> <span class="va">Formatters</span>.<span class="at">Readonly</span><span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="va">columns</span>.<span class="at">push</span>(<span class="op">{</span> <span class="dt">id</span><span class="op">:</span> <span class="st">&#39;productName&#39;</span><span class="op">,</span> <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Product Name&#39;</span><span class="op">,</span> <span class="dt">sortable</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">field</span><span class="op">:</span> <span class="st">&#39;productName&#39;</span><span class="op">,</span> <span class="dt">width</span><span class="op">:</span> <span class="st">&#39;50%&#39;</span><span class="op">,</span> <span class="dt">formatter</span><span class="op">:</span> <span class="va">Formatters</span>.<span class="at">Hyperlink</span><span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">  <span class="co">//Init and get the api for the grid</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="at">$</span>(<span class="st">&#39;#datagrid&#39;</span>).<span class="at">datagrid</span>(<span class="op">{</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="dt">columns</span><span class="op">:</span> columns<span class="op">,</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">    <span class="dt">dataset</span><span class="op">:</span> data <span class="co">//Json Array</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">  <span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"></a></code></pre></div>
+<p>A Read-Only Datagrid uses &quot;Formatters&quot; to render cell content. A number of these are listed in the api section, and it is possible to create your own.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;row&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;twelve columns&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;datagrid&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+
+  <span class="co">//Define Columns for the Grid.</span>
+  <span class="ot">columns</span>.<span class="fu">push</span>({ <span class="dt">id</span>: <span class="st">&#39;productId&#39;</span>, <span class="dt">name</span>: <span class="st">&#39;Product Id&#39;</span>, <span class="dt">field</span>: <span class="st">&#39;productId&#39;</span>, <span class="dt">width</span>: <span class="st">&#39;50%&#39;</span>, <span class="dt">formatter</span>: <span class="ot">Formatters</span>.<span class="fu">Readonly</span>});
+  <span class="ot">columns</span>.<span class="fu">push</span>({ <span class="dt">id</span>: <span class="st">&#39;productName&#39;</span>, <span class="dt">name</span>: <span class="st">&#39;Product Name&#39;</span>, <span class="dt">sortable</span>: <span class="kw">false</span>, <span class="dt">field</span>: <span class="st">&#39;productName&#39;</span>, <span class="dt">width</span>: <span class="st">&#39;50%&#39;</span>, <span class="dt">formatter</span>: <span class="ot">Formatters</span>.<span class="fu">Hyperlink</span>});
+
+  <span class="co">//Init and get the api for the grid</span>
+  <span class="fu">$</span>(<span class="st">&#39;#datagrid&#39;</span>).<span class="fu">datagrid</span>({
+    <span class="dt">columns</span>: columns,
+    <span class="dt">dataset</span>: data <span class="co">//Json Array</span>
+  });
+</code></pre>
 <h2 id="column-settings-general">Column Settings (General)</h2>
 <ul>
 <li><strong>id</strong> The unique id of the column. Each column in the grid should have some unique id.</li>
@@ -3308,7 +3308,7 @@ object
 <ul>
 <li><strong>inlineEditor</strong> If true the elements (on supported formatters) will be shown inline in the field. For example you could show an input element on each cell. This should only be used with the isList type and sparingly.</li>
 <li><strong>dateFormat</strong> Used with <code>Date</code> formatters and editors. You can use it to specify the display format for date values. fx yyyy-MM-dd. See <a href="../components/locale">locale</a> for date formatting patterns.</li>
-<li><strong>timeFormat</strong> Used with <code>Time</code> and ‘Date’ + <code>Time</code> formatters and editors. You can use it to specify the display format for date values. fx HH;mm See <a href="../components/locale">locale</a> for time formatting patterns.</li>
+<li><strong>timeFormat</strong> Used with <code>Time</code> and 'Date' + <code>Time</code> formatters and editors. You can use it to specify the display format for date values. fx HH;mm See <a href="../components/locale">locale</a> for time formatting patterns.</li>
 <li><strong>numberFormat</strong> Used Decimal and Integer columns, this is the same number structure that locale uses. See <a href="../components/locale">locale</a> for number formatting patterns.</li>
 <li><strong>href</strong> Used on <code>Hyperlink</code> formatters. This can be a string to pass to the links href attribute. Or can be function which dynamically runs and can return the href using logic.</li>
 <li><strong>target</strong> Used on <code>Hyperlink</code> formatters. This can be a string to pass to the links target attribute. Or can be function which dynamically runs and can return the target with using logic.</li>
@@ -3328,16 +3328,16 @@ object
 <ul>
 <li><strong>Text</strong> Formats the column value as a direct text element using toString in the grid cell, Undefined or Null values will be shown as empty.</li>
 <li><strong>Input</strong> If inlineEditor is true, will show the text in an inline input field. This should only be used with the isList type and sparingly.</li>
-<li><strong>Ellipsis</strong> Shows the column value as a Text element but if the text is cut off will show ellipsis’s and a tooltip. This is a bit expensive so should be used sparingly.</li>
+<li><strong>Ellipsis</strong> Shows the column value as a Text element but if the text is cut off will show ellipsis's and a tooltip. This is a bit expensive so should be used sparingly.</li>
 <li><strong>Password</strong> Shows the text masked with stars. Fx ***. This is generally used on password fields.</li>
 <li><strong>Readonly</strong> Shows a Text Formatter with the readonly background color. This can be used to differentiate between editable and non editable cells. This should not be used along with an Editor.</li>
-<li><strong>Date</strong> Shows a date or string date value formatted to the column’s <code>dateFormat</code> settings or otherwise the current locale’s date settings.</li>
-<li><strong>Time</strong> Shows a dates time portion or a time string value formatted to the column’s <code>timeFormat</code> settings or otherwise the current locale’s time settings.</li>
+<li><strong>Date</strong> Shows a date or string date value formatted to the column's <code>dateFormat</code> settings or otherwise the current locale's date settings.</li>
+<li><strong>Time</strong> Shows a dates time portion or a time string value formatted to the column's <code>timeFormat</code> settings or otherwise the current locale's time settings.</li>
 <li><strong>Autocomplete</strong> Formats the column as direct text like the Text formatter. But added for symmetry with Autocomplete editor.</li>
 <li><strong>Lookup</strong> Formats the column for use with a Lookup editor. It calls the editors field option / function to assist in mapping key value pairs to the columns data element. When a lookup editor is added it shows the icon on hover.</li>
 <li><strong>Decimal</strong> Formats the numeric data in the current columns number format. Or you can use the <code>numberFormat</code> option for customization.See <a href="../components/locale">locale</a> for number formatting patterns.</li>
 <li><strong>Integer</strong> Formats the numeric data in the current columns integer format. Or you can use the <code>numberFormat</code> option for customization. See <a href="../components/locale">locale</a> for number formatting patterns.</li>
-<li><strong>Hyperlink</strong> Formats the current data into a clickable hyperlink. You can use the <code>href</code> value to pass the links href value in the column (this defaults to ‘#’). You can use the <code>text</code> column value to change the text of the link, in doing so the column value becomes the link contents. <code>hyperlinkTooltip</code> can be added to give tooltip text for the link. The <code>icon</code> option can be added to provide a icon next to the link.</li>
+<li><strong>Hyperlink</strong> Formats the current data into a clickable hyperlink. You can use the <code>href</code> value to pass the links href value in the column (this defaults to '#'). You can use the <code>text</code> column value to change the text of the link, in doing so the column value becomes the link contents. <code>hyperlinkTooltip</code> can be added to give tooltip text for the link. The <code>icon</code> option can be added to provide a icon next to the link.</li>
 <li><strong>Drilldown</strong> Formats the cell with a drill down icon button in it. This type of column is used to drill into this records details. Use the <code>click</code> column option to provide the javascript for that logic.</li>
 <li><strong>RowReorder</strong> Formats the cell with a reorder icon button in it. This should be used in conjunction with the row-reorder feature. See <a href="../components/datagrid/example-row-reorder.html">Example</a></li>
 <li><strong>Checkbox</strong> Formats the cell with a checkbox in it. It can made null or undefined to unchecked and handles either 1/0 as checked un/checked or true/false.</li>
@@ -3348,10 +3348,10 @@ object
 <li><strong>Expander</strong> Formats the cell with an expander chevron. This will act on the <code>click</code> option or toggle the collapsed row, when using the <a href="../components/datagrid/example-expandable-row.html">expandable row option</a></li>
 <li><strong>GroupRow</strong> Formats this cell / column as the group row. If a <code>groupRowFormatter</code> is provided this can be used to return customized html for the group row details. If not it will show the expander icon with the data of the group name. You can pass <code>expanded</code> true in the column to expend the row, this can also be a function that dynamically can determine if the row should be expanded. See the <a href="../components/datagrid/example-grouping.html">grouping examples</a></li>
 <li><strong>GroupFooterRow</strong> Formats this entire row as the last row in a group when using grouping. The option should be a function that returns the
-<tr>
+<tr> 
 markup for the last group row. See the <a href="../components/datagrid/example-grouping-totals.html">group totals example</a></li>
 <li><strong>SummaryRow</strong> Formats this entire column / row as the summary row. The option should be a function that returns the
-<tr>
+<tr> 
 markup for the summary (last) row. See the <a href="../components/datagrid/example-summary-row.html">summary row example</a></li>
 <li><strong>Tree</strong> Formats this entire column as the tree row when using the <a href="../components/datagrid/example-tree.html">tree grid example</a>. This interacts with the <code>treeDepth</code>, <code>children</code> and <code>depth</code> options to format into a tree structure.</li>
 <li><strong>Badge</strong> Formats this entire column as a badge element. You can pass in ranges option to format the badge colors for example <code>ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]</code> for example any value between 151 and 999 will add the info class which formats the color in info blue. Default color is grey.</li>
@@ -3361,15 +3361,15 @@ markup for the summary (last) row. See the <a href="../components/datagrid/examp
 <li><strong>Button</strong> Formats the cell with a button in it. You can use the <code>icon</code> option to select an icon from the svg set. You can also use the text option to customize the text of the button, if used the column contents will be ignored. Use the <code>click</code> column option to code the click function.</li>
 <li><strong>Dropdown</strong> Formats the cell to go along with a dropdown editor. It will lookup the value in the column <code>options</code> array and display the label for the given key. This can be used to resolve code to label displays. It supports the <code>inlineEditor</code> option as well for list grids.</li>
 <li><strong>Spinbox</strong> Formats the cell as text for use with a Spinbox editor. Also supports the <code>inlineEditor</code> option as well for list grids.</li>
-<li><strong>Favorite</strong> Formats the cell with a favorite star. The star’s value (checked or unchecked) is populated like the checkbox column with a boolean or truthy value in the data. The <code>isChecked</code> function or boolean can be used to more dynamically check set state.</li>
+<li><strong>Favorite</strong> Formats the cell with a favorite star. The star's value (checked or unchecked) is populated like the checkbox column with a boolean or truthy value in the data. The <code>isChecked</code> function or boolean can be used to more dynamically check set state.</li>
 <li><strong>TargetedAchievement</strong> Formats the cell with the a targetted achievement chart. The row value will be diveded by 100 to form a percent and the chart will show the percent value. See the <a href="../components/datagrid/test-targeted-achievement.html">targeted achievement example</a></li>
 </ul>
 <h2 id="creating-custom-formatters">Creating Custom Formatters</h2>
 <p>Its possible to create your own custom formatter. The idea behind the formatter is it takes the cell value and does processing on it to return the correct markup for the element. The simplest custom formatter would be this example.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">var</span> myCustom <span class="op">=</span> <span class="kw">function</span> (row<span class="op">,</span> cell<span class="op">,</span> value<span class="op">,</span> col) <span class="op">{</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="cf">return</span> <span class="st">&#39;&lt;span class=&quot;my-custom&quot;&gt; Custom Formatter &lt;b&gt;&#39;</span> <span class="op">+</span> value <span class="op">+</span> <span class="st">&#39;&lt;/b&gt;&lt;/span&gt;&#39;</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="op">};</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> myCustom = <span class="kw">function</span> (row, cell, value, col) {
+  <span class="kw">return</span> <span class="st">&#39;&lt;span class=&quot;my-custom&quot;&gt; Custom Formatter &lt;b&gt;&#39;</span> + value + <span class="st">&#39;&lt;/b&gt;&lt;/span&gt;&#39;</span>;
+};
+</code></pre>
 <p>The formatter is then linked to the column on the formatter setting. <code>columns.push({... formatter: myCustom});</code>. When the grid cell is rendered the formatter function is called and the following options are passed in.</p>
 <ul>
 <li><strong>row</strong> The current row number (zero based).</li>
@@ -3392,13 +3392,13 @@ markup for the summary (last) row. See the <a href="../components/datagrid/examp
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
 <li><strong>Tab  </strong>The initial tab enters the grid with focus on the first cell of the first row, often a header. A second tab moves out of the grid to the next tab stop on the page. Once focus is established in the grid, a TAB into or a Shift Tab into the grid will return to the cell which last had focus.</li>
-<li><strong>Left and Right Arrow</strong> Move focus to the adjacent column’s cell. There is no wrap at the end or beginning of columns.</li>
-<li><strong>Up and Down Arrow</strong> Move focus to the adjacent row’s cell. There is no wrap at the first or last row.</li>
+<li><strong>Left and Right Arrow</strong> Move focus to the adjacent column's cell. There is no wrap at the end or beginning of columns.</li>
+<li><strong>Up and Down Arrow</strong> Move focus to the adjacent row's cell. There is no wrap at the first or last row.</li>
 <li><strong>Home</strong> moves focus to the first cell of the current row</li>
 <li><strong>End</strong> moves focus to the last cell of the current row</li>
 <li><strong>Page Up</strong> moves focus to the first cell in the current column</li>
 <li><strong>Page Down</strong> moves focus to the last cell in the current column</li>
-<li><strong>Enter</strong> toggles edit mode on the cell if it is editable. There is also an “auto edit detection”. If the user starts typing then edit mode will happen automatically without enter.</li>
+<li><strong>Enter</strong> toggles edit mode on the cell if it is editable. There is also an &quot;auto edit detection&quot;. If the user starts typing then edit mode will happen automatically without enter.</li>
 <li><strong>F2</strong> toggles actionable Mode. Pressing the <strong>Tab</strong> key while in actionable mode moves focus to the next actionable cell. There is no wrap at the end or beginning of columns. While in actionable mode you can do things like type + enter. This will move you down a row when you hit enter. If the cell has a control that uses down arrow (like the dropdowns or lookups that are editable). Then the user needs to hit enter to enable the edit mode on that cell.</li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>

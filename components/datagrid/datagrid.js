@@ -1997,10 +1997,17 @@ Datagrid.prototype = {
       return;
     }
 
+    // const container = this.tableBody;
+    // this.element.children().not('[data-arrange-exclude="true"]')
+    this.tableBody.children().filter(function () {
+      return $(this).find('.datagrid-reorder-icon').length < 1;
+    }).attr('data-arrange-exclude', true);
+
     // Attach the Drag API
     this.tableBody.arrange({
       placeholder: `<tr class="datagrid-reorder-placeholder"><td colspan="${this.visibleColumns().length}"></td></tr>`,
-      handle: '.datagrid-reorder-icon'
+      handle: '.datagrid-reorder-icon',
+      isVisualItems: true
     })
       .off('beforearrange.datagrid').on('beforearrange.datagrid', (e, status) => {
         if (self.isSafari) {
