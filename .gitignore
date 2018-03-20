@@ -5,8 +5,7 @@ dist/css
 dist/js
 dist/svg
 dist/all.zip
-docs/local-website
-docs/ids-website/static/
+docs/local-website/*.html
 docs/ids-website/dist/
 docs/ids-website/dist.zip
 documentation/

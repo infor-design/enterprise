@@ -255,7 +255,7 @@ function cleanAll() {
     })
     .then(res => {
       logTaskAction('Clean', paths.dist);
-      createDirs([paths.dist, paths.distDocs, `${paths.static}`]);
+      createDirs([paths.dist, paths.distDocs, paths.static]);
     }
   );
 }
@@ -325,9 +325,11 @@ function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
   const vfs = require('vinyl-fs');
 
+  const themeName = (deployTo === 'static') ? 'theme-single-page' : 'theme-ids-website';
+
   return documentation.build([compFilePath], { extension: 'js', shallow: true })
     .then(comments => {
-      documentation.formats.html(comments, { theme: `${paths.docjs}/theme-ids-website` })
+      documentation.formats.html(comments, { theme: `${paths.docjs}/${themeName}` })
         .then(output => {
           return output.map((file) => {
             return vinylToString(file, 'utf8').then(contents => {
@@ -458,7 +460,8 @@ function timeElapsed(t) {
 function writeHtmlFile(componentName) {
   return new Promise((resolve, reject) => {
     const thisName = componentName;
-    const content = allDocsObj[thisName].api + '<br/><hr><br/>' + allDocsObj[thisName].body;
+    const content = allDocsObj[thisName].api.replace('<insert-md-docs></insert-md-docs>', allDocsObj[thisName].body);
+
     fs.writeFile(`${paths.static}/${thisName}.html`, content, 'utf8', err => {
       if (err) {
         reject(err);
