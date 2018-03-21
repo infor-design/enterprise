@@ -136,7 +136,7 @@ ToolbarFlex.prototype = {
       if (item.type === 'searchfield' && key === 'ArrowLeft') {
         return;
       }
-      this.navigate(-1);
+      this.navigate(-1, undefined, true);
       return;
     }
 
@@ -144,7 +144,7 @@ ToolbarFlex.prototype = {
       if (item.type === 'searchfield' && key === 'ArrowRight') {
         return;
       }
-      this.navigate(1);
+      this.navigate(1, undefined, true);
     }
   },
 
@@ -302,8 +302,9 @@ ToolbarFlex.prototype = {
    * @param {number} direction positive/negative value representing how many spaces to move
    * @param {number} [currentIndex] the index to start checking from
    *  the current focus either right/left respectively.
+   * @param {boolean} [doSetFocus=false] if set to true, will cause navigation to also set focus.
    */
-  navigate(direction, currentIndex) {
+  navigate(direction, currentIndex, doSetFocus) {
     if (this.hasFocusableItems === false) {
       log('No focusable items');
       return;
@@ -336,11 +337,15 @@ ToolbarFlex.prototype = {
 
     const targetItem = this.items[currentIndex];
     if (targetItem.focusable === false) {
-      this.navigate(direction > 0 ? 1 : -1, currentIndex);
+      this.navigate(direction > 0 ? 1 : -1, currentIndex, doSetFocus);
       return;
     }
 
+    // Retain a reference to the focused item and set focus, if applicable.
     this.focusedItem = targetItem;
+    if (doSetFocus) {
+      this.focusedItem.element.focus();
+    }
   },
 
   /**

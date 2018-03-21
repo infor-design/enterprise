@@ -110,7 +110,6 @@ ToolbarFlexItem.prototype = {
   set focused(boolean) {
     if (boolean) {
       this.element.tabIndex = 0;
-      this.element.focus();
       return;
     }
     this.element.tabIndex = -1;
@@ -313,6 +312,7 @@ ToolbarFlexItem.prototype = {
     delete this.visible;
     delete this.disabled;
     delete this.readonly;
+    delete this.invoked;
   }
 
 };
