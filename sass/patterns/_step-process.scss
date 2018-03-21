@@ -85,7 +85,7 @@
         cursor: pointer;
         display: block;
         margin-left: 0;
-        padding: 15px;
+        padding: 15px 60px 15px 15px;
         position: relative;
 
         .icon {
@@ -304,6 +304,43 @@
         height: $header-height;
         width: 50%;
         margin: 0;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .step-process-container {
+    .tree {
+      ul {
+        right: auto;
+
+        li {
+          margin-left: 10px;
+          margin-right: inherit;
+
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+
+        a {
+          margin: 0;
+        }
+      }
+
+
+      li {
+        > a {
+          padding: 15px 15px 15px 60px;
+        }
+
+        &.folder {
+          > a .icon-tree {
+            left: 15px;
+            right: auto;
+          }
+        }
       }
     }
   }
