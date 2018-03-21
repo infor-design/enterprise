@@ -61,6 +61,11 @@ $datagrid-short-row-height: 23px;
   }
 
   &.has-toolbar.has-filterable-columns {
+    .datagrid-header {
+      .datagrid-column-wrapper {
+        padding: 5px 20px 10px;
+      }
+    }
     .datagrid-body {
       height: calc(100% - 60px);
     }
