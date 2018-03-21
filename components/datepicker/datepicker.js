@@ -798,6 +798,13 @@ DatePicker.prototype = {
           this.popup.css('min-height', `${(this.popupClosestScrollable[0].scrollHeight + 2)}px`);
           this.popupClosestScrollable.css('min-height', '375px');
         }
+
+        // Hide calendar until range to be pre selected
+        if (s.range.useRange &&
+            s.range.first && s.range.first.date &&
+            s.range.second && s.range.second.date) {
+          this.popup.addClass('is-hidden');
+        }
       })
       .off('hide.datepicker')
       .on('hide.datepicker', () => {
@@ -1360,6 +1367,8 @@ DatePicker.prototype = {
       if (s.range.second && s.range.first.date && s.range.second.date) {
         this.element.val(this.getRangeValue());
       }
+      // Pre selection compleated now show the calendar
+      this.popup.removeClass('is-hidden');
     }
     this.activeTabindex(this.calendar.find('.is-selected'), true);
   },
