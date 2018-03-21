@@ -1617,7 +1617,7 @@ Datagrid.prototype = {
       let i;
       let ii;
       let len;
-      let len2;
+      let dataSetLen;
 
       if (this.settings.treeGrid) {
         dataset = this.settings.treeDepth;
@@ -1628,7 +1628,7 @@ Datagrid.prototype = {
       } else if (this.settings.groupable) {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
           let isGroupFiltered = true;
-          for (ii = 0, len2 = this.settings.dataset[i].values.length; ii < len2; ii++) {
+          for (ii = 0, dataSetLen = this.settings.dataset[i].values.length; ii < dataSetLen; ii++) {
             isFiltered = !checkRow(this.settings.dataset[i].values[ii]);
             this.settings.dataset[i].values[ii].isFiltered = isFiltered;
 
