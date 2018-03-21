@@ -8,16 +8,20 @@ const COMPONENT_NAME = 'ListFilter';
 const filterModes = ['startsWith', 'contains'];
 
 /**
- * ListFilter default settings
- * @namespace
- * @param {boolean} caseSensitive  Set to true if searches ARE case sensitive
- * @param {string} filterMode  Type of search can current be either 'startsWith' or 'contains'
- * @param {boolean} highlightMatchedText  Inserts markup that appears to highlight text
- * @param {function} highlightCallback  If defined, will execute this code for highlighting text
+ * Abstracted search/filter for use in other controls
+ * @class ListFilter
+ * @constructor
+ *
+ * @param {object} [settings] incoming settings
+ * @param {boolean} [settings.caseSensitive=false]  Set to true if searches ARE case sensitive
+ * @param {string} [settings.filterMode='startsWith']  Type of search can current be either 'startsWith' or 'contains'
+ * @param {boolean} [settings.highlightMatchedText=false]  Inserts markup that appears to highlight text
+ * @param {function} [settings.highlightCallback]  If defined, will execute this code for highlighting text
  * instead of the built-in highlighting code
- * @param {function} searchableTextCallback  If defined, will take each filterable item passed and
- * return user-defined, searchable text content
+ * @param {function} [settings.searchableTextCallback] If defined, will take each
+  filterable item passed and return user-defined, searchable text content
  */
+
 const LISTFILTER_DEFAULTS = {
   caseSensitive: false,
   filterMode: filterModes[0],
@@ -26,12 +30,6 @@ const LISTFILTER_DEFAULTS = {
   searchableTextCallback: undefined
 };
 
-/**
- * Abstracted search/filter for use in other controls
- * @class ListFilter
- * @constructor
- * @param {object} [settings] incoming settings
- */
 function ListFilter(settings) {
   this.settings = utils.mergeSettings(undefined, settings, LISTFILTER_DEFAULTS);
   debug.logTimeStart(COMPONENT_NAME);
@@ -72,7 +70,7 @@ ListFilter.prototype = {
    * Run the filter on the list for the given search term.
    * @param {array} list The array to search.
    * @param {string} term The term to look for.
-   * @returns {boolean|Array|jQuery[]} false if filtering failed,
+   * @returns {boolean|array|jquery[]} false if filtering failed,
    *  or an array/jQuery of items that matched the filter.
    */
   filter(list, term) {
@@ -170,7 +168,7 @@ ListFilter.prototype = {
   /**
    * Updates the ListFilter with new settings
    * @param {object} [settings] incoming settings
-   * @returns {this} component instance
+   * @returns {object} component instance
    */
   updated(settings) {
     this.settings = utils.mergeSettings(undefined, settings, this.settings);
@@ -182,14 +180,14 @@ ListFilter.prototype = {
 
   /**
    * @private
-   * @returns {this} component instance
+   * @returns {object} component instance
    */
   teardown() {
     return this;
   },
 
   /**
-   * @returns {this} component instance
+   * @returns {object} component instance
    */
   destroy() {
     return this.teardown();

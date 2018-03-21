@@ -3,95 +3,109 @@
 <ol type="1">
 <li>Simple Number Example <a href="../components/locale/test-locale">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      currentLocale
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The Currently Set Locale
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      cultures
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Contains all currently-stored cultures.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      culturesPath
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      the web-server's path to culture files.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
 
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          currentLocale
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The Currently Set Locale
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          cultures
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          Contains all currently-stored cultures.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          culturesPath
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          the web-server's path to culture files.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
   </section>
-
   
 
 <h2 id="code-example---initializing">Code Example - Initializing</h2>
 <p>The Locale component is used in many of the components to handle localization 18n use cases. The current locale api handles: number conversion, translation, Right To Left, Arabic Calendar, and Gregorian Calendar.</p>
 <p>The first and main step is to initialize the locale. This can be done via the initializer or manually with a locale call.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">initialize</span>(<span class="st">&#39;en-US&#39;</span>);
-<span class="co">// or....</span>
-<span class="ot">Locale</span>.<span class="fu">set</span>(<span class="st">&#39;es-ES&#39;</span>);
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="at">$</span>(<span class="st">&#39;body&#39;</span>).<span class="at">initialize</span>(<span class="st">&#39;en-US&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">// or....</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="va">Locale</span>.<span class="at">set</span>(<span class="st">&#39;es-ES&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a></code></pre></div>
 <h2 id="code-example---translation">Code Example - Translation</h2>
 <p>We have a number of internal strings that are used in the components. These can be extended and used by applications. Keep in mind that the set function must fetch the locale file from the server so it is asynchronous.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="ot">Locale</span>.<span class="fu">set</span>(<span class="st">&#39;es-ES&#39;</span>).<span class="fu">done</span>(<span class="kw">function</span> () {
-  <span class="ot">Locale</span>.<span class="fu">translate</span>(<span class="st">&#39;Cancel&#39;</span>);
-  <span class="co">// Returns Cancelar</span>
-});
-</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="va">Locale</span>.<span class="at">set</span>(<span class="st">&#39;es-ES&#39;</span>).<span class="at">done</span>(<span class="kw">function</span> () <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="va">Locale</span>.<span class="at">translate</span>(<span class="st">&#39;Cancel&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="co">// Returns Cancelar</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a></code></pre></div>
 <h2 id="code-example---numbers">Code Example - Numbers</h2>
 <p>You can use the formatNumber to display a numeric type in a localized format. You can use parseNumber to convert that number back to the numeric type. Not that by default the formatNumber function uses truncation (.129 becomes .12). To use rounding add the <code>round: true</code> option.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="ot">Locale</span>.<span class="fu">formatNumber</span>(<span class="fl">20.1</span>, {<span class="dt">style</span>: <span class="st">&#39;decimal&#39;</span>, <span class="dt">round</span>: <span class="kw">true</span>, <span class="dt">minimumFractionDigits</span>: <span class="dv">2</span>}));
-<span class="co">// Returns 20.10</span>
-</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="va">Locale</span>.<span class="at">formatNumber</span>(<span class="fl">20.1</span><span class="op">,</span> <span class="op">{</span><span class="dt">style</span><span class="op">:</span> <span class="st">&#39;decimal&#39;</span><span class="op">,</span> <span class="dt">round</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span> <span class="dt">minimumFractionDigits</span><span class="op">:</span> <span class="dv">2</span><span class="op">}</span>))<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">// Returns 20.10</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a></code></pre></div>
 <h2 id="number-format-patterns">Number Format Patterns</h2>
 <p>The formatNumber accepts a numberFormat object with formatting information. For example:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-numberFormat: {<span class="dt">minimumFractionDigits</span>: <span class="dv">3</span>, <span class="dt">maximumFractionDigits</span>: <span class="dv">3</span>}</code></pre>
-<p>The following options are supported: - <strong>style</strong> - Can be <code>decimal</code> or <code>integer</code> or <code>currency</code>. Formats the number with the group, decimal or adds the current currency symbol in the right location. - <strong>maximumFractionDigits</strong> - An integer representing the max number of decimal values before rounding / truncation - <strong>minimumFractionDigits</strong> - An integer representing the min number of decimal values before adding zero's for padding. - <strong>round</strong> - If true the number is rounded up / down rather than truncated</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">numberFormat<span class="op">:</span> <span class="op">{</span><span class="dt">minimumFractionDigits</span><span class="op">:</span> <span class="dv">3</span><span class="op">,</span> <span class="dt">maximumFractionDigits</span><span class="op">:</span> <span class="dv">3</span><span class="op">}</span></a></code></pre></div>
+<p>The following options are supported: - <strong>style</strong> - Can be <code>decimal</code> or <code>integer</code> or <code>currency</code>. Formats the number with the group, decimal or adds the current currency symbol in the right location. - <strong>maximumFractionDigits</strong> - An integer representing the max number of decimal values before rounding / truncation - <strong>minimumFractionDigits</strong> - An integer representing the min number of decimal values before adding zero’s for padding. - <strong>round</strong> - If true the number is rounded up / down rather than truncated</p>
 <h2 id="code-example---dates">Code Example - Dates</h2>
 <p>You can use the formatDate to display a date type in a localized format. You can use parseDate to convert that string back to the date type.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="ot">Locale</span>.<span class="fu">formatDate</span>(<span class="fu">newDate</span>());
-</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="va">Locale</span>.<span class="at">formatDate</span>(<span class="at">newDate</span>())<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a></code></pre></div>
 <h2 id="date-and-time-format-patterns">Date and Time Format Patterns</h2>
 <p>A date format can be constructed by adding the needed date and time parts. For example <code>yyyy-MM-DD HH:mm</code>. The following parts can be used.</p>
 <ul>

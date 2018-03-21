@@ -1,0 +1,31 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <label for="range-islamic-gregorian" class="label">Range - Islamic(ar-SA - gregorian)</label>
+    <input id="range-islamic-gregorian" class="datepicker input-md" name="range-islamic-gregorian" type="text" data-init="false">
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    // Change locale to ar-SA which has the default calendar as umalqura (Hijri)
+    // But use the optional gregorian calendar in that locale instead
+    Locale.set('ar-SA').done(function () {
+      $('#range-islamic-gregorian')
+        .datepicker({
+          calendarName: 'gregorian',
+          range: {
+            useRange: true
+          }
+        })
+        .on('change', function () {
+          console.log($(this).val());
+        });
+    });
+
+  });
+
+</script>

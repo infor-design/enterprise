@@ -3,138 +3,194 @@
 <ol type="1">
 <li>Test List <a href="../components/place/list">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      the base element being placed
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.bleedFromContainer
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, allows positioned content to bleed
+ outside of a defined container.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.callback
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      If defined, provides extra placement adjustments
+ after the main calculation is performed.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.container
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      HTMLElement
+    </td>
+    <td>
+      If defined, contains the placement of the
+ element to the boundaries of a specific container element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.parent
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      HTMLElement
+    </td>
+    <td>
+      If defined, will be used as the reference
+ element for placement this element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.parentXAlignment
+    </td>
+    <td>
+      <span>&#39;center&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Only used for parent-based placement.
+ Determines the X-coordinate alignment of the placed element against its parent.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.parentYAlignment
+    </td>
+    <td>
+      <span>&#39;center&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Only used for parent-based placement.
+ Determines the Y-coordinate alignment of the placed element against its parent.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.placement
+    </td>
+    <td>
+      <span>&#39;bottom&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If defined, changes the direction in which
+ placement of the element happens
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.strategies
+    </td>
+    <td>
+      <span>[&#39;nudge&#39;]</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Determines the "strategy" for alternatively
+ placing the element if it doesn't fit in the defined boundaries.  Only matters
+ when "parent" is a defined setting.  It's possible to define multiple strategies
+ and execute them in order.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          bleedFromContainer
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, allows positioned content to bleed
-outside of a defined container.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          callback
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          If defined, provides extra placement adjustments
-after the main calculation is performed.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          container
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          If defined, contains the placement of the
-element to the boundaries of a specific container element.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          parent
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          If defined, will be used as the reference
-element for placement this element.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          parentXAlignment
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          Only used for parent-based placement.
-Determines the X-coordinate alignment of the placed element against its parent.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          parentYAlignment
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          Only used for parent-based placement.
-Determines the Y-coordinate alignment of the placed element against its parent.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          placement
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          If defined, changes the direction in which
-placement of the element happens
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          strategies
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          Determines the "strategy" for alternatively
-placing the element if it doesn't fit in the defined boundaries.  Only matters
-when "parent" is a defined setting.  It's possible to define multiple strategies
-and execute them in order.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -228,13 +284,12 @@ PlacementObject
 
 
   </section>
-
   
 
 <h2 id="description">Description</h2>
 <p>The place component is an internal component that handles placing of objects relative to another. For example popups to buttons ect. It is mainly used internal but could be useful for its API. Docs to follow</p>
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke the place command.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">place</span>();
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="at">$</span>(<span class="st">&#39;body&#39;</span>).<span class="at">place</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a></code></pre></div>

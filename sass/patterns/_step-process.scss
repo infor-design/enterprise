@@ -2,16 +2,14 @@
 // Use styles to conver the tree to a stepped wizard
 //==================================================//
 
-
 .step-process-container {
 
   // Additional custom toolbar styles
   .toolbar-custom {
-    background-color: $white;
+    background-color: $panel-bg-color;
     border-bottom: solid 2px $panel-border-color;
     height: 60px;
     position: relative;
-
 
     .title {
       &.title-wide {
@@ -30,7 +28,7 @@
       small {
         @include font-size(14);
         display: block;
-        margin: 2px 0 0 0;
+        margin: 2px 0 0;
         padding: 0;
         text-transform: capitalize;
       }
@@ -43,9 +41,9 @@
     }
 
     .btn-toggle-steps {
+      left: 10px;
       position: absolute;
       top: 13px;
-      left: 10px;
     }
   }
 
@@ -81,23 +79,21 @@
       > a {
         // Borrow some accordion styles
         background-color: transparent;
-        border-top: 1px solid transparent;
         border-bottom: 1px solid $accordion-border-color;
         border-radius: 0;
-        display: block;
+        border-top: 1px solid transparent;
         cursor: pointer;
-        height: 45px;
-        line-height: 45px;
+        display: block;
         margin-left: 0;
-        padding: 0 15px;
+        padding: 15px 60px 15px 15px;
         position: relative;
 
         .icon {
           // Position new alert icon for step "status"
           &.step-alert {
-            top: calc(50% - 8px);
-            position: relative;
             margin-right: 11px;
+            position: relative;
+            top: calc(50% - 8px);
           }
 
           // Hide normal tree icons
@@ -150,8 +146,8 @@
 
   // Style the container and step content panels
   .step-container {
-    padding: 15px 30px;
     height: calc(100% - 60px);
+    padding: 15px 30px;
 
     .js-step-panel {
       display: none;
@@ -163,13 +159,20 @@
   }
 
   .js-step-links-scroll {
-    overflow: auto;
     height: 100%;
+    overflow: auto;
   }
 
   .btn-toggle-steps,
   .phone-visible {
     display: none;
+  }
+
+  // Remove default tree styling for step-process items.
+  .tree {
+    a {
+      line-height: normal;
+    }
   }
 }
 
@@ -269,8 +272,9 @@
     &.phone-hide-steps {
       .main {
         @include css3(transform, translateX(0));
-        width: calc(100% - 250px);
+        width: 100%;
       }
+
       .sidebar {
         @include css3(transform, translateX(-100%));
       }
@@ -300,6 +304,43 @@
         height: $header-height;
         width: 50%;
         margin: 0;
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .step-process-container {
+    .tree {
+      ul {
+        right: auto;
+
+        li {
+          margin-left: 10px;
+          margin-right: inherit;
+
+          &:first-child {
+            margin-top: 0;
+          }
+        }
+
+        a {
+          margin: 0;
+        }
+      }
+
+
+      li {
+        > a {
+          padding: 15px 15px 15px 60px;
+        }
+
+        &.folder {
+          > a .icon-tree {
+            left: 15px;
+            right: auto;
+          }
+        }
       }
     }
   }

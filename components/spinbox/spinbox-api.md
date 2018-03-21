@@ -2,48 +2,15 @@
 
 ### Table of Contents
 
--   [SPINBOX_DEFAULTS](#spinbox_defaults)
--   [Spinbox](#spinbox)
-    -   [setWidth](#setwidth)
-    -   [setInitialValue](#setinitialvalue)
-    -   [addMarkup](#addmarkup)
-    -   [enableLongPress](#enablelongpress)
-    -   [disableLongPress](#disablelongpress)
-    -   [handleClick](#handleclick)
-    -   [handleKeyDown](#handlekeydown)
-    -   [handleKeyPress](#handlekeypress)
-    -   [handleInput](#handleinput)
-    -   [handleKeyup](#handlekeyup)
-    -   [handleAfterPaste](#handleafterpaste)
-    -   [correctValue](#correctvalue)
-    -   [increaseValue](#increasevalue)
-    -   [decreaseValue](#decreasevalue)
-    -   [updateVal](#updateval)
-    -   [checkForNumeric](#checkfornumeric)
-    -   [updateAria](#updatearia)
-    -   [addButtonStyle](#addbuttonstyle)
-    -   [removeButtonStyle](#removebuttonstyle)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [isDisabled](#isdisabled)
-    -   [setIsDisabled](#setisdisabled)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-    -   [bindEvents](#bindevents)
-
-## SPINBOX_DEFAULTS
-
-Spinbox default settings
-
-**Properties**
-
--   `autocorrectOnBlur` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
--   `min` **(null | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** if defined, provides a minimum numeric limit
--   `max` **(null | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** if defined, provides a maximum numeric limit
--   `step` **(null | [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** if defined, increases or decreases the spinbox value
-     by a specific interval whenever the control buttons are used.
--   `validateOnInput` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If set to false, will only automatically correct
-     the spinbox value after the spinbox has lost focus.
+-   [Spinbox][1]
+    -   [increaseValue][2]
+    -   [decreaseValue][3]
+    -   [updateVal][4]
+    -   [enable][5]
+    -   [disable][6]
+    -   [isDisabled][7]
+    -   [updated][8]
+    -   [destroy][9]
 
 ## Spinbox
 
@@ -51,124 +18,15 @@ The Spinbox component provides easy access to modification of a numeric input fi
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-### setWidth
-
-Sets the width of the spinbox input field.
-
-Returns **this** component instance
-
-### setInitialValue
-
-Sanitize the initial value of the input field.
-
-Returns **this** component instance
-
-### addMarkup
-
-Appends extra control markup to a Spinbox field.
-
-Returns **this** component instance
-
-### enableLongPress
-
-Enables Long Pressing one of the Spinbox control buttons.
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `touchstart` or `mousedown` events
--   `self` **[Spinbox](#spinbox)** this component instance
-
-Returns **void** 
-
-### disableLongPress
-
-Disables Long Pressing one of the Spinbox control buttons.
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `touchend` or `mouseup` events
--   `self` **[Spinbox](#spinbox)** this component instance
-
-Returns **void** 
-
-### handleClick
-
-Event handler for 'click' events
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `click` event
-
-Returns **void** 
-
-### handleKeyDown
-
-Event handler for 'keydown' events
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `keydown` event
--   `self` **[Spinbox](#spinbox)** component instance
-
-### handleKeyPress
-
-Event handler for 'keypress' events
-TODO: Deprecate in 4.4.0
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `keypress` event
--   `self` **[Spinbox](#spinbox)** component instance
-
-Returns **void** 
-
-### handleInput
-
-Event handler for the 'input' event
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `input` event
--   `self` **[Spinbox](#spinbox)** this component instance
-
-Returns **void** 
-
-### handleKeyup
-
-Event handler for 'keyup' events
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `input` event
--   `self` **[Spinbox](#spinbox)** this component instance
-
-Returns **void** 
-
-### handleAfterPaste
-
-Change a newly pasted value to this element's min or max values, if the pasted
-value goes beyond either of those limits.  Listens to an event emitted by the
-Mask plugin after pasted content is handled.
-
-**Parameters**
-
--   `self` **[Spinbox](#spinbox)** this component instance
-
-Returns **void** 
-
-### correctValue
-
-Fixes a value that may have been entered programmatically, or by paste,
-if it goes out of the range boundaries.
-
-**Parameters**
-
--   `e` **jQuery.Event** jQuery `input` event
-
-Returns **void** 
+-   `element` **([Array][10]&lt;jQuery> | [HTMLElement][11])** the base element
+-   `settings` **[object][12]?** incoming settings
+    -   `settings.autocorrectOnBlur` **[boolean][13]** If true the input will adjust to the nearest step on blur. (optional, default `false`)
+    -   `settings.min` **(null | [Number][14])** if defined, provides a minimum numeric limit (optional, default `null`)
+    -   `settings.max` **(null | [Number][14])** if defined, provides a maximum numeric limit (optional, default `null`)
+    -   `settings.step` **(null | [Number][14])** if defined, increases or decreases the spinbox value
+         by a specific interval whenever the control buttons are used. (optional, default `null`)
+    -   `settings.validateOnInput` **[boolean][13]** If set to false, will only automatically correct
+         the spinbox value after the spinbox has lost focus. (optional, default `true`)
 
 ### increaseValue
 
@@ -188,47 +46,7 @@ Sets a new spinbox value and focuses the spinbox.
 
 **Parameters**
 
--   `newVal` **([Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** the value to set on the spinbox
-
-Returns **void** 
-
-### checkForNumeric
-
-Sanitizes the value of the input field to an integer if it isn't already established.
-
-**Parameters**
-
--   `val` **([Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** will be converted to a number if it's a string.
-
-Returns **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** a numeric version of the value provided, or a corrected value.
-
-### updateAria
-
-Updates the "aria-valuenow" property on the spinbox element if the value is currently set
-
-**Parameters**
-
--   `val` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the new value to be set on the spinbox
-
-Returns **void** 
-
-### addButtonStyle
-
-Adds a "pressed-in" styling for one of the spinner buttons.
-
-**Parameters**
-
--   `e` **(jQuery.Event | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** either an incoming event, or a button element to be acted on
-
-Returns **void** 
-
-### removeButtonStyle
-
-Removes "pressed-in" styling for one of the spinner buttons
-
-**Parameters**
-
--   `e` **(jQuery.Event | [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** either an incoming event, or a button element to be acted on
+-   `newVal` **([Number][14] \| [String][15])** the value to set on the spinbox
 
 Returns **void** 
 
@@ -248,18 +66,7 @@ Returns **void**
 
 Determines whether or not the spinbox is disabled.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the spinbox is disabled.
-
-### setIsDisabled
-
-Toggle whther or not the component is disabled.
-
-**Parameters**
-
--   `button` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the button element to be disabled
--   `isDisabled` **booelan?** whether or not to force a change to the button's state.
-
-Returns **void** 
+Returns **[boolean][13]** whether or not the spinbox is disabled.
 
 ### updated
 
@@ -267,7 +74,7 @@ Updated
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][12]?** incoming settings
 
 Returns **this** component instance
 
@@ -277,8 +84,32 @@ Teardown
 
 Returns **void** 
 
-### bindEvents
+[1]: #spinbox
 
-Sets up event handlers for this control and its sub-elements
+[2]: #increasevalue
 
-Returns **this** component instance
+[3]: #decreasevalue
+
+[4]: #updateval
+
+[5]: #enable
+
+[6]: #disable
+
+[7]: #isdisabled
+
+[8]: #updated
+
+[9]: #destroy
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[11]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[15]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

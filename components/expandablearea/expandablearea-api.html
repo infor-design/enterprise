@@ -1,48 +1,85 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.trigger
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Id of some other button to use as a trigger
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.bottomBorder
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Change the border to bottom vs top (for some cases)
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          trigger
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Id of some other button to use as a trigger
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          bottomBorder
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Change the border to bottom vs top (for some cases)
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -182,5 +219,148 @@ object
 
 
   </section>
-
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>beforeexpand
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is added via the api.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>expand
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is added via the api.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afterexpand
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is added via the api.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforecollapse
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is added via the api.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>collapse
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is added via the api.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>aftercollapse
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after a row is added via the api.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

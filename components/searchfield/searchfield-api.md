@@ -2,250 +2,215 @@
 
 ### Table of Contents
 
--   [SEARCHFIELD_DEFAULTS][1]
--   [Searchfield][2]
--   [hasCategories][3]
--   [hasGoButton][4]
--   [hasFocus][5]
--   [setCategoryButtonText][6]
--   [calculateSearchfieldWidth][7]
--   [isToolbarSearchfield][8]
--   [getCategories][9]
--   [getSelectedCategories][10]
--   [getCategoryData][11]
--   [updateCategories][12]
--   [setCategories][13]
--   [hasCategoryButton][14]
--   [clear][15]
--   [updated][16]
--   [enable][17]
--   [disable][18]
--   [destroy][19]
+-   [SearchField][1]
+    -   [hasCategories][2]
+    -   [hasGoButton][3]
+    -   [hasFocus][4]
+    -   [setCategoryButtonText][5]
+    -   [getCategories][6]
+    -   [getSelectedCategories][7]
+    -   [getCategoryData][8]
+    -   [updateCategories][9]
+    -   [setCategories][10]
+    -   [clear][11]
+    -   [updated][12]
+    -   [enable][13]
+    -   [disable][14]
+    -   [destroy][15]
 
-## SEARCHFIELD_DEFAULTS
+## SearchField
 
-**Properties**
-
--   `resultsCallback` **[function][20]** Callback function for getting typahead results on search.
--   `allResultsCallback` **[function][20]** Callback function for getting "all results".
--   `showAllResults` **[boolean][21]** If true the show all results link is showin in the list.
--   `showGoButton` **[boolean][21]** If true a go button is associated.
--   `goButtonCopy` **[string][22]** The text to use on the go button.
--   `goButtonAction` **[function][20]** If defined as a function, will fire this callback on
-    the Go Button "click"
--   `categories` **[array][23]** If defined as an array, displays a dropdown containing
-    categories that can be used to filter results.
--   `categoryMultiselect` **[boolean][21]** If true, creates a multiselectable categories list.
--   `showCategoryText` **[boolean][21]** If true, will show any available categories that are
-    selected to the left of the Dropdown field.
--   `source` **[function][20]** Callback function for getting type ahead results.
--   `template` **[string][22]** The html template to use for the search list
--   `clearable` **[boolean][21]** Add an X to clear.
-
-## Searchfield
+The search field component.
 
 **Parameters**
 
--   `element` **([Array][23]&lt;jQuery> | [HTMLElement][24])** the base searchfield element
--   `settings` **[object][25]?** incoming settings
+-   `element` **([Array][16]&lt;jQuery> | [HTMLElement][17])** the base searchfield element
+-   `settings` **[object][18]?** incoming settings
+    -   `settings.resultsCallback` **[function][19]?** Callback function for getting typahead results on search.
+    -   `settings.allResultsCallback` **[function][19]?** Callback function for getting "all results".
+    -   `settings.showAllResults` **[boolean][20]** If true the show all results link is showin in the list. (optional, default `true`)
+    -   `settings.showGoButton` **[boolean][20]** If true a go button is associated. (optional, default `false`)
+    -   `settings.goButtonCopy` **[string][21]?** The text to use on the go button.
+    -   `settings.goButtonAction` **[function][19]?** If defined as a function, will fire this callback on the Go Button "click"
+    -   `settings.categories` **[array][16]?** If defined as an array, displays a dropdown containing categories that can be used to filter results.
+    -   `settings.categoryMultiselect` **[boolean][20]** If true, creates a multiselectable categories list. (optional, default `false`)
+    -   `settings.showCategoryText` **[boolean][20]** If true, will show any available categories that are selected
+        to the left of the Dropdown field. (optional, default `false`)
+    -   `settings.source` **[function][19]?** Callback function for getting type ahead results.
+    -   `settings.template` **[string][21]?** The html template to use for the search list
+    -   `settings.clearable` **[boolean][20]** Add an X to clear. (optional, default `false`)
 
-## hasCategories
+### hasCategories
 
 Reveals whether or not categories are active on this searchfield.
 
-Returns **[boolean][21]** whether or not categories are active on this searchfield.
+Returns **[boolean][20]** whether or not categories are active on this searchfield.
 
-## hasGoButton
+### hasGoButton
 
 Detects the existence of a "Go" button added to the main searchfield API
 
-Returns **[boolean][21]** whether or not a "Go" button is present
+Returns **[boolean][20]** whether or not a "Go" button is present
 
-## hasFocus
+### hasFocus
 
 Detects whether or not the Searchfield has focus.
 
-Returns **[boolean][21]** whether or not the Searchfield has focus.
+Returns **[boolean][20]** whether or not the Searchfield has focus.
 
-## setCategoryButtonText
+### setCategoryButtonText
 
 Sets the text content on the category button.  Will either display a single category
 name, or a translated "[x] Selected." string.
 
 **Parameters**
 
--   `textContent` **[string][22]?** Optional incoming text that will be subtituted for the
+-   `textContent` **[string][21]?** Optional incoming text that will be subtituted for the
     selected element count.
 
-Returns **[undefined][26]** 
+Returns **[undefined][22]** 
 
-## calculateSearchfieldWidth
-
-Ensures that the size of the Searchfield Wrapper does not change whenever a category
-is chosen from a category searchfield.
-NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
-
-## isToolbarSearchfield
-
-Detects whether or not this component is a Toolbar Searchfield
-
-Returns **[boolean][21]** whether or not this component is a Toolbar Searchfield
-
-## getCategories
+### getCategories
 
 Gets a complete list of categories in jQuery-collection form.
 
 Returns **jQuery** categories
 
-## getSelectedCategories
+### getSelectedCategories
 
 Gets the currently selected list of categories in jQuery-collection form.
 
 Returns **jQuery** selectedCategories
 
-## getCategoryData
+### getCategoryData
 
 Gets the currently selected categories as data.
 
 **Parameters**
 
--   `onlyReturnSelected` **[boolean][21]** If set to true, will only return
+-   `onlyReturnSelected` **[boolean][20]** If set to true, will only return
      checked list items. (optional, default `false`)
 
-Returns **[Array][23]&lt;[Object][25]>** data -
+Returns **[Array][16]&lt;[Object][18]>** data -
 
-Returns **[string][22]** name - Category name
+Returns **[string][21]** name - Category name
 
-Returns **([string][22] \| [number][27])** id - Category element's ID (if applicable)
+Returns **([string][21] \| [number][23])** id - Category element's ID (if applicable)
 
-Returns **([string][22] \| [number][27])** value - Category element's value (if applicable)
+Returns **([string][21] \| [number][23])** value - Category element's value (if applicable)
 
-Returns **[boolean][21]** [checked=true] - Category's selection status
+Returns **[boolean][20]** [checked=true] - Category's selection status
 
-## updateCategories
+### updateCategories
 
 Updates just the categories setting and rerenders the category list.
 
 **Parameters**
 
--   `categories` **[Array][23]&lt;[Object][25]>** Array of category object definitions.
-    -   `categories[].name` **[string][22]** Category name.
--   `id` **([string][22] \| [number][27])?** Category element's ID (if applicable).
--   `value` **([string][22] \| [number][27])?** Category element's value (if applicable).
--   `checked` **[boolean][21]** Category's selection status (optional, default `true`)
+-   `categories` **[Array][16]&lt;[Object][18]>** Array of category object definitions.
+    -   `categories[].name` **[string][21]** Category name.
+-   `id` **([string][21] \| [number][23])?** Category element's ID (if applicable).
+-   `value` **([string][21] \| [number][23])?** Category element's value (if applicable).
+-   `checked` **[boolean][20]** Category's selection status (optional, default `true`)
 
-Returns **[undefined][26]** 
+Returns **[undefined][22]** 
 
-## setCategories
+### setCategories
 
 Creates a new set of categories on the Searchfield and rerenders it.
 
 **Parameters**
 
--   `categories` **[Array][23]&lt;[Object][25]>** Array of category object definitions.
-    -   `categories[].name` **[string][22]** Category name.
--   `id` **([string][22] \| [number][27])?** Category element's ID (if applicable).
--   `value` **([string][22] \| [number][27])?** Category element's value (if applicable).
--   `checked` **[boolean][21]** Category's selection status (optional, default `true`)
+-   `categories` **[Array][16]&lt;[Object][18]>** Array of category object definitions.
+    -   `categories[].name` **[string][21]** Category name.
+-   `id` **([string][21] \| [number][23])?** Category element's ID (if applicable).
+-   `value` **([string][21] \| [number][23])?** Category element's value (if applicable).
+-   `checked` **[boolean][20]** Category's selection status (optional, default `true`)
 
-Returns **[undefined][26]** 
+Returns **[undefined][22]** 
 
-## hasCategoryButton
-
-Determines whether or not a Category Trigger exists.
-
-Returns **[boolean][21]** whether or not a Category Trigger exists.
-
-## clear
+### clear
 
 Clears the contents of the searchfield
 
 Returns **void** 
 
-## updated
+### updated
 
 Tears down and rebuilds the Searchfield. Can be called directly, but is also
 triggered by calling the "updated.searchfield" event on the searchfield element.
 
 **Parameters**
 
--   `settings` **[object][25]?** incoming settings
+-   `settings` **[object][18]?** incoming settings
 
 Returns **void** 
 
-## enable
+### enable
 
 Enables the Searchfield
 
 Returns **void** 
 
-## disable
+### disable
 
 Disables the Searchfield
 
 Returns **void** 
 
-## destroy
+### destroy
 
 Destroys the Searchfield and removes all jQuery component instancing.
 
 **Parameters**
 
--   `dontDestroyToolbarSearchfield` **[boolean][21]** if true, will not pass through
+-   `dontDestroyToolbarSearchfield` **[boolean][20]** if true, will not pass through
      and destroy a linked instance of the Toolbar Searchfield component.
 
-Returns **[undefined][26]** 
+Returns **[undefined][22]** 
 
-[1]: #searchfield_defaults
+[1]: #searchfield
 
-[2]: #searchfield
+[2]: #hascategories
 
-[3]: #hascategories
+[3]: #hasgobutton
 
-[4]: #hasgobutton
+[4]: #hasfocus
 
-[5]: #hasfocus
+[5]: #setcategorybuttontext
 
-[6]: #setcategorybuttontext
+[6]: #getcategories
 
-[7]: #calculatesearchfieldwidth
+[7]: #getselectedcategories
 
-[8]: #istoolbarsearchfield
+[8]: #getcategorydata
 
-[9]: #getcategories
+[9]: #updatecategories
 
-[10]: #getselectedcategories
+[10]: #setcategories
 
-[11]: #getcategorydata
+[11]: #clear
 
-[12]: #updatecategories
+[12]: #updated
 
-[13]: #setcategories
+[13]: #enable
 
-[14]: #hascategorybutton
+[14]: #disable
 
-[15]: #clear
+[15]: #destroy
 
-[16]: #updated
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[17]: #enable
+[17]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-[18]: #disable
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[19]: #destroy
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
 
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[24]: https://developer.mozilla.org/docs/Web/HTML/Element
-
-[25]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
-
-[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

@@ -2,25 +2,30 @@
 
 ### Table of Contents
 
--   [INITIALIZE_DEFAULTS](#initialize_defaults)
--   [Initialize](#initialize)
-    -   [initAll](#initall)
-
-## INITIALIZE_DEFAULTS
-
-Component Defaults
+-   [Initialize][1]
+    -   [initAll][2]
 
 ## Initialize
 
-Page Bootstrapper
+Page Bootstrapper, will initialize all components on a page with default settings.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the root element to initialize
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `element` **([Array][3]&lt;jQuery> | [HTMLElement][4])** the root element to initialize
+-   `settings` **[object][5]?** incoming settings
 
 ### initAll
 
 Initializes all Soho components inside the root element provided.
 
 Returns **this** component instance
+
+[1]: #initialize
+
+[2]: #initall
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[4]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

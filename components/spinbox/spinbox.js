@@ -4,22 +4,12 @@ import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../button/button.jquery';
-import '../mask/masked-input.jquery';
+import '../mask/mask-input.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'spinbox';
 
-/**
- * Spinbox default settings
- * @namespace
- * @property {boolean} autocorrectOnBlur
- * @property {null|Number} min if defined, provides a minimum numeric limit
- * @property {null|Number} max  if defined, provides a maximum numeric limit
- * @property {null|Number} step  if defined, increases or decreases the spinbox value
- *  by a specific interval whenever the control buttons are used.
- * @property {boolean} validateOnInput  If set to false, will only automatically correct
- *  the spinbox value after the spinbox has lost focus.
- */
+// Component Defaults
 const SPINBOX_DEFAULTS = {
   autocorrectOnBlur: false,
   min: null,
@@ -34,6 +24,13 @@ const SPINBOX_DEFAULTS = {
  * @constructor
  * @param {jQuery[]|HTMLElement} element the base element
  * @param {object} [settings] incoming settings
+ * @param {boolean} [settings.autocorrectOnBlur = false] If true the input will adjust to the nearest step on blur.
+ * @param {null|Number} [settings.min = null] if defined, provides a minimum numeric limit
+ * @param {null|Number} [settings.max = null]  if defined, provides a maximum numeric limit
+ * @param {null|Number} [settings.step = null]  if defined, increases or decreases the spinbox value
+ *  by a specific interval whenever the control buttons are used.
+ * @param {boolean} [settings.validateOnInput = true]  If set to false, will only automatically correct
+ *  the spinbox value after the spinbox has lost focus.
  */
 function Spinbox(element, settings) {
   this.element = $(element);
@@ -64,6 +61,7 @@ Spinbox.prototype = {
 
   /**
    * Sets the width of the spinbox input field.
+   * @private
    * @returns {this} component instance
    */
   setWidth() {
@@ -78,6 +76,7 @@ Spinbox.prototype = {
 
   /**
    * Sanitize the initial value of the input field.
+   * @private
    * @returns {this} component instance
    */
   setInitialValue() {
@@ -112,6 +111,7 @@ Spinbox.prototype = {
 
   /**
    * Appends extra control markup to a Spinbox field.
+   * @private
    * @returns {this} component instance
    */
   addMarkup() {
@@ -251,6 +251,7 @@ Spinbox.prototype = {
 
   /**
    * Enables Long Pressing one of the Spinbox control buttons.
+   * @private
    * @param {jQuery.Event} e jQuery `touchstart` or `mousedown` events
    * @param {Spinbox} self this component instance
    * @returns {void}
@@ -266,6 +267,7 @@ Spinbox.prototype = {
 
   /**
    * Disables Long Pressing one of the Spinbox control buttons.
+   * @private
    * @param {jQuery.Event} e jQuery `touchend` or `mouseup` events
    * @param {Spinbox} self this component instance
    * @returns {void}
@@ -278,6 +280,7 @@ Spinbox.prototype = {
 
   /**
    * Event handler for 'click' events
+   * @private
    * @param {jQuery.Event} e jQuery `click` event
    * @returns {void}
    */
@@ -301,6 +304,7 @@ Spinbox.prototype = {
 
   /**
    * Event handler for 'keydown' events
+   * @private
    * @param {jQuery.Event} e jQuery `keydown` event
    * @param {Spinbox} self component instance
    */
@@ -336,6 +340,7 @@ Spinbox.prototype = {
   /**
    * Event handler for 'keypress' events
    * TODO: Deprecate in 4.4.0
+   * @private
    * @param {jQuery.Event} e jQuery `keypress` event
    * @param {Spinbox} self component instance
    * @returns {void}
@@ -353,6 +358,7 @@ Spinbox.prototype = {
 
   /**
    * Event handler for the 'input' event
+   * @private
    * @param {jQuery.Event} e jQuery `input` event
    * @param {Spinbox} self this component instance
    * @returns {void}
@@ -372,6 +378,7 @@ Spinbox.prototype = {
 
   /**
    * Event handler for 'keyup' events
+   * @private
    * @param {jQuery.Event} e jQuery `input` event
    * @param {Spinbox} self this component instance
    * @returns {void}
@@ -409,6 +416,7 @@ Spinbox.prototype = {
    * Change a newly pasted value to this element's min or max values, if the pasted
    * value goes beyond either of those limits.  Listens to an event emitted by the
    * Mask plugin after pasted content is handled.
+   * @private
    * @param {Spinbox} self this component instance
    * @returns {void}
    */
@@ -430,6 +438,7 @@ Spinbox.prototype = {
   /**
    * Fixes a value that may have been entered programmatically, or by paste,
    * if it goes out of the range boundaries.
+   * @private
    * @param {jQuery.Event} e jQuery `input` event
    * @returns {void}
    */
@@ -494,6 +503,7 @@ Spinbox.prototype = {
 
   /**
    * Sanitizes the value of the input field to an integer if it isn't already established.
+   * @private
    * @param {Number|String} val will be converted to a number if it's a string.
    * @returns {number} a numeric version of the value provided, or a corrected value.
    */
@@ -515,6 +525,7 @@ Spinbox.prototype = {
 
   /**
    * Updates the "aria-valuenow" property on the spinbox element if the value is currently set
+   * @private
    * @param {number} val the new value to be set on the spinbox
    * @returns {void}
    */
@@ -532,6 +543,7 @@ Spinbox.prototype = {
 
   /**
    * Adds a "pressed-in" styling for one of the spinner buttons.
+   * @private
    * @param {jQuery.Event|jQuery[]} e either an incoming event, or a button element to be acted on
    * @returns {void}
    */
@@ -548,6 +560,7 @@ Spinbox.prototype = {
 
   /**
    * Removes "pressed-in" styling for one of the spinner buttons
+   * @private
    * @param {jQuery.Event|jQuery[]} e either an incoming event, or a button element to be acted on
    * @returns {void}
    */
@@ -590,6 +603,7 @@ Spinbox.prototype = {
 
   /**
    * Toggle whther or not the component is disabled.
+   * @private
    * @param {jQuery[]} button the button element to be disabled
    * @param {booelan} [isDisabled] whether or not to force a change to the button's state.
    * @returns {void}
@@ -641,15 +655,46 @@ Spinbox.prototype = {
   },
 
   /**
+  *  Fires when the input gains focus.
+  * @event focus
+  * @memberof Spinbox
+  * @property {object} event - The jquery event object
+  */
+  /**
+   * Fires when the input looses focus.
+   * @event blur
+   * @memberof Spinbox
+   * @property {object} event - The jquery event object
+   */
+  /**
+    * Fires when a key is pressed down.
+    * @event keydown
+    * @memberof Spinbox
+    * @property {object} event - The jquery event object
+  */
+  /**
+    * Fires when a key is pressed.
+    * @event keypress
+    * @memberof Spinbox
+    * @property {object} event - The jquery event object
+  */
+  /**
+    * Fires when a key is pressed up.
+    * @event keyup
+    * @memberof Spinbox
+    * @property {object} event - The jquery event object
+  */
+  /**
+    * Fires after input is pasted in.
+    * @event afterpaste
+    * @memberof Spinbox
+    * @property {object} event - The jquery event object
+  */
+
+  /**
    * Sets up event handlers for this control and its sub-elements
-   * @fires Spinbox#events
-   * @listens focus  &nbsp;-&nbsp;
-   * @listens blur  &nbsp;-&nbsp;
-   * @listens keydown  &nbsp;-&nbsp;
-   * @listens keypress  &nbsp;-&nbsp;
-   * @listens keyup  &nbsp;-&nbsp;
-   * @listens afterpaste  &nbsp;-&nbsp;
-   * @returns {this} component instance
+   * @private
+   * @returns {void}
    */
   bindEvents() {
     const self = this;

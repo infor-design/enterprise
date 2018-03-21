@@ -3,17 +3,16 @@ import { utils } from '../utils/utils';
 import { masks } from './masks';
 
 /**
- * @class SohoMaskAPI
+ * @class MaskAPI
  * @constructor
  * @param {object} [settings] incoming settings
- * @returns {this} component instance
  */
-function SohoMaskAPI(settings) {
+function MaskAPI(settings) {
   this.configure(settings);
   return this;
 }
 
-SohoMaskAPI.prototype = {
+MaskAPI.prototype = {
 
   /**
    * Configure the API for an incoming mask request.
@@ -456,6 +455,7 @@ SohoMaskAPI.prototype = {
 
   /**
    * Takes an index representing a caret and changes it based on mask modifications
+   * @private
    * @param {object} opts information about the caret placement.
    * @returns {number} the index of the text caret.
    */
@@ -740,6 +740,7 @@ SohoMaskAPI.prototype = {
    * Converts the legacy Soho Mask pattern format from a string into an array.
    * If character is a defined pattern matcher, the corresponding item at the
    * array index is converted to its regex form.
+   * @private
    * @param {string} pattern a legacy Soho Mask Pattern
    * @param {object} [defs] mask conversion definitions
    * @returns {array} contains string "literal" characters and Regex matchers
@@ -769,4 +770,4 @@ SohoMaskAPI.prototype = {
 
 };
 
-export { SohoMaskAPI };
+export { MaskAPI };

@@ -14,44 +14,53 @@ import '../tooltip/tooltip.jquery';
 // Component Name
 const COMPONENT_NAME = 'tabs';
 
+// Types of possible Tab containers
+const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'];
+
 /**
- * Component Default Settings
- * @namespace
- * @property {boolean} addTabButton If set to true, creates a button at the end
+ * @class Tabs
+ * @constructor
+ * @param {HTMLElement|jQuery[]} element the base element for this component
+ * @param {object} settings incoming settings
+ *
+ * @param {boolean} [settings.addTabButton=false] If set to true, creates a button at the end
  * of the tab list that can be used to add an empty tab and panel
- * @property {null|function} addTabButtonCallback if defined as a function, will
+ * @param {function} [settings.addTabButtonCallback=null] if defined as a function, will
  * be used in-place of the default Tab Adding method
- * @property {boolean} appMenuTrigger If set to true, will force an App Menu
+ * @param {boolean} [settings.appMenuTrigger=false] If set to true, will force an App Menu
  * trigger to be present on Non-Vertical Tabs implementatations.
- * @property {null|object} ajaxOptions if defined, will be used by any internal
+ * @param {string} [settings.appMenuTriggerText] If defined, replaces the default "Menu" text used
+ * in the app menu trigger.
+ * @param {object} [settings.ajaxOptions] if defined, will be used by any internal
  * Tabs AJAX calls as the desired request settings.
- * @property {undefined|function} beforeActivate If defined as a function, fires
+ * @param {function} [settings.beforeActivate] If defined as a function, fires
  * this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250).
- * @property {null|string|jQuery[]} containerElement Defines a separate element
+ * @param {string|jQuery} [settings.containerElement=null] Defines a separate element
  * to be used for containing the tab panels.  Defaults to a `.tab-panel-container`
  * element that is created if it doesn't already exist.
- * @property {boolean} changeTabOnHashChange If true, will change the selected
+ * @param {boolean} [settings.changeTabOnHashChange=false] If true, will change the selected
  * tab on invocation based on the URL that exists after the hash.
- * @property {null|function} hashChangeCallback If defined as a function,
+ * @param {function} [settings.hashChangeCallback=null] If defined as a function,
  * provides an external method for adjusting the current page hash used by these tabs.
- * @property {boolean} lazyLoad if true, when using full URLs in tab HREFs,
+ * @param {boolean} [settings.lazyLoad=true] if true, when using full URLs in tab HREFs,
  * or when using Ajax calls, tabs will be loaded as needed instead of the markup
  * all being established at once.
- * @property {boolean} moduleTabsTooltips if true, will display a tooltip on
+ * @param {boolean} [settings.moduleTabsTooltips=false] if true, will display a tooltip on
  * Module Tabs with cut-off text content.
- * @property {null|function} source If defined, will serve as a way of pulling
+ * @param {function} [settings.source=null] If defined, will serve as a way of pulling
  * in external content to fill tabs.
- * @property {object} sourceArguments If a source method is defined, this
+ * @param {object} [settings.sourceArguments={}] If a source method is defined, this
  * flexible object can be passed into the source method, and augmented with
  * parameters specific to the implementation.
- * @property {boolean} tabCounts If true, Displays a modifiable count above each tab.
- * @property {boolean} verticalResponsive If Vertical Tabs & true, will automatically
+ * @param {boolean} [settings.tabCounts=false] If true, Displays a modifiable count above each tab.
+ * @param {boolean} [settings.verticalResponsive=false] If Vertical Tabs & true, will automatically
  * switch to Horizontal Tabs on smaller breakpoints.
  */
 const TABS_DEFAULTS = {
   addTabButton: false,
   addTabButtonCallback: null,
   appMenuTrigger: false,
+  appMenuTriggerText: undefined,
   ajaxOptions: null,
   beforeActivate: undefined,
   containerElement: null,
@@ -65,14 +74,6 @@ const TABS_DEFAULTS = {
   verticalResponsive: false
 };
 
-// Types of possible Tab containers
-const tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'];
-
-/**
- * @constructor
- * @param {HTMLElement|jQuery[]} element the base element for this component
- * @param {object} settings incoming settings
- */
 function Tabs(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, TABS_DEFAULTS);
@@ -425,6 +426,7 @@ Tabs.prototype = {
   /**
    * Adds/removes helper buttons and accessibility-centric markup, based on Tabs' configuration
    * Designed to be run at any point in the Tabs lifecycle.
+   * @private
    * @returns {this} component instance
    */
   renderHelperMarkup() {
@@ -485,10 +487,18 @@ Tabs.prototype = {
       // Backwards Compatibility for the original Application Menu codepath.
       if (this.isModuleTabs()) {
         if (!appMenuTrigger.length) {
-          appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
-            '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
-            '<span>Menu</span>' +
-            '</a></tab>');
+          appMenuTrigger = $(`
+            <li class="tab application-menu-trigger">
+              <a href="#">
+                <span class="icon app-header">
+                  <span class="one"></span>
+                  <span class="two"></span>
+                  <span class="three"></span>
+                </span>
+                <span>${this.settings.appMenuTriggerText || Locale.translate('AppMenuTriggerText')}</span>
+              </a>
+            </li>
+          `);
           this.tablist.prepend(appMenuTrigger);
         }
       } else if (this.isVerticalTabs() && appMenuTrigger.length) {
@@ -505,10 +515,12 @@ Tabs.prototype = {
     // Add Tab Button
     if (this.settings.addTabButton) {
       if (!this.addTabButton || !this.addTabButton.length) {
-        this.addTabButton = $(`${'<div class="add-tab-button" tabindex="0" role="button">' +
-          '<span aria-hidden="true" role="presentation">+</span>' +
-          '<span class="audible">'}${Locale.translate('AddNewTab')}</span>` +
-          '</div>');
+        this.addTabButton = $(`
+          <div class="add-tab-button" tabindex="0" role="button">
+            <span aria-hidden="true" role="presentation">+</span>
+            <span class="audible">${Locale.translate('AddNewTab')}</span>
+          </div>
+        `);
         this.addTabButton.insertAfter(this.moreButton);
         this.element.addClass('has-add-button');
       }
@@ -523,6 +535,7 @@ Tabs.prototype = {
 
   /**
    * Establishes the bound event listeners on all tabs elements
+   * @private
    * @returns {this} component instance
    */
   setupEvents() {
@@ -775,6 +788,7 @@ Tabs.prototype = {
    * Setup a mousedown event on tabs to determine in the focus handler whether
    * or a not a keystroked cause a change in focus, or a click.  Keystroke focus
    * changes cause different visual situations
+   * @private
    * @param {$.Event} e incoming focus event
    * @param {jQuery[]} elem element
    * @returns {undefined}
@@ -797,6 +811,7 @@ Tabs.prototype = {
 
   /**
    * Handler for Tab Click
+   * @private
    * @param {jQuery.Event} e incoming click event
    * @param {jQuery[]} li list item representing the clicked tab
    * @returns {boolean|undefined} ? // TODO: why?
@@ -872,6 +887,7 @@ Tabs.prototype = {
 
   /**
    * Handler for click events on the "More Tabs" popupmenu trigger
+   * @private
    * @param {jQuery.event} e Event
    * @returns {boolean|undefined} ?
    */
@@ -900,6 +916,7 @@ Tabs.prototype = {
 
   /**
    * Handler for click events on the "More Tabs" popupmenu trigger
+   * @private
    * @param {jQuery.event} e Event
    * @param {jQuery[]} a represents an anchor tag
    * @returns {boolean|undefined} ?
@@ -931,6 +948,7 @@ Tabs.prototype = {
 
   /**
    * Handler for focus events on the "More Tabs" popupmenu trigger
+   * @private
    * @param {jQuery.event} e incoming focus event
    * @returns {void}
    */
@@ -953,6 +971,7 @@ Tabs.prototype = {
 
   /**
    * Handler for keydown events on Tabs in the list
+   * @private
    * @param {jQuery.event} e incoming keydown event
    * @returns {boolean|undefined} ?
    */
@@ -1143,6 +1162,7 @@ Tabs.prototype = {
 
   /**
    * Handler for keydown events on Dismissible tabs
+   * @private
    * @param {jQuery.event} e incoming keydown event
    * @returns {void}
    */
@@ -1166,6 +1186,7 @@ Tabs.prototype = {
 
   /**
    * Handler for keydown events on the "App Menu" tab (trigger button for the App Menu)
+   * @private
    * @param {jQuery.event} e incoming keydown event
    * @returns {boolean} ?
    */
@@ -1199,6 +1220,7 @@ Tabs.prototype = {
 
   /**
    * Handler for keydown events on the "More Tabs" popupmenu trigger
+   * @private
    * @param {jQuery.event} e incoming keydown event
    * @returns {boolean|undefined} ?
    */
@@ -1256,6 +1278,7 @@ Tabs.prototype = {
 
   /**
    * Handler for keydown events on the "More Tabs" popupmenu trigger
+   * @private
    * @param {jQuery.event} e incoming keydown event
    * @returns {void}
    */
@@ -1285,6 +1308,7 @@ Tabs.prototype = {
 
   /**
    * Handles the Add Tab button being clicked
+   * @private
    * @returns {boolean|undefined} ?
    */
   handleAddButton() {
@@ -1351,6 +1375,7 @@ Tabs.prototype = {
   },
 
   /**
+   * @private
    * @param {jQuery.Event} e incoming keydown event
    * @returns {undefined|boolean} ?
    */
@@ -1413,6 +1438,10 @@ Tabs.prototype = {
     return true;
   },
 
+  /**
+   * @private
+   * @returns {void}
+   */
   handleAddButtonFocus() {
     const tabs = this.tablist.find('li:not(.separator)');
     tabs.add(this.moreButton).removeClass('is-focused');
@@ -1421,6 +1450,11 @@ Tabs.prototype = {
     this.positionFocusState(this.addTabButton, true);
   },
 
+  /**
+   * @private
+   * @param {boolean} ignoreResponsiveCheck if true, doesn't run `this.checkResponsive()`
+   * @returns {void}
+   */
   handleResize(ignoreResponsiveCheck) {
     if (!ignoreResponsiveCheck) {
       this.checkResponsive();
@@ -1446,6 +1480,11 @@ Tabs.prototype = {
     this.renderEdgeFading();
   },
 
+  /**
+   * Checks the window size to determine if a responsive-mode switch is needed.
+   * @private
+   * @returns {void}
+   */
   checkResponsive() {
     const self = this;
     const classList = self.element[0].classList;
@@ -1488,6 +1527,11 @@ Tabs.prototype = {
     }
   },
 
+  /**
+   * Causes a vertical tabs container to stretch to the height of its parent container
+   * @private
+   * @returns {void}
+   */
   handleVerticalTabResize() {
     if (!this.isVerticalTabs()) {
       return;
@@ -1524,50 +1568,99 @@ Tabs.prototype = {
     window.location = href;
   },
 
+  /**
+   * Determines whether or not this tabset's tab list should display an animated selected state on a tab.
+   * @returns {boolean} whether or not the animated selected state should display.
+   */
   hasAnimatedBar() {
     return !this.isModuleTabs() && !this.isVerticalTabs();
   },
 
+  /**
+   * Determines whether or not this tabset's tab list should display a square focus state on a tab.
+   * @returns {boolean} whether or not the square focus state should display.
+   */
   hasSquareFocusState() {
     return true;
   },
 
+  /**
+   * Determines whether or not this tabset currently has a "More Tabs" spillover button.
+   * @returns {boolean} whether or not the "More Tabs" button is currently displayed.
+   */
   hasMoreButton() {
     return this.element[0].classList.contains('has-more-button');
   },
 
+  /**
+   * Determines whether or not this normally "vertical" tabset is in an optional "horizontal" responsive mode
+   * @returns {boolean} whether or not the responsive mode is active.
+   */
   isInResponsiveMode() {
     return this.element[0].classList.contains('is-in-responsive-mode');
   },
 
+  /**
+   * Determines whether or not this tabset is currently operating as Module Tabs
+   * @returns {boolean} whether or not this is a Module tabset.
+   */
   isModuleTabs() {
     return this.element.hasClass('module-tabs');
   },
 
+  /**
+   * Determines whether or not this tabset is currently operating as Vertical Tabs
+   * @returns {boolean} whether or not this is a Vertical tabset.
+   */
   isVerticalTabs() {
     return this.element.hasClass('vertical');
   },
 
+  /**
+   * Determines whether or not this tabset is Vertical Tabs with a responsive, horizontal capability
+   * @returns {boolean} whether or not this is a Vertical tabset.
+   */
   isResponsiveVerticalTabs() {
     return this.settings.verticalResponsive === true;
   },
 
+  /**
+   * Determines whether or not this tabset is currently operating as Header Tabs
+   * @returns {boolean} whether or not this is a Header tabset.
+   */
   isHeaderTabs() {
     return this.element.hasClass('header-tabs');
   },
 
+  /**
+   * Determines whether or not this tabset is showing tabs that allow for selection via horizontal scrolling.
+   * @returns {boolean} whether or not horizontal scrolling is possible.
+   */
   isScrollableTabs() {
     return !this.isModuleTabs() && !this.isVerticalTabs();
   },
 
+  /**
+   * Determines whether or not this tabset is currently hidden
+   * @returns {boolean} whether or not this tabset is hidden.
+   */
   isHidden() {
     return this.element.is(':hidden');
   },
 
+  /**
+   * Determines whether or not this tabset is nested inside a parent Tab Panel
+   * @returns {boolean} whether or not this tabset is nested.
+   */
   isNested() {
     return this.element.closest('.tab-panel').length;
   },
 
+  /**
+   * Determines whether or not a particular tab panel is currently the active (displayed) tab panel
+   * @param {string} href representing the HTML "id" attribute of a corresponding tab panel
+   * @returns {boolean} whether or not the tab panel is active.
+   */
   isActive(href) {
     if (!href || !href.length || (href.length === 1 && href.indexOf('#') < 1)) {
       return false;
@@ -1577,6 +1670,10 @@ Tabs.prototype = {
     return panel[0].classList.contains('can-show');
   },
 
+  /**
+   * Determines whether or not this tabset is nested inside a "Layout"-style of Tab container
+   * @returns {boolean} whether or not this tabset is nested.
+   */
   isNestedInLayoutTabs() {
     const nestedInModuleTabs = this.element.closest('.module-tabs').length;
     const nestedInHeaderTabs = this.element.closest('.header-tabs').length;
@@ -1585,14 +1682,29 @@ Tabs.prototype = {
     return (nestedInModuleTabs > 0 || nestedInHeaderTabs > 0 || hasTabContainerClass > 0);
   },
 
+  /**
+   * Determines if an object is an HTML List Item representing a tab
+   * @param {object} obj incoming object
+   * @returns {boolean} whether or not the item is a tab
+   */
   isTab(obj) {
     return obj instanceof jQuery && obj.length && obj.is('li.tab');
   },
 
+  /**
+   * Determines if an object is an HTML Anchor Tag representing a tab's actionable element
+   * @param {object} obj incoming object
+   * @returns {boolean} whether or not the item is an anchor tag
+   */
   isAnchor(obj) {
     return obj instanceof jQuery && obj.length && obj.is('a');
   },
 
+  /**
+   * Gets a reference to an Anchor tag.
+   * @param {string|jQuery} href either a string that can be used as a Tab ID, or an actual jQuery wrapped Anchor Tag.
+   * @returns {jQuery} the Anchor tag
+   */
   getAnchor(href) {
     if (this.isAnchor(href)) {
       return href;
@@ -1604,6 +1716,11 @@ Tabs.prototype = {
     return this.anchors.filter(`[href="${href}"]`);
   },
 
+  /**
+   * Gets a reference to a Tab panel.
+   * @param {string|jQuery} href either a string that can be used as a Tab ID, or an actual jQuery wrapped Anchor Tag.
+   * @returns {jQuery} the Anchor tag
+   */
   getPanel(href) {
     if (this.isTab(href)) {
       href = href.children('a');
@@ -1692,6 +1809,11 @@ Tabs.prototype = {
     return target;
   },
 
+  /**
+   * Determines whether or not a string has an outbound URL, instead of a hash (#) that would match up to a Tab ID.
+   * @param {string} href a string that may or may not contain a URL
+   * @returns {boolean} whether or not the incoming string is a URL
+   */
   isURL(href) {
     if (!href || href.indexOf('#') === 0) {
       return false;
@@ -1700,6 +1822,11 @@ Tabs.prototype = {
     return true;
   },
 
+  /**
+   * Causes a new tab panel to become active.  Will also trigger AJAX calls on unloaded tab panels, if necessary.
+   * @param {string} href a string that either matches up to a Tab ID, or an outbound link to grab AJAX content from.
+   * @returns {void}
+   */
   activate(href) {
     const self = this;
 
@@ -1729,6 +1856,14 @@ Tabs.prototype = {
 
     // NOTE: Breaking Change as of 4.3.3 - `beforeactivate` to `beforeactivated`
     // See SOHO-5994 for more details
+    /**
+     * Fires when an attempt at activating a tab is started
+     *
+     * @event beforeactivated
+     * @memberof Tabs
+     * @param {jQuery.Event} e event object
+     * @param {jQuery} a the tab anchor attempting to activate
+     */
     const isCancelled = self.element.trigger('beforeactivated', [a]);
     if (!isCancelled) {
       return false;
@@ -1744,6 +1879,15 @@ Tabs.prototype = {
         oldPanel[0].classList.remove('can-show');
         oldPanel[0].classList.remove('is-visible');
         oldPanel.closeChildren();
+
+        /**
+         * Fires when a new tab has been activated
+         *
+         * @event activated
+         * @memberof Tabs
+         * @param {jQuery.Event} e event object
+         * @param {jQuery} a the tab anchor attempting to activate
+         */
         self.element.trigger('activated', [a]);
 
         targetPanelElem.classList.add('can-show');
@@ -1753,6 +1897,14 @@ Tabs.prototype = {
         targetPanelElem.offsetHeight;
 
         targetPanel.one(`${$.fn.transitionEndName()}.tabs`, () => {
+          /**
+           * Fires when a new tab has been completely activated, and the activation process is done
+           *
+           * @event afteractivated
+           * @memberof Tabs
+           * @param {jQuery.Event} e event object
+           * @param {jQuery} a the tab anchor attempting to activate
+           */
           self.element.trigger('afteractivated', [a]);
         });
 
@@ -1819,6 +1971,7 @@ Tabs.prototype = {
 
   /**
    * Shows/Hides some tabsets' faded edges based on scrolling position, if applicable.
+   * @private
    * @returns {undefined}
    */
   renderEdgeFading() {
@@ -1937,6 +2090,9 @@ Tabs.prototype = {
     return false;
   },
 
+  /**
+   * @private
+   */
   renderVisiblePanel() {
     // Recalculate all components inside of the visible tab to adjust
     // widths/heights/display if necessary
@@ -1945,6 +2101,13 @@ Tabs.prototype = {
     // this.panels.filter(':visible').handleResize();
   },
 
+  /**
+   *
+   * Update the hash in the link.
+   * @private
+   * @param  {HTMLElement} href The Dom Element.
+   * @returns {void}
+   */
   changeHash(href) {
     if (!this.settings.changeTabOnHashChange) {
       return;
@@ -1963,9 +2126,20 @@ Tabs.prototype = {
       window.location.hash = href;
     }
 
+    /**
+     * @event hash-change
+     * @memberof Tabs
+     * @param {jQuery.Event} e the jQuery event object
+     * @param {string} href the new hash fragment for the URL
+     */
     this.element.triggerHandler('hash-change', [href]);
   },
 
+  /**
+   * Updates the aria-related markup on all tab elements
+   * @private
+   * @param {jQuery} a the 'selected' tab anchor
+   */
   updateAria(a) {
     if (!a) {
       return;
@@ -1997,6 +2171,10 @@ Tabs.prototype = {
     }
   },
 
+  /**
+   * Causes `handleResize()` to be fired on any Tab components that are nested inside of this tab component's panels.
+   * @returns {void}
+   */
   resizeNestedTabs() {
     this.nestedTabControls.each((i, container) => {
       const c = $(container);
@@ -2008,7 +2186,18 @@ Tabs.prototype = {
     });
   },
 
-  // Adds a new tab into the list and properly binds events
+  /**
+   * Adds a new tab into the list and properly binds all of its events
+   * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
+   * @param {object} options incoming options for the new tab.
+   * @param {string} [options.name] the text title of the new tab.
+   * @param {boolean} [options.doActivate=false] if true, causes the newly-added tab to become activated and focused.
+   * @param {boolean} [options.isDismissible=false] if true, causes the tab to become dismissible (closable) with an "X" button.
+   * @param {boolean} [options.isDropdown=false] if true, causes the tab to become a dropdown tab.
+   * @param {string} [options.content] representing HTML markup that will be added inside of the new tab panel.
+   * @param {number} [atIndex] if defined, inserts the tab at a particular number index in the tab list.  Defaults to the last tab in the list.
+   * @returns {this} component instance
+   */
   add(tabId, options, atIndex) {
     if (!tabId) {
       return this;
@@ -2279,6 +2468,14 @@ Tabs.prototype = {
     // Adjust tablist height
     this.setOverflow();
 
+    /**
+     * Fires when a tab is removed from the tabset
+     *
+     * @event close
+     * @memberof Tabs
+     * @param {jQuery.Event} e event object
+     * @param {jQuery} targetLi the tab list item being closed
+     */
     this.element.trigger('close', [targetLi]);
 
     // If any tabs are left in the list, set the previous tab as the currently selected one.
@@ -2322,11 +2519,26 @@ Tabs.prototype = {
     this.focusBar(prevLi);
     a.focus();
 
+    /**
+     * Fires after a tab is completely removed from the tabset, and the close process has completed.
+     *
+     * @event afterclose
+     * @memberof Tabs
+     * @param {jQuery.Event} e event object
+     * @param {jQuery} targetLi the tab list item being closed
+     */
     this.element.trigger('afterclose', [targetLi]);
 
     return this;
   },
 
+  /**
+   * Adds a new tab into the list and properly binds all of its events
+   * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
+   * @param {string} [content] representing HTML markup that will be added inside of the new tab panel.
+   * @param {boolean} [doInsert=false] if true, actually appends the new content to the tab panel.
+   * @returns {this} component instance
+   */
   createTabPanel(tabId, content, doInsert) {
     tabId = tabId.replace(/#/g, '');
 
@@ -2348,6 +2560,10 @@ Tabs.prototype = {
     return markup;
   },
 
+  /**
+   * @param {jQuery} tab the tab to be checked for popupmenu items.
+   * @returns {jQuery[]} a list of avaiable popupmenu items
+   */
   checkPopupMenuItems(tab) {
     function getRemainingMenuItems(popupAPI) {
       if (!popupAPI || !popupAPI.menu) {
@@ -2374,6 +2590,7 @@ Tabs.prototype = {
     return getRemainingMenuItems(ddTab.data('popupmenu'));
   },
 
+  // @private
   getTab(e, tabId) {
     const self = this;
     const tab = $();
@@ -2423,6 +2640,7 @@ Tabs.prototype = {
     return tab;
   },
 
+  // @private
   doGetTab(e, tabId) {
     if (!e && !tabId) { return $(); }
     if (e && !(e instanceof $.Event) && typeof e !== 'string') {
@@ -2440,7 +2658,12 @@ Tabs.prototype = {
     return this.getTab(null, tabId);
   },
 
-  // Hides a tab
+  /**
+   * Hides a tab
+   * @param {jQuery.Event} e the jQuery Event
+   * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
+   * @returns {this} component instance
+   */
   hide(e, tabId) {
     const tab = this.doGetTab(e, tabId);
 
@@ -2453,7 +2676,12 @@ Tabs.prototype = {
     return this;
   },
 
-  // Shows a tab
+  /**
+   * Shows a tab
+   * @param {jQuery.Event} e the jQuery Event
+   * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
+   * @returns {this} component instance
+   */
   show(e, tabId) {
     const tab = this.doGetTab(e, tabId);
 
@@ -2463,7 +2691,12 @@ Tabs.prototype = {
     return this;
   },
 
-  // Disables an individual tab
+  /**
+   * Disables an individual tab
+   * @param {jQuery.Event} e the jQuery Event
+   * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
+   * @returns {this} component instance
+   */
   disableTab(e, tabId) {
     const tab = this.doGetTab(e, tabId);
 
@@ -2479,7 +2712,12 @@ Tabs.prototype = {
     return this;
   },
 
-  // Enables an individual tab
+  /**
+   * Enables an individual tab
+   * @param {jQuery.Event} e the jQuery Event
+   * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
+   * @returns {this} component instance
+   */
   enableTab(e, tabId) {
     const tab = this.doGetTab(e, tabId);
 
@@ -2489,7 +2727,13 @@ Tabs.prototype = {
     return this;
   },
 
-  // Renames a tab and resets the focusable bar/animation.
+  /**
+   * Renames a tab and resets the focusable bar/animation.
+   * @param {jQuery.Event} e the jQuery Event
+   * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
+   * @param {string} name the new tab name
+   * @returns {void}
+   */
   rename(e, tabId, name) {
     // Backwards compatibility with 4.2.0
     if (e && typeof e === 'string') {
@@ -2527,7 +2771,13 @@ Tabs.prototype = {
     this.focusBar(doesTabExist);
   },
 
-  // For tabs with counts, updates the count and resets the focusable bar/animation
+  /**
+   * For tabs with counts, updates the count and resets the focusable bar/animation
+   * @param {jQuery.Event} e the jQuery Event
+   * @param {string} tabId a string representing the HTML `id` attribute of the new tab panel.
+   * @param {number|string} count the new tab count
+   * @returns {void}
+   */
   updateCount(e, tabId, count) {
     // Backwards compatibility with 4.2.0
     if (e && typeof e === 'string') {
@@ -2549,12 +2799,19 @@ Tabs.prototype = {
     this.focusBar(doesTabExist);
   },
 
-  // returns the currently active tab
+  /**
+   * returns the currently active tab
+   * @returns {jQuery} the currently active tab
+   */
   getActiveTab() {
     const visible = this.panels.filter(':visible');
     return this.anchors.filter(`[href="#${visible.first().attr('id')}"]`);
   },
 
+  /**
+   * returns all visible tabs
+   * @returns {jQuery[]} all visible tabs
+   */
   getVisibleTabs() {
     const self = this;
     let tabHash = $();
@@ -2571,6 +2828,10 @@ Tabs.prototype = {
     return tabHash;
   },
 
+  /**
+   * returns a list of all tabs that are currenly in the "More Tabs" overflow menu.
+   * @returns {jQuery[]} all overflowed tabs
+   */
   getOverflowTabs() {
     const self = this;
     let tabHash = $();
@@ -2587,6 +2848,10 @@ Tabs.prototype = {
     return tabHash;
   },
 
+  /**
+   * @private
+   * @returns {void}
+   */
   setOverflow() {
     const self = this;
     const elem = this.element[0];
@@ -2635,6 +2900,10 @@ Tabs.prototype = {
     this.adjustSpilloverNumber();
   },
 
+  /**
+   * @private
+   * @returns {void}
+   */
   adjustModuleTabs() {
     const self = this;
     let sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)');
@@ -2706,6 +2975,10 @@ Tabs.prototype = {
     this.adjustSpilloverNumber();
   },
 
+  /**
+   * @private
+   * @returns {void}
+   */
   adjustSpilloverNumber() {
     const moreDiv = this.moreButton.find('.more-text');
     const tabs = this.tablist.find('li:not(.separator):not(.hidden):not(.is-disabled):not(.application-menu-trigger)');
@@ -2726,7 +2999,11 @@ Tabs.prototype = {
     countDiv.text(`${overflowedTabs.length} `);
   },
 
-  // Selects a Tab
+  /**
+   * Selects a Tab
+   * @param {string} href a string representing the HTML `id` attribute of the new tab panel.
+   * @returns {void}
+   */
   select(href) {
     const modHref = href.replace(/#/g, '');
     const anchor = this.getAnchor(modHref);
@@ -2742,6 +3019,11 @@ Tabs.prototype = {
     anchor.focus();
   },
 
+  /**
+   * Selects a Tab
+   * @param {string} startingHref a string representing the HTML `href` attribute of the popupmenu item to be selected.
+   * @returns {void}
+   */
   buildPopupMenu(startingHref) {
     const self = this;
     if (self.popupmenu) {
@@ -2940,13 +3222,11 @@ Tabs.prototype = {
       self.popupmenu.highlight(menu.find('li:first-child > a'));
     }
 
-    /**
-     * Overrides a similar method in the popupmenu code that controls escaping of
-     * this menu when pressing certain keys.  We override this here so that the
-     * controls act in a manner as if all tabs are still visible (for accessiblity
-     * reasons), meaning you can use left and right to navigate the popup menu options
-     * as if they were tabs.
-     */
+    // Overrides a similar method in the popupmenu code that controls escaping of
+    // this menu when pressing certain keys.  We override this here so that the
+    // controls act in a manner as if all tabs are still visible (for accessiblity
+    // reasons), meaning you can use left and right to navigate the popup menu options
+    // as if they were tabs.
     $(document).bindFirst('keydown.popupmenu', (e) => {
       const key = e.which;
       const currentMenuItem = $(e.target);
@@ -3027,8 +3307,12 @@ Tabs.prototype = {
     });
   },
 
-  // Used for checking if a particular tab (in the form of a jquery-wrapped list item)
-  // is spilled into the overflow area of the tablist container <UL>.
+  /**
+   * Used for checking if a particular tab (in the form of a jquery-wrapped list item)
+   * is spilled into the overflow area of the tablist container <UL>.
+   * @param {jQuery} li tab list item
+   * @returns {boolean} whether or not the tab is overflowed.
+   */
   isTabOverflowed(li) {
     if (this.isVerticalTabs() || this.isScrollableTabs()) {
       return false;
@@ -3049,6 +3333,9 @@ Tabs.prototype = {
     return liTop > tablistTop;
   },
 
+  /**
+   * @returns {jQuery} representing the last visible tab.
+   */
   findLastVisibleTab() {
     const tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)');
     let targetFocus = tabs.first();
@@ -3065,11 +3352,20 @@ Tabs.prototype = {
     return tabs.eq(tabs.index(targetFocus) - 1).find('a').focus();
   },
 
+  /**
+   * @returns {void}
+   */
   findFirstVisibleTab() {
     const tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)');
     tabs.eq(0).find('a').focus();
   },
 
+  /**
+   * Moves the animated "selected" state bar to a new tab
+   * @param {jQuery} li the new tab list item
+   * @param {function} callback fires after the animation is completed.
+   * @returns {void}
+   */
   focusBar(li, callback) {
     if (!this.hasAnimatedBar()) {
       return;
@@ -3128,6 +3424,10 @@ Tabs.prototype = {
     this.animationTimeout = setTimeout(animationTimeout.apply(this, [callback]), 0);
   },
 
+  /**
+   * Clears the animated "selected" state bar away.
+   * @returns {void}
+   */
   defocusBar() {
     if (!this.hasAnimatedBar()) {
       return;
@@ -3354,6 +3654,11 @@ Tabs.prototype = {
     }
   },
 
+  /**
+   * Causes the entire tabset to reset with new settings.
+   * @param {object} [settings] incoming settings
+   * @returns {this} component instance
+   */
   updated(settings) {
     if (settings) {
       this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
@@ -3449,6 +3754,7 @@ Tabs.prototype = {
   },
 
   /**
+   * Enables the entire Tabs component
    * @returns {void}
    */
   enable() {

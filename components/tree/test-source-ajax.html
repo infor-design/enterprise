@@ -1,0 +1,58 @@
+<div class="row top-padding">
+  <div class="six columns">
+
+    <h2>Tree Control: Ajax</h2>
+
+    <p>This example shows how to use the source callback to load child nodes. But in this twist the data is at root node which was an issue on
+       HFC-4006.
+       Clicking the node two to open should after a simulated delay, load a result with the children for this node </p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+<script>
+
+  var sampleData = [{
+    "id": "node1",
+    "text": "Node One"
+  },
+  {
+    "id": "node2",
+    "text": "Node Two",
+    "open": false,
+    "children": []
+  }];
+
+
+  // Return from Source here simulating an ajax delay.
+  // This caused a bug previously that the node would stay disabled.
+  $('#json-tree').tree({dataset: [], source: function (req, response) {
+    setTimeout(function () {
+      var nodes = [{
+        "id": "node2.1",
+        "text": "Node 2.1"
+      },{
+        "id": "node2.2",
+        "text": "Node 2.2",
+        "children": []
+      }];
+
+      response(nodes);
+    }, 1000);
+  }});
+
+  setTimeout(function () { $('#json-tree').data('tree').loadData(sampleData);} );
+
+
+
+
+</script>

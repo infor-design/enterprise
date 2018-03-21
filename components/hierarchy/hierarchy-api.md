@@ -2,25 +2,9 @@
 
 ### Table of Contents
 
--   [HIERARCHY_DEFAULTS](#hierarchy_defaults)
--   [Hierarchy](#hierarchy)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [selected](#selected)
--   [expanded](#expanded)
--   [collapsed](#collapsed)
-
-## HIERARCHY_DEFAULTS
-
-**Properties**
-
--   `legend` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Pass in custom markdown for the legend structure.
--   `legendKey` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Key to use for the legend matching
--   `dataset` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Hierarchical Data to display
--   `newData` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** New data to be appended into dataset
--   `templateId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional product name information to display
--   `mobileView` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true will only show mobile view, default using device info.
--   `beforeExpand` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** A callback that fires before node expansion of a node.
+-   [Hierarchy][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Hierarchy
 
@@ -28,8 +12,18 @@ The displays customizable hierarchical data such as an org chart.
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][4]** The component element.
+-   `settings` **[string][4]?** The component settings.
+    -   `settings.legend` **[string][4]?** Pass in custom markdown for the legend structure.
+    -   `settings.legendKey` **[string][4]?** Key to use for the legend matching
+    -   `settings.dataset` **[string][4]** Hierarchical Data to display (optional, default `[]`)
+    -   `settings.newData` **[boolean][5]** New data to be appended into dataset (optional, default `[]`)
+    -   `settings.templateId` **[string][4]?** Additional product name information to display
+    -   `settings.mobileView` **[boolean][5]** If true will only show mobile view, default using device info. (optional, default `false`)
+    -   `settings.leafHeight` **[number][6]** Set the height of the leaf (optional, default `null`)
+    -   `settings.leafWidth` **[number][6]** Set the width of the leaf (optional, default `null`)
+    -   `settings.beforeExpand` **[string][4]** A callback that fires before node expansion of a node. (optional, default `null`)
+    -   `settings.paging` **[boolean][5]** If true show pagination. (optional, default `false`)
 
 ### updated
 
@@ -37,9 +31,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][7]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][7]** The api
 
 ### destroy
 
@@ -47,29 +41,16 @@ Removes the component from existence
 
 Returns **void** 
 
-## selected
+[1]: #hierarchy
 
-Fires when node is selected
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `eventInfo` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** More info to identify the node.
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-## expanded
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-Fires when leaf expanded.
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `args` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** [nodeData, dataset]
-
-## collapsed
-
-Fires when leaf collapsed.
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `args` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** [nodeData, dataset]
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

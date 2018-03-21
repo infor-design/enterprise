@@ -10,44 +10,49 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'line';
 
 /**
-* @namespace
-* @property {array} dataset The data to use in the line/area/bubble.
-* @property {function|string} tooltip A custom tooltip or tooltip renderer function
-* for the whole chart.
-* @property {string} isArea Render as an area chart.
-* @property {string} isBubble Render as a bubble chart.
-* @property {string} showLegend If false the label will not be shown.
-* @property {object} xAxis A series of options for the xAxis
-* @property {number} xAxis.rotate Rotate the elements on the x axis.
-* Recommend -65 deg but this can be tweaked depending on look.
-* @property {object} yAxis A series of options for the yAxis
-* @property {object} xAxis.ticks Data to control the number of ticks and y axis format.
-* For example `{number: 5, format: ',.1s'}` would show only 5 yaxis points and format the
-* data to show 1K, 1M, 1G ect.. This uses the d3 formatter.
-* @property {function} xAxis.formatText A function that passes the text element and a counter.
-* You can return a formatted svg markup element to replace the current element.
-* For example you could use tspans to wrap the strings or color them.
-* @property {object} yAxis A series of options for the yAxis
-* @property {function} yAxis.formatter A d3 formatter for the yAxis points.
-* @property {boolean} hideDots If true no dots are shown
-* @property {array} axisLabels  Option to a label to one of the four sides. For Example
-* `{left: 'Left axis label', top: 'Top axis label',
-* right: 'Right axis label', bottom: 'Bottom axis label'}`
-* @property {boolean|string} animate true|false - will do or not do the animation.
-* 'initial' will do only first time the animation.
-* @property {boolean} redrawOnResize If true, the component will not resize when resizing the page.
-* @property {object} dots Option to customize the dot behavior. You can set the dot size (radius),
-* the size on hover and stroke or even add a custom class.
-* Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`
-* @property {string} formatterString Use d3 format some examples can be found on http://bit.ly/1IKVhHh
-* @property {object} emptyMessage An empty message will be displayed when there is no chart data.
-* This accepts an object of the form emptyMessage:
-* `{title: 'No Data Available',
-*  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-*  button: {text: 'xxx', click: <function>}
-*  }`
-*  Set this to null for no message or will default to 'No Data Found with an icon.'
-*/
+ * A line chart or line graph is a type of chart which displays information as a series of data
+ * points called 'markers' connected by straight line segments.
+ * @class Line
+ * @param {string} element The plugin element for the constuctor
+ * @param {string} [settings] The settings element.
+ *
+ * @param {array} [settings.dataset=[]] The data to use in the line/area/bubble.
+ * @param {function|string} [settings.tooltip] A custom tooltip or tooltip renderer function
+ * for the whole chart.
+ * @param {string} [settings.isArea] Render as an area chart.
+ * @param {string} [settings.isBubble=false] Render as a bubble chart.
+ * @param {string} [settings.showLegend=true] If false the label will not be shown.
+ * @param {object} [settings.xAxis] A series of options for the xAxis
+ * @param {number} [settings.xAxis.rotate] Rotate the elements on the x axis.
+ * Recommend -65 deg but this can be tweaked depending on look.
+ * @param {object} [settings.yAxis] A series of options for the yAxis
+ * @param {object} [settings.xAxis.ticks] Data to control the number of ticks and y axis format.
+ * For example `{number: 5, format: ',.1s'}` would show only 5 yaxis points and format the
+ * data to show 1K, 1M, 1G ect.. This uses the d3 formatter.
+ * @param {function} [settings.xAxis.formatText] A function that passes the text element and a counter.
+ * You can return a formatted svg markup element to replace the current element.
+ * For example you could use tspans to wrap the strings or color them.
+ * @param {object} [settings.yAxis] A series of options for the yAxis
+ * @param {function} [settings.yAxis.formatter] A d3 formatter for the yAxis points.
+ * @param {boolean} [settings.hideDots=false] If true no dots are shown
+ * @param {array} [settings.axisLabels]  Option to a label to one of the four sides. For Example
+ * `{left: 'Left axis label', top: 'Top axis label',
+ * right: 'Right axis label', bottom: 'Bottom axis label'}`
+ * @param {boolean|string} [settings.animate] true|false - will do or not do the animation.
+ * 'initial' will do only first time the animation.
+ * @param {boolean} [settings.redrawOnResize=true] If true, the component will not resize when resizing the page.
+ * @param {object} [settings.dots] Option to customize the dot behavior. You can set the dot size (radius),
+ * the size on hover and stroke or even add a custom class.
+ * Example `dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}`
+ * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
+ * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
+ * This accepts an object of the form emptyMessage:
+ * `{title: 'No Data Available',
+ *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+ *  button: {text: 'xxx', click: <function>}
+ *  }`
+ *  Set this to null for no message or will default to 'No Data Found with an icon.'
+ */
 const LINE_DEFAULTS = {
   dataset: [],
   isArea: false,
@@ -59,13 +64,6 @@ const LINE_DEFAULTS = {
   emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
-/**
- * A line chart or line graph is a type of chart which displays information as a series of data
- * points called 'markers' connected by straight line segments.
- * @class Line
- * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
- */
 function Line(element, settings) {
   this.settings = utils.mergeSettings(element, settings, LINE_DEFAULTS);
   this.element = $(element);
@@ -95,8 +93,9 @@ Line.prototype = {
     /**
     * Fires when the chart is complete done rendering, for customization.
     * @event rendered
-    * @property {object} event - The jquery event object
-    * @property {array} svg - The svg object.
+    * @memberof Line
+    * @param {object} event - The jquery event object
+    * @param {array} svg - The svg object.
     */
     this.element.trigger('rendered', [this.svg]);
 
@@ -756,6 +755,9 @@ Line.prototype = {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
     this.element.empty();
 
+    if (settings && settings.dataset) {
+      this.settings.dataset = settings.dataset;
+    }
     return this
       .teardown()
       .init();

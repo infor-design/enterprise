@@ -3,7 +3,19 @@ import { stringUtils as str } from '../utils/string';
 import { Locale } from '../locale/locale';
 
 /**
- * Contents of the `Soho.masks` object
+ * Contains various Mask-related utilities, settings, masking functions, etc.
+ * Available globally under `Soho.masks`.
+ * @property {string} EMPTY_STRING just an empty string
+ * @property {string} PLACEHOLDER_CHAR the default placeholder used in guides
+ * @property {string} CARET_TRAP the string of characters representing a caret trap in mask arrays
+ * @property {regexp} NON_DIGITS_REGEX regular expression that matches non-digit characters
+ * @property {regexp} DIGITS_REGEX regular expression that matches digit characters
+ * @property {regexp} ALPHAS_REGEX regular expression that matches alphabetic, non-special characters
+ * @property {regexp} ANY_REGEX regular expression that matches any non-special characters
+ * @property {object} LEGACY_DEFS mask definitions used by the old Soho Mask component.
+ *  Will be translated to RegExp when a string-based pattern is convered to an array in the new Mask.
+ * @property {object} DEFAULT_API_OPTIONS base options passed to a Mask API.
+ * @property {object} DEFAULT_CONFORM_OPTIONS default set of options that get passed to `maskAPI.conformToMask()`
  */
 const masks = {
 
@@ -29,10 +41,8 @@ const masks = {
 
 };
 
-/**
- * Legacy Mask pattern definitions.
- * The New Mask works based on an array of RegExps and Strings.
- */
+// Legacy Mask pattern definitions.
+// The New Mask works based on an array of RegExps and Strings.
 masks.LEGACY_DEFS = {
   '#': /[0-9]/,
   0: /[0-9]/,
@@ -44,9 +54,7 @@ masks.LEGACY_DEFS = {
   m: /[Mm]/
 };
 
-/**
- * Options that get passed for the _conformToMask()_ method.
- */
+// Default options that get passed for the _conformToMask()_ method.
 masks.DEFAULT_CONFORM_OPTIONS = {
   caretTrapIndexes: [],
   guide: true,
@@ -59,9 +67,7 @@ masks.DEFAULT_CONFORM_OPTIONS = {
   keepCharacterPositions: true
 };
 
-/**
- * Default Number Mask Options
- */
+// Default Number Mask Options
 const DEFAULT_NUMBER_MASK_OPTIONS = {
   prefix: masks.EMPTY_STRING,
   suffix: masks.EMPTY_STRING,
@@ -80,34 +86,28 @@ const DEFAULT_NUMBER_MASK_OPTIONS = {
   integerLimit: null
 };
 
-/**
- * Converts a string representing a formatted number into a Number Mask.
- * @param {string} strNumber incoming string
- * @returns {array} contains strings representing character literals and regex patterns.
- */
+// Converts a string representing a formatted number into a Number Mask.
+// @param {string} strNumber incoming string
+// @returns {array} contains strings representing character literals and regex patterns.
 function convertToMask(strNumber) {
   return strNumber
     .split(masks.EMPTY_STRING)
     .map(char => (masks.DIGITS_REGEX.test(char) ? masks.DIGITS_REGEX : char));
 }
 
-/**
- * Adds thousands separators to the correct spot in a formatted number string.
- * @param {string} n - the string
- * @param {string} thousands - the thousands separator.
- * @returns {string} the incoming string formatted with a thousands separator.
- */
+// Adds thousands separators to the correct spot in a formatted number string.
+// @param {string} n - the string
+// @param {string} thousands - the thousands separator.
+// @returns {string} the incoming string formatted with a thousands separator.
 // http://stackoverflow.com/a/10899795/604296
 function addThousandsSeparator(n, thousands) {
   return n.replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
 }
 
-/**
- * Gets an array of Regex objects matching the number of digits present in a source string
- * @param {string} part string representing the mark part.
- * @param {string} type 'any', 'digits', or 'alphas'
- * @returns {array} regex representing the part that was passed in.
- */
+// Gets an array of Regex objects matching the number of digits present in a source string
+// @param {string} part string representing the mark part.
+// @param {string} type 'any', 'digits', or 'alphas'
+// @returns {array} regex representing the part that was passed in.
 function getRegexForPart(part, type) {
   const types = {
     any: masks.ANY_REGEX,
@@ -256,10 +256,7 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
   return numberMask(rawValue);
 };
 
-/**
- * Default Date Mask Options
- * @namespace
- */
+// Default Date Mask Options
 const DEFAULT_DATETIME_MASK_OPTIONS = {
   format: 'M/d/yyyy',
   symbols: {
@@ -269,10 +266,7 @@ const DEFAULT_DATETIME_MASK_OPTIONS = {
   }
 };
 
-/**
- * Maximum Values for various section maps of date strings.
- * @namespace
- */
+// Maximum Values for various section maps of date strings.
 const DATE_MAX_VALUES = {
   dd: 31,
   d: 31,
@@ -353,6 +347,25 @@ masks.dateMask = function dateMask(rawValue, options) {
   });
 
   return mask;
+};
+
+/**
+ * Soho Range Date Mask Function
+ * @param {string} rawValue the un-formatted value that will eventually be masked.
+ * @param {object} options masking options
+ * @returns {array} representing a mask that will match a formatted date.
+ */
+masks.rangeDateMask = function (rawValue, options) {
+  const parts = rawValue.split(options.delimeter);
+  const delimiterArr = options.delimeter.split('');
+  const firstDate = masks.dateMask(parts[0], options);
+  let secondDate = [];
+
+  if (parts[1]) {
+    secondDate = masks.dateMask(parts[1], options);
+  }
+
+  return firstDate.concat(delimiterArr.concat(secondDate));
 };
 
 /**

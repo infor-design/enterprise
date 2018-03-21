@@ -61,6 +61,11 @@ $datagrid-short-row-height: 23px;
   }
 
   &.has-toolbar.has-filterable-columns {
+    .datagrid-header {
+      .datagrid-column-wrapper {
+        padding: 5px 20px 10px;
+      }
+    }
     .datagrid-body {
       height: calc(100% - 60px);
     }
@@ -2496,8 +2501,20 @@ td .btn-actions {
     padding: 5px 0 2px 5px  !important;
   }
 
-  .short-rowheight th .datagrid-checkbox {
-    top: -2px;
+  .short-rowheight {
+    th .datagrid-checkbox {
+      top: -2px;
+    }
+
+    .datagrid tbody tr.arrange-dragging td {
+      height: $datagrid-short-header-height;
+    }
+  }
+
+  .medium-rowheight {
+    .datagrid tbody tr.arrange-dragging td {
+      height: $datagrid-short-header-height;
+    }
   }
   // scss-lint:enable ImportantRule
 
@@ -2580,6 +2597,10 @@ td .btn-actions {
       }
     }
 
+    tbody tr.arrange-dragging td {
+      @include font-size(14);
+      height: $datagrid-row-height;
+    }
   }
 }
 

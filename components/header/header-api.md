@@ -2,95 +2,29 @@
 
 ### Table of Contents
 
--   [COMPONENT_NAME](#component_name)
--   [HEADER_DEFAULTS](#header_defaults)
--   [Header](#header)
-    -   [buildBreadcrumb](#buildbreadcrumb)
-    -   [adjustBreadcrumb](#adjustbreadcrumb)
-    -   [buildTabs](#buildtabs)
-    -   [buildWizard](#buildwizard)
-    -   [buildPopupmenu](#buildpopupmenu)
-    -   [handleEvents](#handleevents)
-    -   [handleBreadcrumbClick](#handlebreadcrumbclick)
-    -   [initPageChanger](#initpagechanger)
-    -   [drilldown](#drilldown)
-    -   [drillup](#drillup)
-    -   [reset](#reset)
-    -   [removeButton](#removebutton)
-    -   [removeBreadcrumb](#removebreadcrumb)
-    -   [removeTabs](#removetabs)
-    -   [removeWizard](#removewizard)
-    -   [removePopupmenu](#removepopupmenu)
-    -   [unbind](#unbind)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## COMPONENT_NAME
-
-Component Name
-
-Type: [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)
-
-## HEADER_DEFAULTS
-
-Component Default Settings
-
-**Properties**
-
--   `demoOptions` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Used to enable/disable default SoHo Xi options
-     for demo purposes
--   `useBackButton` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, displays a back button next to the
-     title in the header toolbar
--   `useBreadcrumb` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, displays a breadcrumb on drilldown
--   `usePopupmenu` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** f true, changes the Header Title into a popupmenu
-     that can change the current page
--   `tabs` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** If defined as an array of Tab objects, displays a series
-     of tabs that represent application sections
--   `wizardTicks` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** If defined as an array of Wizard Ticks, displays
-     a Wizard Control that represents steps in a process
--   `useAlternate` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, use alternate background/text color
-     for sub-navigation areas
--   `addScrollClass` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true a class will be added as the page
-     scrolls up and down to the header for manipulation. Eg: Docs Page.
+-   [Header][1]
+    -   [handleEvents][2]
+    -   [reset][3]
+    -   [updated][4]
+    -   [destroy][5]
 
 ## Header
 
-Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
+Special Header with Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-### buildBreadcrumb
-
-Used for adding a Breadcrumb Element to the Header
-
-Returns **void** 
-
-### adjustBreadcrumb
-
-Builds Breadcrumb markup that reflects the current state of the application
-
-Returns **void** 
-
-### buildTabs
-
-Builds Header Tabs
-
-Returns **void** 
-
-### buildWizard
-
-Builds a Header Wizard
-
-Returns **void** 
-
-### buildPopupmenu
-
-Builds a Popupmenu in place of the usual Title text, to allow for context swapping.
-
-Returns **void** 
+-   `element` **([HTMLElement][6] \| [Array][7]&lt;jQuery>)** the base element
+-   `settings` **[object][8]?** incoming settings
+    -   `settings.demoOptions` **[boolean][9]** Used to enable/disable default SoHo Xi options for demo purposes (optional, default `true`)
+    -   `settings.useBackButton` **[boolean][9]** If true, displays a back button next to the title in the header toolbar (optional, default `true`)
+    -   `settings.useBreadcrumb` **[boolean][9]** If true, displays a breadcrumb on drilldown (optional, default `false`)
+    -   `settings.usePopupmenu` **[boolean][9]** If true, changes the Header Title into a popupmenu that can change the current page (optional, default `false`)
+    -   `settings.tabs` **[array][7]** If defined as an array of Tab objects, displays a series of tabs that represent application sections (optional, default `null`)
+    -   `settings.wizardTicks` **[array][7]** If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process (optional, default `null`)
+    -   `settings.useAlternate` **[boolean][9]** If true, use alternate background/text color for sub-navigation areas (optional, default `null`)
+    -   `settings.addScrollClass` **[boolean][9]** If true a class will be added as the page scrolls up and down
+        to the header for manipulation. Eg: Docs Page. (optional, default `false`)
 
 ### handleEvents
 
@@ -98,86 +32,9 @@ Sets up header-level events
 
 Returns **this** component instance
 
-### handleBreadcrumbClick
-
-Handles click events on Breadcrumb elements
-
-**Parameters**
-
--   `e` **jQuery.Event** `click` event
-
-Returns **void** 
-
-### initPageChanger
-
-Sets up the `selected` events on the More Actions area of the header, which can include
-Menu Options for changing the current theme, persoanlization colors, and language locale.
-
-**Parameters**
-
--   `e` **jQuery.Event** `click` event
-
-Returns **void** 
-
-### drilldown
-
-Drills deeper into a breadcrumb structure while updating the Header title to reflect state.
-
-**Parameters**
-
--   `viewTitle` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** text contents to put in place of the title area.
-
-Returns **void** 
-
-### drillup
-
-Moves up into a breadcrumb structure while updating the Header title to reflect state.
-
-**Parameters**
-
--   `viewTitle` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** text contents to put in place of the title area.
-
-Returns **void** 
-
 ### reset
 
 Reset the toolbar to its default removing the drilled in patterns.
-
-Returns **this** component instance
-
-### removeButton
-
-Removes a previously-built Button pattern from the Header.
-
-Returns **void** 
-
-### removeBreadcrumb
-
-Removes a previously-built Breadcrumb structure from the Header.
-
-Returns **void** 
-
-### removeTabs
-
-Removes a previously-built Header Tabs pattern from the Header.
-
-Returns **void** 
-
-### removeWizard
-
-Removes a previously-built Header Wizard pattern from the Header.
-
-Returns **void** 
-
-### removePopupmenu
-
-Removes a previously-built Popupmenu pattern from the Header's title.
-
-Returns **void** 
-
-### unbind
-
-Removes bound events from the Header
 
 Returns **this** component instance
 
@@ -187,7 +44,7 @@ Sync up the ui with settings.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings.
+-   `settings` **[object][8]?** incoming settings.
 
 Returns **void** 
 
@@ -196,3 +53,21 @@ Returns **void**
 Teardown and destroy the menu and events.
 
 Returns **void** 
+
+[1]: #header
+
+[2]: #handleevents
+
+[3]: #reset
+
+[4]: #updated
+
+[5]: #destroy
+
+[6]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

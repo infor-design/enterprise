@@ -2,30 +2,11 @@
 
 ### Table of Contents
 
--   [BUSYINDICATOR_DEFAULTS](#busyindicator_defaults)
--   [BusyIndicator](#busyindicator)
-    -   [close](#close)
-    -   [updated](#updated)
-    -   [isActive](#isactive)
-    -   [destroy](#destroy)
--   [start](#start)
--   [complete](#complete)
--   [updated](#updated-1)
-
-## BUSYINDICATOR_DEFAULTS
-
-**Properties**
-
--   `blockUI` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** makes the element that Busy Indicator is invoked on unusable while
-     it's displayed.
--   `text` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Custom Text To Show or Will Show Localized Loading....
--   `displayDelay` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** umber in miliseconds to pass before the markup is displayed.
-    If 0, displays immediately.
--   `timeToComplete` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** fires the 'complete' trigger at a certain timing interval.
-    If 0, goes indefinitely.
--   `transparentOverlay` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If true, allows the "blockUI" setting to display an overlay
-    that prevents interaction, but appears transparent instead of gray.
--   `overlayOnly` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If true, the busy indicator will only be the overlay.
+-   [BusyIndicator][1]
+    -   [close][2]
+    -   [updated][3]
+    -   [isActive][4]
+    -   [destroy][5]
 
 ## BusyIndicator
 
@@ -34,8 +15,15 @@ wait for that request to be processed before continuing with the current task.
 
 **Parameters**
 
--   `element` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The plugin starting element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to use.
+-   `element` **[object][6]** The plugin starting element.
+-   `settings` **[object][6]?** The settings to use.
+    -   `settings.blockUI` **[string][7]** makes the element that Busy Indicator is invoked on unusable while it's displayed. (optional, default `true`)
+    -   `settings.text` **[string][7]** Custom Text To Show or Will Show Localized Loading.... (optional, default `null`)
+    -   `settings.displayDelay` **[string][7]** Number in miliseconds to pass before the markup is displayed. If 0, displays immediately. (optional, default `1000`)
+    -   `settings.timeToComplete` **[boolean][8]** fires the 'complete' trigger at a certain timing interval. If 0, goes indefinitely. (optional, default `0`)
+    -   `settings.transparentOverlay` **[string][7]** If true, allows the "blockUI" setting to display
+        an overlay that prevents interaction, but appears transparent instead of gray. (optional, default `false`)
+    -   `settings.overlayOnly` **[string][7]** If true, the busy indicator will only be the overlay. (optional, default `false`)
 
 ### close
 
@@ -43,7 +31,7 @@ Removes the appended markup and hides any trace of the indicator.
 
 **Parameters**
 
--   `fromEvent` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Designates the close is comming from an event (internal)
+-   `fromEvent` **[boolean][8]** Designates the close is comming from an event (internal)
 
 Returns **void** 
 
@@ -53,7 +41,7 @@ Update the component and apply current settings.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** the settings to update to.
+-   `settings` **[object][6]** the settings to update to.
 
 Returns **this** component instance.
 
@@ -61,7 +49,7 @@ Returns **this** component instance.
 
 Returns if the indicator is active or not.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If the busy indicator is active.
+Returns **[boolean][8]** If the busy indicator is active.
 
 ### destroy
 
@@ -69,27 +57,18 @@ Teardown and remove any added markup and events.
 
 Returns **void** 
 
-## start
+[1]: #busyindicator
 
-Fires when the indicator starts / shows.
+[2]: #close
 
-**Properties**
+[3]: #updated
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
+[4]: #isactive
 
-## complete
+[5]: #destroy
 
-Fires when the indicator is "started"
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-**Properties**
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
--   `ui` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
-
-## updated
-
-Sync the UI/Settings. Fx chnaging the text in the DOM.
-
-**Properties**
-
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

@@ -9,29 +9,23 @@ import '../tabs/tabs.jquery';
 import '../toolbar/toolbar.jquery';
 import '../wizard/wizard.jquery';
 
-/**
- * Component Name
- */
+// The Component Name
 const COMPONENT_NAME = 'header';
 
 /**
- * Component Default Settings
- * @namespace
- * @property {boolean} demoOptions  Used to enable/disable default SoHo Xi options
- *  for demo purposes
- * @property {boolean} useBackButton  If true, displays a back button next to the
- *  title in the header toolbar
- * @property {boolean} useBreadcrumb  If true, displays a breadcrumb on drilldown
- * @property {boolean} usePopupmenu  f true, changes the Header Title into a popupmenu
- *  that can change the current page
- * @property {array} tabs  If defined as an array of Tab objects, displays a series
- *  of tabs that represent application sections
- * @property {array} wizardTicks  If defined as an array of Wizard Ticks, displays
- *  a Wizard Control that represents steps in a process
- * @property {boolean} useAlternate  If true, use alternate background/text color
- *  for sub-navigation areas
- * @property {boolean} addScrollClass  If true a class will be added as the page
- *  scrolls up and down to the header for manipulation. Eg: Docs Page.
+ * Special Header with Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
+ * @class Header
+ * @param {HTMLElement|jQuery[]} element the base element
+ * @param {object} [settings] incoming settings
+ * @param {boolean} [settings.demoOptions = true] Used to enable/disable default SoHo Xi options for demo purposes
+ * @param {boolean} [settings.useBackButton = true] If true, displays a back button next to the title in the header toolbar
+ * @param {boolean} [settings.useBreadcrumb = false] If true, displays a breadcrumb on drilldown
+ * @param {boolean} [settings.usePopupmenu = false] If true, changes the Header Title into a popupmenu that can change the current page
+ * @param {array} [settings.tabs = null] If defined as an array of Tab objects, displays a series of tabs that represent application sections
+ * @param {array} [settings.wizardTicks = null] If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
+ * @param {boolean} [settings.useAlternate = null] If true, use alternate background/text color for sub-navigation areas
+ * @param {boolean} [settings.addScrollClass = false] If true a class will be added as the page scrolls up and down
+ * to the header for manipulation. Eg: Docs Page.
  */
 const HEADER_DEFAULTS = {
   demoOptions: true,
@@ -44,13 +38,6 @@ const HEADER_DEFAULTS = {
   addScrollClass: false
 };
 
-/**
- * Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
- * @class Header
- * @constructor
- * @param {HTMLElement|jQuery[]} element the base element
- * @param {object} [settings] incoming settings
- */
 function Header(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, HEADER_DEFAULTS);
@@ -193,6 +180,7 @@ Header.prototype = {
 
   /**
    * Used for adding a Breadcrumb Element to the Header
+   * @private
    * @returns {void}
    */
   buildBreadcrumb() {
@@ -218,6 +206,7 @@ Header.prototype = {
 
   /**
    * Builds Breadcrumb markup that reflects the current state of the application
+   * @private
    * @returns {void}
    */
   adjustBreadcrumb() {
@@ -237,6 +226,7 @@ Header.prototype = {
 
   /**
    * Builds Header Tabs
+   * @private
    * @returns {void}
    */
   buildTabs() {
@@ -267,6 +257,7 @@ Header.prototype = {
 
   /**
    * Builds a Header Wizard
+   * @private
    * @returns {void}
    */
   buildWizard() {
@@ -298,6 +289,7 @@ Header.prototype = {
 
   /**
    * Builds a Popupmenu in place of the usual Title text, to allow for context swapping.
+   * @private
    * @returns {void}
    */
   buildPopupmenu() {
@@ -379,6 +371,7 @@ Header.prototype = {
 
   /**
    * Handles click events on Breadcrumb elements
+   * @private
    * @param {jQuery.Event} e `click` event
    * @returns {void}
    */
@@ -409,6 +402,7 @@ Header.prototype = {
   /**
    * Sets up the `selected` events on the More Actions area of the header, which can include
    * Menu Options for changing the current theme, persoanlization colors, and language locale.
+   * @private
    * @param {jQuery.Event} e `click` event
    * @returns {void}
    */
@@ -435,6 +429,7 @@ Header.prototype = {
 
   /**
    * Drills deeper into a breadcrumb structure while updating the Header title to reflect state.
+   * @private
    * @param {string} viewTitle text contents to put in place of the title area.
    * @returns {void}
    */
@@ -459,6 +454,7 @@ Header.prototype = {
 
   /**
    * Moves up into a breadcrumb structure while updating the Header title to reflect state.
+   * @private
    * @param {string} viewTitle text contents to put in place of the title area.
    * @returns {void}
    */
@@ -522,6 +518,7 @@ Header.prototype = {
 
   /**
    * Removes a previously-built Button pattern from the Header.
+   * @private
    * @returns {void}
    */
   removeButton() {
@@ -542,6 +539,7 @@ Header.prototype = {
 
   /**
    * Removes a previously-built Breadcrumb structure from the Header.
+   * @private
    * @returns {void}
    */
   removeBreadcrumb() {
@@ -575,6 +573,7 @@ Header.prototype = {
 
   /**
    * Removes a previously-built Header Tabs pattern from the Header.
+   * @private
    * @returns {void}
    */
   removeTabs() {
@@ -614,6 +613,7 @@ Header.prototype = {
 
   /**
    * Removes a previously-built Header Wizard pattern from the Header.
+   * @private
    * @returns {void}
    */
   removeWizard() {
@@ -648,6 +648,7 @@ Header.prototype = {
 
   /**
    * Removes a previously-built Popupmenu pattern from the Header's title.
+   * @private
    * @returns {void}
    */
   removePopupmenu() {
@@ -671,6 +672,7 @@ Header.prototype = {
 
   /**
    * Removes bound events from the Header
+   * @private
    * @returns {this} component instance
    */
   unbind() {

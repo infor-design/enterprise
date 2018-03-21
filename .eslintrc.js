@@ -9,11 +9,17 @@
 module.exports = {
   // Only import some air bnb rules
   // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
-  'extends': 'airbnb-base',
+  'extends': [
+    'airbnb-base',
+    'plugin:jasmine/recommended'
+  ],
   'parserOptions': {
     'ecmaVersion': 8,
     'sourceType': 'module'
   },
+  'plugins': [
+    'jasmine'
+  ],
   'env': {
     'browser': true,
     'jquery': true,
@@ -134,7 +140,19 @@ module.exports = {
     // Forbid the use of extraneous packages
     // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md
     // paths are treated both as absolute paths, and relative to process.cwd()
-    'import/no-extraneous-dependencies': ['off']
+    'import/no-extraneous-dependencies': ['off'],
+
+    // specify the maximum length of a line in your program
+    // https://eslint.org/docs/rules/max-len
+    'max-len': ['error', {
+      code: 100,
+      comments: 150,
+      ignoreUrls: true,
+      ignoreComments: false,
+      ignoreRegExpLiterals: true,
+      ignoreStrings: true,
+      ignoreTemplateLiterals: true,
+    }]
 
   },
   'globals': {

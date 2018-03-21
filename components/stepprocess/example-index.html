@@ -41,7 +41,7 @@
           <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-caret-down"></use>
           </svg>
-          <span class='tree-text'>Step 2 (Folder)</span>
+          <span class='tree-text'>Longer name for Step 2 (Folder) that should wrap to multiple lines</span>
         </a>
         <ul class="folder js-step-folder">
           <li class="js-step">
@@ -359,22 +359,18 @@
     createHTML: function(stepFolder, step) {
       var $stepContainer = $(stepFolder);
       var $contentContainer = $('.step-container');
-      $stepContainer.append(`
-        <li class="js-step">
-          <a class="js-step-link" href="#${step.id}">
-            <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-empty-circle"></use>
-            </svg>
-            <span class='tree-text'>${step.title}</span>
-          </a>
-        </li>
-      `);
-      $contentContainer.append(`
-        <div id="${step.id}" class="js-step-panel">
-          <h2>${step.title}</h2>
-          <p>This is step ${step.id}</p>
-        </div>
-      `);
+      $stepContainer.append('<li class="js-step">' +
+        '<a class="js-step-link" href="#' + step.id + '">' +
+          '<svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">' +
+            '<use xlink:href="#icon-empty-circle"></use>' +
+          '</svg>' +
+          '<span class="tree-text">' + step.title + '</span>' +
+        '</a>' +
+      '</li>');
+      $contentContainer.append('<div id="' + step.id + '" class="js-step-panel">' +
+        '<h2>' + step.title + '</h2>' +
+        '<p>This is step ${step.id}</p>' +
+      '</div>');
     }
 
   };

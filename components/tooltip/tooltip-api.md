@@ -2,45 +2,14 @@
 
 ### Table of Contents
 
--   [TOOLTIP_DEFAULTS](#tooltip_defaults)
--   [Tooltip](#tooltip)
-    -   [addClassToLinks](#addclasstolinks)
-    -   [setContent](#setcontent)
-    -   [render](#render)
-    -   [show](#show)
-    -   [setTargetContainer](#settargetcontainer)
-    -   [position](#position)
-    -   [hide](#hide)
-    -   [updated](#updated)
-    -   [teardown](#teardown)
-    -   [destroy](#destroy)
-
-## TOOLTIP_DEFAULTS
-
-Tooltip Component Default Settings
-
-**Properties**
-
--   `content` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))?** Takes title attribute or feed content.
-     Can be a string or jQuery markup
--   `offset` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** How much room to leave
--   `placement` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
--   `trigger` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** supports click and immediate and hover
-     (and maybe in future focus)
--   `title` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Title for Infor Tips
--   `beforeShow` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Call back for ajax tooltip
--   `popover` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** force it to be a popover (no content)
--   `closebutton` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Show X close button next to title in popover
--   `isError` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** Add error classes
--   `isErrorColor` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** Add error color only not description
--   `tooltipElement` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** ID selector for an alternate element to use
-     to contain the tooltip classes
--   `parentElement` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** jQuery-wrapped element that gets
-     passed to the 'place' behavior as the element to place the tooltip against.
--   `keepOpen` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** Forces the tooltip to stay open in situations
-     where it would normally close.
--   `extraClass` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Extra css class
--   `maxWidth` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Toolip max width
+-   [Tooltip][1]
+    -   [addClassToLinks][2]
+    -   [show][3]
+    -   [setTargetContainer][4]
+    -   [position][5]
+    -   [hide][6]
+    -   [updated][7]
+    -   [destroy][8]
 
 ## Tooltip
 
@@ -48,37 +17,34 @@ Tooltip and Popover Control
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** the base element
--   `settings` **([object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))?** incoming settings
+-   `element` **([htmlelement][9] \| [Array][10]&lt;jquery>)** The component element.
+-   `settings` **[object][11]?** The component settings.
+    -   `settings.content` **([string][12] \| [function][13])?** Takes title attribute or feed content. Can be a string or jQuery markup.
+    -   `settings.offset` **[object][11]** How much room to leave. (optional, default `{top:10,left:10}`)
+    -   `settings.placement` **[string][12]** Supports 'top'|'bottom'|'right'|'offset'. (optional, default `'top'`)
+    -   `settings.trigger` **[string][12]** Supports click and immediate and hover (and maybe in future focus). (optional, default `'hover'`)
+    -   `settings.title` **[string][12]?** Title for Infor Tips.
+    -   `settings.beforeShow` **[string][12]?** Call back for ajax tooltip.
+    -   `settings.popover` **[string][12]?** force it to be a popover (no content).
+    -   `settings.closebutton` **[string][12]?** Show X close button next to title in popover.
+    -   `settings.isError` **[boolean][14]** Add error classes. (optional, default `false`)
+    -   `settings.isErrorColor` **[boolean][14]** Add error color only not description. (optional, default `false`)
+    -   `settings.tooltipElement` **[string][12]?** ID selector for an alternate element to use to contain the tooltip classes.
+    -   `settings.parentElement` **[object][11]?** jQuery-wrapped element that gets.
+        passed to the 'place' behavior as the element to place the tooltip against.
+    -   `settings.keepOpen` **[boolean][14]** Forces the tooltip to stay open in situations where it would normally close. (optional, default `false`)
+    -   `settings.extraClass` **[string][12]?** Extra css class.
+    -   `settings.placementOpt` **[object][11]?** Placement options.
+    -   `settings.maxWidth` **[string][12]?** Toolip max width.
 
 ### addClassToLinks
 
 **Parameters**
 
--   `content` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** HTML or String-based content.
--   `thisClass` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** optional, additional CSS class that gets appeneded to any
-     anchor tags inside of the content.
+-   `content` **([Array][10]&lt;jquery> | [string][12])** HTML or String-based content.
+-   `thisClass` **[string][12]?** optional, additional CSS class that gets appeneded to any anchor tags inside of the content.
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the appended content
-
-### setContent
-
-Sets the content used inside the Tooltip element.
-
-**Parameters**
-
--   `content` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function))** incoming content to be set
--   `dontRender` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** causes the tooltip to prevent a visual refresh after
-     changing its content, meaning it will keep the previous content visible until
-     this tooltip is closed or manually re-drawn.
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the render was successful
-
-### render
-
-Renders internal content either as a Tooltip or Popover.
-
-Returns **void** 
+Returns **[string][12]** the appended content
 
 ### show
 
@@ -86,9 +52,9 @@ Causes the tooltip to become shown
 
 **Parameters**
 
--   `newSettings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** an object containing changed settings that will be
+-   `newSettings` **[object][11]** an object containing changed settings that will be
      applied to the Tooltip/Popover before it's displayed.
--   `ajaxReturn` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** causes an AJAX-powered Tooltip/Popover not to refresh.
+-   `ajaxReturn` **[boolean][14]** causes an AJAX-powered Tooltip/Popover not to refresh.
 
 ### setTargetContainer
 
@@ -116,13 +82,7 @@ Causes the tooltip to store updated settings and re-render itself.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-Returns **this** component instance
-
-### teardown
-
-Tears down this component instance, removing all internal flags and unbinding events.
+-   `settings` **[object][11]?** incoming settings
 
 Returns **this** component instance
 
@@ -131,3 +91,31 @@ Returns **this** component instance
 Destroys this component instance
 
 Returns **void** 
+
+[1]: #tooltip
+
+[2]: #addclasstolinks
+
+[3]: #show
+
+[4]: #settargetcontainer
+
+[5]: #position
+
+[6]: #hide
+
+[7]: #updated
+
+[8]: #destroy
+
+[9]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

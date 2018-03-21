@@ -6,10 +6,12 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'blockgrid';
 
 /**
- * Blockgrid Default Settings
- * @namespace
- * @property {array} dataset An array of data objects
- * @property {string} selectable Controls the selection mode this can be:
+ * Component Name - Does this and that.
+ * @class Blockgrid
+ * @param {string} element The plugin element for the constuctor
+ * @param {string} [settings] The settings element.
+ * @param {array} [settings.dataset=[]] An array of data objects
+ * @param {string} [settings.selectable=false] Controls the selection mode this can be:
  * false, 'single' or 'multiple' or 'mixed'
  */
 const BLOCKGRID_DEFAULTS = {
@@ -17,12 +19,6 @@ const BLOCKGRID_DEFAULTS = {
   selectable: false // false, 'single' or 'multiple' or mixed
 };
 
-/**
- * Component Name - Does this and that.
- * @class ComponentName
- * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
- */
 function Blockgrid(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(element, settings, BLOCKGRID_DEFAULTS);
@@ -39,6 +35,7 @@ Blockgrid.prototype = {
 
   /**
    * Do initialization, build up and / or add events ect.
+   * @private
    * @returns {object} The Component prototype, useful for chaining.
    */
   init() {
@@ -110,7 +107,6 @@ Blockgrid.prototype = {
    * Run selection over a block item
    * @param {element} activeBlock Dom element to use
    * @param {boolean} isCheckbox True if a checkbox, used for mixed mode.
-   * @param {boolean} isKey True if a key was used on the checkbox, used for mixed mode.
   */
   selectBlock(activeBlock, isCheckbox) {
     const allBlocks = this.element.find('.block');
@@ -137,7 +133,7 @@ Blockgrid.prototype = {
         }
       }
 
-      this.element.triggerHandler('unselected', [this.selectedRows, 'deselect']);
+      this.element.triggerHandler('deselected', [{ selectedRows: this.selectedRows, action: 'deselect' }]);
       return;
     }
 
@@ -148,13 +144,29 @@ Blockgrid.prototype = {
       }
 
       this.selectedRows.push({ idx, data: this.settings.dataset[idx], elem: activeBlock });
-      action = isChecked ? 'unselected' : 'selected';
+      action = isChecked ? 'deselected' : 'selected';
     }
 
     if (this.settings.selectable === 'mixed' && !isCheckbox) {
       const isActivated = activeBlock.hasClass('is-activated');
       allBlocks.removeClass('is-activated');
 
+      /**
+      * Fires when a block is selected
+      *
+      * @event deactivated
+      * @memberof Blockgrid
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
+      */
+      /**
+      * Fires when a block is unselected
+      *
+      * @event activated
+      * @memberof Blockgrid
+      * @property {object} event - The jquery event object
+      * @property {object} ui - The dialog object
+      */
       if (isActivated) {
         activeBlock.removeClass('is-activated');
         this.element.triggerHandler('deactivated', [{ row: idx, item: this.settings.dataset[idx] }]);
@@ -169,6 +181,7 @@ Blockgrid.prototype = {
     * Fires when a block is selected
     *
     * @event selected
+    * @memberof Blockgrid
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */
@@ -176,10 +189,11 @@ Blockgrid.prototype = {
     * Fires when a block is unselected
     *
     * @event unselected
+    * @memberof Blockgrid
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */
-    this.element.triggerHandler(isChecked ? 'deselect' : 'selected', [this.selectedRows, action]);
+    this.element.triggerHandler(isChecked ? 'deselected' : 'selected', [{ selectedRows: this.selectedRows, action }]);
   },
 
   /**
@@ -209,10 +223,15 @@ Blockgrid.prototype = {
 
   /**
    * Handle updated settings and values.
-   * @returns {[type]} [description]
+   * @param  {settings} settings The new settings to use.
+   * @returns {void}
    */
-  updated() {
-    this.element.empty();
+  updated(settings) {
+    this.settings = utils.mergeSettings(this.element, settings, this.settings);
+
+    if (settings && settings.dataset) {
+      this.settings.dataset = settings.dataset;
+    }
 
     return this
       .teardown()

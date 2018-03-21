@@ -5,97 +5,153 @@
 <li>Splitter Element in Left Pane <a href="../components/splitter/example-splitter-left">View Example</a></li>
 <li>Events <a href="../components/splitter/example-events">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.axis
+    </td>
+    <td>
+      <span>&#39;x&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The axis on which to split x or y
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.side
+    </td>
+    <td>
+      <span>&#39;left&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Which side to dock to 'left' or 'right'.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.resize
+    </td>
+    <td>
+      <span>&#39;immediate&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      When to resize, during the drag 'immediate' or 'end'
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.containment
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      When to stop the splitter, this can be document, or a parent element
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.save
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the split size will automatically be saved for next time
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.maxWidth
+    </td>
+    <td>
+      <span>{left:&#39;auto&#39;,right:&#39;auto&#39;}</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Ability to stop dragging at a max left or right size.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          axis
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          x or y
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          side
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          left or right
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          resize
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          immediate,
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          containment
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          can be document, or a parent element
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          save
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          
-        </td>
-      </tr>
-      <tr>
-        <td>
-          maxWidth
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -110,7 +166,7 @@
         <td>
           
                 
-                  <span>settings (Object) = The settings to apply.
+                  <span>settings (object) = The settings to apply.
  </span>
                 
           
@@ -121,7 +177,7 @@
         </td>
         <td>
           The api
-Object
+object
         </td>
       </tr>
       <tr>
@@ -142,11 +198,7 @@ void
   </table>
 
 
-  
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -164,7 +216,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -173,7 +225,7 @@ void
       </div>
     
       <div>
-        <span>split (Number)
+        <span>split (number)
         
         = value
 
@@ -183,7 +235,7 @@ void
     
   
   </td>
-  <td>Fires when split.
+  <td>Fires when after the split occurs. Allowing you to sync any ui.
 </td>
 </tr>
 
@@ -195,7 +247,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -217,7 +269,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -240,22 +292,22 @@ void
 <p>The splitter component is integrated into several page patterns that contain side bars. It will not work presently in every situation but new situations can be requested. In this example it is integrated in a two-column fixed layout. Fixed means the page is 100% so all inner content panes are also set to 100%.</p>
 <p>We add the class splitter-container which will cause all elements with content on them to be 100% height. Each inner content pane may be scrollable.</p>
 <p>A div with the class of splitter will become the split handle.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;page-container two-column fixed splitter-container&quot;</span><span class="kw">&gt;</span>
-
-  <span class="kw">&lt;section</span><span class="ot"> class=</span><span class="st">&quot;main&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;content scrollable&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;/div&gt;</span>
-  <span class="kw">&lt;/section&gt;</span>
-
-  <span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;sidebar scrollable&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;content&quot;</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;splitter&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
-    <span class="kw">&lt;/div&gt;</span>
-  <span class="kw">&lt;/nav&gt;</span>
-
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;page-container two-column fixed splitter-container&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;section</span><span class="ot"> class=</span><span class="st">&quot;main&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;content scrollable&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="kw">&lt;/section&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  <span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;sidebar scrollable&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;content&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;splitter&quot;</span><span class="kw">&gt;&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">    <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">  <span class="kw">&lt;/nav&gt;</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>This is a presentation only element</li>

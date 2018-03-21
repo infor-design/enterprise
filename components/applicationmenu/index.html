@@ -7,78 +7,121 @@
 <li>Showing Top Level Buttons <a href="../components/applicationmenu/example-top-level-buttons">View Example</a></li>
 <li>Showing Menubutton as a role switcher <a href="../components/applicationmenu/example-menubutton">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The element that gets the plugin established on it.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The settings to use on this instance.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.breakpoint
+    </td>
+    <td>
+      <span>&#39;phone-to-tablet&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Can be 'tablet' or 'phone-to-tablet' (+767),
+'phablet (+610)', 'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.filterable
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true a search / filter option will be added.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.openOnLarge
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.triggers
+    </td>
+    <td>
+      <span>[]</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      An Array of jQuery-wrapped elements that are able to open/close this nav menu.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          breakpoint
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Can be 'tablet' or 'phone-to-tablet' (+767), 'phablet (+610)',
-'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          filterable
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true a search / filter option will be added.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          openOnLarge
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, will automatically open the Application Menu when a
-large screen-width breakpoint is met.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          triggers
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An Array of jQuery-wrapped elements that are able to open/close
-this nav menu.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -99,7 +142,7 @@ this nav menu.
         </td>
         <td>
           the adjacent container element
-
+Array
         </td>
       </tr>
       <tr>
@@ -142,7 +185,7 @@ boolean
         <td>
           
                 
-                  <span>anchor () = the anchor to target
+                  <span>anchor (Array) = the anchor to target
  </span>
                 
                   <span>value (number) = the numeric value to attach
@@ -195,11 +238,11 @@ void
                   <span>noFocus (boolean) = If true, sets focus on the first item in the application menu.
  </span>
                 
-                  <span>userOpened () = If true, notifies the component that the menu was
+                  <span>userOpened (boolean) = If true, notifies the component that the menu was
 manually opened by the user.
  </span>
                 
-                  <span>openedByClass () = If true, only adjusts bare-miniumum requirements
+                  <span>openedByClass (boolean) = If true, only adjusts bare-miniumum requirements
 for the application menu to appear open (should be used in cases where the application
 menu has the 
 <code>is-open</code>
@@ -220,7 +263,7 @@ menu has the
         <td>
           
                 
-                  <span>userClosed () = if true, sets a flag notifying the component
+                  <span>userClosed (boolean) = if true, sets a flag notifying the component
 that the user was responsible for closing.
  </span>
                 
@@ -252,15 +295,15 @@ boolean
         <td>
           
                 
-                  <span>triggers () = an array of HTMLElements or jQuery-wrapped elements that
+                  <span>triggers (Array) = an array of HTMLElements or jQuery-wrapped elements that
 will be used as triggers.
  </span>
                 
-                  <span>remove () = if defined, triggers that are defined will be removed
+                  <span>remove (boolean) = if defined, triggers that are defined will be removed
 internally instead of added.
  </span>
                 
-                  <span>norebuild () = if defined, this control's events won't automatically
+                  <span>norebuild (boolean) = if defined, this control's events won't automatically
 be rebound to include the new triggers.
  </span>
                 
@@ -332,7 +375,7 @@ this
         <td>
           
                 
-                  <span>settings () = incoming settings
+                  <span>settings (object) = incoming settings
  </span>
                 
           
@@ -379,8 +422,41 @@ this
 
 
   </section>
-
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>applicationmenuopen
+  </td>
+  <td>
   
+  </td>
+  <td>Fires the menu is opened
+</td>
+</tr>
+
+      
+        <tr>
+  <td>applicationmenuclose
+  </td>
+  <td>
+  
+  </td>
+  <td>Fires the menu is closed
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
 
 <h2 id="additional-test-case-pages">Additional Test Case Pages</h2>
 <ol type="1">
@@ -411,7 +487,7 @@ this
 <h2 id="states-and-variations">States and Variations</h2>
 <p>Different components of the menu have different requirements.</p>
 <ul>
-<li>The menu &quot;box&quot; should behave like other overlays or panels.</li>
+<li>The menu “box” should behave like other overlays or panels.</li>
 <li>The hierarchical structure should support the same states as a standard tree (specifically, open and closed).</li>
 <li>The individual objects (links) in the menu should support the same states (hover, focus, selected) as the context menu.</li>
 </ul>

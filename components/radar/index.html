@@ -4,308 +4,470 @@
 <li>Radar Chart Main Example <a href="../components/radar/example-index">View Example</a></li>
 </ol>
 <h2 id="api-details">API Details</h2>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The plugin element for the constuctor
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The settings element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      The data to use in the radar
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.redrawOnResize
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If false, the component will not resize when resizing the page.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.margin
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The margins of the SVG, you may want to adjust
+depending on text location.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.levels
+    </td>
+    <td>
+      <span>4</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      How many levels or inner circles should there be drawn.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.maxValue
+    </td>
+    <td>
+      <span>0</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      What is the value that the biggest circle will represent
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.labelFactor
+    </td>
+    <td>
+      <span>1.27</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      How far out than the outer circle should the labels be placed,
+this may be useful to adjust for some charts.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.wrapWidth
+    </td>
+    <td>
+      <span>60</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The number of pixels after which a label needs to be
+given a new line. You may want to change this based on label data.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showCrosslines
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Set to false to hide the cross line axes.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showAxisLabels
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Set to false to hide percent labels.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.opacityArea
+    </td>
+    <td>
+      <span>0.2</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The opacity value of the blobs. This is set to the correct Infor Style.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dotRadius
+    </td>
+    <td>
+      <span>3</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The size of the colored circles of each blog. Set to zero to remove dots.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.opacityCircles
+    </td>
+    <td>
+      <span>0</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The opacity of the circles of each blob 0 or .1 are good values.
+This is set to the correct Infor Style.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.strokeWidth
+    </td>
+    <td>
+      <span>1</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The width of the stroke around each blob.
+This is set to the correct Infor Style.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.roundStrokes
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the area and stroke will follow a
+round path (cardinal-closed).
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showCrosslines
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If false the axis lines will not be shown in the diagonals.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showAxisLabels
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If false the axis labels will not be shown.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.axisFormatter
+    </td>
+    <td>
+      <span>&#39;.0%&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      D3 formatter to use on the axis labels
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.colors
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      An array of colors to use.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showTooltips
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If false no tooltips will be shown.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.tooltip
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      A setting that controls the tooltip values and format.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.tooltip.show
+    </td>
+    <td>
+      <span>&#39;value&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Controls what is visible in the tooltip, this can be value, label
+or percent or custom function.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.tooltip.formatter
+    </td>
+    <td>
+      <span>&#39;.0%&#39;</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The d3.formatter string.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showLegend
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If false the legend will not be shown.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.legendPlacement
+    </td>
+    <td>
+      <span>&#39;right&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Where to locate the legend. This can be bottom or right at
+the moment.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.emptyMessage
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      An empty message will be displayed when there is no chart data.
+This accepts an object of the form emptyMessage:
+`{title: 'No Data Available',
+ info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+ button: {text: 'xxx', click: <function>}
+ }`
+ Set this to null for no message or will default to 'No Data Found with an icon.'
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          dataset
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          The data to use in the radar
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          redrawOnResize
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, the component will not resize when resizing the page.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          margin
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          The margins of the SVG, you may want to adjust
-depending on text location.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          levels
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          How many levels or inner circles should there be drawn.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          maxValue
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          What is the value that the biggest circle will represent
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          labelFactor
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          How far out than the outer circle should the labels be placed,
-this may be useful to adjust for some labels.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          wrapWidth
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The number of pixels after which a label needs to be
-given a new line. You may want to change this based on label data.
-<ul>
-<li>@property {boolean} showCrosslines Set to false to hide the cross line axes.</li>
-</ul>
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showAxisLabels
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Set to false to hide percent labels.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          opacityArea
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The opacity of the area of the blob.
-This is set to the correct Infor Style.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          dotRadius
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The size of the colored circles of each blog.
-Set to zero to remove dots.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          opacityCircles
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The opacity of the circles of each blob 0 or .1 are good values.
-This is set to the correct Infor Style.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          strokeWidth
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The width of the stroke around each blob.
-This is set to the correct Infor Style.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          roundStrokes
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the area and stroke will follow a
-round path (cardinal-closed).
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showCrosslines
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If false the axis lines will not be shown in the diagonals.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showAxisLabels
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If false the axis labels will not be shown.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          axisFormatter
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          D3 formatter to use on the axis labels
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          colors
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          An array of colors to use.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showTooltips
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If false now tooltips will be shown even if
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          tooltip
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          A setting that controls the tooltip values and format.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showLegend
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If false the legend will not be shown.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          legendPlacement
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Where to locate the legend. This can be bottom or right at
-the moment.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          emptyMessage
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          An empty message will be displayed when there is no chart data.
-This accepts an object of the form emptyMessage:
-
-<code>{title: 'No Data Available', info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data', button: {text: 'xxx', click: &#x3C;function>} }</code>
-
-Set this to null for no message or will default to 'No Data Found with an icon.'
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -327,6 +489,40 @@ Set this to null for no message or will default to 'No Data Found with an icon.'
         </td>
         <td>
           <p>Update the chart with a new dataset</p>
+
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>getSelected</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Get info on the currently selected lines.</p>
+
+        </td>
+        <td>
+          An object with the matching data and reference to the triggering element.
+object
+        </td>
+      </tr>
+      <tr>
+        <td>setSelected</td>
+        <td>
+          
+                
+                  <span>o (object) = The selection data object
+ </span>
+                
+                  <span>isToggle (boolean) = If true toggle the current state.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Get info on the currently selected lines.</p>
 
         </td>
         <td>
@@ -386,9 +582,7 @@ void
   </table>
 
 
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -430,43 +624,123 @@ void
 </tr>
 
       
+        <tr>
+  <td>selected
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>data (object)
+        
+        = The data element attached
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>elem (HTMLElement)
+        
+        = The dom element
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>index (number)
+        
+        = The index for this blob.
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the chart is complete done rendering, for customization.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>deselected
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>data (object)
+        
+        = The data element attached
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>elem (HTMLElement)
+        
+        = The dom element
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>index (number)
+        
+        = The index for this blob.
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the chart is complete done rendering, for customization.
+</td>
+</tr>
+
+      
       </tbody>
     </table>
   </section>
 
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke a pie bar chart with a dataset controlling the values.</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
-  <span class="kw">var</span> radarData = [{
-      <span class="dt">data</span>: [
-              [ <span class="co">// Resource</span>
-          {<span class="dt">name</span>: <span class="st">&#39;Procedure Assistance&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Personnel Training&#39;</span>, <span class="dt">value</span>: <span class="dv">2</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Patient Support&#39;</span>, <span class="dt">value</span>: <span class="dv">1</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Patient Care&#39;</span>, <span class="dt">value</span>: <span class="dv">0</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Paperwork Admin&#39;</span>, <span class="dt">value</span>: <span class="dv">1</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Equipment Management&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Data Analysis&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Compliance&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Community Support&#39;</span>, <span class="dt">value</span>: <span class="dv">2</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Assess and Diagnose&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>}
-        ],[ <span class="co">// Position</span>
-          {<span class="dt">name</span>: <span class="st">&#39;Procedure Assistance&#39;</span>, <span class="dt">value</span>: <span class="dv">5</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Personnel Training&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Patient Support&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Patient Care&#39;</span>, <span class="dt">value</span>: <span class="dv">5</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Paperwork Admin&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Equipment Management&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Data Analysis&#39;</span>, <span class="dt">value</span>: <span class="dv">5</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Compliance&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Community Support&#39;</span>, <span class="dt">value</span>: <span class="dv">5</span>},
-          {<span class="dt">name</span>: <span class="st">&#39;Assess and Diagnose&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>}
-        ]
-            ]
-    }];
-
-  <span class="fu">$</span>(<span class="st">&#39;#radar-chart-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;radar&#39;</span>, <span class="dt">dataset</span>: radarData, <span class="dt">showAxisLabels</span>: <span class="kw">false</span>});
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">var</span> radarData <span class="op">=</span> [<span class="op">{</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">      <span class="dt">data</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">              [ <span class="co">// Resource</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Procedure Assistance&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Personnel Training&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Patient Support&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Patient Care&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Paperwork Admin&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Equipment Management&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Data Analysis&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Compliance&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Community Support&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Assess and Diagnose&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">}</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">        ]<span class="op">,</span>[ <span class="co">// Position</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Procedure Assistance&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Personnel Training&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Patient Support&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Patient Care&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Paperwork Admin&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Equipment Management&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Data Analysis&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Compliance&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Community Support&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Assess and Diagnose&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">}</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">        ]</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">            ]</a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">    <span class="op">}</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">  <span class="at">$</span>(<span class="st">&#39;#radar-chart-example&#39;</span>).<span class="at">chart</span>(<span class="op">{</span><span class="dt">type</span><span class="op">:</span> <span class="st">&#39;radar&#39;</span><span class="op">,</span> <span class="dt">dataset</span><span class="op">:</span> radarData<span class="op">,</span> <span class="dt">showAxisLabels</span><span class="op">:</span> <span class="kw">false</span><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <p>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing different contrast colors.</p>
 <h2 id="code-tips">Code Tips</h2>

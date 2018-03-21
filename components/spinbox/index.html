@@ -8,88 +8,139 @@
 <li>Disabled Spinbox <a href="../components/spinbox/example-disabled">View Example</a></li>
 <li>Spinbox with Required Validation <a href="../components/spinbox/example-validation">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      the base element
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.autocorrectOnBlur
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the input will adjust to the nearest step on blur.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.min
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      if defined, provides a minimum numeric limit
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.max
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      if defined, provides a maximum numeric limit
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.step
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      if defined, increases or decreases the spinbox value
+ by a specific interval whenever the control buttons are used.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.validateOnInput
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If set to false, will only automatically correct
+ the spinbox value after the spinbox has lost focus.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          autocorrectOnBlur
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          
-        </td>
-      </tr>
-      <tr>
-        <td>
-          min
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          if defined, provides a minimum numeric limit
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          max
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          if defined, provides a maximum numeric limit
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          step
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          if defined, increases or decreases the spinbox value
-by a specific interval whenever the control buttons are used.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          validateOnInput
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If set to false, will only automatically correct
-the spinbox value after the spinbox has lost focus.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -99,259 +150,6 @@ the spinbox value after the spinbox has lost focus.
       <th>Returns</th>
     </thead>
     <tbody>
-      <tr>
-        <td>setWidth</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Sets the width of the spinbox input field.</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
-        <td>setInitialValue</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Sanitize the initial value of the input field.</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
-        <td>addMarkup</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Appends extra control markup to a Spinbox field.</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
-        <td>enableLongPress</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = jQuery 
-<code>touchstart</code>
- or 
-<code>mousedown</code>
- events
- </span>
-                
-                  <span>self (Spinbox) = this component instance
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Enables Long Pressing one of the Spinbox control buttons.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>disableLongPress</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = jQuery 
-<code>touchend</code>
- or 
-<code>mouseup</code>
- events
- </span>
-                
-                  <span>self (Spinbox) = this component instance
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Disables Long Pressing one of the Spinbox control buttons.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>handleClick</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = jQuery 
-<code>click</code>
- event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Event handler for 'click' events</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>handleKeyDown</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = jQuery 
-<code>keydown</code>
- event
- </span>
-                
-                  <span>self (Spinbox) = component instance
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Event handler for 'keydown' events</p>
-
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>handleKeyPress</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = jQuery 
-<code>keypress</code>
- event
- </span>
-                
-                  <span>self (Spinbox) = component instance
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Event handler for 'keypress' events
-TODO: Deprecate in 4.4.0</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>handleInput</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = jQuery 
-<code>input</code>
- event
- </span>
-                
-                  <span>self (Spinbox) = this component instance
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Event handler for the 'input' event</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>handleKeyup</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = jQuery 
-<code>input</code>
- event
- </span>
-                
-                  <span>self (Spinbox) = this component instance
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Event handler for 'keyup' events</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>handleAfterPaste</td>
-        <td>
-          
-                
-                  <span>self (Spinbox) = this component instance
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Change a newly pasted value to this element's min or max values, if the pasted
-value goes beyond either of those limits.  Listens to an event emitted by the
-Mask plugin after pasted content is handled.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>correctValue</td>
-        <td>
-          
-                
-                  <span>e (jQuery.Event) = jQuery 
-<code>input</code>
- event
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Fixes a value that may have been entered programmatically, or by paste,
-if it goes out of the range boundaries.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
       <tr>
         <td>increaseValue</td>
         <td>
@@ -392,82 +190,6 @@ void
         </td>
         <td>
           <p>Sets a new spinbox value and focuses the spinbox.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>checkForNumeric</td>
-        <td>
-          
-                
-                  <span>val () = will be converted to a number if it's a string.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Sanitizes the value of the input field to an integer if it isn't already established.</p>
-
-        </td>
-        <td>
-          a numeric version of the value provided, or a corrected value.
-number
-        </td>
-      </tr>
-      <tr>
-        <td>updateAria</td>
-        <td>
-          
-                
-                  <span>val (number) = the new value to be set on the spinbox
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Updates the "aria-valuenow" property on the spinbox element if the value is currently set</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>addButtonStyle</td>
-        <td>
-          
-                
-                  <span>e () = either an incoming event, or a button element to be acted on
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Adds a "pressed-in" styling for one of the spinner buttons.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>removeButtonStyle</td>
-        <td>
-          
-                
-                  <span>e () = either an incoming event, or a button element to be acted on
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Removes "pressed-in" styling for one of the spinner buttons</p>
 
         </td>
         <td>
@@ -518,33 +240,11 @@ boolean
         </td>
       </tr>
       <tr>
-        <td>setIsDisabled</td>
-        <td>
-          
-                
-                  <span>button () = the button element to be disabled
- </span>
-                
-                  <span>isDisabled () = whether or not to force a change to the button's state.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Toggle whther or not the component is disabled.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
         <td>updated</td>
         <td>
           
                 
-                  <span>settings () = incoming settings
+                  <span>settings (object) = incoming settings
  </span>
                 
           
@@ -572,32 +272,161 @@ this
 void
         </td>
       </tr>
-      <tr>
-        <td>bindEvents</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Sets up event handlers for this control and its sub-elements</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
     </tbody>
   </table>
 
 
   </section>
-
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>focus
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the input gains focus.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>blur
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the input looses focus.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>keydown
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a key is pressed down.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>keypress
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a key is pressed.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>keyup
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a key is pressed up.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afterpaste
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after input is pasted in.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
 
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <p>Using the arrows, the user can move through the range of values. Depending on the exact use case, users can also type one of the supported values directly in the field.</p>
 <h2 id="code-example">Code Example</h2>
-<p>A Spinbox is created from a standard type=&quot;text&quot; input field by adding the class=&quot;spinbox&quot;. The initializer will initialize this control using the attributes of a spinbox.</p>
+<p>A Spinbox is created from a standard type=“text” input field by adding the class=“spinbox”. The initializer will initialize this control using the attributes of a spinbox.</p>
 <ul>
 <li>Attribute min - Determines the lowest value this can be set to</li>
 <li>Attribute max - Determines the highest value this can be set to</li>
@@ -605,12 +434,12 @@ this
 <li>Attribute step - Denotes how many steps an increase should take</li>
 </ul>
 <p>Touch and mobile keyboard are supported.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="kw">&gt;</span>Spinbox (init 0, min -99, max 99, step 3)<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="ot"> name=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> class=</span><span class="st">&quot;spinbox&quot;</span><span class="ot"> min=</span><span class="st">&quot;-99&quot;</span><span class="ot"> max=</span><span class="st">&quot;99&quot;</span><span class="ot"> value=</span><span class="st">&quot;0&quot;</span><span class="ot"> step=</span><span class="st">&quot;3&quot;</span><span class="kw">/&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="kw">&gt;</span>Spinbox (init 0, min -99, max 99, step 3)<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="ot"> name=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> class=</span><span class="st">&quot;spinbox&quot;</span><span class="ot"> min=</span><span class="st">&quot;-99&quot;</span><span class="ot"> max=</span><span class="st">&quot;99&quot;</span><span class="ot"> value=</span><span class="st">&quot;0&quot;</span><span class="ot"> step=</span><span class="st">&quot;3&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>Localization for right to left languages may wish to reverse the left and right arrows.</li>

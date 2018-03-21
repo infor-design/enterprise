@@ -5,17 +5,15 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'trackdirty';
 
-/**
- * Default Trackdirty Options
- */
+// Default Trackdirty Options
 const TRACKDIRTY_DEFAULTS = {
 };
 
 /**
 * Track changes on the inputs passed in the jQuery selector and show a dirty indicator
-* @class Tag
-* @param {String} element The component element.
-* @param {String} settings The component settings.
+* @class Trackdirty
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
 */
 function Trackdirty(element, settings) {
   this.settings = utils.mergeSettings(element, settings, TRACKDIRTY_DEFAULTS);
@@ -36,8 +34,8 @@ Trackdirty.prototype = {
   /**
    * Get the value or checked if checkbox or radio
    * @private
-   * @param {Object} element .
-   * @returns {String} element value
+   * @param {object} element .
+   * @returns {string} element value
    */
   valMethod(element) {
     switch (element.attr('type')) {
@@ -52,8 +50,8 @@ Trackdirty.prototype = {
   /**
    * Get absolute position for an element
    * @private
-   * @param {Object} element .
-   * @returns {Object} position for given element
+   * @param {object} element .
+   * @returns {object} position for given element
    */
   getAbsolutePosition(element) {
     const pos = element.position();
@@ -72,7 +70,7 @@ Trackdirty.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     this.element
@@ -90,8 +88,8 @@ Trackdirty.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
@@ -121,13 +119,6 @@ Trackdirty.prototype = {
 
     input.data('original', this.valMethod(input))
       .on('resetdirty.dirty', () => {
-        /**
-        * Fires when reset dirty.
-        *
-        * @event resetdirty
-        * @type {Object}
-        * @property {Object} event - The jquery event object
-        */
         input.data('original', this.valMethod(input))
           .triggerHandler('doresetdirty.dirty');
       })
@@ -213,11 +204,10 @@ Trackdirty.prototype = {
         }
 
         /**
-        * Fires when trackdirty added.
-        *
-        * @event dirty
-        * @type {Object}
-        * @property {Object} event - The jquery event object
+        * Fires when an inout becomes dirty.
+        * @event resetdirty
+        * @memberof Trackdirty
+        * @property {object} event - The jquery event object
         */
         input.trigger('dirty');
       });

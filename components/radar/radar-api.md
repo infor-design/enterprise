@@ -2,58 +2,13 @@
 
 ### Table of Contents
 
--   [RADAR_DEFAULTS](#radar_defaults)
--   [Radar](#radar)
-    -   [updateData](#updatedata)
-    -   [toggleSelected](#toggleselected)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [rendered](#rendered)
-
-## RADAR_DEFAULTS
-
-**Properties**
-
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The data to use in the radar
--   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, the component will not resize when resizing the page.
--   `margin` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The margins of the SVG, you may want to adjust
-    depending on text location.
--   `levels` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** How many levels or inner circles should there be drawn.
--   `maxValue` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** What is the value that the biggest circle will represent
--   `labelFactor` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** How far out than the outer circle should the labels be placed,
-    this may be useful to adjust for some labels.
--   `wrapWidth` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number of pixels after which a label needs to be
-    given a new line. You may want to change this based on label data.-   @property {boolean} showCrosslines Set to false to hide the cross line axes.
--   `showAxisLabels` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to false to hide percent labels.
--   `opacityArea` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The opacity of the area of the blob.
-    This is set to the correct Infor Style.
--   `dotRadius` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The size of the colored circles of each blog.
-    Set to zero to remove dots.
--   `opacityCircles` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The opacity of the circles of each blob 0 or .1 are good values.
-    This is set to the correct Infor Style.
--   `strokeWidth` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The width of the stroke around each blob.
-    This is set to the correct Infor Style.
--   `roundStrokes` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true the area and stroke will follow a
-    round path (cardinal-closed).
--   `showCrosslines` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the axis lines will not be shown in the diagonals.
--   `showAxisLabels` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the axis labels will not be shown.
--   `axisFormatter` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** D3 formatter to use on the axis labels
--   `colors` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An array of colors to use.
--   `showTooltips` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false now tooltips will be shown even if
--   `tooltip` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** A setting that controls the tooltip values and format.
-    -   `tooltip.show` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls what is visible in the tooltip, this can be value, label
-        or percent or custom function.
-    -   `tooltip.formatter` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The d3.formatter string.
--   `showLegend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the legend will not be shown.
--   `legendPlacement` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Where to locate the legend. This can be bottom or right at
-    the moment.
--   `emptyMessage` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An empty message will be displayed when there is no chart data.
-    This accepts an object of the form emptyMessage:
-    `{title: 'No Data Available',
-     info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-     button: {text: 'xxx', click: <function>}
-     }`
-     Set this to null for no message or will default to 'No Data Found with an icon.'
+-   [Radar][1]
+    -   [updateData][2]
+    -   [getSelected][3]
+    -   [setSelected][4]
+    -   [toggleSelected][5]
+    -   [updated][6]
+    -   [destroy][7]
 
 ## Radar
 
@@ -63,8 +18,47 @@ from the same poin
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
+-   `element` **[string][8]** The plugin element for the constuctor
+-   `settings` **[string][8]** The settings element.
+    -   `settings.dataset` **[array][9]** The data to use in the radar
+    -   `settings.redrawOnResize` **[boolean][10]** If false, the component will not resize when resizing the page. (optional, default `true`)
+    -   `settings.margin` **[object][11]?** The margins of the SVG, you may want to adjust
+        depending on text location.
+    -   `settings.levels` **[number][12]** How many levels or inner circles should there be drawn. (optional, default `4`)
+    -   `settings.maxValue` **[number][12]** What is the value that the biggest circle will represent (optional, default `0`)
+    -   `settings.labelFactor` **[number][12]** How far out than the outer circle should the labels be placed,
+        this may be useful to adjust for some charts. (optional, default `1.27`)
+    -   `settings.wrapWidth` **[number][12]** The number of pixels after which a label needs to be
+        given a new line. You may want to change this based on label data. (optional, default `60`)
+    -   `settings.showCrosslines` **[boolean][10]** Set to false to hide the cross line axes. (optional, default `true`)
+    -   `settings.showAxisLabels` **[boolean][10]** Set to false to hide percent labels. (optional, default `true`)
+    -   `settings.opacityArea` **[number][12]** The opacity value of the blobs. This is set to the correct Infor Style. (optional, default `0.2`)
+    -   `settings.dotRadius` **[number][12]** The size of the colored circles of each blog. Set to zero to remove dots. (optional, default `3`)
+    -   `settings.opacityCircles` **[number][12]** The opacity of the circles of each blob 0 or .1 are good values.
+        This is set to the correct Infor Style. (optional, default `0`)
+    -   `settings.strokeWidth` **[number][12]** The width of the stroke around each blob.
+        This is set to the correct Infor Style. (optional, default `1`)
+    -   `settings.roundStrokes` **[boolean][10]** If true the area and stroke will follow a
+        round path (cardinal-closed). (optional, default `true`)
+    -   `settings.showCrosslines` **[boolean][10]** If false the axis lines will not be shown in the diagonals. (optional, default `true`)
+    -   `settings.showAxisLabels` **[boolean][10]** If false the axis labels will not be shown. (optional, default `true`)
+    -   `settings.axisFormatter` **[string][8]** D3 formatter to use on the axis labels (optional, default `'.0%'`)
+    -   `settings.colors` **[array][9]?** An array of colors to use.
+    -   `settings.showTooltips` **[boolean][10]** If false no tooltips will be shown. (optional, default `true`)
+    -   `settings.tooltip` **[object][11]?** A setting that controls the tooltip values and format.
+        -   `settings.tooltip.show` **[string][8]** Controls what is visible in the tooltip, this can be value, label
+            or percent or custom function. (optional, default `'value'`)
+        -   `settings.tooltip.formatter` **[object][11]** The d3.formatter string. (optional, default `'.0%'`)
+    -   `settings.showLegend` **[boolean][10]** If false the legend will not be shown. (optional, default `true`)
+    -   `settings.legendPlacement` **[string][8]** Where to locate the legend. This can be bottom or right at
+        the moment. (optional, default `'right'`)
+    -   `settings.emptyMessage` **[object][11]?** An empty message will be displayed when there is no chart data.
+        This accepts an object of the form emptyMessage:
+        `{title: 'No Data Available',
+         info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+         button: {text: 'xxx', click: <function>}
+         }`
+         Set this to null for no message or will default to 'No Data Found with an icon.'
 
 ### updateData
 
@@ -72,7 +66,22 @@ Update the chart with a new dataset
 
 **Parameters**
 
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The data to use.
+-   `data` **[object][11]** The data to use.
+
+### getSelected
+
+Get info on the currently selected lines.
+
+Returns **[object][11]** An object with the matching data and reference to the triggering element.
+
+### setSelected
+
+Get info on the currently selected lines.
+
+**Parameters**
+
+-   `o` **[object][11]** The selection data object
+-   `isToggle` **[boolean][10]** If true toggle the current state.
 
 ### toggleSelected
 
@@ -80,7 +89,7 @@ Get info on the currently selected lines.
 
 **Parameters**
 
--   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The selected info object.
+-   `options` **[object][11]** The selected info object.
 
 ### updated
 
@@ -88,9 +97,9 @@ Handle updated settings and values.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings to use.
+-   `settings` **[object][11]** The new settings to use.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
+Returns **[object][11]** The api for chaining.
 
 ### destroy
 
@@ -98,11 +107,26 @@ Teardown - Remove added markup and events.
 
 Returns **void** 
 
-## rendered
+[1]: #radar
 
-Fires when the chart is complete done rendering, for customization.
+[2]: #updatedata
 
-**Properties**
+[3]: #getselected
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `svg` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The svg object.
+[4]: #setselected
+
+[5]: #toggleselected
+
+[6]: #updated
+
+[7]: #destroy
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[12]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

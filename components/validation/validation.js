@@ -1,10 +1,8 @@
 import { Locale } from '../locale/locale';
 
-/**
- * The validation rules object.
- * This contains all base rules for validation that come bundled as part of Soho.
- * These rules can be extended.
- */
+// The validation rules object.
+// This contains all base rules for validation that come bundled as part of Soho.
+// These rules can be extended.
 function ValidationRules() {
   const self = this;
 
@@ -179,6 +177,42 @@ function ValidationRules() {
         return check;
       },
       message: 'Unavailable Date',
+      type: 'error'
+    },
+
+    // Range date
+    rangeDate: {
+      check(value, field) {
+        this.message = Locale.translate('rangeDate');
+        let check = true;
+        const api = field.data('datepicker');
+        if (api) {
+          const s = api.settings;
+          const parts = value.split(s.range.separator);
+          const checkRule = (rule, newvalue) => {
+            field.val(newvalue);
+            this.message = `${self.rules[rule].message} (${newvalue})`;
+            if (!self.rules[rule].check(newvalue, field)) {
+              check = false;
+            }
+          };
+          if (parts.length === 2) {
+            checkRule('date', parts[0]);
+            if (check) {
+              checkRule('date', parts[1]);
+            }
+            if (check) {
+              checkRule('availableDate', parts[0]);
+            }
+            if (check) {
+              checkRule('availableDate', parts[1]);
+            }
+          }
+        }
+        field.val(value);
+        return check;
+      },
+      message: 'Range Dates',
       type: 'error'
     },
 

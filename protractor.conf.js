@@ -4,7 +4,7 @@ const protractorImageComparison = require('protractor-image-comparison');
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
-    '**/e2e/*.e2e-spec.js'
+    '**/functional/*.functional-spec.js'
   ],
   capabilities: {
     browserName: 'chrome'
@@ -15,17 +15,22 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
-    print: function() {}
+    print: () => {}
   },
-  onPrepare: function() {
+  onPrepare: () => {
     browser.protractorImageComparison = new protractorImageComparison({
       baselineFolder: './baseline/',
       screenshotPath: './.tmp/',
       autoSaveBaseline: true,
-      debug: true
+      debug: false
     });
+
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: true }
     }));
+
+    return browser.getProcessedConfig().then((cap) => {
+      browser.browserName = cap.capabilities.browserName;
+    });
   }
 };

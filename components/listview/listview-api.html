@@ -1,214 +1,312 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      the base element
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dataset
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      Array of data to feed the template
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.template
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Html Template String
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.description
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Audible Label (or use parent title)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.paging
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, activates paging
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pagesize
+    </td>
+    <td>
+      <span>10</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      If paging is activated, sets the number of listview items available per page
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pagingType
+    </td>
+    <td>
+      <span>&#39;list&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The paging type to use, this can be 'list', 'table' or 'firstlast'
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.searchable
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.selectable
+    </td>
+    <td>
+      <span>&#39;single&#39;</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      selection mode, can be false, 'single', 'multiple' or 'mixed'
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.selectOnFocus
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the first item in the list will be selected as it is focused.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showCheckboxes
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If false will not show checkboxes used with multiple selection mode only
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.hoverable
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the list element will show a hover action to indicate its actionable.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.emptyMessage
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Text to go in emptyMessage.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.source
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      If source is a string then it serves as
+the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.forceToRenderOnEmptyDs
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true list will render as an empty list with ul tag, but not any li tags in it.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disableItemDeactivation
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true when an item is
+activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showPageSizeSelector
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the page size select will be shown when paging.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          dataset
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          Array of data to feed the template
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          content
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Html Template String
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          description
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Audible Label (or use parent title)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          paging
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, activates paging
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          pagingType
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The paging type to use, this can be 'list' (default)
-or 'table' or 'firstlast'
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          pagesize
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          If paging is activated, sets the number of
-listview items available per page
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          searchable
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true, associates itself with a
-Searchfield/Autocomplete and allows itself to be filtered
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          selectable
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          selection mode, can be false, 'single' or
-'multiple' or 'mixed'
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          selectOnFocus
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the first item in the list will be
-selected as it is focused.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showCheckboxes
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If false will not show checkboxes used with
-multiple selection mode only
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          hoverable
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the list element will show a hover action
-to indicate its actionable.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          source
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          If source is a string then it serves as the url
-for an ajax call that returns the dataset. If its a function it is a call back for
-getting the data asyncronously.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          disableItemDeactivation
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true when an item is activated the
-user should not be able to deactivate it by clicking on the activated item. They
-can only select another row.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showPageSizeSelector
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the page size select will be shown when paging.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -218,43 +316,6 @@ can only select another row.
       <th>Returns</th>
     </thead>
     <tbody>
-      <tr>
-        <td>render</td>
-        <td>
-          
-                
-                  <span>dataset (array) = The dataset to use
- </span>
-                
-                  <span>pagerInfo (object) = Pager instructions
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Render the template against the dataset.</p>
-
-        </td>
-        <td>
-        </td>
-      </tr>
-      <tr>
-        <td>refresh</td>
-        <td>
-          
-                
-                  <span>dataset (array) = contains a potential new dataset to display inside the listview.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Get the Data Source. Can be an array, Object or Url and render the list.</p>
-
-        </td>
-        <td>
-        </td>
-      </tr>
       <tr>
         <td>loadData</td>
         <td>
@@ -287,39 +348,6 @@ void
         </td>
         <td>
           <p>Toggle all items from selected to deselected, useful for multi/mixed selection</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>resetSearch</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Reset the current search parameters and highlight.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>focus</td>
-        <td>
-          
-                
-                  <span>item (jQuery) = The list item (as jQuery) to focus
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Focus the provided list item with the keyboard</p>
 
         </td>
         <td>
@@ -389,31 +417,6 @@ void
         </td>
       </tr>
       <tr>
-        <td>sortFunction</td>
-        <td>
-          
-                
-                  <span>field (string) = The field in the dataset to sort on.
- </span>
-                
-                  <span>reverse (string) = If true sort descending.
- </span>
-                
-                  <span>primer (function) = A sorting primer function.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Overridable function to conduct sorting</p>
-
-        </td>
-        <td>
-          a customized sorting algorithm
-function
-        </td>
-      </tr>
-      <tr>
         <td>deselect</td>
         <td>
           
@@ -470,44 +473,6 @@ void
         </td>
       </tr>
       <tr>
-        <td>toggleItemActivation</td>
-        <td>
-          
-                
-                  <span>li (jQuery) = The jQuery list element.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Toggle acivation state on the list item</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>activateItem</td>
-        <td>
-          
-                
-                  <span>li () = The jQuery list element or the index.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Set item to activated, unactivate others and fire an event.</p>
-
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
         <td>activatedItem</td>
         <td>
           
@@ -533,7 +498,7 @@ If null the currently activated one will be deactivated.
           
         </td>
         <td>
-          <p>Set item to deactivated, uand fire an event.</p>
+          <p>Set item to deactivated, and fire an event.</p>
 
         </td>
         <td>
@@ -552,7 +517,7 @@ void
         <td>
           the currently selected ListView item, or an empty jQuery selector
 if there are currently no items selected.
-
+Array
         </td>
       </tr>
       <tr>
@@ -560,7 +525,7 @@ if there are currently no items selected.
         <td>
           
                 
-                  <span>settings () = incoming settings
+                  <span>settings (object) = incoming settings
  </span>
                 
           
@@ -571,7 +536,7 @@ if there are currently no items selected.
         </td>
         <td>
           component instance
-this
+object
         </td>
       </tr>
       <tr>
@@ -603,20 +568,6 @@ void
         </td>
       </tr>
       <tr>
-        <td>teardown</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Detatch all bound events.</p>
-
-        </td>
-        <td>
-          component instance
-this
-        </td>
-      </tr>
-      <tr>
         <td>destroy</td>
         <td>
           
@@ -630,22 +581,229 @@ this
 void
         </td>
       </tr>
-      <tr>
-        <td>handleEvents</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>This component fires the following events.</p>
-
-        </td>
-        <td>
-        </td>
-      </tr>
     </tbody>
   </table>
 
 
   </section>
-
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>rendered
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>dataset (array)
+        
+        = .
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the listbox is fully rendered.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>sorted
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after sorted.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>selected
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>selected (object)
+        
+        = items and item info
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a item is selected.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>deselected
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>selected (object)
+        
+        = items and item info
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when a item is deselected.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforeactivate
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = index, elem, data
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before activate item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>itemactivated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = index, elem, data
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after activate item.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>itemdeactivated
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>args (object)
+        
+        = index, elem, data
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after deactivated item.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

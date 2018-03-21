@@ -12,7 +12,7 @@ const COMPONENT_NAME_DEFAULTS = {
  * Component Name - Does this and that.
  * @class ComponentName
  * @param {string} element The plugin element for the constuctor
- * @param {string} settings The settings element.
+ * @param {string} [settings] The settings element.
  */
 function ComponentName(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COMPONENT_NAME_DEFAULTS);
@@ -70,7 +70,7 @@ ComponentName.prototype = {
 
   /**
    * Handle updated settings and values.
-   * @returns {[type]} [description]
+   * @returns {object} [description]
    */
   updated() {
     return this

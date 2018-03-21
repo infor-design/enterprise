@@ -2,33 +2,19 @@
 
 ### Table of Contents
 
--   [COLORPICKER_DEFAULTS](#colorpicker_defaults)
--   [ColorPicker](#colorpicker)
-    -   [getHexFromLabel](#gethexfromlabel)
-    -   [getLabelFromHex](#getlabelfromhex)
-    -   [toggleList](#togglelist)
-    -   [setColor](#setcolor)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [readonly](#readonly)
-    -   [isDisabled](#isdisabled)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## COLORPICKER_DEFAULTS
-
-Colorpicker Default Settings
-
-**Properties**
-
--   `colors` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** An array of objects of the form.
-    {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
--   `showLabel` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Show the label if true vs the hex value if false.
--   `editable` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If false, the field is readonly and transparent.
-    I.E. The value cannot be typed only editable by selecting.
--   `uppercase` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If false, lower case hex is allowed.
-    If true upper case hex is allowed. If showLabel is true this setting is ignored.
--   `colorOnly` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** If true the field will be shrunk to only show the color portion.
+-   [ColorPicker][1]
+    -   [getHexFromLabel][2]
+    -   [getLabelFromHex][3]
+    -   [getHexValue][4]
+    -   [getLabelValue][5]
+    -   [toggleList][6]
+    -   [setColor][7]
+    -   [enable][8]
+    -   [disable][9]
+    -   [readonly][10]
+    -   [isDisabled][11]
+    -   [updated][12]
+    -   [destroy][13]
 
 ## ColorPicker
 
@@ -36,8 +22,17 @@ The ColorPicker Component is a trigger field with a listing colors that can be s
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** The plugin element for the constuctor
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings element.
+-   `element` **([Array][14]&lt;jQuery> | [HTMLElement][15])** The plugin element for the constuctor
+-   `settings` **[object][16]?** The settings element.
+    -   `settings.themes` **[string][17]** Themes available for ColorPicker (optional, default `{}`)
+    -   `settings.colors` **[string][17]** An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
+        that can be used to populate the color grid. (optional, default `[]`)
+    -   `settings.showLabel` **[string][17]** Show the label if true vs the hex value if false. (optional, default `false`)
+    -   `settings.editable` **[string][17]** If false, the field is readonly and transparent. I.E. The value
+        cannot be typed only editable by selecting. (optional, default `true`)
+    -   `settings.uppercase` **[string][17]** If false, lower case hex is allowed. If true upper case hex is allowed.
+        If showLabel is true this setting is ignored. (optional, default `true`)
+    -   `settings.colorOnly` **[string][17]** If true the field will be shrunk to only show the color portion. (optional, default `false`)
 
 ### getHexFromLabel
 
@@ -45,7 +40,7 @@ Get the hex value based on a label. Does not handle duplicates.
 
 **Parameters**
 
--   `label` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The label to search for in the color labels.
+-   `label` **[string][17]** The label to search for in the color labels.
 
 Returns **void** 
 
@@ -56,9 +51,21 @@ Can pass with or without the #
 
 **Parameters**
 
--   `hex` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The hex to search for in the color set.
+-   `hex` **[string][17]** The hex to search for in the color set.
 
 Returns **void** 
+
+### getHexValue
+
+Get the currently set hex value.
+
+Returns **[string][17]** A string containing the hex
+
+### getLabelValue
+
+Get the currently set label value.
+
+Returns **[string][17]** A string containing the hex
 
 ### toggleList
 
@@ -72,8 +79,8 @@ Set the visible color in the field
 
 **Parameters**
 
--   `hex` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The hex value to use (can have the # or not).
--   `label` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The text to display
+-   `hex` **[string][17]** The hex value to use (can have the # or not).
+-   `label` **[string][17]** The text to display
 
 Returns **void** 
 
@@ -107,12 +114,46 @@ Update the component and optionally apply new settings.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** the settings to update to.
+-   `settings` **[object][16]** the settings to update to.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The plugin api for chaining.
+Returns **[object][16]** The plugin api for chaining.
 
 ### destroy
 
 Detach events and restore DOM to default.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The plugin api (this).
+Returns **[object][16]** The plugin api (this).
+
+[1]: #colorpicker
+
+[2]: #gethexfromlabel
+
+[3]: #getlabelfromhex
+
+[4]: #gethexvalue
+
+[5]: #getlabelvalue
+
+[6]: #togglelist
+
+[7]: #setcolor
+
+[8]: #enable
+
+[9]: #disable
+
+[10]: #readonly
+
+[11]: #isdisabled
+
+[12]: #updated
+
+[13]: #destroy
+
+[14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[15]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

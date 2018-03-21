@@ -21,7 +21,6 @@ module.exports = function (comments, config) {
     const slugger = new GithubSlugger();
     return `#${slugger.slug(namespace)}`;
   });
-
   const formatters = createFormatters(linkerStack.link);
 
   // Add an Index
@@ -71,8 +70,12 @@ module.exports = function (comments, config) {
       typeNoLink(type) {
         let output = '';
 
-        if (!type || !type.name) {
+        if (!type || (!type.name && !type.expression)) {
           return '';
+        }
+
+        if (type.expression) {
+          type = type.expression;
         }
 
         for (const property in type.name) {
@@ -93,8 +96,16 @@ module.exports = function (comments, config) {
 
   sharedImports.imports.renderSection = _.template(fs.readFileSync(path.join(__dirname, 'section._'), 'utf8'), sharedImports);
   sharedImports.imports.renderEvent = _.template(fs.readFileSync(path.join(__dirname, 'event._'), 'utf8'), sharedImports);
+  sharedImports.imports.renderSetting = _.template(fs.readFileSync(path.join(__dirname, 'setting._'), 'utf8'), sharedImports);
   const pageTemplate = _.template(fs.readFileSync(path.join(__dirname, 'index._'), 'utf8'), sharedImports);
-  const events = comments.filter(comment => comment.kind === 'event');
+  let events = [];
+  if (comments[0] && comments[0].members) {
+    events = comments[0].members.events;
+  }
+  let settings = [];
+  if (comments[0] && comments[0].tags) {
+    settings = comments[0].tags;
+  }
 
   // push assets into the pipeline as well.
   const file = new Vinyl({
@@ -102,6 +113,7 @@ module.exports = function (comments, config) {
     contents: new Buffer(pageTemplate({
       docs: comments,
       events,
+      settings,
       config
     }), 'utf8')
   });

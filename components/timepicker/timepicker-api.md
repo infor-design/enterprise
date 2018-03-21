@@ -2,51 +2,22 @@
 
 ### Table of Contents
 
--   [TIMEPICKER_DEFAULTS][1]
--   [TimePicker][2]
-    -   [handleKeys][3]
-    -   [handleBlur][4]
-    -   [is24HourFormat][5]
-    -   [hasSeconds][6]
-    -   [hasDayPeriods][7]
-    -   [getTimeSeparator][8]
-    -   [roundMinutes][9]
-    -   [afterShow][10]
-    -   [getTimeFromField][11]
-    -   [setTimeOnField][12]
-    -   [isOpen][13]
-    -   [openTimePopup][14]
-    -   [closeTimePopup][15]
-    -   [onPopupHide][16]
-    -   [toggleTimePopup][17]
-    -   [value][18]
-    -   [enable][19]
-    -   [readonly][20]
-    -   [disable][21]
-    -   [isDisabled][22]
-    -   [updated][23]
-    -   [destroy][24]
-    -   [handleEvents][25]
-
-## TIMEPICKER_DEFAULTS
-
-Default Timepicker Settings
-
-**Properties**
-
--   `timeFormat` **[string][26]** The time format
--   `minuteInterval` **[number][27]** Integer from 1 to 60.  Multiples of this value
-     are displayed as options in the minutes dropdown.
--   `secondInterval` **[number][27]** Integer from 1 to 60.
--   `mode` **[string][26]** can be set to 'standard', 'range',
--   `roundToInterval` **[boolean][28]** if `false`, does not automatically round
-     user-entered values from the pickers to their nearest interval.
--   `parentElement` **(null | [Array][29]&lt;jQuery>)?** if defined as a jQuery-wrapped element,
-     will be used as the target element.
--   `returnFocus` **[string][26]** If set to false, focus will not be returned to
-     the calling element. It usually should be for accessibility purposes.
-
-Returns **[object][30]** containing settings
+-   [TimePicker][1]
+    -   [getTimeSeparator][2]
+    -   [getTimeFromField][3]
+    -   [setTimeOnField][4]
+    -   [isOpen][5]
+    -   [openTimePopup][6]
+    -   [closeTimePopup][7]
+    -   [toggleTimePopup][8]
+    -   [value][9]
+    -   [enable][10]
+    -   [readonly][11]
+    -   [disable][12]
+    -   [isDisabled][13]
+    -   [updated][14]
+    -   [destroy][15]
+    -   [handleEvents][16]
 
 ## TimePicker
 
@@ -54,68 +25,19 @@ The Timepicker Component provides a click/touch user interface for setting a tim
 
 **Parameters**
 
--   `element` **([HTMLElement][31] \| [Array][29]&lt;jQuery>)** the base element
--   `settings` **[Object][30]?** incoming settings
-
-### handleKeys
-
-Sets up a `keydown` event listener.
-
-Returns **void** 
-
-### handleBlur
-
-Sets up a `blur` event listener.
-
-### is24HourFormat
-
-Checks a time format value to see if it is a Military (24-hour) format.
-
-**Parameters**
-
--   `value` **[string][26]** a string value representing a time format.
-
-Returns **[boolean][28]** whether or not the time format is 24-hour
-
-### hasSeconds
-
-Checks a time format value to see if it includes seconds.
-
-**Parameters**
-
--   `value` **[string][26]** a string value representing a time format.
-
-Returns **[boolean][28]** whether or not seconds are included in the time format
-
-### hasDayPeriods
-
-Checks to see if a time format contains a space for presenting the day period.
-
-**Parameters**
-
--   `value` **[string][26]** a string value representing a time format.
-
-Returns **[boolean][28]** whther or not the time format has day periods.
+-   `element` **([HTMLElement][17] \| [Array][18]&lt;jQuery>)** the base element
+-   `settings` **[object][19]?** incoming settings
+    -   `settings.timeFormat` **[string][20]** The time format, defaults to the current locales time format. (optional, default `'h:mm a'`)
+    -   `settings.minuteInterval` **[number][21]** Integer from 1 to 60.  Multiples of this value
+         are displayed as options in the minutes dropdown. (optional, default `5`)
+    -   `settings.secondInterval` **[number][21]** Integer from 1 to 60. (optional, default `5`)
+    -   `settings.parentElement` **(null | [Array][18]&lt;jQuery>)?** if defined as a jQuery-wrapped element, will be used as the target element.
 
 ### getTimeSeparator
 
 Gets a Locale-defined version of the time separator.
 
-Returns **[string][26]** containing the time separator
-
-### roundMinutes
-
-Rounds the current value of the minutes picker to its nearest interval value.
-
-### afterShow
-
-Handler for the Timepicker Popover's custom `show` event.
-
-**Parameters**
-
--   `ui` **[object][30]** timepicker popup element
-
-Returns **void** 
+Returns **[string][20]** containing the time separator
 
 ### getTimeFromField
 
@@ -124,10 +46,10 @@ minutes, (optional) seconds, and (optional) day period.
 
 **Parameters**
 
--   `value` **[string][26]?** this method can optionally be passed
+-   `value` **[string][20]?** this method can optionally be passed
     a string-based time value to calculate instead of the current field's value.
 
-Returns **[object][30]** containing key/value pairs representing time parts.
+Returns **[object][19]** containing key/value pairs representing time parts.
 
 ### setTimeOnField
 
@@ -140,7 +62,7 @@ Returns **void**
 
 Return whether or not the Timepicker popup is open.
 
-Returns **[boolean][28]** whether or not the Timepicker popup is open.
+Returns **[boolean][22]** whether or not the Timepicker popup is open.
 
 ### openTimePopup
 
@@ -158,12 +80,6 @@ the popover is hidden.
 
 Returns **void** 
 
-### onPopupHide
-
-Handles the time popover's "hide" event
-
-Returns **void** 
-
 ### toggleTimePopup
 
 Toggles the visibility of the Timepicker popup.
@@ -176,9 +92,9 @@ Getter method for retrieving the value of the Timepicker.
 
 **Parameters**
 
--   `removePunctuation` **[boolean][28]** Gets rid of all the value's punctuation on return.
+-   `removePunctuation` **[boolean][22]** Gets rid of all the value's punctuation on return.
 
-Returns **[string][26]** the current timepicker value
+Returns **[string][20]** the current timepicker value
 
 ### enable
 
@@ -202,7 +118,7 @@ Returns **void**
 
 Detects whether or not the component is disabled
 
-Returns **[boolean][28]** whether or not the component is disabled
+Returns **[boolean][22]** whether or not the component is disabled
 
 ### updated
 
@@ -210,7 +126,7 @@ Updates the component instance.  Can be used after being passed new settings.
 
 **Parameters**
 
--   `settings` **[object][30]?** incoming settings
+-   `settings` **[object][19]?** incoming settings
 
 Returns **this** component instanceof
 
@@ -226,64 +142,46 @@ Sets up event listeners for the timepicker instance.
 
 Returns **this** component instance
 
-[1]: #timepicker_defaults
+[1]: #timepicker
 
-[2]: #timepicker
+[2]: #gettimeseparator
 
-[3]: #handlekeys
+[3]: #gettimefromfield
 
-[4]: #handleblur
+[4]: #settimeonfield
 
-[5]: #is24hourformat
+[5]: #isopen
 
-[6]: #hasseconds
+[6]: #opentimepopup
 
-[7]: #hasdayperiods
+[7]: #closetimepopup
 
-[8]: #gettimeseparator
+[8]: #toggletimepopup
 
-[9]: #roundminutes
+[9]: #value
 
-[10]: #aftershow
+[10]: #enable
 
-[11]: #gettimefromfield
+[11]: #readonly
 
-[12]: #settimeonfield
+[12]: #disable
 
-[13]: #isopen
+[13]: #isdisabled
 
-[14]: #opentimepopup
+[14]: #updated
 
-[15]: #closetimepopup
+[15]: #destroy
 
-[16]: #onpopuphide
+[16]: #handleevents
 
-[17]: #toggletimepopup
+[17]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-[18]: #value
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[19]: #enable
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[20]: #readonly
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[21]: #disable
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[22]: #isdisabled
-
-[23]: #updated
-
-[24]: #destroy
-
-[25]: #handleevents
-
-[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
-
-[28]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[31]: https://developer.mozilla.org/docs/Web/HTML/Element
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

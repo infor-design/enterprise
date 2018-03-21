@@ -133,7 +133,7 @@
 
     // On swap-update ==========================================================
     var api1 = $('#example-swaplist-1').data('swaplist');
-    api1.element.on('swapupdate', function (e, items) {
+    api1.element.on('swapupdate', function (e, args) {
       console.log(api1.dataset);
       console.log(api1.getAvailable());
       console.log(api1.getSelected());

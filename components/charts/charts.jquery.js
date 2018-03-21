@@ -10,7 +10,7 @@ import { Radar, COMPONENT_NAME as RADAR_NAME } from '../radar/radar';
 /*
 * jQuery Component Wrapper for Charts. It maps the singlular components
 * to the previous versions single jquery wrapper.
-* @param  {[type]} settings The settings to apply.
+* @param  {object} settings The settings to apply.
 * @returns {object} The jquery object for chaining.
 */
 $.fn.chart = function (settings) {

@@ -457,7 +457,7 @@ Validator.prototype = {
    * @param {boolean} showTooltip whether or not this field should display its
    *  validation message in a tooltip
    * @param {jQuery.Event} e the `validate` event
-   * @returns {Array} of jQuery deferred objects
+   * @returns {array} of jQuery deferred objects
    */
   validate(field, showTooltip, e) {
     field.data(`handleEvent${[(e.type || '')]}`, null);
@@ -475,7 +475,7 @@ Validator.prototype = {
     const value = self.value(field);
     const placeholder = field.attr('placeholder');
 
-    function manageResult(result, type) {
+    function manageResult(result, showResultTooltip, type) {
       // Only remove if "false", not any other value ie.. undefined
       if (rule.positive === false) {
         self.removePositive(field);
@@ -489,7 +489,7 @@ Validator.prototype = {
           return;
         }
 
-        self.addMessage(field, rule.message, rule.type, field.attr(`data-${validationType.type}-type`) !== 'tooltip', showTooltip);
+        self.addMessage(field, rule.message, rule.type, field.attr(`data-${validationType.type}-type`) !== 'tooltip', showResultTooltip);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
@@ -498,14 +498,13 @@ Validator.prototype = {
           dfd.resolve();
         }
       } else if ($.grep(results, res => res === validationType.type).length === 0) {
-        self.removeMessage(field, validationType.type);
         dfd.resolve();
 
         if (rule.positive) {
           // FIX: In Contextual Action Panel control not sure why but need to add error,
           // otherwise "icon-confirm" get misaligned,
           // so for this fix adding and then removing error here
-          self.addMessage(field, rule.message, rule.type, rule.inline, showTooltip);
+          self.addMessage(field, rule.message, rule.type, rule.inline, showResultTooltip);
           self.removeMessage(field, rule.type);
           dfd.resolve();
 
@@ -869,7 +868,9 @@ Validator.prototype = {
     const hasTooltip = field.attr(`data-${type}-type`) || !!tooltipAPI;
     const hasError = field.getMessage({ type: 'error' });
 
-    this.inputs.filter('input, textarea').off('focus.validate');
+    if (this.inputs) {
+      this.inputs.filter('input, textarea').off('focus.validate');
+    }
     field.removeClass(type);
     field.removeData(`data-${type}message`);
 

@@ -6,22 +6,31 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'fileuploadadvanced';
 
 /**
- * Default FileUploadAdvanced Options
- * @namespace
- * @property {boolean} isStandalone On page(true)|on modal(false), used for some visual style only.
- * @property {boolean} allowedTypes Restrict file types(ie. 'jpg|png|gif') ['*' all types]
- * @property {boolean} maxFilesInProcess Max number of files can be uploaded
- * @property {boolean} maxFileSize Max file size in bytes, -1 for unlimited
- * @property {boolean} fileName Variable name to read from server
- * @property {boolean} isDisabled Make control disabled
- * @property {boolean} showBrowseButton Add way to browse files to upload
- * @property {Function} send Method for send file to upload
- * @property {string} textDropArea Text to show in drop area
- * @property {string} textDropAreaWithBrowse Text to show in drop area when browse option true
- * @property {string} textBtnCancel Hidden text for cancel button
- * @property {string} textBtnCloseError Hidden text for error close button
- * @property {string} textBtnRemove Hidden text for remove button
- */
+* A trigger field for uploading a single file.
+* @class FileUploadAdvanced
+* @constructor
+*
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+* @param {boolean} [settings.isStandalone=true] On page(true)|on modal(false), used for some visual style only.
+* @param {string} [settings.standaloneClass='standalone'] Css class if on page.
+* @param {string} [settings.allowedTypes='*'] Restrict file types(ie. 'jpg|png|gif') ['*' all types]
+* @param {number} [settings.maxFilesInProcess=99999] Max number of files can be uploaded
+* @param {number} [settings.maxFileSize=-1] Max file size in bytes, -1 for unlimited
+* @param {string} [settings.fileName='myfile'] Variable name to read from server
+* @param {boolean} [settings.isDisabled=false] Make control disabled
+* @param {boolean} [settings.showBrowseButton=true] Add way to browse files to upload
+* @param {Function} [settings.send] Method for send file to upload
+* @param {string} [settings.textDropArea] Text to show in drop area
+* @param {string} [settings.textDropAreaWithBrowse] Text to show in drop area when browse option true
+* @param {string} [settings.textBtnCancel] Hidden text for cancel button
+* @param {string} [settings.textBtnCloseError] Hidden text for error close button
+* @param {string} [settings.textBtnRemove] Hidden text for remove button
+* @param {string} [settings.errorAllowedTypes] Error text for allowed types
+* @param {string} [settings.errorMaxFileSize] Error text for max file size
+* @param {string} [settings.errorMaxFilesInProcess] Error text for max files in process
+*/
+
 const FILEUPLOADADVANCED_DEFAULTS = {
   isStandalone: true, //
   standaloneClass: 'standalone', // css class if on page
@@ -46,13 +55,6 @@ const FILEUPLOADADVANCED_DEFAULTS = {
   errorMaxFilesInProcess: null
 };
 
-/**
-* A trigger field for uploading a single file.
-* @class FileUploadAdvanced
-* @constructor
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function FileUploadAdvanced(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, FILEUPLOADADVANCED_DEFAULTS);
@@ -180,9 +182,9 @@ FileUploadAdvanced.prototype = {
         * Fires when file/s drag and droped to drop area.
         *
         * @event filesdroped
-        * @type {Object}
-        * @property {Object} event - The jquery event object
-        * @property {Array} files - List of files droped
+        * @memberof FileUploadAdvanced
+        * @property {object} event - The jquery event object
+        * @property {array} files - List of files droped
         */
         self.element.triggerHandler('filesdroped', [files]);
 
@@ -266,9 +268,9 @@ FileUploadAdvanced.prototype = {
       * Fires before create the progress status object.
       *
       * @event beforecreatestatus
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} file - file to set the status
+      * @memberof FileUploadAdvanced
+      * @property {object} event - The jquery event object
+      * @property {object} file - file to set the status
       */
       this.element.triggerHandler('beforecreatestatus', [files[i]]);
       /* global FormData */
@@ -282,9 +284,9 @@ FileUploadAdvanced.prototype = {
       * Fires after create the progress status object.
       *
       * @event aftercreatestatus
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} file - file to set the status
+      * @memberof FileUploadAdvanced
+      * @property {object} event - The jquery event object
+      * @property {object} file - file to set the status
       */
       this.element.triggerHandler('aftercreatestatus', [files[i]]);
 
@@ -344,9 +346,9 @@ FileUploadAdvanced.prototype = {
       * Fires when file progress status changes.
       *
       * @event fileprogress
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} status - `{ file, progress }`
+      * @memberof FileUploadAdvanced
+      * @property {object} event - The jquery event object
+      * @property {object} status - `{ file, progress }`
       */
       this.element.triggerHandler('fileprogress', [{ file, progress }]);
       progressBar.attr('data-value', progress).triggerHandler('updated');
@@ -359,9 +361,9 @@ FileUploadAdvanced.prototype = {
         * Fires when file aborted.
         *
         * @event fileaborted
-        * @type {Object}
-        * @property {Object} event - The jquery event object
-        * @property {Object} file - aborted
+        * @memberof FileUploadAdvanced
+        * @property {object} event - The jquery event object
+        * @property {object} file - aborted
         */
         this.element.triggerHandler('fileaborted', [file]);
         jqxhr.abort();
@@ -400,9 +402,9 @@ FileUploadAdvanced.prototype = {
       * Fires when file complete uploading.
       *
       * @event filecompleteuploading
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {Object} file uploaded
+      * @memberof FileUploadAdvanced
+      * @property {object} event - The jquery event object
+      * @property {object} file uploaded
       */
       self.element.triggerHandler('filecompleteuploading', [file]);
     };
@@ -439,8 +441,8 @@ FileUploadAdvanced.prototype = {
   /**
    * Show error on ui
    * @private
-   * @param {String} error to display
-   * @param {Object} file contains the error.
+   * @param {string} error to display
+   * @param {object} file contains the error.
    * @returns {void}
    */
   showError(error, file) {
@@ -493,8 +495,8 @@ FileUploadAdvanced.prototype = {
   /**
    * Check if file type allowed
    * @private
-   * @param {String} fileName to check types
-   * @returns {Boolean} true if allowed to uploaded
+   * @param {string} fileName to check types
+   * @returns {boolean} true if allowed to uploaded
    */
   isFileTypeAllowed(fileName) {
     const fileExtensions = this.settings.allowedTypes.toLowerCase().split(/[\s|]+/g);
@@ -508,8 +510,8 @@ FileUploadAdvanced.prototype = {
   /**
    * Helper function that formats the file sizes
    * @private
-   * @param {Number} bytes to be formated
-   * @returns {String} formated to use in ui
+   * @param {number} bytes to be formated
+   * @returns {string} formated to use in ui
    */
   formatFileSize(bytes) {
     const scale = {
@@ -570,8 +572,8 @@ FileUploadAdvanced.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

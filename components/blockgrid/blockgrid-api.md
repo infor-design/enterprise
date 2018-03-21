@@ -2,100 +2,58 @@
 
 ### Table of Contents
 
--   [BLOCKGRID_DEFAULTS][1]
--   [ComponentName][2]
--   [init][3]
--   [selectBlock][4]
--   [updated][5]
--   [destroy][6]
--   [selected][7]
--   [unselected][8]
+-   [Blockgrid][1]
+    -   [selectBlock][2]
+    -   [updated][3]
+    -   [destroy][4]
 
-## BLOCKGRID_DEFAULTS
-
-Blockgrid Default Settings
-
-**Properties**
-
--   `dataset` **[array][9]** An array of data objects
--   `selectable` **[string][10]** Controls the selection mode this can be:
-    false, 'single' or 'multiple' or 'mixed'
-
-## ComponentName
+## Blockgrid
 
 Component Name - Does this and that.
 
 **Parameters**
 
--   `element` **[string][10]** The plugin element for the constuctor
--   `settings` **[string][10]** The settings element.
+-   `element` **[string][5]** The plugin element for the constuctor
+-   `settings` **[string][5]?** The settings element.
+    -   `settings.dataset` **[array][6]** An array of data objects (optional, default `[]`)
+    -   `settings.selectable` **[string][5]** Controls the selection mode this can be:
+        false, 'single' or 'multiple' or 'mixed' (optional, default `false`)
 
-## init
-
-Do initialization, build up and / or add events ect.
-
-Returns **[object][11]** The Component prototype, useful for chaining.
-
-## selectBlock
+### selectBlock
 
 Run selection over a block item
 
 **Parameters**
 
--   `activeBlock` **[element][12]** Dom element to use
--   `isCheckbox` **[boolean][13]** True if a checkbox, used for mixed mode.
--   `isKey` **[boolean][13]** True if a key was used on the checkbox, used for mixed mode.
+-   `activeBlock` **[element][7]** Dom element to use
+-   `isCheckbox` **[boolean][8]** True if a checkbox, used for mixed mode.
 
-## updated
+### updated
 
 Handle updated settings and values.
 
-Returns **\[type]** [description]
+**Parameters**
 
-## destroy
+-   `settings` **settings** The new settings to use.
+
+Returns **void** 
+
+### destroy
 
 Teardown - Remove added markup and events.
 
-## selected
+[1]: #blockgrid
 
-Fires when a block is selected
+[2]: #selectblock
 
-**Properties**
+[3]: #updated
 
--   `event` **[object][11]** The jquery event object
--   `ui` **[object][11]** The dialog object
+[4]: #destroy
 
-## unselected
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-Fires when a block is unselected
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-**Properties**
+[7]: https://developer.mozilla.org/docs/Web/API/Element
 
--   `event` **[object][11]** The jquery event object
--   `ui` **[object][11]** The dialog object
-
-[1]: #blockgrid_defaults
-
-[2]: #componentname
-
-[3]: #init
-
-[4]: #selectblock
-
-[5]: #updated
-
-[6]: #destroy
-
-[7]: #selected
-
-[8]: #unselected
-
-[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[12]: https://developer.mozilla.org/docs/Web/API/Element
-
-[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

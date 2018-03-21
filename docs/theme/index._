@@ -1,3 +1,17 @@
+ <% if (settings.length > 0) { %><section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      <% settings.forEach(function(s) { %><%=renderSetting({setting: s})%><% })%>
+      </tbody>
+    </table>
+  </section><% }%>
   <section><% docs.forEach(function(s) { %>
   <% if (s.kind !== 'event') { %>
     <%= renderSection({
@@ -5,7 +19,6 @@
       renderSection: renderSection
     }) %><% } %><% })%>
   </section>
-
   <% if (events.length > 0) { %><section>
     <h2>Events</h2>
     <table class="section-table">

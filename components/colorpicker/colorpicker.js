@@ -7,16 +7,19 @@ import { personalization } from '../personalize/personalize.bootstrap';
 const COMPONENT_NAME = 'colorpicker';
 
 /**
- * Colorpicker Default Settings
- * @namespace
- * @property {string} colors An array of objects of the form.
- * {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
- * @property {string} showLabel  Show the label if true vs the hex value if false.
- * @property {string} editable  If false, the field is readonly and transparent.
- * I.E. The value cannot be typed only editable by selecting.
- * @property {string} uppercase  If false, lower case hex is allowed.
- * If true upper case hex is allowed. If showLabel is true this setting is ignored.
- * @property {string} colorOnly If true the field will be shrunk to only show the color portion.
+ * The ColorPicker Component is a trigger field with a listing colors that can be selected.
+ * @class ColorPicker
+ * @param {jQuery[]|HTMLElement} element The plugin element for the constuctor
+ * @param {object} [settings] The settings element.
+ * @param {string} [settings.themes={}] Themes available for ColorPicker
+ * @param {string} [settings.colors=[]] An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
+ * that can be used to populate the color grid.
+ * @param {string} [settings.showLabel=false]  Show the label if true vs the hex value if false.
+ * @param {string} [settings.editable=true]  If false, the field is readonly and transparent. I.E. The value
+ * cannot be typed only editable by selecting.
+ * @param {string} [settings.uppercase=true] If false, lower case hex is allowed. If true upper case hex is allowed.
+ * If showLabel is true this setting is ignored.
+ * @param {string} [settings.colorOnly=false] If true the field will be shrunk to only show the color portion.
  */
 const COLORPICKER_DEFAULTS = {
   // Theme key: MUST match with theme file name (ie: [filename: 'light-theme.css' -> 'light-theme'])
@@ -118,12 +121,6 @@ const COLORPICKER_DEFAULTS = {
   colorOnly: false
 };
 
-/**
- * The ColorPicker Component is a trigger field with a listing colors that can be selected.
- * @class ColorPicker
- * @param {jQuery[]|HTMLElement} element The plugin element for the constuctor
- * @param {object} settings The settings element.
- */
 function ColorPicker(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COLORPICKER_DEFAULTS);
 
@@ -220,8 +217,9 @@ ColorPicker.prototype = {
   getHexFromLabel(label) {
     for (let i = 0; i < this.settings.colors.length; i++) {
       const data = this.settings.colors[i];
+      const translated = Locale.translate(data.label, true);
 
-      if (label === data.label + data.number) {
+      if (label === data.label + data.number || label === translated + data.number) {
         let hex = data.value;
         if (hex.substr(0, 1) !== '#') {
           hex = `#${hex}`;
@@ -249,11 +247,27 @@ ColorPicker.prototype = {
       const data = this.settings.colors[i];
 
       if (hex.replace('#', '') === data.value.replace('#', '')) {
-        return data.label + data.number;
+        return this.translateColorLabel(data.label) + data.number;
       }
     }
 
     return '';
+  },
+
+  /**
+  * Get the currently set hex value.
+  * @returns {string} A string containing the hex
+  */
+  getHexValue() {
+    return this.element.attr('value');
+  },
+
+  /**
+  * Get the currently set label value.
+  * @returns {string} A string containing the hex
+  */
+  getLabelValue() {
+    return this.settings.showLabel ? this.element.val() : this.getLabelFromHex(this.element.val());
   },
 
   /**
@@ -384,19 +398,32 @@ ColorPicker.prototype = {
     this.element[0].setAttribute('aria-describedby', colorLabel);
   },
 
-  // Refresh and Append the Color Menu
+  /**
+   * @private
+   * @param {string} colorText the original text color
+   * @returns {string} the translated text color
+   */
+  translateColorLabel(colorText) {
+    return Locale.translate(colorText, true);
+  },
+
+  /**
+   * Refresh and Append the Color Menu
+   * @private
+   * @returns {jQuery} the menu to be appended
+   */
   updateColorMenu() {
     const isMenu = !!($('#colorpicker-menu').length);
     const menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
     const activeTheme = personalization.currentTheme;
     const isBorderAll = (this.settings.themes[activeTheme].border === 'all');
-    const isChecked = this.settings.themes[activeTheme].checkmark;
+    const checkThemes = this.settings.themes[activeTheme].checkmark;
     let checkmarkClass = '';
 
     for (let i = 0, l = this.settings.colors.length; i < l; i++) {
       const li = $('<li></li>');
       const a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
-      const colorText = (Locale.translate(this.settings.colors[i].label, true) || this.settings.colors[i].label) + (this.settings.colors[i].number || '');
+      const colorText = (this.translateColorLabel(this.settings.colors[i].label) || this.settings.colors[i].label) + (this.settings.colors[i].number || '');
       const colorValue = this.settings.colors[i].value;
       const colorNum = parseInt(this.settings.colors[i].number, 10);
       let isBorder = false;
@@ -414,9 +441,9 @@ ColorPicker.prototype = {
 
       if (elemValue && (`${elemValue}`).toLowerCase().replace('#', '') === (`${colorValue}`).toLowerCase()) {
         // Set checkmark color class
-        if (isChecked) {
+        if (checkThemes) {
           /* eslint-disable no-loop-func */
-          $.each(isChecked, (k, v) => {
+          $.each(checkThemes, (k, v) => {
             // checkmark: {'one': [1, 2], 'two': [3, 10]}
             // will add class "checkmark-one", where current colors number is in range [1 to 3]
             // and will add class "checkmark-two", where current colors number is in range [3 to 10]
@@ -586,6 +613,10 @@ ColorPicker.prototype = {
 
     this.element.on('keyup.colorpicker blur.colorpicker paste.colorpicker change.colorpicker', function () {
       const val = $(this).val();
+      if (self.settings.showLabel) {
+        self.setColor($(this).attr('value'), val);
+        return;
+      }
       self.setColor(val);
     });
 

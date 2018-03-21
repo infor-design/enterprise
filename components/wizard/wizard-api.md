@@ -2,52 +2,29 @@
 
 ### Table of Contents
 
--   [WIZARD_DEFAULTS](#wizard_defaults)
--   [Wizard](#wizard)
-    -   [buildTicks](#buildticks)
-    -   [updateRange](#updaterange)
-    -   [updated](#updated)
-    -   [teardown](#teardown)
-    -   [activate](#activate)
-    -   [destroy](#destroy)
-    -   [handleEvents](#handleevents)
-
-## WIZARD_DEFAULTS
-
-Component Default Settings
-
-**Properties**
-
--   `ticks` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** Defines the data to use, must be specified.
+-   [Wizard][1]
+    -   [updated][2]
+    -   [activate][3]
+    -   [destroy][4]
+-   [beforeactivate][5]
+-   [activated][6]
+-   [activated][7]
 
 ## Wizard
 
+A horizontal form based wizard component.
+
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the Wizard container
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-### buildTicks
-
-Builds the HTML Markup that draws out defined Wizard tick marks.
-
-Returns **this** component instance
-
-### updateRange
-
-Re-renders the Wizard Range with updated ticks
-
-Returns **this** component instance
+-   `element` **([Array][8]&lt;jQuery> | [HTMLElement][9])** the Wizard container
+-   `settings` **[object][10]?** incoming settings
+    -   `settings.ticks` **[Array][8]&lt;jQuery>?** Defines the data to use, must be specified.
 
 ### updated
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-Returns **this** component instance
-
-### teardown
+-   `settings` **[object][10]?** incoming settings
 
 Returns **this** component instance
 
@@ -60,7 +37,7 @@ element reference to a tick.
 **Parameters**
 
 -   `e` **jQuery.Event** the activate event object
--   `tick` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the target tick to be activated
+-   `tick` **([Array][8]&lt;jQuery> | [HTMLElement][9])** the target tick to be activated
 
 Returns **this** component instance
 
@@ -68,8 +45,52 @@ Returns **this** component instance
 
 Teardown - Remove added markup and events
 
-### handleEvents
+## beforeactivate
 
-This component listens to the following events:
+Fires before a step is activated/pressed. You can cancel selection by returning a 'beforeactivate'
+handler as 'false'
 
-Returns **this** component instance
+**Properties**
+
+-   `event` **[object][10]** The jquery event object
+-   `tick` **[HTMLElement][9]** The tick (link) that was activated.
+
+## activated
+
+Fires while a step is activated/pressed.
+handler as 'false'
+
+**Properties**
+
+-   `event` **[object][10]** The jquery event object
+-   `tick` **[HTMLElement][9]** The tick (link) that was activated.
+
+## activated
+
+Fires after a step is activated/pressed. And the new Dom is loaded.
+handler as 'false'
+
+**Properties**
+
+-   `event` **[object][10]** The jquery event object
+-   `tick` **[HTMLElement][9]** The tick (link) that was activated.
+
+[1]: #wizard
+
+[2]: #updated
+
+[3]: #activate
+
+[4]: #destroy
+
+[5]: #beforeactivate
+
+[6]: #activated
+
+[7]: #activated-1
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[9]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

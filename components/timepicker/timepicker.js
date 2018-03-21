@@ -5,7 +5,7 @@ import { Locale } from '../locale/locale';
 // jQuery components
 import '../dropdown/dropdown.jquery';
 import '../icons/icons.jquery';
-import '../mask/masked-input.jquery';
+import '../mask/mask-input.jquery';
 import '../popover/popover.jquery';
 
 // Component Name
@@ -14,22 +14,7 @@ const COMPONENT_NAME = 'timepicker';
 // Timepicker Modes
 const TIMEPICKER_MODES = ['standard', 'range'];
 
-/**
- * Default Timepicker Settings
- * @namespace
- * @property {string} timeFormat The time format
- * @property {number} minuteInterval  Integer from 1 to 60.  Multiples of this value
- *  are displayed as options in the minutes dropdown.
- * @property {number} secondInterval  Integer from 1 to 60.
- * @property {string} mode  can be set to 'standard', 'range',
- * @property {boolean} roundToInterval  if `false`, does not automatically round
- *  user-entered values from the pickers to their nearest interval.
- * @property {null|jQuery[]} [parentElement]  if defined as a jQuery-wrapped element,
- *  will be used as the target element.
- * @property {string} returnFocus  If set to false, focus will not be returned to
- *  the calling element. It usually should be for accessibility purposes.
- * @returns {object} containing settings
- */
+// Timepicker defaults
 const TIMEPICKER_DEFAULTS = function () {
   return {
     timeFormat: Locale.calendar().timeFormat || 'h:mm a', // The time format
@@ -46,7 +31,17 @@ const TIMEPICKER_DEFAULTS = function () {
  * The Timepicker Component provides a click/touch user interface for setting a time.
  * @class TimePicker
  * @param {HTMLElement|jQuery[]} element the base element
- * @param {Object} [settings] incoming settings
+ * @param {object} [settings] incoming settings
+ * @param {string} [settings.timeFormat = 'h:mm a'] The time format, defaults to the current locales time format.
+ * @param {number} [settings.minuteInterval = 5]  Integer from 1 to 60.  Multiples of this value
+ *  are displayed as options in the minutes dropdown.
+ * @param {number} [settings.secondInterval = 5]  Integer from 1 to 60.
+ * @property {string} [settings.mode = 'standard']  Can be set to 'standard', 'range',
+ * @property {boolean} [settings.roundToInterval = true]  if `false`, does not automatically round user-entered values
+ * from the pickers to their nearest interval.
+ * @param {null|jQuery[]} [settings.parentElement] if defined as a jQuery-wrapped element, will be used as the target element.
+ * @property {string} [settings.returnFocus = true]  If set to false, focus will not be returned to
+ *  the calling element. It usually should be for accessibility purposes.
  */
 function TimePicker(element, settings) {
   this.element = $(element);
@@ -171,6 +166,7 @@ TimePicker.prototype = {
 
   /**
    * Sets up a `keydown` event listener.
+   * @private
    * @returns {void}
    */
   handleKeys() {
@@ -203,7 +199,8 @@ TimePicker.prototype = {
 
   /**
    * Sets up a `blur` event listener.
-   */
+   * @private
+  */
   handleBlur() {
     const self = this;
 
@@ -223,6 +220,7 @@ TimePicker.prototype = {
 
   /**
    * Checks a time format value to see if it is a Military (24-hour) format.
+   * @private
    * @param {string} value - a string value representing a time format.
    * @returns {boolean} whether or not the time format is 24-hour
    */
@@ -242,6 +240,7 @@ TimePicker.prototype = {
 
   /**
    * Checks a time format value to see if it includes seconds.
+   * @private
    * @param {string} value a string value representing a time format.
    * @returns {boolean} whether or not seconds are included in the time format
    */
@@ -252,6 +251,7 @@ TimePicker.prototype = {
 
   /**
    * Checks to see if a time format contains a space for presenting the day period.
+   * @private
    * @param {string} value a string value representing a time format.
    * @returns {boolean} whther or not the time format has day periods.
    */
@@ -270,6 +270,7 @@ TimePicker.prototype = {
 
   /**
    * Rounds the current value of the minutes picker to its nearest interval value.
+   * @private
    */
   roundMinutes() {
     if (!this.getBoolean(this.settings.roundToInterval)) {
@@ -518,6 +519,7 @@ TimePicker.prototype = {
 
   /**
    * Handler for the Timepicker Popover's custom `show` event.
+   * @private
    * @param {object} ui timepicker popup element
    * @returns {void}
    */
@@ -794,6 +796,12 @@ TimePicker.prototype = {
     period = (!this.is24HourFormat() && period === '') ? $('#timepicker-period-shdo').val() : period;
     timeString += period ? ` ${Locale.translateDayPeriod(period)}` : '';
 
+    /**
+    * Fires when the value is changed by typing or the picker.
+    * @event close
+    * @memberof TimePicker
+    * @property {object} event - The jquery event object
+    */
     this.element.val(timeString)
       .trigger('change');
 
@@ -858,6 +866,7 @@ TimePicker.prototype = {
 
   /**
    * Handles the time popover's "hide" event
+   * @private
    * @returns {void}
    */
   onPopupHide() {
@@ -998,6 +1007,10 @@ TimePicker.prototype = {
       mask.destroy();
     }
 
+    $.removeData(this.element[0], 'validate');
+    $.removeData(this.element[0], 'validationEvents');
+    this.element.removeAttr('data-validate').removeData('validate validationEvents');
+
     this.label.find('.audible').remove();
 
     return this;
@@ -1009,7 +1022,6 @@ TimePicker.prototype = {
    */
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], 'validate');
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 

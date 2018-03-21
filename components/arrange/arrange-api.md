@@ -2,24 +2,10 @@
 
 ### Table of Contents
 
--   [ARRANGE_DEFAULTS](#arrange_defaults)
--   [Arrange](#arrange)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [beforearrange](#beforearrange)
--   [arrangeupdate](#arrangeupdate)
-
-## ARRANGE_DEFAULTS
-
-Default Arrange Options
-
-**Parameters**
-
--   `handle` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The CSS class name of the handle element to connect
--   `itemsSelector` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The CSS selector to match all the sortable elements.
--   `connectWith` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)?** Optional CSS Selector to connect with when using two lists
--   `placeholder` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The html for the element that appears while dragging
--   `placeholderCssClass` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The class to add to the ghost element that is being dragged.
+-   [Arrange][1]
+    -   [updated][2]
+    -   [destroy][3]
+-   [dragend][4]
 
 ## Arrange
 
@@ -27,8 +13,14 @@ The Arrange Component allows touch and drag support to sort UI items.
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **([Array][5]&lt;jQuery> | [HTMLElement][6])** The component element.
+-   `settings` **[object][7]?** The component settings.
+    -   `settings.handle` **[string][8]?** The CSS class name of the handle element to connect
+    -   `settings.itemsSelector` **[string][8]?** The CSS selector to match all the sortable elements.
+    -   `settings.connectWith` **[string][8]?** Optional CSS Selector to connect with when using two lists
+    -   `settings.isVisualItems` **[boolean][9]?** Use only index of visual items to trigger
+    -   `settings.placeholder` **[string][8]?** The html for the element that appears while dragging
+    -   `settings.placeholderCssClass` **[string][8]** The class to add to the ghost element that is being dragged. (optional, default `'arrange-placeholder'`)
 
 ### updated
 
@@ -36,9 +28,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][7]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][7]** The api
 
 ### destroy
 
@@ -46,21 +38,28 @@ Teardown process for this plugin
 
 Returns **void** 
 
-## beforearrange
+## dragend
 
-Fires before moving an element allowing you to access the ui to
-customize the draggable item.
+Fires after finishing an arrange action.
 
-**Properties**
+**Parameters**
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `status` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Status for this item
+-   `event` **[object][7]** The jquery event object
 
-## arrangeupdate
+[1]: #arrange
 
-Fires after moving an element allowing you do any follow up updating.
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `status` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Status for this item
+[4]: #dragend
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[6]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

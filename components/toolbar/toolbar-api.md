@@ -2,50 +2,26 @@
 
 ### Table of Contents
 
--   [TOOLBAR_DEFAULTS](#toolbar_defaults)
--   [Toolbar](#toolbar)
-    -   [buildMoreActionsMenuItem](#buildmoreactionsmenuitem)
-    -   [refreshMoreActionsMenu](#refreshmoreactionsmenu)
-    -   [getItemText](#getitemtext)
-    -   [handleTransferToMenuButtonItem](#handletransfertomenubuttonitem)
-    -   [handleResize](#handleresize)
-    -   [navigate](#navigate)
-    -   [getLastVisibleButton](#getlastvisiblebutton)
-    -   [getFirstVisibleButton](#getfirstvisiblebutton)
-    -   [setActiveButton](#setactivebutton)
-    -   [triggerSelect](#triggerselect)
-    -   [getVisibleButtons](#getvisiblebuttons)
-    -   [adjustMenuItemVisibility](#adjustmenuitemvisibility)
-    -   [isItemOverflowed](#isitemoverflowed)
-    -   [moreButtonIsDisabled](#morebuttonisdisabled)
-    -   [moreButtonIsVisible](#morebuttonisvisible)
-    -   [updated](#updated)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [teardown](#teardown)
-    -   [teardownMoreActionsMenuItem](#teardownmoreactionsmenuitem)
-    -   [destroy](#destroy)
-
-## TOOLBAR_DEFAULTS
-
-Component Default Settings
-
-**Properties**
-
--   `rightAligned` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Will always attempt to right-align the contents of
-     the toolbar. By default if there is no title it will left align. This forces right alignment.
--   `maxVisibleButtons` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Total amount of buttons that can be present, not
-     including the More button.
--   `resizeContainers` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, uses Javascript to size the Title and
-     Buttonset elements in a way that shows as much of the Title area as possible.
--   `favorButtonset` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If "resizeContainers" is true, setting this to
-     true will try to display as many buttons as possible while resizing the toolbar.
-     Setting to false attempts to show the entire title instead.
--   `moreMenuSettings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** If defined, provides a toolbar-level method of
-     defining settings that will be applied to the More Actions button's popupmenu instance.
--   `noSearchfieldReinvoke` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, does not manage the lifecycle
-     of an internal toolbarsearchfield automatically.  Allows an external controller
-     to do it instead.
+-   [Toolbar][1]
+    -   [refreshMoreActionsMenu][2]
+    -   [getItemText][3]
+    -   [handleTransferToMenuButtonItem][4]
+    -   [handleResize][5]
+    -   [navigate][6]
+    -   [getLastVisibleButton][7]
+    -   [getFirstVisibleButton][8]
+    -   [setActiveButton][9]
+    -   [triggerSelect][10]
+    -   [getButtonsetButtons][11]
+    -   [getVisibleButtons][12]
+    -   [isItemOverflowed][13]
+    -   [moreButtonIsDisabled][14]
+    -   [moreButtonIsVisible][15]
+    -   [updated][16]
+    -   [enable][17]
+    -   [disable][18]
+    -   [teardown][19]
+    -   [destroy][20]
 
 ## Toolbar
 
@@ -56,21 +32,22 @@ and the second level provides the associated options.
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** the base Toolbar element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
-
-### buildMoreActionsMenuItem
-
-Builds a single "More Actions Menu" item from a source toolbar item.
-Also sets up linkage between the menu item and the original toolbar item to
-allow events/properties to propagate when the More Actions item is acted upon.
-
-**Parameters**
-
--   `item` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the source item from the toolbar.
-
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** a jQuery-wrapped <li> representing a More Actions menu
- implementation of the toolbar item.
+-   `element` **([HTMLElement][21] \| [Array][22]&lt;jQuery>)** the base Toolbar element
+-   `settings` **[object][23]?** incoming settings
+    -   `settings.rightAligned` **[boolean][24]** Will always attempt to right-align the contents of
+         the toolbar. By default if there is no title it will left align. This forces right alignment. (optional, default `false`)
+    -   `settings.maxVisibleButtons` **[number][25]** Total amount of buttons that can be present, not
+         including the More button. (optional, default `3`)
+    -   `settings.resizeContainers` **[boolean][24]** If true, uses Javascript to size the Title and
+         Buttonset elements in a way that shows as much of the Title area as possible. (optional, default `true`)
+    -   `settings.favorButtonset` **[boolean][24]** If "resizeContainers" is true, setting this to
+         true will try to display as many buttons as possible while resizing the toolbar.
+         Setting to false attempts to show the entire title instead. (optional, default `true`)
+    -   `settings.moreMenuSettings` **[object][23]?** If defined, provides a toolbar-level method of
+         defining settings that will be applied to the More Actions button's popupmenu instance.
+    -   `settings.noSearchfieldReinvoke` **[boolean][24]** If true, does not manage the lifecycle
+         of an internal toolbarsearchfield automatically.  Allows an external controller
+         to do it instead. (optional, default `false`)
 
 ### refreshMoreActionsMenu
 
@@ -80,7 +57,7 @@ optionally refresh only part of the menu.
 
 **Parameters**
 
--   `menu` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the menu/submenu to be refreshed.
+-   `menu` **[Array][22]&lt;jQuery>** the menu/submenu to be refreshed.
 
 ### getItemText
 
@@ -94,9 +71,9 @@ Order of operations for populating the List Item text:
 
 **Parameters**
 
--   `item` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the item being evaluated.
+-   `item` **[Array][22]&lt;jQuery>** the item being evaluated.
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the complete text representation.
+Returns **[string][26]** the complete text representation.
 
 ### handleTransferToMenuButtonItem
 
@@ -106,7 +83,7 @@ the case of a menu button that's been spilled over into this Toolbar's More Acti
 **Parameters**
 
 -   `e` **jQuery.Event** custom `show-submenu` jQuery event
--   `li` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the `li.submenu` element.
+-   `li` **[Array][22]&lt;jQuery>** the `li.submenu` element.
 
 ### handleResize
 
@@ -114,11 +91,11 @@ Re-renders the toolbar element and adjusts all internal parts to account for the
 
 **Parameters**
 
--   `containerDims` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** an object containing dimensions that can be set
+-   `containerDims` **[object][23]?** an object containing dimensions that can be set
      on the Toolbar's title and buttonset elements.
-    -   `containerDims.title` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** represents the width that will be applied
+    -   `containerDims.title` **[number][25]?** represents the width that will be applied
          to the title element
-    -   `containerDims.buttonset` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)?** represents the width that will be
+    -   `containerDims.buttonset` **[number][25]?** represents the width that will be
          applied to the buttonset element
 
 Returns **void** 
@@ -129,7 +106,7 @@ Changes the "active" button on the toolbar.
 
 **Parameters**
 
--   `direction` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** can be `-1` (previous), `1` (next), or `0` (remain on current).
+-   `direction` **[number][25]** can be `-1` (previous), `1` (next), or `0` (remain on current).
 
 Returns **void** 
 
@@ -137,13 +114,13 @@ Returns **void**
 
 Gets a reference to the last visible (not overflowed) button inside of the buttonset.
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the last visible button in the buttonset.
+Returns **[Array][22]&lt;jQuery>** the last visible button in the buttonset.
 
 ### getFirstVisibleButton
 
 Gets a reference to the first visible (not overflowed) button inside of the buttonset.
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the first visible button in the buttonset.
+Returns **[Array][22]&lt;jQuery>** the first visible button in the buttonset.
 
 ### setActiveButton
 
@@ -151,8 +128,8 @@ Sets the currently "active" (focused) Toolbar item
 
 **Parameters**
 
--   `activeButton` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the preferred target element to make active.
--   `noFocus` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if defined, prevents this method from giving focus
+-   `activeButton` **[Array][22]&lt;jQuery>** the preferred target element to make active.
+-   `noFocus` **[boolean][24]?** if defined, prevents this method from giving focus
      to the new active button.
 
 ### triggerSelect
@@ -161,8 +138,14 @@ Triggers a "selected" event on the base Toolbar element using a common element a
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** a jQuery Object containing an
+-   `element` **([HTMLElement][21] \| [SVGElement][27] \| [Array][22]&lt;jQuery>)** a jQuery Object containing an
      anchor tag, button, or input field.
+
+### getButtonsetButtons
+
+Assembles and returns a list of all buttons inside the Buttonset element.
+
+Returns **[array][22]** of elements inside the buttonset
 
 ### getVisibleButtons
 
@@ -171,26 +154,9 @@ currently overflowed, and which are visible.
 
 **Parameters**
 
--   `buttons` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** an Array of jQuery-wrapped elements that represents toolbar items.
+-   `buttons` **[array][22]** an Array of jQuery-wrapped elements that represents toolbar items.
 
-Returns **VisibilitySortedToolbarItems** 
-
-Returns **VisibilitySortedToolbarItems.Array** visible - An array containing all visible items.
-
-Returns **VisibilitySortedToolbarItems.Array** hidden - An array containing all
- hidden (overflowed) items.
-
-### adjustMenuItemVisibility
-
-Gets and Iterates through the full list of Toolbar Items and determines which
- ones should currently be present in the More Actions menu.
-
-**Parameters**
-
--   `items` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** an object (normally generated by `_.getVisibleButtons()`)
-     containing arrays of currently visible and hidden buttons, along with some meta-data.
-
-Returns **void** 
+Returns **[object][23]** containing a `visible` items array, and a `hidden` items array.
 
 ### isItemOverflowed
 
@@ -200,13 +166,13 @@ Detects whether or not a toolbar item is currently overflowed.  In general,
 
 **Parameters**
 
--   `item` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the Toolbar item being tested.
+-   `item` **[Array][22]&lt;jQuery>** the Toolbar item being tested.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the item belongs in the More Actions menu
+Returns **[boolean][24]** whether or not the item belongs in the More Actions menu
 
 ### moreButtonIsDisabled
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not this toolbar is able to have a More Button
+Returns **[boolean][24]** whether or not this toolbar is able to have a More Button
 
 ### moreButtonIsVisible
 
@@ -214,13 +180,13 @@ Detection for whether or not More Actions menu is currently visible.  This is
 different than the More Actions menu being disabled.  This check determines
 whether or not items have spilled over, causing the menu to be shown or hidden.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not More Actions menu is currently visible.
+Returns **[boolean][24]** whether or not More Actions menu is currently visible.
 
 ### updated
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming different settings
+-   `settings` **[object][23]?** incoming different settings
 
 Returns **void** 
 
@@ -242,19 +208,63 @@ Returns the Toolbar's internal markup to its original state.
 
 Returns **this** component instance
 
-### teardownMoreActionsMenuItem
-
-Tears down a More Actions Menu item.
-
-**Parameters**
-
--   `item` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the existing <li> from inside the More Actions menu.
--   `doRemove` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if defined, causes the list item to be removed from
-     the more actions menu.
-
 ### destroy
 
 Destroys this Toolbar Component instance and completely disassociates it from
  its corresponding DOM Element.
 
 Returns **void** 
+
+[1]: #toolbar
+
+[2]: #refreshmoreactionsmenu
+
+[3]: #getitemtext
+
+[4]: #handletransfertomenubuttonitem
+
+[5]: #handleresize
+
+[6]: #navigate
+
+[7]: #getlastvisiblebutton
+
+[8]: #getfirstvisiblebutton
+
+[9]: #setactivebutton
+
+[10]: #triggerselect
+
+[11]: #getbuttonsetbuttons
+
+[12]: #getvisiblebuttons
+
+[13]: #isitemoverflowed
+
+[14]: #morebuttonisdisabled
+
+[15]: #morebuttonisvisible
+
+[16]: #updated
+
+[17]: #enable
+
+[18]: #disable
+
+[19]: #teardown
+
+[20]: #destroy
+
+[21]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[25]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[26]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[27]: https://developer.mozilla.org/docs/Web/SVG/Element/animate

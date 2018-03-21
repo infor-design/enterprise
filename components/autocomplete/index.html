@@ -8,143 +8,282 @@
 <li>Autocomplete Disable Search/Filter <a href="../components/autocomplete/example-no-filtering">View Example</a></li>
 <li>Autocomplete List Templates <a href="../components/autocomplete/example-templates">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.source
+    </td>
+    <td>
+      <span>[]</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Defines the data to use, must be specified.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.sourceArguments
+    </td>
+    <td>
+      <span>{}</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If a source method is defined, this flexible object can be passed
+into the source method, and augmented with parameters specific to the implementation.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      boolean
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      If defined, use this to draw the contents of each search result instead of the default draw routine.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.filterMode
+    </td>
+    <td>
+      <span>&#39;startsWith&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The matching algorithm, startsWith and contains are supported - false will not filter client side
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.delay
+    </td>
+    <td>
+      <span>300</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      The delay between key strokes on the keypad before it thinks you stopped typing
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.width
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Width of the open auto complete menu
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.offset
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      For the open menu, the left or top offset
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.autoSelectFirstItem
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Whether or not to select he first item in the list to be selected
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.resultsCallback
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      If defined, does not produce the results of the Autocomplete
+inside a popupmenu, instead piping them to a process defined inside this callback function.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.highlightMatchedText
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      The highlightMatchText property.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.highlightCallback
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      The highlightCallback property.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.resultIteratorCallback
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      The resultIteratorCallback property.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.displayResultsCallback
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      The displayResultsCallback property.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.searchableTextCallback
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      The searchableTextCallback property.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          source
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Defines the data to use, must be specified.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          sourceArguments
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If a source method is defined, this flexible
-object can be passed into the source method, and augmented with parameters specific to the
-implementation.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          template
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If defined, use this to draw the contents of each
-search result instead of the default draw routine.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          filterMode
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The matching algorithm, startsWith and contains
-are supported - false will not filter client side
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          delay
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          The delay between key strokes on the keypad before it
-thinks you stopped typing
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          width
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Width of the open auto complete menu
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          offset
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          For the open menu, the left or top offset
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          autoSelectFirstItem
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Whether or not to select he first item in the
-list to be selected
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          resultsCallback
-        </td>
-        <td>
-          function
-        </td>
-        <td>
-          If defined, does not produce the results of the
-Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback
-function.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -233,14 +372,7 @@ void
   </table>
 
 
-  
-  
-  
-  
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -256,26 +388,6 @@ void
   </td>
   <td>
   
-    
-      <div>
-        <span>event (object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>filterResult (object)
-        
-        = The results of the filtering
-
-        </span>
-        
-      </div>
-    
-  
   </td>
   <td>Fires after the menu is populated with its contents.
 </td>
@@ -286,17 +398,6 @@ void
   <td>safe-blur
   </td>
   <td>
-  
-    
-      <div>
-        <span>event (object)
-        
-        = The input event object
-
-        </span>
-        
-      </div>
-    
   
   </td>
   <td>Fires after the input (and menu) both loose focus
@@ -309,26 +410,6 @@ void
   </td>
   <td>
   
-    
-      <div>
-        <span>event (object)
-        
-        = The input event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>An (array)
-        
-        = array containing the searchTerm and call back function
-
-        </span>
-        
-      </div>
-    
-  
   </td>
   <td>Fires when the ajax request (source option) is completed
 </td>
@@ -339,26 +420,6 @@ void
   <td>requeststart
   </td>
   <td>
-  
-    
-      <div>
-        <span>event (object)
-        
-        = The input event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>event (array)
-        
-        = An array with the buffer in it
-
-        </span>
-        
-      </div>
-    
   
   </td>
   <td>Fires when the ajax request (source option) is initiated
@@ -371,26 +432,6 @@ void
   </td>
   <td>
   
-    
-      <div>
-        <span>event (object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>ui (object)
-        
-        = The dialog object
-
-        </span>
-        
-      </div>
-    
-  
   </td>
   <td>Fires when the menu is opened.
 </td>
@@ -401,17 +442,6 @@ void
   <td>listopen
   </td>
   <td>
-  
-    
-      <div>
-        <span>event (object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
   
   </td>
   <td>Comes from Searchfields wrapping an autocomplete - resets
@@ -425,17 +455,17 @@ a filtered autocomplete back to normal.
   </section>
 
 <h2 id="code-example">Code Example</h2>
-<p>This example shows how to invoke the autocomplete and its starting markup. Remember to add autocomplete=&quot;off&quot; as some browsers have their own autocomplete functionality that interferes.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;autocomplete-default&quot;</span><span class="kw">&gt;</span>States<span class="kw">&lt;/label&gt;</span>
-      <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> autocomplete=</span><span class="st">&quot;off&quot;</span><span class="ot"> class=</span><span class="st">&#39;autocomplete&#39;</span><span class="ot"> id=</span><span class="st">&quot;autocomplete-default&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;/div&gt;</span>
-
-    <span class="kw">&lt;script&gt;</span>
-      <span class="fu">$</span>(<span class="st">&#39;#autocomplete-default&#39;</span>).<span class="fu">autocomplete</span>();
-    &lt;<span class="ot">/script&gt;</span>
-</code></pre>
+<p>This example shows how to invoke the autocomplete and its starting markup. Remember to add autocomplete=“off” as some browsers have their own autocomplete functionality that interferes.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">      <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;autocomplete-default&quot;</span><span class="kw">&gt;</span>States<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">      <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> autocomplete=</span><span class="st">&quot;off&quot;</span><span class="ot"> class=</span><span class="st">&#39;autocomplete&#39;</span><span class="ot"> id=</span><span class="st">&quot;autocomplete-default&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="kw">&lt;script&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">      <span class="at">$</span>(<span class="st">&#39;#autocomplete-default&#39;</span>).<span class="at">autocomplete</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="kw">&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"></a></code></pre></div>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
 <li><strong>Arrow Down</strong> When closed will display the list of choices, if open will move down to the next item in the last. At the bottom it should wrap around to the top again.</li>

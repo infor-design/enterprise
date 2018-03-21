@@ -48,6 +48,7 @@ describe('Dropdown updates, events', () => {
       showSelectAll: false,
       sourceArguments: {}
     };
+
     expect(dropdownObj.settings).toEqual(settings);
   });
 
@@ -72,10 +73,11 @@ describe('Dropdown updates, events', () => {
     dropdownObj.updated();
     dropdownObj.settings.maxWidth = 1000;
     dropdownObj.settings.delay = 2000;
+
     expect(dropdownObj.settings).toEqual(settings);
   });
 
-  it('Should update set settings via parameters', () => {
+  it('Should update set settings via parameter', () => {
     const settings = {
       closeOnSelect: true,
       cssClass: null,
@@ -93,6 +95,7 @@ describe('Dropdown updates, events', () => {
       sourceArguments: {}
     };
     dropdownObj.updated(settings);
+
     expect(dropdownObj.settings).toEqual(settings);
   });
 

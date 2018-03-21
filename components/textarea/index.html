@@ -3,114 +3,172 @@
 <ol type="1">
 <li><a href="../components/textarea/example-index">Text Area Examples</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.autoGrow
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Will automatically expand the textarea to fit the contents when typing.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.autoGrowAnimate
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Will animate the textarea grow.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.autoGrowAnimateSpeed
+    </td>
+    <td>
+      <span>200</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The speed of the animation.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.characterCounter
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Displays a counter that counts down from the maximum
+length allowed.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.printable
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Determines whether or not the text area can be displayed on a
+printed page.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.charRemainingText
+    </td>
+    <td>
+      <span>&#39;Characters Left&#39;</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Text that will be used in place of the "remaining"
+text defaulting to a localized 'Characters Left'.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.charMaxText
+    </td>
+    <td>
+      <span>&#39;Character count maximum of&#39;</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Text that will be used in place of the "Max" text.
+Defaults to a localized Version of 'Character count maximum of'.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          autoGrow
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Will automatically expand the text area to fit the contents.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          autoGrowAnimate
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Will animate the text area growing.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          autoGrowAnimateSpeed
-        </td>
-        <td>
-          integer
-        </td>
-        <td>
-          The speed of the animation.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          characterCounter
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Displays a counter that counts down from the maximum
-length allowed.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          printable
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          Determines whether or not the text area can be displayed on a
-printed page.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          charRemainingText
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          Text that will be used in place of the "remaining"
-text.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          charMaxText
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          Text that will be used in place of the "Max" text.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -120,44 +178,6 @@ text.
       <th>Returns</th>
     </thead>
     <tbody>
-      <tr>
-        <td>isSelected</td>
-        <td>
-          
-                
-                  <span>input (object) = The input dom element (jQuery)
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Determines if the text is selected.</p>
-
-        </td>
-        <td>
-          True if the text is selected in the input.
-boolean
-        </td>
-      </tr>
-      <tr>
-        <td>isPrintable</td>
-        <td>
-          
-                
-                  <span>keycode (number) = a number representing an ASCII keycode value
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Checks a keycode value and determines if it belongs to a printable character.</p>
-
-        </td>
-        <td>
-          Returns true if the key is a printable one.
-boolean
-        </td>
-      </tr>
       <tr>
         <td>enable</td>
         <td>
@@ -248,14 +268,10 @@ boolean
                   <span>focus (object) = Fires when the menu is focused.
  </span>
                 
-                  <span>keypress (object) =  
--
- 
+                  <span>keypress (object) = Fires when pressing a key.
  </span>
                 
-                  <span>blur (object) =  
--
- 
+                  <span>blur (object) = Fires when leaving the field.
  </span>
                 
           
@@ -272,7 +288,6 @@ boolean
 
 
   </section>
-
   
 
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
@@ -281,9 +296,9 @@ boolean
 <li>Text Areas should always have a minimum height of 3 text lines.</li>
 </ul>
 <h2 id="code-example">Code Example</h2>
-<p>A Text Area is a standard css / html element. To implement a Text Area, you can insert a standard textarea element and add the class=&quot;textarea&quot;. Also be sure to create a meaningful label which is linked to the input.</p>
-<p>You can optionally add the class=&quot;resizable&quot; to the input to allow it to be resized.</p>
-<p>You can optionally set a placeholder for inline text such as &quot;type your comments here&quot; etc.</p>
+<p>A Text Area is a standard css / html element. To implement a Text Area, you can insert a standard textarea element and add the class=“textarea”. Also be sure to create a meaningful label which is linked to the input.</p>
+<p>You can optionally add the class=“resizable” to the input to allow it to be resized.</p>
+<p>You can optionally set a placeholder for inline text such as “type your comments here” etc.</p>
 <p>You can optionally set a maxlength attribute which is the maximum number of characters that can be used. If you do this, a count will be shown below the input to assist the user.</p>
 <p>Text areas support:</p>
 <ul>
@@ -292,19 +307,19 @@ boolean
 <li>Required Validation</li>
 <li>Disabled/Enabled</li>
 </ul>
-<pre class="sourceCode html"><code class="sourceCode html">
-
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;description&quot;</span><span class="kw">&gt;</span>Notes (resizable)<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;description&quot;</span><span class="ot"> class=</span><span class="st">&quot;resizable&quot;</span><span class="ot"> name=</span><span class="st">&quot;description&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Type your notes here...&quot;</span><span class="kw">&gt;&lt;/textarea&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;description-max&quot;</span><span class="kw">&gt;</span>Notes (maxlength)<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;description-max&quot;</span><span class="ot"> class=</span><span class="st">&quot;textarea&quot;</span><span class="ot"> maxlength=</span><span class="st">&quot;90&quot;</span><span class="ot"> name=</span><span class="st">&quot;description-max&quot;</span> <span class="kw">&gt;</span>Line One<span class="kw">&lt;/textarea&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;description&quot;</span><span class="kw">&gt;</span>Notes (resizable)<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;description&quot;</span><span class="ot"> class=</span><span class="st">&quot;resizable&quot;</span><span class="ot"> name=</span><span class="st">&quot;description&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Type your notes here...&quot;</span><span class="kw">&gt;&lt;/textarea&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;description-max&quot;</span><span class="kw">&gt;</span>Notes (maxlength)<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;description-max&quot;</span><span class="ot"> class=</span><span class="st">&quot;textarea&quot;</span><span class="ot"> maxlength=</span><span class="st">&quot;90&quot;</span><span class="ot"> name=</span><span class="st">&quot;description-max&quot;</span> <span class="kw">&gt;</span>Line One<span class="kw">&lt;/textarea&gt;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>Printing is supported now. To do this we need a second shadow element in the page which is shown in the print media query.</li>

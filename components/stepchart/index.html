@@ -4,138 +4,203 @@
 <li>Step Chart Examples in a Card/Widget <a href="../components/stepchart/example-index">View Example</a></li>
 <li>Custom Colors <a href="../components/stepchart/example-colors">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      The base element
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.steps
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The number of steps to show.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.completed
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The number of steps complete (linear).
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.inProgress
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The number of the in progress step (linear).
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.iconType
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      The icon to display fx. 'icon-error', 'icon-confirm'
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.completedText
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The completed text or uses a localized 'N of N Steps complete'.
+ You can use {0} and {1} to replace n of n in the string.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.extraText
+    </td>
+    <td>
+      <span>&#39;&#39;</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      The additional text to show on the right. Defaults to none. You
+ can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.completedColor
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The color to show completed steps. Defaults to primary color.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.allCompletedColor
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The color to steps when all are completed. Defaults to primary color.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      i
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      [settings.nProgressColor The color to show in-progress steps. Defaults to ruby02.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          steps
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The number of steps to show.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          completed
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The number of steps complete (linear).
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          inProgress
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          The number of the in progress step (linear).
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          iconType
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          The icon to display fx. 'icon-error', 'icon-confirm'
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          completedText
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The completed text or uses a localized 'N of N Steps complete'.
-You can use {0} and {1} to replace n of n in the string.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          extraText
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          The additional text to show on the right. Defaults to none. You
-can use {0} to replace with the steps remaining count and {1} to replace the number of steps.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          completedColor
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The color to show completed steps. Defaults to primary color.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          allCompletedColor
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The color to steps when all are completed. Defaults to
-primary color.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          inProgressColor
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The color to show in-progress steps. Defaults to ruby02.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -183,7 +248,6 @@ this
 
 
   </section>
-
   
 
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
@@ -193,21 +257,21 @@ this
 </ul>
 <h2 id="code-example">Code Example</h2>
 <p>You can initialize a step chart by putting a simple div in the page with data-options which contain any of the above options.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;step-chart&quot;</span><span class="ot"> data-options=</span><span class="st">&quot;{steps: 7, completed: 2, inProgress: 3, iconType: &#39;icon-error&#39;, extraText: &#39;2 Days Overdue&#39;}&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;/div&gt;</span>
-</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;step-chart&quot;</span><span class="ot"> data-options=</span><span class="st">&quot;{steps: 7, completed: 2, inProgress: 3, iconType: &#39;icon-error&#39;, extraText: &#39;2 Days Overdue&#39;}&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a></code></pre></div>
 <p>Or you can initialize the component using javascript, remove the data-options and initialize like a normal plugin.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-$(&#39;#manual&#39;).stepchart({
-  completed: 2,
-  steps: 10,
-  completedText: &#39;Amount Completed&#39;
-});
-</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">$(&#39;#manual&#39;).stepchart({</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  completed: 2,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  steps: 10,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">  completedText: &#39;Amount Completed&#39;</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">});</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a></code></pre></div>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>The step chart infor is displayed via the text &quot;N of N Complete&quot; which the user can read with a screen reader.</li>
+<li>The step chart infor is displayed via the text “N of N Complete” which the user can read with a screen reader.</li>
 <li>The rest of the chart</li>
 <li>Colors are AA compliant and adapt to AAA on hey contrast version</li>
 </ul>

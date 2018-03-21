@@ -7,156 +7,238 @@
 <li>Popupmenu with disabled submenus <a href="../components/popupmenu/example-disabled-submenus">View Example</a></li>
 <li>Popupmenu with icons <a href="../components/popupmenu/example-icons">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.menu
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Menu's ID Selector, or a jQuery object representing a menu.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.trigger
+    </td>
+    <td>
+      <span>&#39;click&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Action on which to trigger a menu can be: click, rightClick, immediate ect.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.autoFocus
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If false the focus will not focus the first list element. (At the cost of accessibility).
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.attachToBody
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the menu will be moved out to the body. To be used in certin overflow situations.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.beforeOpen
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      Callback that can be used for populating the contents of the menu.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.ariaListbox
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Switches aria to use listbox construct instead of menu construct (internal).
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.eventObj
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Can pass in the event object so you can do a right click with immediate.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.returnFocus
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If set to false, focus will not be
+returned to the calling element. It usually should be for accessibility purposes.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.placementOpts
+    </td>
+    <td>
+      <span>newPlacementObject({
+containerOffsetX:10,
+containerOffsetY:10,
+strategies:[&#39;flip&#39;,&#39;shrink&#39;]
+})</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Gets passed to this control's Place behavior.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.offset
+    </td>
+    <td>
+      <span>{x:0,y:0}</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.predefined
+    </td>
+    <td>
+      <span>$()</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      containing references to menu items that should be passed to the "predefined" hash.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          menu
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Menu's ID Selector, or a jQuery object representing a menu
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          trigger
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Action on which to trigger a menu can be: click,
-rightClick, immediate ect
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          autoFocus
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If false the focus will not focus the first list
-element. (At the cost of accessibility)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          attachToBody
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the menu will be moved out to the body.
-To be used in certin overflow situations.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          beforeOpen
-        </td>
-        <td>
-          function
-        </td>
-        <td>
-          Callback that can be used for populating the
-contents of the menu.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          ariaListbox
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Switches aria to use listbox construct instead
-of menu construct (internal)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          eventObj
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Can pass in the event object so you can do a right
-click with immediate
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          returnFocus
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If set to false, focus will not be returned to
-the calling element. It usually should be for accessibility purposes.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          placementOpts
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          Gets passed to this control's Place behavior
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          offset
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          Can tweak the menu position in the x and y direction.
-Takes an object of form: 
-<code>{x: 0, y: 0}</code>
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -242,7 +324,7 @@ void
         <td>
           
                 
-                  <span>anchor () = the anchor tag representing the menu item.
+                  <span>anchor (Array) = the anchor tag representing the menu item.
  </span>
                 
           
@@ -261,7 +343,7 @@ void
         <td>
           
                 
-                  <span>anchor () = the anchor tag representing the menu item.
+                  <span>anchor (Array) = the anchor tag representing the menu item.
  </span>
                 
           
@@ -286,7 +368,7 @@ array
         </td>
         <td>
           elements inside the top-level menu that are selected.
-
+Array
         </td>
       </tr>
       <tr>
@@ -294,7 +376,7 @@ array
         <td>
           
                 
-                  <span>anchor () = the anchor tag being checked.
+                  <span>anchor (Array) = the anchor tag being checked.
  </span>
                 
           
@@ -305,7 +387,7 @@ array
         </td>
         <td>
           elements inside the top-level menu that are selected.
-
+Array
         </td>
       </tr>
       <tr>
@@ -313,7 +395,7 @@ array
         <td>
           
                 
-                  <span>anchor () = the anchor tag being checked.
+                  <span>anchor (Array) = the anchor tag being checked.
  </span>
                 
           
@@ -325,7 +407,7 @@ array
         <td>
           elements inside the top-level menu that are selected
 within a single-selectable section.
-
+Array
         </td>
       </tr>
       <tr>
@@ -333,7 +415,7 @@ within a single-selectable section.
         <td>
           
                 
-                  <span>anchor () = the anchor tag being checked.
+                  <span>anchor (Array) = the anchor tag being checked.
  </span>
                 
           
@@ -345,7 +427,7 @@ within a single-selectable section.
         <td>
           elements inside the top-level menu that are selected
 within a multi-selectable section.
-
+Array
         </td>
       </tr>
       <tr>
@@ -371,7 +453,7 @@ void
 Wont matter for manual api call.
  </span>
                 
-                  <span>noFocus () = Do not return focus to the calling element (fx a button)
+                  <span>noFocus (boolean) = Do not return focus to the calling element (fx a button)
  </span>
                 
           
@@ -402,7 +484,7 @@ void
         <td>
           
                 
-                  <span>settings () = incoming settings
+                  <span>settings (object) = incoming settings
  </span>
                 
           
@@ -435,8 +517,174 @@ void
 
 
   </section>
-
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>selected
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>selected (object)
+        
+        = anchor
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires on selected.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>beforeopen
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>this (object)
+        
+        = menu instance
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires before open.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>open
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>this (object)
+        
+        = menu instance
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires on open.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afteropen
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>this (object)
+        
+        = menu instance
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after open.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>close
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>close (object)
+        
+        = by cancelled
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when close.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
 
 <h2 id="code-example">Code Example</h2>
 <p>Popupmenu can be invoked in several ways. As a right click action menu fx on an input field or grid or list row (also known as a <a href="../components/contextmenu">Context Menu</a>). Via a click action menu for example on a menu or actions button. Or manually <code>trigger='immediate'</code> as needed via the popupmenu api.</p>

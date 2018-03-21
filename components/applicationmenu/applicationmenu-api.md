@@ -2,36 +2,23 @@
 
 ### Table of Contents
 
--   [APPLICATIONMENU_DEFAULTS](#applicationmenu_defaults)
--   [ApplicationMenu](#applicationmenu)
-    -   [getAdjacentContainerElement](#getadjacentcontainerelement)
-    -   [handleTriggerEvents](#handletriggerevents)
-    -   [handleKeyDown](#handlekeydown)
-    -   [notify](#notify)
-    -   [isOpen](#isopen)
-    -   [testWidth](#testwidth)
-    -   [openMenu](#openmenu)
-    -   [closeMenu](#closemenu)
-    -   [hasTriggers](#hastriggers)
-    -   [modifyTriggers](#modifytriggers)
-    -   [filterResultsCallback](#filterresultscallback)
-    -   [handleSearchfieldInputEvent](#handlesearchfieldinputevent)
-    -   [teardown](#teardown)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-    -   [handleEvents](#handleevents)
-
-## APPLICATIONMENU_DEFAULTS
-
-**Properties**
-
--   `breakpoint` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Can be 'tablet' or 'phone-to-tablet' (+767), 'phablet (+610)',
-    'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
--   `filterable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true a search / filter option will be added.
--   `openOnLarge` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, will automatically open the Application Menu when a
-    large screen-width breakpoint is met.
--   `triggers` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** An Array of jQuery-wrapped elements that are able to open/close
-    this nav menu.
+-   [ApplicationMenu][1]
+    -   [getAdjacentContainerElement][2]
+    -   [handleTriggerEvents][3]
+    -   [handleKeyDown][4]
+    -   [notify][5]
+    -   [isOpen][6]
+    -   [testWidth][7]
+    -   [openMenu][8]
+    -   [closeMenu][9]
+    -   [hasTriggers][10]
+    -   [modifyTriggers][11]
+    -   [filterResultsCallback][12]
+    -   [handleSearchfieldInputEvent][13]
+    -   [teardown][14]
+    -   [updated][15]
+    -   [destroy][16]
+    -   [handleEvents][17]
 
 ## ApplicationMenu
 
@@ -39,14 +26,19 @@ The Application Menu provides access to all the functions, pages, and forms in a
 
 **Parameters**
 
--   `element` **\[type]** The element that gets the plugin established on it.
--   `settings` **\[type]** The settings to use on this instance.
+-   `element` **[object][18]** The element that gets the plugin established on it.
+-   `settings` **[object][18]?** The settings to use on this instance.
+    -   `settings.breakpoint` **[string][19]** Can be 'tablet' or 'phone-to-tablet' (+767),
+        'phablet (+610)', 'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767) (optional, default `'phone-to-tablet'`)
+    -   `settings.filterable` **[boolean][20]** If true a search / filter option will be added. (optional, default `false`)
+    -   `settings.openOnLarge` **[boolean][20]** If true, will automatically open the Application Menu when a large screen-width breakpoint is met. (optional, default `false`)
+    -   `settings.triggers` **[array][21]** An Array of jQuery-wrapped elements that are able to open/close this nav menu. (optional, default `[]`)
 
 ### getAdjacentContainerElement
 
 Gets a reference to this Application Menu's adjacent container element.
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the adjacent container element
+Returns **[Array][21]&lt;jQuery>** the adjacent container element
 
 ### handleTriggerEvents
 
@@ -63,7 +55,7 @@ Handles Keydown Events on the App Menu
 
 -   `e` **jQuery.Event** `keydown` events
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the keydown event was successful
+Returns **[boolean][20]** whether or not the keydown event was successful
 
 ### notify
 
@@ -71,16 +63,16 @@ Adds a visual badge-style notification to an Application Menu accordion header
 
 **Parameters**
 
--   `anchor` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the anchor to target
--   `value` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** the numeric value to attach
+-   `anchor` **[Array][21]&lt;jQuery>** the anchor to target
+-   `value` **[number][22]** the numeric value to attach
 
-Returns **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [undefined](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined))** a reference to the new tag markup, if applicable
+Returns **([Array][21]&lt;jQuery> | [undefined][23])** a reference to the new tag markup, if applicable
 
 ### isOpen
 
 Detects whether or not the application menu is open
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not the application menu is open
+Returns **[boolean][20]** whether or not the application menu is open
 
 ### testWidth
 
@@ -94,10 +86,10 @@ Opens the Application Menu
 
 **Parameters**
 
--   `noFocus` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, sets focus on the first item in the application menu.
--   `userOpened` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If true, notifies the component that the menu was
+-   `noFocus` **[boolean][20]** If true, sets focus on the first item in the application menu.
+-   `userOpened` **[boolean][20]?** If true, notifies the component that the menu was
      manually opened by the user.
--   `openedByClass` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** If true, only adjusts bare-miniumum requirements
+-   `openedByClass` **[boolean][20]?** If true, only adjusts bare-miniumum requirements
      for the application menu to appear open (should be used in cases where the application
      menu has the `is-open` CSS appended to it via markup).  This skips events, animation, etc.
 
@@ -107,14 +99,14 @@ Closes the Application Menu
 
 **Parameters**
 
--   `userClosed` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if true, sets a flag notifying the component
+-   `userClosed` **[boolean][20]?** if true, sets a flag notifying the component
      that the user was responsible for closing.
 
 ### hasTriggers
 
 Detects whether or not the Application Menu has external trigger buttons setup to control it.
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not external triggers have been defined.
+Returns **[boolean][20]** whether or not external triggers have been defined.
 
 ### modifyTriggers
 
@@ -122,19 +114,19 @@ Externally Facing function that can be used to add/remove application nav menu t
 
 **Parameters**
 
--   `triggers` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)>** an array of HTMLElements or jQuery-wrapped elements that
+-   `triggers` **[Array][21]&lt;[Array][21]>** an array of HTMLElements or jQuery-wrapped elements that
      will be used as triggers.
--   `remove` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if defined, triggers that are defined will be removed
+-   `remove` **[boolean][20]?** if defined, triggers that are defined will be removed
      internally instead of added.
--   `norebuild` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if defined, this control's events won't automatically
+-   `norebuild` **[boolean][20]?** if defined, this control's events won't automatically
      be rebound to include the new triggers.
 
 ### filterResultsCallback
 
 **Parameters**
 
--   `results` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** list of items that passed the filtering process
--   `done` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** method to be called when the display of filtered items completes.
+-   `results` **[array][21]** list of items that passed the filtering process
+-   `done` **[function][24]** method to be called when the display of filtered items completes.
 
 Returns **void** 
 
@@ -158,7 +150,7 @@ Triggers a UI Resync.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][18]?** incoming settings
 
 Returns **this** component instance
 
@@ -173,3 +165,51 @@ Returns **void**
 This component fires the following events.
 
 Returns **this** component instance
+
+[1]: #applicationmenu
+
+[2]: #getadjacentcontainerelement
+
+[3]: #handletriggerevents
+
+[4]: #handlekeydown
+
+[5]: #notify
+
+[6]: #isopen
+
+[7]: #testwidth
+
+[8]: #openmenu
+
+[9]: #closemenu
+
+[10]: #hastriggers
+
+[11]: #modifytriggers
+
+[12]: #filterresultscallback
+
+[13]: #handlesearchfieldinputevent
+
+[14]: #teardown
+
+[15]: #updated
+
+[16]: #destroy
+
+[17]: #handleevents
+
+[18]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined
+
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function

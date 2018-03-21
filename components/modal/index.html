@@ -6,135 +6,200 @@
 <li>Supplying Full Modal content <a href="../components/modal/example-full-content">View Example</a></li>
 <li>Validation (enabling buttons) Example <a href="../components/modal/example-validation">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.trigger
+    </td>
+    <td>
+      <span>&#39;click&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The method of opening the dialog. Supports click, immediate.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.buttons
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      A list of buttons that will sit in the toolbar's Buttonset area.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.isAlert
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      isAlert
+    </td>
+    <td>
+      Adds alertdialog role for message dialogs.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.content
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      content
+    </td>
+    <td>
+      Ability to pass in dialog html content.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.cssClass
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Append a css class to top level.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.autoFocus
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the first input will be focused.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.id
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Optionally tag a dialog with an id.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.frameHeight
+    </td>
+    <td>
+      <span>180</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Optional extra height to add.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.frameWidth
+    </td>
+    <td>
+      <span>46</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Optional extra width to add.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          trigger
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The method of opening the dialog. Supports click, immediate.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          buttons
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          A list of buttons that will sit in the toolbar's Buttonset area.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          isAlert
-        </td>
-        <td>
-          isAlert
-        </td>
-        <td>
-          Adds alertdialog role for message dialogs.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          content
-        </td>
-        <td>
-          content
-        </td>
-        <td>
-          Ability to pass in dialog html content.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          cssClass
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Append a css class to top level.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          autoFocus
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the first input will be focused.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          id
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Optionally tag a dialog with an id.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          frameHeight
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          Optional extra height to add.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          frameWidth
-        </td>
-        <td>
-          number
-        </td>
-        <td>
-          Optional extra width to add.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -162,14 +227,18 @@ void
         <td>open</td>
         <td>
           
+                
+                  <span>ajaxReturn (boolean) = Flag used internally to denote its an ajax result return.
+ </span>
+                
+          
         </td>
         <td>
-          <p>Open the modal via the api.</p>
+          <p>*
+Open the modal via the api.</p>
 
         </td>
         <td>
-          
-void
         </td>
       </tr>
       <tr>
@@ -196,8 +265,112 @@ boolean
 
 
   </section>
-
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>beforeopen
+  </td>
+  <td>
   
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the modal is about to open. You can return false to abort opening.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>open
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires when the modal opens.
+</td>
+</tr>
+
+      
+        <tr>
+  <td>afteropen
+  </td>
+  <td>
+  
+    
+      <div>
+        <span>event (object)
+        
+        = The jquery event object
+
+        </span>
+        
+      </div>
+    
+      <div>
+        <span>ui (object)
+        
+        = The dialog object
+
+        </span>
+        
+      </div>
+    
+  
+  </td>
+  <td>Fires after the modal has opened.
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
 
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <ul>
@@ -208,56 +381,56 @@ boolean
 <h3 id="input-dialog">Input Dialog</h3>
 <p>To create an Input Dialog, use the modal plugin. To provide content for the modal dialog you can either append it directly in the page and access it by ID, or pass it as a string to the modal plugin. This example demonstrates both ways. You can also invoke the modal in a few ways: a) by linking it to a button or trigger action b) immediately on demand.</p>
 <p>When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-   <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> data-modal=</span><span class="st">&quot;modal-1&quot;</span><span class="kw">&gt;</span>Add Context<span class="kw">&lt;/button&gt;</span>
-    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal&quot;</span><span class="ot"> id=</span><span class="st">&quot;modal-1&quot;</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-content&quot;</span><span class="kw">&gt;</span>
-
-        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-header&quot;</span><span class="kw">&gt;</span>
-          <span class="kw">&lt;h1</span><span class="ot"> class=</span><span class="st">&quot;modal-title&quot;</span> <span class="kw">&gt;</span>Add Context<span class="kw">&lt;/h1&gt;</span>
-        <span class="kw">&lt;/div&gt;</span>
-
-        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-body&quot;</span><span class="kw">&gt;</span>
-          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-            <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;context-type&quot;</span><span class="kw">&gt;</span>Type<span class="kw">&lt;/label&gt;</span>
-            <span class="kw">&lt;select</span><span class="ot"> class=</span><span class="st">&quot;dropdown&quot;</span><span class="ot"> id=</span><span class="st">&quot;context-type&quot;</span><span class="ot"> name=</span><span class="st">&quot;type&quot;</span><span class="kw">&gt;</span>
-              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;1&quot;</span><span class="kw">&gt;</span>Context #1<span class="kw">&lt;/option&gt;</span>
-              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;2&quot;</span><span class="kw">&gt;</span>Context #2<span class="kw">&lt;/option&gt;</span>
-              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;3&quot;</span><span class="kw">&gt;</span>Context #3<span class="kw">&lt;/option&gt;</span>
-              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;4&quot;</span><span class="kw">&gt;</span>Context #4<span class="kw">&lt;/option&gt;</span>
-              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;5&quot;</span><span class="kw">&gt;</span>Context #5<span class="kw">&lt;/option&gt;</span>
-            <span class="kw">&lt;/select&gt;</span>
-          <span class="kw">&lt;/div&gt;</span>
-          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-            <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;context-name&quot;</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="kw">&gt;</span>Name<span class="kw">&lt;/label&gt;</span>
-            <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;context-name&quot;</span><span class="ot">  aria-required=</span><span class="st">&quot;true&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required&quot;</span><span class="ot"> name=</span><span class="st">&quot;context-name&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span>
-          <span class="kw">&lt;/div&gt;</span>
-          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
-           <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;context-desc&quot;</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="kw">&gt;</span>Page Title<span class="kw">&lt;/label&gt;</span>
-           <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;context-desc&quot;</span><span class="ot"> aria-required=</span><span class="st">&quot;true&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required&quot;</span><span class="ot"> name=</span><span class="st">&quot;context-desc&quot;</span><span class="kw">&gt;&lt;/textarea&gt;</span>
-          <span class="kw">&lt;/div&gt;</span>
-
-          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-buttonset&quot;</span><span class="kw">&gt;</span>
-            <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> class=</span><span class="st">&quot;btn-modal&quot;</span><span class="ot"> style=</span><span class="st">&quot;width:50%&quot;</span><span class="kw">&gt;</span>Cancel<span class="kw">&lt;/button&gt;</span>
-            <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> class=</span><span class="st">&quot;btn-modal-primary&quot;</span><span class="ot"> style=</span><span class="st">&quot;width:50%&quot;</span><span class="kw">&gt;</span>Submit<span class="kw">&lt;/button&gt;</span>
-          <span class="kw">&lt;/div&gt;</span>
-        <span class="kw">&lt;/div&gt;</span>
-      <span class="kw">&lt;/div&gt;</span>
-    <span class="kw">&lt;/div&gt;</span>
-
-    <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> id=</span><span class="st">&quot;btn-add-comment&quot;</span><span class="kw">&gt;</span>Add Comment<span class="kw">&lt;/button&gt;</span></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">   <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> data-modal=</span><span class="st">&quot;modal-1&quot;</span><span class="kw">&gt;</span>Add Context<span class="kw">&lt;/button&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal&quot;</span><span class="ot"> id=</span><span class="st">&quot;modal-1&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-content&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-header&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">          <span class="kw">&lt;h1</span><span class="ot"> class=</span><span class="st">&quot;modal-title&quot;</span> <span class="kw">&gt;</span>Add Context<span class="kw">&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">        <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">        <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-body&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">            <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;context-type&quot;</span><span class="kw">&gt;</span>Type<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">            <span class="kw">&lt;select</span><span class="ot"> class=</span><span class="st">&quot;dropdown&quot;</span><span class="ot"> id=</span><span class="st">&quot;context-type&quot;</span><span class="ot"> name=</span><span class="st">&quot;type&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;1&quot;</span><span class="kw">&gt;</span>Context #1<span class="kw">&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;2&quot;</span><span class="kw">&gt;</span>Context #2<span class="kw">&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;3&quot;</span><span class="kw">&gt;</span>Context #3<span class="kw">&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;4&quot;</span><span class="kw">&gt;</span>Context #4<span class="kw">&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;5&quot;</span><span class="kw">&gt;</span>Context #5<span class="kw">&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">            <span class="kw">&lt;/select&gt;</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">          <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">            <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;context-name&quot;</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="kw">&gt;</span>Name<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">            <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;context-name&quot;</span><span class="ot">  aria-required=</span><span class="st">&quot;true&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required&quot;</span><span class="ot"> name=</span><span class="st">&quot;context-name&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">          <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">           <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;context-desc&quot;</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="kw">&gt;</span>Page Title<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">           <span class="kw">&lt;textarea</span><span class="ot"> id=</span><span class="st">&quot;context-desc&quot;</span><span class="ot"> aria-required=</span><span class="st">&quot;true&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required&quot;</span><span class="ot"> name=</span><span class="st">&quot;context-desc&quot;</span><span class="kw">&gt;&lt;/textarea&gt;</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">          <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">          <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-buttonset&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">            <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> class=</span><span class="st">&quot;btn-modal&quot;</span><span class="ot"> style=</span><span class="st">&quot;width:50%&quot;</span><span class="kw">&gt;</span>Cancel<span class="kw">&lt;/button&gt;</span></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">            <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> class=</span><span class="st">&quot;btn-modal-primary&quot;</span><span class="ot"> style=</span><span class="st">&quot;width:50%&quot;</span><span class="kw">&gt;</span>Submit<span class="kw">&lt;/button&gt;</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">          <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">        <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">      <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">    <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">    <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> id=</span><span class="st">&quot;btn-add-comment&quot;</span><span class="kw">&gt;</span>Add Comment<span class="kw">&lt;/button&gt;</span></a></code></pre></div>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>SoHo Xi uses the concept of a default button being on the right most button. There is a <a href="http://uxmovement.com/buttons/why-ok-buttons-in-di...%20">good article</a> discussing this issue and we agree with the conclusions.</li>
 <li>In general the action button text should be verbs for example; Cancel/Delete or Logout/Cancel vs Yes, No, Ok. Using this technique allows the button to stand on its own without the rest of the context of the dialog. However, there may be a case where some forms could use Yes/No actions to answer questions.</li>
-<li>The default action in a dialog should be whatever the user intended as the action that led to the dialog. So if the user clicked &quot;Delete&quot;, and then got a message dialog that said &quot;Are you sure?&quot; the default button would be &quot;Delete&quot; and the secondary button would be &quot;Cancel&quot;. The modal itself is the protection against unintended actions with high consequence. They don't need the additional protection of having &quot;Cancel&quot; as the primary action.</li>
+<li>The default action in a dialog should be whatever the user intended as the action that led to the dialog. So if the user clicked “Delete”, and then got a message dialog that said “Are you sure?” the default button would be “Delete” and the secondary button would be “Cancel”. The modal itself is the protection against unintended actions with high consequence. They don’t need the additional protection of having “Cancel” as the primary action.</li>
 </ul>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Ensure that aria-labeled by is used to point the dialog to the title of the page, this way you can get away with focusing the first field</li>
 <li>Use aria-hidden and display:none when the dialog is not visible.</li>
 <li>The user should not be able to tab out of the dialog back into the page.</li>
-<li>aria-modal can be added but this is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet.</li>
+<li>aria-modal can be added but this is a forward thinking approach, since aria-modal isn’t actually supported by browsers or ATs yet.</li>
 <li>When the dialog is closed or cancelled focus should return to the element in the application which had focus before the dialog is invoked. This is usually the control which opened the dialog.</li>
 <li>When a modal dialog opens focus goes to the first focusable item in the dialog. Determining the first focusable item must take into account elements which receive focus by default (form fields and links) as well as items which may have a tabindex attribute with a positive value. If there is no focusable item in the dialog, focus is placed on the dialog container element.</li>
 </ul>
