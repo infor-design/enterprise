@@ -129,7 +129,7 @@ Trackdirty.prototype = {
         const d = { class: '', style: '' };
 
         if (field.is('.field-fileupload')) {
-          el = label.prev('input');
+          el = label.next('input');
         }
 
         if (field.is('.editor-container')) {
