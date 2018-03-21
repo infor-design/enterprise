@@ -1190,12 +1190,11 @@ Datagrid.prototype = {
       return false;
     });
 
-    this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
+    this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', (e) => {
       e.stopPropagation();
 
       if (e.which === 13) {
-        e.preventDefault();
-        $(this).trigger('change');
+        self.applyFilter();
       }
     }).off('change.datagrid').on('change.datagrid', '.datagrid-filter-wrapper input', () => {
       self.applyFilter();
