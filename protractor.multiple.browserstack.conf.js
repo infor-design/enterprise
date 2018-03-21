@@ -3,7 +3,7 @@ const browserstack = require('browserstack-local');
 const protractorImageComparison = require('protractor-image-comparison');
 
 exports.config = {
-  allScriptsTimeout: 60000,
+  allScriptsTimeout: 120000,
   specs: [
     '**/functional/*.functional-spec.js'
   ],

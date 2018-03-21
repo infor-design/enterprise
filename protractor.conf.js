@@ -1,11 +1,17 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
 
+const getSpecs = (listSpec) => {
+  if (listSpec) {
+    return listSpec.split(',');
+  }
+
+  return ['components/**/*.functional-spec.js'];
+};
+
 exports.config = {
-  allScriptsTimeout: 11000,
-  specs: [
-    '**/functional/*.functional-spec.js'
-  ],
+  allScriptsTimeout: 120000,
+  specs: getSpecs(process.env.PROTRACTOR_SPECS),
   capabilities: {
     browserName: 'chrome'
   },
@@ -18,6 +24,7 @@ exports.config = {
     print: () => {}
   },
   onPrepare: () => {
+    browser.ignoreSynchronization = true;
     browser.protractorImageComparison = new protractorImageComparison({
       baselineFolder: './baseline/',
       screenshotPath: './.tmp/',
