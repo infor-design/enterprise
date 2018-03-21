@@ -60,27 +60,27 @@ describe('Popupmenu tests', () => {
         await browserStackErrorReporter(done, error);
       }
     });
+
+    it('Should be accessible on close with no WCAG2AA violations on keypress(Spacebar)', async (done) => {
+      try {
+        await browser.waitForAngularEnabled(false);
+        await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
+        const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
+        await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
+
+        const res = await AxeBuilder(browser.driver)
+          .configure(axeOptions)
+          .exclude('header')
+          .analyze();
+
+        expect(res.violations.length).toEqual(0);
+        done();
+      } catch (error) {
+        done.fail('Failed: error sent');
+        await browserStackErrorReporter(done, error);
+      }
+    });
   }
-
-  it('Should be accessible on close with no WCAG2AA violations on keypress(Spacebar)', async (done) => {
-    try {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
-      const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
-      await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
-
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
-
-      expect(res.violations.length).toEqual(0);
-      done();
-    } catch (error) {
-      done.fail('Failed: error sent');
-      await browserStackErrorReporter(done, error);
-    }
-  });
 
   if (browser.browserName.toLowerCase() !== 'ie' && browser.browserName.toLowerCase() !== 'safari') {
     it('Should open with enter, and arrow down to the last menu item, and focus', async (done) => {
