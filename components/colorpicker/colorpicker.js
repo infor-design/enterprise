@@ -247,7 +247,7 @@ ColorPicker.prototype = {
       const data = this.settings.colors[i];
 
       if (hex.replace('#', '') === data.value.replace('#', '')) {
-        return data.label + data.number;
+        return this.translateColorLabel(data.label) + data.number;
       }
     }
 
@@ -398,7 +398,20 @@ ColorPicker.prototype = {
     this.element[0].setAttribute('aria-describedby', colorLabel);
   },
 
-  // Refresh and Append the Color Menu
+  /**
+   * @private
+   * @param {string} colorText the original text color
+   * @returns {string} the translated text color
+   */
+  translateColorLabel(colorText) {
+    return Locale.translate(colorText, true);
+  },
+
+  /**
+   * Refresh and Append the Color Menu
+   * @private
+   * @returns {jQuery} the menu to be appended
+   */
   updateColorMenu() {
     const isMenu = !!($('#colorpicker-menu').length);
     const menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
@@ -410,7 +423,7 @@ ColorPicker.prototype = {
     for (let i = 0, l = this.settings.colors.length; i < l; i++) {
       const li = $('<li></li>');
       const a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
-      const colorText = (Locale.translate(this.settings.colors[i].label, true) || this.settings.colors[i].label) + (this.settings.colors[i].number || '');
+      const colorText = (this.translateColorLabel(this.settings.colors[i].label) || this.settings.colors[i].label) + (this.settings.colors[i].number || '');
       const colorValue = this.settings.colors[i].value;
       const colorNum = parseInt(this.settings.colors[i].number, 10);
       let isBorder = false;
