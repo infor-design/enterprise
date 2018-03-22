@@ -6337,7 +6337,8 @@ Datagrid.prototype = {
       }
       if (messageText !== '') {
         self.showCellError(row, cell, messageText, validationType.type);
-        self.element.trigger(`cell${validationType.type}`, { row, cell, message: messageText, target: this.cellNode(row, cell), value: cellValue, column });
+        const rowNode = this.dataRowNode(row);
+        self.element.trigger(`cell${validationType.type}`, { row, cell, message: messageText, target: this.cellNode(rowNode, cell), value: cellValue, column });
       } else {
         self.clearCellError(row, cell, validationType.type);
       }
@@ -6353,7 +6354,8 @@ Datagrid.prototype = {
   * @returns {void}
   */
   showCellError(row, cell, message, type) {
-    const node = this.cellNode(row, cell);
+    const rowNode = this.dataRowNode(row);
+    const node = this.cellNode(rowNode, cell);
 
     // clear the table nonVisibleCellErrors for the row and cell
     this.clearNonVisibleCellErrors(row, cell, type);
@@ -6455,7 +6457,8 @@ Datagrid.prototype = {
 
   clearCellError(row, cell, type) {
     this.clearNonVisibleCellErrors(row, cell, type);
-    const node = this.cellNode(row, cell);
+    const rowNode = this.dataRowNode(row);
+    const node = this.cellNode(rowNode, cell);
 
     if (!node.length) {
       return;
