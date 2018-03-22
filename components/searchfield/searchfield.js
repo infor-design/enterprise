@@ -572,7 +572,7 @@ SearchField.prototype = {
     }
 
     let subtractWidth = 0;
-    let targetWidthProp = '100%';
+    let targetWidthProp;
 
     if (this.hasCategories()) {
       subtractWidth += this.categoryButton.outerWidth(true);
@@ -585,8 +585,9 @@ SearchField.prototype = {
     if (subtractWidth > 0) {
       targetWidthProp = `calc(100% - ${subtractWidth}px)`;
     }
-
-    this.element[0].style.width = targetWidthProp;
+    if (targetWidthProp) {
+      this.element[0].style.width = targetWidthProp;
+    }
   },
 
   /**

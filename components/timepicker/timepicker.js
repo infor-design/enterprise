@@ -5,7 +5,7 @@ import { Locale } from '../locale/locale';
 // jQuery components
 import '../dropdown/dropdown.jquery';
 import '../icons/icons.jquery';
-import '../mask/masked-input.jquery';
+import '../mask/mask-input.jquery';
 import '../popover/popover.jquery';
 
 // Component Name
@@ -1007,6 +1007,10 @@ TimePicker.prototype = {
       mask.destroy();
     }
 
+    $.removeData(this.element[0], 'validate');
+    $.removeData(this.element[0], 'validationEvents');
+    this.element.removeAttr('data-validate').removeData('validate validationEvents');
+
     this.label.find('.audible').remove();
 
     return this;
@@ -1018,7 +1022,6 @@ TimePicker.prototype = {
    */
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], 'validate');
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 

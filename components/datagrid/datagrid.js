@@ -16,7 +16,7 @@ import { Editors } from '../datagrid/datagrid.editors';
 import '../utils/animations';
 import '../emptymessage/emptymessage.jquery';
 import '../pager/pager.jquery';
-import '../mask/masked-input.jquery';
+import '../mask/mask-input.jquery';
 import '../drag/drag.jquery';
 
 // The name of this component.
@@ -1190,12 +1190,11 @@ Datagrid.prototype = {
       return false;
     });
 
-    this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
+    this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', (e) => {
       e.stopPropagation();
 
       if (e.which === 13) {
-        e.preventDefault();
-        $(this).trigger('change');
+        self.applyFilter();
       }
     }).off('change.datagrid').on('change.datagrid', '.datagrid-filter-wrapper input', () => {
       self.applyFilter();
@@ -1367,10 +1366,7 @@ Datagrid.prototype = {
       this.element.triggerHandler('closefilterrow');
     } else {
       this.settings.filterable = true;
-
-      if (!this.filterRowRendered) {
-        this.render('filterrow');
-      }
+      this.filterRowRendered = true;
 
       this.element.addClass('has-filterable-columns');
 
@@ -1618,13 +1614,29 @@ Datagrid.prototype = {
       let dataset;
       let isFiltered;
       let i;
+      let ii;
       let len;
+      let dataSetLen;
 
       if (this.settings.treeGrid) {
         dataset = this.settings.treeDepth;
         for (i = 0, len = dataset.length; i < len; i++) {
           isFiltered = !checkRow(dataset[i].node);
           dataset[i].node.isFiltered = isFiltered;
+        }
+      } else if (this.settings.groupable) {
+        for (i = 0, len = this.settings.dataset.length; i < len; i++) {
+          let isGroupFiltered = true;
+          for (ii = 0, dataSetLen = this.settings.dataset[i].values.length; ii < dataSetLen; ii++) {
+            isFiltered = !checkRow(this.settings.dataset[i].values[ii]);
+            this.settings.dataset[i].values[ii].isFiltered = isFiltered;
+
+            if (!isFiltered) {
+              isGroupFiltered = false;
+            }
+          }
+
+          this.settings.dataset[i].isFiltered = isGroupFiltered;
         }
       } else {
         for (i = 0, len = this.settings.dataset.length; i < len; i++) {
@@ -2000,10 +2012,15 @@ Datagrid.prototype = {
       return;
     }
 
+    this.tableBody.children().filter(function () {
+      return $(this).find('.datagrid-reorder-icon').length < 1;
+    }).attr('data-arrange-exclude', true);
+
     // Attach the Drag API
     this.tableBody.arrange({
       placeholder: `<tr class="datagrid-reorder-placeholder"><td colspan="${this.visibleColumns().length}"></td></tr>`,
-      handle: '.datagrid-reorder-icon'
+      handle: '.datagrid-reorder-icon',
+      isVisualItems: true
     })
       .off('beforearrange.datagrid').on('beforearrange.datagrid', (e, status) => {
         if (self.isSafari) {
@@ -2259,9 +2276,11 @@ Datagrid.prototype = {
 
         // Now Push Groups
         for (let k = 0; k < s.dataset[i].values.length; k++) {
-          tableHtml += self.rowHtml(s.dataset[i].values[k], this.recordCount, i);
-          this.recordCount++;
-          self.groupArray.push({ group: i, node: k });
+          if (!s.dataset[i].values[k].isFiltered) {
+            tableHtml += self.rowHtml(s.dataset[i].values[k], this.recordCount, i);
+            this.recordCount++;
+            self.groupArray.push({ group: i, node: k });
+          }
         }
 
         // Now Push summary rowHtml
@@ -4269,7 +4288,7 @@ Datagrid.prototype = {
       self.setActiveCell(target.closest('td'));
 
       // Dont Expand rows or make cell editable when clicking expand button
-      if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
+      if (target.is('.datagrid-expand-btn')) {
         rowNode = $(this).closest('tr');
         dataRowIdx = self.settings.treeGrid ?
           self.dataRowIndex(rowNode) : self.visualRowIndex(rowNode);

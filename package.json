@@ -30,7 +30,16 @@
     "publish-dev": "grunt publish && npm publish publish --tag dev --force",
     "publish-prod": "grunt publish && npm publish publish --force",
     "documentation": "./build/generate-documentation.js",
-    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v"
+    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
+    "lint-staged": "lint-staged"
+  },
+  "pre-commit": [
+    "lint-staged"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
   },
   "dependencies": {
     "d3": "^4.13.0",
@@ -85,6 +94,7 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^2.0.9",
+    "lint-staged": "^7.0.0",
     "load-grunt-tasks": "^3.5.2",
     "map-stream": "0.0.7",
     "marked": "^0.3.17",
@@ -92,6 +102,7 @@
     "moment": "^2.19.2",
     "node-pandoc": "^0.3.0",
     "pandoc": "^0.2.0",
+    "pre-commit": "^1.2.2",
     "protractor": "^5.3.0",
     "protractor-image-comparison": "^1.5.1",
     "pygmentize-bundled": "^2.3.0",

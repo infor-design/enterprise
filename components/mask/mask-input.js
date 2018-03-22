@@ -3,17 +3,17 @@ import { utils } from '../utils/utils';
 import { Environment as env } from '../utils/environment';
 import { Locale } from '../locale/locale';
 import { masks } from './masks';
-import { SohoMaskAPI } from './mask-api';
+import { MaskAPI } from './mask-api';
 
 // The name of this component
 const COMPONENT_NAME = 'mask';
 
 /**
  * Component Wrapper for input elements that gives them the ability to become "masked".
- * @class SohoMaskedInput
+ * @class MaskInput
  * @constructor
  * @param {HTMLInputElement} element regular HTML Input Element (not wrapped with jQuery)
- * @param {SohoMaskedInputOptions} [settings] incoming settings
+ * @param {MaskInputOptions} [settings] incoming settings
  *
  * @param {object} [settings.definitions=false] if defined, passes additional string-based pattern match "types".
  * @param {boolean} [settings.guide=false] if true, causes a guide to show inside the input field, represented by the placeholder,
@@ -35,12 +35,12 @@ const COMPONENT_NAME = 'mask';
  *  but can automatically configure the field for "date", "time", and "number"
  * @param {boolean} [settings.processOnBlur=true] if defined, causes the mask API to process this input field whenever it becomes blurred.
  * @param {boolean} [settings.processOnInitialize=true] if defined, causes the mask API to process this input field when the component is initialized.
- * @returns {SohoMaskedInput} component instance
+ * @returns {MaskInput} component instance
  */
-const DEFAULT_MASKED_INPUT_OPTIONS = {
+const DEFAULT_MASK_INPUT_OPTIONS = {
   definitions: undefined,
   guide: false,
-  maskAPI: SohoMaskAPI,
+  maskAPI: MaskAPI,
   keepCharacterPositions: false,
   pattern: undefined,
   patternOptions: undefined,
@@ -51,7 +51,7 @@ const DEFAULT_MASKED_INPUT_OPTIONS = {
   processOnInitialize: true
 };
 
-function SohoMaskedInput(element, settings) {
+function MaskInput(element, settings) {
   this.element = element;
 
   if (!settings) {
@@ -61,7 +61,7 @@ function SohoMaskedInput(element, settings) {
   return this.init(settings);
 }
 
-SohoMaskedInput.prototype = {
+MaskInput.prototype = {
 
   /**
    * Initialization/things that need to be called on `updated()` in addition to initialization
@@ -72,7 +72,7 @@ SohoMaskedInput.prototype = {
   init(settings) {
     // Define internal settings
     if (!this.settings) {
-      this.settings = utils.mergeSettings(this.element, settings, DEFAULT_MASKED_INPUT_OPTIONS);
+      this.settings = utils.mergeSettings(this.element, settings, DEFAULT_MASK_INPUT_OPTIONS);
     } else {
       this.settings = utils.mergeSettings(this.element, settings, this.settings);
     }
@@ -281,7 +281,7 @@ SohoMaskedInput.prototype = {
     /**
      * Fire the 'write' event
      * @event write
-     * @memberof SohoMaskedInput
+     * @memberof MaskInput
      * @param {jQuery.Event} e the event object
      * @param {string} finalValue the final, masked value
      */
@@ -560,4 +560,4 @@ SohoMaskedInput.prototype = {
   }
 };
 
-export { SohoMaskedInput, COMPONENT_NAME };
+export { MaskInput, COMPONENT_NAME };
