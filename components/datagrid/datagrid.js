@@ -4286,7 +4286,7 @@ Datagrid.prototype = {
       */
       self.triggerRowEvent('click', e, true);
       self.setActiveCell(target.closest('td'));
-      
+
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
         rowNode = $(this).closest('tr');
