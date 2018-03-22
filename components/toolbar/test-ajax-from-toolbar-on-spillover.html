@@ -14,7 +14,7 @@
 <div class="row">
   <div class="twelve columns">
 
-    <div id="ajax-toolbar" class="toolbar" data-init="false" data-options="{ maxVisibleButtons: 4 }">
+    <div id="ajax-toolbar" class="toolbar" data-init="false">
       <div class="title">Ajax-ified Toolbar</div>
       <div class="buttonset">
 
@@ -69,13 +69,21 @@
 
   </div>
 </div>
-<div class="row">
+<div class="row top-padding">
   <div class="twelve columns">
-    <button type="button" id="change-ajax" class="btn">
+    <button id="change-ajax" type="button" class="btn-secondary">
       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-settings"></use>
       </svg>
       <span>Change Ajax Call</span>
+    </button>
+
+    <button id="destroy" type="button" class="btn-secondary">
+      <span>Destroy Toolbar Instance</span>
+    </button>
+
+    <button id="reinvoke" type="button" class="btn-secondary" disabled>
+      <span>Re-invoke Toolbar Instance</span>
     </button>
   </div>
 </div>
@@ -123,6 +131,10 @@
   var moreElem = $('#predefined-more');
   var moreAPI = moreElem.data('popupmenu');
 
+  var btnChangeAjax = $('#change-ajax');
+  var btnDestroy = $('#destroy');
+  var btnReinvoke = $('#reinvoke');
+
   // Settings
   var TOOLBAR_SETTINGS = {
     maxVisibleButtons: 4,
@@ -131,15 +143,39 @@
     }
   };
 
-  if (toolbarAPI) {
-    toolbarAPI.updated(TOOLBAR_SETTINGS);
-  } else {
-    toolbarElem.toolbar(TOOLBAR_SETTINGS);
-    toolbarAPI = toolbarElem.data('toolbar');
+  function invokeToolbar() {
+    btnChangeAjax.enable();
+    btnDestroy.enable();
+    btnReinvoke.disable();
+
+    if (toolbarAPI) {
+      toolbarAPI.updated(TOOLBAR_SETTINGS);
+    } else {
+      toolbarElem.toolbar(TOOLBAR_SETTINGS);
+      toolbarAPI = toolbarElem.data('toolbar');
+    }
   }
 
-  // Swap out the More Menu's ajax call for a different one.
-  $('#change-ajax').on('click', function () {
+  // invoke the toolbar once on page load
+  invokeToolbar();
+
+  // Destroys the toolbar instance.
+  btnDestroy.on('click', function() {
+    $(this).disable();
+    btnChangeAjax.disable();
+    btnReinvoke.enable();
+    toolbarAPI.destroy();
+  });
+
+  // Reinvokes the toolbar instance.
+  btnReinvoke.on('click', function() {
+    invokeToolbar();
+  });
+
+  // Swaps out the More Menu's ajax call for a different one.
+  btnChangeAjax.on('click', function () {
+    $(this).disable();
+
     if (toolbarAPI) {
       toolbarAPI.updated({
         maxVisibleButtons: 4,
