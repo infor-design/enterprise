@@ -78,7 +78,7 @@ const serverUris = {
   static: paths.static,
   local: 'http://localhost/api/docs/',
   localDebug: 'http://localhost:9002/api/docs/',
-  staging: 'http://staging.design.infor.com/api/docs/',
+  staging: 'https://staging.design.infor.com/api/docs/',
   prod: 'https://design.infor.com/api/docs/'
 };
 const packageJson = require(`${rootPath}/publish/package.json`);
@@ -406,6 +406,7 @@ function postZippedBundle() {
   let form = new formData();
   form.append('file', fs.createReadStream(`${paths.dist}.zip`));
   form.append('root_path', `ids-jquery/${packageJson.version}`);
+  form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : "");
   form.submit(serverUris[envAlias], (err, res) => {
     if (err) {
       console.error(err);
