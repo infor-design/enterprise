@@ -239,7 +239,7 @@ div.multiselect {
   }
 
   li {
-    //min-height: 32px;
+    cursor: pointer;
     position: relative;
 
     i {
@@ -255,11 +255,13 @@ div.multiselect {
     &:hover,
     &.hover {
       background-color: $popupmenu-hover-color;
-      cursor: pointer;
       outline: none;
     }
 
     &.is-disabled {
+      cursor: default;
+      pointer-events: none;
+
       > a {
         color: $disabled-color;
       }
@@ -267,17 +269,15 @@ div.multiselect {
       &:hover,
       &.hover {
         background-color: transparent;
-        cursor: default;
       }
     }
 
     &:focus {
       background-color: $popupmenu-hover-color;
-      cursor: pointer;
       outline: none;
     }
 
-    &.is-focused {
+    &.is-focused:not(.is-disabled) {
       background-color: $dropdown-selected-bg-color;
 
       a {
