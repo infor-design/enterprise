@@ -1,5 +1,5 @@
-<section class='py2 clearfix'>
-  <h2 id='<%- slug(note.namespace) %>' class='mt0'>
+<section>
+  <h2 id='<%- slug(note.namespace) %>'>
     <%- note.name %>
   </h2>
   <% if (note.description) { %>
