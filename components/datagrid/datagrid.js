@@ -4267,6 +4267,17 @@ Datagrid.prototype = {
       */
       self.triggerRowEvent('click', e, true);
       self.setActiveCell(target.closest('td'));
+      
+      // Dont Expand rows or make cell editable when clicking expand button
+      if (target.is('.datagrid-expand-btn')) {
+        rowNode = $(this).closest('tr');
+        dataRowIdx = self.settings.treeGrid ?
+          self.dataRowIndex(rowNode) : self.visualRowIndex(rowNode);
+        self.toggleRowDetail(dataRowIdx);
+        self.toggleGroupChildren(rowNode);
+        self.toggleChildren(e, dataRowIdx);
+        return false; //eslint-disable-line
+      }
 
       const isSelectionCheckbox = target.is('.datagrid-selection-checkbox') ||
                                 target.find('.datagrid-selection-checkbox').length === 1;
@@ -4290,17 +4301,6 @@ Datagrid.prototype = {
         e.preventDefault();
       } else if (canSelect) {
         self.toggleRowSelection(target.closest('tr'));
-      }
-      
-      // Dont Expand rows or make cell editable when clicking expand button
-      if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
-        rowNode = $(this).closest('tr');
-        dataRowIdx = self.settings.treeGrid ?
-          self.dataRowIndex(rowNode) : self.visualRowIndex(rowNode);
-        self.toggleRowDetail(dataRowIdx);
-        self.toggleGroupChildren(rowNode);
-        self.toggleChildren(e, dataRowIdx);
-        return false; //eslint-disable-line
       }
 
       const isEditable = self.makeCellEditable(self.activeCell.dataRow, self.activeCell.cell, e);
