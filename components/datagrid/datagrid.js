@@ -4286,9 +4286,9 @@ Datagrid.prototype = {
       */
       self.triggerRowEvent('click', e, true);
       self.setActiveCell(target.closest('td'));
-
+      
       // Dont Expand rows or make cell editable when clicking expand button
-      if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
+      if (target.is('.datagrid-expand-btn')) {
         rowNode = $(this).closest('tr');
         dataRowIdx = self.settings.treeGrid ?
           self.dataRowIndex(rowNode) : self.visualRowIndex(rowNode);
