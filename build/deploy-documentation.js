@@ -277,6 +277,7 @@ function markdownToHtml(filePath) {
         const fmData = frontMatter(data);
         if (fmData.attributes.title) allDocsObj[fileBasename].title = fmData.attributes.title;
         if (fmData.attributes.description) allDocsObj[fileBasename].description = fmData.attributes.description;
+        if (fmData.attributes.demo) allDocsObj[fileBasename].demo = fmData.attributes.demo;
 
         marked(fmData.body, (err, content) => {
           if (err) {
