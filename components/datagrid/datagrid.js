@@ -5035,7 +5035,6 @@ Datagrid.prototype = {
    */
   selectRow(idx, nosync, noTrigger) {
     let rowNode = null;
-    let rowIndex;
     let dataRowIndex;
     const self = this;
     let checkbox = null;
@@ -5045,8 +5044,7 @@ Datagrid.prototype = {
       return;
     }
 
-    rowNode = this.visualRowNode(idx);
-    rowIndex = this.actualRowIndex(rowNode);
+    rowNode = this.actualRowNode(idx);
     dataRowIndex = this.dataRowIndex(rowNode);
 
     if (isNaN(dataRowIndex)) {
@@ -5117,14 +5115,14 @@ Datagrid.prototype = {
             }
           });
         } else { // Default to Single element selection
-          rowData = s.treeDepth[self.pager && s.source ? rowNode.index() : rowIndex].node;
-          selectNode(rowNode, rowIndex, rowData);
+          rowData = s.treeDepth[self.pager && s.source ? rowNode.index() : idx].node;
+          selectNode(rowNode, idx, rowData);
         }
         self.setNodeStatus(rowNode);
       } else {
         rowData = s.dataset[dataRowIndex];
         if (s.groupable) {
-          const gData = self.groupArray[dataRowIndex];
+          const gData = self.groupArray[idx];
           rowData = s.dataset[gData.group].values[gData.node];
         }
         selectNode(rowNode, dataRowIndex, rowData);
