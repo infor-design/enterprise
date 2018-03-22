@@ -18,8 +18,10 @@
  *
  * Flags:
  * --dry-run       - Run the script, skipping POSTing to the api
- * --site=[server] - Deploy to specific server (defaults to "local"):
+ * --site=[server] - Deploy to specific server:
  *                   [local, local_debug, staging, prod]
+ *                   Note: If there is no flag, it'll deploy to "static"
+ *
  * --test-mode     - Run the script on a few components
  * --verbose       - Log all details
  *
@@ -335,7 +337,7 @@ function documentJsToHtml(componentName) {
           return output.map((file) => {
             return vinylToString(file, 'utf8').then(contents => {
               componentStats.numDocumented++;
-              logTaskAction('Documented', componentName + '.js')
+              logTaskAction('Documented', componentName + '.js');
               allDocsObj[componentName].api = contents;
             });
           })
@@ -391,34 +393,23 @@ function logTaskAction(action, desc, color = 'green') {
 function postZippedBundle() {
   const formData = require('form-data');
 
-
-  let envAlias = 'local';
-  if (argv.site) {
-    if (Object.keys(serverURIs).includes(argv.site)) {
-      envAlias = argv.site;
-    } else {
-      console.log(chalk.red(`Site "${argv.site}" not found!`), '\n"--site" options are', Object.keys(serverURIs).join(', '));
-      console.log(`Defaulting to "${envAlias}" api`)
-    }
-  }
-
-  logTaskStart(`publish to server "${envAlias}"`);
+  logTaskStart(`publish to server "${deployTo}"`);
 
   let form = new formData();
   form.append('file', fs.createReadStream(`${paths.dist}.zip`));
   form.append('root_path', `ids-jquery/${packageJson.version}`);
   form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : "");
-  form.submit(serverURIs[envAlias], (err, res) => {
+  form.submit(serverURIs[deployTo], (err, res) => {
     if (err) {
       console.error(err);
     } else {
       if (res.statusCode == 200) {
-        logTaskAction('Success', `to "${serverURIs[envAlias]}"`)
+        logTaskAction('Success', `to "${serverURIs[deployTo]}"`)
       } else {
         logTaskAction('Failed!', `Status ${res.statusCode}`, 'red');
       }
       res.resume();
-      logTaskEnd(`publish to server "${envAlias}"`);
+      logTaskEnd(`publish to server "${deployTo}"`);
       numArchivesSent++;
       statsConclusion();
     }
