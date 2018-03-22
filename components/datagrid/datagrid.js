@@ -6729,7 +6729,7 @@ Datagrid.prototype = {
 
     if (!fromApiCall) {
       // Validate the cell
-      this.validateCell(row, cell);
+      this.validateCell(dataRowIndex, cell);
     }
 
     if (coercedVal !== oldVal && !fromApiCall) {
