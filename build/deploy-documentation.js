@@ -74,7 +74,7 @@ const jsonTemplate = {
   body: '',
   api: ''
 };
-const serverUris = {
+const serverURIs = {
   static: paths.static,
   local: 'http://localhost/api/docs/',
   localDebug: 'http://localhost:9002/api/docs/',
@@ -107,7 +107,7 @@ let numArchivesSent = 0;
 // -------------------------------------
 logTaskStart('deploy');
 
-if (argv.site && Object.keys(serverUris).includes(argv.site)) {
+if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
   deployTo = argv.site;
 }
 
@@ -393,10 +393,10 @@ function postZippedBundle() {
 
   let envAlias = 'local';
   if (argv.site) {
-    if (Object.keys(serverUris).includes(argv.site)) {
+    if (Object.keys(serverURIs).includes(argv.site)) {
       envAlias = argv.site;
     } else {
-      console.log(chalk.red(`Site "${argv.site}" not found!`), '\n"--site" options are', Object.keys(serverUris).join(', '));
+      console.log(chalk.red(`Site "${argv.site}" not found!`), '\n"--site" options are', Object.keys(serverURIs).join(', '));
       console.log(`Defaulting to "${envAlias}" api`)
     }
   }
@@ -407,7 +407,7 @@ function postZippedBundle() {
   form.append('file', fs.createReadStream(`${paths.dist}.zip`));
   form.append('root_path', `ids-jquery/${packageJson.version}`);
   form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : "");
-  form.submit(serverUris[envAlias], (err, res) => {
+  form.submit(serverURIs[envAlias], (err, res) => {
     if (err) {
       console.error(err);
     } else {
