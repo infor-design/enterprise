@@ -6661,7 +6661,10 @@ Datagrid.prototype = {
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
     const isTreeGrid = this.settings.treeGrid;
-    const dataRowIndex = this.dataRowIndex(rowNode);
+    let dataRowIndex = this.dataRowIndex(rowNode);
+    if (!dataRowIndex) {
+      dataRowIndex = row;
+    }
     const rowData = isTreeGrid ?
       this.settings.treeDepth[row].node :
       this.settings.dataset[dataRowIndex];
@@ -6686,7 +6689,7 @@ Datagrid.prototype = {
     }
 
     // Update the value in the dataset
-    if (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip) {
+    if (col.id === 'rowStatus' && rowData && rowData.rowStatus && rowData.rowStatus.tooltip) {
       cellNode.attr('title', rowData.rowStatus.tooltip);
       cellNode.tooltip({
         placement: 'right',
