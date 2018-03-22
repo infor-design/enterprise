@@ -412,7 +412,7 @@ function postZippedBundle() {
       console.error(err);
     } else {
       if (res.statusCode == 200) {
-        logTaskAction('Success', `to "${urls[envAlias]}"`)
+        logTaskAction('Success', `to "${serverURIs[envAlias]}"`)
       } else {
         logTaskAction('Failed!', `Status ${res.statusCode}`, 'red');
       }
