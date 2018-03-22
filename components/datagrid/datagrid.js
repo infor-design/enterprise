@@ -1190,12 +1190,11 @@ Datagrid.prototype = {
       return false;
     });
 
-    this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
+    this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', (e) => {
       e.stopPropagation();
 
       if (e.which === 13) {
-        e.preventDefault();
-        $(this).trigger('change');
+        self.applyFilter();
       }
     }).off('change.datagrid').on('change.datagrid', '.datagrid-filter-wrapper input', () => {
       self.applyFilter();
@@ -4289,7 +4288,7 @@ Datagrid.prototype = {
       self.setActiveCell(target.closest('td'));
 
       // Dont Expand rows or make cell editable when clicking expand button
-      if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
+      if (target.is('.datagrid-expand-btn')) {
         rowNode = $(this).closest('tr');
         dataRowIdx = self.settings.treeGrid ?
           self.dataRowIndex(rowNode) : self.visualRowIndex(rowNode);
