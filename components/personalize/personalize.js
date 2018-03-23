@@ -271,11 +271,15 @@ Personalize.prototype = {
 
     if (css.length > 0) {
       const path = css.attr('href');
-      thisTheme = path.substring(path.lastIndexOf('/') + 1).replace('.min.css', '').replace('.css', '').replace('-theme', '');
-
-      if (thisTheme.lastIndexOf('?') > -1) {
-        thisTheme = thisTheme.substring(0, thisTheme.lastIndexOf('?'));
+      thisTheme = path.substring(path.lastIndexOf('/') + 1);
+      // trim query string off the end if it exists
+      // something like ?v=123 may be used for cache busting or build identifiers
+      const queryParamIndex = thisTheme.lastIndexOf('?');
+      if (queryParamIndex > -1) {
+        thisTheme = thisTheme.slice(0, queryParamIndex);
       }
+      // trim the file extensions off the end and drop the -theme portion
+      thisTheme = thisTheme.replace('.min.css', '').replace('.css', '').replace('-theme', '');
     }
     return thisTheme;
   },
