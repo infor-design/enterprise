@@ -1,7 +1,7 @@
 <div class="jsdoc-functions">
   <% members.forEach(function(member) { %>
     <div id='<%- slug(member.namespace) %>'>
-      <div class="jsdoc-functions--title">
+      <div class="jsdoc-functions--heading">
         <%= shortSignature(member) %>
       </div>
       <div class="jsdoc-functions--content">
