@@ -1,4 +1,4 @@
-<section>
+<section class='docjs-note'>
   <h2 id='<%- slug(note.namespace) %>'>
     <%- note.name %>
   </h2>

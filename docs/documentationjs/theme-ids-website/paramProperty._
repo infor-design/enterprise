@@ -1,10 +1,10 @@
 <tr>
-  <td>
-  <span><%- property.name %></span> <code><%= formatType(property.type) %></code>
-  <% if (property.default) { %>
-    (default <code><%- property.default %></code>)
-  <% } %></td>
-  <td class='break-word'><span><%= md(property.description, true) %></span></td>
+  <td class="jsdoc-childprop--name">
+    <%- property.name %></em> <code><%= formatType(property.type) %>
+    <% if (property.default) { %>
+      (default <%- property.default %>)
+    <% } %></td>
+  <td class="jsdoc-childprop--desc"><%= md(property.description, true) %></td>
 </tr>
 <% if(property.properties && property.properties.length) { %>
   <% property.properties.forEach(function(childProperty) { %>
