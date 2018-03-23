@@ -3,12 +3,7 @@
     <%- property.name %>
   </td>
   <td>
-    <code><%= formatType(property.type) %></code>
-  </td>
-  <td>
-    <% if (property.default) { %>
-      <code><%- property.default %></code>
-    <% } %>
+    <code><%= formatType(property.type) %><% if (property.default) { %>=<%- property.default %><% } %></code>
   </td>
   <td class="jsdoc-childprop--desc"><%= md(property.description, true) %></td>
 </tr>

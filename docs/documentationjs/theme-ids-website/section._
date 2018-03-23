@@ -15,7 +15,7 @@
 
   <%= md(section.description) %>
 
-  <div class="jsdoc-signature"><%= signature(section) %></div>
+  <p class="jsdoc-signature"><%= signature(section) %></p>
 
   <% if (section.type) { %>
     <p>
@@ -42,18 +42,16 @@
 
   <% if (section.params.length) { %>
     <table>
-      <caption>Parameters</caption>
+      <caption class="jsdoc-section--heading">Parameters</caption>
       <colgroup>
         <col width='30%' />
-        <col width='15%' />
-        <col width='15%' />
-        <col width='40%' />
+        <col width='20%' />
+        <col width='50%' />
       </colgroup>
       <thead>
         <tr>
           <th>Name</th>
           <th>Type</th>
-          <th>Default</th>
           <th>Description</th>
         </tr>
       </thead>
@@ -64,12 +62,7 @@
               <%- param.name %>
             </td>
             <td>
-              <code><%= formatType(param.type) %></code>
-            </td>
-            <td>
-              <% if (param.default) { %>
-                <code>= <%- param.default %></code>
-              <% } %>
+              <code><%= formatType(param.type) %><% if (param.default) { %>= <%- param.default %><% } %></code>
             </td>
             <td class="jsdoc-prop--desc">
               <%= md(param.description, true) %>
