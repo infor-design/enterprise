@@ -4,7 +4,7 @@
     <div>
       <% if (typeof nested === 'undefined') { %>
       <h2 id='<%- slug(section.namespace) %>'>
-        <%- section.name %>
+        <%- section.name %> Code Specs
       </h2>
       <% } %>
       <% if (section.context && section.context.github) { %>
@@ -45,11 +45,15 @@
       <caption>Parameters</caption>
       <colgroup>
         <col width='30%' />
-        <col width='70%' />
+        <col width='15%' />
+        <col width='15%' />
+        <col width='40%' />
       </colgroup>
       <thead>
         <tr>
           <th>Name</th>
+          <th>Type</th>
+          <th>Default</th>
           <th>Description</th>
         </tr>
       </thead>
@@ -58,8 +62,14 @@
           <tr>
             <td class="jsdoc-prop--name">
               <%- param.name %>
-              &nbsp;
-              <code>(<%= formatType(param.type) %><% if (param.default) { %>= <%- param.default %><% } %>)</code>
+            </td>
+            <td>
+              <code><%= formatType(param.type) %></code>
+            </td>
+            <td>
+              <% if (param.default) { %>
+                <code>= <%- param.default %></code>
+              <% } %>
             </td>
             <td class="jsdoc-prop--desc">
               <%= md(param.description, true) %>
@@ -79,7 +89,7 @@
   <% } %>
 
   <% if (section.properties.length) { %>
-    <div class="jsdoc-section--heading"></div>Properties</div>
+    <h3 class="jsdoc-section--heading">Properties</h3>
     <% section.properties.forEach(function(property) { %>
       <div>
         <strong><%- property.name%></strong> <code>(<%= formatType(property.type) %>)</code>
@@ -122,7 +132,7 @@
   <% } %>
 
   <% if (section.examples.length) { %>
-    <div class="jsdoc-section--heading">Example</div>
+    <h3 class="jsdoc-section--heading">Example</h3>
     <% section.examples.forEach(function(example) { %>
       <% if (example.caption) { %><p><%= md(example.caption) %></p><% } %>
       <pre><%= highlight(example.description) %></pre>
@@ -130,17 +140,17 @@
   <% } %>
 
   <% if (section.members.static && section.members.static.length) { %>
-    <div class="jsdoc-section--heading">Static Members</div>
+    <h3 class="jsdoc-section--heading">Static Members</h3>
     <%= renderSectionList({ members: section.members.static, renderSection: renderSection, renderParamProperty: renderParamProperty, noun: 'Static Member' }) %>
   <% } %>
 
   <% if (section.members.instance && section.members.instance.length) { %>
-    <div class="jsdoc-section--heading">Instance Members</div>
+    <h3 class="jsdoc-section--heading">Instance Members</h3>
     <%= renderSectionList({ members: section.members.instance, renderSection: renderSection, renderParamProperty: renderParamProperty, noun: 'Instance Member' }) %>
   <% } %>
 
   <% if (section.members.events && section.members.events.length) { %>
-    <div class="jsdoc-section--heading">Events</div>
+    <h3 class="jsdoc-section--heading">Events</h3>
     <%= renderSectionList({ members: section.members.events, renderSection: renderSection, renderParamProperty: renderParamProperty, noun: 'Event' }) %>
   <% } %>
 </section>

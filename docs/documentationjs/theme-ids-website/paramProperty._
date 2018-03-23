@@ -1,9 +1,15 @@
 <tr>
   <td class="jsdoc-childprop--name">
-    <%- property.name %></em> <code><%= formatType(property.type) %>
+    <%- property.name %>
+  </td>
+  <td>
+    <code><%= formatType(property.type) %></code>
+  </td>
+  <td>
     <% if (property.default) { %>
-      (default <%- property.default %>)
-    <% } %></td>
+      <code><%- property.default %></code>
+    <% } %>
+  </td>
   <td class="jsdoc-childprop--desc"><%= md(property.description, true) %></td>
 </tr>
 <% if(property.properties && property.properties.length) { %>
