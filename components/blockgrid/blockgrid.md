@@ -1,20 +1,23 @@
 ---
-title: Blockgrid  
+title: Blockgrid
 description: This page describes Blockgrid.
+demo:
+  pages:
+  - name: Blockgrid with images
+    slug: example-index
+  - name: Blockgrid with image and text
+    slug: example-text
+  - name: Blockgrid with single selection
+    slug: example-singleselect
+  - name: Blockgrid with multiselect select
+    slug: example-multiselect
+  - name: Blockgrid with mixed selection select
+    slug: example-mixed-selection
 ---
-
-## Configuration Options
-
-1. Blockgrid with images [View Example]( ../components/blockgrid/example-index)
-2. Blockgrid with image and text  [View Example]( ../components/blockgrid/example-text)
-3. Blockgrid with single selection [View Example]( ../components/blockgrid/example-singleselect)
-4. Blockgrid with multiselect select [View Example]( ../components/blockgrid/example-multiselect)
-5. Blockgrid with mixed selection select [View Example]( ../components/blockgrid/example-mixed-selection)
 
 ## Code Example
 
-This example shows how to place several object (image placeholders) in side a block grid.
-The block grid will layout the elements across the parent width and flow to next line if need be.
+This example shows how to place several objects inside a block grid. The block grid will layout the elements across the parent width and flow to next line if need be.
 
 ```html
 <div class="row blockgrid l-center">
@@ -38,7 +41,7 @@ The block grid will layout the elements across the parent width and flow to next
 
 ## Accessibility
 
-Note that tab order should be maintained and not changed with an explicit tabindex.
+Note that tab order should be maintained and not changed with an explicit `tabindex`.
 
 ## Code Tips
 

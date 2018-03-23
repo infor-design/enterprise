@@ -1,31 +1,22 @@
 ---
 title: File Upload Advanced
-description: This page describes File Upload Advanced.
+description: This page describes File Upload Advanced.i
+demo:
+  pages:
+  - name: Advanced File Upload Example
+    slug: example-index
+  - name: Default File Upload Example
+    slug: example-index
 ---
 
-## Configuration Options
-
-1. Advanced File Upload Example [View Example]( ../components/fileupload-advanced/example-index)
-2. Default File Upload Example [View Example]( ../components/fileupload/example-index)
-
-## Code Example
-
-### File Upload Advanced
-
-The advanced file upload control just needs a div in which to draw its contents.
+The advanced file upload control just needs a `<div>` with the class `fileupload-advanced` in which to draw its contents.
 
 ```html
 <div class="fileupload-advanced">
 </div>
 ```
 
-## Implementation Tips
-
--   This is done by using an html5 drag drop feature. So is only supported well on IE11 +
-
-## Accessibility
-
--  TODO
+This is done by using an HTML5 drag and drop feature, so is only supported well on modern browsers, including Internet Explorer 11 or later.
 
 ## Keyboard Shortcuts
 
@@ -38,8 +29,4 @@ The advanced file upload control just needs a div in which to draw its contents.
 
 ## Responsive Guidelines
 
--   The div will size to parent but recommend default size.
-
-## Upgrading from 3.X
-
--   Did not exist
+-   The `<div>` will size to parent but recommend default size.

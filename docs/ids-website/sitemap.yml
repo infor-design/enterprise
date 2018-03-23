@@ -29,8 +29,6 @@ sections:
       slug: autocomplete
     - name: Badges
       slug: badges
-    - name: Blockgrid
-      slug: blockgrid
     - name: Button
       slug: button
     - name: Breadcrumb
@@ -43,8 +41,6 @@ sections:
       slug: circlepager
     - name: Color Picker
       slug: colorpicker
-    - name: Composite Form
-      slug: compositeform
     - name: Contextual Action Panel
       slug: contextualactionpanel
     - name: Context Menu

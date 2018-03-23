@@ -1,18 +1,20 @@
 ---
-title: Circle Pager  
+title: Circle Pager
 description: This page describes Circle Pager.
+demo:
+  pages:
+  - name: Default Circle Pager Example
+    slug: example-index
+  - name: Circle Pager on a Form
+    slug: example-form
+  - name: Circle Pager with more than one item per slide
+    slug: example-more-slides
+  - name: Circle Pager on a Tab Example
+    slug: example-tabs
 ---
-
-## Configuration Options
-
-1. Default Circle Pager Example [View Example]( ../components/circlepager/example-index)
-2. Circle Pager on a Form [View Example]( ../components/circlepager/example-form)
-3. Circle Pager with more than one item per slide [View Example]( ../components/circlepager/example-more-slides)
-4. Circle Pager on a Tab Example [View Example]( ../components/circlepager/example-tabs)
-
 ## Code Example
 
-This example shows how markup the circle pager. Then call `$(elem).circlepager()` to invoke. The structure of the circle pager is that you have a circlepager div followed by a slides container and then one slider per "page". The page content goes in the slide-content element.
+Use the below markup to create a circle pager, then call `$(elem).circlepager()` to invoke. The structure of the circle pager is that you have a `<div class="circlepager">` followed by a `slide` container and then one slider per "page". The page content goes in the `slide-content` element.
 
 ```html
 <div class="circlepager example1">
@@ -52,14 +54,14 @@ This example shows how markup the circle pager. Then call `$(elem).circlepager()
 ## Accessibility
 
 -   [Carousel](https://www.w3.org/WAI/tutorials/carousels/) guidelines apply.
-- We do not auto move the carousel elements
-- User can tab to the cicles and activate
+- We do not auto-move the carousel elements
+- User can <kbd>Tab</kbd> to the circles and activate
 
 ## Keyboard Shortcuts
 
--   **Tab:** Tab through the pager buttons (circles)
--   **Enter:** Activate a Page
+-   <kbd>Tab</kbd> to move through the pages
+-   <kbd>Enter</kbd> to activate a page
 
 ## Upgrading from 3.X
 
--   Replaces .inforCarousel() in a more limited fashion
+-   Replaces `.inforCarousel()` in a more limited fashion

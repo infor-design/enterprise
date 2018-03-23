@@ -1,17 +1,14 @@
 ---
-title: Form Functionality  
-description: This page describes Form Functionality.
+title: Form Functionality
+description: The forms plugins are a set of form related utilities and functionality contained in `forms.js`. This page outlines the functionality contained in that plugin and shows some from related examples for layout from other areas.
+
+demo:
+  pages:
+  - name: Form Inputs in the Responsive Grid
+    slug: example-inputs
+  - name: Form Inputs in the Responsive Simplified Grid
+    slug: example-inputs-simple
+  - name: Form Layouts
+    slug: example-forms
 ---
 
-## General Information
-
-The forms plugins are a set of form related small utils and functionality contained in `forms.js`. This page outlines the functionality contained in that plugin and shows some from related examples for layout from other areas.
-
-## Configuration Options
-
-1. Form Inputs in the Responsive Grid [View Example]( ../components/form/example-inputs)
-2. Form Inputs in the Responsive Simplified Grid [View Example]( ../components/form/example-inputs-simple)
-3. Dirty Fields [View Example](#)
-4. Form Layouts [View Example]( ../components/form/example-forms)
-
-## API Details

@@ -34,14 +34,14 @@ test:
 This example shows how to invoke the autocomplete and its starting markup. Remember to add `autocomplete="off"` as some browsers have their own autocomplete functionality that interferes.
 
 ```html
-    <div class="field">
-      <label for="autocomplete-default">States</label>
-      <input type="text" autocomplete="off" class='autocomplete' id="autocomplete-default">
-    </div>
+<div class="field">
+  <label for="autocomplete-default">States</label>
+  <input type="text" autocomplete="off" class='autocomplete' id="autocomplete-default">
+</div>
 
-    <script>
-      $('#autocomplete-default').autocomplete();
-    </script>
+<script>
+  $('#autocomplete-default').autocomplete();
+</script>
 ```
 
 ## Keyboard Shortcuts
@@ -52,11 +52,3 @@ This example shows how to invoke the autocomplete and its starting markup. Remem
 - <kbd>Any Letter</kbd> After a typehead delay all of these choices should be shown. The focus should stay in the field for additional typing. NOTE: Only valid alpha numeric characters will open the list.
 - <kbd>Escape</kbd> Closes the drop down list and restores the last value (if any)
 - <kbd>Tab</kbd> Goes to the next tabbable item. If the list is open the currently highlighted one will be selected
-
-## States and Variations
-
-- Normal
-- Focus
-- Active (Popup Menu is present)
-- Disabled
-- Readonly

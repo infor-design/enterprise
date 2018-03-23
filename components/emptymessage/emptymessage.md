@@ -1,16 +1,15 @@
 ---
 title: Empty Message
 description: This page describes Empty Message .
+demo:
+  pages:
+  - name: Simple Empty Message
+    slug: example-index
+  - name: Widget Examples
+    slug: example-widgets
 ---
 
-## Configuration Options
-
-1. Simple Empty Message [View Example]( ../components/emptymessage/example-index)
-1. Widget Examples [View Example]( ../components/emptymessage/example-widgets)
-
-## Code Example
-
-Use an empty message when no data is present.
+Use an empty message when no data is present in a list or container and there is no other context to provide the user information about what to do. On smaller breakpoints, the empty message will be centered in the container.
 
 ```javascript
 $('.empty-message').emptymessage({
@@ -19,7 +18,3 @@ $('.empty-message').emptymessage({
 });
 
 ```
-
-## Responsive Guidelines
-
-- The empty message will be centered in the container.

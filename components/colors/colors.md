@@ -1,19 +1,15 @@
 ---
-title: Color Palette Info 
-description: This page describes Color Palette Info .
+title: Color Palette
+description:
+demo:
+  pages:
+  - name: Full Color Palette
+    slug: example-index
+  - name: Color Variables (Badges)
+    slug: example-color-vars
 ---
 
-## Configuration Options
-
-1. Full Color Palette [View Example]( ../components/colors/example-index)
-2. Color Variables (Badges) [View Example]( ../components/colors/example-color-vars)
-
-## API Details
-
-### Settings
-
-* Text Color Classes - These set the color attribute to a alert color in the palette: error-text, warning-text, good-text, "info-text
-* Background Color Clases - If using the SoHo components, there are classes (background colors) for every color in the  palette that correspond to the table above. For example: azure06 or emerald01.
+Text color classes can be used to set the color attribute to an alert color in the palette by using the classes `error-text`, `warning-text`, `good-text`, and `info-text`. Background color classes can also be used to set the `background-color` of an element. Every color in the palette has a corresponding class; for example: `azure06` or `emerald01`.
 
 ```html
 <p class="error-text">Error</p>
@@ -24,5 +20,4 @@ description: This page describes Color Palette Info .
 
 ## Accessibility
 
-* Do not use color alone to indicate state. Meaning if you use a color then also use an icon or text to explain the meaning in case someone is color blind.
-* Some of the colors in the palette need either a light or dark color for proper color contrast. This can be seen in the [palette example]( ../components/colors/example-index)
+* Do not use color alone to indicate state. If you use a color then also use an icon or text to explain the meaning in case someone is color blind and unable to discern the meaning of the status based on the color.

@@ -1,17 +1,19 @@
 ---
 title: Field Set
 description: This page describes Field Set.
+demo:
+  pages:
+  - name: Default Fieldset Example
+    slug: example-index
+  - name: 50/50 Fieldset Example
+    slug: example-50-50
+  - name: Example Showing Input Fields
+    slug: example-fields
 ---
 
-## Configuration Options
+A field set uses the standard HTML `<fieldset>` and `<legend>` element and simply adds CSS to style the `<legend>` element text. A `<fieldset>` is not expandable. For that, you can use the [expandable area](./expandablearea) component.
 
-1. Default Fieldset Example [View Example]( ../components/fieldset/example-index)
-2. 50/50 Fieldset Example [View Example]( ../components/fieldset/example-50-50)
-2. Example Showing Input Fields [View Example]( ../components/fieldset/example-fields)
-
-## Code Example
-
-A field set uses the standard html field set and legend element and simply adds css to style the legend element text. A field set is not expandable for that you could use the [expandable area component]( ../components/expandablearea). Here is an example showing a few input fields in a field set. Anything can go inside a field set but its usually something like input fields or data input fields.
+Here is an example showing a few input fields in a `<fieldset>`. Anything can go inside a `<fieldset>` but is usually used for input fields.
 
 ```html
 <form action="#" method="post">
@@ -38,9 +40,7 @@ A field set uses the standard html field set and legend element and simply adds 
 </form>
 ```
 
-## Code Tip
-
-There are some added classes to style sections like field sets for cases you semantically don't require a fieldset. The `fieldset-title` element will make a text header, you should use a H element for this in the structure of your page. Then you can add a `<hr class="fieldset-hr">` element at the top of each subsequent section for a divider. This would be laid out like this example:
+There are some added classes to style sections to look like `<fieldsets>` in cases you semantically choose not to use a `<fieldset>`. The `fieldset-title` class can be combined with a heading tag, like `<h2>`, to add this visual structure to your page. Then you can add a `<hr class="fieldset-hr">` element at the top of each subsequent section for a divider.
 
 ```html
 <div class="row">
@@ -57,16 +57,7 @@ There are some added classes to style sections like field sets for cases you sem
 
 ```
 
-## Accessibility
-
--   Normal rules for content inside apply
-
-## Responsive Guidelines
-
--   Uses form guidelines
-
 ## Upgrading from 3.X
 
--   Remove expand/collapse button
--   Move div content to field setup body (optional)
--   Remove class inforFieldSetLabel and inforFieldSet
+-   Remove the expand/collapse button
+-   Remove class `inforFieldSetLabel` and `inforFieldSet`
