@@ -61,7 +61,7 @@
               &nbsp;
               <code>(<%= formatType(param.type) %><% if (param.default) { %>= <%- param.default %><% } %>)</code>
             </td>
-            <td class="jsdoc-prop--name">
+            <td class="jsdoc-prop--desc">
               <%= md(param.description, true) %>
             </td>
           </tr>
