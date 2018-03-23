@@ -1320,6 +1320,17 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    // Make all content fit in singleline
+    .is-singleline {
+      * {
+        display: inline;
+      }
+
+      br {
+        display: none;
+      }
+    }
+
     .word-wrap {
       word-wrap: break-word;
 
@@ -3211,6 +3222,10 @@ html[dir='rtl'] {
 
       li {
         list-style: inherit;
+      }
+
+      p {
+        text-align: inherit;
       }
     }
   }
