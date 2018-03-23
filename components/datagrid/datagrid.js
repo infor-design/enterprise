@@ -4231,6 +4231,55 @@ Datagrid.prototype = {
       });
     }
 
+    // ENABLE COPY PASTE FROM EXCEL
+    if (self.settings.editable) {
+      $('body').bind('paste', function(e){
+        let values = e.originalEvent.clipboardData.getData('text').split('\n');
+        values.pop();
+  
+        let currentDataSet = self.settings.dataset;
+        let startRowCount = parseInt(e.target.closest('tr').getAttribute('data-index'));
+        let startColIndex = parseInt(e.target.closest('td').getAttribute('aria-colindex')) - 1;
+  
+        for (let i = 0; i < values.length; i++) {
+          let rawVal = values[i].split('\t');
+          let colIndex = startColIndex;
+  
+          if (startRowCount < currentDataSet.length) {
+            let currentRowData = currentDataSet[startRowCount];  
+            for (let j = 0; j < rawVal.length; j++) {
+              if (self.settings.columns[colIndex].formatter === Formatters.Checkbox) {
+                currentRowData[self.settings.columns[colIndex].field] = rawVal[j].trim() == "true";
+              } else {
+                currentRowData[self.settings.columns[colIndex].field] = rawVal[j];
+              }
+              colIndex++;
+            }
+            currentDataSet[startRowCount] = currentRowData;
+          } else {
+            let newRowData = {};
+            for (let k = 0; k < self.settings.columns.length; k++) {
+              newRowData[self.settings.columns[k].field] = '';
+            }
+  
+            for (let j = 0; j < rawVal.length; j++) {
+              if (self.settings.columns[colIndex].formatter === Formatters.Checkbox) {
+                newRowData[self.settings.columns[colIndex].field] = rawVal[j].trim() == "true";
+              } else {
+                newRowData[self.settings.columns[colIndex].field] = rawVal[j];
+              }
+              colIndex++;
+            }
+            currentDataSet.push(newRowData);
+          }
+          startRowCount++;
+        }
+  
+        self.settings.dataset = currentDataSet;
+        self.renderRows();
+      });
+    }
+
     // Handle Resize - Re do the columns
     if (self.settings.redrawOnResize) {
       let oldWidth = self.element.outerWidth();
