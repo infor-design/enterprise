@@ -145,7 +145,9 @@ Promise.all(setupPromises)
       })
       .then(values => {
         logTaskEnd('writing files');
-        zipAndDeploy();
+        if (deployTo !== 'static') {
+          zipAndDeploy();
+        }
       });
   });
 

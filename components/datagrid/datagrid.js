@@ -29,8 +29,7 @@ const COMPONENT_NAME = 'datagrid';
  *
  * @param {jQuery[]|HTMLElement} element The component element.
  * @param {object}   [settings] The component settings.
- * @param {boolean}  [settings.actionableMode=false] If actionableMode is "true, tab and shift tab behave like left
- * and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+ * @param {boolean}  [settings.actionableMode=false] If actionableMode is "true, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
  * @param {boolean}  [settings.cellNavigation=true] If cellNavigation is "false, will show border around whole row on focus
  * @param {boolean}  [settings.rowNavigation=true] If rowNavigation is "false, will NOT show border around the row
  * @param {boolean}  [settings.alternateRowShading=false] Sets shading for readonly grids
@@ -38,8 +37,13 @@ const COMPONENT_NAME = 'datagrid';
  * @param {array}    [settings.dataset=[]] An array of data objects
  * @param {boolean}  [settings.columnReorder=false] Allow Column reorder
  * @param {boolean}  [settings.saveColumns=false] Save Column Reorder and resize
- * @param {object}   [settings.saveUserSettings= {columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true}]
- * Save one or all of the following to local storage
+ * @param {object}   [settings.saveUserSettings]
+ * @param {object}   [settings.saveUserSettings.columns=true]
+ * @param {object}   [settings.saveUserSettings.rowHeight=true]
+ * @param {object}   [settings.saveUserSettings.sortOrdertrue]
+ * @param {object}   [settings.saveUserSettings.pageSize=true]
+ * @param {object}   [settings.saveUserSettings.activePage=true]
+ * @param {object}   [settings.saveUserSettings.filter=true]
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
  * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
  * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
@@ -50,17 +54,13 @@ const COMPONENT_NAME = 'datagrid';
  * @param {string}   [settings.headerMenuBeforeOpen=false] Callback for the header level beforeopen menu event
  * @param {string}   [settings.uniqueId=null] Unique ID to use as local storage reference and internal variable names
  * @param {string}   [settings.rowHeight=normal] Controls the height of the rows / number visible rows. May be (short, medium or normal)
- * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or
- * 'multiple' or 'mixed' or 'siblings'
- * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping,
- * e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
- * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last
- * column will get filled with an empty spacer column.
+ * @param {string}   [settings.selectable=false] Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed' or 'siblings'
+ * @param {object}   [settings.groupable=null]  Controls fields to use for data grouping Use Data grouping, e.g. `{fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}`
+ * @param {boolean}  [settings.spacerColumn=false] if true and the grid is not wide enough to fit the last column will get filled with an empty spacer column.
  * @param {boolean}  [settings.stretchColumn='last'] If 'last' the last column will stretch we will add more options.
  * @param {boolean}  [settings.clickToSelect=true] Controls if using a selection mode if you can click the rows to select
  * @param {object}   [settings.toolbar=false]  Toggles and appends toolbar features fx..
- * @param {boolean}  [settings.selectChildren=true] Can prevent selecting of all child nodes on multiselect
- * `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
+ * @param {boolean}  [settings.selectChildren=true] Can prevent selecting of all child nodes on multiselect `{title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}`
  * @param {boolean}  [settings.initializeToolbar=true] Set to false if you will initialize the toolbar yourself
  * @param {boolean}  [settings.paging=false] Enable paging mode
  * @param {number}   [settings.pagesize=25] Number of rows per page
@@ -78,23 +78,21 @@ const COMPONENT_NAME = 'datagrid';
  * @param {boolean}  [settings.showSelectAllCheckBox=true] Allow to hide the checkbox header (true to show, false to hide)
  * @param {boolean}  [settings.allowOneExpandedRow=true] Controls if you cna expand more than one expandable row.
  * @param {boolean}  [settings.enableTooltips=false] Process tooltip logic at a cost of performance
- * @param {boolean}  [settings.disableRowDeactivation=false] if a row is activated the user should not be able to
- * deactivate it by clicking on the activated row
+ * @param {boolean}  [settings.disableRowDeactivation=false] if a row is activated the user should not be able to deactivate it by clicking on the activated row
  * @param {boolean}  [settings.sizeColumnsEqually=false] If true make all the columns equal width
  * @param {boolean}  [settings.expandableRow=false] If true we append an expandable row area without the rowTemplate feature being needed.
  * @param {boolean}  [settings.redrawOnResize=false] If set to false we skip redraw logic on the resize of the page.
  * @param {boolean}  [settings.exportConvertNegative=false] If set to true export data with trailing negative signs moved in front.
  * @param {array}    [settings.columnGroups=null] An array of columns to use for grouped column headers.
  * @param {boolean}  [settings.treeGrid=false] If true a tree grid is expected so addition calculations will be used to calculate of the row children
- * @param {Function} [settings.onPostRenderCell=null] A call back function that will fire and send you the cell
- * container and related information for any cells cells with a component attribute in the column definition.
- * @param {Function} [settings.onDestroyCell=null] A call back that goes along with onPostRenderCel and will
- * fire when this cell is destroyed and you need noification of that.
+ * @param {Function} [settings.onPostRenderCell=null] A call back function that will fire and send you the cell container and related information for any cells cells with a component attribute in the column definition.
+ * @param {Function} [settings.onDestroyCell=null] A call back that goes along with onPostRenderCel and will fire when this cell is destroyed and you need noification of that.
  * @param {Function} [settings.onEditCell=null] A callback that fires when a cell is edited, the editor object is passed in to the function
- * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used.
- * when expandableRow is true. The function gets eventData about the row and grid and a response function callback.
- * Call the response function with markup to append and delay opening the row.
- * @param {object}   [settings.emptyMessage={title:'No Data Available', infor: '', icon: 'icon-empty-no-data'}]
+ * @param {Function} [settings.onExpandRow=null] A callback function that fires when expanding rows. To be used. when expandableRow is true. The function gets eventData about the row and grid and a response function callback. Call the response function with markup to append and delay opening the row.
+ * @param {object}   [settings.emptyMessage]
+ * @param {object}   [settings.emptyMessage.title='No Data Available']
+ * @param {object}   [settings.emptyMessageinfor='']
+ * @param {object}   [settings.emptyMessage.icon='icon-empty-no-data']
  * An empty message will be displayed when there is no rows in the grid. This accepts an object of the form
  * emptyMessage: {title: 'No Data Available', info: 'Make a selection on the list above to see results',
  * icon: 'icon-empty-no-data', button: {text: 'xxx', click: <function>}} set this to null for no message
