@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid1"></div>
+  </div>
+  <div class="twelve columns">
+    <div id="datagrid2"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function() {
+
+    const columns = [{
+        align: 'center',
+        field: '',
+        id: 'drilldown',
+        formatter: Formatters.Drilldown
+      }, {
+        field: 'activity',
+        id: 'activity',
+        name: 'Activity'
+      }, {
+        field: 'quantity',
+        id: 'quantity',
+        name: 'Quantity'
+      }
+    ];
+
+    const dataset = [{
+        activity: 'Assemble Paint',
+        quantity: 1
+      }, {
+        activity: 'Inspect and Repair',
+        quantity: 2
+      }, {
+        activity: 'Inspect and Repair',
+        quantity: 1
+      }
+    ];
+
+    $('#datagrid1').datagrid({ columns, dataset });
+
+    // rendering with this method will not correctly size the fields
+    $('#datagrid2').datagrid({ columns }).data('datagrid').updateDataset(dataset);
+  });
+
+</script>
