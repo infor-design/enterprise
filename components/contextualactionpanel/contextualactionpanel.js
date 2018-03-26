@@ -23,7 +23,7 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
   content: null, //
   initializeContent: true, // initialize content before opening
   trigger: 'click',
-  showCloseButton: true
+  showCloseButton: false
 };
 
 function ContextualActionPanel(element, settings) {
