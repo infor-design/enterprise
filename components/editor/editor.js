@@ -115,6 +115,9 @@ Editor.prototype = {
       }
     }
 
+    if (this.element.hasClass('is-readonly')) {
+      this.readonly();
+    }
     return this.setup();
   },
 
