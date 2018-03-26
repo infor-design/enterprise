@@ -4233,50 +4233,60 @@ Datagrid.prototype = {
 
     // ENABLE COPY PASTE FROM EXCEL
     if (self.settings.editable) {
-      $('body').bind('paste', function(e){
-        let values = e.originalEvent.clipboardData.getData('text').split('\n');
-        values.pop();
-  
-        let currentDataSet = self.settings.dataset;
-        let startRowCount = parseInt(e.target.closest('tr').getAttribute('data-index'));
-        let startColIndex = parseInt(e.target.closest('td').getAttribute('aria-colindex')) - 1;
-  
-        for (let i = 0; i < values.length; i++) {
-          let rawVal = values[i].split('\t');
-          let colIndex = startColIndex;
-  
-          if (startRowCount < currentDataSet.length) {
-            let currentRowData = currentDataSet[startRowCount];  
-            for (let j = 0; j < rawVal.length; j++) {
-              if (self.settings.columns[colIndex].formatter === Formatters.Checkbox) {
-                currentRowData[self.settings.columns[colIndex].field] = rawVal[j].trim() == "true";
-              } else {
-                currentRowData[self.settings.columns[colIndex].field] = rawVal[j];
-              }
-              colIndex++;
-            }
-            currentDataSet[startRowCount] = currentRowData;
-          } else {
-            let newRowData = {};
-            for (let k = 0; k < self.settings.columns.length; k++) {
-              newRowData[self.settings.columns[k].field] = '';
-            }
-  
-            for (let j = 0; j < rawVal.length; j++) {
-              if (self.settings.columns[colIndex].formatter === Formatters.Checkbox) {
-                newRowData[self.settings.columns[colIndex].field] = rawVal[j].trim() == "true";
-              } else {
-                newRowData[self.settings.columns[colIndex].field] = rawVal[j];
-              }
-              colIndex++;
-            }
-            currentDataSet.push(newRowData);
-          }
-          startRowCount++;
+      $('body').on('paste', function (e) {
+        let pastedData;
+        if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        } else {
+          pastedData = window.clipboardData && window.clipboardData.getData ? window.clipboardData.getData('Text') : false;
         }
-  
-        self.settings.dataset = currentDataSet;
-        self.renderRows();
+        
+        if (pastedData) {
+          pastedData = pastedData.split('\n');
+          pastedData.pop();
+          
+          let currentDataSet = self.settings.dataset;
+          let startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'));
+          let startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex')) - 1;
+    
+          for (let i = 0; i < pastedData.length; i++) {
+            let rawVal = pastedData[i].split('\t');
+            let colIndex = startColIndex;
+    
+            if (startRowCount < currentDataSet.length) {
+              let currentRowData = currentDataSet[startRowCount];  
+              for (let j = 0; j < rawVal.length; j++) {
+                if (self.settings.columns[colIndex].formatter === Formatters.Checkbox) {
+                  currentRowData[self.settings.columns[colIndex].field] = rawVal[j].trim() == "true";
+                } else {
+                  currentRowData[self.settings.columns[colIndex].field] = rawVal[j];
+                }
+                colIndex++;
+              }
+              currentDataSet[startRowCount] = currentRowData;
+            } else {
+              let newRowData = {};
+              for (let k = 0; k < self.settings.columns.length; k++) {
+                newRowData[self.settings.columns[k].field] = '';
+              }
+    
+              for (let j = 0; j < rawVal.length; j++) {
+                if (self.settings.columns[colIndex].formatter === Formatters.Checkbox) {
+                  newRowData[self.settings.columns[colIndex].field] = rawVal[j].trim() == "true";
+                } else {
+                  newRowData[self.settings.columns[colIndex].field] = rawVal[j];
+                }
+                colIndex++;
+              }
+              currentDataSet.push(newRowData);
+            }
+            startRowCount++;
+          }
+    
+          self.settings.dataset = currentDataSet;
+          self.renderRows();
+        } 
+        
       });
     }
 
