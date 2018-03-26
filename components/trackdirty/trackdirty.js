@@ -133,7 +133,7 @@ Trackdirty.prototype = {
         }
 
         if (field.is('.editor-container')) {
-          el = field.closest('textarea');
+          el = field.find('.editor');
         }
 
         // Used element without .field wrapper
