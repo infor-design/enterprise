@@ -284,11 +284,6 @@ div.multiselect {
         color: $dropdown-selected-color;
       }
 
-      &::before {
-        @include checkbox-checked-before-style;
-        border-color: $inverse-color;
-      }
-
       &.is-selected {
         background-color: $dropdown-selected-bg-color;
 
@@ -401,7 +396,7 @@ div.multiselect {
       @include checkbox-unchecked-disabled-before-style;
     }
 
-    li.is-focused {
+    li.is-focused:not(.is-disabled) {
       background-color: $popupmenu-hover-color;
 
       > a {
