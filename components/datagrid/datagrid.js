@@ -4334,7 +4334,7 @@ Datagrid.prototype = {
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
         const rowElem = $(this).closest('tr');
         const rowIdx = self.actualRowIndex(rowElem);
-        const dataRowIdx = self.dataRowIndex(rowElem);
+        dataRowIdx = self.dataRowIndex(rowElem);
         const item = self.settings.treeGrid ?
           self.settings.treeDepth[rowIdx].node :
           self.settings.dataset[dataRowIdx];
@@ -5260,7 +5260,7 @@ Datagrid.prototype = {
 
     if (activatedRow.length) {
       let rowIndex = this.actualRowIndex(activatedRow);
-      let dataRowIndex = this.dataRowIndex(activatedRow);
+      const dataRowIndex = this.dataRowIndex(activatedRow);
 
       if (this.settings.indeterminate) {
         rowIndex = this.actualArrayIndex(activatedRow);
