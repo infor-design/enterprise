@@ -17,6 +17,8 @@ import '../utils/animations';
 import '../emptymessage/emptymessage.jquery';
 import '../pager/pager.jquery';
 import '../mask/mask-input.jquery';
+import '../multiselect/multiselect.jquery';
+import '../timepicker/timepicker.jquery';
 import '../drag/drag.jquery';
 
 // The name of this component.

@@ -37,7 +37,9 @@
     "lint-staged"
   ],
   "lint-staged": {
-    "*.js": ["eslint"]
+    "*.js": [
+      "eslint"
+    ]
   },
   "dependencies": {
     "d3": "^4.13.0",

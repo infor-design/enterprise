@@ -7,6 +7,7 @@ import { Environment as env } from '../utils/environment';
 import '../mask/mask-input.jquery';
 import '../popover/popover.jquery';
 import '../validation/validation.jquery';
+import '../validation/validation.utils';
 
 // Component Name
 const COMPONENT_NAME = 'datepicker';
