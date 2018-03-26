@@ -753,4 +753,13 @@ describe('Locale API', () => {
 
     expect(Locale.parseNumber(4000)).toEqual(4000);
   });
+
+  it('Should have 12 months per locale', () => {
+    for (let culture in Locale.cultures) {  //eslint-disable-line
+      Locale.set(culture);
+
+      expect(Locale.calendar().months.wide.length).toEqual(12);
+      expect(Locale.calendar().months.abbreviated.length).toEqual(12);
+    }
+  });
 });
