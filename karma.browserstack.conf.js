@@ -18,7 +18,7 @@ module.exports = function (config) {
       username: process.env.BROWSER_STACK_USERNAME,
       accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
       startTunnel: true,
-      build: 'unit-tests-browserstack',
+      build: 'Unit',
       name: 'Unit tests'
     },
     customLaunchers: {
@@ -36,6 +36,14 @@ module.exports = function (config) {
         browser_version: '11.0',
         os_version: 'High Sierra',
         os: 'OS X',
+        resolution: '1024x768'
+      },
+      bs_ie_windows: {
+        base: 'BrowserStack',
+        browser: 'IE',
+        browser_version: '11.0',
+        os_version: '10',
+        os: 'Windows',
         resolution: '1024x768'
       }
     },
@@ -71,7 +79,8 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: [
       'bs_firefox_mac',
-      'bs_safari_mac'
+      'bs_safari_mac',
+      'bs_ie_windows'
     ],
     singleRun: true,
     concurrency: 1
