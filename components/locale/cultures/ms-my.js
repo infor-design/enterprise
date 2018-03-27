@@ -36,7 +36,7 @@ Soho.Locale.addCulture('ms-MY', {
       abbreviated: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'O', 'S', 'O', 'N', 'D']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'h:mm',
+    timeFormat: 'h:mm a',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['PG', 'PTG']
   }],

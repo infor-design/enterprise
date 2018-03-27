@@ -21,7 +21,7 @@ Soho.Locale.addCulture('zh-TW', {
       full: 'yyyy年M月d日EEEE',
       month: 'M月d日',
       year: 'yyyy年M月',
-      timestamp: 'hh:mm:ss',
+      timestamp: 'hh:mm:ss a',
       datetime: 'M/d/yyyy hh:mm'
     }, // Infered short + short gregorian/dateTimeFormats
     // ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
@@ -35,7 +35,7 @@ Soho.Locale.addCulture('zh-TW', {
       abbreviated: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-    timeFormat: 'hh:mm',
+    timeFormat: 'hh:mm a',
     // ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
     dayPeriods: ['上午', '下午']
   }],
