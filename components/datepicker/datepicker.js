@@ -6,6 +6,7 @@ import { Environment as env } from '../utils/environment';
 // jQuery Components
 import '../mask/mask-input.jquery';
 import '../popover/popover.jquery';
+import '../timepicker/timepicker.jquery';
 import '../validation/validation.jquery';
 import '../validation/validation.utils';
 
@@ -480,7 +481,7 @@ DatePicker.prototype = {
       this.pattern = s.dateFormat + (s.showTime && s.timeFormat ? ` ${s.timeFormat}` : '');
     }
 
-    this.show24Hours = (this.pattern.match('HH') || []).length > 0;
+    this.show24Hours = (this.pattern.match('H') || []).length > 0;
     this.isSeconds = (this.pattern.match('ss') || []).length > 0;
   },
 
@@ -738,7 +739,7 @@ DatePicker.prototype = {
     if (s.showTime) {
       if (s.timeFormat === undefined) {
         // Getting time-format from date-format (dateFormat: 'M/d/yyyy HH:mm:ss')
-        timeOptions.timeFormat = this.pattern.slice(this.pattern.indexOf(' '));
+        timeOptions.timeFormat = this.pattern.slice(this.pattern.indexOf(' ')).trim();
       } else {
         timeOptions.timeFormat = s.timeFormat;
       }
@@ -2006,10 +2007,10 @@ DatePicker.prototype = {
    * @returns {void}
    */
   setTime(date) {
-    let hours = $('#timepicker-hours').val();
-    const minutes = $('#timepicker-minutes').val();
-    const seconds = this.isSeconds ? $('#timepicker-seconds').val() : 0;
-    const period = $('#timepicker-period');
+    let hours = this.popup.find('.dropdown.hours').val();
+    const minutes = this.popup.find('.dropdown.minutes').val();
+    const seconds = this.isSeconds ? this.popup.find('.dropdown.seconds').val() : 0;
+    const period = this.popup.find('.dropdown.period');
 
     hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
     hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;

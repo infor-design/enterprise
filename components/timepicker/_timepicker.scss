@@ -116,6 +116,12 @@
   .dropdown {
     width: 60px;
 
+    &.period {
+      + .dropdown-wrapper .dropdown {
+        width: 63px;
+      }
+    }
+
     + .icon {
       height: 31px;
       right: 6px;

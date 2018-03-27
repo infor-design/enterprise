@@ -1197,7 +1197,11 @@ Datagrid.prototype = {
 
       if (e.which === 13) {
         self.applyFilter();
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
       }
+      return true;
     }).off('change.datagrid').on('change.datagrid', '.datagrid-filter-wrapper input', () => {
       self.applyFilter();
     });
@@ -1210,8 +1214,24 @@ Datagrid.prototype = {
         return true;
       }
 
-      elem.find('select.dropdown').dropdown(col.editorOptions).on('selected.datagrid', () => {
-        self.applyFilter();
+      elem.find('select.dropdown').each(function () {
+        const dropdown = $(this);
+        dropdown.dropdown(col.editorOptions).on('selected.datagrid', () => {
+          self.applyFilter();
+        });
+
+        // Append the Dropdown's sourceArguments with some row/col meta-data
+        const api = dropdown.data('dropdown');
+        api.settings.sourceArguments = {
+          column: col,
+          container: elem,
+          grid: self,
+          cell: col,
+          event: undefined,
+          row: -1,
+          rowData: {},
+          value: undefined
+        };
       });
 
       elem.find('select.multiselect').multiselect(col.editorOptions).on('selected.datagrid', () => {
