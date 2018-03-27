@@ -1,24 +1,33 @@
 ---
-title: Searchfield  
+title: Searchfield
 description: This page describes Searchfield.
+demo:
+  pages:
+  - name: Common Configuration
+    slug: example-index.html
+  - name: Context Search Style
+    slug: example-context-search-style.html
+  - name: Different Template
+    slug: example-different-template.html
+  - name: Searchfield + Go Button
+    slug: example-go-button.html
+  - name: `clearable` Setting Demonstration
+    slug: example-clearable.html
+  - name: No "All Results For `x`" Link
+    slug: example-no-all-results-link.html
+  - name: Categories (Compact Size)
+    slug: example-categories-short.html
+  - name: Categories (Full Size)
+    slug: example-categories-full.html
+  - name: Header Search Field (Compact)
+    slug: example-searchfield-expanded
+  - name: Header Search Field (Large)
+    slug: example-searchfield-large
 ---
 
-## Important Notes
+There is a specific component wrapper for searchfield components that reside inside of [toolbars]( ./toolbar/) entitled [toolbar searchfield]( ./toolbar-searchfield). These components are very different from regular searchfields and have an expanded API.
 
-Described below is the general API that is present in all searchfields.  There is a specific component wrapper for searchfield components that reside inside of [Toolbars]( ../components/toolbar/) entitled [Toolbar Searchfield]( ../components/toolbar-searchfield).  These components are very different from regular searchfields and have an expanded API.
-
-## Configuration Options
-
-1. [Common Configuration]( ../components/searchfield/example-index.html)
-2. [Context Search Style]( ../components/searchfield/example-context-search-style.html)
-3. [Different Template]( ../components/searchfield/example-different-template.html)
-4. [Searchfield + Go Button]( ../components/searchfield/example-go-button.html)
-5. [`clearable` Setting Demonstration]( ../components/searchfield/example-clearable.html)
-6. [No "All Results For `x`" Link]( ../components/searchfield/example-no-all-results-link.html)
-7. [Categories (Compact Size)]( ../components/searchfield/example-categories-short.html)
-8. [Categories (Full Size)]( ../components/searchfield/example-categories-full.html)
-8. [Header Search Field (Compact)]( ../components/header/example-searchfield-expanded)
-9. [Header Search Field (Large)]( ../components/header/example-searchfield-large)
+Defining the `source` setting on Searchfield will cause it to invoke an [autocomplete]( ./autocomplete). The source is not directly handled by the searchfield component and is passed directly into this new autocomplete instance.
 
 ## Code Example
 
@@ -29,21 +38,14 @@ Described below is the general API that is present in all searchfields.  There i
 </div>
 ```
 
-## Implementation Tips
-
-- Defining the `source` setting on Searchfield will cause it to invoke an [Autocomplete]( ../components/autocomplete).  The source is not directly handled by the Searchfield component, and is passed directly into this new Autocomplete instance.
-
-## Accessibility
 
 ## Keyboard Shortcuts
 
-- *Tab* Will tab into the search field in a forward direction.
-- *Shift Tab* Will tab out of the search field in a backward direction.
-- *Alt + Delete* (Mac) Will clear the contents of the field.
-- *Ctrl + Backspace* (PC) Will clear the contents of the field.
-- *Up / Down Arrow* When on a toolbar up and down will move to the next/previous object on the toolbar.
-This is done because the normal keys of left and right will navigate through the toolbar
-- *Left / Right Arrow* When on a toolbar left and right will navigate through the next/previous object on the toolbar. When a list is open it will navigate up and down a list.
-- *Enter* Should submit the search / form. You will need to handle this in your code.
+- <kbd>Tab</kbd> will tab into the search field in a forward direction
+- <kbd>Shift + Tab</kbd> will tab out of the search field in a backward direction
+- <kbd>Alt + Delete</kbd> (Mac) will clear the contents of the field
+- <kbd>Ctrl + Backspace</kbd> (PC) will clear the contents of the field
+- <kbd>Up</kbd> or <kbd>Down</kbd> arrows, when on a toolbar, will move to the next/previous object on the toolbar. This is done because the normal keys of <kbd>Left</kbd> and <kbd>Right</kbd> will navigate through the toolbar
+- <kbd>Left</kbd> or <kbd>Right Arrow</kbd> when on a toolbar will navigate through the next/previous object on the toolbar. When a list is open it will navigate up and down a list.
+- <kbd>Enter</kbd> should submit the search. You will need to handle this in your code
 
-## States and Variations

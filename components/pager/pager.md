@@ -1,22 +1,21 @@
 ---
-title: Pager  
+title: Pager
 description: This page describes Pager.
+demo:
+  pages:
+  - name: Paging a List (Ul)
+    slug: example-index
+  - name: Paging on the Listview Component
+    slug: example-paging
+  - name: Paging on the Datagrid Component
+    slug: example-paging
+  - name: Circle Pager Component
+    slug: example-index
 ---
-
-## Configuration Options
-
-1. Paging a List (Ul) [View Example]( ../components/pager/example-index)
-2. Paging on the Listview Component [View Example]( ../components/listview/example-paging)
-3. Paging on the Datagrid Component [View Example]( ../components/datagrid/example-paging)
-4. Circle Pager Component [View Example]( ../components/circlepager/example-index)
 
 ## Code Example
 
-The auto initializer will search for ul elements with a `paginated` class and add a pager to them. You can add the option `data-options="{'pagesize': 10}"` to set the page size desired. For listview and datagrid this is built in to those components.
-
-[Datagrid]( ../components/datagrid)
-[Listview]( ../components/listview)
-[Circle Pagination]( ../components/circlepager)
+The auto initializer will search for `<ul>` elements with a `paginated` class and add a pager to them. You can add the option `data-options="{'pagesize': 10}"` to set the page size desired. For [listview](./listview) and [datagrid](./datagrid) components, this is built into those components.
 
 ```html
     <ul class="paginated listview" data-options="{'pagesize': 10}">
@@ -48,29 +47,12 @@ The auto initializer will search for ul elements with a `paginated` class and ad
 
 ## Accessibility
 
--   Since the buttons are arrows, we add an audible span with text like "next", "previous" so the user will now what these buttons are for
--   icons have role="presentation" aria-hidden="true" focusable="false"
--   select page has aria-selected = "true"
--   disabled pages (if there) have aria-disabled="true"
-
-## States and Variations
-
-Pagination
-
--   Normal
--   Disabled
--   Hover
--   Focus
--   Pressed
-
-Circular Navigation
-
--   Normal/Active
--   Hover
--   Focus
--   Disabled
+-   Since the buttons are arrows, we add an audible span with text like "next", "previous" so the user will know what these buttons are for
+-   Icons have `role="presentation" aria-hidden="true" focusable="false"`
+-   Selected page has `aria-selected = "true"`
+-   Disabled pages (if exists) have `aria-disabled="true"`
 
 ## Upgrading from 3.X
 
 -   This did not exist as a standalone component
--   Datagrid paging has new options - [see datagrid docs]( ../components/datagrid)
+-   Datagrid paging has new options - [see datagrid docs]( ./datagrid)

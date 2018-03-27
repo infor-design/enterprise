@@ -81,16 +81,12 @@ sections:
       slug: hyperlinks
     - name: Input (Text)
       slug: input
-    - name: Images
-      slug: images
     - name: List Builder
       slug: listbuilder
     - name: List Filter
       slug: listfilter
     - name: Lookup
       slug: lookup
-    - name: Masthead
-      slug: masthead
     - name: Menubutton
       slug: menubutton
     - name: Message
@@ -105,18 +101,12 @@ sections:
       slug: popover
     - name: Popupmenu
       slug: popupmenu
-    - name: Process Indicator
-      slug: processindicator
     - name: Progress Indicator
       slug: progress
-    - name: Radio Buttons
-      slug: radio
     - name: Rating
       slug: rating
     - name: Searchfield
       slug: searchfield
-    - name: Sign-In
-      slug: signin
     - name: Skip Link
       slug: skiplink
     - name: Slider

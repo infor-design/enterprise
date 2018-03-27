@@ -1,24 +1,29 @@
 ---
 title: Popover Component
 description: This page describes Popover Component .
+demo:
+  pages:
+  - name: Common Configuration
+    slug: example-index
+  - name: Simple Popover Content
+    slug: example-simple
+  - name: Complex Form Layout Inside Popover
+    slug: example-complex-content
+  - name: Attached To Textbox's Info Icon
+    slug: example-attached-to-textbox
+  - name: Alternate (Flipped) Positioning
+    slug: example-alternate-positions
+  - name: Demo of `extraCssClass` Setting
+    slug: example-extra-css-class
 ---
-
-## Configuration Options
-
-1. [Common Configuration]( ../components/popover/example-index)
-2. [Simple Popover Content]( ../components/popover/example-simple)
-3. [Complex Form Layout Inside Popover]( ../components/popover/example-complex-content)
-4. [Attached To Textbox's Info Icon]( ../components/popover/example-attached-to-textbox)
-5. [Alternate (Flipped) Positioning]( ../components/popover/example-alternate-positions)
-6. [Demo of `extraCssClass` Setting]( ../components/popover/example-extra-css-class)
 
 ## API Details
 
-This component shares a common API with the [Tooltip]( ../components/tooltip) Component.  When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover.  For more details on this component's API, please see the [Tooltip Documentation]( ../components/tooltip).
+This component shares a common API with the [Tooltip]( ./tooltip) component. When a popover component is invoked, any methods and events used by the tooltip will also be available in the popover. For more details on this component's API, please see the [tooltip documentation]( ./tooltip).
 
 ## Code Example
 
-Popover Components are generally created with a combination of a "trigger" element and a container element  which will be used inside of the popover.  Consider the following HTML:
+Popover components are generally created with a combination of a "trigger" element and a container element which will be used inside of the popover.  Consider the following HTML:
 
 ```html
 <!-- This is the trigger element -->
@@ -48,18 +53,6 @@ $('#popover-trigger').popover({
 });
 ```
 
-
 ## Accessibility
 
--   Focus should always return to the object on which the popover is called from once the popover closes.
-
-## Keyboard Shortcuts
-
-See Details on the respective Code pages in the related links section.
-
-## States and Variations
-
--   Normal
--   Hover
--   Pressed
--   Active
+Focus should always return to the object on which the popover is called from once the popover closes.

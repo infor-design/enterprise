@@ -1,15 +1,15 @@
 ---
-title: Rating  
+title: Rating
 description: This page describes Rating.
+demo:
+  pages:
+  - name: Rating Example
+    slug: example-index
 ---
-
-## Configuration Options
-
-1. Rating Example [View Example]( ../components/rating/example-index)
 
 ## Code Example
 
-The Rating component can be used to either display a rating or allow the end user to select a rating. Half start ratings can be displayed but not set. You can implement the Rating control by using the below markup consisting of a block element (div) with class="rating", then any number of inputs followed by labels for the stars. The label element should contain an svg image with the star. An audible label should also be added for accessibility.
+The rating component can be used to either display a rating or allow the end user to select a rating. Half star ratings can be displayed but not set. You can implement the rating control by using the below markup consisting of a block element (a `<div>`) with `class="rating"`, then any number of `<inputs>` followed by `<labels>` for the stars. The `<label>` element should contain an SVG image with the star. An `audible` class should also be added for accessibility. Behind the scenese, the rating component functions using radio buttons.
 
 ```html
 <div class="rating">
@@ -55,35 +55,15 @@ The Rating component can be used to either display a rating or allow the end use
 </div>
 ```
 
-## Implementation Tips
-
--   Rating uses svg elements for the stars
--   Functions using a radio button
 
 ## Accessibility
 
--   Should work like a radio button
--   aubible labels are added for giving the star information
+`aubible` labels are added for giving the star information.
 
 ## Keyboard Shortcuts
 
--   **Tab key** will enter the rating group
--   **Down/Right** decreases the rating
--   **Up/Left** increases the rating
--   **Space bar** is a toggle selected/unselected
--   **Control + Arrow** moves through the options without updating content or selecting the rating
-
-## States and Variations
-
--   focus
--   selected
--   half star
-
-## Responsive Guidelines
-
--   Smaller than mobile size
--   May have size variations
-
-## Upgrading from 3.X
-
--   Did not exist
+-   <kbd>Tab</kbd> will enter the rating group
+-   <kbd>Down</kbd> or <kbd>Right</kbd> decreases the rating
+-   <kbd>Up</kbd> or <kbd>Left</kbd> increases the rating
+-   <kbd>Space</kbd> toggles selected/unselected
+-   <kbd>Control + Arrow</kbd> moves through the options without updating content or selecting the rating

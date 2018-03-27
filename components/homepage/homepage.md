@@ -1,22 +1,27 @@
 ---
-title: HomePage  
+title: HomePage
 description: This page describes HomePage.
+demo:
+  pages:
+  - name: Example of Empty HomePage Layout
+    slug: example-index
+  - name: Example of HomePage filled with Sample Data
+    slug: example-filled
+  - name: 4 Column Layout
+    slug: example-four-column
+  - name: Hero Widget 3 Columns
+    slug: example-hero-widget
+  - name: Hero Widget 2 Column
+    slug: example-widget-two-column
+  - name: More Test Layouts (replace a-o in url)
+    slug: example-scenario-a.html
 ---
-
-## Configuration Options
-
-1. Example of Empty HomePage Layout [View Example]( ../components/homepage/example-index)
-2. Example of HomePage filled with Sample Data [View Example]( ../components/homepage/example-filled)
-3. 4 Column Layout [View Example]( ../components/homepage/example-four-column)
-4. Hero Widget 3 Columns [View Example]( ../components/homepage/example-hero-widget)
-5. Hero Widget 2 Column [View Example]( ../components/homepage/example-widget-two-column)
-6. More Test Layouts (replace a-o in url) [View Example]( ../components/homepage/example-scenario-a.html)
 
 ## Code Example
 
-The home page component needs js for its layout mechanism. Call the `.homepage()` plugin on the prescribed structure. The plugin will take care on resize that everything is laid out in the best order and use of space it can be.
+The homepage component requires JS for its layout mechanism. Call the `.homepage()` plugin on the prescribed structure. On resize, the plugin will take care that everything is laid out in the best order and use of space it can be. It is possible to toggle viewin 3 or 4 columns depending on how much screen real estate you want to use by adding the `data-columns` attribute with a value of `3` or `4`.
 
-See also the card/widget examples [View Example]( ../components/cards) for widget structure.
+See also the [Cards](./cards) documentation for widget structure.
 
 ```html
 <div class="homepage page-container scrollable" data-columns="3">
@@ -40,16 +45,12 @@ See also the card/widget examples [View Example]( ../components/cards) for widge
 
 ## Accessibility
 
-- The component respects element tab order which is important between the main containers.
-
-## Code Tips
-
-- It is possible to toggle / view 3 or 4 columns depending on how much screen real estate you want to use.
+- The component respects element tab order which is important between the main containers
 
 ## Keyboard Shortcuts
 
--   **Tab** Moves between the card sections
+-   <kbd>Tab</kbd> Moves between the card sections
 
 ## Upgrading from 3.X
 
--  Replaces the Tiles layout and is not compatible.
+-  Replaces the Tiles layout and is not compatible
