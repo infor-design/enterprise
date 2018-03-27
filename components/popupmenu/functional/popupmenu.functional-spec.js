@@ -72,7 +72,7 @@ describe('Popupmenu tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
 
-      expect(element.all(by.css('#popupmenu-2 li')).last().getAttribute('class')).toEqual('is-focused');
+      expect(await element.all(by.css('#popupmenu-2 li')).last().getAttribute('class')).toEqual('is-focused');
     });
 
     it('Should select last item on spacebar, arrowing down', async () => {

@@ -1,7 +1,10 @@
 const r2 = require('r2');
 
 const browserStackErrorHTTPReporter = async (error) => {
-  if (!process.argv.filter(item => item.includes('protractor.browserstack.conf.js'))) {
+
+
+  if (!process.argv.filter(item => item.includes('protractor.browserstack.conf.js'))
+    || process.argv.filter(item => item.includes('local'))) {
     return;
   }
 
@@ -15,7 +18,11 @@ const browserStackErrorHTTPReporter = async (error) => {
     reason: error.description
   };
 
-  await r2.put(url, { json: obj }).json;
+  try {
+    await r2.put(url, { json: obj }).json;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const browserStackErrorReporter = {
