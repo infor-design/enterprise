@@ -82,12 +82,19 @@ Modal.prototype = {
     }
 
     // ensure is appended to body for new dom tree
-    if (this.settings.content || this.settings.beforeShow) {
+    if (this.settings.content) {
       this.settings.trigger = this.settings.content instanceof jQuery ? this.settings.trigger : 'immediate';
       this.appendContent();
       setTimeout(() => {
         self.open();
       }, 1);
+      return;
+    }
+
+    if (this.settings.beforeShow) {
+      this.settings.trigger = this.settings.content instanceof jQuery ? this.settings.trigger : 'immediate';
+      this.appendContent();
+      this.callSource();
       return;
     }
 
@@ -129,7 +136,19 @@ Modal.prototype = {
     }
 
     if (this.settings.beforeShow) {
-      this.element.find('.modal-body').append($('<div class="field"><div id="modal-busyindicator" class="busy card"></div></div>'));
+      // this.element.find('.modal-body').append($('<div class="field"><div id="modal-busyindicator" class="busy card"></div></div>'));
+      $('body').append($('<div class="overlay busy">' +
+                        '</div>' +
+                        '<div class="busy-indicator-container blocked-ui" aria-live="polite" role="status">' +
+                          '<div class="busy-indicator active">' +
+                            '<div class="bar one"></div>' +
+                            '<div class="bar two"></div>' +
+                            '<div class="bar three"></div>' +
+                            '<div class="bar four"></div>' +
+                            '<div class="bar five"></div>' +
+                          '</div>' +
+                          '<span>Loading...</span>' +
+                        '</div>'));
     }
 
     if (!isAppended) {
@@ -151,6 +170,7 @@ Modal.prototype = {
     utils.fixSVGIcons(this.element);
 
     if (this.settings.beforeShow) {
+      // Change to full screen
       const busyIndEl = $('#modal-busyindicator');
       busyIndEl.busyindicator({}).data('busyindicator');
       busyIndEl.trigger('start.busyindicator');
@@ -360,10 +380,12 @@ Modal.prototype = {
     }
 
     const self = this;
-    const response = function(content) {
+    const response = function (content) {
       if (content === false) {
         return false;
       }
+
+      self.open(true);
 
       $('#modal-busyindicator').trigger('complete.busyindicator');
 
@@ -381,11 +403,11 @@ Modal.prototype = {
 
     const callBackOpts = {};
     this.settings.beforeShow(response, callBackOpts);
-    self.open(true);
   },
 
   /**
   * Open the modal via the api.
+  * @param  {boolean} ajaxReturn ajaxReturn boolean
   * @returns {void}
   */
   open(ajaxReturn) {
