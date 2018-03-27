@@ -129,11 +129,11 @@ Trackdirty.prototype = {
         const d = { class: '', style: '' };
 
         if (field.is('.field-fileupload')) {
-          el = label.prev('input');
+          el = field.find('input.fileupload-background-transparent');
         }
 
         if (field.is('.editor-container')) {
-          el = field.closest('textarea');
+          el = field.find('.editor');
         }
 
         // Used element without .field wrapper
