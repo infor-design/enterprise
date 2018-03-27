@@ -43,20 +43,54 @@ describe('Listview API', () => {
     expect(listviewAPI).toEqual(jasmine.any(Object));
   });
 
+  it('Can be disabled and re-enabled', () => {
+    listviewAPI.disable();
+
+    expect(listviewEl.className.indexOf('is-disabled')).toBeGreaterThan(-1);
+
+    listviewAPI.enable();
+
+    expect(listviewEl.className.indexOf('is-disabled')).toEqual(-1);
+  });
+
+  it('Can be updated with new settings', () => {
+    const newSettings = {
+      dataset: [
+        { task: 'New Task #1', date: '03/27/2018', desc: 'This is a test task' },
+        { task: 'New Task #2', date: '03/27/2018', desc: 'This is another test task' },
+      ]
+    };
+
+    listviewAPI.updated(newSettings);
+    listviewItemEls = listviewEl.querySelectorAll('li');
+    const secondItemDesc = listviewItemEls.item(1).querySelector('.listview-subheading');
+
+    expect(secondItemDesc.innerHTML.trim()).toBe('This is another test task');
+  });
+
+  it('Properly detects the total number of listview items', () => {
+    const ds = listviewAPI.settings.dataset;
+    const totals = listviewAPI.getTotals(ds);
+
+    expect(totals).toBeDefined();
+    expect(totals.count).toBeDefined();
+    expect(totals.count).toEqual(12);
+  });
+
   it('Can select a list item with a numeric index', () => {
     const index = 0;
     listviewAPI.select(index);
-
     const selectedEl = listviewAPI.getSelected();
 
     expect(listviewItemEls.item(index)).toEqual(selectedEl[0]);
   });
 
-  xit('Can select a list item with an element reference', () => {
+  it('Can select a list item with an element reference', () => {
+    const index = 2;
+    const thirdEl = listviewEl.querySelectorAll('li').item(index);
+    listviewAPI.select($(thirdEl));
+    const selectedEl = listviewAPI.getSelected();
 
-  });
-
-  xit('Can select multiple list items', () => {
-
+    expect(listviewItemEls.item(index)).toEqual(selectedEl[0]);
   });
 });
