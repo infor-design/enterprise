@@ -116,8 +116,10 @@
   .dropdown {
     width: 60px;
 
-    &[aria-label="[TimePeriod]"] {
-      width: 63px;
+    &.period {
+      + .dropdown-wrapper .dropdown {
+        width: 63px;
+      }
     }
 
     + .icon {
