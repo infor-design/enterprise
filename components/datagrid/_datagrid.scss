@@ -2041,6 +2041,7 @@ $datagrid-short-row-height: 23px;
           width: 13px;
         }
 
+        &:not(:disabled) + .icon:hover,
         &:hover:not(:disabled) + .icon {
           // scss-lint:disable ImportantRule
           fill: $datagrid-filter-hover-color !important;
