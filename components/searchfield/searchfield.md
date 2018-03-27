@@ -11,7 +11,7 @@ demo:
     slug: example-different-template.html
   - name: Searchfield + Go Button
     slug: example-go-button.html
-  - name: `clearable` Setting Demonstration
+  - name: Demo of `clearable` Setting
     slug: example-clearable.html
   - name: No "All Results For `x`" Link
     slug: example-no-all-results-link.html
