@@ -129,11 +129,11 @@ Trackdirty.prototype = {
         const d = { class: '', style: '' };
 
         if (field.is('.field-fileupload')) {
-          el = label.prev('input');
+          el = field.find('input.fileupload-background-transparent');
         }
 
         if (field.is('.editor-container')) {
-          el = field.closest('textarea');
+          el = field.find('.editor');
         }
 
         // Used element without .field wrapper
@@ -196,7 +196,16 @@ Trackdirty.prototype = {
           original = textArea[0].defaultValue;
           current = this.valMethod(textArea);
         }
-        if (current === original) {
+
+        if (field.is('.editor-container')) {
+          // editors values are further down it's tree in a textarea,
+          // so get the elements with the value
+          const textArea = field.find('textarea');
+          original = textArea[0].defaultValue;
+          current = this.valMethod(textArea);
+        }
+
+        if (current === original || (input.attr('multiple') && utils.equals(current, original))) {
           input.removeClass('dirty');
           $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
           input.trigger(e.type === 'doresetdirty' ? 'afterresetdirty' : 'pristine');

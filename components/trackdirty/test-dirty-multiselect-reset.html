@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <form id="test-form" action="#" method="POST">
+      <div class="field">
+        <label for="bytes">Bytes:</label>
+        <select id="bytes" multiple="true" name="bytes" class="dropdown" data-trackdirty="true">
+          <option selected="true">0</option>
+          <option>1</option>
+          <option>2</option>
+          <option>4</option>
+          <option>8</option>
+          <option>16</option>
+          <option>32</option>
+          <option>64</option>
+          <option>128</option>
+          <option>256</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="first-name">File Name</label>
+        <input type="text" id="first-name" name="first-name" data-trackdirty="true"/>
+      </div>
+
+      <button id="btn-save" class="btn-secondary" type="button">Save</button>
+
+    </form>
+  </div>
+</div>
+
+<script>
+
+  var elements = $('#bytes, #first-name');
+
+  // Bind events
+  elements.on('dirty', function (event) {
+    console.log('Dirty Fired - ' + $(event.currentTarget).attr('id'));
+  })
+  .on('pristine', function (event) {
+    console.log('Pristine Fired - ' + $(event.currentTarget).attr('id'));
+  })
+  .on('afterresetdirty', function (event) {
+    console.log('Reset Dirty Fired - ' + $(event.currentTarget).attr('id'));
+  });
+
+  // Resetdirty
+  $('#btn-save').on('click', function () {
+    console.log('resetdirty is triggered')
+    elements.trigger('resetdirty');
+  });
+
+  // Parent Dirty Fired
+  $('body').on('dirty', function () {
+    console.log('Parent Dirty Fired');
+  });
+
+</script>
