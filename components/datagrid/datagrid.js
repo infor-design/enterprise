@@ -1197,7 +1197,11 @@ Datagrid.prototype = {
 
       if (e.which === 13) {
         self.applyFilter();
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
       }
+      return true;
     }).off('change.datagrid').on('change.datagrid', '.datagrid-filter-wrapper input', () => {
       self.applyFilter();
     });
