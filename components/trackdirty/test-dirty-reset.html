@@ -1,11 +1,14 @@
 <div class="row">
   <div class="twelve columns">
-
     <form id="test-form" action="#" method="POST">
       <div class="field">
-        <label for="bytes">Bytes:</label>
-        <select id="bytes" multiple="true" name="bytes" class="dropdown" data-trackdirty="true">
-          <option selected="true">0</option>
+        <label for="fileupload-trackdirty">Upload a File - Track dirty</label>
+        <input type="file" class="fileupload" id="fileupload-trackdirty" name="fileupload-trackdirty" data-trackdirty="true"/>
+      </div>
+      <div class="field">
+        <label for="multiselect-dirty">Bytes:</label>
+        <select id="multiselect-dirty" multiple class="dropdown" data-trackdirty="true">
+          <option selected>0</option>
           <option>1</option>
           <option>2</option>
           <option>4</option>
@@ -17,22 +20,18 @@
           <option>256</option>
         </select>
       </div>
-
       <div class="field">
-        <label for="first-name">File Name</label>
-        <input type="text" id="first-name" name="first-name" data-trackdirty="true"/>
+        <span class="label">Comments</span>
+        <div class="editor"  id="editor1" role="textbox" aria-multiline="true" aria-label="Comments" data-trackdirty="true">
+          original
+        </div>
       </div>
-
       <button id="btn-save" class="btn-secondary" type="button">Save</button>
-
     </form>
   </div>
 </div>
-
 <script>
-
-  var elements = $('#bytes, #first-name');
-
+  var elements = $('#multiselect-dirty, #fileupload-trackdirty, #editor1');
   // Bind events
   elements.on('dirty', function (event) {
     console.log('Dirty Fired - ' + $(event.currentTarget).attr('id'));
@@ -41,18 +40,15 @@
     console.log('Pristine Fired - ' + $(event.currentTarget).attr('id'));
   })
   .on('afterresetdirty', function (event) {
-    console.log('Reset Dirty Fired - ' + $(event.currentTarget).attr('id'));
+    console.log('After Reset Dirty Fired - ' + $(event.currentTarget).attr('id'));
   });
-
   // Resetdirty
   $('#btn-save').on('click', function () {
     console.log('resetdirty is triggered')
     elements.trigger('resetdirty');
   });
-
   // Parent Dirty Fired
   $('body').on('dirty', function () {
     console.log('Parent Dirty Fired');
   });
-
 </script>
