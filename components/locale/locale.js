@@ -275,7 +275,7 @@ const Locale = {  // eslint-disable-line
     ret = ret.replace('hh', (hours > 12 ? this.pad(hours - 12, 2) : this.pad(hours, 2)));
     ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
     ret = ret.replace('HH', this.pad(hours, 2));
-    ret = ret.replace('H', (hours > 12 ? hours - 12 : hours));
+    ret = ret.replace('H', hours);
     ret = ret.replace('mm', this.pad(mins, 2));
     ret = ret.replace('ss', this.pad(seconds, 2));
     ret = ret.replace('SSS', this.pad(value.getMilliseconds(), 0));
@@ -528,7 +528,7 @@ const Locale = {  // eslint-disable-line
           dateObj.h = value.length === 1 ? `0${value}` : value;
           break;
         case 'H':
-          if (numberValue < 0 || numberValue > 12) {
+          if (numberValue < 0 || numberValue > 24) {
             return undefined;
           }
           dateObj.h = value;

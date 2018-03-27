@@ -191,19 +191,37 @@ describe('Locale API', () => {
 
     Locale.set('fi-FI');
 
-    expect(Locale.formatDate(date, opts)).toEqual('1.2.2017 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('1.2.2017 17:27');
     Locale.set('cs-CZ');
 
-    expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 17:27');
     Locale.set('hu-HU');
 
-    expect(Locale.formatDate(date, opts)).toEqual('2017. 02. 01. 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('2017. 02. 01. 17:27');
     Locale.set('ja-JP');
 
-    expect(Locale.formatDate(date, opts)).toEqual('2017/02/01 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('2017/02/01 17:27');
     Locale.set('ru-RU');
 
-    expect(Locale.formatDate(date, opts)).toEqual('2/1/2017 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('2/1/2017 17:27');
+
+    opts.pattern = 'yyyy-MM-dd H:mm';
+
+    Locale.set('fi-FI');
+
+    expect(Locale.formatDate(date, opts)).toEqual('1.2.2017 17:27');
+    Locale.set('cs-CZ');
+
+    expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 17:27');
+    Locale.set('hu-HU');
+
+    expect(Locale.formatDate(date, opts)).toEqual('2017. 02. 01. 17:27');
+    Locale.set('ja-JP');
+
+    expect(Locale.formatDate(date, opts)).toEqual('2017/02/01 17:27');
+    Locale.set('ru-RU');
+
+    expect(Locale.formatDate(date, opts)).toEqual('2/1/2017 17:27');
   });
 
   // monthYear and yearMonth
