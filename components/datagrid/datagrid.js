@@ -5007,12 +5007,13 @@ Datagrid.prototype = {
     const dataset = s.treeGrid ? s.treeDepth : s.dataset;
 
     for (let i = 0, l = dataset.length; i < l; i++) {
+      const idx = this.pagingRowIndex(i);
       if (this.filterRowRendered) {
         if (!dataset[i].isFiltered) {
-          rows.push(i);
+          rows.push(idx);
         }
       } else {
-        rows.push(i);
+        rows.push(idx);
       }
     }
 
@@ -5039,7 +5040,8 @@ Datagrid.prototype = {
     const selectedRows = this.selectedRows();
     this.dontSyncUi = true;
     for (let i = 0, l = selectedRows.length; i < l; i++) {
-      this.unselectRow(selectedRows[i].idx, true, true);
+      const idx = this.pagingRowIndex(selectedRows[i].idx);
+      this.unselectRow(idx, true, true);
     }
     this.dontSyncUi = false;
     this.syncSelectedUI();
@@ -5424,7 +5426,7 @@ Datagrid.prototype = {
   unselectRow(idx, nosync, noTrigger) {
     const self = this;
     const s = self.settings;
-    const rowNode = self.visualRowNode(idx);
+    const rowNode = self.actualRowNode(idx);
     let checkbox = null;
 
     if (!rowNode || idx === undefined) {
@@ -6822,6 +6824,15 @@ Datagrid.prototype = {
 
   actualRowIndex(row) {
     return row.attr('aria-rowindex') - 1;
+  },
+
+  pagingRowIndex(idx) {
+    let rowIdx = idx;
+
+    if (this.settings.paging && this.settings.source) {
+      rowIdx += ((this.pager.activePage - 1) * this.settings.pagesize);
+    }
+    return rowIdx;
   },
 
   dataRowNode(idx) {
