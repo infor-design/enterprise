@@ -25,9 +25,9 @@ describe('MultiSelect API', () => {
 
   afterEach(() => {
     multiSelectObj.destroy();
-    multiSelectEl.remove();
-    rowEl.remove();
-    svgEl.remove();
+    multiSelectEl.parentNode.removeChild(multiSelectEl);
+    rowEl.parentNode.removeChild(rowEl);
+    svgEl.parentNode.removeChild(svgEl);
   });
 
   it('Should be defined on jQuery object', () => {

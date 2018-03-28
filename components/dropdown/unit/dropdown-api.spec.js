@@ -25,9 +25,9 @@ describe('Dropdown API', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    dropdownEl.remove();
-    rowEl.remove();
-    svgEl.remove();
+    dropdownEl.parentNode.removeChild(dropdownEl);
+    rowEl.parentNode.removeChild(rowEl);
+    svgEl.parentNode.removeChild(svgEl);
   });
 
   it('Should be defined on jQuery object', () => {
