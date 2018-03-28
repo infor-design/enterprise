@@ -44,6 +44,14 @@ module.exports = function (config) {
         os_version: '10',
         os: 'Windows',
         resolution: '1024x768'
+      },
+      bs_chrome_windows: {
+        base: 'BrowserStack',
+        browser: 'Chrome',
+        browser_version: '65',
+        os_version: '10',
+        os: 'Windows',
+        resolution: '1024x768'
       }
     },
     preprocessors: {
@@ -91,7 +99,8 @@ module.exports = function (config) {
     browsers: [
       'bs_firefox_mac',
       'bs_safari_mac',
-      'bs_ie_windows'
+      'bs_ie_windows',
+      'bs_chrome_windows'
     ],
     singleRun: true,
     concurrency: 1
