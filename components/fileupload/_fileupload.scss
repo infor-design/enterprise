@@ -24,8 +24,8 @@
       fill: $trigger-icon-fill-color;
       height: 14px;
       top: 2px;
-      width: 14px;
       vertical-align: baseline;
+      width: 14px;
     }
 
     &:hover {
@@ -67,10 +67,6 @@
     &:disabled + span:not(.audible),
     &:disabled + label.fileupload {
 
-      .trigger {
-        cursor: default;
-      }
-
       svg {
         fill: $input-disabled-border-color;
       }
@@ -80,6 +76,10 @@
           fill: $input-disabled-border-color;
         }
       }
+    }
+
+    &:disabled + .trigger {
+      cursor: default;
     }
   }
 }
