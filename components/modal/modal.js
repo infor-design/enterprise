@@ -22,6 +22,8 @@ const COMPONENT_NAME = 'modal';
 * @param {string} [settings.id=null] Optionally tag a dialog with an id.
 * @param {number} [settings.frameHeight=180] Optional extra height to add.
 * @param {number} [settings.frameWidth=46] Optional extra width to add.
+* @param {function} [settings.beforeShow=null] A call back function that can be used to return data for the modal.
+* return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 */
 const MODAL_DEFAULTS = {
   trigger: 'click',
