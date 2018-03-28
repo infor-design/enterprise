@@ -208,7 +208,7 @@ Soho.Locale.addCulture('ar-EG', {
         ],
         minDate: -2198707200000,
         maxDate: 1873411199999,
-        toGregorian(hyear, hmonth, hday) {
+        toGregorian: function(hyear, hmonth, hday) {  // eslint-disable-line
           let days = hday - 1;
           const gyear = hyear - 1318;
 
@@ -233,7 +233,7 @@ Soho.Locale.addCulture('ar-EG', {
           gdate.setDate(gdate.getDate() + days);
           return gdate;
         },
-        fromGregorian(gdate) {
+        fromGregorian: function(gdate) { // eslint-disable-line
           // Date's ticks in javascript are always from the GMT time,
           // but we are interested in the hijri date in the same timezone,
           // not what the hijri date was at GMT time, so we adjust for the offset.
