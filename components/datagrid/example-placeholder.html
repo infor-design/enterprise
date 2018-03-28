@@ -106,7 +106,7 @@
         columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, validate: 'required', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input});
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date , validate: 'required date'});
         columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required',
-        options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 1}, {id: 'sh1', label: 'Shipped', value: 2} , {id: 'ac1', label: 'Action', value: 3}]
+        options: [{id: '', label: '', value: -1}, {id: 'oh1', label: 'On Hold', value: 'oh'}, {id: 'sh1', label: 'Shipped', value: 'sh'} , {id: 'ac1', label: 'Action', value: 'ac'}]
         });
 
         //Init and get the api for the grid
