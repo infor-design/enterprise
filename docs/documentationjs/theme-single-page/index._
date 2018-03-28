@@ -4,9 +4,9 @@
   <meta charset='utf-8' />
   <title><%- config['project-name'] %> <%- config['project-version'] %> | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
-  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
-  <link href='assets/style.css' type='text/css' rel='stylesheet' />
-  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+  <link href='/assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='/assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='/assets/github.css' type='text/css' rel='stylesheet' />
 </head>
 <body class='documentation m0'>
   <div>
