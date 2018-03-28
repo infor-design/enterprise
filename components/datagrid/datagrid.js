@@ -130,6 +130,7 @@ const DATAGRID_DEFAULTS = {
   groupable: null,
   spacerColumn: false,
   stretchColumn: 'last',
+  twoLineHeader: false,
   clickToSelect: true,
   toolbar: false,
   initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
@@ -1152,8 +1153,12 @@ Datagrid.prototype = {
     if (!this.settings.filterable) {
       return;
     }
-
+    
     this.element.addClass('has-filterable-columns');
+
+    if (this.settings.twoLineHeader) {
+      this.element.addClass('has-two-line-header')
+    }
 
     // Attach Keyboard support
     this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
@@ -1378,7 +1383,7 @@ Datagrid.prototype = {
       this.settings.filterable = false;
       this.filterRowRendered = false;
       this.element.removeClass('has-filterable-columns');
-
+      this.element.removeClass('has-two-line-header')
       /**
       *  Fires after the filter row is closed by the user.
       * @event closefilterrow
@@ -1391,6 +1396,10 @@ Datagrid.prototype = {
       this.filterRowRendered = true;
 
       this.element.addClass('has-filterable-columns');
+      
+      if (this.settings.twoLineHeader) {
+        this.element.addClass('has-two-line-header')
+      }
 
       this.headerRow.addClass('is-filterable');
       this.headerRow.find('.is-filterable').addClass('is-filterable');
