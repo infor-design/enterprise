@@ -1,0 +1,91 @@
+<div class="row">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="show-modal">Show Modal</button><br/><br/>
+
+		<!-- Modal Example -->
+		<div id="modal-add-context" class="hidden">
+      <form>
+
+        <div class="form-responsive row">
+          <div class="twelve columns">
+            <div class="field">
+              <label for="subject">Key Word</label>
+              <input type="text" id="subject" name="subject" />
+            </div>
+            <button class="btn-secondary hide-focus" type="button">Search</button>
+          </div>
+        </div>
+
+      </form>
+
+      <div class="row">
+        <div class="twelve columns">
+          <div id="datagrid">
+          </div>
+        </div>
+      </div>
+
+		</div>
+
+	</div>
+</div>
+
+<script>
+
+  // init the Grid
+    var grid,
+      columns = [],
+      data = [];
+
+    // Define Some Sample Data
+    data.push({ id: 1, productId: undefined, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', quantity: 1, price: 410.99, orderDate: new Date(2014, 12, 8), action: 'Action', status: 'Error'});
+    data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 2, price: 310.99, orderDate: new Date(2015, 7, 3), action: 'On Hold', status: 'Error'});
+    data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', quantity: 1, price: 620.99, orderDate: new Date(2014, 6, 3), action: 'Action', status: 'Error'});
+    data.push({ id: 4, productId: 2445204, productName: undefined, inStock: false, activity:  'Assemble Paint', quantity: 3, price: 1210.99, orderDate: new Date(2015, 3, 3), action: 'Action', status: 'Confirmed'});
+    data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', quantity: 4, price: 810.99, orderDate: new Date(2015, 5, 5), action: 'On Hold', status: 'Confirmed'});
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'id', name: 'Id', field: 'id', filterType: 'text'});
+    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text'});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, filterType: 'text'});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', formatter: Formatters.Dropdown, filterType: 'multiselect'});
+    columns.push({ id: 'quantity', name: 'Qty', field: 'quantity', align: 'right', filterType: 'integer'});
+
+    //Init and get the api for the grid
+    var api = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      filterable: true
+    });
+
+  // Setup button to open a modal
+  $('#show-modal').on('click', function () {
+    $('body').modal({
+      title: 'Add Context',
+      id: 'my-id',
+      content: $('#modal-add-context'),
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    });
+  });
+
+  // Show disabling enter on a form press
+  $('form').on('keypress', function (e) {
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    return false;
+  });
+</script>

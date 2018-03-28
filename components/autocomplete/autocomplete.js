@@ -326,7 +326,7 @@ Autocomplete.prototype = {
     // Overrides the 'click' listener attached by the Popupmenu plugin
     self.list.off('click touchend')
       .on('touchend.autocomplete click.autocomplete', 'a', (e) => {
-        self.select(e, items);
+        self.select(e, filterResult);
       })
       .off('focusout.autocomplete').on('focusout.autocomplete', () => {
         self.checkActiveElement();

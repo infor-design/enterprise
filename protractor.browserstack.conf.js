@@ -1,20 +1,27 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
+const { browserStackErrorReporter } = require('./test/helpers/browserStackErrorReporter');
 const browserstack = require('browserstack-local');
 const protractorImageComparison = require('protractor-image-comparison');
 
+const getSpecs = (listSpec) => {
+  if (listSpec) {
+    return listSpec.split(',');
+  }
+
+  return ['components/**/*.functional-spec.js'];
+};
+
 exports.config = {
-  allScriptsTimeout: 60000,
-  specs: [
-    '**/functional/*.functional-spec.js'
-  ],
+  allScriptsTimeout: 120000,
+  specs: getSpecs(process.env.PROTRACTOR_SPECS),
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
   commonCapabilities: {
     'browserstack.user': process.env.BROWSER_STACK_USERNAME,
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
-    'browserstack.debug': false,
+    'browserstack.debug': true,
     'browserstack.local': true,
-    build: 'protractor-browserstack',
+    build: 'Protractor',
     name: 'Functional tests'
   },
   multiCapabilities: [

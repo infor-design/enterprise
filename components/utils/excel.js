@@ -1,4 +1,5 @@
 import { Environment as env } from '../utils/environment';
+import { Formatters } from '../datagrid/datagrid.formatters';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};
@@ -258,6 +259,44 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     link.click();
     document.body.removeChild(link);
   }
+};
+
+excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
+  for (let i = 0; i < pastedData.length; i++) {
+    const rawVal = pastedData[i].split('\t');
+    let startColIndex = colIndex;
+
+    if (rowCount < dataSet.length) {
+      const currentRowData = dataSet[rowCount];
+      for (let j = 0; j < rawVal.length; j++) {
+        if (self.settings.columns[startColIndex].formatter === Formatters.Checkbox) {
+          currentRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() === 'true';
+        } else {
+          currentRowData[self.settings.columns[startColIndex].field] = rawVal[j];
+        }
+        startColIndex++;
+      }
+      dataSet[rowCount] = currentRowData;
+    } else {
+      const newRowData = {};
+      for (let k = 0; k < self.settings.columns.length; k++) {
+        newRowData[self.settings.columns[k].field] = '';
+      }
+
+      for (let j = 0; j < rawVal.length; j++) {
+        if (self.settings.columns[startColIndex].formatter === Formatters.Checkbox) {
+          newRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() === 'true';
+        } else {
+          newRowData[self.settings.columns[startColIndex].field] = rawVal[j];
+        }
+        startColIndex++;
+      }
+      dataSet.push(newRowData);
+    }
+    rowCount++;
+  }
+
+  self.settings.dataset = dataSet;
 };
 
 export { excel };

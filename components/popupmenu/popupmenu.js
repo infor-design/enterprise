@@ -555,7 +555,12 @@ PopupMenu.prototype = {
           }
         }
 
-        const focus = self.menu.find(':focus');
+        let focus = self.menu.find(':focus');
+
+        // Sets focus for functional testing
+        if (!focus[0]) {
+          focus = $(self.menu[0].querySelector('.is-focused a'));
+        }
 
         const isPicker = (self.settings.menu === 'colorpicker-menu');
         const isAutocomplete = self.element.is('.autocomplete');

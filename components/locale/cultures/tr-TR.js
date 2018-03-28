@@ -352,7 +352,7 @@ Soho.Locale.addCulture('tr-TR', {
    * @param {string} str starting text string
    * @returns {string} the fixed string
    */
-  toUpperCase(str) {
+  toUpperCase: function(str) { // eslint-disable-line
     return str.replace(/ğ/g, 'Ğ')
       .replace(/ü/g, 'Ü')
       .replace(/ş/g, 'Ş')
@@ -368,7 +368,7 @@ Soho.Locale.addCulture('tr-TR', {
    * @param {string} str starting text string
    * @returns {string} the fixed string
    */
-  toLowerCase(str) {
+  toLowerCase: function(str) { // eslint-disable-line
     return str.replace(/Ğ/g, 'ğ')
       .replace(/Ü/g, 'ü')
       .replace(/Ş/g, 'ş')

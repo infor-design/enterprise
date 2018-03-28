@@ -95,6 +95,7 @@ describe('Locale API', () => {
 
     expect(html.getAttribute('lang')).toEqual('ar-SA');
     expect(html.getAttribute('dir')).toEqual('rtl');
+    Locale.set('en-US');
   });
 
   it('Should map in-ID to id-ID', () => {
@@ -108,6 +109,7 @@ describe('Locale API', () => {
     // Note date is year, month, day
     expect(Locale.formatDate(new Date(2000, 12, 1), { pattern: Locale.calendar().dateFormat.month })).toEqual('01 محرم');
     expect(Locale.formatDate(new Date(2017, 10, 8), { pattern: Locale.calendar().dateFormat.month })).toEqual('08 ذو القعدة');
+    Locale.set('en-US');
   });
 
   it('Should format en-US dates', () => {
@@ -134,6 +136,7 @@ describe('Locale API', () => {
     // Note date is year, month, day
     expect(Locale.formatDate(new Date(2000, 12, 1), { pattern: Locale.calendar().dateFormat.month })).toEqual('01 محرم');
     expect(Locale.formatDate(new Date(2017, 10, 8), { pattern: Locale.calendar().dateFormat.month })).toEqual('08 ذو القعدة');
+    Locale.set('en-US');
   });
 
   it('Should format timestamp in English', () => {
@@ -181,29 +184,34 @@ describe('Locale API', () => {
 
     expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40), { date: 'datetime' })).toEqual('11/8/2000 1:40 PM');
     expect(Locale.formatDate(new Date(2000, 10, 8, 13, 0), { date: 'datetime' })).toEqual('11/8/2000 1:00 PM');
+
     Locale.set('de-DE');
 
     expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), { date: 'datetime' })).toEqual('01.12.2000 13:40');
     expect(Locale.formatDate(new Date(2000, 11, 1, 13, 5), { pattern: 'M.dd.yyyy HH:mm' })).toEqual('12.01.2000 13:05');
 
     const date = new Date(2017, 1, 1, 17, 27, 40);
-    const opts = { pattern: 'yyyy-MM-dd HH:mm', date: 'datetime' };
+    const opts = { date: 'datetime' };
 
     Locale.set('fi-FI');
 
-    expect(Locale.formatDate(date, opts)).toEqual('1.2.2017 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('1.2.2017 17:27');
+
     Locale.set('cs-CZ');
 
-    expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 17:27');
+
     Locale.set('hu-HU');
 
-    expect(Locale.formatDate(date, opts)).toEqual('2017. 02. 01. 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('2017. 02. 01. 17:27');
+
     Locale.set('ja-JP');
 
-    expect(Locale.formatDate(date, opts)).toEqual('2017/02/01 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('2017/02/01 17:27');
+
     Locale.set('ru-RU');
 
-    expect(Locale.formatDate(date, opts)).toEqual('2/1/2017 5:27');
+    expect(Locale.formatDate(date, opts)).toEqual('2/1/2017 17:27');
   });
 
   // monthYear and yearMonth
@@ -232,6 +240,7 @@ describe('Locale API', () => {
     Locale.set('ar-SA');
 
     expect(Locale.isRTL()).toEqual(true);
+    Locale.set('en-US');
   });
 
   // Formating Hours
@@ -312,6 +321,7 @@ describe('Locale API', () => {
     Locale.set('bg-BG');
 
     expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), { date: 'long' })).toEqual('1 януари 2015 г.');
+    Locale.set('en-US');
   });
 
   it('Should be able to parse dates', () => {
@@ -426,15 +436,6 @@ describe('Locale API', () => {
     expect(Locale.formatDate(new Date(2015, 0, 8, 13, 40, 45), { date: 'timestamp' })).toEqual('13:40:45');
   });
 
-  it('Should be format time stamp', () => {
-    Locale.set('en-US');
-
-    expect(Locale.isRTL()).toEqual(false);
-    Locale.set('ar-SA');
-
-    expect(Locale.isRTL()).toEqual(true);
-  });
-
   it('Should treat no-NO and nb-NO as the same locale', () => {
     Locale.set('no-NO');
 
@@ -481,6 +482,7 @@ describe('Locale API', () => {
     Locale.set('ar-EG');
 
     expect(Locale.translate('XYZ')).toEqual('[XYZ]');
+    Locale.set('en-US');
   });
 
   it('Should be possible to add translations', () => {
@@ -526,6 +528,7 @@ describe('Locale API', () => {
     Locale.set('bg-BG');
 
     expect(Locale.formatNumber(12345.1)).toEqual('12 345,10');
+    Locale.set('en-US');
   });
 
   it('Should truncate and not round decimals', () => {
@@ -693,6 +696,7 @@ describe('Locale API', () => {
     Locale.set('ar-SA');
 
     expect(Locale.formatNumber(-1000000, { style: 'currency' })).toEqual('-﷼ 1٬000٬000٫00');
+    Locale.set('en-US');
   });
 
   it('Should round when the round option is used', () => {
@@ -739,6 +743,7 @@ describe('Locale API', () => {
     islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2010, 11, 1)));
 
     expect(`${islamicDate[0].toString()} ${islamicDate[1].toString()} ${islamicDate[2].toString()}`).toEqual('1431 11 25');
+    Locale.set('en-US');
   });
 
   it('Should properly convert from Islamic UmAlQura to Gregorian', () => {
@@ -746,11 +751,21 @@ describe('Locale API', () => {
     const time = Locale.calendar().conversions.toGregorian(1431, 11, 25).getTime();
 
     expect(time).toEqual(new Date(2010, 11, 1, 0, 0, 0).getTime());
+    Locale.set('en-US');
   });
 
   it('Should handle numbers passed to parseNumber', () => {
     Locale.set('en-US');
 
     expect(Locale.parseNumber(4000)).toEqual(4000);
+  });
+
+  it('Should have 12 months per locale', () => {
+    for (let culture in Locale.cultures) {  //eslint-disable-line
+      Locale.set(culture);
+
+      expect(Locale.calendar().months.wide.length).toEqual(12);
+      expect(Locale.calendar().months.abbreviated.length).toEqual(12);
+    }
   });
 });

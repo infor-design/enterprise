@@ -61,13 +61,19 @@ $datagrid-short-row-height: 23px;
   }
 
   &.has-toolbar.has-filterable-columns {
+    .datagrid-body {
+      height: calc(100% - 60px);
+    }
+  }
+
+  &.has-toolbar.has-two-line-header {
     .datagrid-header {
       .datagrid-column-wrapper {
         padding: 5px 20px 10px;
+        .sort-indicator {
+          vertical-align: baseline;
+        }
       }
-    }
-    .datagrid-body {
-      height: calc(100% - 60px);
     }
   }
 
@@ -1320,6 +1326,17 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    // Make all content fit in singleline
+    .is-singleline {
+      * {
+        display: inline;
+      }
+
+      br {
+        display: none;
+      }
+    }
+
     .word-wrap {
       word-wrap: break-word;
 
@@ -2030,6 +2047,7 @@ $datagrid-short-row-height: 23px;
           width: 13px;
         }
 
+        &:not(:disabled) + .icon:hover,
         &:hover:not(:disabled) + .icon {
           // scss-lint:disable ImportantRule
           fill: $datagrid-filter-hover-color !important;
@@ -3211,6 +3229,10 @@ html[dir='rtl'] {
 
       li {
         list-style: inherit;
+      }
+
+      p {
+        text-align: inherit;
       }
     }
   }

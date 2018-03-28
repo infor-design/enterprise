@@ -93,8 +93,8 @@
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center'});
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
         columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required'});  //maxLength: 2

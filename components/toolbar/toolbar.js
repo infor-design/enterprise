@@ -213,9 +213,6 @@ Toolbar.prototype = {
       this.moreMenu = popupMenuInstance.menu;
     }
 
-    this.defaultMenuItems = this.moreMenu.children('li:not(.separator)');
-    this.hasDefaultMenuItems = this.defaultMenuItems.length > 0;
-
     function menuItemFilter() {
       return $(this).parent('.buttonset, .inline').length;
     }
@@ -231,6 +228,9 @@ Toolbar.prototype = {
         item.prependTo(self.moreMenu);
       }
     });
+
+    this.defaultMenuItems = this.moreMenu.children('li:not(.separator)');
+    this.hasDefaultMenuItems = this.defaultMenuItems.length > 0;
 
     // Setup an Event Listener that will refresh the contents of the More Actions
     // Menu's items each time the menu is opened.
@@ -1316,7 +1316,7 @@ Toolbar.prototype = {
     const hiddenOverflowItems = overflowItems.not('.hidden');
 
     let method = 'removeClass';
-    if (this.hasDefaultMenuItems || hiddenOverflowItems.length > 0) {
+    if (hiddenOverflowItems.length > 0) {
       method = 'addClass';
     }
 

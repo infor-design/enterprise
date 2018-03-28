@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Time Example (Locale: cs-CZ)</h2>
+    <p>Shows an example of a date picker with time.</p>
+  </div>
+</div>
+
+
+<div class="row">
+    <div class="twelve columns">
+        <form >
+            <div class="field">
+                <label for="dp1" class="label">Date-Time Picker with Custom Pattern</label>
+                <input id="dp1" data-init="false" class="datepicker datetime" name="dp1" type="text" value="26.02.2016 9:15 PM" />
+            </div>
+            <div class="field">
+                <label for="dp2" class="label">Date-Time Picker in Locale (Default)</label>
+                <input id="dp2" data-init="false" class="datepicker datetime" name="dp2" type="text" value="26.02.2016 14:15"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+Locale.set('cs-CZ').done(function () {
+
+  $('#dp1').datepicker({
+    timeFormat: 'h:mm a',
+    showTime: true
+  });
+
+  $('#dp2').datepicker({
+    showTime: true
+  });
+
+});
+</script>

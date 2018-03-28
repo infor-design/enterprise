@@ -36,7 +36,6 @@ function isSpecialCase(componentName) {
 // Generate a Doc file with buffered content
 function runPandoc(componentName, data, apiHtml, componentPath) {
   logger('padded', `Generating human-friendly docs with Pandoc for ${chalk.yellow(componentName)}`);
-
   // Note that im using gfm vs markdown for h level support
   nodePandoc(data, ['-f', 'markdown', '-t', 'html5', '-o', componentPath + 'index.html'], (error, stdout, stderr) => {
     if (error) {
@@ -53,19 +52,27 @@ function runPandoc(componentName, data, apiHtml, componentPath) {
       return;
     }
 
-    let pandocOutput = stdout;
-    if (apiHtml) {
+    if (!apiHtml) {
       logger('padded', `Attempting to inline API Details for ${chalk.yellow(componentName)}`);
-      pandocOutput = fs.readFileSync(`${componentPath}index.html`, 'utf8');
-      pandocOutput = pandocOutput.replace('<p>{{api-details}}</p>', apiHtml);
+    } else {
+      logger('success', `Index file for ${chalk.yellow(componentName)} saved successfully!`);
     }
 
-    fs.writeFile(`${componentPath}index.html`, pandocOutput, (err) => {
-      if (err) {
-        throw err;
-      }
-      logger('success', `Index file for ${chalk.yellow(componentName)} saved successfully!`);
-    });
+    if (stdout && apiHtml) {
+      fs.readFile(`${componentPath}index.html`, 'utf8', (readError, htmlData) => {
+        if (readError) {
+          throw readError;
+        }
+
+        const newData = htmlData.replace('<p>{{api-details}}</p>', apiHtml);
+        fs.writeFile(`${componentPath}index.html`, newData, (err) => {
+          if (err) {
+            throw err;
+          }
+          logger('success', `Index file for ${chalk.yellow(componentName)} saved successfully!`);
+        });
+      });
+    }
   });
 }
 
@@ -81,7 +88,6 @@ function generateDocs(componentPath, componentName) {
 
   // Read the md file and Generate the Pandoc / Html file for it
   const mdData = fs.readFileSync(`${componentPath + componentName}.md`, 'utf8');
-
   // If there's no {componentName.js} in the path, just return the MD documentation as is.
   if (!fs.existsSync(`${componentPath + componentName}.js`)) {
     runPandoc(componentName, mdData, null, componentPath);

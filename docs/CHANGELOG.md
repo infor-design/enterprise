@@ -1,8 +1,8 @@
-## <a name="version-4.5.0">4.5.0</a>
+redundant## <a name="version-4.5.0">4.5.0</a>
 
-Release Date: 2018-03-31
+Release Date: 2018-03-29
 
-Full Jira Release Notes: http://bit.ly/2oCLCRp
+Full Jira Release Notes: https://bit.ly/2GlnGJ1
 
 ### <a name="version-4.5.0-download-build-assets">Download Build Assets:</a>
 
@@ -16,28 +16,71 @@ http://usalvlhlpool1.infor.com/4.5.0/components/
 
 ### <a name="version-4.5.0-key-new-features">Key New Features</a>
 - Experimental new font added from IDS. You can enable the new font as explained on http://bit.ly/2p2sjjZ
--
-
-### <a name="version-4.5.0-corrections">Corrections to Your Code</a>
--
--
+- Datagrid - Added support for pasting from excel
+- Datagrid - Added option to specify which column stretches
 
 ### <a name="version-4.5.0-behavior-changes">Behavior Changes</a>
 - Search Field - ESC incorrectly cleared the field and was inconsistent. The proper key is ctrl + backspace (PC )/ alt + delete (mac) to clear all field contents. ESC no longer does anything.
 
 ### <a name="version-4.5.0-improvements">Improvements</a>
--
--
+- Datagrid - Added support for a two line title on the header
+- Dropdown - Added onKeyPress override for custom key strokes
+- Datepicker - Added support to select ranges
+- More unit tests
+- Contextual Action Panel - Added an option to add a right side close button.
+- Removed jsHint in favor of Eslint
 
-### <a name="version-4.5.0-breaking-changes">Breaking Changes</a>
+### <a name="version-4.5.0-breaking-changes">Code Updates / Breaking Changes</a>
 - Swaplist - changed custom events `beforeswap and swapupdate` data from `Array: list-items-moved` to `Object: from: container-info, to: container-info and items: list-items-moved` to use data more reliable way by the (SOHO-7407).
--
 
 ### <a name="version-4.5.0-bug-fixes">Bug Fixes</a>
--
--
+- Angular - Added new wrappers for Radar, Bullet, Line, Pie, Sparkline
+- Angular Dropdown - Fixed missing data from select event
+- Colorpicker - Added better translation support
+- Compound Field - Fixed layout with some field types
+- Datepicker - Fixed issues with validation in certain locales
+- Datepicker - Not able to validate on MMMM
+- Datagrid - Fixed bug that filter did not work when it started out hidden.
+- Datagrid - Fixed issue with context menu not opening repeatedly
+- Datagrid - Fixed bug in indeterminate paging with smaller page sizes
+- Datagrid - Fixed error when editing some numbers
+- Datagrid - Added support for single line markup
+- Datagrid - Fixed exportable option, which was not working for both csv and xls export
+- Datagrid - Fixed column sizing logic to work better with alerts and alerts + text
+- Datagrid - Fixed bug when reordering rows with expandable rows
+- Datagrid - Added events for opening and closing the filter row.
+- Datagrid - Fixed bugs on multiselect + tree grid
+- Datagrid - Fixed problems with missing data on click events when paging
+- Datagrid - Fixed problems editing with paging
+- Datagrid - Fixed Column alignment calling updateDataset
+- Datagrid - Now passes sourceArgs for the filter row
+- Dropdown - Fixed cursor on disabled items
+- Editor - Added paste support for links
+- Editor - Fixed bug that prevented some shortcut keys from working.
+- Editor - Fixed link pointers in readonly mode
+- Expandable Area - Fixed bug when not working on second page
+- General - Some ES6 imports missing
+- Personalization - Added support for cache bust
+- Locale - Fixed some months missing in some cultures
+- Listview - Removed redundant resize events
+- Line - Fixed problems updating data
+- Mask - Fixed bug on alpha masks that ignored the last character
+- Modal - Allow enter key to be stopped for forms. Allow filter row to work if a grid is on a modal.
+- Fileupload - Fixed bug when running in Contextual Action Panel
+- Searchfield - Fixed wrong width
+- Step Process - Improved layout and responsive
+- Step Process - Improved wrapping of step items
+- Targeted Achievement - Fixed icon alignment
+- Timepicker - Fixed error calling removePunctuation
+- Text Area - Adding missing classes for use in responsive-forms.
+- Toast - Fixed missing animation
+- Toolbar - Added
+- Tree - Fixed a bug where if the callback is not async the node wont open.
+- Track Dirty - Fixed error when used on a file upload
+- Track Dirty - Did not work to reset dirty on editor and Multiselect
+- Validation - Fixed more extra events firing
 
-(X Jira Issues Solved this release, Backlog Dev X, Design X, Unresolved X, Test Coverage X% )
+(67 Jira Issues Solved this release, Backlog Dev 378, Design 105, Unresolved 585, Test Coverage 6% )
 
 ## <a name="version-4.4.0">4.4.0</a>
 
