@@ -181,44 +181,31 @@ describe('Locale API', () => {
 
     expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40), { date: 'datetime' })).toEqual('11/8/2000 1:40 PM');
     expect(Locale.formatDate(new Date(2000, 10, 8, 13, 0), { date: 'datetime' })).toEqual('11/8/2000 1:00 PM');
+
     Locale.set('de-DE');
 
     expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), { date: 'datetime' })).toEqual('01.12.2000 13:40');
     expect(Locale.formatDate(new Date(2000, 11, 1, 13, 5), { pattern: 'M.dd.yyyy HH:mm' })).toEqual('12.01.2000 13:05');
 
     const date = new Date(2017, 1, 1, 17, 27, 40);
-    const opts = { pattern: 'yyyy-MM-dd HH:mm', date: 'datetime' };
+    const opts = { date: 'datetime' };
 
     Locale.set('fi-FI');
 
     expect(Locale.formatDate(date, opts)).toEqual('1.2.2017 17:27');
+
     Locale.set('cs-CZ');
 
     expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 17:27');
+
     Locale.set('hu-HU');
 
     expect(Locale.formatDate(date, opts)).toEqual('2017. 02. 01. 17:27');
+
     Locale.set('ja-JP');
 
     expect(Locale.formatDate(date, opts)).toEqual('2017/02/01 17:27');
-    Locale.set('ru-RU');
 
-    expect(Locale.formatDate(date, opts)).toEqual('2/1/2017 17:27');
-
-    opts.pattern = 'yyyy-MM-dd H:mm';
-
-    Locale.set('fi-FI');
-
-    expect(Locale.formatDate(date, opts)).toEqual('1.2.2017 17:27');
-    Locale.set('cs-CZ');
-
-    expect(Locale.formatDate(date, opts)).toEqual('01.02.2017 17:27');
-    Locale.set('hu-HU');
-
-    expect(Locale.formatDate(date, opts)).toEqual('2017. 02. 01. 17:27');
-    Locale.set('ja-JP');
-
-    expect(Locale.formatDate(date, opts)).toEqual('2017/02/01 17:27');
     Locale.set('ru-RU');
 
     expect(Locale.formatDate(date, opts)).toEqual('2/1/2017 17:27');
