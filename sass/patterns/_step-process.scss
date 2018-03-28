@@ -54,6 +54,22 @@
     width: 100%;
 
     li {
+      position: relative;
+
+      .icon {
+        // Position new alert icon for step "status"
+        &.step-alert {
+          left: 15px;
+          margin-right: 15px;
+          position: absolute;
+          top: calc(50% - 8px);
+        }
+
+        // Hide normal tree icons
+        &.icon-tree {
+          display: none;
+        }
+      }
 
       // Selected State (similar to accordion)
       &.is-selected,
@@ -84,30 +100,25 @@
         border-top: 1px solid transparent;
         cursor: pointer;
         display: block;
+        font-size: 0;
         margin-left: 0;
-        padding: 15px 60px 15px 15px;
+        padding: 15px 60px 15px 45px;
         position: relative;
-
-        .icon {
-          // Position new alert icon for step "status"
-          &.step-alert {
-            margin-right: 11px;
-            position: relative;
-            top: calc(50% - 8px);
-          }
-
-          // Hide normal tree icons
-          &.icon-tree {
-            display: none;
-          }
-        }
 
         // Focus State
         &:not(.hide-focus):focus {
           border: 1px solid $tree-focus-border-color;
         }
 
+        span {
+          display: inline-block;
+          @include font-size(14);
+          max-width: 80%;
+        }
 
+        .tree-text {
+          margin: 0;
+        }
       }
     }
 
@@ -332,7 +343,17 @@ html[dir='rtl'] {
 
       li {
         > a {
-          padding: 15px 15px 15px 60px;
+          padding: 15px 45px 15px 60px;
+        }
+
+        .icon {
+          // Position new alert icon for step "status"
+          &.step-alert {
+            margin-left: 15px;
+            margin-right: 0;
+            left: auto;
+            right: 15px;
+          }
         }
 
         &.folder {
