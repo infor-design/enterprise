@@ -1,3 +1,4 @@
+import { Environment as env } from '../utils/environment';
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -64,6 +65,7 @@ SearchField.prototype = {
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
+    this.isIe11 = env.browser.name === 'ie' && env.browser.version === '11';
     this.build().setupEvents();
   },
 
@@ -257,15 +259,22 @@ SearchField.prototype = {
   setupEvents() {
     const self = this;
 
-    self.element.on('updated.searchfield', () => {
-      self.updated();
-    }).on('focus.searchfield', (e) => {
-      self.handleFocus(e);
-    }).on('blur.searchfield', (e) => {
-      self.handleBlur(e);
-    }).on('click.searchfield', (e) => {
-      self.handleClick(e);
-    })
+    self.element
+      .on('updated.searchfield', () => {
+        self.updated();
+      })
+      .on('focus.searchfield', (e) => {
+        self.handleFocus(e);
+      })
+      .on('blur.searchfield', (e) => {
+        self.handleBlur(e);
+      })
+      .on('click.searchfield', (e) => {
+        self.handleClick(e);
+      })
+      .on('keydown.searchfield', (e) => {
+        self.handleKeydown(e);
+      })
       .on('beforeopen.searchfield', (e, menu) => { // propagates from Autocomplete's Popupmenu
         self.handlePopupBeforeOpen(e, menu);
       })
@@ -468,6 +477,20 @@ SearchField.prototype = {
   },
 
   /**
+   * Keydown event handler
+   * @private
+   * @param {jQuery.Event} e jQuery `keydown`
+   * @returns {void}
+   */
+  handleKeydown(e) {
+    const key = e.which;
+
+    if (key === 27 && this.isIe11) {
+      e.preventDefault();
+    }
+  },
+
+  /**
    * Modifies the menu at $('#autocomplete-list') to propagate/remove style
    *  classes on the Searchfield element.
    * @private
@@ -572,7 +595,7 @@ SearchField.prototype = {
     }
 
     let subtractWidth = 0;
-    let targetWidthProp = '100%';
+    let targetWidthProp;
 
     if (this.hasCategories()) {
       subtractWidth += this.categoryButton.outerWidth(true);
@@ -585,8 +608,9 @@ SearchField.prototype = {
     if (subtractWidth > 0) {
       targetWidthProp = `calc(100% - ${subtractWidth}px)`;
     }
-
-    this.element[0].style.width = targetWidthProp;
+    if (targetWidthProp) {
+      this.element[0].style.width = targetWidthProp;
+    }
   },
 
   /**

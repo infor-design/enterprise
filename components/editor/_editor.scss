@@ -9,8 +9,16 @@
       border-top: 1px solid $editor-border-color;
     }
 
+    &.editor-container:hover .editor:not(.error) {
+      border-color: $editor-hover-border-color;
+    }
+
     .editor-toolbar {
       display: none;
+    }
+
+    .hyperlink {
+      cursor: pointer;
     }
   }
 

@@ -115,6 +115,9 @@ Editor.prototype = {
       }
     }
 
+    if (this.element.hasClass('is-readonly')) {
+      this.readonly();
+    }
     return this.setup();
   },
 
@@ -1274,11 +1277,7 @@ Editor.prototype = {
         types = clipboardData.types;
         if ((types instanceof DOMStringList && types.contains('text/html')) ||
             (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
-          if (self.isIeEdge) {
-            pastedData = e.originalEvent.clipboardData.getData('text/plain');
-          } else {
-            pastedData = e.originalEvent.clipboardData.getData('text/html');
-          }
+          pastedData = e.originalEvent.clipboardData.getData('text/html');
         }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
@@ -1311,7 +1310,7 @@ Editor.prototype = {
       */
       $.when(self.element.triggerHandler('beforepaste', [{ pastedData: self.pastedData }])).done(() => {
         if (self.pastedData && !e.defaultPrevented) {
-          if (!self.isIe11) {
+          if (!self.isIe11 && !self.isIeEdge) {
             e.preventDefault();
           }
 
@@ -1546,6 +1545,9 @@ Editor.prototype = {
 
     // Remove header tag and content
     s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
+
+    // Remove empty tags
+    s = s.replace(/<[^/>]+>[\s]*<\/[^>]+>/gi, '');
 
     return s;
   },

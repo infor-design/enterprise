@@ -15,15 +15,15 @@ describe('Mask Input Field Api', () => {
   it('Should pass a basic sanity test', () => {
     expect(window.Soho).toBeDefined();
     expect(window.Soho.masks).toBeDefined();
-    expect(window.Soho.components.MaskedInput).toBeDefined();
+    expect(window.Soho.components.MaskInput).toBeDefined();
   });
 
   it('Should be invokable', () => {
-    TEST_COMPONENT_API = new window.Soho.components.MaskedInput(TEST_INPUT);
+    TEST_COMPONENT_API = new window.Soho.components.MaskInput(TEST_INPUT);
     const api = TEST_COMPONENT_API;
 
     expect(api).toBeDefined();
-    expect(window.Soho.components.MaskedInput).toBeDefined();
+    expect(window.Soho.components.MaskInput).toBeDefined();
 
     // Check default settings
     expect(api.settings).toEqual(jasmine.any(Object));
@@ -40,7 +40,7 @@ describe('Mask Input Field Api', () => {
     input.setAttribute('data-mask-mode', 'date');
     input.setAttribute('data-must-complete', 'true');
 
-    const inputComponent = new window.Soho.components.MaskedInput(input);
+    const inputComponent = new window.Soho.components.MaskInput(input);
 
     expect(inputComponent.settings).toBeDefined();
     expect(inputComponent.settings).toEqual(jasmine.any(Object));
@@ -49,7 +49,7 @@ describe('Mask Input Field Api', () => {
 
   it('Should be able to safely get a string value from an input field', () => {
     // Test `_getSafeRawValue()_`
-    TEST_COMPONENT_API = new window.Soho.components.MaskedInput(TEST_INPUT);
+    TEST_COMPONENT_API = new window.Soho.components.MaskInput(TEST_INPUT);
 
     expect(TEST_COMPONENT_API._getSafeRawValue('straight up text')).toEqual('straight up text');
     expect(TEST_COMPONENT_API._getSafeRawValue(300)).toEqual('300');
@@ -66,7 +66,7 @@ describe('Mask Input Field Api', () => {
     input1.setAttribute('id', 'preset-text');
     input1.setAttribute('value', '1234567890');
 
-    const inputComponent1 = new window.Soho.components.MaskedInput(input1, {
+    const inputComponent1 = new window.Soho.components.MaskInput(input1, {
       pattern: '(###) ###-####'
     });
 
@@ -79,7 +79,7 @@ describe('Mask Input Field Api', () => {
     input2.setAttribute('id', 'preset-number-dec');
     input2.setAttribute('value', '1234567890');
 
-    const inputComponent2 = new window.Soho.components.MaskedInput(input2, {
+    const inputComponent2 = new window.Soho.components.MaskInput(input2, {
       process: 'number',
       pattern: '#,###,###',
       patternOptions: {
@@ -111,7 +111,7 @@ describe('Mask Input Field Api', () => {
     input3.setAttribute('id', 'preset-number-dec');
     input3.setAttribute('value', '-5555.33');
 
-    const inputComponent3 = new window.Soho.components.MaskedInput(input3, {
+    const inputComponent3 = new window.Soho.components.MaskInput(input3, {
       process: 'number',
       pattern: '-#,###,###.00',
       patternOptions: {
@@ -140,7 +140,7 @@ describe('Mask Input Field Api', () => {
     input.setAttribute('id', 'french-text');
     input.setAttribute('value', '5333,66');
 
-    const inputComponent = new window.Soho.components.MaskedInput(input, {
+    const inputComponent = new window.Soho.components.MaskInput(input, {
       process: 'number',
       pattern: '# ###,00',
       patternOptions: {
@@ -172,7 +172,7 @@ describe('Mask Input Field Api', () => {
     input.setAttribute('id', 'rtl');
     input.setAttribute('value', '123456789');
 
-    const inputComponent = new window.Soho.components.MaskedInput(input, {
+    const inputComponent = new window.Soho.components.MaskInput(input, {
       process: 'number',
       pattern: '#٬###٬###-',
       patternOptions: {

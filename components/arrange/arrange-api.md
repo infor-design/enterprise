@@ -18,6 +18,8 @@ The Arrange Component allows touch and drag support to sort UI items.
     -   `settings.handle` **[string][8]?** The CSS class name of the handle element to connect
     -   `settings.itemsSelector` **[string][8]?** The CSS selector to match all the sortable elements.
     -   `settings.connectWith` **[string][8]?** Optional CSS Selector to connect with when using two lists
+    -   `settings.isVisualItems` **[boolean][9]?** Use only index of visual items to trigger
+    -   `settings.placeholder` **[string][8]?** The html for the element that appears while dragging
     -   `settings.placeholderCssClass` **[string][8]** The class to add to the ghost element that is being dragged. (optional, default `'arrange-placeholder'`)
 
 ### updated
@@ -59,3 +61,5 @@ Fires after finishing an arrange action.
 [7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
 [8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

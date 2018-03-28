@@ -55,6 +55,9 @@ module.exports = {
     // disallow multiple empty lines and only one newline at the end
     'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 1 }],
 
+    // set "no-trailing-spaces" to only a warning (this shouldn't fail builds)
+    'no-trailing-spaces': ['warn'],
+
     // ensure JSDoc comments are valid
     // https://eslint.org/docs/rules/valid-jsdoc
     'valid-jsdoc': ['warn', {

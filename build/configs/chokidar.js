@@ -21,7 +21,7 @@ module.exports = {
       tasks: ['build:js'],
       options: {
         livereload: true,
-        nospawn: true // For the docs task to work
+        spawn: false // For the docs task to work
       }
     },
 
@@ -36,10 +36,19 @@ module.exports = {
       }
     },
 
-    other: {
+    docs: {
       files: [
         'components/**/*.md',
         '!components/**/*-api.md',
+      ],
+      options: {
+        livereload: true,
+        spawn: false
+      }
+    },
+
+    other: {
+      files: [
         'svg/*.svg',
         'views/docs/**.html',
         'views/**.html',

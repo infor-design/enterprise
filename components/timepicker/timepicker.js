@@ -5,7 +5,7 @@ import { Locale } from '../locale/locale';
 // jQuery components
 import '../dropdown/dropdown.jquery';
 import '../icons/icons.jquery';
-import '../mask/masked-input.jquery';
+import '../mask/mask-input.jquery';
 import '../popover/popover.jquery';
 
 // Component Name
@@ -77,7 +77,7 @@ TimePicker.prototype = {
         type = 'minute';
       }
 
-      const defaultInterval = TIMEPICKER_DEFAULTS[(`${type}Interval`)];
+      const defaultInterval = TIMEPICKER_DEFAULTS()[(`${type}Interval`)];
       if (value === undefined || isNaN(value)) {
         return defaultInterval;
       }
@@ -86,8 +86,8 @@ TimePicker.prototype = {
     }
 
     function sanitizeTimeFormat(value) {
-      if (!value || (!value.match('h') && !value.match('HH')) || !value.match('mm')) {
-        return TIMEPICKER_DEFAULTS.timeFormat;
+      if (!value || !value.toUpperCase().match('H') || !value.match('mm')) {
+        return TIMEPICKER_DEFAULTS().timeFormat;
       }
 
       return value;
@@ -99,8 +99,10 @@ TimePicker.prototype = {
 
     function sanitizeMode(value) {
       const modes = ['standard', 'range'];
-      return $.inArray(value, modes) > -1 ? value : TIMEPICKER_DEFAULTS.mode;
+      return $.inArray(value, modes) > -1 ? value : TIMEPICKER_DEFAULTS().mode;
     }
+
+    this.id = `${this.element.uniqueId('timepicker')}-id`;
 
     if (this.element.is('[data-round-to-interval]')) {
       this.settings.roundToInterval = sanitizeRoundToInterval(this.element.attr('data-round-to-interval'));
@@ -226,7 +228,7 @@ TimePicker.prototype = {
    */
   is24HourFormat(value) {
     if (!value) { value = this.settings.timeFormat; }
-    return (value.match('HH') || []).length > 0;
+    return (value.match('H') || []).length > 0;
   },
 
   /**
@@ -386,7 +388,7 @@ TimePicker.prototype = {
     let hourCounter = is24HourFormat ? 0 : 1;
     const maxHourCount = is24HourFormat ? 24 : 13;
 
-    this.hourSelect = $('<select id="timepicker-hours" data-options="{\'noSearch\': \'true\'}" class="hours dropdown"></select>');
+    this.hourSelect = $(`<select id="timepicker-hours-${this.id}" data-options="{'noSearch': 'true'}" class="hours dropdown"></select>`);
 
     while (hourCounter < maxHourCount) {
       selected = '';
@@ -396,13 +398,13 @@ TimePicker.prototype = {
       self.hourSelect.append($(`<option${selected}>${self.hourText(hourCounter)}</option>`));
       hourCounter++;
     }
-    timeParts.append($(`<label for="timepicker-hours" class="audible">${Locale.translate('Hours')}</label>`));
+    timeParts.append($(`<label for="timepicker-hours-${this.id}" class="audible">${Locale.translate('Hours')}</label>`));
     timeParts.append(this.hourSelect);
     timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
 
     // Minutes Picker
     let minuteCounter = 0;
-    this.minuteSelect = $('<select id="timepicker-minutes" data-options="{\'noSearch\': \'true\'}" class="minutes dropdown"></select>');
+    this.minuteSelect = $(`<select id="timepicker-minutes-${this.id}" data-options="{'noSearch': 'true'}" class="minutes dropdown"></select>`);
 
     while (minuteCounter <= 59) {
       textValue = minuteCounter < 10 ? `0${minuteCounter}` : minuteCounter;
@@ -421,13 +423,13 @@ TimePicker.prototype = {
       this.minuteSelect.prepend($(`<option selected>${self.initValues.minutes}</option>`));
     }
 
-    timeParts.append($(`<label for="timepicker-minutes" class="audible">${Locale.translate('Minutes')}</label>`));
+    timeParts.append($(`<label for="timepicker-minutes-${this.id}" class="audible">${Locale.translate('Minutes')}</label>`));
     timeParts.append(this.minuteSelect);
 
     // Seconds Picker
     if (hasSeconds) {
       let secondCounter = 0;
-      this.secondSelect = $('<select id="timepicker-seconds" data-options="{\'noSearch\': \'true\'}" class="seconds dropdown"></select>');
+      this.secondSelect = $(`<select id="timepicker-seconds-${this.id}" data-options="{'noSearch': 'true'}" class="seconds dropdown"></select>`);
 
       while (secondCounter <= 59) {
         textValue = secondCounter < 10 ? `0${secondCounter}` : secondCounter;
@@ -447,12 +449,12 @@ TimePicker.prototype = {
       }
 
       timeParts.append($(`<span class="label colons">${timeSeparator}</span>`));
-      timeParts.append($(`<label for="timepicker-seconds" class="audible">${Locale.translate('Seconds')}</label>`));
+      timeParts.append($(`<label for="timepicker-seconds-${this.id}" class="audible">${Locale.translate('Seconds')}</label>`));
       timeParts.append(this.secondSelect);
     }
 
     if (!is24HourFormat && hasDayPeriods) {
-      this.periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
+      this.periodSelect = $(`<select id="timepicker-period-${this.id}" data-options="{'noSearch': 'true'}" class="period dropdown"></select>`);
       timeParts.append($('<span class="label colons"></span>'));
       const localeDays = Locale.calendar().dayPeriods;
       let localeCount = 0;
@@ -469,7 +471,7 @@ TimePicker.prototype = {
 
         localeCount++;
       }
-      timeParts.append($(`<label for="timepicker-period" class="audible">${Locale.translate('TimePeriod')}</label>`));
+      timeParts.append($(`<label for="timepicker-period-${this.id}" class="audible">${Locale.translate('TimePeriod')}</label>`));
       timeParts.append(this.periodSelect);
     }
 
@@ -786,14 +788,14 @@ TimePicker.prototype = {
    * @returns {void}
    */
   setTimeOnField() {
-    const hours = $('#timepicker-hours').val() || '';
-    const minutes = $('#timepicker-minutes').val() || '';
-    const seconds = $('#timepicker-seconds').val() || '';
-    let period = ($('#timepicker-period').val() || '').toUpperCase();
+    const hours = $(`#timepicker-hours-${this.id}`).val() || '';
+    const minutes = $(`#timepicker-minutes-${this.id}`).val() || '';
+    const seconds = $(`#timepicker-seconds-${this.id}`).val() || '';
+    let period = ($(`#timepicker-period-${this.id}`).val() || '').toUpperCase();
     const sep = this.getTimeSeparator();
     let timeString = `${hours}${sep}${minutes}${this.hasSeconds() ? sep + seconds : ''}`;
 
-    period = (!this.is24HourFormat() && period === '') ? $('#timepicker-period-shdo').val() : period;
+    period = (!this.is24HourFormat() && period === '') ? $(`#timepicker-period-${this.id}-shdo`).val() : period;
     timeString += period ? ` ${Locale.translateDayPeriod(period)}` : '';
 
     /**
@@ -871,13 +873,13 @@ TimePicker.prototype = {
    */
   onPopupHide() {
     if (this.settings.mode === 'standard') {
-      $('#timepicker-hours').data('dropdown').destroy();
-      $('#timepicker-minutes').data('dropdown').destroy();
+      $(`#timepicker-hours-${this.id}`).data('dropdown').destroy();
+      $(`#timepicker-minutes-${this.id}`).data('dropdown').destroy();
       if (this.hasSeconds()) {
-        $('#timepicker-seconds').data('dropdown').destroy();
+        $(`#timepicker-seconds-${this.id}`).data('dropdown').destroy();
       }
       if (this.hasDayPeriods()) {
-        $('#timepicker-period').data('dropdown').destroy();
+        $(`#timepicker-period-${this.id}`).data('dropdown').destroy();
       }
       this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
     }
@@ -1007,6 +1009,10 @@ TimePicker.prototype = {
       mask.destroy();
     }
 
+    $.removeData(this.element[0], 'validate');
+    $.removeData(this.element[0], 'validationEvents');
+    this.element.removeAttr('data-validate').removeData('validate validationEvents');
+
     this.label.find('.audible').remove();
 
     return this;
@@ -1018,7 +1024,6 @@ TimePicker.prototype = {
    */
   destroy() {
     this.teardown();
-    $.removeData(this.element[0], 'validate');
     $.removeData(this.element[0], COMPONENT_NAME);
   },
 

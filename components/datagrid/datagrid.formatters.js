@@ -270,7 +270,7 @@ const formatters = {
   Editor(row, cell, value, col) {
     const formatted = ((value === null || value === undefined) ? '' : value);
     let classes = 'is-editor';
-    classes += col.singleline ? '' : ' datagrid-multiline-text';
+    classes += col.singleline ? ' is-singleline' : ' datagrid-multiline-text';
     classes += col.contentTooltip ? ' content-tooltip' : '';
     return `<div class="${classes}">${$.unescapeHTML(formatted)}</div>`;
   },

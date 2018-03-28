@@ -15,13 +15,15 @@ const COMPONENT_NAME = 'arrange';
 * @param {string} [settings.handle] The CSS class name of the handle element to connect
 * @param {string} [settings.itemsSelector] The CSS selector to match all the sortable elements.
 * @param {string} [settings.connectWith] Optional CSS Selector to connect with when using two lists
-* @param {string} [placeholder.settings] The html for the element that appears while dragging
+* @param {boolean} [settings.isVisualItems] Use only index of visual items to trigger
+* @param {string} [settings.placeholder] The html for the element that appears while dragging
 * @param {string} [settings.placeholderCssClass='arrange-placeholder'] The class to add to the ghost element that is being dragged.
 */
 const ARRANGE_DEFAULTS = {
   handle: null, // The Class of the handle element
   itemsSelector: null,
   connectWith: false,
+  isVisualItems: false,
   placeholder: null,
   placeholderCssClass: 'arrange-placeholder'
 };
@@ -124,6 +126,27 @@ Arrange.prototype = {
   },
 
   /**
+   * Find out the visual index to trigger
+   * @private
+   * @param {object} elem to get index number.
+   * @returns {number} the index
+   */
+  getVisualIndex(elem) {
+    const s = this.settings;
+    let idx = null;
+
+    if (s.isVisualItems) {
+      let items = this.element.children().not('[data-arrange-exclude="true"]');
+      if (s.itemsSelector) {
+        items = $(s.itemsSelector, this.element).not('[data-arrange-exclude="true"]');
+      }
+      idx = items.index(elem);
+    }
+
+    return idx;
+  },
+
+  /**
    * Attach Events used by the Control
    * @private
    * @returns {void}
@@ -204,8 +227,10 @@ Arrange.prototype = {
             self.dragging = $(this);
 
             index = self.dragging.addClass('arrange-dragging').index();
+            const idx = s.isVisualItems ?
+              self.getVisualIndex(self.dragging) : index;
 
-            $.extend(status, { start: self.dragging, startIndex: index });
+            $.extend(status, { start: self.dragging, startIndex: idx });
 
             /**
             * Fires before moving an element allowing you to access the ui to
@@ -259,7 +284,9 @@ Arrange.prototype = {
             self.placeholders.detach();
 
             if (index !== self.dragging.index()) {
-              $.extend(status, { end: self.dragging, endIndex: self.dragging.index() });
+              const idx = s.isVisualItems ?
+                self.getVisualIndex(self.dragging) : self.dragging.index();
+              $.extend(status, { end: self.dragging, endIndex: idx });
 
               /**
               * Fires after moving an element allowing you do any follow up updating.
@@ -314,15 +341,20 @@ Arrange.prototype = {
                 self.dragging.hide();
               }
 
+              let idx;
               if (placeholder.index() < (overItem.index())) {
                 placeholder.insertAfter(overItem);
                 overIndex = overItem.index();
+                idx = s.isVisualItems ?
+                  self.getVisualIndex(overItem) : overIndex;
               } else {
                 placeholder.insertBefore(overItem);
                 overIndex = placeholder.index();
+                idx = s.isVisualItems ?
+                  self.getVisualIndex(placeholder) : overIndex;
               }
 
-              $.extend(status, { over: overItem, overIndex });
+              $.extend(status, { over: overItem, overIndex: idx });
               self.element.triggerHandler('draggingarrange', status);
 
               // Fix: IE-11 on windows-10 svg was disappering

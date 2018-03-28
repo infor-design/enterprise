@@ -4,7 +4,7 @@ import { Locale } from '../locale/locale';
 
 // jQuery Components
 import '../button/button.jquery';
-import '../mask/masked-input.jquery';
+import '../mask/mask-input.jquery';
 
 // Component Name
 const COMPONENT_NAME = 'spinbox';
