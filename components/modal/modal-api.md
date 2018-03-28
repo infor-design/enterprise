@@ -24,6 +24,8 @@ Responsive and Accessible Modal Control
     -   `settings.id` **[string][5]** Optionally tag a dialog with an id. (optional, default `null`)
     -   `settings.frameHeight` **[number][8]** Optional extra height to add. (optional, default `180`)
     -   `settings.frameWidth` **[number][8]** Optional extra width to add. (optional, default `46`)
+    -   `settings.beforeShow` **[function][9]** A call back function that can be used to return data for the modal.
+        return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response. (optional, default `null`)
 
 ### disableSubmit
 
@@ -64,3 +66,5 @@ Returns **[boolean][7]** If the dialog was open returns false. If the dialog was
 [7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
 [8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
