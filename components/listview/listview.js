@@ -1248,4 +1248,4 @@ ListView.prototype = {
   }
 };
 
-export { ListView, COMPONENT_NAME };
+export { ListView, COMPONENT_NAME, LISTVIEW_DEFAULTS };

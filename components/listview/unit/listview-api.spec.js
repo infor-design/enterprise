@@ -46,26 +46,11 @@ describe('Listview API', () => {
   it('Can be disabled and re-enabled', () => {
     listviewAPI.disable();
 
-    expect(listviewEl.className.indexOf('is-disabled')).toBeGreaterThan(-1);
+    expect(listviewEl.classList.contains('is-disabled')).toBeTruthy();
 
     listviewAPI.enable();
 
     expect(listviewEl.className.indexOf('is-disabled')).toEqual(-1);
-  });
-
-  it('Can be updated with new settings', () => {
-    const newSettings = {
-      dataset: [
-        { task: 'New Task #1', date: '03/27/2018', desc: 'This is a test task' },
-        { task: 'New Task #2', date: '03/27/2018', desc: 'This is another test task' },
-      ]
-    };
-
-    listviewAPI.updated(newSettings);
-    listviewItemEls = listviewEl.querySelectorAll('li');
-    const secondItemDesc = listviewItemEls.item(1).querySelector('.listview-subheading');
-
-    expect(secondItemDesc.innerHTML.trim()).toBe('This is another test task');
   });
 
   it('Properly detects the total number of listview items', () => {
@@ -92,5 +77,12 @@ describe('Listview API', () => {
     const selectedEl = listviewAPI.getSelected();
 
     expect(listviewItemEls.item(index)).toEqual(selectedEl[0]);
+  });
+
+  // Note: currently checks $.data()
+  it('Can be destroyed', () => {
+    listviewAPI.destroy();
+
+    expect($(listviewEl).data('listview')).toBeFalsy();
   });
 });

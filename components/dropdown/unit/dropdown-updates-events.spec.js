@@ -100,6 +100,7 @@ describe('Dropdown updates, events', () => {
   });
 
   it('Should trigger "has-updated" event', () => {
+    // TODO from Ed C: Why does this pass?  The event's name is `has-updated`, not `has-update`
     $('.dropdown').on('has-update', () => {
       expect(true).toBe(true);
     });
