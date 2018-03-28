@@ -1,4 +1,5 @@
 import { Environment as env } from '../utils/environment';
+import { Formatters } from '../datagrid/datagrid.formatters';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};
@@ -262,14 +263,14 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
 
 excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
   for (let i = 0; i < pastedData.length; i++) {
-    let rawVal = pastedData[i].split('\t');
+    const rawVal = pastedData[i].split('\t');
     let startColIndex = colIndex;
-    
+
     if (rowCount < dataSet.length) {
-      let currentRowData = dataSet[rowCount];  
+      const currentRowData = dataSet[rowCount];
       for (let j = 0; j < rawVal.length; j++) {
         if (self.settings.columns[startColIndex].formatter === Formatters.Checkbox) {
-          currentRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() == "true";
+          currentRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() === 'true';
         } else {
           currentRowData[self.settings.columns[startColIndex].field] = rawVal[j];
         }
@@ -277,14 +278,14 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
       }
       dataSet[rowCount] = currentRowData;
     } else {
-      let newRowData = {};
+      const newRowData = {};
       for (let k = 0; k < self.settings.columns.length; k++) {
         newRowData[self.settings.columns[k].field] = '';
       }
 
       for (let j = 0; j < rawVal.length; j++) {
         if (self.settings.columns[startColIndex].formatter === Formatters.Checkbox) {
-          newRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() == "true";
+          newRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() === 'true';
         } else {
           newRowData[self.settings.columns[startColIndex].field] = rawVal[j];
         }

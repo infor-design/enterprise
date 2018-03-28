@@ -4316,26 +4316,25 @@ Datagrid.prototype = {
     // Handle Row Clicking
     const tbody = this.table.find('tbody');
 
-    //ENABLE COPY PASTE FROM EXCEL
+    // Add a paste event for handling pasting from excel
     if (self.settings.editable) {
-      tbody.off('paste').on('paste', function (e) {
+      tbody.off('paste').on('paste', (e) => {
         let pastedData;
         if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
         } else {
           pastedData = window.clipboardData && window.clipboardData.getData ? window.clipboardData.getData('Text') : false;
         }
-        
+
         if (pastedData) {
           pastedData = pastedData.split('\n');
           pastedData.pop();
-          
-          let startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'));
-          let startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex')) - 1;
+
+          const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
+          const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
           self.copyToDataSet(pastedData, startRowCount, startColIndex, self.settings.dataset);
           self.renderRows();
-        } 
-        
+        }
       });
     }
 
