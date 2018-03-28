@@ -2,31 +2,9 @@
 
 ### Table of Contents
 
--   [COLUMN_DEFAULTS](#column_defaults)
--   [Column](#column)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## COLUMN_DEFAULTS
-
-**Properties**
-
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The data to use in the line/area/bubble.
--   `isStacked` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Set to true if its a stacked column chart
--   `showLegend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the legend will not be shown.
--   `animate` **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** true|false - will do or not do the animation.
-    'initial' will do only first time the animation.
--   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, the component will not resize when resizing the page.
--   `format` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The d3 axis format
--   `formatterString` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Use d3 format some examples can be found on <http://bit.ly/1IKVhHh>
--   `ticks` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The number of ticks to show.
--   `emptyMessage` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** An empty message will be displayed when there is no chart data.
-    This accepts an object of the form emptyMessage:
-    `{title: 'No Data Available',
-     info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-     button: {text: 'xxx', click: <function>}
-     }`
-     Set this to null for no message or will default to 'No Data Found with an icon.'
+-   [Column][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## Column
 
@@ -36,8 +14,24 @@ comparisons among items.
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
+-   `element` **[string][4]** The plugin element for the constuctor
+-   `settings` **[string][4]?** The settings element.
+    -   `settings.dataset` **[array][5]** The data to use in the line/area/bubble. (optional, default `[]`)
+    -   `settings.isStacked` **[boolean][6]** Set to true if its a stacked column chart (optional, default `false`)
+    -   `settings.showLegend` **[boolean][6]** If false the legend will not be shown. (optional, default `true`)
+    -   `settings.animate` **([boolean][6] \| [string][4])** true|false - will do or not do the animation. 'initial' will do only first time the animation. (optional, default `true`)
+    -   `settings.redrawOnResize` **[boolean][6]** If true, the component will not resize when resizing the page. (optional, default `true`)
+    -   `settings.format` **[string][4]** The d3 axis format (optional, default `null`)
+    -   `settings.formatterString` **[string][4]?** Use d3 format some examples can be found on [http://bit.ly/1IKVhHh][7]
+    -   `settings.ticks` **[number][8]** The number of ticks to show. (optional, default `9`)
+    -   `settings.emptyMessage` **[object][9]** An empty message will be displayed when there is no chart data. This accepts an object of the form
+        `emptyMessage: {
+          title: 'No Data Available',
+          info: 'Make a selection on the list above to see results',
+          icon: 'icon-empty-no-data',
+          button: {text: 'xxx', click: <function>
+          }`
+        Set this to null for no message or will default to 'No Data Found with an icon.' (optional, default `{title:'No Data',info:,icon:'icon-empty-no-data'}`)
 
 ### updated
 
@@ -45,12 +39,30 @@ Handle updated settings and values.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings to use.
+-   `settings` **[object][9]** The new settings to use.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
+Returns **[object][9]** The api for chaining.
 
 ### destroy
 
 Teardown - Remove added markup and events.
 
 Returns **void** 
+
+[1]: #column
+
+[2]: #updated
+
+[3]: #destroy
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[7]: http://bit.ly/1IKVhHh
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

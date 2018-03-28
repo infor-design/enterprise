@@ -3,31 +3,103 @@
 <ol type="1">
 <li>Default Trackdirty Example <a href="../components/trackdirty/example-index">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = The settings to apply.
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Resync the UI and Settings.</p>
+
+        </td>
+        <td>
+          The api
+object
+        </td>
+      </tr>
+      <tr>
+        <td>destroy</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Destroy this component instance and remove the link from its base element.</p>
+
+        </td>
+        <td>
+          
+void
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-    
-
-
-
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -45,7 +117,7 @@
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -55,29 +127,7 @@
     
   
   </td>
-  <td>Fires when reset dirty.
-</td>
-</tr>
-
-      
-        <tr>
-  <td>dirty
-  </td>
-  <td>
-  
-    
-      <div>
-        <span>event (Object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-  
-  </td>
-  <td>Fires when trackdirty added.
+  <td>Fires when an inout becomes dirty.
 </td>
 </tr>
 

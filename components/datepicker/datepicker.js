@@ -4,70 +4,74 @@ import { Locale } from '../locale/locale';
 import { Environment as env } from '../utils/environment';
 
 // jQuery Components
-import '../mask/masked-input.jquery';
+import '../mask/mask-input.jquery';
 import '../popover/popover.jquery';
+import '../timepicker/timepicker.jquery';
 import '../validation/validation.jquery';
+import '../validation/validation.utils';
 
 // Component Name
 const COMPONENT_NAME = 'datepicker';
 
 /**
- * Default DatePicker Options
- * @namespace
- * @property {boolean} showTime If true the time selector will be shown.
- * @property {string} [timeFormat] Format to use time section fx HH:mm,
+ * A component to support date entry.
+ * @class DatePicker
+ * @constructor
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object} [settings] The component settings.
+ * @param {boolean} [settings.showTime=false] If true the time selector will be shown.
+ * @param {string} [settings.timeFormat] Format to use time section fx HH:mm,
  *  defaults current locale settings.
- * @property {number} [minuteInterval]
- * @property {number} [secondInterval]
- * @property {string} [mode] Time picker options: 'standard', 'range',
+ * @param {number} [settings.minuteInterval]
+ * @param {number} [settings.secondInterval]
+ * @param {string} [settings.mode] Time picker options: 'standard', 'range',
  *  this controls the time picker.
- * @property {boolean} [roundToInterval] In time picker mode, if a non-matching
+ * @param {boolean} [settings.roundToInterval] In time picker mode, if a non-matching
  *  minutes value is entered,
  *  rounds the minutes value to the nearest interval when the field is blurred.
- * @property {string} dateFormat Defaults to current locale but can be
- *  overriden to a specific format, like like 'yyyy-MM-dd' iso8601 format.
- * @property {object} disable Disable dates in various ways.
+ * @param {string} [settings.dateFormat='locale'] Defaults to current locale but can be
+ * @param {string} [settings.placeholder=false] Text to show in input element while empty.
+ * @param {object} [settings.disable] Disable dates in various ways.
  * For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
  * or be a Date() object or string that can be converted to a date with new Date().
- * @property {array} disable.dates Disable specific dates.
+ * @param {array} [settings.disable.dates] Disable specific dates.
  * Example `{dates: ['12/31/2018', '01/01/2019'}`.
- * @property {string|date} disable.minDate Disable up to a minimum date.
+ * @param {string|date} [settings.disable.minDate] Disable up to a minimum date.
  * Example `{minDate: '12/31/2016'}`.
- * @property {string|date} disable.maxDate Disable up to a maximum date.
+ * @param {string|date} [settings.disable.maxDate] Disable up to a maximum date.
  * Example `{minDate: '12/31/2019'}`.
- * @property {array} disable.dayOfWeek Disable a specific of days of the week 0-6.
+ * @param {array} [settings.disable.dayOfWeek] Disable a specific of days of the week 0-6.
  * Example `{dayOfWeek: [0,6]}`.
- * @property {array} disable.isEnable Defaults to false.
+ * @param {boolean} [settings.disable.isEnable=false] Inverse the disable settings.
  * If true all the disable settings will be enabled and the rest will be disabled.
  * So you can inverse the settings.
  * For example if you have more non specific dates to disable then enable ect.
- * @property {boolean} showMonthYearPicker If true the month and year will render
- *  as dropdowns.
- * @property {boolean} hideDays If true the days portion of the calendar will be hidden.
+ * @param {boolean} [settings.showLegend=false] If true a legend is show to associate dates.
+ * @param {boolean} [settings.customValidation=false] If true the internal validation is disabled.
+ * @param {boolean} [settings.showMonthYearPicker=false] If true the month and year will render as dropdowns.
+ * @param {boolean} [settings.hideDays=false] If true the days portion of the calendar will be hidden.
  *  Usefull for Month/Year only formats.
- * @property {boolean} customValidation If true the internal validation is disabled.
- * @property {boolean} advanceMonths The number of months in each direction to show in
+ * @param {number} [settings.advanceMonths=5] The number of months in each direction to show in
  *  the dropdown for months (when initially opening)
- * @property {boolean} showLegend If true a legend is show to associate dates.
- * @property {array} legend  Legend Build up
+ * @param {array} [settings.legend]  Legend Build up
  * for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
  * {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
- * @property {object} range Range between two dates with various options.
- * @property {boolean} range.useRange Use range of two dates options.
- * @property {string|date} range.start Start date in range.
- * @property {string|date} range.end End date in range.
- * @property {string} range.separator Visual separator between two dates.
- * @property {number} range.minDays Minimum days to be in range.
- * @property {number} range.maxDays Maximum days to be in range.
- * @property {boolean} range.selectForward Range only in forward direction.
- * @property {boolean} range.selectBackward Range only in backward direction.
- * @property {boolean} range.includeDisabled Include disable dates in range of dates.
- * @property {string} calendarName The name of the calendar to use in instance of
+ * @param {object} [settings.range] Range between two dates with various options.
+ * @param {boolean} [settings.range.useRange=false] Use range of two dates options.
+ * @param {string|date} [settings.range.start] Start date in range.
+ * @param {string|date} [settings.range.end] End date in range.
+ * @param {string} [settings.range.separator=' - '] Visual separator between two dates.
+ * @param {number} [settings.range.minDays=0] Minimum days to be in range.
+ * @param {number} [settings.range.maxDays=0] Maximum days to be in range.
+ * @param {boolean} [settings.range.selectForward=false] Range only in forward direction.
+ * @param {boolean} [settings.range.selectBackward=false] Range only in backward direction.
+ * @param {boolean} [settings.range.includeDisabled=false] Include disable dates in range of dates.
+ * @param {string} [settings.calendarName] The name of the calendar to use in instance of
  * multiple calendars. At this time only ar-SA and ar-EG locales have either
  * 'gregorian' or 'islamic-umalqura' as valid values.
- * @property {useUTC} useUTC If true the dates will use UTC format. This is only partially
+ * @param {boolean} [settings.useUTC=false] If true the dates will use UTC format. This is only partially
  * implemented https://jira.infor.com/browse/SOHO-3437
-*/
+ */
 const DATEPICKER_DEFAULTS = {
   showTime: false,
   timeFormat: undefined,
@@ -110,12 +114,6 @@ const DATEPICKER_DEFAULTS = {
   useUTC: false
 };
 
-/**
- * A component to support date entry.
- * @class DatePicker
- * @param {String} element The component element.
- * @param {String} settings The component settings.
- */
 function DatePicker(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, DATEPICKER_DEFAULTS);
@@ -151,6 +149,7 @@ DatePicker.prototype = {
     this.setCurrentCalendar();
     this.isIslamic = this.currentCalendar.name === 'islamic-umalqura';
     this.conversions = this.currentCalendar.conversions;
+    this.isFullMonth = this.settings.dateFormat.indexOf('MMMM') > -1;
   },
 
   /**
@@ -482,7 +481,7 @@ DatePicker.prototype = {
       this.pattern = s.dateFormat + (s.showTime && s.timeFormat ? ` ${s.timeFormat}` : '');
     }
 
-    this.show24Hours = (this.pattern.match('HH') || []).length > 0;
+    this.show24Hours = (this.pattern.match('H') || []).length > 0;
     this.isSeconds = (this.pattern.match('ss') || []).length > 0;
   },
 
@@ -528,7 +527,11 @@ DatePicker.prototype = {
       }
     }
 
-    this.element.mask(maskOptions);
+    if (this.isFullMonth) {
+      this.pattern = this.settings.dateFormat;
+    } else {
+      this.element.mask(maskOptions);
+    }
 
     if (!s.customValidation) {
       this.element.attr({
@@ -564,7 +567,7 @@ DatePicker.prototype = {
   /**
    * Check if the calendar div is open or not
    * @private
-   * @returns {Boolean} whether or not the calendar div is open.
+   * @returns {boolean} whether or not the calendar div is open.
    */
   isOpen() {
     return (this.popup && this.popup.is(':visible') &&
@@ -583,9 +586,9 @@ DatePicker.prototype = {
   /**
    * Check if file type allowed
    * @private
-   * @param {Object} elem to set fouus
-   * @param {Boolean} isFocus true if need to set foucs
-   * @returns {Object} element passed in
+   * @param {object} elem to set fouus
+   * @param {boolean} isFocus true if need to set foucs
+   * @returns {object} element passed in
    */
   activeTabindex(elem, isFocus) {
     $('td', this.days).removeAttr('tabindex');
@@ -617,8 +620,8 @@ DatePicker.prototype = {
     * Fires as the calendar popup is opened.
     *
     * @event listopened
-    * @type {Object}
-    * @property {Object} event - The jquery event object
+    * @memberof DatePicker
+    * @property {object} event - The jquery event object
     */
     this.element.addClass('is-active is-open').trigger('listopened');
 
@@ -736,7 +739,7 @@ DatePicker.prototype = {
     if (s.showTime) {
       if (s.timeFormat === undefined) {
         // Getting time-format from date-format (dateFormat: 'M/d/yyyy HH:mm:ss')
-        timeOptions.timeFormat = this.pattern.slice(this.pattern.indexOf(' '));
+        timeOptions.timeFormat = this.pattern.slice(this.pattern.indexOf(' ')).trim();
       } else {
         timeOptions.timeFormat = s.timeFormat;
       }
@@ -796,6 +799,13 @@ DatePicker.prototype = {
           this.popup.find('.arrow').hide();
           this.popup.css('min-height', `${(this.popupClosestScrollable[0].scrollHeight + 2)}px`);
           this.popupClosestScrollable.css('min-height', '375px');
+        }
+
+        // Hide calendar until range to be pre selected
+        if (s.range.useRange &&
+            s.range.first && s.range.first.date &&
+            s.range.second && s.range.second.date) {
+          this.popup.addClass('is-hidden');
         }
       })
       .off('hide.datepicker')
@@ -919,8 +929,8 @@ DatePicker.prototype = {
         * Fires after the value in the input is changed by any means.
         *
         * @event change
-        * @type {Object}
-        * @property {Object} event - The jquery event object
+        * @memberof DatePicker
+        * @property {object} event - The jquery event object
         */
         self.element.val('').trigger('change').trigger('input');
         self.currentDate = null;
@@ -1008,7 +1018,7 @@ DatePicker.prototype = {
   /**
    * Set range on given cell -or- current month/year.
    * @private
-   * @param {Object} cell to set range.
+   * @param {object} cell to set range.
    * @returns {void}
    */
   setRangeOnCell(cell) {
@@ -1057,8 +1067,8 @@ DatePicker.prototype = {
   /**
    * Get date from given cell.
    * @private
-   * @param {Object} cell to get date.
-   * @returns {Object} as: year, month, day
+   * @param {object} cell to get date.
+   * @returns {object} as: year, month, day
    */
   getCellDate(cell) {
     const s = this.settings;
@@ -1128,8 +1138,8 @@ DatePicker.prototype = {
       * Fires as the calendar popup is closed.
       *
       * @event listclosed
-      * @type {Object}
-      * @property {Object} event - The jquery event object
+      * @memberof DatePicker
+      * @property {object} event - The jquery event object
       */
       this.element.trigger('listclosed');
       this.element.removeClass('is-active is-open');
@@ -1139,10 +1149,10 @@ DatePicker.prototype = {
   /**
    * Check through the options to see if the date is disabled
    * @private
-   * @param {String} year to check.
-   * @param {String} month to check.
-   * @param {String} date to check.
-   * @returns {Boolean} true if the date is disabled
+   * @param {string} year to check.
+   * @param {string} month to check.
+   * @param {string} date to check.
+   * @returns {boolean} true if the date is disabled
    */
   isDateDisabled(year, month, date) {
     const s = this.settings;
@@ -1180,10 +1190,10 @@ DatePicker.prototype = {
   /**
    * Set disable Date
    * @private
-   * @param {Object} elem to set.
-   * @param {String} year to check.
-   * @param {String} month to check.
-   * @param {String} date to check.
+   * @param {object} elem to set.
+   * @param {string} year to check.
+   * @param {string} month to check.
+   * @param {string} date to check.
    * @returns {void}
    */
   setDisabled(elem, year, month, date) {
@@ -1232,10 +1242,10 @@ DatePicker.prototype = {
   /**
    * Set Color for the Legend settings
    * @private
-   * @param {Object} elem to set.
-   * @param {String} year to check.
-   * @param {String} month to check.
-   * @param {String} date to check.
+   * @param {object} elem to set.
+   * @param {string} year to check.
+   * @param {string} month to check.
+   * @param {string} date to check.
    * @returns {void}
    */
   setLegendColor(elem, year, month, date) {
@@ -1273,9 +1283,9 @@ DatePicker.prototype = {
    * Convert the provided hex to an RGBA for states
    * This may be later moved into a colors file along with getLuminousColorShade
    * @private
-   * @param {String} hex to set.
-   * @param {String} opacity to check.
-   * @returns {String} converted rgba
+   * @param {string} hex to set.
+   * @param {string} opacity to check.
+   * @returns {string} converted rgba
    */
   hexToRgba(hex, opacity) {
     let c;
@@ -1296,10 +1306,10 @@ DatePicker.prototype = {
   /**
    * Process Color Options to get the date color
    * @private
-   * @param {String} year .
-   * @param {String} month .
-   * @param {String} date .
-   * @returns {String} date color
+   * @param {string} year .
+   * @param {string} month .
+   * @param {string} date .
+   * @returns {string} date color
    */
   /* eslint-disable consistent-return */
   getLegendColor(year, month, date) {
@@ -1359,6 +1369,8 @@ DatePicker.prototype = {
       if (s.range.second && s.range.first.date && s.range.second.date) {
         this.element.val(this.getRangeValue());
       }
+      // Pre selection compleated now show the calendar
+      this.popup.removeClass('is-hidden');
     }
     this.activeTabindex(this.calendar.find('.is-selected'), true);
   },
@@ -1366,9 +1378,9 @@ DatePicker.prototype = {
   /**
    * Update the calendar to show the month
    * @private
-   * @param {Number} month zero based.
-   * @param {Number} year .
-   * @param {Number} skipYear .
+   * @param {number} month zero based.
+   * @param {number} year .
+   * @param {number} skipYear .
    * @returns {void}
    */
   showMonth(month, year, skipYear) {
@@ -1530,8 +1542,8 @@ DatePicker.prototype = {
   /**
    * Append month year picker
    * @private
-   * @param {Number} month .
-   * @param {Number} year .
+   * @param {number} month .
+   * @param {number} year .
    * @returns {void}
    */
   appendMonthYearPicker(month, year) {
@@ -1603,8 +1615,8 @@ DatePicker.prototype = {
   /**
    * Put the date in the field and select on the calendar
    * @private
-   * @param {Object} date .
-   * @param {Boolean} isReset .
+   * @param {object} date .
+   * @param {boolean} isReset .
    * @returns {void}
    */
   insertDate(date, isReset) {
@@ -1657,8 +1669,8 @@ DatePicker.prototype = {
   /**
    * Convert a string to boolean
    * @private
-   * @param {String} val .
-   * @returns {Boolean} Converted value
+   * @param {string} val .
+   * @returns {boolean} Converted value
    */
   getBoolean(val) {
     const num = +val;
@@ -1668,9 +1680,9 @@ DatePicker.prototype = {
   /**
    * Find first day of the week for a given month
    * @private
-   * @param {Number} year .
-   * @param {Number} month .
-   * @returns {Number} day
+   * @param {number} year .
+   * @param {number} month .
+   * @returns {number} day
    */
   firstDayOfMonth(year, month) {
     if (this.isIslamic) {
@@ -1683,8 +1695,8 @@ DatePicker.prototype = {
   /**
    * Get islamic year index
    * @private
-   * @param {Number} islamicYear .
-   * @returns {Number} index
+   * @param {number} islamicYear .
+   * @returns {number} index
    */
   islamicYearIndex(islamicYear) {
     const yearIdx = islamicYear - 1318;
@@ -1697,9 +1709,9 @@ DatePicker.prototype = {
   /**
    * Find the date of the Month (29, 30, 31 ect)
    * @private
-   * @param {Number} year .
-   * @param {Number} month .
-   * @returns {Number} date
+   * @param {number} year .
+   * @param {number} month .
+   * @returns {number} date
    */
   daysInMonth(year, month) {
     if (this.isIslamic) {
@@ -1722,9 +1734,9 @@ DatePicker.prototype = {
   /**
    * Set the Formatted value in the input
    * @private
-   * @param {Object} date The date to set in date format.
-   * @param {Boolean} trigger If true will trigger the change event.
-   * @param {Boolean} isTime will pass to set range.
+   * @param {object} date The date to set in date format.
+   * @param {boolean} trigger If true will trigger the change event.
+   * @param {boolean} isTime will pass to set range.
    * @returns {void}
    */
   setValue(date, trigger, isTime) {
@@ -1975,8 +1987,8 @@ DatePicker.prototype = {
       * Fires after the value in the input is changed by user interaction.
       *
       * @event input
-      * @type {Object}
-      * @property {Object} event - The jquery event object
+      * @memberof DatePicker
+      * @property {object} event - The jquery event object
       */
       if (s.range.useRange) {
         this.element
@@ -1991,14 +2003,14 @@ DatePicker.prototype = {
   /**
    * Set time
    * @private
-   * @param {Object} date .
+   * @param {object} date .
    * @returns {void}
    */
   setTime(date) {
-    let hours = $('#timepicker-hours').val();
-    const minutes = $('#timepicker-minutes').val();
-    const seconds = this.isSeconds ? $('#timepicker-seconds').val() : 0;
-    const period = $('#timepicker-period');
+    let hours = this.popup.find('.dropdown.hours').val();
+    const minutes = this.popup.find('.dropdown.minutes').val();
+    const seconds = this.isSeconds ? this.popup.find('.dropdown.seconds').val() : 0;
+    const period = this.popup.find('.dropdown.period');
 
     hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
     hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;
@@ -2011,9 +2023,9 @@ DatePicker.prototype = {
   /**
    * Get Time String
    * @private
-   * @param {Object} date .
-   * @param {Boolean} isHours24 .
-   * @returns {String} time
+   * @param {object} date .
+   * @param {boolean} isHours24 .
+   * @returns {string} time
    */
   getTimeString(date, isHours24) {
     const twodigit = function (number) {
@@ -2040,7 +2052,7 @@ DatePicker.prototype = {
   /**
    * Reset range values
    * @private
-   * @param {Object} cell to keep selection.
+   * @param {object} cell to keep selection.
    * @returns {void}
    */
   resetRange(cell) {
@@ -2096,7 +2108,7 @@ DatePicker.prototype = {
   /**
    * Set range first part
    * @private
-   * @param {Object} date .
+   * @param {object} date .
    * @returns {void}
    */
   setRangeFirstPart(date) {
@@ -2123,8 +2135,8 @@ DatePicker.prototype = {
   /**
    * Set range value to element
    * @private
-   * @param {Object} date .
-   * @param {Boolean} isSingleDate .
+   * @param {object} date .
+   * @param {boolean} isSingleDate .
    * @returns {void}
    */
   setRangeToElem(date, isSingleDate) {
@@ -2235,10 +2247,10 @@ DatePicker.prototype = {
   /**
    * Get array of dates between two dates
    * @private
-   * @param {Object} startDate .
-   * @param {Object} endDate .
-   * @param {Boolean} includeDisabled .
-   * @returns {Array} dates between two dates
+   * @param {object} startDate .
+   * @param {object} endDate .
+   * @param {boolean} includeDisabled .
+   * @returns {array} dates between two dates
    */
   getDateRange(startDate, endDate, includeDisabled) {
     const dates = [];
@@ -2259,10 +2271,10 @@ DatePicker.prototype = {
   /**
    * Get difference to given date
    * @private
-   * @param {Object} date .
-   * @param {Number} days .
-   * @param {Boolean} includeDisabled .
-   * @returns {Object} before/after difference to given date
+   * @param {object} date .
+   * @param {number} days .
+   * @param {boolean} includeDisabled .
+   * @returns {object} before/after difference to given date
    */
   getDifferenceToDate(date, days, includeDisabled) {
     const difference = {};
@@ -2291,7 +2303,7 @@ DatePicker.prototype = {
   /**
    * Get range value to insert in element
    * @private
-   * @returns {String} range dates to display in element
+   * @returns {string} range dates to display in element
    */
   getRangeValue() {
     const s = this.settings;
@@ -2313,9 +2325,9 @@ DatePicker.prototype = {
    * Change the order for execution jquery events were bound
    * http://stackoverflow.com/questions/2360655/jquery-event-handlers-always-execute-in-order-they-were-bound-any-way-around-t
    * @private
-   * @param {Object} elements .
-   * @param {String} names .
-   * @param {Number} newIndex .
+   * @param {object} elements .
+   * @param {string} names .
+   * @param {number} newIndex .
    * @returns {void}
    */
   changeEventOrder(elements, names, newIndex) {
@@ -2334,8 +2346,8 @@ DatePicker.prototype = {
 
   /**
    * Updates the component instance. Can be used after being passed new settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
@@ -2348,6 +2360,7 @@ DatePicker.prototype = {
 
   /**
    * Removes event bindings from the instance.
+   * @private
    * @returns {void}
    */
   teardown() {

@@ -5,16 +5,19 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'about';
 
 /**
-* @namespace
-* @property {string} appName The Main Application Name to display in the header.
-* @property {string} content Additional text content to display at the top.
-* @property {string} copyrightYear The year displayed in the copyright, defaults to current year.
-* @property {boolean} deviceSpecs Determines whether or not to display device
-* information. This information includes Browser, Platform, Locale and if Cookies are Enabled.
-* @property {string} productName Additional product name information to display.
-* @property {boolean} useDefaultCopyright Add the Legal Approved Infor Copy Right Text.
-* @property {string} version Semantic Version Number for example (4.0.0).
-*/
+ * The About Dialog Component is displays information regarding the application.
+ * @class About
+ * @param {object} element The component element.
+ * @param {object} [settings] The component settings.
+ * @param {string} [settings.appName='Infor Application Name'] The Main Application Name to display in the header.
+ * @param {string} [settings.content] Additional text content to display at the top.
+ * @param {string} [settings.copyrightYear=new Date().getFullYear()] The year displayed in the copyright, defaults to current year.
+ * @param {boolean} [settings.deviceSpecs=true] Determines whether or not to display device information.
+ * This information includes Browser, Platform, Locale and if Cookies are Enabled.
+ * @param {string} [settings.productName] Additional product name information to display.
+ * @param {boolean} [settings.useDefaultCopyright=true] Add the Legal Approved Infor Copyright Text.
+ * @param {string} [settings.version] Semantic Version Number for example (4.0.0).
+ */
 const ABOUT_DEFAULTS = {
   appName: 'Infor Application Name',
   content: undefined,
@@ -25,13 +28,6 @@ const ABOUT_DEFAULTS = {
   version: undefined,
 };
 
-/**
- * The About Dialog Component is displays information regarding the application.
- *
- * @class About
- * @param {object} element The component element.
- * @param {object} [settings] The component settings.
- */
 function About(element, settings) {
   this.settings = utils.mergeSettings(element, settings, ABOUT_DEFAULTS);
   this.element = $(element);
@@ -203,8 +199,8 @@ About.prototype = {
 
     /**
     * Fires when the dialog is closing.
-    *
     * @event close
+    * @memberof About
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */
@@ -214,8 +210,8 @@ About.prototype = {
 
     /**
     * Fires after the dialog is done closing and removed.
-    *
     * @event afterclose
+    * @memberof About
     * @property {object} event - The jquery event object
     * @property {object} ui - The dialog object
     */
@@ -261,8 +257,9 @@ About.prototype = {
     * Fires when the about dialog is opening, allowing you to veto by returning false.
     *
     * @event beforeopen
-    * @property {object} event - The jquery event object.
-    * @property {object} ui - The dialog object
+    * @memberof About
+    * @property {object} event The jquery event object.
+    * @property {object} ui The dialog object
     */
     this.modal.data('modal').element.on('beforeopen.about', () => {
       this.modal.find('.modal-body').scrollTop(0);

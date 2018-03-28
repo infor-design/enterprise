@@ -8,21 +8,18 @@ import '../utils/animations';
 const COMPONENT_NAME = 'expandablearea';
 
 /**
-* @namespace
-* @property {string} trigger  Id of some other button to use as a trigger
-* @property {string} bottomBorder  Change the border to bottom vs top (for some cases)
+* An expandable pane / area.
+* @class ExpandableArea
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
+* @param {string} [settings.trigger = null]  Id of some other button to use as a trigger
+* @param {string} [settings.bottomBorder = false]  Change the border to bottom vs top (for some cases)
 */
 const EXPANDABLEAREA_DEFAULTS = {
   trigger: null,
   bottomBorder: false
 };
 
-/**
-* [ExpandableArea description]
-* @class ExpandableArea
-* @param {string} element The component element.
-* @param {string} settings The component settings.
-*/
 function ExpandableArea(element, settings) {
   this.settings = utils.mergeSettings(element, settings, EXPANDABLEAREA_DEFAULTS);
   this.element = $(element);
@@ -227,6 +224,13 @@ ExpandableArea.prototype = {
   * Open the pane if closed.
   */
   open() {
+    /**
+     * Fires after a row is added via the api.
+    * @event beforeexpand
+    * @memberof ExpandableArea
+    * @property {object} event The jquery event object
+    * @property {HTMLElement} args.row The Html Element.
+    */
     const canExpand = this.element.triggerHandler('beforeexpand', [this.element]);
 
     if (canExpand === false) {
@@ -236,6 +240,14 @@ ExpandableArea.prototype = {
     this.element.addClass('is-expanded');
     this.header.attr('aria-expanded', 'true');
     this.expander.addClass('active');
+
+    /**
+     * Fires after a row is added via the api.
+    * @event expand
+    * @memberof ExpandableArea
+    * @property {object} event The jquery event object
+    * @property {HTMLElement} args.row The Html Element.
+    */
     this.element.triggerHandler('expand', [this.element]);
 
     this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowLess') ? Locale.translate('ShowLess') : 'Show Less');
@@ -247,6 +259,14 @@ ExpandableArea.prototype = {
     if (this.content[0]) {
       this.content[0].style.display = 'block';
     }
+
+    /**
+     * Fires after a row is added via the api.
+    * @event afterexpand
+    * @memberof ExpandableArea
+    * @property {object} event The jquery event object
+    * @property {HTMLElement} args.row The Html Element.
+    */
     this.content.one('animateopencomplete', () => {
       this.element.triggerHandler('afterexpand', [this.element]);
     }).animateOpen();
@@ -256,6 +276,13 @@ ExpandableArea.prototype = {
   * Close the pane if open.
   */
   close() {
+    /**
+    * Fires after a row is added via the api.
+    * @event beforecollapse
+    * @memberof ExpandableArea
+    * @property {object} event The jquery event object
+    * @property {HTMLElement} args.row The Html Element.
+    */
     const canCollapse = this.element.triggerHandler('beforecollapse', [this.element]);
 
     if (canCollapse === false) {
@@ -263,6 +290,13 @@ ExpandableArea.prototype = {
     }
 
     this.expander.removeClass('active');
+    /**
+    * Fires after a row is added via the api.
+    * @event collapse
+    * @memberof ExpandableArea
+    * @property {object} event The jquery event object
+    * @property {HTMLElement} args.row The Html Element.
+    */
     this.element.triggerHandler('collapse', [this.element]);
     this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowMore') ? Locale.translate('ShowMore') : 'Show More');
 
@@ -270,6 +304,13 @@ ExpandableArea.prototype = {
       this.expander.find('.icon').removeClass('active');
     }
 
+    /**
+    * Fires after a row is added via the api.
+    * @event aftercollapse
+    * @memberof ExpandableArea
+    * @property {object} event The jquery event object
+    * @property {HTMLElement} args.row The Html Element.
+    */
     this.content.one('animateclosedcomplete', () => {
       this.element.removeClass('is-expanded');
       this.header.attr('aria-expanded', 'false');

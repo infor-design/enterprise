@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar no-actions-button" role="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+      <div class="buttonset">
+        <button type="button" class="btn" id="refresh">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#refresh"></use>
+          </svg>
+          <span>Reload</span>
+        </button>
+      </div>
+
+    </div>
+
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<ul id="grid-actions-menu" class="popupmenu">
+  <li><a href="#">Action One</a></li>
+  <li><a href="#">Action Two</a></li>
+  <li><a href="#">Action Three</a></li>
+</ul>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [];
+
+      //Define Columns for the Grid.
+
+      columns.push({ id: 'id', name: 'Id', field: 'id', sortable: false});
+      columns.push({ id: 'taskName', name: 'Task Name', sortable: false, field: 'taskName',formatter: Formatters.Hyperlink});
+      columns.push({ id: 'desc', name: 'Description', sortable: false, field: 'desc'});
+      columns.push({ id: 'comments', name: 'Comments', sortable: false, field: 'comments'});
+      columns.push({ id: 'actions', name: 'Actions', field: '', formatter: Formatters.Actions, menuId: 'grid-actions-menu', selected: function(e, a) { console.log(e, a); }});
+
+      var url = '{{basepath}}api/tasks';
+
+      $.getJSON(url, function(res) {
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res
+        });
+      });
+
+      $('#refresh').on('click', function () {
+        var url = '{{basepath}}api/tasks';;
+        $.getJSON(url, function(res) {
+          grid.data('datagrid').loadData(res);
+        });
+      });
+
+    });
+</script>

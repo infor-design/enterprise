@@ -7,50 +7,7 @@ import { Locale } from '../locale/locale';
 // Settings and Options
 const COMPONENT_NAME = 'radar';
 
-/**
-* @namespace
-* @property {array} dataset The data to use in the radar
-* @property {boolean} redrawOnResize If false, the component will not resize when resizing the page.
-* @property {object} margin The margins of the SVG, you may want to adjust
-* depending on text location.
-* @property {number} levels How many levels or inner circles should there be drawn.
-* @property {number} maxValue What is the value that the biggest circle will represent
-* @property {number} labelFactor How far out than the outer circle should the labels be placed,
-* this may be useful to adjust for some charts.
-* @property {number} wrapWidth The number of pixels after which a label needs to be
-* given a new line. You may want to change this based on label data.
-* * @property {boolean} showCrosslines Set to false to hide the cross line axes.
-* @property {boolean} showAxisLabels Set to false to hide percent labels.
-* @property {number} opacityArea The opacity value of the blobs.
-* This is set to the correct Infor Style.
-* @property {number} dotRadius The size of the colored circles of each blog.
-* Set to zero to remove dots.
-* @property {number} opacityCircles The opacity of the circles of each blob 0 or .1 are good values.
-* This is set to the correct Infor Style.
-* @property {number} strokeWidth The width of the stroke around each blob.
-* This is set to the correct Infor Style.
-* @property {boolean} roundStrokes If true the area and stroke will follow a
-* round path (cardinal-closed).
-* @property {boolean} showCrosslines If false the axis lines will not be shown in the diagonals.
-* @property {boolean} showAxisLabels If false the axis labels will not be shown.
-* @property {string} axisFormatter D3 formatter to use on the axis labels
-* @property {array} colors An array of colors to use.
-* @property {boolean} showTooltips If false no tooltips will be shown.
-* @property {object} tooltip A setting that controls the tooltip values and format.
-* @property {string} tooltip.show Controls what is visible in the tooltip, this can be value, label
-* or percent or custom function.
-* @property {object} tooltip.formatter The d3.formatter string.
-* @property {boolean} showLegend If false the legend will not be shown.
-* @property {string} legendPlacement Where to locate the legend. This can be bottom or right at
-* the moment.
-* @property {object} emptyMessage An empty message will be displayed when there is no chart data.
-* This accepts an object of the form emptyMessage:
-* `{title: 'No Data Available',
-*  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
-*  button: {text: 'xxx', click: <function>}
-*  }`
-*  Set this to null for no message or will default to 'No Data Found with an icon.'
-*/
+// Default Radar Options
 const RADAR_DEFAULTS = {
   dataset: [],
   redrawOnResize: true,
@@ -85,6 +42,45 @@ const RADAR_DEFAULTS = {
  * @class Radar
  * @param {string} element The plugin element for the constuctor
  * @param {string} settings The settings element.
+ * @param {array} settings.dataset The data to use in the radar
+ * @param {boolean} [settings.redrawOnResize = true] If false, the component will not resize when resizing the page.
+ * @param {object} [settings.margin] The margins of the SVG, you may want to adjust
+ * depending on text location.
+ * @param {number} [settings.levels = 4] How many levels or inner circles should there be drawn.
+ * @param {number} [settings.maxValue = 0] What is the value that the biggest circle will represent
+ * @param {number} [settings.labelFactor = 1.27] How far out than the outer circle should the labels be placed,
+ * this may be useful to adjust for some charts.
+ * @param {number} [settings.wrapWidth = 60] The number of pixels after which a label needs to be
+ * given a new line. You may want to change this based on label data.
+ * @param {boolean} [settings.showCrosslines = true] Set to false to hide the cross line axes.
+ * @param {boolean} [settings.showAxisLabels = true] Set to false to hide percent labels.
+ * @param {number} [settings.opacityArea = 0.2] The opacity value of the blobs. This is set to the correct Infor Style.
+ * @param {number} [settings.dotRadius = 3] The size of the colored circles of each blog. Set to zero to remove dots.
+ * @param {number} [settings.opacityCircles  = 0]The opacity of the circles of each blob 0 or .1 are good values.
+ * This is set to the correct Infor Style.
+ * @param {number} [settings.strokeWidth = 1] The width of the stroke around each blob.
+ * This is set to the correct Infor Style.
+ * @param {boolean} [settings.roundStrokes = true] If true the area and stroke will follow a
+ * round path (cardinal-closed).
+ * @param {boolean} [settings.showCrosslines = true]  If false the axis lines will not be shown in the diagonals.
+ * @param {boolean} [settings.showAxisLabels = true]  If false the axis labels will not be shown.
+ * @param {string} [settings.axisFormatter = '.0%'] D3 formatter to use on the axis labels
+ * @param {array} [settings.colors] An array of colors to use.
+ * @param {boolean} [settings.showTooltips = true] If false no tooltips will be shown.
+ * @param {object} [settings.tooltip] A setting that controls the tooltip values and format.
+ * @param {string} [settings.tooltip.show = 'value'] Controls what is visible in the tooltip, this can be value, label
+ * or percent or custom function.
+ * @param {object} [settings.tooltip.formatter = '.0%'] The d3.formatter string.
+ * @param {boolean} [settings.showLegend = true] If false the legend will not be shown.
+ * @param {string} [settings.legendPlacement = 'right'] Where to locate the legend. This can be bottom or right at
+ * the moment.
+ * @param {object} [settings.emptyMessage] An empty message will be displayed when there is no chart data.
+ * This accepts an object of the form emptyMessage:
+ * `{title: 'No Data Available',
+ *  info: 'Make a selection on the list above to see results', icon: 'icon-empty-no-data',
+ *  button: {text: 'xxx', click: <function>}
+ *  }`
+ *  Set this to null for no message or will default to 'No Data Found with an icon.'
  */
 function Radar(element, settings) {
   this.settings = utils.mergeSettings(element, settings, RADAR_DEFAULTS);
@@ -113,6 +109,7 @@ Radar.prototype = {
     /**
     * Fires when the chart is complete done rendering, for customization.
     * @event rendered
+    * @memberof Radar
     * @property {object} event - The jquery event object
     * @property {array} svg - The svg object.
     */
@@ -129,7 +126,6 @@ Radar.prototype = {
   build() {
     this.updateData(this.settings.dataset);
     this.setInitialSelected();
-    this.element.trigger('rendered');
     return this;
   },
 
@@ -228,9 +224,10 @@ Radar.prototype = {
         .attr('fill', '#737373')
         .text((d) => {
           let text = '';
+          const roundedVal = Math.round(maxValue * 10) / 10;
 
           if (settings.axisFormatter.indexOf('%') > -1) {
-            text = d3.format(settings.axisFormatter)(maxValue * d / settings.levels);
+            text = d3.format(settings.axisFormatter)(roundedVal * d / settings.levels);
           } else {
             text = d3.format(settings.axisFormatter)(d / settings.levels);
           }
@@ -314,7 +311,25 @@ Radar.prototype = {
           data: d,
           index: i
         };
-        self.element.triggerHandler((isSelected ? 'selected' : 'unselected'), triggerData);
+
+        /**
+        * Fires when the chart is complete done rendering, for customization.
+        * @event selected
+        * @memberof Radar
+        * @property {object} data - The data element attached
+        * @property {HTMLElement} elem - The dom element
+        * @property {number} index - The index for this blob.
+        */
+
+        /**
+        * Fires when the chart is complete done rendering, for customization.
+        * @event deselected
+        * @memberof Radar
+        * @property {object} data - The data element attached
+        * @property {HTMLElement} elem - The dom element
+        * @property {number} index - The index for this blob.
+        */
+        self.element.triggerHandler((isSelected ? 'deselected' : 'selected'), triggerData);
 
         charts.selected = !isSelected ? triggerData : [];
       });
@@ -339,7 +354,24 @@ Radar.prototype = {
       .style('fill', function () {
         return colors($(this.parentNode).index() - 1);
       })
-      .style('fill-opacity', 0.6)
+      .style('fill-opacity', 0.6);
+
+    // Wrapper for the invisible circles on top
+    const blobCircleWrapper = g.selectAll('.radar-circle-wrapper')
+      .data(data.map(i => i.data))
+      .enter().append('g')
+      .attr('class', 'radar-circle-wrapper');
+
+      // Append a set of invisible circles on top for the mouseover pop-up
+    blobCircleWrapper.selectAll('.radar-invisible-circle')
+      .data(d => d)
+      .enter().append('circle')
+      .attr('class', 'radar-invisible-circle')
+      .attr('r', settings.dotRadius * 1.5)
+      .attr('cx', (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
+      .attr('cy', (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
+      .style('fill', 'none')
+      .style('pointer-events', 'all')
       .on('mouseenter', function (d) {
         if (!settings.showTooltips) {
           return;

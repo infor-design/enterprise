@@ -5,17 +5,18 @@ import { Locale } from '../locale/locale';
 // Component Name
 const COMPONENT_NAME = 'fileupload';
 
-// Placeholder for future options
+/**
+* A list of items with add/remove/delete and sort functionality.
+* @class FileUpload
+* @constructor
+*
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+*/
+
 const FILEUPLOAD_DEFAULTS = {
 };
 
-/**
-* A list of items with add/remove/delete and sort functionality.
-*
-* @class FileUpload
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function FileUpload(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, FILEUPLOAD_DEFAULTS);
@@ -188,8 +189,8 @@ FileUpload.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

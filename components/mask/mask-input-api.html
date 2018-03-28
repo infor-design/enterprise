@@ -1,0 +1,321 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      HTMLInputElement
+    </td>
+    <td>
+      regular HTML Input Element (not wrapped with jQuery)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      MaskInputOptions
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.definitions
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      if defined, passes additional string-based pattern match "types".
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.guide
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if true, causes a guide to show inside the input field, represented by the placeholder,
+ that demonstrates how the mask can be filled in.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.keepCharacterPositions
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if defined alongside of `settings.guide`, will allow indiviual characters
+ to be removed from the mask without moving the positions of other characters that have been written into the field.
+ Works well with things like credit card or phone numbers, which have sections that are separate from each other.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pattern
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      the pattern that is used by the mask for determining input to keep or throw out.
+ Arrays of strings representing individual characters, and regex matching individual characters, is the perferred way of supplying a pattern.
+ For some `settings.process` types (date/time/number), a function that dynamically generates a mask is automatically used.
+ It's also possible to define a custom mask function and supply it here. The legacy string style is also supported.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.patternOptions
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      If using a function to define `settings.pattern`, any options that must be passed
+ to the masking function can be supplied in this object.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.placeholderChar
+    </td>
+    <td>
+      <span>&#39;_&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If using the `settings.guide`, will be used as the placeholder
+ for characters that are not yet typed.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pipe
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      provides a way of adjusting the masked content, caret position,
+ etc after the input field has been processed by the mask API.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.process
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      can be defined as a quick way to create certain complex masks.  Defaults to the regular pattern mask,
+ but can automatically configure the field for "date", "time", and "number"
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.processOnBlur
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if defined, causes the mask API to process this input field whenever it becomes blurred.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.processOnInitialize
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if defined, causes the mask API to process this input field when the component is initialized.
+    </td>
+  </tr>
+
+
+
+      </tbody>
+    </table>
+  </section>
+  <section>
+  
+    
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Sets up events</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>process</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Main Process for conforming a mask against the API.</p>
+
+        </td>
+        <td>
+          whether or not the mask process was successful
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Updates the component instance with new settings.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Tears down the current component instance</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>write
+  </td>
+  <td>
+  
+  </td>
+  <td>Fire the 'write' event
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>

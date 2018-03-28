@@ -1,3 +1,4 @@
+/* eslint-disable */
 const path = require('path');
 
 module.exports = function(arrControls) {
@@ -9,5 +10,4 @@ module.exports = function(arrControls) {
   }
 
   return strControls;
-
 };

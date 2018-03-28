@@ -239,7 +239,7 @@ div.multiselect {
   }
 
   li {
-    //min-height: 32px;
+    cursor: pointer;
     position: relative;
 
     i {
@@ -255,11 +255,13 @@ div.multiselect {
     &:hover,
     &.hover {
       background-color: $popupmenu-hover-color;
-      cursor: pointer;
       outline: none;
     }
 
     &.is-disabled {
+      cursor: default;
+      pointer-events: none;
+
       > a {
         color: $disabled-color;
       }
@@ -267,26 +269,19 @@ div.multiselect {
       &:hover,
       &.hover {
         background-color: transparent;
-        cursor: default;
       }
     }
 
     &:focus {
       background-color: $popupmenu-hover-color;
-      cursor: pointer;
       outline: none;
     }
 
-    &.is-focused {
+    &.is-focused:not(.is-disabled) {
       background-color: $dropdown-selected-bg-color;
 
       a {
         color: $dropdown-selected-color;
-      }
-
-      &::before {
-        @include checkbox-checked-before-style;
-        border-color: $inverse-color;
       }
 
       &.is-selected {
@@ -401,7 +396,7 @@ div.multiselect {
       @include checkbox-unchecked-disabled-before-style;
     }
 
-    li.is-focused {
+    li.is-focused:not(.is-disabled) {
       background-color: $popupmenu-hover-color;
 
       > a {
@@ -569,6 +564,10 @@ input.dropdown.error:focus {
 .field-short {
   .dropdown-wrapper {
     margin-bottom: 0;
+  }
+
+  .dropdown {
+    line-height: normal;
   }
 }
 

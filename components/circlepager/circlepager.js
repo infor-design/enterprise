@@ -6,11 +6,15 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'circlepager';
 
 /**
- * CirclePager Default Settings
- * @namespace
- * @param {Integer} slidesToShow The number of slides to show in one view / pane
- * @param {Integer} [startingSlide] First showing slide/group, an 0-based integer
- * @param {boolean} loop Setting loop: true will loop back after next/previous reached to end
+ * The Circle Pager Displays content in a sliding carousel and has paging buttons.
+ * @class CirclePager
+ * @constructor
+ *
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object} [settings] The component settings.
+ * @param {Integer} [settings.slidesToShow=1] The number of slides to show in one view / pane
+ * @param {Integer} [settings.startingSlide] First showing slide/group, an 0-based integer
+ * @param {boolean} [settings.loop=false] Setting loop: true will loop back after next/previous reached to end
  */
 const CIRCLEPAGER_DEFAULTS = {
   slidesToShow: 1,
@@ -18,13 +22,6 @@ const CIRCLEPAGER_DEFAULTS = {
   loop: false
 };
 
-/**
- * The Circle Pager Displays content in a sliding carousel and has paging buttons.
- *
- * @class CirclePager
- * @param {jQuery[]|HTMLElement} element The component element.
- * @param {object} [settings] The component settings.
- */
 function CirclePager(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, CIRCLEPAGER_DEFAULTS);
@@ -178,8 +175,8 @@ CirclePager.prototype = {
   /**
    * Check if given element is visible in container
    * @private
-   * @param {Object} element to check.
-   * @returns {Boolean} -1 if not in container
+   * @param {object} element to check.
+   * @returns {boolean} -1 if not in container
    */
   isVisibleInContainer(element) {
     if (element && element[0]) {
@@ -195,8 +192,8 @@ CirclePager.prototype = {
   /**
    * Update number of slides to show in view
    * @private
-   * @param {Object} numOfSlides to show.
-   * @returns {Object} this api
+   * @param {object} numOfSlides to show.
+   * @returns {object} this api
    */
   updateSlidesToShow(numOfSlides) {
     if (!this.isActive) {
@@ -210,7 +207,7 @@ CirclePager.prototype = {
   /**
    * Make sure max number of slides to show in view
    * @private
-   * @param {Object} numOfSlides to show.
+   * @param {object} numOfSlides to show.
    * @returns {void}
    */
   responsiveSlidesToShow(numOfSlides) {
@@ -380,7 +377,7 @@ CirclePager.prototype = {
   /**
    * Removes event bindings from the instance.
    * @private
-   * @returns {Object} The api
+   * @returns {object} The api
    */
   unbind() {
     $('body').off('resize.circlepager');
@@ -394,8 +391,8 @@ CirclePager.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

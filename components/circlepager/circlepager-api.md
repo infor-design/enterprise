@@ -2,20 +2,9 @@
 
 ### Table of Contents
 
--   [CIRCLEPAGER_DEFAULTS](#circlepager_defaults)
--   [CirclePager](#circlepager)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## CIRCLEPAGER_DEFAULTS
-
-CirclePager Default Settings
-
-**Parameters**
-
--   `slidesToShow` **Integer** The number of slides to show in one view / pane
--   `startingSlide` **Integer?** First showing slide/group, an 0-based integer
--   `loop` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Setting loop: true will loop back after next/previous reached to end
+-   [CirclePager][1]
+    -   [updated][2]
+    -   [destroy][3]
 
 ## CirclePager
 
@@ -23,8 +12,11 @@ The Circle Pager Displays content in a sliding carousel and has paging buttons.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** The component element.
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** The component settings.
+-   `element` **([Array][4]&lt;jQuery> | [HTMLElement][5])** The component element.
+-   `settings` **[object][6]?** The component settings.
+    -   `settings.slidesToShow` **Integer** The number of slides to show in one view / pane (optional, default `1`)
+    -   `settings.startingSlide` **Integer?** First showing slide/group, an 0-based integer
+    -   `settings.loop` **[boolean][7]** Setting loop: true will loop back after next/previous reached to end (optional, default `false`)
 
 ### updated
 
@@ -32,12 +24,26 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][6]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][6]** The api
 
 ### destroy
 
 Destroy this component instance and remove the link from its base element.
 
 Returns **void** 
+
+[1]: #circlepager
+
+[2]: #updated
+
+[3]: #destroy
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[5]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

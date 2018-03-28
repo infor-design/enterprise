@@ -4,75 +4,122 @@
 <li>Basic Accordion <a href="../components/accordion/example-index">View Example</a></li>
 <li>Accordion Panels <a href="../components/accordion/example-accordion-panels">View Example</a></li>
 </ol>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.allowOnePane
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If set to true, allows only one pane of the Accordion to be open at a
+time.  If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.displayChevron
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Displays a "Chevron" icon that sits off to the right-most
+side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.rerouteOnLinkClick
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Can be set to false if routing is externally handled
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.source
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          allowOnePane
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          If set to true, allows only one pane of the
-Accordion to be open at a time.  If an Accordion pane is open, and that pane
-contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          displayChevron
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Displays a "Chevron" icon that sits off to the
-right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          rerouteOnLinkClick
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Can be set to false if routing
-is externally handled
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          source
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          A callback function that when implemented
-provided a call back for "ajax loading" of tab contents on open.
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -136,7 +183,7 @@ void
         <td>
           the currently selected Accoridon Header, or an empty jQuery selector
 if there are currently no headers selected.
-
+Array
         </td>
       </tr>
       <tr>
@@ -296,7 +343,7 @@ $.Deferred
         <td>
           
                 
-                  <span>anchor () = The anchor element
+                  <span>anchor (Array) = The anchor element
  </span>
                 
                   <span>animationCallback (Function) = The call back function
@@ -362,7 +409,7 @@ void
         <td>
           
                 
-                  <span>element () = a jQuery object containing either an expander button
+                  <span>element (Array) = a jQuery object containing either an expander button
 or an anchor tag.
  </span>
                 
@@ -411,7 +458,7 @@ void
         <td>
           
                 
-                  <span>header () = a jQuery object containing an Accordion header.
+                  <span>header (Array) = a jQuery object containing an Accordion header.
  </span>
                 
                   <span>direction (integer) = if -1, sets the position to be at the end of this set of
@@ -454,10 +501,10 @@ void
         <td>
           
                 
-                  <span>headers () = element references representing accordion headers.
+                  <span>headers (Array) = element references representing accordion headers.
  </span>
                 
-                  <span>doReset () = if defined, causes the filtering system to reset.
+                  <span>doReset (boolean) = if defined, causes the filtering system to reset.
  </span>
                 
           
@@ -542,7 +589,7 @@ this
         <td>
           
                 
-                  <span>headers () = The header elements to tear down (optional).
+                  <span>headers (jQuery) = The header elements to tear down (optional).
  </span>
                 
           
@@ -574,14 +621,7 @@ void
   </table>
 
 
-  
-  
-  
-  
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -597,26 +637,6 @@ void
   </td>
   <td>
   
-    
-      <div>
-        <span>event (object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>header (object)
-        
-        = The header object
-
-        </span>
-        
-      </div>
-    
-  
   </td>
   <td>Fires when a panel is opened.
 </td>
@@ -627,17 +647,6 @@ void
   <td>followlink
   </td>
   <td>
-  
-    
-      <div>
-        <span>anchor (array)
-        
-        = The anchor in an array
-
-        </span>
-        
-      </div>
-    
   
   </td>
   <td>If the anchor is a real link, follow the link and die here.
@@ -651,26 +660,6 @@ This indicates the link has been followed.
   </td>
   <td>
   
-    
-      <div>
-        <span>event (object)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>anchor (array)
-        
-        = The anchor tag in an array.
-
-        </span>
-        
-      </div>
-    
-  
   </td>
   <td>Fires when expanding a pane is initiated.
 </td>
@@ -682,17 +671,6 @@ This indicates the link has been followed.
   </td>
   <td>
   
-    
-      <div>
-        <span>anchor (array)
-        
-        = The anchor tag in an array.
-
-        </span>
-        
-      </div>
-    
-  
   </td>
   <td>Fires after a pane is expanded.
 </td>
@@ -703,26 +681,6 @@ This indicates the link has been followed.
   <td>collapse
   </td>
   <td>
-  
-    
-      <div>
-        <span>event (jQuery.Event)
-        
-        = The jquery event object
-
-        </span>
-        
-      </div>
-    
-      <div>
-        <span>anchor (array)
-        
-        = The anchor tag in an array.
-
-        </span>
-        
-      </div>
-    
   
   </td>
   <td>Fires when collapsed a pane is initiated.

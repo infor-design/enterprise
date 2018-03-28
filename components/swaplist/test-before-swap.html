@@ -132,7 +132,7 @@
     });
 
     // Before swap ==============================================================
-    elem.on('beforeswap', function (e, items) {
+    elem.on('beforeswap', function (e, args) {
       if (!validationResults) {
         console.log('No swap, validation fail');
       }
@@ -140,7 +140,7 @@
     });
 
     // On swap update ==========================================================
-    elem.on('swapupdate', function (e, items) {
+    elem.on('swapupdate', function (e, args) {
       console.log('Swap done');
     });
 

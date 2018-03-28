@@ -1,244 +1,586 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showTime
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the time selector will be shown.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.timeFormat
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Format to use time section fx HH:mm,
+ defaults current locale settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.minuteInterval
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.secondInterval
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.mode
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Time picker options: 'standard', 'range',
+ this controls the time picker.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.roundToInterval
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      In time picker mode, if a non-matching
+ minutes value is entered,
+ rounds the minutes value to the nearest interval when the field is blurred.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.dateFormat
+    </td>
+    <td>
+      <span>&#39;locale&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Defaults to current locale but can be
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.placeholder
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Text to show in input element while empty.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disable
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Disable dates in various ways.
+For example `{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}`. Dates should be in format M/d/yyyy
+or be a Date() object or string that can be converted to a date with new Date().
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disable.dates
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      Disable specific dates.
+Example `{dates: ['12/31/2018', '01/01/2019'}`.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disable.minDate
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Disable up to a minimum date.
+Example `{minDate: '12/31/2016'}`.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disable.maxDate
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Disable up to a maximum date.
+Example `{minDate: '12/31/2019'}`.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disable.dayOfWeek
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      Disable a specific of days of the week 0-6.
+Example `{dayOfWeek: [0,6]}`.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.disable.isEnable
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Inverse the disable settings.
+If true all the disable settings will be enabled and the rest will be disabled.
+So you can inverse the settings.
+For example if you have more non specific dates to disable then enable ect.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showLegend
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true a legend is show to associate dates.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.customValidation
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the internal validation is disabled.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.showMonthYearPicker
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the month and year will render as dropdowns.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.hideDays
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the days portion of the calendar will be hidden.
+ Usefull for Month/Year only formats.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.advanceMonths
+    </td>
+    <td>
+      <span>5</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      The number of months in each direction to show in
+ the dropdown for months (when initially opening)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.legend
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      array
+    </td>
+    <td>
+      Legend Build up
+for example `[{name: 'Public Holiday', color: '#76B051', dates: []},
+{name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Range between two dates with various options.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range.useRange
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Use range of two dates options.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range.start
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      Start date in range.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range.end
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      End date in range.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range.separator
+    </td>
+    <td>
+      <span>&#39; - &#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Visual separator between two dates.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range.minDays
+    </td>
+    <td>
+      <span>0</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Minimum days to be in range.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range.maxDays
+    </td>
+    <td>
+      <span>0</span>
+    </td>
+    <td>
+      number
+    </td>
+    <td>
+      Maximum days to be in range.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range.selectForward
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Range only in forward direction.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range.selectBackward
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Range only in backward direction.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.range.includeDisabled
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Include disable dates in range of dates.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.calendarName
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The name of the calendar to use in instance of
+multiple calendars. At this time only ar-SA and ar-EG locales have either
+'gregorian' or 'islamic-umalqura' as valid values.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.useUTC
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the dates will use UTC format. This is only partially
+implemented https://jira.infor.com/browse/SOHO-3437
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          showTime
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the time selector will be shown.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          timeFormat
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          Format to use time section fx HH:mm,
-defaults current locale settings.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          minuteInterval
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          
-        </td>
-      </tr>
-      <tr>
-        <td>
-          secondInterval
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          
-        </td>
-      </tr>
-      <tr>
-        <td>
-          mode
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          Time picker options: 'standard', 'range',
-this controls the time picker.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          roundToInterval
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          In time picker mode, if a non-matching
-minutes value is entered,
-rounds the minutes value to the nearest interval when the field is blurred.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          dateFormat
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          Defaults to current locale but can be
-overriden to a specific format, like like 'yyyy-MM-dd' iso8601 format.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          disable
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          Disable dates in various ways.
-For example 
-<code>{minDate: 'M/d/yyyy', maxDate: 'M/d/yyyy'}</code>
-. Dates should be in format M/d/yyyy
-or be a Date() object or string that can be converted to a date with new Date().
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showMonthYearPicker
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the month and year will render
-as dropdowns.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          hideDays
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the days portion of the calendar will be hidden.
-Usefull for Month/Year only formats.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          customValidation
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true the internal validation is disabled.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          advanceMonths
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          The number of months in each direction to show in
-the dropdown for months (when initially opening)
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          showLegend
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          If true a legend is show to associate dates.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          legend
-        </td>
-        <td>
-          array
-        </td>
-        <td>
-          Legend Build up
-for example 
-<code>[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]</code>
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          range
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          Range between two dates with various options.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          calendarName
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          The name of the calendar to use in instance of
-multiple calendars. At this time only ar-SA and ar-EG locales have either
-'gregorian' or 'islamic-umalqura' as valid values.
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          useUTC
-        </td>
-        <td>
-          useUTC
-        </td>
-        <td>
-          If true the dates will use UTC format. This is only partially
-implemented 
-<a href="https://jira.infor.com/browse/SOHO-3437">https://jira.infor.com/browse/SOHO-3437</a>
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -309,7 +651,7 @@ Date
         <td>
           
                 
-                  <span>settings (Object) = The settings to apply.
+                  <span>settings (object) = The settings to apply.
  </span>
                 
           
@@ -320,21 +662,7 @@ Date
         </td>
         <td>
           The api
-Object
-        </td>
-      </tr>
-      <tr>
-        <td>teardown</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Removes event bindings from the instance.</p>
-
-        </td>
-        <td>
-          
-void
+object
         </td>
       </tr>
       <tr>
@@ -355,12 +683,7 @@ void
   </table>
 
 
-  
-  
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -378,7 +701,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -400,7 +723,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -422,7 +745,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -444,7 +767,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 

@@ -1,94 +1,150 @@
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component element.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The component settings.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.axis
+    </td>
+    <td>
+      <span>&#39;x&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      The axis on which to split x or y
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.side
+    </td>
+    <td>
+      <span>&#39;left&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      Which side to dock to 'left' or 'right'.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.resize
+    </td>
+    <td>
+      <span>&#39;immediate&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      When to resize, during the drag 'immediate' or 'end'
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.containment
+    </td>
+    <td>
+      <span>null</span>
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      When to stop the splitter, this can be document, or a parent element
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.save
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      If true the split size will automatically be saved for next time
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.maxWidth
+    </td>
+    <td>
+      <span>{left:&#39;auto&#39;,right:&#39;auto&#39;}</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      Ability to stop dragging at a max left or right size.
+    </td>
+  </tr>
+
+
+      </tbody>
+    </table>
+  </section>
   <section>
   
     
-
-  <h2>Settings</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Type</th>
-      <th>Description</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          axis
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          x or y
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          side
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          left or right
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          resize
-        </td>
-        <td>
-          string
-        </td>
-        <td>
-          immediate,
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          containment
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          can be document, or a parent element
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          save
-        </td>
-        <td>
-          boolean
-        </td>
-        <td>
-          
-        </td>
-      </tr>
-      <tr>
-        <td>
-          maxWidth
-        </td>
-        <td>
-          object
-        </td>
-        <td>
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-
-
-  
-    
-
-
   <h2>Methods</h2>
   <table class="section-table">
     <thead>
@@ -103,7 +159,7 @@
         <td>
           
                 
-                  <span>settings (Object) = The settings to apply.
+                  <span>settings (object) = The settings to apply.
  </span>
                 
           
@@ -114,7 +170,7 @@
         </td>
         <td>
           The api
-Object
+object
         </td>
       </tr>
       <tr>
@@ -135,11 +191,7 @@ void
   </table>
 
 
-  
-  
-  
   </section>
-
   <section>
     <h2>Events</h2>
     <table class="section-table">
@@ -157,7 +209,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -166,7 +218,7 @@ void
       </div>
     
       <div>
-        <span>split (Number)
+        <span>split (number)
         
         = value
 
@@ -176,7 +228,7 @@ void
     
   
   </td>
-  <td>Fires when split.
+  <td>Fires when after the split occurs. Allowing you to sync any ui.
 </td>
 </tr>
 
@@ -188,7 +240,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 
@@ -210,7 +262,7 @@ void
   
     
       <div>
-        <span>event (Object)
+        <span>event (object)
         
         = The jquery event object
 

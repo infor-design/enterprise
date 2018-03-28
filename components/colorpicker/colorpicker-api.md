@@ -2,33 +2,19 @@
 
 ### Table of Contents
 
--   [COLORPICKER_DEFAULTS][1]
--   [ColorPicker][2]
-    -   [getHexFromLabel][3]
-    -   [getLabelFromHex][4]
-    -   [toggleList][5]
-    -   [setColor][6]
-    -   [enable][7]
-    -   [disable][8]
-    -   [readonly][9]
-    -   [isDisabled][10]
-    -   [updated][11]
-    -   [destroy][12]
-
-## COLORPICKER_DEFAULTS
-
-Colorpicker Default Settings
-
-**Properties**
-
--   `colors` **[string][13]** An array of objects of the form.
-    {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
--   `showLabel` **[string][13]** Show the label if true vs the hex value if false.
--   `editable` **[string][13]** If false, the field is readonly and transparent.
-    I.E. The value cannot be typed only editable by selecting.
--   `uppercase` **[string][13]** If false, lower case hex is allowed.
-    If true upper case hex is allowed. If showLabel is true this setting is ignored.
--   `colorOnly` **[string][13]** If true the field will be shrunk to only show the color portion.
+-   [ColorPicker][1]
+    -   [getHexFromLabel][2]
+    -   [getLabelFromHex][3]
+    -   [getHexValue][4]
+    -   [getLabelValue][5]
+    -   [toggleList][6]
+    -   [setColor][7]
+    -   [enable][8]
+    -   [disable][9]
+    -   [readonly][10]
+    -   [isDisabled][11]
+    -   [updated][12]
+    -   [destroy][13]
 
 ## ColorPicker
 
@@ -37,7 +23,16 @@ The ColorPicker Component is a trigger field with a listing colors that can be s
 **Parameters**
 
 -   `element` **([Array][14]&lt;jQuery> | [HTMLElement][15])** The plugin element for the constuctor
--   `settings` **[object][16]** The settings element.
+-   `settings` **[object][16]?** The settings element.
+    -   `settings.themes` **[string][17]** Themes available for ColorPicker (optional, default `{}`)
+    -   `settings.colors` **[string][17]** An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
+        that can be used to populate the color grid. (optional, default `[]`)
+    -   `settings.showLabel` **[string][17]** Show the label if true vs the hex value if false. (optional, default `false`)
+    -   `settings.editable` **[string][17]** If false, the field is readonly and transparent. I.E. The value
+        cannot be typed only editable by selecting. (optional, default `true`)
+    -   `settings.uppercase` **[string][17]** If false, lower case hex is allowed. If true upper case hex is allowed.
+        If showLabel is true this setting is ignored. (optional, default `true`)
+    -   `settings.colorOnly` **[string][17]** If true the field will be shrunk to only show the color portion. (optional, default `false`)
 
 ### getHexFromLabel
 
@@ -45,7 +40,7 @@ Get the hex value based on a label. Does not handle duplicates.
 
 **Parameters**
 
--   `label` **[string][13]** The label to search for in the color labels.
+-   `label` **[string][17]** The label to search for in the color labels.
 
 Returns **void** 
 
@@ -56,9 +51,21 @@ Can pass with or without the #
 
 **Parameters**
 
--   `hex` **[string][13]** The hex to search for in the color set.
+-   `hex` **[string][17]** The hex to search for in the color set.
 
 Returns **void** 
+
+### getHexValue
+
+Get the currently set hex value.
+
+Returns **[string][17]** A string containing the hex
+
+### getLabelValue
+
+Get the currently set label value.
+
+Returns **[string][17]** A string containing the hex
 
 ### toggleList
 
@@ -72,8 +79,8 @@ Set the visible color in the field
 
 **Parameters**
 
--   `hex` **[string][13]** The hex value to use (can have the # or not).
--   `label` **[string][13]** The text to display
+-   `hex` **[string][17]** The hex value to use (can have the # or not).
+-   `label` **[string][17]** The text to display
 
 Returns **void** 
 
@@ -117,34 +124,36 @@ Detach events and restore DOM to default.
 
 Returns **[object][16]** The plugin api (this).
 
-[1]: #colorpicker_defaults
+[1]: #colorpicker
 
-[2]: #colorpicker
+[2]: #gethexfromlabel
 
-[3]: #gethexfromlabel
+[3]: #getlabelfromhex
 
-[4]: #getlabelfromhex
+[4]: #gethexvalue
 
-[5]: #togglelist
+[5]: #getlabelvalue
 
-[6]: #setcolor
+[6]: #togglelist
 
-[7]: #enable
+[7]: #setcolor
 
-[8]: #disable
+[8]: #enable
 
-[9]: #readonly
+[9]: #disable
 
-[10]: #isdisabled
+[10]: #readonly
 
-[11]: #updated
+[11]: #isdisabled
 
-[12]: #destroy
+[12]: #updated
 
-[13]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[13]: #destroy
 
 [14]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
 [15]: https://developer.mozilla.org/docs/Web/HTML/Element
 
 [16]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[17]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

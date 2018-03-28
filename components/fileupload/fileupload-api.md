@@ -15,8 +15,8 @@ A list of items with add/remove/delete and sort functionality.
 
 **Parameters**
 
--   `element` **[String][7]** The component element.
--   `settings` **[String][7]** The component settings.
+-   `element` **([Array][7]&lt;jQuery> | [HTMLElement][8])** The component element.
+-   `settings` **[object][9]?** The component settings.
 
 ### updated
 
@@ -24,9 +24,9 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object][8]** The settings to apply.
+-   `settings` **[object][9]** The settings to apply.
 
-Returns **[Object][8]** The api
+Returns **[object][9]** The api
 
 ### destroy
 
@@ -64,6 +64,8 @@ Returns **void**
 
 [6]: #readonly
 
-[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[8]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

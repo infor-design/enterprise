@@ -2,53 +2,42 @@
 
 ### Table of Contents
 
--   [PIE_DEFAULTS](#pie_defaults)
--   [Pie](#pie)
-    -   [updateData](#updatedata)
-    -   [toggleSelected](#toggleselected)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
--   [rendered](#rendered)
-
-## PIE_DEFAULTS
-
-**Properties**
-
--   `dataset` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The data to use in the line/area/bubble.
--   `isDonut` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true it renders as a donut chart.
--   `animationSpeed` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Controls the animation speed
--   `animate` **([boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean) \| [string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String))** true|false - will do or not do the animation.
-    'initial' will do only first time the animation.
--   `redrawOnResize` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, the component will not resize when resizing the page.
-    there is tooltip values provided.
-    will not be shown. If you still want lines at the lower breakpoint you can set this to true
--   `hideCenterLabel` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the center label will not be shown.
--   `showLines` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false connector lines wont be shown
--   `showLinesMobile` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** This defaults to false, when false and under 450px the lines
--   `lines` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** A setting that controls the line values and format.
--   `showLegend` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false the legend will not be shown.
--   `legendPlacement` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Where to locate the legend. This can be bottom or right at
-    the moment.
--   `legend` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** A setting that controls the legend values and format.
-    -   `legend.show` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls  what is visible in the legend , this can be value,
-        value (percent), label or percent or your own custom function.
-    -   `legend.formatter` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The d3.formatter string.
--   `showTooltips` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If false now tooltips will be shown even if
--   `tooltip` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** A setting that controls the tooltip values and format.
-    -   `tooltip.show` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Controls what is visible in the tooltip, this can be value, label
-        or percent or custom function.
-    -   `tooltip.formatter` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The d3.formatter string.
+-   [Pie][1]
+    -   [updateData][2]
+    -   [toggleSelected][3]
+    -   [updated][4]
+    -   [destroy][5]
 
 ## Pie
 
-A pie chart (or a circle chart) is a circular statistical graphic which is divided into slices
-to illustrate numerical proportion. In a pie chart, the arc length of each slice is proportional
-to the quantity it represents.
+A pie chart (or a circle chart) is a circular statistical graphic which is divided
+into slices to illustrate numerical proportion. In a pie chart, the arc length of each slice is proportional to the quantity it represents.
 
 **Parameters**
 
--   `element` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The plugin element for the constuctor
--   `settings` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The settings element.
+-   `element` **([Array][6]&lt;jquery> | [htmlelement][7])** The plugin element for the constuctor
+-   `settings` **[object][8]?** The component settings.
+    -   `settings.dataset` **[array][6]?** The data to use in the line/area/bubble.
+    -   `settings.isDonut` **[boolean][9]** If true it renders as a donut chart. (optional, default `false`)
+    -   `settings.animationSpeed` **[number][10]** Controls the animation speed (optional, default `600`)
+    -   `settings.animate` **([boolean][9] \| [string][11])** true|false - will do or not do the animation and 'initial' will do only first time the animation. (optional, default `true`)
+    -   `settings.redrawOnResize` **[boolean][9]** If true, the component will not resize when resizing the page. There is tooltip values provided.
+        It will not be shown. If you still want lines at the lower breakpoint you can set this to true (optional, default `true`)
+    -   `settings.hideCenterLabel` **[boolean][9]** If false the center label will not be shown. (optional, default `false`)
+    -   `settings.showLines` **[boolean][9]** If false connector lines wont be shown (optional, default `true`)
+    -   `settings.showLinesMobile` **[boolean][9]** This defaults to false, when false and under 450px the lines (optional, default `false`)
+    -   `settings.lines` **[object][8]?** A setting that controls the line values and format.
+    -   `settings.showLegend` **[boolean][9]** If false the legend will not be shown. (optional, default `true`)
+    -   `settings.legendPlacement` **[string][11]** Where to locate the legend. This can be bottom or right at the moment. (optional, default `'right'`)
+    -   `settings.legend` **[object][8]?** A setting that controls the legend values and format.
+        -   `settings.legend.show` **[string][11]** Controls what is visible
+            in the legend, this can be value, value (percent), label or percent or your own custom function. (optional, default `'label (percent)'`)
+        -   `settings.legend.formatter` **[string][11]** The d3.formatter string. (optional, default `'.0f'`)
+    -   `settings.showTooltips` **[boolean][9]** If false now tooltips will be shown (optional, default `true`)
+    -   `settings.tooltip` **[object][8]?** A setting that controls the tooltip values and format.
+        -   `settings.tooltip.show` **[string][11]** Controls what is visible in
+            the tooltip, this can be value, label or percent or custom function. (optional, default `'label (value)'`)
+        -   `settings.tooltip.formatter` **[string][11]** The d3.formatter string. (optional, default `'.0f'`)
 
 ### updateData
 
@@ -56,7 +45,9 @@ Update the chart with a new dataset
 
 **Parameters**
 
--   `data` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The data to use.
+-   `data` **[object][8]** The data to use.
+
+Returns **void** 
 
 ### toggleSelected
 
@@ -64,7 +55,9 @@ Get info on the currently selected lines.
 
 **Parameters**
 
--   `options` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The selected info object.
+-   `options` **[object][8]** The selected info object.
+
+Returns **void** 
 
 ### updated
 
@@ -72,9 +65,9 @@ Handle updated settings and values.
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The new settings to use.
+-   `settings` **[object][8]** The new settings to use.
 
-Returns **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api for chaining.
+Returns **[object][8]** The api for chaining.
 
 ### destroy
 
@@ -82,11 +75,24 @@ Teardown - Remove added markup and events.
 
 Returns **void** 
 
-## rendered
+[1]: #pie
 
-Fires when the chart is complete done rendering, for customization.
+[2]: #updatedata
 
-**Properties**
+[3]: #toggleselected
 
--   `event` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
--   `svg` **[array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** The svg object.
+[4]: #updated
+
+[5]: #destroy
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[7]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

@@ -9,6 +9,7 @@
   padding: 9px;
   text-align: center;
   width: 84px;
+  height: 34px;
 
   &:focus {
     box-shadow: none;
@@ -33,6 +34,7 @@ input::-webkit-inner-spin-button {
   > .spinbox-wrapper {
     @include font-size(0);
     position: relative;
+    vertical-align: top;
   }
 }
 
@@ -54,6 +56,7 @@ input::-webkit-inner-spin-button {
   resize: none;
   text-align: center;
   width: 33px;
+  height: 34px;
   -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
   -moz-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
 

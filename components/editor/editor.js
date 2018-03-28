@@ -11,23 +11,25 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'editor';
 
 /**
-* @namespace
-* @property {string} buttons An array with all the visible buttons in it.
-* @property {string} excludeButtons An array with all the buttons in it to excloude
-* @property {string} firstHeader  Allows you to set if the first header inserted is
- a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
-* @property {boolean} secondHeader  Allows you to set if the second header inserted
- is a h3 or h4 element. You should set this to match the structure of the parent
-  page for accessibility
-* @property {string} pasteAsPlainText  If true, when you paste into the editor
- the element will be unformatted to plain text.
-* @property {string} anchor  An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
-* the url is the default url to display. Class should normally stay hyperlink
- and represents the styling class. target can be 'New window' or 'Same window',
- isClickable make the links appear clickable in the editor, showIsClickable will
-show a checkbox to allow the user to make clickable links in the link popup.
-* @param {string} image  Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
-* @param {function} onLinkClick Call back for clicking on links to control link behavior.
+* The Editor Component is displays and edits markdown.
+*
+* @class Editor
+* @param {string} element The component element.
+* @param {string} [settings] The component settings.
+* @param {string} [settings.buttons =
+* { editor: [ 'header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'strikethrough',
+* 'separator', 'foreColor', 'backColor', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist',
+* 'unorderedlist', 'separator', 'anchor', 'separator', 'image', 'separator', 'source' ], source: [ 'visual' ] }]
+* An array with all the visible buttons in it.
+* @param {string} [settings.excludeButtons = { editor: ['backColor'], source: [] }] An array with all the buttons in it to excloude
+* @param {string} [settings.firstHeader = 'h3'] Allows you to set if the first header inserted is a h3 or h4 element.
+* You should set this to match the structure of the parent page for accessibility
+* @param {boolean} [settings.secondHeader = 'h4'] Allows you to set if the second header inserted is a h3 or
+* h4 element. You should set this to match the structure of the parent page for accessibility
+* @param {string} [settings.pasteAsPlainText = false] If true, when you paste into the editor the element will be unformatted to plain text.
+* @param {string} [settings.anchor = { url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false }] An object with settings related to controlling link behavior when inserted example: `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},` the url is the default url to display. Class should normally stay hyperlink and represents the styling class. target can be 'New window' or 'Same window', isClickable make the links appear clickable in the editor, showIsClickable will show a checkbox to allow the user to make clickable links in the link popup.
+* @param {string} [settings.image = { url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg' }] Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
+* @param {function} [settings.onLinkClick = null] Call back for clicking on links to control link behavior.
 */
 const EDITOR_DEFAULTS = {
   buttons: {
@@ -60,13 +62,6 @@ const EDITOR_DEFAULTS = {
   onLinkClick: null
 };
 
-/**
-* The Editor Component is displays and edits markdown.
-*
-* @class Editor
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function Editor(element, settings) {
   this.settings = utils.mergeSettings(element, settings, EDITOR_DEFAULTS);
 
@@ -120,7 +115,11 @@ Editor.prototype = {
       }
     }
 
-    return this.setup();
+    this.setup();
+    if (this.element.hasClass('is-readonly')) {
+      this.readonly();
+    }
+    return this;
   },
 
   setup() {
@@ -381,7 +380,7 @@ Editor.prototype = {
   },
 
   triggerClick(e, btn) {
-    $(`button[data-action="' + ${btn} + '"]`, this.toolbar).trigger('click.editor');
+    $(`button[data-action="${btn}"]`, this.toolbar).trigger('click.editor');
   },
 
   setupKeyboardEvents() {
@@ -1279,11 +1278,7 @@ Editor.prototype = {
         types = clipboardData.types;
         if ((types instanceof DOMStringList && types.contains('text/html')) ||
             (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
-          if (self.isIeEdge) {
-            pastedData = e.originalEvent.clipboardData.getData('text/plain');
-          } else {
-            pastedData = e.originalEvent.clipboardData.getData('text/html');
-          }
+          pastedData = e.originalEvent.clipboardData.getData('text/html');
         }
       } else {
         paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
@@ -1309,13 +1304,14 @@ Editor.prototype = {
       * Fires before paste.
       *
       * @event beforepaste
-      * @type {Object}
-      * @property {Object} event - The jquery event object
-      * @property {String} pastedData .
+      * @memberof Editor
+      * @type {object}
+      * @property {object} event - The jquery event object
+      * @property {string} pastedData .
       */
       $.when(self.element.triggerHandler('beforepaste', [{ pastedData: self.pastedData }])).done(() => {
         if (self.pastedData && !e.defaultPrevented) {
-          if (!self.isIe11) {
+          if (!self.isIe11 && !self.isIeEdge) {
             e.preventDefault();
           }
 
@@ -1330,9 +1326,10 @@ Editor.prototype = {
         * Fires after paste.
         *
         * @event afterpaste
-        * @type {Object}
-        * @property {Object} event - The jquery event object
-        * @property {String} pastedData .
+        * @memberof Editor
+        * @type {object}
+        * @property {object} event - The jquery event object
+        * @property {string} pastedData .
         */
         self.element.triggerHandler('afterpaste', [{ pastedData: self.pastedData }]);
         self.pastedData = null;
@@ -1549,6 +1546,9 @@ Editor.prototype = {
 
     // Remove header tag and content
     s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
+
+    // Remove empty tags
+    s = s.replace(/<[^/>]+>[\s]*<\/[^>]+>/gi, '');
 
     return s;
   },
@@ -2011,8 +2011,8 @@ Editor.prototype = {
 
   /**
    * Updates the component instance.  Can be used after being passed new settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

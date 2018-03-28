@@ -11,26 +11,27 @@ import '../modal/modal.jquery';
 // Component Name
 const COMPONENT_NAME = 'lookup';
 
+// Lookup components are "modal" (one on-screen at any given time)
+let LOOKUP_GRID_ID = 'lookup-datagrid';
+
 /**
- * Default Lookup Settings
- * @namespace
- * @property {function} click  Provide a special function to run when the dialog opens to
- * customize the interaction entirely.
- * @property {string} field  Field name to return from the dataset or can be a function
- * which returns a string on logic
- * @property {string} title   Dialog title to show, or befault shows  field label + "Lookup"
- * @property {array} buttons  Pass dialog buttons or Cancel / Apply
- * @property {object} options  Options to pass to the datagrid
- * @property {function} beforeShow  Call back that executes async before the lookup is opened.
- * @property {string} modalContent  Custom modal markup can be sent in here
- * @property {boolean} editable  Can the user type text in the field
- * @property {string} autoApply  If set to false the dialog wont apply the value on
- * clicking a value.
- * @property {function} validator  A function that fires to let you validate form
- * items on open and select
- * @property {boolean} autoWidth  If true the field will grow/change in size based
- * on the content selected.
+ * Input element that opens a dialog with a list for selection.
+ * @class Lookup
+ * @param {jquery[]|htmlelement} element the base element
+ * @param {object} [settings] incoming settings
+ * @param {function} [settings.click] Provide a special function to run when the dialog opens to customize the interaction entirely.
+ * @param {string} [settings.field='id'] Field name to return from the dataset or can be a function which returns a string on logic
+ * @param {string} [settings.title] Dialog title to show, or befault shows  field label + "Lookup"
+ * @param {array} [settings.buttons] Pass dialog buttons or Cancel / Apply
+ * @param {object} [settings.options] Options to pass to the datagrid
+ * @param {function} [settings.beforeShow] Call back that executes async before the lookup is opened.
+ * @param {string} [settings.modalContent] Custom modal markup can be sent in here
+ * @param {boolean} [settings.editable=true] Can the user type text in the field
+ * @param {boolean} [settings.autoApply=true] If set to false the dialog wont apply the value on clicking a value.
+ * @param {function} [settings.validator] A function that fires to let you validate form items on open and select
+ * @param {boolean} [settings.autoWidth=false] If true the field will grow/change in size based on the content selected.
  */
+
 const LOOKUP_DEFAULTS = {
   click: null,
   field: 'id',
@@ -46,15 +47,6 @@ const LOOKUP_DEFAULTS = {
   autoWidth: false
 };
 
-// Lookup components are "modal" (one on-screen at any given time)
-let LOOKUP_GRID_ID = 'lookup-datagrid';
-
-/**
- * Input element that opens a dialog with a list for selection.
- * @class Lookup
- * @param {jQuery[]|HTMLElement} element the base element
- * @param {object} [settings] incoming settings
- */
 function Lookup(element, settings) {
   this.element = $(element);
   this.settings = utils.mergeSettings(this.element[0], settings, LOOKUP_DEFAULTS);
@@ -204,11 +196,19 @@ Lookup.prototype = {
 
   /**
    * Create and Open the Dialog
-   * @param {jQuery.Event} e click or keyup event
+   * @private
+   * @param {jquery.event} e click or keyup event
    * @returns {void}
    */
   openDialog(e) {
     const self = this;
+    /**
+      * Fires before open dialog.
+      *
+      * @event beforeopen
+      * @memberof Lookup
+      * @property {object} event - The jquery event object
+      */
     const canOpen = self.element.triggerHandler('beforeopen');
 
     if (canOpen === false) {
@@ -235,7 +235,24 @@ Lookup.prototype = {
         }
 
         self.createModal();
+        /**
+          * Fires on complete dialog open (for busy indicator).
+          *
+          * @event complete
+          * @memberof Lookup
+          * @property {object} event - The jquery event object
+          */
         self.element.triggerHandler('complete'); // for Busy Indicator
+
+        /**
+          * Fires on open dialog.
+          *
+          * @event open
+          * @memberof Lookup
+          * @property {object} event - The jquery event object
+          * @property {object} modal instance
+          * @property {object} grid in lookup
+          */
         self.element.trigger('open', [self.modal, self.grid]);
 
         if (self.settings.validator) {
@@ -244,6 +261,13 @@ Lookup.prototype = {
         return true;
       };
 
+      /**
+        * Fires before start open dialog (for busy indicator).
+        *
+        * @event start
+        * @memberof Lookup
+        * @property {object} event - The jquery event object
+        */
       this.element.triggerHandler('start'); // for Busy Indicator
       this.settings.beforeShow(this, response);
       return;
@@ -266,6 +290,15 @@ Lookup.prototype = {
       }, 600);
     }
 
+    /**
+      * Fires after open dialog.
+      *
+      * @event afteropen
+      * @memberof Lookup
+      * @property {object} event - The jquery event object
+      * @property {object} modal instance
+      * @property {object} grid in lookup
+      */
     self.element.trigger('afteropen', [self.modal, self.grid]);
 
     if (self.settings.validator) {
@@ -350,6 +383,15 @@ Lookup.prototype = {
       .off('close.lookup')
       .on('close.lookup', () => {
         self.element.focus();
+        /**
+          * Fires on close dialog.
+          *
+          * @event close
+          * @memberof Lookup
+          * @property {object} event - The jquery event object
+          * @property {object} modal instance
+          * @property {object} grid in lookup
+          */
         self.element.triggerHandler('close', [self.modal, self.grid]);
       });
 
@@ -398,7 +440,7 @@ Lookup.prototype = {
   /**
    * Overridable Function in which we create the grid on the current UI dialog.
    * @interface
-   * @param {jQuery[]} grid jQuery wrapped element containing a pre-invoked datagrid instance
+   * @param {jquery[]} grid jQuery wrapped element containing a pre-invoked datagrid instance
    * @returns {void}
    */
   createGrid(grid) {
@@ -556,6 +598,14 @@ Lookup.prototype = {
       value += (i !== 0 ? ',' : '') + currValue;
     }
 
+    /**
+      * Fires on input value change.
+      *
+      * @event change
+      * @memberof Lookup
+      * @property {object} event - The jquery event object
+      * @property {object} selected rows
+      */
     this.element.val(value).trigger('change', [this.selectedRows]);
     this.applyAutoWidth();
     this.element.focus();
@@ -602,6 +652,7 @@ Lookup.prototype = {
   },
 
   /**
+   * Input is disabled or not
    * @returns {boolean} whether or not the Input is disabled
    */
   isDisabled() {
@@ -609,6 +660,7 @@ Lookup.prototype = {
   },
 
   /**
+   * Input is readonly or not
    * @returns {boolean} whether or not the Input is readonly
    */
   isReadonly() {

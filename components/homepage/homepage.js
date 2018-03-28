@@ -6,11 +6,20 @@ import { Locale } from '../locale/locale';
 const COMPONENT_NAME = 'homepage';
 
 /**
- * Homepage Default Settings
- * @namespace
- * @property {boolean} animate  Disable animation during resize
- * @property {number} columns  Display in 3 (default) or 4 column layout
- */
+* The Homepage handles card layout at multiple breakpoints.
+*
+* @class Homepage
+* @constructor
+* @param {HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+* @param {boolean} [settings.animate] Disable animation during resize
+* @param {number} [settings.columns] Display in 3 (default) or 4 column layout
+* @param {string} [settings.easing]
+* @param {number} [settings.gutterSize]
+* @param {number} [settings.widgetWidth]
+* @param {number} [settings.widgetHeight]
+* @param {number} [settings.timeout]
+*/
 const HOMEPAGE_DEFAULTS = {
   animate: true,
   columns: 3,
@@ -21,13 +30,6 @@ const HOMEPAGE_DEFAULTS = {
   timeout: 100 // Private
 };
 
-/**
-* The Homepage handles card layout at multiple breakpoints.
-* @class Homepage
-* @constructor
-* @param {String} element The component element.
-* @param {String} settings The component settings.
-*/
 function Homepage(element, settings) {
   this.settings = utils.mergeSettings(element, settings, HOMEPAGE_DEFAULTS);
 
@@ -56,7 +58,7 @@ Homepage.prototype = {
   /**
    * Initialize columns.
    * @private
-   * @param {Number} row to be initialize.
+   * @param {number} row to be initialize.
    * @returns {void}
    */
   initColumns(row) {
@@ -94,8 +96,8 @@ Homepage.prototype = {
   /**
    * Get availability where we can fit this given block.
    * @private
-   * @param {Object} block to get availability.
-   * @returns {Object} [x and y] where we can fit this block
+   * @param {object} block to get availability.
+   * @returns {object} [x and y] where we can fit this block
    */
   getAvailability(block) {
     let abort = false;
@@ -151,9 +153,9 @@ Homepage.prototype = {
    * Make all spots as unavailable, depends on block's width and height
    * Soon we used this block
    * @private
-   * @param {Number} r as row.
-   * @param {Number} c as col.
-   * @param {Number} block to fit.
+   * @param {number} r as row.
+   * @param {number} c as col.
+   * @param {number} block to fit.
    * @returns {void}
    */
   fitBlock(r, c, block) {
@@ -251,9 +253,9 @@ Homepage.prototype = {
   /**
    * Move an array element position
    * @private
-   * @param {Array} arr .
-   * @param {Number} from index.
-   * @param {Number} to index.
+   * @param {array} arr .
+   * @param {number} from index.
+   * @param {number} to index.
    * @returns {void}
    */
   arrayIndexMove(arr, from, to) {
@@ -263,8 +265,8 @@ Homepage.prototype = {
   /**
    * Resize Method
    * @private
-   * @param {Object} self .
-   * @param {Boolean} animate .
+   * @param {object} self .
+   * @param {boolean} animate .
    * @returns {void}
    */
   resize(self, animate) {
@@ -380,8 +382,9 @@ Homepage.prototype = {
     * Fires after the page is resized and layout is set.
     * Can be used for any special adjustments.
     * @event resize
-    * @type {Object}
-    * @property {Object} event - The jquery event object
+    * @memberof Homepage
+    * @type {object}
+    * @param {object} event - The jquery event object
     */
     self.element.triggerHandler('resize', self.settings.columns);
   },
@@ -389,8 +392,8 @@ Homepage.prototype = {
   /**
    * Apply cubic-bezier effects
    * @private
-   * @param {Object} el as element.
-   * @param {String} cubicBezier effect to apply.
+   * @param {object} el as element.
+   * @param {string} cubicBezier effect to apply.
    * @returns {void}
    */
   applyCubicBezier(el, cubicBezier) {
@@ -405,7 +408,7 @@ Homepage.prototype = {
   /**
    * Check if browser supports transitions
    * @private
-   * @returns {Boolean} true if supports transitions
+   * @returns {boolean} true if supports transitions
    */
   supportsTransitions() {
     const s = document.createElement('p').style;
@@ -439,8 +442,8 @@ Homepage.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {

@@ -7,10 +7,7 @@ import '../tooltip/tooltip.jquery';
 // Component Name
 const COMPONENT_NAME = 'progress';
 
-/**
- * Default Progress Options
- * @namespace
- */
+// Default Progress Options
 const PROGRESS_DEFAULTS = {
 };
 
@@ -33,6 +30,10 @@ function Progress(element, settings) {
 // Actual Progress Code
 Progress.prototype = {
 
+  /**
+   * Init this component.
+   * @private
+   */
   init() {
     this.update();
 
@@ -42,6 +43,11 @@ Progress.prototype = {
     });
   },
 
+  /**
+   * Update the aria on this component
+   * @private
+   * @param  {string} value The progress value.
+   */
   updateAria(value) {
     this.element.attr({ role: 'progressbar', 'aria-valuenow': value, 'aria-maxvalue': '100' });
 
@@ -53,14 +59,16 @@ Progress.prototype = {
     }
   },
 
-  // Unbind all events
+  /**
+   * Unbind all events.
+   * @private
+   */
   unbind() {
     this.element.off('updated.progress');
   },
 
   /**
   * Update the progress bar.
-  *
   * @param {string} value  The percent value to use to fill. 0-100
   * @returns {void}
   */
@@ -78,8 +86,8 @@ Progress.prototype = {
 
   /**
    * Resync the UI and Settings.
-   * @param {Object} settings The settings to apply.
-   * @returns {Object} The api
+   * @param {object} settings The settings to apply.
+   * @returns {object} The api
    */
   updated(settings) {
     if (typeof settings !== 'undefined') {
@@ -92,7 +100,6 @@ Progress.prototype = {
 
   /**
   * Teardown and remove any added markup and events.
-  * @returns {void}
   */
   destroy() {
     this.unbind();

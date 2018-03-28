@@ -28,12 +28,6 @@
     -   [updated][24]
     -   [teardown][25]
     -   [destroy][26]
--   [selected][27]
--   [followlink][28]
--   [expand][29]
--   [afterexpand][30]
--   [collapse][31]
--   [aftercollapse][32]
 
 ## Accordion
 
@@ -43,17 +37,14 @@ category or section header, and the second level provides the associated options
 
 **Parameters**
 
--   `element` **[object][33]** The component element.
--   `settings` **[object][33]** The component settings.
--   `allowOnePane` **[string][34]** If set to true, allows only one pane of the
-     Accordion to be open at a time.  If an Accordion pane is open, and that pane
-     contains sub-headers only one of the pane's sub-headers can be open at a time. (default true)
--   `displayChevron` **[string][34]** Displays a "Chevron" icon that sits off to the
-    right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
--   `rerouteOnLinkClick` **[string][34]** Can be set to false if routing
-    is externally handled
--   `source` **[boolean][35]** A callback function that when implemented
-    provided a call back for "ajax loading" of tab contents on open.
+-   `element` **[object][27]** The component element.
+-   `settings` **[object][27]?** The component settings.
+    -   `settings.allowOnePane` **[string][28]** If set to true, allows only one pane of the Accordion to be open at a
+        time.  If an Accordion pane is open, and that pane contains sub-headers only one of the pane's sub-headers can be open at a time. (default true) (optional, default `true`)
+    -   `settings.displayChevron` **[string][28]** Displays a "Chevron" icon that sits off to the right-most
+        side of a top-level accordion header. Used in place of an Expander (+/-) if enabled. (optional, default `true`)
+    -   `settings.rerouteOnLinkClick` **[string][28]** Can be set to false if routing is externally handled (optional, default `true`)
+    -   `settings.source` **[boolean][29]** A callback function that when implemented provided a call back for "ajax loading" of tab contents on open. (optional, default `null`)
 
 ### toData
 
@@ -61,11 +52,11 @@ Translates all existing markup inside the accordion to a JSON-compatible object 
 
 **Parameters**
 
--   `flatten` **[boolean][35]** If true, places all accordion headers in the root array.
--   `addElementReference` **[boolean][35]** if true, includes a reference to the original
+-   `flatten` **[boolean][29]** If true, places all accordion headers in the root array.
+-   `addElementReference` **[boolean][29]** if true, includes a reference to the original
     header element inside the structure (NOT valid JSON).
 
-Returns **[object][33]** The data the represents the accodion structure
+Returns **[object][27]** The data the represents the accodion structure
 
 ### select
 
@@ -73,7 +64,7 @@ Makes a header "selected" if its expander button or anchor tag is focused.
 
 **Parameters**
 
--   `element` **[object][33]** a jQuery object containing either an expander button or an anchor tag.
+-   `element` **[object][27]** a jQuery object containing either an expander button or an anchor tag.
 
 Returns **void** 
 
@@ -81,7 +72,7 @@ Returns **void**
 
 Gets the currently-selected Accordion Header, if applicable.
 
-Returns **[Array][36]&lt;jQuery>** the currently selected Accoridon Header, or an empty jQuery selector
+Returns **[Array][30]&lt;jQuery>** the currently selected Accoridon Header, or an empty jQuery selector
  if there are currently no headers selected.
 
 ### isDisabled
@@ -90,9 +81,9 @@ Checks if a particular header is disabled, or if the entire accordion is disable
 
 **Parameters**
 
--   `header` **[object][33]** The jquery header element
+-   `header` **[object][27]** The jquery header element
 
-Returns **[boolean][35]** Whether or not the element is enabled.
+Returns **[boolean][29]** Whether or not the element is enabled.
 
 ### isFiltered
 
@@ -100,9 +91,9 @@ Checks if the header is filtered out or not
 
 **Parameters**
 
--   `header` **[object][33]** The jquery header element
+-   `header` **[object][27]** The jquery header element
 
-Returns **[boolean][35]** Whether or not the element is filtered.
+Returns **[boolean][29]** Whether or not the element is filtered.
 
 ### isExpanded
 
@@ -110,9 +101,9 @@ Checks if an Accordion Section is currently expanded.
 
 **Parameters**
 
--   `header` **[object][33]** The jquery header element
+-   `header` **[object][27]** The jquery header element
 
-Returns **[boolean][35]** Whether or not the element is expanded.
+Returns **[boolean][29]** Whether or not the element is expanded.
 
 ### toggle
 
@@ -120,7 +111,7 @@ Toggle the given Panel on the Accordion between expanded and collapsed.
 
 **Parameters**
 
--   `header` **[object][33]** The jquery header element.
+-   `header` **[object][27]** The jquery header element.
 
 Returns **void** 
 
@@ -130,8 +121,8 @@ Expand the given Panel on the Accordion.
 
 **Parameters**
 
--   `header` **[object][33]** The jquery header element.
--   `dontCollapseHeaders` **[boolean][35]** if defined, will not collapse any open accordion headers
+-   `header` **[object][27]** The jquery header element.
+-   `dontCollapseHeaders` **[boolean][29]** if defined, will not collapse any open accordion headers
      (generally used while filtering)
 
 Returns **$.Deferred** resolved on the completion of an accoridon pane's
@@ -150,7 +141,7 @@ Collapse the given Panel on the Accordion.
 
 **Parameters**
 
--   `header` **[object][33]** The jquery header element.
+-   `header` **[object][27]** The jquery header element.
 
 Returns **$.Deferred** resolved on the completion of an accoridon pane's
  collapse animation (or immediately, if animation is disabled).
@@ -171,10 +162,10 @@ inside of an accordion pane.
 
 **Parameters**
 
--   `anchor` **[Array][36]&lt;jQuery>** The anchor element
--   `animationCallback` **[Function][37]** The call back function
+-   `anchor` **[Array][30]&lt;jQuery>** The anchor element
+-   `animationCallback` **[Function][31]** The call back function
 
-Returns **[Function][37]** The call back function
+Returns **[Function][31]** The call back function
 
 ### getElements
 
@@ -182,9 +173,9 @@ Prepares a handful of references for dealing with a specific accordion header
 
 **Parameters**
 
--   `eventTarget` **[object][33]** The event we are working with.
+-   `eventTarget` **[object][27]** The event we are working with.
 
-Returns **[object][33]** An object with the accordion dom elements in it.
+Returns **[object][27]** An object with the accordion dom elements in it.
 
 ### prevHeader
 
@@ -193,8 +184,8 @@ Accordion Header.
 
 **Parameters**
 
--   `element` **[object][33]** a jQuery object containing either an expander button or an anchor tag.
--   `noDescend` **[boolean][35]** if it's normally possible to descend into a sub-accordion, prevent
+-   `element` **[object][27]** a jQuery object containing either an expander button or an anchor tag.
+-   `noDescend` **[boolean][29]** if it's normally possible to descend into a sub-accordion, prevent
     against descending.
 
 Returns **void** 
@@ -206,9 +197,9 @@ Accordion Header.
 
 **Parameters**
 
--   `element` **[Array][36]&lt;jQuery>** a jQuery object containing either an expander button
+-   `element` **[Array][30]&lt;jQuery>** a jQuery object containing either an expander button
     or an anchor tag.
--   `noDescend` **[boolean][35]** if it's normally possible to descend into a sub-accordion,
+-   `noDescend` **[boolean][29]** if it's normally possible to descend into a sub-accordion,
     prevent against descending.
 
 Returns **void** 
@@ -220,8 +211,8 @@ If we're at the top level, jump out of the accordion to the last focusable eleme
 
 **Parameters**
 
--   `header` **[object][33]** A jQuery object containing an Accordion header.
--   `direction` **[number][38]** If -1, sets the position to be at the end of this set of
+-   `header` **[object][27]** A jQuery object containing an Accordion header.
+-   `direction` **[number][32]** If -1, sets the position to be at the end of this set of
     headers instead of at the beginning.
 
 Returns **void** 
@@ -232,7 +223,7 @@ Selects the first Accordion Header in the child container of the current Accordi
 
 **Parameters**
 
--   `header` **[Array][36]&lt;jQuery>** a jQuery object containing an Accordion header.
+-   `header` **[Array][30]&lt;jQuery>** a jQuery object containing an Accordion header.
 -   `direction` **integer** if -1, sets the position to be at the end of this set of
     headers instead of at the beginning.
 
@@ -245,7 +236,7 @@ Governed by the property "this.originalSelection".
 
 **Parameters**
 
--   `header` **[object][33]** a jQuery object containing an Accordion header.
+-   `header` **[object][27]** a jQuery object containing an Accordion header.
 
 Returns **void** 
 
@@ -253,14 +244,14 @@ Returns **void**
 
 **Parameters**
 
--   `headers` **[Array][36]&lt;jQuery>** element references representing accordion headers.
--   `doReset` **[boolean][35]?** if defined, causes the filtering system to reset.
+-   `headers` **[Array][30]&lt;jQuery>** element references representing accordion headers.
+-   `doReset` **[boolean][29]?** if defined, causes the filtering system to reset.
 
 ### unfilter
 
 **Parameters**
 
--   `headers` **[Array][36]&lt;jQuery>?** element references representing accordion headers.
+-   `headers` **[Array][30]&lt;jQuery>?** element references representing accordion headers.
      If provided, will cause only specific items to become unfiltered.  If not
      provided, removes all filtering from the accordion.
 
@@ -282,9 +273,9 @@ Updates an entire accordion, or specific portion(s).
 
 **Parameters**
 
--   `headers` **[Array][36]&lt;jQuery>?** Optional jQuery object containing accordion headers whose
+-   `headers` **[Array][30]&lt;jQuery>?** Optional jQuery object containing accordion headers whose
     contents need to be torndown/rebound
--   `settings` **[object][33]** The current settings.
+-   `settings` **[object][27]** The current settings.
 
 Returns **this** The api object
 
@@ -303,62 +294,6 @@ Returns **void**
 Teardown and remove any added markup and events.
 
 Returns **void** 
-
-## selected
-
-Fires when a panel is opened.
-
-**Properties**
-
--   `event` **[object][33]** The jquery event object
--   `header` **[object][33]** The header object
-
-## followlink
-
-If the anchor is a real link, follow the link and die here.
-This indicates the link has been followed.
-
-**Properties**
-
--   `anchor` **[array][36]** The anchor in an array
-
-## expand
-
-Fires when expanding a pane is initiated.
-
-**Properties**
-
--   `event` **[object][33]** The jquery event object
--   `anchor` **[array][36]** The anchor tag in an array.
-
-## afterexpand
-
-Fires after a pane is expanded.
-
-**Parameters**
-
--   `e` **jQuery.Event?** The jquery event object
-
-**Properties**
-
--   `anchor` **[array][36]** The anchor tag in an array.
-
-## collapse
-
-Fires when collapsed a pane is initiated.
-
-**Properties**
-
--   `event` **jQuery.Event** The jquery event object
--   `anchor` **[array][36]** The anchor tag in an array.
-
-## aftercollapse
-
-Fires after a pane is collapsed.
-
-**Parameters**
-
--   `e` **jQuery.Event?** The jquery event object
 
 [1]: #accordion
 
@@ -412,26 +347,14 @@ Fires after a pane is collapsed.
 
 [26]: #destroy
 
-[27]: #selected
+[27]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[28]: #followlink
+[28]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[29]: #expand-1
+[29]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[30]: #afterexpand
+[30]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[31]: #collapse-1
+[31]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[32]: #aftercollapse
-
-[33]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-[34]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
-
-[35]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
-
-[36]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[37]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[32]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

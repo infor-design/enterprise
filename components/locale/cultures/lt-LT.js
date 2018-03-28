@@ -32,7 +32,7 @@ Soho.Locale.addCulture('lt-LT', {
     },
     // ca-gregorian/main/dates/calendars/gregorian/months/format/wide
     months: {
-      wide: ['sausis', 'vasaris', 'kovas', 'balandis', 'gegužė', 'birželis', 'rugpjūtis', 'rugsėjis', 'spalis', 'lapkritis', 'gruodis'],
+      wide: ['sausis', 'vasaris', 'kovas', 'balandis', 'gegužė', 'birželis', 'liepa', 'rugpjūtis', 'rugsėjis', 'spalis', 'lapkritis', 'gruodis'],
       abbreviated: ['saus.', 'vas.', 'kov.', 'bal.', 'geg.', 'birž.', 'liep.', 'rugp.', 'rugs.', 'spal.', 'lapkr.', 'gruod.']
     },
     // ca-gregorian/main/dates/calendars/gregorian/timeFormats/short

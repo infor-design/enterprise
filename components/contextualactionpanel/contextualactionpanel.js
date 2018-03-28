@@ -4,13 +4,17 @@ import { utils } from '../utils/utils';
 const COMPONENT_NAME = 'contextualactionpanel';
 
 /**
-* @namespace
-* @property {string} id  The id to use for the CAP, or defaults to generated.
-* @property {array} buttons  A list of buttons that will sit in the toolbar's Buttonset area.
-* @property {string} title  String that sits in the toolbar's title field.
-* @property {content} content  Pass content through to CAP.
-* @property {boolean} initializeContent  Initialize content before opening with defaults.
-* @property {string} trigger Can be 'click' or 'immediate'.
+* A more complex modal for complex in page interactions.
+* @class ContextualActionPanel
+* @param {string} element The component element.
+* @param {string} settings The component settings.
+* @param {string} [settings.id = `contextual-action-modal-cnt`]
+* The id to use for the CAP, or defaults to generated.
+* @param {array} [settings.buttons = null] A list of buttons that will sit in the toolbar's Buttonset area.
+* @param {string} [settings.title = 'Contextual Action Panel'] String that sits in the toolbar's title field.
+* @param {content} [settings.content = null] Pass content through to CAP.
+* @param {boolean} [settings.initializeContent = true] Initialize content before opening with defaults.
+* @param {string} [settings.trigger = 'click'] Can be 'click' or 'immediate'.
 */
 const CONTEXTUALACTIONPANEL_DEFAULTS = {
   id: `contextual-action-modal-${parseInt($('.modal').length, 10) + 1}`,
@@ -18,15 +22,10 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
   title: 'Contextual Action Panel', //
   content: null, //
   initializeContent: true, // initialize content before opening
-  trigger: 'click'
+  trigger: 'click',
+  showCloseButton: false
 };
 
-/**
-* A more complex modal for complex in page interactions.
-* @class ContextualActionPanel
-* @param {string} element The component element.
-* @param {string} settings The component settings.
-*/
 function ContextualActionPanel(element, settings) {
   this.settings = utils.mergeSettings(element, settings, CONTEXTUALACTIONPANEL_DEFAULTS);
   this.element = $(element);
@@ -146,6 +145,13 @@ ContextualActionPanel.prototype = {
         this.toolbar.prepend(toolbarTitle);
       }
 
+      if (this.settings.showCloseButton) {
+        this.closer = $('<div class="close-button"><button class="btn" type="button"><svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></use></svg><span>Close</span></button></div>');
+        this.closer.appendTo(this.header);
+
+        this.toolbar.addClass('has-close-button');
+      }
+
       let toolbarButtonset = this.toolbar.find('.buttonset');
       if (!toolbarButtonset.length) {
         toolbarButtonset = $('<div class="buttonset"></div>');
@@ -169,7 +175,7 @@ ContextualActionPanel.prototype = {
     });
 
     this.buttons = this.panel.find('.buttonset').children('button');
-    this.closeButton = this.buttons.filter('.btn-close, [name="close"], .icon-close');
+    this.closeButton = this.panel.find('.modal-header').find('.close-button').children('button');
 
     if (!this.toolbar) {
       this.toolbar = this.panel.find('.toolbar');
@@ -237,8 +243,8 @@ ContextualActionPanel.prototype = {
         self.teardown();
       });
 
-    if (self.toolbar) {
-      self.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
+    if (self.settings.showCloseButton) {
+      self.panel.find('.modal-header').find('.close-button').children('button')
         .on('click.contextualactionpanel', () => {
           self.handleToolbarSelected();
         });
@@ -284,9 +290,14 @@ ContextualActionPanel.prototype = {
     }
 
     const children = self.panel.find('.modal-body').children();
-    children.first().unwrap().unwrap(); // removes $('.modal-body'), then $('.modal-content')
+    children.first().unwrap().unwrap();
 
     self.element.removeAttr('data-modal');
+
+    if (self.settings.showCloseButton) {
+      self.panel.find('.modal-header').find('.close-button').children('button')
+        .off('click.contextualactionpanel');
+    }
 
     // Trigger an afterclose event on the Contextual Action Panel's trigger element
     // (different from the panel, which is already removed).

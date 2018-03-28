@@ -2,24 +2,12 @@
 
 ### Table of Contents
 
--   [ICON_DEFAULTS](#icon_defaults)
--   [Icon](#icon)
-    -   [getBasedUseTag](#getbasedusetag)
-    -   [getExistingUseTag](#getexistingusetag)
-    -   [updated](#updated)
-    -   [teardown](#teardown)
-    -   [destroy](#destroy)
-
-## ICON_DEFAULTS
-
-Default Component Settings
-
-**Properties**
-
--   `use` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the type of icon that will appear.
-     (gets added to the `<use>` tag's `xlink:href` property)
--   `focusable` **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** whether or not this icon gets a `tabIndex` and
-     becomes a focusable element on the page.
+-   [Icon][1]
+    -   [getBasedUseTag][2]
+    -   [getExistingUseTag][3]
+    -   [updated][4]
+    -   [teardown][5]
+    -   [destroy][6]
 
 ## Icon
 
@@ -29,12 +17,18 @@ relative or absolute URLs, and clean up after itself.  Works with the Base tag.
 
 **Parameters**
 
--   `element` **([Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/docs/Web/HTML/Element))** the base element
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `element` **([Array][7]&lt;jQuery> | [HTMLElement][8])** the base element
+-   `settings` **[object][9]?** incoming settings
+    -   `settings.use` **[string][10]** the type of icon that will appear.
+         (gets added to the `<use>` tag's `xlink:href` property) (optional, default `'user-profile'`)
+    -   `settings.focusable` **[boolean][11]** whether or not this icon gets a `tabIndex` and
+         becomes a focusable element on the page. (optional, default `false`)
 
 ### getBasedUseTag
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** a version of this icon's definition prefixed with the current base tag's URL.
+Gets the currently used base tag.
+
+Returns **[string][10]** a version of this icon's definition prefixed with the current base tag's URL.
 
 ### getExistingUseTag
 
@@ -49,7 +43,7 @@ Handle Updating Settings
 
 **Parameters**
 
--   `settings` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?** incoming settings
+-   `settings` **[object][9]?** incoming settings
 
 Returns **this** component instance
 
@@ -62,3 +56,25 @@ Returns **this** component instance
 ### destroy
 
 Teardown - Remove added markup and events
+
+[1]: #icon
+
+[2]: #getbasedusetag
+
+[3]: #getexistingusetag
+
+[4]: #updated
+
+[5]: #teardown
+
+[6]: #destroy
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[8]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[9]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[11]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean

@@ -1,4 +1,4 @@
-<h1 id="mask-learn-more">Mask <a href="#">Learn More</a></h1>
+<h1 id="masked-input-learn-more">Masked Input <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol type="1">
 <li>Inputs with Masks <a href="../components/mask/example-index">View Example</a></li>
@@ -6,15 +6,397 @@
 <li>Fields with Symbols <a href="../components/mask/example-fields-with-symbols">View Example</a></li>
 <li>Number Mask Gauntlet <a href="../components/mask/test-number-mask-gauntlet">View Example</a></li>
 </ol>
-<p>{{api-details}}</p>
+ <section>
+    <h2>Settings</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Default</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+
+
+  <tr>
+    <td>
+      element
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      HTMLInputElement
+    </td>
+    <td>
+      regular HTML Input Element (not wrapped with jQuery)
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      MaskInputOptions
+    </td>
+    <td>
+      incoming settings
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.definitions
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      if defined, passes additional string-based pattern match "types".
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.guide
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if true, causes a guide to show inside the input field, represented by the placeholder,
+ that demonstrates how the mask can be filled in.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.keepCharacterPositions
+    </td>
+    <td>
+      <span>false</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if defined alongside of `settings.guide`, will allow indiviual characters
+ to be removed from the mask without moving the positions of other characters that have been written into the field.
+ Works well with things like credit card or phone numbers, which have sections that are separate from each other.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pattern
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      the pattern that is used by the mask for determining input to keep or throw out.
+ Arrays of strings representing individual characters, and regex matching individual characters, is the perferred way of supplying a pattern.
+ For some `settings.process` types (date/time/number), a function that dynamically generates a mask is automatically used.
+ It's also possible to define a custom mask function and supply it here. The legacy string style is also supported.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.patternOptions
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      object
+    </td>
+    <td>
+      If using a function to define `settings.pattern`, any options that must be passed
+ to the masking function can be supplied in this object.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.placeholderChar
+    </td>
+    <td>
+      <span>&#39;_&#39;</span>
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      If using the `settings.guide`, will be used as the placeholder
+ for characters that are not yet typed.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.pipe
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      function
+    </td>
+    <td>
+      provides a way of adjusting the masked content, caret position,
+ etc after the input field has been processed by the mask API.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.process
+    </td>
+    <td>
+      
+    </td>
+    <td>
+      string
+    </td>
+    <td>
+      can be defined as a quick way to create certain complex masks.  Defaults to the regular pattern mask,
+ but can automatically configure the field for "date", "time", and "number"
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.processOnBlur
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if defined, causes the mask API to process this input field whenever it becomes blurred.
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
+      settings.processOnInitialize
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      if defined, causes the mask API to process this input field when the component is initialized.
+    </td>
+  </tr>
+
+
+
+      </tbody>
+    </table>
+  </section>
+  <section>
+  
+    
+  <h2>Methods</h2>
+  <table class="section-table">
+    <thead>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+      <th>Returns</th>
+    </thead>
+    <tbody>
+      <tr>
+        <td>handleEvents</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Sets up events</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>process</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Main Process for conforming a mask against the API.</p>
+
+        </td>
+        <td>
+          whether or not the mask process was successful
+boolean
+        </td>
+      </tr>
+      <tr>
+        <td>updated</td>
+        <td>
+          
+                
+                  <span>settings (object) = incoming settings
+ </span>
+                
+          
+        </td>
+        <td>
+          <p>Updates the component instance with new settings.</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+      <tr>
+        <td>teardown</td>
+        <td>
+          
+        </td>
+        <td>
+          <p>Tears down the current component instance</p>
+
+        </td>
+        <td>
+          component instance
+this
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </section>
+  <section>
+    <h2>Events</h2>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Args</th>
+        <th>Description</th>
+      </thead>
+      <tbody>
+      
+        <tr>
+  <td>write
+  </td>
+  <td>
+  
+  </td>
+  <td>Fire the 'write' event
+</td>
+</tr>
+
+      
+      </tbody>
+    </table>
+  </section>
+
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
-<h3 id="mask-patterns">Mask Patterns</h3>
-<p>Mask Patterns are comprised of two different types of characters:</p>
+<p>The Masked Input limits the types of text input that can be included inside of an HTML Input field. Masking of the input is done as a user is typing text into the input field, and can also be done on an entire string of text (for example, copy/paste or programmatically). This can be used for several purposes, such as:</p>
+<ul>
+<li>Limiting text in simple patterns, such as credit cards and phone numbers.</li>
+<li>Automatically formatting numbers, dates, and times to the current <a href="../components/locale/locale.md">Locale</a>.</li>
+</ul>
+<h3 id="defining-a-mask-pattern">Defining a Mask Pattern</h3>
+<p>Mask Patterns can be defined as the following:</p>
+<ul>
+<li><a href="" title="#arrays">Arrays</a> of single character strings and regular expressions</li>
+<li><a href="#functions">Functions</a>, which will analyze the contents of the entire input and return an array.</li>
+<li><a href="#strings-legacy-mask-patterns">Strings</a>, which can contain a set of pre-defined &quot;matchable&quot; characters that represent areas that will be replaced by a specific type. These get converted to an array.</li>
+</ul>
+<h4 id="arrays">Arrays</h4>
+<p>Standard Soho masks can be defined using arrays of both &quot;literal&quot; string characters (not replaced by masking) and &quot;pattern&quot; regular expressions (will be replaced by masking). Regular expressions should be designed to match a single character.</p>
+<p>A field needing to capture a U.S. Phone Number could be masked with a pattern array like this:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="kw">const</span> phoneNumberPattern = [<span class="st">&#39;(&#39;</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span>, <span class="st">&#39;)&#39;</span>, <span class="st">&#39; &#39;</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span>, <span class="st">&#39;-&#39;</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span>, <span class="ot">/</span><span class="bn">\d</span><span class="ot">/</span> ];
+
+<span class="fu">$</span>(<span class="st">&#39;#my-phone-number&#39;</span>).<span class="fu">mask</span>({
+  <span class="dt">pattern</span>: phoneNumberPattern
+});
+</code></pre>
+<h4 id="functions">Functions</h4>
+<p>Mask functions can be passed as the <code>pattern</code> setting when being invoked. Mask functions are dynamic, and are capable of analyzing the raw value passed to the Mask API. This can be useful if you need to mask a specific section of input differently for several cases.</p>
+<p>Mask functions take two arguments. The first one is a string containing the raw value that will eventually be masked. The second argument is an object representing the <code>patternOptions</code> setting on the Masked Input field. The second setting should be populated with whatever settings your mask will need to analyze the raw value properly at runtime. Mask functions should always eventually return an array of string literals and single-character regular expressions, similar to the <a href="#arrays">array</a> style definition above.</p>
+<p>A mask function would be structured like this:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="kw">function</span> <span class="fu">customMaskFunction</span>(rawValue, options) {
+  <span class="kw">let</span> arr = [];
+
+  <span class="co">// do some analysis on the raw value</span>
+  <span class="co">// ...</span>
+
+  <span class="kw">return</span> arr;
+}
+</code></pre>
+<p>When using the mask process <code>date</code>, <code>time</code>, or <code>number</code>, the Masked Input field will automatically configure itself with built-in mask functions that handle these cases. For example, to format a U.S. shorthand date, a user could define a mask field with the following:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="fu">$</span>(<span class="st">&#39;#my-date-field&#39;</span>).<span class="fu">mask</span>({
+  <span class="dt">process</span>: <span class="st">&#39;date&#39;</span>,
+  <span class="dt">patternOptions</span>: {
+    <span class="dt">format</span>: <span class="st">&#39;M/d/yyyy&#39;</span>
+  }
+});
+</code></pre>
+<h5 id="dynamism-of-a-mask-function">Dynamism of a mask function</h5>
+<p>In the date mask function, detection is done on the incoming date format to figure out how many characters should be represented by the day, month, hours, or seconds. For example, if a date's month is defined as <code>MM</code> and the raw value representing the month contains a single 3 thru 9, the Mask function will understand that a second character is not possible, and will eventually cause the masking process to prepend a zero. However, if the number is 0 thru 2, the masking function will allow for another character to be typed before it adds a literal <code>/</code> to the array.</p>
+<h5 id="replacing-built-in-mask-functions">Replacing built-in mask functions</h5>
+<p>When using any of the processes listed above, it's possible to override the built-in masking functions on each input field, if you desire. Simply add a <code>pattern</code> setting in addition to the settings above.</p>
+<h4 id="strings-legacy-mask-patterns">Strings (Legacy Mask Patterns)</h4>
+<p>Legacy Mask Patterns are built in a string-based format.</p>
+<p>String-based patterns are built with two different types of characters:</p>
 <ul>
 <li><strong>Pattern Characters</strong> - These are characters replaceable by a pre-defined subset of other characters. For example, by default, a <strong>#</strong> can only be replaced by any numeric character (0 through 9). One pattern character will always match one keyed character.</li>
-<li><strong>Literal Characters</strong> - These characters are &quot;literal,&quot; meaning that they will only be represented in the text input by itself. When the cursor is placed at a literal character and any key is pressed, the Mask Control will find the next possible pattern character in the string and match the keyboard input against it. If it's a match, the pattern character and all literal characters preceding it will be filled in automatically. It's also possible to individually key in each literal character in the string.</li>
+<li><strong>Literal Characters</strong> - These characters are &quot;literal,&quot; meaning that they will only be represented in the text input by itself. When the cursor is placed at a literal character and any key is pressed, the Mask Component will find the next possible pattern character in the string and match the keyboard input against it. If it's a match, the pattern character and all literal characters preceding it will be filled in automatically. It's also possible to individually key in each literal character in the string.</li>
 </ul>
-<h4 id="available-mask-pattern-characters">Available Mask Pattern Characters</h4>
+<p>The string-based mask is best used when you need to define simple masks inline with HTML, or if your mask doesn't need to be highly configurable, like a number, date, etc. Building a pattern mask inline could look like this in HTML:</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;my-masked-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;new-mask&quot;</span><span class="ot"> data-options=</span><span class="st">&#39;{ &quot;pattern&quot;: &quot;####-####-####-####&quot; }&#39;</span> <span class="kw">/&gt;</span>
+</code></pre>
+<p>It's also possible to invoke a pattern mask with Javascript directly on an input field:</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="fu">$</span>(<span class="st">&#39;#my-masked-field&#39;</span>).<span class="fu">mask</span>({
+  <span class="dt">pattern</span>: <span class="st">&#39;####-####-####-####&#39;</span>
+});
+</code></pre>
+<p><strong>NOTE:</strong> If your project is making use of the Soho Standard <code>data.options</code> attribute, the legacy string style is still the best way to define simple mask patterns. It will be converted to an array, converting any pattern characters found into a corresponding regular expression using the <a href="#available-mask-pattern-characters">Legacy Mask Pattern Characters</a>. It's not possible to pass arrays or functions directly into the <code>data-options</code> attribute, so this remains the best way to handle populating masks through HTML.</p>
+<h5 id="available-mask-pattern-characters">Available Mask Pattern Characters</h5>
 <p>The following mask pattern characters are available by default:</p>
 <ul>
 <li><strong>#</strong> - Replaces any number 0 through 9. In a number mask, represents an integer (full number before the decimal point)</li>
@@ -24,18 +406,12 @@
 <li><strong>a</strong> - Represents the first character in the time period (am/pm). Can be replaced by <strong>a</strong>, <strong>A</strong>, <strong>p</strong>, or <strong>P</strong>.</li>
 <li><strong>m</strong> - Represents the second character in the time period (am/pm). Can be replaced by <strong>m</strong> or <strong>M</strong>.</li>
 </ul>
-<h4 id="creating-new-pattern-characters">Creating New Pattern Characters</h4>
-<p>It's possible to create additional pattern characters by extending the Control's &quot;definitions&quot; option. The below example sets up a rule that will allow a pattern character of 'd' to only be replaced by lowercase letters between <strong>a</strong> and <strong>e</strong>.</p>
+<h5 id="creating-custom-pattern-characters">Creating Custom Pattern Characters</h5>
+<p>It's possible to create additional pattern characters by extending the Component's &quot;definitions&quot; option. The below example sets up a rule that will allow a pattern character of '=' to only be replaced by lowercase letters between <strong>a</strong> and <strong>e</strong> (See it in action <a href="" title="./test-legacy-custom-definition.html">here</a>).</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="ot">$</span>.<span class="fu">extend</span>(<span class="fu">$</span>(<span class="st">&#39;#mask&#39;</span>).<span class="fu">data</span>(<span class="st">&#39;mask&#39;</span>).<span class="ot">settings</span>.<span class="fu">definitions</span>, {
-  <span class="st">&#39;d&#39;</span> : <span class="st">&#39;[abcde]&#39;</span>
-});
+<span class="co">// Only allows lowercase &quot;a&quot; through &quot;e&quot;.</span>
+<span class="fu">$</span>(<span class="st">&#39;#my-strange-mask&#39;</span>).<span class="fu">data</span>(<span class="st">&#39;mask&#39;</span>).<span class="ot">settings</span>.<span class="fu">definitions</span>[<span class="st">&#39;=&#39;</span>] = <span class="st">&#39;[abcde]&#39;</span>;
 </code></pre>
-<h2 id="code-example">Code Example</h2>
-<h3 id="mask">Mask</h3>
-<p>A Mask Control is created simply by adding a &quot;data-mask&quot; attribute to any input field. The &quot;data-mask&quot; attribute contains a pattern that will control the allowed text-entry into the input field.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-<span class="kw">&lt;input</span><span class="ot"> data-mask=</span><span class="st">&quot;####-####-####-####&quot;</span> <span class="kw">/&gt;</span>
-</code></pre>
+<p><strong>NOTE :</strong> You should choose custom pattern characters that are not going to clash with the type of input your field will be accepting.</p>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
-<p>No specific keyboard shortcuts exist for the Mask Control, but it should be noted that certain keys will not produce a character in the Input field based on the current position of the cursor inside the mask.</p>
+<p>No specific keyboard shortcuts exist for the Mask Component, but it should be noted that certain keys will not produce a character in the Input field based on the current position of the cursor inside the mask.</p>

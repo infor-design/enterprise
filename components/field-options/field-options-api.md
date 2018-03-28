@@ -2,37 +2,32 @@
 
 ### Table of Contents
 
--   [FIELDOPTIONS_DEFAULTS](#fieldoptions_defaults)
--   [FieldOptions](#fieldoptions)
-    -   [enable](#enable)
-    -   [disable](#disable)
-    -   [updated](#updated)
-    -   [destroy](#destroy)
-
-## FIELDOPTIONS_DEFAULTS
-
-Default FieldOptions Options
+-   [FieldOptions][1]
+    -   [enable][2]
+    -   [disable][3]
+    -   [updated][4]
+    -   [destroy][5]
 
 ## FieldOptions
 
-A list of items with add/remove/delete and sort functionality.
+A control bind next to another component to add some extra functionality.
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **([Array][6]&lt;jQuery> | [HTMLElement][7])** The component element.
+-   `settings` **[object][8]?** The component settings.
 
 ### enable
 
 Set component to enabled.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][8]** The api
 
 ### disable
 
 Set component to disabled.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][8]** The api
 
 ### updated
 
@@ -40,12 +35,28 @@ Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][8]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][8]** The api
 
 ### destroy
 
 Teardown process for this plugin
 
 Returns **void** 
+
+[1]: #fieldoptions
+
+[2]: #enable
+
+[3]: #disable
+
+[4]: #updated
+
+[5]: #destroy
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[7]: https://developer.mozilla.org/docs/Web/HTML/Element
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

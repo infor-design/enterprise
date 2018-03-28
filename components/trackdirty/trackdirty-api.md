@@ -2,54 +2,41 @@
 
 ### Table of Contents
 
--   [TRACKDIRTY_DEFAULTS](#trackdirty_defaults)
--   [Tag](#tag)
--   [updated](#updated)
--   [destroy](#destroy)
--   [resetdirty](#resetdirty)
--   [dirty](#dirty)
+-   [Trackdirty][1]
+    -   [updated][2]
+    -   [destroy][3]
 
-## TRACKDIRTY_DEFAULTS
-
-Default Trackdirty Options
-
-## Tag
+## Trackdirty
 
 Track changes on the inputs passed in the jQuery selector and show a dirty indicator
 
 **Parameters**
 
--   `element` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component element.
--   `settings` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The component settings.
+-   `element` **[string][4]** The component element.
+-   `settings` **[string][4]?** The component settings.
 
-## updated
+### updated
 
 Resync the UI and Settings.
 
 **Parameters**
 
--   `settings` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The settings to apply.
+-   `settings` **[object][5]** The settings to apply.
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The api
+Returns **[object][5]** The api
 
-## destroy
+### destroy
 
 Destroy this component instance and remove the link from its base element.
 
 Returns **void** 
 
-## resetdirty
+[1]: #trackdirty
 
-Fires when reset dirty.
+[2]: #updated
 
-**Properties**
+[3]: #destroy
 
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-## dirty
-
-Fires when trackdirty added.
-
-**Properties**
-
--   `event` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

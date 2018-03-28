@@ -13,26 +13,25 @@ import '../tooltip/tooltip.jquery';
 const COMPONENT_NAME = 'pager';
 
 /**
-* @namespace
-* @property {string} componentAPI  If defined, becomes the definitive way to call methods on
+* The Pager Component supports paging on lists.
+* @class Pager
+* @param {jQuery[]|HTMLElement} element The component element.
+* @param {object} [settings] The component settings.
+*
+* @param {string} [settings.componentAPI]  If defined, becomes the definitive way to call methods on
 * parent component.
-* @property {string} type  Different types of pagers
-* list - just shows next and Previous and a listing of pages
-* table - shows next and previous and first and last with a page number input and
-* page size selector used as the default for datagrid
-* pageof - also shows next and previous and first and last with a page number input and
-* page size selector used optionally for lists
-* firstlast - shows next and previous and first and last with option to set showPageSizeSelector
-* @property {string} position  Can be on 'bottom' or 'top'.
-* @property {number} activePage  Start on this page
-* @property {boolean} hideOnOnePage  If true, hides the pager if there is only one page worth of
-* results.
-* @property {Function} source  Call Back Function for Pager Data Source
-* @property {number} pagesize  Can be calculated or a specific number
-* @property {array} pagesizes  Array of numbers of the page size selector
-* @property {boolean} showPageSizeSelector  If false will not show page size selector
-* @property {boolean} indeterminate  If true will not show anything that lets you go to a specific
-* page.
+* @param {string} [settings.type = 'list']  Different types of pagers list - just shows next and Previous and a listing of pages table
+* shows next and previous and first and last with a page number input and page size selector used as the default
+* for datagrid pageof - also shows next and previous and first and last with a page number input and page size selector used optionally for
+* lists firstlast - shows next and previous and first and last with option to set showPageSizeSelector
+* @param {string} [settings.position = 'bottom']  Can be on 'bottom' or 'top'.
+* @param {number} [settings.activePage = 1]  Start on this page
+* @param {boolean} [settings.hideOnOnePage = false]  If true, hides the pager if there is only one page worth of results.
+* @param {Function} [settings.source]  Call Back Function for Pager Data Source
+* @param {number} [settings.pagesize = 15]  Can be calculated or a specific number
+* @param {array} [settings.pagesizes = [15, 25, 50, 75]] Array of numbers of the page size selector
+* @param {boolean} [settings.showPageSizeSelector = false] If false will not show page size selector
+* @param {boolean} [settings.indeterminate = false] If true will not show anything that lets you go to a specific
 */
 const PAGER_DEFAULTS = {
   componentAPI: undefined,
@@ -48,14 +47,6 @@ const PAGER_DEFAULTS = {
 };
 
 const PAGER_NON_NUMBER_BUTTON_SELECTOR = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
-
-/**
-* The Pager Component supports paging on lists.
-* @class Pager
-* @param {jQuery[]|HTMLElement} element The component element.
-* @param {object} [settings] The component settings.
-*
-*/
 function Pager(element, settings) {
   this.settings = utils.mergeSettings(element, settings, PAGER_DEFAULTS);
   this.settings.dataset = settings.dataset; // by pass deep copy
@@ -540,7 +531,9 @@ Pager.prototype = {
     this.pagerBar.find('.pager-count input').attr('data-mask', '').mask({ pattern, mode: 'number', processOnInitialize: false });
 
     this._pageCount = this._pageCount || 1;
-
+    if (this.settings.indeterminate) {
+      return 999999999;
+    }
     return this._pageCount;
   },
 
@@ -683,6 +676,7 @@ Pager.prototype = {
 
   /**
    * Render a page of items.
+   * @private
    * @param  {object} op The paging operation.
    * @param  {function} callback The pager callback.
    */
@@ -696,7 +690,13 @@ Pager.prototype = {
       total: self.settings.componentAPI ? self.settings.componentAPI.settings.dataset.length : -1
     };
 
-    // Make an ajax call and wait
+    /**
+    * Fires just before changing page. Returning false from the request function will cancel paging.
+    * @event beforepaging
+    * @memberof Pager
+    * @property {object} event - The jquery event object
+    * @property {function} request - The paging request info
+    */
     setTimeout(() => {
       const doPaging = self.element.triggerHandler('beforepaging', request);
       if (doPaging === false) {
@@ -722,6 +722,13 @@ Pager.prototype = {
             callback(true);
           }
 
+          /**
+          * Fires after changing paging has completed.
+          * @event afterpaging
+          * @memberof Pager
+          * @property {object} event - The jquery event object
+          * @property {object} pagingInfo - The paging info object
+          */
           setTimeout(() => {
             self.element.trigger('afterpaging', pagingInfo);
           }, 1);
@@ -739,7 +746,13 @@ Pager.prototype = {
         self.settings.source(request, response);
       }
 
-      // Make an ajax call and wait
+      /**
+      * Fires when change page.
+      * @event paging
+      * @memberof Pager
+      * @property {object} event The jquery event object
+      * @property {object} request The paging request object
+      */
       self.element.trigger('paging', request);
       const elements = self.getPageableElements().not('.is-hidden');
 
@@ -779,7 +792,6 @@ Pager.prototype = {
 
   /**
    * Update the component and optionally apply new settings.
-   *
    * @param  {object} settings the settings to update to.
    * @returns {object} The plugin api for chaining.
    */

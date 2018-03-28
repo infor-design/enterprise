@@ -250,13 +250,13 @@ $('body').one('initialized', function () {
     });
 
     // On swap update ==========================================================
-    api1.element.on('swapupdate', function (e, items) {
+    api1.element.on('swapupdate', function (e, args) {
       console.log(api1.dataset);
       // console.log(api1.getAvailable());
       // console.log(api1.getSelected());
     });
 
-    api2.element.on('swapupdate', function (e, items) {
+    api2.element.on('swapupdate', function (e, args) {
       console.log(api2.dataset);
       // console.log(api2.getAvailable());
       // console.log(api2.getSelected());

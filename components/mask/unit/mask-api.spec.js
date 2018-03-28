@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { SohoMaskAPI } from '../../mask/mask-api';
+import { MaskAPI } from '../../mask/mask-api';
 import { masks } from '../../mask/masks';
 
 describe('Mask API', () => {
@@ -11,16 +11,16 @@ describe('Mask API', () => {
   it('Should be an object', () => {
     expect(window.Soho).toBeDefined();
     expect(window.Soho.masks).toBeDefined();
-    expect(window.Soho.components.MaskedInput).toBeDefined();
+    expect(window.Soho.components.MaskInput).toBeDefined();
   });
 
   it('Can be invoked', () => {
-    const api = new SohoMaskAPI(DEFAULT_SETTINGS);
+    const api = new MaskAPI(DEFAULT_SETTINGS);
 
     expect(api).toBeDefined();
     expect(api).toEqual(jasmine.any(Object));
 
-    expect(window.Soho.components.MaskedInput).toBeDefined();
+    expect(window.Soho.components.MaskInput).toBeDefined();
 
     // Check default settings
     expect(api.settings).toBeDefined();
@@ -32,7 +32,7 @@ describe('Mask API', () => {
   });
 
   it('Should convert a legacy Soho pattern mask to an array', () => {
-    const api = new SohoMaskAPI(DEFAULT_SETTINGS);
+    const api = new MaskAPI(DEFAULT_SETTINGS);
     const maskDefinitions = masks.LEGACY_DEFS;
 
     // Credit Cards
@@ -53,7 +53,7 @@ describe('Mask API', () => {
   it('can convert a mask array into a placeholder array', () => {
     // Placeholder masks are used internally to figure out placement positions, and can be
     // used visually as the guide inside of an input field.
-    const api = new SohoMaskAPI(DEFAULT_SETTINGS);
+    const api = new MaskAPI(DEFAULT_SETTINGS);
     const mask = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     const result = api._convertMaskToPlaceholder(mask, masks.PLACEHOLDER_CHAR);
 
@@ -67,7 +67,7 @@ describe('Mask API', () => {
     const settings = DEFAULT_SETTINGS;
     settings.pattern = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
     const text = 'x0x1x2x3x4x5x6x7x8x9x0x1x2x3x4x5x6x';
-    const api = new SohoMaskAPI(settings);
+    const api = new MaskAPI(settings);
     const opts = {
       selection: {
         start: 0
@@ -86,7 +86,7 @@ describe('Mask API', () => {
     const settings = DEFAULT_SETTINGS;
     settings.process = 'number';
     settings.pattern = masks.numberMask;
-    const api = new SohoMaskAPI(settings);
+    const api = new MaskAPI(settings);
 
     // Handle big numbers with thousands separators
     let textValue = '1111111111';
@@ -143,7 +143,7 @@ describe('Mask API', () => {
     const settings = DEFAULT_SETTINGS;
     settings.process = 'date';
     settings.pattern = masks.shortDateMask;
-    const api = new SohoMaskAPI(settings);
+    const api = new MaskAPI(settings);
 
     const textValue = '1111111111';
     const opts = {
@@ -163,7 +163,7 @@ describe('Mask API', () => {
   });
 
   it('Should properly identify caret traps in a pattern array', () => {
-    const api = new SohoMaskAPI(DEFAULT_SETTINGS);
+    const api = new MaskAPI(DEFAULT_SETTINGS);
     const caretTrap = masks.CARET_TRAP;
     const testMask = [/\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, ',', /\d/, /\d/, /\d/, caretTrap, '.', caretTrap, /\d/, /\d/];
 
@@ -183,7 +183,7 @@ describe('Mask API', () => {
     const settings = DEFAULT_SETTINGS;
     settings.pattern = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
 
-    const api = new SohoMaskAPI(DEFAULT_SETTINGS);
+    const api = new MaskAPI(DEFAULT_SETTINGS);
     const opts = {
       selection: {
         start: 1
@@ -217,7 +217,7 @@ describe('Mask API', () => {
   it('Should properly adjust text caret placement when adding character literals', () => {
     const settings = DEFAULT_SETTINGS;
     settings.pattern = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-    const api = new SohoMaskAPI(settings);
+    const api = new MaskAPI(settings);
     const textValue = '1234';
     const opts = {
       selection: {
