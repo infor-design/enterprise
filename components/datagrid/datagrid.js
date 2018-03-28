@@ -3839,6 +3839,10 @@ Datagrid.prototype = {
     excel.exportToExcel(fileName, worksheetName, customDs, this);
   },
 
+  copyToDataSet(pastedValue, rowCount, colIndex, dataSet) {
+    excel.copyToDataSet(pastedValue, rowCount, colIndex, dataSet, this);
+  },
+
   /**
   * Open the personalization dialog.
   * @private
@@ -4295,6 +4299,30 @@ Datagrid.prototype = {
 
     // Handle Row Clicking
     const tbody = this.table.find('tbody');
+
+    //ENABLE COPY PASTE FROM EXCEL
+    if (self.settings.editable) {
+      tbody.off('paste').on('paste', function (e) {
+        let pastedData;
+        if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
+          pastedData = e.originalEvent.clipboardData.getData('text/plain');
+        } else {
+          pastedData = window.clipboardData && window.clipboardData.getData ? window.clipboardData.getData('Text') : false;
+        }
+        
+        if (pastedData) {
+          pastedData = pastedData.split('\n');
+          pastedData.pop();
+          
+          let startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'));
+          let startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex')) - 1;
+          self.copyToDataSet(pastedData, startRowCount, startColIndex, self.settings.dataset);
+          self.renderRows();
+        } 
+        
+      });
+    }
+
     tbody.off('click.datagrid').on('click.datagrid', 'td', function (e) {
       let rowNode = null;
       let dataRowIdx = null;
