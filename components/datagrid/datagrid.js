@@ -7345,6 +7345,7 @@ Datagrid.prototype = {
     this.resetPager('sorted');
     this.tableBody.removeClass('is-loading');
     this.saveUserSettings();
+    this.validateAll();
     this.element.trigger('sorted', [this.sortColumn]);
   },
 
