@@ -4302,7 +4302,7 @@ Datagrid.prototype = {
 
     // Add a paste event for handling pasting from excel
     if (self.settings.editable) {
-      tbody.off('paste').on('paste', (e) => {
+      this.element.off('paste.datagrid').on('paste.datagrid', (e) => {
         let pastedData;
         if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
@@ -4310,14 +4310,27 @@ Datagrid.prototype = {
           pastedData = window.clipboardData && window.clipboardData.getData ? window.clipboardData.getData('Text') : false;
         }
 
-        if (pastedData) {
-          pastedData = pastedData.split('\n');
-          pastedData.pop();
+        const hasLineFeed = /\n/.exec(pastedData);
+        const hasCarriageReturn = /\r/.exec(pastedData);
+        const hasBoth = /\r\n/.exec(pastedData);
+
+        if (self.activeCell && self.activeCell.node.hasClass('is-readonly')) {
+          return; // disallow pasting on non editable cells.
+        }
+
+        if (pastedData && hasCarriageReturn || hasLineFeed || hasBoth) {
+          let splitData = hasLineFeed ? pastedData.split('\n') : pastedData.split('\r');
+          if (hasBoth) {
+            splitData = pastedData.split('\r\n');
+          }
 
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
-          self.copyToDataSet(pastedData, startRowCount, startColIndex, self.settings.dataset);
-          self.renderRows();
+
+          if (self.editor && self.editor.input) {
+            self.commitCellEdit(self.editor.input);
+          }
+          self.copyToDataSet(splitData, startRowCount, startColIndex, self.settings.dataset);
         }
       });
     }

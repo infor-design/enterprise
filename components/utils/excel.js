@@ -276,7 +276,7 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
         }
         startColIndex++;
       }
-      dataSet[rowCount] = currentRowData;
+      self.updateRow(rowCount, currentRowData);
     } else {
       const newRowData = {};
       for (let k = 0; k < self.settings.columns.length; k++) {
@@ -291,12 +291,10 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
         }
         startColIndex++;
       }
-      dataSet.push(newRowData);
+      self.addRow(newRowData, 'bottom');
     }
     rowCount++;
   }
-
-  self.settings.dataset = dataSet;
 };
 
 export { excel };
