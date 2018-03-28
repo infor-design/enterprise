@@ -250,6 +250,13 @@ ContextualActionPanel.prototype = {
         });
     }
 
+    if (self.toolbar) {
+      self.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
+        .on('click.contextualactionpanel', () => {
+          self.handleToolbarSelected();
+        });
+    }
+
     return this;
   },
 
