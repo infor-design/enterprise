@@ -1686,6 +1686,13 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    .datagrid-cell-wrapper {
+      input.placeholder {
+        border: 1px solid transparent;
+        padding: 12px 0 8px;
+      }
+    }
+
     //Editing Inline - Dropdown
     .is-inline {
       &.dropdown-wrapper {
@@ -1710,12 +1717,20 @@ $datagrid-short-row-height: 23px;
     &.l-right-text {
       .datagrid-cell-wrapper {
         text-align: right;
+
+        input::placeholder {
+          text-align: right;
+        }
       }
     }
 
     &.l-center-text {
       .datagrid-cell-wrapper {
         text-align: center;
+
+        input::placeholder {
+          text-align: center;
+        }
       }
     }
 
@@ -1897,7 +1912,6 @@ $datagrid-short-row-height: 23px;
       .sort-indicator {
         margin: 2px 5px 0;
       }
-
     }
   }
 
