@@ -82,6 +82,8 @@
     "grunt-mocha-cli": "^4.0.0",
     "grunt-nodemon": "^0.4.2",
     "grunt-sass": "^2.1.0",
+    "handlebars": "^4.0.11",
+    "handlebars-registrar": "^1.5.2",
     "html-loader": "^0.5.5",
     "jasmine-core": "^3.0.0",
     "jasmine-spec-reporter": "^4.2.1",

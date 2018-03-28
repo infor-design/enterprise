@@ -40,6 +40,8 @@ const documentation = require('documentation');
 const frontMatter = require('front-matter');
 const fs = require('fs');
 const glob = require('glob');
+const handlebars = require('handlebars');
+const hbsRegistrar = require('handlebars-registrar');
 const mapStream = require('map-stream');
 const marked = require('marked');
 const path = require('path');
@@ -64,6 +66,7 @@ const localWebsitePath = 'docs/local-website';
 const rootPath = process.cwd();
 const paths = {
   components:  `${rootPath}/components`,
+  docs:        `${rootPath}/docs`,
   docjs:       `${rootPath}/docs/documentationjs`,
   src:         `${rootPath}/${idsWebsitePath}`,
   static:      `${rootPath}/${localWebsitePath}`,
@@ -104,6 +107,13 @@ let deployTo = 'static';
 let stopwatch = {};
 let numArchivesSent = 0;
 
+hbsRegistrar(handlebars, {
+  bustCache: true,
+  partials: [
+    `${paths.docs}/templates/partials/*.hbs`
+  ]
+});
+
 // -------------------------------------
 //   Main
 // -------------------------------------
@@ -127,8 +137,10 @@ Promise.all(setupPromises)
     logTaskStart('writing files');
 
     let writePromises = [];
-    if (deployTo !== 'static') {
-      writePromises.push(writeSitemapToDist());
+    if (deployTo === 'static') {
+      writePromises.push(writeHtmlSitemap());
+    } else {
+      writePromises.push(writeJsonSitemap());
     }
 
     for (compName in allDocsObj) {
@@ -492,7 +504,7 @@ function writeJsonFile(componentName) {
  * Convert/write the sitemap.yml to sitemap.json into dist
  * @return {Promise}
  */
-function writeSitemapToDist() {
+function writeJsonSitemap() {
   return new Promise((resolve, reject) => {
     let doc = '';
     try {
@@ -506,6 +518,34 @@ function writeSitemapToDist() {
         reject(err);
       } else {
         logTaskAction('Created', 'sitemap.json');
+        resolve();
+      }
+    });
+  });
+}
+
+
+/**
+ * Convert/write the sitemap.yml and index.html file for local docs
+ * @return {Promise}
+ */
+function writeHtmlSitemap() {
+  return new Promise((resolve, reject) => {
+    const tocTemplate = handlebars.compile(fs.readFileSync(`${paths.docs}/templates/toc.hbs`, 'utf-8'));
+    let sitemapJson = '';
+    try {
+      sitemapJson = yaml.safeLoad(fs.readFileSync(`${paths.src}/sitemap.yml`, 'utf8'));
+    } catch (e) {
+      reject(e);
+    }
+
+    const sitemapHtml = tocTemplate(sitemapJson);
+
+    fs.writeFile(`${paths.static}/sitemap.html`, sitemapHtml, 'utf8', err => {
+      if (err) {
+        reject(err);
+      } else {
+        logTaskAction('Created', 'sitemap.html');
         resolve();
       }
     });
