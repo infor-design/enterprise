@@ -476,18 +476,18 @@ Fires when a key is pressed inside of the searchfield.
 
 <h2 id="code-example">Code Example</h2>
 <p><em>NOTE:</em> Toolbar Searchfields can only exist when a searchfield becomes invoked inside of a Toolbar element. The minimum amount of markup for building a toolbar is present in the code sample below. For more information about how to define and configure the Toolbar component, please see the <a href="../components/toolbar/">Toolbar API page</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;toolbar no-actions-button left-aligned&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;buttonset&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">      <span class="co">&lt;!-- Begin Toolbar Searchfield Component Part --&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">        <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;example-toolbar-searchfield&quot;</span><span class="kw">&gt;</span>Example<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;example-toolbar-searchfield&quot;</span><span class="ot"> class=</span><span class="st">&quot;searchfield&quot;</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">      <span class="co">&lt;!-- End Toolbar Searchfield Component Part --&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;toolbar no-actions-button left-aligned&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;buttonset&quot;</span><span class="kw">&gt;</span>
+
+      <span class="co">&lt;!-- Begin Toolbar Searchfield Component Part --&gt;</span>
+        <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;example-toolbar-searchfield&quot;</span><span class="kw">&gt;</span>Example<span class="kw">&lt;/label&gt;</span>
+        <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;example-toolbar-searchfield&quot;</span><span class="ot"> class=</span><span class="st">&quot;searchfield&quot;</span> <span class="kw">/&gt;</span>
+      <span class="co">&lt;!-- End Toolbar Searchfield Component Part --&gt;</span>
+
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>A regular (Searchfield)[/components/searchfield] defined as an input field with a <code>.searchfield</code> class will be automatically converted to Toolbar Searchfield by its parent toolbar element when being invoked.</li>
@@ -504,16 +504,16 @@ Fires when a key is pressed inside of the searchfield.
 <li>Focused</li>
 </ul>
 <h3 id="contextual-colors">Contextual Colors</h3>
-<p>There are several scenarios where the background, border, and text color of a Toolbar Searchfield can change based on how it’s used:</p>
+<p>There are several scenarios where the background, border, and text color of a Toolbar Searchfield can change based on how it's used:</p>
 <ul>
 <li>There is an <a href="../components/toolbarsearchfield/example-alternate-style">Alternate In-Page Style</a> for Toolbar Searchfields that can be used when content is displayed over a gray background.</li>
 <li><a href="../components/toolbarsearchfield/example-inside-contextual-panel.html">Inside Contextual Action Panels</a>, the background and border colors change to match the header.</li>
-<li>In any example of a <a href="../components/header">Header</a>, the Toolbar Searchfield’s background color becomes semi-transparent black, and the text/border change to stand out better on the darker colors defined in the Header’s background.</li>
+<li>In any example of a <a href="../components/header">Header</a>, the Toolbar Searchfield's background color becomes semi-transparent black, and the text/border change to stand out better on the darker colors defined in the Header's background.</li>
 <li>Inside of <a href="../components/masthead">Mastheads</a>, the Toolbar Searchfield will change to a dark graphite/slate to match the background color of the Masthead.</li>
 </ul>
 <h3 id="size-settings">Size Settings</h3>
 <ul>
-<li><em>Collapsed</em> - If the <code>collapsible</code> setting is changed to true, toolbar searchfield can become “collapsed” when either de-focusing the searchfield wrapper, or resizing the page.</li>
+<li><em>Collapsed</em> - If the <code>collapsible</code> setting is changed to true, toolbar searchfield can become &quot;collapsed&quot; when either de-focusing the searchfield wrapper, or resizing the page.</li>
 <li><em>Expanded</em> - This is the default state for Toolbar Searchfields when <code>collapsible</code> is set to false. The searchfield will also look like this when focused in either case.</li>
 </ul>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>

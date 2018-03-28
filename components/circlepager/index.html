@@ -155,41 +155,41 @@ void
   
 
 <h2 id="code-example">Code Example</h2>
-<p>This example shows how markup the circle pager. Then call <code>$(elem).circlepager()</code> to invoke. The structure of the circle pager is that you have a circlepager div followed by a slides container and then one slider per “page”. The page content goes in the slide-content element.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;circlepager example1&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slides&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide-content&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">        <span class="kw">&lt;p&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">          <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> class=</span><span class="st">&quot;hyperlink&quot;</span><span class="kw">&gt;</span>Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom<span class="kw">&lt;/a&gt;&lt;br</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">        $750.00</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">        <span class="kw">&lt;/p&gt;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">      <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide-content&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">        <span class="kw">&lt;p&gt;</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">          <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> class=</span><span class="st">&quot;hyperlink&quot;</span><span class="kw">&gt;</span>Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom<span class="kw">&lt;/a&gt;&lt;br</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">        $750.00</a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">        <span class="kw">&lt;/p&gt;</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">      <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide-content&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">        <span class="kw">&lt;p&gt;</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">          <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> class=</span><span class="st">&quot;hyperlink&quot;</span><span class="kw">&gt;</span>Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom<span class="kw">&lt;/a&gt;&lt;br</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">        $750.00</a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">        <span class="kw">&lt;/p&gt;</span></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">      <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">    <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb1-32" data-line-number="32">  <span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-33" data-line-number="33"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-34" data-line-number="34"></a></code></pre></div>
+<p>This example shows how markup the circle pager. Then call <code>$(elem).circlepager()</code> to invoke. The structure of the circle pager is that you have a circlepager div followed by a slides container and then one slider per &quot;page&quot;. The page content goes in the slide-content element.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;circlepager example1&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slides&quot;</span><span class="kw">&gt;</span>
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide-content&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;p&gt;</span>
+          <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> class=</span><span class="st">&quot;hyperlink&quot;</span><span class="kw">&gt;</span>Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom<span class="kw">&lt;/a&gt;&lt;br</span> <span class="kw">/&gt;</span>
+        $750.00
+        <span class="kw">&lt;/p&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide-content&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;p&gt;</span>
+          <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> class=</span><span class="st">&quot;hyperlink&quot;</span><span class="kw">&gt;</span>Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom<span class="kw">&lt;/a&gt;&lt;br</span> <span class="kw">/&gt;</span>
+        $750.00
+        <span class="kw">&lt;/p&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;slide-content&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;p&gt;</span>
+          <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> class=</span><span class="st">&quot;hyperlink&quot;</span><span class="kw">&gt;</span>Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom<span class="kw">&lt;/a&gt;&lt;br</span> <span class="kw">/&gt;</span>
+        $750.00
+        <span class="kw">&lt;/p&gt;</span>
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li><a href="https://www.w3.org/WAI/tutorials/carousels/">Carousel</a> guidelines apply.</li>

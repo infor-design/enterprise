@@ -156,7 +156,7 @@ void
   
 
 <h2 id="code-example">Code Example</h2>
-<p>A button object should always use a button element. Also make sure to add type+“button” or some browsers will treat this as a submit button and refresh the page.</p>
+<p>A button object should always use a button element. Also make sure to add type+&quot;button&quot; or some browsers will treat this as a submit button and refresh the page.</p>
 <p>This example shows four types of buttons, all controlled by class.</p>
 <ul>
 <li>btn-primary -&gt; Primary action form button</li>
@@ -165,24 +165,24 @@ void
 <li>btn-icon -&gt; Icon only button</li>
 </ul>
 <p>All buttons are assumed to be icon + text. To add the icon you add the svg icon element and use a span to hold the button text.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="op">&lt;</span>button <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-primary&quot;</span> type<span class="op">=</span><span class="st">&quot;button&quot;</span><span class="op">&gt;</span>Action&lt;/button<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="op">&lt;</span>button <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-secondary&quot;</span> type<span class="op">=</span><span class="st">&quot;button&quot;</span><span class="op">&gt;</span>Action&lt;/button<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-tertiary&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">  <span class="op">&lt;</span>svg role<span class="op">=</span><span class="st">&quot;presentation&quot;</span> aria<span class="op">-</span>hidden<span class="op">=</span><span class="st">&quot;true&quot;</span> focusable<span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;icon&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="op">&lt;</span>use xlink<span class="op">:</span>href<span class="op">=</span><span class="st">&quot;#icon-filter&quot;</span><span class="op">&gt;</span>&lt;/use<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">  &lt;/svg<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">  <span class="op">&lt;</span>span<span class="op">&gt;</span>Action&lt;/span<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">&lt;/button<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="op">&lt;</span>button type<span class="op">=</span><span class="st">&quot;button&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;btn-icon&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">  <span class="op">&lt;</span>svg role<span class="op">=</span><span class="st">&quot;presentation&quot;</span> aria<span class="op">-</span>hidden<span class="op">=</span><span class="st">&quot;true&quot;</span> focusable<span class="op">=</span><span class="st">&quot;false&quot;</span> <span class="kw">class</span><span class="op">=</span><span class="st">&quot;icon&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="op">&lt;</span>use xlink<span class="op">:</span>href<span class="op">=</span><span class="st">&quot;#icon-calendar&quot;</span><span class="op">&gt;</span>&lt;/use<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">  &lt;/svg<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">  <span class="op">&lt;</span>span<span class="op">&gt;</span>Date&lt;/span<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">&lt;/button<span class="op">&gt;</span></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+&lt;button <span class="kw">class</span>=<span class="st">&quot;btn-primary&quot;</span> type=<span class="st">&quot;button&quot;</span>&gt;Action&lt;<span class="ot">/button&gt;</span>
+
+<span class="ot">&lt;button class=&quot;btn-secondary&quot; type=&quot;button&quot;&gt;Action&lt;/button</span>&gt;
+
+&lt;button type=<span class="st">&quot;button&quot;</span> <span class="kw">class</span>=<span class="st">&quot;btn-tertiary&quot;</span>&gt;
+  &lt;svg role=<span class="st">&quot;presentation&quot;</span> aria-hidden=<span class="st">&quot;true&quot;</span> focusable=<span class="st">&quot;false&quot;</span> <span class="kw">class</span>=<span class="st">&quot;icon&quot;</span>&gt;
+    &lt;use xlink:href=<span class="st">&quot;#icon-filter&quot;</span>&gt;&lt;<span class="ot">/use&gt;</span>
+<span class="ot">  &lt;/svg</span>&gt;
+  &lt;span&gt;Action&lt;<span class="ot">/span&gt;</span>
+<span class="ot">&lt;/button</span>&gt;
+
+&lt;button type=<span class="st">&quot;button&quot;</span> <span class="kw">class</span>=<span class="st">&quot;btn-icon&quot;</span>&gt;
+  &lt;svg role=<span class="st">&quot;presentation&quot;</span> aria-hidden=<span class="st">&quot;true&quot;</span> focusable=<span class="st">&quot;false&quot;</span> <span class="kw">class</span>=<span class="st">&quot;icon&quot;</span>&gt;
+    &lt;use xlink:href=<span class="st">&quot;#icon-calendar&quot;</span>&gt;&lt;<span class="ot">/use&gt;</span>
+<span class="ot">  &lt;/svg</span>&gt;
+  &lt;span&gt;Date&lt;<span class="ot">/span&gt;</span>
+<span class="ot">&lt;/button</span>&gt;</code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
 <li>Do not use any elements other than button attributes for buttons.</li>
@@ -211,7 +211,7 @@ void
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
-<li>Change class “inforFormButton default” to btn-primary</li>
-<li>Change class “inforFormButton” to btn-secondary</li>
+<li>Change class &quot;inforFormButton default&quot; to btn-primary</li>
+<li>Change class &quot;inforFormButton&quot; to btn-secondary</li>
 <li>Tertiary is a new type we did not have that would be normally used that is the common toolbar / non form button type.</li>
 </ul>

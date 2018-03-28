@@ -1,1 +1,29 @@
-true
+<h1 id="images-learn-more">Images <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol type="1">
+<li>Image Sizes and Placeholders <a href="../components/images/example-index">View Example</a></li>
+<li>A Pattern showing a toolbar over a list of Images <a href="../components/images/example-image-list">View Example</a></li>
+<li>People Photos and initials <a href="../components/images/example-photos">View Example</a></li>
+</ol>
+<h2 id="api-details">API Details</h2>
+<p>The image component is a css only component to handle placeholder / empty images. And the various sizes of images that can appear in an application. Placeholder images can be in sizes image-lg. image-md, image-sm</p>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke a small sized placeholder image.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;image-sm placeholder&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-insert-image&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
+  <span class="kw">&lt;/svg&gt;</span>
+  <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Placeholder Image<span class="kw">&lt;/span&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>For images always use an alt tag, which is read by screen readers.</li>
+</ul>
+<h2 id="code-tips">Code Tips</h2>
+<p>The <a href="../components/images/example-image-list">example image list pattern</a> is created by using a toolbar above the block grid layout.</p>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>Block grid / Image List partially replaces the carousel in 3.x</li>
+</ul>

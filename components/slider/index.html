@@ -585,70 +585,66 @@ this
 
 <h2 id="code-example">Code Example</h2>
 <h3 id="single-handle-slider">Single-Handle Slider</h3>
-<p>The Slider Control provides a clickable, touchable interface that interfaces with a standard HTML Input element with a “range” type attribute. Because of styling and functionality requirements, we use a stylized shadow widget which implements the range input’s behavior and updates in sync with a hidden input element. This allows the input element to be serialized with the DOM like normal. The simplest way to use the Slider Control is to create markup containing: a field (for field and responsive form alignment), a label and an input element with a “range” type and a “slider” CSS class. For accessibility and implementation reasons the label is required.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="kw">&gt;</span>Regular<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="ot"> name=</span><span class="st">&quot;slider-regular&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a></code></pre></div>
+<p>The Slider Control provides a clickable, touchable interface that interfaces with a standard HTML Input element with a &quot;range&quot; type attribute. Because of styling and functionality requirements, we use a stylized shadow widget which implements the range input's behavior and updates in sync with a hidden input element. This allows the input element to be serialized with the DOM like normal. The simplest way to use the Slider Control is to create markup containing: a field (for field and responsive form alignment), a label and an input element with a &quot;range&quot; type and a &quot;slider&quot; CSS class. For accessibility and implementation reasons the label is required.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="kw">&gt;</span>Regular<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="ot"> name=</span><span class="st">&quot;slider-regular&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="kw">/&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h3 id="ranged-slider">Ranged Slider</h3>
 <p>Example of a Slider Control that is configured to be a Range, with a lower value and a higher value. This Slider also displays the current value for the selected handle inside a tooltip.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="kw">&gt;</span>Regular<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="ot"> name=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="ot"> data-tooltip-content=</span><span class="st">&#39;[&quot;&quot;]&#39;</span><span class="ot"> data-tooltip-persist=</span><span class="st">&quot;true&quot;</span> <span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="kw">&gt;</span>Regular<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="ot"> name=</span><span class="st">&quot;slider-regular-example&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="ot"> data-tooltip-content=</span><span class="st">&#39;[&quot;&quot;]&#39;</span><span class="ot"> data-tooltip-persist=</span><span class="st">&quot;true&quot;</span> <span class="kw">/&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h3 id="extra-ticks-colors">Extra Ticks &amp; Colors</h3>
 <p>This example shows how to properly implement a Slider Control with Ticks using HTML5 data attributes for settings.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;slider-quality-example&quot;</span><span class="kw">&gt;</span>Ticks <span class="dv">&amp;amp;</span> Colors<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;slider-quality-example&quot;</span><span class="ot"> name=</span><span class="st">&quot;slider-quality-example&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="ot"> min=</span><span class="st">&quot;0&quot;</span><span class="ot"> max=</span><span class="st">&quot;5&quot;</span><span class="ot"> value=</span><span class="st">&quot;2&quot;</span><span class="ot"> step=</span><span class="st">&quot;1&quot;</span><span class="ot"> data-ticks=</span><span class="st">&#39;[</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  {&quot;value&quot;: 0, &quot;description&quot;: &quot;Very Poor&quot;, &quot;color&quot;: &quot;very-poor&quot;},</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  {&quot;value&quot;: 1, &quot;description&quot;: &quot;Poor&quot;, &quot;color&quot;: &quot;poor&quot;},</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  {&quot;value&quot;: 2, &quot;description&quot;: &quot;Adequate&quot;, &quot;color&quot;: &quot;adequate&quot;},</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">  {&quot;value&quot;: 3, &quot;description&quot;: &quot;Good&quot;, &quot;color&quot;: &quot;good&quot;},</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">  {&quot;value&quot;: 4, &quot;description&quot;: &quot;Very Good&quot;, &quot;color&quot;: &quot;very-good&quot;},</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="st">  {&quot;value&quot;: 5, &quot;description&quot;: &quot;Superior&quot;, &quot;color&quot;: &quot;superior&quot;}</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">]&#39;</span><span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;slider-quality-example&quot;</span><span class="kw">&gt;</span>Ticks <span class="dv">&amp;amp;</span> Colors<span class="kw">&lt;/label&gt;</span>
+<span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;slider-quality-example&quot;</span><span class="ot"> name=</span><span class="st">&quot;slider-quality-example&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="ot"> min=</span><span class="st">&quot;0&quot;</span><span class="ot"> max=</span><span class="st">&quot;5&quot;</span><span class="ot"> value=</span><span class="st">&quot;2&quot;</span><span class="ot"> step=</span><span class="st">&quot;1&quot;</span><span class="ot"> data-ticks=</span><span class="st">&#39;[</span>
+<span class="st">  {&quot;value&quot;: 0, &quot;description&quot;: &quot;Very Poor&quot;, &quot;color&quot;: &quot;very-poor&quot;},</span>
+<span class="st">  {&quot;value&quot;: 1, &quot;description&quot;: &quot;Poor&quot;, &quot;color&quot;: &quot;poor&quot;},</span>
+<span class="st">  {&quot;value&quot;: 2, &quot;description&quot;: &quot;Adequate&quot;, &quot;color&quot;: &quot;adequate&quot;},</span>
+<span class="st">  {&quot;value&quot;: 3, &quot;description&quot;: &quot;Good&quot;, &quot;color&quot;: &quot;good&quot;},</span>
+<span class="st">  {&quot;value&quot;: 4, &quot;description&quot;: &quot;Very Good&quot;, &quot;color&quot;: &quot;very-good&quot;},</span>
+<span class="st">  {&quot;value&quot;: 5, &quot;description&quot;: &quot;Superior&quot;, &quot;color&quot;: &quot;superior&quot;}</span>
+<span class="st">]&#39;</span><span class="kw">/&gt;</span>
+</code></pre>
 <h3 id="stepped-slider-example">Stepped Slider Example</h3>
 <p>This is an example of a Slider that can only have values in increments of 10, with a minimum of -150 and a maximum of 150.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb4-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;slider-stepped-example&quot;</span><span class="kw">&gt;</span>Stepped<span class="kw">&lt;/label&gt;</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;slider-stepped-example&quot;</span><span class="ot"> name=</span><span class="st">&quot;slider-stepped&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="ot"> step=</span><span class="st">&quot;5&quot;</span><span class="ot"> data-ticks=</span><span class="st">&#39;[</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">    {&quot;value&quot;: 0, &quot;description&quot;: &quot;Min&quot;},</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">    {&quot;value&quot;: 100, &quot;description&quot;: &quot;Max&quot;}</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="st">  ]&#39;</span><span class="kw">/&gt;</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">&lt;/div&gt;</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"></a></code></pre></div>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;slider-stepped-example&quot;</span><span class="kw">&gt;</span>Stepped<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;slider-stepped-example&quot;</span><span class="ot"> name=</span><span class="st">&quot;slider-stepped&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="ot"> step=</span><span class="st">&quot;5&quot;</span><span class="ot"> data-ticks=</span><span class="st">&#39;[</span>
+<span class="st">    {&quot;value&quot;: 0, &quot;description&quot;: &quot;Min&quot;},</span>
+<span class="st">    {&quot;value&quot;: 100, &quot;description&quot;: &quot;Max&quot;}</span>
+<span class="st">  ]&#39;</span><span class="kw">/&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
-<p>Only providing the HTML Label and Input with a “range” type attribute and “slider” CSS class are necessary if using the SoHo Xi Components Suite.</p>
+<p>Only providing the HTML Label and Input with a &quot;range&quot; type attribute and &quot;slider&quot; CSS class are necessary if using the SoHo Xi Components Suite.</p>
 <h2 id="accessibility">Accessibility</h2>
 <p>The Slider is fairly complex to make accessible. But generally this can be accomplished in four steps:</p>
 <ul>
 <li>Make sure the above keyboard shortcuts are used.</li>
 <li>Make sure that there is a label which matches both the input and any shadow element inputs and identifies the field and is correctly matched using the label for to the input id.</li>
-<li>Use the following ARIA tags on all slider handles/thumbs (the clickable/touchable part of the slider):
-<ul>
+<li>Use the following ARIA tags on all slider handles/thumbs (the clickable/touchable part of the slider):</li>
 <li><code>role=&quot;slider&quot;</code></li>
-<li><code>aria-orientation=&quot;horizontal&quot;</code> or <code>&quot;vertical&quot;</code>, to match the Control’s orientation.</li>
+<li><code>aria-orientation=&quot;horizontal&quot;</code> or <code>&quot;vertical&quot;</code>, to match the Control's orientation.</li>
 <li><code>aria-valuemin</code> - the lowest possible numeric value on the slider.</li>
 <li><code>aria-valuemax</code> - the highest possible numeric value on the slider.</li>
 <li><code>aria-valuenow</code> - the current numeric value of the slider. This should dynamically update whenever the handle value is changed.</li>
 <li><code>aria-valuetext</code> - If there is a word or phrase associated with the current slider value, it should be duplicated in this attribute so it will be read by a screen reader. This should update in sync with aria-valuenow.</li>
 <li><code>tabindex</code> - set to zero if not using focusable HTML elements, or set to -1 if the handle is disabled.</li>
-</ul></li>
-<li>Conditionally use the following ARIA attributes in some situations:
-<ul>
+<li>Conditionally use the following ARIA attributes in some situations:</li>
 <li><code>aria-label</code> - Use in most cases to describe the purpose of the handle (Is it the only one? Is it the lower-value versus the higher handle)</li>
-<li><code>aria-describedby</code> - When used in conjunction with a <a href="https://soho.infor.com/index.php?p=component/tooltip">Tooltip Control</a>, this attribute will be appended to the handle automatically, but in this case the ‘aria-label’ attribute should be removed.</li>
-</ul></li>
+<li><code>aria-describedby</code> - When used in conjunction with a <a href="https://soho.infor.com/index.php?p=component/tooltip">Tooltip Control</a>, this attribute will be appended to the handle automatically, but in this case the 'aria-label' attribute should be removed.</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
-<p>Keyboard functionality of the Slider control differs based on whether or not the Slider is single-thumbed (one handle), or a “range” (multi-handle). The keyboard applies to all types of Sliders in these ways:</p>
+<p>Keyboard functionality of the Slider control differs based on whether or not the Slider is single-thumbed (one handle), or a &quot;range&quot; (multi-handle). The keyboard applies to all types of Sliders in these ways:</p>
 <ul>
 <li><strong>Right and Up Arrows</strong> increase the value of the Slider.</li>
 <li><strong>Left and Down Arrows</strong> decrease the value of the Slider.</li>
@@ -669,7 +665,7 @@ this
 <h2 id="states-and-variations">States and Variations</h2>
 <ul>
 <li>Draggable</li>
-<li>Active (vs. at rest)</li>
+<li>Active (vs. at rest)</li>
 <li>Focus</li>
 <li>Hover</li>
 <li>Disabled</li>

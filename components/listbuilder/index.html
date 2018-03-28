@@ -725,16 +725,16 @@ void
 <h2 id="code-example">Code Example</h2>
 <p>The list builder is structured as a listbuilder element that contains a <a href="../components/toolbar">standard toolbar</a> structure followed by a listbuilder-content section that contains a standard <a href="../components/listview">listview</a>.</p>
 <p>When initialized with the <code>$elem.listbuilder()</code> plugin you pass in a data set that ineracts with the list view template. The toolbar buttons are automatically mapped to add, edit , delete , up , down functions via the option settings.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;listbuilder&quot;</span> <span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;toolbar formatter-toolbar&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">      ...</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    &lt;/div<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;listbuilder-content&quot;</span><span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">      <span class="op">&lt;</span>div <span class="kw">class</span><span class="op">=</span><span class="st">&quot;listview&quot;</span><span class="op">&gt;</span>&lt;/div<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">    &lt;/div<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">  &lt;/div<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+  &lt;div <span class="kw">class</span>=<span class="st">&quot;listbuilder&quot;</span> &gt;
+    &lt;div <span class="kw">class</span>=<span class="st">&quot;toolbar formatter-toolbar&quot;</span>&gt;
+      ...
+    &lt;<span class="ot">/div&gt;</span>
+<span class="ot">    &lt;div class=&quot;listbuilder-content&quot;&gt;</span>
+<span class="ot">      &lt;div class=&quot;listview&quot;&gt;&lt;/div</span>&gt;
+    &lt;<span class="ot">/div&gt;</span>
+<span class="ot">  &lt;/div</span>&gt;
+</code></pre>
 <h2 id="accessibility-keyboard-shortcuts">Accessibility / Keyboard Shortcuts</h2>
 <ul>
 <li><a href="../components/listview">ListView</a> guidelines apply as this is conatains a listview.</li>

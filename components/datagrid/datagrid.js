@@ -1153,11 +1153,11 @@ Datagrid.prototype = {
     if (!this.settings.filterable) {
       return;
     }
-    
+
     this.element.addClass('has-filterable-columns');
 
     if (this.settings.twoLineHeader) {
-      this.element.addClass('has-two-line-header')
+      this.element.addClass('has-two-line-header');
     }
 
     // Attach Keyboard support
@@ -1383,7 +1383,7 @@ Datagrid.prototype = {
       this.settings.filterable = false;
       this.filterRowRendered = false;
       this.element.removeClass('has-filterable-columns');
-      this.element.removeClass('has-two-line-header')
+      this.element.removeClass('has-two-line-header');
       /**
       *  Fires after the filter row is closed by the user.
       * @event closefilterrow
@@ -1396,9 +1396,9 @@ Datagrid.prototype = {
       this.filterRowRendered = true;
 
       this.element.addClass('has-filterable-columns');
-      
+
       if (this.settings.twoLineHeader) {
-        this.element.addClass('has-two-line-header')
+        this.element.addClass('has-two-line-header');
       }
 
       this.headerRow.addClass('is-filterable');
