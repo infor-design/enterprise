@@ -133,19 +133,18 @@ Modal.prototype = {
     }
 
     if (this.settings.beforeShow) {
-      // this.element.find('.modal-body').append($('<div class="field"><div id="modal-busyindicator" class="busy card"></div></div>'));
-      $('body').append($('<div class="overlay busy">' +
-                        '</div>' +
-                        '<div class="busy-indicator-container blocked-ui" aria-live="polite" role="status">' +
-                          '<div class="busy-indicator active">' +
-                            '<div class="bar one"></div>' +
-                            '<div class="bar two"></div>' +
-                            '<div class="bar three"></div>' +
-                            '<div class="bar four"></div>' +
-                            '<div class="bar five"></div>' +
-                          '</div>' +
-                          '<span>Loading...</span>' +
-                        '</div>'));
+      this.busyIndicator = $('<div class="overlay busy"></div>' +
+        '<div class="busy-indicator-container blocked-ui" aria-live="polite" role="status">' +
+          '<div class="busy-indicator active">' +
+            '<div class="bar one"></div>' +
+            '<div class="bar two"></div>' +
+            '<div class="bar three"></div>' +
+            '<div class="bar four"></div>' +
+            '<div class="bar five"></div>' +
+          '</div>' +
+          '<span>Loading...</span>' +
+        '</div>');
+      $('body').append(this.busyIndicator);
     }
 
     if (!isAppended) {
@@ -165,13 +164,6 @@ Modal.prototype = {
     }
 
     utils.fixSVGIcons(this.element);
-
-    if (this.settings.beforeShow) {
-      // Change to full screen
-      const busyIndEl = $('#modal-busyindicator');
-      busyIndEl.busyindicator({}).data('busyindicator');
-      busyIndEl.trigger('start.busyindicator');
-    }
   },
 
   reStructure() {
@@ -410,6 +402,10 @@ Modal.prototype = {
   open(ajaxReturn) {
     let messageArea = null;
     let elemCanOpen = true;
+
+    if (this.busyIndicator) {
+      this.busyIndicator.remove();
+    }
 
     if (!this.trigger || this.trigger.length === 0) {
       this.oldActive = $(':focus'); // Save and restore focus for A11Y
