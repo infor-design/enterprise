@@ -79,12 +79,19 @@ Modal.prototype = {
     }
 
     // ensure is appended to body for new dom tree
-    if (this.settings.content || this.settings.beforeShow) {
+    if (this.settings.content) {
       this.settings.trigger = this.settings.content instanceof jQuery ? this.settings.trigger : 'immediate';
       this.appendContent();
       setTimeout(() => {
         self.open();
       }, 1);
+      return;
+    }
+
+    if (this.settings.beforeShow) {
+      this.settings.trigger = this.settings.content instanceof jQuery ? this.settings.trigger : 'immediate';
+      this.appendContent();
+      this.callSource();
       return;
     }
 
@@ -126,7 +133,18 @@ Modal.prototype = {
     }
 
     if (this.settings.beforeShow) {
-      this.element.find('.modal-body').append($('<div class="field"><div id="modal-busyindicator" class="busy card"></div></div>'));
+      this.busyIndicator = $('<div class="overlay busy"></div>' +
+        '<div class="busy-indicator-container blocked-ui" aria-live="polite" role="status">' +
+          '<div class="busy-indicator active">' +
+            '<div class="bar one"></div>' +
+            '<div class="bar two"></div>' +
+            '<div class="bar three"></div>' +
+            '<div class="bar four"></div>' +
+            '<div class="bar five"></div>' +
+          '</div>' +
+          '<span>Loading...</span>' +
+        '</div>');
+      $('body').append(this.busyIndicator);
     }
 
     if (!isAppended) {
@@ -146,12 +164,6 @@ Modal.prototype = {
     }
 
     utils.fixSVGIcons(this.element);
-
-    if (this.settings.beforeShow) {
-      const busyIndEl = $('#modal-busyindicator');
-      busyIndEl.busyindicator({}).data('busyindicator');
-      busyIndEl.trigger('start.busyindicator');
-    }
   },
 
   reStructure() {
@@ -362,6 +374,8 @@ Modal.prototype = {
         return false;
       }
 
+      self.open(true);
+
       $('#modal-busyindicator').trigger('complete.busyindicator');
 
       if (!(content instanceof jQuery)) {
@@ -378,17 +392,20 @@ Modal.prototype = {
 
     const callBackOpts = {};
     this.settings.beforeShow(response, callBackOpts);
-    self.open(true);
   },
 
   /**
-   * *
+   *
    * Open the modal via the api.
    * @param {boolean} ajaxReturn Flag used internally to denote its an ajax result return.
    */
   open(ajaxReturn) {
     let messageArea = null;
     let elemCanOpen = true;
+
+    if (this.busyIndicator) {
+      this.busyIndicator.remove();
+    }
 
     if (!this.trigger || this.trigger.length === 0) {
       this.oldActive = $(':focus'); // Save and restore focus for A11Y

@@ -33,7 +33,6 @@ Returns **void**
 
 ### open
 
-\*
 Open the modal via the api.
 
 **Parameters**
