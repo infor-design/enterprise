@@ -1239,8 +1239,24 @@ Datagrid.prototype = {
         };
       });
 
-      elem.find('select.multiselect').multiselect(col.editorOptions).on('selected.datagrid', () => {
-        self.applyFilter();
+      elem.find('select.multiselect').each(function () {
+        const multiselect = $(this);
+        multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
+          self.applyFilter();
+        });
+
+        // Append the Dropdown's sourceArguments with some row/col meta-data
+        const api = multiselect.data('dropdown');
+        api.settings.sourceArguments = {
+          column: col,
+          container: elem,
+          grid: self,
+          cell: col,
+          event: undefined,
+          row: -1,
+          rowData: {},
+          value: undefined
+        };
       });
 
       if (col.maskOptions) {
