@@ -1,5 +1,4 @@
 const { SpecReporter } = require('jasmine-spec-reporter');
-const { browserStackErrorReporter } = require('./test/helpers/browserStackErrorReporter');
 const protractorImageComparison = require('protractor-image-comparison');
 
 const getSpecs = (listSpec) => {
