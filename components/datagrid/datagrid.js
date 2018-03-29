@@ -1197,7 +1197,9 @@ Datagrid.prototype = {
       return false;
     });
 
+    let typingTimer;
     this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', (e) => {
+      clearTimeout(typingTimer);
       e.stopPropagation();
 
       if (e.which === 13) {
@@ -1207,8 +1209,11 @@ Datagrid.prototype = {
         return false;
       }
       return true;
-    }).off('change.datagrid').on('change.datagrid', '.datagrid-filter-wrapper input', () => {
-      self.applyFilter();
+    }).off('keyup.datagrid').on('keyup.datagrid', '.datagrid-filter-wrapper input', () => {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(() => {
+        self.applyFilter();
+      }, 400);
     });
 
     this.headerRow.find('tr:last th').each(function () {
