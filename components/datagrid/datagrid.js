@@ -1492,6 +1492,10 @@ Datagrid.prototype = {
         }
 
         if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
+          if (columnDef.filterType === 'date' && typeof rowValue === 'string') {
+            rowValue = columnDef.formatter(false, false, rowValue, columnDef, true);
+            // rowValue = window.Formatters.Date(false, false, rowValue, columnDef, true);
+          }
           const getValues = (rValue, cValue) => {
             cValue = Locale.parseDate(cValue, conditions[i].format);
             if (cValue) {
@@ -1550,7 +1554,9 @@ Datagrid.prototype = {
 
           let values = null;
           if (conditions[i].operator === 'in-range') {
-            const datepickerApi = conditions[i].input.data('datepicker');
+            const cell = self.settings.columns.indexOf(columnDef);
+            const input = self.headerRow.find(`th:eq(${cell}) .datagrid-filter-wrapper input`);
+            const datepickerApi = input.data('datepicker');
             if (datepickerApi) {
               rangeData = datepickerApi.settings.range.data;
               if (rangeData && rangeData.start) {
@@ -1814,8 +1820,7 @@ Datagrid.prototype = {
       const condition = {
         columnId: rowElem.attr('data-column-id'),
         operator: op,
-        value,
-        input
+        value
       };
 
       if (input.data('datepicker')) {
