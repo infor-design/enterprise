@@ -317,25 +317,27 @@ Tabs.prototype = {
       // NOTE: popupmenu items that represent dropdown tabs shouldn't have children,
       // so they aren't accounted for here.
       if (popup) {
-        popup.menu.children('li').each(() => {
-          const popupA = li.children('a');
-          const popupPanel = $(href);
+        popup.menu.children('li').each(function () {
+          const popupLi = $(this);
+          const popupA = popupLi.children('a');
+          const popupHref = popupA.attr('href');
+          const popupPanel = $(popupHref);
 
           popupA.data('panel-link', popupPanel);
-          popupPanel.data('tab-link', a);
+          popupPanel.data('tab-link', popupA);
 
           self.panels = self.panels.add(popupPanel);
-          self.anchors = self.anchors.add(a);
+          self.anchors = self.anchors.add(popupA);
 
-          if (!li.hasClass('dismissible')) {
+          if (!popupLi.hasClass('dismissible')) {
             return;
           }
 
-          let icon = li.children('.icon');
-          if (!icon.length) {
-            icon = $.createIconElement({ icon: 'close', classes: 'icon close' });
+          let popupIcon = popupLi.children('.icon');
+          if (!popupIcon.length) {
+            popupIcon = $.createIconElement({ icon: 'close', classes: 'icon close' });
           }
-          icon.detach().appendTo(a);
+          popupIcon.detach().appendTo(popupA);
         }).on('click.popupmenu', '.icon', function iconClickHandler(e) {
           const popupIcon = $(this);
           const popupLi = popupIcon.closest('li');
