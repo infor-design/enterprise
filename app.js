@@ -483,6 +483,7 @@ function getDirectoryListing(directory, req, res, next, extraExcludes) {
 // ======================================
 
 router.get('/', (req, res, next) => {
+  console.log('here');
   const opts = res.opts;
   opts.basepath = fullBasePath(req);
   res.redirect(`${BASE_PATH}kitchen-sink`);
