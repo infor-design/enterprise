@@ -26,9 +26,9 @@ describe('Dropdown updates, events', () => {
   afterEach(() => {
     dropdownObj.destroy();
     $('.dropdown').destroy();
-    dropdownEl.remove();
-    rowEl.remove();
-    svgEl.remove();
+    dropdownEl.parentNode.removeChild(dropdownEl);
+    rowEl.parentNode.removeChild(rowEl);
+    svgEl.parentNode.removeChild(svgEl);
   });
 
   it('Should set settings', () => {

@@ -27,7 +27,8 @@ module.exports = {
     resolve(),
     json(),
     babel({
-      exclude: 'node_modules/**' // only transpile our source code
+      exclude: 'node_modules/**', // only transpile our source code
+      plugins: ['external-helpers']
     }),
     license({
       sourceMap: true,

@@ -40,8 +40,8 @@ describe('Listview API', () => {
 
   afterEach(() => {
     listviewAPI.destroy();
-    listviewEl.remove();
-    svgEl.remove();
+    listviewEl.parentNode.removeChild(listviewEl);
+    svgEl.parentNode.removeChild(svgEl);
   });
 
   it('Properly sets default settings', () => {

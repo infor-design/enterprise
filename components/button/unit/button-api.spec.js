@@ -25,9 +25,9 @@ describe('Button API', () => {
 
   afterEach(() => {
     buttonObj.destroy();
-    buttonEl.remove();
-    rowEl.remove();
-    svgEl.remove();
+    buttonEl.parentNode.removeChild(buttonEl);
+    rowEl.parentNode.removeChild(rowEl);
+    svgEl.parentNode.removeChild(svgEl);
   });
 
   it('Should be defined on jQuery object', () => {

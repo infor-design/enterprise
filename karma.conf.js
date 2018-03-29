@@ -26,12 +26,24 @@ module.exports = function (config) {
     },
     webpack: {
       module: {
-        rules: [{
-          test: /\.html$/,
-          use: [{
-            loader: 'html-loader'
-          }],
-        }]
+        rules: [
+          {
+            test: /\.html$/,
+            use: [{
+              loader: 'html-loader'
+            }],
+          },
+          {
+            test: /\.js$/,
+            use: [{
+              loader: 'babel-loader',
+              options: {
+                presets: ['env']
+              }
+            }],
+            exclude: /node_modules/
+          }
+        ]
       }
     },
     webpackMiddleware: {

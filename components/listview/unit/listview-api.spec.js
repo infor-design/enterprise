@@ -35,8 +35,8 @@ describe('Listview API', () => {
 
   afterEach(() => {
     listviewAPI.destroy();
-    listviewEl.remove();
-    svgEl.remove();
+    svgEl.parentNode.removeChild(svgEl);
+    listviewEl.parentNode.removeChild(listviewEl);
   });
 
   it('Can be invoked', () => {

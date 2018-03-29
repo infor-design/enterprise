@@ -26,11 +26,12 @@ describe('Dropdown ARIA', () => {
 
   afterEach(() => {
     dropdownObj.destroy();
-    dropdownEl.remove();
-    rowEl.remove();
-    svgEl.remove();
+    dropdownEl.parentNode.removeChild(dropdownEl);
+    rowEl.parentNode.removeChild(rowEl);
+    svgEl.parentNode.removeChild(svgEl);
     if (document.querySelector('.dropdown-list')) {
-      document.querySelector('.dropdown-list').remove();
+      const dropdownElList = document.querySelector('.dropdown-list');
+      dropdownElList.parentNode.removeChild(dropdownElList);
     }
   });
 

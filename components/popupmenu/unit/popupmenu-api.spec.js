@@ -35,9 +35,9 @@ describe('Popupmenu Menu Button API', () => {
 
   afterEach(() => {
     popupmenuObj.destroy();
-    popupmenuButtonEl.remove();
-    rowEl.remove();
-    svgEl.remove();
+    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
+    rowEl.parentNode.removeChild(rowEl);
+    svgEl.parentNode.removeChild(svgEl);
   });
 
   it('Should be defined on jQuery object', () => {
@@ -88,9 +88,9 @@ describe('Popupmenu Single Select API', () => {
 
   afterEach(() => {
     popupmenuObj.destroy();
-    popupmenuButtonEl.remove();
-    rowEl.remove();
-    svgEl.remove();
+    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
+    rowEl.parentNode.removeChild(rowEl);
+    svgEl.parentNode.removeChild(svgEl);
   });
 
   it('Should select', () => {
