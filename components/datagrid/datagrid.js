@@ -2067,18 +2067,11 @@ Datagrid.prototype = {
         const first = self.settings.dataset.splice(status.startIndex, 1)[0];
         self.settings.dataset.splice(status.endIndex, 0, first);
 
-        const swapRow = status.over;
         const originalRow = status.start;
 
         // If using expandable rows move the expandable row with it
-        const movedUp = status.endIndex < status.startIndex;
         if (self.settings.rowTemplate || self.settings.expandableRow) {
-          if (movedUp) {
-            self.tableBody.find('tr').eq(status.startIndex + 1).insertAfter(originalRow);
-          } else {
-            self.tableBody.find('tr').eq(status.startIndex).insertAfter(originalRow);
-            originalRow.next().next().insertAfter(swapRow);
-          }
+          self.tableBody.find('tr').eq((status.startIndex * 2) + 1).insertAfter(originalRow);
         }
 
         // Resequence the rows
