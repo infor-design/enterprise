@@ -214,6 +214,10 @@
         }
       }
     }
+
+    &.has-go-button {
+      box-shadow: none;
+    }
   }
 
   // Buttons inside of searchfields
