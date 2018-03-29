@@ -1494,7 +1494,6 @@ Datagrid.prototype = {
         if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
           if (columnDef.filterType === 'date' && typeof rowValue === 'string') {
             rowValue = columnDef.formatter(false, false, rowValue, columnDef, true);
-            // rowValue = window.Formatters.Date(false, false, rowValue, columnDef, true);
           }
           const getValues = (rValue, cValue) => {
             cValue = Locale.parseDate(cValue, conditions[i].format);
