@@ -113,6 +113,8 @@ sections:
       slug: slider
     - name: Spinbox
       slug: spinbox
+    - name: Step Process
+      slug: stepprocess
     - name: Swaplist
       slug: swaplist
     - name: Switch

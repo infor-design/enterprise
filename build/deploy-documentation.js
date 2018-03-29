@@ -411,7 +411,7 @@ function postZippedBundle() {
 
   let form = new formData();
   form.append('file', fs.createReadStream(`${paths.dist}.zip`));
-  form.append('root_path', `ids-jquery/${packageJson.version}`);
+  form.append('root_path', `ids-enterprise/${packageJson.version}`);
   form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : "");
   form.submit(serverURIs[deployTo], (err, res) => {
     if (err) {
