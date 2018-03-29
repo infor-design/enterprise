@@ -28,8 +28,7 @@ const formatters = {
       const getType = {};
       if (getType.toString.call(placeholder) === '[object Function]') {
         placeholder = placeholder(row, cell, value, col, item);
-      }
-      else if (item && item[placeholder]) {
+      } else if (item && item[placeholder]) {
         placeholder = item[placeholder];
       }
       const html = `<label for="datagrid-inline-input-${row}-${cell}" class="audible">${col.name}</label><input id="datagrid-inline-input-${row}-${cell}" class="placeholder" placeholder="${placeholder}">`;
