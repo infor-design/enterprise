@@ -19,6 +19,10 @@ const axeOptions = {
     {
       id: 'color-contrast',
       enabled: false
+    },
+    {
+      id: 'region',
+      enabled: false
     }
   ]
 };

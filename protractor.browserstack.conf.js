@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { SpecReporter } = require('jasmine-spec-reporter');
 const browserstack = require('browserstack-local');
 const protractorImageComparison = require('protractor-image-comparison');
@@ -26,7 +27,7 @@ exports.config = {
   multiCapabilities: [
     {
       browserName: 'Chrome',
-      browser_version: '65'
+      browser_version: '64'
     },
     {
       browserName: 'Firefox',
