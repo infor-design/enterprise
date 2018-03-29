@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
 
