@@ -63,12 +63,12 @@ git checkout master
 
 ## Build Operations
 * Change the v-Next build http://bamboo.infor.com/chain/admin/config/editChainDetails.action?buildKey=SOHO-NEXT
-  * change the name to Angular 4.6.0-RC (Version Next)
+  * change the name to 4.6.0-RC (Version Next)
   * change the repo it points to
   * checkout 4.6.0-rc and bump the versions in package.json and publish/package.json
 * Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
   * change the versions in the build config
-  * Label the build release-450 for example http://bamboo.infor.com/browse/label/release-440
+  * Label the build release-440 for example http://bamboo.infor.com/browse/label/release-440
 
 ## Update version in @infor/sohoxi-angular
 * Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
