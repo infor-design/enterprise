@@ -16,7 +16,7 @@
     "minify": "node ./build/minify.js",
     "install-globals": "npm install -g pandoc-bin grunt-cli documentation rollup",
     "local:unit": "karma start karma.conf.js",
-    "ci:local:unit": "karma start karma.conf.js --no-auto-watch --single-run --browsers ChromeHeadless",
+    "ci:local:unit": "karma start karma.conf.js --no-auto-watch --single-run --browsers ChromeHeadless --no-sandbox",
     "browserstack:unit": "karma start karma.browserstack.conf.js",
     "prelocal:functional": "npm run webdriver:update && (npm run start & sleep 10)",
     "local:functional": "protractor ./protractor.conf.js || npm run stop",
