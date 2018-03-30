@@ -6,10 +6,10 @@
   border-radius: 0;
   -webkit-font-smoothing: subpixel-antialiased;
   font-weight: 400;
+  height: 34px;
   padding: 9px;
   text-align: center;
   width: 84px;
-  height: 34px;
 
   &:focus {
     box-shadow: none;
@@ -49,16 +49,16 @@ input::-webkit-inner-spin-button {
   cursor: pointer;
   display: inline-block;
   font-weight: 700;
+  height: 34px;
   line-height: normal;
   overflow: hidden;
   padding: 9px 10px;
   position: relative;
   resize: none;
   text-align: center;
-  width: 33px;
-  height: 34px;
-  -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
   -moz-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
+  -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
+  width: 33px;
 
   &.up {
     border-bottom-right-radius: 2px;
@@ -151,11 +151,14 @@ input::-webkit-inner-spin-button {
   }
 
   .spinbox {
+    height: inherit;
     margin-bottom: 0;
   }
 
   .spinbox-control {
-    padding: 4px 10px;
+    height: inherit;
+    padding: 4px 7px;
+    width: 25px;
   }
 }
 
@@ -210,6 +213,15 @@ html[dir='rtl'] {
       > .spinbox-control {
         border-color: $input-disabled-border-color;
       }
+    }
+  }
+}
+
+// Ie11
+.ie11 {
+  .field-short {
+    .spinbox-control {
+      height: 25px;
     }
   }
 }
