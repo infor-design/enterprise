@@ -83,7 +83,7 @@ module.exports = function (config) {
     webpackMiddleware: {
       stats: 'errors-only'
     },
-    reporters: ['mocha', 'coverage', 'BrowserStack', 'junit'],
+    reporters: ['mocha', 'coverage', 'BrowserStack'],
     coverageReporter: {
       includeAllSources: true,
       dir: 'coverage/',
@@ -103,15 +103,6 @@ module.exports = function (config) {
       'bs_chrome_windows'
     ],
     singleRun: true,
-    concurrency: 1,
-    junitReporter: {
-      outputDir: 'test-reports', // results will be saved as $outputDir/$browserName.xml
-      outputFile: 'junit-report.xml', // if included, results will be saved as $outputDir/$browserName/$outputFile
-      suite: '', // suite will become the package name attribute in xml testsuite element
-      useBrowserName: true, // add browser name to report and classes names
-      nameFormatter: undefined, // function (browser, result) to customize the name
-      classNameFormatter: undefined, // function (browser, result) to customize the classname
-      properties: {} // key value pair of properties to add to the section of the report
-    }
+    concurrency: 1
   });
 };
