@@ -2092,11 +2092,16 @@ Datagrid.prototype = {
         const first = self.settings.dataset.splice(status.startIndex, 1)[0];
         self.settings.dataset.splice(status.endIndex, 0, first);
 
-        const originalRow = status.start;
+        const moveDown = status.endIndex > status.startIndex;
 
         // If using expandable rows move the expandable row with it
-        if (self.settings.rowTemplate || self.settings.expandableRow) {
-          self.tableBody.find('tr').eq((status.startIndex * 2) + 1).insertAfter(originalRow);
+        if ((self.settings.rowTemplate || self.settings.expandableRow) && moveDown) {
+          self.tableBody.find('tr').eq(status.startIndex * 2).insertAfter(status.end);
+          status.end.next().next().insertAfter(status.over);
+        }
+
+        if ((self.settings.rowTemplate || self.settings.expandableRow) && !moveDown) {
+          self.tableBody.find('tr').eq(status.startIndex * 2).next().insertAfter(status.end);
         }
 
         // Resequence the rows
@@ -2430,7 +2435,6 @@ Datagrid.prototype = {
     setTimeout(() => {
       if (!self.settings.source) {
         self.displayCounts();
-      } else {
         self.checkEmptyMessage();
       }
 
@@ -2460,7 +2464,7 @@ Datagrid.prototype = {
       * @property {HTMLElement} pager Object pager body area
       */
       self.element.trigger('afterrender', { body: self.tableBody, header: self.headerRow, pager: self.pagerBar });
-    }, 0);
+    }, 100);
   },
 
   /**
