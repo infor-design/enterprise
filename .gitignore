@@ -16,6 +16,7 @@ views/docs
 publish/dist
 publish/sass
 templates/**/doc.html
+test-reports/
 
 # Packages #
 ############
