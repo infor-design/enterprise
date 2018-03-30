@@ -172,7 +172,7 @@ FileUploadAdvanced.prototype = {
 
       // Drop
       .on('drop.fileuploadadvanced', function (e) {
-        const files = [...e.originalEvent.dataTransfer.files];
+        const files = e.originalEvent.dataTransfer.files;
         e.preventDefault();
         if (s.isDisabled) {
           return;
