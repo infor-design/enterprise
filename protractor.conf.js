@@ -1,5 +1,5 @@
+/* eslint-disable */
 const { SpecReporter } = require('jasmine-spec-reporter');
-const { browserStackErrorReporter } = require('./test/helpers/browserStackErrorReporter');
 const protractorImageComparison = require('protractor-image-comparison');
 
 const getSpecs = (listSpec) => {
@@ -35,7 +35,7 @@ exports.config = {
     });
 
     jasmine.getEnv().addReporter(new SpecReporter({
-      spec: { displayStacktrace: true }
+      spec: { displayStacktrace: false }
     }));
 
     return browser.getProcessedConfig().then((cap) => {

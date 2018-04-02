@@ -193,8 +193,14 @@ SearchField.prototype = {
     }
 
     // Add a "Go" Button from scratch if we enable the setting
-    if (this.settings.showGoButton && (!this.goButton || !this.goButton.length)) {
-      this.goButton = $(`<button class="btn-secondary go-button"><span>${this.settings.goButtonCopy || Locale.translate('Go')}</span></button>`);
+    if (this.settings.showGoButton) {
+      if (!this.goButton || !this.goButton.length) {
+        this.goButton = $(`
+          <button class="btn-secondary go-button">
+            <span>${this.settings.goButtonCopy || Locale.translate('Go')}</span>
+          </button>
+        `);
+      }
       this.goButton.attr('id', this.goButton.uniqueId('searchfield-go-button-'));
       this.wrapper.addClass('has-go-button');
       this.element.after(this.goButton);

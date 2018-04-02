@@ -1195,7 +1195,9 @@ Datagrid.prototype = {
       return false;
     });
 
+    let typingTimer;
     this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', (e) => {
+      clearTimeout(typingTimer);
       e.stopPropagation();
 
       if (e.which === 13) {
@@ -1205,8 +1207,11 @@ Datagrid.prototype = {
         return false;
       }
       return true;
-    }).off('change.datagrid').on('change.datagrid', '.datagrid-filter-wrapper input', () => {
-      self.applyFilter();
+    }).off('keyup.datagrid').on('keyup.datagrid', '.datagrid-filter-wrapper input', () => {
+      clearTimeout(typingTimer);
+      typingTimer = setTimeout(() => {
+        self.applyFilter();
+      }, 400);
     });
 
     this.headerRow.find('tr:last th').each(function () {
@@ -1490,6 +1495,9 @@ Datagrid.prototype = {
         }
 
         if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
+          if (columnDef.filterType === 'date' && typeof rowValue === 'string') {
+            rowValue = columnDef.formatter(false, false, rowValue, columnDef, true);
+          }
           const getValues = (rValue, cValue) => {
             cValue = Locale.parseDate(cValue, conditions[i].format);
             if (cValue) {
@@ -1548,7 +1556,9 @@ Datagrid.prototype = {
 
           let values = null;
           if (conditions[i].operator === 'in-range') {
-            const datepickerApi = conditions[i].input.data('datepicker');
+            const cell = self.settings.columns.indexOf(columnDef);
+            const input = self.headerRow.find(`th:eq(${cell}) .datagrid-filter-wrapper input`);
+            const datepickerApi = input.data('datepicker');
             if (datepickerApi) {
               rangeData = datepickerApi.settings.range.data;
               if (rangeData && rangeData.start) {
@@ -1812,8 +1822,7 @@ Datagrid.prototype = {
       const condition = {
         columnId: rowElem.attr('data-column-id'),
         operator: op,
-        value,
-        input
+        value
       };
 
       if (input.data('datepicker')) {
@@ -2081,18 +2090,16 @@ Datagrid.prototype = {
         const first = self.settings.dataset.splice(status.startIndex, 1)[0];
         self.settings.dataset.splice(status.endIndex, 0, first);
 
-        const swapRow = status.over;
-        const originalRow = status.start;
+        const moveDown = status.endIndex > status.startIndex;
 
         // If using expandable rows move the expandable row with it
-        const movedUp = status.endIndex < status.startIndex;
-        if (self.settings.rowTemplate || self.settings.expandableRow) {
-          if (movedUp) {
-            self.tableBody.find('tr').eq(status.startIndex + 1).insertAfter(originalRow);
-          } else {
-            self.tableBody.find('tr').eq(status.startIndex).insertAfter(originalRow);
-            originalRow.next().next().insertAfter(swapRow);
-          }
+        if ((self.settings.rowTemplate || self.settings.expandableRow) && moveDown) {
+          self.tableBody.find('tr').eq(status.startIndex * 2).insertAfter(status.end);
+          status.end.next().next().insertAfter(status.over);
+        }
+
+        if ((self.settings.rowTemplate || self.settings.expandableRow) && !moveDown) {
+          self.tableBody.find('tr').eq(status.startIndex * 2).next().insertAfter(status.end);
         }
 
         // Resequence the rows
@@ -2426,7 +2433,6 @@ Datagrid.prototype = {
     setTimeout(() => {
       if (!self.settings.source) {
         self.displayCounts();
-      } else {
         self.checkEmptyMessage();
       }
 
@@ -2456,7 +2462,7 @@ Datagrid.prototype = {
       * @property {HTMLElement} pager Object pager body area
       */
       self.element.trigger('afterrender', { body: self.tableBody, header: self.headerRow, pager: self.pagerBar });
-    }, 0);
+    }, 100);
   },
 
   /**
@@ -4316,7 +4322,7 @@ Datagrid.prototype = {
 
     // Add a paste event for handling pasting from excel
     if (self.settings.editable) {
-      tbody.off('paste').on('paste', (e) => {
+      this.element.off('paste.datagrid').on('paste.datagrid', (e) => {
         let pastedData;
         if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
           pastedData = e.originalEvent.clipboardData.getData('text/plain');
@@ -4324,14 +4330,27 @@ Datagrid.prototype = {
           pastedData = window.clipboardData && window.clipboardData.getData ? window.clipboardData.getData('Text') : false;
         }
 
-        if (pastedData) {
-          pastedData = pastedData.split('\n');
-          pastedData.pop();
+        const hasLineFeed = /\n/.exec(pastedData);
+        const hasCarriageReturn = /\r/.exec(pastedData);
+        const hasBoth = /\r\n/.exec(pastedData);
+
+        if (self.activeCell && self.activeCell.node.hasClass('is-readonly')) {
+          return; // disallow pasting on non editable cells.
+        }
+
+        if (pastedData && hasCarriageReturn || hasLineFeed || hasBoth) {
+          let splitData = hasLineFeed ? pastedData.split('\n') : pastedData.split('\r');
+          if (hasBoth) {
+            splitData = pastedData.split('\r\n');
+          }
 
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
-          self.copyToDataSet(pastedData, startRowCount, startColIndex, self.settings.dataset);
-          self.renderRows();
+
+          if (self.editor && self.editor.input) {
+            self.commitCellEdit(self.editor.input);
+          }
+          self.copyToDataSet(splitData, startRowCount, startColIndex, self.settings.dataset);
         }
       });
     }
@@ -4361,9 +4380,16 @@ Datagrid.prototype = {
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
+        const activePage = self.pager ? self.pager.activePage : 1;
         rowNode = $(this).closest('tr');
         dataRowIdx = self.settings.treeGrid ?
-          self.actualRowIndex(rowNode) : self.dataRowIndex(rowNode);
+          self.actualRowIndex(rowNode) : self.visualRowIndex(rowNode);
+
+        if (!self.settings.treeGrid &&
+          self.settings.paging && !self.settings.source && activePage > 1) {
+          dataRowIdx = self.actualRowIndex(rowNode);
+        }
+
         self.toggleRowDetail(dataRowIdx);
         self.toggleGroupChildren(rowNode);
         self.toggleChildren(e, dataRowIdx);

@@ -6,8 +6,14 @@
             Grid Example: Performance Test
          </h3>
          <p>
-            Test by clicking "Load Data" and see how long it takes to render the rows. IE was very slow (30 + secons)
+            Test by clicking "Load Data" and see how long it takes to render the rows. IE was very slow (30 + seconds)
          </p>
+        <br>
+
+        <div class="field">
+          <label for="record-count">Record Count</label>
+          <input id="record-count" name="record-count" type="text" class="new-mask input-sm" value="10000" data-options='{ "process": "number", "pattern" : "#,###,###" }' />
+        </div>
 
          <button type="button" id="load" class="btn-primary"><span>Load Data</span></button>
          <hr class="fieldset-hr">
@@ -22,13 +28,7 @@
 
    <script>
       $('body').one('initialized', function () {
-         var grid, columns = [],
-            data = [], i;
-
-         // Some Sample Data
-         for (i = 1; i <= 800; i++) {
-            data.push({ id: i, productId: i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action' });
-         }
+         var grid, columns = [];
 
          //Define Columns for the Grid.
          columns.push({ id: 'productId', name: 'Product #', field: 'productId', formatter: Formatters.Text, align: 'right' });
@@ -53,11 +53,21 @@
             paging: true,
             pagesize: 10,
             pagesizes: [5, 10, 25, 50],
-            toolbar: {title: 'Data Grid List', results: true, dateFilter: true ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+            toolbar: {title: 'Records', results: true, dateFilter: true, keywordFilter: true, advancedFilter: true, actions: true, exportToExcel: true, views: true, rowHeight: true, collapsibleFilter: true}
          }).data('datagrid');
 
          // Load function
          $('#load').click(function () {
+           var data = [], i;
+           var count = $('#record-count').val();
+           count = count ? Locale.parseNumber(count) : 0;
+
+           // Build Sample Data
+           for (i = 1; i <= count; i++) {
+             data.push({ id: i, productId: i, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action' });
+           }
+
+            // Time the loadData call
             var start = new Date().getTime();
             grid.loadData(data);
             var end = new Date().getTime();

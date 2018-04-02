@@ -1,5 +1,5 @@
 const AxeBuilder = require('axe-webdriverjs');
-const { browserStackErrorReporter } = require('../../../test/helpers/browserStackErrorReporter.js');
+const { browserStackErrorReporter } = require('../../../test/helpers/browserstack-error-reporter.js');
 
 // Light Theme color contrast is not WCAG 2AA, #fff on #368ac0, focused item on a open dropdown
 const axeOptions = {
@@ -18,6 +18,10 @@ const axeOptions = {
     },
     {
       id: 'color-contrast',
+      enabled: false
+    },
+    {
+      id: 'region',
       enabled: false
     }
   ]

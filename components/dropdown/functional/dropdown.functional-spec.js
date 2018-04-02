@@ -1,5 +1,6 @@
 const AxeBuilder = require('axe-webdriverjs');
-const { browserStackErrorReporter } = require('../../../test/helpers/browserStackErrorReporter.js');
+const { browserStackErrorReporter } = require('../../../test/helpers/browserstack-error-reporter.js');
+require('../../../test/helpers/rejection.js');
 
 // Light Theme color contrast is not WCAG 2AA, #fff on #368ac0, focused item on a open dropdown
 const axeOptions = {
@@ -19,6 +20,10 @@ const axeOptions = {
     {
       id: 'color-contrast',
       enabled: false
+    },
+    {
+      id: 'region',
+      enabled: false
     }
   ]
 };
@@ -28,7 +33,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 const clickOnDropdown = async () => {
   await browser.waitForAngularEnabled(false);
   await browser.driver.get('http://localhost:4000/components/dropdown/example-index');
-  const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+  const dropdownEl = element(by.css('div[aria-controls="dropdown-list"]'));
   await browser.driver.wait(protractor.ExpectedConditions.presenceOf(dropdownEl), 5000);
   await dropdownEl.click();
 };
@@ -38,17 +43,6 @@ describe('Dropdown tests', () => {
     await clickOnDropdown();
 
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
-  });
-
-  it('Should arrow down to New York, and focus', async () => {
-    await clickOnDropdown();
-
-    const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
-    const newYorkOption = await element(by.css('li[data-val="NY"]'));
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-    await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
-
-    expect(newYorkOption.getAttribute('class')).toEqual('dropdown-option is-focused');
   });
 
   it('Should scroll down to end of list, and Vermont should be visible', async () => {
@@ -79,14 +73,47 @@ describe('Dropdown tests', () => {
     });
   }
 
-  if (browser.browserName.toLowerCase() === 'chrome') {
-    it('Should not visual regress', async () => {
+  if (browser.browserName.toLowerCase() !== 'safari') {
+    it('Should arrow down to New York, and focus', async () => {
       await browser.waitForAngularEnabled(false);
       await browser.driver.get('http://localhost:4000/components/dropdown/example-index');
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(dropdownEl), 5000);
+      await dropdownEl.click();
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await dropdownEl.sendKeys(protractor.Key.ARROW_DOWN);
+      await browser.driver.sleep(1000);
+
+      expect(await element(by.className('is-focused')).getText()).toEqual('New York');
+    });
+  }
+
+  if (browser.browserName.toLowerCase() === 'chrome') {
+    it('Should not visual regress', async () => {
+      await browser.waitForAngularEnabled(false);
+      await browser.driver.get('http://localhost:4000/components/dropdown/example-index');
+      const dropdownEl = element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(dropdownEl), 5000);
 
       expect(await browser.protractorImageComparison.checkScreen('dropdownPage')).toEqual(0);
+    });
+  }
+
+  if (browser.browserName.toLowerCase() === 'chrome') {
+    it('Should search for Colorado', async () => {
+      await browser.waitForAngularEnabled(false);
+      await browser.driver.get('http://localhost:4000/components/dropdown/example-index');
+      const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(dropdownEl), 5000);
+      await dropdownEl.click();
+      const dropdownSearchEl = element(by.id('dropdown-search'));
+      await dropdownSearchEl.click();
+      await browser.driver.switchTo().activeElement().clear();
+      await browser.driver.switchTo().activeElement().sendKeys('Colorado');
+      // Forcefully wait for focus shift
+      await browser.driver.sleep(1000);
+
+      expect(await element(by.className('is-focused')).getText()).toEqual('Colorado');
     });
   }
 });
