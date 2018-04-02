@@ -2091,8 +2091,8 @@ Dropdown.prototype = {
   selectValue(value) {
     if (typeof value === 'string') {
       const option = this.element.find(`option[value="${value}"]`);
-      this.element.find('option:selected').removeAttr('selected');
-      option.attr('selected', 'true');
+      this.element.find('option:selected').prop('selected', false);
+      option.prop('selected', true);
       this.updated();
     }
   },

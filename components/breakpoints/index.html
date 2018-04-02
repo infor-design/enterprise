@@ -1,1 +1,16 @@
-true
+<h1 id="favorites-learn-more">Favorites <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol type="1">
+<li>Breakpoint Event Change Detection <a href="../components/breakpoints/example-change-detection">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>An event gets triggered on a Soho application's body tag whenever the Soho CSS determines that a breakpoint change should be made. In any application that implements Soho UX, there will be an <code>::after</code> pseudo-element appended to the body tag with a content property that describes the current breakpoint.</p>
+<p>There is also a small utility, <code>Soho.breakpoints</code> that has a few convenience functions for working with the breakpoint</p>
+<p>In the example test, causing this page to have an orientation change or resize event that results in a new breakpoint change will cause a toast message to appear containing the custom event's data.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">on</span>(<span class="st">&#39;breakpoint-change&#39;</span>, <span class="kw">function</span>(e, breakpointState) {
+  <span class="fu">$</span>(<span class="kw">this</span>).<span class="fu">toast</span>({
+    <span class="dt">title</span>: <span class="st">&#39;Breakpoint Change&#39;</span>,
+    <span class="dt">message</span>: <span class="st">&#39;&lt;b&gt;Current: &lt;/b&gt;&#39;</span> + <span class="ot">breakpointState</span>.<span class="fu">current</span> + <span class="st">&#39;&lt;br /&gt;&lt;b&gt;Previous: &lt;/b&gt;&#39;</span> + <span class="ot">breakpointState</span>.<span class="fu">previous</span>
+  });
+});</code></pre>

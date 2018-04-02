@@ -1,15 +1,23 @@
+/* eslint-disable */
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
 
+const getSpecs = (listSpec) => {
+  if (listSpec) {
+    return listSpec.split(',');
+  }
+
+  return ['components/**/*.functional-spec.js'];
+};
+
 exports.config = {
-  allScriptsTimeout: 11000,
-  specs: [
-    '**/functional/*.functional-spec.js'
-  ],
+  allScriptsTimeout: 120000,
+  specs: getSpecs(process.env.PROTRACTOR_SPECS),
+  SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
     browserName: 'chrome'
   },
-  directConnect: false,
+  directConnect: true,
   baseUrl: 'http://localhost:4000/',
   framework: 'jasmine2',
   jasmineNodeOpts: {
@@ -18,6 +26,7 @@ exports.config = {
     print: () => {}
   },
   onPrepare: () => {
+    browser.ignoreSynchronization = true;
     browser.protractorImageComparison = new protractorImageComparison({
       baselineFolder: './baseline/',
       screenshotPath: './.tmp/',
@@ -26,7 +35,7 @@ exports.config = {
     });
 
     jasmine.getEnv().addReporter(new SpecReporter({
-      spec: { displayStacktrace: true }
+      spec: { displayStacktrace: false }
     }));
 
     return browser.getProcessedConfig().then((cap) => {

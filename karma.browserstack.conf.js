@@ -4,7 +4,6 @@ module.exports = function (config) {
     frameworks: ['jasmine'],
     files: [
       'dist/css/light-theme.css',
-      'dist/css/light-theme.css.map',
       'dist/js/jquery-3.1.1.js',
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
@@ -18,7 +17,7 @@ module.exports = function (config) {
       username: process.env.BROWSER_STACK_USERNAME,
       accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
       startTunnel: true,
-      build: 'unit-tests-browserstack',
+      build: 'Unit',
       name: 'Unit tests'
     },
     customLaunchers: {
@@ -37,6 +36,22 @@ module.exports = function (config) {
         os_version: 'High Sierra',
         os: 'OS X',
         resolution: '1024x768'
+      },
+      bs_ie_windows: {
+        base: 'BrowserStack',
+        browser: 'IE',
+        browser_version: '11.0',
+        os_version: '10',
+        os: 'Windows',
+        resolution: '1024x768'
+      },
+      bs_chrome_windows: {
+        base: 'BrowserStack',
+        browser: 'Chrome',
+        browser_version: '65',
+        os_version: '10',
+        os: 'Windows',
+        resolution: '1024x768'
       }
     },
     preprocessors: {
@@ -45,12 +60,24 @@ module.exports = function (config) {
     },
     webpack: {
       module: {
-        rules: [{
-          test: /\.html$/,
-          use: [{
-            loader: 'html-loader'
-          }],
-        }]
+        rules: [
+          {
+            test: /\.html$/,
+            use: [{
+              loader: 'html-loader'
+            }],
+          },
+          {
+            test: /\.js$/,
+            use: [{
+              loader: 'babel-loader',
+              options: {
+                presets: ['env']
+              }
+            }],
+            exclude: /node_modules/
+          }
+        ]
       }
     },
     webpackMiddleware: {
@@ -71,7 +98,9 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: [
       'bs_firefox_mac',
-      'bs_safari_mac'
+      'bs_safari_mac',
+      'bs_ie_windows',
+      'bs_chrome_windows'
     ],
     singleRun: true,
     concurrency: 1

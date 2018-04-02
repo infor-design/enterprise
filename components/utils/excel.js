@@ -1,4 +1,5 @@
 import { Environment as env } from '../utils/environment';
+import { Formatters } from '../datagrid/datagrid.formatters';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};
@@ -77,7 +78,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
       cols = $(rows[i]).find('td, th');
       for (let i2 = 0; i2 < cols.length; i2++) {
         if (nonExportables.indexOf(i2) <= -1) {
-          content = cols[i2].innerText.replace('"', '""');
+          content = cols[i2].innerText.replace(/"/g, '""');
 
           // Exporting data with trailing negative signs moved in front
           if (self.settings.exportConvertNegative) {
@@ -107,6 +108,18 @@ excel.exportToCsv = function (fileName, customDs, self) {
       });
       navigator.msSaveBlob(blob, fileName);
     }
+  } else if (window.URL.createObjectURL) { // createObjectURL api allows downloading larger files
+    const blob = new Blob([csvData], {
+      type: 'application/csv;charset=utf-8;'
+    });
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = objectUrl;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(objectUrl);
   } else {
     const link = document.createElement('a');
     link.href = base64(csvData);
@@ -250,6 +263,18 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
       });
       navigator.msSaveBlob(blob, fileName);
     }
+  } else if (window.URL.createObjectURL) { // createObjectURL api allows downloading larger files
+    const blob = new Blob([format(template, ctx)], {
+      type: 'application/vnd.ms-excel;charset=utf-8;'
+    });
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = objectUrl;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(objectUrl);
   } else {
     const link = document.createElement('a');
     link.href = base64(format(template, ctx));
@@ -257,6 +282,42 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+};
+
+excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
+  for (let i = 0; i < pastedData.length; i++) {
+    const rawVal = pastedData[i].split('\t');
+    let startColIndex = colIndex;
+
+    if (rowCount < dataSet.length) {
+      const currentRowData = dataSet[rowCount];
+      for (let j = 0; j < rawVal.length; j++) {
+        if (self.settings.columns[startColIndex].formatter === Formatters.Checkbox) {
+          currentRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() === 'true';
+        } else {
+          currentRowData[self.settings.columns[startColIndex].field] = rawVal[j];
+        }
+        startColIndex++;
+      }
+      self.updateRow(rowCount, currentRowData);
+    } else {
+      const newRowData = {};
+      for (let k = 0; k < self.settings.columns.length; k++) {
+        newRowData[self.settings.columns[k].field] = '';
+      }
+
+      for (let j = 0; j < rawVal.length; j++) {
+        if (self.settings.columns[startColIndex].formatter === Formatters.Checkbox) {
+          newRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() === 'true';
+        } else {
+          newRowData[self.settings.columns[startColIndex].field] = rawVal[j];
+        }
+        startColIndex++;
+      }
+      self.addRow(newRowData, 'bottom');
+    }
+    rowCount++;
   }
 };
 

@@ -155,7 +155,10 @@ module.exports = {
       ignoreRegExpLiterals: true,
       ignoreStrings: true,
       ignoreTemplateLiterals: true,
-    }]
+    }],
+
+    // Disallow use of disabled tests (Jasmine)
+    'jasmine/no-disabled-tests': ['off']
 
   },
   'globals': {

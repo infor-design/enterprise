@@ -22,6 +22,24 @@ const formatters = {
     return str;
   },
 
+  Placeholder(row, cell, value, col, item) {
+    if (col.placeholder && value === '') {
+      let placeholder = col.placeholder;
+      const getType = {};
+      if (getType.toString.call(placeholder) === '[object Function]') {
+        placeholder = placeholder(row, cell, value, col, item);
+      } else if (item && item[placeholder]) {
+        placeholder = item[placeholder];
+      }
+      const html = `<label for="datagrid-inline-input-${row}-${cell}" class="audible">${col.name}</label><input id="datagrid-inline-input-${row}-${cell}" class="placeholder" placeholder="${placeholder}">`;
+
+      return html;
+    }
+
+    const str = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    return str;
+  },
+
   Ellipsis(row, cell, value, col) {
     const str = ((value === null || value === undefined || value === '') ? '' : value.toString());
     col.textOverflow = 'ellipsis';
@@ -270,7 +288,7 @@ const formatters = {
   Editor(row, cell, value, col) {
     const formatted = ((value === null || value === undefined) ? '' : value);
     let classes = 'is-editor';
-    classes += col.singleline ? '' : ' datagrid-multiline-text';
+    classes += col.singleline ? ' is-singleline' : ' datagrid-multiline-text';
     classes += col.contentTooltip ? ' content-tooltip' : '';
     return `<div class="${classes}">${$.unescapeHTML(formatted)}</div>`;
   },

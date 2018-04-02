@@ -22,18 +22,18 @@ Component Wrapper for input elements that gives them the ability to become "mask
     -   `settings.keepCharacterPositions` **[boolean][8]** if defined alongside of `settings.guide`, will allow indiviual characters
          to be removed from the mask without moving the positions of other characters that have been written into the field.
          Works well with things like credit card or phone numbers, which have sections that are separate from each other. (optional, default `false`)
-    -   `settings.pattern` **([array][9] \| [function][10] \| [string][11])** the pattern that is used by the mask for determining input to keep or throw out.
+    -   `settings.pattern` **([array][9] \| [function][10] \| [string][11])?** the pattern that is used by the mask for determining input to keep or throw out.
          Arrays of strings representing individual characters, and regex matching individual characters, is the perferred way of supplying a pattern.
          For some `settings.process` types (date/time/number), a function that dynamically generates a mask is automatically used.
-         It's also possible to define a custom mask function and supply it here. The legacy string style is also supported. (optional, default `undefined`)
-    -   `settings.patternOptions` **[object][7]** If using a function to define `settings.pattern`, any options that must be passed
-         to the masking function can be supplied in this object. (optional, default `undefined`)
+         It's also possible to define a custom mask function and supply it here. The legacy string style is also supported.
+    -   `settings.patternOptions` **[object][7]?** If using a function to define `settings.pattern`, any options that must be passed
+         to the masking function can be supplied in this object.
     -   `settings.placeholderChar` **[string][11]** If using the `settings.guide`, will be used as the placeholder
          for characters that are not yet typed. (optional, default `'_'`)
-    -   `settings.pipe` **[function][10]** provides a way of adjusting the masked content, caret position,
-         etc after the input field has been processed by the mask API. (optional, default `undefined`)
-    -   `settings.process` **[string][11]** can be defined as a quick way to create certain complex masks.  Defaults to the regular pattern mask,
-         but can automatically configure the field for "date", "time", and "number" (optional, default `undefined`)
+    -   `settings.pipe` **[function][10]?** provides a way of adjusting the masked content, caret position,
+         etc after the input field has been processed by the mask API.
+    -   `settings.process` **[string][11]?** can be defined as a quick way to create certain complex masks.  Defaults to the regular pattern mask,
+         but can automatically configure the field for "date", "time", and "number"
     -   `settings.processOnBlur` **[boolean][8]** if defined, causes the mask API to process this input field whenever it becomes blurred. (optional, default `true`)
     -   `settings.processOnInitialize` **[boolean][8]** if defined, causes the mask API to process this input field when the component is initialized. (optional, default `true`)
 

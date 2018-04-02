@@ -531,7 +531,9 @@ Pager.prototype = {
     this.pagerBar.find('.pager-count input').attr('data-mask', '').mask({ pattern, mode: 'number', processOnInitialize: false });
 
     this._pageCount = this._pageCount || 1;
-
+    if (this.settings.indeterminate) {
+      return 999999999;
+    }
     return this._pageCount;
   },
 

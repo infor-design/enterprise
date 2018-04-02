@@ -1316,7 +1316,7 @@ Toolbar.prototype = {
     const hiddenOverflowItems = overflowItems.not('.hidden');
 
     let method = 'removeClass';
-    if (this.hasDefaultMenuItems || hiddenOverflowItems.length > 0) {
+    if (hiddenOverflowItems.length > 0) {
       method = 'addClass';
     }
 

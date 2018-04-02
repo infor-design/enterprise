@@ -23,7 +23,7 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
   content: null, //
   initializeContent: true, // initialize content before opening
   trigger: 'click',
-  showCloseButton: true
+  showCloseButton: false
 };
 
 function ContextualActionPanel(element, settings) {
@@ -245,6 +245,13 @@ ContextualActionPanel.prototype = {
 
     if (self.settings.showCloseButton) {
       self.panel.find('.modal-header').find('.close-button').children('button')
+        .on('click.contextualactionpanel', () => {
+          self.handleToolbarSelected();
+        });
+    }
+
+    if (self.toolbar) {
+      self.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
         .on('click.contextualactionpanel', () => {
           self.handleToolbarSelected();
         });

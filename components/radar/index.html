@@ -710,37 +710,37 @@ void
 
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke a pie bar chart with a dataset controlling the values.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">var</span> radarData <span class="op">=</span> [<span class="op">{</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">      <span class="dt">data</span><span class="op">:</span> [</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">              [ <span class="co">// Resource</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Procedure Assistance&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Personnel Training&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Patient Support&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Patient Care&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">0</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Paperwork Admin&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">1</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Equipment Management&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Data Analysis&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-12" data-line-number="12">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Compliance&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Community Support&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">2</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Assess and Diagnose&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">}</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15">        ]<span class="op">,</span>[ <span class="co">// Position</span></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Procedure Assistance&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Personnel Training&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Patient Support&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Patient Care&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Paperwork Admin&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Equipment Management&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Data Analysis&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Compliance&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">4</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-24" data-line-number="24">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Community Support&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">5</span><span class="op">},</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25">          <span class="op">{</span><span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Assess and Diagnose&#39;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">3</span><span class="op">}</span></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">        ]</a>
-<a class="sourceLine" id="cb1-27" data-line-number="27">            ]</a>
-<a class="sourceLine" id="cb1-28" data-line-number="28">    <span class="op">}</span>]<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">  <span class="at">$</span>(<span class="st">&#39;#radar-chart-example&#39;</span>).<span class="at">chart</span>(<span class="op">{</span><span class="dt">type</span><span class="op">:</span> <span class="st">&#39;radar&#39;</span><span class="op">,</span> <span class="dt">dataset</span><span class="op">:</span> radarData<span class="op">,</span> <span class="dt">showAxisLabels</span><span class="op">:</span> <span class="kw">false</span><span class="op">}</span>)<span class="op">;</span></a>
-<a class="sourceLine" id="cb1-31" data-line-number="31"></a></code></pre></div>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+  <span class="kw">var</span> radarData = [{
+      <span class="dt">data</span>: [
+              [ <span class="co">// Resource</span>
+          {<span class="dt">name</span>: <span class="st">&#39;Procedure Assistance&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Personnel Training&#39;</span>, <span class="dt">value</span>: <span class="dv">2</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Patient Support&#39;</span>, <span class="dt">value</span>: <span class="dv">1</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Patient Care&#39;</span>, <span class="dt">value</span>: <span class="dv">0</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Paperwork Admin&#39;</span>, <span class="dt">value</span>: <span class="dv">1</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Equipment Management&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Data Analysis&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Compliance&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Community Support&#39;</span>, <span class="dt">value</span>: <span class="dv">2</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Assess and Diagnose&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>}
+        ],[ <span class="co">// Position</span>
+          {<span class="dt">name</span>: <span class="st">&#39;Procedure Assistance&#39;</span>, <span class="dt">value</span>: <span class="dv">5</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Personnel Training&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Patient Support&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Patient Care&#39;</span>, <span class="dt">value</span>: <span class="dv">5</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Paperwork Admin&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Equipment Management&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Data Analysis&#39;</span>, <span class="dt">value</span>: <span class="dv">5</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Compliance&#39;</span>, <span class="dt">value</span>: <span class="dv">4</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Community Support&#39;</span>, <span class="dt">value</span>: <span class="dv">5</span>},
+          {<span class="dt">name</span>: <span class="st">&#39;Assess and Diagnose&#39;</span>, <span class="dt">value</span>: <span class="dv">3</span>}
+        ]
+            ]
+    }];
+
+  <span class="fu">$</span>(<span class="st">&#39;#radar-chart-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;radar&#39;</span>, <span class="dt">dataset</span>: radarData, <span class="dt">showAxisLabels</span>: <span class="kw">false</span>});
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <p>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing different contrast colors.</p>
 <h2 id="code-tips">Code Tips</h2>

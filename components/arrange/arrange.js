@@ -1,4 +1,3 @@
-import { Environment as env } from '../utils/environment';
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 
@@ -43,7 +42,6 @@ Arrange.prototype = {
   // example from: https://github.com/farhadi/html5arrangeable/blob/master/jquery.arrangeable.js
   init() {
     this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    this.isIe11 = (env.browser.name === 'ie' && env.browser.version === '11');
     this.handleEvents();
   },
 
@@ -358,10 +356,7 @@ Arrange.prototype = {
               self.element.triggerHandler('draggingarrange', status);
 
               // Fix: IE-11 on windows-10 svg was disappering
-              const svg = $('svg', overItem);
-              if (self.isIe11 && svg.length) {
-                overItem.html(overItem.html());
-              }
+              utils.fixSVGIcons(overItem);
 
               self.placeholders.not(placeholder).detach();
             } else if (!self.placeholders.is(this)) {

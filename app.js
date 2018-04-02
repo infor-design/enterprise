@@ -333,6 +333,8 @@ const GENERAL_LISTING_EXCLUDES = [
   /(api.md$)/,
   /(api.html$)/,
   /partial/,
+  /functional/,
+  /unit/,
   /\.DS_Store/
 ];
 

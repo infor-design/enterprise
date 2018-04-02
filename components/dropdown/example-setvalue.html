@@ -1,0 +1,22 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="updatable" class="label">Updatable</label>
+      <select id="updatable" name="updatable" class="dropdown">
+        <option value="1" selected="selected">Option One</option>
+        <option value="2">Option Two</option>
+        <option value="3">Option Three</option>
+      </select>
+  </div>
+  <button type="button" class="btn-secondary">Update</button>
+</div>
+
+<script>
+    // Set the value to three every time using the API function
+    $('button').on('click', function () {
+	    var api = $('#updatable').data('dropdown');
+			api.selectValue("3");
+    });
+</script>

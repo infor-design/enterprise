@@ -26,18 +26,30 @@ module.exports = function (config) {
     },
     webpack: {
       module: {
-        rules: [{
-          test: /\.html$/,
-          use: [{
-            loader: 'html-loader'
-          }],
-        }]
+        rules: [
+          {
+            test: /\.html$/,
+            use: [{
+              loader: 'html-loader'
+            }],
+          },
+          {
+            test: /\.js$/,
+            use: [{
+              loader: 'babel-loader',
+              options: {
+                presets: ['env']
+              }
+            }],
+            exclude: /node_modules/
+          }
+        ]
       }
     },
     webpackMiddleware: {
       stats: 'errors-only'
     },
-    reporters: ['mocha', 'coverage'],
+    reporters: ['mocha', 'coverage', 'junit'],
     coverageReporter: {
       includeAllSources: true,
       dir: 'coverage/',
@@ -49,9 +61,24 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'ChromeHeadlessNoSandbox'],
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
     autoWatch: true,
     singleRun: false,
-    concurrency: Infinity
+    concurrency: Infinity,
+    junitReporter: {
+      outputDir: 'test-reports', // results will be saved as $outputDir/$browserName.xml
+      outputFile: 'junit-report.xml', // if included, results will be saved as $outputDir/$browserName/$outputFile
+      suite: '', // suite will become the package name attribute in xml testsuite element
+      useBrowserName: true, // add browser name to report and classes names
+      nameFormatter: undefined, // function (browser, result) to customize the name
+      classNameFormatter: undefined, // function (browser, result) to customize the classname
+      properties: {} // key value pair of properties to add to the section of the report
+    }
   });
 };
