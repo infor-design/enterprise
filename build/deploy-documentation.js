@@ -62,16 +62,18 @@ marked.setOptions({
 //   Constants
 // -------------------------------------
 const idsWebsitePath = 'docs/ids-website';
-const localWebsitePath = 'docs/local-website';
+const staticWebsitePath = 'docs/local-website';
 const rootPath = process.cwd();
 const paths = {
   components:  `${rootPath}/components`,
   docs:        `${rootPath}/docs`,
   docjs:       `${rootPath}/docs/documentationjs`,
-  src:         `${rootPath}/${idsWebsitePath}`,
-  static:      `${rootPath}/${localWebsitePath}`,
-  dist:        `${rootPath}/${idsWebsitePath}/dist`,
-  distDocs:    `${rootPath}/${idsWebsitePath}/dist/docs`
+  idsWebsite: {
+    root: `${rootPath}/${idsWebsitePath}`,
+    dist:        `${rootPath}/${idsWebsitePath}/dist`,
+    distDocs:    `${rootPath}/${idsWebsitePath}/dist/docs`
+  },
+  static:      `${rootPath}/${staticWebsitePath}`,
 };
 const jsonTemplate = {
   title: '',
@@ -95,7 +97,7 @@ const testComponents = [
 // -------------------------------------
 //   Variables
 // -------------------------------------
-let allDocsObj = {};
+let allDocsObjMap = {};
 let componentStats = {
   numDocumented: 0,
   numConverted: 0,
@@ -143,7 +145,7 @@ Promise.all(setupPromises)
       writePromises.push(writeJsonSitemap());
     }
 
-    for (compName in allDocsObj) {
+    for (compName in allDocsObjMap) {
       if (deployTo === 'static') {
         writePromises.push(writeHtmlFile(compName));
       } else {
@@ -194,7 +196,7 @@ function compileComponents() {
           continue;
         }
 
-        allDocsObj[compName] = Object.assign({}, jsonTemplate, {
+        allDocsObjMap[compName] = Object.assign({}, jsonTemplate, {
           title: compName,
           description: 'All about ' + compName,
         });
@@ -228,11 +230,11 @@ function compileSupportingDocs() {
     let promises = [];
     let compName = '';
 
-    glob(`${paths.src}/*.md`, (err, files) => {
+    glob(`${paths.idsWebsite.root}/*.md`, (err, files) => {
       for (filePath of files) {
         fileName = path.basename(filePath, '.md');
 
-        allDocsObj[fileName] = Object.assign({}, jsonTemplate, {
+        allDocsObjMap[fileName] = Object.assign({}, jsonTemplate, {
           title: fileName,
           description: 'All about ' + fileName,
         });
@@ -262,7 +264,7 @@ function cleanAll() {
   if (deployTo === 'static') {
     toDel.push(`${paths.static}/*.html`)
   } else {
-    toDel.push(paths.dist, paths.distDocs);
+    toDel.push(paths.idsWebsite.dist, paths.idsWebsite.distDocs);
   }
 
   return del(toDel)
@@ -270,8 +272,8 @@ function cleanAll() {
       console.error(chalk.red('Error!'), err);
     })
     .then(res => {
-      logTaskAction('Clean', paths.dist);
-      createDirs([paths.dist, paths.distDocs, paths.static]);
+      logTaskAction('Clean', paths.idsWebsite.dist);
+      createDirs([paths.idsWebsite.dist, paths.idsWebsite.distDocs, paths.static]);
     }
   );
 }
@@ -291,9 +293,9 @@ function markdownToHtml(filePath) {
         reject(err);
       } else {
         const fmData = frontMatter(data);
-        if (fmData.attributes.title) allDocsObj[fileBasename].title = fmData.attributes.title;
-        if (fmData.attributes.description) allDocsObj[fileBasename].description = fmData.attributes.description;
-        if (fmData.attributes.demo) allDocsObj[fileBasename].demo = fmData.attributes.demo;
+        if (fmData.attributes.title) allDocsObjMap[fileBasename].title = fmData.attributes.title;
+        if (fmData.attributes.description) allDocsObjMap[fileBasename].description = fmData.attributes.description;
+        if (fmData.attributes.demo) allDocsObjMap[fileBasename].demo = fmData.attributes.demo;
 
         marked(fmData.body, (err, content) => {
           if (err) {
@@ -301,7 +303,7 @@ function markdownToHtml(filePath) {
           } else {
             componentStats.numConverted++;
             logTaskAction('Converting', fileBasename + '.md')
-            resolve(allDocsObj[fileBasename].body = content);
+            resolve(allDocsObjMap[fileBasename].body = content);
           }
         });
       }
@@ -352,7 +354,7 @@ function documentJsToHtml(componentName) {
             return vinylToString(file, 'utf8').then(contents => {
               componentStats.numDocumented++;
               logTaskAction('Documented', componentName + '.js');
-              allDocsObj[componentName].api = contents;
+              allDocsObjMap[componentName].api = contents;
             });
           })
         }, err => {
@@ -410,7 +412,7 @@ function postZippedBundle() {
   logTaskStart(`publish to server "${deployTo}"`);
 
   let form = new formData();
-  form.append('file', fs.createReadStream(`${paths.dist}.zip`));
+  form.append('file', fs.createReadStream(`${paths.idsWebsite.dist}.zip`));
   form.append('root_path', `ids-enterprise/${packageJson.version}`);
   form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : "");
   form.submit(serverURIs[deployTo], (err, res) => {
@@ -467,7 +469,7 @@ function timeElapsed(t) {
 function writeHtmlFile(componentName) {
   return new Promise((resolve, reject) => {
     const thisName = componentName;
-    const content = allDocsObj[thisName].api.replace('<insert-md-docs></insert-md-docs>', allDocsObj[thisName].body);
+    const content = allDocsObjMap[thisName].api.replace('<insert-md-docs></insert-md-docs>', allDocsObjMap[thisName].body);
 
     fs.writeFile(`${paths.static}/${thisName}.html`, content, 'utf8', err => {
       if (err) {
@@ -488,7 +490,7 @@ function writeHtmlFile(componentName) {
 function writeJsonFile(componentName) {
   return new Promise((resolve, reject) => {
     const thisName = componentName;
-    fs.writeFile(`${paths.distDocs}/${thisName}.json`, JSON.stringify(allDocsObj[thisName]), 'utf8', err => {
+    fs.writeFile(`${paths.idsWebsite.distDocs}/${thisName}.json`, JSON.stringify(allDocsObjMap[thisName]), 'utf8', err => {
       if (err) {
         reject(err);
       } else {
@@ -513,7 +515,7 @@ function writeJsonSitemap() {
       reject(e);
     }
 
-    fs.writeFile(`${paths.dist}/sitemap.json`, JSON.stringify(doc), 'utf8', err => {
+    fs.writeFile(`${paths.idsWebsite.dist}/sitemap.json`, JSON.stringify(doc), 'utf8', err => {
       if (err) {
         reject(err);
       } else {
@@ -559,7 +561,7 @@ function zipAndDeploy() {
   logTaskStart('zip json files');
 
   // create a file to stream archive data to.
-  var output = fs.createWriteStream(paths.dist + '.zip');
+  var output = fs.createWriteStream(paths.idsWebsite.dist + '.zip');
   var archive = archiver('zip', {
     zlib: { level: 9 } // Sets the compression level.
   });
@@ -603,6 +605,6 @@ function zipAndDeploy() {
   // pipe archive data to the file
   archive.pipe(output);
 
-  archive.directory(paths.dist, false);
+  archive.directory(paths.idsWebsite.dist, false);
   archive.finalize();
 }
