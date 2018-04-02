@@ -125,6 +125,8 @@ if (argv.site && Object.keys(serverURIs).includes(argv.site)) {
   deployTo = argv.site;
 }
 
+const sitemapObj = readSitemapYaml();
+
 const setupPromises = [
   cleanAll(),
   compileSupportingDocs(),
@@ -169,6 +171,17 @@ Promise.all(setupPromises)
 // -------------------------------------
 //   Functions
 // -------------------------------------
+
+function readSitemapYaml() {
+  let sitemapJson = '';
+  try {
+    sitemapJson = yaml.safeLoad(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
+  } catch (e) {
+    throw e;
+  }
+  return sitemapJson;
+}
+
 
 /**
  * Compiled the component's MD and DocJS
@@ -508,14 +521,7 @@ function writeJsonFile(componentName) {
  */
 function writeJsonSitemap() {
   return new Promise((resolve, reject) => {
-    let doc = '';
-    try {
-      doc = yaml.safeLoad(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
-    } catch (e) {
-      reject(e);
-    }
-
-    fs.writeFile(`${paths.idsWebsite.dist}/sitemap.json`, JSON.stringify(doc), 'utf8', err => {
+    fs.writeFile(`${paths.idsWebsite.dist}/sitemap.json`, JSON.stringify(sitemapObj), 'utf8', err => {
       if (err) {
         reject(err);
       } else {
@@ -534,14 +540,7 @@ function writeJsonSitemap() {
 function writeHtmlSitemap() {
   return new Promise((resolve, reject) => {
     const tocTemplate = handlebars.compile(fs.readFileSync(`${paths.docs}/templates/toc.hbs`, 'utf-8'));
-    let sitemapJson = '';
-    try {
-      sitemapJson = yaml.safeLoad(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
-    } catch (e) {
-      reject(e);
-    }
-
-    const sitemapHtml = tocTemplate(sitemapJson);
+    const sitemapHtml = tocTemplate(sitemapObj);
 
     fs.writeFile(`${paths.static}/sitemap.html`, sitemapHtml, 'utf8', err => {
       if (err) {
