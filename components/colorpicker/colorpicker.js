@@ -144,6 +144,7 @@ ColorPicker.prototype = {
     this.isInlineLabel = this.element.parent().is('.inline');
     this.build();
     this.handleEvents();
+    this.setCustomWidth();
   },
 
   // Add the extra markup
@@ -255,6 +256,18 @@ ColorPicker.prototype = {
   },
 
   /**
+  * Set custom width.
+  * @private
+  * @returns {void}
+  */
+  setCustomWidth() {
+    if (this.element[0].style && this.element[0].style.width) {
+      const w = parseInt(this.element[0].style.width, 10);
+      this.container.css({ width: w });
+      this.element.css({ width: ((w - 2) - this.swatch.width()) });
+    }
+  },
+  /**
   * Get the currently set hex value.
   * @returns {string} A string containing the hex
   */
@@ -365,6 +378,7 @@ ColorPicker.prototype = {
   * @returns {void}
   */
   setColor(hex, label) {
+    const s = this.settings;
     let colorHex = hex;
     let colorLabel = label;
 
@@ -377,7 +391,7 @@ ColorPicker.prototype = {
 
     // Simply return out if hex isn't valid
     if (!isValidHex) {
-      if (!this.settings.showLabel) {
+      if (!s.showLabel) {
         return;
       }
       colorLabel = hex.replace('#', '');
@@ -390,8 +404,10 @@ ColorPicker.prototype = {
       colorLabel = this.getLabelFromHex(colorHex);
     }
 
+    colorHex = s.uppercase ? colorHex.toUpperCase() : colorHex.toLowerCase();
+
     // Set the value on the field
-    this.element[0].value = this.settings.showLabel ? colorLabel : colorHex;
+    this.element[0].value = s.showLabel ? colorLabel : colorHex;
     this.element[0].setAttribute(targetAttr, colorHex);
     this.swatch[0].style.backgroundColor = colorHex;
 
@@ -413,29 +429,30 @@ ColorPicker.prototype = {
    * @returns {jQuery} the menu to be appended
    */
   updateColorMenu() {
+    const s = this.settings;
     const isMenu = !!($('#colorpicker-menu').length);
     const menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
     const activeTheme = personalization.currentTheme;
-    const isBorderAll = (this.settings.themes[activeTheme].border === 'all');
-    const checkThemes = this.settings.themes[activeTheme].checkmark;
+    const isBorderAll = (s.themes[activeTheme].border === 'all');
+    const checkThemes = s.themes[activeTheme].checkmark;
     let checkmarkClass = '';
 
-    for (let i = 0, l = this.settings.colors.length; i < l; i++) {
+    for (let i = 0, l = s.colors.length; i < l; i++) {
       const li = $('<li></li>');
       const a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
-      const colorText = (this.translateColorLabel(this.settings.colors[i].label) || this.settings.colors[i].label) + (this.settings.colors[i].number || '');
-      const colorValue = this.settings.colors[i].value;
-      const colorNum = parseInt(this.settings.colors[i].number, 10);
-      let isBorder = false;
+      const colorText = (this.translateColorLabel(s.colors[i].label) || s.colors[i].label) + (s.colors[i].number || '');
+      const colorNum = parseInt(s.colors[i].number, 10);
       const regexp = new RegExp(`\\b${activeTheme}\\b`);
+      let colorValue = s.colors[i].value;
+      let isBorder = false;
       let elemValue = this.isEditor ? this.element.attr('data-value') : this.element.val();
 
-      if (this.settings.showLabel && !this.isEditor) {
+      if (s.showLabel && !this.isEditor) {
         elemValue = this.getHexFromLabel(elemValue);
       }
 
       // Set border to this swatch
-      if (isBorderAll || regexp.test(this.settings.colors[i].border)) {
+      if (isBorderAll || regexp.test(s.colors[i].border)) {
         isBorder = true;
       }
 
@@ -456,6 +473,7 @@ ColorPicker.prototype = {
         a.addClass(`is-selected${checkmarkClass}`);
       }
 
+      colorValue = s.uppercase ? colorValue.toUpperCase() : colorValue.toLowerCase();
       const swatch = a.find('.swatch');
       if (swatch[0]) {
         swatch[0].style.backgroundColor = `#${colorValue}`;
