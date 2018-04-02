@@ -508,7 +508,7 @@ function writeJsonSitemap() {
   return new Promise((resolve, reject) => {
     let doc = '';
     try {
-      doc = yaml.safeLoad(fs.readFileSync(`${paths.src}/sitemap.yml`, 'utf8'));
+      doc = yaml.safeLoad(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
     } catch (e) {
       reject(e);
     }
@@ -534,7 +534,7 @@ function writeHtmlSitemap() {
     const tocTemplate = handlebars.compile(fs.readFileSync(`${paths.docs}/templates/toc.hbs`, 'utf-8'));
     let sitemapJson = '';
     try {
-      sitemapJson = yaml.safeLoad(fs.readFileSync(`${paths.src}/sitemap.yml`, 'utf8'));
+      sitemapJson = yaml.safeLoad(fs.readFileSync(`${paths.docs}/sitemap.yml`, 'utf8'));
     } catch (e) {
       reject(e);
     }
