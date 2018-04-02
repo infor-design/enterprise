@@ -1,4 +1,5 @@
 import { utils } from '../utils/utils';
+import { Environment as env } from '../utils/environment';
 
 // Component Name
 const COMPONENT_NAME = 'toolbarflexitem';
@@ -13,7 +14,8 @@ function hyperlinkFilter(elem) {
 // TODO: Designate between "button" and "menu button"
 const TOOLBAR_ELEMENTS = [
   { type: 'button', selector: 'button:not(.btn-menu):not(.btn-actions), input[type="button"]:not(.btn-menu):not(.btn-actions)' },
-  { type: 'menubutton', selector: '.btn-menu, .btn-actions' },
+  { type: 'menubutton', selector: '.btn-menu' },
+  { type: 'actionbutton', selector: '.btn-actions' },
   { type: 'hyperlink', selector: 'a[href]', filter: hyperlinkFilter },
   { type: 'checkbox', selector: 'input[type="checkbox"]' },
   { type: 'radio', selector: 'input[type="radio"]' },
@@ -67,6 +69,8 @@ function ToolbarFlexItem(element, settings) {
 
   // Internal flags
   this.type = getToolbarItemType(element);
+  this.section = this.element.parentElement;
+  this.toolbar = this.section.parentElement;
   this.init();
 }
 
@@ -78,6 +82,7 @@ ToolbarFlexItem.prototype = {
    * @private
    */
   init() {
+    this.render();
     this.handleEvents();
   },
 
@@ -144,7 +149,7 @@ ToolbarFlexItem.prototype = {
    */
   get componentAPI() {
     let api;
-    if (this.type === 'menubutton') {
+    if (this.type === 'menubutton' || this.type === 'actionbutton') {
       api = $(this.element).data('popupmenu');
     }
     if (this.type === 'hyperlink') {
@@ -161,10 +166,16 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   triggerSelectedEvent() {
+    // Searchfields aren't "selectable" in the same way actionable items are,
+    // so they shouldn't fire the "selected" event.
+    if (this.type === 'searchfield' || this.type === 'toolbarsearchfield') {
+      return;
+    }
+
     const eventArgs = [this];
 
     // MenuButton types pass the currently-selected anchor
-    if (this.type === 'menubutton' && this.selectedAnchor) {
+    if ((this.type === 'menubutton' || this.type === 'actionbutton') && this.selectedAnchor) {
       eventArgs.push(this.selectedAnchor);
     }
 
@@ -268,15 +279,31 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
+   * @returns {boolean} whether or not the item is pushed into overflow by the boundaries
+   *  of its container element.
+   */
+  get overflowed() {
+    const isRTL = env.rtl;
+    const elemRect = this.element.getBoundingClientRect();
+    const sectionRect = this.section.getBoundingClientRect();
+
+    if (isRTL) {
+      return elemRect.left < sectionRect.left;
+    }
+    return elemRect.right > sectionRect.right;
+  },
+
+  /**
    * Sets up all event listeners for this element.
    * @returns {void}
    */
   handleEvents() {
     const self = this;
+    const $element = $(this.element);
 
-    if (this.type === 'menubutton') {
+    if (this.type === 'menubutton' || this.type === 'actionbutton') {
       // Listen to the Popupmenu's selected event
-      $(this.element).on(`selected.${COMPONENT_NAME}`, (e, anchor) => {
+      $element.on(`selected.${COMPONENT_NAME}`, (e, anchor) => {
         if (this.selectedAnchor) {
           return;
         }
@@ -286,6 +313,43 @@ ToolbarFlexItem.prototype = {
         self.selected = true;
       });
     }
+
+    if (this.type === 'actionbutton') {
+      $element.on(`beforeopen.${COMPONENT_NAME}`, this.handleActionButtonBeforeOpen.bind(this));
+    }
+  },
+
+  /**
+   * If this element is an Action Button, this listener runs before its popupmenu is opened
+   * To determine which elements need to be shown/hidden.
+   * @private
+   */
+  handleActionButtonBeforeOpen() {
+
+  },
+
+  /**
+   * Renders extra markup or anything else needed on the toolbar item
+   * @returns {void}
+   */
+  render() {
+    /*
+     * TODO: Undo this after the initializer refactoring
+
+    if (this.type !== 'actionbutton') {
+      return;
+    }
+
+    TODO: Need to build all the action button items that link back to real Toolbar items here
+
+    let $menu;
+    if (this.componentAPI) {
+      $menu = this.componentAPI.menu;
+    }
+
+    debugger;
+    //$menu.append();
+    */
   },
 
   /**
@@ -304,7 +368,9 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   teardown() {
-    $(this.element).off(`selected.${COMPONENT_NAME}`);
+    $(this.element)
+      .off(`selected.${COMPONENT_NAME}`)
+      .off(`beforeopen.${COMPONENT_NAME}`);
 
     delete this.type;
     delete this.selected;

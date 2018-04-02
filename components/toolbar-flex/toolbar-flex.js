@@ -194,7 +194,7 @@ ToolbarFlex.prototype = {
     // Gets set in `this.handleItemKeydown` by pressing 'Enter'.
     if (this.clickByEnterKey) {
       // Prevents the enter key from triggering a `selected` event on the menu button.
-      if (this.type === 'menubutton') {
+      if (this.type === 'menubutton' || this.type === 'actionbutton') {
         e.preventDefault();
       }
       delete this.clickByEnterKey;
@@ -298,6 +298,21 @@ ToolbarFlex.prototype = {
   },
 
   /**
+   * @returns {HTMLElement[]} all overflowed items in the toolbar
+   */
+  get overflowedItems() {
+    const overflowed = [];
+
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].overflowed === true) {
+        overflowed.push(this.items[i]);
+      }
+    }
+
+    return overflowed;
+  },
+
+  /**
    * Navigates among toolbar items and gets a reference to a potential target for focus.
    * @param {number} direction positive/negative value representing how many spaces to move
    * @param {number} [currentIndex] the index to start checking from
@@ -357,6 +372,7 @@ ToolbarFlex.prototype = {
 
     switch (item.type) {
       case 'searchfield':
+      case 'actionbutton':
       case 'menubutton': {
         if (this.clickByEnterKey) {
           return;
