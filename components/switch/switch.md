@@ -3,8 +3,6 @@ title: Switch Component
 description: This page describes Switch Component .
 ---
 
-## API Details
-
 The Switch Component is a CSS-only component, and has no specific Javascript API.
 
 ## Configuration Options

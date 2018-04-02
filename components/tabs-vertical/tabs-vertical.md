@@ -9,6 +9,4 @@ description: This page describes Vertical Tabs .
 2. [Vertical Tabs as outbound links]( ../components/tabs-vertical/example-outbound-links-page1)
 3. [Responsive Setting (changes to header tabs)]( ../components/tabs-vertical/example-responsive)
 
-## API Details
-
 All Soho Tabs components use the same API.  For details on this component's API, please read the [Tabs Component API]( ../components/tabs).

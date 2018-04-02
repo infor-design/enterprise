@@ -13,8 +13,6 @@ description: This page describes Pie Chart.
 6. Example showing Get Selected value [View Example]( ../components/pie/example-get-selected)
 7. Example showing Set Selected value [View Example]( ../components/pie/example-set-selected)
 
-## API Details
-
 ## Code Example
 
 This example shows how to invoke a pie bar chart with a dataset controlling the values.

@@ -11,8 +11,6 @@ description: This page describes Positive-Negative Chart.
 4. Example showing Get Selected value [View Example]( ../components/positive-negative/example-get-selected)
 5. Example showing Set Selected value [View Example]( ../components/positive-negative/example-set-selected)
 
-## API Details
-
 ### Dataset Settings
 
 * `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - The name to show on the y axis for the bar

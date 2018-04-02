@@ -11,8 +11,6 @@ description: This page describes Bubble Chart.
 4. Example showing Get Selected value [View Example]( ../components/bubble/example-get-selected)
 5. Example showing Set Selected value [View Example]( ../components/bubble/example-set-selected)
 
-## API Details
-
 The ubble chart is a line chart with the isBubble set that adds the bubble. Plus the z dimension in the data.
 See the [line chart api]( ../components/line) for more details.
 

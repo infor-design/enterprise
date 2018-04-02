@@ -9,8 +9,6 @@ description: This page describes Sparklines.
 2. Example showing Get Selected value [View Example]( ../components/sparkline/example-get-selected)
 3. Example showing Set Selected value [View Example]( ../components/sparkline/example-set-selected)
 
-## API Details
-
 ## Spark Line Chart Types
 
 * `sparkline-dots-n-peak` - Shows dots for each datapoint and highlights the top value as "peak".

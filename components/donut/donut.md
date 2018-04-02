@@ -13,8 +13,6 @@ description: This page describes Donut Chart.
 6. Example showing Get Selected value [View Example]( ../components/donut/example-get-selected)
 7. Example showing Set Selected value [View Example]( ../components/donut/example-set-selected)
 
-## API Details
-
 ### Settings
 
 See the [Pie API]( ../components/pie) as this is just a pie setting.

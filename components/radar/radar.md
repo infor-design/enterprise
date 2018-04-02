@@ -7,8 +7,6 @@ description: This page describes Radar Chart.
 
 1. Radar Chart Main Example [View Example]( ../components/radar/example-index)
 
-## API Details
-
 ## Code Example
 
 This example shows how to invoke a pie bar chart with a dataset controlling the values.

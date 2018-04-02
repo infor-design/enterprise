@@ -9,8 +9,6 @@ description: This page describes Targeted Achievement Chart.
 2. Grid Example, this chart is available as a formatter.  [View Example]( ../components/datagrid/test-targeted-achievement.html)
 3. Example showing Percent Text [View Example]( ../components/targeted-achievement/example-percent-text)
 
-## API Details
-
 ### Dataset Settings
 
 * name - Applies a name label to the left most section of the chart.

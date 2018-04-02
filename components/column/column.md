@@ -19,8 +19,6 @@ description: This page describes Column Chart.
 12. Example showing Get Selected value [View Test]( ../components/column/example-get-selected)
 13. Example showing Set Selected value [View Test]( ../components/column/example-set-selected)
 
-## API Details
-
 ## Dataset Settings
 
 * name - this value will be on the axis

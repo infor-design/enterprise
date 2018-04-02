@@ -14,8 +14,6 @@ description: This page describes Column Chart (Stacked).
 6. Example showing Set Selected value [View Example]( ../components/column-stacked/example-set-selected)
 7. Example showing Singular Set Selected value [View Example]( ../components/column-stacked/example-singular-set-selected)
 
-## API Details
-
 ### Dataset Settings
 
 * name (data point) - this value will be used to stack/group the similar data points

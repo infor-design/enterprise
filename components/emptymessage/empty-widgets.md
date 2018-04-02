@@ -7,8 +7,6 @@ description: This page describes Empty Widgets.
 
 1. Example Showing all Types of Empty Widgets [View Example]( ../components/empty-widgets/example-index)
 
-## API Details
-
 ### Html Sections
 
 -   `card-empty-icon` -  If true will contain one of the icons from the [icon list](http://git.infor.com/projects/SOHO/repos/controls/browse/components/empty-widgets/svg-empty.html)

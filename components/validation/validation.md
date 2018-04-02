@@ -12,8 +12,6 @@ description: This page describes Validation.
 5. Manually adding an Error [View Example]( ../components/validation/example-standalone-error)
 6. Validating on Form Submit [View Example]( ../components/validation/example-validation-form)
 
-## API Details
-
 ## Code Example - Auto
 
 This example shows how to manually link validation automatically on fields. Use the `data-validate` attribute to indicate a space separated list of validation rules to use out of the validation object.
