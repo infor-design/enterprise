@@ -20,7 +20,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
       const el = this;
       const elm = $(this);
 
-      if (elm.is('.is-hidden')) {
+      if (elm.is('.is-hidden, .datagrid-expandable-row')) {
         elm.remove();
         return;
       }
@@ -170,7 +170,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
       const el = this;
       const elm = $(this);
 
-      if (elm.is('.is-hidden')) {
+      if (elm.is('.is-hidden, .datagrid-expandable-row')) {
         elm.remove();
         return;
       }
