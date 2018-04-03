@@ -1,0 +1,46 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Color Picker (Short Field)</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field-short">
+      <label for="background-color">Normal</label>
+      <input class="colorpicker" id="background-color" type="text" />
+    </div>
+
+    <div class="field-short">
+      <label for="non-editable">Normal (Non-Editable)</label>
+      <input class="colorpicker" id="non-editable" type="text" data-options="{'editable' : false}"/>
+    </div>
+
+    <div class="field-short">
+      <label for="foreground-color">Disabled</label>
+      <input class="colorpicker" disabled id="foreground-color" type="text" value="#0896e9"/>
+    </div>
+
+    <div class="field-short">
+      <label for="readonly-color">Readonly</label>
+      <input class="colorpicker" readonly id="readonly-color" type="text" value="#0896e9"/>
+    </div>
+
+    <div class="field-short">
+      <label for="dirty-color">Dirty Tracking</label>
+      <input class="colorpicker" data-trackdirty="true"  id="dirty-color" type="text"/>
+    </div>
+
+    <div class="field-short">
+      <label class="required" for="required-color">Validation<span class="audible">Required</span></label>
+      <input class="colorpicker" data-validate="required" data id="required-color" type="text" />
+    </div>
+
+    <div class="field-short">
+      <label class="required" for="color-only">Just Color</label>
+      <input class="colorpicker" data-options="{'colorOnly' : true}" id="color-only"  type="text" value="#0896e9"/>
+    </div>
+
+  </div>
+</div>

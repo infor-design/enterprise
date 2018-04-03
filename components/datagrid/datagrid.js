@@ -6840,7 +6840,8 @@ Datagrid.prototype = {
 
     if (coercedVal !== oldVal && !fromApiCall) {
       const args = {
-        row,
+        row: this.settings.source !== null ? dataRowIndex : row,
+        relativeRow: row,
         cell,
         target: cellNode,
         value: coercedVal,

@@ -164,7 +164,10 @@
       cursor: default;
       opacity: .6;
     }
+  }
 
+  .icon-dirty {
+    margin: 2px 0 0 3px;
   }
 }
 
@@ -248,12 +251,39 @@
   }
 }
 
+// Short Fields
+.field-short {
+  .colorpicker-container {
+    width: inherit;
+
+    .trigger {
+      height: 22px;
+      margin-left: -22px;
+      width: 22px;
+
+      .icon:not(.icon-error) {
+        left: 5px;
+        top: 5px;
+      }
+    }
+
+    .swatch {
+      height: 22px;
+      width: 22px;
+    }
+
+    .colorpicker {
+      height: inherit;
+      line-height: 14px;
+      padding: 5px 21px 5px 5px;
+    }
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
 
   .colorpicker-container {
-
-    // Color Piece
     .swatch {
       left: 0;
       right: 1px;
@@ -261,6 +291,27 @@ html[dir='rtl'] {
 
     .icon {
       left: 0;
+    }
+
+    .icon-dirty {
+      margin: 2px 3px 0 0;
+    }
+  }
+
+  .field-short {
+    .colorpicker-container {
+      .trigger {
+        left: 22px;
+        position: relative;
+
+        .icon:not(.icon-error) {
+          left: 0;
+        }
+      }
+
+      .colorpicker {
+        padding: 5px 5px 5px 21px;
+      }
     }
   }
 

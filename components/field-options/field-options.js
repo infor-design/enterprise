@@ -83,6 +83,7 @@ FieldOptions.prototype = {
     const timepicker = this.element.data('timepicker');
     const dropdown = this.element.data('dropdown');
     const lookup = this.element.data('lookup') || this.element.hasClass('lookup');
+    const isCheckbox = this.element.is('.checkbox');
     const isFileupload = this.element.is('.fileupload');
     const isSearchfield = this.element.is('.searchfield');
     const isSpinbox = this.element.is('.spinbox');
@@ -206,6 +207,11 @@ FieldOptions.prototype = {
             doActive();
           });
       }
+    }
+    // Checkbox add parent css class
+    if (isCheckbox) {
+      this.field.addClass('is-fieldoptions');
+      this.trigger.addClass('is-checkbox');
     }
     // Bind fileupload events
     if (isFileupload) {

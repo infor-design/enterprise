@@ -673,17 +673,20 @@ label,
 
 // Field Sizes
 .input-lg,
+.colorpicker-container .input-lg.colorpicker,
 .field-short .input-lg {
   width: $field-lg;
 }
 
 .input-md,
+.colorpicker-container .input-md.colorpicker,
 .input-md.datepicker,
 .field-short .input-md {  //Default
   width: $field-md;
 }
 
 .input-mm,
+.colorpicker-container .input-mm.colorpicker,
 .input-mm.datepicker,
 .field-short .input-mm {  //Default
   width: $field-mm;
@@ -691,11 +694,13 @@ label,
 
 
 .input-sm,
+.colorpicker-container .input-sm.colorpicker,
 .field-short .input-sm {
   width: $field-sm;
 }
 
 .input-xs,
+.colorpicker-container .input-xs.colorpicker,
 .field-short .input-xs {
   width: $field-xs;
 }
