@@ -31,7 +31,7 @@ const formatters = {
       } else if (item && item[placeholder]) {
         placeholder = item[placeholder];
       }
-      const html = `<label for="datagrid-inline-input-${row}-${cell}" class="audible">${col.name}</label><input id="datagrid-inline-input-${row}-${cell}" class="placeholder" placeholder="${placeholder}">`;
+      const html = `<span class="is-placeholder">${placeholder}</span>`;
 
       return html;
     }

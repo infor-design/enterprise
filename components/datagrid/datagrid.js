@@ -6253,10 +6253,11 @@ Datagrid.prototype = {
       this.settings.dataset[idx];
     const cellWidth = cellParent.outerWidth();
     const isEditor = $('.is-editor', cellParent).length > 0;
+    const isPlaceholder = $('.is-placeholder', cellNode).length > 0;
     let cellValue = (cellNode.text() ?
       cellNode.text() : this.fieldValue(rowData, col.field));
 
-    if (isEditor) {
+    if (isEditor || isPlaceholder) {
       cellValue = this.fieldValue(rowData, col.field);
     }
 
