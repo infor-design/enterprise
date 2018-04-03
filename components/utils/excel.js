@@ -67,7 +67,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
 
     // CHECK EXPORTABLE
     const nonExportables = [];
-    $.each($('th').not('.is-hidden'), (index, item) => {
+    $.each($('th', self.headerRow).not('.is-hidden'), (index, item) => {
       if ($(item)[0].getAttribute('data-exportable') && $(item)[0].getAttribute('data-exportable') === 'no') {
         nonExportables.push(index);
       }
