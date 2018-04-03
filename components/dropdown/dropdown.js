@@ -842,6 +842,10 @@ Dropdown.prototype = {
     // Space will add a space inside the search input.
     this.searchKeyMode = false;
 
+    this.searchInput.on('blur.dropdown', function (e) {
+      self.close();
+    });
+
     this.searchInput.on('keydown.dropdown', function (e) {
       const searchInput = $(this);
 
@@ -1734,7 +1738,7 @@ Dropdown.prototype = {
     }
 
     this.filterTerm = '';
-    this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
+    this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown blur.dropdown');
 
     // Destroy any tooltip items
     this.listUl.find('.has-tooltip').each(function () {
