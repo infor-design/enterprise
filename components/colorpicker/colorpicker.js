@@ -125,7 +125,7 @@ function ColorPicker(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COLORPICKER_DEFAULTS);
 
   // Merge Settings does deep copy we want to replace here
-  if (settings.colors) {
+  if (settings && settings.colors) {
     this.settings.colors = settings.colors;
   }
 
