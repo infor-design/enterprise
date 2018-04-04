@@ -164,6 +164,7 @@ module.exports = {
 
   },
   'globals': {
-    'd3': false
+    'd3': false,
+    'spyOnEvent': true
   }
 };

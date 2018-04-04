@@ -913,8 +913,8 @@ PopupMenu.prototype = {
     const wrapper = this.menu.parent('.popupmenu-wrapper');
     const mouse = this.getPositionFromEvent(e);
     const menuDimensions = {
-      width: this.menu.outerWidth(),
-      height: this.menu.outerHeight()
+      width: this.menu[0].offsetWidth,
+      height: this.menu[0].offsetHeight
     };
 
     if (!wrapper.length) {
@@ -922,7 +922,7 @@ PopupMenu.prototype = {
     }
 
     // Make the field the same size
-    const elemWidth = this.element.outerWidth();
+    const elemWidth = this.element[0].offsetWidth;
     if (this.settings.trigger === 'click' && elemWidth > menuDimensions.width) {
       this.menu.width(elemWidth);
     }
