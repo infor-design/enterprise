@@ -62,7 +62,7 @@ marked.setOptions({
 //   Constants
 // -------------------------------------
 const idsWebsitePath = 'docs/ids-website';
-const staticWebsitePath = 'docs/local-website';
+const staticWebsitePath = 'docs/static-website';
 const rootPath = process.cwd();
 const paths = {
   components:  `${rootPath}/components`,
@@ -138,6 +138,9 @@ Promise.all(setupPromises)
   .then(values => {
     logTaskStart('writing files');
 
+    const pageTemplate = handlebars.compile(fs.readFileSync(`${paths.docs}/templates/page.hbs`, 'utf-8'));
+
+
     let writePromises = [];
     if (deployTo === 'static') {
       writePromises.push(writeHtmlSitemap());
@@ -147,7 +150,7 @@ Promise.all(setupPromises)
 
     for (compName in allDocsObjMap) {
       if (deployTo === 'static') {
-        writePromises.push(writeHtmlFile(compName));
+        writePromises.push(writeHtmlFile(pageTemplate, compName));
       } else {
         writePromises.push(writeJsonFile(compName));
       }
@@ -220,7 +223,7 @@ function compileComponents() {
 
 /**
  * Compile all ids-website supporting MD files
- * and store the output string in an object
+ * and store the output string
  * @return {Promise}
  */
 function compileSupportingDocs() {
@@ -230,9 +233,9 @@ function compileSupportingDocs() {
     let promises = [];
     let compName = '';
 
-    glob(`${paths.idsWebsite.root}/*.md`, (err, files) => {
+    glob(`${paths.docs}/*.md`, (err, files) => {
       for (filePath of files) {
-        fileName = path.basename(filePath, '.md');
+        let fileName = path.basename(filePath, '.md').toLowerCase();
 
         allDocsObjMap[fileName] = Object.assign({}, jsonTemplate, {
           title: fileName,
@@ -259,20 +262,20 @@ function compileSupportingDocs() {
  * @return {Promise}
  */
 function cleanAll() {
-  const toDel = [];
+  const filesToDel = [];
 
   if (deployTo === 'static') {
-    toDel.push(`${paths.static}/*.html`)
+    filesToDel.push(`${paths.static}/*.html`)
   } else {
-    toDel.push(paths.idsWebsite.dist, paths.idsWebsite.distDocs);
+    filesToDel.push(paths.idsWebsite.dist, paths.idsWebsite.distDocs);
   }
 
-  return del(toDel)
+  return del(filesToDel)
     .catch(err => {
       console.error(chalk.red('Error!'), err);
     })
     .then(res => {
-      logTaskAction('Clean', paths.idsWebsite.dist);
+      logTaskAction('Cleaned', paths.idsWebsite.dist);
       createDirs([paths.idsWebsite.dist, paths.idsWebsite.distDocs, paths.static]);
     }
   );
@@ -286,7 +289,7 @@ function cleanAll() {
  * @return {Promise}
  */
 function markdownToHtml(filePath) {
-  let fileBasename = path.basename(filePath, '.md');
+  let fileBasename = path.basename(filePath, '.md').toLowerCase();
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
@@ -344,7 +347,8 @@ function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
   const vfs = require('vinyl-fs');
 
-  const themeName = (deployTo === 'static') ? 'theme-single-page' : 'theme-ids-website';
+  // const themeName = (deployTo === 'static') ? 'theme-single-page' : 'theme-ids-website';
+  const themeName = 'theme-ids-website';
 
   return documentation.build([compFilePath], { extension: 'js', shallow: true })
     .then(comments => {
@@ -477,19 +481,21 @@ function timeElapsed(t) {
 
 /**
  * Write a html file for specified component
+ *
  * @param {string} componentName - the name of the component
  */
-function writeHtmlFile(componentName) {
+function writeHtmlFile(hbsTemplate, componentName) {
   return new Promise((resolve, reject) => {
-    const thisName = componentName;
-    const content = allDocsObjMap[thisName].api.replace('<insert-md-docs></insert-md-docs>', allDocsObjMap[thisName].body);
+    const html = hbsTemplate({
+      version: packageJson.version,
+      component: allDocsObjMap[componentName]
+    });
 
-    fs.writeFile(`${paths.static}/${thisName}.html`, content, 'utf8', err => {
+    fs.writeFile(`${paths.static}/${componentName}.html`, html, 'utf8', err => {
       if (err) {
         reject(err);
       } else {
-        componentStats.numWritten++;
-        logTaskAction('Created', thisName + '.html');
+        logTaskAction('Created', `${componentName}.html`);
         resolve();
       }
     });
