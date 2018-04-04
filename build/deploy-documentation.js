@@ -493,10 +493,12 @@ function timeElapsed(t) {
  */
 function writeHtmlFile(hbsTemplate, componentName) {
   return new Promise((resolve, reject) => {
-    const html = hbsTemplate({
+    const data = {
       version: packageJson.version,
       component: allDocsObjMap[componentName]
-    });
+    };
+    data.component.slug = componentName;
+    const html = hbsTemplate(data);
 
     fs.writeFile(`${paths.static}/${componentName}.html`, html, 'utf8', err => {
       if (err) {
