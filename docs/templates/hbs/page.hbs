@@ -22,6 +22,14 @@
 
   <main class="ids-container">
     <h1>{{component.title}}</h1>
+    <p>{{component.description}}</p>
+    <ul>
+      {{#each component.demo.pages}}
+        <li>
+          <a href="{{slug}}">{{name}}</a>
+        </li>
+      {{/each}}
+    </ul>
     <div>
       {{{component.body}}}
     </div>

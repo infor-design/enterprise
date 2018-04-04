@@ -61,26 +61,33 @@ marked.setOptions({
 // -------------------------------------
 //   Constants
 // -------------------------------------
+const rootPath = process.cwd();
 const idsWebsitePath = 'docs/ids-website';
 const staticWebsitePath = 'docs/static-website';
-const rootPath = process.cwd();
+
 const paths = {
-  components:  `${rootPath}/components`,
-  docs:        `${rootPath}/docs`,
-  docjs:       `${rootPath}/docs/documentationjs`,
-  idsWebsite: {
-    root: `${rootPath}/${idsWebsitePath}`,
-    dist:        `${rootPath}/${idsWebsitePath}/dist`,
-    distDocs:    `${rootPath}/${idsWebsitePath}/dist/docs`
+  components: `${rootPath}/components`,
+  docs:       `${rootPath}/docs`,
+  templates: {
+    root:  `${rootPath}/docs/templates`,
+    hbs:   `${rootPath}/docs/templates/hbs`,
+    docjs: `${rootPath}/docs/templates/documentationjs`
   },
-  static:      `${rootPath}/${staticWebsitePath}`,
+  idsWebsite: {
+    root:     `${rootPath}/${idsWebsitePath}`,
+    dist:     `${rootPath}/${idsWebsitePath}/dist`,
+    distDocs: `${rootPath}/${idsWebsitePath}/dist/docs`
+  },
+  static: `${rootPath}/${staticWebsitePath}`,
 };
+
 const jsonTemplate = {
   title: '',
   description: '',
   body: '',
   api: ''
 };
+
 const serverURIs = {
   static: paths.static,
   local: 'http://localhost/api/docs/',
@@ -112,7 +119,7 @@ let numArchivesSent = 0;
 hbsRegistrar(handlebars, {
   bustCache: true,
   partials: [
-    `${paths.docs}/templates/partials/*.hbs`
+    `${paths.templates.hbs}/partials/*.hbs`
   ]
 });
 
@@ -138,7 +145,7 @@ Promise.all(setupPromises)
   .then(values => {
     logTaskStart('writing files');
 
-    const pageTemplate = handlebars.compile(fs.readFileSync(`${paths.docs}/templates/page.hbs`, 'utf-8'));
+    const pageTemplate = handlebars.compile(fs.readFileSync(`${paths.templates.hbs}/page.hbs`, 'utf-8'));
 
 
     let writePromises = [];
@@ -352,7 +359,7 @@ function documentJsToHtml(componentName) {
 
   return documentation.build([compFilePath], { extension: 'js', shallow: true })
     .then(comments => {
-      documentation.formats.html(comments, { theme: `${paths.docjs}/${themeName}` })
+      documentation.formats.html(comments, { theme: `${paths.templates.docjs}/${themeName}` })
         .then(output => {
           return output.map((file) => {
             return vinylToString(file, 'utf8').then(contents => {
@@ -546,7 +553,7 @@ function writeJsonSitemap() {
  */
 function writeHtmlSitemap() {
   return new Promise((resolve, reject) => {
-    const tocTemplate = handlebars.compile(fs.readFileSync(`${paths.docs}/templates/toc.hbs`, 'utf-8'));
+    const tocTemplate = handlebars.compile(fs.readFileSync(`${paths.templates.hbs}/toc.hbs`, 'utf-8'));
     const sitemapObj = readSitemapYaml();
     const sitemapHtml = tocTemplate(sitemapObj);
 
