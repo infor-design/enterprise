@@ -128,3 +128,117 @@ describe('Popupmenu Single Select API', () => {
     expect(toreDownObj).toEqual(jasmine.any(Object));
   });
 });
+
+describe('Popupmenu renderItem API', () => {
+  beforeEach(() => {
+    popupmenuButtonEl = null;
+    svgEl = null;
+    rowEl = null;
+    popupmenuObj = null;
+    document.body.insertAdjacentHTML('afterbegin', popupmenuSelectableHTML);
+    document.body.insertAdjacentHTML('afterbegin', svg);
+    popupmenuButtonEl = document.body.querySelector('#single-select-popupmenu-trigger');
+    rowEl = document.body.querySelector('.row');
+    svgEl = document.body.querySelector('.svg-icons');
+    popupmenuObj = new PopupMenu(popupmenuButtonEl);
+  });
+
+  afterEach(() => {
+    popupmenuObj.destroy();
+    popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
+    rowEl.parentNode.removeChild(rowEl);
+    svgEl.parentNode.removeChild(svgEl);
+  });
+
+  it('Should build HTML for a single Popupmenu item from a settings object', () => {
+    // Single Menu Option
+    const data = {
+      text: 'Pre-defined Menu Item #1'
+    };
+    const markup = popupmenuObj.renderItem(data);
+
+    expect(markup).toBe('<li class="popupmenu-item"><a href="#"><span>Pre-defined Menu Item #1</span></a></li>');
+  });
+
+  it('Should build HTML for two Popupmenu items from a settings array', () => {
+    // Two menu options (should be wrapped in a `<ul class="popupmenu"></ul>`)
+    const data = [{
+      text: 'Pre-defined Menu Item #1',
+      selectable: 'single'
+    }, {
+      text: 'Pre-defined Menu Item #2',
+      selectable: 'single'
+    }];
+    const markup = popupmenuObj.renderItem(data);
+
+    expect(markup).toBe('<ul class="popupmenu"><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #1</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #2</span></a></li></ul>');
+  });
+
+  it('Should build HTML for a single Popupmenu Item with an icon', () => {
+    const data = {
+      text: 'trash',
+      icon: 'delete'
+    };
+    const markup = popupmenuObj.renderItem(data);
+
+    expect(markup).toBe('<li class="popupmenu-item"><a href="#"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-delete"></use></svg><span>trash</span></a></li>');
+  });
+
+  it('Should build HTML for a single Popupmenu Item that\'s disabled', () => {
+    const data = {
+      text: 'This is disabled',
+      disabled: true
+    };
+    const markup = popupmenuObj.renderItem(data);
+
+    expect(markup).toBe('<li class="popupmenu-item is-disabled"><a href="#"><span>This is disabled</span></a></li>');
+  });
+
+  it('Should build HTML for a single Popupmenu item with a submenu from a settings object', () => {
+    // Single Menu Option
+    const data = {
+      text: 'Parent Menu Item',
+      submenu: [
+        {
+          text: 'Child Menu Item #1',
+          selectable: 'single'
+        },
+        {
+          text: 'Child Menu Item #2',
+          selectable: 'single'
+        },
+        {
+          text: 'Child Menu Item #3',
+          selectable: 'single'
+        }
+      ]
+    };
+    const markup = popupmenuObj.renderItem(data);
+
+    expect(markup).toBe('<li class="popupmenu-item submenu"><a href="#"><span>Parent Menu Item</span></a><ul class="popupmenu"><li class="popupmenu-item is-selectable"><a href="#"><span>Child Menu Item #1</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Child Menu Item #2</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Child Menu Item #3</span></a></li></ul></li>');
+  });
+
+  it('Should build HTML for a single Popupmenu item with a multi-selectable submenu from a settings object', () => {
+    // Single Menu Option
+    const data = {
+      text: 'Parent Menu Item',
+      submenu: [
+        {
+          text: 'Child Menu Item #1',
+          selectable: 'multiple'
+        },
+        {
+          text: 'Child Menu Item #2',
+          selectable: 'multiple'
+        },
+        {
+          text: 'Child Menu Item #3',
+          selectable: 'multiple'
+        }
+      ]
+    };
+    const markup = popupmenuObj.renderItem(data);
+
+    expect(markup).toBe('<li class="popupmenu-item submenu"><a href="#"><span>Parent Menu Item</span></a><ul class="popupmenu"><li class="popupmenu-item is-multiselectable"><a href="#"><span>Child Menu Item #1</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Child Menu Item #2</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Child Menu Item #3</span></a></li></ul></li>');
+  });
+});

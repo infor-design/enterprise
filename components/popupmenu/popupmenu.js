@@ -1,5 +1,6 @@
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
+import { stringUtils } from '../utils/string';
 import { DOM } from '../utils/dom';
 import { Locale } from '../locale/locale';
 import { PlacementObject, Place } from '../place/place';
@@ -276,6 +277,84 @@ PopupMenu.prototype = {
     if (this.menu.is('.hidden')) {
       this.menu.removeClass('hidden');
     }
+  },
+
+  /**
+   * @param {object|object[]} settings JSON-friendly object that represents a popupmenu item, or array of items.
+   * @param {boolean} [settings.divider=false] causes this menu item to be a divider (overrides everything else)
+   * @param {string} [settings.heading=""] Produces a heading element after a divider with text content.
+   * @param {string} [settings.nextSectionSelect] can be null, "single", or "multiple"
+   * @param {string} settings.text contains the text that will be displayed.
+   * @param {string|null} [settings.icon=null] applies an icon to the menu item
+   * @param {string|null} [settings.selectable] can be null, "single", or "multiple"
+   * @param {boolean} [settings.disabled=false] causes the item to be disabled.
+   * @param {object[]} [settings.submenu] array of settings object contstructed just like this one, that represent submenu items.
+   * @returns {string} HTML representing a Popupmenu item with the settings passed.
+   */
+  renderItem(settings) {
+    // Top-level arrays run this method on each sub-item.
+    if (Array.isArray(settings)) {
+      let items = '';
+      settings.forEach((menuObj) => {
+        items += this.renderItem(menuObj);
+      });
+      return stringUtils.stripWhitespace(`<ul class="popupmenu">${items}</ul>`);
+    }
+
+    let headingText = '';
+    let sectionSelectClass = '';
+
+    // Dividers get rendered out first
+    if (settings.divider === true) {
+      if (settings.heading) {
+        headingText += `<li class="heading">${settings.heading}</li>`;
+      }
+      if (settings.nextSectionSelect === 'single' || settings.nextSectionSelect === 'multiple') {
+        sectionSelectClass = ` ${settings.nextSectionSelect}`;
+      }
+
+      return stringUtils.stripWhitespace(`
+        <li class="separator${sectionSelectClass}"></li>
+        ${headingText}
+      `);
+    }
+
+    let disabledClass = '';
+    let icon = '';
+    let selectableClass = '';
+    let submenuClass = '';
+    let submenu = '';
+
+    if (settings.disabled) {
+      disabledClass += ' is-disabled';
+    }
+
+    if (settings.selectable === 'single') {
+      selectableClass += ' is-selectable';
+    }
+
+    if (settings.selectable === 'multiple') {
+      selectableClass += ' is-multiselectable';
+    }
+
+    if (settings.icon) {
+      icon = `<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-${settings.icon}"></use>
+      </svg>`;
+    }
+
+    if (Array.isArray(settings.submenu)) {
+      submenuClass += ' submenu';
+      submenu += this.renderItem(settings.submenu);
+    }
+
+    return stringUtils.stripWhitespace(`<li class="popupmenu-item${disabledClass}${selectableClass}${submenuClass}">
+      <a href="#">
+        ${icon}
+        <span>${settings.text}</span>
+      </a>
+      ${submenu}
+    </li>`);
   },
 
   /**

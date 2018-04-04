@@ -56,6 +56,18 @@ stringUtils.stripHTML = function stripHTML(str) {
 };
 
 /**
+ * Takes a string containing HTML and strips it of extraneous white space.
+ * @param {string} str The string to parse
+ * @returns {string} The string minus extraneous white space.
+ */
+stringUtils.stripWhitespace = function stripWhitespace(str) {
+  return str.replace(/\n/g, '')
+    .replace(/[\t ]+</g, '<')
+    .replace(/>[\t ]+</g, '><')
+    .replace(/>[\t ]+$/g, '>');
+};
+
+/**
  * Capitalizes the first letter of a string
  * @param {string} str the incoming text
  * @returns {string} the modified text

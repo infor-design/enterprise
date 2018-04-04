@@ -71,6 +71,7 @@ function ToolbarFlexItem(element, settings) {
   this.type = getToolbarItemType(element);
   this.section = this.element.parentElement;
   this.toolbar = this.section.parentElement;
+
   this.init();
 }
 
@@ -159,6 +160,13 @@ ToolbarFlexItem.prototype = {
       api = $(this.element).data('searchfield');
     }
     return api;
+  },
+
+  /**
+   * @returns {ToolbarFlex} the parent toolbar API
+   */
+  get toolbarAPI() {
+    return $(this.toolbar).data('toolbar-flex');
   },
 
   /**
@@ -325,7 +333,7 @@ ToolbarFlexItem.prototype = {
    * @private
    */
   handleActionButtonBeforeOpen() {
-
+    this.renderMoreActionsMenu();
   },
 
   /**
@@ -333,23 +341,41 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   render() {
-    /*
-     * TODO: Undo this after the initializer refactoring
-
     if (this.type !== 'actionbutton') {
       return;
     }
 
-    TODO: Need to build all the action button items that link back to real Toolbar items here
+    this.renderMoreActionsMenu();
+  },
 
+  renderMoreActionsMenu() {
     let $menu;
     if (this.componentAPI) {
       $menu = this.componentAPI.menu;
     }
+    if (!this.toolbarAPI) {
+      return;
+    }
 
-    debugger;
-    //$menu.append();
+    const excludes = this.predefinedItems || $();
+    if (this.toolbarAPI) {
+      excludes.add(this.toolbarAPI.predefinedItems);
+    }
+
+    if (excludes.length) {
+      $menu.children().not(excludes).remove();
+    }
+
+    /**
+     * TODO: create process that builds popupmenu items from toolbar markup, and links them for event usage.
+     */
+    /*
+    this.toolbarAPI.items.reverse().forEach((item) => {
+      $menu.prepend(`<li><a href="#">${$(item).text().trim()}</a></li>`);
+    });
     */
+
+    this.predefinedItems = this.toolbarAPI.items;
   },
 
   /**
