@@ -11,14 +11,16 @@ module.exports = {
   // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
   'extends': [
     'airbnb-base',
-    'plugin:jasmine/recommended'
+    'plugin:jasmine/recommended',
+    'plugin:jasmine-jquery/recommended'
   ],
   'parserOptions': {
     'ecmaVersion': 8,
     'sourceType': 'module'
   },
   'plugins': [
-    'jasmine'
+    'jasmine',
+    'jasmine-jquery'
   ],
   'env': {
     'browser': true,
