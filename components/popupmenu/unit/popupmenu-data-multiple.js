@@ -35,7 +35,8 @@ module.exports = [
     nextSectionSelect: 'single'
   },
   {
-    text: 'Pre-defined Menu Item #6'
+    text: 'Pre-defined Menu Item #6',
+    hidden: true
   },
   {
     text: 'Pre-defined Menu Item #6'

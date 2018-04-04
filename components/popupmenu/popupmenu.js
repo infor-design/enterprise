@@ -281,6 +281,7 @@ PopupMenu.prototype = {
 
   /**
    * @param {object|object[]} settings JSON-friendly object that represents a popupmenu item, or array of items.
+   * @param {string} [settings.id] adds an ID to the item's anchor tag
    * @param {boolean} [settings.divider=false] causes this menu item to be a divider (overrides everything else)
    * @param {string} [settings.heading=""] Produces a heading element after a divider with text content.
    * @param {string} [settings.nextSectionSelect] can be null, "single", or "multiple"
@@ -289,23 +290,35 @@ PopupMenu.prototype = {
    * @param {string|null} [settings.selectable] can be null, "single", or "multiple"
    * @param {boolean} [settings.disabled=false] causes the item to be disabled.
    * @param {object[]} [settings.submenu] array of settings object contstructed just like this one, that represent submenu items.
+   * @param {boolean} [settings.noMenuWrap=false] if true, causes multiple top-level menu items not to be wrapped by a `<ul class="popupmenu"></ul>`
    * @returns {string} HTML representing a Popupmenu item with the settings passed.
    */
   renderItem(settings) {
+    if (settings === undefined) {
+      return '';
+    }
+
+    const self = this;
+    function wrapMenuItems(settingsArr) {
+      let items = '';
+      settingsArr.forEach((menuObj) => {
+        items += self.renderItem(menuObj);
+      });
+      return items;
+    }
+
     // Top-level arrays run this method on each sub-item.
     if (Array.isArray(settings)) {
-      let items = '';
-      settings.forEach((menuObj) => {
-        items += this.renderItem(menuObj);
-      });
-      return stringUtils.stripWhitespace(`<ul class="popupmenu">${items}</ul>`);
+      const items = wrapMenuItems(settings);
+      const template = `<ul class="popupmenu">${items}</ul>`;
+      return stringUtils.stripWhitespace(template);
     }
 
     let headingText = '';
     let sectionSelectClass = '';
 
     // Dividers get rendered out first
-    if (settings.divider === true) {
+    if (settings.divider !== undefined) {
       if (settings.heading) {
         headingText += `<li class="heading">${settings.heading}</li>`;
       }
@@ -319,14 +332,53 @@ PopupMenu.prototype = {
       `);
     }
 
+    // Top-level Menus can have settings.
+    // Handle an object-based settings with a `menu` definition here
+    if (settings.menu) {
+      let menuId = '';
+      if (settings.menuId) {
+        menuId = ` id="${settings.menuId}"`;
+      }
+
+      let iconsClass = '';
+      if (settings.hasIcons) {
+        iconsClass += ' has-icons';
+      }
+
+      let items = '';
+      if (Array.isArray(settings.menu)) {
+        items = wrapMenuItems(settings.menu);
+      }
+
+      if (settings.noMenuWrap) {
+        return items;
+      }
+
+      return stringUtils.stripWhitespace(`
+        <ul${menuId} class="popupmenu${iconsClass}">
+          ${items}
+        </ul>
+      `);
+    }
+
     let disabledClass = '';
+    let hiddenClass = '';
     let icon = '';
+    let id = '';
     let selectableClass = '';
     let submenuClass = '';
     let submenu = '';
 
     if (settings.disabled) {
       disabledClass += ' is-disabled';
+    }
+
+    if (settings.visible === false) {
+      hiddenClass += ' hidden';
+    }
+
+    if (settings.id) {
+      id = ` id="${settings.id}"`;
     }
 
     if (settings.selectable === 'single') {
@@ -348,13 +400,92 @@ PopupMenu.prototype = {
       submenu += this.renderItem(settings.submenu);
     }
 
-    return stringUtils.stripWhitespace(`<li class="popupmenu-item${disabledClass}${selectableClass}${submenuClass}">
-      <a href="#">
+    return stringUtils.stripWhitespace(`<li class="popupmenu-item${disabledClass}${hiddenClass}${selectableClass}${submenuClass}">
+      <a${id} href="#">
         ${icon}
         <span>${settings.text}</span>
       </a>
       ${submenu}
     </li>`);
+  },
+
+  /**
+   * Converts the contents of a popupmenu or submenu to a JSON-friendly object structure.
+   * @param {object} [settings={}] incoming conversion settings
+   * @param {jQuery[]|HTMLElement} [settings.contextElement] the top-most element that will
+   *  be modified (defaults to the top-level menu).
+   * @param {boolean} [settings.noMenuWrap] if true, will pass an array as the top-level data instead
+   *  of an object with a `menu` property.
+   * @returns {object|object[]} an object representation of this popupmenu's current state.
+   */
+  toData(settings) {
+    let data = {};
+    const menu = [];
+
+    settings = settings || {};
+
+    // Figure out Context Element
+    if (!settings.contextElement) {
+      settings.contextElement = this.menu;
+    }
+    if (settings.contextElement instanceof HTMLElement) {
+      settings.contextElement = $(settings.contextElement);
+    }
+    if (settings.contextElement.is('.popupmenu-wrapper')) {
+      settings.contextElement = settings.contextElement.children('ul');
+    }
+
+    const menuId = `${settings.contextElement.attr('id')}`;
+    if (menuId) {
+      data.menuId = menuId;
+    }
+
+    const hasIcons = settings.contextElement.hasClass('has-icons');
+    data.hasIcons = hasIcons;
+
+    if (settings.noMenuWrap) {
+      data = menu;
+    }
+
+    function decodeListItem(i, item) {
+      const li = $(item);
+      const icon = li.children('.icon');
+      const a = li.children('a');
+      const id = a.attr('id');
+      const liData = {};
+
+      liData.text = a.text().trim();
+      liData.disabled = li.hasClass('disabled');
+      liData.visible = !li.hasClass('hidden');
+
+      if (typeof id === 'string' && id.length) {
+        liData.id = id;
+      }
+
+      if (icon.length && (icon[0] instanceof SVGElement)) {
+        liData.icon = icon[0].querySelector('use').getAttribute('xlink:href').replace('#icon-', '');
+      }
+
+      if (li.hasClass('is-selectable')) {
+        liData.selectable = 'single';
+      } else if (li.hasClass('is-multiselectable')) {
+        liData.selectable = 'multiple';
+      }
+
+      const submenu = li.find('.popupmenu');
+      if (submenu.length) {
+        liData.submenu = submenu.first().children().each(decodeListItem);
+      }
+
+      return liData;
+    }
+
+    const lis = settings.contextElement.children('li');
+    lis.each((i, item) => {
+      menu.push(decodeListItem(i, item));
+    });
+
+    return data;
   },
 
   /**
@@ -374,11 +505,13 @@ PopupMenu.prototype = {
     const lis = contextElement.find('li:not(.heading):not(.separator)');
     const menuClassName = contextElement[0].className;
     const isTranslatable = DOM.classNameHas(menuClassName, 'isTranslatable');
+    let hasIcons = false;
 
     lis.each((i, li) => {
       const a = $(li).children('a')[0]; // TODO: do this better when we have the infrastructure
       let span = $(a).children('span')[0];
       let submenu = $(li).children('ul')[0];
+      const icon = $(li).children('.icon:not(.close):not(.icon-dropdown)');
       const submenuWrapper = $(li).children('.wrapper')[0];
 
       li.setAttribute('role', 'presentation');
@@ -443,7 +576,17 @@ PopupMenu.prototype = {
           a.removeAttribute('aria-checked');
         }
       }
+
+      if (icon) {
+        hasIcons = true;
+      }
     });
+
+    if (hasIcons) {
+      contextElement.addClass('has-icons');
+    } else {
+      contextElement.removeClass('has-icons');
+    }
   },
 
   /**

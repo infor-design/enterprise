@@ -313,6 +313,27 @@ ToolbarFlex.prototype = {
   },
 
   /**
+   * @param {HTMLElement} item the HTMLElement reference that gets linked back to
+   * @returns {void}
+   */
+  set actionButtonLink(item) {
+    if (this.type !== 'actionbutton' || !(item instanceof HTMLElement)) {
+      return;
+    }
+    $(this.element).data('actionButtonLink', item);
+  },
+
+  /**
+   * @returns {HTMLElement|undefined} the reference to a corresponding "More Actions" menu item.
+   */
+  get actionButtonLink() {
+    if (this.type !== 'actionbutton') {
+      return undefined;
+    }
+    return $(this.element).data('actionButtonLink');
+  },
+
+  /**
    * Navigates among toolbar items and gets a reference to a potential target for focus.
    * @param {number} direction positive/negative value representing how many spaces to move
    * @param {number} [currentIndex] the index to start checking from
@@ -386,6 +407,56 @@ ToolbarFlex.prototype = {
     }
 
     log('log', `Item ${item} selected.`);
+  },
+
+  /**
+   * Exports everything in the current `items` array as Popupmenu-friendly data to be
+   * converted to menu items.
+   * NOTE: Searchfields, ToolbarSearchfields, and other Action Buttons are ignored
+   * @returns {object} containing JSON-friendly Popupmenu data
+   */
+  toPopupmenuData() {
+    const data = {
+      noMenuWrap: true
+    };
+
+    let hasIcons = false;
+
+    function getItemData(item) {
+      const itemData = {
+        itemLink: item,
+        disabled: item.disabled,
+        visible: item.visible
+      };
+
+      const icon = item.element.querySelector('.icon:not(.close):not(.icon-dropdown) > use');
+      if (icon) {
+        itemData.icon = icon.getAttribute('xlink:href').replace('#icon-', '');
+        hasIcons = true;
+      }
+
+      if (item.type === 'button' || item.type === 'menubutton') {
+        itemData.text = item.element.textContent.trim();
+      }
+
+      if (item.type === 'menubutton') {
+        // TODO: Need to convert a Popupmenu's contents to the object format with this method
+        itemData.submenu = item.componentAPI.toData({ noMenuWrap: true });
+      }
+
+      return itemData;
+    }
+
+    data.menu = this.items.filter((item) => {
+      if (item.type === 'actionbutton' || item.type === 'searchfield' || item.type === 'toolbarsearchfield') {
+        return false;
+      }
+      return true;
+    }).map(item => getItemData(item));
+
+    data.hasIcons = hasIcons;
+
+    return data;
   },
 
   /**

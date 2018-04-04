@@ -348,26 +348,36 @@ ToolbarFlexItem.prototype = {
     this.renderMoreActionsMenu();
   },
 
-  renderMoreActionsMenu() {
+  /**
+   * Builds data from Toolbar items that will properly supply pre-defined items to the More Actions menu.
+   * @param {boolean} [force=false] if defined as true, will force-empty the list of all previous toolbar item links.
+   */
+  renderMoreActionsMenu(force) {
+    const menuAPI = this.componentAPI;
     let $menu;
-    if (this.componentAPI) {
-      $menu = this.componentAPI.menu;
+    if (menuAPI) {
+      $menu = menuAPI.menu;
     }
-    if (!this.toolbarAPI) {
+    if (!menuAPI || !this.toolbarAPI) {
       return;
     }
 
-    const excludes = this.predefinedItems || $();
-    if (this.toolbarAPI) {
-      excludes.add(this.toolbarAPI.predefinedItems);
+    // Clear the More Actions menu of anything that shouldn't be there (AJAX-related stuff that will be reloaded)
+    let excludes = this.predefinedItems || $();
+    if (force) {
+      excludes = $();
     }
+    // TODO: Distinguish between Toolbar Items and pre-defined Popupmenu Markup?
+    $menu.children().not(excludes).remove();
 
-    if (excludes.length) {
-      $menu.children().not(excludes).remove();
-    }
+    // Add Toolbar Items
+    const data = this.toolbarAPI.toPopupmenuData();
+    this.predefinedItems = $(menuAPI.renderItem(data));
+    $menu.prepend(this.predefinedItems);
 
     /**
-     * TODO: create process that builds popupmenu items from toolbar markup, and links them for event usage.
+     * TODO: create process that builds popupmenu items from toolbar markup,
+     * and links them for event usage.
      */
     /*
     this.toolbarAPI.items.reverse().forEach((item) => {

@@ -174,6 +174,40 @@ describe('Popupmenu renderItem API', () => {
     expect(markup).toBe('<ul class="popupmenu"><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #1</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #2</span></a></li></ul>');
   });
 
+  it('Should build HTML for two Popupmenu items from a settings array, without a wrapping `<ul>` tag', () => {
+    // Two menu options (should NOT be wrapped in a `<ul class="popupmenu"></ul>`)
+    const data = {
+      noMenuWrap: true,
+      menu: [{
+        text: 'Pre-defined Menu Item #1',
+        selectable: 'single',
+      }, {
+        text: 'Pre-defined Menu Item #2',
+        selectable: 'single'
+      }]
+    };
+    const markup = popupmenuObj.renderItem(data);
+
+    expect(markup).toBe('<li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #1</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #2</span></a></li>');
+  });
+
+  it('Should build HTML for two Popupmenu items with a customized wrapping `<ul>` tag', () => {
+    // Two menu options (should NOT be wrapped in a `<ul class="popupmenu"></ul>`)
+    const data = {
+      menuId: 'my-popupmenu',
+      menu: [{
+        text: 'Pre-defined Menu Item #1',
+        selectable: 'single',
+      }, {
+        text: 'Pre-defined Menu Item #2',
+        selectable: 'single'
+      }]
+    };
+    const markup = popupmenuObj.renderItem(data);
+
+    expect(markup).toBe('<ul id="my-popupmenu" class="popupmenu"><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #1</span></a></li><li class="popupmenu-item is-selectable"><a href="#"><span>Pre-defined Menu Item #2</span></a></li></ul>');
+  });
+
   it('Should build HTML for a single Popupmenu Item with an icon', () => {
     const data = {
       text: 'trash',
@@ -182,6 +216,16 @@ describe('Popupmenu renderItem API', () => {
     const markup = popupmenuObj.renderItem(data);
 
     expect(markup).toBe('<li class="popupmenu-item"><a href="#"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-delete"></use></svg><span>trash</span></a></li>');
+  });
+
+  it('Should build HTML for a single Popupmenu Item with an ID', () => {
+    const data = {
+      text: 'New Popup Item',
+      id: 'my-new-popup-item'
+    };
+    const markup = popupmenuObj.renderItem(data);
+
+    expect(markup).toBe('<li class="popupmenu-item"><a id="my-new-popup-item" href="#"><span>New Popup Item</span></a></li>');
   });
 
   it('Should build HTML for a single Popupmenu Item that\'s disabled', () => {
@@ -241,4 +285,43 @@ describe('Popupmenu renderItem API', () => {
 
     expect(markup).toBe('<li class="popupmenu-item submenu"><a href="#"><span>Parent Menu Item</span></a><ul class="popupmenu"><li class="popupmenu-item is-multiselectable"><a href="#"><span>Child Menu Item #1</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Child Menu Item #2</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Child Menu Item #3</span></a></li></ul></li>');
   });
+});
+
+it('Should build HTML for a single Popupmenu item with a submenu that contains both selection types independently', () => {
+  const data = {
+    text: 'Settings',
+    icon: 'settings',
+    disabled: false,
+    submenu: [
+      {
+        text: 'Submenu Item #1',
+        selectable: 'multiple'
+      },
+      {
+        text: 'Submenu Item #2',
+        selectable: 'multiple'
+      },
+      {
+        text: 'Submenu Item #3',
+        selectable: 'multiple'
+      },
+      {
+        divider: true,
+        heading: 'Additional Settings',
+        nextSectionSelect: 'single'
+      },
+      {
+        text: 'Other Setting #1',
+      },
+      {
+        text: 'Other Setting #2',
+      },
+      {
+        text: 'Other Setting #3',
+      }
+    ]
+  };
+  const markup = popupmenuObj.renderItem(data);
+
+  expect(markup).toBe('<li class="popupmenu-item submenu"><a href="#"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-settings"></use></svg><span>Settings</span></a><ul class="popupmenu"><li class="popupmenu-item is-multiselectable"><a href="#"><span>Submenu Item #1</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Submenu Item #2</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Submenu Item #3</span></a></li><li class="separator single"></li><li class="heading">Additional Settings</li><li class="popupmenu-item"><a href="#"><span>Other Setting #1</span></a></li><li class="popupmenu-item"><a href="#"><span>Other Setting #2</span></a></li><li class="popupmenu-item"><a href="#"><span>Other Setting #3</span></a></li></ul></li>');
 });
