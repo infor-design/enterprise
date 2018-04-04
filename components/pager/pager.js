@@ -58,7 +58,6 @@ function Pager(element, settings) {
 
 Pager.prototype = {
 
-  pagerInfo: {},
 
   /**
    * Init the pager.
@@ -72,6 +71,8 @@ Pager.prototype = {
     this.renderBar();
     this.renderPages('initial');
     this.handleEvents();
+    this.pagerInfo = {};
+    this._pageCount = 0;
   },
 
   /**
@@ -403,8 +404,6 @@ Pager.prototype = {
     }
     return pageNum;
   },
-
-  _pageCount: 0,
 
   /**
    * Get the Total Number of pages
