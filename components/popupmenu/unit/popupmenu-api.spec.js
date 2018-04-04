@@ -4,11 +4,6 @@ const popupmenuHTML = require('../example-index.html');
 const popupmenuSelectableHTML = require('../example-selectable.html');
 const svg = require('../../icons/svg.html');
 
-let popupmenuButtonEl;
-let svgEl;
-let rowEl;
-let popupmenuObj;
-
 const ePage = {
   pageX: 136,
   pageY: 182
@@ -19,16 +14,19 @@ const eClient = {
   clientY: 333
 };
 
+let popupmenuButtonEl;
+let svgEl;
+let popupmenuObj;
+
 describe('Popupmenu Menu Button API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
     svgEl = null;
-    rowEl = null;
     popupmenuObj = null;
-    document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
+
     document.body.insertAdjacentHTML('afterbegin', svg);
+    document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
     popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
-    rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     popupmenuObj = new PopupMenu(popupmenuButtonEl);
   });
@@ -36,7 +34,6 @@ describe('Popupmenu Menu Button API', () => {
   afterEach(() => {
     popupmenuObj.destroy();
     popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    rowEl.parentNode.removeChild(rowEl);
     svgEl.parentNode.removeChild(svgEl);
   });
 
@@ -76,12 +73,10 @@ describe('Popupmenu Single Select API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
     svgEl = null;
-    rowEl = null;
     popupmenuObj = null;
     document.body.insertAdjacentHTML('afterbegin', popupmenuSelectableHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
     popupmenuButtonEl = document.body.querySelector('#single-select-popupmenu-trigger');
-    rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     popupmenuObj = new PopupMenu(popupmenuButtonEl);
   });
@@ -89,7 +84,6 @@ describe('Popupmenu Single Select API', () => {
   afterEach(() => {
     popupmenuObj.destroy();
     popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    rowEl.parentNode.removeChild(rowEl);
     svgEl.parentNode.removeChild(svgEl);
   });
 
