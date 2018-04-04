@@ -30,6 +30,10 @@ $.fn.modal = function (settings) {
       return;
     }
 
+    if (instance && !settings) {
+      return;
+    }
+
     instance = $.data(this, COMPONENT_NAME, new Modal(this, settings));
   });
 };
