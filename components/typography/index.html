@@ -16,6 +16,45 @@
 </ol>
 <pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="fu">$</span>(<span class="st">&#39;html&#39;</span>).<span class="fu">personalize</span>({<span class="dt">colors</span>: [<span class="st">&#39;80000&#39;</span>], <span class="dt">theme</span>: <span class="st">&#39;dark&#39;</span>, <span class="dt">font</span>: <span class="st">&#39;source-sans&#39;</span>});</code></pre>
 <p>Also sample app can be run with this font by adding the <code>?font=source-sans</code> parameter to any page. For example <a href="../components/personalize/example-index.html?font=source-sans">Main Example Page</a></p>
+<h2 id="typography-related-classes">Typography Related Classes</h2>
+<p>The following classes can be used for text color:</p>
+<ul>
+<li><code>text-default</code>- Makes the text the normal default color for the theme.</li>
+<li><code>text-descriptive</code> - Used for descriptive text so a bit lighter.</li>
+<li><code>text-muted</code> - Used for disable/subtle text so even more.</li>
+<li><code>text-link</code> - Style text to look like a link. (Primary Color)</li>
+</ul>
+<p>The following classes can be used for text style:</p>
+<ul>
+<li><code>text-emphasis</code> - Style text to show in italics. Often used on timestamps.</li>
+<li><code>text-strong</code> - Style text to look bold. Often used for group labels or emphasis.</li>
+<li><code>text-alert</code> or <code>alert-text</code> - Style text to a red alert. (Alter Color) Used for errors. You should always use an icon with text in order to give meaning to color blind users.</li>
+<li><code>text-uppercase</code> or <code>uppercase-text</code> - Force text to uppercase.</li>
+</ul>
+<p>The following classes can be used for text size:</p>
+<ul>
+<li><code>text-primary</code> - Used for primary sized text (1.8rem). Used for headings.</li>
+<li><code>text-secondary</code> - Used for primary sized text (1.6rem). Used for subheadings.</li>
+<li><code>text-base</code> - Used for normal/default text (1.4rem).</li>
+<li><code>text-small</code> - Used for normal/default text (1.2rem).</li>
+<li><code>larger-heavy-text</code> - Shows text slightly larger and emphasized. Used for totals or group labels.</li>
+<li><code>data-large</code> - Shows text in an even larger size (2.2em) used for count style data labels.</li>
+<li><code>xl-text</code> - Shows text in an even larger size (5em) used for form counts.</li>
+</ul>
+<p>The following classes can be used for errors/warnings</p>
+<ul>
+<li><code>alert-text</code> - Shows text for alerts in ruby/red. Along with an icon.</li>
+<li><code>error-text</code> - Shows text for error messages in ruby/red.</li>
+<li><code>warning-text</code> - Shows text for warning messages.</li>
+<li><code>good-text</code> - Shows text for good /positive affirmation in green/emerald</li>
+<li><code>info-text</code> - Shows text for information blue/azure</li>
+</ul>
+<p>The following classes can be used for text alignment</p>
+<ul>
+<li><code>align-text-left</code> - Set text alignment to left.</li>
+<li><code>align-text-right</code> - Set text alignment to right.</li>
+<li><code>align-text-right</code> or <code>center-text</code> - Set text alignment to center.</li>
+</ul>
 <h2 id="title-case-vs.-sentence-case">Title Case vs. Sentence Case</h2>
 <p>Title case follows the standards used in book titles: always capitalize the first and last word, and capitalize all other words in the text string except for articles (a, an, the) and prepositions (except if they are the first or last word). Use title case for the following types of text:</p>
 <ul>
