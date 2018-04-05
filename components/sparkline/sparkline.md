@@ -1,15 +1,13 @@
-
-# Sparklines  [Learn More](#)
+---
+title: Sparklines
+description: This page describes Sparklines.
+---
 
 ## Configuration Options
 
 1. Sparklines Main Example [View Example]( ../components/sparkline/example-index)
 2. Example showing Get Selected value [View Example]( ../components/sparkline/example-get-selected)
 3. Example showing Set Selected value [View Example]( ../components/sparkline/example-set-selected)
-
-## API Details
-
-{{api-details}}
 
 ## Spark Line Chart Types
 
@@ -24,7 +22,6 @@
 This example shows how to invoke a simple single line sparkline. Multiple lines can be shown by passing multiple data points.
 
 ```javascript
-
 var singleLine = [{
   data: [25, 20, 55, 28, 41, 30, 50, 22, 16, 27],
   name: 'Inventory'
@@ -39,8 +36,6 @@ var twoLines = [{
 }];
 
 $('#sparkline-chart-example-1').chart({type: 'sparkline-dots-n-peak', dataset: singleLine});
-
-
 ```
 
 ## Accessibility

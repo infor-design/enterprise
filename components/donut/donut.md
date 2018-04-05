@@ -1,5 +1,7 @@
-
-# Donut Chart  [Learn More](#)
+---
+title: Donut Chart
+description: This page describes Donut Chart.
+---
 
 ## Configuration Options
 
@@ -11,8 +13,6 @@
 6. Example showing Get Selected value [View Example]( ../components/donut/example-get-selected)
 7. Example showing Set Selected value [View Example]( ../components/donut/example-set-selected)
 
-## API Details
-
 ### Settings
 
 See the [Pie API]( ../components/pie) as this is just a pie setting.
@@ -22,7 +22,6 @@ See the [Pie API]( ../components/pie) as this is just a pie setting.
 This example shows how to invoke a dount bar chart with a dataset controlling the values.
 
 ```javascript
-
   var donutData = [{
     data: [{
         name: 'Component A',
@@ -37,8 +36,6 @@ This example shows how to invoke a dount bar chart with a dataset controlling th
   $('#pie-donut-example').chart({type: 'donut', dataset: donutData}).on('selected', function (e, elem, args) {
     console.log(e, elem, args);
   });
-
-
 ```
 
 ## Accessibility

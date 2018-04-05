@@ -1,19 +1,17 @@
-# Process Indicator [Learn More](https://soho.infor.com/index.php?p=component/popover)
-
-## Configuration Options
-
-1. [Main Process Indicator Example]( ../components/processindicator/example-index)
-
-## API Details
-
-TODO
+---
+title: Process Indicator
+description: This page describes Process Indicator .
+demo:
+  pages:
+  - name: Main Process Indicator Example
+    slug: example-index
+---
 
 ## Code Example
 
-Here is an example of a compact process indicator. There are several classes in the stucture that control the output and status settings.
+Here is an example of a compact process indicator. There are several classes in the structure that control the output and status settings.
 
 ```html
-
 <div class="process-indicator compact">
   <div class="display">
     <span class="indicator lightest"></span>
@@ -33,16 +31,3 @@ Here is an example of a compact process indicator. There are several classes in 
 </div>
 
 ```
-
-
-## Accessibility
-
-TODO
-
-## Keyboard Shortcuts
-
-There is no keyboard
-
-## States and Variations
-
-This is a static component

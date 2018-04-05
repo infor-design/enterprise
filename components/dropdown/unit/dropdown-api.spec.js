@@ -5,19 +5,16 @@ const svg = require('../../icons/svg.html');
 
 let dropdownEl;
 let svgEl;
-let rowEl;
 let dropdownObj;
 
 describe('Dropdown API', () => {
   beforeEach(() => {
     dropdownEl = null;
     svgEl = null;
-    rowEl = null;
     dropdownObj = null;
-    document.body.insertAdjacentHTML('afterbegin', dropdownHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
+    document.body.insertAdjacentHTML('afterbegin', dropdownHTML);
     dropdownEl = document.body.querySelector('.dropdown');
-    rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     dropdownEl.classList.add('no-init');
     dropdownObj = new Dropdown(dropdownEl);
@@ -26,7 +23,6 @@ describe('Dropdown API', () => {
   afterEach(() => {
     dropdownObj.destroy();
     dropdownEl.parentNode.removeChild(dropdownEl);
-    rowEl.parentNode.removeChild(rowEl);
     svgEl.parentNode.removeChild(svgEl);
   });
 

@@ -1,5 +1,7 @@
-
-# Bar Chart (Stacked)  [Learn More](#)
+---
+title: Bar Chart (Stacked)
+description: This page describes Bar Chart (Stacked).
+---
 
 ## Configuration Options
 
@@ -17,7 +19,6 @@
 
 This example shows how to invoke the grouped bar chart in the charts component. We pass a dataset data points for each bar group we want to show.
 ```javascript
-
 var dataset = [{
     data: [{
         name: '2008',
@@ -45,8 +46,6 @@ var dataset = [{
 }];
 
 $('#bar-stacked-example').chart({type: 'bar-stacked', dataset: dataset});
-
-
 ```
 
 ## Accessibility
@@ -54,7 +53,6 @@ $('#bar-stacked-example').chart({type: 'bar-stacked', dataset: dataset});
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
 
 ```javascript
-
 color: '#1a1a1a'
 name: 'Component C'
 
@@ -65,16 +63,12 @@ name: 'Component C'
 You can override the tooltip by passing in a specific tooltip text value.
 
 ```javascript
-
 {type: 'bar-stacked', dataset: dataset, tooltip: 'Tooltip by attribute'}
-
-
 ```
 
 Or if you have more dynamic requirements you can do this with an ajax callback.
 
 ```javascript
-
 $('#bar-grouped-example').chart({type: 'bar-stacked', dataset: dataset,
   tooltip: function(response) {
     //Ajax Call or async op
@@ -83,8 +77,6 @@ $('#bar-grouped-example').chart({type: 'bar-stacked', dataset: dataset,
     }, 400);
   }
 });
-
-
 ```
 
 ## Keyboard Shortcuts

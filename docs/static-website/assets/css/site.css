@@ -1,0 +1,134 @@
+/* Specific Local Dev Site Styles */
+
+/*
+ * Variables (custom or overriding IDS variables)
+ */
+:root {
+  --brand-blue: #3770ff;
+  --black: #000;
+  --white: #fff;
+  --blue-01: #497aff;
+  --blue-02: #77c8ff;
+  --blue-03: rgb(247, 252, 255);
+  --blue-gradient: var(--blue-01), var(--blue-02);
+  --graphite055: #606060;
+  --graphite055-light: rgba(96, 96, 96, 0.3);
+  --font-mono: menlo, monaco, consolas, courier new, monospace;
+  --link-color-custom: #888;
+  --link-color-custom-dark: #1f1f1f;
+  --spacing: 8px;
+
+  /* TODO: REPLACE WITH IDS TOKENS */
+  --graphite01: #f0f0f0;
+  --graphite03: #bdbdbd;
+}
+
+body {
+  background-color: #fff;
+}
+
+.logo {
+  align-items: center;
+  display: flex;
+}
+
+.logo span {
+  color: var(--black);
+  font-size: 2.2rem;
+  font-weight: 300;
+}
+
+.logo svg {
+  display: flex;
+  flex-shrink: 0;
+  margin-right: calc(var(--spacing) * 2);
+  width: 40px;
+}
+
+
+/*
+ * JsDocumentation Section Styles
+ */
+.jsdoc-section--heading {
+  color: var(--text-color-muted);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-normal);
+}
+
+.jsdoc-signature {
+  background-color: var(--graphite01);
+  font-family: var(--font-family-monospace);
+  padding: var(--spacing-base);
+}
+
+.jsdoc-function {
+  border-left: 3px solid var(--input-readonly-bg-color);
+  margin-bottom: calc(var(--spacing-base) * 4);
+  padding-left: calc(var(--spacing-base) * 2);
+}
+
+.jsdoc-function .jsdoc-function--heading {
+  font-family: var(--font-family-monospace);
+}
+
+
+.jsdoc-childprop--name {
+  text-indent: calc(var(--spacing-base) * 2);
+}
+
+
+/*
+ * Tables
+ */
+
+table {
+  color: var(--graphite055);
+  margin-bottom: 32px;
+  width: 100%;
+}
+
+table caption {
+  font-size: var(--font-size-md);
+  text-align: left;
+}
+
+table thead {
+  border-bottom: 1px solid var(--graphite055);
+  text-align: left;
+}
+
+table tr {
+  border-bottom: 1px solid var(--graphite055-light);
+}
+
+table th,
+table td {
+  padding: calc(var(--spacing) * 3) var(--spacing);
+}
+
+table th:first-child,
+table td:first-child {
+  padding-left: 0;
+}
+
+table th:first-child,
+table td:last-child {
+  padding-right: 0;
+}
+
+table th {
+  font-weight: var(--font-weight-bold);
+}
+
+table td {
+  line-height: 1.5;
+  vertical-align: middle;
+}
+
+/**
+ * Lists
+ */
+ul li {
+  list-style-position: outside;
+  margin-left: 2rem;
+}
