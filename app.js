@@ -22,6 +22,7 @@ app.set('views', [
   path.join(__dirname, 'views'),
   path.join(__dirname, 'docs/static-website')
 ]);
+
 mmm.setEngine('hogan.js');
 app.engine('html', mmm.__express);
 
@@ -666,7 +667,12 @@ function reDirectSlashRoute(req, res, next) {
   next();
 }
 
-router.get('/components/:component', componentRoute);
+// Redirect "/component/component.html"
+app.get('/components/:component', function(req, res, next) {
+  res.redirect('/' + req.params.component);
+});
+
+// router.get('/components/:component', componentRoute);
 router.get('/components/:component/', reDirectSlashRoute);
 router.get('/components/:component/:example', componentRoute);
 router.get('/components/:component/:example/', reDirectSlashRoute);
