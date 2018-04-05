@@ -206,6 +206,18 @@ Datagrid.prototype = {
     this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
     this.removeToolbarOnDestroy = false;
     this.nonVisibleCellErrors = [];
+    this.recordCount = 0;
+    this.canvas = null;
+    this.totalWidth = 0;
+    this.editor = null; // Current Cell Editor thats in Use
+    this.activeCell = { node: null, cell: null, row: null }; // Current Active Cell
+    this.dontSyncUi = false;
+    this.widthPercent = false;
+    this.rowSpans = [];
+    this.headerWidths = []; // Cache
+    this.filterRowRendered = false; // Flag used to determine if the header is rendered or not.
+    this.scrollLeft = 0;
+    this.scrollTop = 0;
 
     this.restoreColumns();
     this.restoreUserSettings();
@@ -979,11 +991,6 @@ Datagrid.prototype = {
   },
 
   /**
-  * Flag used to determine if the header is rendered or not.
-  */
-  filterRowRendered: false,
-
-  /**
   * Set filter datepicker with range/single date.
   * @private
   * @param {object} input element to target datepicker.
@@ -1476,11 +1483,11 @@ Datagrid.prototype = {
         if (columnDef.filterType === 'percent') {
           conditionValue = (conditionValue / 100).toString();
           if ((`${columnDef.name}`).toLowerCase() === 'decimal') {
-            rowValue = window.Formatters.Decimal(false, false, rowValue, columnDef);
-            conditionValue = window.Formatters.Decimal(false, false, conditionValue, columnDef);
+            rowValue = Formatters.Decimal(false, false, rowValue, columnDef);
+            conditionValue = Formatters.Decimal(false, false, conditionValue, columnDef);
           } else if ((`${columnDef.name}`).toLowerCase() === 'integer') {
-            rowValue = window.Formatters.Integer(false, false, rowValue, columnDef);
-            conditionValue = window.Formatters.Integer(false, false, conditionValue, columnDef);
+            rowValue = Formatters.Integer(false, false, rowValue, columnDef);
+            conditionValue = Formatters.Integer(false, false, conditionValue, columnDef);
           }
         }
 
@@ -2238,7 +2245,7 @@ Datagrid.prototype = {
       return;
     }
 
-    this.settings.dataset = window.GroupBy(this.settings.dataset, groupSettings.fields);
+    this.settings.dataset = GroupBy(this.settings.dataset, groupSettings.fields);
   },
 
   /**
@@ -2650,8 +2657,6 @@ Datagrid.prototype = {
     return formattedValue;
   },
 
-  recordCount: 0,
-
   rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter) {
     let isEven = false;
     const self = this;
@@ -2924,9 +2929,6 @@ Datagrid.prototype = {
     return rowHtml;
   },
 
-  canvas: null,
-  totalWidth: 0,
-
   /**
    * This Function approximates the table auto widthing
    * Except use all column values and compare the text width of the header as max
@@ -3024,8 +3026,6 @@ Datagrid.prototype = {
 
     return Math.round(metrics.width + padding); // Add padding and borders
   },
-
-  headerWidths: [], // Cache
 
   headerTableWidth() {
     const cacheWidths = this.headerWidths[this.settings.columns.length - 1];
@@ -3299,9 +3299,6 @@ Datagrid.prototype = {
 
     return ` style="width: ${this.widthPercent ? `${colPercWidth}%` : `${colWidth}px`}"`;
   },
-
-  widthPercent: false,
-  rowSpans: [],
 
   /**
   * Figure out if the row spans and should skip rendiner.
@@ -4225,9 +4222,6 @@ Datagrid.prototype = {
     cells = rowNode.find('td');
     return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
   },
-
-  scrollLeft: 0,
-  scrollTop: 0,
 
   handleScroll() {
     const left = this.contentContainer[0].scrollLeft;
@@ -5253,8 +5247,6 @@ Datagrid.prototype = {
     }
   },
 
-  dontSyncUi: false,
-
   /**
   * Select rows between indexes
   * @private
@@ -5839,9 +5831,6 @@ Datagrid.prototype = {
     return idx;
   },
 
-  // Current Active Cell
-  activeCell: { node: null, cell: null, row: null },
-
   /**
   * Handle all keyboard behavior
   * @private
@@ -6194,9 +6183,6 @@ Datagrid.prototype = {
     const selector = '.dropdown, .datepicker';
     return !($(selector, container).length);
   },
-
-  // Current Cell Editor thats in Use
-  editor: null,
 
   isCellEditable(row, cell) {
     if (!this.settings.editable) {

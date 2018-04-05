@@ -52,6 +52,7 @@ export { Toolbar } from './toolbar/toolbar';
 export { ToolbarSearchfield } from './toolbarsearchfield/toolbarsearchfield';
 export { Tooltip } from './tooltip/tooltip';
 export { Tree } from './tree/tree';
+export { Treemap } from './treemap/treemap';
 export { Validator } from './validation/validator';
 export { Wizard } from './wizard/wizard';
 export { Zoom } from './zoom/zoom';

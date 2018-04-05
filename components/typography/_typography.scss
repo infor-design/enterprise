@@ -147,7 +147,6 @@ a.text-secondary {
   @include rem(line-height, 2rem);
 }
 
-
 .text-base,
 a.text-base {
   @include font-size(14);
@@ -158,7 +157,6 @@ a.text-base {
 a.text-small {
   @include font-size(12);
 }
-
 
 // Labels
 label,
@@ -226,8 +224,20 @@ small,
   @include font-size(11);
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2rem);
-  color: $font-color-lowcontrast;
+  color: $alert-red;
   font-weight: bold;
+  padding-left: 15px;
+
+  &::before {
+    background-color: $alert-red;
+    border-radius: 50%;
+    content: '';
+    height: 8px;
+    margin-left: -14px;
+    margin-top: 4px;
+    position: absolute;
+    width: 8px;
+  }
 }
 
 .error-text {
@@ -270,6 +280,16 @@ small,
   font-weight: bold;
 }
 
+.data-large {
+  @include font-size(22);
+  color: $font-color-highcontrast;
+  padding-bottom: 2px;
+}
+
+.xl-text {
+  @include font-size(50);
+}
+
 .align-text-left {
   text-align: left;
 }
@@ -278,28 +298,47 @@ small,
   text-align: right;
 }
 
+.align-text-enter {
+  text-align: center;
+}
+
 .center-text {
   text-align: center;
 }
 
+.text-uppercase,
 .uppercase-text {
   text-transform: uppercase;
 }
 
-.alert-text {
-  color: $alert-red;
-  padding-left: 15px;
+// Flexible Field alignment
+.field-flex {
+  align-items: center;
+  display: flex;
 
-  &::before {
-    background-color: $alert-red;
-    border-radius: 50%;
-    content: '';
-    height: 8px;
-    margin-left: -14px;
-    margin-top: 4px;
-    position: absolute;
-    width: 8px;
+  .data-description {
+    flex-basis: 25%;
   }
+
+  .field-flex-group {
+    padding: 20px;
+  }
+}
+
+// Left aligned fields
+.field.label-left {
+  display: flex;
+
+  .label {
+    padding-right: 8px;
+    position: relative;
+    top: 1px;
+  }
+}
+
+// Label + Data Label
+.label + .data {
+  color: $font-color-extrahighcontrast;
 }
 
 //RTL Styles

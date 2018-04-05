@@ -742,6 +742,10 @@ $blockgrid-selected-border-color: $btn-focus-border-color;
 $blockgrid-hover-color: $listview-hover-bg-color;
 $blockgrid-focus-border-color: $primary-color;
 
+// Tree Map
+$treemap-title-bg-color: $slate03;
+$treemap-title-color: $slate10;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;
