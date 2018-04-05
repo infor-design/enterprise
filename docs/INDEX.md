@@ -31,4 +31,4 @@ node server
 
 ## Recent Changes
 
-Visit the [release notes](./release-notes.html) for this release.
+Visit the [release notes](./changelog.html) for this release.
