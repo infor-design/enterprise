@@ -13,6 +13,7 @@ module.exports = function (config) {
     files: [
       'dist/css/light-theme.css',
       'dist/js/jquery-3.1.1.js',
+      'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
       'dist/js/cultures/en-US.js'

@@ -5,19 +5,16 @@ const svg = require('../../icons/svg.html');
 
 let multiSelectEl;
 let svgEl;
-let rowEl;
 let multiSelectObj;
 
 describe('MultiSelect API', () => {
   beforeEach(() => {
     multiSelectEl = null;
     svgEl = null;
-    rowEl = null;
     multiSelectObj = null;
     document.body.insertAdjacentHTML('afterbegin', multiSelectHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
     multiSelectEl = document.body.querySelector('.multiselect');
-    rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     multiSelectEl.classList.add('no-init');
     multiSelectObj = new MultiSelect(multiSelectEl);
@@ -26,7 +23,6 @@ describe('MultiSelect API', () => {
   afterEach(() => {
     multiSelectObj.destroy();
     multiSelectEl.parentNode.removeChild(multiSelectEl);
-    rowEl.parentNode.removeChild(rowEl);
     svgEl.parentNode.removeChild(svgEl);
   });
 
