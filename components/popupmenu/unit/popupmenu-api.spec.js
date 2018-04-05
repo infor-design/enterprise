@@ -4,11 +4,6 @@ const popupmenuHTML = require('../example-index.html');
 const popupmenuSelectableHTML = require('../example-selectable.html');
 const svg = require('../../icons/svg.html');
 
-let popupmenuButtonEl;
-let svgEl;
-let rowEl;
-let popupmenuObj;
-
 const ePage = {
   pageX: 136,
   pageY: 182
@@ -19,16 +14,19 @@ const eClient = {
   clientY: 333
 };
 
+let popupmenuButtonEl;
+let svgEl;
+let popupmenuObj;
+
 describe('Popupmenu Menu Button API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
     svgEl = null;
-    rowEl = null;
     popupmenuObj = null;
-    document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
+
     document.body.insertAdjacentHTML('afterbegin', svg);
+    document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
     popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
-    rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     popupmenuObj = new PopupMenu(popupmenuButtonEl);
   });
@@ -36,7 +34,6 @@ describe('Popupmenu Menu Button API', () => {
   afterEach(() => {
     popupmenuObj.destroy();
     popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    rowEl.parentNode.removeChild(rowEl);
     svgEl.parentNode.removeChild(svgEl);
   });
 
@@ -52,6 +49,13 @@ describe('Popupmenu Menu Button API', () => {
   it('Should return X, and Y from mouse event', () => {
     expect(popupmenuObj.getPositionFromEvent(ePage)).toEqual({ x: 136, y: 182 });
     expect(popupmenuObj.getPositionFromEvent(eClient)).toEqual({ x: 222, y: 333 });
+  });
+
+  it('Should position correctly', () => {
+    // Indirectly tests Place component
+    popupmenuObj.position(ePage);
+
+    expect(document.querySelector('.popupmenu-wrapper').classList.toString()).toContain('placeable bottom');
   });
 
   it('Should open', () => {
@@ -76,12 +80,10 @@ describe('Popupmenu Single Select API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
     svgEl = null;
-    rowEl = null;
     popupmenuObj = null;
     document.body.insertAdjacentHTML('afterbegin', popupmenuSelectableHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
     popupmenuButtonEl = document.body.querySelector('#single-select-popupmenu-trigger');
-    rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     popupmenuObj = new PopupMenu(popupmenuButtonEl);
   });
@@ -89,16 +91,48 @@ describe('Popupmenu Single Select API', () => {
   afterEach(() => {
     popupmenuObj.destroy();
     popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    rowEl.parentNode.removeChild(rowEl);
     svgEl.parentNode.removeChild(svgEl);
   });
 
   it('Should select', () => {
     // Expects jQuery element
-    const select = popupmenuObj.select($('.popupmenu li').first());
+    const selectItem = document.querySelector('.popupmenu li');
+    const select = popupmenuObj.select($(selectItem));
 
     expect(select[0]).toEqual(jasmine.any(Object));
     expect(select[1]).toEqual('selected');
+  });
+
+  it('Should highlight', () => {
+    // Expects jQuery anchor
+    const anchorItem = document.querySelector('.popupmenu li a');
+    popupmenuObj.highlight($(anchorItem));
+
+    expect(anchorItem.parentNode.classList.toString()).toContain('is-focused');
+  });
+
+  it('Should return if item is in selectable section', () => {
+    // Expects jQuery anchor
+    const anchorItem = document.querySelector('.popupmenu li a');
+    const isSelectable = popupmenuObj.isInSelectableSection($(anchorItem));
+
+    expect(isSelectable).toBeFalsy();
+  });
+
+  it('Should return if item is in single selectable section', () => {
+    // Expects jQuery anchor
+    const anchorItem = document.querySelector('.popupmenu li a');
+    const isSingleSelectable = popupmenuObj.isInSingleSelectSection($(anchorItem));
+
+    expect(isSingleSelectable).toBeFalsy();
+  });
+
+  it('Should return if item is in multi selectable section', () => {
+    // Expects jQuery anchor
+    const anchorItem = document.querySelector('.popupmenu li a');
+    const isMultiSelectable = popupmenuObj.isInMultiselectSection($(anchorItem));
+
+    expect(isMultiSelectable).toBeFalsy();
   });
 
   it('Should get selected', () => {
@@ -108,11 +142,15 @@ describe('Popupmenu Single Select API', () => {
     expect(selected[0].innerText).toEqual('Sub Option #4');
   });
 
+  it('Should detach itself', () => {
+    popupmenuObj.detach();
+  });
+
   it('Should destroy itself', () => {
     popupmenuObj.open();
     popupmenuObj.destroy();
 
-    expect(popupmenuButtonEl.classList[1]).not.toContain('is-open');
+    expect(popupmenuButtonEl.classList[1]).not.toContain('is-focused');
   });
 
   it('Should update settings', () => {

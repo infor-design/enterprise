@@ -5,19 +5,16 @@ const svg = require('../../icons/svg.html');
 
 let buttonEl;
 let svgEl;
-let rowEl;
 let buttonObj;
 
 describe('Button API', () => {
   beforeEach(() => {
     buttonEl = null;
     svgEl = null;
-    rowEl = null;
     buttonObj = null;
-    document.body.insertAdjacentHTML('afterbegin', buttonHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
+    document.body.insertAdjacentHTML('afterbegin', buttonHTML);
     buttonEl = document.body.querySelector('.btn');
-    rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     buttonEl.classList.add('no-init');
     buttonObj = new Button(buttonEl);
@@ -26,7 +23,6 @@ describe('Button API', () => {
   afterEach(() => {
     buttonObj.destroy();
     buttonEl.parentNode.removeChild(buttonEl);
-    rowEl.parentNode.removeChild(rowEl);
     svgEl.parentNode.removeChild(svgEl);
   });
 
