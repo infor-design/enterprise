@@ -37,7 +37,7 @@ When the markup is established this is set, you can call the updated method or t
 -   aria-labelledby should point to the manditory text label
 -   role="progressbar" indicates the role of the progress bar
 -   aria-valuenow should indicate the current value
--   aria-maxvalue="100" should indicate the max value (100%)
+-   aria-valuemax="100" should indicate the max value (100%)
 
 ## Keyboard Shortcuts
 
