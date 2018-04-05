@@ -283,7 +283,12 @@ function cleanAll() {
     })
     .then(res => {
       logTaskAction('Cleaned', paths.idsWebsite.dist);
-      createDirs([paths.idsWebsite.dist, paths.idsWebsite.distDocs, paths.static]);
+      createDirs([
+        paths.idsWebsite.root,
+        paths.idsWebsite.dist,
+        paths.idsWebsite.distDocs,
+        paths.static
+      ]);
     }
   );
 }
