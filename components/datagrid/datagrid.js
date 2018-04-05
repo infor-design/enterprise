@@ -1168,20 +1168,12 @@ Datagrid.prototype = {
     }
 
     // Attach Keyboard support
-    this.headerRow.find('.dropdown').off('click.datagrid-dropdown').on('click.datagrid-dropdown', () => {
-      if (self.popupmenuHeader) {
-        self.popupmenuHeader.close(true, true);
-      }
-    });
-
     this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-      self.closeAllDropdownHeaders();
-
       const popupOpts = { trigger: 'immediate', offset: { y: 15 }, attachToBody: $('html').hasClass('ios'), placementOpts: { strategies: ['flip', 'nudge'] } };
-      self.popupmenuHeader = $(this).data('popupmenu');
+      const popupmenu = $(this).data('popupmenu');
 
-      if (self.popupmenuHeader) {
-        self.popupmenuHeader.close(true, true);
+      if (popupmenu) {
+        popupmenu.close(true, true);
       } else {
         $(this).off('beforeopen.datagrid-filter').on('beforeopen.datagrid-filter', function () {
           const menu = $(this).next('.popupmenu-wrapper');
@@ -1208,8 +1200,6 @@ Datagrid.prototype = {
               data.destroy();
             }
           });
-
-        self.popupmenuHeader = $(this).data('popupmenu');
       }
       return false;
     });
@@ -1259,8 +1249,6 @@ Datagrid.prototype = {
           rowData: {},
           value: undefined
         };
-
-        self.dropdownHeaderList.push(api);
       });
 
       elem.find('select.multiselect').each(function () {
@@ -1281,8 +1269,6 @@ Datagrid.prototype = {
           rowData: {},
           value: undefined
         };
-
-        self.dropdownHeaderList.push(api);
       });
 
       if (col.maskOptions) {
@@ -1455,15 +1441,6 @@ Datagrid.prototype = {
       */
       this.element.triggerHandler('openfilterrow');
       this.attachFilterRowEvents();
-    }
-  },
-
-  closeAllDropdownHeaders() {
-    const self = this;
-
-    for (let i = 0; i < self.dropdownHeaderList.length; i++) {
-      const dropdown = self.dropdownHeaderList[i];
-      dropdown.close();
     }
   },
 
