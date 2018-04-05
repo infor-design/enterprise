@@ -7,19 +7,20 @@
     -   [renderItem][3]
     -   [toData][4]
     -   [markupItems][5]
-    -   [getPositionFromEvent][6]
-    -   [position][7]
-    -   [highlight][8]
-    -   [select][9]
-    -   [getSelected][10]
-    -   [isInSelectableSection][11]
-    -   [isInSingleSelectSection][12]
-    -   [isInMultiselectSection][13]
-    -   [detach][14]
-    -   [close][15]
-    -   [teardown][16]
-    -   [updated][17]
-    -   [destroy][18]
+    -   [refreshMenuItem][6]
+    -   [getPositionFromEvent][7]
+    -   [position][8]
+    -   [highlight][9]
+    -   [select][10]
+    -   [getSelected][11]
+    -   [isInSelectableSection][12]
+    -   [isInSingleSelectSection][13]
+    -   [isInMultiselectSection][14]
+    -   [detach][15]
+    -   [close][16]
+    -   [teardown][17]
+    -   [updated][18]
+    -   [destroy][19]
 
 ## PopupMenu
 
@@ -27,48 +28,48 @@ Responsive Popup Menu Control aka Context Menu when doing a right click action.
 
 **Parameters**
 
--   `element` **([Array][19]&lt;jquery> | [htmlelement][20])** The component element.
--   `settings` **[object][21]?** The component settings.
-    -   `settings.menu` **[string][22]?** Menu's ID Selector, or a jQuery object representing a menu.
-    -   `settings.trigger` **[string][22]** Action on which to trigger a menu can be: click, rightClick, immediate ect. (optional, default `'click'`)
-    -   `settings.autoFocus` **[boolean][23]** If false the focus will not focus the first list element. (At the cost of accessibility). (optional, default `true`)
-    -   `settings.attachToBody` **[boolean][23]** If true the menu will be moved out to the body. To be used in certin overflow situations. (optional, default `false`)
-    -   `settings.beforeOpen` **[function][24]?** Callback that can be used for populating the contents of the menu.
-    -   `settings.ariaListbox` **[string][22]** Switches aria to use listbox construct instead of menu construct (internal). (optional, default `false`)
-    -   `settings.eventObj` **[string][22]?** Can pass in the event object so you can do a right click with immediate.
-    -   `settings.returnFocus` **[string][22]?** If set to false, focus will not be
+-   `element` **([Array][20]&lt;jquery> | [htmlelement][21])** The component element.
+-   `settings` **[object][22]?** The component settings.
+    -   `settings.menu` **[string][23]?** Menu's ID Selector, or a jQuery object representing a menu.
+    -   `settings.trigger` **[string][23]** Action on which to trigger a menu can be: click, rightClick, immediate ect. (optional, default `'click'`)
+    -   `settings.autoFocus` **[boolean][24]** If false the focus will not focus the first list element. (At the cost of accessibility). (optional, default `true`)
+    -   `settings.attachToBody` **[boolean][24]** If true the menu will be moved out to the body. To be used in certin overflow situations. (optional, default `false`)
+    -   `settings.beforeOpen` **[function][25]?** Callback that can be used for populating the contents of the menu.
+    -   `settings.ariaListbox` **[string][23]** Switches aria to use listbox construct instead of menu construct (internal). (optional, default `false`)
+    -   `settings.eventObj` **[string][23]?** Can pass in the event object so you can do a right click with immediate.
+    -   `settings.returnFocus` **[string][23]?** If set to false, focus will not be
         returned to the calling element. It usually should be for accessibility purposes.
-    -   `settings.placementOpts` **[object][21]** Gets passed to this control's Place behavior. (optional, default `newPlacementObject({
+    -   `settings.placementOpts` **[object][22]** Gets passed to this control's Place behavior. (optional, default `newPlacementObject({
         containerOffsetX:10,
         containerOffsetY:10,
         strategies:['flip','shrink']
         })`)
-    -   `settings.offset` **[object][21]** Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`. (optional, default `{x:0,y:0}`)
-    -   `settings.predefined` **[Array][19]&lt;jQuery>** containing references to menu items that should be passed to the "predefined" hash. (optional, default `$()`)
+    -   `settings.offset` **[object][22]** Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`. (optional, default `{x:0,y:0}`)
+    -   `settings.predefined` **[Array][20]&lt;jQuery>** containing references to menu items that should be passed to the "predefined" hash. (optional, default `$()`)
 
 ### isRTL
 
 Checks whether or not Right-To-Left reading mode is active.
 
-Returns **[boolean][23]** whether or not the reading/writing direction is RTL
+Returns **[boolean][24]** whether or not the reading/writing direction is RTL
 
 ### renderItem
 
 **Parameters**
 
--   `settings` **([object][21] \| [Array][19]&lt;[object][21]>)** JSON-friendly object that represents a popupmenu item, or array of items.
-    -   `settings.id` **[string][22]?** adds an ID to the item's anchor tag
-    -   `settings.divider` **[boolean][23]** causes this menu item to be a divider (overrides everything else) (optional, default `false`)
-    -   `settings.heading` **[string][22]** Produces a heading element after a divider with text content. (optional, default `""`)
-    -   `settings.nextSectionSelect` **[string][22]?** can be null, "single", or "multiple"
-    -   `settings.text` **[string][22]** contains the text that will be displayed.
-    -   `settings.icon` **([string][22] | null)** applies an icon to the menu item (optional, default `null`)
-    -   `settings.selectable` **([string][22] | null)?** can be null, "single", or "multiple"
-    -   `settings.disabled` **[boolean][23]** causes the item to be disabled. (optional, default `false`)
-    -   `settings.submenu` **[Array][19]&lt;[object][21]>?** array of settings object contstructed just like this one, that represent submenu items.
-    -   `settings.noMenuWrap` **[boolean][23]** if true, causes multiple top-level menu items not to be wrapped by a `<ul class="popupmenu"></ul>` (optional, default `false`)
+-   `settings` **([object][22] \| [Array][20]&lt;[object][22]>)** JSON-friendly object that represents a popupmenu item, or array of items.
+    -   `settings.id` **[string][23]?** adds an ID to the item's anchor tag
+    -   `settings.divider` **[boolean][24]** causes this menu item to be a divider (overrides everything else) (optional, default `false`)
+    -   `settings.heading` **[string][23]** Produces a heading element after a divider with text content. (optional, default `""`)
+    -   `settings.nextSectionSelect` **[string][23]?** can be null, "single", or "multiple"
+    -   `settings.text` **[string][23]** contains the text that will be displayed.
+    -   `settings.icon` **([string][23] | null)** applies an icon to the menu item (optional, default `null`)
+    -   `settings.selectable` **([string][23] | null)?** can be null, "single", or "multiple"
+    -   `settings.disabled` **[boolean][24]** causes the item to be disabled. (optional, default `false`)
+    -   `settings.submenu` **[Array][20]&lt;[object][22]>?** array of settings object contstructed just like this one, that represent submenu items.
+    -   `settings.noMenuWrap` **[boolean][24]** if true, causes multiple top-level menu items not to be wrapped by a `<ul class="popupmenu"></ul>` (optional, default `false`)
 
-Returns **[string][22]** HTML representing a Popupmenu item with the settings passed.
+Returns **[string][23]** HTML representing a Popupmenu item with the settings passed.
 
 ### toData
 
@@ -76,20 +77,33 @@ Converts the contents of a popupmenu or submenu to a JSON-friendly object struct
 
 **Parameters**
 
--   `settings` **[object][21]** incoming conversion settings (optional, default `{}`)
-    -   `settings.contextElement` **([Array][19]&lt;jQuery> | [HTMLElement][20])?** the top-most element that will
+-   `settings` **[object][22]** incoming conversion settings (optional, default `{}`)
+    -   `settings.contextElement` **([Array][20]&lt;jQuery> | [HTMLElement][21])?** the top-most element that will
          be modified (defaults to the top-level menu).
-    -   `settings.noMenuWrap` **[boolean][23]?** if true, will pass an array as the top-level data instead
+    -   `settings.noMenuWrap` **[boolean][24]?** if true, will pass an array as the top-level data instead
          of an object with a `menu` property.
 
-Returns **([object][21] \| [Array][19]&lt;[object][21]>)** an object representation of this popupmenu's current state.
+Returns **([object][22] \| [Array][20]&lt;[object][22]>)** an object representation of this popupmenu's current state.
 
 ### markupItems
 
 **Parameters**
 
--   `contextElement` **([Array][19]&lt;jQuery> | [HTMLElement][20])?** the top-most element that will
+-   `contextElement` **([Array][20]&lt;jQuery> | [HTMLElement][21])?** the top-most element that will
      be modified (defaults to the top-level menu).
+
+Returns **void** 
+
+### refreshMenuItem
+
+Takes a pre-existing menu item and refreshes its state
+
+**Parameters**
+
+-   `item` **[HTMLElement][21]** the menu item to be refreshed
+-   `data` **[object][22]** representing a Popupmenu data structure, containing updated state information
+-   `callback` **[function][25]?** runs on completion of the item refresh.  Can be used for adding additional
+     important flags/properties to the Menu Item for a specific implementation.
 
 Returns **void** 
 
@@ -101,7 +115,7 @@ Get the event position, handling browser cases (IE,FF) as well as SVG
 
 -   `e` **jQuery.Event** the mouse event to be checked for pageX/pageY
 
-Returns **[object][21]** containing x/y coordinates
+Returns **[object][22]** containing x/y coordinates
 
 ### position
 
@@ -119,7 +133,7 @@ Places a highlighted visual state on an item inside the menu
 
 **Parameters**
 
--   `anchor` **[Array][19]&lt;jQuery>** the anchor tag representing the menu item.
+-   `anchor` **[Array][20]&lt;jQuery>** the anchor tag representing the menu item.
 
 Returns **void** 
 
@@ -129,15 +143,15 @@ Adds/removes checkmarks that are in selectable groups inside the Popupmenu
 
 **Parameters**
 
--   `anchor` **[Array][19]&lt;jQuery>** the anchor tag representing the menu item.
+-   `anchor` **[Array][20]&lt;jQuery>** the anchor tag representing the menu item.
 
-Returns **[array][19]** updated references to the anchor and its state.
+Returns **[array][20]** updated references to the anchor and its state.
 
 ### getSelected
 
 Gets references to top-level menu items that are currently selected.
 
-Returns **[Array][19]&lt;jQuery>** elements inside the top-level menu that are selected.
+Returns **[Array][20]&lt;jQuery>** elements inside the top-level menu that are selected.
 
 ### isInSelectableSection
 
@@ -145,9 +159,9 @@ Determines whether or not an anchor resides inside of a selectable Popupmenu sec
 
 **Parameters**
 
--   `anchor` **[Array][19]&lt;jQuery>** the anchor tag being checked.
+-   `anchor` **[Array][20]&lt;jQuery>** the anchor tag being checked.
 
-Returns **[Array][19]&lt;jQuery>** elements inside the top-level menu that are selected.
+Returns **[Array][20]&lt;jQuery>** elements inside the top-level menu that are selected.
 
 ### isInSingleSelectSection
 
@@ -155,9 +169,9 @@ Determines whether or not an anchor resides inside of a single-selectable Popupm
 
 **Parameters**
 
--   `anchor` **[Array][19]&lt;jQuery>** the anchor tag being checked.
+-   `anchor` **[Array][20]&lt;jQuery>** the anchor tag being checked.
 
-Returns **[Array][19]&lt;jQuery>** elements inside the top-level menu that are selected
+Returns **[Array][20]&lt;jQuery>** elements inside the top-level menu that are selected
  within a single-selectable section.
 
 ### isInMultiselectSection
@@ -166,9 +180,9 @@ Determines whether or not an anchor resides inside of a multi-selectable Popupme
 
 **Parameters**
 
--   `anchor` **[Array][19]&lt;jQuery>** the anchor tag being checked.
+-   `anchor` **[Array][20]&lt;jQuery>** the anchor tag being checked.
 
-Returns **[Array][19]&lt;jQuery>** elements inside the top-level menu that are selected
+Returns **[Array][20]&lt;jQuery>** elements inside the top-level menu that are selected
  within a multi-selectable section.
 
 ### detach
@@ -183,9 +197,9 @@ Close the open menu
 
 **Parameters**
 
--   `isCancelled` **[boolean][23]** Internally set option used if the operation is a cancel.
+-   `isCancelled` **[boolean][24]** Internally set option used if the operation is a cancel.
      Wont matter for manual api call.
--   `noFocus` **[boolean][23]?** Do not return focus to the calling element (fx a button)
+-   `noFocus` **[boolean][24]?** Do not return focus to the calling element (fx a button)
 
 ### teardown
 
@@ -199,7 +213,7 @@ Updates this Popupmenu instance with new settings
 
 **Parameters**
 
--   `settings` **[object][21]?** incoming settings
+-   `settings` **[object][22]?** incoming settings
 
 Returns **this** component instance
 
@@ -219,40 +233,42 @@ Returns **void**
 
 [5]: #markupitems
 
-[6]: #getpositionfromevent
+[6]: #refreshmenuitem
 
-[7]: #position
+[7]: #getpositionfromevent
 
-[8]: #highlight
+[8]: #position
 
-[9]: #select
+[9]: #highlight
 
-[10]: #getselected
+[10]: #select
 
-[11]: #isinselectablesection
+[11]: #getselected
 
-[12]: #isinsingleselectsection
+[12]: #isinselectablesection
 
-[13]: #isinmultiselectsection
+[13]: #isinsingleselectsection
 
-[14]: #detach
+[14]: #isinmultiselectsection
 
-[15]: #close
+[15]: #detach
 
-[16]: #teardown
+[16]: #close
 
-[17]: #updated
+[17]: #teardown
 
-[18]: #destroy
+[18]: #updated
 
-[19]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[19]: #destroy
 
-[20]: https://developer.mozilla.org/docs/Web/HTML/Element
+[20]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[21]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[21]: https://developer.mozilla.org/docs/Web/HTML/Element
 
-[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[22]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[23]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[24]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[25]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function

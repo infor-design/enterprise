@@ -368,6 +368,7 @@ PopupMenu.prototype = {
     let selectableClass = '';
     let submenuClass = '';
     let submenu = '';
+    let ddicon = '';
 
     if (settings.disabled) {
       disabledClass += ' is-disabled';
@@ -398,12 +399,16 @@ PopupMenu.prototype = {
     if (Array.isArray(settings.submenu)) {
       submenuClass += ' submenu';
       submenu += this.renderItem(settings.submenu);
+      ddicon += `<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dropdown"></use>
+      </svg>`;
     }
 
     return stringUtils.stripWhitespace(`<li class="popupmenu-item${disabledClass}${hiddenClass}${selectableClass}${submenuClass}">
       <a${id} href="#">
         ${icon}
         <span>${settings.text}</span>
+        ${ddicon}
       </a>
       ${submenu}
     </li>`);
@@ -455,7 +460,7 @@ PopupMenu.prototype = {
       const liData = {};
 
       liData.text = a.text().trim();
-      liData.disabled = li.hasClass('disabled');
+      liData.disabled = li.hasClass('is-disabled');
       liData.visible = !li.hasClass('hidden');
 
       if (typeof id === 'string' && id.length) {
@@ -586,6 +591,80 @@ PopupMenu.prototype = {
       contextElement.addClass('has-icons');
     } else {
       contextElement.removeClass('has-icons');
+    }
+  },
+
+  /**
+   * Takes a pre-existing menu item and refreshes its state
+   * @param {HTMLElement} item the menu item to be refreshed
+   * @param {object} data representing a Popupmenu data structure, containing updated state information
+   * @param {function} [callback] runs on completion of the item refresh.  Can be used for adding additional
+   *  important flags/properties to the Menu Item for a specific implementation.
+   * @returns {void}
+   */
+  refreshMenuItem(item, data, callback) {
+    if (!item || !(item instanceof HTMLElement) || !data) {
+      return;
+    }
+
+    // Don't refresh the menu item if it doesn't belong to this menu
+    if (!$(this.menu)[0].contains(item)) {
+      return;
+    }
+
+    const itemA = item.querySelector('a');
+    const itemIcon = item.querySelector('.icon:not(.close):not(.icon-dropdown)');
+    let itemIconUse;
+
+    if (data.text) {
+      if (itemA.innerText.trim() !== data.text) {
+        itemA.innerText = `${data.text}`;
+      }
+    }
+
+    if (data.disabled === true) {
+      if (item.className.indexOf('hidden') === -1) {
+        item.classList.add('is-disabled');
+      }
+    } else if (item.className.indexOf('is-disabled') > -1) {
+      item.classList.remove('is-disabled');
+    }
+
+    if (data.visible === true) {
+      if (item.className.indexOf('hidden') > -1) {
+        item.classList.remove('hidden');
+      }
+    } else if (item.className.indexOf('hidden') === -1) {
+      item.classList.add('visible');
+    }
+
+    if (data.icon) {
+      // TODO: fragile?
+      if (itemIcon) {
+        itemIconUse = itemIcon.querySelector('use');
+        if (itemIconUse && itemIconUse.getAttribute('xlink:href').replace('#icon-', '') !== data.icon) {
+          itemIcon.remove();
+        }
+        itemIconUse.setAttribute('xlink:href', `#icon-${data.icon}`);
+      } else {
+        // TODO: Create icon element and append
+      }
+    } else if (itemIcon) {
+      itemIcon.remove();
+    }
+
+    // TODO: Submenus
+    // Build so the submenu data structure is used to rerun this method against each submenu item.
+    if (data.submenu) {
+      const submenuItems = item.querySelector('.popupmenu').children;
+      for (let i = 0; i < data.submenu.length; i++) {
+        this.refreshMenuItem(submenuItems.item(i), data.submenu[i], callback);
+      }
+    }
+
+    // Run callback to apply additional refresh changes, if applicable.
+    if (typeof callback === 'function') {
+      callback.apply(this, item, data);
     }
   },
 

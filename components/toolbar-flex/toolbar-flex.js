@@ -423,27 +423,10 @@ ToolbarFlex.prototype = {
     let hasIcons = false;
 
     function getItemData(item) {
-      const itemData = {
-        itemLink: item,
-        disabled: item.disabled,
-        visible: item.visible
-      };
-
-      const icon = item.element.querySelector('.icon:not(.close):not(.icon-dropdown) > use');
-      if (icon) {
-        itemData.icon = icon.getAttribute('xlink:href').replace('#icon-', '');
+      const itemData = item.toPopupmenuData();
+      if (itemData && itemData.icon) {
         hasIcons = true;
       }
-
-      if (item.type === 'button' || item.type === 'menubutton') {
-        itemData.text = item.element.textContent.trim();
-      }
-
-      if (item.type === 'menubutton') {
-        // TODO: Need to convert a Popupmenu's contents to the object format with this method
-        itemData.submenu = item.componentAPI.toData({ noMenuWrap: true });
-      }
-
       return itemData;
     }
 

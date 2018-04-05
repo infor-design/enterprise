@@ -23,6 +23,15 @@ const TOOLBAR_ELEMENTS = [
   { type: 'toolbarsearchfield', selector: '.toolbarsearchfield' } // temporary
 ];
 
+// Mappings from toolbar item type to component API
+const TOOLBAR_COMPONENT_APIS = {
+  actionbutton: 'popupmenu',
+  menubutton: 'popupmenu',
+  hyperlink: 'hyperlink',
+  searchfield: 'searchfield',
+  toolbarsearchfield: 'searchfield'
+};
+
 /**
  * Default Settings
  * @namespace
@@ -30,7 +39,8 @@ const TOOLBAR_ELEMENTS = [
 const TOOLBAR_FLEX_ITEM_DEFAULTS = {
   disabled: false,
   readonly: false,
-  hidden: false
+  hidden: false,
+  componentSettings: undefined
 };
 
 /**
@@ -149,17 +159,14 @@ ToolbarFlexItem.prototype = {
    * @returns {object|undefined} Soho Component instance, if applicable
    */
   get componentAPI() {
-    let api;
-    if (this.type === 'menubutton' || this.type === 'actionbutton') {
-      api = $(this.element).data('popupmenu');
+    const $element = $(this.element);
+    const componentType = TOOLBAR_COMPONENT_APIS[this.type];
+
+    if (!componentType) {
+      return undefined;
     }
-    if (this.type === 'hyperlink') {
-      api = $(this.element).data('hyperlink');
-    }
-    if (this.type === 'searchfield' || this.type === 'toolbarsearchfield') {
-      api = $(this.element).data('searchfield');
-    }
-    return api;
+
+    return $element.data(componentType);
   },
 
   /**
@@ -333,7 +340,7 @@ ToolbarFlexItem.prototype = {
    * @private
    */
   handleActionButtonBeforeOpen() {
-    this.renderMoreActionsMenu();
+    this.refreshMoreActionsMenu();
   },
 
   /**
@@ -341,10 +348,24 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   render() {
+    // Setup component APIs, if applicable
+    // NOTE: Soho Initializer doesn't invoke these automatically, by nature of the
+    // base elements existing inside the Flex Toolbar.
+    const $element = $(this.element);
+    const componentType = TOOLBAR_COMPONENT_APIS[this.type];
+    if (componentType) {
+      const api = $element.data(componentType);
+      if (!api) {
+        $element[componentType](this.settings.componentSettings);
+      } else {
+        api.updated(this.settings.componentSettings);
+      }
+    }
+
+    // Action Buttons need more stuff
     if (this.type !== 'actionbutton') {
       return;
     }
-
     this.renderMoreActionsMenu();
   },
 
@@ -354,13 +375,11 @@ ToolbarFlexItem.prototype = {
    */
   renderMoreActionsMenu(force) {
     const menuAPI = this.componentAPI;
-    let $menu;
-    if (menuAPI) {
-      $menu = menuAPI.menu;
-    }
     if (!menuAPI || !this.toolbarAPI) {
       return;
     }
+
+    const $menu = menuAPI.menu;
 
     // Clear the More Actions menu of anything that shouldn't be there (AJAX-related stuff that will be reloaded)
     let excludes = this.predefinedItems || $();
@@ -368,24 +387,106 @@ ToolbarFlexItem.prototype = {
       excludes = $();
     }
     // TODO: Distinguish between Toolbar Items and pre-defined Popupmenu Markup?
+    this.unlinkToolbarItems();
     $menu.children().not(excludes).remove();
 
     // Add Toolbar Items
     const data = this.toolbarAPI.toPopupmenuData();
-    this.predefinedItems = $(menuAPI.renderItem(data));
+    const menuItems = $(menuAPI.renderItem(data));
+    this.predefinedItems = menuItems;
+    this.linkToolbarItems(data);
+
     $menu.prepend(this.predefinedItems);
+  },
 
-    /**
-     * TODO: create process that builds popupmenu items from toolbar markup,
-     * and links them for event usage.
-     */
-    /*
-    this.toolbarAPI.items.reverse().forEach((item) => {
-      $menu.prepend(`<li><a href="#">${$(item).text().trim()}</a></li>`);
+  /**
+   * Removes links between the current set of Toolbar Items to `More Actions` menu items.
+   */
+  unlinkToolbarItems() {
+    if (this.type !== 'actionbutton' || !this.predefinedItems || !this.predefinedItems.length) {
+      return;
+    }
+
+    this.predefinedItems.each((i, item) => {
+      const originalButton = $(item).data('originalButton');
+      originalButton.data('toolbarflexitem').actionButtonLink = null;
+      $(item).removeData('original-button');
     });
-    */
+  },
 
-    this.predefinedItems = this.toolbarAPI.items;
+  /**
+   * Links the current set of Toolbar Items to the `More Actions` menu items.
+   * @param {object} popupmenuData incoming popupmenu data
+   */
+  linkToolbarItems(popupmenuData) {
+    if (this.type !== 'actionbutton' || !popupmenuData) {
+      return;
+    }
+
+    if (!Array.isArray(popupmenuData)) {
+      popupmenuData = popupmenuData.menu;
+    }
+
+    this.predefinedItems.each((i, item) => {
+      const originalButton = popupmenuData[i].itemLink;
+      originalButton.actionButtonLink = item;
+      $(item).data('original-button', originalButton.element);
+    });
+  },
+
+  /**
+   * @returns {object} an object representation of this Toolbar Item as a Popupmenu Item.
+   */
+  toPopupmenuData() {
+    const itemData = {
+      itemLink: this,
+      disabled: this.disabled,
+      visible: this.visible
+    };
+
+    const icon = this.element.querySelector('.icon:not(.close):not(.icon-dropdown) > use');
+    if (icon) {
+      itemData.icon = icon.getAttribute('xlink:href').replace('#icon-', '');
+    }
+
+    if (this.type === 'button' || this.type === 'menubutton') {
+      itemData.text = this.element.textContent.trim();
+    }
+
+    if (this.type === 'menubutton') {
+      // TODO: Need to convert a Popupmenu's contents to the object format with this method
+      itemData.submenu = this.componentAPI.toData({ noMenuWrap: true });
+    }
+
+    return itemData;
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  refreshMoreActionsMenu() {
+    if (this.type !== 'actionbutton') {
+      return;
+    }
+
+    const menuAPI = this.componentAPI;
+    if (!menuAPI || !this.toolbarAPI) {
+      return;
+    }
+
+    // If there are toolbar items, but no predefined items items, render the more-actions menu
+    if ((!this.predefinedItems || !this.predefinedItems.length) && this.toolbarAPI.items.length) {
+      this.renderMoreActionsMenu();
+    }
+
+    // Each Linked Toolbar Item will be refreshed by the Popupmenu API
+    this.toolbarAPI.items.forEach((item) => {
+      if (!item.actionButtonLink) {
+        return;
+      }
+      menuAPI.refreshMenuItem(item.actionButtonLink, item.toPopupmenuData());
+    });
   },
 
   /**
