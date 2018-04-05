@@ -3,7 +3,7 @@
 <ol type="1">
 <li>Form Buttons <a href="../components/button/example-index">View Example</a></li>
 <li>100% Width Button <a href="../components/button/example-100-percent">View Example</a></li>
-<li>Button on an a> tag <a href="../components/button/example-as-link">View Example</a></li>
+<li>Button on an <a> tag <a href="../components/button/example-as-link">View Example</a></li>
 <li>Form Call to Action Button <a href="../components/button/example-secondary-border">View Example</a></li>
 <li>Button with Icons <a href="../components/button/example-with-icons">View Example</a></li>
 <li>Toggle Buttons <a href="../components/button/example-toggle-button">View Example</a></li>
@@ -166,25 +166,26 @@ void
 </ul>
 <p>All buttons are assumed to be icon + text. To add the icon you add the svg icon element and use a span to hold the button text.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">
-&lt;button <span class="kw">class</span>=<span class="st">&quot;btn-primary&quot;</span> type=<span class="st">&quot;button&quot;</span>&gt;Action&lt;<span class="ot">/button&gt;</span>
+&lt;button <span class="kw">class</span>=<span class="st">&quot;btn-primary&quot;</span> type=<span class="st">&quot;button&quot;</span> data-automation-id=<span class="st">&quot;page-button-primary&quot;</span>&gt;Action&lt;<span class="ot">/button&gt;</span>
 
 <span class="ot">&lt;button class=&quot;btn-secondary&quot; type=&quot;button&quot;&gt;Action&lt;/button</span>&gt;
 
-&lt;button type=<span class="st">&quot;button&quot;</span> <span class="kw">class</span>=<span class="st">&quot;btn-tertiary&quot;</span>&gt;
+&lt;button type=<span class="st">&quot;button&quot;</span> <span class="kw">class</span>=<span class="st">&quot;btn-tertiary&quot;</span> data-automation-id=<span class="st">&quot;page-button-tertiary&quot;</span>&gt;
   &lt;svg role=<span class="st">&quot;presentation&quot;</span> aria-hidden=<span class="st">&quot;true&quot;</span> focusable=<span class="st">&quot;false&quot;</span> <span class="kw">class</span>=<span class="st">&quot;icon&quot;</span>&gt;
     &lt;use xlink:href=<span class="st">&quot;#icon-filter&quot;</span>&gt;&lt;<span class="ot">/use&gt;</span>
 <span class="ot">  &lt;/svg</span>&gt;
   &lt;span&gt;Action&lt;<span class="ot">/span&gt;</span>
 <span class="ot">&lt;/button</span>&gt;
 
-&lt;button type=<span class="st">&quot;button&quot;</span> <span class="kw">class</span>=<span class="st">&quot;btn-icon&quot;</span>&gt;
-  &lt;svg role=<span class="st">&quot;presentation&quot;</span> aria-hidden=<span class="st">&quot;true&quot;</span> focusable=<span class="st">&quot;false&quot;</span> <span class="kw">class</span>=<span class="st">&quot;icon&quot;</span>&gt;
-    &lt;use xlink:href=<span class="st">&quot;#icon-calendar&quot;</span>&gt;&lt;<span class="ot">/use&gt;</span>
-<span class="ot">  &lt;/svg</span>&gt;
-  &lt;span&gt;Date&lt;<span class="ot">/span&gt;</span>
+&lt;button type=<span class="st">&quot;button&quot;</span> <span class="kw">class</span>=<span class="st">&quot;btn-icon&quot;</span> disabled data-automation-id=<span class="st">&quot;page-button-icon&quot;</span>&gt;
+  &lt;span <span class="kw">class</span>=<span class="st">&quot;audible&quot;</span>&gt;Date&lt;<span class="ot">/span&gt;</span>
+<span class="ot">  &lt;svg role=&quot;presentation&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot; class=&quot;icon&quot;&gt;</span>
+<span class="ot">    &lt;use xlink:href=&quot;#icon-calendar&quot;&gt;&lt;/use</span>&gt;
+  &lt;<span class="ot">/svg&gt;</span>
 <span class="ot">&lt;/button</span>&gt;</code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>
+<li>Make sure to add an automation-id for testing that remains the same across versions.</li>
 <li>Do not use any elements other than button attributes for buttons.</li>
 <li>Press State has a touch effect which requires JS to implement</li>
 <li>Buttons can optionally have tooltips via adding a title attribute</li>

@@ -26,31 +26,32 @@ All buttons are assumed to be icon + text. To add the icon you add the svg icon 
 
 ```javascript
 
-<button class="btn-primary" type="button">Action</button>
+<button class="btn-primary" type="button" data-automation-id="page-button-primary">Action</button>
 
 <button class="btn-secondary" type="button">Action</button>
 
-<button type="button" class="btn-tertiary">
+<button type="button" class="btn-tertiary" data-automation-id="page-button-tertiary">
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
     <use xlink:href="#icon-filter"></use>
   </svg>
   <span>Action</span>
 </button>
 
-<button type="button" class="btn-icon">
+<button type="button" class="btn-icon" disabled data-automation-id="page-button-icon">
+  <span class="audible">Date</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
     <use xlink:href="#icon-calendar"></use>
   </svg>
-  <span>Date</span>
 </button>
 
 ```
 
 ## Implementation Tips
 
--   Do not use any elements other than button attributes for buttons.
--   Press State has a touch effect which requires JS to implement
--   Buttons can optionally have tooltips via adding a title attribute
+- Make sure to add an automation-id for testing that remains the same across versions.
+- Do not use any elements other than button attributes for buttons.
+- Press State has a touch effect which requires JS to implement
+- Buttons can optionally have tooltips via adding a title attribute
 
 ## Accessibility
 

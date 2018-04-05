@@ -227,12 +227,8 @@ Spinbox.prototype = {
     }
 
     // Add Aria Properties for valuemin/valuemax
-    if (min) {
-      attributes['aria-valuemin'] = min;
-    }
-    if (max) {
-      attributes['aria-valuemax'] = max;
-    }
+    attributes['aria-valuemin'] = min || 0;
+    attributes['aria-valuemax'] = max || 0;
     this.element.attr(attributes);
 
     // Set an initial "aria-valuenow" value.
@@ -534,7 +530,7 @@ Spinbox.prototype = {
     const max = this.element.attr('max');
 
     val = this.checkForNumeric(val);
-    this.element.attr('aria-valuenow', (val !== '' ? val : ''));
+    this.element.attr('aria-valuenow', val || '0');
 
     // Toggle min/max buttons
     this.setIsDisabled(this.buttons.up, (val !== '' && max && val >= max) ? 'disable' : 'enable');
