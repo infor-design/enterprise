@@ -68,6 +68,7 @@ import './tooltip/tooltip.jquery';
 import './trackdirty/trackdirty.jquery';
 import './popover/popover.jquery';
 import './tree/tree.jquery';
+import './treemap/treemap.jquery';
 import './validation/validation.jquery';
 import './validation/validation.utils';
 import './wizard/wizard.jquery';

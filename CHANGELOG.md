@@ -1,4 +1,34 @@
-redundant## <a name="version-4.5.0">4.5.0</a>
+## <a name="version-4.6.0">4.6.0</a>
+
+Release Date: 2018-04-29
+
+Full Jira Release Notes: https://bit.ly/2GlnGJ1
+
+### <a name="version-4.6.0-download-build-assets">Download Build Assets:</a>
+
+Build Server: http://bamboo.infor.com/browse/label/release-460
+Npm: http://npm.infor.com
+Angular Components Change Log: http://git.infor.com/projects/SOHO/repos/angular-components/browse/CHANGELOG.md
+
+### <a name="version-4.6.0-download-build-assets">Demo Site</a>
+
+http://usalvlhlpool1.infor.com/4.6.0/components/
+
+### <a name="version-4.6.0-key-new-features">Key New Features</a>
+- Treemap Component Added
+
+### <a name="version-4.6.0-behavior-changes">Behavior Changes</a>
+
+### <a name="version-4.6.0-improvements">Improvements</a>
+
+### <a name="version-4.6.0-breaking-changes">Code Updates / Breaking Changes</a>
+
+### <a name="version-4.5.0-bug-fixes">Bug Fixes</a>
+- Angular - Added fixes so that the soho.migrate script is no longer needed.
+
+(X Jira Issues Solved this release, Backlog Dev X, Design X, Unresolved X, Test Coverage X% )
+
+## <a name="version-4.5.0">4.5.0</a>
 
 Release Date: 2018-03-29
 

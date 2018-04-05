@@ -1,5 +1,6 @@
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
+import { Formatters } from './datagrid.formatters';
 
 /**
 *  A object containing all the supported Editors
@@ -475,7 +476,7 @@ const editors = {
         // Note that the value should be formatted from the formatter.
         this.input.val(v);
       }
-      return window.Formatters.Date(row, cell, this.input.val(), column, true);
+      return Formatters.Date(row, cell, this.input.val(), column, true);
     };
 
     this.focus = function () {

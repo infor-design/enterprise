@@ -1465,11 +1465,11 @@ Datagrid.prototype = {
         if (columnDef.filterType === 'percent') {
           conditionValue = (conditionValue / 100).toString();
           if ((`${columnDef.name}`).toLowerCase() === 'decimal') {
-            rowValue = window.Formatters.Decimal(false, false, rowValue, columnDef);
-            conditionValue = window.Formatters.Decimal(false, false, conditionValue, columnDef);
+            rowValue = Formatters.Decimal(false, false, rowValue, columnDef);
+            conditionValue = Formatters.Decimal(false, false, conditionValue, columnDef);
           } else if ((`${columnDef.name}`).toLowerCase() === 'integer') {
-            rowValue = window.Formatters.Integer(false, false, rowValue, columnDef);
-            conditionValue = window.Formatters.Integer(false, false, conditionValue, columnDef);
+            rowValue = Formatters.Integer(false, false, rowValue, columnDef);
+            conditionValue = Formatters.Integer(false, false, conditionValue, columnDef);
           }
         }
 
@@ -2226,7 +2226,7 @@ Datagrid.prototype = {
       return;
     }
 
-    this.settings.dataset = window.GroupBy(this.settings.dataset, groupSettings.fields);
+    this.settings.dataset = GroupBy(this.settings.dataset, groupSettings.fields);
   },
 
   /**
