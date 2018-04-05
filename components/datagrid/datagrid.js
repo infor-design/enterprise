@@ -71,6 +71,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {Function} [settings.source=false]  Callback function for paging
  * @param {boolean}  [settings.hidePagerOnOnePage=false]  If true, hides the pager if there's only one page worth of results.
  * @param {boolean}  [settings.filterable=false] Enable Column Filtering, This will require column filterTypes as well.
+ * @param {boolean}  [settings.filterWhenTyping=true] Enable Column Filtering as you stop typing in inputs
  * @param {boolean}  [settings.disableClientFilter=false] Disable Filter Logic client side and let your server do it
  * @param {boolean}  [settings.disableClientSort=false] Disable Sort Logic client side and let your server do it
  * @param {string}   [settings.resultsText=null] Can provide a custom function to adjust results text on the toolbar
@@ -144,6 +145,7 @@ const DATAGRID_DEFAULTS = {
   hidePagerOnOnePage: false, // If true, hides the pager if there's only one page worth of results.
   // Filtering settings
   filterable: false,
+  filterWhenTyping: true,
   disableClientFilter: false, // Disable Filter Logic client side and let your server do it
   disableClientSort: false, // Disable Sort Logic client side and let your server do it
   resultsText: null, // Can provide a custom function to adjust results text
@@ -970,7 +972,7 @@ Datagrid.prototype = {
     }
 
     if (this.restoreFilter) {
-      this.applyFilter(this.savedFilter);
+      this.applyFilter(this.savedFilter, 'render');
       this.restoreFilter = false;
       this.savedFilter = null;
     }
@@ -1184,7 +1186,7 @@ Datagrid.prototype = {
               const operator = svg.getIconName().replace('filter-', '');
               self.filterSetDatepicker(input, operator);
             }
-            self.applyFilter();
+            self.applyFilter(null, 'selected');
           })
           .off('close.datagrid-filter')
           .on('close.datagrid-filter', function () {
@@ -1203,18 +1205,26 @@ Datagrid.prototype = {
       e.stopPropagation();
 
       if (e.which === 13) {
-        self.applyFilter();
+        self.applyFilter(null, 'enter');
         e.preventDefault();
         e.stopPropagation();
         return false;
       }
       return true;
-    }).off('keyup.datagrid').on('keyup.datagrid', '.datagrid-filter-wrapper input', () => {
-      clearTimeout(typingTimer);
-      typingTimer = setTimeout(() => {
-        self.applyFilter();
-      }, 400);
     });
+
+    if (this.settings.filterWhenTyping) {
+      this.headerRow.off('keyup.datagrid').on('keyup.datagrid', '.datagrid-filter-wrapper input', (e) => {
+        if (e.which === 13) {
+          return;
+        }
+
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+          self.applyFilter(null, 'keyup');
+        }, 400);
+      });
+    }
 
     this.headerRow.find('tr:last th').each(function () {
       const col = self.columnById($(this).attr('data-column-id'))[0];
@@ -1227,7 +1237,7 @@ Datagrid.prototype = {
       elem.find('select.dropdown').each(function () {
         const dropdown = $(this);
         dropdown.dropdown(col.editorOptions).on('selected.datagrid', () => {
-          self.applyFilter();
+          self.applyFilter(null, 'selected');
         });
 
         // Append the Dropdown's sourceArguments with some row/col meta-data
@@ -1247,7 +1257,7 @@ Datagrid.prototype = {
       elem.find('select.multiselect').each(function () {
         const multiselect = $(this);
         multiselect.multiselect(col.editorOptions).on('selected.datagrid', () => {
-          self.applyFilter();
+          self.applyFilter(null, 'selected');
         });
 
         // Append the Dropdown's sourceArguments with some row/col meta-data
@@ -1440,8 +1450,9 @@ Datagrid.prototype = {
   /**
   * Apply the Filter with the currently selected conditions, or the ones passed in.
   * @param {object} conditions An array of objects with the filter conditions.
+  * @param {string} [trigger] A string to identify the triggering action.
   */
-  applyFilter(conditions) {
+  applyFilter(conditions, trigger) {
     const self = this;
     this.filteredDataset = null;
 
@@ -1716,9 +1727,10 @@ Datagrid.prototype = {
     * @property {object} args Object with the arguments
     * @property {number} args.op The filter operation, this can be 'apply', 'clear'
     * @property {object} args.conditions An object with all the condition data.
+    * @property {string} args.trigger Info on what was the triggering action. May be render, select or key
     */
-    this.element.trigger('filtered', { op: 'apply', conditions });
-    this.resetPager('filtered');
+    this.element.trigger('filtered', { op: 'apply', conditions, trigger });
+    this.resetPager('filtered', trigger);
     this.saveUserSettings();
   },
 
@@ -3674,7 +3686,7 @@ Datagrid.prototype = {
       }
 
       if (settings.filter) {
-        this.applyFilter(settings.filter);
+        this.applyFilter(settings.filter, 'restore');
       }
       return;
     }
@@ -4839,7 +4851,7 @@ Datagrid.prototype = {
         self.toggleFilterRow();
       }
       if (action === 'run-filter') {
-        self.applyFilter();
+        self.applyFilter(null, 'menu');
       }
       if (action === 'clear-filter') {
         self.clearFilter();
@@ -7537,7 +7549,7 @@ Datagrid.prototype = {
     api.updatePagingInfo(pagingInfo);
 
     if (!isResponse) {
-      api.renderPages(pagingInfo.type, callback);
+      api.renderPages(pagingInfo.type, callback, pagingInfo.trigger);
     }
 
     // Update selected and Sync header checkbox
@@ -7547,14 +7559,19 @@ Datagrid.prototype = {
   /**
   * Reset the pager to the first page.
   * @param {string} type The action type, which gets sent to the source callback.
+  * @param {string} trigger The triggering action
   */
-  resetPager(type) {
+  resetPager(type, trigger) {
     if (!this.pager) {
       return;
     }
 
     if (!this.pager.pagingInfo) {
       this.pager.pagingInfo = {};
+    }
+
+    if (trigger) {
+      this.pager.pagingInfo.trigger = trigger;
     }
 
     this.pager.pagingInfo.type = type;

@@ -594,6 +594,22 @@ column will get filled with an empty spacer column.
 
   <tr>
     <td>
+      settings.filterWhenTyping
+    </td>
+    <td>
+      <span>true</span>
+    </td>
+    <td>
+      boolean
+    </td>
+    <td>
+      Enable Column Filtering as you stop typing in inputs
+    </td>
+  </tr>
+
+
+  <tr>
+    <td>
       settings.disableClientFilter
     </td>
     <td>
@@ -1144,6 +1160,9 @@ array
           
                 
                   <span>conditions (object) = An array of objects with the filter conditions.
+ </span>
+                
+                  <span>trigger (string) = A string to identify the triggering action.
  </span>
                 
           
@@ -2072,6 +2091,9 @@ string
                   <span>type (string) = The action type, which gets sent to the source callback.
  </span>
                 
+                  <span>trigger (string) = The triggering action
+ </span>
+                
           
         </td>
         <td>
@@ -2417,6 +2439,11 @@ object
               <li><code>args.conditions</code> object
                 
                 <p>An object with all the condition data.</p>
+</li>
+            
+              <li><code>args.trigger</code> string
+                
+                <p>Info on what was the triggering action. May be render, select or key</p>
 </li>
             
           </ul>

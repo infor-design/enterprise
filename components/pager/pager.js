@@ -677,16 +677,18 @@ Pager.prototype = {
   /**
    * Render a page of items.
    * @private
-   * @param  {object} op The paging operation.
-   * @param  {function} callback The pager callback.
+   * @param {object} op The paging operation.
+   * @param {function} callback The pager callback.
+   * @param {string} trigger The triggering action.
    */
-  renderPages(op, callback) {
+  renderPages(op, callback, trigger) {
     let expr;
     const self = this;
     const request = {
       activePage: self.activePage,
       pagesize: self.settings.pagesize,
       type: op,
+      trigger,
       total: self.settings.componentAPI ? self.settings.componentAPI.settings.dataset.length : -1
     };
 

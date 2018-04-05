@@ -112,6 +112,7 @@ The Datagrid Component displays and process data in tabular format.
     -   `settings.source` **[Function][69]** Callback function for paging (optional, default `false`)
     -   `settings.hidePagerOnOnePage` **[boolean][66]** If true, hides the pager if there's only one page worth of results. (optional, default `false`)
     -   `settings.filterable` **[boolean][66]** Enable Column Filtering, This will require column filterTypes as well. (optional, default `false`)
+    -   `settings.filterWhenTyping` **[boolean][66]** Enable Column Filtering as you stop typing in inputs (optional, default `true`)
     -   `settings.disableClientFilter` **[boolean][66]** Disable Filter Logic client side and let your server do it (optional, default `false`)
     -   `settings.disableClientSort` **[boolean][66]** Disable Sort Logic client side and let your server do it (optional, default `false`)
     -   `settings.resultsText` **[string][67]** Can provide a custom function to adjust results text on the toolbar (optional, default `null`)
@@ -232,6 +233,7 @@ Apply the Filter with the currently selected conditions, or the ones passed in.
 **Parameters**
 
 -   `conditions` **[object][65]** An array of objects with the filter conditions.
+-   `trigger` **[string][67]?** A string to identify the triggering action.
 
 ### clearFilter
 
@@ -674,6 +676,7 @@ Reset the pager to the first page.
 **Parameters**
 
 -   `type` **[string][67]** The action type, which gets sent to the source callback.
+-   `trigger` **[string][67]** The triggering action
 
 ### destroy
 
