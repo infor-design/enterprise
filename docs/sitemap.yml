@@ -223,23 +223,23 @@ sections:
     slug: stepchart
   - name: Completion Chart
     slug: completion-chart
-Other:
-  - pages:
-    - name: Block Grid
-      slug: blockgrid
-    - name: Compositform
-      slug: compositform
-    - name: Images
-      slug: images
-    - name: Masthead
-      slug: masthead
-    - name: Process Indicator
-      slug: processindicator
-    - name: Radios
-      slug: radios
-    - name: Signin
-      slug: signin
-    - name: Tabs-multi
-      slug: tabsmulti
-    - name: Textarea
-      slug: textarea
+- name: Unclassified
+  pages:
+  - name: Block Grid
+    slug: blockgrid
+  - name: Compositform
+    slug: compositeform
+  - name: Images
+    slug: images
+  - name: Masthead
+    slug: masthead
+  - name: Process Indicator
+    slug: processindicator
+  - name: Radios
+    slug: radios
+  - name: Signin
+    slug: signin
+  - name: Tabs-multi
+    slug: tabsmulti
+  - name: Textarea
+    slug: textarea
