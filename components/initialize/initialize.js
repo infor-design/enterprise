@@ -42,9 +42,11 @@ const PLUGIN_MAPPINGS = [
   }],
 
   // Application Menu
-  ['applicationmenu', '#application-menu', function (rootElem) {
-    rootElem.applicationmenu({
-      triggers: rootElem.find('.application-menu-trigger')
+  ['applicationmenu', '#application-menu', function (rootElem, pluginName, selector) {
+    matchedItems(rootElem, selector).each((i, item) => {
+      $(item).applicationmenu({
+        triggers: rootElem.find('.application-menu-trigger')
+      });
     });
   }],
 
