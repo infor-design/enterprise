@@ -1,0 +1,80 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid">
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+         var grid,
+          columns = [],
+          data = [];
+
+        //Define Columns for the Grid.
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input});
+		    columns.push({ id: 'boolean', name: 'Checkbox', field: 'Boolean', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
+
+        var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
+
+        $.getJSON(url, function(res) {
+
+            //Init and get the api for the grid
+            grid = $('#datagrid').datagrid({
+              dataset: res.data,
+              columns: columns,
+              editable: true,
+              selectable: 'multiple',
+              paging: true,
+              pagesize: 10,
+              resultsText: function (grid, count, filterCount) {
+                console.log(grid, count, filterCount);
+                if (filterCount > 0 ) {
+                  return '(' + filterCount + ' of '+ count + ')';
+                }
+                else {
+                  return '(' + 'all '+ count + ')';
+                }
+              },
+              source: function(req, response) {
+                console.log(req, response);
+                var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+                if (req.sortId) {
+                  url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+                }
+
+                if (req.filterExpr && req.filterExpr[0]) {
+                  url += '&filterValue=' + req.filterExpr[0].value;
+                  url += '&filterOp=' + req.filterExpr[0].operator;
+                  url += '&filterColumn=' + req.filterExpr[0].columnId;
+                }
+
+                //Get Page Based on info in Req, return results into response;
+                $.getJSON(url, function(res) {
+                  // This is the total going into the grid so the pager works (filtered total or total)
+                  req.total = res.total;
+
+                  if ((req.filterExpr && req.filterExpr[0])) {
+                    req.total = res.total;
+                    req.grandTotal = res.grandTotal; // This is the total amount on the server
+                  }
+                  response(res.data, req);
+                });
+              },
+              toolbar: {title: 'Data Grid Header Title',filterRow: true, personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+            }).on('cellchange', function (e, args) {
+              console.log(args);
+            });
+        });
+
+  });
+
+</script>

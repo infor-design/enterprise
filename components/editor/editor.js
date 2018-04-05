@@ -989,7 +989,9 @@ Editor.prototype = {
     } else {
       let sel;
       let range;
+      let rangeChildren;
       let rangeStr;
+      let rangeImg;
 
       if (!this.selection.isCollapsed || this.isIe11) {
         // get example from: http://jsfiddle.net/jwvha/1/
@@ -1003,6 +1005,20 @@ Editor.prototype = {
             if (rangeStr.trim() !== '') {
               alink.html(rangeStr);
             }
+
+            rangeChildren = range.commonAncestorContainer.children;
+            const len = rangeChildren ? rangeChildren.length : 0;
+            for (let i = 0; i < len; i++) {
+              const rangeChild = rangeChildren[i];
+
+              if (rangeChild instanceof HTMLImageElement) {
+                rangeImg = rangeChild;
+              }
+            }
+            if (rangeImg) {
+              alink.html(rangeImg.outerHTML);
+            }
+
             range.deleteContents();
 
             // Range.createContextualFragment() would be useful here but is

@@ -112,6 +112,13 @@
     box-shadow: $focus-box-shadow-transparent;
   }
 
+  // Checkbox ==============================================================
+  &.checkbox {
+    ~ .btn-actions {
+      left: -5px;
+    }
+  }
+
   // Dropdown ==================================================================
   &.dropdown,
   &.multiselect {
@@ -188,7 +195,7 @@
 
 // Colorpicker|Lookup|Searchfield ==============================================
 .field.is-fieldoptions {
-  .btn-actions {
+  .btn-actions:not(.is-checkbox) {
     @include trigger-button();
   }
 
@@ -198,6 +205,10 @@
       top: -13px;
       width: 36px;
     }
+  }
+
+  &.field-checkbox {
+    margin-bottom: 7px;
   }
 
   .lookup-wrapper {

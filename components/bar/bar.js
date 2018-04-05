@@ -80,6 +80,7 @@ Bar.prototype = {
    * @returns {object} The component prototype for chaining.
    */
   init() {
+    this.width = 0;
     this
       .build()
       .handleEvents();
@@ -679,8 +680,6 @@ Bar.prototype = {
 
     return this;
   },
-
-  width: 0,
 
   /*
    * Get info on the currently selected lines.

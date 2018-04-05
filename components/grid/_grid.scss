@@ -52,6 +52,10 @@ $gutter-neg-size: -20px;
     padding-bottom: 20px;
   }
 
+  &.extended-bottom-padding {
+    padding-bottom: 40px;
+  }
+
   &.bottom-space {
     // scss-lint:disable ImportantRule
     padding-bottom: 10px !important;

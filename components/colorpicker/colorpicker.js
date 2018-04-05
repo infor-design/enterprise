@@ -1,3 +1,4 @@
+import { Environment as env } from '../utils/environment';
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -125,7 +126,7 @@ function ColorPicker(element, settings) {
   this.settings = utils.mergeSettings(element, settings, COLORPICKER_DEFAULTS);
 
   // Merge Settings does deep copy we want to replace here
-  if (settings.colors) {
+  if (settings && settings.colors) {
     this.settings.colors = settings.colors;
   }
 
@@ -139,11 +140,15 @@ function ColorPicker(element, settings) {
 ColorPicker.prototype = {
 
   init() {
+    this.isIe = env.browser.name === 'ie';
+    this.isIeEdge = env.browser.name === 'edge';
+    this.isIe11 = this.isIe && env.browser.version === '11';
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
     this.build();
     this.handleEvents();
+    this.setCustomWidth();
   },
 
   // Add the extra markup
@@ -255,6 +260,18 @@ ColorPicker.prototype = {
   },
 
   /**
+  * Set custom width.
+  * @private
+  * @returns {void}
+  */
+  setCustomWidth() {
+    if (this.element[0].style && this.element[0].style.width) {
+      const w = parseInt(this.element[0].style.width, 10);
+      this.container.css({ width: w });
+      this.element.css({ width: ((w - 2) - this.swatch.width()) });
+    }
+  },
+  /**
   * Get the currently set hex value.
   * @returns {string} A string containing the hex
   */
@@ -365,6 +382,7 @@ ColorPicker.prototype = {
   * @returns {void}
   */
   setColor(hex, label) {
+    const s = this.settings;
     let colorHex = hex;
     let colorLabel = label;
 
@@ -377,7 +395,7 @@ ColorPicker.prototype = {
 
     // Simply return out if hex isn't valid
     if (!isValidHex) {
-      if (!this.settings.showLabel) {
+      if (!s.showLabel) {
         return;
       }
       colorLabel = hex.replace('#', '');
@@ -390,8 +408,10 @@ ColorPicker.prototype = {
       colorLabel = this.getLabelFromHex(colorHex);
     }
 
+    colorHex = s.uppercase ? colorHex.toUpperCase() : colorHex.toLowerCase();
+
     // Set the value on the field
-    this.element[0].value = this.settings.showLabel ? colorLabel : colorHex;
+    this.element[0].value = s.showLabel ? colorLabel : colorHex;
     this.element[0].setAttribute(targetAttr, colorHex);
     this.swatch[0].style.backgroundColor = colorHex;
 
@@ -413,29 +433,30 @@ ColorPicker.prototype = {
    * @returns {jQuery} the menu to be appended
    */
   updateColorMenu() {
+    const s = this.settings;
     const isMenu = !!($('#colorpicker-menu').length);
     const menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>');
     const activeTheme = personalization.currentTheme;
-    const isBorderAll = (this.settings.themes[activeTheme].border === 'all');
-    const checkThemes = this.settings.themes[activeTheme].checkmark;
+    const isBorderAll = (s.themes[activeTheme].border === 'all');
+    const checkThemes = s.themes[activeTheme].checkmark;
     let checkmarkClass = '';
 
-    for (let i = 0, l = this.settings.colors.length; i < l; i++) {
+    for (let i = 0, l = s.colors.length; i < l; i++) {
       const li = $('<li></li>');
       const a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li);
-      const colorText = (this.translateColorLabel(this.settings.colors[i].label) || this.settings.colors[i].label) + (this.settings.colors[i].number || '');
-      const colorValue = this.settings.colors[i].value;
-      const colorNum = parseInt(this.settings.colors[i].number, 10);
-      let isBorder = false;
+      const colorText = (this.translateColorLabel(s.colors[i].label) || s.colors[i].label) + (s.colors[i].number || '');
+      const colorNum = parseInt(s.colors[i].number, 10);
       const regexp = new RegExp(`\\b${activeTheme}\\b`);
+      let colorValue = s.colors[i].value;
+      let isBorder = false;
       let elemValue = this.isEditor ? this.element.attr('data-value') : this.element.val();
 
-      if (this.settings.showLabel && !this.isEditor) {
+      if (s.showLabel && !this.isEditor) {
         elemValue = this.getHexFromLabel(elemValue);
       }
 
       // Set border to this swatch
-      if (isBorderAll || regexp.test(this.settings.colors[i].border)) {
+      if (isBorderAll || regexp.test(s.colors[i].border)) {
         isBorder = true;
       }
 
@@ -456,6 +477,7 @@ ColorPicker.prototype = {
         a.addClass(`is-selected${checkmarkClass}`);
       }
 
+      colorValue = s.uppercase ? colorValue.toUpperCase() : colorValue.toLowerCase();
       const swatch = a.find('.swatch');
       if (swatch[0]) {
         swatch[0].style.backgroundColor = `#${colorValue}`;
@@ -566,7 +588,7 @@ ColorPicker.prototype = {
   },
 
   teardown() {
-    this.element.off('keyup.colorpicker blur.colorpicker openlist.colorpicker change.colorpicker paste.colorpicker');
+    this.element.off('keypress.colorpicker keyup.colorpicker blur.colorpicker openlist.colorpicker change.colorpicker paste.colorpicker');
     this.swatch.off('click.colorpicker');
     this.swatch.remove();
     this.container.find('.trigger').remove();
@@ -596,34 +618,47 @@ ColorPicker.prototype = {
   * @returns {void}
   */
   handleEvents() {
-    const self = this;
+    const elem = this.element;
+    const elemParent = elem.parent();
+    let originalVal;
+
     this.icon.parent().on('click.colorpicker', () => {
-      self.toggleList();
+      this.toggleList();
     });
 
-    this.element.on('focus.colorpicker', function () {
-      $(this).parent().addClass('is-focused');
-    })
-      .on('blur.colorpicker', function () {
-        $(this).parent().removeClass('is-focused');
+    elem
+      .on('focus.colorpicker', () => {
+        originalVal = elem.val();
+        elemParent.addClass('is-focused');
+      })
+      .on('blur.colorpicker', () => {
+        elemParent.removeClass('is-focused');
+
+        // Fix: Force to change event
+        // IE-Edge not firing `change event` after updated input-s values
+        if (this.isIeEdge && !elem.is('.is-open') && originalVal !== elem.val()) {
+          elem.triggerHandler('change');
+        }
       })
       .on('openlist.colorpicker', () => {
-        self.toggleList();
+        this.toggleList();
       });
 
-    this.element.on('keyup.colorpicker blur.colorpicker paste.colorpicker change.colorpicker', function () {
-      const val = $(this).val();
-      if (self.settings.showLabel) {
-        self.setColor($(this).attr('value'), val);
+    let eventStr = 'blur.colorpicker paste.colorpicker change.colorpicker';
+    eventStr += this.isIe11 ? 'keypress.colorpicker' : 'keyup.colorpicker';
+    elem.on(eventStr, () => {
+      const val = elem.val();
+      if (this.settings.showLabel) {
+        this.setColor(elem.attr('value'), val);
         return;
       }
-      self.setColor(val);
+      this.setColor(val);
     });
 
     // Handle Key Down to open
-    this.element.on('keydown.colorpicker', (e) => {
+    elem.on('keydown.colorpicker', (e) => {
       if (e.keyCode === 38 || e.keyCode === 40) {
-        self.toggleList();
+        this.toggleList();
       }
     });
   }
