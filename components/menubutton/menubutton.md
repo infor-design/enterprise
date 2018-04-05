@@ -1,25 +1,32 @@
-# MenuButton Component [Learn More](#)
-
-## Configuration Options
-
-1. Simple Menu Button [View Example]( ../components/menubutton/example-index)
-2. Menu Button Events [View Example]( ../components/menubutton/example-events)
-3. Submenus [View Example]( ../components/menubutton/example-submenu.htm)
-4. Submenu With Icons [View Example]( ../components/menubutton/example-submenu-icons.htm)
-5. RTL [View Example]( ../components/menubutton/example-submenu-icons-rtl.html?locale=ar-SA)
-5. Replace Text Content with Selection [View Example]( ../components/menubutton/example-replace-text)
+---
+title: MenuButton Component
+description: This page describes MenuButton Component .
+demo:
+  pages:
+  - name: Simple Menu Button
+    slug: example-index
+  - name: Menu Button Events
+    slug: example-events
+  - name: Submenus
+    slug: example-submenu.htm
+  - name: Submenu With Icons
+    slug: example-submenu-icons.htm
+  - name: RTL
+    slug: example-submenu-icons-rtl.html?locale=ar-SA
+  - name: Replace Text Content with Selection
+    slug: example-replace-text
+---
 
 ## Code Example
 
-The menu button component is comprised of the [popupmenu]( ../components/popupmenu) and [button]( ../components/popupmenu) components.
+The menu button component is comprised of the [popupmenu]( ./popupmenu) and [button]( ./popupmenu) components.
 
 Once the proper markup is in place calling `$(elem).button()` will correctly initialize a menu button.
 If the arrow is missing in the markup it will be added.
 
-The popupmenu markup follows as per the [popupmenu]( ../components/popupmenu) , menu details.
+The popupmenu markup follows as per the [popupmenu]( ./popupmenu):
 
 ```html
-
 <button class="btn-menu">
   <span>Normal Menu</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown">
@@ -31,14 +38,8 @@ The popupmenu markup follows as per the [popupmenu]( ../components/popupmenu) , 
   <li><a href="#">Menu Option #2</a></li>
   <li><a href="#">Menu Option #3</a></li>
 </ul>
-
-
 ```
 
-## Accessibility
+## Accessibility and Keyboard Shortcuts
 
-See [popupmenu]( ../components/popupmenu) details.
-
-## Keyboard Shortcuts
-
-See [popupmenu]( ../components/popupmenu) details.
+See [popupmenu]( ./popupmenu) for details.

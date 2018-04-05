@@ -1,5 +1,7 @@
-
-# Column Chart (Grouped)  [Learn More](#)
+---
+title: Column Chart (Grouped)
+description: This page describes Column Chart (Grouped).
+---
 
 ## Configuration Options
 
@@ -14,7 +16,6 @@
 
 This example shows how to invoke the grouped bar chart in the charts component. We pass a dataset data points for each bar group we want to show.
 ```javascript
-
 var dataset = [{
   data: [{
       name: 'Jan',
@@ -36,8 +37,6 @@ var dataset = [{
 }];
 
 $('#column-grouped-example').chart({type: 'column-grouped', dataset: dataset});
-
-
 ```
 
 ## Accessibility

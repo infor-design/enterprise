@@ -1,5 +1,7 @@
-
-# Charts [Learn More](#)
+---
+title: Charts 
+description: This page describes Charts .
+---
 
 All of the charts are documented separately by type. See the respective pages for each chart in addition to this shared API info page. The following charts are currently supported
 
@@ -32,7 +34,6 @@ All of the charts are documented separately by type. See the respective pages fo
 All of the charts are initialized via the chart api with an option for each chart. The dataset option accepts a JSON array with slightly different structure depending on chart. This is an example of a donut chart.
 
 ```html
-
   $('#pie-chart-example').chart({
     type: 'donut',
     dataset: pieData

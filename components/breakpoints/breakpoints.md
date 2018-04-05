@@ -1,4 +1,7 @@
-# Favorites  [Learn More](#)
+---
+title: Favorites
+description: This page describes Favorites.
+---
 
 ## Configuration Options
 
@@ -13,7 +16,6 @@ There is also a small utility, `Soho.breakpoints` that has a few convenience fun
 In the example test, causing this page to have an orientation change or resize event that results in a new breakpoint change will cause a toast message to appear containing the custom event's data.
 
 ```javascript
-
 $('body').on('breakpoint-change', function(e, breakpointState) {
   $(this).toast({
     title: 'Breakpoint Change',

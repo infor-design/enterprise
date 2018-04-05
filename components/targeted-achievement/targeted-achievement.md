@@ -1,13 +1,13 @@
-
-# Targeted Achievement Chart  [Learn More](#)
+---
+title: Targeted Achievement Chart
+description: This page describes Targeted Achievement Chart.
+---
 
 ## Configuration Options
 
 1. Main Target to Achievement Example showing 3 examples [View Example]( ../components/targeted-achievement/example-index)
 2. Grid Example, this chart is available as a formatter.  [View Example]( ../components/datagrid/test-targeted-achievement.html)
 3. Example showing Percent Text [View Example]( ../components/targeted-achievement/example-percent-text)
-
-## API Details
 
 ### Dataset Settings
 
@@ -20,7 +20,6 @@
 This example shows how to invoke a simple target to achievement chart with a dataset with a value several of the key points of the chart.
 
 ```javascript
-
 var dataset1 = [{
   data: [{
     name: {text: 'Label A'},
@@ -31,8 +30,6 @@ var dataset1 = [{
 }];
 
 var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart');
-
-
 ```
 
 ## Accessibility

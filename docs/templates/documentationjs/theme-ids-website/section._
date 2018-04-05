@@ -1,0 +1,149 @@
+<section>
+
+  <% if (typeof nested === 'undefined' || (section.context && section.context.github)) { %>
+    <div>
+      <% if (typeof nested === 'undefined') { %>
+      <h2 id='<%- slug(section.namespace) %>'>
+        <%- section.name %> Code Specs
+      </h2>
+      <% } %>
+      <% if (section.context && section.context.github) { %>
+        <a href='<%= section.context.github.url %>' class="jsdoc-githublink"><%= section.context.github.path %></a>
+      <% } %>
+    </div>
+  <% } %>
+
+  <%= md(section.description) %>
+
+  <p class="jsdoc-signature"><%= signature(section) %></p>
+
+  <% if (section.type) { %>
+    <p>
+      Type: <%= formatType(section.type) %>
+    </p>
+  <% } %>
+  <% if (section.augments.length) { %>
+    <p>
+      Extends
+      <% if (section.augments) { %>
+        <%= section.augments.map(function(tag) {
+          return autolink(tag.name);
+        }).join(', ') %>
+      <% } %>
+    </p>
+  <% } %>
+
+  <% if (section.deprecated) { %><div>Deprecated: <%= md(section.deprecated, true) %></div><% }%>
+  <% if (section.version) { %><div>Version: <%- section.version %></div><% }%>
+  <% if (section.license) { %><div>License: <%- section.license %></div><% }%>
+  <% if (section.author) { %><div>Author: <%- section.author %></div><% }%>
+  <% if (section.copyright) { %><div>Copyright: <%= md(section.copyright, true) %></div><% }%>
+  <% if (section.since) { %><div>Since: <%- section.since %></div><% }%>
+
+  <% if (section.params.length) { %>
+    <table>
+      <caption class="jsdoc-section--heading">Parameters</caption>
+      <colgroup>
+        <col width='30%' />
+        <col width='20%' />
+        <col width='50%' />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% section.params.forEach(function(param) { %>
+          <tr>
+            <td class="jsdoc-prop--name">
+              <%- param.name %>
+            </td>
+            <td>
+              <code><%= formatType(param.type) %><% if (param.default) { %>= <%- param.default %><% } %></code>
+            </td>
+            <td class="jsdoc-prop--desc">
+              <%= md(param.description, true) %>
+            </td>
+          </tr>
+          <% if (param.properties && param.properties.length) { %>
+            <% param.properties.forEach(function(property) { %>
+              <%= renderParamProperty({
+                property: property,
+                renderParamProperty: renderParamProperty
+              }) %>
+            <% }) %>
+          <% } %>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (section.properties.length) { %>
+    <h3 class="jsdoc-section--heading">Properties</h3>
+    <% section.properties.forEach(function(property) { %>
+      <div>
+        <strong><%- property.name%></strong> <code>(<%= formatType(property.type) %>)</code>
+        <% if (property.default) { %>
+          (default <code><%- property.default %></code>)
+        <% } %><% if (property.description) { %>: <%= md(property.description, true) %><% } %>
+        <% if (property.properties && property.properties.length) { %>
+          <ul>
+            <% property.properties.forEach(function(property) { %>
+              <li>
+                <code><%- property.name %></code> <%= formatType(property.type) %>
+                <% if (property.default) { %>
+                  (default <code><%- property.default %></code>)
+                <% } %>
+                <%= md(property.description) %>
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    <% }) %>
+  <% } %>
+
+  <% if (section.returns.length) { %>
+    <% section.returns.forEach(function(ret) { %>
+      <strong>Returns</strong>
+      <code><%= formatType(ret.type) %></code><% if (ret.description) { %>:
+        <%= md(ret.description, true) %>
+      <% }%>
+    <% }) %>
+  <% } %>
+
+  <% if (section.throws.length) { %>
+    <strong>Throws</strong>
+    <ul>
+      <% section.throws.forEach(function(throws) { %>
+        <li><%= formatType(throws.type) %>: <%= md(throws.description, true) %></li>
+      <% }); %>
+    </ul>
+  <% } %>
+
+  <% if (section.examples.length) { %>
+    <h3 class="jsdoc-section--heading">Example</h3>
+    <% section.examples.forEach(function(example) { %>
+      <% if (example.caption) { %><p><%= md(example.caption) %></p><% } %>
+      <pre><%= highlight(example.description) %></pre>
+    <% }) %>
+  <% } %>
+
+  <% if (section.members.static && section.members.static.length) { %>
+    <h3 class="jsdoc-section--heading">Static Members</h3>
+    <%= renderSectionList({ members: section.members.static, renderSection: renderSection, renderParamProperty: renderParamProperty, noun: 'Static Member' }) %>
+  <% } %>
+
+  <% if (section.members.instance && section.members.instance.length) { %>
+    <h3 class="jsdoc-section--heading">Instance Members</h3>
+    <%= renderSectionList({ members: section.members.instance, renderSection: renderSection, renderParamProperty: renderParamProperty, noun: 'Instance Member' }) %>
+  <% } %>
+
+  <% if (section.members.events && section.members.events.length) { %>
+    <h3 class="jsdoc-section--heading">Events</h3>
+    <%= renderSectionList({ members: section.members.events, renderSection: renderSection, renderParamProperty: renderParamProperty, noun: 'Event' }) %>
+  <% } %>
+</section>
