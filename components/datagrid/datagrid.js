@@ -1162,7 +1162,7 @@ Datagrid.prototype = {
     }
 
     // Attach Keyboard support
-    $('.dropdown').off('click.dropdown').on('click.dropdown', function () {
+    this.headerRow.find('.dropdown').off('click.datagrid-dropdown').on('click.datagrid-dropdown', function() {
       if (self.popupmenuHeader) {
         self.popupmenuHeader.close(true, true);
       }
