@@ -51,6 +51,11 @@ stringUtils.containsHTML = function containsHTML(str) {
  */
 stringUtils.stripHTML = function stripHTML(str) {
   let newStr = str;
+
+  if (!newStr) {
+    return '';
+  }
+
   newStr = newStr.replace(/<\/?[^>]+(>|$)/g, '');
   return newStr;
 };
