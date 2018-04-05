@@ -1,4 +1,19 @@
+---
+title: Form Functionality
+description: The forms plugins are a set of form related utilities and functionality contained in `forms.js`. This page outlines the functionality contained in that plugin and shows some from related examples for layout from other areas.
 
+demo:
+  pages:
+  - name: Form Inputs in the Responsive Grid
+    slug: example-inputs
+  - name: Form Inputs in the Responsive Simplified Grid
+    slug: example-inputs-simple
+  - name: Form Layouts
+    slug: example-forms
+---
+
+<<<<<<< HEAD
+=======
 # Form Functionality and Form Layout  [Learn More](#)
 
 ## General Information
@@ -29,3 +44,4 @@ The following classes can be used for form and label alignment.
 * `field-flex` -  Makes all the labels and fields inside go into a side by side layout. Yet still work responsively. This can be used for labels input description situations or to force some labels to sit together , similar to compound fields [See Example]( ../components/form/example-labels)
 * `label-left` - Used to put a label and data label to the left of each other rather than on top. This may be used on some forms but not with editable inputs. [See Example]( ../components/form/example-labels)
 * `compound-field` - Used to put several fields next to each other in a row. This may be used for related fields like phone + extension [See Example]( ../components/form/example-forms)
+>>>>>>> origin/4.6.0-rc

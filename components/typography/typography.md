@@ -1,12 +1,11 @@
-# Typography [Learn More](https://soho.infor.com/index.php?p=component/typography)
-
-## API Details
-
-Typography styles in Soho do not have a Javascript API.
-
-## Examples
-
-1. [Main Example Page]( ../components/typography/example-index)
+---
+title: Typography
+description: This page describes Typography .
+demo:
+  pages:
+    - name: Main Example Page
+      slug: example-index
+---
 
 ## Font family
 
@@ -19,15 +18,20 @@ To enable this font in the components first you need to add this link to the hea
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
 ```
 
-After that you can either
+After that you can either:
 
-1. Add the class `font-source-sans` to the html tag.
-2. Or Pass it in to the personalize api....
+1. Add the class `font-source-sans` to the html tag like `<html class="font-source-sans>`
+2. Or pass it in to the personalize API as the example below shows:
 
 ```javascript
 $('html').personalize({colors: ['80000'], theme: 'dark', font: 'source-sans'});
 ```
 
+<<<<<<< HEAD
+<!--
+The sample app can be run with this font by adding the `?font=source-sans` parameter to any page. For example `components/personalize/example-index.html?font=source-sans`
+-->
+=======
 Also sample app can be run with this font by adding the `?font=source-sans` parameter to any page. For example
 [Main Example Page]( ../components/personalize/example-index.html?font=source-sans)
 
@@ -105,7 +109,8 @@ In general, "Number" should not be used in labels. Example: use "Advance Ship No
 If abbreviations are needed (useful in datagrid), it is better to abbreviate by removing words, for example removing "Item" since context is known. "Item Number" could become "Number" or "Num", and "Item Description" could become "Description" or "Desc"
 
 When a field can contain one or more items, use the plural. Example: rather than "Group(s)", use "Groups"
+>>>>>>> origin/4.6.0-rc
 
-## Ellipsis for Actions
+## Usage
 
-While menu commands are used for immediate actions, more information might be needed to perform those actions. To indicate a command that needs additional information (including a confirmation), add an ellipsis ("...") to the end of the label. This doesn't mean you should use an ellipsis whenever an action displays another window—only when additional information is required to perform the action. For example, the commands About, Advanced, Help, Options, Properties, and Settings must display another window when clicked, but don't require additional information from the user. Therefore, they don't need ellipses.
+For further font, typography, and grammar usage, see the [Typography guidelines](/guidelines/identity/typography).

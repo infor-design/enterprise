@@ -1,21 +1,23 @@
-
-# Radio Button [Learn More](#)
-
-## Configuration Options
-
-1. Radio Button Example [View Example]( ../components/radios/example-index)
-2. Horizontal Radio Button Example [View Example]( ../components/radios/example-index)
-3. Dirty Flag [View Example]( ../components/radios/test-dirty)
-3. Validation [View Example]( ../components/radios/test-validation)
-
-{{api-details}}
+---
+title: Radio Buttons
+description: This page describes Radio Buttons.
+demo:
+  pages:
+  - name: Radio Button Example
+    slug: example-index
+  - name: Horizontal Radio Button Example
+    slug: example-index
+  - name: Dirty Flag
+    slug: test-dirty
+  - name: Validation
+    slug: test-validation
+---
 
 ## Code Example
 
 Displays one or more selectable values. A user can select exactly one value at a time. Best used when all possible options should be clearly visible to a user.
 
 ```html
-
 <fieldset class="radio-group">
 <legend>Select delivery method</legend>
   <input type="radio" class="radio" name="options" id="option1" data-automation-id="page-field-radio-1" value="option1" />
@@ -30,8 +32,6 @@ Displays one or more selectable values. A user can select exactly one value at a
   <input type="radio" class="radio" name="options" id="option4" data-automation-id="page-field-radio-4" value="delivery" disabled="true" />
   <label for="option4" class="radio-label">Option four</label>
 </fieldset>
-
-
 ```
 
 ## Implementation Tips

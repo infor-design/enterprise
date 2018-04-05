@@ -5,17 +5,11 @@
 
 1. Treemap Main Example [View Example]( ../components/treemap/example-index)
 
-## API Details
-
-{{api-details}}
-
 ## Code Example
 
 This example shows how to invoke a Treemap with a dataset to controlling the values.
 
 ```javascript
-
-
 ```
 
 ## Accessibility

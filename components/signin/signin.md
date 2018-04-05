@@ -1,22 +1,25 @@
-# Signin Component [Learn More](#)
-
-## Configuration Options
-
-1. Main Example [View Example](../components/signin/example-index)
-2. "Remember Me" Example [View Example](../components/signin/example-remember-me)
-3. Customer Designed Sign in Page [View Example](../components/signin/test-custom)
-4. Example with a server dropdown [View Example](../components/signin/test-dropdown)
-5. Example with several field [View Example](../components/signin/test-dropdown)
-
-
-{{api-details}}
+---
+title: Signin Component
+description: This page describes Signin Component .
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
+  - name: "Remember Me" Example
+    slug: example-remember-me
+  - name: Customer Designed Sign in Page
+    slug: test-custom
+  - name: Example with a server dropdown
+    slug: test-dropdown
+  - name: Example with several field
+    slug: test-dropdown
+---
 
 ## Code Example
 
 Displays one or more selectable values. A user can select exactly one value at a time. Best used when all possible options should be clearly visible to a user.
 
 ```html
-
 <div class="page-container scrollable">
   <div class="wrapper">
     <section class="signin" role="main">
@@ -57,8 +60,6 @@ Displays one or more selectable values. A user can select exactly one value at a
   </div>
 
 </div>
-
-
 ```
 
 ## Implementation Tips

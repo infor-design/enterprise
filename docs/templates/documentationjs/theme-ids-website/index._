@@ -1,0 +1,12 @@
+<% docs.forEach(function(s) { %>
+  <% if (s.kind !== 'note') { %>
+    <%= renderSection({
+      section: s,
+      renderSection: renderSection,
+      renderSectionList: renderSectionList,
+      renderParamProperty: renderParamProperty
+    }) %>
+  <% } else { %>
+    <div ><%=renderNote({ note: s })%></div>
+  <% } %>
+<% }) %>
