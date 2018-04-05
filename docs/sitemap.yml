@@ -240,6 +240,6 @@ sections:
   - name: Signin
     slug: signin
   - name: Tabs-multi
-    slug: tabsmulti
+    slug: tabs-multi
   - name: Textarea
     slug: textarea
