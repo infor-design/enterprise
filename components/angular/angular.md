@@ -32,10 +32,7 @@ If using just import the sohoxi-angular.js script after the sohoxi script and th
 For convenience angular 1.0 directives are added. To use them import
 
 ```html
-
 <script src="{{basepath}}js/sohoxi.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
 <script src="{{basepath}}js/sohoxi-angular.js"></script>
-
-
 ```

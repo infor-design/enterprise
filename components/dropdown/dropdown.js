@@ -1361,6 +1361,23 @@ Dropdown.prototype = {
       }
     });
 
+    // Close any open popup menus
+    const otherMenus = $('.popupmenu.is-open').filter(function () {
+      return $(this).parents('.popupmenu').length === 0;
+    }); // close others.
+
+    otherMenus.each(function () {
+      const trigger = $(this).data('trigger');
+      if (!trigger || !trigger.length) {
+        return;
+      }
+
+      const api = $(this).data('trigger').data('popupmenu');
+      if (api && typeof api.close === 'function') {
+        api.close();
+      }
+    });
+
     this.list.appendTo('body').show();
 
     // In a grid cell

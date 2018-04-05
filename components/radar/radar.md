@@ -1,20 +1,17 @@
-
-# Radar Chart  [Learn More](#)
+---
+title: Radar Chart
+description: This page describes Radar Chart.
+---
 
 ## Configuration Options
 
 1. Radar Chart Main Example [View Example]( ../components/radar/example-index)
-
-## API Details
-
-{{api-details}}
 
 ## Code Example
 
 This example shows how to invoke a pie bar chart with a dataset controlling the values.
 
 ```javascript
-
   var radarData = [{
       data: [
 			  [ // Resource
@@ -44,8 +41,6 @@ This example shows how to invoke a pie bar chart with a dataset controlling the 
     }];
 
   $('#radar-chart-example').chart({type: 'radar', dataset: radarData, showAxisLabels: false});
-
-
 ```
 
 ## Accessibility

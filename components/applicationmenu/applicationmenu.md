@@ -1,21 +1,27 @@
-
-# Application Menu  [Learn More](https://soho.infor.com/index.php?p=component/application-menu)
-
-## Configuration Options
-
-1. Default About Example [View Example]( ../components/applicationmenu/example-index)
-2. Different Header Types Event Demo [View Example]( ../components/applicationmenu/example-different-header-types)
-3. As Shown on the Soho Site [View Example]( ../components/applicationmenu/example-soho-site)
-4. Showing Top Level Buttons [View Example]( ../components/applicationmenu/example-top-level-buttons)
-4. Showing Menubutton as a role switcher [View Example]( ../components/applicationmenu/example-menubutton)
-
-{{api-details}}
-
-## Additional Test Case Pages
-
-1. No Errors on an Empty Menu [View Example]( ../components/applicationmenu/test-empty)
-2. Six Levels Deep (Bad Idea) Event Demo [View Example]( ../components/applicationmenu/test-six-levels)
-3. Six Levels Deep with Icons (Equally Bad Idea) [View Example]( ../components/applicationmenu/test-six-levels-icons)
+---
+title: Application Menu
+description: This page describes Application Menu.
+demo:
+  pages:
+  - name: Default About Example
+    slug: example-index
+  - name: Different Header Types Event Demo
+    slug: example-different-header-types
+  - name: As Shown on the Soho Site
+    slug: example-soho-site
+  - name: Showing Top Level Buttons
+    slug: example-top-level-buttons
+  - name: Showing Menubutton as a role switcher
+    slug: example-menubutton
+tests:
+  pages:
+  - name: No Errors on an Empty Menu
+    slug: test-empty
+  - name: Six Levels Deep (Bad Idea) Event Demo
+    slug: test-six-levels
+  - name: Six Levels Deep with Icons (Equally Bad Idea)
+    slug: test-six-levels-icons
+---
 
 ## Behavior Guidelines
 
@@ -35,10 +41,10 @@ Within the menu itself:
 
 In SoHo Xi Controls, the following keyboard shortcuts are implemented in the Application Menu
 
--   When pressing **Enter** while focused on an Application Menu Trigger, the Application Menu will be toggled open/closed.
--   When pressing **Escape** while the Application Menu is opened, the Application Menu will close and (if applicable) the Trigger Button that originally caused the Application Menu to open will be re-focused.
+-   When pressing <kbd>Enter</kbd> while focused on an Application Menu Trigger, the Application Menu will be toggled open/closed.
+-   When pressing <kbd>Escape</kbd> while the Application Menu is opened, the Application Menu will close and (if applicable) the Trigger Button that originally caused the Application Menu to open will be re-focused.
 
-In all other cases, the Application Menu uses a SoHo Xi [Accordion Control](https://soho.infor.com/index.php?p=component/accordion) internally, and will utilize its keyboard shortcuts when focus lies inside of the menu.
+In all other cases, the Application Menu uses a SoHo Xi [Accordion Control](./accordion) internally, and will utilize its keyboard shortcuts when focus lies inside of the menu.
 
 ## States and Variations
 

@@ -1,4 +1,7 @@
-# Toolbar  [Learn More](https://soho.infor.com/index.php?p=component/toolbar)
+---
+title: Toolbar  
+description: This page describes Toolbar.
+---
 
 ## Configuration Options
 
@@ -13,12 +16,9 @@
 9. [Additional Examples of `MaxVisibleButtons` Behavior]( ../components/toolbar/example-overflow)
 10. [`selected` Event Behavior]( ../components/toolbar/example-selected-event)
 
-{{api-details}}
-
 ## Code Example
 
 ```html
-
   <div class="toolbar">
     <div class="title">
       Toolbar Title
@@ -49,8 +49,6 @@
       </ul>
     </div>
   </div>
-
-
 ```
 
 ## Implementation Tips

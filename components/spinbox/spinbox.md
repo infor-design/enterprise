@@ -1,4 +1,7 @@
-# Spinbox Component [Learn More](https://soho.infor.com/index.php?p=component/spin-box)
+---
+title: Spinbox Component 
+description: This page describes Spinbox Component .
+---
 
 ## Configuration Options
 
@@ -8,8 +11,6 @@
 4. Dirty Tracking [View Example](../components/spinbox/example-dirty-tracking)
 5. Disabled Spinbox [View Example](../components/spinbox/example-disabled)
 5. Spinbox with Required Validation [View Example](../components/spinbox/example-validation)
-
-{{api-details}}
 
 ## Behavior Guidelines
 
@@ -27,13 +28,10 @@ A Spinbox is created from a standard type="text" input field by adding the class
 Touch and mobile keyboard are supported.
 
 ```html
-
 <div class="field">
   <label for="stepped-spinbox">Spinbox (init 0, min -99, max 99, step 3)</label>
   <input id="stepped-spinbox" name="stepped-spinbox" type="text" class="spinbox" min="-99" max="99" value="0" step="3"/>
 </div>
-
-
 ```
 
 ## Implementation Tips

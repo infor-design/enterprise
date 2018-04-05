@@ -1,12 +1,13 @@
-# Splitter Component [Learn More](#)
+---
+title: Splitter Component 
+description: This page describes Splitter Component .
+---
 
 ## Configuration Examples
 
 1. Main [View Example](../components/splitter/example-index)
 2. Splitter Element in Left Pane [View Example](../components/splitter/example-splitter-left)
 3. Events [View Example](../components/splitter/example-events)
-
-{{api-details}}
 
 ## Code Example
 
@@ -17,7 +18,6 @@ We add the class splitter-container which will cause all elements with content o
 A div with the class of splitter will become the split handle.
 
 ```html
-
 <div class="page-container two-column fixed splitter-container">
 
   <section class="main">
@@ -32,8 +32,6 @@ A div with the class of splitter will become the split handle.
   </nav>
 
 </div>
-
-
 ```
 
 ## Accessibility

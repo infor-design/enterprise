@@ -1,73 +1,65 @@
+---
+title: Editor (Rich Text)
+description: This page describes Editor (Rich Text).
+demo:
+  pages:
+  - name: Default Rich Text Editor Example
+    slug: example-index
+  - name: Customize Buttons
+    slug: example-customize-buttons
+  - name: Back Color Button (Experimental - Limited Browser Support)
+    slug: example-with-backcolor
+  - name: Clickable Links with Rich Text Editor Example
+    slug: example-clickable-links
+  - name: Rich Text Editor with Event Checking
+    slug: example-with-events
+---
 
-# Editor (Rich Text)  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
+A Rich Text Editor is implemented using a `contenteditable` element with several polyfills. To make an editor all you need to do is add a `field` class to an element, a `label` class, and a `<div>` with the class `editor`. You should also add `aria-label` for better accessibility.
 
-## Configuration Options
+The editor can be `readonly` or `disabled` and the toolbar will disappear appropriately.
 
-1. Default Rich Text Editor Example [View Example]( ../components/editor/example-index)
-2. Customize Buttons [View Example]( ../components/editor/example-customize-buttons)
-3. Back Color Button (Experimental - Limited Browser Support) [View Example]( ../components/editor/example-with-backcolor)
-4. Clickable Links with Rich Text Editor Example [View Example]( ../components/editor/example-clickable-links)
-4. Rich Text Editor with Event Checking [View Example]( ../components/editor/example-with-events)
-
-{{api-details}}
-
-## Code Example
-
-### Rich Text Editor
-
-A Rich Text Editor is implemented using a content editable element with several polyfills. To make an editor all you need to do is add a field element, a label, and a div with class="editor". You should also add aria-label for better accessibility.
-
-To save and get the data from the content editable, you should simply save and restore the markup inside the div.
-
+To save and get the data from the `contenteditable` element, you should simply save and restore the markup inside the `<div>`.
 
 ```html
-
- <div class="field">
-      <span class="label">Comments</span>
-      <div class="editor" role="textbox" aria-multiline="true" aria-label="Comments - Type To Replace Existing Content">
-        <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce">e-commerce action-items</a>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.</p>
-        <p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>
-      </div>
-    </div>
-
+<div class="field">
+  <span class="label">Comments</span>
+  <div class="editor" role="textbox" aria-multiline="true" aria-label="Comments - Type To Replace Existing Content">
+    <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce">e-commerce action-items</a>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.</p>
+    <p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>
+  </div>
+</div>
 ```
 
 ## Accessibility
 
--   aria-multiline = true is added
--   role = text box is added
--   keyboard short cuts for all keys is added
--   add label and aria-label
+-   Use `aria-multiline="true"`
+-   Use `role="textbox`
+-   Keyboard shortcuts for all keys are used
+-   Add `label` and `aria-label`
 
 ## Keyboard Shortcuts
 
--   **Tab and Shift + Tab** – Moves into and out of the edit control and toolbar
--   **Arrow Left and Right** – Moves throw the toolbar when focused.
--   **Ctrl + B** – Toggle bold on text selection
--   **Ctrl + I** – Toggle italic on text selection
--   **Ctrl + U** – Toggle underline on text selection
--   **Ctrl + Q** – Append block quote
--   **Ctrl + 3** – Header3 on text selection
--   **Ctrl + 4** – Header4 on text selection
--   **Ctrl + L** – Toggle justify left on text selection
--   **Ctrl + E** – Toggle justify center on text selection
--   **Ctrl + R** – Toggle justify right on text selection
--   **Ctrl + H** – Insert Anchor
--   **Ctrl + Shift + I** – Insert Image
--   **Ctrl + O** – Insert ordered list
--   **Ctrl + Shift + L** – Insert unordered (bullet) list
--   **Ctrl + Shift + N** – Insert ordered (number) list
--   **Ctrl + \~ (Tilde)** – Toggle source or visual
--   **Shift + Click** – (Mac FF) Opens a link in a new window
--   **Command + Click** – (Mac Chrome) Opens a link in a new window
--   **Ctrl + Click** – (PC) Opens a link in a new window
-
-
-## States and Variations
-
--   The action buttons support standard button states (see the Action Buttons spec sheet)
--   The text area takes the same states as the individual Text Area control
--   Control can be readonly or disabled (toolbar will disappear)
+-   <kbd>Tab</kbd> and <kbd>Shift + Tab</kbd> – Moves into and out of the edit control and toolbar
+-   <kbd>Left</kbd> and <kbd>Right</kbd> arrow – Moves throw the toolbar when focused
+-   <kbd>Ctrl + B</kbd> – Toggle bold on text selection
+-   <kbd>Ctrl + I</kbd> – Toggle italic on text selection
+-   <kbd>Ctrl + U</kbd> – Toggle underline on text selection
+-   <kbd>Ctrl + Q</kbd> – Append block quote
+-   <kbd>Ctrl + 3</kbd> – Header 3 on text selection
+-   <kbd>Ctrl + 4</kbd> – Header 4 on text selection
+-   <kbd>Ctrl + L</kbd> – Toggle justify left on text selection
+-   <kbd>Ctrl + E</kbd> – Toggle justify center on text selection
+-   <kbd>Ctrl + R</kbd> – Toggle justify right on text selection
+-   <kbd>Ctrl + H</kbd> – Insert Anchor
+-   <kbd>Ctrl + Shift + I</kbd> – Insert Image
+-   <kbd>Ctrl + O</kbd> – Insert ordered list
+-   <kbd>Ctrl + Shift + L</kbd> – Insert unordered (bullet) list
+-   <kbd>Ctrl + Shift + N</kbd> – Insert ordered (number) list
+-   <kbd>Ctrl + ~ (Tilde)</kbd> – Toggle source or visual
+-   <kbd>Shift + Click</kbd> – (Mac Firefox) Opens a link in a new window
+-   <kbd>Command + Click</kbd> – (Mac Chrome) Opens a link in a new window
+-   <kbd>Ctrl + Click</kbd> – (PC) Opens a link in a new window
 
 ## Responsive Guidelines
 
@@ -75,5 +67,5 @@ To save and get the data from the content editable, you should simply save and r
 
 ## Upgrading from 3.X
 
--   Change classes from inforRIchTextEditor to editor
--   Add the label (required)
+-   Change classes from `inforRIchTextEditor` to `editor`
+-   Add the `label` class (required)

@@ -1,12 +1,13 @@
-# Wizard Component [Learn More](https://soho.infor.com/index.php?p=component/wizard)
+---
+title: Wizard Component 
+description: This page describes Wizard Component .
+---
 
 ## Configuration Examples
 
 1. [Common Configuration]( ../components/wizard/example-index)
 2. [Disabled Tick Clicks]( ../components/wizard/example-in-page)
 3. [Programmatic Tick Selection]( ../components/wizard/example-set-selected)
-
-{{api-details}}
 
 ## Code Example
 
@@ -15,7 +16,6 @@ An example of a default Wizard control with no extra settings. Classes are added
 An addition wizard can be used for header navigation. This is a full page pattern so must be shown on its own page. See here for [header wizard examples.](http://usalvwsoho2:4000/controls/grid)
 
 ```html
-
   <div class="wizard">
     <div class="wizard-header">
       <div class="bar">
@@ -35,8 +35,6 @@ An addition wizard can be used for header navigation. This is a full page patter
       </div>
     </div>
   </div>
-
-
 ```
 
 ## Keyboard Shortcuts

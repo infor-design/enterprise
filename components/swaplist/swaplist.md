@@ -1,4 +1,7 @@
-# Swaplist Component [Learn More](https://soho.infor.com/index.php?p=component/swaplist)
+---
+title: Swaplist Component
+description: This page describes Swaplist Component .
+---
 
 ## Configuration options
 
@@ -6,8 +9,6 @@
 2. Swaplist with Selected Items [View Example](../components/swaplist/example-selected.html)
 3. Swaplist with Filter/Search [View Example](../components/swaplist/example-search.html)
 4. Swaplist with Disable Dragging [View Example](../components/swaplist/example-disable-dragging.html)
-
-{{api-details}}
 
 ## Behavior Guidelines
 
@@ -22,7 +23,6 @@ The markup structure of the component itself is made up of a parent container th
 Initialize the component by calling .swaplist() on the element and passing a JSON Array for the available, selected sides and reference to the template. (Not the the template can also be passed here as a string instead of being in the DOM.
 
 ```javascript
-
 var available = [], selected = [];
 
 available.push({id: 1, value: 'opt-1', text: 'Option A'});
@@ -39,8 +39,6 @@ selected.push({id: 10, value: 'opt-10', text: 'Option J'});
 selected.push({id: 11, value: 'opt-11', text: 'Option K'});
 
 $('#example-swaplist-1').swaplist({available: available, selected: selected, template: $('#swaplist-tmpl').html()});
-
-
 ```
 
 ## Accessibility

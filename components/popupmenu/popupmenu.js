@@ -1177,6 +1177,9 @@ PopupMenu.prototype = {
       }
     });
 
+    // Close open dropdowns
+    $('#dropdown-list').remove();
+
     this.element.addClass('is-open');
     this.menu.addClass('is-open').attr('aria-hidden', 'false');
 

@@ -1,0 +1,245 @@
+sections:
+- name: Getting Started
+  slug: index
+- name: Identity
+  pages:
+  - name: Colors
+    slug: colors
+  - name: Icons (SVG)
+    slug: icons
+  - name: Typography
+    slug: typography
+- name: Layouts
+  pages:
+  - name: Grid
+    slug: grid
+- name: Components
+  pages:
+  - name: Elements
+    pages:
+    - name: About
+      slug: about
+    - name: Accordion
+      slug: accordion
+    - name: Alerts
+      slug: alerts
+    - name: Application Menu
+      slug: applicationmenu
+    - name: Autocomplete
+      slug: autocomplete
+    - name: Badges
+      slug: badges
+    - name: Button
+      slug: button
+    - name: Breadcrumb
+      slug: breadcrumb
+    - name: Busy Indicator
+      slug: busyindicator
+    - name: Checkboxes
+      slug: checkboxes
+    - name: Circle Pager
+      slug: circlepager
+    - name: Color Picker
+      slug: colorpicker
+    - name: Contextual Action Panel
+      slug: contextualactionpanel
+    - name: Context Menu
+      slug: contextmenu
+    - name: Counts
+      slug: counts
+    - name: Datepicker
+      slug: datepicker
+    - name: Dropdown
+      slug: dropdown
+    - name: Editor (RichText)
+      slug: editor
+    - name: Empty Messages
+      slug: emptymessage
+    - name: Expandable Area
+      slug: expandablearea
+    - name: Favorites
+      slug: favorites
+    - name: Fieldset
+      slug: fieldset
+    - name: Field Filter
+      slug: field-filter
+    - name: Field Options
+      slug: field-options
+    - name: File Upload
+      slug: fileupload
+    - name: File Upload (Advanced)
+      slug: fileupload-advanced
+    - name: Form Functionality
+      slug: form
+    - name: Header
+      slug: header
+    - name: Hierarchy (Org Chart)
+      slug: hierarchy
+    - name: HomePage
+      slug: homepage
+    - name: Hyperlinks
+      slug: hyperlinks
+    - name: Input (Text)
+      slug: input
+    - name: List Builder
+      slug: listbuilder
+    - name: List Filter
+      slug: listfilter
+    - name: Lookup
+      slug: lookup
+    - name: Menubutton
+      slug: menubutton
+    - name: Message
+      slug: message
+    - name: Modal
+      slug: modal
+    - name: Multiselect
+      slug: multiselect
+    - name: Pager
+      slug: pager
+    - name: Popover
+      slug: popover
+    - name: Popupmenu
+      slug: popupmenu
+    - name: Progress Indicator
+      slug: progress
+    - name: Rating
+      slug: rating
+    - name: Searchfield
+      slug: searchfield
+    - name: Skip Link
+      slug: skiplink
+    - name: Slider
+      slug: slider
+    - name: Spinbox
+      slug: spinbox
+    - name: Step Process
+      slug: stepprocess
+    - name: Swaplist
+      slug: swaplist
+    - name: Switch
+      slug: switch
+    - name: Tabs
+      slug: tabs
+    - name: Tabs (Header)
+      slug: tabs-header
+    - name: Tabs (Module)
+      slug: tabs-module
+    - name: Tabs (Vertical)
+      slug: tabs-vertical
+    - name: Tag
+      slug: tag
+    - name: Text Input
+      slug: input
+    - name: Timeline
+      slug: timeline
+    - name: Timepicker
+      slug: timepicker
+    - name: Toast
+      slug: toast
+    - name: Toolbar Searchfield
+      slug: toolbarsearchfield
+    - name: Tooltip
+      slug: tooltip
+    - name: Tree
+      slug: tree
+    - name: Wizard
+      slug: wizard
+  - name: Blocks
+    pages:
+    - name: Data Tiles
+      slug: cards
+    - name: Data Grid
+      slug: datagrid
+    - name: Data List
+      slug: listview
+    - name: Toolbar
+      slug: toolbar
+- name: Utilities
+  pages:
+  - name: Arrange
+    slug: arrange
+  - name: Drag
+    slug: drag
+  - name: Initialize
+    slug: initialize
+  - name: Locale
+    slug: locale
+  - name: Mask
+    slug: mask
+  - name: Personalize
+    slug: personalize
+  - name: Place
+    slug: place
+  - name: Splitter
+    slug: splitter
+  - name: Trackdirty
+    slug: trackdirty
+  - name: Visibility
+    slug: visibility
+  - name: Utils
+    slug: utils
+  - name: Validation
+    slug: validation
+  - name: Zoom
+    slug: zoom
+- name: Charts
+  pages:
+  - name: Getting Start with Charts
+    slug: charts
+  - name: Area
+    slug: area
+  - name: Bar Chart
+    slug: bar
+  - name: Bar Chart (Grouped)
+    slug: bar-grouped
+  - name: Bar Chart (Stacked)
+    slug: bar-stacked
+  - name: Bubble
+    slug: bubble
+  - name: Bullet
+    slug: bullet
+  - name: Column Chart
+    slug: column
+  - name: Column Chart (Grouped)
+    slug: column-grouped
+  - name: Column Chart (Stacked)
+    slug: column-stacked
+  - name: Donut
+    slug: donut
+  - name: Targeted Achievement (Chart)
+    slug: targeted-achievement
+  - name: Line Chart
+    slug: line
+  - name: Pie Chart
+    slug: pie
+  - name: Positive/Negative Chart
+    slug: positive-negative
+  - name: Radar
+    slug: radar
+  - name: Sparkline
+    slug: sparkline
+  - name: Step Chart
+    slug: stepchart
+  - name: Completion Chart
+    slug: completion-chart
+- name: Unclassified
+  pages:
+  - name: Block Grid
+    slug: blockgrid
+  - name: Compositform
+    slug: compositeform
+  - name: Images
+    slug: images
+  - name: Masthead
+    slug: masthead
+  - name: Process Indicator
+    slug: processindicator
+  - name: Radios
+    slug: radios
+  - name: Signin
+    slug: signin
+  - name: Tabs-multi
+    slug: tabs-multi
+  - name: Textarea
+    slug: textarea
