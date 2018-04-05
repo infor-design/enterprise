@@ -13,123 +13,100 @@
         <th>Description</th>
       </thead>
       <tbody>
-      
+        <tr>
+          <td>
+            element
+          </td>
+          <td>
 
+          </td>
+          <td>
 
-  <tr>
-    <td>
-      element
-    </td>
-    <td>
-      
-    </td>
-    <td>
-      
-    </td>
-    <td>
-      The component element.
-    </td>
-  </tr>
+          </td>
+          <td>
+            The component element.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            settings
+          </td>
+          <td>
 
-
-  <tr>
-    <td>
-      settings
-    </td>
-    <td>
-      
-    </td>
-    <td>
-      object
-    </td>
-    <td>
-      The component settings.
-    </td>
-  </tr>
-
-
+          </td>
+          <td>
+            object
+          </td>
+          <td>
+            The component settings.
+          </td>
+        </tr>
       </tbody>
     </table>
   </section>
   <section>
-  
-    
   <h2>Methods</h2>
-  <table class="section-table">
-    <thead>
-      <th>Name</th>
-      <th>Parameters</th>
-      <th>Description</th>
-      <th>Returns</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td>readonly</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Set component to readonly.</p>
+    <table class="section-table">
+      <thead>
+        <th>Name</th>
+        <th>Parameters</th>
+        <th>Description</th>
+        <th>Returns</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>readonly</td>
+          <td>
 
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>enable</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Set component to enable.</p>
+          </td>
+          <td>
+            <p>Set component to readonly.</p>
 
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-      <tr>
-        <td>updated</td>
-        <td>
-          
-                
-                  <span>settings (object) = The settings to apply.
- </span>
-                
-          
-        </td>
-        <td>
-          <p>Resync the UI and Settings.</p>
+          </td>
+          <td>
+            void
+          </td>
+        </tr>
+        <tr>
+          <td>enable</td>
+          <td>
 
-        </td>
-        <td>
-          The api
-object
-        </td>
-      </tr>
-      <tr>
-        <td>destroy</td>
-        <td>
-          
-        </td>
-        <td>
-          <p>Destroy and remove added markup, all events</p>
+          </td>
+          <td>
+            <p>Set component to enable.</p>
 
-        </td>
-        <td>
-          
-void
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          </td>
+          <td>
+            void
+          </td>
+        </tr>
+        <tr>
+          <td>updated</td>
+          <td>
+              <span>settings (object) = The settings to apply.</span>
+          </td>
+          <td>
+            <p>Resync the UI and Settings.</p>
+          </td>
+          <td>
+            The api object
+          </td>
+        </tr>
+        <tr>
+          <td>destroy</td>
+          <td>
 
-
+          </td>
+          <td>
+            <p>Destroy and remove added markup, all events</p>
+          </td>
+          <td>
+            void
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
-  
 
 <h2 id="code-example">Code Example</h2>
 <p>The Rating component can be used to either display a rating or allow the end user to select a rating. Half start ratings can be displayed but not set. You can implement the Rating control by using the below markup consisting of a block element (div) with class=&quot;rating&quot;, then any number of inputs followed by labels for the stars. The label element should contain an svg image with the star. An audible label should also be added for accessibility.</p>
