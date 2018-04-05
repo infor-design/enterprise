@@ -667,9 +667,16 @@ function reDirectSlashRoute(req, res, next) {
   next();
 }
 
-// Redirect "/component/component.html"
+// Redirect "/component/component{.html}" to "/component.html"
 app.get('/components/:component', function(req, res, next) {
-  res.redirect('/' + req.params.component);
+  var compName = stripHtml(req.params.component);
+  res.redirect('/' + compName + '.html');
+});
+
+// Redirect: /component => /component.html
+app.get('/:component', function(req, res, next) {
+  var compName = stripHtml(req.params.component);
+  res.redirect('/' + compName + '.html');
 });
 
 // router.get('/components/:component', componentRoute);
