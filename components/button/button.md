@@ -38,7 +38,7 @@ All buttons are assumed to be icon + text. To add the icon you add the svg icon 
 </button>
 
 <button type="button" class="btn-icon" disabled data-automation-id="page-button-icon">
-  <span class="audible">Date</span>
+  <span>Date</span>
   <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
     <use xlink:href="#icon-calendar"></use>
   </svg>
@@ -48,7 +48,7 @@ All buttons are assumed to be icon + text. To add the icon you add the svg icon 
 
 ## Implementation Tips
 
-- Make sure to add an automation-id for testing that remains the same across versions.
+- Make sure to add an automation-id or permanently unique id for testing that remains the same across versions.
 - Do not use any elements other than button attributes for buttons.
 - Press State has a touch effect which requires JS to implement
 - Buttons can optionally have tooltips via adding a title attribute
