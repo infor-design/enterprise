@@ -42,6 +42,12 @@ Personalize.prototype = {
    * @returns {this} component instance
    */
   init() {
+    this.availableThemes = [
+      'light',
+      'dark',
+      'high-contrast'
+    ];
+
     // Set the default theme, or grab the theme from an external CSS stylesheet.
     const cssTheme = this.getThemeFromStylesheet();
     this.currentTheme = cssTheme || this.settings.theme;
@@ -253,12 +259,6 @@ Personalize.prototype = {
 
     return rgb;
   },
-
-  availableThemes: [
-    'light',
-    'dark',
-    'high-contrast'
-  ],
 
   /**
    * Detect the current theme based on the style sheet.

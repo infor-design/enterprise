@@ -102,6 +102,8 @@ Radar.prototype = {
    * @returns {object} The component prototype for chaining.
    */
   init() {
+    this.width = 0;
+
     this
       .build()
       .handleEvents();
@@ -509,8 +511,6 @@ Radar.prototype = {
   toggleSelected(options) {
     this.setSelected(options, true);
   },
-
-  width: 0,
 
   /**
    * Handles resizing a chart.

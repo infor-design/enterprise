@@ -86,6 +86,9 @@ Dropdown.prototype = {
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
 
+    this.timer = null;
+    this.filterTerm = '';
+
     if (orgId === undefined) {
       orgId = this.element.uniqueId('dropdown');
       this.element.attr('id', orgId);
@@ -1175,9 +1178,6 @@ Dropdown.prototype = {
     }
     return true;  // eslint-disable-line
   },
-
-  timer: null,
-  filterTerm: '',
 
   /**
    * Handle the typeahead.
