@@ -2,6 +2,10 @@
 <h2 id="configuration-options">Configuration Options</h2>
 <ol type="1">
 <li>Main Example <a href="../components/signin/example-index">View Example</a></li>
+<li>&quot;Remember Me&quot; Example <a href="../components/signin/example-remember-me">View Example</a></li>
+<li>Customer Designed Sign in Page <a href="../components/signin/test-custom">View Example</a></li>
+<li>Example with a server dropdown <a href="../components/signin/test-dropdown">View Example</a></li>
+<li>Example with several field <a href="../components/signin/test-dropdown">View Example</a></li>
 </ol>
  <section>
     <h2>Settings</h2>
@@ -102,3 +106,49 @@ void
   </section>
   
 
+<h2 id="code-example">Code Example</h2>
+<p>Displays one or more selectable values. A user can select exactly one value at a time. Best used when all possible options should be clearly visible to a user.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;fieldset</span><span class="ot"> class=</span><span class="st">&quot;radio-group&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;legend&gt;</span>Select delivery method<span class="kw">&lt;/legend&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;options&quot;</span><span class="ot"> id=</span><span class="st">&quot;option1&quot;</span><span class="ot"> data-automation-id=</span><span class="st">&quot;page-field-radio-1&quot;</span><span class="ot"> value=</span><span class="st">&quot;option1&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;option1&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Option one<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;br/&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;options&quot;</span><span class="ot"> id=</span><span class="st">&quot;option2&quot;</span><span class="ot"> data-automation-id=</span><span class="st">&quot;page-field-radio-2&quot;</span><span class="ot"> value=</span><span class="st">&quot;option1&quot;</span><span class="ot"> checked=</span><span class="st">&quot;true&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;option2&quot;</span><span class="ot">  class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Option two<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;br/&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;options&quot;</span><span class="ot"> id=</span><span class="st">&quot;option3&quot;</span><span class="ot"> data-automation-id=</span><span class="st">&quot;page-field-radio-3&quot;</span><span class="ot"> value=</span><span class="st">&quot;option3&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;option3&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Option three<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;br/&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;options&quot;</span><span class="ot"> id=</span><span class="st">&quot;option4&quot;</span><span class="ot"> data-automation-id=</span><span class="st">&quot;page-field-radio-4&quot;</span><span class="ot"> value=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> disabled=</span><span class="st">&quot;true&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;option4&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Option four<span class="kw">&lt;/label&gt;</span>
+<span class="kw">&lt;/fieldset&gt;</span>
+</code></pre>
+<h2 id="implementation-tips">Implementation Tips</h2>
+<ul>
+<li>Make sure each item has a unique Id</li>
+<li>Make sure to add an automation-id for testing that remains the same across versions.</li>
+<li>Radio button is a css only component so anything you find on the web about radios can be used.</li>
+</ul>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>Make sure the</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><strong>Tab</strong> Between Fields</li>
+<li><strong>Enter</strong> To submit the form and fire the signin process.</li>
+</ul>
+<h2 id="states-and-variations">States and Variations</h2>
+<ul>
+<li>Disabled</li>
+<li>Error</li>
+</ul>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<ul>
+<li>Will stay centered on all devices both vertically and horizontally.</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>Has updated markup and layout.</li>
+</ul>

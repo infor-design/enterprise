@@ -1,63 +1,61 @@
-<h1 id="mask-learn-more">Mask <a href="#">Learn More</a></h1>
+<h1 id="radio-button-learn-more">Radio Button <a href="#">Learn More</a></h1>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol type="1">
-<li>Radio Example <a href="../components/radios/example-index">View Example</a></li>
-<li>Horizontal Example <a href="../components/radios/example-horizontal">View Example</a></li>
+<li>Radio Button Example <a href="../components/radios/example-index">View Example</a></li>
+<li>Horizontal Radio Button Example <a href="../components/radios/example-index">View Example</a></li>
+<li>Dirty Flag <a href="../components/radios/test-dirty">View Example</a></li>
+<li>Validation <a href="../components/radios/test-validation">View Example</a></li>
 </ol>
-<h2 id="behavior-guidelines">Behavior Guidelines</h2>
-<ul>
-<li>One option (and only one option) must always be selected.</li>
-<li>Users should be able to select/deselect an option by clicking either the button itself or anywhere within the associated label.</li>
-</ul>
+<p>{{api-details}}</p>
 <h2 id="code-example">Code Example</h2>
-<p>A Radio Button should always have a group label to indicate what you are selecting. To get the group label, place the Radio Button in a field set with class radio-group. The legend contains this label.</p>
-<p>Add any number of input elements, but other controls are better for a large number of options: See <a href="https://soho.infor.com/index.php?p=articles/selecting-from-a-set-of-values-choosing-the-right-component">decision tree article</a>.</p>
-<p>Each input should have class = &quot;radio&quot; and type=&quot;radio&quot; and should have an id that points to the matching label (required). Value can be set to the logical value represented by that radio choice.</p>
+<p>Displays one or more selectable values. A user can select exactly one value at a time. Best used when all possible options should be clearly visible to a user.</p>
 <pre class="sourceCode html"><code class="sourceCode html">
- <span class="kw">&lt;fieldset</span><span class="ot"> class=</span><span class="st">&quot;radio-group&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;legend&gt;</span>Select delivery method<span class="kw">&lt;/legend&gt;</span>
-    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> id=</span><span class="st">&quot;delivery1&quot;</span><span class="ot"> value=</span><span class="st">&quot;in&quot;</span> <span class="kw">/&gt;</span>
-    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;delivery1&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Dine in<span class="kw">&lt;/label&gt;</span>
-    <span class="kw">&lt;br&gt;</span>
-    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> checked class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> id=</span><span class="st">&quot;delivery2&quot;</span><span class="ot"> value=</span><span class="st">&quot;out&quot;</span> <span class="kw">/&gt;</span>
-    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;delivery2&quot;</span><span class="ot">  class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Carry out<span class="kw">&lt;/label&gt;</span>
-    <span class="kw">&lt;br&gt;</span>
-    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> id=</span><span class="st">&quot;delivery3&quot;</span><span class="ot"> value=</span><span class="st">&quot;delivery&quot;</span> <span class="kw">/&gt;</span>
-    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;delivery3&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Delivery<span class="kw">&lt;/label&gt;</span>
+<span class="kw">&lt;fieldset</span><span class="ot"> class=</span><span class="st">&quot;radio-group&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;legend&gt;</span>Select delivery method<span class="kw">&lt;/legend&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;options&quot;</span><span class="ot"> id=</span><span class="st">&quot;option1&quot;</span><span class="ot"> data-automation-id=</span><span class="st">&quot;page-field-radio-1&quot;</span><span class="ot"> value=</span><span class="st">&quot;option1&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;option1&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Option one<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;br/&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;options&quot;</span><span class="ot"> id=</span><span class="st">&quot;option2&quot;</span><span class="ot"> data-automation-id=</span><span class="st">&quot;page-field-radio-2&quot;</span><span class="ot"> value=</span><span class="st">&quot;option1&quot;</span><span class="ot"> checked=</span><span class="st">&quot;true&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;option2&quot;</span><span class="ot">  class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Option two<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;br/&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;options&quot;</span><span class="ot"> id=</span><span class="st">&quot;option3&quot;</span><span class="ot"> data-automation-id=</span><span class="st">&quot;page-field-radio-3&quot;</span><span class="ot"> value=</span><span class="st">&quot;option3&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;option3&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Option three<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;br/&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;radio&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio&quot;</span><span class="ot"> name=</span><span class="st">&quot;options&quot;</span><span class="ot"> id=</span><span class="st">&quot;option4&quot;</span><span class="ot"> data-automation-id=</span><span class="st">&quot;page-field-radio-4&quot;</span><span class="ot"> value=</span><span class="st">&quot;delivery&quot;</span><span class="ot"> disabled=</span><span class="st">&quot;true&quot;</span> <span class="kw">/&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;option4&quot;</span><span class="ot"> class=</span><span class="st">&quot;radio-label&quot;</span><span class="kw">&gt;</span>Option four<span class="kw">&lt;/label&gt;</span>
 <span class="kw">&lt;/fieldset&gt;</span>
 </code></pre>
+<h2 id="implementation-tips">Implementation Tips</h2>
+<ul>
+<li>Make sure each item has a unique Id</li>
+<li>Make sure to add an automation-id for testing thats safe across versions.</li>
+<li>Radio button is a css only component so anything you find on the web about radios can be used.</li>
+</ul>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>The radio button element uses the standard radio construct which makes it possible to be accessible.</li>
+<li>Should work like a standard html radio button</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li><strong>Tab</strong> will enter the radio group. When tabbing into a group focus goes to the selected button. If none is selected it goes to the first button in the group unless you are shift tabbing, which goes to the last button in the group. Or in ARIA it can go to the radio group. HTML does not have a radio group. Tab again will exit the radio group.</li>
-<li><strong>Down/Right</strong> moves forward in the group.</li>
-<li><strong>Up/Left</strong> moves backwards in the group; when the arrow moves focus, the button is selected.</li>
-<li><strong>Down/Right arrow</strong> at bottom should wrap to beginning of the set</li>
-<li><strong>Up/Left arrow</strong> at top should wrap to end of the set</li>
-<li><strong>Space</strong> Toggles Check/Unchecked</li>
-<li><strong>Control + Arrow</strong> moves through the options without updating content or selecting the button.</li>
+<li><strong>Tab</strong> Will enter the radio group</li>
+<li><strong>Shit + Tab</strong> Will exit the radio group</li>
+<li><strong>Down/Right</strong> Changes the select to the next/previous element.</li>
+<li><strong>Up/Left</strong> Changes the select to the next/previous element.</li>
+<li><strong>Space bar</strong> Can work to select with limitations.</li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
-<p>A Radio Button can take the following states:</p>
 <ul>
-<li>Selected/Not Selected</li>
-<li>Hover</li>
-<li>Focus</li>
-<li>Disabled (generally, the entire set of values will be disabled)</li>
+<li>Enabled</li>
+<li>Disabled</li>
+<li>Checked</li>
+<li>Error</li>
 <li>Dirty</li>
 </ul>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <ul>
-<li>Will always be smaller than the max container height.</li>
-<li>See form guidelines</li>
+<li>Smaller than mobile size so should fit in the responsive grid except for exceptionally long text which will wrap.</li>
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
-<li>Css only now. Remove all calls to inforRadioButton</li>
-<li>Many changes for accessibility - use new simplified DOM structure</li>
-<li>role = radio should be removed its redundant</li>
-<li>parent inforRadioButton set is no longer needed</li>
+<li>Has updated markup and validation has changes.</li>
 </ul>

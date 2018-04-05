@@ -3,5 +3,91 @@
 ## Configuration Options
 
 1. Main Example [View Example](../components/signin/example-index)
+2. "Remember Me" Example [View Example](../components/signin/example-remember-me)
+3. Customer Designed Sign in Page [View Example](../components/signin/test-custom)
+4. Example with a server dropdown [View Example](../components/signin/test-dropdown)
+5. Example with several field [View Example](../components/signin/test-dropdown)
+
 
 {{api-details}}
+
+## Code Example
+
+Displays one or more selectable values. A user can select exactly one value at a time. Best used when all possible options should be clearly visible to a user.
+
+```html
+
+<div class="page-container scrollable">
+  <div class="wrapper">
+    <section class="signin" role="main">
+
+        <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-logo"></use>
+        </svg>
+
+        <h1>Application Name</h1>
+
+        <form id="signin" data-validate-on="submit" autocomplete="off">
+
+          <div class="field">
+            <label for="username" class="required">Email</label>
+            <input type="text" name="username" id="username" autocomplete="off" data-validate="required"/>
+          </div>
+
+          <div class="field">
+            <label for="password" class="required">Password</label>
+            <input type="password" id="password" data-validate="required" name="password"/>
+          </div>
+
+          <div class="field">
+            <label for="states" class="label">Server</label>
+            <select id="states" name="states" class="dropdown">
+              <option value="N">NL</option>
+              <option value="U">US</option>
+              <option value="E">EU</option>
+              <option value="c">China</option>
+            </select>
+          </div>
+
+          <button class="btn-primary" type="submit">Sign in</button>
+          <a class="hyperlink" href="forgotpassword">Forgot Password?</a>
+
+        </form>
+    </section>
+  </div>
+
+</div>
+
+
+```
+
+## Implementation Tips
+
+- Make sure each item has a unique Id
+- Make sure to add an automation-id for testing that remains the same across versions.
+- Sigin uses a form to fire the form submit on enter.
+- Turn off autocomplete for better security.
+- Consider two factor authentication.
+- The forgot password page is also a pattern you can use. See page [the forgot password page ](../patterns/forgotpassword.html) and the [the forgot password sent page ](../patterns/forgotpassword-sent.html)
+
+## Accessibility
+
+-  Make sure all fields have id's that much the labels.
+
+## Keyboard Shortcuts
+
+-  **Tab** Between Fields
+-  **Enter** To submit the form and fire the signin process.
+
+## States and Variations
+
+- Disabled
+- Error
+
+## Responsive Guidelines
+
+- Will stay centered on all devices both vertically and horizontally.
+
+## Upgrading from 3.X
+
+- Has updated markup and layout.
