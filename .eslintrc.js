@@ -149,7 +149,7 @@ module.exports = {
     // https://eslint.org/docs/rules/max-len
     'max-len': ['error', {
       code: 100,
-      comments: 150,
+      comments: 350,
       ignoreUrls: true,
       ignoreComments: false,
       ignoreRegExpLiterals: true,
