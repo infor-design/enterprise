@@ -1,5 +1,7 @@
-
-# Area  [Learn More](#)
+---
+title: Area
+description: This page describes Area.
+---
 
 ## Configuration Options
 
@@ -10,8 +12,6 @@
 5. Example showing Get Selected value [View Example]( ../components/area/example-get-selected)
 6. Example showing Set Selected value [View Example]( ../components/area/example-set-selected)
 
-## API Details
-
 The area chart is a line chart with the isArea set that adds the fills. See the [line chart api]( ../components/line) for more details.
 
 ## Code Example
@@ -20,7 +20,6 @@ This example shows how to invoke the area chart option using the charts componen
 we pass a dataset with x and y axis values to make three lines.
 
 ```javascript
-
 var dataset = [{
   data: [{
       name: 'Jan',
@@ -87,8 +86,6 @@ var dataset = [{
 }];
 
 $('#area-example').chart({type: 'area', dataset: dataset});
-
-
 ```
 
 ## Accessibility
@@ -96,11 +93,8 @@ $('#area-example').chart({type: 'area', dataset: dataset});
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
 
 ```javascript
-
 color: '#1a1a1a'
 name: 'Component C'
-
-
 ```
 
 ## Keyboard Shortcuts

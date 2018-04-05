@@ -1,0 +1,19 @@
+{{#each children}}
+  <div class="link-list no-border">
+    <div>
+      {{#if slug}}
+        <a class="hyperlink" href="/{{slug}}.html">
+          {{name}}
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-launch"></use>
+          </svg>
+        </a>
+      {{else}}
+        <div>{{name}}</div>
+      {{/if}}
+      {{#if pages}}
+        {{> toc-blocks children=pages}}
+      {{/if}}
+    </div>
+  </div>
+{{/each}}

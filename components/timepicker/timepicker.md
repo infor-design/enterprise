@@ -1,4 +1,7 @@
-# Timepicker Component [Learn More](#)
+---
+title: Timepicker Component 
+description: This page describes Timepicker Component .
+---
 
 ## Configuration Options
 
@@ -9,8 +12,6 @@
 5. [Disabled Timepicker]( ../components/timepicker/example-disabled)
 6. [Timepicker with a Seconds Picker]( ../components/timepicker/example-seconds-picker)
 6. [Timepicker with Required Validation]( ../components/timepicker/example-with-validation)
-
-{{api-details}}
 
 ## Behavior Guidelines
 
@@ -29,35 +30,26 @@ Different use cases support:
 A time field is created by adding an input field with `type="text"` and a `.timepicker` CSS class. Also make sure to link to a label with an `id` attribute for accessibility.
 
 ```html
-
 <div class="field">
   <label for="timepicker-main" class="label">Timepicker</label>
   <input id="timepicker-main" class="timepicker" type="text">
 </div>
-
-
 ```
 
 It's also possible to configure the timepicker with a custom time format.  This allows the timepicker to be configured in [Military Time]( ../components/timepicker/example-24-hour), and/or with a [Seconds Picker]( ../components/timepicker/example-seconds-picker) for more accurate time.
 
 ```html
-
 <div class="field">
   <label for="timepicker-24hrs" class="label">Time Field (24-hour)</label>
   <input id="timepicker-24hrs" class="timepicker" type="text" data-options='{ "timeFormat": "HH:mm" };' />
 </div>
-
-
 ```
 
 In [another configuration]( ../components/timepicker/example-intervals), it's also possible to pass the Timepicker settings that control the intervals of minutes and seconds available for picking, as well as if the Timepicker will allow "off-timing"-intervals to be entered manually with a keyboard.
 
 ```html
-
 <div class="field">
   <label for="twentyfour-time-field" class="label">Time Field (24-hour)</label>
   <input id="twentyfour-time-field" class="timepicker" name="twentyfour-time-field" type="text" data-options='{ "minuteInterval": "10", "roundToInterval": "true"}' />
 </div>
-
-
 ```
