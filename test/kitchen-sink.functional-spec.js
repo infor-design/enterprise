@@ -24,6 +24,10 @@ const axeOptions = {
     {
       id: 'region',
       enabled: false
+    },
+    {
+      id: 'duplicate-id',
+      enabled: false
     }
   ]
 };
