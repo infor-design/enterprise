@@ -58,7 +58,6 @@ function Pager(element, settings) {
 
 Pager.prototype = {
 
-
   /**
    * Init the pager.
    * @private
