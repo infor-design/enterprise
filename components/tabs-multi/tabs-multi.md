@@ -15,8 +15,6 @@ demo:
 
 1. [Common Configuration]( ../components/tabs-multi/example-index)
 
-{{api-details}}
-
 ## Behavior Guidelines
 
 The Multi-Tabs component creates a system that wraps individual [Tabs Components]( ../components/tabs/index).
