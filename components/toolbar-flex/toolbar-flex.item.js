@@ -416,9 +416,29 @@ ToolbarFlexItem.prototype = {
       return;
     }
 
-    // If there are toolbar items, but no predefined items items, render the more-actions menu
+    // If there are toolbar items, but no predefined items, render the more-actions menu
     if ((!this.predefinedItems || !this.predefinedItems.length) && this.toolbarAPI.items.length) {
       this.renderMoreActionsMenu();
+    }
+
+    // Called at the end of the item refresh.
+    // Uses the Popupmenu's API to add overflow information.
+    function itemRefreshCallback(menuItem, data) {
+      if (data.isSubmenuItem) {
+        return;
+      }
+
+      if (data.overflowed === true) {
+        menuItem.classList.add('is-overflowed');
+
+        if (data.visible) {
+          menuItem.classList.remove('hidden');
+        }
+        return;
+      }
+
+      menuItem.classList.remove('is-overflowed');
+      menuItem.classList.add('hidden');
     }
 
     // Each Linked Toolbar Item will be refreshed by the Popupmenu API
@@ -426,7 +446,11 @@ ToolbarFlexItem.prototype = {
       if (!item.actionButtonLink) {
         return;
       }
-      menuAPI.refreshMenuItem(item.actionButtonLink, item.toPopupmenuData());
+
+      const itemData = item.toPopupmenuData();
+      itemData.overflowed = item.overflowed;
+
+      menuAPI.refreshMenuItem(item.actionButtonLink, itemData, itemRefreshCallback);
     });
   },
 

@@ -1,5 +1,6 @@
 # Ed's TODO List:
 
-- Unit test Popupmenu `.toData()` and Flex Toolbar
-- Build system for linking `More Actions` menu items to Toolbar Items, for driving events.
-- Disable `.btn-actions` from directly triggering the `selected` event? (Toolbar might trigger this from its base element)
+- Unit test Flex Toolbar
+- Make clicking on `More Actions` menu items trigger selected events on Toolbar items, if applicable.
+  - If no `originalButton` exists on menu item, trigger a `selected` event as expected.
+  - If `originalButton` exists, trigger `selected` event on the toolbar item.

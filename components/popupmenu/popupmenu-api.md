@@ -96,7 +96,7 @@ Returns **void**
 
 ### refreshMenuItem
 
-Takes a pre-existing menu item and refreshes its state
+Takes a pre-existing menu item and refreshes its state.
 
 **Parameters**
 

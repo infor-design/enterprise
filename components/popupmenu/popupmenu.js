@@ -633,7 +633,7 @@ PopupMenu.prototype = {
   },
 
   /**
-   * Takes a pre-existing menu item and refreshes its state
+   * Takes a pre-existing menu item and refreshes its state.
    * @param {HTMLElement} item the menu item to be refreshed
    * @param {object} data representing a Popupmenu data structure, containing updated state information
    * @param {function} [callback] runs on completion of the item refresh.  Can be used for adding additional
@@ -696,13 +696,14 @@ PopupMenu.prototype = {
     if (data.submenu) {
       const submenuItems = item.querySelector('.popupmenu').children;
       for (let i = 0; i < data.submenu.length; i++) {
+        data.submenu[i].isSubmenuItem = true;
         this.refreshMenuItem(submenuItems.item(i), data.submenu[i], callback);
       }
     }
 
     // Run callback to apply additional refresh changes, if applicable.
     if (typeof callback === 'function') {
-      callback.apply(this, item, data);
+      callback.apply(this, [item, data]);
     }
   },
 
