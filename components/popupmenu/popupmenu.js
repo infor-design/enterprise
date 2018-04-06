@@ -400,7 +400,7 @@ PopupMenu.prototype = {
       submenuClass += ' submenu';
       submenu += this.renderItem(settings.submenu);
       ddicon += `<svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dropdown"></use>
+        <use xlink:href="#icon-dropdown"></use>
       </svg>`;
     }
 
