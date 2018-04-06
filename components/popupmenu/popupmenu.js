@@ -282,8 +282,8 @@ PopupMenu.prototype = {
   /**
    * @param {object|object[]} settings JSON-friendly object that represents a popupmenu item, or array of items.
    * @param {string} [settings.id] adds an ID to the item's anchor tag
-   * @param {boolean} [settings.divider=false] causes this menu item to be a divider (overrides everything else)
-   * @param {string} [settings.heading=""] Produces a heading element after a divider with text content.
+   * @param {boolean} [settings.separator=false] causes this menu item to be a separator (overrides everything else)
+   * @param {string} [settings.heading=""] Produces a heading element after a separator with text content.
    * @param {string} [settings.nextSectionSelect] can be null, "single", or "multiple"
    * @param {string} settings.text contains the text that will be displayed.
    * @param {string|null} [settings.icon=null] applies an icon to the menu item
@@ -317,8 +317,8 @@ PopupMenu.prototype = {
     let headingText = '';
     let sectionSelectClass = '';
 
-    // Dividers get rendered out first
-    if (settings.divider !== undefined) {
+    // separators get rendered out first
+    if (settings.separator !== undefined) {
       if (settings.heading) {
         headingText += `<li class="heading">${settings.heading}</li>`;
       }
@@ -450,14 +450,41 @@ PopupMenu.prototype = {
 
     if (settings.noMenuWrap) {
       data = menu;
+    } else {
+      data.menu = menu;
     }
 
-    function decodeListItem(i, item) {
+    function decodeListItem(item) {
       const li = $(item);
-      const icon = li.children('.icon');
-      const a = li.children('a');
-      const id = a.attr('id');
       const liData = {};
+
+      // Ignore headings, which are included as part of separators inside data
+      if (li.hasClass('heading')) {
+        return undefined;
+      }
+
+      // separators include different metadata
+      if (li.hasClass('separator')) {
+        liData.separator = true;
+
+        if (li.hasClass('single-selectable-section')) {
+          liData.nextSectionSelect = 'single';
+        }
+        if (li.hasClass('multi-selectable-section')) {
+          liData.nextSectionSelect = 'multiple';
+        }
+
+        const next = li.next();
+        if (next.hasClass('heading')) {
+          liData.heading = next.text().trim();
+        }
+
+        return liData;
+      }
+
+      const a = li.children('a');
+      const icon = a.children('.icon:not(.close):not(.icon-dropdown)');
+      const id = a.attr('id');
 
       liData.text = a.text().trim();
       liData.disabled = li.hasClass('is-disabled');
@@ -479,7 +506,14 @@ PopupMenu.prototype = {
 
       const submenu = li.find('.popupmenu');
       if (submenu.length) {
-        liData.submenu = submenu.first().children().each(decodeListItem);
+        liData.submenu = [];
+        submenu.first().children().each((i, submenuItem) => {
+          const submenuLiData = decodeListItem(submenuItem);
+          if (!submenuLiData) {
+            return;
+          }
+          liData.submenu.push(submenuLiData);
+        });
       }
 
       return liData;
@@ -487,7 +521,11 @@ PopupMenu.prototype = {
 
     const lis = settings.contextElement.children('li');
     lis.each((i, item) => {
-      menu.push(decodeListItem(i, item));
+      const liData = decodeListItem(item);
+      if (!liData) {
+        return;
+      }
+      menu.push(liData);
     });
 
     return data;

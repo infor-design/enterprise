@@ -59,8 +59,8 @@ Returns **[boolean][24]** whether or not the reading/writing direction is RTL
 
 -   `settings` **([object][22] \| [Array][20]&lt;[object][22]>)** JSON-friendly object that represents a popupmenu item, or array of items.
     -   `settings.id` **[string][23]?** adds an ID to the item's anchor tag
-    -   `settings.divider` **[boolean][24]** causes this menu item to be a divider (overrides everything else) (optional, default `false`)
-    -   `settings.heading` **[string][23]** Produces a heading element after a divider with text content. (optional, default `""`)
+    -   `settings.separator` **[boolean][24]** causes this menu item to be a separator (overrides everything else) (optional, default `false`)
+    -   `settings.heading` **[string][23]** Produces a heading element after a separator with text content. (optional, default `""`)
     -   `settings.nextSectionSelect` **[string][23]?** can be null, "single", or "multiple"
     -   `settings.text` **[string][23]** contains the text that will be displayed.
     -   `settings.icon` **([string][23] | null)** applies an icon to the menu item (optional, default `null`)

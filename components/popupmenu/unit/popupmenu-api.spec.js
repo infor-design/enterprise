@@ -2,6 +2,7 @@ import { PopupMenu } from '../popupmenu';
 
 const popupmenuHTML = require('../example-index.html');
 const popupmenuSelectableHTML = require('../example-selectable.html');
+const popupmenuContextMenuHTML = require('../../contextmenu/example-index.html');
 const svg = require('../../icons/svg.html');
 
 let popupmenuButtonEl;
@@ -129,7 +130,7 @@ describe('Popupmenu Single Select API', () => {
   });
 });
 
-describe('Popupmenu renderItem API', () => {
+describe('Popupmenu renderItem() API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
     svgEl = null;
@@ -306,7 +307,7 @@ it('Should build HTML for a single Popupmenu item with a submenu that contains b
         selectable: 'multiple'
       },
       {
-        divider: true,
+        separator: true,
         heading: 'Additional Settings',
         nextSectionSelect: 'single'
       },
@@ -324,4 +325,91 @@ it('Should build HTML for a single Popupmenu item with a submenu that contains b
   const markup = popupmenuObj.renderItem(data);
 
   expect(markup).toBe('<li class="popupmenu-item submenu"><a href="#"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-settings"></use></svg><span>Settings</span><svg class="arrow icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></a><ul class="popupmenu"><li class="popupmenu-item is-multiselectable"><a href="#"><span>Submenu Item #1</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Submenu Item #2</span></a></li><li class="popupmenu-item is-multiselectable"><a href="#"><span>Submenu Item #3</span></a></li><li class="separator single"></li><li class="heading">Additional Settings</li><li class="popupmenu-item"><a href="#"><span>Other Setting #1</span></a></li><li class="popupmenu-item"><a href="#"><span>Other Setting #2</span></a></li><li class="popupmenu-item"><a href="#"><span>Other Setting #3</span></a></li></ul></li>');
+});
+
+describe('Popupmenu toData() API', () => {
+  describe('Main Examples', () => {
+    beforeEach(() => {
+      popupmenuButtonEl = null;
+      svgEl = null;
+      rowEl = null;
+      popupmenuObj = null;
+      document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
+      document.body.insertAdjacentHTML('afterbegin', svg);
+      popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
+      rowEl = document.body.querySelector('.row');
+      svgEl = document.body.querySelector('.svg-icons');
+      popupmenuObj = new PopupMenu(popupmenuButtonEl);
+    });
+
+    afterEach(() => {
+      popupmenuObj.destroy();
+      popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
+      rowEl.parentNode.removeChild(rowEl);
+      svgEl.parentNode.removeChild(svgEl);
+    });
+
+    it('Should convert the main Popupmenu example into an object representation', () => {
+      const data = popupmenuObj.toData();
+
+      expect(data).toBeDefined();
+      expect(data.menuId).toBeDefined(); // auto-generated
+      expect(data.menu).toBeDefined();
+      expect(data.menu.length).toBe(3);
+      expect(data.menu[0].text).toBe('Menu Option #1');
+      expect(data.menu[0].disabled).toBeFalsy();
+      expect(data.menu[0].visible).toBeTruthy();
+    });
+  });
+
+  describe('Context Menu examples', () => {
+    beforeEach(() => {
+      popupmenuButtonEl = null;
+      svgEl = null;
+      rowEl = null;
+      popupmenuObj = null;
+      document.body.insertAdjacentHTML('afterbegin', popupmenuContextMenuHTML);
+      document.body.insertAdjacentHTML('afterbegin', svg);
+      popupmenuButtonEl = document.body.querySelector('#input-menu');
+      rowEl = document.body.querySelector('.row');
+      svgEl = document.body.querySelector('.svg-icons');
+      popupmenuObj = new PopupMenu(popupmenuButtonEl);
+    });
+
+    afterEach(() => {
+      popupmenuObj.destroy();
+      popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
+      rowEl.parentNode.removeChild(rowEl);
+      svgEl.parentNode.removeChild(svgEl);
+    });
+
+    it('Should convert a more complicated Popupmenu example into an object representation', () => {
+      const data = popupmenuObj.toData();
+
+      expect(data).toBeDefined();
+      expect(data.menuId).toBe('action-popupmenu');
+      expect(data.menu).toBeDefined();
+      expect(data.menu.length).toBe(14);
+
+      // Check existence of separator
+      expect(data.menu[4].separator).toBeDefined();
+      expect(data.menu[4].text).toBeUndefined();
+
+      // Check existence of separator with heading/selection area
+      expect(data.menu[9].separator).toBeDefined();
+      expect(data.menu[9].heading).toBe('Additional Options');
+      expect(data.menu[9].nextSectionSelect).toBe('single');
+
+      // Check existence of submenu
+      expect(data.menu[3].submenu).toBeDefined();
+      expect(data.menu[3].submenu.length).toBe(4);
+      expect(data.menu[3].submenu[0].text).toBe('Sub Menu 1');
+      expect(data.menu[3].submenu[0].disabled).toBeFalsy();
+      expect(data.menu[3].submenu[0].visible).toBeTruthy();
+
+      // Check existence of icon
+      expect(data.menu[13]).toBeDefined();
+      expect(data.menu[13].icon).toBe('settings');
+    });
+  });
 });
