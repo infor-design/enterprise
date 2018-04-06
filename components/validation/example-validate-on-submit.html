@@ -6,28 +6,28 @@
 
        <div class="field">
         <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
-        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required customRule" data-error-type="tooltip" placeholder="someone@someplace.com" value="someone@someplace.com">
+        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required" placeholder="someone@someplace.com" value="someone@someplace.com"/>
       </div>
 
       <div class="field">
         <label class="required" for="credit-card">Credit Card <span class="audible">Required</span></label>
-        <input type="text" id="credit-card" name="credit-card" data-validate="required" value="xxxx-xxxx-xxxx-xxxx" data-error-type="tooltip" >
+        <input type="text" id="credit-card" name="credit-card" data-validate="required" value="xxxx-xxxx-xxxx-xxxx" />
       </div>
 
       <div class="field">
         <label for="credit-code">Code <span class="audible">Required</span></label>
-        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-mask-mode="number" data-error-type="tooltip" >
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-mask-mode="number" />
       </div>
 
       <div class="field">
         <label class="required" for="credit-code2">Code <span class="audible">Required</span></label>
-        <input type="text" id="credit-code2" class="input-xs" name="credit-code2" data-validate="required" data-mask-mode="number" data-error-type="tooltip" >
+        <input type="text" id="credit-code2" class="input-xs" name="credit-code2" data-validate="required" data-mask-mode="number" />
       </div>
 
       <div class="field">
-        <label class="required" for="states" class="label">States</label>
-        <select id="states" data-validate="required" name="states" class="dropdown" data-error-type="tooltip" >
-          <option value="" selected>&nbsp;</option>
+        <label class="required label" for="states">States</label>
+        <select id="states" data-validate="required" name="states" class="dropdown" >
+          <option value="" selected="true">&nbsp;</option>
           <option value="AL" >Alabama</option>
           <option value="DE">Delaware</option>
           <option value="DC">District Of Columbia</option>
@@ -43,40 +43,29 @@
           </select>
       </div>
 
-      <div class="field">
-        <span class="label required">Editor <span class="audible">Required</span></span>
-        <div class="editor" data-validate="required" data-error-type="tooltip" >
-        </div>
-      </div>
-
-      <button type="submit" id = 'test1' class="btn-primary">Submit</button>
+      <button type="submit" id = "test1" class="btn-primary">Submit</button>
     </form>
-
-	<script>
-      $(function() {
-        $.fn.validation.rules.customRule = {
-          check: function (value) {
-
-            return false;
-          },
-          message: 'Custom Error'
-        };
-
-        $('#test').on('validated', function (e, isValid) {
-
-          if (isValid) {
-            // Do some stuff before it goes to postback/submit
-
-            //Manually post/submit or change window
-            //http://stackoverflow.com/questions/1200266/submit-a-form-using-jquery
-            window.location = 'http://www.google.com';
-            return;
-          }
-
-          // Do some stuff other than highlighting what's required and obviously cancel the submit.
-
-        });
-      });
-    </script>
   </div>
 </div>
+
+<script>
+  $(function() {
+
+    // Work Around
+    //$('form[data-validate-on="submit"]').validate();
+
+    $('#test').on('validated', function (e, isValid) {
+
+      if (isValid) {
+        // Do some stuff before it goes to postback/submit
+
+        //Manually post/submit or change window
+        //http://stackoverflow.com/questions/1200266/submit-a-form-using-jquery
+        window.location = 'http://www.google.com';
+        return;
+      }
+
+      // Do some stuff other than highlighting what's required and obviously cancel the submit.
+    });
+  });
+</script>
