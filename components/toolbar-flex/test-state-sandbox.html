@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Flex Toolbar Test: State Sandbox</h2>
+    <p>JIRA: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7475" target="_blank">SOHO-7475</a></p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <!-- Begin Flex Toolbar -->
+    <div id="flex-toolbar" class="flex-toolbar">
+      <div id="front-button-section" class="toolbar-section">
+        <button id="btnIconHamburger" class="btn-icon application-menu-trigger" type="button">
+          <span class="audible">Show navigation</span>
+          <span class="icon app-header">
+            <span class="one"></span>
+            <span class="two"></span>
+            <span class="three"></span>
+          </span>
+        </button>
+      </div>
+
+      <div id="title-section" class="toolbar-section title">
+        <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
+      </div>
+
+      <div id="buttonset-section" class="toolbar-section buttonset">
+        <button id="btnText" class="btn">
+          <span>Text Button</span>
+        </button>
+
+        <button id="btnMenu" class="btn-menu">
+          <span>Menu Button</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Item One</a></li>
+          <li><a href="#">Item Two</a></li>
+          <li><a href="#">Item Three</a></li>
+        </ul>
+
+        <button id="btnIconOne" class="btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span class="audible">Settings</span>
+        </button>
+
+        <button id="btnIconTwo" class="btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Trash</span>
+        </button>
+      </div>
+
+      <div id="searchfield-section" class="toolbar-section search">
+        <div class="searchfield-wrapper">
+          <label for="searchfield" class="audible">Toolbar Search</label>
+          <input id="searchfield" class="searchfield" placeholder="Search..."/>
+        </div>
+      </div>
+
+      <div id="moreactions-section" class="toolbar-section more">
+        <button id="btnMoreActions" class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Pre-defined Item #1</a></li>
+          <li><a href="#">Pre-defined Item #2</a></li>
+          <li><a href="#">Pre-defined Item #3</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- End Flex Toolbar -->
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <button id="btnDisabler" class="btn-secondary">
+      <span>Disable Some Buttons</span>
+    </button>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var TEXT = {
+    disableSomeButtons: 'Disable Some Buttons',
+    enableSomeButtons: 'Enable Some Buttons'
+  }
+
+  $('body').on('initialized', function() {
+    var btnIconHamburgerAPI = $('#btnIconHamburger').data('toolbarflexitem');
+    var btnTextAPI = $('#btnText').data('toolbarflexitem');
+    var btnMenuAPI = $('#btnMenu').data('toolbarflexitem');
+    var btnIconTwoAPI = $('#btnIconTwo').data('toolbarflexitem');
+    var btnIconOneAPI = $('#btnIconOne').data('toolbarflexitem');
+    var btnMoreActionsAPI = $('#btnMoreActions').data('toolbarflexitem');
+    var searchfieldAPI = $('#searchfield').data('toolbarflexitem');
+
+    // Toggles certain buttons and menu items to be disabled
+    function toggleDisabled() {
+      if ($('#btnDisabler').is('[data-disabled]')) {
+        btnTextAPI.disabled = false;
+        btnIconTwoAPI.disabled = false;
+
+        $('#btnDisabler')
+          .removeAttr('data-disabled')
+          .children('span').text(TEXT.disableSomeButtons);
+        return;
+      }
+
+      btnTextAPI.disabled = true;
+      btnIconTwoAPI.disabled = true;
+
+      $('#btnDisabler')
+        .attr('data-disabled', true)
+        .children('span').text(TEXT.enableSomeButtons);
+    }
+
+    // ==================================================
+    // Setup Click Events for test-specific button functions
+    $('#btnDisabler').on('click.test', function() {
+      toggleDisabled();
+    });
+  });
+</script>

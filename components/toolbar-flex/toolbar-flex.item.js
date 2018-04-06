@@ -253,8 +253,10 @@ ToolbarFlexItem.prototype = {
   set disabled(boolean) {
     if (boolean) {
       this.element.disabled = true;
-      this.readonly = false;
+      this.element.readonly = false;
+      return;
     }
+    this.element.disabled = false;
   },
 
   /**
