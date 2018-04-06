@@ -668,7 +668,6 @@ function reDirectSlashRoute(req, res, next) {
 
 // Redirect "/component/component{.html}" to "/component.html"
 app.get('/components/:component', function(req, res, next) {
-  console.log('here');
   var compName = stripHtml(req.params.component);
   res.redirect(`/components/${compName}.html`);
 });
