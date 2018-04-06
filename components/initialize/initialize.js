@@ -339,7 +339,10 @@ const PLUGIN_MAPPINGS = [
   // Validation on individual fields (Should run last)
   ['validate', '[data-validate]', function (rootElem, pluginName, selector) {
     matchedItems(rootElem, selector).parentsUntil('form, html').validate();
-  }]
+  }],
+
+  // Form validation
+  ['validate', 'form[data-validate-on="submit"]']
 ];
 
 // Invokes a specific Soho component type against an element, in some cases with
