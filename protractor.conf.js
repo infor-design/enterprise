@@ -7,7 +7,7 @@ const getSpecs = (listSpec) => {
     return listSpec.split(',');
   }
 
-  return ['components/**/*.functional-spec.js'];
+  return ['components/**/*.functional-spec.js', 'test/kitchen-sink.functional-spec.js'];
 };
 
 exports.config = {

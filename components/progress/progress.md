@@ -33,6 +33,14 @@ When the markup is established, you can call the `updated` method or trigger the
 -   `aria-valuenow` should indicate the current value
 -   `aria-maxvalue="100"` should indicate the max value (100%)
 
+## Keyboard Shortcuts
+
+-   No Keyboard
+
+## Responsive Guidelines
+
+-   Will size to parent container
+
 ## Upgrading from 3.X
 
 -   Much simpler API then before.

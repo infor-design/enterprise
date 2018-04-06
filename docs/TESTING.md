@@ -50,12 +50,26 @@ export BROWSER_STACK_USERNAME=xxxxxxxxxxxxx
 export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 ```
 
-## Debugging a Test
-1. Put a debugger; statement at a place in the code.
+## Debugging a Unit Test
+1. Put a debugger; statement at a place in the test/code.
 2. Run the unit test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run local:unit`
-3. Run the functional test with `env PROTRACTOR_SPECS='components/dropdown/functional/dropdown.functional-spec.js' npm run local:functional`
+4. Open Chrome tools
+5. Refresh the page and the debugger will pop up / or click the debugger button (had less luck with this.)
+
+## Debugging a Functional Test
+1. Put a debugger; statement at a place in the test/code..
+2. Run the functional test with `env PROTRACTOR_SPECS='components/dropdown/functional/dropdown.functional-spec.js' npm run local:functional`
 4. Open Chrome tools
 5. Refresh the page and the debugger will pop up
+
+## Debugging Accessibility Test Errors
+1. Put a debugger; statement at a place in the test/code for example under the `res = await AxeBuilder` command.
+2. Start the server normally with `node server`
+3. In another terminal run the functional test with `env PROTRACTOR_SPECS='test/kitchen-sink.functional-spec.js' npx -n=--inspect-brk protractor protractor.conf.js` in watch mode
+4. In Chrome open ``chrome://inspect` in a new tab.
+5. Click 'Open dedicated DevTools for Node.
+6. Hit Play on the debugger
+7. View `res.violations` in the console
 
 ## Running all Tests Silently
 `npm run ci:local:unit`
