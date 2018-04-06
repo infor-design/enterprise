@@ -10,7 +10,8 @@ description: This page describes Validation.
 3. Multiple Validation Errors on a Field [View Example]( ../components/validation/example-multiple-errors)
 4. Legacy Short Fields [View Example]( ../components/validation/example-short-fields)
 5. Manually adding an Error [View Example]( ../components/validation/example-standalone-error)
-6. Validating on Form Submit [View Example]( ../components/validation/example-validation-form)
+6. Enabling a Button on Valid [View Example]( ../components/validation/example-validation-form)
+6. Validating on Form Submit [View Example]( ../components/validation/example-validation-on-submit)
 
 ## Code Example - Auto
 
