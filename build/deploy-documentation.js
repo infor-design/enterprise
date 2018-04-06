@@ -78,7 +78,10 @@ const paths = {
     dist:     `${rootPath}/${idsWebsitePath}/dist`,
     distDocs: `${rootPath}/${idsWebsitePath}/dist/docs`
   },
-  static: `${rootPath}/${staticWebsitePath}`,
+  static: {
+    root: `${rootPath}/${staticWebsitePath}`,
+    components: `${rootPath}/${staticWebsitePath}/components`
+  }
 };
 
 const jsonTemplate = {
@@ -89,7 +92,7 @@ const jsonTemplate = {
 };
 
 const serverURIs = {
-  static: paths.static,
+  static: paths.static.root,
   local: 'http://localhost/api/docs/',
   localDebug: 'http://localhost:9002/api/docs/',
   staging: 'https://staging.design.infor.com/api/docs/',
@@ -209,6 +212,7 @@ function compileComponents() {
         allDocsObjMap[compName] = Object.assign({}, jsonTemplate, {
           title: compName,
           description: 'All about ' + compName,
+          isComponent: true
         });
 
         // note: comp path includes an ending "/"
@@ -272,9 +276,15 @@ function cleanAll() {
   const filesToDel = [];
 
   if (deployTo === 'static') {
-    filesToDel.push(`${paths.static}/*.html`)
+    filesToDel.push(
+      `${paths.static.root}/*.html`,
+      `${paths.static.components}/*.html`
+    );
   } else {
-    filesToDel.push(paths.idsWebsite.dist, paths.idsWebsite.distDocs);
+    filesToDel.push(
+      paths.idsWebsite.dist,
+      paths.idsWebsite.distDocs
+    );
   }
 
   return del(filesToDel)
@@ -287,7 +297,8 @@ function cleanAll() {
         paths.idsWebsite.root,
         paths.idsWebsite.dist,
         paths.idsWebsite.distDocs,
-        paths.static
+        paths.static.root,
+        paths.static.components
       ]);
     }
   );
@@ -508,7 +519,13 @@ function writeHtmlFile(hbsTemplate, componentName) {
     data.component.slug = componentName;
     const html = hbsTemplate(data);
 
-    fs.writeFile(`${paths.static}/${componentName}.html`, html, 'utf8', err => {
+    // Regular docs go in root, components go in "components/"
+    let dest = `${paths.static.root}/${componentName}.html`;
+    if (data.component.isComponent) {
+      dest = `${paths.static.components}/${componentName}.html`;
+    }
+
+    fs.writeFile(dest, html, 'utf8', err => {
       if (err) {
         reject(err);
       } else {
@@ -558,7 +575,7 @@ function writeJsonSitemap() {
 
 
 /**
- * Convert/write the sitemap.yml and index.html file for local docs
+ * Convert/write the sitemap.yml as "components/index" for static docs
  * @return {Promise}
  */
 function writeHtmlSitemap() {
@@ -567,7 +584,7 @@ function writeHtmlSitemap() {
     const sitemapObj = readSitemapYaml();
     const sitemapHtml = tocTemplate(sitemapObj);
 
-    fs.writeFile(`${paths.static}/sitemap.html`, sitemapHtml, 'utf8', err => {
+    fs.writeFile(`${paths.static.components}/index.html`, sitemapHtml, 'utf8', err => {
       if (err) {
         reject(err);
       } else {
