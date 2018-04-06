@@ -282,7 +282,7 @@ function cleanAll() {
       console.error(chalk.red('Error!'), err);
     })
     .then(res => {
-      logTaskAction('Cleaned', paths.idsWebsite.dist);
+      logTaskAction('Cleaned', paths.idsWebsite.dist.replace(rootPath, '.'));
       createDirs([
         paths.idsWebsite.root,
         paths.idsWebsite.dist,
@@ -317,7 +317,7 @@ function markdownToHtml(filePath) {
             reject(err);
           } else {
             componentStats.numConverted++;
-            logTaskAction('Converting', fileBasename + '.md')
+            logTaskAction('Converting', fileBasename + '.md', true);
             resolve(allDocsObjMap[fileBasename].body = content);
           }
         });
@@ -334,7 +334,7 @@ function createDirs(arrPaths) {
   for (let path of arrPaths) {
     if (!fs.existsSync(path)) {
       fs.mkdirSync(path);
-      logTaskAction('Created', path);
+      logTaskAction('Created', path.replace(rootPath, '.'));
     }
   }
 }
@@ -369,7 +369,7 @@ function documentJsToHtml(componentName) {
           return output.map((file) => {
             return vinylToString(file, 'utf8').then(contents => {
               componentStats.numDocumented++;
-              logTaskAction('Documented', componentName + '.js');
+              logTaskAction('Documented', componentName + '.js', true);
               allDocsObjMap[componentName].api = contents;
             });
           })
@@ -411,10 +411,12 @@ function logTaskEnd(taskName) {
  * Log an individual task's action
  * @param {string} action - the action
  * @param {string} desc - a brief description or more details
+ * @param {boolean} [onlyVerbose] - console log only with verbose flag
  * @param {string} [color] - one of the chalk module's color aliases
+ *
  */
-function logTaskAction(action, desc, color = 'green') {
-  if (argv.verbose) {
+function logTaskAction(action, desc, onlyVerbose=false, color = 'green') {
+  if (!onlyVerbose || (onlyVerbose && argv.verbose)) {
     console.log('-', action, chalk[color](desc));
   }
 }
@@ -425,23 +427,24 @@ function logTaskAction(action, desc, color = 'green') {
 function postZippedBundle() {
   const formData = require('form-data');
 
-  logTaskStart(`publish to server "${deployTo}"`);
+  logTaskStart(`attempt publish to server "${deployTo}"`);
 
   let form = new formData();
   form.append('file', fs.createReadStream(`${paths.idsWebsite.dist}.zip`));
   form.append('root_path', `ids-enterprise/${packageJson.version}`);
   form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : "");
   form.submit(serverURIs[deployTo], (err, res) => {
+    logTaskEnd(`attempt publish to server "${deployTo}"`);
     if (err) {
       console.error(err);
+      logTaskAction('Failed!', `Status ${err}`, false, 'red');
     } else {
       if (res.statusCode == 200) {
         logTaskAction('Success', `to "${serverURIs[deployTo]}"`)
       } else {
-        logTaskAction('Failed!', `Status ${res.statusCode}`, 'red');
+        logTaskAction('Failed!', `Status ${res.statusCode}: ${res.statusMessage}`, false, 'red');
       }
       res.resume();
-      logTaskEnd(`publish to server "${deployTo}"`);
       numArchivesSent++;
       statsConclusion();
     }
@@ -509,7 +512,7 @@ function writeHtmlFile(hbsTemplate, componentName) {
       if (err) {
         reject(err);
       } else {
-        logTaskAction('Created', `${componentName}.html`);
+        logTaskAction('Created', `${componentName}.html`, true);
         resolve();
       }
     });
@@ -528,7 +531,7 @@ function writeJsonFile(componentName) {
         reject(err);
       } else {
         componentStats.numWritten++;
-        logTaskAction('Created', thisName + '.json');
+        logTaskAction('Created', thisName + '.json', true);
         resolve();
       }
     });
