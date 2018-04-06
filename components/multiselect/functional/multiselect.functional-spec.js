@@ -31,14 +31,17 @@ const axeOptions = {
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 const clickOnMultiselect = async () => {
-  await browser.waitForAngularEnabled(false);
-  await browser.driver.get('http://localhost:4000/components/multiselect/example-states');
   const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
   await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
   await multiselectEl.click();
 };
 
-describe('Multiselect tests', () => {
+describe('Multiselect example-states tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/multiselect/example-states');
+  });
+
   it('Should open multiselect list on click', async () => {
     await clickOnMultiselect();
 
@@ -59,6 +62,22 @@ describe('Multiselect tests', () => {
       posVT.y < (posMultiselectElList.y + multiselectElListSize.height)).toBeTruthy();
   });
 
+  if (browser.browserName.toLowerCase() !== 'safari') {
+    it('Should show validation message error "Required"', async () => {
+      const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).get(2);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await multiselectEl.sendKeys(protractor.Key.ENTER);
+      await multiselectEl.sendKeys(protractor.Key.ENTER);
+      await multiselectEl.sendKeys(protractor.Key.ENTER);
+      await multiselectEl.sendKeys(protractor.Key.TAB);
+
+      expect(await element(by.css('.message-text')).getText()).toEqual('Required');
+    });
+  }
+
   // Disable IE11: Async timeout errors
   if (browser.browserName.toLowerCase() !== 'ie') {
     it('Should be accessible on init with no WCAG 2AA violations', async () => {
@@ -72,11 +91,16 @@ describe('Multiselect tests', () => {
       expect(res.violations.length).toEqual(0);
     });
   }
+});
+
+describe('Multiselect example-index tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/multiselect/example-index');
+  });
 
   if (browser.browserName.toLowerCase() !== 'safari') {
     it('Should arrow down to Arizona, and focus', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/components/multiselect/example-index');
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
       await multiselectEl.click();
@@ -87,9 +111,20 @@ describe('Multiselect tests', () => {
       expect(await element(by.className('is-focused')).getText()).toEqual('Arizona');
     });
 
+    it('Should tab into deselect Alaska then tab out and input should be empty', async () => {
+      const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await multiselectEl.sendKeys(protractor.Key.ENTER);
+      await multiselectEl.sendKeys(protractor.Key.ENTER);
+      await multiselectEl.sendKeys(protractor.Key.TAB);
+
+      expect(await element(by.css('.dropdown span')).getText()).toEqual('');
+    });
+
     it('Should arrow down to Arizona select, arrow down, and select Arkansas, and update search input', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/components/multiselect/example-index');
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
       await multiselectEl.click();
@@ -104,24 +139,10 @@ describe('Multiselect tests', () => {
 
       expect(await multiselectSearchElVal).toEqual('Alaska, Arizona, Arkansas');
     });
-
-    it('Should clear all', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/components/multiselect/example-clear-all');
-      const buttonEl = await element(by.id('btn-clear'));
-
-      expect(await element(by.css('.dropdown span')).getText()).toEqual('Orange');
-      await buttonEl.click();
-      await browser.driver.sleep(1000);
-
-      expect(await element(by.css('.dropdown span')).getText()).toEqual('');
-    });
   }
 
   if (browser.browserName.toLowerCase() === 'chrome') {
     it('Should not visual regress', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/components/multiselect/example-index');
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
 
@@ -130,8 +151,6 @@ describe('Multiselect tests', () => {
   }
 
   it('Should search for Colorado', async () => {
-    await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/multiselect/example-index');
     const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
     await multiselectEl.click();
@@ -146,8 +165,6 @@ describe('Multiselect tests', () => {
   });
 
   it('Should do nothing on disabled', async () => {
-    await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/multiselect/example-index');
     const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).get(1);
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
 
@@ -156,4 +173,24 @@ describe('Multiselect tests', () => {
 
     expect(await element.all(by.className('is-disabled')).first().getAttribute('disabled')).toBeTruthy();
   });
+});
+
+describe('Multiselect example-clear-all tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/multiselect/example-clear-all');
+  });
+
+  if (browser.browserName.toLowerCase() !== 'safari') {
+    it('Should clear all', async () => {
+      const buttonEl = await element(by.id('btn-clear'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+
+      expect(await element(by.css('.dropdown span')).getText()).toEqual('Orange');
+      await buttonEl.click();
+      await browser.driver.sleep(1000);
+
+      expect(await element(by.css('.dropdown span')).getText()).toEqual('');
+    });
+  }
 });

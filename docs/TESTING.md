@@ -22,12 +22,12 @@ Targeting
       element(by.css('div[aria-controls=dropdown-list]'))
 
 It also may include integration testing which is the phase in software testing in which individual software modules are combined and tested as a group
-
   - Clicking on elements, looking on the page, accessibility
-  - Screen Shots
 
 
 It also maybe include regression testing, which is a type of software testing which verifies that software which was previously developed and tested still performs the same way after it was changed or interfaced with other software.
+  - Screen Shots
+    We are utilizing a plugin to aide with the collection, and analysis of screenshots. On Chrome only currently, we capture screenshots, and compare them to a baseline(most current and valid) screenshots
 
 ## Running and Debugging Tests
 Run just the api spec, for debugging with Chrome. For debugging use statements in the unit tests, and open Chrome DevTools
