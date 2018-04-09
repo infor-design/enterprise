@@ -1,0 +1,39 @@
+{
+ "name": "File Utilization (45 GB)",
+ "children": [
+  {
+   "name": "by type",
+   "children": [
+    {
+     "name": "type1",
+     "children": [
+      {"name": "JSON", "value": 1400}
+     ]
+    },
+    {
+     "name": "type2",
+     "children": [
+      {"name": "PDF", "value": 1200}
+     ]
+    },
+    {
+     "name": "type3",
+     "children": [
+      {"name": "BOD", "value": 500}
+     ]
+    },
+    {
+     "name": "type4",
+     "children": [
+      {"name": "TXT", "value": 400}
+     ]
+    },
+    {
+     "name": "type5",
+     "children": [
+      {"name": "CSV", "value": 2000}
+     ]
+    }
+   ]
+  }]
+}

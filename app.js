@@ -1972,8 +1972,12 @@ router.get('/api/jobs', (req, res, next) => {
   sendJSONFile('jobs', req, res, next);
 });
 
-router.get('/api/general/status-codes', (req, res, next) => {
+router.get('/api/status-codes', (req, res, next) => {
   sendJSONFile('status-codes', req, res, next);
+});
+
+router.get('/api/storage-usage', (req, res, next) => {
+  sendJSONFile('storage-usage', req, res, next);
 });
 
 module.exports = app;
