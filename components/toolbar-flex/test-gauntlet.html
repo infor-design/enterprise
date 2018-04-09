@@ -22,7 +22,8 @@
       </div>
 
       <div id="title-section" class="toolbar-section title">
-        <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
+        <h2 class="page-title">Incredibly Long Toolbar (Favor's Buttonset)</h2>
+        <span class="section-title hidden">Smaller Subsection Title with Details</span>
       </div>
 
       <div id="buttonset-section" class="toolbar-section buttonset">
@@ -81,7 +82,29 @@
 </div>
 
 <div class="row top-padding">
-  <div class="six columns" id="enabled-controls">
+  <div class="six columns">
+
+    <h3>Title/Eyebrow</h3>
+    <div class="field">
+      <label for="title-text">Title Text</label>
+      <input type="text" id="title-text" value="Incredibly Long Toolbar (Favor's Buttonset)"/>
+    </div>
+
+    <div class="field">
+      <input type="checkbox" class="checkbox" name="show-eyebrow-text" id="show-eyebrow-text"/>
+      <label for="show-eyebrow-text" class="radio-label">Show Eyebrow Text</label>
+    </div>
+
+    <div id="eyebrow-text-container" class="field">
+      <label for="eyebrow-text">Eyebrow Text</label>
+      <input type="text" id="eyebrow-text" value="Smaller Subsection Title with Details" disabled/>
+    </div>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="four columns" id="enabled-controls">
     <h3>Item Enabled</h3>
 
     <input type="checkbox" class="checkbox" name="btnIconHamburger-en" id="btnIconHamburger-en" checked/>
@@ -113,7 +136,7 @@
     <br />
     <br />
   </div>
-  <div class="six columns" id="visibility-controls">
+  <div class="four columns" id="visibility-controls">
     <h3>Item Visibility</h3>
 
     <input type="checkbox" class="checkbox" name="btnIconHamburger-vis" id="btnIconHamburger-vis" checked/>
@@ -145,6 +168,13 @@
     <br />
     <br />
   </div>
+  <div class="four columns" id="readOnly-controls">
+    <h3>Item readOnly</h3>
+
+    <input type="checkbox" class="checkbox" name="searchfield-ro" id="searchfield-ro"/>
+    <label for="searchfield-ro" class="radio-label">Searchfield</label>
+    <br />
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -153,6 +183,9 @@
   $('body').on('initialized', function() {
     // References to all items
     var toolbarAPI = $('#flex-toolbar').data('toolbar-flex');
+    var pageTitleSpan = $('#title-section .page-title');
+    var sectionTitleSpan = $('#title-section .section-title');
+
     var btnIconHamburgerAPI = $('#btnIconHamburger').data('toolbarflexitem');
     var btnTextAPI = $('#btnText').data('toolbarflexitem');
     var btnMenuAPI = $('#btnMenu').data('toolbarflexitem');
@@ -160,6 +193,11 @@
     var btnIconOneAPI = $('#btnIconOne').data('toolbarflexitem');
     var btnMoreActionsAPI = $('#btnMoreActions').data('toolbarflexitem');
     var searchfieldAPI = $('#searchfield').data('toolbarflexitem');
+
+    // Specific Form Controls
+    var inputTitleText = $('#title-text');
+    var inputEyebrowText = $('#eyebrow-text');
+    var chkShowEyebrow = $('#show-eyebrow-text');
 
     // Get the current toolbar state
     function getPageState() {
@@ -205,6 +243,19 @@
       $(item).prop('checked', true);
     }
 
+    // Toggles certain buttons and menu buttons to hide/show
+    function toggleReadOnly(item) {
+      var API = controlNameToToolbarItem(item);
+      if (API.readOnly) {
+        API.readOnly = false;
+        $(item).prop('checked', false);
+        return;
+      }
+
+      API.readOnly = true;
+      $(item).prop('checked', true);
+    }
+
     // ==================================================
     // Setup Change Events for Disabled/Visiblity
     $('#enabled-controls').on('change.test', 'input', function() {
@@ -216,5 +267,43 @@
       toggleVisibility(this);
       getPageState();
     });
+
+    $('#readOnly-controls').on('change.test', 'input', function() {
+      toggleReadOnly(this);
+      getPageState();
+    });
+
+    //====================================================
+    // Title/Eyebrow Text
+    function checkShowEyebrow() {
+      if (chkShowEyebrow.prop('checked') === false) {
+        sectionTitleSpan.addClass('hidden');
+        inputEyebrowText.prop('disabled', true);
+        $('#eyebrow-text-container').addClass('hidden');
+        return;
+      }
+
+      $('#eyebrow-text-container').removeClass('hidden');
+      sectionTitleSpan.removeClass('hidden');
+      inputEyebrowText.prop('disabled', false);
+    }
+
+    chkShowEyebrow.on('change.test', checkShowEyebrow);
+    checkShowEyebrow();
+
+    function updateText(field, textarea) {
+      textarea.html(field.val());
+    }
+
+    inputTitleText.on('change.test input.test', function() {
+      updateText($(this), pageTitleSpan);
+    });
+    updateText(inputTitleText, pageTitleSpan);
+
+    inputEyebrowText.on('change.test input.test', function() {
+      updateText($(this), sectionTitleSpan);
+    });
+    updateText(inputEyebrowText, sectionTitleSpan);
+
   });
 </script>

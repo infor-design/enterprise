@@ -38,7 +38,7 @@ const TOOLBAR_COMPONENT_APIS = {
  */
 const TOOLBAR_FLEX_ITEM_DEFAULTS = {
   disabled: false,
-  readonly: false,
+  readOnly: false,
   hidden: false,
   componentSettings: undefined
 };
@@ -257,8 +257,8 @@ ToolbarFlexItem.prototype = {
    */
   enable() {
     this.disabled = false;
-    if (this.hasReadonly) {
-      this.readonly = false;
+    if (this.hasReadOnly) {
+      this.readOnly = false;
     }
   },
 
@@ -276,46 +276,46 @@ ToolbarFlexItem.prototype = {
   set disabled(boolean) {
     if (boolean) {
       this.element.disabled = true;
-      this.element.readonly = false;
+      this.element.readOnly = false;
       return;
     }
     this.element.disabled = false;
   },
 
   /**
-   * @returns {boolean} whether or not `readonly` as a property exists on this HTMLElement type.
+   * @returns {boolean} whether or not `readOnly` as a property exists on this HTMLElement type.
    */
-  get hasReadonly() {
-    return 'readonly' in this.element;
+  get hasReadOnly() {
+    return 'readOnly' in this.element;
   },
 
   /**
-   * @returns {boolean} element's readonly prop
+   * @returns {boolean} element's readOnly prop
    */
-  get readonly() {
-    if (!this.hasReadonly) {
+  get readOnly() {
+    if (!this.hasReadOnly) {
       return false;
     }
-    return this.element.readonly;
+    return this.element.readOnly;
   },
 
   /**
-   * @param {boolean} boolean, if provided, sets a readonly state on the toolbar item, if possible.
+   * @param {boolean} boolean, if provided, sets a readOnly state on the toolbar item, if possible.
    * @returns {void}
    */
-  set readonly(boolean) {
-    if (!this.hasReadonly) {
+  set readOnly(boolean) {
+    if (!this.hasReadOnly) {
       return;
     }
 
     if (boolean) {
       this.disabled = false;
       this.element.disabled = false;
-      this.element.readonly = true;
+      this.element.readOnly = true;
       return;
     }
 
-    this.element.readonly = false;
+    this.element.readOnly = false;
   },
 
   /**
@@ -578,8 +578,8 @@ ToolbarFlexItem.prototype = {
       visible: this.visible
     };
 
-    if (this.hasReadonly) {
-      itemData.readonly = this.readonly;
+    if (this.hasReadOnly) {
+      itemData.readOnly = this.readOnly;
     }
 
     if (this.actionButtonLink) {
@@ -624,7 +624,7 @@ ToolbarFlexItem.prototype = {
     delete this.focusable;
     delete this.visible;
     delete this.disabled;
-    delete this.readonly;
+    delete this.readOnly;
     delete this.invoked;
   }
 
