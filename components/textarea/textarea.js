@@ -75,7 +75,7 @@ Textarea.prototype = {
     }
 
     this.handleEvents();
-    this.updateCounter(this);
+    this.updateCounter();
   },
 
   /**
@@ -177,7 +177,8 @@ Textarea.prototype = {
    * @private
    * @param {object} self The current object.
    */
-  updateCounter(self) {
+  updateCounter() {
+    const self = this;
     const value = self.element.val();
     const isExtraLinebreaks = this.isChrome || this.isSafari;
     const length = value.length + (isExtraLinebreaks ? this.countLinebreaks(value) : 0);
@@ -275,7 +276,7 @@ Textarea.prototype = {
     const self = this;
 
     this.element.on('keyup.textarea', (e) => {
-      self.updateCounter(self);
+      self.updateCounter();
 
       if (self.settings.autoGrow) {
         self.handleResize(self, e);
@@ -291,7 +292,7 @@ Textarea.prototype = {
       const max = self.element.attr('maxlength');
 
       if ([97, 99, 118, 120].indexOf(e.which) > -1 && (e.metaKey || e.ctrlKey)) {
-        self.updateCounter(self);
+        self.updateCounter();
         return;
       }
 
@@ -304,7 +305,7 @@ Textarea.prototype = {
       }
     })
       .on('blur.textarea', () => {
-        self.updateCounter(self);
+        self.updateCounter();
         if (self.counter) {
           self.counter.removeClass('focus');
         }
