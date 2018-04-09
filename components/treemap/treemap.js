@@ -71,7 +71,7 @@ Treemap.prototype = {
     /**
     * Fires when the chart is complete done rendering, for customization.
     * @event rendered
-    * @memberof Radar
+    * @memberof Treemap
     * @property {object} event - The jquery event object
     * @property {array} svg - The svg object.
     */
@@ -87,7 +87,6 @@ Treemap.prototype = {
    */
   build() {
     this.updateData(this.settings.dataset);
-    this.setInitialSelected();
     return this;
   },
 
@@ -115,7 +114,7 @@ Treemap.prototype = {
         .attr('class', 'chart-treemap-title')
         .text(data.name);
 
-      height -= 34;
+      height -= 35;
       margin.top -= 19;
     }
 
@@ -157,14 +156,6 @@ Treemap.prototype = {
         .attr('class', 'chart-treemap-percent')
         .text(d => d3.format(this.settings.labelFormatter)(d.value / this.total));
     }
-  },
-
-  /**
-   * Set the initially selected elements
-   * @private
-   */
-  setInitialSelected() {
-
   },
 
   /**
