@@ -1,5 +1,5 @@
 ---
-title: Toolbar  
+title: Toolbar
 description: This page describes Toolbar.
 ---
 
@@ -62,9 +62,9 @@ description: This page describes Toolbar.
 
 ## Keyboard Shortcuts
 
-- **Tab** moves focus to the first enabled toolbar item
-- **Tab Again** moves focus out of the toolbar
-- **Left and Right Arrow** keys navigate among the enabled items in the toolbar.
+- <kbd>Tab</kbd> moves focus to the first enabled toolbar item
+- <kbd>Tab Again</kbd> moves focus out of the toolbar
+- <kbd>Left and Right Arrow</kbd> keys navigate among the enabled items in the toolbar.
 
 ## States and Variations
 
