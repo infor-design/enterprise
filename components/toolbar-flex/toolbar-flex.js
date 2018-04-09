@@ -446,6 +446,16 @@ ToolbarFlex.prototype = {
   },
 
   /**
+   * Exports everything in the current `items` array as a Flex Toolbar object structure
+   * @returns {object} containing JSON-friendly Flex Toolbar data
+   */
+  toData() {
+    const data = {};
+    data.items = this.items.map(item => item.toData());
+    return data;
+  },
+
+  /**
    * @param {object} [settings] incoming settings
    * @returns {void}
    */

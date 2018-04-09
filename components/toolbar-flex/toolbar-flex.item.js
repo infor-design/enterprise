@@ -215,9 +215,19 @@ ToolbarFlexItem.prototype = {
    * @param {boolean} boolean whether or not the `hidden` class should be set.
    */
   set visible(boolean) {
+    // NOTE: Temporary until Searchfield handles this better internally.
+    const isSearchfield = this.type === 'searchfield' || this.type === 'toolbarsearchfield';
+
     if (boolean) {
+      if (isSearchfield) {
+        this.element.parentNode.classList.remove('hidden');
+      }
       this.element.classList.remove('hidden');
       return;
+    }
+
+    if (isSearchfield) {
+      this.element.parentNode.classList.add('hidden');
     }
     this.element.classList.add('hidden');
   },
@@ -513,6 +523,10 @@ ToolbarFlexItem.prototype = {
    * @returns {object} an object representation of this Toolbar Item as a Popupmenu Item.
    */
   toPopupmenuData() {
+    if (this.type === 'searchfield' || this.type === 'toolbarsearchfield' || this.type === 'actionbutton') {
+      return undefined;
+    }
+
     const itemData = {
       itemLink: this,
       disabled: this.disabled,
@@ -531,6 +545,40 @@ ToolbarFlexItem.prototype = {
     if (this.type === 'menubutton') {
       // TODO: Need to convert a Popupmenu's contents to the object format with this method
       itemData.submenu = this.componentAPI.toData({ noMenuWrap: true });
+    }
+
+    return itemData;
+  },
+
+  /**
+   * Converts the current state of this toolbar item to an object structure that can be
+   * easily passed back/forth and tested.
+   * @returns {object} containing the current Toolbar Item state.
+   */
+  toData() {
+    const itemData = {
+      type: this.type,
+      disabled: this.disabled,
+      focused: this.focused,
+      selected: this.selected,
+      overflowed: this.overflowed,
+      visible: this.visible
+    };
+
+    if (this.hasReadonly) {
+      itemData.readonly = this.readonly;
+    }
+
+    if (this.actionButtonLink) {
+      itemData.actionButtonLink = this.actionButtonLink;
+    }
+
+    if (this.componentAPI) {
+      itemData.componentAPI = this.componentAPI;
+    }
+
+    if (this.type === 'actionbutton') {
+      itemData.predefinedItems = this.predefinedItems;
     }
 
     return itemData;

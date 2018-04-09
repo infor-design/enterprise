@@ -1,0 +1,220 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Flex Toolbar Gauntlet</h2>
+    <p>JIRA: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-7475" target="_blank">SOHO-7475</a></p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <!-- Begin Flex Toolbar -->
+    <div id="flex-toolbar" class="flex-toolbar">
+      <div id="front-button-section" class="toolbar-section">
+        <button id="btnIconHamburger" class="btn-icon application-menu-trigger" type="button">
+          <span class="audible">Show navigation</span>
+          <span class="icon app-header">
+            <span class="one"></span>
+            <span class="two"></span>
+            <span class="three"></span>
+          </span>
+        </button>
+      </div>
+
+      <div id="title-section" class="toolbar-section title">
+        <h2>Incredibly Long Toolbar (Favor's Buttonset)</h2>
+      </div>
+
+      <div id="buttonset-section" class="toolbar-section buttonset">
+        <button id="btnText" class="btn">
+          <span>Text Button</span>
+        </button>
+
+        <button id="btnMenu" class="btn-menu">
+          <span>Menu Button</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Item One</a></li>
+          <li><a href="#">Item Two</a></li>
+          <li><a href="#">Item Three</a></li>
+        </ul>
+
+        <button id="btnIconOne" class="btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span class="audible">Settings</span>
+        </button>
+
+        <button id="btnIconTwo" class="btn-icon">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Trash</span>
+        </button>
+      </div>
+
+      <div id="searchfield-section" class="toolbar-section search">
+        <div class="searchfield-wrapper">
+          <label for="searchfield" class="audible">Toolbar Search</label>
+          <input id="searchfield" class="searchfield" placeholder="Search..."/>
+        </div>
+      </div>
+
+      <div id="moreactions-section" class="toolbar-section more">
+        <button id="btnMoreActions" class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Pre-defined Item #1</a></li>
+          <li><a href="#">Pre-defined Item #2</a></li>
+          <li><a href="#">Pre-defined Item #3</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- End Flex Toolbar -->
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns" id="enabled-controls">
+    <h3>Item Enabled</h3>
+
+    <input type="checkbox" class="checkbox" name="btnIconHamburger-en" id="btnIconHamburger-en" checked/>
+    <label for="btnIconHamburger-en" class="radio-label">App Menu (Hamburger) Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnText-en" id="btnText-en" checked/>
+    <label for="btnText-en" class="radio-label">Text Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnMenu-en" id="btnMenu-en" checked/>
+    <label for="btnMenu-en" class="radio-label">Menu Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnIconOne-en" id="btnIconOne-en" checked/>
+    <label for="btnIconOne-en" class="radio-label">Icon Button (Settings)</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnIconTwo-en" id="btnIconTwo-en" checked/>
+    <label for="btnIconTwo-en" class="radio-label">Icon Button (Trash)</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="searchfield-en" id="searchfield-en" checked/>
+    <label for="searchfield-en" class="radio-label">Searchfield</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnMoreActions-en" id="btnMoreActions-en" checked/>
+    <label for="btnMoreActions-en" class="radio-label">More Actions Button</label>
+    <br />
+    <br />
+  </div>
+  <div class="six columns" id="visibility-controls">
+    <h3>Item Visibility</h3>
+
+    <input type="checkbox" class="checkbox" name="btnIconHamburger-vis" id="btnIconHamburger-vis" checked/>
+    <label for="btnIconHamburger-vis" class="radio-label">App Menu (Hamburger) Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnText-vis" id="btnText-vis" checked/>
+    <label for="btnText-vis" class="radio-label">Text Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnMenu-vis" id="btnMenu-vis" checked/>
+    <label for="btnMenu-vis" class="radio-label">Menu Button</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnIconOne-vis" id="btnIconOne-vis" checked/>
+    <label for="btnIconOne-vis" class="radio-label">Icon Button (Settings)</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnIconTwo-vis" id="btnIconTwo-vis" checked/>
+    <label for="btnIconTwo-vis" class="radio-label">Icon Button (Trash)</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="searchfield-vis" id="searchfield-vis" checked/>
+    <label for="searchfield-vis" class="radio-label">Searchfield</label>
+    <br />
+
+    <input type="checkbox" class="checkbox" name="btnMoreActions-vis" id="btnMoreActions-vis" checked/>
+    <label for="btnMoreActions-vis" class="radio-label">More Actions Button</label>
+    <br />
+    <br />
+  </div>
+</div>
+
+<script type="text/javascript">
+  var STATE = {};
+
+  $('body').on('initialized', function() {
+    // References to all items
+    var toolbarAPI = $('#flex-toolbar').data('toolbar-flex');
+    var btnIconHamburgerAPI = $('#btnIconHamburger').data('toolbarflexitem');
+    var btnTextAPI = $('#btnText').data('toolbarflexitem');
+    var btnMenuAPI = $('#btnMenu').data('toolbarflexitem');
+    var btnIconTwoAPI = $('#btnIconTwo').data('toolbarflexitem');
+    var btnIconOneAPI = $('#btnIconOne').data('toolbarflexitem');
+    var btnMoreActionsAPI = $('#btnMoreActions').data('toolbarflexitem');
+    var searchfieldAPI = $('#searchfield').data('toolbarflexitem');
+
+    // Get the current toolbar state
+    function getPageState() {
+      STATE = toolbarAPI.toData();
+      if (console) {
+        console.dir(STATE);
+      }
+    }
+    getPageState();
+
+    // Gets an appropriate toolbar item reference from an activated sandbox toggle button.
+    function controlNameToToolbarItem(toggleBtn) {
+      var ctrlId = toggleBtn.name;
+      var ctrlIdHasMeta = ctrlId.indexOf('-') > -1;
+      ctrlId = ctrlId.substring(0, (ctrlIdHasMeta ? ctrlId.indexOf('-') : ctrlId.length));
+
+      return $('#' + ctrlId).data('toolbarflexitem');
+    }
+
+    // Toggles certain buttons and menu items to be disabled
+    function toggleDisabled(item) {
+      var API = controlNameToToolbarItem(item);
+      if (API.disabled) {
+        API.disabled = false;
+        $(item).prop('checked', true);
+        return;
+      }
+
+      API.disabled = true;
+      $(item).prop('checked', false);
+    }
+
+    // Toggles certain buttons and menu buttons to hide/show
+    function toggleVisibility(item) {
+      var API = controlNameToToolbarItem(item);
+      if (API.visible) {
+        API.visible = false;
+        $(item).prop('checked', false);
+        return;
+      }
+
+      API.visible = true;
+      $(item).prop('checked', true);
+    }
+
+    // ==================================================
+    // Setup Change Events for Disabled/Visiblity
+    $('#enabled-controls').on('change.test', 'input', function() {
+      toggleDisabled(this);
+      getPageState();
+    });
+
+    $('#visibility-controls').on('change.test', 'input', function() {
+      toggleVisibility(this);
+      getPageState();
+    });
+  });
+</script>
