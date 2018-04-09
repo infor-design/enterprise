@@ -11,7 +11,7 @@ demo:
 
 ## Behavior Guidelines
 
-The Composite form pattern combines a summary area with a responsive [Tabs Component]( ../components/tabs/index).  Each tab contains part of a complex form.
+The Composite form pattern combines a summary area with a responsive [Tabs Component](./tabs).  Each tab contains part of a complex form.
 
 ## Code Example
 

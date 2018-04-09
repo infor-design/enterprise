@@ -1,5 +1,5 @@
 ---
-title: Spinbox Component 
+title: Spinbox Component
 description: This page describes Spinbox Component .
 ---
 
@@ -44,11 +44,11 @@ Touch and mobile keyboard are supported.
 
 ## Keyboard Shortcuts
 
-- **Right and Up Arrows** increase the value.
-- **Left and Down Arrows** decrease the value.
-- **Home and End key** move to the maximum or minimum values
-- **Optional Page Up and Page Down** incrementally increase or decrease the value
-- **Tab key** moves into and out of the widget
+- <kbd>Right and Up Arrows</kbd> increase the value.
+- <kbd>Left and Down Arrows</kbd> decrease the value.
+- <kbd>Home and End key</kbd> move to the maximum or minimum values
+- Optional <kbd>Page Up / Page Down</kbd> incrementally increase or decrease the value
+- <kbd>Tab key</kbd> moves into and out of the widget
 
 ## States and Variations
 

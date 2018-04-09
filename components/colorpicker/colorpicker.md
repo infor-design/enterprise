@@ -1,5 +1,5 @@
 ---
-title: Color Picker  
+title: Color Picker
 description: This page describes Color Picker.
 ---
 
@@ -33,11 +33,11 @@ The color picker is made from a text input with class="colorpicker". It can be i
 
 ## Keyboard Shortcuts
 
--   **Tab** moves focus into the edit field.
--   **Down Arrow** opens the color list and moves focus to the selected color. (If nothing is selected, then focus moves to the first color in the list).
--   **Up and Down Arrow** moves focus up and down the list of colors.
--   **Enter** selects the color on the list and updates the combo then closes the drop down and returns to the edit field.
--   **Escape key** closes the list, returns focus to the edit field, and does not change the current selection.
+- <kbd>Tab</kbd> moves focus into the edit field.
+- <kbd>Down Arrow</kbd> opens the color list and moves focus to the selected color. (If nothing is selected, then focus moves to the first color in the list).
+- <kbd>Up and Down Arrow</kbd> moves focus up and down the list of colors.
+- <kbd>Enter</kbd> selects the color on the list and updates the combo then closes the drop down and returns to the edit field.
+- <kbd>Escape key</kbd> closes the list, returns focus to the edit field, and does not change the current selection.
 
 ## States and Variations
 

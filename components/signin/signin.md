@@ -5,7 +5,7 @@ demo:
   pages:
   - name: Main Example
     slug: example-index
-  - name: "Remember Me" Example
+  - name: Remember Me Example
     slug: example-remember-me
   - name: Customer Designed Sign in Page
     slug: test-custom
@@ -77,8 +77,8 @@ Displays one or more selectable values. A user can select exactly one value at a
 
 ## Keyboard Shortcuts
 
--  **Tab** Between Fields
--  **Enter** To submit the form and fire the signin process.
+- <kbd>Tab</kbd> Between Fields
+- <kbd>Enter</kbd> To submit the form and fire the signin process.
 
 ## States and Variations
 

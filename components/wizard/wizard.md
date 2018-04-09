@@ -1,5 +1,5 @@
 ---
-title: Wizard Component 
+title: Wizard Component
 description: This page describes Wizard Component .
 ---
 
@@ -39,9 +39,9 @@ An addition wizard can be used for header navigation. This is a full page patter
 
 ## Keyboard Shortcuts
 
--   Use **Tab** to navigate forward among the Wizard's Ticks
--   Use **Shift + Tab** to navigate backwards
--   Use **Enter** or **Space** to active a link that has focus
+- <kbd>Tab</kbd> to navigate forward among the Wizard's Ticks
+- Use <kbd>Shift + Tab</kbd>    to navigate backwards
+- Use <kbd>Enter</kbd> or <kbd>Space</kbd>    to active a link that has focus
 
 ## States and Variations
 

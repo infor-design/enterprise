@@ -1,5 +1,5 @@
 ---
-title: Slider Component 
+title: Slider Component
 description: This page describes Slider Component .
 ---
 
@@ -93,21 +93,21 @@ The Slider is fairly complex to make accessible. But generally this can be accom
 
 Keyboard functionality of the Slider control differs based on whether or not the Slider is single-thumbed (one handle), or a "range" (multi-handle). The keyboard applies to all types of Sliders in these ways:
 
-- **Right and Up Arrows** increase the value of the Slider.
-- **Left and Down Arrows** decrease the value of the Slider.
-- **Home and End** move to the minimum and maximum values of the Slider.
-- **Tab** into and out of the Slider handle.
-- **Page Up and Page Down** optionally increment or decrement the Slider by a given amount. Normally it will change by 10% of the total possible value of the Slider, or it will adjust to the next highest/lowest tick.
-- **Note:** Focus is placed on the Slider. (The visual object that the mouse/touch user would move, also known as the thumb.)
-- **Note:** Localization for right-to-left languages may wish to reverse the left and right arrows.
+- <kbd>Right and Up Arrows</kbd> increase the value of the Slider.
+- <kbd>Left and Down Arrows</kbd> decrease the value of the Slider.
+- <kbd>Home and End</kbd> move to the minimum and maximum values of the Slider.
+- <kbd>Tab</kbd> into and out of the Slider handle.
+- <kbd>Page Up and Page Down</kbd> optionally increment or decrement the Slider by a given amount. Normally it will change by 10% of the total possible value of the Slider, or it will adjust to the next highest/lowest tick.
+- Note: Focus is placed on the Slider. (The visual object that the mouse/touch user would move, also known as the thumb.)
+- Note: Localization for right-to-left languages may wish to reverse the left and right arrows.
 
 In cases of a range (two-handled) Slider, the keyboard functionality changes in the following ways:
 
-- On the lower-value handle, **Right and Up Arrows** will only increase the value of the slider up to the constraint of the higher-value handle. The lower handle can never be a higher value than the upper handle.
-- On the higher-value handle, the **Left and Down Arrows** will only decrease the value of the slider down to the constraint of the lower-value handle. The higher handle can never be a lower value than the lower handle.
-- **Home and End** have the same effect of being constrained by other handles.
-- **Tab** will initially focus on the first handle. Pressing Tab again will focus the next handle. Pressing Tab a third time moves to the next focusable object in the document.
-- **Shift+Tab** has the reverse effect.
+- On the lower-value handle, <kbd>Right and Up Arrows</kbd>  will only increase the value of the slider up to the constraint of the higher-value handle. The lower handle can never be a higher value than the upper handle.
+- On the higher-value handle, the <kbd>Left and Down Arrows</kbd>  will only decrease the value of the slider down to the constraint of the lower-value handle. The higher handle can never be a lower value than the lower handle.
+- <kbd>Home and End</kbd>  have the same effect of being constrained by other handles.
+- <kbd>Tab</kbd>  will initially focus on the first handle. Pressing Tab again will focus the next handle. Pressing Tab a third time moves to the next focusable object in the document.
+- <kbd>Shift+Tab</kbd>  has the reverse effect.
 
 ## States and Variations
 

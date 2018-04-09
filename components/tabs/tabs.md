@@ -1,5 +1,5 @@
 ---
-title: Tabs Component 
+title: Tabs Component
 description: This page describes Tabs Component .
 ---
 
@@ -150,7 +150,7 @@ It's possible to create a Tab that contains a Dropdown menu. In the case of a Dr
 
 ## Keyboard Shortcuts
 
-### **Down Arrow/Right Arrow**
+<kbd>Down Arrow/Right Arrow</kbd>
 
 -   When focus is on the Tab, a press of down/right will move focus to the next logical Tab.
 -   When focus reaches the last Tab, further key presses will wrap to the first Tab in the order.
@@ -159,32 +159,32 @@ It's possible to create a Tab that contains a Dropdown menu. In the case of a Dr
   -   Subsequent down/right presses will navigate through the menu options
   -   On the last menu option, pressing down/right will close the menu and focus the first Tab in the order
 
-### **Up Arrow/Left Arrow** is generally the reverse of Down/Right arrows
+<kbd>Up Arrow/Left Arrow</kbd> is generally the reverse of Down/Right arrows
 
 -   When focus reaches the first tab, further key presses will either:
   -   Wrap to the last available Tab in the order
   -   Select the "More..." button if responsive design causes the tabs to collapse. This will open the menu and focus the last option in the menu
 -   If the "More..." button is open and the top option is focused, pressing up/left will close the menu and focus the last available tab in the order
 
-### **Enter/Space**
+<kbd>Enter/Space</kbd>
 
 -   Causes the currently focused Tab or "More..." menu option to be selected, causing its corresponding panel to become visible.
 
-### **Tab**
+<kbd>Tab</kbd>
 
 -   When focus is on a Tab, a TAB keystroke will move focus in the following manner:
   -   If interactive glyphs or menus are present in the Accordion Header / Tab, focus will move to each of these glyphs or menus in order.
   -   When the corresponding Tab panel is expanded (its aria-expanded state is 'true'), then focus moves to the first focusable element in the panel.
 
-### **Shift+Tab**
+<kbd>Shift+Tab</kbd>
 
 Shift + Tab works similarly to the strategy for the Tab key, but moves focus backwards instead of forwards.
 
-**NOTE:** For tabs to work correctly on mac you need to go to apple \>\> keyboard shortcuts, then click the checkbox at the bottom of the page at the bottom that says full keyboard access - all controls. This way the system can tab into any elements (this is a mac setting).
+NOTE: For tabs to work correctly on mac you need to go to apple \>\> keyboard shortcuts, then click the checkbox at the bottom of the page at the bottom that says full keyboard access - all controls. This way the system can tab into any elements (this is a mac setting).
 
 If using Safari on a Mac, you also need to go into Safari \>\> Preferences... then click the checkbox near the top that says Press Tab to Highlight Each Option on a webpage. This allows hyperlinks to be focusable by default (without having to press Option + Tab).
 
-### ** Alt+backspace / Alt+Delete**
+<kbd>Alt+backspace / Alt+Delete</kbd>
 
 -  If the tab is dismissible that tab will be closed. We use the alt combination because backspace can be used to go back a page.
 
