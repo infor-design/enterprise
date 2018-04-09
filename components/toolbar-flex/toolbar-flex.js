@@ -349,6 +349,9 @@ ToolbarFlex.prototype = {
       return;
     }
 
+    // reference the original direction for later, if placement fails.
+    const originalDirection = 0 + direction;
+
     if (currentIndex === undefined) {
       currentIndex = this.items.indexOf(this.focusedItem);
     }
@@ -376,7 +379,7 @@ ToolbarFlex.prototype = {
 
     const targetItem = this.items[currentIndex];
     if (targetItem.focusable === false) {
-      this.navigate(direction > 0 ? 1 : -1, currentIndex, doSetFocus);
+      this.navigate(originalDirection > 0 ? 1 : -1, currentIndex, doSetFocus);
       return;
     }
 
