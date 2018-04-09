@@ -511,6 +511,64 @@ const editors = {
     this.init();
   },
 
+  Fileupload(row, cell, value, container, column, event, grid) {
+    const id = $.fn.uniqueId(`fileupload-${row}-${cell}-`);
+    this.name = 'fileupload';
+    this.originalValue = value;
+    this.useValue = true; // use the data set value not cell value
+
+    this.init = function () {
+      this.input = $(`<input id="${id}" name="${id}" class="fileupload" value="${value}" type="file" />`).appendTo(container);
+      this.input.fileupload(column.editorOptions);
+    };
+
+    this.val = function (v) {
+      return v ? this.input.attr('value', v) : this.input.val();
+    };
+
+    this.focus = () => {
+      const td = container.closest('td');
+      td.addClass('is-fileupload').find('label').addClass('audible');
+      this.api = this.input.data('fileupload');
+
+      // Using keyboard
+      if (event.type === 'keydown') {
+        td.on('keydown.editorfileupload', (e) => {
+          if (e.keyCode === 13 && grid.quickEditMode) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+      }
+
+      // Check if isClick or cell touch
+      if (event.type === 'click') {
+        if ($(event.target).is('svg') && this.api) {
+          this.api.fileInput.trigger('click');
+        }
+      }
+
+      // Update on change from lookup
+      this.input.on('change', () => {
+        grid.commitCellEdit(this.input);
+        setTimeout(() => {
+          container.parent().focus();
+          grid.setNextActiveCell(event);
+          grid.quickEditMode = false;
+        }, 1);
+      });
+    };
+
+    this.destroy = () => {
+      grid.quickEditMode = false;
+      if (this.api) {
+        this.api.destroy();
+      }
+    };
+
+    this.init();
+  },
+
   Time(row, cell, value, container, column, event, grid) {
     this.name = 'time';
     this.originalValue = value;

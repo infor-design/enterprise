@@ -520,6 +520,12 @@ const formatters = {
     return html;
   },
 
+  Fileupload(row, cell, value, col) {
+    const html = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    return col.inlineEditor ?
+      html : `<span class="trigger">${html}</span>${$.createIcon({ icon: 'folder', classes: ['icon-fileupload'] })}`;
+  },
+
   Spinbox(row, cell, value, col) {
     let html = ((value === null || value === undefined || value === '') ? '' : value.toString());
 
