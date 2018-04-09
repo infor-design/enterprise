@@ -935,13 +935,14 @@ Editor.prototype = {
   },
 
   updateCurrentLink(alink) {
-    const emUrl = $(`[name="em-url${this.id}"]`).val();
-    const emClass = $(`[name="em-class${this.id}"]`).val();
-    const emTarget = $(`[name="em-target${this.id}"]`).val();
-    const emIsClickable = this.settings.anchor.showIsClickable ? $(`[name="em-isclickable${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
+    const emUrl = $(`[name="em-url-${this.id}"]`).val();
+    const emClass = $(`[name="em-class-${this.id}"]`).val();
+    const emTarget = $(`[name="em-target-${this.id}"]`).val();
+    const emIsClickable = this.settings.anchor.showIsClickable ? $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    alink.attr('href', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl));
+    alink.attr('href', this.fixLinkFormat((emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl)));
     alink.attr('class', (emClass && $.trim(emClass).length ? emClass : this.settings.anchor.defaultClass));
+    alink.attr('data-url', (emUrl && $.trim(emUrl).length ? emUrl : this.settings.anchor.defaultUrl).replace('http://', ''));
 
     if (emIsClickable) {
       alink.attr('contenteditable', false);
@@ -961,7 +962,8 @@ Editor.prototype = {
     this.restoreSelection(this.savedSelection);
 
     // Fix and Format the Link
-    input.val(this.fixLinkFormat(input.val()));
+    const originalValue = input[0].value;
+    input.val(this.fixLinkFormat(input[0].value));
 
     // Set selection url/class/target for Link
     this.settings.anchor.url = input.val();
@@ -970,7 +972,7 @@ Editor.prototype = {
     this.settings.anchor.isClickable = this.settings.anchor.showIsClickable ?
       $(`[name="em-isclickable-${this.id}"]`).is(':checked') : this.settings.anchor.isClickable;
 
-    const alink = $(`<a href="${input.val()}">${input.val()}</a>`);
+    const alink = $(`<a data-url="${originalValue}" href="${input.val()}">${input.val()}</a>`);
 
     if (this.settings.anchor.class && $.trim(this.settings.anchor.class).length) {
       alink.addClass(this.settings.anchor.class);
@@ -989,7 +991,9 @@ Editor.prototype = {
     } else {
       let sel;
       let range;
+      let rangeChildren;
       let rangeStr;
+      let rangeImg;
 
       if (!this.selection.isCollapsed || this.isIe11) {
         // get example from: http://jsfiddle.net/jwvha/1/
@@ -1003,6 +1007,20 @@ Editor.prototype = {
             if (rangeStr.trim() !== '') {
               alink.html(rangeStr);
             }
+
+            rangeChildren = range.commonAncestorContainer.children;
+            const len = rangeChildren ? rangeChildren.length : 0;
+            for (let i = 0; i < len; i++) {
+              const rangeChild = rangeChildren[i];
+
+              if (rangeChild instanceof HTMLImageElement) {
+                rangeImg = rangeChild;
+              }
+            }
+            if (rangeImg) {
+              alink.html(rangeImg.outerHTML);
+            }
+
             range.deleteContents();
 
             // Range.createContextualFragment() would be useful here but is
@@ -1615,7 +1633,7 @@ Editor.prototype = {
 
     if (self.settings.onLinkClick) {
       editorContainer.on('click.editorlinks', 'a', (e) => {
-        self.settings.onLinkClick(e, this);
+        self.settings.onLinkClick(e, { elem: this, url: e.currentTarget.getAttribute('data-url') });
         e.preventDefault();
         e.stopImmediatePropagation();
         e.stopPropagation();

@@ -471,7 +471,7 @@ a.btn-menu {
 // Specific Icon Button styles
 .btn-icon {
   > span:not(.icon) {
-    visibility: hidden;
+    text-indent: -99999px;
   }
 
   .icon.app-header {

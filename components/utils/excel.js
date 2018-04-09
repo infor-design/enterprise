@@ -20,7 +20,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
       const el = this;
       const elm = $(this);
 
-      if (elm.is('.is-hidden')) {
+      if (elm.is('.is-hidden, .datagrid-expandable-row')) {
         elm.remove();
         return;
       }
@@ -67,7 +67,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
 
     // CHECK EXPORTABLE
     const nonExportables = [];
-    $.each($('th').not('.is-hidden'), (index, item) => {
+    $.each($('th', self.headerRow).not('.is-hidden'), (index, item) => {
       if ($(item)[0].getAttribute('data-exportable') && $(item)[0].getAttribute('data-exportable') === 'no') {
         nonExportables.push(index);
       }
@@ -170,7 +170,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
       const el = this;
       const elm = $(this);
 
-      if (elm.is('.is-hidden')) {
+      if (elm.is('.is-hidden, .datagrid-expandable-row')) {
         elm.remove();
         return;
       }

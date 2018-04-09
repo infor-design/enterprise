@@ -1,5 +1,7 @@
-
-# Color Picker  [Learn More](#)
+---
+title: Color Picker  
+description: This page describes Color Picker.
+---
 
 ## Configuration Options
 
@@ -9,20 +11,15 @@
 4. Test States [View Test]( ../components/colorpicker/test-states)
 5. Test it works on a Modal [View Test]( ../components/colorpicker/test-modal)
 
-{{api-details}}
-
 ## Code Example
 
 The color picker is made from a text input with class="colorpicker". It can be initialized manually or via the page initializer. Once initialized it functions similar to a dropdown except that the list is showing colors in a pallette / swatch. A tooltip shows the hex code to be inserted. After selecting the hex code is inserted.
 
 ```html
-
 <div class="field">
   <label for="background-color">Color Picker</label>
   <input class="colorpicker" value="#ffa800" id="background-color" type="text" />
 </div>
-
-
 ```
 
 ## Behavior Guidelines

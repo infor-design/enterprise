@@ -100,7 +100,7 @@ charts.hideTooltip = function hideTooltip() {
  * @returns {void}
  */
 charts.removeTooltip = function removeTooltip() {
-  if (this.tooltip) {
+  if (this.tooltip && this.tooltip.remove) {
     this.tooltip.remove();
   }
 };

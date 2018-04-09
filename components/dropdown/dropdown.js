@@ -86,6 +86,9 @@ Dropdown.prototype = {
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
 
+    this.timer = null;
+    this.filterTerm = '';
+
     if (orgId === undefined) {
       orgId = this.element.uniqueId('dropdown');
       this.element.attr('id', orgId);
@@ -1176,9 +1179,6 @@ Dropdown.prototype = {
     return true;  // eslint-disable-line
   },
 
-  timer: null,
-  filterTerm: '',
-
   /**
    * Handle the typeahead.
    * @private
@@ -1358,6 +1358,23 @@ Dropdown.prototype = {
       const data = $(this).data();
       if (data.dropdown) {
         data.dropdown.closeList('cancel');
+      }
+    });
+
+    // Close any open popup menus
+    const otherMenus = $('.popupmenu.is-open').filter(function () {
+      return $(this).parents('.popupmenu').length === 0;
+    }); // close others.
+
+    otherMenus.each(function () {
+      const trigger = $(this).data('trigger');
+      if (!trigger || !trigger.length) {
+        return;
+      }
+
+      const api = $(this).data('trigger').data('popupmenu');
+      if (api && typeof api.close === 'function') {
+        api.close();
       }
     });
 

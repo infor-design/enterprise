@@ -1,11 +1,11 @@
-
-# Place  [Learn More](#)
+---
+title: Place
+description: This page describes Place.
+---
 
 ## Configuration Options
 
 1. Test List [View Example]( ../components/place/list)
-
-{{api-details}}
 
 
 ## Description
@@ -18,8 +18,5 @@ Docs to follow
 This example shows how to invoke the place command.
 
 ```javascript
-
 $('body').place();
-
-
 ```

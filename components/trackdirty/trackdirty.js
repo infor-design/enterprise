@@ -168,6 +168,9 @@ Trackdirty.prototype = {
           if (input.is('[type="checkbox"]')) {
             d.rect = this.getAbsolutePosition(label);
             d.style = ` style="left:${d.rect.left}px; top:${d.rect.top}px;"`;
+          } else if (input.is('.colorpicker') && !Locale.isRTL()) {
+            d.rect = this.getAbsolutePosition(input);
+            d.style = ` style="left:${d.rect.left}px; top:${d.rect.top}px;"`;
           }
           d.icon = `<span class="icon-dirty${d.class}"${d.style}></span>`;
           d.msg = Locale.translate('MsgDirty') || '';

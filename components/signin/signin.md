@@ -1,7 +1,9 @@
-# Signin Component [Learn More](#)
+---
+title: Signin Component
+description: This page describes Signin Component .
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
+---
 
-## Configuration Options
-
-1. Main Example [View Example](../components/signin/example-index)
-
-{{api-details}}

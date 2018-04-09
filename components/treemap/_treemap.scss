@@ -1,0 +1,42 @@
+// Tree Map Visualization
+//==================================================//
+
+.chart-treemap {
+
+  .chart-treemap-node {
+    @include font-size(12);
+    color: $white;
+    font-weight: lighter;
+    overflow: hidden;
+    padding-top: 8px;
+    position: absolute;
+    text-indent: 8px;
+  }
+
+  .chart-treemap-percent {
+    @include font-size(16);
+    display: block;
+    padding-top: 2px;
+  }
+
+  .chart-treemap-title {
+    @include font-size(16);
+    background-color: $treemap-title-bg-color;
+    color: $treemap-title-color;
+    height: 34px;
+    line-height: 34px;
+    margin: 20px 20px 0;
+    text-align: center;
+  }
+
+}
+
+.chart-treemap-container {
+  height: 85%;
+}
+
+.chart-treemap-footer {
+  height: 60px;
+  margin-top: -28px;
+  overflow: hidden;
+}

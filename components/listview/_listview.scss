@@ -790,6 +790,11 @@ html[dir='rtl'] {
       padding-left: inherit;
       padding-right: 43px;
 
+      .listview-selection-checkbox {
+        left: auto;
+        right: 10px;
+      }
+
       &.is-selected::after {
         left: auto;
         right: 19px;
