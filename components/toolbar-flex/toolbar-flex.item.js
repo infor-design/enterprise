@@ -326,6 +326,20 @@ ToolbarFlexItem.prototype = {
         }
 
         e.stopPropagation();
+
+        if (this.type === 'actionbutton') {
+          const li = $(anchor).parent();
+          const itemLink = li.data('originalButton');
+          const itemLinkAPI = $(itemLink).data('toolbarflexitem');
+
+          // If this item is linked to another toolbar item, trigger its `selected` event instead
+          // of the one on the item in this menu.
+          if (itemLinkAPI) {
+            itemLinkAPI.selected = true;
+            return;
+          }
+        }
+
         self.selectedAnchor = anchor;
         self.selected = true;
       });
