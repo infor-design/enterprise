@@ -87,34 +87,41 @@ function ToolbarFlexItem(element, settings) {
 
 ToolbarFlexItem.prototype = {
 
+  /**
+   * @property {string} type used to determine the type of toolbar item.  Certain toolbar item types
+   *  have certain special properties.
+   * @property {HTMLElement} section the parent toolbar section that this item is housed in.
+   * @property {HTMLElement} toolbar the parent toolbar's base element.
+   */
   type: undefined,
 
   /**
    * @private
+   * @returns {void}
    */
   init() {
     this.render();
     this.handleEvents();
   },
 
+  /**
+   * @returns {boolean} whether or not the toolbar item is currently able to be focused, based
+   *  on its `disabled`, `overflowed`, and `visible` properties.
+   */
   get focusable() {
     if (this.disabled === true) {
       return false;
     }
+    if (this.overflowed === true) {
+      return false;
+    }
+
     return this.visible;
   },
 
-  set focusable(boolean) {
-    if (boolean === true) {
-      if (this.disabled) {
-        this.disabled = false;
-      }
-      if (!this.visible) {
-        this.visible = true;
-      }
-    }
-  },
-
+  /**
+   * @returns {boolean} whether or not the toolbar item is the one that will currently be focused
+   */
   get focused() {
     return this.element.tabIndex === 0;
   },
@@ -131,6 +138,9 @@ ToolbarFlexItem.prototype = {
     this.element.tabIndex = -1;
   },
 
+  /**
+   * @returns {boolean} whether or not the Toolbar item is selected.
+   */
   get selected() {
     return this.trueSelected;
   },
@@ -156,7 +166,7 @@ ToolbarFlexItem.prototype = {
 
   /**
    * Retrieves an item's main Soho Component instance.
-   * @returns {object|undefined} Soho Component instance, if applicable
+   * @returns {object} Soho Component instance, if applicable
    */
   get componentAPI() {
     const $element = $(this.element);
@@ -198,6 +208,7 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
+   * Causes the toolbar item to become visible.
    * @returns {void}
    */
   show() {
@@ -205,6 +216,7 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
+   * Causes the toolbar item to become hidden.
    * @returns {void}
    */
   hide() {
@@ -212,6 +224,7 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
+   * Toggles the Toolbar item's visiblity.
    * @param {boolean} boolean whether or not the `hidden` class should be set.
    */
   set visible(boolean) {
@@ -518,9 +531,9 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
-   * Converts the contents of this Toolbar Item to a data structure that's compatible with a Popupmenu component.
+   * Converts the contents of the Toolbar Item to a data structure that's compatible with a Popupmenu component.
    * This data structure can be used to populate the contents of a "More Actions" menu.
-   * @returns {object} an object representation of this Toolbar Item as a Popupmenu Item.
+   * @returns {object} an object representation of the Toolbar Item as a Popupmenu Item.
    */
   toPopupmenuData() {
     if (this.type === 'searchfield' || this.type === 'toolbarsearchfield' || this.type === 'actionbutton') {
@@ -551,7 +564,7 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
-   * Converts the current state of this toolbar item to an object structure that can be
+   * Converts the current state of the toolbar item to an object structure that can be
    * easily passed back/forth and tested.
    * @returns {object} containing the current Toolbar Item state.
    */
