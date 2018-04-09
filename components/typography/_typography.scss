@@ -325,6 +325,21 @@ small,
   }
 }
 
+.field-flex-sm {
+  align-items: center;
+  display: flex;
+  overflow: auto;
+
+  .data-description {
+    flex-basis: auto;
+    white-space: nowrap;
+  }
+
+  input {
+    min-width: 25%;
+  }
+}
+
 // Left aligned fields
 .field.label-left {
   display: flex;
