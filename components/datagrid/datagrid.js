@@ -5254,6 +5254,8 @@ Datagrid.prototype = {
     for (let i = indexes[0]; i <= indexes[1]; i++) {
       this.selectRow(i);
     }
+
+    this.displayCounts();
   },
 
   /**
