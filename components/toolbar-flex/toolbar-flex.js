@@ -82,7 +82,6 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   handleEvents() {
-    $('body').on(`resize.${COMPONENT_NAME}`, () => this.handleResize);
     this.element.addEventListener('keydown', this.handleKeydown.bind(this));
     this.element.addEventListener('keyup', this.handleKeyup.bind(this));
     this.element.addEventListener('click', this.handleClick.bind(this));
@@ -472,7 +471,6 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   teardown() {
-    $('body').off(`resize.${COMPONENT_NAME}`);
     this.element.removeEventListener('keydown', this.handleKeydown.bind(this));
     this.element.removeEventListener('up', this.handleKeyup.bind(this));
     this.element.removeEventListener('click', this.handleClick.bind(this));
