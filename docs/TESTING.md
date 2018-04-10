@@ -38,7 +38,7 @@ Run several spec tests with a Glob, for debugging with Chrome.
  `KARMA_SPECS='components/dropdown/unit/dropdown*.spec.js' npm run local:unit` // Glob example
 
 Run just an api test, headless.
- `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run ci:local:unit`
+ `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run ci:unit`
 
 To run BrowserStack you need to place your copy the following configuration, and place the keys in your path.
 
@@ -72,8 +72,11 @@ export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 6. Hit Play on the debugger
 7. View `res.violations` in the console
 
-## Running all Tests Silently
-`npm run ci:local:unit`
+## Running all Unit Tests Silently for Continuous Integration
+`npm run ci:unit`
+
+## Running all Unit Tests on BrowserStack
+After configuration, `npm run browserstack:unit`
 
 ## Watching a Test
 You may when building a test out want to watch it. You can leave the test running and as you change the file.
