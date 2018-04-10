@@ -2555,6 +2555,11 @@ Datagrid.prototype = {
   */
   isRowVisible(rowIndex) {
     if (!this.settings.virtualized) {
+      if (this.settings.paging && !this.settings.source && rowIndex) {
+        return (this.pager.activePage - 1) * this.settings.pagesize >= rowIndex &&
+            (this.pager.activePage) * this.settings.pagesize <= rowIndex;
+      }
+
       return true;
     }
 
@@ -4199,38 +4204,28 @@ Datagrid.prototype = {
    * @returns {object} The dom node
    */
   cellNode(row, cell, includeGroups) {
-    if (this.isInRowPage(row)) {
-      let cells = null;
-      let rowNode = this.tableBody.find(`tr:not(.datagrid-expandable-row)[aria-rowindex="${row + 1}"]`);
+    let cells = null;
+    let rowNode = null;
 
-      if (row instanceof jQuery) {
-        rowNode = row;
-      }
-
-      if (includeGroups && this.settings.groupable) {
-        rowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
-        if (rowNode) {
-          rowNode = this.tableBody.find('.datagrid-rowgroup-header').eq(row);
-        }
-      }
-
-      if (cell === -1) {
-        return $();
-      }
-
-      cells = rowNode.find('td');
-      return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
+    if (row instanceof jQuery) {
+      rowNode = row;
     } else {
+      rowNode = this.tableBody.find(`tr:not(.datagrid-expandable-row)[aria-rowindex="${row + 1}"]`);
+    }
+
+    if (includeGroups && this.settings.groupable) {
+      rowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
+      if (rowNode) {
+        rowNode = this.tableBody.find('.datagrid-rowgroup-header').eq(row);
+      }
+    }
+
+    if (cell === -1 || rowNode.length === 0) {
       return $();
     }
-  },
 
-  isInRowPage(row) {
-    if (row && row.length) {
-      return true;
-    } else {
-      return false;
-    }
+    cells = rowNode.find('td');
+    return cells.eq(cell >= cells.length ? cells.length - 1 : cell);
   },
 
   handleScroll() {
@@ -5151,7 +5146,7 @@ Datagrid.prototype = {
    * @param {boolean} noTrigger Do not trigger events.
    * @returns {void}
    */
-  selectRow(idx, nosync, noTrigger, selectAll) {
+  selectRow(idx, nosync, noTrigger) {
     let rowNode = null;
     let dataRowIndex;
     const self = this;
@@ -5173,11 +5168,9 @@ Datagrid.prototype = {
       return;
     }
 
-    if (!selectAll) {
-      const selectedRows = this.selectedRows();
-      if (s.selectable === 'single' && selectedRows.length > 0) {
-        this.unselectRow(selectedRows[0].idx, true, true);
-      }
+    const selectedRows = this.selectedRows();
+    if (s.selectable === 'single' && selectedRows.length > 0) {
+      this.unselectRow(selectedRows[0].idx, true, true);
     }
 
     if (!rowNode.hasClass('is-selected')) {
@@ -5188,14 +5181,14 @@ Datagrid.prototype = {
           return;
         }
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
-        if (checkbox && checkbox.length) {
-          elem.addClass(`is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`).attr('aria-selected', 'true')
+        elem.addClass(`is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`).attr('aria-selected', 'true')
           .find('td').attr('aria-selected', 'true');
+
+        if (checkbox.length > 0) {
           checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .addClass('is-checked').attr('aria-checked', 'true');
+            .addClass('is-checked').attr('aria-checked', 'true');
         }
         data._selected = true;
-        
       };
 
       if (s.treeGrid) {
@@ -5256,7 +5249,7 @@ Datagrid.prototype = {
       self.syncSelectedUI();
     }
 
-    if (!noTrigger || !selectAll) {
+    if (!noTrigger) {
       this.element.triggerHandler('selected', [this.selectedRows(), 'select']);
     }
   },
@@ -5754,7 +5747,7 @@ Datagrid.prototype = {
 
       // Select - may be passed array or int
       idx = ((Object.prototype.toString.call(row) === '[object Array]') ? row[0] : row.index());
-      this.selectRow(idx, true, true, true);
+      this.selectRow(idx, true, true);
     }
 
     if (isMultiple || isSiblings) {
@@ -5763,10 +5756,10 @@ Datagrid.prototype = {
           if (s.groupable) {
             for (let k = 0; k < dataset[i].values.length; k++) {
               gIdx++;
-              this.selectRow(gIdx, true, true, true);
+              this.selectRow(gIdx, true, true);
             }
           } else {
-            this.selectRow(row[i], true, true, true);
+            this.selectRow(row[i], true, true);
           }
         }
 
@@ -5776,7 +5769,7 @@ Datagrid.prototype = {
           }
         }
       } else {
-        this.selectRow(row.index(), true, true, true);
+        this.selectRow(row.index(), true, true);
       }
     }
 
@@ -5786,7 +5779,7 @@ Datagrid.prototype = {
     if (!nosync) {
       this.syncSelectedUI();
     }
-    if (selectAll) {
+    if (!selectAll) {
       this.element.triggerHandler('selected', [selectedRows, 'select']);
     }
 
@@ -6897,6 +6890,10 @@ Datagrid.prototype = {
 
     if (this.settings.paging && this.settings.source) {
       rowIdx += ((this.pager.activePage - 1) * this.settings.pagesize);
+    }
+
+    if (!this.isRowVisible(idx)) {
+      return $([]);
     }
 
     return this.tableBody.find(`tr[aria-rowindex="${rowIdx + 1}"]`);
