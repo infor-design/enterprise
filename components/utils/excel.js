@@ -1,5 +1,6 @@
 import { Environment as env } from '../utils/environment';
 import { Formatters } from '../datagrid/datagrid.formatters';
+import { Editors } from '../datagrid/datagrid.editors';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};
@@ -286,35 +287,44 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
 };
 
 excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
+  const validateFields = function(values, settings, rowData, idx) {
+    for (let j = 0; j < values.length; j++) {
+      if (settings.columns[idx].formatter !== Formatters.Readonly) {
+        if (settings.columns[idx].editor === Editors.Input) {
+          if (settings.columns[idx].filterType === 'integer' 
+          || settings.columns[idx].filterType === 'decimal' 
+          || settings.columns[idx].filterType === 'number') {
+            if (!isNaN(values[j].trim())) {
+              rowData[settings.columns[idx].field] = values[j];
+            }
+          } else {
+            rowData[settings.columns[idx].field] = values[j];
+          }
+        } else if (settings.columns[idx].editor === Editors.Date) {
+          if (!isNaN(Date.parse(values[j]))) {
+            rowData[settings.columns[idx].field] = new Date(values[j]);
+          }
+        }
+      }
+
+      idx++;
+    }
+  };
+
   for (let i = 0; i < pastedData.length; i++) {
     const rawVal = pastedData[i].split('\t');
     let startColIndex = colIndex;
 
     if (rowCount < dataSet.length) {
       const currentRowData = dataSet[rowCount];
-      for (let j = 0; j < rawVal.length; j++) {
-        if (self.settings.columns[startColIndex].formatter === Formatters.Checkbox) {
-          currentRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() === 'true';
-        } else {
-          currentRowData[self.settings.columns[startColIndex].field] = rawVal[j];
-        }
-        startColIndex++;
-      }
+      validateFields(rawVal, self.settings, currentRowData, startColIndex);
       self.updateRow(rowCount, currentRowData);
     } else {
       const newRowData = {};
       for (let k = 0; k < self.settings.columns.length; k++) {
         newRowData[self.settings.columns[k].field] = '';
       }
-
-      for (let j = 0; j < rawVal.length; j++) {
-        if (self.settings.columns[startColIndex].formatter === Formatters.Checkbox) {
-          newRowData[self.settings.columns[startColIndex].field] = rawVal[j].trim() === 'true';
-        } else {
-          newRowData[self.settings.columns[startColIndex].field] = rawVal[j];
-        }
-        startColIndex++;
-      }
+      validateFields(rawVal, self.settings, newRowData, startColIndex);
       self.addRow(newRowData, 'bottom');
     }
     rowCount++;

@@ -4350,6 +4350,8 @@ Datagrid.prototype = {
             splitData = pastedData.split('\r\n');
           }
 
+          splitData.pop();
+
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
 
