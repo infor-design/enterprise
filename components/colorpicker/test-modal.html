@@ -16,7 +16,6 @@
         <input class="colorpicker" id="color2" type="text" />
       </div>
 
-      <br />
     </div>
 
   </div>
@@ -27,8 +26,21 @@
 
   $('#add-comment').on('click', function () {
     $('body').modal({
-      'title': 'Set Colors',
-      'content': $('#modal-edit-color')
+      title: 'Set Colors',
+      content: $('#modal-edit-color'),
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
     });
   });
 

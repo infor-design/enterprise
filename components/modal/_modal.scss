@@ -71,9 +71,11 @@
     }
   }
 
-  .field:last-child input:not(.spinbox, .colorpicker),
+  .field:last-child input:not(.spinbox):not(.colorpicker),
   .field:last-child .dropdown,
-  .field:last-child textarea {
+  .field:last-child textarea,
+  .field:last-child .spinbox-wrapper,
+  .field:last-child .colorpicker-container {
     margin-bottom: 10px;
   }
 
