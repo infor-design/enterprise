@@ -63,7 +63,7 @@ describe('Multiselect example-states tests', () => {
   });
 
   if (browser.browserName.toLowerCase() !== 'safari') {
-    it('Should show validation message error "Required"', async () => {
+    it('Should show validation message error "Required" on tab out', async () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).get(2);
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
       await element(by.css('body')).sendKeys(protractor.Key.TAB);
@@ -73,6 +73,20 @@ describe('Multiselect example-states tests', () => {
       await multiselectEl.sendKeys(protractor.Key.ENTER);
       await multiselectEl.sendKeys(protractor.Key.ENTER);
       await multiselectEl.sendKeys(protractor.Key.TAB);
+
+      expect(await element(by.css('.message-text')).getText()).toEqual('Required');
+    });
+
+    it('Should show validation message error "Required" on click', async () => {
+      const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).get(2);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await multiselectEl.sendKeys(protractor.Key.ENTER);
+      await multiselectEl.sendKeys(protractor.Key.ENTER);
+      await multiselectEl.sendKeys(protractor.Key.ENTER);
+      await element.all(by.css('.trigger')).first().click();
 
       expect(await element(by.css('.message-text')).getText()).toEqual('Required');
     });
