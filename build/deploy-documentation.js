@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-/* eslint-disable import/no-extraneous-dependencies, function-paren-newline,
-  no-console, no-restricted-syntax, no-continue, no-loop-func, prefer-template */
+/* eslint-disable */
 
 /**
  * @fileoverview This script does:
@@ -322,6 +321,7 @@ function markdownToHtml(filePath) {
         if (fmData.attributes.title) allDocsObjMap[fileBasename].title = fmData.attributes.title;
         if (fmData.attributes.description) allDocsObjMap[fileBasename].description = fmData.attributes.description;
         if (fmData.attributes.demo) allDocsObjMap[fileBasename].demo = fmData.attributes.demo;
+        if (fmData.attributes.system) allDocsObjMap[fileBasename].system = fmData.attributes.system;
 
         marked(fmData.body, (err, content) => {
           if (err) {
