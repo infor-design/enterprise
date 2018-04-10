@@ -75,6 +75,7 @@ Treemaps are not good when there is a big difference in the magnitude of the mea
 
   $('#treemap-chart-example').treemap({dataset: treeMapData});
 
+
 ```
 
 ## Accessibility

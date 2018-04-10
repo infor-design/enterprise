@@ -47,10 +47,10 @@ $('#example-swaplist-1').swaplist({available: available, selected: selected, tem
 
 ## Keyboard Shortcuts
 
-- **Tab** Tabs in and out of the list boxes and the between the buttons on the Toolbars and the adjacent objects.
-- **Arrow up / Down** - Moves up and down the currently focused list
-- **Enter/Space** - Toggles selection if a list item is focused
-- **CTRL+M** - Moves the currently selected items in one list to the next list. If in the middle list focus will be on the toolbar and you can choose which ones to go to.
+- <kbd>Tab</kbd> Tabs in and out of the list boxes and the between the buttons on the Toolbars and the adjacent objects.
+- <kbd>Arrow up / Down</kbd> Moves up and down the currently focused list
+- <kbd>Enter/Space</kbd> Toggles selection if a list item is focused
+- <kbd>CTRL+M</kbd> Moves the currently selected items in one list to the next list. If in the middle list focus will be on the toolbar and you can choose which ones to go to.
 
 ## States and Variations
 

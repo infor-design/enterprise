@@ -19,18 +19,6 @@ description: This page describes Bar Chart.
 12. Example showing Set Selected value [View Example]( ../components/bar/example-set-selected)
 13. Example showing empty data set [View Example]( ../components/bar/test-empty)
 
-## Dataset Settings
-
-* `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - The name to show on the y axis for the bar
-* `value` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** - The raw data value for the bar.
-* `tooltip`**[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  - The custom tooltip to show.
-
-### Extra Chart Settings
-
-* `formatterString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - the d3 formatter string to show
-* `showLines` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Hide the lines going north south across the x axis
-* `useLogScale` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Use a logarithmic scale on the x axis. This can be used for skewed data.
-
 ## Code Example
 
 This example shows how to invoke a simple bar chart with a dataset controlling the values.
@@ -87,8 +75,8 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
 
 ## Keyboard Shortcuts
 
--   **Tab:** You can tab into the chart area and through the legend values as each has a focus state.
--   **Enter/Space:** Will select the bar group the corresponds with the focus'd legend item.
+- <kbd>Tab</kbd> You can tab into the chart area and through the legend values as each has a focus state.
+- <kbd>Enter/Space</kbd> Will select the bar group the corresponds with the focus'd legend item.
 
 ## Upgrading from 3.X
 

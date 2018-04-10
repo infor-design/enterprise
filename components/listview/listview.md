@@ -1,5 +1,5 @@
 ---
-title: Listview  
+title: Listview
 description: This page describes Listview.
 ---
 
@@ -67,10 +67,10 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
 
 ## Keyboard Shortcuts
 
--   **Tab:** When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.
--   **Up/down arrow** navigate up and down the list.
--   **Shift+F10:** If the current item has an associated context menu, then this key combination will launch that menu.
-- **Space bar** toggles [checkboxes](http://access.aol.com/dhtml-style-guide-working-group/#checkbox) in the case of multi select or a list item in case of normal select
+- <kbd>Tab</kbd> When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.
+- <kbd>Up/down arrow</kbd> navigate up and down the list.
+- <kbd>Shift+F10</kbd> If the current item has an associated context menu, then this key combination will launch that menu.
+- <kbd>Space</kbd> toggles [checkboxes](http://access.aol.com/dhtml-style-guide-working-group/#checkbox) in the case of multi select or a list item in case of normal select
 
 ## States and Variations
 
