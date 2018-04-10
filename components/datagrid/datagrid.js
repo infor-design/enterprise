@@ -2553,6 +2553,11 @@ Datagrid.prototype = {
   */
   isRowVisible(rowIndex) {
     if (!this.settings.virtualized) {
+      if (this.settings.paging && !this.settings.source && rowIndex) {
+        return (this.pager.activePage - 1) * this.settings.pagesize >= rowIndex &&
+            (this.pager.activePage) * this.settings.pagesize <= rowIndex;
+      }
+
       return true;
     }
 
@@ -4198,10 +4203,12 @@ Datagrid.prototype = {
    */
   cellNode(row, cell, includeGroups) {
     let cells = null;
-    let rowNode = this.tableBody.find(`tr:not(.datagrid-expandable-row)[aria-rowindex="${row + 1}"]`);
+    let rowNode = null;
 
     if (row instanceof jQuery) {
       rowNode = row;
+    } else {
+      rowNode = this.tableBody.find(`tr:not(.datagrid-expandable-row)[aria-rowindex="${row + 1}"]`);
     }
 
     if (includeGroups && this.settings.groupable) {
@@ -4211,7 +4218,7 @@ Datagrid.prototype = {
       }
     }
 
-    if (cell === -1) {
+    if (cell === -1 || rowNode.length === 0) {
       return $();
     }
 
@@ -5174,9 +5181,11 @@ Datagrid.prototype = {
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
         elem.addClass(`is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`).attr('aria-selected', 'true')
           .find('td').attr('aria-selected', 'true');
-        checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .addClass('is-checked').attr('aria-checked', 'true');
 
+        if (checkbox.length > 0) {
+          checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+            .addClass('is-checked').attr('aria-checked', 'true');
+        }
         data._selected = true;
       };
 
@@ -5822,6 +5831,7 @@ Datagrid.prototype = {
     for (let i = 0; i < cols.length; i++) {
       if (cols[i].id === id) {
         idx = i;
+        break;
       }
     }
     return idx;
@@ -6878,6 +6888,10 @@ Datagrid.prototype = {
 
     if (this.settings.paging && this.settings.source) {
       rowIdx += ((this.pager.activePage - 1) * this.settings.pagesize);
+    }
+
+    if (!this.isRowVisible(idx)) {
+      return $([]);
     }
 
     return this.tableBody.find(`tr[aria-rowindex="${rowIdx + 1}"]`);
