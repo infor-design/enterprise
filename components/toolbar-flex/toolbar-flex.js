@@ -1,6 +1,6 @@
 import { utils } from '../utils/utils';
 import { log } from '../utils/debug';
-import { TOOLBAR_ELEMENTS } from './toolbar-flex.item';
+import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
 
 // jQuery Components
 import './toolbar-flex.item.jquery';
@@ -243,10 +243,14 @@ ToolbarFlex.prototype = {
   },
 
   /**
-   * @param {HTMLElement} element the element to be checked
+   * @param {HTMLElement|ToolbarFlexItem} element the element to be checked
    * @returns {ToolbarFlexItem} an instance of a Toolbar item
    */
   getItemFromElement(element) {
+    if (element instanceof ToolbarFlexItem) {
+      return element;
+    }
+
     let item;
     for (let i = 0; i < this.items.length; i++) {
       // Simple comparison of innerHTML to figure out if the elements match up
@@ -301,7 +305,7 @@ ToolbarFlex.prototype = {
   },
 
   /**
-   * @returns {HTMLElement[]} all overflowed items in the toolbar
+   * @returns {ToolbarFlexItem[]} all overflowed items in the toolbar
    */
   get overflowedItems() {
     const overflowed = [];
@@ -313,27 +317,6 @@ ToolbarFlex.prototype = {
     }
 
     return overflowed;
-  },
-
-  /**
-   * @param {HTMLElement} item the HTMLElement reference that gets linked back to
-   * @returns {void}
-   */
-  set actionButtonLink(item) {
-    if (this.type !== 'actionbutton' || !(item instanceof HTMLElement)) {
-      return;
-    }
-    $(this.element).data('actionButtonLink', item);
-  },
-
-  /**
-   * @returns {HTMLElement|undefined} the reference to a corresponding "More Actions" menu item.
-   */
-  get actionButtonLink() {
-    if (this.type !== 'actionbutton') {
-      return undefined;
-    }
-    return $(this.element).data('actionButtonLink');
   },
 
   /**
@@ -391,7 +374,8 @@ ToolbarFlex.prototype = {
   },
 
   /**
-   * @param {HTMLElement} element an HTMLElement representing a Toolbar Item.
+   * @param {HTMLElement|ToolbarFlexItem} element an HTMLElement representing a
+   *  Toolbar Item, or an actual ToolbarFlexItem API to use.
    * @returns {void}
    */
   select(element) {
@@ -456,6 +440,19 @@ ToolbarFlex.prototype = {
     const data = {};
     data.items = this.items.map(item => item.toData());
     return data;
+  },
+
+  get disabled() {
+    return this.trueDisabled;
+  },
+
+  set disabled(bool) {
+    this.trueDisabled = bool;
+    if (bool === true) {
+      this.element.classList.add('is-disabled');
+      return;
+    }
+    this.element.classList.remove('is-disabled');
   },
 
   /**

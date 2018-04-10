@@ -81,6 +81,7 @@ function ToolbarFlexItem(element, settings) {
   this.type = getToolbarItemType(element);
   this.section = this.element.parentElement;
   this.toolbar = this.section.parentElement;
+  this.trueSelected = false;
 
   this.init();
 }
@@ -590,8 +591,22 @@ ToolbarFlexItem.prototype = {
       itemData.componentAPI = this.componentAPI;
     }
 
+    const icon = this.element.querySelector('.icon:not(.close):not(.icon-dropdown) > use');
+    if (icon) {
+      itemData.icon = icon.getAttribute('xlink:href').replace('#icon-', '');
+    }
+
+    if (this.type === 'button' || this.type === 'menubutton') {
+      itemData.text = this.element.textContent.trim();
+    }
+
     if (this.type === 'actionbutton') {
       itemData.predefinedItems = this.predefinedItems;
+    }
+
+    if (this.type === 'menubutton' || this.type === 'actionbutton') {
+      // TODO: Need to convert a Popupmenu's contents to the object format with this method
+      itemData.submenu = this.componentAPI.toData({ noMenuWrap: true });
     }
 
     return itemData;
