@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint-disable */
 
 /**
  * @fileoverview This script does:
@@ -41,7 +40,6 @@ const fs = require('fs');
 const glob = require('glob');
 const handlebars = require('handlebars');
 const hbsRegistrar = require('handlebars-registrar');
-const mapStream = require('map-stream');
 const marked = require('marked');
 const path = require('path');
 const vinylToString = require('vinyl-contents-tostring');
@@ -106,16 +104,16 @@ const testComponents = [
 // -------------------------------------
 //   Variables
 // -------------------------------------
-let allDocsObjMap = {};
-let componentStats = {
+const allDocsObjMap = {};
+const componentStats = {
   numDocumented: 0,
   numConverted: 0,
   numWritten: 0,
   numSkipped: 0,
   total: 0,
 };
+const stopwatch = {};
 let deployTo = 'static';
-let stopwatch = {};
 let numArchivesSent = 0;
 
 hbsRegistrar(handlebars, {
@@ -144,11 +142,10 @@ Promise.all(setupPromises)
   .catch(err => {
     console.error(chalk.red('Error!'), err);
   })
-  .then(values => {
+  .then(() => {
     logTaskStart('writing files');
 
     const pageTemplate = handlebars.compile(fs.readFileSync(`${paths.templates.hbs}/page.hbs`, 'utf-8'));
-
 
     let writePromises = [];
     if (deployTo === 'static') {
@@ -157,7 +154,7 @@ Promise.all(setupPromises)
       writePromises.push(writeJsonSitemap());
     }
 
-    for (compName in allDocsObjMap) {
+    for (let compName in allDocsObjMap) {
       if (deployTo === 'static') {
         writePromises.push(writeHtmlFile(pageTemplate, compName));
       } else {
@@ -169,7 +166,7 @@ Promise.all(setupPromises)
       .catch(err => {
         console.error(chalk.red('Error!'), err);
       })
-      .then(values => {
+      .then(() => {
         logTaskEnd('writing files');
         if (deployTo !== 'static') {
           zipAndDeploy();
@@ -177,26 +174,24 @@ Promise.all(setupPromises)
       });
   });
 
-
 // -------------------------------------
 //   Functions
 // -------------------------------------
 
 /**
  * Compiled the component's MD and DocJS
- * @return {Promise}
+ * @returns {Promise}
  */
 function compileComponents() {
   return new Promise((resolve, reject) => {
-
     logTaskStart('component documentation');
-    let compPromises = [];
+    const compPromises = [];
     let compName = '';
 
     glob(`${paths.components}/*/`, (err, componentDirs) => {
       componentStats.total = componentDirs.length;
 
-      for (compDir of componentDirs) {
+      for (let compDir of componentDirs) {
         compName = deriveComponentName(compDir);
 
         // For testing to only get one or two components
@@ -223,28 +218,27 @@ function compileComponents() {
         .catch(err => {
           reject(err.message)
         })
-        .then(values => {
+        .then(() => {
           logTaskEnd('component documentation');
           resolve();
         });
     });
-  })
+  });
 }
 
 /**
  * Compile all ids-website supporting MD files
  * and store the output string
- * @return {Promise}
+ * @returns {Promise}
  */
 function compileSupportingDocs() {
   return new Promise((resolve, reject) => {
 
     logTaskStart('markdown documentation');
-    let promises = [];
-    let compName = '';
+    const promises = [];
 
     glob(`${paths.docs}/*.md`, (err, files) => {
-      for (filePath of files) {
+      for (let filePath of files) {
         let fileName = path.basename(filePath, '.md').toLowerCase();
 
         allDocsObjMap[fileName] = Object.assign({}, jsonTemplate, {
@@ -257,9 +251,9 @@ function compileSupportingDocs() {
 
       Promise.all(promises)
         .catch(err => {
-          reject(err)
+          reject(err);
         })
-        .then(values => {
+        .then(() => {
           logTaskEnd('markdown documentation');
           resolve();
         });
@@ -269,7 +263,7 @@ function compileSupportingDocs() {
 
 /**
  * Remove any "built" directories/files
- * @return {Promise}
+ * @returns {Promise}
  */
 function cleanAll() {
   const filesToDel = [];
@@ -308,7 +302,7 @@ function cleanAll() {
  * and store the output html string in the component
  * object property
  * @param  {string} filePath - the full file path
- * @return {Promise}
+ * @returns {Promise}
  */
 function markdownToHtml(filePath) {
   let fileBasename = path.basename(filePath, '.md').toLowerCase();
@@ -354,7 +348,7 @@ function createDirs(arrPaths) {
  * Check if the component (directory) has a
  * self-named documentation mardkdown file
  * @param  {string} componentName - the name of the component
- * @return {boolean}
+ * @returns {boolean}
  */
 function documentationExists(componentName) {
   return fs.existsSync(`${paths.components}/${componentName}/${componentName}.md`);
@@ -364,11 +358,10 @@ function documentationExists(componentName) {
  * Run documentationJs on a file with JSON output
  * and save that in the components object property
  * @param  {string} componentName - the name of the component
- * @return {Promise}
+ * @returns {Promise}
  */
 function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
-  const vfs = require('vinyl-fs');
 
   // const themeName = (deployTo === 'static') ? 'theme-single-page' : 'theme-ids-website';
   const themeName = 'theme-ids-website';
@@ -440,7 +433,7 @@ function postZippedBundle() {
 
   logTaskStart(`attempt publish to server "${deployTo}"`);
 
-  let form = new formData();
+  const form = new formData();
   form.append('file', fs.createReadStream(`${paths.idsWebsite.dist}.zip`));
   form.append('root_path', `ids-enterprise/${packageJson.version}`);
   form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : "");
@@ -450,8 +443,8 @@ function postZippedBundle() {
       console.error(err);
       logTaskAction('Failed!', `Status ${err}`, false, 'red');
     } else {
-      if (res.statusCode == 200) {
-        logTaskAction('Success', `to "${serverURIs[deployTo]}"`)
+      if (res.statusCode === 200) {
+        logTaskAction('Success', `to "${serverURIs[deployTo]}"`);
       } else {
         logTaskAction('Failed!', `Status ${res.statusCode}: ${res.statusMessage}`, false, 'red');
       }
@@ -464,6 +457,7 @@ function postZippedBundle() {
 
 /**
  * Get the sitemap contents as a json object
+ * @returns {String}
  */
 function readSitemapYaml() {
   let sitemap = {};
@@ -509,6 +503,7 @@ function timeElapsed(t) {
  * Write a html file for specified component
  *
  * @param {string} componentName - the name of the component
+ * @returns {Promise}
  */
 function writeHtmlFile(hbsTemplate, componentName) {
   return new Promise((resolve, reject) => {
@@ -539,6 +534,7 @@ function writeHtmlFile(hbsTemplate, componentName) {
 /**
  * Write a json file for specified component
  * @param {string} componentName - the name of the component
+ * @returns {Promise}
  */
 function writeJsonFile(componentName) {
   return new Promise((resolve, reject) => {
@@ -557,7 +553,7 @@ function writeJsonFile(componentName) {
 
 /**
  * Convert/write the sitemap.yml to sitemap.json into dist
- * @return {Promise}
+ * @returns {Promise}
  */
 function writeJsonSitemap() {
   return new Promise((resolve, reject) => {
@@ -573,10 +569,9 @@ function writeJsonSitemap() {
   });
 }
 
-
 /**
  * Convert/write the sitemap.yml as "components/index" for static docs
- * @return {Promise}
+ * @returns {Promise}
  */
 function writeHtmlSitemap() {
   return new Promise((resolve, reject) => {
@@ -602,20 +597,20 @@ function zipAndDeploy() {
   logTaskStart('zip json files');
 
   // create a file to stream archive data to.
-  var output = fs.createWriteStream(paths.idsWebsite.dist + '.zip');
-  var archive = archiver('zip', {
+  let output = fs.createWriteStream(paths.idsWebsite.dist + '.zip');
+  let archive = archiver('zip', {
     zlib: { level: 9 } // Sets the compression level.
   });
 
   // listen for all archive data to be written
   // 'close' event is fired only when a file descriptor is involved
   output.on('close', () => {
-    logTaskAction('Zipped', archive.pointer() + ' total bytes')
+    logTaskAction('Zipped', archive.pointer() + ' total bytes');
     logTaskEnd('zip json files');
 
     if (argv.dryRun) {
       console.log(chalk.bgRed.bold('!! DRY RUN !!'));
-      statsConclusion()
+      statsConclusion();
     } else {
       postZippedBundle();
     }
