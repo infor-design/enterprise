@@ -9,7 +9,7 @@ let toolbarAPI;
 let rowEl;
 let svgEl;
 
-describe('Flex Toolbar API', () => {
+describe('Flex Toolbar', () => {
   beforeEach(() => {
     toolbarEl = null;
     toolbarAPI = null;
@@ -113,19 +113,20 @@ describe('Flex Toolbar API', () => {
     toolbarAPI.navigate(2);
     focusedItem = toolbarAPI.focusedItem;
 
-    expect(focusedItem).toEqual(items[2]);
+    // Item isn't "2" here because the item at index 2 is disabled, so it skips to "3"
+    expect(focusedItem).toEqual(items[3]);
 
     // Navigate to the left
     toolbarAPI.navigate(-2);
     focusedItem = toolbarAPI.focusedItem;
 
-    expect(focusedItem).toEqual(items[0]);
+    expect(focusedItem).toEqual(items[1]);
 
     // Run with no directional change (should give the same result)
     toolbarAPI.navigate(0);
     focusedItem = toolbarAPI.focusedItem;
 
-    expect(focusedItem).toEqual(items[0]);
+    expect(focusedItem).toEqual(items[1]);
   });
 
   /*
@@ -218,5 +219,108 @@ describe('Flex Toolbar API', () => {
 
     expect(data.menu[1].submenu).toBeDefined();
     expect(data.menu[1].submenu.length).toBe(3);
+  });
+
+  describe('Item', () => {
+    it('Can be invoked by its parent Toolbar', () => {
+      const item = toolbarAPI.items[0];
+      const elementAPI = $(item.element).data('toolbarflexitem');
+
+      expect(elementAPI).toBeDefined();
+      expect(elementAPI).toEqual(jasmine.any(ToolbarFlexItem));
+
+      expect(item.section).toBeDefined();
+      expect(item.toolbar).toEqual(toolbarEl);
+    });
+
+    it('Can be individually disabled and re-enabled', () => {
+      const item = toolbarAPI.items[2];
+
+      expect(item.disabled).toBeTruthy();
+      expect(item.element.getAttribute('aria-disabled')).toBeTruthy();
+    });
+
+    it('Can individually become hidden and re-displayed', () => {
+      const item = toolbarAPI.items[3];
+
+      expect(item.visible).toBeTruthy();
+
+      item.hide();
+
+      expect(item.visible).toBeFalsy();
+
+      item.show();
+
+      expect(item.visible).toBeTruthy();
+    });
+
+    it('Can announce whether or not it can become the focused item', () => {
+      const menuButton = toolbarAPI.items[1];
+
+      expect(menuButton.focusable).toBeTruthy();
+
+      // The icon button is disabled by default
+      const iconButton = toolbarAPI.items[2];
+
+      expect(iconButton.focusable).toBeFalsy();
+
+      const secondIconButton = toolbarAPI.items[3];
+      secondIconButton.hide();
+
+      expect(secondIconButton.focusable).toBeFalsy();
+    });
+
+    it('Can individually be set as the focused toolbar item', () => {
+      const item = toolbarAPI.items[1];
+      item.focused = true;
+
+      expect(item.element.tabIndex).toEqual(0);
+      expect(item.focused).toBeTruthy();
+    });
+
+    it('Can be set to readonly, if allowed by the field type', () => {
+      const searchfieldItem = toolbarAPI.items[4];
+      searchfieldItem.readOnly = true;
+
+      expect(searchfieldItem.readOnly).toBeTruthy();
+      expect(searchfieldItem.element.readOnly).toBeTruthy();
+    });
+
+    it('Can not be readonly and disabled at the same time, if allowed by the field type', () => {
+      const searchfieldItem = toolbarAPI.items[4];
+      searchfieldItem.readOnly = true;
+      searchfieldItem.disabled = true;
+
+      expect(searchfieldItem.readOnly).toBeFalsy();
+      expect(searchfieldItem.element.readOnly).toBeFalsy();
+      expect(searchfieldItem.disabled).toBeTruthy();
+      expect(searchfieldItem.element.disabled).toBeTruthy();
+
+      searchfieldItem.readOnly = true;
+
+      expect(searchfieldItem.readOnly).toBeTruthy();
+      expect(searchfieldItem.element.readOnly).toBeTruthy();
+      expect(searchfieldItem.disabled).toBeFalsy();
+      expect(searchfieldItem.element.disabled).toBeFalsy();
+    });
+
+    it('Can individually be selected', () => {
+      const item = toolbarAPI.items[1];
+      item.selected = true;
+
+      expect(item.selected).toBe(true);
+      expect(item.element.className.indexOf('is-selected')).toBeGreaterThan(-1);
+    });
+
+    it('Can individually determine that it should be placed into overflow', () => {
+      rowEl.style.width = '700px';
+      const textButton = toolbarAPI.items[0];
+
+      expect(textButton.overflowed).toBeFalsy();
+
+      const secondIconButton = toolbarAPI.items[3];
+
+      expect(secondIconButton.overflowed).toBeTruthy();
+    });
   });
 });

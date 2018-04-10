@@ -277,10 +277,13 @@ ToolbarFlexItem.prototype = {
   set disabled(boolean) {
     if (boolean) {
       this.element.disabled = true;
+      this.element.setAttribute('aria-disabled', true);
       this.element.readOnly = false;
       return;
     }
+
     this.element.disabled = false;
+    this.element.removeAttribute('aria-disabled');
   },
 
   /**
@@ -389,6 +392,11 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   render() {
+    this.disabled = this.disabled;
+    if (this.hasReadOnly) {
+      this.readonly = this.readonly;
+    }
+
     // Setup component APIs, if applicable.
     // NOTE: Soho Initializer doesn't invoke these automatically, by nature of the
     // base elements existing inside the Flex Toolbar.
@@ -640,7 +648,6 @@ ToolbarFlexItem.prototype = {
     delete this.visible;
     delete this.disabled;
     delete this.readOnly;
-    delete this.invoked;
   }
 
 };
