@@ -135,7 +135,7 @@ describe('Multiselect example-index tests', () => {
       await multiselectEl.sendKeys(protractor.Key.ENTER);
       await multiselectEl.sendKeys(protractor.Key.TAB);
 
-      expect(await element(by.css('.dropdown span')).getText()).toEqual('');
+      expect(await element.all(by.css('.dropdown span')).first().getText()).toEqual('');
     });
 
     it('Should arrow down to Arizona select, arrow down, and select Arkansas, and update search input', async () => {
