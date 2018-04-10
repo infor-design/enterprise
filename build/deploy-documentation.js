@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+/* eslint-disable arrow-body-style, key-spacing, no-use-before-define, arrow-parens, no-console, import/no-dynamic-require, global-require, no-shadow, max-len, object-shorthand */
 /**
  * @fileoverview This script does:
  * 1. Coverts components jsdoc comments into html
@@ -48,7 +49,7 @@ const yaml = require('js-yaml');
 // Set Marked options
 marked.setOptions({
   gfm: true,
-  highlight: function (code, lang, callback) {
+  highlight: (code, lang, callback) => {
     return require('pygmentize-bundled')({ lang: lang, format: 'html' }, code, (err, result) => {
       callback(err, result.toString());
     });
@@ -147,20 +148,20 @@ Promise.all(setupPromises)
 
     const pageTemplate = handlebars.compile(fs.readFileSync(`${paths.templates.hbs}/page.hbs`, 'utf-8'));
 
-    let writePromises = [];
+    const writePromises = [];
     if (deployTo === 'static') {
       writePromises.push(writeHtmlSitemap());
     } else {
       writePromises.push(writeJsonSitemap());
     }
 
-    for (let compName in allDocsObjMap) {
+    Object.keys(allDocsObjMap).forEach(compName => {
       if (deployTo === 'static') {
         writePromises.push(writeHtmlFile(pageTemplate, compName));
       } else {
         writePromises.push(writeJsonFile(compName));
       }
-    }
+    });
 
     Promise.all(writePromises)
       .catch(err => {
@@ -180,7 +181,7 @@ Promise.all(setupPromises)
 
 /**
  * Compiled the component's MD and DocJS
- * @returns {Promise}
+ * @returns {Promise} - A promise
  */
 function compileComponents() {
   return new Promise((resolve, reject) => {
@@ -191,32 +192,32 @@ function compileComponents() {
     glob(`${paths.components}/*/`, (err, componentDirs) => {
       componentStats.total = componentDirs.length;
 
-      for (let compDir of componentDirs) {
+      componentDirs.forEach(compDir => {
         compName = deriveComponentName(compDir);
 
         // For testing to only get one or two components
-        if (argv.testMode && !testComponents.includes(compName)) continue;
+        if (argv.testMode && !testComponents.includes(compName)) return;
 
         if (!documentationExists(compName)) {
           logTaskAction('Skipping', compName, 'yellow');
           componentStats.numSkipped++;
-          continue;
+          return;
         }
 
         allDocsObjMap[compName] = Object.assign({}, jsonTemplate, {
           title: compName,
-          description: 'All about ' + compName,
+          description: `All about ${compName}`,
           isComponent: true
         });
 
         // note: comp path includes an ending "/"
         compPromises.push(documentJsToHtml(compName));
         compPromises.push(markdownToHtml(`${compDir}${compName}.md`));
-      }
+      });
 
       Promise.all(compPromises)
         .catch(err => {
-          reject(err.message)
+          reject(err.message);
         })
         .then(() => {
           logTaskEnd('component documentation');
@@ -229,25 +230,24 @@ function compileComponents() {
 /**
  * Compile all ids-website supporting MD files
  * and store the output string
- * @returns {Promise}
+ * @returns {Promise} - A promise
  */
 function compileSupportingDocs() {
   return new Promise((resolve, reject) => {
-
     logTaskStart('markdown documentation');
     const promises = [];
 
     glob(`${paths.docs}/*.md`, (err, files) => {
-      for (let filePath of files) {
-        let fileName = path.basename(filePath, '.md').toLowerCase();
+      files.forEach(filePath => {
+        const fileName = path.basename(filePath, '.md').toLowerCase();
 
         allDocsObjMap[fileName] = Object.assign({}, jsonTemplate, {
           title: fileName,
-          description: 'All about ' + fileName,
+          description: `All about ${fileName}`,
         });
 
         promises.push(markdownToHtml(filePath));
-      }
+      });
 
       Promise.all(promises)
         .catch(err => {
@@ -258,12 +258,12 @@ function compileSupportingDocs() {
           resolve();
         });
     });
-  })
+  });
 }
 
 /**
  * Remove any "built" directories/files
- * @returns {Promise}
+ * @returns {Promise} - A promise
  */
 function cleanAll() {
   const filesToDel = [];
@@ -284,7 +284,7 @@ function cleanAll() {
     .catch(err => {
       console.error(chalk.red('Error!'), err);
     })
-    .then(res => {
+    .then(() => {
       logTaskAction('Cleaned', paths.idsWebsite.dist.replace(rootPath, '.'));
       createDirs([
         paths.idsWebsite.root,
@@ -293,8 +293,7 @@ function cleanAll() {
         paths.static.root,
         paths.static.components
       ]);
-    }
-  );
+    });
 }
 
 /**
@@ -302,10 +301,10 @@ function cleanAll() {
  * and store the output html string in the component
  * object property
  * @param  {string} filePath - the full file path
- * @returns {Promise}
+ * @returns {Promise} - A promise
  */
 function markdownToHtml(filePath) {
-  let fileBasename = path.basename(filePath, '.md').toLowerCase();
+  const fileBasename = path.basename(filePath, '.md').toLowerCase();
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
@@ -322,12 +321,12 @@ function markdownToHtml(filePath) {
             reject(err);
           } else {
             componentStats.numConverted++;
-            logTaskAction('Converting', fileBasename + '.md', true);
+            logTaskAction('Converting', `${fileBasename}.md`, true);
             resolve(allDocsObjMap[fileBasename].body = content);
           }
         });
       }
-    })
+    });
   });
 }
 
@@ -336,19 +335,19 @@ function markdownToHtml(filePath) {
  * @param  {array} arrPaths - the directory path(s)
  */
 function createDirs(arrPaths) {
-  for (let path of arrPaths) {
+  arrPaths.forEach(path => {
     if (!fs.existsSync(path)) {
       fs.mkdirSync(path);
       logTaskAction('Created', path.replace(rootPath, '.'));
     }
-  }
+  });
 }
 
 /**
  * Check if the component (directory) has a
  * self-named documentation mardkdown file
  * @param  {string} componentName - the name of the component
- * @returns {boolean}
+ * @returns {boolean} - if the documentation markdown file exists
  */
 function documentationExists(componentName) {
   return fs.existsSync(`${paths.components}/${componentName}/${componentName}.md`);
@@ -358,7 +357,7 @@ function documentationExists(componentName) {
  * Run documentationJs on a file with JSON output
  * and save that in the components object property
  * @param  {string} componentName - the name of the component
- * @returns {Promise}
+ * @returns {Promise} - A promise
  */
 function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
@@ -373,20 +372,20 @@ function documentJsToHtml(componentName) {
           return output.map((file) => {
             return vinylToString(file, 'utf8').then(contents => {
               componentStats.numDocumented++;
-              logTaskAction('Documented', componentName + '.js', true);
+              logTaskAction('Documented', `${componentName}.js`, true);
               allDocsObjMap[componentName].api = contents;
             });
-          })
+          });
         }, err => {
           console.error(chalk.red('Error!'), err);
-        })
+        });
     });
 }
 
 /**
  * Derive the component name from its folder path
  * @param {string} dirPath - the component's directory path
- * @return {string} - the component's name
+ * @returns {string} - the component's name
  */
 function deriveComponentName(dirPath) {
   return dirPath
@@ -419,7 +418,7 @@ function logTaskEnd(taskName) {
  * @param {string} [color] - one of the chalk module's color aliases
  *
  */
-function logTaskAction(action, desc, onlyVerbose=false, color = 'green') {
+function logTaskAction(action, desc, onlyVerbose = false, color = 'green') {
   if (!onlyVerbose || (onlyVerbose && argv.verbose)) {
     console.log('-', action, chalk[color](desc));
   }
@@ -429,14 +428,14 @@ function logTaskAction(action, desc, onlyVerbose=false, color = 'green') {
  * Deploy the zipped bundle using a POST request
  */
 function postZippedBundle() {
-  const formData = require('form-data');
+  const FormData = require('form-data');
 
   logTaskStart(`attempt publish to server "${deployTo}"`);
 
-  const form = new formData();
+  const form = new FormData();
   form.append('file', fs.createReadStream(`${paths.idsWebsite.dist}.zip`));
   form.append('root_path', `ids-enterprise/${packageJson.version}`);
-  form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : "");
+  form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : '');
   form.submit(serverURIs[deployTo], (err, res) => {
     logTaskEnd(`attempt publish to server "${deployTo}"`);
     if (err) {
@@ -457,7 +456,7 @@ function postZippedBundle() {
 
 /**
  * Get the sitemap contents as a json object
- * @returns {String}
+ * @returns {String} - sitemap contents
  */
 function readSitemapYaml() {
   let sitemap = {};
@@ -492,18 +491,19 @@ function statsConclusion() {
 /**
  * Calculate the difference in seconds
  * @param {number} t - a time in milliseconds elapsed since January 1, 1970 00:00:00 UTC.
- * @return {string}
+ * @returns {string} - the time elapsed in seconds
  */
 function timeElapsed(t) {
-  const elapsed = ((Date.now() - t)/1000).toFixed(1);
-  return elapsed + 's';
+  const elapsed = ((Date.now() - t) / 1000).toFixed(1);
+  return `${elapsed}s`;
 }
 
 /**
  * Write a html file for specified component
  *
+ * @param {function} hbsTemplate - the hbs page template function
  * @param {string} componentName - the name of the component
- * @returns {Promise}
+ * @returns {Promise} - A promise
  */
 function writeHtmlFile(hbsTemplate, componentName) {
   return new Promise((resolve, reject) => {
@@ -534,7 +534,7 @@ function writeHtmlFile(hbsTemplate, componentName) {
 /**
  * Write a json file for specified component
  * @param {string} componentName - the name of the component
- * @returns {Promise}
+ * @returns {Promise} - A promise
  */
 function writeJsonFile(componentName) {
   return new Promise((resolve, reject) => {
@@ -544,7 +544,7 @@ function writeJsonFile(componentName) {
         reject(err);
       } else {
         componentStats.numWritten++;
-        logTaskAction('Created', thisName + '.json', true);
+        logTaskAction('Created', `${thisName}.json`, true);
         resolve();
       }
     });
@@ -553,7 +553,7 @@ function writeJsonFile(componentName) {
 
 /**
  * Convert/write the sitemap.yml to sitemap.json into dist
- * @returns {Promise}
+ * @returns {Promise} - A promise
  */
 function writeJsonSitemap() {
   return new Promise((resolve, reject) => {
@@ -571,7 +571,7 @@ function writeJsonSitemap() {
 
 /**
  * Convert/write the sitemap.yml as "components/index" for static docs
- * @returns {Promise}
+ * @returns {Promise} - A promise
  */
 function writeHtmlSitemap() {
   return new Promise((resolve, reject) => {
@@ -597,15 +597,15 @@ function zipAndDeploy() {
   logTaskStart('zip json files');
 
   // create a file to stream archive data to.
-  let output = fs.createWriteStream(paths.idsWebsite.dist + '.zip');
-  let archive = archiver('zip', {
+  const output = fs.createWriteStream(`${paths.idsWebsite.dist}.zip`);
+  const archive = archiver('zip', {
     zlib: { level: 9 } // Sets the compression level.
   });
 
   // listen for all archive data to be written
   // 'close' event is fired only when a file descriptor is involved
   output.on('close', () => {
-    logTaskAction('Zipped', archive.pointer() + ' total bytes');
+    logTaskAction(`Zipped ${archive.pointer()} total bytes`);
     logTaskEnd('zip json files');
 
     if (argv.dryRun) {
@@ -614,7 +614,7 @@ function zipAndDeploy() {
     } else {
       postZippedBundle();
     }
-  })
+  });
 
   // This event is fired when the data source is drained no matter what was the data source.
   // It is not part of this library but rather from the NodeJS Stream API.
