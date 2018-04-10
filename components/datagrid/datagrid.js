@@ -2365,8 +2365,6 @@ Datagrid.prototype = {
       let currentCount = i;
       if (s.treeGrid) {
         currentCount = this.recordCount;
-      } else if (s.filterable) {
-        currentCount = i - this.filteredCount;
       }
 
       tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
