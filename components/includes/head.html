@@ -6,7 +6,7 @@
     {{#subtitle}}
       {{subtitle}} |
     {{/subtitle}}
-    {{title}}
+    {{title}}{{nonce}}
   </title>
 
   <!-- Meta Info -->
@@ -16,15 +16,15 @@
   <meta name="version" content="{{version}}"/>
   <meta name="commit" content="{{commit}}"/>
 
-  <script src="{{basepath}}js/jquery-3.1.1.js"></script>
-  <script src="{{basepath}}js/d3.v4.js"></script>
+  <script src="{{basepath}}js/jquery-3.1.1.js" {{#nonce}}nonce="{{nonce}}"{{/nonce}}></script>
+  <script src="{{basepath}}js/d3.v4.js" {{#nonce}}nonce="{{nonce}}"{{/nonce}}></script>
   {{#minify}}
-    <script src="{{basepath}}js/sohoxi.min.js"></script>
+    <script src="{{basepath}}js/sohoxi.min.js" {{#nonce}}nonce="{{nonce}}"{{/nonce}}></script>
   {{/minify}}
   {{^minify}}
-    <script src="{{basepath}}js/sohoxi.js"></script>
+    <script src="{{basepath}}js/sohoxi.js" {{#nonce}}nonce="{{nonce}}"{{/nonce}}></script>
   {{/minify}}
-  <script src="{{basepath}}js/sohoxi-migrate-4.4.0.js"></script>
+  <script src="{{basepath}}js/sohoxi-migrate-4.4.0.js" {{#nonce}}nonce="{{nonce}}"{{/nonce}}></script>
 
   <!-- Supplying the culture in the head is supported
   <script src="{{basepath}}js/sohoxi.js?v=MTIuMC4wLjAuMQ"></script>
@@ -34,7 +34,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
   {{/font}}
 
-  <script>
+  <script nonce="{{nonce}}">
     var colors;
     var theme;
     var font = '';

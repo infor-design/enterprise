@@ -104,6 +104,35 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
+   * Append the local script to the page.
+   * @param {string} locale The locale name to append.
+   * @returns {void}
+   */
+  appendLocaleScript(locale) {
+    const script = document.createElement('script');
+
+    script.src = `${this.getCulturesPath() + locale}.js`;
+    script.onload = () => {
+      this.setCurrentLocale(locale, this.cultures[locale]);
+      this.addCulture(locale, this.currentLocale.data);
+
+      if (locale && (locale === 'en-US' || this.cultures['en-US'])) {
+        this.dff.resolve(this.currentLocale.name);
+      }
+    };
+
+    script.onerror = () => {
+      this.dff.reject();
+    };
+
+    if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.nonce === 'string') {
+      script.setAttribute('nonce', window.SohoConfig.nonce);
+    }
+
+    document.head.appendChild(script);
+  },
+
+  /**
    * Set the currently used locale.
    * @param {string} locale The locale to fetch and set.
    * @returns {jquery.deferred} which is resolved once the locale culture is retrieved and set
@@ -119,36 +148,12 @@ const Locale = {  // eslint-disable-line
 
     if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
       this.setCurrentLocale(locale);
-
-      // fetch the local and cache it
-      $.ajax({
-        url: `${this.getCulturesPath() + this.currentLocale.name}.js`,
-        dataType: 'script',
-        error() {
-          self.dff.reject();
-        }
-      }).done(() => {
-        self.setCurrentLocale(locale, self.cultures[locale]);
-        self.addCulture(locale, self.currentLocale.data);
-
-        if (locale && (locale === 'en-US' || self.cultures['en-US'])) {
-          self.dff.resolve(self.currentLocale.name);
-        }
-      });
+      // Fetch the local and cache it
+      this.appendLocaleScript(locale);
     }
 
     if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
-      // fetch the english local and cache it from translation defaults
-      $.ajax({
-        url: `${this.getCulturesPath()}en-US.js`,
-        dataType: 'script',
-        error() {
-          self.dff.reject();
-        }
-      }).done(() => {
-        self.addCulture(locale, self.currentLocale.data);
-        self.dff.resolve(self.currentLocale.name);
-      });
+      this.appendLocaleScript('en-US');
     }
 
     if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
