@@ -88,7 +88,7 @@ The test will rerun.
 5. Update your test and save
 6. Tests will run again.. Repeat..
 
-## Checking Coverage
+## Checking Unit Test Coverage
 1. Run the test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run local:unit`
 2. While the browser is open. Go to `cd coverage`
 3. Start a simple web server `python -m SimpleHTTPServer`
@@ -101,6 +101,20 @@ The test will rerun.
 - Select a menu button menu item etc..
 - Themes
 - RTL
+
+## Functional Testing Coverage
+* Excluding screen reader (JAWS, etc) testing
+
+##### Testing Coverage Rating Scale
+☹️ 😕 😐 🙂 😁
+
+Component | Functional Test Coverage
+------------- | :-------------:
+Dropdown | ☹️
+MultiSelect | 🙂
+Validation | ☹️
+Popupmenu | 😐
+Button | 😁
 
 ## Testing Resources
 
