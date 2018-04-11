@@ -126,7 +126,7 @@ Wizard.prototype = {
     this.ticks.each(function (i) {
       const tick = $(this);
       const label = tick.children('.label');
-      const left = Locale.isRTL() ? (100 - tickPos[i]) : tickPos[i];
+      const left = (Locale ? Locale.isRTL() : false) ? (100 - tickPos[i]) : tickPos[i];
 
       this.style.left = `${left}%`;
 
@@ -152,7 +152,8 @@ Wizard.prototype = {
     if (currentTick.length) {
       widthPercentage = (100 * parseFloat(window.getComputedStyle(currentTick[0]).left) /
         parseFloat(window.getComputedStyle(currentTick.parent()[0]).width));
-      widthPercentage = Locale.isRTL() ? (100 - widthPercentage) : widthPercentage;
+      widthPercentage = (Locale ? Locale.isRTL() : false) ? (100 - widthPercentage)
+        : widthPercentage;
     }
 
     this.completedRange[0].style.width = `${widthPercentage}%`;

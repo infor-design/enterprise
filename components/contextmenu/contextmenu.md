@@ -1,28 +1,29 @@
+---
+title: Context Menu
+description: This page describes Context Menu .
+demo:
+  pages:
+  - name: Context Menu on an Input
+    slug: example-index
+---
 
-# Context Menu [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
-
-## Configuration Options
-
-1. Context Menu on an Input [View Example]( ../components/contextmenu/example-index)
-
-## API Details
-
-For all api information [See the popup menu]( ../components/popupmenu) as this component is used to make a contextmenu via its option `trigger: 'right-click'`.
+For all API information see the [popup menu](./popupmenu) as this component is used to make a context menu via its option `trigger: 'right-click'`.
 
 ## Code Example
 
-The context menu control is also referred to as a popupmenu. It can be invoked in several ways. As a right click menu fx on an input field or grid or list row. As a click menu for example on a menu or actions button. Or manually on demand via the api.
+The context menu control is also referred to as a popup menu. It can be invoked in several ways:
 
-The structure of the menu is a ul element with li elements containing links for each of the rows in the menu. An other ul element can be added to create a submenu. Use only one level of submenus for accessibility and usability reasons.
+* as a right click menu; for example, on an input field, grid, or list row
+* as a click menu; for example, on a menu or action button
+* or manually, on demand, via the API
 
-The class popupmenu should be added to the ul elements at the top and submenu level. You can create rows as space separators for grouping with the tag with the class separator. You can create rows as groups with titles as well with the class group.
+The structure of the menu is a `<ul>` element with `<li>` elements containing links for each of the rows in the menu. Another `<ul>` element can be added to create a sub-menu. Use only one level of sub-menus for accessibility and usability reasons.
 
-The popupmenu can be linked as a right click menu item by adding the attribute data-popupmenu="action-popupmenu" to any element that should get the menu, this should point to the id of the menu.
+The class `popupmenu` should be added to the `<ul>` elements at the top and sub-menu level. You can create rows as space separators for grouping with the class `separator`. You can create rows as groups with titles with the class `group`.
 
-This page focus on the right click popup menu (Context Menu).
+The popup menu can be linked as a right-click menu item by adding the attribute `data-popupmenu="action-popupmenu"` to any element that should get the menu. This should point to the `id` of the menu.
 
 ```html
-
 <div class="field">
   <label for="input-menu">Label</label>
   <input type="text" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu">
@@ -48,14 +49,12 @@ This page focus on the right click popup menu (Context Menu).
   <li class="is-selectable is-checked"><a href="#">Conditional formatting</a></li>
   <li class="is-selectable"><a href="#">Data validation</a></li>
 </ul>
-
-
 ```
 
 ## Coding Tips
 
 -   If necessary, the options can be broken up into categories
--   The Context Menu should not be used as a navigation method
--   A shortcut/right-click menu should never be the only method of performing specific actions, as such actions are not easily discoverable by the user
+-   The context menu should not be used as a navigation method
+-   A right-click menu should never be the only method of performing specific actions as the actions are not easily discoverable by the user
 
-For all additional information [See the popup menu]( ../components/popupmenu) as this component is used to make a contextmenu via its option `trigger: 'right-click'`.
+For all additional information, see the [popup menu](./popupmenu) as this component is used to make a context menu via it's option `trigger: 'right-click'`.

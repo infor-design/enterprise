@@ -1,10 +1,11 @@
-# Textarea Component [Learn More](#)
+---
+title: Textarea Component
+description: This page describes Textarea Component .
+---
 
 ## Configuration Details
 
 1. [Text Area  Examples]( ../components/textarea/example-index)
-
-{{api-details}}
 
 ## Behavior Guidelines
 
@@ -29,24 +30,17 @@ Text areas support:
 -   Disabled/Enabled
 
 ```html
-
-
 <div class="field">
   <label for="description">Notes (resizable)</label>
   <textarea id="description" class="resizable" name="description" placeholder="Type your notes here..."></textarea>
 </div>
-
-
 ```
 
 ```html
-
 <div class="field">
   <label for="description-max">Notes (maxlength)</label>
   <textarea id="description-max" class="textarea" maxlength="90" name="description-max" >Line One</textarea>
 </div>
-
-
 ```
 
 ## Implementation Tips

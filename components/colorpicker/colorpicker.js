@@ -1,3 +1,4 @@
+import { Environment as env } from '../utils/environment';
 import * as debug from '../utils/debug';
 import { utils } from '../utils/utils';
 import { Locale } from '../locale/locale';
@@ -139,6 +140,9 @@ function ColorPicker(element, settings) {
 ColorPicker.prototype = {
 
   init() {
+    this.isIe = env.browser.name === 'ie';
+    this.isIeEdge = env.browser.name === 'edge';
+    this.isIe11 = this.isIe && env.browser.version === '11';
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
@@ -584,7 +588,7 @@ ColorPicker.prototype = {
   },
 
   teardown() {
-    this.element.off('keyup.colorpicker blur.colorpicker openlist.colorpicker change.colorpicker paste.colorpicker');
+    this.element.off('keypress.colorpicker keyup.colorpicker blur.colorpicker openlist.colorpicker change.colorpicker paste.colorpicker');
     this.swatch.off('click.colorpicker');
     this.swatch.remove();
     this.container.find('.trigger').remove();
@@ -614,34 +618,47 @@ ColorPicker.prototype = {
   * @returns {void}
   */
   handleEvents() {
-    const self = this;
+    const elem = this.element;
+    const elemParent = elem.parent();
+    let originalVal;
+
     this.icon.parent().on('click.colorpicker', () => {
-      self.toggleList();
+      this.toggleList();
     });
 
-    this.element.on('focus.colorpicker', function () {
-      $(this).parent().addClass('is-focused');
-    })
-      .on('blur.colorpicker', function () {
-        $(this).parent().removeClass('is-focused');
+    elem
+      .on('focus.colorpicker', () => {
+        originalVal = elem.val();
+        elemParent.addClass('is-focused');
+      })
+      .on('blur.colorpicker', () => {
+        elemParent.removeClass('is-focused');
+
+        // Fix: Force to change event
+        // IE-Edge not firing `change event` after updated input-s values
+        if (this.isIeEdge && !elem.is('.is-open') && originalVal !== elem.val()) {
+          elem.triggerHandler('change');
+        }
       })
       .on('openlist.colorpicker', () => {
-        self.toggleList();
+        this.toggleList();
       });
 
-    this.element.on('keyup.colorpicker blur.colorpicker paste.colorpicker change.colorpicker', function () {
-      const val = $(this).val();
-      if (self.settings.showLabel) {
-        self.setColor($(this).attr('value'), val);
+    let eventStr = 'blur.colorpicker paste.colorpicker change.colorpicker';
+    eventStr += this.isIe11 ? 'keypress.colorpicker' : 'keyup.colorpicker';
+    elem.on(eventStr, () => {
+      const val = elem.val();
+      if (this.settings.showLabel) {
+        this.setColor(elem.attr('value'), val);
         return;
       }
-      self.setColor(val);
+      this.setColor(val);
     });
 
     // Handle Key Down to open
-    this.element.on('keydown.colorpicker', (e) => {
+    elem.on('keydown.colorpicker', (e) => {
       if (e.keyCode === 38 || e.keyCode === 40) {
-        self.toggleList();
+        this.toggleList();
       }
     });
   }

@@ -1,16 +1,17 @@
-
-# Masthead  [Learn More](#)
-
-## Configuration Options
-
-1. Default Masthead Example [View Example]( ../components/masthead/example-index)
+---
+title: Masthead
+description: This page describes Masthead.
+demo:
+  pages:
+  - name: Default Masthead Example
+    slug: example-index
+---
 
 ## Code Example
 
 The masthead can be added to applications when not running inside mingle to add functionality that mingle would add that you need standalone. When running in mingle, detect and do not show the mast head.
 
 ```html
-
 <section class="masthead" role="banner">
   <div class="toolbar no-actions-button" data-options="{maxVisibleButtons: 6}">
     <div class="title">
@@ -62,23 +63,21 @@ The masthead can be added to applications when not running inside mingle to add 
     </div>
   </div>
 </section>
-
-
 ```
 
 ## Accessibility
 
--  Use the role="banner" landmark role
--  Should use html5 section or nav type.
+-  Use the `role="banner"` Landmark role
+-  Should use html5 section or nav type
 
 ## Keyboard Shortcuts
 
--   The header action buttons should function as a toolbar, see toolbar page for guidelines.
+The header action buttons should function as a toolbar, see [toolbar](./toolbar) page for guidelines.
 
 ## Responsive Guidelines
 
--   Menu will resize vertically, if buttons do not fit will fold into the more menu like a toolbar.
+Menu will resize vertically, if buttons do not fit will fold into the "More" menu like a toolbar.
 
 ## Upgrading from 3.X
 
--   Masthead Replaces the inforTopBanner css. The markup and css is entirely different to support new look and behavior.
+Masthead replaces the `inforTopBanner` CSS. The markup and CSS Is entirely different to support new look and behavior.

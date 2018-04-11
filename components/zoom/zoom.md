@@ -1,3 +1,4 @@
-# Zoom Component [Learn More](#)
-
-{{api-details}}
+---
+title: Zoom Component
+description: This page describes Zoom Component .
+---

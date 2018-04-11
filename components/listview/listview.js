@@ -823,7 +823,7 @@ ListView.prototype = {
         title = $('<div class="title selection-count"></div>');
         toolbar.prepend(title);
       }
-      title.text(`${self.selectedItems.length} ${Locale.translate('Selected')}`);
+      title.text(`${self.selectedItems.length} ${Locale ? Locale.translate('Selected') : 'Selected'}`);
     } else {
       toolbar.addClass('is-hidden').one('animateclosedcomplete', function (e) {
         e.stopPropagation();

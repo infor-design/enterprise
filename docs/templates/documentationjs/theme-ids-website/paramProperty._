@@ -1,0 +1,17 @@
+<tr>
+  <td class="jsdoc-childprop--name">
+    <%- property.name %>
+  </td>
+  <td>
+    <code><%= formatType(property.type) %><% if (property.default) { %>=<%- property.default %><% } %></code>
+  </td>
+  <td class="jsdoc-childprop--desc"><%= md(property.description, true) %></td>
+</tr>
+<% if(property.properties && property.properties.length) { %>
+  <% property.properties.forEach(function(childProperty) { %>
+    <%= renderParamProperty({
+      property: childProperty,
+      renderParamProperty: renderParamProperty
+    }) %>
+  <% }) %>
+<% } %>

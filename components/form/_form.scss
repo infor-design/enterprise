@@ -29,6 +29,13 @@
     width: 100%;
   }
 
+  .label,
+  label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
 }
 
 @include respond-to(tabletdown) {

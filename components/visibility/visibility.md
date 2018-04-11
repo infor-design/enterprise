@@ -1,4 +1,7 @@
-# Visibility CSS Classes [Learn More](#)
+---
+title: Visibility CSS Classes 
+description: This page describes Visibility CSS Classes .
+---
 
 The Soho visibility classes allow elements to become conditionally visible or hidden based on breakpoint size.  They also provide a way to conveniently change the CSS `display` property on a per-breakpoint basis.
 

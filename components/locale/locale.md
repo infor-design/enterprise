@@ -1,12 +1,12 @@
-
-# Locale  [Learn More](#)
+---
+title: Locale
+description: This page describes Locale.
+---
 
 ## Configuration Options
 
 1. Simple Number Example [View Example]( ../components/locale/test-locale)
 
-
-{{api-details}}
 
 
 ## Code Example - Initializing
@@ -16,12 +16,9 @@ The Locale component is used in many of the components to handle localization  1
 The first and main step is to initialize the locale. This can be done via the initializer or manually with a locale call.
 
 ```javascript
-
 $('body').initialize('en-US');
 // or....
 Locale.set('es-ES');
-
-
 ```
 
 ## Code Example - Translation
@@ -29,13 +26,10 @@ Locale.set('es-ES');
 We have a number of internal strings that are used in the components. These can be extended and used by applications. Keep in mind that the set function must fetch the locale file from the server so it is asynchronous.
 
 ```javascript
-
 Locale.set('es-ES').done(function () {
   Locale.translate('Cancel');
   // Returns Cancelar
 });
-
-
 ```
 
 ## Code Example - Numbers
@@ -43,11 +37,8 @@ Locale.set('es-ES').done(function () {
 You can use the formatNumber to display a numeric type in a localized format. You can use parseNumber to convert that number back to the numeric type. Not that by default the formatNumber function uses truncation (.129 becomes .12). To use rounding add the `round: true` option.
 
 ```javascript
-
 Locale.formatNumber(20.1, {style: 'decimal', round: true, minimumFractionDigits: 2}));
 // Returns 20.10
-
-
 ```
 
 ## Number Format Patterns
@@ -55,7 +46,6 @@ Locale.formatNumber(20.1, {style: 'decimal', round: true, minimumFractionDigits:
 The formatNumber accepts a numberFormat object with formatting information. For example:
 
 ```javascript
-
 numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}
 
 ```
@@ -73,10 +63,7 @@ You can use the formatDate to display a date type in a localized format. You can
 
 
 ```javascript
-
 Locale.formatDate(newDate());
-
-
 ```
 
 ## Date and Time Format Patterns

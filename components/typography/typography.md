@@ -1,12 +1,11 @@
-# Typography [Learn More](https://soho.infor.com/index.php?p=component/typography)
-
-## API Details
-
-Typography styles in Soho do not have a Javascript API.
-
-## Examples
-
-1. [Main Example Page]( ../components/typography/example-index)
+---
+title: Typography
+description: This page describes Typography .
+demo:
+  pages:
+    - name: Main Example Page
+      slug: example-index
+---
 
 ## Font family
 
@@ -19,17 +18,62 @@ To enable this font in the components first you need to add this link to the hea
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet"/>
 ```
 
-After that you can either
+After that you can either:
 
-1. Add the class `font-source-sans` to the html tag.
-2. Or Pass it in to the personalize api....
+1. Add the class `font-source-sans` to the html tag like `<html class="font-source-sans>`
+2. Or pass it in to the personalize API as the example below shows:
 
 ```javascript
 $('html').personalize({colors: ['80000'], theme: 'dark', font: 'source-sans'});
 ```
 
+<<<<<<< HEAD
+<!--
+The sample app can be run with this font by adding the `?font=source-sans` parameter to any page. For example `components/personalize/example-index.html?font=source-sans`
+-->
+=======
 Also sample app can be run with this font by adding the `?font=source-sans` parameter to any page. For example
 [Main Example Page]( ../components/personalize/example-index.html?font=source-sans)
+
+## Typography Related Classes
+
+The following classes can be used for text color:
+
+* `text-default`- Makes the text the normal default color for the theme.
+* `text-descriptive ` - Used for descriptive text so a bit lighter.
+* `text-muted` - Used for disable/subtle text so even more.
+* `text-link` - Style text to look like a link. (Primary Color)
+
+The following classes can be used for text style:
+
+* `text-emphasis` - Style text to show in italics. Often used on timestamps.
+* `text-strong ` - Style text to look bold. Often used for group labels or emphasis.
+* `text-alert` or `alert-text` - Style text to a red alert. (Alter Color) Used for errors. You should always use an icon with text in order to give meaning to color blind users.
+* `text-uppercase` or `uppercase-text` - Force text to uppercase.
+
+The following classes can be used for text size:
+
+* `text-primary` - Used for primary sized text (1.8rem). Used for headings.
+* `text-secondary` - Used for primary sized text (1.6rem). Used for subheadings.
+* `text-base` - Used for normal/default text (1.4rem).
+* `text-small` - Used for normal/default text (1.2rem).
+* `larger-heavy-text` -  Shows text slightly larger and emphasized. Used for totals or group labels.
+* `data-large` -  Shows text in an even larger size (2.2em) used for count style data labels.
+* `xl-text` -  Shows text in an even larger size (5em) used for form counts.
+
+The following classes can be used for errors/warnings
+
+* `alert-text` - Shows text for alerts in ruby/red. Along with an icon.
+* `error-text` -  Shows text for error messages in ruby/red.
+* `warning-text` -  Shows text for warning messages.
+* `good-text` -  Shows text for good /positive affirmation in green/emerald
+* `info-text` -  Shows text for information blue/azure
+
+The following classes can be used for text alignment
+
+* `align-text-left` - Set text alignment to left.
+* `align-text-right` -  Set text alignment to right.
+* `align-text-right` or `center-text` -  Set text alignment to center.
 
 ## Title Case vs. Sentence Case
 
@@ -65,7 +109,8 @@ In general, "Number" should not be used in labels. Example: use "Advance Ship No
 If abbreviations are needed (useful in datagrid), it is better to abbreviate by removing words, for example removing "Item" since context is known. "Item Number" could become "Number" or "Num", and "Item Description" could become "Description" or "Desc"
 
 When a field can contain one or more items, use the plural. Example: rather than "Group(s)", use "Groups"
+>>>>>>> origin/4.6.0-rc
 
-## Ellipsis for Actions
+## Usage
 
-While menu commands are used for immediate actions, more information might be needed to perform those actions. To indicate a command that needs additional information (including a confirmation), add an ellipsis ("...") to the end of the label. This doesn't mean you should use an ellipsis whenever an action displays another window—only when additional information is required to perform the action. For example, the commands About, Advanced, Help, Options, Properties, and Settings must display another window when clicked, but don't require additional information from the user. Therefore, they don't need ellipses.
+For further font, typography, and grammar usage, see the [Typography guidelines](/guidelines/identity/typography).

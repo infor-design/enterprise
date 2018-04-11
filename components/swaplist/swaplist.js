@@ -207,7 +207,7 @@ SwapList.prototype = {
     s.numOfSelectionsClass = 'num-of-selections';
     s.itemContentClass = 'swaplist-item-content';
     s.itemContentTempl = $(`<div><p><span class="${s.numOfSelectionsClass}">###</span> ${
-      Locale.translate('ItemsSelected')}</p><div/>`);
+      Locale ? Locale.translate('ItemsSelected') : ' Items Selected '}</p><div/>`);
 
     // Make top buttons disable if not draggable
     if (!s.draggable.available) {

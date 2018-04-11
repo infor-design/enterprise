@@ -29,16 +29,15 @@ const axeOptions = {
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Popupmenu tests', () => {
-  beforeEach(async (done) => {
+describe('Popupmenu example-selectable tests', () => {
+  beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    done();
+    await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
   });
 
   // Disable IE11: Async timeout errors
   if (browser.browserName.toLowerCase() !== 'ie') {
     it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
-      await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
 
@@ -51,7 +50,6 @@ describe('Popupmenu tests', () => {
     });
 
     it('Should be accessible on close with no WCAG2AA violations on keypress(Spacebar)', async () => {
-      await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
 
@@ -66,7 +64,6 @@ describe('Popupmenu tests', () => {
 
   if (browser.browserName.toLowerCase() !== 'ie' && browser.browserName.toLowerCase() !== 'safari') {
     it('Should open with enter, and arrow down to the last menu item, and focus', async () => {
-      await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
@@ -80,7 +77,6 @@ describe('Popupmenu tests', () => {
     });
 
     it('Should select last item on spacebar, arrowing down', async () => {
-      await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
@@ -94,9 +90,17 @@ describe('Popupmenu tests', () => {
 
       expect(await listItem.getAttribute('class')).toEqual('is-checked');
     });
+  }
+});
 
+describe('Popupmenu example-selectable-multiple tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple');
+  });
+
+  if (browser.browserName.toLowerCase() !== 'ie' && browser.browserName.toLowerCase() !== 'safari') {
     it('Should select first, and last item on spacebar, arrowing down', async () => {
-      await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple');
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
@@ -115,7 +119,6 @@ describe('Popupmenu tests', () => {
     });
 
     it('Should select first, and last item on spacebar, unselect last item, arrowing down', async () => {
-      await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple');
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);

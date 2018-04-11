@@ -58,8 +58,6 @@ function Pager(element, settings) {
 
 Pager.prototype = {
 
-  pagerInfo: {},
-
   /**
    * Init the pager.
    * @private
@@ -72,6 +70,8 @@ Pager.prototype = {
     this.renderBar();
     this.renderPages('initial');
     this.handleEvents();
+    this.pagerInfo = {};
+    this._pageCount = 0;
   },
 
   /**
@@ -404,8 +404,6 @@ Pager.prototype = {
     return pageNum;
   },
 
-  _pageCount: 0,
-
   /**
    * Get the Total Number of pages
    * @private
@@ -677,16 +675,18 @@ Pager.prototype = {
   /**
    * Render a page of items.
    * @private
-   * @param  {object} op The paging operation.
-   * @param  {function} callback The pager callback.
+   * @param {object} op The paging operation.
+   * @param {function} callback The pager callback.
+   * @param {string} trigger The triggering action.
    */
-  renderPages(op, callback) {
+  renderPages(op, callback, trigger) {
     let expr;
     const self = this;
     const request = {
       activePage: self.activePage,
       pagesize: self.settings.pagesize,
       type: op,
+      trigger,
       total: self.settings.componentAPI ? self.settings.componentAPI.settings.dataset.length : -1
     };
 

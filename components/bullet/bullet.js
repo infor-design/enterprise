@@ -46,6 +46,8 @@ Bullet.prototype = {
    * @returns {object} The bullet chart prototype for chaining.
    */
   init() {
+    this.width = 0;
+
     // Do initialization. Build or Events ect
     this
       .build()
@@ -354,8 +356,6 @@ Bullet.prototype = {
 
     return this;
   },
-
-  width: 0,
 
   /*
    * Handles resizing a chart.

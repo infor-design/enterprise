@@ -11,14 +11,16 @@ module.exports = {
   // https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base/rules
   'extends': [
     'airbnb-base',
-    'plugin:jasmine/recommended'
+    'plugin:jasmine/recommended',
+    'plugin:jasmine-jquery/recommended'
   ],
   'parserOptions': {
     'ecmaVersion': 8,
     'sourceType': 'module'
   },
   'plugins': [
-    'jasmine'
+    'jasmine',
+    'jasmine-jquery'
   ],
   'env': {
     'browser': true,
@@ -149,7 +151,7 @@ module.exports = {
     // https://eslint.org/docs/rules/max-len
     'max-len': ['error', {
       code: 100,
-      comments: 150,
+      comments: 350,
       ignoreUrls: true,
       ignoreComments: false,
       ignoreRegExpLiterals: true,
@@ -162,6 +164,7 @@ module.exports = {
 
   },
   'globals': {
-    'd3': false
+    'd3': false,
+    'spyOnEvent': true
   }
 };

@@ -1,5 +1,7 @@
-
-# Pie Chart  [Learn More](#)
+---
+title: Pie Chart
+description: This page describes Pie Chart.
+---
 
 ## Configuration Options
 
@@ -11,16 +13,11 @@
 6. Example showing Get Selected value [View Example]( ../components/pie/example-get-selected)
 7. Example showing Set Selected value [View Example]( ../components/pie/example-set-selected)
 
-## API Details
-
-{{api-details}}
-
 ## Code Example
 
 This example shows how to invoke a pie bar chart with a dataset controlling the values.
 
 ```javascript
-
   var pieData = [{
       data: [{
           name: 'Component A',

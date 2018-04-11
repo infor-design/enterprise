@@ -1,31 +1,42 @@
-
-# Busy Indicator  [Learn More](#)
-
-## Configuration Options
-
-1. Busy Form Example [View Example]( ../components/busyindicator/example-index)
-2. Busy Input Elements [View Example]( ../components/busyindicator/example-inputs)
-3. Non Blocking Busy Indicator [View Example]( ../components/busyindicator/example-non-blocking)
-4. Smaller Size [View Example]( ../components/busyindicator/example-small)
-5. On the Page Body [View Example]( ../components/busyindicator/example-body)
-6. Customize Loading Text [View Example]( ../components/busyindicator/example-custom-loading-text.html)
-7. Nested Busy Indicators [View Example]( ../components/busyindicator/test-nested.html)
-8. transparent Overlay [View Example]( ../components/busyindicator/example-transparent-overlay.html)
-9. Ajax Calls [View Test]( ../components/busyindicator/test-ajax-calls)
-10. Block Entire UI [View Test]( ../components/busyindicator/test-ajax-calls)
-11. Block Specific Area [View Test]( ../components/busyindicator/test-ajax-calls)
-12. In Font-size Zero [View Test]( ../components/busyindicator/test-contained-in-font-size-0)
-13. Delay before Display [View Test]( ../components/busyindicator/test-delayed-display.html)
-
-{{api-details}}
+---
+title: Busy Indicator
+description: This page describes Busy Indicator.
+demo:
+  pages:
+  - name: Busy Form Example
+    slug: example-index
+  - name: Busy Input Elements
+    slug: example-inputs
+  - name: Non Blocking Busy Indicator
+    slug: example-non-blocking
+  - name: Smaller Size
+    slug: example-small
+  - name: On the Page Body
+    slug: example-body
+  - name: Customize Loading Text
+    slug: example-custom-loading-text.html
+  - name: Nested Busy Indicators
+    slug: test-nested.html
+  - name: transparent Overlay
+    slug: example-transparent-overlay.html
+  - name: Ajax Calls
+    slug: test-ajax-calls
+  - name: Block Entire UI
+    slug: test-ajax-calls
+  - name: Block Specific Area
+    slug: test-ajax-calls
+  - name: In Font-size Zero
+    slug: test-contained-in-font-size-0
+  - name: Delay before Display
+    slug: test-delayed-display.html
+---
 
 ## Code Example
 
-To use the busy indicator place it on a element with class = "busy". Keep in mind it will center itself on that element.
-You can provide the options inline in the data-options. This example is using the initializer. If you arent call `$('#busy-form').busyindicator()` to init the plugin.
+To use the busy indicator place it on a element with class `busy`. Keep in mind it will center itself on that element.
+You can provide the options inline in the `data-options`. This example below uses the initializer. If you're not using the initializer, call `$('#busy-form').busyindicator()` to initialize the plugin.
 
 ```html
-
 <form id="busy-form" class="busy" action="#" method="POST" data-options="{ 'displayDelay': 100, 'timeToComplete': 4000 }">
   <div class="field">
     <label for="busy-field-name">Name</label>
@@ -46,10 +57,9 @@ You can provide the options inline in the data-options. This example is using th
 
 ```
 
-When a task happens that requires the indicator; you can trigger the event on the element to force this indicator to show.
+When a task happens that requires the indicator, you can trigger the event on the element to force this indicator to show.
 
 ```javascript
-
 $('#busy-form button[type="submit"]').click(function(e) {
   e.preventDefault();
   $('#busy-form').trigger('start.busyindicator');
@@ -57,13 +67,6 @@ $('#busy-form button[type="submit"]').click(function(e) {
 
 ```
 
-## States and Variations
-
-Elements that contain a Busy Indicator will have the following states:
-
--   Normal
--   Busy (Active)
-
 ## Responsive Guidelines
 
-Busy Indicators that block UI will usually be placed at a "container" or "form" level, and will cover the container/form elements with an overlay. The overlay should stretch to cover the width and height of the container/form.
+Busy Indicators that block UI will usually be placed at a "container" or "form" level, and will cover the container or form elements with an overlay. The overlay should stretch to cover the width and height of the container or form.

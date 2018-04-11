@@ -1,3 +1,4 @@
-# Templating Component [Learn More](#)
-
-{{api-details}}
+---
+title: Templating Component 
+description: This page describes Templating Component .
+---

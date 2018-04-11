@@ -1,4 +1,7 @@
-# Swaplist Component [Learn More](https://soho.infor.com/index.php?p=component/swaplist)
+---
+title: Swaplist Component
+description: This page describes Swaplist Component .
+---
 
 ## Configuration options
 
@@ -6,8 +9,6 @@
 2. Swaplist with Selected Items [View Example](../components/swaplist/example-selected.html)
 3. Swaplist with Filter/Search [View Example](../components/swaplist/example-search.html)
 4. Swaplist with Disable Dragging [View Example](../components/swaplist/example-disable-dragging.html)
-
-{{api-details}}
 
 ## Behavior Guidelines
 
@@ -22,7 +23,6 @@ The markup structure of the component itself is made up of a parent container th
 Initialize the component by calling .swaplist() on the element and passing a JSON Array for the available, selected sides and reference to the template. (Not the the template can also be passed here as a string instead of being in the DOM.
 
 ```javascript
-
 var available = [], selected = [];
 
 available.push({id: 1, value: 'opt-1', text: 'Option A'});
@@ -39,8 +39,6 @@ selected.push({id: 10, value: 'opt-10', text: 'Option J'});
 selected.push({id: 11, value: 'opt-11', text: 'Option K'});
 
 $('#example-swaplist-1').swaplist({available: available, selected: selected, template: $('#swaplist-tmpl').html()});
-
-
 ```
 
 ## Accessibility
@@ -49,10 +47,10 @@ $('#example-swaplist-1').swaplist({available: available, selected: selected, tem
 
 ## Keyboard Shortcuts
 
-- **Tab** Tabs in and out of the list boxes and the between the buttons on the Toolbars and the adjacent objects.
-- **Arrow up / Down** - Moves up and down the currently focused list
-- **Enter/Space** - Toggles selection if a list item is focused
-- **CTRL+M** - Moves the currently selected items in one list to the next list. If in the middle list focus will be on the toolbar and you can choose which ones to go to.
+- <kbd>Tab</kbd> Tabs in and out of the list boxes and the between the buttons on the Toolbars and the adjacent objects.
+- <kbd>Arrow up / Down</kbd> Moves up and down the currently focused list
+- <kbd>Enter/Space</kbd> Toggles selection if a list item is focused
+- <kbd>CTRL+M</kbd> Moves the currently selected items in one list to the next list. If in the middle list focus will be on the toolbar and you can choose which ones to go to.
 
 ## States and Variations
 

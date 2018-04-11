@@ -21,7 +21,7 @@ exports.config = {
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
     'browserstack.debug': true,
     'browserstack.local': true,
-    build: 'Protractor',
+    build: 'Functional',
     name: 'Functional tests'
   },
   multiCapabilities: [

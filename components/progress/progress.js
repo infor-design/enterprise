@@ -49,7 +49,7 @@ Progress.prototype = {
    * @param  {string} value The progress value.
    */
   updateAria(value) {
-    this.element.attr({ role: 'progressbar', 'aria-valuenow': value, 'aria-maxvalue': '100' });
+    this.element.attr({ role: 'progressbar', 'aria-valuenow': value, 'aria-valuemax': '100' });
 
     const container = this.element.parent();
     if (container.data('tooltip')) {

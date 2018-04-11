@@ -1,18 +1,17 @@
-
-# List Filter  [Learn More](#)
-
-## Configuration Options
-
-1. Multiselect Filter Types [View Example]( ../components/multiselect/test-filter-types)
-
-{{api-details}}
+---
+title: List Filter
+description: This page describes List Filter.
+demo:
+  pages:
+  - name: Multiselect Filter Types
+    slug: test-filter-types
+---
 
 ## Code Example
 
-This is a component behavior used on [listview]( ../components/listview), [dropdown]( ../components/dropdown) and [multiselect]( ../components/multiselect) other components. However, its API may be useful in applications for filtering elements.
+This is a component behavior used on [listview]( ./listview), [dropdown]( ./dropdown) and [multiselect]( ./multiselect) components. However, its API may be useful in applications for filtering elements.
 
 ```javascript
-
 // Make a List filter object
 this.listfilter = new ListFilter({
   filterMode: 'contains'

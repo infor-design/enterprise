@@ -1,27 +1,37 @@
-
-# Contextual Action Panel  [Learn More](#)
-
-## Configuration Options
-
-1. Default CAP Example [View Example]( ../components/contextualactionpanel/example-index)
-2. CAP using jQuery Object for Content [View Example]( ../components/contextualactionpanel/example-jquery)
-3. CAP using Inline Markup for Content [View Example]( ../components/contextualactionpanel/example-markup)
-3. CAP example triggering on adjacent content [View Example]( ../components/contextualactionpanel/example-trigger)
-4. Toolbar Alignment Test [View Test]( /component/contextualactionpanel/test-alignment)
-5. Destroy Test [View Test]( ../components/contextualactionpanel/test-destroy)
-6. Launching From a Menu [View Test]( ../components/contextualactionpanel/test-from-menu)
-7. IFrame for Contents [View Test]( ../components/contextualactionpanel/test-iframe)
-8. Open on Grid Rows [View Test]( ../components/contextualactionpanel/test-trigger-immediate)
-9. Search Field / Keyboard Test [View Test]( ../components/contextualactionpanel/test-searchfield)
-
-{{api-details}}
+---
+title: Contextual Action Panel
+description: This page describes Contextual Action Panel.
+demo:
+  pages:
+  - name: Default CAP Example
+    slug: example-index
+  - name: CAP using jQuery Object for Content
+    slug: example-jquery
+  - name: CAP using Inline Markup for Content
+    slug: example-markup
+  - name: CAP example triggering on adjacent content
+    slug: example-trigger
+  - name: Destroy Test
+    slug: test-destroy
+  - name: Launching From a Menu
+    slug: test-from-menu
+  - name: IFrame for Contents
+    slug: test-iframe
+  - name: Open on Grid Rows
+    slug: test-trigger-immediate
+  - name: Search Field / Keyboard Test
+    slug: test-searchfield
+test:
+  pages:
+    - name: Toolbar Alignment Test
+      slug: test-alignment
+---
 
 ## Code Example
 
-This example shows how to invoke a Contextual Action Panel (CAP) and pass in the content for the CAP body. The buttons option lets you customize the CAP's toolbar and functions.
+This example shows how to invoke a contextual action panel and pass in the content for the body. The `buttons` option lets you customize the contextual action panel's toolbar and functions.
 
 ```javascript
-
 $('body').contextualactionpanel({
   id: 'contextual-action-modal-id',
   title: 'Expenses: $50,000.00',
@@ -41,27 +51,20 @@ $('body').contextualactionpanel({
     }
   ]
 });
-
-
 ```
 
 ## Keyboard Shortcuts
 
-The Contextual Action Panel inherits the following keystrokes from other controls:
+The contextual action panel inherits the following keystrokes from other controls:
 
--   **Escape** closes the Contextual Action Panel the same way it would close an [Input Dialog](https://soho.infor.com/index.php?p=component/input-dialog).
--   When focused on elements inside the Toolbar at the top of the Contextual Action Panel, all [Toolbar](https://soho.infor.com/index.php?p=component/toolbar) keystrokes take effect.
-- **Tab** - should never tab off the Dialog
-
-## States and Variations
-
--   Hidden
--   Visible
+-   <kbd>Escape</kbd> closes the contextual action panel
+-   When focused on elements inside the toolbar at the top of the contextual action panel, all [toolbar](./toolbar) keystrokes take effect
+- <kbd>Tab</kbd> should never tab off of the contextual action panel
 
 ## Responsive Guidelines
 
-The Contextual Action Panel responds similarly to an [Input Dialog](https://soho.infor.com/index.php?p=component/input-dialog), in that it will resize and center itself horizontally and vertically in the browser window, never fitting beyond 80% width and height of the window.
+The contextual action panel responds similarly to a [modal](./modal), in that it will resize and center itself horizontally and vertically in the browser window, never fitting beyond 80% width and height of the window
 
 ## Upgrading from 3.X
 
--   Did not exist in 3.X, but any complex Modals should be changed to use this.
+-   Did not exist in 3.X, but any complex modals should be changed to use this.

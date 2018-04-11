@@ -1,4 +1,7 @@
-# Tooltip Component [Learn More](https://soho.infor.com/index.php?p=component/tooltip)
+---
+title: Tooltip Component 
+description: This page describes Tooltip Component .
+---
 
 ## Important Notes
 
@@ -16,8 +19,6 @@ The [Popover]( ../components/popover) component shares a common API with the Too
 8. [Demo of AJAX-powered Tooltip Content]( ../components/tooltip/example-ajax-tooltip)
 9. [Using the `keepOpen` setting]( ../components/tooltip/example-keep-open)
 
-{{api-details}}
-
 ## Behavior Guidelines
 
 - For accessibility the tooltip should be shown when you keyboard onto an element after a short delay (Open Task)
@@ -29,12 +30,9 @@ The [Popover]( ../components/popover) component shares a common API with the Too
 If using the [Soho Initializer]( ../components/initialize), any elements with a `title` attribute will be picked up and turned into a Soho Tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to [reinitialize a component](https://soho.infor.com/index.php?p=component/getting-started) or page section which has been added.
 
 ```html
-
 <button class="btn" type="button" title="Tooltips Provide Additional Information">
   Tootltip Button
 </button>
-
-
 ```
 
 The code above is demoed in the [Common Tooltip Example]( ../components/tooltip/example-index).
@@ -44,12 +42,9 @@ The code above is demoed in the [Common Tooltip Example]( ../components/tooltip/
 It's also possible to use inline HTML inside of the `title` atribute:
 
 ```html
-
 <button class="btn-secondary" type="button" title="<span style='text-align: right; display: inline-block;'><b style='line-height: 1.7em;'>Connected order</b><br>Tooltips Provide <br> <span style="color: #AFDC91;">Additional Information</span>.</span>">
   Custom HTML Tooltip
 </button>
-
-
 ```
 
 The code above is demoed in the [HTML Tooltip Example]( ../components/tooltip/example-html-tooltip).
@@ -57,7 +52,6 @@ The code above is demoed in the [HTML Tooltip Example]( ../components/tooltip/ex
 Another possible method of defining custom tooltips is to create a hidden HTML element that will be referenced by its ID attribute.  When defining your `title` attribute on your trigger element, simply place use ID selector instead of the actual content, and the initializer will pick it up:
 
 ```html
-
 <button class="btn-secondary" type="button" title="#tooltip-id">
   <span>Example</span>
 </button>
@@ -68,8 +62,6 @@ Another possible method of defining custom tooltips is to create a hidden HTML e
   </svg>
   <p>Add Comment</p>
 </div>
-
-
 ```
 
 The code above is demoed in the [Icons in Tooltips Example]( ../components/tooltip/example-icon-in-tooltip).

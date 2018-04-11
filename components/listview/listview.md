@@ -1,5 +1,7 @@
-
-# Listview  [Learn More](#)
+---
+title: Listview
+description: This page describes Listview.
+---
 
 ## Configuration Options
 
@@ -12,8 +14,6 @@
 7. Status Indicators [View Example]( ../components/listview/example-status)
 8. Click Events [View Example]( ../components/listview/example-click-events)
 9. Mixed Selection Mode [View Example]( ../components/listview/example-mixed-selection)
-
-{{api-details}}
 
 ## Behavior Guidelines
 
@@ -31,10 +31,7 @@ This example shows using a list with a [mustache template](https://mustache.gith
 The template shows the use of an if/else to show a is-disabled class. And also shows the use of the three text sizes available. Note that `dataset`}}` is required to loop over teh dataset option passed into the control.
 
 ```html
-
 <div class="listview" id="id-to-list" data-tmpl="id-to-task-tmpl" data-dataset="array or url"></div>
-
-
 ```
 
 ### Listview - Multiselect
@@ -42,7 +39,6 @@ The template shows the use of an if/else to show a is-disabled class. And also s
 Creating a Multiselect Listview also uses the listview component. API guidelines are listed on the basic list page. The only special option to create a multiselect list is to add data-selectable="multiple". When doing this, a checkbox is added. You can also create a listview-toolbar which will show buttons upon selection of one or more rows.
 
 ```html
-
 <div class="card">
   <div class="card-header">
     <h2 class="card-title">My Tasks</h2>
@@ -67,16 +63,14 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
     <div class="listview" id="multiselect-listview" data-options="{ template: 'multiselect-tmpl', selectable: 'multiple', dataset: 'demoTasks' }"></div>
   </div>
 </div>
-
-
 ```
 
 ## Keyboard Shortcuts
 
--   **Tab:** When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.
--   **Up/down arrow** navigate up and down the list.
--   **Shift+F10:** If the current item has an associated context menu, then this key combination will launch that menu.
-- **Space bar** toggles [checkboxes](http://access.aol.com/dhtml-style-guide-working-group/#checkbox) in the case of multi select or a list item in case of normal select
+- <kbd>Tab</kbd> When a list is tabbed to, select the first item if nothing else is already selected. A second tab will take the user out of the widget to the next tab stop on the page.
+- <kbd>Up/down arrow</kbd> navigate up and down the list.
+- <kbd>Shift+F10</kbd> If the current item has an associated context menu, then this key combination will launch that menu.
+- <kbd>Space</kbd> toggles [checkboxes](http://access.aol.com/dhtml-style-guide-working-group/#checkbox) in the case of multi select or a list item in case of normal select
 
 ## States and Variations
 

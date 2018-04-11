@@ -1,4 +1,7 @@
-# Slider Component [Learn More](#)
+---
+title: Slider Component
+description: This page describes Slider Component .
+---
 
 ## Configuration Details
 
@@ -10,8 +13,6 @@
 6. Custom Tooltip Decorators [View Example](../components/slider/example-custom-tooltips)
 7. `setValue()` API Demo [View Example](../components/slider/example-set-value-api)
 
-{{api-details}}
-
 ## Code Example
 
 ### Single-Handle Slider
@@ -19,13 +20,10 @@
 The Slider Control provides a clickable, touchable interface that interfaces with a standard HTML Input element with a "range" type attribute. Because of styling and functionality requirements, we use a stylized shadow widget which implements the range input's behavior and updates in sync with a hidden input element. This allows the input element to be serialized with the DOM like normal. The simplest way to use the Slider Control is to create markup containing: a field (for field and responsive form alignment), a label and an input element with a "range" type and a "slider" CSS class. For accessibility and implementation reasons the label is required.
 
 ```html
-
 <div class="field">
   <label for="slider-regular-example">Regular</label>
   <input id="slider-regular-example" name="slider-regular" class="slider" type="range"/>
 </div>
-
-
 ```
 
 ### Ranged Slider
@@ -33,13 +31,10 @@ The Slider Control provides a clickable, touchable interface that interfaces wit
 Example of a Slider Control that is configured to be a Range, with a lower value and a higher value. This Slider also displays the current value for the selected handle inside a tooltip.
 
 ```html
-
 <div class="field">
   <label for="slider-regular-example">Regular</label>
   <input id="slider-regular-example" name="slider-regular-example" class="slider" type="range" data-tooltip-content='[""]' data-tooltip-persist="true" />
 </div>
-
-
 ```
 
 ### Extra Ticks & Colors
@@ -47,7 +42,6 @@ Example of a Slider Control that is configured to be a Range, with a lower value
 This example shows how to properly implement a Slider Control with Ticks using HTML5 data attributes for settings.
 
 ```html
-
 <label for="slider-quality-example">Ticks &amp; Colors</label>
 <input id="slider-quality-example" name="slider-quality-example" class="slider" type="range" min="0" max="5" value="2" step="1" data-ticks='[
   {"value": 0, "description": "Very Poor", "color": "very-poor"},
@@ -57,8 +51,6 @@ This example shows how to properly implement a Slider Control with Ticks using H
   {"value": 4, "description": "Very Good", "color": "very-good"},
   {"value": 5, "description": "Superior", "color": "superior"}
 ]'/>
-
-
 ```
 
 ### Stepped Slider Example
@@ -66,7 +58,6 @@ This example shows how to properly implement a Slider Control with Ticks using H
 This is an example of a Slider that can only have values in increments of 10, with a minimum of -150 and a maximum of 150.
 
 ```html
-
 <div class="field">
   <label for="slider-stepped-example">Stepped</label>
   <input id="slider-stepped-example" name="slider-stepped" class="slider" type="range" step="5" data-ticks='[
@@ -74,8 +65,6 @@ This is an example of a Slider that can only have values in increments of 10, wi
     {"value": 100, "description": "Max"}
   ]'/>
 </div>
-
-
 ```
 
 ## Implementation Tips
@@ -104,21 +93,21 @@ The Slider is fairly complex to make accessible. But generally this can be accom
 
 Keyboard functionality of the Slider control differs based on whether or not the Slider is single-thumbed (one handle), or a "range" (multi-handle). The keyboard applies to all types of Sliders in these ways:
 
-- **Right and Up Arrows** increase the value of the Slider.
-- **Left and Down Arrows** decrease the value of the Slider.
-- **Home and End** move to the minimum and maximum values of the Slider.
-- **Tab** into and out of the Slider handle.
-- **Page Up and Page Down** optionally increment or decrement the Slider by a given amount. Normally it will change by 10% of the total possible value of the Slider, or it will adjust to the next highest/lowest tick.
-- **Note:** Focus is placed on the Slider. (The visual object that the mouse/touch user would move, also known as the thumb.)
-- **Note:** Localization for right-to-left languages may wish to reverse the left and right arrows.
+- <kbd>Right and Up Arrows</kbd> increase the value of the Slider.
+- <kbd>Left and Down Arrows</kbd> decrease the value of the Slider.
+- <kbd>Home and End</kbd> move to the minimum and maximum values of the Slider.
+- <kbd>Tab</kbd> into and out of the Slider handle.
+- <kbd>Page Up and Page Down</kbd> optionally increment or decrement the Slider by a given amount. Normally it will change by 10% of the total possible value of the Slider, or it will adjust to the next highest/lowest tick.
+- Note: Focus is placed on the Slider. (The visual object that the mouse/touch user would move, also known as the thumb.)
+- Note: Localization for right-to-left languages may wish to reverse the left and right arrows.
 
 In cases of a range (two-handled) Slider, the keyboard functionality changes in the following ways:
 
-- On the lower-value handle, **Right and Up Arrows** will only increase the value of the slider up to the constraint of the higher-value handle. The lower handle can never be a higher value than the upper handle.
-- On the higher-value handle, the **Left and Down Arrows** will only decrease the value of the slider down to the constraint of the lower-value handle. The higher handle can never be a lower value than the lower handle.
-- **Home and End** have the same effect of being constrained by other handles.
-- **Tab** will initially focus on the first handle. Pressing Tab again will focus the next handle. Pressing Tab a third time moves to the next focusable object in the document.
-- **Shift+Tab** has the reverse effect.
+- On the lower-value handle, <kbd>Right and Up Arrows</kbd>  will only increase the value of the slider up to the constraint of the higher-value handle. The lower handle can never be a higher value than the upper handle.
+- On the higher-value handle, the <kbd>Left and Down Arrows</kbd>  will only decrease the value of the slider down to the constraint of the lower-value handle. The higher handle can never be a lower value than the lower handle.
+- <kbd>Home and End</kbd>  have the same effect of being constrained by other handles.
+- <kbd>Tab</kbd>  will initially focus on the first handle. Pressing Tab again will focus the next handle. Pressing Tab a third time moves to the next focusable object in the document.
+- <kbd>Shift+Tab</kbd>  has the reverse effect.
 
 ## States and Variations
 

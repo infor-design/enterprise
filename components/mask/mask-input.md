@@ -1,3 +1,7 @@
+---
+title: Mask
+description: This page describes Mask.
+---
 
 # Masked Input [Learn More](#)
 
@@ -7,8 +11,6 @@
 2. Common Mask Patterns [View Example]( ../components/mask/example-common-patterns)
 3. Fields with Symbols [View Example]( ../components/mask/example-fields-with-symbols)
 4. Number Mask Gauntlet [View Example]( ../components/mask/test-number-mask-gauntlet)
-
-{{api-details}}
 
 ## Behavior Guidelines
 
@@ -142,7 +144,7 @@ $('#my-strange-mask').data('mask').settings.definitions['='] = '[abcde]';
 
 ```
 
-**NOTE :** You should choose custom pattern characters that are not going to clash with the type of input your field will be accepting.  
+**NOTE :** You should choose custom pattern characters that are not going to clash with the type of input your field will be accepting.
 
 ## Keyboard Shortcuts
 

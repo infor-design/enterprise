@@ -1,5 +1,7 @@
-
-# Line  [Learn More](#)
+---
+title: Line
+description: This page describes Line.
+---
 
 ## Configuration Options
 
@@ -14,16 +16,11 @@
 9. Example showing Set Selected value [View Example]( ../components/line/example-set-selected)
 10. Example showing two line x axis [View Example]( ../components/line/example-two-lines)
 
-## API Details
-
-{{api-details}}
-
 ## Code Example
 
 This example shows how to invoke the line chart option in the charts component. In this example we pass a dataset with x and y axis values for three lines.
 
 ```javascript
-
 var dataset = [{
   data: [{
       name: 'Jan',
@@ -90,14 +87,12 @@ var dataset = [{
 }];
 
 $('#area-example').chart({type: 'line', dataset: dataset});
-
-
 ```
 
 ## Keyboard Shortcuts
 
--   **Tab:** You can tab into the chart area and through the legend values as each has a focus state.
--   **Enter/Space:** Will select the area the corresponds with the focus'd legend item.
+- <kbd>Tab</kbd> You can tab into the chart area and through the legend values as each has a focus state.
+- <kbd>Enter/Space</kbd> Will select the area the corresponds with the focus'd legend item.
 
 ## Upgrading from 3.X
 

@@ -1,0 +1,15 @@
+<div class="jsdoc-functions">
+  <% members.forEach(function(member) { %>
+    <div id='<%- slug(member.namespace) %>' class="jsdoc-function">
+      <div class="jsdoc-function--heading">
+        <%= shortSignature(member) %>
+      </div>
+      <%= renderSection({
+        section: member,
+        renderSection: renderSection,
+        renderParamProperty: renderParamProperty,
+      nested: true
+      }) %>
+    </div>
+  <% }) %>
+</div>

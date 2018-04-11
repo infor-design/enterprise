@@ -78,7 +78,8 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'clean:dist',
     'build',
-    'compress'
+    'compress',
+    'exec:documentation'
   ]);
 
   // Main build task (Gets everything)
@@ -118,16 +119,6 @@ module.exports = function (grunt) {
   grunt.registerTask('watch', [
     'chokidar'
   ]);
-
-  // This event runs whenever Chokidar detects a file change.
-  // If one of the files is a Soho Component JS file, and has a documentation page, it will
-  // trigger a re-documentation of that component.
-  grunt.event.on('chokidar', (action, filepath) => {
-    if (filepath.indexOf('components') > -1 && (filepath.indexOf('.js') > -1 || filepath.indexOf('.md') > -1)) {
-      const componentName = filepath.substr(filepath.lastIndexOf('/') + 1).replace('.js', '').replace('.md', '');
-      grunt.task.run(`exec:documentation:${componentName}`);
-    }
-  });
 };
 /* eslint-enable global-require, no-param-reassign,
   no-useless-concat, import/no-extraneous-dependencies */

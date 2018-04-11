@@ -1,5 +1,7 @@
-
-# Bar Chart  [Learn More](#)
+---
+title: Bar Chart
+description: This page describes Bar Chart.
+---
 
 ## Configuration Options
 
@@ -17,28 +19,11 @@
 12. Example showing Set Selected value [View Example]( ../components/bar/example-set-selected)
 13. Example showing empty data set [View Example]( ../components/bar/test-empty)
 
-## API Details
-
-{{api-details}}
-
-## Dataset Settings
-
-* `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - The name to show on the y axis for the bar
-* `value` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** - The raw data value for the bar.
-* `tooltip`**[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  - The custom tooltip to show.
-
-### Extra Chart Settings
-
-* `formatterString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - the d3 formatter string to show
-* `showLines` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Hide the lines going north south across the x axis
-* `useLogScale` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Use a logarithmic scale on the x axis. This can be used for skewed data.
-
 ## Code Example
 
 This example shows how to invoke a simple bar chart with a dataset controlling the values.
 
 ```javascript
-
  var dataset = [{
       data: [{
           name: 'Category A',
@@ -62,11 +47,8 @@ This example shows how to invoke a simple bar chart with a dataset controlling t
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
 
 ```javascript
-
 color: '#1a1a1a'
 name: 'Component C'
-
-
 ```
 
 ## Code Tips
@@ -74,16 +56,12 @@ name: 'Component C'
 You can override the tooltip by passing in a specific tooltip text value.
 
 ```javascript
-
 {type: 'bar-grouped', dataset: dataset, tooltip: 'Tooltip by attribute'}
-
-
 ```
 
 Or if you have more dynamic requirements you can do this with an ajax callback.
 
 ```javascript
-
 $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
   tooltip: function(response) {
     //Ajax Call or async op
@@ -97,8 +75,8 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
 
 ## Keyboard Shortcuts
 
--   **Tab:** You can tab into the chart area and through the legend values as each has a focus state.
--   **Enter/Space:** Will select the bar group the corresponds with the focus'd legend item.
+- <kbd>Tab</kbd> You can tab into the chart area and through the legend values as each has a focus state.
+- <kbd>Enter/Space</kbd> Will select the bar group the corresponds with the focus'd legend item.
 
 ## Upgrading from 3.X
 

@@ -40,6 +40,7 @@
             columns: columns,
             selectable: 'multiple',
             filterable: true,
+            filterWhenTyping: false,
             paging: true,
             pagesize: 10,
             source: function(req, response) {
@@ -62,7 +63,7 @@
                 response(res.data, req);
               });
             },
-            toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+            toolbar: {title: 'Data Grid Header Title', filterRow: true, results: true, actions: true, rowHeight: true}
           }).on('sorted', function (e, args) {
             console.log('sorted', args);
           });

@@ -1,21 +1,23 @@
-
-# Hierarchy  [Learn More](#)
-
-## Configuration Options
-
-1. Org Chart Example [View Example]( ../components/hierarchy/example-index)
-2. Lazy Loading Example [View Example]( ../components/hierarchy/example-lazy-loading)
-3. Example Paging [View Example]( ../components/hierarchy/example-paging)
-4. Example Single Manager/Subordinate [View Example]( ../components/hierarchy/example-single)
-
-{{api-details}}
+---
+title: Hierarchy
+description: This page describes Hierarchy.
+demo:
+  pages:
+  - name: Org Chart Example
+    slug: example-index
+  - name: Lazy Loading Example
+    slug: example-lazy-loading
+  - name: Example Paging
+    slug: example-paging
+  - name: Example Single Manager/Subordinate
+    slug: example-single
+---
 
 ## Code Example
 
 This example shows how to invoke the hierarchy component passing in data and legend info for matching.
 
 ```javascript
-
     var legendData = [
       { 'value' : 'FT', 'label' : 'Full Time'     },
       { 'value' : 'PT', 'label' : 'Part Time'     },
@@ -29,11 +31,9 @@ This example shows how to invoke the hierarchy component passing in data and leg
       legend: legendData,
       dataset: data
     });
-
-
 ```
 
-Required template HTML markup
+Required template HTML markup:
 
 ```HTML
   <script type="text/html" id="<YOUR_TEMPLATE_ID>">
@@ -47,14 +47,9 @@ Required template HTML markup
 
 ## Accessibility
 
-- This component is lacking accessibility at the moment.
-- Needs, Keyboard, Aria Added or an Alternate view.
-
-
-## Keyboard Shortcuts
-
-- None
+- This component is lacking accessibility
+- Needs, Keyboard, Aria Added or an Alternate view
 
 ## Upgrading from 3.X
 
--  This component was very similar in 3.5, just rename inforHierarchy to hierarchy
+-  This component was very similar in 3.5, just rename `inforHierarchy` to `hierarchy`

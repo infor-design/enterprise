@@ -1,11 +1,11 @@
-
-# Empty Widgets  [Learn More](#)
+---
+title: Empty Widgets  
+description: This page describes Empty Widgets.
+---
 
 ## Configuration Options
 
 1. Example Showing all Types of Empty Widgets [View Example]( ../components/empty-widgets/example-index)
-
-## API Details
 
 ### Html Sections
 
@@ -15,7 +15,6 @@
 -   `card-empty-actions` -  If adding this section will contain some actions a person can do to resolve the empty situation such as reload ect. Should be preferably one action.
 
 ```html
-
 <div class="card-content">
   <div class="card-empty-icon">
     <svg class="icon-empty-state" focusable="false" aria-hidden="true" role="presentation">

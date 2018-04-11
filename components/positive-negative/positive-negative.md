@@ -1,5 +1,7 @@
-
-# Positive-Negative Chart  [Learn More](#)
+---
+title: Positive-Negative Chart
+description: This page describes Positive-Negative Chart.
+---
 
 ## Configuration Options
 
@@ -8,8 +10,6 @@
 3. Set animation speed [View Example]( ../components/positive-negative/example-animation)
 4. Example showing Get Selected value [View Example]( ../components/positive-negative/example-get-selected)
 5. Example showing Set Selected value [View Example]( ../components/positive-negative/example-set-selected)
-
-## API Details
 
 ### Dataset Settings
 
@@ -27,7 +27,6 @@
 This example shows how to invoke a simple positive-negative chart with a dataset controlling the values.
 
 ```javascript
-
 var dataset = [{
   data: [{
       name: 'Jan',

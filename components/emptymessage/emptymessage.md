@@ -1,26 +1,20 @@
+---
+title: Empty Message
+description: This page describes Empty Message .
+demo:
+  pages:
+  - name: Simple Empty Message
+    slug: example-index
+  - name: Widget Examples
+    slug: example-widgets
+---
 
-# Empty Message [Learn More](#)
-
-## Configuration Options
-
-1. Simple Empty Message [View Example]( ../components/emptymessage/example-index)
-1. Widget Examples [View Example]( ../components/emptymessage/example-widgets)
-
-{{api-details}}
-
-## Code Example
-
-Use an empty message when no data is present.
+Use an empty message when no data is present in a list or container and there is no other context to provide the user information about what to do. On smaller breakpoints, the empty message will be centered in the container.
 
 ```javascript
-
 $('.empty-message').emptymessage({
   title: 'No Records Available',
   icon: 'icon-empty-no-data'
 });
 
 ```
-
-## Responsive Guidelines
-
-- The empty message will be centered in the container.

@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="cp-event-change">Change event</label>
+      <input class="colorpicker" id="cp-event-change" type="text" />
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    $('#cp-event-change').on('change', function() {
+      alert('Change Fired');
+    });
+
+  });
+</script>

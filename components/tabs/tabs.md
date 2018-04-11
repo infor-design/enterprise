@@ -1,4 +1,7 @@
-# Tabs Component [Learn More](https://soho.infor.com/index.php?p=component/tabs)
+---
+title: Tabs Component
+description: This page describes Tabs Component .
+---
 
 ## Configuration Options
 
@@ -9,8 +12,6 @@
 5. [`updateCount()` Demo]( ../components/tabs/example-update-count-api)
 6. [`changeTabOnHashChange` Setting with Callback Demo]( ../components/tabs/example-url-hash-change)
 7. [`beforeActivate` Callback example]( ../components/tabs/example-beforeactivate-callback)
-
-{{api-details}}
 
 ## Code Examples
 
@@ -24,7 +25,6 @@ The Tabs Control provides a clickable, touchable interface for accessing content
 - Inside the `<div class="tab-panel-container">`, a series of `<div>` tags should exist that matches the number of list items in the `<ul>`. Each one should have an ID that corresponds to one of the anchor tags in the `<ul>`.
 
 ```html
-
   <div id="tabs-normal" class="tab-container">
     <ul class="tab-list">
       <li><a href="#tabs-normal-contracts">Contracts</a></li>
@@ -56,8 +56,6 @@ The Tabs Control provides a clickable, touchable interface for accessing content
       <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
     </div>
   </div>
-
-
 ```
 
 ### Tabs - Counts Example
@@ -65,7 +63,6 @@ The Tabs Control provides a clickable, touchable interface for accessing content
 This is an example of what the Tabs Control looks like when you use the "tabCounts" option or "data-tab-counts" attribute. Additionally, in this example there are separator elements that break the tabs apart into visually-distinct groups.
 
 ```html
-
   <div id="tabs-counts" class="tab-container" data-tab-counts="true">
     <ul class="tab-list">
       <li><a href="#tabs-counts-pending">Pending</a></li>
@@ -109,8 +106,6 @@ This is an example of what the Tabs Control looks like when you use the "tabCoun
       <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular morph.<p>
     </div>
   </div>
-
-
 ```
 
 ### Tabs - Dismissible Example
@@ -118,7 +113,6 @@ This is an example of what the Tabs Control looks like when you use the "tabCoun
 It's possible to create Tabs and Panels that are dismissible. Dismissible Tabs/Panels will be removed from the Tabs Control when their close button is clicked/tapped.
 
 ```html
-
       <ul class="tab-list">
         <li><a href="#firefox">Firefox</a></li>
         <li><a href="#chrome">Chrome</a></li>
@@ -126,8 +120,6 @@ It's possible to create Tabs and Panels that are dismissible. Dismissible Tabs/P
         <li class="dismissible"><a href="#opera">Opera</a></li>
         <li class="dismissible"><a href="#safari">Safari</a></li>
       </ul>
-
-
 ```
 
 ### Tabs - Dropdown Example
@@ -135,7 +127,6 @@ It's possible to create Tabs and Panels that are dismissible. Dismissible Tabs/P
 It's possible to create a Tab that contains a Dropdown menu. In the case of a Dropdown Tab, the top-level "Tab" does not correspond to a Tab panel, but all of its children (any of the "dropdown" options) will be linked to a panel. When the Tabs Control's responsive design takes over and pushes a dropdown tab into the "More..." menu, the children of the Dropdown tab will be pushed into a submenu.
 
 ```html
-
     <ul class="tab-list">
         <li><a href="#information">Information</a></li>
         <li class="has-popupmenu">
@@ -155,13 +146,11 @@ It's possible to create a Tab that contains a Dropdown menu. In the case of a Dr
           </ul>
         </li>
     </ul>
-
-
 ```
 
 ## Keyboard Shortcuts
 
-### **Down Arrow/Right Arrow**
+<kbd>Down Arrow/Right Arrow</kbd>
 
 -   When focus is on the Tab, a press of down/right will move focus to the next logical Tab.
 -   When focus reaches the last Tab, further key presses will wrap to the first Tab in the order.
@@ -170,32 +159,32 @@ It's possible to create a Tab that contains a Dropdown menu. In the case of a Dr
   -   Subsequent down/right presses will navigate through the menu options
   -   On the last menu option, pressing down/right will close the menu and focus the first Tab in the order
 
-### **Up Arrow/Left Arrow** is generally the reverse of Down/Right arrows
+<kbd>Up Arrow/Left Arrow</kbd> is generally the reverse of Down/Right arrows
 
 -   When focus reaches the first tab, further key presses will either:
   -   Wrap to the last available Tab in the order
   -   Select the "More..." button if responsive design causes the tabs to collapse. This will open the menu and focus the last option in the menu
 -   If the "More..." button is open and the top option is focused, pressing up/left will close the menu and focus the last available tab in the order
 
-### **Enter/Space**
+<kbd>Enter/Space</kbd>
 
 -   Causes the currently focused Tab or "More..." menu option to be selected, causing its corresponding panel to become visible.
 
-### **Tab**
+<kbd>Tab</kbd>
 
 -   When focus is on a Tab, a TAB keystroke will move focus in the following manner:
   -   If interactive glyphs or menus are present in the Accordion Header / Tab, focus will move to each of these glyphs or menus in order.
   -   When the corresponding Tab panel is expanded (its aria-expanded state is 'true'), then focus moves to the first focusable element in the panel.
 
-### **Shift+Tab**
+<kbd>Shift+Tab</kbd>
 
 Shift + Tab works similarly to the strategy for the Tab key, but moves focus backwards instead of forwards.
 
-**NOTE:** For tabs to work correctly on mac you need to go to apple \>\> keyboard shortcuts, then click the checkbox at the bottom of the page at the bottom that says full keyboard access - all controls. This way the system can tab into any elements (this is a mac setting).
+NOTE: For tabs to work correctly on mac you need to go to apple \>\> keyboard shortcuts, then click the checkbox at the bottom of the page at the bottom that says full keyboard access - all controls. This way the system can tab into any elements (this is a mac setting).
 
 If using Safari on a Mac, you also need to go into Safari \>\> Preferences... then click the checkbox near the top that says Press Tab to Highlight Each Option on a webpage. This allows hyperlinks to be focusable by default (without having to press Option + Tab).
 
-### ** Alt+backspace / Alt+Delete**
+<kbd>Alt+backspace / Alt+Delete</kbd>
 
 -  If the tab is dismissible that tab will be closed. We use the alt combination because backspace can be used to go back a page.
 

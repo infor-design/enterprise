@@ -1,4 +1,7 @@
-# Toolbar  [Learn More](https://soho.infor.com/index.php?p=component/toolbar)
+---
+title: Toolbar
+description: This page describes Toolbar.
+---
 
 ## Configuration Options
 
@@ -13,12 +16,9 @@
 9. [Additional Examples of `MaxVisibleButtons` Behavior]( ../components/toolbar/example-overflow)
 10. [`selected` Event Behavior]( ../components/toolbar/example-selected-event)
 
-{{api-details}}
-
 ## Code Example
 
 ```html
-
   <div class="toolbar">
     <div class="title">
       Toolbar Title
@@ -49,8 +49,6 @@
       </ul>
     </div>
   </div>
-
-
 ```
 
 ## Implementation Tips
@@ -64,9 +62,9 @@
 
 ## Keyboard Shortcuts
 
-- **Tab** moves focus to the first enabled toolbar item
-- **Tab Again** moves focus out of the toolbar
-- **Left and Right Arrow** keys navigate among the enabled items in the toolbar.
+- <kbd>Tab</kbd> moves focus to the first enabled toolbar item
+- <kbd>Tab Again</kbd> moves focus out of the toolbar
+- <kbd>Left and Right Arrow</kbd> keys navigate among the enabled items in the toolbar.
 
 ## States and Variations
 

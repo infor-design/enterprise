@@ -1693,9 +1693,8 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-cell-wrapper {
-      input.placeholder {
-        border: 1px solid transparent;
-        padding: 12px 0 8px;
+      .is-placeholder {
+        color: $input-placeholder-color;
       }
     }
 
@@ -1723,20 +1722,12 @@ $datagrid-short-row-height: 23px;
     &.l-right-text {
       .datagrid-cell-wrapper {
         text-align: right;
-
-        input::placeholder {
-          text-align: right;
-        }
       }
     }
 
     &.l-center-text {
       .datagrid-cell-wrapper {
         text-align: center;
-
-        input::placeholder {
-          text-align: center;
-        }
       }
     }
 

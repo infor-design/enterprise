@@ -5,6 +5,7 @@ import { utils } from '../utils/utils';
 import { ListFilter } from '../listfilter/listfilter';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
+import { stringUtils } from '../utils/string';
 
 // jQuery Components
 import '../utils/highlight';
@@ -672,6 +673,18 @@ Autocomplete.prototype = {
     this.highlight(a);
 
     this.noSelect = true;
+
+    // Update the data for the event
+    ret.label = stringUtils.stripHTML(ret.label);
+
+    // Add these elements for key down vs click consistency
+    if (!ret.highlightTarget) {
+      ret.highlightTarget = 'label';
+      ret.index = parseInt(dataIndex, 10);
+      ret.listItemId = 'ac-list-option' + ret.index;
+      ret.hasValue = true;
+    }
+
     this.element
       .trigger('selected', [a, ret])
       .focus();
