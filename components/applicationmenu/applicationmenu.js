@@ -571,6 +571,24 @@ ApplicationMenu.prototype = {
   },
 
   /**
+   * @param {jQuery} anchor the anchor being checked
+   * @returns {void}
+   */
+  handleDismissOnClick(anchor) {
+    if (!this.settings.dismissOnClickMobile) {
+      return;
+    }
+
+    this.userOpened = false;
+    $(anchor).blur();
+    if (this.isLargerThanBreakpoint()) {
+      return;
+    }
+
+    this.closeMenu();
+  },
+
+  /**
    * Unbinds event listeners and removes extraneous markup from the Application Menu.
    * @returns {this} component instance
    */
@@ -584,7 +602,7 @@ ApplicationMenu.prototype = {
     $('body').off('resize.applicationmenu');
     $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu keydown.applicationmenu');
 
-    this.accordion.off('blur.applicationmenu');
+    this.accordion.off('blur.applicationmenu selected.applicationmenu followlink.applicationmenu');
     if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
       if (this.isFiltered) {
         this.accordionAPI.collapse();
@@ -652,15 +670,11 @@ ApplicationMenu.prototype = {
 
     this.accordion.on('blur.applicationmenu', () => {
       self.closeMenu();
-    }).on('selected.applicationmenu', (e, anchor) => {
-      if (self.settings.dismissOnClickMobile) {
-        self.userOpened = false;
-        $(anchor).blur();
-
-        if (!self.isLargerThanBreakpoint()) {
-          self.closeMenu();
-        }
-      }
+    }).on('selected.applicationmenu', (e, header) => {
+      const a = header.children('a');
+      self.handleDismissOnClick(a);
+    }).on('followlink.applicationmenu', (e, anchor) => {
+      self.handleDismissOnClick(anchor);
     });
 
     $(document).on('open-applicationmenu', () => {
