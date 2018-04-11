@@ -172,12 +172,10 @@ describe('Popupmenu renderItem() API', () => {
   beforeEach(() => {
     popupmenuButtonEl = null;
     svgEl = null;
-    rowEl = null;
     popupmenuObj = null;
     document.body.insertAdjacentHTML('afterbegin', popupmenuSelectableHTML);
     document.body.insertAdjacentHTML('afterbegin', svg);
     popupmenuButtonEl = document.body.querySelector('#single-select-popupmenu-trigger');
-    rowEl = document.body.querySelector('.row');
     svgEl = document.body.querySelector('.svg-icons');
     popupmenuObj = new PopupMenu(popupmenuButtonEl);
   });
@@ -185,7 +183,6 @@ describe('Popupmenu renderItem() API', () => {
   afterEach(() => {
     popupmenuObj.destroy();
     popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-    rowEl.parentNode.removeChild(rowEl);
     svgEl.parentNode.removeChild(svgEl);
   });
 
@@ -370,12 +367,10 @@ describe('Popupmenu toData() API', () => {
     beforeEach(() => {
       popupmenuButtonEl = null;
       svgEl = null;
-      rowEl = null;
       popupmenuObj = null;
       document.body.insertAdjacentHTML('afterbegin', popupmenuHTML);
       document.body.insertAdjacentHTML('afterbegin', svg);
       popupmenuButtonEl = document.body.querySelector('#popupmenu-trigger');
-      rowEl = document.body.querySelector('.row');
       svgEl = document.body.querySelector('.svg-icons');
       popupmenuObj = new PopupMenu(popupmenuButtonEl);
     });
@@ -383,7 +378,6 @@ describe('Popupmenu toData() API', () => {
     afterEach(() => {
       popupmenuObj.destroy();
       popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-      rowEl.parentNode.removeChild(rowEl);
       svgEl.parentNode.removeChild(svgEl);
     });
 
@@ -404,12 +398,10 @@ describe('Popupmenu toData() API', () => {
     beforeEach(() => {
       popupmenuButtonEl = null;
       svgEl = null;
-      rowEl = null;
       popupmenuObj = null;
       document.body.insertAdjacentHTML('afterbegin', popupmenuContextMenuHTML);
       document.body.insertAdjacentHTML('afterbegin', svg);
       popupmenuButtonEl = document.body.querySelector('#input-menu');
-      rowEl = document.body.querySelector('.row');
       svgEl = document.body.querySelector('.svg-icons');
       popupmenuObj = new PopupMenu(popupmenuButtonEl);
     });
@@ -417,7 +409,6 @@ describe('Popupmenu toData() API', () => {
     afterEach(() => {
       popupmenuObj.destroy();
       popupmenuButtonEl.parentNode.removeChild(popupmenuButtonEl);
-      rowEl.parentNode.removeChild(rowEl);
       svgEl.parentNode.removeChild(svgEl);
     });
 
