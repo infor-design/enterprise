@@ -768,4 +768,20 @@ describe('Locale API', () => {
       expect(Locale.calendar().months.abbreviated.length).toEqual(12);
     }
   });
+
+  it('Should default bad locales', () => {
+    for (let culture in Locale.cultures) {  //eslint-disable-line
+      Locale.set('de-AU');
+
+      expect(Locale.currentLocale.name).toEqual('de-DE');
+
+      Locale.set('en-UG');
+
+      expect(Locale.currentLocale.name).toEqual('en-EN');
+
+      Locale.set('fi-RU');
+
+      expect(Locale.currentLocale.name).toEqual('fi-FI');
+    }
+  });
 });

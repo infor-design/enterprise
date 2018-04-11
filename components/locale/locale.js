@@ -95,6 +95,68 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Internally stores a new culture file for future use.
+   * @private
+   * @param {string} locale The locale to check.
+   * @returns {string} The actual locale to use.
+   */
+  defaultLocale(locale) {
+    const lang = locale.split('-')[0];
+    const defaults = [
+      { lang: 'af', default: 'af-ZA' },
+      { lang: 'ar', default: 'af-EG' },
+      { lang: 'bg', default: 'bg-BG' },
+      { lang: 'cs', default: 'cs-CZ' },
+      { lang: 'de', default: 'de-DE' },
+      { lang: 'el', default: 'el-GR' },
+      { lang: 'en', default: 'en-US' },
+      { lang: 'es', default: 'es-ES' },
+      { lang: 'et', default: 'et-ET' },
+      { lang: 'fi', default: 'fi-FI' },
+      { lang: 'fr', default: 'fr-FR' },
+      { lang: 'he', default: 'he-IL' },
+      { lang: 'hi', default: 'hi-IN' },
+      { lang: 'hr', default: 'hr-HR' },
+      { lang: 'hu', default: 'hu-HU' },
+      { lang: 'id', default: 'id-ID' },
+      { lang: 'it', default: 'it-IT' },
+      { lang: 'ja', default: 'ja-JP' },
+      { lang: 'ko', default: 'ko-KR' },
+      { lang: 'lt', default: 'lt-LT' },
+      { lang: 'ms', default: 'ms-bn' },
+      { lang: 'nb', default: 'nb-NO' },
+      { lang: 'nl', default: 'nl-NL' },
+      { lang: 'no', default: 'no-NO' },
+      { lang: 'pl', default: 'pl-PL' },
+      { lang: 'pt', default: 'pt-PT' },
+      { lang: 'ro', default: 'ro-RO' },
+      { lang: 'ru', default: 'ru-RU' },
+      { lang: 'sl', default: 'sl-SI' },
+      { lang: 'sv', default: 'sv-SE' },
+      { lang: 'th', default: 'th-TH' },
+      { lang: 'tr', default: 'tr-TR' },
+      { lang: 'uk', default: 'uk-UA' },
+      { lang: 'vi', default: 'vi-VN' },
+      { lang: 'zh', default: 'zh-CN' }
+    ];
+    const allLocales = ['af-ZA', 'ar-EG', 'ar-SA', 'bg-BG', 'cs-CZ', 'da-DK', 'de-DE', 'el-GR',
+      'en-AU', 'en-GB', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'es-AR', 'es-ES', 'es-MX',
+      'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
+      'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
+      'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
+      'uk-UA', 'vi-VN', 'zh-CN', 'zh-TW'];
+
+    if (allLocales.indexOf(locale) === -1) {
+      locale = defaults.filter(a => a.lang === lang);
+
+      if (locale && locale[0]) {
+        return locale[0].default;
+      }
+    }
+    return locale;
+  },
+
+  /**
+   * Internally stores a new culture file for future use.
    * @param {string} locale the 4-character Locale ID
    * @param {object} data translation data and locale-specific functions, such as calendars.
    * @returns {void}
@@ -145,6 +207,8 @@ const Locale = {  // eslint-disable-line
     if (locale === 'in-ID') {
       locale = 'id-ID';
     }
+
+    locale = this.defaultLocale(locale);
 
     if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
       this.setCurrentLocale(locale);
