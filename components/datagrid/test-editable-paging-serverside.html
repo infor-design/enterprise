@@ -44,7 +44,6 @@
                 }
               },
               source: function(req, response) {
-                console.log(req, response);
                 var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
                 if (req.sortId) {
@@ -74,7 +73,7 @@
         });
 
       setTimeout(function () {
-        grid.data('datagrid').showRowError(12, 'This row has a custom error message.', 'error');
+        grid.data('datagrid').showRowError(2, 'This row has a custom error message.', 'error');
       }, 3000);
 
   });
