@@ -149,9 +149,6 @@ const PLUGIN_MAPPINGS = [
   // Circle Pager
   ['circlepager'],
 
-  // Track Dirty
-  ['trackdirty', '[data-trackdirty="true"]'],
-
   // Clear x
   ['clearable', '[data-clearable="true"]'],
 
@@ -211,6 +208,9 @@ const PLUGIN_MAPPINGS = [
   ['stepchart', '.step-chart'],
 
   ['listview'],
+
+  // Track Dirty
+  ['trackdirty', '[data-trackdirty="true"]'],
 
   // Context Menus - Popupmenu Components with no trigger buttons
   ['popupmenu', '[data-popupmenu]:not(.btn-actions, .btn-filter, .btn-menu)', function (rootElem, pluginName, selector) {

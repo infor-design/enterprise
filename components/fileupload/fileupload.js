@@ -76,7 +76,15 @@ FileUpload.prototype = {
       this.fileInput.after(svg);
     }
 
-    this.textInput = elem.parent().find('[type="text"]');
+    // if there is a value attribute, then this will be used as the current value since unable to set files[0].name
+    // move it to the text input and remove it off the file input
+    const fileInputValue = this.fileInput.attr('value');
+    if (fileInputValue && fileInputValue.length > 0) {
+      shadowField.val(fileInputValue);
+      this.fileInput.attr('value', '');
+    }
+
+    this.textInput = shadowField;
     this.svg = elem.parent().find('.trigger');
     this.svgClose = elem.parent().find('.trigger-close');
 
