@@ -19,12 +19,14 @@ const COMPONENT_NAME = 'applicationmenu';
  * @param {object} [settings] The settings to use on this instance.
  * @param {string} [settings.breakpoint='phone-to-tablet'] Can be 'tablet' or 'phone-to-tablet' (+767),
  * 'phablet (+610)', 'desktop' +(1024) or 'tablet-to-desktop' (+1280). Default is 'phone-to-tablet' (767)
+ * @param {boolean} [settings.dismissOnClickMobile=false] If true, causes a clicked menu option to dismiss on click when the responsive view is shown.
  * @param {boolean} [settings.filterable=false] If true a search / filter option will be added.
  * @param {boolean} [settings.openOnLarge=false]  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
  * @param {array} [settings.triggers=[]]  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
  */
 const APPLICATIONMENU_DEFAULTS = {
   breakpoint: 'phone-to-tablet',
+  dismissOnClickMobile: false,
   filterable: false,
   openOnLarge: false,
   triggers: []
@@ -304,7 +306,7 @@ ApplicationMenu.prototype = {
 
       this.element[0].classList.add('show-shadow');
 
-      if (this.element.find(document.activeElement).length || this.isAnimating) {
+      if (this.isAnimating) {
         return;
       }
 
@@ -569,6 +571,24 @@ ApplicationMenu.prototype = {
   },
 
   /**
+   * @param {jQuery} anchor the anchor being checked
+   * @returns {void}
+   */
+  handleDismissOnClick(anchor) {
+    if (!this.settings.dismissOnClickMobile) {
+      return;
+    }
+
+    this.userOpened = false;
+    $(anchor).blur();
+    if (this.isLargerThanBreakpoint()) {
+      return;
+    }
+
+    this.closeMenu();
+  },
+
+  /**
    * Unbinds event listeners and removes extraneous markup from the Application Menu.
    * @returns {this} component instance
    */
@@ -582,7 +602,7 @@ ApplicationMenu.prototype = {
     $('body').off('resize.applicationmenu');
     $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu keydown.applicationmenu');
 
-    this.accordion.off('blur.applicationmenu');
+    this.accordion.off('blur.applicationmenu selected.applicationmenu followlink.applicationmenu');
     if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
       if (this.isFiltered) {
         this.accordionAPI.collapse();
@@ -650,6 +670,11 @@ ApplicationMenu.prototype = {
 
     this.accordion.on('blur.applicationmenu', () => {
       self.closeMenu();
+    }).on('selected.applicationmenu', (e, header) => {
+      const a = header.children('a');
+      self.handleDismissOnClick(a);
+    }).on('followlink.applicationmenu', (e, anchor) => {
+      self.handleDismissOnClick(anchor);
     });
 
     $(document).on('open-applicationmenu', () => {
