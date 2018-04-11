@@ -289,21 +289,33 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
 excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
   const validateFields = function(values, settings, rowData, idx) {
     for (let j = 0; j < values.length; j++) {
-      if (settings.columns[idx].formatter !== Formatters.Readonly) {
-        if (settings.columns[idx].editor === Editors.Input) {
-          if (settings.columns[idx].filterType === 'integer' 
-          || settings.columns[idx].filterType === 'decimal' 
-          || settings.columns[idx].filterType === 'number') {
-            if (!isNaN(values[j].trim())) {
-              rowData[settings.columns[idx].field] = values[j];
+      let col = settings.columns[idx];
+
+      if (col.formatter !== Formatters.Readonly) {
+        switch (col.editor.name) {
+          case Editors.Input.name:
+            if (col.filterType === 'integer' || col.filterType === 'decimal' || col.filterType === 'number') {
+              // Number Values
+
+              // Validates if input is number. If true, will overwrite the data in cell otherwise nothing will happen.
+              if (!isNaN(values[j].trim())) {
+                rowData[col.field] = values[j];
+              }
+
+            } else { 
+              // String Values
+
+              // Just overwrite the data in the cell
+              rowData[col.field] = values[j];
             }
-          } else {
-            rowData[settings.columns[idx].field] = values[j];
-          }
-        } else if (settings.columns[idx].editor === Editors.Date) {
-          if (!isNaN(Date.parse(values[j]))) {
-            rowData[settings.columns[idx].field] = new Date(values[j]);
-          }
+            break;
+          case Editors.Date.name:
+            // Validates if input is date. If true, will overwrite the data in cell otherwise nothing will happen.
+            if (!isNaN(Date.parse(values[j]))) {
+              rowData[col.field] = new Date(values[j]);
+            }
+          default:
+            break;
         }
       }
 
