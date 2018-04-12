@@ -231,6 +231,7 @@ Soho.Locale.addCulture('en-US', {
     NoData: { id: 'NoData', value: 'No Data Available', comment: 'Shown when there is no rows shown in a list' },
     NoDataFilter: { id: 'NoDataFilter', value: 'No data available, make a new filter selection to see more results.', comment: 'Shown when there is no rows shown in a list' },
     NoDataList: { id: 'NoDataList', value: 'No data available, make a selection in the list above to see more results.', comment: 'Shown when there is no rows shown in a list' },
+    None: { id: 'None', value: 'None', comment: 'None to pick clear color' },
     NoResults: { id: 'NoResults', value: 'No Results', comment: 'Search Results Text' },
     Normal: { id: 'Normal', value: 'Normal', comment: 'Normal row height' },
     Notes: { id: 'Notes', value: 'Notes', comment: 'Notes icon tooltip' },
