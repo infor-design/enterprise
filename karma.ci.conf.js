@@ -53,7 +53,7 @@ module.exports = function (config) {
     reporters: ['mocha', 'coverage', 'junit'],
     coverageReporter: {
       reporters: [
-        { type: 'lcov' }
+        { type: 'json' }
       ]
     },
     port: 9876,
