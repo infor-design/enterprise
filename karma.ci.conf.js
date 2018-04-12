@@ -52,11 +52,8 @@ module.exports = function (config) {
     },
     reporters: ['mocha', 'coverage', 'junit'],
     coverageReporter: {
-      includeAllSources: true,
-      dir: 'coverage/',
       reporters: [
-        { type: 'lcov', subdir: '.' },
-        { type: 'json', subdir: '.' }
+        { type: 'lcov' }
       ]
     },
     port: 9876,
