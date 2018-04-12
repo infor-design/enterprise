@@ -1129,6 +1129,8 @@ PopupMenu.prototype = {
       callbackOpts.contextElement = targetMenu;
     }
 
+    callbackOpts.contextElement = this.element;
+
     if (typeof this.settings.beforeOpen === 'string') {
       window[this.settings.beforeOpen](response, callbackOpts);
       return;
