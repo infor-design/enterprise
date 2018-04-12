@@ -55,7 +55,9 @@ module.exports = function (config) {
       includeAllSources: true,
       dir: 'coverage/',
       reporters: [
-        {type:'lcovonly', subdir: '.'}
+        { type: 'html', subdir: 'html' },
+        { type: 'lcovonly', subdir: '.' },
+        { type: 'text-summary' }
       ]
     },
     port: 9876,
