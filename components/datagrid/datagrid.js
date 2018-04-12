@@ -4355,6 +4355,8 @@ Datagrid.prototype = {
             splitData = pastedData.split('\r\n');
           }
 
+          splitData.pop();
+
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
 
@@ -6763,21 +6765,25 @@ Datagrid.prototype = {
   */
   updateCellNode(row, cell, value, fromApiCall, isInline) {
     let coercedVal;
-    const rowNode = this.actualRowNode(row);
-    const cellNode = rowNode.find('td').eq(cell);
+    let rowNode = this.actualRowNode(row);
+    let cellNode = rowNode.find('td').eq(cell);
     const col = this.settings.columns[cell] || {};
     let formatted = '';
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
     const isTreeGrid = this.settings.treeGrid;
     let dataRowIndex = this.dataRowIndex(rowNode);
-    if (!dataRowIndex) {
+    if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
     const rowData = isTreeGrid ?
       this.settings.treeDepth[row].node :
       this.settings.dataset[dataRowIndex];
 
+    if (rowNode.length === 0 && this.settings.paging) {
+      rowNode = this.visualRowNode(row);
+      cellNode = rowNode.find('td').eq(cell);
+    }
     const oldVal = (col.field ? rowData[col.field] : '');
 
     // Coerce/Serialize value if from cell edit

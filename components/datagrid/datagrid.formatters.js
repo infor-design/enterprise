@@ -552,7 +552,7 @@ const formatters = {
   },
 
   Status(row, cell, value, col, item) {
-    if (!item.rowStatus) {
+    if (!item || !item.rowStatus) {
       return '<span></span>';
     }
 

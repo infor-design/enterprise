@@ -35,13 +35,23 @@ Trackdirty.prototype = {
    * Get the value or checked if checkbox or radio
    * @private
    * @param {object} element .
+   * @param {boolean} isOriginal .
    * @returns {string} element value
    */
-  valMethod(element) {
+  valMethod(element, isOriginal) {
     switch (element.attr('type')) {
       case 'checkbox':
       case 'radio':
         return element.prop('checked');
+      case 'file': {
+        if (typeof isOriginal === 'boolean' && isOriginal) {
+          const original = element.attr('original');
+          return (original !== undefined) ? original : '';
+        }
+
+        const el = element.parent().find('[type="text"]');
+        return el.val();
+      }
       default:
         return element.val();
     }
@@ -117,7 +127,7 @@ Trackdirty.prototype = {
   handleEvents() {
     const input = this.element;
 
-    input.data('original', this.valMethod(input))
+    input.data('original', this.valMethod(input, true))
       .on('resetdirty.dirty', () => {
         if (input.is('.editor')) {
           const textArea = input.parent().find('textarea');
