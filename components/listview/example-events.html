@@ -31,6 +31,18 @@
   </div>
 </div>
 
+<script {{#nonce}}nonce="{{nonce}}"{{/nonce}}>
+  $('#task-listview').on('selected', function (e, args) {
+    console.log('item was selected', args);
+  }).on('itemactivated', function (e, args) {
+    console.log('item was activated', args);
+  }).on('itemdeactivated', function (e, args) {
+    console.log('item was deactivated', args);
+  }).on('beforeactivate', function (e, args) {
+    console.log('beforeactivate triggered', args);
+  });
+</script>
+
 {{={{{ }}}=}}
 <script id="task-tmpl" type="text/html">
   <ul>
@@ -47,16 +59,4 @@
       </li>
     {{/dataset}}
   </ul>
-</script>
-
-<script>
-  $('#task-listview').on('selected', function (e, args) {
-    console.log('item was selected', args);
-  }).on('itemactivated', function (e, args) {
-    console.log('item was activated', args);
-  }).on('itemdeactivated', function (e, args) {
-    console.log('item was deactivated', args);
-  }).on('beforeactivate', function (e, args) {
-    console.log('beforeactivate triggered', args);
-  });
 </script>

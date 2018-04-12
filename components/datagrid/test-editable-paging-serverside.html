@@ -35,7 +35,6 @@
               paging: true,
               pagesize: 10,
               resultsText: function (grid, count, filterCount) {
-                console.log(grid, count, filterCount);
                 if (filterCount > 0 ) {
                   return '(' + filterCount + ' of '+ count + ')';
                 }
@@ -44,7 +43,6 @@
                 }
               },
               source: function(req, response) {
-                console.log(req, response);
                 var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
                 if (req.sortId) {

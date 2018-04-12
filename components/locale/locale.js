@@ -151,6 +151,7 @@ const Locale = {  // eslint-disable-line
       if (locale && locale[0]) {
         return locale[0].default;
       }
+      return '';
     }
     return locale;
   },
@@ -210,6 +211,11 @@ const Locale = {  // eslint-disable-line
 
     locale = this.defaultLocale(locale);
 
+    if (locale === '') {
+      self.dff.resolve();
+      return this.dff.promise();
+    }
+
     if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
       this.setCurrentLocale(locale);
       // Fetch the local and cache it
@@ -229,6 +235,7 @@ const Locale = {  // eslint-disable-line
     if (self.cultures[locale] && this.cultureInHead()) {
       self.dff.resolve(self.currentLocale.name);
     }
+
     return this.dff.promise();
   },
 

@@ -769,7 +769,7 @@ describe('Locale API', () => {
     }
   });
 
-  it('Should default bad locales', () => {
+  it('Should default bad/missing locales', () => {
     for (let culture in Locale.cultures) {  //eslint-disable-line
       Locale.set('de-AU');
 
@@ -777,11 +777,15 @@ describe('Locale API', () => {
 
       Locale.set('en-UG');
 
-      expect(Locale.currentLocale.name).toEqual('en-EN');
+      expect(Locale.currentLocale.name).toEqual('en-US');
 
       Locale.set('fi-RU');
 
       expect(Locale.currentLocale.name).toEqual('fi-FI');
+
+      Locale.set('zz-ZZ');
+
+      expect(Locale.currentLocale.name).toEqual('fi-FI'); // not found so equals last one
     }
   });
 });

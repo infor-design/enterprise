@@ -299,9 +299,9 @@ function filterUnusablePaths(pathDefs, excludes, directoryPrepender) {
 }
 
 /**
-   * @private
-   * @param {string} text
-   */
+ * @private
+ * @param {string} text
+ */
 function formatPath(text) {
   return text.replace(/-/g, ' ').replace(/\.html/, '');
 }
@@ -386,14 +386,14 @@ function getFolderContents(type, dir) { // type, dir, folderName
 }
 
 /**
-   * Returns a listing of both "examples" and "tests" for a particular type of component.
-   * @param {string} type - the component/layout/pattern type
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
-   * @param {array} [extraExcludes]
-   * @returns {?}
-   */
+ * Returns a listing of both "examples" and "tests" for a particular type of component.
+ * @param {string} type - the component/layout/pattern type
+ * @param {object} req
+ * @param {object} res
+ * @param {function} next
+ * @param {array} [extraExcludes]
+ * @returns {?}
+ */
 function getFullListing(type, req, res, next, extraExcludes) {
   let allPaths = [],
     componentPaths,
@@ -457,13 +457,13 @@ function getFullListing(type, req, res, next, extraExcludes) {
 }
 
 /**
-   * Returns a directory listing as page content with working links
-   * @param {string} directory
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
-   * @param {array} [extraExcludes] - List of files names to exclude
-   */
+ * Returns a directory listing as page content with working links
+ * @param {string} directory
+ * @param {object} req
+ * @param {object} res
+ * @param {function} next
+ * @param {array} [extraExcludes] - List of files names to exclude
+ */
 function getDirectoryListing(directory, req, res, next, extraExcludes) {
   if (!extraExcludes) {
     extraExcludes = [];
@@ -615,8 +615,15 @@ function componentRoute(req, res, next) {
   }
 
   if (req.params.example !== undefined) {
-    res.render(`${componentName}/${req.params.example}`, opts);
+    console.log(`${componentName}/${req.params.example}`)
+    res.render(`${componentName}/${req.params.example}`, opts, function(err, html) {
+      html = html.replace(/<div/ig, '<div class="azure07"');
+      console.log(html);
+      res.send(html);
+    });
   }
+
+
   next();
 }
 
