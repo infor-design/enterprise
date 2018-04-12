@@ -571,6 +571,9 @@ Datagrid.prototype = {
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = -1;
       pagerInfo.type = 'initial';
+      if (this.settings.treeGrid) {
+        pagerInfo.preserveSelected = true;
+      }
     }
 
     if (this.settings.source && pagerInfo.grandTotal) {
