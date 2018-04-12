@@ -106,14 +106,14 @@ The test will rerun.
 * Excluding screen reader (JAWS, etc) testing
 
 ##### Testing Coverage Rating Scale
-☹️ 😕 😐 🙂 😁
+☹️ 😕 🙂 😁
 
 Component | Functional Test Coverage
 ------------- | :-------------:
 Dropdown | ☹️
 MultiSelect | 🙂
 Validation | ☹️
-Popupmenu | 😐
+Popupmenu | 😕
 Button | 😁
 
 ## Testing Resources
