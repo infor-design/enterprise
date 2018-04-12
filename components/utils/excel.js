@@ -286,10 +286,19 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
   }
 };
 
+/**
+ * Copy pasted data into the dataset to facilitate copy from excel.
+ * @param {object} pastedData The paste data from the paste event.
+ * @param {[type]} rowCount The number of rows.
+ * @param {[type]} colIndex The column index we started on.
+ * @param {[type]} dataSet The dataset.
+ * @param {[type]} self The datagrid API.
+ * @returns {void}
+ */
 excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
-  const validateFields = function(values, settings, rowData, idx) {
+  const validateFields = function (values, settings, rowData, idx) {
     for (let j = 0; j < values.length; j++) {
-      let col = settings.columns[idx];
+      const col = settings.columns[idx];
 
       if (col.formatter !== Formatters.Readonly) {
         switch (col.editor.name) {
@@ -301,10 +310,8 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
               if (!isNaN(values[j].trim())) {
                 rowData[col.field] = values[j];
               }
-
-            } else { 
+            } else {
               // String Values
-
               // Just overwrite the data in the cell
               rowData[col.field] = values[j];
             }
@@ -314,6 +321,7 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
             if (!isNaN(Date.parse(values[j]))) {
               rowData[col.field] = new Date(values[j]);
             }
+            break;
           default:
             break;
         }
@@ -325,7 +333,7 @@ excel.copyToDataSet = function (pastedData, rowCount, colIndex, dataSet, self) {
 
   for (let i = 0; i < pastedData.length; i++) {
     const rawVal = pastedData[i].split('\t');
-    let startColIndex = colIndex;
+    const startColIndex = colIndex;
 
     if (rowCount < dataSet.length) {
       const currentRowData = dataSet[rowCount];
