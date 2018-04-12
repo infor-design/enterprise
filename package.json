@@ -15,8 +15,8 @@
     "build": "rollup -c",
     "minify": "node ./build/minify.js",
     "install-globals": "npm install -g pandoc-bin grunt-cli documentation rollup",
-    "local:unit": "karma start karma.local.conf.js",
-    "ci:unit": "karma start karma.ci.conf.js",
+    "local:unit": "npx karma start karma.local.conf.js",
+    "ci:unit": "npx karma start karma.ci.conf.js",
     "browserstack:unit": "karma start karma.browserstack.conf.js",
     "prelocal:functional": "npm run webdriver:update && (npm run start & sleep 10)",
     "local:functional": "protractor ./protractor.conf.js || npm run stop",
@@ -24,22 +24,14 @@
     "prebrowserstack:functional": "npm run webdriver && (npm run start & sleep 10)",
     "browserstack:functional": "protractor ./protractor.browserstack.conf.js || npm run stop",
     "postbrowserstack:functional": "npm run stop && exit 0",
+    "report:coverage": "codecov",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
     "pree2e": "npm run webdriver && (npm run start & sleep 10)",
     "publish-dev": "grunt publish && npm publish publish --tag dev --force",
     "publish-prod": "grunt publish && npm publish publish --force",
     "documentation": "node ./build/deploy-documentation.js",
-    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
-    "lint-staged": "lint-staged"
-  },
-  "pre-commit": [
-    "lint-staged"
-  ],
-  "lint-staged": {
-    "*.js": [
-      "eslint"
-    ]
+    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v"
   },
   "dependencies": {
     "d3": "^4.13.0",
@@ -110,7 +102,6 @@
     "node-pandoc": "^0.3.0",
     "node-sass": "^4.8.3",
     "pandoc": "^0.2.0",
-    "pre-commit": "^1.2.2",
     "protractor": "^5.3.0",
     "protractor-image-comparison": "^1.5.1",
     "pygmentize-bundled": "^2.3.0",
