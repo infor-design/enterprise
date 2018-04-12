@@ -1,9 +1,7 @@
 
 <div class="row">
   <div class="twelve columns">
-
     <div id="datagrid">
-
     </div>
   </div>
 </div>
@@ -17,15 +15,17 @@
           data = [];
 
         //Define Columns for the Grid.
+        columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center'});
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input});
 		    columns.push({ id: 'boolean', name: 'Checkbox', field: 'Boolean', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, width: 120, editor: Editors.Date , validate: 'required date'});
+        columns.push({ id: '', name: '', field: ''});
 
         var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
 
         $.getJSON(url, function(res) {
-
             //Init and get the api for the grid
             grid = $('#datagrid').datagrid({
               dataset: res.data,
@@ -44,7 +44,6 @@
                 }
               },
               source: function(req, response) {
-                console.log(req, response);
                 var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
                 if (req.sortId) {
@@ -70,10 +69,12 @@
                 });
               },
               toolbar: {title: 'Data Grid Header Title',filterRow: true, personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
-            }).on('cellchange', function (e, args) {
-              console.log(args);
             });
         });
+
+      setTimeout(function () {
+        grid.data('datagrid').showRowError(2, 'This row has a custom error message.', 'error');
+      }, 3000);
 
   });
 
