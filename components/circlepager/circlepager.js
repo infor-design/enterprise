@@ -372,9 +372,7 @@ CirclePager.prototype = {
       return false;
     }
     this.show();
-    setTimeout(() => {
-      this.slidesJQ.addClass('is-visible');
-    }, 0);
+    this.slidesJQ.addClass('is-visible');
   },
 
   /**
