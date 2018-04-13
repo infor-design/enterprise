@@ -127,7 +127,6 @@ const optionHandler = function (req, res, next) {
         }
       }
     });
-    console.log(`Using Csp Headers`);
   }
 
   // Disable live reload for IE
