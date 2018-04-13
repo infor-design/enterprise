@@ -569,6 +569,9 @@ Datagrid.prototype = {
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = -1;
       pagerInfo.type = 'initial';
+      if (this.settings.treeGrid) {
+        pagerInfo.preserveSelected = true;
+      }
     }
 
     if (this.settings.source && pagerInfo.grandTotal) {
@@ -3983,7 +3986,7 @@ Datagrid.prototype = {
     }
 
     // Handle Col Span - as the width is calculated on the total
-    if (columnSettings.colspan) {
+    if (typeof columnSettings.colspan === 'number') {
       width /= columnSettings.colspan;
     }
 
