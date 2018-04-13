@@ -77,8 +77,7 @@ FieldFilter.prototype = {
         }
       }
 
-      const compiledTmpl = Tmpl.compile(s.template);
-      const renderedTmpl = compiledTmpl.render({ dataset: !s.dropdownOpts.source ? dataset : [] });
+      const renderedTmpl = Tmpl.compile(s.template, { dataset: !s.dropdownOpts.source ? dataset : [] });  // eslint-disable-line
       const emptyTmpl = '' +
         `<label for="ffdropdown-empty" class="audible">
           ${Locale.translate('FieldFilter')}

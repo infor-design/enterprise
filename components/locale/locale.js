@@ -179,9 +179,7 @@ const Locale = {  // eslint-disable-line
       this.setCurrentLocale(locale, this.cultures[locale]);
       this.addCulture(locale, this.currentLocale.data);
 
-      if (locale && (locale === 'en-US' || this.cultures['en-US'])) {
-        this.dff.resolve(this.currentLocale.name);
-      }
+      this.dff.resolve(this.currentLocale.name);
     };
 
     script.onerror = () => {
@@ -222,9 +220,11 @@ const Locale = {  // eslint-disable-line
       this.appendLocaleScript(locale);
     }
 
-    if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
-      this.appendLocaleScript('en-US');
-    }
+    setTimeout(() => {
+      if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
+        this.appendLocaleScript('en-US');
+      }
+    }, 0);
 
     if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
       self.dff.resolve(self.currentLocale.name);

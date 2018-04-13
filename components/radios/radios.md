@@ -20,29 +20,33 @@ Displays one or more selectable values. A user can select exactly one value at a
 ```html
 <fieldset class="radio-group">
 <legend>Select delivery method</legend>
-  <input type="radio" class="radio" name="options" id="option1" data-automation-id="page-field-radio-1" value="option1" />
+  <input type="radio" class="radio" name="options" id="option1" data-automation-id="option1" value="option1" />
   <label for="option1" class="radio-label">Option one</label>
   <br/>
-  <input type="radio" class="radio" name="options" id="option2" data-automation-id="page-field-radio-2" value="option1" checked="true" />
+  <input type="radio" class="radio" name="options" id="option2" data-automation-id="option2" value="option1" checked="true" />
   <label for="option2"  class="radio-label">Option two</label>
   <br/>
-  <input type="radio" class="radio" name="options" id="option3" data-automation-id="page-field-radio-3" value="option3" />
+  <input type="radio" class="radio" name="options" id="option3" data-automation-id="option3" value="option3" />
   <label for="option3" class="radio-label">Option three</label>
   <br/>
-  <input type="radio" class="radio" name="options" id="option4" data-automation-id="page-field-radio-4" value="delivery" disabled="true" />
+  <input type="radio" class="radio" name="options" id="option4" data-automation-id="option4" value="delivery" disabled="true" />
   <label for="option4" class="radio-label">Option four</label>
 </fieldset>
 ```
 
+## Testability
+
+- Make sure each item has a unique id that does not change across versions of your software.
+- If you think that your id may change you can also use an optional automation-id for test teams to target your elements. This should not change or future test scripts may break unexpectedly.
+
 ## Implementation Tips
 
-- Make sure each item has a unique Id
-- Make sure to add an automation-id for testing that remains the same across versions.
 - Radio button is a css only component so anything you find on the web about radios can be used.
 
 ## Accessibility
 
--  Should work like a standard html radio button
+- Should work like a standard html radio button
+- Make sure you have a label that matches the id of your input.
 
 ## Keyboard Shortcuts
 

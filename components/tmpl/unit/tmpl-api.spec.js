@@ -13,7 +13,7 @@ describe('Tmpl API', () => {
     expect(output).toEqual('<p>hello<p>');
   });
 
-  it('Should parse nested', () => {
+  it('Should parse datasets', () => {
     const testTempl = `
       <ul>
         {{#dataset}}
@@ -50,5 +50,72 @@ describe('Tmpl API', () => {
             <p class="listview-micro">Due: Sat Nov 10 2018 00:00:00 GMT-0500 (EST)</p>
           </li>
       </ul>`));
+  });
+
+  it('Should parse autocomplete templates', () => {
+    const testTempl = `
+      <li id="{{listItemId}}" data-index="{{index}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">
+       <a href="#" tabindex="-1">
+         <span>{{{label}}}</span>
+       </a>
+      </li>`;
+
+    let output = Tmpl.compile(testTempl, {
+      index: 1,
+      listItemId: 'ac-list-option1',
+      hasValue: true,
+      value: 'al',
+      label: '<i>A</i>labama'
+    });
+
+    output = stringUtils.stripWhitespace(output);
+
+    expect(output).toEqual(stringUtils.stripWhitespace(`
+      <li id="ac-list-option1" data-index="1" data-value="al" role="listitem">
+      <a href="#" tabindex="-1"><span><i>A</i>labama</span></a></li>`));
+  });
+
+  it('Should parse templates with html', () => {
+    const testTempl = `
+      <li id="{{listItemId}}" {{#hasValue}} data-value="{{value}}" {{/hasValue}} role="listitem">
+             <a href="#" tabindex="-1">
+                <span>{{{label}}}</span>
+                <small>{{{email}}}</small>
+                <span style="display: none;" class="display-value">{{label}} - {{email}}</span>
+             </a>
+           </li>`;
+
+    let output = Tmpl.compile(testTempl, {
+      index: 1,
+      listItemId: 'ac-list-option1',
+      hasValue: true,
+      value: 'al',
+      label: '<i>A</i>labama',
+      email: 'Alex.Mills@example.com'
+    });
+    output = stringUtils.stripWhitespace(output);
+
+    expect(output).toEqual(stringUtils.stripWhitespace(`
+        <li id="ac-list-option1"  data-value="al"  role="listitem">
+        <a href="#" tabindex="-1"><span><i>A</i>labama</span><small>Alex.Mills@example.com</small>
+        <span style="display: none;" class="display-value">&lt;i&gt;A&lt;/i&gt;labama - Alex.Mills@example.com
+        </span></a></li>`));
+  });
+
+  it('Should parse expandable row templates', () => {
+    const testTempl = `
+      <div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>
+      <div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>
+      <p class="datagrid-row-micro-text">{{{sku}}}</p>
+      <span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>
+      <a class="hyperlink">Read more</a>`;
+
+    let output = Tmpl.compile(testTempl, {
+      sku: '<b>SKU #9000001-237</b>',
+    });
+    output = stringUtils.stripWhitespace(output);
+
+    expect(output).toEqual(stringUtils.stripWhitespace(`
+      <div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div><div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p><p class="datagrid-row-micro-text"><b>SKU #9000001-237</b></p><span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span><a class="hyperlink">Read more</a>`));
   });
 });

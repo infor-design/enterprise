@@ -1,18 +1,14 @@
 
 {{#enableLiveReload}}
-<script {{#nonce}}nonce="{{nonce}}"{{/nonce}} src="http://localhost:35729/livereload.js"></script>
+<script src="http://localhost:35729/livereload.js"></script>
 {{/enableLiveReload}}
 
-<script {{#nonce}}nonce="{{nonce}}"{{/nonce}}>
+<script>
   // Initialize all SoHo Xi Controls and set the locale
   var initialLocale = 'en-US';
   {{#locale}}
   initialLocale = '{{locale}}';
   {{/locale}}
-
-  {{#nonce}}
-  window.SohoConfig = { nonce: '{{nonce}}' };
-  {{/nonce}}
 
   $('body').initialize({locale: initialLocale});
 </script>

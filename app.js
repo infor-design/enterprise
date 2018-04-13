@@ -52,7 +52,7 @@ const defaults = {
   title: 'SoHo XI',
   basepath: BASE_PATH,
   version: packageJSON.version,
-  csp: false,
+  csp: true,
   nonce: null
 };
 
@@ -114,15 +114,16 @@ const optionHandler = function (req, res, next) {
     console.log(`Using the ${req.query.font} font`);
   }
 
-  if (req.query.csp) {
+  if (res.opts.csp || req.query.csp) {
     res.opts.nonce = Math.random().toString(12).replace(/[^a-z0-9]+/g, '').substr(0, 8);
     res.setPolicy({
       policy: {
         directives: {
           'default-src': ['self'],
-          'script-src': ['nonce-' + res.opts.nonce],
+          'script-src': ['strict-dynamic', 'nonce-' + res.opts.nonce],
           'object-src': ['none'],
-          'style-src': ['self']
+          'style-src': ['* data: http://* \'unsafe-inline\''],
+          'img-src': ['self', 'https://randomuser.me', 'http://placehold.it']
         }
       }
     });
@@ -132,7 +133,7 @@ const optionHandler = function (req, res, next) {
   // Disable live reload for IE
   const ua = req.headers['user-agent'];
   const isIE = /Windows NT/.test(ua) && (/Trident/.test(ua) || /Edge/.test(ua));
-  if (isIE || req.query.csp) {
+  if (isIE || res.opts.csp || req.query.csp) {
     res.opts.enableLiveReload = false;
   }
   next();
@@ -452,7 +453,13 @@ function getFullListing(type, req, res, next, extraExcludes) {
     paths: allPaths.map(pathMapper)
   });
 
-  res.render('listing', opts);
+  res.render('listing', opts, function(err, html) {
+    if (res.opts.csp || req.query.csp) {
+      html = html.replace(/<script/ig, `<script nonce="${res.opts.nonce}"`);
+    }
+    res.send(html);
+  });
+
   next();
 }
 
@@ -514,7 +521,12 @@ router.get('/', (req, res, next) => {
 router.get('/kitchen-sink', (req, res, next) => {
   const opts = res.opts;
   opts.basepath = fullBasePath(req);
-  res.render('kitchen-sink', res.opts);
+  res.render('kitchen-sink', res.opts, function(err, html) {
+    if (res.opts.csp || req.query.csp) {
+      html = html.replace(/<script/ig, `<script nonce="${res.opts.nonce}"`);
+    }
+    res.send(html);
+  });
   next();
 });
 
@@ -560,7 +572,7 @@ function defaultDocsRoute(req, res, next) {
 
   const componentName = stripHtml(req.params.component);
 
-  res.render(`${componentName}.html`, opts);
+  res.render(`${BASE_PATH}${componentName}.html`, opts);
   next();
 }
 
@@ -617,8 +629,9 @@ function componentRoute(req, res, next) {
   if (req.params.example !== undefined) {
     console.log(`${componentName}/${req.params.example}`)
     res.render(`${componentName}/${req.params.example}`, opts, function(err, html) {
-      html = html.replace(/<div/ig, '<div class="azure07"');
-      console.log(html);
+      if (res.opts.csp || req.query.csp) {
+        html = html.replace(/<script/ig, `<script nonce="${res.opts.nonce}"`);
+      }
       res.send(html);
     });
   }
@@ -643,8 +656,11 @@ function reDirectSlashRoute(req, res, next) {
 
 // Redirect "/component/component{.html}" to "/component.html"
 app.get('/components/:component', function(req, res, next) {
+  let opts = extend({}, res.opts, componentOpts);
   var compName = stripHtml(req.params.component);
-  res.redirect(`/components/${compName}.html`);
+  opts.basepath = fullBasePath(req);
+  console.log(`${BASE_PATH}components/${compName}.html`)
+  res.redirect(`${BASE_PATH}components/${compName}.html`);
 });
 
 router.get('/components/:component/:example', componentRoute);
