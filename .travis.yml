@@ -1,0 +1,18 @@
+language:
+  node_js
+  - 9
+# @TODO: fix sudo workaround
+# https://github.com/travis-ci/travis-ci/issues/8836#issuecomment-356362524
+sudo: required
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install -g codecov
+  - npm install
+before_script:
+  - npm run eslint:error-only
+script:
+  - npx grunt
+  - npm run ci:unit
+  - npm run report:coverage
