@@ -3984,7 +3984,7 @@ Datagrid.prototype = {
     }
 
     // Handle Col Span - as the width is calculated on the total
-    if (columnSettings.colspan) {
+    if (typeof columnSettings.colspan === 'number') {
       width /= columnSettings.colspan;
     }
 
