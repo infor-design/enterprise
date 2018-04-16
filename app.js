@@ -51,12 +51,19 @@ const defaults = {
   locale: 'en-US',
   title: 'SoHo XI',
   basepath: BASE_PATH,
-  version: packageJSON.version
+  version: packageJSON.version,
+  csp: true,
+  nonce: null
 };
 
-  // Option Handling - Custom Middleware
-  // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
-  // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
+// Add csp header
+const csp = require('express-csp');
+csp.extend(app);
+const uuidv4 = require('uuid/v4')
+
+// Option Handling - Custom Middleware
+// Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
+// In some cases, these options can be modified based on query parameters.  Check the default route for these options.
 const optionHandler = function (req, res, next) {
   res.opts = extend({}, defaults);
 
@@ -107,10 +114,31 @@ const optionHandler = function (req, res, next) {
     console.log(`Using the ${req.query.font} font`);
   }
 
+  if (res.opts.csp || req.query.csp) {
+    res.opts.nonce = Math.random().toString(12).replace(/[^a-z0-9]+/g, '').substr(0, 8);
+    res.setPolicy({
+      policy: {
+        directives: {
+          'default-src': ['self'],
+          'script-src': ['strict-dynamic', 'nonce-' + res.opts.nonce],
+          'object-src': ['none'],
+          'style-src': ['* data: http://* \'unsafe-inline\''],
+          'img-src': ['self', 'https://randomuser.me', 'http://placehold.it']
+        }
+      }
+    });
+  }
+
+  // Disable live reload for IE
+  const ua = req.headers['user-agent'];
+  const isIE = /Windows NT/.test(ua) && (/Trident/.test(ua) || /Edge/.test(ua));
+  if (isIE || res.opts.csp || req.query.csp) {
+    res.opts.enableLiveReload = false;
+  }
   next();
 };
 
-  // Simple Middleware that simulates a delayed response by setting a timeout before returning the next middleware.
+// Simple Middleware that simulates a delayed response by setting a timeout before returning the next middleware.
 const responseThrottler = function (req, res, next) {
   if (!res.opts.delay) {
     return next();
@@ -125,7 +153,7 @@ const responseThrottler = function (req, res, next) {
   setTimeout(delayedResponse, res.opts.delay);
 };
 
-  // Simple Middleware that passes API data back as a template option if we're on a certain page
+// Simple Middleware that passes API data back as a template option if we're on a certain page
 const globalDataHandler = function (req, res, next) {
   const url = req.url;
 
@@ -140,13 +168,7 @@ const globalDataHandler = function (req, res, next) {
   next();
 };
 
-  // Simple Middleware for logging some meta-data about the request to the console
-const timestampLogger = function (req, res, next) {
-  console.log(`${Date.now()} - ${req.method}: ${req.url}`);
-  next();
-};
-
-  // Simple Middleware for handling errors
+// Simple Middleware for handling errors
 const errorHandler = function (err, req, res, next) {
   if (!err) {
     return next();
@@ -161,12 +183,11 @@ const errorHandler = function (err, req, res, next) {
   res.status(500).send(`<h2>Internal Server Error</h2><p>${err.stack}</p>`);
 };
 
-  // place optionHandler() first to augment all 'res' objects with an 'opts' object
+// place optionHandler() first to augment all 'res' objects with an 'opts' object
 app.use(optionHandler);
 app.use(globalDataHandler);
 app.use(responseThrottler);
 app.use(router);
-app.use(timestampLogger);
 app.use(errorHandler);
 
 // Strips the '.html' from a file path and returns the target route name without it
@@ -278,9 +299,9 @@ function filterUnusablePaths(pathDefs, excludes, directoryPrepender) {
 }
 
 /**
-   * @private
-   * @param {string} text
-   */
+ * @private
+ * @param {string} text
+ */
 function formatPath(text) {
   return text.replace(/-/g, ' ').replace(/\.html/, '');
 }
@@ -330,8 +351,8 @@ function pathMapper(pathDef) {
 }
 
 /**
-   * Excluded file names that should never appear in the DemoApp List Pages
-   */
+ * Excluded file names that should never appear in the DemoApp List Pages
+ */
 const GENERAL_LISTING_EXCLUDES = [
   /(_)?(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
   /footer\.html/,
@@ -344,10 +365,10 @@ const GENERAL_LISTING_EXCLUDES = [
   /\.DS_Store/
 ];
 
-  /**
-   * @private
-   * @param {string} type
-   */
+/**
+ * @private
+ * @param {string} type
+ */
 function getFolderContents(type, dir) { // type, dir, folderName
   let paths = [];
   try {
@@ -365,14 +386,14 @@ function getFolderContents(type, dir) { // type, dir, folderName
 }
 
 /**
-   * Returns a listing of both "examples" and "tests" for a particular type of component.
-   * @param {string} type - the component/layout/pattern type
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
-   * @param {array} [extraExcludes]
-   * @returns {?}
-   */
+ * Returns a listing of both "examples" and "tests" for a particular type of component.
+ * @param {string} type - the component/layout/pattern type
+ * @param {object} req
+ * @param {object} res
+ * @param {function} next
+ * @param {array} [extraExcludes]
+ * @returns {?}
+ */
 function getFullListing(type, req, res, next, extraExcludes) {
   let allPaths = [],
     componentPaths,
@@ -431,18 +452,24 @@ function getFullListing(type, req, res, next, extraExcludes) {
     paths: allPaths.map(pathMapper)
   });
 
-  res.render('listing', opts);
+  res.render('listing', opts, function(err, html) {
+    if (res.opts.csp || req.query.csp) {
+      html = html.replace(/<script/ig, `<script nonce="${res.opts.nonce}"`);
+    }
+    res.send(html);
+  });
+
   next();
 }
 
 /**
-   * Returns a directory listing as page content with working links
-   * @param {string} directory
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
-   * @param {array} [extraExcludes] - List of files names to exclude
-   */
+ * Returns a directory listing as page content with working links
+ * @param {string} directory
+ * @param {object} req
+ * @param {object} res
+ * @param {function} next
+ * @param {array} [extraExcludes] - List of files names to exclude
+ */
 function getDirectoryListing(directory, req, res, next, extraExcludes) {
   if (!extraExcludes) {
     extraExcludes = [];
@@ -493,62 +520,14 @@ router.get('/', (req, res, next) => {
 router.get('/kitchen-sink', (req, res, next) => {
   const opts = res.opts;
   opts.basepath = fullBasePath(req);
-  res.render('kitchen-sink', res.opts);
-  next();
-});
-
-// ======================================
-//  Controls Section -> Now just in as a redirect
-// ======================================
-
-const controlOpts = {
-  layout: 'controls/layout',
-  subtitle: 'Style',
-};
-
-function defaultControlsRoute(req, res, next) {
-  const opts = extend({}, res.opts, controlOpts);
-  opts.subtitle = 'Full Index';
-
-  res.render('components/index', opts);
-  next();
-}
-
-router.get('/controls/:control', (req, res, next) => {
-  let controlName = '',
-    opts = extend({}, res.opts, controlOpts);
-
-  if (!req.params.control) {
-    return defaultControlsRoute(req, res, next);
-  }
-
-  controlName = stripHtml(req.params.control);
-  opts.subtitle = toTitleCase(controlName.charAt(0).toUpperCase() + controlName.slice(1).replace('-', ' '));
-
-  // Specific Changes for certain controls
-  opts.subtitle = opts.subtitle.replace('Contextualactionpanel', 'Contextual Action Panel');
-  if (controlName.indexOf('masthead') !== -1) {
-    opts.layout = 'controls/masthead-layout';
-  }
-
-  if (res.opts.nofrillslayout) {
-    opts.layout = 'tests/layout-noheader';
-  }
-
-  // Handle Redirects to new Structure
-  if (!fs.existsSync(`views/controls/${controlName}.html`)) {
-    if (controlName === 'buttons') {
-      controlName = 'button';
+  res.render('kitchen-sink', res.opts, function(err, html) {
+    if (res.opts.csp || req.query.csp) {
+      html = html.replace(/<script/ig, `<script nonce="${res.opts.nonce}"`);
     }
-    res.redirect(`${BASE_PATH}components/${controlName}/example-index`);
-  }
-
-  res.render(`controls/${controlName}`, opts);
+    res.send(html);
+  });
   next();
 });
-
-router.get('/controls/', defaultControlsRoute);
-router.get('/controls', defaultControlsRoute);
 
 // ======================================
 //  Components Section
@@ -592,7 +571,7 @@ function defaultDocsRoute(req, res, next) {
 
   const componentName = stripHtml(req.params.component);
 
-  res.render(`${componentName}.html`, opts);
+  res.render(`${BASE_PATH}${componentName}.html`, opts);
   next();
 }
 
@@ -647,8 +626,16 @@ function componentRoute(req, res, next) {
   }
 
   if (req.params.example !== undefined) {
-    res.render(`${componentName}/${req.params.example}`, opts);
+    console.log(`${componentName}/${req.params.example}`)
+    res.render(`${componentName}/${req.params.example}`, opts, function(err, html) {
+      if (res.opts.csp || req.query.csp) {
+        html = html.replace(/<script/ig, `<script nonce="${res.opts.nonce}"`);
+      }
+      res.send(html);
+    });
   }
+
+
   next();
 }
 
@@ -668,8 +655,11 @@ function reDirectSlashRoute(req, res, next) {
 
 // Redirect "/component/component{.html}" to "/component.html"
 app.get('/components/:component', function(req, res, next) {
+  let opts = extend({}, res.opts, componentOpts);
   var compName = stripHtml(req.params.component);
-  res.redirect(`/components/${compName}.html`);
+  opts.basepath = fullBasePath(req);
+  console.log(`${BASE_PATH}components/${compName}.html`)
+  res.redirect(`${BASE_PATH}components/${compName}.html`);
 });
 
 router.get('/components/:component/:example', componentRoute);
@@ -1253,46 +1243,6 @@ router.get('/api/fruits', (req, res, next) => {
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(resData));
   next();
-});
-
-// TODO: Make this work with XSS to return a copy of the SoHo Site Search Results for testing the Modal Search plugin.
-// Calls out to Craft CMS's search results page.
-// NOTE: Doesn't actually get rendered, just passed along.
-router.post('/api/site-search', (req, res) => {
-  let opts = {
-      host: 'usmvvwdev53',
-      port: '80',
-      path: '/search/results', // ?q=[SEARCH TERM GOES HERE]
-      method: 'POST',
-      headers: req.headers
-    },
-    creq = http.request(opts, (cres) => {
-      // set encoding
-      cres.setEncoding('utf8');
-
-      // wait
-      cres.on('data', (chunk) => {
-        res.write(chunk);
-      });
-
-      cres.on('close', () => {
-        // closed, let's end client request as well
-        res.writeHead(cres.statusCode);
-        res.end();
-      });
-
-      cres.on('end', () => {
-        // finished, let's finish client request as well
-        res.writeHead(cres.statusCode);
-        res.end();
-      });
-    }).on('error', () => {
-      // we got an error, return 500 error to client and log error
-      res.writeHead(500);
-      res.end();
-    });
-
-  creq.end();
 });
 
 // Data Grid Paging Example

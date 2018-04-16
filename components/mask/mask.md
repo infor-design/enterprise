@@ -19,7 +19,7 @@ Mask Patterns are comprised of two different types of characters:
 -   **Pattern Characters** - These are characters replaceable by a pre-defined subset of other characters. For example, by default, a **\#** can only be replaced by any numeric character (0 through 9). One pattern character will always match one keyed character.
 -   **Literal Characters** - These characters are "literal," meaning that they will only be represented in the text input by itself. When the cursor is placed at a literal character and any key is pressed, the Mask Control will find the next possible pattern character in the string and match the keyboard input against it. If it's a match, the pattern character and all literal characters preceding it will be filled in automatically. It's also possible to individually key in each literal character in the string.
 
-#### Available Mask Pattern Characters
+### Available Mask Pattern Characters
 
 The following mask pattern characters are available by default:
 
@@ -30,7 +30,7 @@ The following mask pattern characters are available by default:
 -   **a** - Represents the first character in the time period (am/pm). Can be replaced by **a**, **A**, **p**, or **P**.
 -   **m** - Represents the second character in the time period (am/pm). Can be replaced by **m** or **M**.
 
-#### Creating New Pattern Characters
+### Creating New Pattern Characters
 
 It's possible to create additional pattern characters by extending the Control's "definitions" option. The below example sets up a rule that will allow a pattern character of 'd' to only be replaced by lowercase letters between **a** and **e**.
 

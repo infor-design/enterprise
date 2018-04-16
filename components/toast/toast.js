@@ -161,7 +161,7 @@ Toast.prototype = {
    */
   updated(settings) {
     if (settings) {
-      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this.settings = utils.mergeSettings(this.element[0], settings, TOAST_DEFAULTS);
     }
     this.show();
   },

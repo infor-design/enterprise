@@ -119,7 +119,7 @@ $('#my-masked-field').mask({
 
 ```
 
-**NOTE:** If your project is making use of the Soho Standard `data.options` attribute, the legacy string style is still the best way to define simple mask patterns.  It will be converted to an array, converting any pattern characters found into a corresponding regular expression using the [Legacy Mask Pattern Characters](#available-mask-pattern-characters).  It's not possible to pass arrays or functions directly into the `data-options` attribute, so this remains the best way to handle populating masks through HTML.
+**NOTE** If your project is making use of the Soho Standard `data.options` attribute, the legacy string style is still the best way to define simple mask patterns.  It will be converted to an array, converting any pattern characters found into a corresponding regular expression using the [Legacy Mask Pattern Characters](#available-mask-pattern-characters).  It's not possible to pass arrays or functions directly into the `data-options` attribute, so this remains the best way to handle populating masks through HTML.
 
 ##### Available Mask Pattern Characters
 
@@ -144,7 +144,7 @@ $('#my-strange-mask').data('mask').settings.definitions['='] = '[abcde]';
 
 ```
 
-**NOTE :** You should choose custom pattern characters that are not going to clash with the type of input your field will be accepting.
+**NOTE** You should choose custom pattern characters that are not going to clash with the type of input your field will be accepting.
 
 ## Keyboard Shortcuts
 

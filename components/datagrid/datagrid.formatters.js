@@ -202,8 +202,7 @@ const formatters = {
     let renderedTmpl = '';
 
     if (Tmpl && item && tmpl) {
-      const compiledTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`);
-      renderedTmpl = compiledTmpl.render({ dataset: item });
+      renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
     }
 
     return renderedTmpl;

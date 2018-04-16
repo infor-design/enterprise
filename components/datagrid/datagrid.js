@@ -2907,8 +2907,7 @@ Datagrid.prototype = {
       let renderedTmpl = '';
 
       if (Tmpl && item) {
-        const compiledTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`);
-        renderedTmpl = compiledTmpl.render({ dataset: item });
+        renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
       }
 
       rowHtml += `<tr class="datagrid-expandable-row"><td colspan="${this.visibleColumns().length}">` +
@@ -4105,6 +4104,10 @@ Datagrid.prototype = {
       countText = `(${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
     }
 
+    if (!totals && this.settings.source) {
+      count = this.lastCount;
+    }
+
     if (self.settings.resultsText) {
       if (typeof self.settings.resultsText === 'function') {
         if (self.grandTotal) {
@@ -4124,6 +4127,7 @@ Datagrid.prototype = {
       self.toolbar.find('.datagrid-row-count').text(count);
     }
     self.element.closest('.modal').find('.datagrid-result-count').html(countText);
+    this.lastCount = count;
 
     this.checkEmptyMessage();
   },

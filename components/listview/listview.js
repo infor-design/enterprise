@@ -222,8 +222,7 @@ ListView.prototype = {
         totals = this.getTotals(dataset);
       }
 
-      const compiledTmpl = Tmpl.compile(this.settings.template);
-      const renderedTmpl = compiledTmpl.render({ dataset, totals });
+      const renderedTmpl = Tmpl.compile(this.settings.template, { dataset, totals });
 
       if (dataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
         this.element.html(renderedTmpl);
