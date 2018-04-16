@@ -1150,6 +1150,9 @@ Datagrid.prototype = {
       filterMarkup += '</div>';
     }
 
+    if (!columnDef.filterType) {
+      filterMarkup = '<div class="datagrid-filter-wrapper"></div>';
+    }
     return filterMarkup;
   },
 
@@ -3006,7 +3009,7 @@ Datagrid.prototype = {
     context.font = '14px arial';
 
     const metrics = context.measureText(maxText);
-    let padding = chooseHeader ? 35 : 40;
+    let padding = chooseHeader ? 40 : 45;
 
     if (hasAlert && !chooseHeader) {
       padding += 20;
