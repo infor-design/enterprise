@@ -405,6 +405,8 @@ Column.prototype = {
     let targetBars;
     let pnBars;
     const barMaxWidth = 35;
+    const barsInGroup = dataArray[0] && dataArray[0].values ? dataArray[0].values.length : 0;
+    const isGroupSmaller = ((width / dataArray.length) > (barMaxWidth * (barsInGroup + 1)));
     const color = function (colorStr) {
       return charts.chartColor(0, '', { color: colorStr });
     };
@@ -528,7 +530,13 @@ Column.prototype = {
             return i;
           })
           .attr('transform', function (d) {
-            return `translate(${x0(self.settings.isStacked ? xAxisValues[0] : d.name)},0)`;
+            let x = x0(self.settings.isStacked ? xAxisValues[0] : d.name);
+            const bandwidth = x0.bandwidth();
+            if (!self.settings.isStacked && isGroupSmaller &&
+              bandwidth > ((barMaxWidth * dataArray.length) * 2)) {
+              x += (((x0.bandwidth() / 2) / dataArray.length) / 2);
+            }
+            return `translate(${x},0)`;
           });
 
         bars = xValues.selectAll('rect')
