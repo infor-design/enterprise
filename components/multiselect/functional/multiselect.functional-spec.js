@@ -92,7 +92,7 @@ describe('Multiselect example-states tests', () => {
     });
   }
 
-  // Disable IE11: Async timeout errors
+  // Exclude IE11: Async timeout errors
   if (browser.browserName !== 'ie') {
     it('Should be accessible on init with no WCAG 2AA violations', async () => {
       await clickOnMultiselect();

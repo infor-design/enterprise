@@ -31,7 +31,7 @@ const axeOptions = {
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Kitchen-sink tests', () => {
-  // Disable IE11: Async timeout errors
+  // Exclude IE11: Async timeout errors
   if (browser.browserName.toLowerCase() !== 'ie') {
     it('Should be accessible on init with no WCAG 2AA violations', async () => {
       await browser.waitForAngularEnabled(false);
