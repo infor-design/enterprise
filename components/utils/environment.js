@@ -120,16 +120,6 @@ const Environment = {
 };
 
 /**
- *
- */
-Environment.pasteEvent = (function getPasteEvent() {
-  const el = document.createElement('input');
-  const name = 'onpaste';
-  el.setAttribute(name, '');
-  return ((typeof el[name] === 'function') ? 'paste' : 'input');
-}());
-
-/**
  * Automatically set up the environment by virtue of including this script
  */
 Environment.set();

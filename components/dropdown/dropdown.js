@@ -241,7 +241,7 @@ Dropdown.prototype = {
     }
 
     // Persist sizing defintions
-    const sizingStrings = ['-xs', '-sm', '-md', '-lg'];
+    const sizingStrings = ['-xs', '-sm', '-mm', '-md', '-lg'];
     const classString = this.element.attr('class');
     let s = null;
 

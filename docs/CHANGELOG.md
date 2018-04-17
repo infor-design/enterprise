@@ -22,6 +22,9 @@ http://usalvlhlpool1.infor.com/4.6.0/components/
 ### <a name="version-4.6.0-improvements">Improvements</a>
 
 ### <a name="version-4.6.0-breaking-changes">Code Updates / Breaking Changes</a>
+- The internal template engine changed for better XSS security as a result one feature is no longer supported.
+If you have a delimiter syntax to embed html such as `{{& name}}` please change this to the `{{{name}}}` alternate syntax.
+- jQuery - Updated from 3.1.1 to 3.3.1
 
 ### <a name="version-4.5.0-bug-fixes">Bug Fixes</a>
 - Angular - Added fixes so that the soho.migrate script is no longer needed.

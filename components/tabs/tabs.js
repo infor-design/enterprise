@@ -3423,7 +3423,8 @@ Tabs.prototype = {
         cb();
       }
     }
-    this.animationTimeout = setTimeout(animationTimeout.apply(this, [callback]), 0);
+
+    animationTimeout(callback);
   },
 
   /**
