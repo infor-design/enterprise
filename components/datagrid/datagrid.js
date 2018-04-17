@@ -4425,6 +4425,11 @@ Datagrid.prototype = {
 
         // Then Activate
         if (!canSelect) {
+          if (e.shiftKey && self.activatedRow().length) {
+            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').index()]);
+            e.preventDefault();
+          }
+
           self.toggleRowActivation(target.closest('tr'));
         }
       }
