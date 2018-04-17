@@ -33,22 +33,23 @@ describe('Tmpl API', () => {
     let output = Tmpl.compile(testTempl, {
       dataset: [
         { disabled: true, task: 'Test', desc: 'Test Desc' },
-        { disabled: false, task: 'Test 2', desc: 'Test Desc 2', date: new Date(2018, 10, 10) }
+        { disabled: false, task: 'Test 2', desc: 'Test Desc 2', date: 'May 2019' }
       ]
     });
     output = stringUtils.stripWhitespace(output);
 
     expect(output).toEqual(stringUtils.stripWhitespace(`
       <ul>
-          <li class="is-disabled"><p class="listview-heading">Task #Test</p>
-            <p class="listview-subheading">Test Desc </p>
-            <p class="listview-micro">Due: </p>
-          </li>
-          <li>
-            <p class="listview-heading">Task #Test 2</p>
-            <p class="listview-subheading">Test Desc 2 </p>
-            <p class="listview-micro">Due: Sat Nov 10 2018 00:00:00 GMT-0500 (EST)</p>
-          </li>
+        <li class="is-disabled">
+          <p class="listview-heading">Task #Test</p>
+          <p class="listview-subheading">Test Desc</p>
+          <p class="listview-micro">Due:</p>
+        </li>
+        <li>
+          <p class="listview-heading">Task #Test 2</p>
+          <p class="listview-subheading">Test Desc 2</p>
+          <p class="listview-micro">Due: May 2019</p>
+        </li>
       </ul>`));
   });
 
