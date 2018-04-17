@@ -21,30 +21,46 @@ exports.config = {
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
     'browserstack.debug': true,
     'browserstack.local': true,
+    'browserstack.networkLogs' : true,
     build: 'Functional',
     name: 'Functional tests'
   },
   multiCapabilities: [
     {
       browserName: 'Chrome',
-      browser_version: '64'
+      browser_version: '65.0',
+      resolution: '1280x800',
+      os_version: '10',
+      os: 'Windows'
     },
     {
       browserName: 'Firefox',
-      browser_version: '58'
+      browser_version: '59.0',
+      resolution: '1280x800',
+      os_version: '10',
+      os: 'Windows'
     },
     {
-      os: 'OS X',
-      os_version: 'El Capitan',
       browserName: 'Safari',
-      browser_version: '9.1'
+      browser_version: '9.1',
+      resolution: '1280x960',
+      os_version: 'El Capitan',
+      os: 'OS X'
     },
     {
-      browserName: 'Edge'
+      browserName: 'Edge',
+      resolution: '1280x800',
+      browser_version: '16.0',
+      os_version: '10',
+      os: 'Windows'
+
     },
     {
       browserName: 'IE',
-      browser_version: '11'
+      browser_version: '11.0',
+      resolution: '1280x800',
+      os_version: '10',
+      os: 'Windows'
     }
   ],
   beforeLaunch: () => {
@@ -58,10 +74,8 @@ exports.config = {
       });
     });
   },
-
   onPrepare: () => {
     browser.ignoreSynchronization = true;
-
     browser.protractorImageComparison = new protractorImageComparison({
       baselineFolder: './baseline/',
       screenshotPath: './.tmp/',
@@ -74,7 +88,10 @@ exports.config = {
     }));
 
     return browser.getProcessedConfig().then((cap) => {
-      browser.browserName = cap.capabilities.browserName;
+      browser.browserName = cap.capabilities.browserName.toLowerCase();
+      if (browser.browserName === 'chrome') {
+        return browser.driver.manage().window().setSize(1200, 800);
+      }
     });
   },
 

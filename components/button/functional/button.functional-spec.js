@@ -35,7 +35,7 @@ describe('Button example-with-icons tests', () => {
     await browser.driver.get('http://localhost:4000/components/button/example-with-icons');
   });
 
-  if (browser.browserName.toLowerCase() !== 'safari') {
+  if (browser.browserName !== 'safari') {
     it('Should open menu on return', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
@@ -56,14 +56,14 @@ describe('Button example-with-icons tests', () => {
     expect(await element(by.css('button#menu-button-alone[aria-haspopup="true"]')).isDisplayed()).toBe(true);
   });
 
-  if (browser.browserName.toLowerCase() === 'chrome') {
+  if (browser.browserName === 'chrome') {
     it('Should not visual regress', async () => {
       expect(await browser.protractorImageComparison.checkScreen('buttonPage')).toEqual(0);
     });
   }
 
   // Disable IE11: Async timeout errors
-  if (browser.browserName.toLowerCase() !== 'ie') {
+  if (browser.browserName !== 'ie') {
     it('Should be accessible on init with no WCAG 2AA violations', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
