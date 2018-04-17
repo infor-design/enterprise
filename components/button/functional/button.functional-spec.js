@@ -7,6 +7,26 @@ const axeOptions = { rules: rules.axeRules };
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
+describe('Button example-index tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/button/example-index.html');
+  });
+
+  it('Should tab to "Primary Button", and animate on enter', async () => {
+    const buttonEl = await element.all(by.css('.btn-primary')).get(3);
+    const svgEl = await element.all(by.css('.btn-primary')).get(3).element(by.css('.ripple-effect'));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+    await element(by.css('body')).sendKeys(protractor.Key.TAB);
+    await element(by.css('body')).sendKeys(protractor.Key.TAB);
+    await element(by.css('body')).sendKeys(protractor.Key.TAB);
+    await buttonEl.sendKeys(protractor.Key.ENTER);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+
+    expect(await svgEl.getAttribute('class')).toContain('is-animation');
+  });
+});
+
 describe('Button example-with-icons tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
