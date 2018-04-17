@@ -1,3 +1,5 @@
+import { utils } from '../utils/utils';
+
 const Tmpl = {};
 
 /**
@@ -27,7 +29,7 @@ Tmpl.compile = function compile(template, self, parent, invert) {
     let depth = 0;
     let inverted;
     let ctx = (typeof self[i] === 'object') ? self[i] : {};
-    ctx = Object.assign({}, parent, ctx);
+    ctx = utils.extend({}, parent, ctx); // Same as Object.assign({}, parent, ctx); but safe on IE
     ctx[''] = { '': self[i] };
 
     template.replace(
