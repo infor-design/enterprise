@@ -78,8 +78,7 @@ module.exports = function (grunt) {
   grunt.registerTask('default', [
     'clean:dist',
     'build',
-    'compress',
-    'exec:documentation'
+    'compress'
   ]);
 
   // Main build task (Gets everything)

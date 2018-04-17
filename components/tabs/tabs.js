@@ -294,11 +294,17 @@ Tabs.prototype = {
       let panel;
 
       // Associated the current one
-      const href = a.attr('href');
+      let href = a.attr('href');
 
       if (href.substr(0, 1) !== '#') {
         // is an outbound Link
         return;
+      }
+
+      if (href.substr(0, 2) === '#/') {
+        // uses angular LocationStrategy
+        // Just to find the panel but these are handled by angular
+        href = href.replace('#/', '#');
       }
 
       if (href !== undefined && href !== '#') {
@@ -1715,6 +1721,7 @@ Tabs.prototype = {
     if (href.indexOf('#') === -1 && href.charAt(0) !== '/') {
       href = `#${href}`;
     }
+
     return this.anchors.filter(`[href="${href}"]`);
   },
 
@@ -1736,6 +1743,10 @@ Tabs.prototype = {
       return $();
     }
 
+    // uses angular LocationStrategy
+    if (href.substr(0, 2) === '#/') {
+      href = href.replace('#/', '#');
+    }
     return this.panels.filter(`[id="${href.replace(/#/g, '')}"]`);
   },
 
