@@ -28,6 +28,7 @@
     "webdriver:update": "webdriver-manager update",
     "pree2e": "npm run webdriver && (npm run start & sleep 10)",
     "publish-dev": "grunt publish && npm publish publish --tag dev --force",
+    "publish-nightly": "grunt publish && npm publish publish --tag nightly",
     "publish-prod": "grunt publish && npm publish publish --force",
     "documentation": "node ./build/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
