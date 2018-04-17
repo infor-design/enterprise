@@ -6,10 +6,10 @@ import babel from 'rollup-plugin-babel';
 import json from 'rollup-plugin-json';
 import license from 'rollup-plugin-license';
 
-const bundleBanner = require('./build/generate-bundle-banner');
+const bundleBanner = require('./scripts/generate-bundle-banner');
 
 module.exports = {
-  input: 'components/index.js',
+  input: 'src/index.js',
   output: {
     file: 'dist/js/sohoxi.js',
     format: 'iife',

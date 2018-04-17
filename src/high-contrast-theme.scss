@@ -1,0 +1,805 @@
+// Soho Xi - 508 - High Contrast Theme
+//================================================== //
+
+// Standard CSS reset stuff here
+@import 'core/reset';
+@import 'core/mixins';
+@import 'core/config';
+
+//Override Config
+//================================================== //
+
+// Form Background Color
+$body-bg-color:  $graphite03;
+$header-bg-color: $azure09;
+$subhead-bg-color: $azure08;
+$header-border-color: $slate10;
+$header-button-color: rgba($white, 1);
+$header-button-focus-color: rgba($white, 1);
+$header-button-hover-color: rgba($white, .85);
+$header-button-disabled-color: rgba($white, .3);
+$header-primary-btn-background-color: $azure06;
+$header-primary-btn-background-hover-color: $azure05;
+$header-disabled-color: $graphite05;
+$header-focus-box-shadow:  0 0 4px 3px rgba(255, 255, 255, .3);
+
+$panel-bg-color: $graphite02;
+$panel-border-color: $graphite06;
+$drop-shadow-depth: rgba(0, 0, 0, .2);
+$focus-box-shadow-color: rgba(41, 41, 41, .3);
+$focus-box-shadow: 0 0 4px 2px $focus-box-shadow-color;
+
+$focus-box-shadow-spinbox: 0 -3px 3px 0 $focus-box-shadow-color,
+                           0 3px 3px 0 $focus-box-shadow-color;
+
+$focus-box-shadow-spinbox-down: 0 -3px 3px 0 $focus-box-shadow-color,
+                                0 3px 3px 0 $focus-box-shadow-color,
+                                -3px 0 3px 0 $focus-box-shadow-color;
+
+$focus-box-shadow-spinbox-up: 0 -3px 3px 0 $focus-box-shadow-color,
+                                0 3px 3px 0 $focus-box-shadow-color,
+                                3px 0 3px 0 $focus-box-shadow-color;
+
+// Base Colors
+$primary-color: $azure09;
+$inverse-color: #ffffff;
+
+// Text Color
+$font-color-extrahighcontrast: $graphite10;
+$font-color-highcontrast: $graphite10;
+$font-color: $graphite09;
+$font-color-lowcontrast: $graphite07;
+$label-color: $graphite09;
+$label-disabled-color: $graphite05;
+$disabled-color: $graphite05;
+$signin-title-color: $slate10;
+
+// New Text Colors
+$font-color-default: $black;
+$font-color-descriptive: $graphite09;
+$font-color-hyperlink: $primary-color;
+$font-color-muted: $graphite05;
+$font-color-alert: $alert-red;
+
+//The hyperlink Style
+$hyperlink-color: $azure09;
+$hyperlink-focus-border-color: $azure09;
+$hyperlink-visited-color: $amethyst10;
+$hyperlink-disabled-color: $disabled-color;
+$hyperlink-hover-color: $azure07;
+
+// Alert Colors
+$alert-info: $azure09;
+$alert-green: #397514;
+$alert-yellow: #ffd726;
+$alert-red: $ruby09;
+
+// Rules
+$hr-top-color: $graphite03;
+$hr-bottom-color: transparent;
+
+// Circle Pager
+$circlepager-bg-color: $white;
+$circlepager-border-color: $graphite06;
+$circlepager-hover-bg-color: $white;
+$circlepager-hover-border-color: $black;
+$circlepager-focus-bg-color: $white;
+$circlepager-focus-border-color: $azure07;
+
+$circlepager-active-bg-color: $primary-color;
+$circlepager-active-border-color: $primary-color;
+$circlepager-active-hover-bg-color: $primary-color;
+$circlepager-active-hover-border-color: $primary-color;
+$circlepager-active-focus-bg-color: $primary-color;
+$circlepager-active-focus-border-color: $primary-color;
+
+$circlepager-disable-bg-color: transparent;
+$circlepager-disable-border-color: $graphite04;
+$circlepager-disable-hover-bg-color: transparent;
+$circlepager-disable-hover-border-color: $graphite04;
+$circlepager-disable-focus-bg-color: transparent;
+$circlepager-disable-focus-border-color: $graphite04;
+
+
+// Popovers
+$popover-bg-color: $graphite01;
+$popover-border-color: $graphite06;
+$popover-box-shadow: 0 2px 5px $drop-shadow-depth;
+$popover-arrow-border-color: $graphite06;
+$popover-color: $font-color;
+$popover-separator-color: $graphite06;
+
+// Tooltips
+$tooltip-bg-color: $graphite08;
+$tooltip-border-color: $graphite08;
+$tooltip-box-shadow: 0 2px 5px $drop-shadow-depth;
+$tooltip-color: $white;
+$tooltip-error-bg-color: $alert-red;
+$tooltip-error-border-color:  $alert-red;
+$tooltip-error-color: $white;
+
+// Badges
+$badge-neutral-color: $black;
+$badge-neutral-bg-color: $graphite04;
+$badge-neutral-hover-bg-color: $graphite05;
+$badge-secondary-color: $black;
+$badge-secondary-bg-color: $graphite02;
+$badge-secondary-border-color: $graphite06;
+$badge-error-color: $white;
+$badge-alert-color: $black;
+$badge-good-color: $white;
+$badge-info-color: $white;
+$badge-info-bg-color: $primary-color;
+$badge-neutral-icon-color: $graphite09;
+$badge-neutral-hover-icon-color: $graphite06;
+
+.tag,
+.badge {
+  font-weight: bold !important;
+}
+
+// Popup Menu
+$popupmenu-color: $font-color-extrahighcontrast;
+$popupmenu-icon-color: $graphite06;
+$popupmenu-bg-color: $white;
+$popupmenu-border-color: $graphite06;
+$popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
+$popupmenu-heading-color: $graphite07;
+$popupmenu-hover-color: $graphite04;
+$popupmenu-checked-color: $azure09;
+
+// Form Buttons
+$primary-btn-bg-color: $primary-color;
+$primary-btn-color: $inverse-color;
+$primary-btn-hover-bg-color: $azure08;
+$primary-btn-focus-bg-color: $primary-color;
+$primary-btn-active-bg-color: $azure08;
+$primary-btn-disabled-color: $inverse-color;
+$primary-btn-disabled-bg-color: $primary-color; //Primary at 50%
+$primary-btn-disabled-border-color: $primary-color;
+$primary-btn-disabled-opacity: .5;
+
+// Secondary/Normal Buttons
+$btn-color: $white;
+$btn-bg-color: $graphite07;
+$btn-hover-bg-color: $graphite06;
+$btn-focus-bg-color: $primary-color;
+$btn-focus-border-color: $primary-color;
+$btn-active-bg-color: $graphite05;
+$btn-disabled-bg-color: $graphite07;
+$btn-disabled-color: $white;
+$btn-disabled-border-color: $graphite07;
+$btn-disabled-opacity: .5;
+
+// Tertiary Buttons
+$tertiary-btn-color: $graphite09;
+$tertiary-btn-hover-color: $graphite06;
+$tertiary-btn-open-color: $primary-color;
+$tertiary-btn-active-color: $graphite06;
+$tertiary-btn-ripple-color: $azure07;
+
+// Secondary with Border
+$secondary-border-btn-color:  $graphite09;
+$secondary-border-btn-border-color: $graphite09;
+$secondary-border-btn-hover-color:  $graphite10;
+$secondary-border-btn-hover-border-color: $graphite10;
+$secondary-border-btn-ripple-color: $azure07;
+
+// Input Fields
+$input-border-color: $graphite06;
+$input-color: $black;
+$input-bg-color: $white;
+$input-disabled-bg-color: transparent;
+$input-disabled-border-color: $graphite04;
+$input-disabled-color: $graphite05;
+$input-hover-border-color: $black;
+$input-focus-border-color: $graphite08;
+$input-placeholder-color: $graphite05;
+$input-readonly-border-color: $input-border-color;
+$input-readonly-bg-color: $graphite04;
+$input-readonly-color: $black;
+
+//States
+$error-color: $alert-red;
+$error-icon-fill: $alert-red;
+$alert-color: #d66221;
+$confirm-color: $alert-green;
+$info-color: $primary-color;
+$error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, .3);
+$dirty-icon-fill: $alert-yellow;
+$confirm-icon-fill: $alert-green;
+$info-icon-fill: $azure08;
+$selected-bg-color: rgba($azure07, .3);
+
+// Autocomplete
+$autocomplete-light-text: $graphite05;
+$autocomplete-active-bg-color: $body-bg-color;
+$autocomplete-box-shadow: 0 2px 5px 2px $focus-box-shadow-color;
+$autocomplete-box-shadow-flipped: 0 -2px 5px 2px $focus-box-shadow-color;
+$trigger-icon-fill-color: $graphite09;
+$trigger-icon-fill-light-color: $graphite08;
+$trigger-hover-color: $graphite06;
+$trigger-active-color: $primary-color;
+$trigger-focus-color: $primary-color;
+$trigger-disabled-color: $graphite04;
+
+//List View
+$listview-bg-color: $inverse-color;
+$listview-bg-color-alternate: $graphite02;
+$listview-hover-bg-color: $graphite04;
+$listview-border-color: $graphite06;
+$listview-color: $black;
+$listview-secondary-color: $graphite09;
+$listview-tertiary-color: $graphite07;
+$listview-disabled-color: $disabled-color;
+$listview-selected-text-color: $font-color-extrahighcontrast;
+$listview-header-bg-color: $graphite04;
+$listview-header-color: $font-color-extrahighcontrast;
+$listview-subhead-color: $graphite06;
+
+$listview-toolbar-button-text-color: $tertiary-btn-color;
+$listview-toolbar-button-icon-color: $tertiary-btn-color;
+$listview-toolbar-button-text-hover-color: $primary-color;
+$listview-toolbar-button-icon-hover-color: $primary-color;
+$listview-toolbar-button-text-selected-color: $primary-color;
+$listview-toolbar-button-icon-selected-color: $primary-color;
+
+// Listbuilder
+$listbuilder-bg-color: $input-bg-color;
+$listbuilder-bg-color-hover: $graphite04;
+$listbuilder-bg-color-selected: $primary-color;
+$listbuilder-border-color: $input-border-color;
+$listbuilder-border-color-focus: $azure07;
+$listbuilder-icon-color-hover: $font-color-highcontrast;
+$listbuilder-text-color: $black;
+$listbuilder-input-selection-bg-color: $azure10;
+
+// Toolbar
+$toolbar-standalone-bg-color: $graphite01;
+$toolbar-standalone-border-color: $graphite06;
+$toolbar-standalone-disabled-color: $graphite08;
+$toolbar-separator-color: $graphite06;
+
+// Field Filter
+$fieldfilter-border-side-color: $input-border-color;
+
+// Formatter Toolbar
+$formatter-toolbar-separator-color: $graphite06;
+
+//Contextual Toolbar
+$contextual-toolbar-bg-color: $primary-color;
+$contextual-toolbar-color: $inverse-color;
+$contextual-toolbar-button-color: rgba($inverse-color, 1);
+$contextual-toolbar-button-hover-color: rgba($inverse-color, .7);
+$contextual-toolbar-button-disabled-color: rgba($inverse-color, .3);
+$contextual-panel-seperator-bg-color: $graphite06;
+
+// Drop down
+$dropdown-filter-color: $font-color-extrahighcontrast;
+$dropdown-color: $input-color;
+$dropdown-search-color: $autocomplete-light-text;
+$dropdown-menu-border-color: $primary-color;
+$dropdown-menu-separator-color: $graphite07;
+$dropdown-menu-separator-border-color: $graphite06;
+$dropdown-group-label-color: $graphite05;
+$dropdown-selected-bg-color: $primary-color;
+$dropdown-box-shadow: 0 5px 5px $drop-shadow-depth;
+
+// Date Picker
+$datepicker-month-year-color: $black;
+$datepicker-icon-active-color: $azure09;
+// $datepicker-alternate-month-color: rgba($graphite06, 0.5);
+$datepicker-alternate-month-color: $graphite05;
+$datepicker-day-color: $black;
+$datepicker-focus-border-color: $azure07;
+$datepicker-selected-bg-color: $primary-color;
+$datepicker-selected-color: $inverse-color;
+$datepicker-today-color: $black;
+$datepicker-hover-bg-color: $graphite04;
+$datepicker-disabled-border-color: $graphite04;
+$datepicker-disabled-bg-color: $graphite02;
+$datepicker-disabled-color: $graphite04;
+
+.calendar-table .is-today {
+  text-decoration: underline;
+}
+
+//Time Picker
+$timepicker-disabled-border-color: $graphite04;
+$timepicker-disabled-color: $graphite04;
+
+
+// Color Picker
+$colorpicker-initial-bg-color: $graphite06;
+$colorpicker-swatch-border-color: $graphite06;
+$colorpicker-checkmark-one-color: $black;
+$colorpicker-checkmark-two-color: $white;
+$colorpicker-popup-bg-color: $graphite01;
+$colorpicker-popup-border-color: $graphite06;
+
+// Fileupload
+$fileupload-border-color: $graphite05;
+$fileupload-droparea-color: $graphite05;
+$fileupload-secondary-color: $graphite07;
+$fileupload-error-border-color: $alert01;
+$fileupload-completed-color: #225800;
+$fileupload-completed-border-color: #225800;
+$fileupload-droparea-hover-color: $graphite05;
+$fileupload-droparea-hover-bg-color: $azure02;
+$fileupload-cancel-bg-color: $graphite05;
+$fileupload-cancel-hover-bg-color: darken($graphite05, 15%);
+$fileupload-droparea-bg-color: rgba($graphite01, .5);
+$fileupload-droparea-hover-bg-color: $graphite01;
+$fileupload-droparea-dd-hover-bg-color: rgba(200, 233, 244, .80);
+$fileupload-droparea-dd-hover-border-color: $primary-color;
+
+//Spinbox
+$spinbox-active-color: $font-color-extrahighcontrast;
+$spinbox-bg-color: $graphite03;
+$spinbox-button-color: #ffffff;
+
+//Skip Link
+$skip-link-border-color: $graphite06;
+$skip-link-bg-color: $graphite01;
+$skip-link-color: $primary-color;
+
+//Mast Head
+$masthead-bg-color: $slate10;
+$masthead-border-color: $slate05;
+
+// Icons
+$icon-color: $font-color;
+$icon-empty-bg-color: $font-color-lowcontrast;
+
+//Field Set
+$fieldset-border-top-color: $graphite06;
+$fieldset-border-bottom-color: transparent;
+$fieldset-title-color: $font-color-highcontrast;
+
+// Expandable Area
+$expandable-area-border-color: $graphite06;
+$expandable-area-title-color: $black;
+
+// Cardlist
+$cardlist-bg-color: $graphite01;
+$cardlist-border-color: $graphite06;
+$cardlist-header-color: $black;
+$cardlist-actions-color: $graphite09;
+
+// Checkboxes
+$checkbox-color: $primary-color;
+$checkbox-arrow-color: #ffffff;
+$checkbox-border-color: $graphite06;
+$checkbox-bg-color: #ffffff;
+$checkbox-hover-border-color: $black;
+$checkbox-disabled-font-color: $disabled-color;
+$checkbox-disabled-border-color: $input-disabled-border-color;
+$checkbox-disabled-bg-color: transparent;
+$checkbox-disabled-select-bg-color: $input-readonly-bg-color;
+$checkbox-disabled-arrow-color: #f4f4f4;
+$checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $azure07;
+$checkbox-label-color: $input-color;
+
+// Switch
+$switch-checked-color: $primary-color;
+$switch-checked-bg-color: $azure06;
+$switch-unchecked-bg-color: $white;
+$switch-unchecked-bar-color: $graphite07;
+$switch-unchecked-border-color: $graphite06;
+$switch-unchecked-color: $slate05;
+$switch-unchecked-pressed-bg-color: $slate04;
+$switch-disabled-bg-color: $graphite02;
+$switch-disabled-border-color: $graphite04;
+$switch-disabled-bar-color: $graphite04;
+$switch-disabled-label-color: $disabled-color;
+$switch-focus-box-shadow: 0 0 0 3px #3f505f, 0 0 0 4px $primary-color, 0 0 4px 6px rgba(41, 41, 41, .3);
+$switch-hover-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+
+// Editor
+$editor-bg-color: $input-bg-color;
+$editor-border-color: $input-border-color;
+$editor-hover-border-color: $input-hover-border-color;
+$editor-focus-border-color: $input-focus-border-color;
+$editor-line-number-color: $graphite05;
+$editor-color: $input-color;
+$editor-toolbar-bg-color: $graphite02;
+$editor-middle-border-color: $graphite06;
+$editor-btn-color: $graphite09;
+$editor-btn-hover-color: $graphite05;
+$editor-btn-active-color: $primary-color;
+$editor-btn-active-box-shadow: 0 0 0 2px transparent, 0 0 0 1px $primary-color, $focus-box-shadow;
+$editor-top-focus-box-shadow: -2px -2px 3px 0 rgba(41, 41, 41, .3);
+$editor-blockquote-color: $graphite07;
+
+// Radio Buttons
+$radio-bg-color: $white;
+$radio-border-color: $graphite06;
+$radio-hover-border-color: $black;
+$radio-selected-color: $primary-color;
+$radio-selected-bg-color: $white;
+$radio-disabled-border-color: $graphite04;
+$radio-disabled-bg-color: $body-bg-color;
+$radio-disabled-select-bg-color: $white;
+$radio-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $azure07, 0 0 4px 5px rgba(41, 41, 41, .3);
+
+// Pager
+$pager-text-color: $primary-color;
+$pager-selected-color: $font-color-highcontrast;
+$pager-focus-border-color: $input-focus-border-color;
+$pager-hover-color: $font-color-extrahighcontrast;
+$pager-disabled-color: $graphite04;
+
+// Slider
+$slider-bg-color: $graphite06;
+$slider-active-bg-color: $primary-color;
+$slider-labels-color: $graphite09;
+$slider-disabled-color: $graphite04;
+$slider-disabled-active-bg-color: $graphite06;
+$slider-disabled-labels-color: $graphite05;
+$slider-disabled-handle-color: $graphite06;
+$slider-disabled-range-color: $graphite06;
+$slider-readonly-color: $graphite06;
+$slider-readonly-active-bg-color: $graphite08;
+$slider-readonly-labels-color: $graphite07;
+$slider-readonly-handle-color: $graphite08;
+$slider-readonly-range-color: $graphite08;
+$slider-hover-shadow: 0 2px 5px 0 rgba($black, .3);
+
+//Modal
+$modal-bg-color: $graphite01;
+$modal-border-color: $graphite06;
+$modal-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
+$modal-btn-color: $graphite08;
+$modal-color: $graphite09;
+$modal-btn-border-color: $graphite06;
+$modal-btn-hover-color: $graphite05;
+$modal-btn-primary-color: $azure09;
+$modal-btn-primary-hover-color: $azure09;
+$modal-btn-disabled-color: $graphite08;
+$modal-btn-disabled-opacity: .5;
+$modal-primary-color: $black;
+$modal-secondary-color: $graphite09;
+
+// Accordion
+$accordion-bg-color: $graphite01;
+$accordion-border-color: $graphite06;
+$accordion-toplevel-border-color: $slate04;
+$accordion-pane-bg-color: $graphite04;
+$accordion-text-color: $graphite09;
+$accordion-text-active-color: $black;
+$accordion-icon-color: $graphite09;
+$accordion-icon-hover-color: $black;
+$accordion-hover-border-color: $black;
+$accordion-hover-text-color: $graphite10;
+
+$accordion-panel-border-color: $graphite04;
+
+$accordion-alternate-bg-color: $white;
+$accordion-alternate-border-color: $graphite04;
+$accordion-alternate-pane-bg-color: $graphite04;
+
+$accordion-inverse-bg-color: $slate08;
+$accordion-inverse-pane-bg-color: $black;
+$accordion-inverse-border-color: $slate10;
+$accordion-inverse-border-hover-color: $white;
+$accordion-inverse-text-color: $slate03;
+$accordion-inverse-text-hover-color: $white;
+$accordion-inverse-focus-state-color: $white;
+
+$accordion-focused-text-color: $azure05;
+$accordion-focused-border-color: $azure05;
+
+$accordion-selected-bg-color: $azure05;
+$accordion-selected-text-color: $white;
+
+$accordion-highcontrast-text-decoration: underline;
+
+$accordion-disabled-bg-color: transparent;
+$accordion-disabled-border-color: $graphite07;
+$accordion-disabled-text-color: $graphite06;
+$accordion-disabled-pane-bg-color: transparent;
+$accordion-disabled-pane-text-color: $graphite06;
+
+$accordion-header-filtered-children-background-color: $black;
+$accordion-filtered-background-color: $black;
+$accordion-filtered-text-color: $graphite06;
+
+// Application Menu (extends Accoridon)
+$application-menu-border-color: $slate04;
+
+// Contextual Action Panel
+$contextual-panel-bg: $graphite03;
+$contextual-panel-border-color: $graphite05;
+$contextual-panel-color: $white;
+
+//BreadCrumb
+$breadcrumb-color: $graphite09;
+$breadcrumb-hover-color: $graphite09;
+$breadcrumb-disabled-color: $disabled-color;
+
+// Rating (Stars)
+$rating-bg-color: $amber06;
+$rating-border-color: $graphite06;
+$rating-hover-color: $primary-color;
+
+// Tabs
+$tab-text-color: $graphite10;
+$tab-selected-color: $azure09;
+$tab-border-color: $graphite04;
+$tab-hover-color: $font-color-extrahighcontrast;
+
+// Vertical Tabs
+$vertical-tab-text-color: $font-color-extrahighcontrast;
+$vertical-tab-text-hover-color: $font-color-extrahighcontrast;
+$vertical-tab-text-hover-decoration: underline;
+$vertical-tab-bg-hover-color: $graphite04;
+$vertical-tab-focus-border-color: $primary-color;
+$vertical-tab-active-text-color: $white;
+$vertical-tab-active-bg-color: $primary-color;
+
+$vertical-tab-panel-bg-color: $panel-bg-color;
+$vertical-tab-sidebar-bg-color: $body-bg-color;
+$vertical-tab-sidebar-border-color: $graphite06;
+
+//Multi-tabs
+$mutlitabs-section-border-color: $graphite06;
+$mutlitabs-section-alt-bg-color: $white;
+$mutlitabs-section-alt-border-color: $graphite03;
+
+//Charts
+$chart-line-color: $graphite03;
+$chart-font-color: $font-color-extrahighcontrast;
+$chart-font-color-inverse: $font-color-extrahighcontrast;
+
+// DataGrid
+$datagrid-border-color: $graphite06;
+$datagrid-header-color: #ffffff;
+$datagrid-header-bg-color: $graphite08;
+$datagrid-header-border-color: $graphite06;
+$datagrid-header-hover-color: $graphite10;
+$datagrid-header-active-color: $graphite08;
+$datagrid-header-checkbox-border-color: $graphite05;
+$datagrid-sort-icon-color: $graphite04;
+$datagrid-sort-icon-sorted-color: $white;
+$datagrid-required-icon-color: $white;
+
+$datagrid-cell-color: $font-color;
+$datagrid-cell-bg-color: $graphite01;
+$datagrid-cell-readonly-bg-color: $graphite02;
+$datagrid-cell-readonly-color: $font-color;
+$datagrid-cell-border-color: $graphite06;
+$datagrid-cell-focus-box-shadow: 0 0 4px 1px rgba(80, 83, 90, .4);
+$datagrid-data-color: $font-color-extrahighcontrast;
+$datagrid-row-selected-color: #b3ccdb;
+$datagrid-row-selected-color-dark: #a2bbca;
+$datagrid-row-hover-color: $graphite04;
+$datagrid-row-icon-color: $graphite09;
+
+$datagrid-alternate-bg-color: #bdbdbd;
+$datagrid-alternate-row-hover-color: $graphite04;
+$datagrid-list-header-bg-color: $graphite04;
+
+$datagrid-list-header-focus-border-color: $primary-color;
+$datagrid-list-header-box-shadow: 0 0 4px 1px rgba(80, 83, 90, .4);
+$datagrid-list-header-border-color: transparent;
+$datagrid-list-header-color: $graphite10;
+$datagrid-list-header-hover-color: $graphite04;
+$datagrid-list-row-hover-color: transparent;
+$datagrid-list-sort-icon-color: $graphite04;
+$datagrid-list-sort-icon-hover-color: $graphite06;
+$datagrid-header-focus-bg-color: $graphite08;
+$datagrid-header-focus-border-color: $white;
+$datagrid-list-header-checkbox-border-color: $slate05;
+$datagrid-list-header-active-color: $graphite05;
+
+$datagrid-filter-border-color: $slate06;
+$datagrid-filter-hover-border-color: $white;
+$datagrid-filter-color: $white;
+$datagrid-filter-hover-color: $white;
+$datagrid-filter-disabled-color: $slate06;
+$datagrid-filter-icon-color: $slate03;
+$datagrid-filter-focus-color: $azure04;
+$datagrid-filter-active-color: $azure04;
+
+$datagrid-list-filter-border-color: $slate06;
+$datagrid-list-filter-hover-border-color: $slate10;
+$datagrid-list-filter-color: $slate10;
+$datagrid-list-filter-hover-color: $slate10;
+$datagrid-list-filter-icon-color: $slate06;
+$datagrid-list-filter-disabled-color: $slate04;
+$datagrid-list-filter-focus-color: $azure09;
+$datagrid-list-filter-active-color: $azure09;
+
+$datagrid-rowgroup-header: $graphite02;
+$datagrid-rowgroup-color: $font-color;
+$datagrid-empty-bg-color: #f0f0f0; //$datagrid-cell-bg-color
+
+// Search Results
+$sr-masthead-text-color: $font-color;
+$sr-result-bottom-border-color: $hr-top-color;
+$sr-masthead-item-color: $font-color-lowcontrast;
+
+// Tree
+$tree-selected-color: $black;
+$tree-selected-bg-color: $graphite04;
+$tree-focus-border-color: $azure07;
+$tree-active-bg-color: #8fa8b7;
+$tree-icon-color: $graphite09;
+$tree-link-color: $graphite09;
+$tree-disabled-color: $graphite05;
+$tree-hover-color: $black;
+$tree-hover-icon-color: $graphite06;
+
+//Progress
+$progress-bg-color: $graphite01;
+$progress-border-color: $graphite06;
+$progress-bar-bg-color: $azure09;
+
+//Chart Progress Bar
+$chart-progressbar-bg-color: #767676;
+$chart-progressbar-bg-color-dark: $graphite05;
+$chart-progressbar-completed-fill: #2f6b0a;
+$chart-progressbar-target-fill: $graphite05;
+$chart-progressbar-primary-fill: $primary-color;
+$chart-progressbar-dark-fill: $graphite08;
+$chart-targeted-achievement-bg-color: $graphite04;
+
+//Timeline
+$timeline-indicator-color: $graphite05;
+$timeline-indicator-processing-color: $primary-color;
+$timeline-indicator-complete-color: $primary-color;
+$timeline-line-color: $graphite05;
+$timeline-header-color: $azure09;
+
+//Wizard
+$wizard-default-bg: $body-bg-color;
+$wizard-bar-bg: $graphite06;
+$wizard-color: $graphite09;
+$wizard-disabled-color: $graphite04;
+$wizard-active-color: $primary-color;
+$wizard-active-text-color: $primary-color;
+$wizard-focus-box-shadow: 0 0 0 1px $azure07;
+
+//Org Chart
+$hierarchy-line-color: $graphite10;
+
+// Searchfield Colors
+$searchfield-bg-color: $white;
+$searchfield-border-color: $graphite03;
+$searchfield-icon-color: $tertiary-btn-color;
+$searchfield-text-color: $tertiary-btn-color;
+$searchfield-lighter-bg-color: $graphite02;
+$searchfield-lighter-text-color: $graphite05;
+$searchfield-active-icon-color: $azure09;
+
+$searchfield-alt-bg-color: $white;
+$searchfield-alt-border-color: $graphite05;
+
+$searchfield-context-bg: $graphite01;
+$searchfield-context-alt-bg: $white;
+$searchfield-context-border-color: $graphite03;
+$searchfield-context-box-shadow-color: $graphite03;
+$searchfield-context-icon-color: $graphite04;
+$searchfield-context-text-color: $font-color;
+
+$searchfield-card-bg-color: $white;
+$searchfield-card-border-color: $graphite03;
+$searchfield-card-icon-color: $graphite03;
+$searchfield-card-text-color: $font-color;
+
+$searchfield-header-bg-color: $graphite08;
+$searchfield-header-border-color: $graphite09;
+$searchfield-header-text-color: $white;
+$searchfield-header-placeholder-text-color: $graphite03;
+$searchfield-header-icon-color: $header-button-color;
+
+//Image Border Color
+$image-border-color: $graphite03;
+$image-background-color: $graphite03;
+
+//Toast
+$toast-bg-color: $white;
+$toast-border-color: $graphite06;
+$toast-header-color: $black;
+$toast-text-color: $black;
+
+$toast-shadow: none; //0 0 5px rgba(255, 255, 255, .2);
+
+//Builder Pattern
+$builder-header-bg-color: $slate07;
+
+//About
+$about-header-color: $black;
+$about-text-color: $black;
+$about-text-border-color: $graphite06;
+$about-text-hover-border-color: $black;
+
+// Header Tabs
+$header-tabcontainer-border-color: $graphite04;
+$header-tab-separator: rgba(255, 255, 255, .4);
+$header-tab-normal-color: $graphite01;
+$header-tab-hover-color: $inverse-color;
+$header-tab-selected-color: $inverse-color;
+$header-tab-alt-bg-color: $slate10;
+$header-tab-alt-separator: $header-tabcontainer-border-color;
+$header-tab-alt-normal-color: $inverse-color;
+$header-tab-alt-hover-color: $inverse-color;
+$header-tab-alt-selected-color: $inverse-color;
+
+// Header Breadcrumb
+$header-breadcrumb-color: $white;
+$header-breadcrumb-alt-bg-color: $white;
+$header-breadcrumb-alt-color: $font-color-highcontrast;
+$header-breadcrumb-border-color: $graphite06;
+
+// Module Tabs
+$module-tabs-bg-color: $azure09;
+$module-tabs-x-border-color: $azure05;
+$module-tabs-y-border-color: $azure10;
+$module-tabs-inactive-bg-color: $azure10;
+$module-tabs-active-bg-color: $azure07;
+$module-tabs-hover-bg-color: $azure06;
+$module-tabs-inactive-text-color: rgba($white, .85);
+$module-tabs-active-text-color: $white;
+$module-tabs-hover-text-color: $white;
+$module-tabs-disabled-bg-color: $azure06;
+$module-tabs-disabled-x-border-color: $azure04;
+$module-tabs-disabled-y-border-color: $azure07;
+$module-tabs-disabled-text-color: $azure04;
+
+// Composite Tabs
+$composite-tabs-panel-bg-color: $white;
+
+// Splitter
+$splitter-grip-bg-color: $graphite09;
+$splitter-active-bg-color: $graphite04;
+$splitter-active-grip-bg-color: $black;
+$splitter-box-shadow-color: rgba(37, 120, 169, .75);
+
+// Step Chart
+$step-chart-bg-color: $graphite02;
+$step-chart-border-color: $graphite01;
+$step-chart-inprogress-bg-color: $ruby02;
+$step-chart-completed-bg-color: $primary-color;
+$step-chart-totally-completed-bg-color: #80ce4d;
+
+//Swaplist
+$swaplist-bg-color-hover: $graphite04;
+$swaplist-bg-color-selected: $primary-color;
+$swaplist-border-color-focus: $azure07;
+$swaplist-icon-color: $graphite05;
+$swaplist-icon-color-hover: $font-color-highcontrast;
+$swaplist-border-color-hover: $font-color-highcontrast;
+$swaplist-text-color: $black;
+$swaplist-title-text-color: $black;
+
+// Block Grid
+$blockgrid-selected-bg-color: $selected-bg-color;
+$blockgrid-selected-border-color: $btn-focus-border-color;
+$blockgrid-hover-color: $listview-hover-bg-color;
+$blockgrid-focus-border-color: $primary-color;
+
+// Tree Map
+$treemap-title-bg-color: $graphite08;
+$treemap-title-color: $white;
+
+//================================================== //
+// Special Control Overrides
+@import 'core/controls';
+
+//Swaplist
+.swaplist {
+  .audible {
+    background-color: $graphite07;
+  }
+}
+
+// Tree - add a line
+.tree a:not(.is-disabled):hover .tree-text {
+  border-bottom: 1px solid;
+}
+
+// Override contrast text on high contrast
+.datagrid-cell-wrapper .chart-targeted-text {
+  color: $white;
+}

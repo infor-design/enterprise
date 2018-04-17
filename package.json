@@ -9,9 +9,9 @@
   "scripts": {
     "start": "node server.js",
     "stop": "./bin/stop.sh",
-    "eslint": "eslint -c .eslintrc.js components",
-    "eslint:log": "eslint -c .eslintrc.js components -o eslint.log",
-    "eslint:error-only": "eslint -c .eslintrc.js --quiet components",
+    "eslint": "eslint -c .eslintrc.js src",
+    "eslint:log": "eslint -c .eslintrc.js src -o eslint.log",
+    "eslint:error-only": "eslint -c .eslintrc.js --quiet src",
     "build": "rollup -c",
     "minify": "node ./build/minify.js",
     "install-globals": "npm install -g grunt-cli rollup",
@@ -35,12 +35,13 @@
     "lint-staged": "lint-staged",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v"
   },
-  "pre-commit": [
-    "lint-staged"
-  ],
+  "pre-commit": [],
   "lint-staged": {
-    "*.js": [
-      "eslint"
+    "src/**/*.js": [
+      "eslint -c .eslintrc.js"
+    ],
+    "test/**/*.js": [
+      "eslint -c .eslintrc.js"
     ]
   },
   "dependencies": {
