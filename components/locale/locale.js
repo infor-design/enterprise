@@ -169,14 +169,17 @@ const Locale = {  // eslint-disable-line
   /**
    * Append the local script to the page.
    * @param {string} locale The locale name to append.
+   * @param {boolean} isCurrent If we should set this as the current locale
    * @returns {void}
    */
-  appendLocaleScript(locale) {
+  appendLocaleScript(locale, isCurrent) {
     const script = document.createElement('script');
 
     script.src = `${this.getCulturesPath() + locale}.js`;
     script.onload = () => {
-      this.setCurrentLocale(locale, this.cultures[locale]);
+      if (isCurrent) {
+        this.setCurrentLocale(locale, this.cultures[locale]);
+      }
       this.addCulture(locale, this.currentLocale.data);
 
       this.dff.resolve(this.currentLocale.name);
@@ -217,12 +220,12 @@ const Locale = {  // eslint-disable-line
     if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
       this.setCurrentLocale(locale);
       // Fetch the local and cache it
-      this.appendLocaleScript(locale);
+      this.appendLocaleScript(locale, true);
     }
 
     setTimeout(() => {
       if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
-        this.appendLocaleScript('en-US');
+        this.appendLocaleScript('en-US', false);
       }
     }, 0);
 
@@ -251,8 +254,8 @@ const Locale = {  // eslint-disable-line
     if (data) {
       this.currentLocale.data = data;
       this.currentLocale.dataName = name;
+      this.updateLang();
     }
-    this.updateLang();
   },
 
   /**
