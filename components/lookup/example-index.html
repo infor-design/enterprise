@@ -65,7 +65,9 @@
         }
       }
     }).on('change', function (e, args) {
-      console.log(args[0]);
+      if (args) {
+        console.log(args[0]);
+      }
     });
 
 </script>
