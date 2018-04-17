@@ -1,0 +1,156 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Stacked Column Chart Title - xAxis Two lines</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-bar-stacked-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [{
+        data: [{
+            name: 'Jan 2018',
+            value: 12,
+        }, {
+            name: 'Feb 2018',
+            value: 11
+        }, {
+            name: 'Mar 2018',
+            value: 14
+        }, {
+            name: 'Apr 2018',
+            value: 10
+        }, {
+            name: 'May 2018',
+            value: 14
+        }, {
+            name: 'Jun 2018',
+            value: 8
+        }, {
+            name: 'Jul 2018',
+            value: 7
+        }, {
+            name: 'Aug 2018',
+            value: 10
+        }, {
+            name: 'Sep 2018',
+            value: 9
+        }, {
+            name: 'Oct 2018',
+            value: 8
+        }, {
+            name: 'Nov 2018',
+            value: 10
+        }, {
+            name: 'Dec 2018',
+            value: 6
+        }],
+        name: 'Component A'
+      }, {
+        data: [{
+            name: 'Jan 2018',
+            value: 22
+        }, {
+            name: 'Feb 2018',
+            value: 21
+        }, {
+            name: 'Mar 2018',
+            value: 24
+        }, {
+            name: 'Apr 2018',
+            value: 20
+        }, {
+            name: 'May 2018',
+            value: 24
+        }, {
+            name: 'Jun 2018',
+            value: 28
+        }, {
+            name: 'Jul 2018',
+            value: 27
+        }, {
+            name: 'Aug 2018',
+            value: 20
+        }, {
+            name: 'Sep 2018',
+            value: 29
+        }, {
+            name: 'Oct 2018',
+            value: 28
+        }, {
+            name: 'Nov 2018',
+            value: 20
+        }, {
+            name: 'Dec 2018',
+            value: 26
+        }],
+        name: 'Component B'
+      }, {
+        data: [{
+            name: 'Jan 2018',
+            value: 32
+        }, {
+            name: 'Feb 2018',
+            value: 31
+        }, {
+            name: 'Mar 2018',
+            value: 34
+        }, {
+            name: 'Apr 2018',
+            value: 30
+        }, {
+            name: 'May 2018',
+            value: 34
+        }, {
+            name: 'Jun 2018',
+            value: 38
+        }, {
+            name: 'Jul 2018',
+            value: 37
+        }, {
+            name: 'Aug 2018',
+            value: 30
+        }, {
+            name: 'Sep 2018',
+            value: 39
+        }, {
+            name: 'Oct 2018',
+            value: 38
+        }, {
+            name: 'Nov 2018',
+            value: 30
+        }, {
+            name: 'Dec 2018',
+            value: 36
+        }],
+        name: 'Component C'
+      }];
+
+    $('#column-bar-stacked-example').chart({
+      type: 'column-stacked',
+      dataset: dataset,
+      xAxis: {
+        formatText: function (d) {
+          var text = d.split(' '),
+            markup = '';
+
+          text.map(function (text, i) {
+            markup += '<tspan x="0" dy="' + ((i+1)*0.50) + 'em">'+ text +'</tspan>';
+          });
+
+          return markup;
+        }
+      }
+    });
+
+});
+</script>

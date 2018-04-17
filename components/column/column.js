@@ -27,6 +27,9 @@ const COMPONENT_NAME = 'column';
 * @param {string} [settings.format = null] The d3 axis format
 * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @param {number} [settings.ticks = 9] The number of ticks to show.
+* @param {function} [settings.xAxis.formatText] A function that passes the text element and a counter.
+* You can return a formatted svg markup element to replace the current element.
+* For example you could use tspans to wrap the strings or color them.
 * @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
 * An empty message will be displayed when there is no chart data. This accepts an object of the form
 * `emptyMessage: {
@@ -858,6 +861,16 @@ Column.prototype = {
         charts.addLegend(self.settings.isStacked ? seriesStacked :
           series, self.settings.type, self.settings, self.element);
       }
+    }
+
+    if (self.settings.xAxis && self.settings.xAxis.formatText) {
+      self.svg.selectAll('.x.axis .tick text').each(function (m) {
+        const elem = d3.select(this);
+        const text = d3.select(this).text();
+        const markup = self.settings.xAxis.formatText(text, m);
+
+        elem.html(markup);
+      });
     }
 
     if (charts.isRTL && charts.isIE) {
