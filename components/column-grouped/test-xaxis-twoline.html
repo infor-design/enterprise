@@ -1,0 +1,102 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Grouped Column Chart - xAxis Two lines</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-grouped-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [{
+        data: [{
+            name: 'Jan',
+            value: 12
+        }, {
+            name: 'Feb',
+            value: 11
+        }, {
+            name: 'Mar',
+            value: 14
+        }, {
+            name: 'Apr',
+            value: 10
+        }, {
+            name: 'May',
+            value: 14
+        }, {
+            name: 'Jun',
+            value: 8
+        }],
+        name: 'Year:2018 Component-A'
+      }, {
+        data: [{
+            name: 'Jan',
+            value: 22
+        }, {
+            name: 'Feb',
+            value: 21
+        }, {
+            name: 'Mar',
+            value: 24
+        }, {
+            name: 'Apr',
+            value: 20
+        }, {
+            name: 'May',
+            value: 24
+        }, {
+            name: 'Jun',
+            value: 28
+        }],
+        name: 'Year:2018 Component-B'
+      }, {
+        data: [{
+            name: 'Jan',
+            value: 32
+        }, {
+            name: 'Feb',
+            value: 31
+        }, {
+            name: 'Mar',
+            value: 34
+        }, {
+            name: 'Apr',
+            value: 30
+        }, {
+            name: 'May',
+            value: 34
+        }, {
+            name: 'Jun',
+            value: 38
+        }],
+        name: 'Year:2018 Component-C'
+      }];
+
+  $('#column-grouped-example').chart({
+    type: 'column-grouped',
+    dataset: dataset,
+    xAxis: {
+      formatText: function (d) {
+        var text = d.split(' '),
+          markup = '';
+
+        text.map(function (text, i) {
+          markup += '<tspan x="0" dy="' + ((i+1)*0.50) + 'em">'+ text.replace(':', ' ').replace('-', ' ') +'</tspan>';
+        });
+
+        return markup;
+      }
+    }
+  });
+
+});
+</script>

@@ -120,7 +120,7 @@ const optionHandler = function (req, res, next) {
       policy: {
         directives: {
           'default-src': ['self'],
-          'script-src': ['strict-dynamic', 'nonce-' + res.opts.nonce],
+          'script-src': ['self', 'nonce-' + res.opts.nonce],
           'object-src': ['none'],
           'style-src': ['* data: http://* \'unsafe-inline\''],
           'img-src': ['self', 'https://randomuser.me', 'http://placehold.it']
@@ -571,7 +571,7 @@ function defaultDocsRoute(req, res, next) {
 
   const componentName = stripHtml(req.params.component);
 
-  res.render(`${BASE_PATH}${componentName}.html`, opts);
+  res.render(`${opts.basepath}${componentName}.html`, opts);
   next();
 }
 

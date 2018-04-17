@@ -1,0 +1,79 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Column Chart Example - xAxis Two lines</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [{
+            data: [{
+                name: 'Automotive Part',
+                shortName: 'Auto',
+                abbrName: 'A',
+                value: 7,
+                tooltip: 'Custom Tooltip - {{value}}'
+            }, {
+                name: 'Distribution Area',
+                shortName: 'Dist',
+                abbrName: 'D',
+                value: 10
+            }, {
+                name: 'Equipment Type',
+                shortName: 'Equip',
+                abbrName: 'E',
+                value: 14
+            }, {
+                name: 'Fashion Trend',
+                shortName: 'Fash',
+                abbrName: 'F',
+                value: 10
+            }, {
+                name: 'Food Service',
+                shortName: 'Food',
+                abbrName: 'F',
+                value: 14
+            }, {
+                name: 'Healthcare Partner',
+                shortName: 'Health',
+                abbrName: 'H',
+                value: 8
+            }, {
+                name: 'Other Stuff',
+                shortName: 'Other',
+                abbrName: 'O',
+                value: 7
+            }]
+          }];
+
+    $('#column-bar-example').chart({
+      type: 'column',
+      dataset: dataset,
+      xAxis: {
+        formatText: function (d) {
+          var text = d.split(' '),
+            markup = '';
+
+          text.map(function (text, i) {
+            markup += '<tspan x="0" dy="' + ((i+1)*0.50) + 'em">'+ text +'</tspan>';
+          });
+
+          return markup;
+        }
+      }
+    });
+
+});
+</script>
