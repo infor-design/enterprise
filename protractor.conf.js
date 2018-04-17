@@ -39,7 +39,10 @@ exports.config = {
     }));
 
     return browser.getProcessedConfig().then((cap) => {
-      browser.browserName = cap.capabilities.browserName;
+      browser.browserName = cap.capabilities.browserName.toLowerCase();
+      if (browser.browserName === 'chrome') {
+        return browser.driver.manage().window().setSize(1200, 800);
+      }
     });
   }
 };
