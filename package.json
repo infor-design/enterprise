@@ -13,7 +13,7 @@
     "eslint:log": "eslint -c .eslintrc.js src -o eslint.log",
     "eslint:error-only": "eslint -c .eslintrc.js --quiet src",
     "build": "rollup -c",
-    "minify": "node ./build/minify.js",
+    "minify": "node ./scripts/minify.js",
     "install-globals": "npm install -g pandoc-bin grunt-cli documentation rollup",
     "local:unit": "karma start karma.local.conf.js",
     "ci:unit": "karma start karma.ci.conf.js",

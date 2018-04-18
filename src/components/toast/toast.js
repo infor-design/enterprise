@@ -1,6 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils, math } from '../../utils/utils';
-import { renderLoop, RenderLoopItem } from '../utils/renderloop';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../locale/locale';
 
 // Component Name

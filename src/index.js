@@ -48,5 +48,6 @@ export { GroupBy } from './components/datagrid/datagrid.groupby';
 
 // Components ================================= /
 import * as components from './components/components';
+import * as patterns from './patterns/patterns';
 
-export { components };
+export { components, patterns };

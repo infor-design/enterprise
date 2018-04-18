@@ -1,7 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
-import { breakpoints } from '../utils/breakpoints';
+import { breakpoints } from '../../utils/breakpoints';
 
 // jQuery Components
 import '../expandablearea/expandablearea.jquery';
