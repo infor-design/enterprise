@@ -2,9 +2,9 @@
 //================================================== //
 
 // Standard CSS reset stuff here
-@import 'core/reset';
-@import 'core/mixins';
-@import 'core/config';
+@import '../core/reset';
+@import '../core/mixins';
+@import '../core/config';
 
 // Core Controls
-@import 'core/controls';
+@import '../core/controls';
