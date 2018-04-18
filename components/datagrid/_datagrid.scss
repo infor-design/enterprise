@@ -2932,6 +2932,22 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .datagrid-container {
+    &.has-vertical-scroll {
+      &.is-windows .datagrid-header {
+        margin-left: 18px;
+        margin-right: 0;
+      }
+    }
+  }
+
+  &.ie-edge {
+    .datagrid-container.has-vertical-scroll.is-windows .datagrid-header {
+      margin-left: 12px;
+      margin-right: 0;
+    }
+  }
 }
 // scss-lint:enable ImportantRule
 
