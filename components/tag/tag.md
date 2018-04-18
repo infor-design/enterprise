@@ -1,15 +1,14 @@
 ---
-title: Tag Component 
+title: Tag Component
 description: This page describes Tag Component .
+demo:
+  pages:
+  - name: Common Tag Examples
+    slug: example-index
 ---
-
-## Configuration Details
-
-1. [Common Tag Examples]( ../components/tag/example-index)
-
 ## Code Example
 
-Tags are simple span elements with the class="tag". They can be mixed in with other elements like lists, grids and search fields. You can optionally add a few classes to add color/status such as error == red, good == green and alert == yellow/orange. Since you should not use color alone to indicate state, this should be either supplemented with off-screen labels or visual labels near the element explaining the state.
+Tags are simple span elements with the class `tag`. They can be mixed in with other elements like lists, grids and search fields. You can optionally add a few classes to add color or status such as `error` for red, `good` to be green and `alert` for yellow. Since you should not use color alone to indicate state, this should be either supplemented with off-screen labels or visual labels near the element explaining the state.
 
 ```html
 <span class="tag">#Tagged</span>
