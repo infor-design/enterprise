@@ -1,10 +1,10 @@
 ---
-title: Timeline Component 
+title: Timeline Component
 description: This page describes Timeline Component .
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
 ---
 
-## Configuration options
-
-1. [Main Example]( ../components/timeline/example-index)
-
-The Timeline Component is a CSS-Only Component, and has no Javascript API.
+The timeline component is a CSS-only component, and has no Javascript API.

@@ -1,14 +1,17 @@
 ---
 title: Swaplist Component
 description: This page describes Swaplist Component .
+demo:
+  pages:
+  - name: Main Swaplist Example
+    slug: example-index.html
+  - name: Swaplist with Selected Items
+    slug: example-selected.html
+  - name: Swaplist with Filter/Search
+    slug: example-search.html
+  - name: Swaplist with Disable Dragging
+    slug: example-disable-dragging.html
 ---
-
-## Configuration options
-
-1. Main Swaplist Example [View Example](../components/swaplist/example-index.html)
-2. Swaplist with Selected Items [View Example](../components/swaplist/example-selected.html)
-3. Swaplist with Filter/Search [View Example](../components/swaplist/example-search.html)
-4. Swaplist with Disable Dragging [View Example](../components/swaplist/example-disable-dragging.html)
 
 ## Behavior Guidelines
 
@@ -16,11 +19,11 @@ description: This page describes Swaplist Component .
 
 ## Code Example
 
-The swap list uses the underlying [listview component](https://soho.infor.com/index.php?p=component/basic-list). Like the listview a list template is needed. This template can either by dynamic or static. In the example below a template with a basic list value and support for drag and drop and disabled is shown in `id="swaplist-tmpl"` section.
+The swap list uses the underlying [listview component](./basic-list). Like the listview, a list template is needed. This template can either by dynamic or static. In the example below, a template with a basic list value and support for drag and drop and disabled is shown in `id="swaplist-tmpl"` section.
 
-The markup structure of the component itself is made up of a parent container that has an available and selected div section. Each of these has a title, buttons for moving and a div in which the list template will be generated.
+The markup structure of the component itself is made up of a parent container that has an available and selected div section. Each of these has a title, buttons for moving, and a div in which the list template will be generated.
 
-Initialize the component by calling .swaplist() on the element and passing a JSON Array for the available, selected sides and reference to the template. (Not the the template can also be passed here as a string instead of being in the DOM.
+Initialize the component by calling `.swaplist()` on the element and passing a JSON array for the available, selected sides and reference to the template. (Not the template can also be passed here as a string instead of being in the DOM.
 
 ```javascript
 var available = [], selected = [];
@@ -47,10 +50,10 @@ $('#example-swaplist-1').swaplist({available: available, selected: selected, tem
 
 ## Keyboard Shortcuts
 
-- <kbd>Tab</kbd> Tabs in and out of the list boxes and the between the buttons on the Toolbars and the adjacent objects.
-- <kbd>Arrow up / Down</kbd> Moves up and down the currently focused list
-- <kbd>Enter/Space</kbd> Toggles selection if a list item is focused
-- <kbd>CTRL+M</kbd> Moves the currently selected items in one list to the next list. If in the middle list focus will be on the toolbar and you can choose which ones to go to.
+- <kbd>Tab</kbd> moves in and out of the list boxes and the between the buttons on the toolbars and the adjacent objects
+- <kbd>Up</kbd> and <kbd>Down</kbd> moves up and down the currently focused list
+- <kbd>Enter</kbd> or <kbd>Space</kbd> toggles selection if a list item is focused
+- <kbd>CTRL + M</kbd> moves the currently selected items in one list to the next list. If in the middle list, focus will be on the toolbar and you can choose which list to go to.
 
 ## States and Variations
 
@@ -67,6 +70,6 @@ The individual components (list boxes, move/reorganize controls) take the follow
 
 ## Upgrading from 3.X
 
--   Replace `.inforSwapList()` with `.swaplist()` in the js
--   The available and selected options are the same
+-   Replace `.inforSwapList()` with `.swaplist()` in the javascript
+-   The `available` and `selected` options are the same
 -   You must now pass markup as a template and place the markup in the DOM
