@@ -517,8 +517,7 @@ utils.actualChar = function (e) {
   }
 
   // Handle Numpad keys
-  if (key >= 96 && key <= 105 &&
-    ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'].indexOf(String.fromCharCode(key)) === -1) {
+  if (key >= 96 && key <= 105) {
     key -= 48;
   }
 
