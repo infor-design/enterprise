@@ -6,9 +6,9 @@
 // styles.
 //==================================================//
 
-@import 'config';
-@import 'mixins';
-@import 'demo/grid';
-@import 'demo/forms';
-@import 'demo/patterns';
-@import 'demo/wizard';
+@import '../../src/core/config';
+@import '../../src/core/mixins';
+@import 'sass/grid';
+@import 'sass/forms';
+@import 'sass/patterns';
+@import 'sass/wizard';
