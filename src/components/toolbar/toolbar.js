@@ -1,7 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
-import { stringUtils } from '../utils/string';
+import { stringUtils } from '../../utils/string';
 
 // jQuery Components
 import '../button/button.jquery';

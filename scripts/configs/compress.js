@@ -7,7 +7,10 @@ module.exports = {
       },
 
       files: [
-        {src: ['dist/**'], dest: 'dist/'}
+        {
+          src: ['dist/**'],
+          dest: 'dist/'
+        }
       ]
     }
   }

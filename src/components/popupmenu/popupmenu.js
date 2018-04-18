@@ -1,7 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { stringUtils } from '../../utils/string';
-import { DOM } from '../utils/dom';
+import { DOM } from '../../utils/dom';
 import { Locale } from '../locale/locale';
 import { PlacementObject, Place } from '../place/place';
 

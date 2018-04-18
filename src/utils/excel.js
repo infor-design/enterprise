@@ -1,6 +1,6 @@
-import { Environment as env } from '../utils/environment';
-import { Formatters } from '../datagrid/datagrid.formatters';
-import { Editors } from '../datagrid/datagrid.editors';
+import { Environment as env } from './environment';
+import { Formatters } from '../components/datagrid/datagrid.formatters';
+import { Editors } from '../components/datagrid/datagrid.editors';
 
 /* eslint-disable import/prefer-default-export */
 const excel = {};

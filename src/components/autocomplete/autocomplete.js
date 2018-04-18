@@ -5,10 +5,10 @@ import { utils } from '../../utils/utils';
 import { ListFilter } from '../listfilter/listfilter';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
-import { stringUtils } from '../utils/string';
+import { stringUtils } from '../../utils/string';
 
 // jQuery Components
-import '../utils/highlight';
+import '../../utils/highlight';
 import '../popupmenu/popupmenu.jquery';
 
 // The Name of this components

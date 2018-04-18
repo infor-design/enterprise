@@ -3,8 +3,10 @@ module.exports = {
   chokidar: {
     sass: {
       files: [
-        'components/**/*.scss',
-        'sass/**/*.scss'
+        'src/core/**/*.scss',
+        'src/layouts/**/*.scss',
+        'src/components/**/*.scss',
+        'src/patterns/**/*.scss'
       ],
       tasks: ['build:sass'],
       options: {
@@ -14,8 +16,8 @@ module.exports = {
 
     js: {
       files: [
-        'components/**/*.js',
-        'components/locale/cultures/*.*',
+        'src/**/*.js',
+        'src/components/locale/cultures/*.*',
         'demoapp/js/site.js'
       ],
       tasks: ['build:js'],
@@ -28,8 +30,8 @@ module.exports = {
     configs: {
       files: [
         'gruntfile.js',
-        'build/*.js',
-        'build/**/*.js',
+        'scripts/*.js',
+        'scripts/**/*.js',
       ],
       options: {
         reload: true // NOT supposed to be 'livereload', see https://www.npmjs.com/package/grunt-chokidar#optionsreload
@@ -38,8 +40,8 @@ module.exports = {
 
     docs: {
       files: [
-        'components/**/*.md',
-        '!components/**/*-api.md',
+        'src/**/*.md',
+        '!src/**/*-api.md',
       ],
       options: {
         livereload: true,

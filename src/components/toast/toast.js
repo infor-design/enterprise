@@ -1,6 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils, math } from '../../utils/utils';
-import { stringUtils } from '../../utils/string';
+import { stringUtils } from '../../utils/string'
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../../locale/locale';
 

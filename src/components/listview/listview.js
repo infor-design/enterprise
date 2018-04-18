@@ -1,12 +1,12 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { stringUtils as str } from '../utils/string';
+import { stringUtils as str } from '../../utils/string';
 import { Tmpl } from '../tmpl/tmpl';
 import { ListFilter } from '../listfilter/listfilter';
 import { Locale } from '../locale/locale';
 
 // jQuery Components
-import '../utils/animations';
+import '../../utils/animations';
 import '../pager/pager.jquery';
 import '../popupmenu/popupmenu.jquery';
 import '../searchfield/searchfield.jquery';

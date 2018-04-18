@@ -4,19 +4,19 @@ module.exports = function (grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
 
-  const sass = require('./build/configs/sass.js');
-  const chokidar = require('./build/configs/watch.js');
-  const amdHeader = require('./build/configs/amdHeader.js');
-  const copy = require('./build/configs/copy.js');
-  const cssmin = require('./build/configs/cssmin.js');
-  const usebanner = require('./build/configs/usebanner.js');
-  const compress = require('./build/configs/compress.js');
-  const meta = require('./build/configs/meta.js');
-  const clean = require('./build/configs/clean.js');
-  const dependencyBuilder = require('./build/dependencybuilder.js');
-  const strBanner = require('./build/strbanner.js');
-  const controls = require('./build/controls.js');
-  const run = require('./build/configs/run.js');
+  const sass = require('./scripts/configs/sass.js');
+  const chokidar = require('./scripts/configs/watch.js');
+  const amdHeader = require('./scripts/configs/amdHeader.js');
+  const copy = require('./scripts/configs/copy.js');
+  const cssmin = require('./scripts/configs/cssmin.js');
+  const usebanner = require('./scripts/configs/usebanner.js');
+  const compress = require('./scripts/configs/compress.js');
+  const meta = require('./scripts/configs/meta.js');
+  const clean = require('./scripts/configs/clean.js');
+  const dependencyBuilder = require('./scripts/dependencybuilder.js');
+  const strBanner = require('./scripts/strbanner.js');
+  const controls = require('./scripts/controls.js');
+  const run = require('./scripts/configs/run.js');
 
   let selectedControls = dependencyBuilder(grunt);
   let bannerText = '/**\n* Soho XI Controls v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/\n';

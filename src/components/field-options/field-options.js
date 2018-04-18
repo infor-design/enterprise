@@ -1,6 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { Environment as env } from '../utils/environment';
+import { Environment as env } from '../../utils/environment';
 
 // Component Name
 const COMPONENT_NAME = 'fieldoptions';

@@ -1,5 +1,5 @@
 module.exports = {
   eslint: {
-    target: ['components/index.js']
+    target: ['src/index.js']
   }
 };

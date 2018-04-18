@@ -1,7 +1,7 @@
 import { utils } from '../../utils/utils';
-import { DOM } from '../utils/dom';
-import { stringUtils } from '../utils/string';
-import { breakpoints } from '../utils/breakpoints';
+import { DOM } from '../../utils/dom';
+import { stringUtils } from '../../utils/string';
+import { breakpoints } from '../../utils/breakpoints';
 
 // Component Name
 const COMPONENT_NAME = 'listdetail';
