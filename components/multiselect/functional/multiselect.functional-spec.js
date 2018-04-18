@@ -1,32 +1,9 @@
 const AxeBuilder = require('axe-webdriverjs');
 const { browserStackErrorReporter } = require('../../../test/helpers/browserstack-error-reporter.js');
+const rules = require('../../../test/helpers/axe-rules.js');
 require('../../../test/helpers/rejection.js');
 
-// Light Theme color contrast is not WCAG 2AA, #fff on #368ac0, focused item on a open dropdown
-const axeOptions = {
-  rules: [
-    {
-      id: 'aria-allowed-attr',
-      enabled: false
-    },
-    {
-      id: 'aria-required-children',
-      enabled: false
-    },
-    {
-      id: 'aria-valid-attr-value',
-      enabled: false
-    },
-    {
-      id: 'color-contrast',
-      enabled: false
-    },
-    {
-      id: 'region',
-      enabled: false
-    }
-  ]
-};
+const axeOptions = { rules: rules.axeRules };
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -62,8 +39,8 @@ describe('Multiselect example-states tests', () => {
       posVT.y < (posMultiselectElList.y + multiselectElListSize.height)).toBeTruthy();
   });
 
-  if (browser.browserName.toLowerCase() !== 'safari') {
-    it('Should show validation message error "Required" on tab out', async () => {
+  if (browser.browserName !== 'safari') {
+    xit('Should show validation message error "Required" on tab out', async () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).get(2);
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
       await element(by.css('body')).sendKeys(protractor.Key.TAB);
@@ -92,8 +69,8 @@ describe('Multiselect example-states tests', () => {
     });
   }
 
-  // Disable IE11: Async timeout errors
-  if (browser.browserName.toLowerCase() !== 'ie') {
+  // Exclude IE11: Async timeout errors
+  if (browser.browserName !== 'ie') {
     it('Should be accessible on init with no WCAG 2AA violations', async () => {
       await clickOnMultiselect();
 
@@ -113,7 +90,7 @@ describe('Multiselect example-index tests', () => {
     await browser.driver.get('http://localhost:4000/components/multiselect/example-index');
   });
 
-  if (browser.browserName.toLowerCase() !== 'safari') {
+  if (browser.browserName !== 'safari') {
     it('Should arrow down to Arizona, and focus', async () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
@@ -125,7 +102,7 @@ describe('Multiselect example-index tests', () => {
       expect(await element(by.className('is-focused')).getText()).toEqual('Arizona');
     });
 
-    it('Should tab into deselect Alaska then tab out and input should be empty', async () => {
+    xit('Should tab into deselect Alaska then tab out and input should be empty', async () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
       await element(by.css('body')).sendKeys(protractor.Key.TAB);
@@ -155,7 +132,7 @@ describe('Multiselect example-index tests', () => {
     });
   }
 
-  if (browser.browserName.toLowerCase() === 'chrome') {
+  if (browser.browserName === 'chrome') {
     it('Should not visual regress', async () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
@@ -195,7 +172,7 @@ describe('Multiselect example-clear-all tests', () => {
     await browser.driver.get('http://localhost:4000/components/multiselect/example-clear-all');
   });
 
-  if (browser.browserName.toLowerCase() !== 'safari') {
+  if (browser.browserName !== 'safari') {
     it('Should clear all', async () => {
       const buttonEl = await element(by.id('btn-clear'));
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);

@@ -1,31 +1,9 @@
 const AxeBuilder = require('axe-webdriverjs');
 const { browserStackErrorReporter } = require('../../../test/helpers/browserstack-error-reporter.js');
+const rules = require('../../../test/helpers/axe-rules.js');
+require('../../../test/helpers/rejection.js');
 
-// Light Theme color contrast is not WCAG 2AA, #fff on #368ac0, focused item on a open dropdown
-const axeOptions = {
-  rules: [
-    {
-      id: 'aria-allowed-attr',
-      enabled: false
-    },
-    {
-      id: 'aria-required-children',
-      enabled: false
-    },
-    {
-      id: 'aria-valid-attr-value',
-      enabled: false
-    },
-    {
-      id: 'color-contrast',
-      enabled: false
-    },
-    {
-      id: 'region',
-      enabled: false
-    }
-  ]
-};
+const axeOptions = { rules: rules.axeRules };
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -35,8 +13,8 @@ describe('Popupmenu example-selectable tests', () => {
     await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
   });
 
-  // Disable IE11: Async timeout errors
-  if (browser.browserName.toLowerCase() !== 'ie') {
+  // Exclude IE11: Async timeout errors
+  if (browser.browserName !== 'ie') {
     it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
@@ -62,7 +40,7 @@ describe('Popupmenu example-selectable tests', () => {
     });
   }
 
-  if (browser.browserName.toLowerCase() !== 'ie' && browser.browserName.toLowerCase() !== 'safari') {
+  if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
     it('Should open with enter, and arrow down to the last menu item, and focus', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
@@ -99,7 +77,7 @@ describe('Popupmenu example-selectable-multiple tests', () => {
     await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple');
   });
 
-  if (browser.browserName.toLowerCase() !== 'ie' && browser.browserName.toLowerCase() !== 'safari') {
+  if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
     it('Should select first, and last item on spacebar, arrowing down', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
