@@ -120,3 +120,13 @@ https://codecraft.tv/courses/angular/unit-testing/jasmine-and-karma/
 
 Coverage
 https://github.com/dwyl/learn-istanbul
+
+#FAQ
+
+> How come we do so much browser exclusion logic?
+
+Each browser has a different Selenium driver with different capabilities. We plan highlight this difference for manual testing. As browser capabilities get updated, we should revisit tests that don't work. As for the Chrome exclusions, we are only testing visual regression on Chrome. Chrome is the default local functional test browser, and will be responsible for aiding the creation of the baseline images for visual regression testing.
+
+> Why are so many Axe Rules disabled?
+
+This a bit complex as the light theme is not completely WCAG AA... and per component in various states (open/close) may not be WCAG 2AA as well. Additional various rules are at the application level and not suitable for review on this level. Currently, this is a @TODO, we hope to enable rules like "color-contrast" which are critical to various users.
