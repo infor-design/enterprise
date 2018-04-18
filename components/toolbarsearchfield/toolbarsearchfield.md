@@ -7,7 +7,7 @@ demo:
     slug: example-index.html
   - name: Alternate In-Page Style
     slug: example-alternate-style.html
-  - name: `collapsibleOnMobile` Setting Demo
+  - name: "`collapsibleOnMobile` Setting Demo"
     slug: example-collapsible-on-mobile.html
 ---
 
