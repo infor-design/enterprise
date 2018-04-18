@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle, no-continue, no-nested-ternary */
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { excel } from '../utils/excel';
+import { excel } from '../../utils/excel';
 import { Locale } from '../locale/locale';
 import { Tmpl } from '../tmpl/tmpl';
-import { debounce } from '../utils/debounced-resize';
-import { stringUtils } from '../utils/string';
+import { debounce } from '../../utils/debounced-resize';
+import { stringUtils } from '../../utils/string';
 
 import { Formatters } from '../datagrid/datagrid.formatters';
 import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
@@ -13,7 +13,7 @@ import { GroupBy, Aggregators } from '../datagrid/datagrid.groupby';
 import { Editors } from '../datagrid/datagrid.editors';
 
 // jQuery components
-import '../utils/animations';
+import '../../utils/animations';
 import '../emptymessage/emptymessage.jquery';
 import '../pager/pager.jquery';
 import '../mask/mask-input.jquery';

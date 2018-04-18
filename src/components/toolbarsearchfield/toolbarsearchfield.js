@@ -1,7 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { breakpoints } from '../utils/breakpoints';
-import { Environment as env } from '../utils/environment';
+import { breakpoints } from '../../utils/breakpoints';
+import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 
 // jQuery Components

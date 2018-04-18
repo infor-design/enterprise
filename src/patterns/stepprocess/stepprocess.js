@@ -1,9 +1,9 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { Locale } from '../locale/locale';
+import { Locale } from '../../components/locale/locale';
 
 // Jquery Imports
-import '../utils/animations';
+import '../../utils/animations';
 
 // Component Name
 const COMPONENT_NAME = 'stepprocess';

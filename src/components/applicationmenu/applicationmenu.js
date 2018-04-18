@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle, prefer-arrow-callback */
 import { utils } from '../../utils/utils';
-import { Environment as env } from '../utils/environment';
-import { breakpoints } from '../utils/breakpoints';
+import { Environment as env } from '../../utils/environment';
+import { breakpoints } from '../../utils/breakpoints';
 import { Locale } from '../locale/locale';
 
 // jQuery Components
-import '../utils/lifecycle';
+import '../../utils/lifecycle';
 import '../accordion/accordion.jquery';
 import '../searchfield/searchfield.jquery';
 

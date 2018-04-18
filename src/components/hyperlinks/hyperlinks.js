@@ -1,5 +1,5 @@
 import { utils } from '../../utils/utils';
-import { HideFocus } from '../utils/behaviors';
+import { HideFocus } from '../../utils/behaviors';
 
 const COMPONENT_NAME = 'hyperlink';
 

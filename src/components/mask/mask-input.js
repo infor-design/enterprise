@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle, new-cap */
 import { utils } from '../../utils/utils';
-import { Environment as env } from '../utils/environment';
+import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { masks } from './masks';
 import { MaskAPI } from './mask-api';
