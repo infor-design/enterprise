@@ -1,33 +1,41 @@
 ---
-title: Tooltip Component 
+title: Tooltip Component
 description: This page describes Tooltip Component .
+demo:
+  pages:
+  - name: Default Tooltip Example
+    slug: example-index
+  - name: Tooltip with an Icon
+    slug: example-icon-in-tooltip
+  - name: Functioning URL inside of a Tooltip
+    slug: example-url-in-tooltip
+  - name: Example of triggering by "focus"
+    slug: example-trigger-focus
+  - name: Example of triggering with "immediate"
+    slug: example-trigger-immediate
+  - name: Using the `extraCssClass` setting
+    slug: example-extra-css-class
+  - name: Demo of the `setContent()` API method
+    slug: example-setcontent-api
+  - name: Demo of AJAX-powered Tooltip Content
+    slug: example-ajax-tooltip
+  - name: Using the `keepOpen` setting
+    slug: example-keep-open
 ---
 
 ## Important Notes
 
-The [Popover]( ../components/popover) component shares a common API with the Tooltip Component.  When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover.
-
-## Configuration Options
-
-1. [Default Tooltip Example]( ../components/tooltip/example-index)
-2. [Tooltip with an Icon]( ../components/tooltip/example-icon-in-tooltip)
-3. [Functioning URL inside of a Tooltip]( ../components/tooltip/example-url-in-tooltip)
-4. [Example of triggering by "focus"]( ../components/tooltip/example-trigger-focus)
-5. [Example of triggering with "immediate"]( ../components/tooltip/example-trigger-immediate)
-6. [Using the `extraCssClass` setting]( ../components/tooltip/example-extra-css-class)
-7. [Demo of the `setContent()` API method]( ../components/tooltip/example-setcontent-api)
-8. [Demo of AJAX-powered Tooltip Content]( ../components/tooltip/example-ajax-tooltip)
-9. [Using the `keepOpen` setting]( ../components/tooltip/example-keep-open)
+The [popover]( ./popover) component shares a common API with the tooltip Component.  When a popover component is invoked, any methods and events used by the tooltip will also be available in the popover.
 
 ## Behavior Guidelines
 
-- For accessibility the tooltip should be shown when you keyboard onto an element after a short delay (Open Task)
+For accessibility, the tooltip should be shown when you keyboard onto an element after a short delay
 
 ## Code Example
 
 ### Simple Tooltips
 
-If using the [Soho Initializer]( ../components/initialize), any elements with a `title` attribute will be picked up and turned into a Soho Tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to [reinitialize a component](https://soho.infor.com/index.php?p=component/getting-started) or page section which has been added.
+If using the [initializer]( ./initialize), any elements with a `title` attribute will be picked up and turned into a tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to reinitialize a component or page section which has been added.
 
 ```html
 <button class="btn" type="button" title="Tooltips Provide Additional Information">
@@ -35,11 +43,11 @@ If using the [Soho Initializer]( ../components/initialize), any elements with a 
 </button>
 ```
 
-The code above is demoed in the [Common Tooltip Example]( ../components/tooltip/example-index).
+The code above is demoed in the [common tooltip example]( ../components/tooltip/example-index).
 
 ### Custom HTML Tooltips
 
-It's also possible to use inline HTML inside of the `title` atribute:
+It's also possible to use inline HTML inside of the `title` attribute:
 
 ```html
 <button class="btn-secondary" type="button" title="<span style='text-align: right; display: inline-block;'><b style='line-height: 1.7em;'>Connected order</b><br>Tooltips Provide <br> <span style="color: #AFDC91;">Additional Information</span>.</span>">
@@ -47,7 +55,7 @@ It's also possible to use inline HTML inside of the `title` atribute:
 </button>
 ```
 
-The code above is demoed in the [HTML Tooltip Example]( ../components/tooltip/example-html-tooltip).
+The code above is demoed in the [HTML tooltip example]( ../components/tooltip/example-html-tooltip).
 
 Another possible method of defining custom tooltips is to create a hidden HTML element that will be referenced by its ID attribute.  When defining your `title` attribute on your trigger element, simply place use ID selector instead of the actual content, and the initializer will pick it up:
 
@@ -64,18 +72,14 @@ Another possible method of defining custom tooltips is to create a hidden HTML e
 </div>
 ```
 
-The code above is demoed in the [Icons in Tooltips Example]( ../components/tooltip/example-icon-in-tooltip).
+The code above is demoed in the [icons in tooltips example]( ../components/tooltip/example-icon-in-tooltip).
 
 
 ## Accessibility
 
-- aria-describedby is added to the related element
-- The tooltip content should be physically add to the dom right after the input field for the case of validation errors. This is so that a screen reader use can down arrow and reread content in case they missed it.
-- For accessibility the tooltip should be shown when you keyboard onto an element after a short delay (Open Task)
-
-## Keyboard Shortcuts
-
-- None but see next note.
+- `aria-describedby` is added to the related element
+- The tooltip content should be physically add to the DOM right after the input field for the case of validation errors. This is so that a screen reader use can down arrow and reread content in case they missed it.
+- For accessibility the tooltip should be shown when you keyboard onto an element after a short delay
 
 ## States and Variations
 
@@ -84,7 +88,7 @@ The code above is demoed in the [Icons in Tooltips Example]( ../components/toolt
 
 ## Responsive Guidelines
 
-- Will be showin in the direction it fits
+- Will be shown in the direction it fits
 
 ## Upgrading from 3.X
 
