@@ -76,7 +76,7 @@ module.exports = function (grunt) {
   // - Updates local documentation
   // - Zips
   grunt.registerTask('default', [
-    'clean:dist',
+    'clean',
     'build',
     'compress'
   ]);

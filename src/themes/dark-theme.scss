@@ -2,9 +2,9 @@
 //================================================== //
 
 // Standard CSS reset stuff here
-@import 'core/reset';
-@import 'core/mixins';
-@import 'core/config';
+@import '../core/reset';
+@import '../core/mixins';
+@import '../core/config';
 
 //Override Config
 //================================================== //
@@ -753,4 +753,4 @@ $treemap-title-color: $slate10;
 
 //================================================== //
 // Core Controls
-@import 'core/controls';
+@import '../core/controls';
