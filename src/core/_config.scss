@@ -1,7 +1,7 @@
 // Variables
 //================================================== //
 
-@import 'components/colors/colorpalette';
+@import '../components/colors/colorpalette';
 
 // Form Background Color
 $body-bg-color:  $graphite01;
@@ -217,7 +217,8 @@ $input-readonly-color: $graphite10;
 
 //States
 $error-color: $alert-red;
-$error-focus-box-shadow:  0 0 4px 2px rgba(222, 129, 129, .3);
+$error-color-transparent: rgba($alert-red, .3);
+$error-focus-box-shadow:  0 0 4px 2px $error-color-transparent;
 $alert-color: $alert-orange;
 $confirm-color: $alert-green;
 $info-color: $primary-color;

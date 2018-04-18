@@ -1,6 +1,7 @@
 # Compiled #
 ############
 designs/
+demoapp/dist/
 dist/css
 dist/js
 dist/svg

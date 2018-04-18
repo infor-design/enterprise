@@ -1,15 +1,22 @@
 module.exports = {
 
   sass: {
-    options: {
-      sourceMap: true
-    },
     dist: {
+      options: {
+        sourceMap: true
+      },
       files: {
-        'demoapp/dist/css/demo.css': 'demoapp/src/index.scss',
-        'dist/css/light-theme.css': 'src/light-theme.scss',
-        'dist/css/dark-theme.css': 'src/dark-theme.scss',
-        'dist/css/high-contrast-theme.css': 'src/high-contrast-theme.scss'
+        'dist/css/light-theme.css': 'src/themes/light-theme.scss',
+        'dist/css/dark-theme.css': 'src/themes/dark-theme.scss',
+        'dist/css/high-contrast-theme.css': 'src/themes/high-contrast-theme.scss'
+      }
+    },
+
+    demoapp: {
+      dist: {
+        files: {
+          'demoapp/dist/css/demo.css': 'demoapp/src/index.scss'
+        }
       }
     }
   }
