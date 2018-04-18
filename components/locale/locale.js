@@ -95,12 +95,105 @@ const Locale = {  // eslint-disable-line
 
   /**
    * Internally stores a new culture file for future use.
+   * @private
+   * @param {string} locale The locale to check.
+   * @returns {string} The actual locale to use.
+   */
+  defaultLocale(locale) {
+    const lang = locale.split('-')[0];
+    const defaults = [
+      { lang: 'af', default: 'af-ZA' },
+      { lang: 'ar', default: 'af-EG' },
+      { lang: 'bg', default: 'bg-BG' },
+      { lang: 'cs', default: 'cs-CZ' },
+      { lang: 'de', default: 'de-DE' },
+      { lang: 'el', default: 'el-GR' },
+      { lang: 'en', default: 'en-US' },
+      { lang: 'es', default: 'es-ES' },
+      { lang: 'et', default: 'et-ET' },
+      { lang: 'fi', default: 'fi-FI' },
+      { lang: 'fr', default: 'fr-FR' },
+      { lang: 'he', default: 'he-IL' },
+      { lang: 'hi', default: 'hi-IN' },
+      { lang: 'hr', default: 'hr-HR' },
+      { lang: 'hu', default: 'hu-HU' },
+      { lang: 'id', default: 'id-ID' },
+      { lang: 'it', default: 'it-IT' },
+      { lang: 'ja', default: 'ja-JP' },
+      { lang: 'ko', default: 'ko-KR' },
+      { lang: 'lt', default: 'lt-LT' },
+      { lang: 'ms', default: 'ms-bn' },
+      { lang: 'nb', default: 'nb-NO' },
+      { lang: 'nl', default: 'nl-NL' },
+      { lang: 'no', default: 'no-NO' },
+      { lang: 'pl', default: 'pl-PL' },
+      { lang: 'pt', default: 'pt-PT' },
+      { lang: 'ro', default: 'ro-RO' },
+      { lang: 'ru', default: 'ru-RU' },
+      { lang: 'sl', default: 'sl-SI' },
+      { lang: 'sv', default: 'sv-SE' },
+      { lang: 'th', default: 'th-TH' },
+      { lang: 'tr', default: 'tr-TR' },
+      { lang: 'uk', default: 'uk-UA' },
+      { lang: 'vi', default: 'vi-VN' },
+      { lang: 'zh', default: 'zh-CN' }
+    ];
+    const allLocales = ['af-ZA', 'ar-EG', 'ar-SA', 'bg-BG', 'cs-CZ', 'da-DK', 'de-DE', 'el-GR',
+      'en-AU', 'en-GB', 'en-IN', 'en-NZ', 'en-US', 'en-ZA', 'es-AR', 'es-ES', 'es-MX',
+      'es-US', 'et-EE', 'fi-FI', 'fr-CA', 'fr-FR', 'he-IL', 'hi-IN', 'hr-HR',
+      'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'lt-LT', 'lv-LV', 'ms-bn', 'ms-my', 'nb-NO',
+      'nl-NL', 'no-NO', 'pl-PL', 'pt-BR', 'pt-PT', 'ro-RO', 'ru-RU', 'sl-SI', 'sv-SE', 'th-TH', 'tr-TR',
+      'uk-UA', 'vi-VN', 'zh-CN', 'zh-TW'];
+
+    if (allLocales.indexOf(locale) === -1) {
+      locale = defaults.filter(a => a.lang === lang);
+
+      if (locale && locale[0]) {
+        return locale[0].default;
+      }
+      return '';
+    }
+    return locale;
+  },
+
+  /**
+   * Internally stores a new culture file for future use.
    * @param {string} locale the 4-character Locale ID
    * @param {object} data translation data and locale-specific functions, such as calendars.
    * @returns {void}
    */
   addCulture(locale, data) {
     this.cultures[locale] = data;
+  },
+
+  /**
+   * Append the local script to the page.
+   * @param {string} locale The locale name to append.
+   * @param {boolean} isCurrent If we should set this as the current locale
+   * @returns {void}
+   */
+  appendLocaleScript(locale, isCurrent) {
+    const script = document.createElement('script');
+
+    script.src = `${this.getCulturesPath() + locale}.js`;
+    script.onload = () => {
+      if (isCurrent) {
+        this.setCurrentLocale(locale, this.cultures[locale]);
+      }
+      this.addCulture(locale, this.currentLocale.data);
+
+      this.dff.resolve(this.currentLocale.name);
+    };
+
+    script.onerror = () => {
+      this.dff.reject();
+    };
+
+    if (typeof window.SohoConfig === 'object' && typeof window.SohoConfig.nonce === 'string') {
+      script.setAttribute('nonce', window.SohoConfig.nonce);
+    }
+
+    document.head.appendChild(script);
   },
 
   /**
@@ -117,39 +210,24 @@ const Locale = {  // eslint-disable-line
       locale = 'id-ID';
     }
 
+    locale = this.defaultLocale(locale);
+
+    if (locale === '') {
+      self.dff.resolve();
+      return this.dff.promise();
+    }
+
     if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
       this.setCurrentLocale(locale);
-
-      // fetch the local and cache it
-      $.ajax({
-        url: `${this.getCulturesPath() + this.currentLocale.name}.js`,
-        dataType: 'script',
-        error() {
-          self.dff.reject();
-        }
-      }).done(() => {
-        self.setCurrentLocale(locale, self.cultures[locale]);
-        self.addCulture(locale, self.currentLocale.data);
-
-        if (locale && (locale === 'en-US' || self.cultures['en-US'])) {
-          self.dff.resolve(self.currentLocale.name);
-        }
-      });
+      // Fetch the local and cache it
+      this.appendLocaleScript(locale, true);
     }
 
-    if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
-      // fetch the english local and cache it from translation defaults
-      $.ajax({
-        url: `${this.getCulturesPath()}en-US.js`,
-        dataType: 'script',
-        error() {
-          self.dff.reject();
-        }
-      }).done(() => {
-        self.addCulture(locale, self.currentLocale.data);
-        self.dff.resolve(self.currentLocale.name);
-      });
-    }
+    setTimeout(() => {
+      if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
+        this.appendLocaleScript('en-US', false);
+      }
+    }, 0);
 
     if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
       self.dff.resolve(self.currentLocale.name);
@@ -160,6 +238,7 @@ const Locale = {  // eslint-disable-line
     if (self.cultures[locale] && this.cultureInHead()) {
       self.dff.resolve(self.currentLocale.name);
     }
+
     return this.dff.promise();
   },
 
@@ -175,8 +254,8 @@ const Locale = {  // eslint-disable-line
     if (data) {
       this.currentLocale.data = data;
       this.currentLocale.dataName = name;
+      this.updateLang();
     }
-    this.updateLang();
   },
 
   /**

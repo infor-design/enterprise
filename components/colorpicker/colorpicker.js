@@ -12,15 +12,17 @@ const COMPONENT_NAME = 'colorpicker';
  * @class ColorPicker
  * @param {jQuery[]|HTMLElement} element The plugin element for the constuctor
  * @param {object} [settings] The settings element.
- * @param {string} [settings.themes={}] Themes available for ColorPicker
- * @param {string} [settings.colors=[]] An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
+ * @param {object} [settings.themes={}] Themes available for ColorPicker
+ * @param {array} [settings.colors=[]] An array of objects of the form. {label: 'Azure', number: '01', value: 'CBEBF4'}
  * that can be used to populate the color grid.
- * @param {string} [settings.showLabel=false]  Show the label if true vs the hex value if false.
- * @param {string} [settings.editable=true]  If false, the field is readonly and transparent. I.E. The value
+ * @param {boolean} [settings.showLabel=false]  Show the label if true vs the hex value if false.
+ * @param {boolean} [settings.editable=true]  If false, the field is readonly and transparent. I.E. The value
  * cannot be typed only editable by selecting.
- * @param {string} [settings.uppercase=true] If false, lower case hex is allowed. If true upper case hex is allowed.
+ * @param {boolean} [settings.uppercase=true] If false, lower case hex is allowed. If true upper case hex is allowed.
  * If showLabel is true this setting is ignored.
- * @param {string} [settings.colorOnly=false] If true the field will be shrunk to only show the color portion.
+ * @param {boolean} [settings.colorOnly=false] If true the field will be shrunk to only show the color portion.
+ * @param {boolean} [settings.clearable=true] If true will add clearable option.
+ * @param {string} [settings.clearableText] The text to show in tooltip.
  */
 const COLORPICKER_DEFAULTS = {
   // Theme key: MUST match with theme file name (ie: [filename: 'light-theme.css' -> 'light-theme'])
@@ -112,14 +114,15 @@ const COLORPICKER_DEFAULTS = {
     { label: 'Azure', number: '05', value: '4EA0D1' },
     { label: 'Azure', number: '04', value: '69B5DD' },
     { label: 'Azure', number: '03', value: '8DC9E6' },
-    { label: 'Azure', number: '02', value: 'ADD8EB' },
-    { label: 'Azure', number: '01', value: 'CBEBF4' }
+    { label: 'Azure', number: '02', value: 'ADD8EB' }
   ],
   placeIn: null, // null|'editor'
   showLabel: false,
   editable: true,
   uppercase: true,
-  colorOnly: false
+  colorOnly: false,
+  clearable: true,
+  clearableText: null,
 };
 
 function ColorPicker(element, settings) {
@@ -146,6 +149,12 @@ ColorPicker.prototype = {
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
+
+    // Set default clearable text
+    if (!this.settings.clearableText) {
+      this.settings.clearableText = Locale ? Locale.translate('None') : 'None';
+    }
+
     this.build();
     this.handleEvents();
     this.setCustomWidth();
@@ -156,6 +165,7 @@ ColorPicker.prototype = {
     this.isEditor = this.settings.placeIn === 'editor';
     const colorpicker = this.element;
     const initialValue = this.isEditor ? this.element.attr('data-value') : this.element.val();
+    const classList = `swatch${(!initialValue || $.trim(initialValue) === '') ? ' is-empty' : ''}`;
 
     if (!this.isEditor) {
       // Add Button
@@ -167,17 +177,14 @@ ColorPicker.prototype = {
       }
 
       this.container = colorpicker.parent();
-      this.swatch = $('<span class="swatch"></span>').prependTo(this.container);
+      this.swatch = $(`<span class="${classList}"></span>`).prependTo(this.container);
 
       // Add Masking to show the #.
       // Remove the mask if using the "showLabel" setting
       if (!this.settings.showLabel) {
-        const patternUpper = ['#', /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/];
-        const patternLower = ['#', /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/];
+        const pattern = ['#', /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/];
 
-        colorpicker.mask({
-          pattern: this.settings.uppercase ? patternUpper : patternLower
-        });
+        colorpicker.mask({ pattern });
       } else {
         const maskAPI = colorpicker.data('mask');
         if (maskAPI && typeof maskAPI.destroy === 'function') {
@@ -382,40 +389,65 @@ ColorPicker.prototype = {
   * @returns {void}
   */
   setColor(hex, label) {
+    hex = hex || '';
     const s = this.settings;
     let colorHex = hex;
     let colorLabel = label;
 
     // Make sure there is always a hash
-    if (hex.substr(0, 1) !== '#') {
+    if (hex.substr(0, 1) !== '#' && hex !== '') {
       colorHex = `#${colorHex}`;
     }
 
-    const isValidHex = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(colorHex);
+    const isValidHex = /(^#[0-9a-fA-F]{6}$)|(^#[0-9a-fA-F]{3}$)/i.test(colorHex);
 
     // Simply return out if hex isn't valid
     if (!isValidHex) {
       if (!s.showLabel) {
+        this.setValueOnField({ hex: colorHex, invalid: true });
         return;
       }
       colorLabel = hex.replace('#', '');
       colorHex = this.getHexFromLabel(colorLabel);
     }
 
-    const targetAttr = this.isEditor ? 'data-value' : 'value';
-
     if (!colorLabel) {
       colorLabel = this.getLabelFromHex(colorHex);
     }
 
-    colorHex = s.uppercase ? colorHex.toUpperCase() : colorHex.toLowerCase();
+    this.setValueOnField({ hex: colorHex, label: colorLabel });
+  },
 
-    // Set the value on the field
-    this.element[0].value = s.showLabel ? colorLabel : colorHex;
-    this.element[0].setAttribute(targetAttr, colorHex);
-    this.swatch[0].style.backgroundColor = colorHex;
+  /**
+   * Set the value on the field
+   * @private
+   * @param {object} [o] Options
+   * @param {string} [o.hex] The hex value to use
+   * @param {string} [o.label] The text to display
+   * @param {boolean} [o.isEmpty] if true will set empty value for all
+   * @param {boolean} [o.invalid] if true will set empty value for swatch only
+   * @returns {void}
+   */
+  setValueOnField(o) {
+    const s = this.settings;
+    const targetAttr = this.isEditor ? 'data-value' : 'value';
+    let hex = '';
 
-    this.element[0].setAttribute('aria-describedby', colorLabel);
+    if (!o.isEmpty && typeof o.hex === 'string') {
+      hex = s.uppercase ? o.hex.toUpperCase() : o.hex.toLowerCase();
+    }
+
+    if (o.isEmpty || o.invalid) {
+      this.swatch.addClass(o.isEmpty ? 'is-empty' : 'is-invalid');
+      this.swatch[0].style.backgroundColor = null;
+    } else {
+      this.swatch.removeClass('is-empty is-invalid');
+      this.swatch[0].style.backgroundColor = hex;
+    }
+
+    this.element[0].value = s.showLabel && !o.isEmpty ? o.label : hex;
+    this.element[0].setAttribute(targetAttr, hex);
+    this.element[0].setAttribute('aria-describedby', o.isEmpty || !o.label ? '' : o.label);
   },
 
   /**
@@ -494,6 +526,14 @@ ColorPicker.prototype = {
     }
 
     if (!isMenu) {
+      // Add clearable swatch to popupmenu
+      if (s.clearable) {
+        const li = $('<li></li>');
+        const a = $(`<a href="#" title="${s.clearableText}"><span class="swatch is-empty${isBorderAll ? ' is-border' : ''}"></span></a>`).appendTo(li);
+        a.data('label', '').data('value', '').tooltip();
+        menu.append(li);
+      }
+
       $('body').append(menu);
     }
 

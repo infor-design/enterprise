@@ -53,13 +53,14 @@ Mac and IOS (not windows) (R-1)
 * (Windows) Install Python >= v2.5.0 & < 3.0.0 : https://www.python.org/downloads/
 * Install nodejs as paying attention to your OS directions: http://nodejs.org/
 * Install gruntjs: http://gruntjs.com/ by running the command (`npm install -g grunt-cli`)
+* On Windows you should run `git config core.autocrlf false`
 
 ### Get The Code
 * Make a directory (fx 4.4.0)
 * Move into your new directory: `cd 4.4.0`
 * Clone the repo into that current director `git clone http://git.infor.com/scm/soho/controls.git .`
 * Then  `npm install` to install node package dependencies. On mac you may need `sudo npm install` as some packages require elevated permissions.
-* Then  `npm run install-globals` to install some global packages we use.
+* Then `npm run install-globals` to install some global packages we use.
 
 ### Running The App
 * `cd` into project folder fx `cd 4.4.0`

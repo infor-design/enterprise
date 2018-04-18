@@ -21,5 +21,19 @@ describe('Kitchen-sink tests', () => {
 
       expect(res.violations.length).toEqual(0);
     });
+
+    it('Should pass CSP', async () => {
+      await browser.waitForAngularEnabled(false);
+      await browser.driver.get('http://localhost:4000/kitchen-sink');
+
+      let errorLog = null;
+      await browser.manage().logs().get('browser').then((browserLog) => {
+        errorLog = browserLog;
+      });
+
+      const securityErrors = errorLog.filter(err => err.level.name === 'SEVERE' && err.message.indexOf('Security') > -1);
+
+      expect(securityErrors.length).toEqual(0);
+    });
   }
 });

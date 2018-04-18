@@ -4,6 +4,8 @@ import { utils } from '../utils/utils';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
+import '../emptymessage/emptymessage.jquery';
+
 // Settings and Options
 const COMPONENT_NAME = 'treemap';
 

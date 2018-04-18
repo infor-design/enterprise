@@ -25,22 +25,23 @@
         data = [];
 
         // Some Sample Data
-        data.push({ id: 1, productId: 2142201, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70});
-        data.push({ id: 2, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70});
-        data.push({ id: 3, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70});
-        data.push({ id: 4, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70});
-        data.push({ id: 5, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70});
-        data.push({ id: 7, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70});
-        data.push({ id: 8, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70});
+        data.push({ id: 1, productId: 2142201, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70, col6: new Date(2018, 0, 1)});
+        data.push({ id: 2, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70, col6: new Date(2018, 0, 2)});
+        data.push({ id: 3, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70, col6: new Date(2018, 0, 3)});
+        data.push({ id: 4, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70, col6: new Date(2018, 0, 4)});
+        data.push({ id: 5, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70, col6: new Date(2018, 0, 5)});
+        data.push({ id: 7, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70, col6: new Date(2018, 0, 6)});
+        data.push({ id: 8, productId: 2142202, col1: 10, col2: 20, col3: 30, col4: 40, col5: 60, col6: 70, col6: new Date(2018, 0, 7)});
 
         //Define Columns for the Grid.
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly, editor: Editors.Input});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'col1', name: 'Column One', field: 'col1', editor: Editors.Decimal, filterType: 'decimal', editor: Editors.Input});
-        columns.push({ id: 'col2', name: 'Column One', field: 'col2', editor: Editors.Decimal, filterType: 'decimal', editor: Editors.Input});
-        columns.push({ id: 'col3', name: 'Column One', field: 'col3', editor: Editors.Decimal, filterType: 'decimal', editor: Editors.Input});
-        columns.push({ id: 'col4', name: 'Column One', field: 'col4', editor: Editors.Decimal, filterType: 'decimal', editor: Editors.Input});
-        columns.push({ id: 'col5', name: 'Column One', field: 'col5', editor: Editors.Decimal, filterType: 'decimal', editor: Editors.Input});
+        columns.push({ id: 'col1', name: 'Column One', field: 'col1', formatter: Formatters.Readonly, filterType: 'decimal', editor: Editors.Input});
+        columns.push({ id: 'col2', name: 'Column One', field: 'col2', filterType: 'decimal', editor: Editors.Input});
+        columns.push({ id: 'col3', name: 'Column One', field: 'col3', filterType: 'decimal', editor: Editors.Input});
+        columns.push({ id: 'col4', name: 'Column One', field: 'col4', filterType: 'decimal', editor: Editors.Input});
+        columns.push({ id: 'col5', name: 'Column One', field: 'col5', filterType: 'decimal', editor: Editors.Input});
+        columns.push({ id: 'col6', name: 'Column One', field: 'col6', formatter: Formatters.Date, editor: Editors.Date, validate: 'required date'});
 
         //Init and get the api for the grid
         grid = $('#datagrid').datagrid({
