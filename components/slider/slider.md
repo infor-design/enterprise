@@ -9,13 +9,13 @@ demo:
     slug: example-range
   - name: Steps
     slug: example-stepping
-  - name: Colors \& Ticks
+  - name: "Colors & Ticks"
     slug: example-colors-and-ticks
   - name: Vertical Sliders
     slug: example-vertical
   - name: Custom Tooltip Decorators
     slug: example-custom-tooltips
-  - name: `setValue()` API Demo
+  - name: "`setValue()` API Demo"
     slug: example-set-value-api
 ---
 

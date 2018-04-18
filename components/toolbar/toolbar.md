@@ -17,11 +17,11 @@ demo:
     slug: example-standalone-style
   - name: No "More Actions" Button
     slug: example-no-action-button
-  - name: `MaxVisibleButtons` Defined as "6" Instead of "3"
+  - name: "`MaxVisibleButtons` Defined as '6' Instead of '3'"
     slug: example-more-than-three-buttons
   - name: Additional Examples of `MaxVisibleButtons` Behavior
     slug: example-overflow
-  - name: `selected` Event Behavior
+  - name: "`selected` Event Behavior"
     slug: example-selected-event
 ---
 
