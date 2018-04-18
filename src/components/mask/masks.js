@@ -1,5 +1,5 @@
 import { utils } from '../../utils/utils';
-import { stringUtils as str } from '../utils/string';
+import { stringUtils as str } from '../../utils/string';
 import { Locale } from '../locale/locale';
 
 /**

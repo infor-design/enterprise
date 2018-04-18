@@ -3,7 +3,7 @@ import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';
 
 // Jquery Imports
-import '../utils/animations';
+import '../../utils/animations';
 
 const COMPONENT_NAME = 'expandablearea';
 

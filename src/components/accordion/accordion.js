@@ -5,8 +5,8 @@ import { Locale } from '../locale/locale';
 
 // jQuery components
 import '../icons/icons.jquery';
-import '../utils/animations';
-import '../utils/behaviors';
+import '../../utils/animations';
+import '../../utils/behaviors';
 
 // Component Name
 const COMPONENT_NAME = 'accordion';

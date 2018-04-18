@@ -6,12 +6,10 @@ module.exports = {
     },
     dist: {
       files: {
-        'dist/css/demo.css': 'sass/demo.scss',
-        'dist/css/light-theme.css': 'sass/light-theme.scss',
-        'dist/css/dark-theme.css': 'sass/dark-theme.scss',
-        'dist/css/high-contrast-theme.css': 'sass/high-contrast-theme.scss',
-        'dist/css/css-only.css': 'sass/css-only.scss',
-        'dist/css/site.css': 'sass/site.scss'
+        'demoapp/dist/css/demo.css': 'demoapp/src/index.scss',
+        'dist/css/light-theme.css': 'src/light-theme.scss',
+        'dist/css/dark-theme.css': 'src/dark-theme.scss',
+        'dist/css/high-contrast-theme.css': 'src/high-contrast-theme.scss'
       }
     }
   }

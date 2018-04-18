@@ -2,8 +2,8 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable consistent-return */
 
-import { Environment as env } from '../utils/environment';
-import { debounce } from '../utils/debounced-resize';
+import { Environment as env } from '../../utils/environment';
+import { debounce } from '../../utils/debounced-resize';
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Locale } from '../locale/locale';

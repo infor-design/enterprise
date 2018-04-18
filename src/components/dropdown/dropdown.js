@@ -1,7 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
-import { DOM } from '../utils/dom';
-import { Environment as env } from '../utils/environment';
+import { DOM } from '../../utils/dom';
+import { Environment as env } from '../../utils/environment';
 import { Locale } from '../locale/locale';
 import { ListFilter } from '../listfilter/listfilter';
 
