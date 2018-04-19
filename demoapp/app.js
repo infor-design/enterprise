@@ -1,25 +1,28 @@
 /* eslint-disable */
 
 // set variables for environment
-let express = require('express'),
-  extend = require('extend'), // equivalent of $.extend()
-  app = express(),
-  path = require('path'),
-  mmm = require('mmm'),
-  fs = require('fs'),
-  http = require('http'),
-  BASE_PATH = process.env.BASEPATH || '/',
-  fullBasePath = function (req) {
-    const fullPath = (`${req.protocol}://${req.headers.host.replace('/', '')}${BASE_PATH}`);
-    return fullPath;
-  },
-  getJSONFile = require(path.resolve(__dirname, 'src', 'js', 'getJSONFile')),
-  packageJSON = getJSONFile(path.resolve(__dirname, '..', 'package.json'));
+const chalk = require('chalk');
+const express = require('express');
+const extend = require('extend'); // equivalent of $.extend()
+const logger = require('../scripts/logger');
+
+const app = express();
+const path = require('path');
+const mmm = require('mmm');
+const fs = require('fs');
+const http = require('http');
+const BASE_PATH = process.env.BASEPATH || '/';
+
+function fullBasePath(req) {
+  const fullPath = (`${req.protocol}://${req.headers.host.replace('/', '')}${BASE_PATH}`);
+  return fullPath;
+};
+
+const getJSONFile = require(path.resolve(__dirname, 'src', 'js', 'getJSONFile'));
+const packageJSON = getJSONFile(path.resolve(__dirname, '..', 'package.json'));
 
 app.set('view engine', 'html');
-app.set('views', [
-  path.join(__dirname, 'views'),
-]);
+app.set('views', path.resolve(__dirname, 'views'));
 
 mmm.setEngine('hogan.js');
 app.engine('html', mmm.__express);
@@ -59,6 +62,15 @@ const defaults = {
 const csp = require('express-csp');
 csp.extend(app);
 const uuidv4 = require('uuid/v4')
+
+// Makes a simple timestamp log of each request in the console
+const requestLogger = function(req, res, next) {
+  const type = `${chalk.yellow((req.method).toUpperCase())}`;
+  const url = `${req.originalUrl}`;
+
+  logger('timestamp', `${type}: ${url}`);
+  next();
+};
 
 // Option Handling - Custom Middleware
 // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
@@ -183,6 +195,7 @@ const errorHandler = function (err, req, res, next) {
 };
 
 // place optionHandler() first to augment all 'res' objects with an 'opts' object
+app.use(requestLogger);
 app.use(optionHandler);
 app.use(globalDataHandler);
 app.use(responseThrottler);
@@ -205,17 +218,12 @@ function toTitleCase(str) {
 
 /**
  * Adds a stored "nonce" attribute to all script tags to conform with security policy.
- * Used as the callback argument [2] on Express's `res.send`
  */
-function addNonceToScript(err, html) {
+function addNonceToScript(html, nonce) {
   if (!html || !html.length) {
-    return;
+    return '';
   }
-
-  if (res.opts.csp || req.query.csp) {
-    html = html.replace(/<script/ig, `<script nonce="${res.opts.nonce}"`);
-  }
-  res.send(html);
+  return html.replace(/<script/ig, `<script nonce="${nonce}"`);
 }
 
 /**
@@ -466,7 +474,12 @@ function getFullListing(type, req, res, next, extraExcludes) {
     paths: allPaths.map(pathMapper)
   });
 
-  res.render('listing', opts, addNonceToScript);
+  res.render('listing', opts, function(err, html) {
+    if (res.opts.csp || req.query.csp) {
+      html = addNonceToScript(html, res.opts.nonce);
+    }
+    res.send(html);
+  });
 
   next();
 }
@@ -536,7 +549,12 @@ router.get('/index', (req, res, next) => {
 router.get('/kitchen-sink', (req, res, next) => {
   const opts = res.opts;
   opts.basepath = fullBasePath(req);
-  res.render('kitchen-sink', res.opts, addNonceToScript);
+  res.render('kitchen-sink', res.opts, function(err, html) {
+    if (res.opts.csp || req.query.csp) {
+      html = addNonceToScript(html, res.opts.nonce);
+    }
+    res.send(html);
+  });
   next();
 });
 
@@ -643,7 +661,12 @@ function componentRoute(req, res, next) {
 
   if (req.params.example !== undefined) {
     console.log(`${componentName}/${req.params.example}`)
-    res.render(`${componentName}/${req.params.example}`, opts, addNonceToScript);
+    res.render(`${componentName}/${req.params.example}`, opts, function(err, html) {
+      if (res.opts.csp || req.query.csp) {
+        html = addNonceToScript(html, res.opts.nonce);
+      }
+      res.send(html);
+    });
   }
 
 
