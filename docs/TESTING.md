@@ -121,7 +121,7 @@ https://codecraft.tv/courses/angular/unit-testing/jasmine-and-karma/
 Coverage
 https://github.com/dwyl/learn-istanbul
 
-#FAQ
+## FAQ
 
 > How come we do so much browser exclusion logic?
 

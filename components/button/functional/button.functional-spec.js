@@ -13,18 +13,157 @@ describe('Button example-index tests', () => {
     await browser.driver.get('http://localhost:4000/components/button/example-index.html');
   });
 
-  it('Should tab to "Primary Button", and animate on enter', async () => {
-    const buttonEl = await element.all(by.css('.btn-primary')).get(3);
-    const svgEl = await element.all(by.css('.btn-primary')).get(3).element(by.css('.ripple-effect'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
-    await element(by.css('body')).sendKeys(protractor.Key.TAB);
-    await element(by.css('body')).sendKeys(protractor.Key.TAB);
-    await element(by.css('body')).sendKeys(protractor.Key.TAB);
-    await buttonEl.sendKeys(protractor.Key.ENTER);
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+  if (browser.browserName !== 'safari' && browser.browserName !== 'ie') {
+    if (browser.browserName === 'chrome') {
+      it('Should mouseover "Primary Button", and change background-color', async () => {
+        const buttonEl = await element.all(by.css('.btn-primary')).get(3);
+        await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+        await browser.driver.actions().mouseMove(buttonEl).perform();
+        await browser.driver.sleep(1000);
+        // Value returned will be as the browser interprets it, tricky to form a proper assertion
+        expect(await buttonEl.getCssValue('background-color')).toBe('rgba(37, 120, 169, 1)');
+      });
+    }
 
-    expect(await svgEl.getAttribute('class')).toContain('is-animation');
-  });
+    it('Should tab to "Primary Button", and animate on enter', async () => {
+      const buttonEl = await element.all(by.css('.btn-primary')).get(3);
+      const svgEl = await element.all(by.css('.btn-primary')).get(3).element(by.css('.ripple-effect'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await buttonEl.sendKeys(protractor.Key.ENTER);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).toContain('ripple-effect');
+    });
+
+    it('Should click on "Primary Button", and animate on click', async () => {
+      const buttonEl = await element.all(by.css('.btn-primary')).get(3);
+      const svgEl = await element.all(by.css('.btn-primary')).get(3).element(by.css('.ripple-effect'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await buttonEl.click();
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).toContain('ripple-effect');
+    });
+
+    it('Should click on "Disabled Primary Button", and not animate', async () => {
+      const buttonEl = await element.all(by.css('.btn-primary')).get(2);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await buttonEl.click();
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+
+      expect(await buttonEl.isElementPresent(by.tagName('svg'))).toBeFalsy();
+      expect(await buttonEl.isEnabled()).toBeFalsy();
+    });
+
+    it('Should tab to "Secondary Button", and animate on enter', async () => {
+      const buttonEl = await element.all(by.css('.btn-secondary')).first();
+      const svgEl = await element.all(by.css('.btn-secondary')).first().element(by.css('.ripple-effect'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await buttonEl.sendKeys(protractor.Key.ENTER);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).toContain('ripple-effect');
+    });
+
+    it('Should click on "Disabled Secondary Button", and not animate', async () => {
+      const buttonEl = await element.all(by.css('.btn-secondary')).get(1);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await buttonEl.click();
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+
+      expect(await buttonEl.isElementPresent(by.tagName('svg'))).toBeFalsy();
+      expect(await buttonEl.isEnabled()).toBeFalsy();
+    });
+
+    it('Should click on "Secondary Button", and animate on click', async () => {
+      const buttonEl = await element.all(by.css('.btn-secondary')).first();
+      const svgEl = await element.all(by.css('.btn-secondary')).first().element(by.css('.ripple-effect'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await buttonEl.click();
+
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).toContain('ripple-effect');
+    });
+
+    it('Should tab to "Tertiary Button", and animate on enter', async () => {
+      const buttonEl = await element.all(by.css('.btn-tertiary')).first();
+      const svgEl = await element.all(by.css('.btn-tertiary')).first().element(by.css('.ripple-effect'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await buttonEl.sendKeys(protractor.Key.ENTER);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).toContain('ripple-effect');
+    });
+
+    it('Should click on "Disabled Tertiary Button", and not animate', async () => {
+      const buttonEl = await element.all(by.css('.btn-tertiary')).get(1);
+      const svgEl = await element.all(by.css('.btn-tertiary')).get(1).element(by.css('.icon'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await buttonEl.click();
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).not.toContain('ripple-effect');
+      expect(await buttonEl.isElementPresent(by.tagName('svg'))).toBeTruthy();
+      expect(await buttonEl.isEnabled()).toBeFalsy();
+    });
+
+    it('Should click on "Tertiary Button", and animate on click', async () => {
+      const buttonEl = await element.all(by.css('.btn-tertiary')).first();
+      const svgEl = await element.all(by.css('.btn-tertiary')).first().element(by.css('.ripple-effect'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await buttonEl.click();
+
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).toContain('ripple-effect');
+    });
+
+    it('Should tab to "Icon Button", and animate on enter', async () => {
+      const buttonEl = await element.all(by.css('.btn-icon')).first();
+      const svgEl = await element.all(by.css('.btn-icon')).first().element(by.css('.ripple-effect'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await element(by.css('body')).sendKeys(protractor.Key.TAB);
+      await buttonEl.sendKeys(protractor.Key.ENTER);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).toContain('ripple-effect');
+    });
+
+    it('Should click on "Disabled Icon Button", and not animate', async () => {
+      const buttonEl = await element.all(by.css('.btn-icon')).get(1);
+      const svgEl = await element.all(by.css('.btn-icon')).get(1).element(by.css('.icon'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await buttonEl.click();
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).not.toContain('ripple-effect');
+      expect(await buttonEl.isElementPresent(by.tagName('svg'))).toBeTruthy();
+      expect(await buttonEl.isEnabled()).toBeFalsy();
+    });
+
+    it('Should click on "Icon Button", and animate on click', async () => {
+      const buttonEl = await element.all(by.css('.btn-icon')).first();
+      const svgEl = await element.all(by.css('.btn-icon')).first().element(by.css('.ripple-effect'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+      await buttonEl.click();
+
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(svgEl), 5000);
+
+      expect(await svgEl.getAttribute('class')).toContain('ripple-effect');
+    });
+  }
 });
 
 describe('Button example-with-icons tests', () => {
@@ -56,6 +195,9 @@ describe('Button example-with-icons tests', () => {
 
   if (browser.browserName === 'chrome') {
     it('Should not visual regress', async () => {
+      const buttonEl = await element(by.id('menu-button-alone'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
+
       expect(await browser.protractorImageComparison.checkScreen('buttonPage')).toEqual(0);
     });
   }
