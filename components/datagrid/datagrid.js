@@ -6270,7 +6270,8 @@ Datagrid.prototype = {
       return false; // eslint-disable-line
     }
 
-    const idx = this.dataRowIndex(this.actualRowNode(row));
+    const thisRow = this.actualRowNode(row);
+    const idx = this.settings.treeGrid ? this.actualRowIndex(thisRow) : this.dataRowIndex(thisRow);
     const rowData = this.settings.treeGrid ?
       this.settings.treeDepth[idx].node :
       this.settings.dataset[idx];
@@ -7138,7 +7139,8 @@ Datagrid.prototype = {
   // expand the tree rows
   toggleChildren(e, dataRowIndex) {
     const self = this;
-    let rowElement = this.visualRowNode(dataRowIndex);
+    let rowElement = this.settings.treeGrid ?
+      this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
     let children = rowElement.nextUntil(`[aria-level="${level}"]`);
@@ -7156,7 +7158,8 @@ Datagrid.prototype = {
     }
 
     const toggleExpanded = function () {
-      rowElement = self.visualRowNode(dataRowIndex);
+      rowElement = self.settings.treeGrid ?
+        self.actualRowNode(dataRowIndex) : self.visualRowNode(dataRowIndex);
       expandButton = rowElement.find('.datagrid-expand-btn');
       children = rowElement.nextUntil(`[aria-level="${level}"]`);
 
