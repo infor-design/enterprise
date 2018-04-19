@@ -65,6 +65,15 @@ do
   (echo "$component\n" && mkdir $demoappdir && git mv $srcfiles $demoappdir);
 done
 
+# rename `demoapp` to `app`
+$ mkdir app
+$ git mv demoapp app
+
+# move weird utils/libs
+$ git mv src/generic-jquery.js src/utils/generic-jquery.js
+$ mkdir lib && git mv src/sohoxi-migrate-4.4.0.js lib/sohoxi-migrate-4.4.0.js
+$ git mv specs/DATAGRID.md src/components/datagrid/test-cases.md
+$ rmdir specs
 
 ```
 
