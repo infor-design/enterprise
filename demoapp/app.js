@@ -161,7 +161,7 @@ const globalDataHandler = function (req, res, next) {
   }
 
   if (isComponentRoute('dropdown')) {
-    res.opts.dropdownListData = require(path.resolve('demoapp', 'js', 'getJunkDropdownData'));
+    res.opts.dropdownListData = require(path.resolve('src', 'js', 'getJunkDropdownData'));
   }
 
   next();
