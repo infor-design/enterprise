@@ -64,7 +64,7 @@ const idsWebsitePath = 'docs/ids-website';
 const staticWebsitePath = 'docs/static-website';
 
 const paths = {
-  components: `${rootPath}/components`,
+  components: `${rootPath}/src/components`,
   docs:       `${rootPath}/docs`,
   templates: {
     root:  `${rootPath}/docs/templates`,
