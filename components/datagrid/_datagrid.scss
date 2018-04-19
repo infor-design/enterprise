@@ -66,10 +66,27 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-filterable-columns {
+    // Align filter column headings
+    .datagrid-filter-wrapper {
+      height: 22px;
+    }
+
+    .datagrid-column-wrapper {
+      position: relative;
+      top: -4px;
+    }
+
+    .is-filterable .datagrid-column-wrapper {
+      top: -3px;
+    }
+  }
+
   &.has-toolbar.has-two-line-header {
     .datagrid-header {
       .datagrid-column-wrapper {
         padding: 5px 20px 10px;
+
         .sort-indicator {
           vertical-align: baseline;
         }
@@ -337,36 +354,6 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    .is-filterable {
-      .datagrid-column-wrapper {
-        top: 0;
-      }
-
-      .datagrid-filter-wrapper {
-        margin-bottom: 5px;
-        top: -3px;
-
-        .btn-filter {
-          left: 6px;
-        }
-
-        input {
-          left: 6px;
-          width: calc(100% - 39px);
-        }
-
-        .timepicker + .icon,
-        .datepicker + .icon,
-        .dropdown + .icon {
-          margin-left: -12px;
-        }
-      }
-
-      &.l-center-text .btn-filter {
-        left: 18px;
-      }
-    }
-
     .sort-indicator {
       margin: 0 0 0 4px;
 
@@ -383,6 +370,24 @@ $datagrid-short-row-height: 23px;
     .arrange-placeholder {
       height: $datagrid-short-row-height + 7;
     }
+
+    &.has-filterable-columns {
+      // Align filter column headings
+      .datagrid-filter-wrapper {
+        height: 20px;
+      }
+
+      .datagrid-column-wrapper {
+        margin-bottom: 4px;
+        position: relative;
+        top: -2px;
+      }
+
+      .is-filterable .datagrid-column-wrapper {
+        top: -1px;
+      }
+    }
+
   }
 
   &.medium-rowheight {
@@ -459,6 +464,22 @@ $datagrid-short-row-height: 23px;
 
     .arrange-placeholder {
       height: $datagrid-medium-row-height + 10;
+    }
+
+    &.has-filterable-columns {
+      // Align filter column headings
+      .datagrid-filter-wrapper {
+        height: 24px;
+      }
+
+      .datagrid-column-wrapper {
+        position: relative;
+        top: -4px;
+      }
+
+      .is-filterable .datagrid-column-wrapper {
+        top: -3px;
+      }
     }
 
   }
@@ -1839,7 +1860,6 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-
     // Centering Text
     .datagrid-column-wrapper.l-center-text {
       width: 100%;
@@ -2910,6 +2930,22 @@ html[dir='rtl'] {
         left: auto;
         right: 13px;
       }
+    }
+  }
+
+  .datagrid-container {
+    &.has-vertical-scroll {
+      &.is-windows .datagrid-header {
+        margin-left: 18px;
+        margin-right: 0;
+      }
+    }
+  }
+
+  &.ie-edge {
+    .datagrid-container.has-vertical-scroll.is-windows .datagrid-header {
+      margin-left: 12px;
+      margin-right: 0;
     }
   }
 }

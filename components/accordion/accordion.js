@@ -293,16 +293,6 @@ Accordion.prototype = {
       return;
     }
 
-    /**
-    * Fires when a panel is opened.
-    *
-    * @event selected
-    * @memberof Accordion
-    * @param {object} event - The jquery event object
-    * @param {object} header - The header object
-    */
-    this.element.trigger('selected', header);
-
     // Set the original element for DOM traversal by keyboard
     this.originalSelection = anchor;
 
@@ -343,6 +333,7 @@ Accordion.prototype = {
     // If it's not a real link, try and toggle an expansion pane.
     if (pane.length) {
       self.toggle(header);
+      return true;
     }
 
     // This flag is set by the List/Detail Pattern Wrapper.
@@ -356,6 +347,16 @@ Accordion.prototype = {
     } else {
       anchor.focus();
     }
+
+    /**
+    * Fires when an accordion header is truly selected.
+    *
+    * @event selected
+    * @memberof Accordion
+    * @param {object} event - The jquery event object
+    * @param {object} header - The header object
+    */
+    this.element.trigger('selected', header);
 
     return true;
   },

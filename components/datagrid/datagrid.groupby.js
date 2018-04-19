@@ -141,7 +141,12 @@ aggregators.aggregate = function (items, columns) {
       const field = columns[i].field;
 
       self.sum = function (sum, node) {
+        if (node.isFiltered) { // If excluded / filtered out.
+          return sum;
+        }
+
         let value;
+
         if (field.indexOf('.') > -1) {
           value = field.split('.').reduce((o, x) => (o ? o[x] : ''), node);
         } else {

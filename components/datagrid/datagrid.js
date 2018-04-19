@@ -569,6 +569,9 @@ Datagrid.prototype = {
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = -1;
       pagerInfo.type = 'initial';
+      if (this.settings.treeGrid) {
+        pagerInfo.preserveSelected = true;
+      }
     }
 
     if (this.settings.source && pagerInfo.grandTotal) {
@@ -1147,6 +1150,9 @@ Datagrid.prototype = {
       filterMarkup += '</div>';
     }
 
+    if (!columnDef.filterType) {
+      filterMarkup = '<div class="datagrid-filter-wrapper"></div>';
+    }
     return filterMarkup;
   },
 
@@ -2904,8 +2910,7 @@ Datagrid.prototype = {
       let renderedTmpl = '';
 
       if (Tmpl && item) {
-        const compiledTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`);
-        renderedTmpl = compiledTmpl.render({ dataset: item });
+        renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
       }
 
       rowHtml += `<tr class="datagrid-expandable-row"><td colspan="${this.visibleColumns().length}">` +
@@ -3004,7 +3009,7 @@ Datagrid.prototype = {
     context.font = '14px arial';
 
     const metrics = context.measureText(maxText);
-    let padding = chooseHeader ? 35 : 40;
+    let padding = chooseHeader ? 40 : 45;
 
     if (hasAlert && !chooseHeader) {
       padding += 20;
@@ -3984,7 +3989,7 @@ Datagrid.prototype = {
     }
 
     // Handle Col Span - as the width is calculated on the total
-    if (columnSettings.colspan) {
+    if (typeof columnSettings.colspan === 'number') {
       width /= columnSettings.colspan;
     }
 
@@ -4102,6 +4107,10 @@ Datagrid.prototype = {
       countText = `(${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
     }
 
+    if (!totals && this.settings.source) {
+      count = this.lastCount;
+    }
+
     if (self.settings.resultsText) {
       if (typeof self.settings.resultsText === 'function') {
         if (self.grandTotal) {
@@ -4121,6 +4130,7 @@ Datagrid.prototype = {
       self.toolbar.find('.datagrid-row-count').text(count);
     }
     self.element.closest('.modal').find('.datagrid-result-count').html(countText);
+    this.lastCount = count;
 
     this.checkEmptyMessage();
   },
@@ -4355,6 +4365,8 @@ Datagrid.prototype = {
             splitData = pastedData.split('\r\n');
           }
 
+          splitData.pop();
+
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
 
@@ -4420,6 +4432,11 @@ Datagrid.prototype = {
 
         // Then Activate
         if (!canSelect) {
+          if (e.shiftKey && self.activatedRow().length) {
+            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').index()]);
+            e.preventDefault();
+          }
+
           self.toggleRowActivation(target.closest('tr'));
         }
       }
@@ -6763,21 +6780,25 @@ Datagrid.prototype = {
   */
   updateCellNode(row, cell, value, fromApiCall, isInline) {
     let coercedVal;
-    const rowNode = this.actualRowNode(row);
-    const cellNode = rowNode.find('td').eq(cell);
+    let rowNode = this.actualRowNode(row);
+    let cellNode = rowNode.find('td').eq(cell);
     const col = this.settings.columns[cell] || {};
     let formatted = '';
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
     const isTreeGrid = this.settings.treeGrid;
     let dataRowIndex = this.dataRowIndex(rowNode);
-    if (!dataRowIndex) {
+    if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
     const rowData = isTreeGrid ?
       this.settings.treeDepth[row].node :
       this.settings.dataset[dataRowIndex];
 
+    if (rowNode.length === 0 && this.settings.paging) {
+      rowNode = this.visualRowNode(row);
+      cellNode = rowNode.find('td').eq(cell);
+    }
     const oldVal = (col.field ? rowData[col.field] : '');
 
     // Coerce/Serialize value if from cell edit

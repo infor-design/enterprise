@@ -2982,11 +2982,11 @@
 │  ├─ repository: https://github.com/meganz/jodid25519
 │  ├─ publisher: Michele Bini, Ron Garret, Guy K. Kloss
 │  └─ licenseFile: /Users/tmcconechy/Dev/develop/node_modules/jodid25519/LICENSE
-├─ jquery@3.1.1
+├─ jquery@3.3.1
 │  ├─ licenses: MIT
 │  ├─ repository: https://github.com/jquery/jquery
 │  ├─ publisher: jQuery Foundation and other contributors
-│  ├─ url: https://github.com/jquery/jquery/blob/3.1.1/AUTHORS.txt
+│  ├─ url: https://github.com/jquery/jquery/blob/3.3.1/AUTHORS.txt
 │  └─ licenseFile: /Users/tmcconechy/Dev/develop/node_modules/jquery/LICENSE.txt
 ├─ js-tokens@2.0.0
 │  ├─ licenses: MIT
