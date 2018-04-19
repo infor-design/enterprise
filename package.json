@@ -7,7 +7,7 @@
   "author": "Hook & Loop",
   "license": "Runtime License",
   "scripts": {
-    "start": "node demoapp/server.js",
+    "start": "node app/server.js",
     "stop": "./scripts/stop.sh",
     "eslint": "eslint -c .eslintrc.js src",
     "eslint:log": "eslint -c .eslintrc.js src -o eslint.log",

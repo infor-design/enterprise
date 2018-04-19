@@ -442,7 +442,7 @@ function getFullListing(type, req, res, next, extraExcludes) {
   }
 
   // Search the "/components/<type>" folder for all tests/examples located here
-  componentPaths = getFolderContents(type, `demoapp/views/components/${type}/`, 'Components');
+  componentPaths = getFolderContents(type, `app/views/components/${type}/`, 'Components');
   componentPaths.forEach((path, i) => {
     const isTest = path.substr(0, 5) === 'test-';
 
