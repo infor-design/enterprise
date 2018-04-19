@@ -130,3 +130,11 @@ Each browser has a different Selenium driver with different capabilities. We pla
 > Why are so many Axe Rules disabled?
 
 This a bit complex as the light theme is not completely WCAG AA... and per component in various states (open/close) may not be WCAG 2AA as well. Additional various rules are at the application level and not suitable for review on this level. Currently, this is a @TODO, we hope to enable rules like "color-contrast" which are critical to various users.
+
+## Problems
+ - Visual Regression
+     - Maintaining baseline screenshots across different environments is problematic, and not consistent. The same machines need to run comparisons. Different machines can be generated their own screenshots, and compare them to screenshots on other system.
+ - Browser driver differences
+    - Lack of process to automate a record of differences to to aid reduction of manual testing
+    - Lack of process to check automated tests manually
+

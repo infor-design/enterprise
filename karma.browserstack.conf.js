@@ -18,6 +18,7 @@ module.exports = function (config) {
       username: process.env.BROWSER_STACK_USERNAME,
       accessKey: process.env.BROWSER_STACK_ACCESS_KEY,
       startTunnel: true,
+      forcelocal: true,
       build: 'Unit',
       name: 'Unit tests'
     },
@@ -95,7 +96,7 @@ module.exports = function (config) {
     },
     port: 9876,
     colors: true,
-    logLevel: config.LOG_INFO,
+    logLevel: config.DEBUG,
     autoWatch: true,
     browsers: [
       'bs_firefox_mac',
