@@ -12,8 +12,8 @@ const COMPONENT_NAME = 'spinbox';
 // Component Defaults
 const SPINBOX_DEFAULTS = {
   autocorrectOnBlur: false,
-  min: null,
-  max: null,
+  min: -2147483647,
+  max: 2147483647,
   step: null,
   validateOnInput: true
 };
@@ -25,8 +25,8 @@ const SPINBOX_DEFAULTS = {
  * @param {jQuery[]|HTMLElement} element the base element
  * @param {object} [settings] incoming settings
  * @param {boolean} [settings.autocorrectOnBlur = false] If true the input will adjust to the nearest step on blur.
- * @param {null|Number} [settings.min = null] if defined, provides a minimum numeric limit
- * @param {null|Number} [settings.max = null]  if defined, provides a maximum numeric limit
+ * @param {Number} [settings.min = -2147483647] if defined, provides a minimum numeric limit
+ * @param {Number} [settings.max = 2147483647]  if defined, provides a maximum numeric limit
  * @param {null|Number} [settings.step = null]  if defined, increases or decreases the spinbox value
  *  by a specific interval whenever the control buttons are used.
  * @param {boolean} [settings.validateOnInput = true]  If set to false, will only automatically correct
