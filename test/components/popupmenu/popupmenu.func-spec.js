@@ -14,7 +14,7 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   // Exclude IE11: Async timeout errors
-  if (browser.browserName !== 'ie') {
+  if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
     it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
@@ -27,9 +27,10 @@ describe('Popupmenu example-selectable tests', () => {
       expect(res.violations.length).toEqual(0);
     });
 
-    it('Should be accessible on close with no WCAG2AA violations on keypress(Spacebar)', async () => {
+    it('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
+      await buttonTriggerEl.sendKeys(protractor.Key.ESCAPE);
 
       const res = await AxeBuilder(browser.driver)
         .configure(axeOptions)
@@ -38,9 +39,24 @@ describe('Popupmenu example-selectable tests', () => {
 
       expect(res.violations.length).toEqual(0);
     });
-  }
 
-  if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
+    it('Should open on keypress(Enter), and close on keypress(Escape)', async () => {
+      const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
+      await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
+
+      expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
+      await buttonTriggerEl.sendKeys(protractor.Key.ESCAPE);
+
+      expect(await buttonTriggerEl.getAttribute('class')).not.toContain('is-open');
+    });
+
+    it('Should open on keypress(Space)', async () => {
+      const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
+      await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
+
+      expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
+    });
+
     it('Should open with enter, and arrow down to the last menu item, and focus', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
