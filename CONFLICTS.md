@@ -52,6 +52,20 @@ $ rmdir public
 $ rm -rf sass
 $ rm -rf images
 $ rm -rf license (?)
+
+#!/bin/bash
+# One-time use bash script for moving all "*.html" files from all `src/components` folders
+# to their `demoapp/views/components` counterparts.
+# NOTE: make the script executable, and run it from the project root
+components=$(find src/components/* -type d -maxdepth 1 | cut -d'/' -f3-)
+for component in $components
+do
+  demoappdir="demoapp/views/components/$component";
+  srcfiles="src/components/$component/*.html";
+  (echo "$component\n" && mkdir $demoappdir && git mv $srcfiles $demoappdir);
+done
+
+
 ```
 
 # Possible Merge Conflicts
