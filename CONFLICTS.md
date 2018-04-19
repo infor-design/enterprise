@@ -62,7 +62,7 @@ for component in $components
 do
   demoappdir="demoapp/views/components/$component";
   srcfiles="src/components/$component/*.html";
-  (echo "$component\n" && mkdir $demoappdir && git mv $srcfiles $demoappdir);
+  (echo "$component\n" && mkdir $demoappdir && git mv --dry-run $srcfiles $demoappdir);
 done
 
 # rename `demoapp` to `app`
@@ -74,6 +74,19 @@ $ git mv src/generic-jquery.js src/utils/generic-jquery.js
 $ mkdir lib && git mv src/sohoxi-migrate-4.4.0.js lib/sohoxi-migrate-4.4.0.js
 $ git mv specs/DATAGRID.md src/components/datagrid/test-cases.md
 $ rmdir specs
+
+#!/bin/bash
+# One-time use bash script for moving all "src/component/[componentName]/[componentName].md" files
+# to their "src/component/[componentName]/readme.md"
+# NOTE: make the script executable, and run it from the project root
+components=$(find src/components/* -type d -maxdepth 1 | cut -d'/' -f3-)
+for component in $components
+do
+  componentDir="src/components/$component/";
+  srcfile="$componentDir/$component.md";
+  targetfile="$componentDir/readme.md";
+  (echo "$component\n" && git mv --dry-run $srcfile $targetfile);
+done
 
 ```
 
