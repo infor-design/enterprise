@@ -336,6 +336,10 @@ function formatPath(text) {
  * @param {string} pathDef.labelColor
  */
 function pathMapper(pathDef) {
+  if (!pathDef || !pathDef.link) {
+    return;
+  }
+
   let href = pathDef.link.replace(/\\/g, '/').replace(/\/\//g, '/'),
     icon;
 
@@ -438,7 +442,7 @@ function getFullListing(type, req, res, next, extraExcludes) {
   }
 
   // Search the "/components/<type>" folder for all tests/examples located here
-  componentPaths = getFolderContents(type, `components/${type}/`, 'Components');
+  componentPaths = getFolderContents(type, `demoapp/views/components/${type}/`, 'Components');
   componentPaths.forEach((path, i) => {
     const isTest = path.substr(0, 5) === 'test-';
 
@@ -452,19 +456,6 @@ function getFullListing(type, req, res, next, extraExcludes) {
   componentPaths = filterUnusablePaths(componentPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes).concat([
     /[^-.]index\.html/,
   ]));
-
-  // TODO: Handle the test paths the same way as before.
-  // Search the legacy "tests" folder for any relevant tests
-  testPaths = getFolderContents(type, `views/tests/${type}/`, 'Tests');
-  testPaths.forEach((path, i) => {
-    testPaths[i] = {
-      text: formatPath(path),
-      link: `tests/${type}/${path}`,
-      type: 'test',
-      labelColor: 'amber07'
-    };
-  });
-  testPaths = filterUnusablePaths(testPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
 
   // Combine the arrays and filter out the junk
   allPaths = allPaths.concat(componentPaths).concat(testPaths);
@@ -499,7 +490,6 @@ function getDirectoryListing(directory, req, res, next, extraExcludes) {
 
   fs.readdir(`./views/${directory}`, (err, paths) => {
     if (err) {
-      // console.log(err);
       res.render(err);
       return next();
     }
@@ -520,7 +510,9 @@ function getDirectoryListing(directory, req, res, next, extraExcludes) {
 
     const opts = extend({}, res.opts, {
       subtitle: `Listing for ${directory}`,
-      paths: paths.map(pathMapper)
+      paths: paths.filter((item) => {
+        return item !== undefined && item.link !== undefined;
+      }).map(pathMapper)
     });
 
     res.render('listing', opts);
@@ -660,8 +652,8 @@ function componentRoute(req, res, next) {
   }
 
   if (req.params.example !== undefined) {
-    console.log(`${componentName}/${req.params.example}`)
-    res.render(`${componentName}/${req.params.example}`, opts, function(err, html) {
+    logger('timestamp', `Rendering View "views/components/${componentName}/${req.params.example}"`)
+    res.render(`components/${componentName}/${req.params.example}`, opts, function(err, html) {
       if (res.opts.csp || req.query.csp) {
         html = addNonceToScript(html, res.opts.nonce);
       }
@@ -694,8 +686,8 @@ app.get('/components/:component', function(req, res, next) {
   let opts = extend({}, res.opts, componentOpts);
   var compName = stripHtml(req.params.component);
   opts.basepath = fullBasePath(req);
-  console.log(`${BASE_PATH}components/${compName}.html`)
-  res.redirect(`${BASE_PATH}components/${compName}.html`);
+  console.log(`${chalk.cyan('Redirect')}: ${BASE_PATH}components/${compName}.html`)
+  res.redirect(`${BASE_PATH}components/${compName}/example-index.html`);
 });
 
 router.get('/components/:component/:example', componentRoute);
