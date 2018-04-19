@@ -1393,6 +1393,13 @@ Tabs.prototype = {
       return false;
     }
 
+    const validKeys = [13, 32, 37, 38, 39, 40];
+    const key = e.which;
+
+    if (validKeys.indexOf(key) < 0) {
+      return false;
+    }
+
     const self = this;
     const isRTL = Locale.isRTL();
     let targetLi;
@@ -1413,7 +1420,7 @@ Tabs.prototype = {
       targetLi = self.tablist.find(filter).first();
     }
 
-    switch (e.which) {
+    switch (key) {
       case 37: // left
         if (isRTL) {
           firstTab();
