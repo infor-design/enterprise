@@ -30,20 +30,16 @@ describe('Button API', () => {
     expect(buttonObj).toEqual(jasmine.any(Object));
   });
 
-  it('Should destroy button, and deactivate click event', () => {
-    $('.btn.no-init').on('click.button', () => {
-      expect(true).toBe(true);
-    });
-
-    $('.btn.no-init').click();
-
-    $('.btn.no-init').on('click.button', () => {
-      // Should fail, click should not trigger
-      expect(false).toBe(true);
-    });
-
+  it('Should destroy button', (done) => {
+    const spyEvent = spyOnEvent(buttonEl, 'click.button');
     buttonObj.destroy();
-    $('.btn.no-init').click();
+    buttonEl.click();
+    setTimeout(() => {
+      expect(spyEvent).not.toHaveBeenTriggered();
+      done();
+    }, 500);
+
+    expect($(buttonEl).data('button')).toBeFalsy();
   });
 
   it('Should set settings', () => {
