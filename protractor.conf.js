@@ -31,6 +31,7 @@ exports.config = {
       baselineFolder: './baseline/',
       screenshotPath: './.tmp/',
       autoSaveBaseline: true,
+      ignoreAntialiasing: true,
       debug: false
     });
 
