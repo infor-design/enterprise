@@ -1,7 +1,7 @@
-import { PopupMenu } from '../popupmenu';
+import { PopupMenu } from '../../../src/components/popupmenu/popupmenu';
 
-const popupmenuSelectableHTML = require('../example-selectable.html');
-const svg = require('../../icons/svg.html');
+const popupmenuSelectableHTML = require('../../../app/views/components/popupmenu/example-selectable.html');
+const svg = require('../../../app/views/components/icons/svg.html');
 
 let popupmenuButtonEl;
 let svgEl;

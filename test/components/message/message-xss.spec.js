@@ -1,5 +1,5 @@
 
-import { Message } from '../message';
+import { Message } from '../../../src/components/message/message';
 
 let messageEl;
 let messageAPI;

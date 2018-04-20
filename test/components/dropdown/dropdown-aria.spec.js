@@ -1,7 +1,7 @@
-import { Dropdown } from '../dropdown';
+import { Dropdown } from '../../../src/components/dropdown/dropdown';
 
-const dropdownHTML = require('../example-index.html');
-const svg = require('../../icons/svg.html');
+const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
+const svg = require('../../../app/views/components/icons/svg.html');
 
 let dropdownEl;
 let svgEl;

@@ -1,9 +1,9 @@
-import { Treemap } from '../treemap';
+import { Treemap } from '../../../src/components/treemap/treemap';
 
-const treemapHTML = require('../example-index.html');
-const svg = require('../../icons/svg.html');
-const data = require('../../../../demoapp/data/storage-usage.json');
-const dataUpdate = require('../../../../demoapp/data/file-usage.json');
+const treemapHTML = require('../../../app/views/components/treemap/example-index.html');
+const svg = require('../../../app/views/components/icons/svg.html');
+const data = require('../../../app/data/storage-usage.json');
+const dataUpdate = require('../../../app/data/file-usage.json');
 
 let treemapEl;
 let treemapAPI;

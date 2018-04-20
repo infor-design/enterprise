@@ -3,7 +3,7 @@ const getSpecs = (listSpec) => {
     return listSpec.split(',');
   }
 
-  return ['../src/components/**/*.spec.js'];
+  return ['../test/components/**/*.spec.js'];
 };
 
 module.exports = function (config) {
@@ -22,7 +22,7 @@ module.exports = function (config) {
       'node_modules'
     ],
     preprocessors: {
-      '../src/components/**/*.spec.js': ['webpack', 'sourcemap']
+      '../test/components/**/*.spec.js': ['webpack', 'sourcemap']
     },
     webpack: {
       module: {

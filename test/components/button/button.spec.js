@@ -1,7 +1,7 @@
-import { Button } from '../button';
+import { Button } from '../../../src/components/button/button';
 
-const buttonHTML = require('../example-index.html');
-const svg = require('../../icons/svg.html');
+const buttonHTML = require('../../../app/views/components/button/example-index.html');
+const svg = require('../../../app/views/components/icons/svg.html');
 
 let buttonEl;
 let svgEl;
