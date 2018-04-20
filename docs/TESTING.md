@@ -50,7 +50,7 @@ export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 ## Debugging Functional Tests
 1. Put a debugger; statement at a place in the test/code for example under the `res = await AxeBuilder` command.
 2. Start the server normally with `node server`
-3. In another terminal run the functional test with `env PROTRACTOR_SPECS='test/kitchen-sink.func-spec.js' npx -n=--inspect-brk protractor protractor.conf.js` in watch mode
+3. In another terminal run the functional test with `env PROTRACTOR_SPECS='test/kitchen-sink.func-spec.js' npx -n=--inspect-brk protractor test/protractor.conf.js` in watch mode
 4. In Chrome open `chrome://inspect` in a new tab.
 5. Click 'Open dedicated DevTools for Node.
 6. Hit Play on the debugger
