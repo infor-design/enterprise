@@ -92,7 +92,35 @@ done
 git mv karma* test
 git mv protractor* test
 
+#!/bin/bash
+# One-time use bash script for moving all "src/component/[componentName]/[unit or functional]" files
+# to their "test/components/[componentName]" counter part
+# NOTE: make the script executable, and run it from the project root
+components=$(find src/components/* -type d -maxdepth 1 | cut -d'/' -f3-)
+for component in $components
+do
+  srcDir="src/components/$component";
+  targetDir="test/components/$component";
 
+  srcFuncFile="$srcDir/functional/$component.functional-spec.js";
+  srcUnitFile="$srcDir/unit/$component-api.spec.js";
+
+  if [ -f $srcFuncFile ]; then
+    echo "Move $srcFuncFile";
+    targetFuncFile="$targetDir/$component.func-spec.js";
+
+    mkdir $targetDir
+    git mv $srcFuncFile $targetFuncFile;
+  fi
+
+  if [ -f $srcUnitFile ]; then
+    echo "Move $srcFuncFile";
+    targetUnitFile="$targetDir/$component.spec.js";
+
+    mkdir $targetDir
+    git mv $srcUnitFile $targetUnitFile;
+  fi
+done
 ```
 
 # Possible Merge Conflicts
