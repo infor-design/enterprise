@@ -2029,7 +2029,7 @@ Editor.prototype = {
   },
 
   teardown() {
-    $(document).off('input.editor keyup.editor', this.element);
+    this.container.off('input.editor keyup.editor', this.element);
     $('html').off('mouseup.editor');
 
     this.destroyToolbar();
