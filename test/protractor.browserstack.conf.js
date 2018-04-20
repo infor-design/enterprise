@@ -54,7 +54,6 @@ exports.config = {
       browser_version: '16.0',
       os_version: '10',
       os: 'Windows'
-
     },
     {
       browserName: 'IE',
