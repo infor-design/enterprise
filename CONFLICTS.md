@@ -88,6 +88,11 @@ do
   (echo "$component\n" && git mv --dry-run $srcfile $targetfile);
 done
 
+
+git mv karma* test
+git mv protractor* test
+
+
 ```
 
 # Possible Merge Conflicts
