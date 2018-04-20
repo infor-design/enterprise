@@ -12,7 +12,7 @@ module.exports = function (config) {
     frameworks: ['jasmine'],
     files: [
       'dist/css/light-theme.css',
-      'dist/js/jquery-3.1.1.js',
+      'dist/js/jquery-3.3.1.js',
       'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
@@ -62,15 +62,15 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    browsers: ['Chrome', 'ChromeHeadlessNoSandbox'],
+    browsers: ['ChromeHeadlessNoSandbox'],
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
         flags: ['--no-sandbox']
       }
     },
-    autoWatch: true,
-    singleRun: false,
+    autoWatch: false,
+    singleRun: true,
     concurrency: Infinity,
     junitReporter: {
       outputDir: 'test-reports', // results will be saved as $outputDir/$browserName.xml

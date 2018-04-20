@@ -236,15 +236,6 @@ Editor.prototype = {
     return this;
   },
 
-  // Builds a fake element and gets the name of the event that will be used for "paste"
-  // Used for cross-browser compatability.
-  getPasteEvent() {
-    const el = document.createElement('input');
-    const name = 'onpaste';
-    el.setAttribute(name, '');
-    return `${((typeof el[name] === 'function') ? 'paste' : 'input')}.editor`;
-  },
-
   initToolbar() {
     if (this.toolbar) {
       return this;
@@ -1226,10 +1217,6 @@ Editor.prototype = {
     const self = this;
     const currentElement = self.getCurrentElement();
 
-    if (!self.pasteEvent) {
-      self.pasteEvent = self.getPasteEvent();
-    }
-
     this.pasteWrapper = function (e) {
       let paste;
       if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
@@ -1357,7 +1344,7 @@ Editor.prototype = {
       }
     };
 
-    currentElement.on(self.pasteEvent, (self.settings.pasteAsPlainText ?
+    currentElement.on('paste.editor', (self.settings.pasteAsPlainText ?
       self.pasteWrapper : self.pasteWrapperHtml));
 
     return this;
@@ -1996,7 +1983,7 @@ Editor.prototype = {
     this.toolbar.off('touchstart.editor click.editor click.editor mousedown.editor');
     this.toolbar.remove();
     this.toolbar = undefined;
-    this.element.off(`mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor ${this.pasteEvent}`);
+    this.element.off('mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor paste.editor');
     this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
     this.element.prev('.label').off('click.editor');
 

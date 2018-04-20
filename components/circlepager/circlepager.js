@@ -372,6 +372,7 @@ CirclePager.prototype = {
       return false;
     }
     this.show();
+    this.slidesJQ.addClass('is-visible');
   },
 
   /**

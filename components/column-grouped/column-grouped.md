@@ -51,8 +51,8 @@ $('#column-grouped-example').chart({type: 'column-grouped', dataset: dataset});
 
 ## Keyboard Shortcuts
 
--   **Tab:** You can tab into the chart area and through the legend values as each has a focus state.
--   **Enter/Space:** Will select the bar group the corresponds with the focus'd legend item.
+- <kbd>Tab</kbd>You can tab into the chart area and through the legend values as each has a focus state.
+- <kbd>Enter/Space</kbd>Will select the bar group the corresponds with the focus'd legend item.
 
 ## Upgrading from 3.X
 

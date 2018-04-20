@@ -1,5 +1,5 @@
 ---
-title: Charts 
+title: Charts
 description: This page describes Charts .
 ---
 
@@ -51,8 +51,8 @@ We still have some work to do to make charts accessible. Some todo's
 
 ## Keyboard Shortcuts
 
--   **Tab:** Tab throughout the tabbable elements in the chart.
--   **Enter/Space:** Toggle selection on the element
+- <kbd>Tab</kbd> Tab throughout the tabbable elements in the chart.
+- <kbd>Enter/Space</kbd>Toggle selection on the element
 
 ## Upgrading from 3.X
 

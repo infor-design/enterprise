@@ -59,6 +59,10 @@ function ValidationRules() {
           return true;
         }
 
+        if ($.isArray(value)) {
+          return value.length > 0;
+        }
+
         return (!!value);
       },
 

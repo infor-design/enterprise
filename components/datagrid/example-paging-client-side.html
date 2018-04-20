@@ -45,16 +45,10 @@
           paging: true,
           pagesize: 15,
           toolbar: {title: 'Requests', results: true, dateFilter: false , keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
-          }).on('click', function (e, args) {
+          }).on('selected', function (e, args) {
             console.log(args);
-          });
-
-          $('#datagrid tbody').on('paging', function(e, args) {
-          //  console.log(args);
-          });
-
-          $('#datagrid-remove-btn').on('click', function() {
-            $('#datagrid').data('datagrid').removeSelected();
+          }).on('unselected', function (e, args) {
+            console.log(args);
           });
       });
 

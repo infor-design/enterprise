@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Empty Radar Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div class="chart-treemap-container">
+            <div id="treemap-chart-example" class="chart-container">
+            </div>
+          </div>
+          <div class="chart-treemap-footer">
+            <div class="row">
+              <div class="six columns">
+                <div class="field-flex">
+                  <span class="larger-heavy-text">Storage</span>
+                  <div class="field-flex-group">
+                    <span class="data data-large">78 GB</span>
+                    <span class="label">Total Capacity</span>
+                  </div>
+                  <span class="text-emphasis">Last Refreshed 10/10/2018</span>
+                </div>
+              </div>
+              <div class="three columns">
+                <div class="field-flex">
+                  <div class="field-flex-group">
+                    <span class="data data-large">600 GB</span>
+                    <span class="label">Total# of Objects</span>
+                  </div>
+                </div>
+              </div>
+              <div class="three columns">
+                <div class="field-flex">
+                  <div class="field-flex-group">
+                    <span class="data data-large">900 GB</span>
+                    <span class="label">Queried Data</span>
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  $.getJSON('{{basepath}}api/storage-usage', function(data) {
+    $('#treemap-chart-example').treemap({dataset: data});
+  });
+
+});
+</script>

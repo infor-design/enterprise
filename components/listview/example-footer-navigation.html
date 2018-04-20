@@ -93,7 +93,7 @@
 </div>
 
 
-<script type="text/javascript">
+<script>
   $('body').on('initialized', function() {
 
     var getUrl = function(pageNum, pageSize) {
@@ -131,12 +131,10 @@
         if (lv1.compressors.responseJSON) {
           lv1.resData = lv1.compressors.responseJSON.data;
           lv1.data.push.apply(lv1.data, lv1.resData);
-          lv1.container.trigger('updated');
+          lv1.container.data('listview').updated({dataset: lv1.data});
         }
       });
     });
-
-
 
     // listview-2 ==============================================================
     var lv2 = {
@@ -162,7 +160,7 @@
       });
     });
 
-    // Loadding more with scroll
+    // Loading more with scroll
     lv2.container.on('scroll', function(e) {
       if (lv2.processScroll  && lv2.container.scrollTop() > lv2.container.prop('scrollHeight') - lv2.container.height() - lv2.threshold) {
         lv2.processScroll = false;
@@ -173,15 +171,13 @@
           if (lv2.compressors.responseJSON) {
             lv2.resData = lv2.compressors.responseJSON.data;
             lv2.data.push.apply(lv2.data, lv2.resData);
-            lv2.container.trigger('updated');
+            lv2.container.data('listview').updated({dataset: lv2.data});
             lv2.containerLazy.trigger('complete.busyindicator');
           }
           lv2.processScroll = true;
         });
       }
     });
-
-
 
     // listview-3 ==============================================================
     var lv3 = {

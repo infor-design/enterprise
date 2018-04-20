@@ -22,12 +22,13 @@ Targeting
       element(by.css('div[aria-controls=dropdown-list]'))
 
 It also may include integration testing which is the phase in software testing in which individual software modules are combined and tested as a group
-
   - Clicking on elements, looking on the page, accessibility
-  - Screen Shots
 
 
 It also maybe include regression testing, which is a type of software testing which verifies that software which was previously developed and tested still performs the same way after it was changed or interfaced with other software.
+  - Screen Shots
+     - We are utilizing a plugin to aide with the collection, and analysis of screenshots. On Chrome only currently, we capture screenshots, and compare them to a baseline(most current and valid) screenshots
+     - The tool will capture screenshots, and save the screenshots to the `../.tmp/actual/` directory. If the screenshot is valid, and can then be moved to the baseline directory where it should be committed, and saved in the git repository.
 
 ## Running and Debugging Tests
 Run just the api spec, for debugging with Chrome. For debugging use statements in the unit tests, and open Chrome DevTools
@@ -37,7 +38,7 @@ Run several spec tests with a Glob, for debugging with Chrome.
  `KARMA_SPECS='components/dropdown/unit/dropdown*.spec.js' npm run local:unit` // Glob example
 
 Run just an api test, headless.
- `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run ci:local:unit`
+ `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run ci:unit`
 
 To run BrowserStack you need to place your copy the following configuration, and place the keys in your path.
 
@@ -56,23 +57,20 @@ export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 4. Open Chrome tools
 5. Refresh the page and the debugger will pop up / or click the debugger button (had less luck with this.)
 
-## Debugging a Functional Test
-1. Put a debugger; statement at a place in the test/code..
-2. Run the functional test with `env PROTRACTOR_SPECS='components/dropdown/functional/dropdown.functional-spec.js' npm run local:functional`
-4. Open Chrome tools
-5. Refresh the page and the debugger will pop up
-
-## Debugging Accessibility Test Errors
+## Debugging Functional Tests
 1. Put a debugger; statement at a place in the test/code for example under the `res = await AxeBuilder` command.
 2. Start the server normally with `node server`
 3. In another terminal run the functional test with `env PROTRACTOR_SPECS='test/kitchen-sink.functional-spec.js' npx -n=--inspect-brk protractor protractor.conf.js` in watch mode
-4. In Chrome open ``chrome://inspect` in a new tab.
+4. In Chrome open `chrome://inspect` in a new tab.
 5. Click 'Open dedicated DevTools for Node.
 6. Hit Play on the debugger
 7. View `res.violations` in the console
 
-## Running all Tests Silently
-`npm run ci:local:unit`
+## Running all Unit Tests Silently for Continuous Integration
+`npm run ci:unit`
+
+## Running all Unit Tests on BrowserStack
+After configuration, `npm run browserstack:unit`
 
 ## Watching a Test
 You may when building a test out want to watch it. You can leave the test running and as you change the file.
@@ -84,7 +82,7 @@ The test will rerun.
 5. Update your test and save
 6. Tests will run again.. Repeat..
 
-## Checking Coverage
+## Checking Unit Test Coverage
 1. Run the test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run local:unit`
 2. While the browser is open. Go to `cd coverage`
 3. Start a simple web server `python -m SimpleHTTPServer`
@@ -97,6 +95,20 @@ The test will rerun.
 - Select a menu button menu item etc..
 - Themes
 - RTL
+
+## Functional Testing Coverage
+* Excluding screen reader (JAWS, etc) testing
+
+##### Testing Coverage Rating Scale
+☹️ 😕 🙂 😁
+
+Component | Functional Test Coverage
+------------- | :-------------:
+Dropdown | ☹️
+MultiSelect | 🙂
+Validation | ☹️
+Popupmenu | 😕
+Button | 😁
 
 ## Testing Resources
 

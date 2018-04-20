@@ -569,6 +569,9 @@ Datagrid.prototype = {
       pagerInfo.pagesize = this.settings.pagesize;
       pagerInfo.total = -1;
       pagerInfo.type = 'initial';
+      if (this.settings.treeGrid) {
+        pagerInfo.preserveSelected = true;
+      }
     }
 
     if (this.settings.source && pagerInfo.grandTotal) {
@@ -1147,6 +1150,9 @@ Datagrid.prototype = {
       filterMarkup += '</div>';
     }
 
+    if (!columnDef.filterType) {
+      filterMarkup = '<div class="datagrid-filter-wrapper"></div>';
+    }
     return filterMarkup;
   },
 
@@ -2365,8 +2371,6 @@ Datagrid.prototype = {
       let currentCount = i;
       if (s.treeGrid) {
         currentCount = this.recordCount;
-      } else if (s.filterable) {
-        currentCount = i - this.filteredCount;
       }
 
       tableHtml += self.rowHtml(s.dataset[i], currentCount, i);
@@ -2555,6 +2559,11 @@ Datagrid.prototype = {
   */
   isRowVisible(rowIndex) {
     if (!this.settings.virtualized) {
+      if (this.settings.paging && !this.settings.source && rowIndex) {
+        return (this.pager.activePage - 1) * this.settings.pagesize >= rowIndex &&
+            (this.pager.activePage) * this.settings.pagesize <= rowIndex;
+      }
+
       return true;
     }
 
@@ -2901,8 +2910,7 @@ Datagrid.prototype = {
       let renderedTmpl = '';
 
       if (Tmpl && item) {
-        const compiledTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`);
-        renderedTmpl = compiledTmpl.render({ dataset: item });
+        renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
       }
 
       rowHtml += `<tr class="datagrid-expandable-row"><td colspan="${this.visibleColumns().length}">` +
@@ -3001,7 +3009,7 @@ Datagrid.prototype = {
     context.font = '14px arial';
 
     const metrics = context.measureText(maxText);
-    let padding = chooseHeader ? 35 : 40;
+    let padding = chooseHeader ? 40 : 45;
 
     if (hasAlert && !chooseHeader) {
       padding += 20;
@@ -3981,7 +3989,7 @@ Datagrid.prototype = {
     }
 
     // Handle Col Span - as the width is calculated on the total
-    if (columnSettings.colspan) {
+    if (typeof columnSettings.colspan === 'number') {
       width /= columnSettings.colspan;
     }
 
@@ -4099,6 +4107,10 @@ Datagrid.prototype = {
       countText = `(${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
     }
 
+    if (!totals && this.settings.source) {
+      count = this.lastCount;
+    }
+
     if (self.settings.resultsText) {
       if (typeof self.settings.resultsText === 'function') {
         if (self.grandTotal) {
@@ -4118,6 +4130,7 @@ Datagrid.prototype = {
       self.toolbar.find('.datagrid-row-count').text(count);
     }
     self.element.closest('.modal').find('.datagrid-result-count').html(countText);
+    this.lastCount = count;
 
     this.checkEmptyMessage();
   },
@@ -4200,10 +4213,12 @@ Datagrid.prototype = {
    */
   cellNode(row, cell, includeGroups) {
     let cells = null;
-    let rowNode = this.tableBody.find(`tr:not(.datagrid-expandable-row)[aria-rowindex="${row + 1}"]`);
+    let rowNode = null;
 
     if (row instanceof jQuery) {
       rowNode = row;
+    } else {
+      rowNode = this.tableBody.find(`tr:not(.datagrid-expandable-row)[aria-rowindex="${row + 1}"]`);
     }
 
     if (includeGroups && this.settings.groupable) {
@@ -4213,7 +4228,7 @@ Datagrid.prototype = {
       }
     }
 
-    if (cell === -1) {
+    if (cell === -1 || rowNode.length === 0) {
       return $();
     }
 
@@ -4350,6 +4365,8 @@ Datagrid.prototype = {
             splitData = pastedData.split('\r\n');
           }
 
+          splitData.pop();
+
           const startRowCount = parseInt($(e.target)[0].parentElement.parentElement.parentElement.getAttribute('data-index'), 10);
           const startColIndex = parseInt($(e.target)[0].parentElement.parentElement.getAttribute('aria-colindex'), 10) - 1;
 
@@ -4415,6 +4432,11 @@ Datagrid.prototype = {
 
         // Then Activate
         if (!canSelect) {
+          if (e.shiftKey && self.activatedRow().length) {
+            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').index()]);
+            e.preventDefault();
+          }
+
           self.toggleRowActivation(target.closest('tr'));
         }
       }
@@ -5176,9 +5198,11 @@ Datagrid.prototype = {
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
         elem.addClass(`is-selected${self.settings.selectable === 'mixed' ? ' hide-selected-color' : ''}`).attr('aria-selected', 'true')
           .find('td').attr('aria-selected', 'true');
-        checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
-          .addClass('is-checked').attr('aria-checked', 'true');
 
+        if (checkbox.length > 0) {
+          checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+            .addClass('is-checked').attr('aria-checked', 'true');
+        }
         data._selected = true;
       };
 
@@ -5256,6 +5280,8 @@ Datagrid.prototype = {
     for (let i = indexes[0]; i <= indexes[1]; i++) {
       this.selectRow(i);
     }
+
+    this.displayCounts();
   },
 
   /**
@@ -5824,6 +5850,7 @@ Datagrid.prototype = {
     for (let i = 0; i < cols.length; i++) {
       if (cols[i].id === id) {
         idx = i;
+        break;
       }
     }
     return idx;
@@ -6243,7 +6270,8 @@ Datagrid.prototype = {
       return false; // eslint-disable-line
     }
 
-    const idx = this.dataRowIndex(this.actualRowNode(row));
+    const thisRow = this.actualRowNode(row);
+    const idx = this.settings.treeGrid ? this.actualRowIndex(thisRow) : this.dataRowIndex(thisRow);
     const rowData = this.settings.treeGrid ?
       this.settings.treeDepth[idx].node :
       this.settings.dataset[idx];
@@ -6753,21 +6781,25 @@ Datagrid.prototype = {
   */
   updateCellNode(row, cell, value, fromApiCall, isInline) {
     let coercedVal;
-    const rowNode = this.actualRowNode(row);
-    const cellNode = rowNode.find('td').eq(cell);
+    let rowNode = this.actualRowNode(row);
+    let cellNode = rowNode.find('td').eq(cell);
     const col = this.settings.columns[cell] || {};
     let formatted = '';
     const formatter = (col.formatter ? col.formatter : this.defaultFormatter);
     const isEditor = $('.editor', cellNode).length > 0;
     const isTreeGrid = this.settings.treeGrid;
     let dataRowIndex = this.dataRowIndex(rowNode);
-    if (!dataRowIndex) {
+    if (dataRowIndex === null || dataRowIndex === undefined || isNaN(dataRowIndex)) {
       dataRowIndex = row;
     }
     const rowData = isTreeGrid ?
       this.settings.treeDepth[row].node :
       this.settings.dataset[dataRowIndex];
 
+    if (rowNode.length === 0 && this.settings.paging) {
+      rowNode = this.visualRowNode(row);
+      cellNode = rowNode.find('td').eq(cell);
+    }
     const oldVal = (col.field ? rowData[col.field] : '');
 
     // Coerce/Serialize value if from cell edit
@@ -6880,6 +6912,10 @@ Datagrid.prototype = {
 
     if (this.settings.paging && this.settings.source) {
       rowIdx += ((this.pager.activePage - 1) * this.settings.pagesize);
+    }
+
+    if (!this.isRowVisible(idx)) {
+      return $([]);
     }
 
     return this.tableBody.find(`tr[aria-rowindex="${rowIdx + 1}"]`);
@@ -7103,7 +7139,8 @@ Datagrid.prototype = {
   // expand the tree rows
   toggleChildren(e, dataRowIndex) {
     const self = this;
-    let rowElement = this.visualRowNode(dataRowIndex);
+    let rowElement = this.settings.treeGrid ?
+      this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
     let children = rowElement.nextUntil(`[aria-level="${level}"]`);
@@ -7121,7 +7158,8 @@ Datagrid.prototype = {
     }
 
     const toggleExpanded = function () {
-      rowElement = self.visualRowNode(dataRowIndex);
+      rowElement = self.settings.treeGrid ?
+        self.actualRowNode(dataRowIndex) : self.visualRowNode(dataRowIndex);
       expandButton = rowElement.find('.datagrid-expand-btn');
       children = rowElement.nextUntil(`[aria-level="${level}"]`);
 

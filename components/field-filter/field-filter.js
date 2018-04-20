@@ -77,8 +77,7 @@ FieldFilter.prototype = {
         }
       }
 
-      const compiledTmpl = Tmpl.compile(s.template);
-      const renderedTmpl = compiledTmpl.render({ dataset: !s.dropdownOpts.source ? dataset : [] });
+      const renderedTmpl = Tmpl.compile(s.template, { dataset: !s.dropdownOpts.source ? dataset : [] });  // eslint-disable-line
       const emptyTmpl = '' +
         `<label for="ffdropdown-empty" class="audible">
           ${Locale.translate('FieldFilter')}
@@ -115,6 +114,7 @@ FieldFilter.prototype = {
 
       // Set Dropdown
       s.dropdownOpts.cssClass = s.dropdownOpts.cssClass ? `${s.dropdownOpts.cssClass} ffdropdown` : 'ffdropdown';
+      s.dropdownOpts.noSearch = true;
       this.ffdropdown = this.field.find('select.dropdown');
       this.ffdropdown
         .attr({ id: ffId, named: ffId })

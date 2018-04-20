@@ -10,6 +10,7 @@ import '../utils/animations';
 import '../pager/pager.jquery';
 import '../popupmenu/popupmenu.jquery';
 import '../searchfield/searchfield.jquery';
+import '../emptymessage/emptymessage.jquery';
 
 const COMPONENT_NAME = 'listview';
 
@@ -222,8 +223,7 @@ ListView.prototype = {
         totals = this.getTotals(dataset);
       }
 
-      const compiledTmpl = Tmpl.compile(this.settings.template);
-      const renderedTmpl = compiledTmpl.render({ dataset, totals });
+      const renderedTmpl = Tmpl.compile(this.settings.template, { dataset, totals });
 
       if (dataset.length > 0 || this.settings.forceToRenderOnEmptyDs) {
         this.element.html(renderedTmpl);

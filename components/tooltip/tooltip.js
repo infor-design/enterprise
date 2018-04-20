@@ -537,7 +537,7 @@ Tooltip.prototype = {
       return;
     }
 
-    this.tooltip[0].setAttribute('style', '');
+    this.tooltip[0].removeAttribute('style');
     this.tooltip[0].classList.add(this.settings.placement);
 
     if (this.settings.isError || this.settings.isErrorColor) {

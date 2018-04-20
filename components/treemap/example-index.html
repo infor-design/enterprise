@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="twelve columns">
       <div class="widget">
@@ -13,70 +12,10 @@
   </div>
 </div>
 
-{{={{{ }}}=}}
-
 <script>
 $('body').on('initialized', function () {
-
-  var treeMapData = {
-   name: 'Storage Utilization (78 GB)',
-   children: [
-    {
-     name: "by type",
-     children: [
-      {
-       name: "type1",
-       children: [
-        {name: "JSON", value: 3400}
-       ]
-      },
-      {
-       name: "type2",
-       children: [
-        {name: "PDF", value: 2200}
-       ]
-      },
-      {
-       name: "type3",
-       children: [
-        {name: "BOD", value: 1000}
-       ]
-      },
-      {
-       name: "type4",
-       children: [
-        {name: "TXT", value: 1000}
-       ]
-      },
-      {
-       name: "type5",
-       children: [
-        {name: "CSV", value: 2000}
-       ]
-      },
-      {
-       name: "type6",
-       children: [
-        {name: "Assets", value: 800}
-       ]
-      },
-      {
-       name: "type7",
-       children: [
-        {name: "Others", value: 1700}
-       ]
-      }
-     ]
-    }]
-  };
-
-  $('#treemap-chart-example').treemap({dataset: treeMapData})
-    .on('selected', function (e, args) {
-      console.log('selected', args);
-    })
-    .on('unselected', function (e, args) {
-      console.log('unselected', args);
-    });
-
+  $.getJSON('{{basepath}}api/storage-usage', function(data) {
+    $('#treemap-chart-example').treemap({dataset: data});
+  });
 });
 </script>
