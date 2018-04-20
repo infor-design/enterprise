@@ -1,8 +1,8 @@
 const AxeBuilder = require('axe-webdriverjs');
-const { browserStackErrorReporter } = require('../../../../test/helpers/browserstack-error-reporter.js');
-const rules = require('../../../../test/helpers/axe-rules.js');
-require('../../../../test/helpers/rejection.js');
 
+const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
+const rules = requireHelper('axe-rules');
+requireHelper('rejection');
 const axeOptions = { rules: rules.axeRules };
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);

@@ -1,4 +1,5 @@
 /* eslint-disable */
+const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
 const protractorImageComparison = require('protractor-image-comparison');
 
@@ -7,7 +8,7 @@ const getSpecs = (listSpec) => {
     return listSpec.split(',');
   }
 
-  return ['../src/components/**/*.functional-spec.js', 'kitchen-sink.functional-spec.js'];
+  return ['components/**/*.func-spec.js', 'kitchen-sink.func-spec.js'];
 };
 
 exports.config = {
@@ -26,10 +27,11 @@ exports.config = {
     print: () => {}
   },
   onPrepare: () => {
+    global.requireHelper = (filename) => require(`${basePath}/helpers/${filename}.js`);
     browser.ignoreSynchronization = true;
     browser.protractorImageComparison = new protractorImageComparison({
-      baselineFolder: './baseline/',
-      screenshotPath: './.tmp/',
+      baselineFolder: `${basePath}/baseline`,
+      screenshotPath: `${basePath}/.tmp/`,
       autoSaveBaseline: true,
       ignoreAntialiasing: true,
       debug: false
