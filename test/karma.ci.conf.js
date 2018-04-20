@@ -1,21 +1,29 @@
+const getSpecs = (listSpec) => {
+  if (listSpec) {
+    return listSpec.split(',');
+  }
+
+  return ['../src/components/**/*.spec.js'];
+};
+
 module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'dist/css/light-theme.css',
-      'dist/js/jquery-3.3.1.js',
-      'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-      'dist/js/d3.v4.js',
-      'dist/js/sohoxi.js',
-      'dist/js/cultures/en-US.js',
-      'components/**/*.spec.js'
-    ],
+      '../dist/css/light-theme.css',
+      '../dist/js/jquery-3.3.1.js',
+      '../node_modules/jasmine-jquery/lib/jasmine-jquery.js',
+      '../dist/js/d3.v4.js',
+      '../dist/js/sohoxi.js',
+      '../dist/js/cultures/en-US.js'
+    ].concat(getSpecs(process.env.KARMA_SPECS)),
     exclude: [
-      'node_modules'
+      '../node_modules'
     ],
     preprocessors: {
-      '**/components/**/*.js': ['webpack', 'sourcemap', 'coverage'],
+      '../src/components/**/*.spec.js': ['webpack', 'sourcemap'],
+      '../dist/js/sohoxi.js': ['coverage']
     },
     webpack: {
       module: {
@@ -33,8 +41,7 @@ module.exports = function (config) {
               options: {
                 presets: ['env']
               }
-            }],
-            exclude: /node_modules/
+            }]
           }
         ]
       }

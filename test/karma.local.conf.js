@@ -3,7 +3,7 @@ const getSpecs = (listSpec) => {
     return listSpec.split(',');
   }
 
-  return ['components/**/*.spec.js'];
+  return ['../src/components/**/*.spec.js'];
 };
 
 module.exports = function (config) {
@@ -11,18 +11,18 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'dist/css/light-theme.css',
-      'dist/js/jquery-3.3.1.js',
-      'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-      'dist/js/d3.v4.js',
-      'dist/js/sohoxi.js',
-      'dist/js/cultures/en-US.js'
+      '../dist/css/light-theme.css',
+      '../dist/js/jquery-3.3.1.js',
+      '../node_modules/jasmine-jquery/lib/jasmine-jquery.js',
+      '../dist/js/d3.v4.js',
+      '../dist/js/sohoxi.js',
+      '../dist/js/cultures/en-US.js'
     ].concat(getSpecs(process.env.KARMA_SPECS)),
     exclude: [
       'node_modules'
     ],
     preprocessors: {
-      'components/**/*.spec.js': ['webpack', 'sourcemap']
+      '../src/components/**/*.spec.js': ['webpack', 'sourcemap']
     },
     webpack: {
       module: {
@@ -40,8 +40,7 @@ module.exports = function (config) {
               options: {
                 presets: ['env']
               }
-            }],
-            exclude: /node_modules/
+            }]
           }
         ]
       }
