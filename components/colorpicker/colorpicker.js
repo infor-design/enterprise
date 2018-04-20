@@ -439,7 +439,7 @@ ColorPicker.prototype = {
 
     if (o.isEmpty || o.invalid) {
       this.swatch.addClass(o.isEmpty ? 'is-empty' : 'is-invalid');
-      this.swatch[0].style.backgroundColor = null;
+      this.swatch[0].style.backgroundColor = '';
     } else {
       this.swatch.removeClass('is-empty is-invalid');
       this.swatch[0].style.backgroundColor = hex;
