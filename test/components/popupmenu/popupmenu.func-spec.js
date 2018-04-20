@@ -13,6 +13,23 @@ describe('Popupmenu example-selectable tests', () => {
     await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
   });
 
+  it('Should open on click, and close on click', async () => {
+    const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
+    await buttonTriggerEl.click();
+
+    expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
+    await buttonTriggerEl.click();
+
+    expect(await buttonTriggerEl.getAttribute('class')).not.toContain('is-open');
+  });
+
+  it('Should open on click', async () => {
+    const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
+    await buttonTriggerEl.click();
+
+    expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
+  });
+
   // Exclude IE11: Async timeout errors
   if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
     it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
