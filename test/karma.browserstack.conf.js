@@ -9,7 +9,7 @@ module.exports = function (config) {
       '../dist/js/d3.v4.js',
       '../dist/js/sohoxi.js',
       '../dist/js/cultures/en-US.js',
-      '../src/components/**/*.spec.js'
+      '../test/components/**/*.spec.js'
     ],
     exclude: [
       '../node_modules'
@@ -57,7 +57,7 @@ module.exports = function (config) {
       }
     },
     preprocessors: {
-      '../src/components/**/*.spec.js': ['webpack'],
+      '../test/components/**/*.spec.js': ['webpack'],
       '../dist/js/sohoxi.js': ['coverage']
     },
     webpack: {

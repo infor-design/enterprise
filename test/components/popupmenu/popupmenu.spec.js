@@ -1,9 +1,9 @@
-import { PopupMenu } from '../popupmenu';
+import { PopupMenu } from '../../../src/components/popupmenu/popupmenu';
 
-const popupmenuHTML = require('../example-index.html');
-const popupmenuSelectableHTML = require('../example-selectable.html');
-const popupmenuContextMenuHTML = require('../../contextmenu/example-index.html');
-const svg = require('../../icons/svg.html');
+const popupmenuHTML = require('../../../app/views/components/popupmenu/example-index.html');
+const popupmenuSelectableHTML = require('../../../app/views/components/popupmenu/example-selectable.html');
+const popupmenuContextMenuHTML = require('../../../app/views/components/contextmenu/example-index.html');
+const svg = require('../../../app/views/components/icons/svg.html');
 
 const ePage = {
   pageX: 136,

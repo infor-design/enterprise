@@ -1,8 +1,8 @@
-import { ListView } from '../listview';
+import { ListView } from '../../../src/components/listview/listview';
 
-const listviewHTML = require('../example-index.html');
-const svg = require('../../icons/svg.html');
-const data = require('../../../../demoapp/data/inventory-tasks.json');
+const listviewHTML = require('../../../app/views/components/listview/example-index.html');
+const svg = require('../../../app/views/components/icons/svg.html');
+const data = require('../../../app/data/inventory-tasks.json');
 
 let listviewEl;
 let listviewAPI;

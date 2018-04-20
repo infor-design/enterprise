@@ -1,4 +1,4 @@
-import { Toast } from '../toast';
+import { Toast } from '../../../src/components/toast/toast';
 
 let toastEl;
 let toastAPI;

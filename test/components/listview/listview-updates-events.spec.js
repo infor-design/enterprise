@@ -1,7 +1,7 @@
-import { ListView, LISTVIEW_DEFAULTS } from '../listview';
+import { ListView, LISTVIEW_DEFAULTS } from '../../../src/components/listview/listview';
 
-const listviewHTML = require('../example-index.html');
-const svg = require('../../icons/svg.html');
+const listviewHTML = require('../../../app/views/components/listview/example-index.html');
+const svg = require('../../../app/views/components/icons/svg.html');
 
 let listviewEl;
 let listviewAPI;

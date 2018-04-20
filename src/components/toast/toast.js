@@ -2,7 +2,7 @@ import * as debug from '../../utils/debug';
 import { utils, math } from '../../utils/utils';
 import { stringUtils } from '../../utils/string'
 import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
-import { Locale } from '../../locale/locale';
+import { Locale } from '../../../src/components/locale/locale';
 
 // Component Name
 const COMPONENT_NAME = 'toast';
