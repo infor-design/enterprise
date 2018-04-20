@@ -88,7 +88,6 @@ do
   (echo "$component\n" && git mv --dry-run $srcfile $targetfile);
 done
 
-
 git mv karma* test
 git mv protractor* test
 
@@ -121,6 +120,9 @@ do
     git mv $srcUnitFile $targetUnitFile;
   fi
 done
+echo "Remove left over empty src directories"
+find ./src -type d -empty -delete
+
 ```
 
 # Possible Merge Conflicts
