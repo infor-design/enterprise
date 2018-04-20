@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
-import { MaskAPI } from '../../mask/mask-api';
-import { masks } from '../../mask/masks';
+import { MaskAPI } from '../../../src/components/mask/mask-api';
+import { masks } from '../../../src/components/mask/masks';
 
 describe('Mask API', () => {
   const DEFAULT_SETTINGS = {

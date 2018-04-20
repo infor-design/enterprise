@@ -1,6 +1,6 @@
 // Import all the locales
-import { Tmpl } from '../tmpl';
-import { stringUtils } from '../../utils/string';
+import { Tmpl } from '../../../src/components/tmpl/tmpl';
+import { stringUtils } from '../../../src/utils/string';
 
 describe('Tmpl API', () => {
   it('Should exist', () => {

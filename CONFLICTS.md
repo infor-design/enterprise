@@ -21,7 +21,7 @@ $ mkdir src
 $ mkdir src/core
 $ mkdir src/patterns
 $ git mv components src/components
-$ git mv src/components/utils src/utils
+$ git mv src/utils src/utils
 $ git mv src/components/includes demoapp/views
 $ git mv src/components/list-detail src/patterns/
 
