@@ -3,16 +3,16 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      'dist/css/light-theme.css',
-      'dist/js/jquery-3.3.1.js',
-      'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-      'dist/js/d3.v4.js',
-      'dist/js/sohoxi.js',
-      'dist/js/cultures/en-US.js',
-      'components/**/*.spec.js'
+      '../dist/css/light-theme.css',
+      '../dist/js/jquery-3.3.1.js',
+      '../node_modules/jasmine-jquery/lib/jasmine-jquery.js',
+      '../dist/js/d3.v4.js',
+      '../dist/js/sohoxi.js',
+      '../dist/js/cultures/en-US.js',
+      '../src/components/**/*.spec.js'
     ],
     exclude: [
-      'node_modules'
+      '../node_modules'
     ],
     browserStack: {
       username: process.env.BROWSER_STACK_USERNAME,
@@ -56,8 +56,8 @@ module.exports = function (config) {
       }
     },
     preprocessors: {
-      'components/**/*.spec.js': ['webpack'],
-      'dist/js/sohoxi.js': ['coverage']
+      '../src/components/**/*.spec.js': ['webpack'],
+      '../dist/js/sohoxi.js': ['coverage']
     },
     webpack: {
       module: {
@@ -75,8 +75,7 @@ module.exports = function (config) {
               options: {
                 presets: ['env']
               }
-            }],
-            exclude: /node_modules/
+            }]
           }
         ]
       }
