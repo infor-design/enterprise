@@ -28,12 +28,12 @@ Run several spec tests with a Glob, for debugging with Chrome.
  `KARMA_SPECS='test/components/dropdown/dropdown*.spec.js' npm run local:unit` // Glob example
 
 Run just an api test, headless.
- `env KARMA_SPECS='test/components/locale/locale-api.spec.js' npm run ci:unit`
+ `env KARMA_SPECS='components/locale/locale-api.spec.js' npm run ci:unit`
 
 To run BrowserStack you need to place your copy the following configuration, and place the keys in your path.
 
 Run a specific functional test suite
- `env PROTRACTOR_SPECS='test/components/dropdown/dropdown.func-spec.js' npm run local:functional`
+ `env PROTRACTOR_SPECS='components/dropdown/dropdown.func-spec.js' npm run local:functional`
 
 One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #followed  by the command`
 ```sh
@@ -43,14 +43,14 @@ export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 
 ## Debugging a Unit Test
 1. Put a debugger; statement at a place in the test/code.
-2. Run the unit test with `env KARMA_SPECS='test/components/locale/locale-api.spec.js' npm run local:unit`
+2. Run the unit test with `env KARMA_SPECS='components/locale/locale-api.spec.js' npm run local:unit`
 4. Open Chrome tools
 5. Refresh the page and the debugger will pop up / or click the debugger button (had less luck with this.)
 
 ## Debugging Functional Tests
 1. Put a debugger; statement at a place in the test/code for example under the `res = await AxeBuilder` command.
 2. Start the server normally with `node server`
-3. In another terminal run the functional test with `env PROTRACTOR_SPECS='test/kitchen-sink.func-spec.js' npx -n=--inspect-brk protractor test/protractor.conf.js` in watch mode
+3. In another terminal run the functional test with `env PROTRACTOR_SPECS='kitchen-sink.func-spec.js' npx -n=--inspect-brk protractor test/protractor.conf.js` in watch mode
 4. In Chrome open `chrome://inspect` in a new tab.
 5. Click 'Open dedicated DevTools for Node.
 6. Hit Play on the debugger
@@ -66,14 +66,14 @@ After configuration, `npm run browserstack:unit`
 You may when building a test out want to watch it. You can leave the test running and as you change the file.
 The test will rerun.
 
-1. Run the targeted request test with a command like `env KARMA_SPECS='test/components/locale/locale-api.spec.js' npm run local:unit`
+1. Run the targeted request test with a command like `env KARMA_SPECS='components/locale/locale-api.spec.js' npm run local:unit`
 3. Your test(s) will run.
 4. Keep the page open and console running
 5. Update your test and save
 6. Tests will run again.. Repeat..
 
 ## Checking Unit Test Coverage
-1. Run the test with `env KARMA_SPECS='test/components/locale-api.spec.js' npm run local:unit`
+1. Run the test with `env KARMA_SPECS='components/locale-api.spec.js' npm run local:unit`
 2. Open `test/coverage/index.html` in a browser
 
 ## Test Recipes
