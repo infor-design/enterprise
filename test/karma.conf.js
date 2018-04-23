@@ -15,7 +15,8 @@ module.exports = function (config) {
       'node_modules'
     ],
     preprocessors: {
-      '**/components/**/*.js': ['webpack', 'sourcemap', 'coverage'],
+      '**/components/*/!(.spec|.jquery).js': ['webpack', 'sourcemap', 'coverage'],
+      '**/tests/components/*/*.spec.js': ['webpack', 'sourcemap'],
     },
     webpack: {
       module: {
