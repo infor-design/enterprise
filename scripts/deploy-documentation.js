@@ -61,7 +61,7 @@ marked.setOptions({
 // -------------------------------------
 const rootPath = process.cwd();
 const idsWebsitePath = 'docs/ids-website';
-const staticWebsitePath = 'docs/static-website';
+const staticWebsitePath = 'app/www/docs';
 
 const paths = {
   components: `${rootPath}/src/components`,
