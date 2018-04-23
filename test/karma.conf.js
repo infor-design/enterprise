@@ -1,29 +1,22 @@
-const getSpecs = (listSpec) => {
-  if (listSpec) {
-    return listSpec.split(',');
-  }
-
-  return ['../test/components/**/*.spec.js'];
-};
-
 module.exports = function (config) {
   config.set({
-    basePath: '',
+    basePath: '..',
     frameworks: ['jasmine'],
     files: [
-      '../dist/css/light-theme.css',
-      '../dist/js/jquery-3.3.1.js',
-      '../node_modules/jasmine-jquery/lib/jasmine-jquery.js',
-      '../dist/js/d3.v4.js',
-      '../dist/js/sohoxi.js',
-      '../dist/js/cultures/en-US.js'
-    ].concat(getSpecs(process.env.KARMA_SPECS)),
+      'dist/css/light-theme.css',
+      'dist/js/jquery-3.3.1.js',
+      'node_modules/jasmine-jquery/lib/jasmine-jquery.js',
+      'dist/js/d3.v4.js',
+      'dist/js/sohoxi.js',
+      'dist/js/cultures/en-US.js',
+      'test/components/**/*.spec.js'
+    ],
     exclude: [
-      '../node_modules'
+      'node_modules'
     ],
     preprocessors: {
-      '../test/components/**/*.spec.js': ['webpack', 'sourcemap'],
-      '../dist/js/sohoxi.js': ['coverage']
+      '**/components/*/!(.spec|.jquery).js': ['webpack', 'sourcemap', 'coverage'],
+      '**/tests/components/*/*.spec.js': ['webpack', 'sourcemap'],
     },
     webpack: {
       module: {
@@ -41,7 +34,8 @@ module.exports = function (config) {
               options: {
                 presets: ['env']
               }
-            }]
+            }],
+            exclude: /node_modules/
           }
         ]
       }
@@ -67,8 +61,6 @@ module.exports = function (config) {
         flags: ['--no-sandbox']
       }
     },
-    autoWatch: false,
-    singleRun: true,
-    concurrency: Infinity,
+    singleRun: false
   });
 };
