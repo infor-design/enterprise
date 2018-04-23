@@ -1230,6 +1230,10 @@ Datagrid.prototype = {
           return;
         }
 
+        if (this.activeCell && this.activeCell.isFocused) {
+          this.activeCell.isFocused = false;
+        }
+
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
           self.applyFilter(null, 'keyup');
