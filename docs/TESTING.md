@@ -1,13 +1,3 @@
-## @TODOS
-- Prioritizing Initial Components
-  - Button
-  - Dropdown
-  - Multiselect
-  - Listview
-  - PopupMenu
-- ~~Screenshots~~
-- ~~Protractor Recipes~~
-
 ## Unit Testing
 In computer programming, unit testing is a software testing method by which individual units of source code, sets of one or more computer program modules together with associated control data, usage ...
 
@@ -28,24 +18,24 @@ It also may include integration testing which is the phase in software testing i
 It also maybe include regression testing, which is a type of software testing which verifies that software which was previously developed and tested still performs the same way after it was changed or interfaced with other software.
   - Screen Shots
      - We are utilizing a plugin to aide with the collection, and analysis of screenshots. On Chrome only currently, we capture screenshots, and compare them to a baseline(most current and valid) screenshots
-     - The tool will capture screenshots, and save the screenshots to the `../.tmp/actual/` directory. If the screenshot is valid, and can then be moved to the baseline directory where it should be committed, and saved in the git repository.
+     - The tool will capture screenshots, and save the screenshots to the `test/.tmp/actual/` directory. If the screenshot is valid, and can then be moved to the baseline directory where it should be committed, and saved in the git repository.
 
 ## Running and Debugging Tests
 Run just the api spec, for debugging with Chrome. For debugging use statements in the unit tests, and open Chrome DevTools
- `KARMA_SPECS='components/dropdown/unit/dropdown-api.spec.js' npm run local:unit` // Only runs API spec
+ `KARMA_SPECS='test/components/dropdown/dropdown-api.spec.js' npm run local:unit` // Only runs API spec
 
 Run several spec tests with a Glob, for debugging with Chrome.
- `KARMA_SPECS='components/dropdown/unit/dropdown*.spec.js' npm run local:unit` // Glob example
+ `KARMA_SPECS='test/components/dropdown/dropdown*.spec.js' npm run local:unit` // Glob example
 
 Run just an api test, headless.
- `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run ci:unit`
+ `env KARMA_SPECS='test/components/locale/locale-api.spec.js' npm run ci:unit`
 
 To run BrowserStack you need to place your copy the following configuration, and place the keys in your path.
 
 Run a specific functional test suite
- `env PROTRACTOR_SPECS='components/dropdown/functional/dropdown.functional-spec.js' npm run local:functional`
+ `env PROTRACTOR_SPECS='test/components/dropdown/dropdown.func-spec.js' npm run local:functional`
 
-One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #follwed  by the command`
+One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #followed  by the command`
 ```sh
 export BROWSER_STACK_USERNAME=xxxxxxxxxxxxx
 export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
@@ -53,14 +43,14 @@ export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 
 ## Debugging a Unit Test
 1. Put a debugger; statement at a place in the test/code.
-2. Run the unit test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run local:unit`
+2. Run the unit test with `env KARMA_SPECS='test/components/locale/locale-api.spec.js' npm run local:unit`
 4. Open Chrome tools
 5. Refresh the page and the debugger will pop up / or click the debugger button (had less luck with this.)
 
 ## Debugging Functional Tests
 1. Put a debugger; statement at a place in the test/code for example under the `res = await AxeBuilder` command.
 2. Start the server normally with `node server`
-3. In another terminal run the functional test with `env PROTRACTOR_SPECS='test/kitchen-sink.functional-spec.js' npx -n=--inspect-brk protractor protractor.conf.js` in watch mode
+3. In another terminal run the functional test with `env PROTRACTOR_SPECS='test/kitchen-sink.func-spec.js' npx -n=--inspect-brk protractor test/protractor.conf.js` in watch mode
 4. In Chrome open `chrome://inspect` in a new tab.
 5. Click 'Open dedicated DevTools for Node.
 6. Hit Play on the debugger
@@ -76,17 +66,15 @@ After configuration, `npm run browserstack:unit`
 You may when building a test out want to watch it. You can leave the test running and as you change the file.
 The test will rerun.
 
-1. Run the targeted request test with a command like `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run local:unit`
+1. Run the targeted request test with a command like `env KARMA_SPECS='test/components/locale/locale-api.spec.js' npm run local:unit`
 3. Your test(s) will run.
 4. Keep the page open and console running
 5. Update your test and save
 6. Tests will run again.. Repeat..
 
 ## Checking Unit Test Coverage
-1. Run the test with `env KARMA_SPECS='components/locale/unit/locale-api.spec.js' npm run local:unit`
-2. While the browser is open. Go to `cd coverage`
-3. Start a simple web server `python -m SimpleHTTPServer`
-4. Open up a browser and go to http://localhost:8000/ and browse in to the page
+1. Run the test with `env KARMA_SPECS='test/components/locale-api.spec.js' npm run local:unit`
+2. Open `test/coverage/index.html` in a browser
 
 ## Test Recipes
 - Click something and get result

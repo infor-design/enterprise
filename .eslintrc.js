@@ -165,6 +165,7 @@ module.exports = {
   },
   'globals': {
     'd3': false,
-    'spyOnEvent': true
+    'spyOnEvent': true,
+    'requireHelper': true
   }
 };
