@@ -14,5 +14,5 @@ before_script:
   - npm run eslint:error-only
 script:
   - npx grunt
-  - npm run ci:unit
+  - npm run unit:ci
   - npm run report:coverage
