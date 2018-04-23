@@ -142,7 +142,7 @@ describe('Button example-index tests', () => {
     });
 
     it('Should click on "Disabled Icon Button", and not animate', async () => {
-      const buttonEl = await element.all(by.css('.btn-icon')).get(1);
+      const buttonEl = await element.all(by.css('.btn-icon')).get(2);
       const svgEl = await element.all(by.css('.btn-icon')).get(1).element(by.css('.icon'));
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
       await buttonEl.click();
