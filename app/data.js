@@ -902,7 +902,7 @@ module.exports = function(router){
   });
 
   router.get('/api/dummy-dropdown-data', (req, res, next) => {
-    const data = require(path.resolve('app', 'js', 'getJunkDropdownData'));
+    const data = require(path.resolve('app', 'src', 'js', 'getJunkDropdownData'));
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
     next();
