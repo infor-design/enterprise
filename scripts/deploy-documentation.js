@@ -61,7 +61,7 @@ marked.setOptions({
 // -------------------------------------
 const rootPath = process.cwd();
 const idsWebsitePath = 'docs/ids-website';
-const staticWebsitePath = 'docs/static-website';
+const staticWebsitePath = 'app/www/docs';
 
 const paths = {
   components: `${rootPath}/src/components`,
@@ -212,7 +212,7 @@ function compileComponents() {
 
         // note: comp path includes an ending "/"
         compPromises.push(documentJsToHtml(compName));
-        compPromises.push(markdownToHtml(`${compDir}${compName}.md`));
+        compPromises.push(markdownToHtml(`${compDir}readme.md`, compName));
       });
 
       Promise.all(compPromises)
@@ -246,7 +246,7 @@ function compileSupportingDocs() {
           description: `All about ${fileName}`,
         });
 
-        promises.push(markdownToHtml(filePath));
+        promises.push(markdownToHtml(filePath, fileName));
       });
 
       Promise.all(promises)
@@ -301,28 +301,28 @@ function cleanAll() {
  * and store the output html string in the component
  * object property
  * @param  {string} filePath - the full file path
+ * @param  {string} fileName - the name of the file
  * @returns {Promise} - A promise
  */
-function markdownToHtml(filePath) {
-  const fileBasename = path.basename(filePath, '.md').toLowerCase();
+function markdownToHtml(filePath, fileName) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
         reject(err);
       } else {
         const fmData = frontMatter(data);
-        if (fmData.attributes.title) allDocsObjMap[fileBasename].title = fmData.attributes.title;
-        if (fmData.attributes.description) allDocsObjMap[fileBasename].description = fmData.attributes.description;
-        if (fmData.attributes.demo) allDocsObjMap[fileBasename].demo = fmData.attributes.demo;
-        if (fmData.attributes.system) allDocsObjMap[fileBasename].system = fmData.attributes.system;
+        if (fmData.attributes.title) allDocsObjMap[fileName].title = fmData.attributes.title;
+        if (fmData.attributes.description) allDocsObjMap[fileName].description = fmData.attributes.description;
+        if (fmData.attributes.demo) allDocsObjMap[fileName].demo = fmData.attributes.demo;
+        if (fmData.attributes.system) allDocsObjMap[fileName].system = fmData.attributes.system;
 
         marked(fmData.body, (err, content) => {
           if (err) {
             reject(err);
           } else {
             componentStats.numConverted++;
-            logTaskAction('Converting', `${fileBasename}.md`, true);
-            resolve(allDocsObjMap[fileBasename].body = content);
+            logTaskAction('Converting', `${fileName}/readme.md`, true);
+            resolve(allDocsObjMap[fileName].body = content);
           }
         });
       }
@@ -350,7 +350,7 @@ function createDirs(arrPaths) {
  * @returns {boolean} - if the documentation markdown file exists
  */
 function documentationExists(componentName) {
-  return fs.existsSync(`${paths.components}/${componentName}/${componentName}.md`);
+  return fs.existsSync(`${paths.components}/${componentName}/readme.md`);
 }
 
 /**
