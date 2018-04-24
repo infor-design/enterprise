@@ -26,7 +26,6 @@
     "report:coverage": "codecov",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
-    "pree2e": "npm run webdriver && (npm run start & sleep 10)",
     "publish-dev": "grunt publish && npm publish publish --tag dev --force",
     "publish-nightly": "grunt publish && npm publish publish --tag nightly",
     "publish-prod": "grunt publish && npm publish publish --force",
