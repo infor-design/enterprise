@@ -361,8 +361,6 @@ function documentationExists(componentName) {
  */
 function documentJsToHtml(componentName) {
   const compFilePath = `${paths.components}/${componentName}/${componentName}.js`;
-
-  // const themeName = (deployTo === 'static') ? 'theme-single-page' : 'theme-ids-website';
   const themeName = 'theme-ids-website';
 
   return documentation.build([compFilePath], { extension: 'js', shallow: true })
