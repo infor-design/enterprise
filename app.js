@@ -665,7 +665,9 @@ app.get('/components/:component', function(req, res, next) {
 router.get('/components/:component/:example', componentRoute);
 router.get('/components/:component/:example/', reDirectSlashRoute);
 router.get('/components/', reDirectSlashRoute);
-router.get('/components', defaultDocsRoute);
+router.get('/components', function(req, res, next) {
+  res.redirect(301, fullBasePath(req) + '/');
+});
 
 // ======================================
 //  Patterns Section

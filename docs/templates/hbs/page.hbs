@@ -11,13 +11,13 @@
 </head>
 <body>
   <header class="site-header ids-container">
-    <a class="logo" href="../components">
-      <img alt="" src="/assets/logo.svg"/>
+    <a class="logo" href="../components/">
+      <img alt="" src="../images/logo.svg"/>
       <span>Soho Enterprise Components - {{version}}</span>
     </a>
     <br/>
     <br/>
-    <a href="../components">Back</a>
+    <a href="../components/">Back</a>
   </header>
 
   <main class="ids-container">
@@ -26,7 +26,7 @@
     <ul>
       {{#each component.demo.pages}}
         <li>
-          <a href="/components/{{../component.slug}}/{{slug}}.html">{{name}}</a>
+          <a href="../components/{{../component.slug}}/{{slug}}.html">{{name}}</a>
         </li>
       {{/each}}
     </ul>
