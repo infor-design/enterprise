@@ -3,6 +3,8 @@ const AxeBuilder = require('axe-webdriverjs');
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const rules = requireHelper('axe-rules');
 requireHelper('rejection');
+const popupmenuPageObject = require('./helpers/popupmenu-page-objects.js');
+
 const axeOptions = { rules: rules.axeRules };
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
@@ -11,20 +13,38 @@ describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
     await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
+    const buttonChangerEl = await element(by.css('.page-changer'));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonChangerEl), 1000);
+    await buttonChangerEl.click();
+    const highContrastItem = await element.all(by.css('.popupmenu.is-open li')).get(2);
+    await highContrastItem.click();
+    await browser.driver.sleep(1000);
   });
 
   it('Should open on click, and close on click', async () => {
     const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonTriggerEl), 1000);
     await buttonTriggerEl.click();
 
     expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
+    let res = await AxeBuilder(browser.driver)
+      .exclude('header')
+      .analyze();
+
+    expect(res.violations.length).toEqual(0);
     await buttonTriggerEl.click();
 
+    res = await AxeBuilder(browser.driver)
+      .exclude('header')
+      .analyze();
+
+    expect(res.violations.length).toEqual(0);
     expect(await buttonTriggerEl.getAttribute('class')).not.toContain('is-open');
   });
 
   it('Should open on click', async () => {
     const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonTriggerEl), 1000);
     await buttonTriggerEl.click();
 
     expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
@@ -33,9 +53,7 @@ describe('Popupmenu example-selectable tests', () => {
   // Exclude IE11: Async timeout errors
   if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
     it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
-      const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
-      await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
-
+      await popupmenuPageObject.openSingleSelect();
       const res = await AxeBuilder(browser.driver)
         .configure(axeOptions)
         .exclude('header')
@@ -45,8 +63,7 @@ describe('Popupmenu example-selectable tests', () => {
     });
 
     it('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
-      const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
-      await buttonTriggerEl.sendKeys(protractor.Key.SPACE);
+      const buttonTriggerEl = await popupmenuPageObject.openSingleSelect();
       await buttonTriggerEl.sendKeys(protractor.Key.ESCAPE);
 
       const res = await AxeBuilder(browser.driver)
@@ -84,6 +101,11 @@ describe('Popupmenu example-selectable tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
 
+      const res = await AxeBuilder(browser.driver)
+        .exclude('header')
+        .analyze();
+
+      expect(res.violations.length).toEqual(0);
       expect(await element.all(by.css('#popupmenu-2 li')).last().getAttribute('class')).toEqual('is-focused');
     });
 
@@ -99,6 +121,11 @@ describe('Popupmenu example-selectable tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await element.all(by.css('#popupmenu-2 li a')).last().sendKeys(protractor.Key.SPACE);
 
+      const res = await AxeBuilder(browser.driver)
+        .exclude('header')
+        .analyze();
+
+      expect(res.violations.length).toEqual(0);
       expect(await listItem.getAttribute('class')).toEqual('is-checked');
     });
   }
@@ -108,6 +135,12 @@ describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
     await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple');
+    const buttonChangerEl = await element(by.css('.page-changer'));
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonChangerEl), 1000);
+    await buttonChangerEl.click();
+    const highContrastItem = await element.all(by.css('.popupmenu.is-open li')).get(2);
+    await highContrastItem.click();
+    await browser.driver.sleep(1000);
   });
 
   if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
@@ -125,6 +158,11 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await element.all(by.css('#popupmenu-2 li a')).last().sendKeys(protractor.Key.SPACE);
 
+      const res = await AxeBuilder(browser.driver)
+        .exclude('header')
+        .analyze();
+
+      expect(res.violations.length).toEqual(0);
       expect(await lastItem.getAttribute('class')).toEqual('is-focused is-checked');
       expect(await firstItem.getAttribute('class')).toEqual('is-checked');
     });
@@ -143,10 +181,20 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       await bodyEl.sendKeys(protractor.Key.ARROW_DOWN);
       await element.all(by.css('#popupmenu-2 li a')).last().sendKeys(protractor.Key.SPACE);
 
+      let res = await AxeBuilder(browser.driver)
+        .exclude('header')
+        .analyze();
+
+      expect(res.violations.length).toEqual(0);
       expect(await lastItem.getAttribute('class')).toEqual('is-focused is-checked');
       expect(await firstItem.getAttribute('class')).toEqual('is-checked');
       await element.all(by.css('#popupmenu-2 li a')).last().sendKeys(protractor.Key.SPACE);
+      res = await AxeBuilder(browser.driver)
+        .exclude('header')
+        .analyze();
 
+      debugger;
+      expect(res.violations.length).toEqual(0);
       expect(await lastItem.getAttribute('class')).not.toEqual('is-focused is-checked');
     });
   }
