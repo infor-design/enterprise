@@ -15,8 +15,7 @@ module.exports = function (config) {
       'node_modules'
     ],
     preprocessors: {
-      '**/components/*/!(.spec|.jquery).js': ['webpack', 'sourcemap', 'coverage'],
-      '**/tests/components/*/*.spec.js': ['webpack', 'sourcemap'],
+      '**/components/*/*.js': ['webpack', 'sourcemap'],
     },
     webpack: {
       module: {
@@ -44,14 +43,14 @@ module.exports = function (config) {
       stats: 'errors-only'
     },
     reporters: ['mocha', 'coverage'],
-    coverageReporter: {
-      dir: 'coverage',
-      reporters: [
-        { type: 'lcov', subdir: '.' },
-        { type: 'text-summary' },
-        { type: 'json' }
-      ]
-    },
+    // coverageReporter: {
+    //   dir: 'coverage',
+    //   reporters: [
+    //     { type: 'lcov', subdir: '.' },
+    //     { type: 'text-summary' },
+    //     { type: 'json' }
+    //   ]
+    // },
     port: 9876,
     colors: true,
     browsers: ['ChromeHeadlessNoSandbox'],
