@@ -7,8 +7,9 @@
   "author": "Hook & Loop",
   "license": "Runtime License",
   "scripts": {
-    "start": "node app/server.js",
+    "start": "npm run server",
     "stop": "./scripts/stop.sh",
+    "server": "grunt clean:app && grunt sass:app && node app/server.js",
     "eslint": "eslint -c .eslintrc.js src",
     "eslint:log": "eslint -c .eslintrc.js src -o eslint.log",
     "eslint:error-only": "eslint -c .eslintrc.js --quiet src",
