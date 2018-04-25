@@ -8,7 +8,7 @@ const getSpecs = (listSpec) => {
     return listSpec.split(',');
   }
 
-  return ['components/**/*.func-spec.js', 'kitchen-sink.func-spec.js'];
+  return ['components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
 };
 
 exports.config = {

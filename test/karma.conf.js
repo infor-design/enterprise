@@ -9,7 +9,7 @@ module.exports = function (config) {
       'dist/js/d3.v4.js',
       'dist/js/sohoxi.js',
       'dist/js/cultures/en-US.js',
-      'test/components/**/*.spec.js'
+      'test/components/**/*.func-spec.js'
     ],
     exclude: [
       'node_modules'

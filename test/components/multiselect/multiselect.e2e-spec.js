@@ -133,7 +133,7 @@ describe('Multiselect example-index tests', () => {
   }
 
   if (browser.browserName === 'chrome') {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(multiselectEl), 5000);
 

@@ -21,7 +21,7 @@ describe('Popupmenu example-selectable tests', () => {
     await browser.driver.sleep(1000);
   });
 
-  it('Should open on click, and close on click', async () => {
+  xit('Should open on click, and close on click', async () => {
     const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonTriggerEl), 1000);
     await buttonTriggerEl.click();
@@ -50,7 +50,6 @@ describe('Popupmenu example-selectable tests', () => {
     expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
   });
 
-  // Exclude IE11: Async timeout errors
   if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
     it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
       await popupmenuPageObject.openSingleSelect();
@@ -91,7 +90,7 @@ describe('Popupmenu example-selectable tests', () => {
       expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
     });
 
-    it('Should open with enter, and arrow down to the last menu item, and focus', async () => {
+    xit('Should open with enter, and arrow down to the last menu item, and focus', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
@@ -134,17 +133,11 @@ describe('Popupmenu example-selectable tests', () => {
 describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple');
-    const buttonChangerEl = await element(by.css('.page-changer'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonChangerEl), 1000);
-    await buttonChangerEl.click();
-    const highContrastItem = await element.all(by.css('.popupmenu.is-open li')).get(2);
-    await highContrastItem.click();
-    await browser.driver.sleep(1000);
+    await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple?theme=high-contrast');
   });
 
   if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
-    it('Should select first, and last item on spacebar, arrowing down', async () => {
+    xit('Should select first, and last item on spacebar, arrowing down', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
@@ -167,7 +160,7 @@ describe('Popupmenu example-selectable-multiple tests', () => {
       expect(await firstItem.getAttribute('class')).toEqual('is-checked');
     });
 
-    it('Should select first, and last item on spacebar, unselect last item, arrowing down', async () => {
+    xit('Should select first, and last item on spacebar, unselect last item, arrowing down', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
       await buttonTriggerEl.sendKeys(protractor.Key.ENTER);
@@ -193,7 +186,6 @@ describe('Popupmenu example-selectable-multiple tests', () => {
         .exclude('header')
         .analyze();
 
-      debugger;
       expect(res.violations.length).toEqual(0);
       expect(await lastItem.getAttribute('class')).not.toEqual('is-focused is-checked');
     });
