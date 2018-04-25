@@ -1,13 +1,13 @@
 # Compiled #
 ############
 designs/
-demoapp/dist/
+app/dist/css/*
 dist/css
 dist/js
 dist/svg
 dist/all.zip
-app/www/docs/*.html
-app/www/docs/components/*.html
+app/docs/*.html
+app/docs/components/*.html
 docs/ids-website/dist/
 docs/ids-website/dist.zip
 documentation/
