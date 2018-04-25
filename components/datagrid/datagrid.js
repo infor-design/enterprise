@@ -4256,7 +4256,7 @@ Datagrid.prototype = {
     const isMixed = this.settings.selectable === 'mixed';
 
     // Set Focus on rows
-    if (self.settings.cellNavigation && self.settings.rowNavigation) {
+    if (!self.settings.cellNavigation && self.settings.rowNavigation) {
       self.table
         .on('focus.datagrid', 'tbody > tr', function () {
           $(this).addClass('is-active-row');
