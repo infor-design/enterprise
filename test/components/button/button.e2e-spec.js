@@ -194,7 +194,7 @@ describe('Button example-with-icons tests', () => {
   });
 
   if (browser.browserName === 'chrome') {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonEl), 5000);
 

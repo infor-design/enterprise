@@ -9,7 +9,7 @@ const getSpecs = (listSpec) => {
     return listSpec.split(',');
   }
 
-  return ['components/**/*.func-spec.js', 'kitchen-sink.func-spec.js'];
+  return ['components/**/*.e2e-spec.js', 'kitchen-sink.e2e-spec.js'];
 };
 
 exports.config = {
@@ -23,13 +23,13 @@ exports.config = {
     'browserstack.debug': true,
     'browserstack.local': true,
     'browserstack.networkLogs' : true,
-    build: 'Functional',
-    name: 'Functional tests'
+    build: 'e2e',
+    name: 'e2e tests'
   },
   multiCapabilities: [
     {
       browserName: 'Chrome',
-      browser_version: '65.0',
+      browser_version: '66.0',
       resolution: '1280x800',
       os_version: '10',
       os: 'Windows'
