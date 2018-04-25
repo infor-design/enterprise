@@ -78,7 +78,7 @@ describe('Dropdown example-index tests', () => {
   }
 
   if (browser.browserName === 'chrome') {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const dropdownEl = element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(dropdownEl), 5000);
 
