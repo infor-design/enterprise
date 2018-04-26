@@ -144,8 +144,8 @@ describe('Button example-index tests', () => {
     });
 
     it('Should tab to "Icon Button", and animate on enter', async () => {
-      const buttonEl = await element.all(by.css('.btn-icon')).first();
-      const svgEl = await element.all(by.css('.btn-icon')).first().element(by.css('.ripple-effect'));
+      const buttonEl = await element.all(by.css('#maincontent .btn-icon')).first();
+      const svgEl = await element.all(by.css('#maincontent .btn-icon')).first().element(by.css('.ripple-effect'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await element(by.css('body')).sendKeys(protractor.Key.TAB);
@@ -158,8 +158,8 @@ describe('Button example-index tests', () => {
     });
 
     it('Should click on "Disabled Icon Button", and not animate', async () => {
-      const buttonEl = await element.all(by.css('.btn-icon')).get(2);
-      const svgEl = await element.all(by.css('.btn-icon')).get(1).element(by.css('.icon'));
+      const buttonEl = await element.all(by.css('#maincontent .btn-icon')).get(1);
+      const svgEl = await element.all(by.css('#maincontent .btn-icon')).first().element(by.css('.icon'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await buttonEl.click();
@@ -172,8 +172,8 @@ describe('Button example-index tests', () => {
     });
 
     it('Should click on "Icon Button", and animate on click', async () => {
-      const buttonEl = await element.all(by.css('.btn-icon')).first();
-      const svgEl = await element.all(by.css('.btn-icon')).first().element(by.css('.ripple-effect'));
+      const buttonEl = await element.all(by.css('#maincontent .btn-icon')).first();
+      const svgEl = await element.all(by.css('#maincontent .btn-icon')).first().element(by.css('.ripple-effect'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await buttonEl.click();
