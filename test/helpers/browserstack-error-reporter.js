@@ -1,7 +1,7 @@
 const r2 = require('r2');
 
 const browserStackErrorHTTPReporter = async (error) => {
-  if (!process.argv.filter(item => item.includes('protractor.browserstack.conf.js')).length > 0) {
+  if (!process.argv.filter(item => item.includes('protractor.ci.conf.js')).length > 0) {
     return;
   }
 

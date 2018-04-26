@@ -1,29 +1,25 @@
 const AxeBuilder = require('axe-webdriverjs');
-
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
-const rules = requireHelper('axe-rules');
-requireHelper('rejection');
 const popupmenuPageObject = require('./helpers/popupmenu-page-objects.js');
 
+const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
+const utils = requireHelper('e2e-utils');
+const rules = requireHelper('default-axe-options');
+const config = requireHelper('e2e-config');
+requireHelper('rejection');
 const axeOptions = { rules: rules.axeRules };
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Popupmenu example-selectable tests', () => {
+describe('Popupmenu example-selectable high contrast theme tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
-    const buttonChangerEl = await element(by.css('.page-changer'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonChangerEl), 1000);
-    await buttonChangerEl.click();
-    const highContrastItem = await element.all(by.css('.popupmenu.is-open li')).get(2);
-    await highContrastItem.click();
-    await browser.driver.sleep(1000);
+    await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable?theme=high-contrast');
   });
 
   xit('Should open on click, and close on click', async () => {
     const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonTriggerEl), 1000);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(buttonTriggerEl), config.sleep);
     await buttonTriggerEl.click();
 
     expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
@@ -44,13 +40,14 @@ describe('Popupmenu example-selectable tests', () => {
 
   it('Should open on click', async () => {
     const buttonTriggerEl = await element(by.id('single-select-popupmenu-trigger'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(buttonTriggerEl), 1000);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(buttonTriggerEl), config.sleep);
     await buttonTriggerEl.click();
 
     expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
   });
 
-  if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
+  if (!utils.isIE() && !utils.isSafari()) {
     it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
       await popupmenuPageObject.openSingleSelect();
       const res = await AxeBuilder(browser.driver)
@@ -61,7 +58,7 @@ describe('Popupmenu example-selectable tests', () => {
       expect(res.violations.length).toEqual(0);
     });
 
-    it('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
+    xit('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
       const buttonTriggerEl = await popupmenuPageObject.openSingleSelect();
       await buttonTriggerEl.sendKeys(protractor.Key.ESCAPE);
 
@@ -130,13 +127,13 @@ describe('Popupmenu example-selectable tests', () => {
   }
 });
 
-describe('Popupmenu example-selectable-multiple tests', () => {
+describe('Popupmenu example-selectable-multiple high contrast theme tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
     await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple?theme=high-contrast');
   });
 
-  if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
+  if (!utils.isIE() && !utils.isSafari()) {
     xit('Should select first, and last item on spacebar, arrowing down', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));
