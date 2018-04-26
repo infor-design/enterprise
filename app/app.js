@@ -107,12 +107,12 @@ function is(type, filePath) {
     };
 
   if (!type) {
-    console.warn(`No type defined. Using the default type of "${defaultType}".`);
+    logger('alert', `No type defined. Using the default type of "${defaultType}".`);
     type = defaultType;
   }
 
   if (!mappings[type]) {
-    console.error(`Provided type "${type}" is not in the list of valid types.`);
+    logger('alert', `Provided type "${type}" is not in the list of valid types.`);
     return false;
   }
 
@@ -127,7 +127,7 @@ function is(type, filePath) {
   try {
     return fs.statSync(targetPath)[methodName]();
   } catch (e) {
-    console.info(`File Path "${targetPath}" is not a ${type}.`);
+    logger('info', `File Path "${targetPath}" is not a ${type}.`);
     return false;
   }
 }
