@@ -1,23 +1,21 @@
 /* eslint-disable */
-
-// set variables for environment
-const chalk = require('chalk');
+const csp = require('express-csp');
 const express = require('express');
 const extend = require('extend'); // equivalent of $.extend()
+const fs = require('fs');
+const mmm = require('mmm');
+const path = require('path');
+
+const getJSONFile = require('./src/js/getJSONFile');
 const logger = require('../scripts/logger');
 
 const app = express();
-const path = require('path');
-const mmm = require('mmm');
-const fs = require('fs');
-const http = require('http');
 const BASE_PATH = process.env.BASEPATH || '/';
-
-const getJSONFile = require(path.resolve(__dirname, 'src', 'js', 'getJSONFile'));
-const packageJSON = getJSONFile(path.resolve(__dirname, '..', 'package.json'));
+const packageJSON = getJSONFile('../../../package.json');
 
 app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, 'views'));
+app.set('basepath', BASE_PATH);
 
 mmm.setEngine('hogan.js');
 app.engine('html', mmm.__express);
@@ -47,7 +45,7 @@ const router = express.Router({
 // ===========================================
 // Default Options / Custom Middleware
 // ===========================================
-const defaults = {
+const DEFAULT_RESPONSE_OPTS = {
   enableLiveReload: true,
   layout: 'layout',
   locale: 'en-US',
@@ -58,156 +56,17 @@ const defaults = {
   nonce: null
 };
 
-// Add csp header
-const csp = require('express-csp');
+// Add CSP headers
 csp.extend(app);
-const uuidv4 = require('uuid/v4')
 
-// Makes a simple timestamp log of each request in the console
-const requestLogger = function(req, res, next) {
-  const type = `${chalk.yellow((req.method).toUpperCase())}`;
-  const url = `${req.originalUrl}`;
-
-  logger('timestamp', `${type}: ${url}`);
-  next();
-};
-
-// Option Handling - Custom Middleware
-// Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
-// In some cases, these options can be modified based on query parameters.  Check the default route for these options.
-const optionHandler = function (req, res, next) {
-  res.opts = extend({}, defaults);
-
-  // Change Locale (which also changes right-to-left text setting)
-  if (req.query.locale && req.query.locale.length > 0) {
-    res.opts.locale = req.query.locale;
-    console.log(`Changing Route Parameter "locale" to be "${res.opts.locale}".`);
-  }
-
-  // Normally we will use an external file for loading SVG Icons and Patterns.
-  // Setting 'inlineSVG' to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
-  res.opts.inlineSVG = true;
-
-  // Global settings for forcing a 'no frills' layout for test pages.
-  // This means no header with page title, hamburger, theme swap settings, etc.
-  if (req.query.nofrills && req.query.nofrills.length > 0) {
-    res.opts.nofrillslayout = true;
-    console.log('"No-frills" layout active.');
-  }
-
-  // Set the theme and colorScheme
-  // Fx: http://localhost:4000/controls/modal?colors=9279a6,ffffff&theme=dark
-  if (req.query.theme && req.query.theme.length > 0) {
-    res.opts.theme = req.query.theme;
-    console.log(`Setting Theme to ${res.opts.theme}`);
-  } else {
-    res.opts.theme = 'light';
-  }
-
-  if (req.query.colors && req.query.colors.length > 0) {
-    res.opts.colors = req.query.colors;
-    console.log(`Setting Colors to ${res.opts.colors}`);
-  }
-
-  // Sets a simulated response delay for API Calls
-  if (req.query.delay && !isNaN(req.query.delay) && req.query.delay.length > 0) {
-    res.opts.delay = req.query.delay;
-  }
-
-  // Uses the minified version of the Soho library instead of the uncompressed version
-  if (req.query.minify && req.query.minify.length > 0) {
-    res.opts.minify = true;
-    console.log(`Using the minified version of "sohoxi.js"`);
-  }
-
-  if (req.query.font && req.query.font.length > 0) {
-    res.opts.font = req.query.font;
-    console.log(`Using the ${req.query.font} font`);
-  }
-
-  if (res.opts.csp || req.query.csp) {
-    res.opts.nonce = Math.random().toString(12).replace(/[^a-z0-9]+/g, '').substr(0, 8);
-    res.setPolicy({
-      policy: {
-        directives: {
-          'default-src': ['self'],
-          'script-src': ['self', 'nonce-' + res.opts.nonce],
-          'object-src': ['none'],
-          'style-src': ['* data: http://* \'unsafe-inline\''],
-          'img-src': ['self', 'https://randomuser.me', 'http://placehold.it']
-        }
-      }
-    });
-  }
-
-  // Disable live reload for IE
-  const ua = req.headers['user-agent'];
-  const isIE = /Windows NT/.test(ua) && (/Trident/.test(ua) || /Edge/.test(ua));
-  if (isIE || res.opts.csp || req.query.csp) {
-    res.opts.enableLiveReload = false;
-  }
-  next();
-};
-
-// Simple Middleware that simulates a delayed response by setting a timeout before returning the next middleware.
-const responseThrottler = function (req, res, next) {
-  if (!res.opts.delay) {
-    return next();
-  }
-
-  function delayedResponse() {
-    console.log('Delayed request continuing...');
-    return next();
-  }
-
-  console.log(`Delaying the response time of this request by ${res.opts.delay}ms...`);
-  setTimeout(delayedResponse, res.opts.delay);
-};
-
-// Simple Middleware that passes API data back as a template option if we're on a certain page
-const globalDataHandler = function (req, res, next) {
-  const url = req.url;
-
-  function isComponentRoute(componentName) {
-    return new RegExp(componentName, 'g').test(url);
-  }
-
-  if (isComponentRoute('dropdown')) {
-    res.opts.dropdownListData = require(path.resolve('app', 'src', 'js', 'getJunkDropdownData'));
-  }
-
-  next();
-};
-
-// Simple Middleware for handling errors
-const errorHandler = function (err, req, res, next) {
-  if (!err) {
-    return next();
-  }
-
-  console.error(err.stack);
-
-  if (res.headersSent) {
-    return next(err);
-  }
-
-  res.status(500).send(`<h2>Internal Server Error</h2><p>${err.stack}</p>`);
-};
-
-// Simple middleware for building a complete URL string containing an optional basepath
-const basePathHandler = function(req, res, next) {
-  res.opts.basepath = `${req.protocol}://${req.headers.host.replace('/', '')}${BASE_PATH}`;
-  next();
-};
-
-// place optionHandler() first to augment all 'res' objects with an 'opts' object
-app.use(requestLogger);
-app.use(optionHandler);
-app.use(basePathHandler);
-app.use(globalDataHandler);
-app.use(responseThrottler);
+// Import various custom middleware (order matters!)
+app.use(require('./src/js/middleware/requestLogger')(app));
+app.use(require('./src/js/middleware/optionHandler')(app, DEFAULT_RESPONSE_OPTS));
+app.use(require('./src/js/middleware/basepathHandler')(app));
+app.use(require('./src/js/middleware/globalDataHandler')(app));
+app.use(require('./src/js/middleware/responseThrottler')(app));
 app.use(router);
-app.use(errorHandler);
+app.use(require('./src/js/middleware/errorHandler')(app));
 
 // Strips the '.html' from a file path and returns the target route name without it
 function stripHtml(routeParam) {
@@ -223,9 +82,7 @@ function toTitleCase(str) {
   return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
-/**
- * Adds a stored "nonce" attribute to all script tags to conform with security policy.
- */
+// Adds a stored "nonce" attribute to all script tags to conform with security policy.
 function addNonceToScript(html, nonce) {
   if (!html || !html.length) {
     return '';
@@ -233,7 +90,7 @@ function addNonceToScript(html, nonce) {
   return html.replace(/<script/ig, `<script nonce="${nonce}"`);
 }
 
-/**
+/*
  * Checks the target file path for its type (is it a file, a directory, etc)
  * http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
  * @param {string} type - 'file' or 'folder'
@@ -303,7 +160,6 @@ function filterUnusablePaths(pathDefs, excludes, directoryPrepender) {
 
   pathDefs.forEach((pathDef) => {
     pathDef.link = pathDef.link.replace(/\/\//g, '/');
-    // console.log('Checking path: "' + pathDef.link + '"');
 
     let match = false;
     excludes.forEach((exclude) => {
@@ -409,7 +265,6 @@ function getFolderContents(type, dir) { // type, dir, folderName
   } catch (e) {
     // Handle 'No Directory' errors
     if (e.code === 'ENOENT') {
-      // console.log('No '+ folderName +' Folder found for "' + type + '');
       paths = [];
     } else {
       throw e;
@@ -583,7 +438,7 @@ function addDefaultFolderLayout(opts, component) {
     layoutPath = `components/${component}/${layoutFileNames[i]}`;
     if (fs.existsSync(layoutPath)) {
       opts.layout = stripHtml(`${component}/${layoutFileNames[i]}`);
-      console.log(`layout for this folder changed to "${opts.layout}".`);
+      logger('info', `layout for this folder changed to "${opts.layout}".`);
     }
   }
 
@@ -598,11 +453,15 @@ function sendGeneratedDocPage(options, req, res, next) {
     next('No generated documentation page path was provided.');
   }
 
-  const output = fs.readFileSync(options.path, 'utf8');
+  let output = fs.readFileSync(options.path, 'utf8');
   if (!output) {
     res.status(500);
     next(options.error || 'Could not read from the specified generated documentation file.');
     return;
+  }
+
+  if (res.opts.csp || req.query.csp) {
+    output = addNonceToScript(output, res.opts.nonce);
   }
 
   res.send(output);
