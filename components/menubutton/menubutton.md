@@ -8,9 +8,9 @@ demo:
   - name: Menu Button Events
     slug: example-events
   - name: Submenus
-    slug: example-submenu.htm
+    slug: example-submenu
   - name: Submenu With Icons
-    slug: example-submenu-icons.htm
+    slug: example-submenu-icons
   - name: RTL
     slug: example-submenu-icons-rtl.html?locale=ar-SA
   - name: Replace Text Content with Selection
