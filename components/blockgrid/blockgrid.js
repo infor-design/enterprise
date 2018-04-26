@@ -12,11 +12,17 @@ const COMPONENT_NAME = 'blockgrid';
  * @param {string} [settings] The settings element.
  * @param {array} [settings.dataset=[]] An array of data objects
  * @param {string} [settings.selectable=false] Controls the selection mode this can be:
+ * @param {boolean} paging Enable paging mode
+ * @param {number} pagesize Number of rows per page
+ * @param {array} pagesizes Array of page sizes to show in the page size dropdown.
  * false, 'single' or 'multiple' or 'mixed'
  */
 const BLOCKGRID_DEFAULTS = {
   dataset: [],
-  selectable: false // false, 'single' or 'multiple' or mixed
+  selectable: false, // false, 'single' or 'multiple' or mixed
+  paging: false,
+  pagesize: 25,
+  pagesizes: [10, 25, 50, 75]
 };
 
 function Blockgrid(element, settings) {
@@ -40,6 +46,8 @@ Blockgrid.prototype = {
    */
   init() {
     // Do initialization. Build or Events ect
+    this.handlePaging();
+
     return this
       .build()
       .handleEvents();
@@ -101,6 +109,21 @@ Blockgrid.prototype = {
     });
 
     return this;
+  },
+
+  handlePaging() {
+    if (!this.settings.paging) {
+      return;
+    }
+
+    const pagerElem = this.element;
+    this.element.addClass('paginated');
+    pagerElem.pager({
+      componentAPI: this,
+      dataset: this.settings.dataset,
+      pagesize: this.settings.pagesize,
+      pagesizes: this.settings.pagesizes
+    });
   },
 
   /**
