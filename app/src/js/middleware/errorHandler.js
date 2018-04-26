@@ -1,7 +1,7 @@
 const logger = require('../../../../scripts/logger');
 
 // Simple Middleware for handling errors
-module.exports = function (app) {
+module.exports = function () {
   return function errorHandler(err, req, res, next) {
     if (!err) {
       next();

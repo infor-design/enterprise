@@ -1,7 +1,7 @@
 const logger = require('../../../../scripts/logger');
 
 // Simple Middleware that simulates a delayed response by setting a timeout before returning the next middleware.
-module.exports = function(app) {
+module.exports = function () {
   return function responseThrottler(req, res, next) {
     if (!res.opts.delay) {
       next();

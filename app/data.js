@@ -1,3 +1,4 @@
+/* eslint-disable */
 // =========================================
 // Fake 'API' Calls for use with AJAX-ready Controls
 // =========================================
