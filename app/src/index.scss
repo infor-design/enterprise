@@ -6,8 +6,11 @@
 // styles.
 //==================================================//
 
+// Soho Core/Helpers
 @import '../../src/core/config';
 @import '../../src/core/mixins';
+
+// Demo-specific styles
 @import 'sass/grid';
 @import 'sass/forms';
 @import 'sass/patterns';

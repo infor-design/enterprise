@@ -17,6 +17,7 @@ module.exports = {
         sourceMap: true
       },
       files: {
+        'app/dist/css/docs.css': 'app/src/docs.scss',
         'app/dist/css/demo.css': 'app/src/index.scss',
       }
     }
