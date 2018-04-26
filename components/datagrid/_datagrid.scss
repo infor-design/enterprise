@@ -1319,8 +1319,6 @@ $datagrid-short-row-height: 23px;
 
     &:focus ,
     &.is-focused {
-      box-shadow: $datagrid-cell-focus-box-shadow;
-
       .datagrid-cell-wrapper {
         border: 1px solid $primary-color;
       }
