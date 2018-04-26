@@ -4407,15 +4407,8 @@ Datagrid.prototype = {
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
-        const activePage = self.pager ? self.pager.activePage : 1;
         rowNode = $(this).closest('tr');
-        dataRowIdx = self.settings.treeGrid ?
-          self.actualRowIndex(rowNode) : self.visualRowIndex(rowNode);
-
-        if (!self.settings.treeGrid &&
-          self.settings.paging && !self.settings.source && activePage > 1) {
-          dataRowIdx = self.actualRowIndex(rowNode);
-        }
+        dataRowIdx = self.actualRowIndex(rowNode);
 
         self.toggleRowDetail(dataRowIdx);
         self.toggleGroupChildren(rowNode);
@@ -7247,7 +7240,7 @@ Datagrid.prototype = {
    */
   toggleRowDetail(dataRowIndex) {
     const self = this;
-    let rowElement = self.visualRowNode(dataRowIndex);
+    let rowElement = self.actualRowNode(dataRowIndex);
     if (!rowElement.length && self.settings.paging &&
       (self.settings.rowTemplate || self.settings.expandableRow)) {
       dataRowIndex += ((self.pager.activePage - 1) * self.settings.pagesize);
