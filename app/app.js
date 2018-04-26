@@ -549,7 +549,6 @@ router.get('/components/:component/:example', function(req, res, next) {
   }
 
   if (req.params.example !== undefined) {
-    logger('timestamp', `Rendering View "views/components/${componentName}/${req.params.example}"`)
     res.render(`components/${componentName}/${req.params.example}`, opts, function(err, html) {
       if (res.opts.csp || req.query.csp) {
         html = addNonceToScript(html, res.opts.nonce);

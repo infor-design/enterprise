@@ -2,7 +2,7 @@ const chalk = require('chalk');
 const logger = require('../../../../scripts/logger');
 
 // Makes a simple timestamp log of each request in the console
-module.exports = function (app) {
+module.exports = function () {
   return function requestLogger(req, res, next) {
     const type = `${chalk.yellow((req.method).toUpperCase())}`;
     const url = `${req.originalUrl}`;
