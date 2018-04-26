@@ -517,6 +517,13 @@ router.get('/', (req, res, next) => {
   next();
 });
 
+router.get('/index', (req, res, next) => {
+  const opts = res.opts;
+  opts.basepath = fullBasePath(req);
+  res.redirect(`${BASE_PATH}`);
+  next();
+});
+
 router.get('/kitchen-sink', (req, res, next) => {
   const opts = res.opts;
   opts.basepath = fullBasePath(req);
@@ -645,10 +652,12 @@ function reDirectSlashRoute(req, res, next) {
     let exampleName = req.params.example;
 
     if (exampleName !== undefined) {
-      res.render(301, `${fullBasePath(req) + componentName}/${exampleName}`);
+      res.redirect(301, `${fullBasePath(req) + componentName}/${exampleName}`);
+    } else if (componentName !== undefined) {
+      res.redirect(301, fullBasePath(req) + componentName);
+    } else {
+      res.redirect(301, fullBasePath(req));
     }
-
-    res.redirect(301, fullBasePath(req) + componentName);
   }
   next();
 }
@@ -665,7 +674,9 @@ app.get('/components/:component', function(req, res, next) {
 router.get('/components/:component/:example', componentRoute);
 router.get('/components/:component/:example/', reDirectSlashRoute);
 router.get('/components/', reDirectSlashRoute);
-router.get('/components', defaultDocsRoute);
+router.get('/components', function(req, res, next) {
+  res.redirect(301, fullBasePath(req) + '/');
+});
 
 // ======================================
 //  Patterns Section

@@ -237,7 +237,7 @@ Tabs.prototype = {
 
     // Conditionally Change layout classes if veritcal tabs is in responsive
     // mode, and breakpoints match.
-    this.checkResponsive();
+    this.checkResponsive(false);
 
     // Handle Focus State, Animated Bar, More Button, Add Tabs Button, and
     // App Menu Button.
@@ -904,7 +904,7 @@ Tabs.prototype = {
 
     this.moreButton.data('focused-by-click', true);
 
-    if (!(this.container.hasClass('has-more-button'))) {
+    if (!(this.hasMoreButton())) {
       e.stopPropagation();
     }
     if (this.moreButton.hasClass('popup-is-open')) {
@@ -1468,7 +1468,7 @@ Tabs.prototype = {
    */
   handleResize(ignoreResponsiveCheck) {
     if (!ignoreResponsiveCheck) {
-      this.checkResponsive();
+      this.checkResponsive(true);
     }
 
     this.setOverflow();
@@ -1496,7 +1496,7 @@ Tabs.prototype = {
    * @private
    * @returns {void}
    */
-  checkResponsive() {
+  checkResponsive(handleRebuild) {
     const self = this;
     const classList = self.element[0].classList;
 
@@ -1512,7 +1512,9 @@ Tabs.prototype = {
         classList.add('header-tabs');
         classList.add('alternate');
         classList.remove('vertical');
-        rebuild();
+        if (handleRebuild) {
+          rebuild();
+        }
       }
     }
 
@@ -1522,7 +1524,9 @@ Tabs.prototype = {
         classList.remove('is-in-responsive-mode');
         classList.remove('header-tabs');
         classList.remove('alternate');
-        rebuild();
+        if (handleRebuild) {
+          rebuild();
+        }
       }
     }
 

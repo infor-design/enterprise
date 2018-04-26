@@ -1175,7 +1175,7 @@ Datagrid.prototype = {
 
     // Attach Keyboard support
     this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-      const popupOpts = { trigger: 'immediate', offset: { y: 15 }, attachToBody: $('html').hasClass('ios'), placementOpts: { strategies: ['flip', 'nudge'] } };
+      const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
       const popupmenu = $(this).data('popupmenu');
 
       if (popupmenu) {
@@ -1228,6 +1228,10 @@ Datagrid.prototype = {
       this.headerRow.off('keyup.datagrid').on('keyup.datagrid', '.datagrid-filter-wrapper input', (e) => {
         if (e.which === 13) {
           return;
+        }
+
+        if (this.activeCell && this.activeCell.isFocused) {
+          this.activeCell.isFocused = false;
         }
 
         clearTimeout(typingTimer);
@@ -4403,15 +4407,8 @@ Datagrid.prototype = {
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
-        const activePage = self.pager ? self.pager.activePage : 1;
         rowNode = $(this).closest('tr');
-        dataRowIdx = self.settings.treeGrid ?
-          self.actualRowIndex(rowNode) : self.visualRowIndex(rowNode);
-
-        if (!self.settings.treeGrid &&
-          self.settings.paging && !self.settings.source && activePage > 1) {
-          dataRowIdx = self.actualRowIndex(rowNode);
-        }
+        dataRowIdx = self.actualRowIndex(rowNode);
 
         self.toggleRowDetail(dataRowIdx);
         self.toggleGroupChildren(rowNode);
@@ -7243,7 +7240,7 @@ Datagrid.prototype = {
    */
   toggleRowDetail(dataRowIndex) {
     const self = this;
-    let rowElement = self.visualRowNode(dataRowIndex);
+    let rowElement = self.actualRowNode(dataRowIndex);
     if (!rowElement.length && self.settings.paging &&
       (self.settings.rowTemplate || self.settings.expandableRow)) {
       dataRowIndex += ((self.pager.activePage - 1) * self.settings.pagesize);

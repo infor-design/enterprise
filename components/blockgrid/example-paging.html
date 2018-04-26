@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1 class="section-title">Block Grid - Paging</h1>
+    <div class="row blockgrid l-center" id="blockgrid">
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var data = [];
+
+    data.push({
+      image: 'https://randomuser.me/api/portraits/med/women/8.jpg',
+      title: 'Sheena Taylor',
+      subtitle: 'Infor, Developer',
+      id: 1
+    });
+    data.push({
+      image: 'https://randomuser.me/api/portraits/med/women/9.jpg',
+      title: 'Jane Taylor',
+      subtitle: 'Infor, Developer',
+      id: 2
+    });
+    data.push({
+      image: 'https://randomuser.me/api/portraits/med/women/10.jpg',
+      title: 'Sam Smith',
+      subtitle: 'Infor, SVP',
+      id: 3
+    });
+    data.push({
+      image: 'https://randomuser.me/api/portraits/med/women/11.jpg',
+      title: 'Mary Pane',
+      subtitle: 'Infor, Developer',
+      id: 4
+    });
+    data.push({
+      image: 'https://randomuser.me/api/portraits/med/women/12.jpg',
+      title: 'Paula Paulson',
+      subtitle: 'Infor, Architect',
+      id: 5
+    });
+
+    $('#blockgrid').blockgrid({
+      dataset: data,
+      selectable: 'multiple',
+      paging: true,
+      pagesize: 3,
+      pagesizes: [3, 10, 25, 50, 75]
+    }).on('selected', function (e, args) {
+      console.log(args);
+    }).on('unselected', function (e, args) {
+      console.log(args);
+    });
+
+  });
+
+</script>
