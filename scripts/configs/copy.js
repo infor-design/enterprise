@@ -4,7 +4,7 @@ module.exports = {
     main: {
       files: [
         { expand: true, flatten: true, src: ['src/components/angular/sohoxi-angular.js'], dest: 'dist/js/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['src/sohoxi-migrate-4.4.0.js'], dest: 'dist/js/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['lib/sohoxi-migrate-4.4.0.js'], dest: 'dist/js/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['src/*/*.js'], dest: 'dist/js/all/', filter: 'isFile' },
         {
           expand: true,
@@ -50,7 +50,7 @@ module.exports = {
     publish: {
       files: [
         { expand: true, flatten: true, src: ['dist/js/sohoxi*.*'], dest: 'publish/dist/js/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['src/sohoxi-migrate-4.4.0.js'], dest: 'publish/dist/js/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['lib/sohoxi-migrate-4.4.0.js'], dest: 'publish/dist/js/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['src/*/*.js'], dest: 'publish/dist/js/all/', filter: 'isFile' },
         {
           expand: true,
