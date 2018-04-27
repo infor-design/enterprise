@@ -513,8 +513,7 @@ const editors = {
 
   Fileupload(row, cell, value, container, column, event, grid) {
     const s = utils.mergeSettings(undefined, column.editorOptions, {
-      allowedTypes: '*', // restrict file types(ie. 'jpg|png|gif') ['*' all types]
-      useMultiple: false
+      allowedTypes: '*' // restrict file types(ie. 'jpg|png|gif') ['*' all types]
     });
     const fileExtensions = s.allowedTypes.split(/[\s|]+/g);
     const id = $.fn.uniqueId(`fileupload-${row}-${cell}-`);
