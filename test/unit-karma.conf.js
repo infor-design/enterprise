@@ -14,6 +14,7 @@ module.exports = function (config) {
       'node_modules'
     ],
     preprocessors: {
+      'src/components/locale/locale.js': ['coverage'],
       'test/components/locale/locale.spec.js': ['webpack'],
     },
     webpack: {
@@ -31,8 +32,11 @@ module.exports = function (config) {
           },
           {
             test: /\locale.js$/,
-            use: { loader: 'istanbul-instrumenter-loader' },
-            include: path.resolve('src/components')
+            use: [{
+              loader: 'istanbul-instrumenter-loader',
+              options: { esModules: true }
+            }],
+            exclude: /(node_modules)/,
           }
         ]
       }
@@ -40,15 +44,10 @@ module.exports = function (config) {
     webpackMiddleware: {
       stats: 'errors-only'
     },
-    reporters: ['mocha', 'coverage'],
-    coverageReporter: {
-      dir: 'coverage',
-      reporters: [
-        { type: 'lcov', subdir: '.' },
-        { type: 'text-summary' },
-        { type: 'json' },
-        { type: 'html', subdir: 'report-html' }
-      ]
+    reporters: ['mocha', 'coverage-istanbul'],
+    coverageIstanbulReporter: {
+      reports: [ 'html', 'lcov', 'text-summary' ],
+      fixWebpackSourcePaths: true
     },
     port: 9876,
     colors: true,
