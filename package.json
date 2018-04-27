@@ -16,6 +16,7 @@
     "build": "rollup -c",
     "minify": "node ./scripts/minify.js",
     "install-globals": "npm install -g grunt-cli rollup",
+    "unit:local": "npx karma start test/unit-karma.conf.js",
     "functional:local": "npx karma start test/karma.conf.js",
     "functional:ci": "npx karma start test/karma.conf.js --single-run",
     "e2e:local:pre": "npm run webdriver:update && (npm run start & sleep 10)",
