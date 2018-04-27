@@ -1522,6 +1522,19 @@ Dropdown.prototype = {
       }
 
       self.activate(!self.settings.closeOnSelect);
+
+      // Check/uncheck select all depending on no. of selected items
+      if (self.settings.showSelectAll) {
+        const opts = self.element.find('option');
+        const selectedOpts = opts.filter(':selected');
+
+        if (opts.length > selectedOpts.length) {
+          self.list.find('.dropdown-select-all-list-item').removeClass('is-selected');
+        } else {
+          self.list.find('.dropdown-select-all-list-item').addClass('is-selected');
+        }
+      }
+
       return true;  //eslint-disable-line
     }
 
