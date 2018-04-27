@@ -2,7 +2,7 @@
 // NOTE: Synchronous for now.
 
 const path = require('path');
-const getJSONFile = require('./getJSONFile');
+const getJSONFile = require('./get-json-file');
 
 const NUMBER_OF_DROPDOWNS = 1000;
 const data = [];

@@ -1,4 +1,4 @@
-const getJunkDropdownData = require('../getJunkDropdownData');
+const getJunkDropdownData = require('../get-junk-dropdown-data');
 
 // Simple Middleware that passes API data back as a template option if we're on a certain page
 module.exports = function () {
