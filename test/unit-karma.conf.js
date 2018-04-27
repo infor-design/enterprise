@@ -14,14 +14,14 @@ module.exports = function (config) {
       'node_modules'
     ],
     preprocessors: {
-      'src/components/locale/locale.js': ['coverage'],
+      'src/components/locale/locale.js': ['webpack'],
       'test/components/locale/locale.spec.js': ['webpack'],
     },
     webpack: {
       module: {
         rules: [
           {
-            test: /\.js$/,
+            test: /\locale.spec.js$/,
             use: [{
               loader: 'babel-loader',
               options: {
@@ -36,7 +36,7 @@ module.exports = function (config) {
               loader: 'istanbul-instrumenter-loader',
               options: { esModules: true }
             }],
-            exclude: /(node_modules)/,
+            exclude: /node_modules/
           }
         ]
       }
