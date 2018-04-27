@@ -846,6 +846,7 @@ $datagrid-short-row-height: 23px;
           }
         }
 
+        // scss-lint:disable NestingDepth
         &.datagrid-trigger-cell {
 
           .icon {
@@ -853,7 +854,6 @@ $datagrid-short-row-height: 23px;
             margin-bottom: -1px;
             top: 3px;
 
-            // scss-lint:disable NestingDepth
             &.icon-calendar,
             &.icon-fileupload {
               height: 15px;
@@ -865,7 +865,11 @@ $datagrid-short-row-height: 23px;
               left: -8px;
               top: 1px;
             }
-            // scss-lint:enable NestingDepth
+
+            &.icon-close {
+              margin-left: -30px !important;
+              margin-right: 10px;
+            }
           }
 
           .colorpicker-container {
@@ -878,6 +882,7 @@ $datagrid-short-row-height: 23px;
             left: -3px;
           }
         }
+        // scss-lint:enable NestingDepth
 
         //Editing
         // scss-lint:disable NestingDepth
@@ -2450,6 +2455,7 @@ td .btn-actions {
     text-align: left;
     width: calc(100% - 10px);
 
+    &.is-clearable,
     &.dropdown-trigger {
       &:not(.colorpicker-container) {
         overflow: hidden;
@@ -2459,12 +2465,20 @@ td .btn-actions {
       }
     }
 
+    &.is-clearable {
+      margin-right: 22px;
+      width: calc(100% - 32px);
+    }
   }
 
   &.has-editor:not(.is-readonly):not(.error):hover,
   &.has-editor:not(.is-readonly):not(.error):focus {
     .icon {
       visibility: visible;
+    }
+
+    .icon-close {
+      margin-left: -22px;
     }
   }
 

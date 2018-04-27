@@ -4488,6 +4488,7 @@ Datagrid.prototype = {
         setTimeout(() => {
           if ($('textarea, input', elem).length &&
               (!$('.dropdown,' +
+              '[type=file],' +
               '[type=image],' +
               '[type=button],' +
               '[type=submit],' +
@@ -6333,20 +6334,30 @@ Datagrid.prototype = {
   },
 
   commitCellEdit(input) {
-    let newValue;
-    let cellNode;
-    const isEditor = input.is('.editor');
-    const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
-
     if (!this.editor) {
       return;
     }
+
+    let newValue;
+    let cellNode;
+    const isEditor = this.editor.name === 'editor';
+    const isFileupload = this.editor.name === 'fileupload';
+    const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
 
     // Editor.getValue
     newValue = this.editor.val();
 
     if (isEditor) {
       cellNode = this.editor.td;
+    } else if (isFileupload) {
+      if (this.editor.status === 'clear') {
+        newValue = '';
+      } else if (this.editor.status === 'init' || this.editor.status === 'cancel') {
+        newValue = this.editor.originalValue;
+      }
+      // Fix: Not sure why, but `input.closest('td')` did not work
+      cellNode = this.tableBody.find(`#${input.attr('id')}`).closest('td');
+      newValue = $.escapeHTML(newValue);
     } else {
       cellNode = input.closest('td');
       newValue = $.escapeHTML(newValue);
