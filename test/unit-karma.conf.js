@@ -1,6 +1,5 @@
 module.exports = function (config) {
   config.set({
-    basePath: '..',
     frameworks: ['jasmine'],
     files: [
       'dist/js/jquery-3.3.1.js',
@@ -11,8 +10,8 @@ module.exports = function (config) {
       'node_modules'
     ],
     preprocessors: {
-      'src/components/locale/locale.js': ['webpack', 'sourcemap', 'coverage'],
-      'test/components/locale/locale.spec.js': ['webpack', 'sourcemap'],
+      'src/components/locale/locale.js': ['coverage'],
+      'test/components/locale/locale.spec.js': ['webpack'],
     },
     webpack: {
       module: {
