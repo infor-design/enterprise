@@ -404,6 +404,7 @@ ColorPicker.prototype = {
     // Simply return out if hex isn't valid
     if (!isValidHex) {
       if (!s.showLabel) {
+        colorHex = colorHex !== '#' ? colorHex : '';
         this.setValueOnField({ hex: colorHex, invalid: true });
         return;
       }
@@ -437,12 +438,14 @@ ColorPicker.prototype = {
       hex = s.uppercase ? o.hex.toUpperCase() : o.hex.toLowerCase();
     }
 
-    if (o.isEmpty || o.invalid) {
-      this.swatch.addClass(o.isEmpty ? 'is-empty' : 'is-invalid');
-      this.swatch[0].style.backgroundColor = '';
-    } else {
-      this.swatch.removeClass('is-empty is-invalid');
-      this.swatch[0].style.backgroundColor = hex;
+    if (this.swatch) {
+      if (o.isEmpty || o.invalid) {
+        this.swatch.addClass(o.isEmpty ? 'is-empty' : 'is-invalid');
+        this.swatch[0].style.backgroundColor = '';
+      } else {
+        this.swatch.removeClass('is-empty is-invalid');
+        this.swatch[0].style.backgroundColor = hex;
+      }
     }
 
     this.element[0].value = s.showLabel && !o.isEmpty ? o.label : hex;
@@ -600,7 +603,7 @@ ColorPicker.prototype = {
   },
 
   rgb2hex(rgb) {
-    if (rgb.search('rgb') === -1) {
+    if (!rgb || rgb.search('rgb') === -1) {
       return rgb;
     } else if (rgb === 'rgba(0, 0, 0, 0)') {
       return 'transparent';
@@ -687,7 +690,7 @@ ColorPicker.prototype = {
     let eventStr = 'blur.colorpicker paste.colorpicker change.colorpicker';
     eventStr += this.isIe11 ? 'keypress.colorpicker' : 'keyup.colorpicker';
     elem.on(eventStr, () => {
-      const val = elem.val();
+      const val = this.isEditor ? elem.attr('data-value') : elem.val();
       if (this.settings.showLabel) {
         this.setColor(elem.attr('value'), val);
         return;

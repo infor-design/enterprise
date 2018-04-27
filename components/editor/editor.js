@@ -1829,7 +1829,8 @@ Editor.prototype = {
         color = cpApi.decimal2rgb(color);
       }
       color = cpApi.rgb2hex(color);
-      cpBtn.attr('data-value', color).find('.icon').css('fill', color);
+      cpBtn.attr('data-value', color)
+        .find('.icon').css('fill', color === 'transparent' ? '' : color);
     }
     return { cpBtn, cpApi, color };
   },
@@ -1841,11 +1842,16 @@ Editor.prototype = {
     const cpApi = state.cpApi;
 
     cpBtn.on('selected.editor', (e, item) => {
-      const value = (`#${item.data('value')}`).toLowerCase();
+      let value = (`#${item.data('value')}`).toLowerCase();
+      value = value !== '#' ? value : '';
       cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
       if (this.isIe || action === 'foreColor') {
-        document.execCommand(action, false, value);
+        if (value) {
+          document.execCommand(action, false, value);
+        } else {
+          document.execCommand('removeFormat', false, action);
+        }
       } else {
         // [action: backColor] - for Chrome/Firefox/Safari
         // Get selection parent element
