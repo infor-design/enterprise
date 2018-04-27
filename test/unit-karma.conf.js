@@ -11,8 +11,8 @@ module.exports = function (config) {
       'node_modules'
     ],
     preprocessors: {
-      'src/components/locale/locale.js': ['webpack', 'sourcemap'],
-      'test/components/locale/locale.spec.js': ['webpack', 'sourcemap', 'coverage'],
+      'src/components/locale/locale.js': ['webpack', 'sourcemap', 'coverage'],
+      'test/components/locale/locale.spec.js': ['webpack', 'sourcemap'],
     },
     webpack: {
       module: {
