@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise, no-undef */
 
 // Get Latest from http://www.unicode.org/Public/cldr/25/
-Soho.Locale.addCulture('en-US', {
+const enUs = {
   // layout/language
   language: 'en',
   englishName: 'English (United States)',
@@ -352,4 +352,6 @@ Soho.Locale.addCulture('en-US', {
     Year: { id: 'Year', value: 'Year', comment: 'As in a date year' },
     Yes: { id: 'Yes', value: 'Yes', comment: 'On a dialog button' }
   }
-});
+};
+
+export { enUs };

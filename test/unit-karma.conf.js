@@ -12,7 +12,7 @@ module.exports = function (config) {
     ],
     preprocessors: {
       'src/components/locale/locale.js': ['webpack', 'sourcemap'],
-      'test/components/locale/locale.spec.js': ['webpack', 'coverage'],
+      'test/components/locale/locale.spec.js': ['webpack', 'sourcemap', 'coverage'],
     },
     webpack: {
       module: {

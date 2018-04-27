@@ -1,62 +1,10 @@
 // Import all the locales
 
-require('../../../src/components/locale/cultures/af-ZA.js');
-require('../../../src/components/locale/cultures/ar-EG.js');
-require('../../../src/components/locale/cultures/ar-SA.js');
-require('../../../src/components/locale/cultures/bg-BG.js');
-require('../../../src/components/locale/cultures/cs-CZ.js');
-require('../../../src/components/locale/cultures/da-DK.js');
-require('../../../src/components/locale/cultures/de-DE.js');
-require('../../../src/components/locale/cultures/el-GR.js');
-require('../../../src/components/locale/cultures/en-AU.js');
-require('../../../src/components/locale/cultures/en-GB.js');
-require('../../../src/components/locale/cultures/en-IN.js');
-require('../../../src/components/locale/cultures/en-NZ.js');
-require('../../../src/components/locale/cultures/en-US.js');
-require('../../../src/components/locale/cultures/en-ZA.js');
-require('../../../src/components/locale/cultures/es-AR.js');
-require('../../../src/components/locale/cultures/es-ES.js');
-require('../../../src/components/locale/cultures/es-MX.js');
-require('../../../src/components/locale/cultures/es-US.js');
-require('../../../src/components/locale/cultures/et-EE.js');
-require('../../../src/components/locale/cultures/fi-FI.js');
-require('../../../src/components/locale/cultures/fr-CA.js');
-require('../../../src/components/locale/cultures/fr-FR.js');
-require('../../../src/components/locale/cultures/he-IL.js');
-require('../../../src/components/locale/cultures/hi-IN.js');
-require('../../../src/components/locale/cultures/hr-HR.js');
-require('../../../src/components/locale/cultures/hu-HU.js');
-require('../../../src/components/locale/cultures/id-ID.js');
-require('../../../src/components/locale/cultures/it-IT.js');
-require('../../../src/components/locale/cultures/ja-JP.js');
-require('../../../src/components/locale/cultures/ko-KR.js');
-require('../../../src/components/locale/cultures/lt-LT.js');
-require('../../../src/components/locale/cultures/lv-LV.js');
-require('../../../src/components/locale/cultures/ms-bn.js');
-require('../../../src/components/locale/cultures/ms-my.js');
-require('../../../src/components/locale/cultures/nb-NO.js');
-require('../../../src/components/locale/cultures/nl-NL.js');
-require('../../../src/components/locale/cultures/no-NO.js');
-require('../../../src/components/locale/cultures/pl-PL.js');
-require('../../../src/components/locale/cultures/pt-BR.js');
-require('../../../src/components/locale/cultures/pt-PT.js');
-require('../../../src/components/locale/cultures/ro-RO.js');
-require('../../../src/components/locale/cultures/ru-RU.js');
-require('../../../src/components/locale/cultures/sl-SI.js');
-require('../../../src/components/locale/cultures/sv-SE.js');
-require('../../../src/components/locale/cultures/th-TH.js');
-require('../../../src/components/locale/cultures/tr-TR.js');
-require('../../../src/components/locale/cultures/uk-UA.js');
-require('../../../src/components/locale/cultures/vi-VN.js');
-require('../../../src/components/locale/cultures/zh-CN.js');
-require('../../../src/components/locale/cultures/zh-TW.js');
-
 import { Locale } from '../../../src/components/locale/locale';
+import { enUs } from '../../../src/components/locale/cultures/en-US';
 
 
 describe('Locale API', () => {
-  window.SohoConfig = {};
-  const Locale = new Locale();
 
   // it('Should be possible to preset culturesPath', () => {
   //   window.SohoConfig = { culturesPath: 'dist/js/cultures/' };
