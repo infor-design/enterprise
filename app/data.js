@@ -7,7 +7,7 @@
 // Example Call: http://localhost:4000/api/states?term=al
 
 const path = require('path');
-const getJSONFile = require(path.resolve(__dirname, 'src', 'js', 'getJSONFile'));
+const getJSONFile = require(path.resolve(__dirname, 'src', 'js', 'get-json-file'));
 
 module.exports = function(router){
   router.get('/api/states', (req, res, next) => {

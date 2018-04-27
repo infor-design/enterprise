@@ -6,7 +6,7 @@ const fs = require('fs');
 const mmm = require('mmm');
 const path = require('path');
 
-const getJSONFile = require('./src/js/getJSONFile');
+const getJSONFile = require('./src/js/get-json-file');
 const logger = require('../scripts/logger');
 
 const app = express();
@@ -60,13 +60,13 @@ const DEFAULT_RESPONSE_OPTS = {
 csp.extend(app);
 
 // Import various custom middleware (order matters!)
-app.use(require('./src/js/middleware/requestLogger')(app));
-app.use(require('./src/js/middleware/optionHandler')(app, DEFAULT_RESPONSE_OPTS));
-app.use(require('./src/js/middleware/basepathHandler')(app));
-app.use(require('./src/js/middleware/globalDataHandler')(app));
-app.use(require('./src/js/middleware/responseThrottler')(app));
+app.use(require('./src/js/middleware/request-logger')(app));
+app.use(require('./src/js/middleware/option-handler')(app, DEFAULT_RESPONSE_OPTS));
+app.use(require('./src/js/middleware/basepath-handler')(app));
+app.use(require('./src/js/middleware/global-data-handler')(app));
+app.use(require('./src/js/middleware/response-throttler')(app));
 app.use(router);
-app.use(require('./src/js/middleware/errorHandler')(app));
+app.use(require('./src/js/middleware/error-handler')(app));
 
 // Strips the '.html' from a file path and returns the target route name without it
 function stripHtml(routeParam) {
