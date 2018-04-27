@@ -431,10 +431,7 @@ ToolbarFlexItem.prototype = {
 
     const $menu = menuAPI.menu;
 
-    this.unlinkToolbarItems();
-    if (this.predefinedItems && this.predefinedItems.length) {
-      this.predefinedItems.remove();
-    }
+    this.teardownPredefinedItems();
 
     // Add Toolbar Items
     const data = this.toolbarAPI.toPopupmenuData();
@@ -504,6 +501,7 @@ ToolbarFlexItem.prototype = {
 
   /**
    * Removes links between the current set of Toolbar Items to `More Actions` menu items.
+   * @private
    * @returns {void}
    */
   unlinkToolbarItems() {
@@ -511,15 +509,40 @@ ToolbarFlexItem.prototype = {
       return;
     }
 
-    this.predefinedItems.each((i, item) => {
-      const originalButton = $(item).data('originalButton');
-      originalButton.data('toolbarflexitem').actionButtonLink = null;
-      $(item).removeData('original-button');
-    });
+    function doUnlinkSubmenuItem(actionMenuElement) {
+      const $originalMenuElement = $($(actionMenuElement).data('original-menu-element'));
+      $originalMenuElement.removeData('action-button-link');
+      $(actionMenuElement).removeData('original-menu-element');
+
+      if ($originalMenuElement.hasClass('submenu')) {
+        const submenuItems = $originalMenuElement[0].querySelector('.popupmenu').children;
+        for (let j = 0; j < submenuItems.length; j++) {
+          doUnlinkSubmenuItem(submenuItems[j]);
+        }
+      }
+    }
+
+    function doUnlinkToolbarItems(i, itemElement) {
+      const originalButton = $(itemElement).data('originalButton');
+      const originalButtonAPI = $(originalButton).data('toolbarflexitem');
+
+      originalButtonAPI.actionButtonLink = null;
+      $(itemElement).removeData('original-button');
+
+      if (originalButtonAPI.type === 'menubutton') {
+        const submenuItems = itemElement.querySelector('.popupmenu').children;
+        for (let j = 0; j < submenuItems.length; j++) {
+          doUnlinkSubmenuItem(submenuItems[j]);
+        }
+      }
+    }
+
+    this.predefinedItems.each(doUnlinkToolbarItems);
   },
 
   /**
    * Links the current set of Toolbar Items to the `More Actions` menu items.
+   * @private
    * @param {object} popupmenuData incoming popupmenu data
    * @returns {void}
    */
@@ -532,11 +555,35 @@ ToolbarFlexItem.prototype = {
       popupmenuData = popupmenuData.menu;
     }
 
-    this.predefinedItems.each((i, item) => {
-      const originalButton = popupmenuData[i].itemLink;
-      originalButton.actionButtonLink = item;
-      $(item).data('original-button', originalButton.element);
-    });
+    function doLinkSubmenuItem(menuItemData, actionMenuElement) {
+      const originalMenuElement = menuItemData.elementLink;
+      $(originalMenuElement).data('action-button-link', actionMenuElement);
+      $(actionMenuElement).data('original-menu-element', originalMenuElement);
+
+      const submenu = menuItemData.submenu;
+      if (submenu && submenu.length) {
+        const submenuItems = originalMenuElement.querySelector('.popupmenu').children;
+        for (let j = 0; j < submenuItems.length; j++) {
+          doLinkSubmenuItem(submenu[j], submenuItems[j]);
+        }
+      }
+    }
+
+    function doLinkToolbarItems(i, itemElement) {
+      const originalButtonAPI = popupmenuData[i].itemLink;
+      originalButtonAPI.actionButtonLink = itemElement;
+      $(itemElement).data('original-button', originalButtonAPI.element);
+
+      const submenu = popupmenuData[i].submenu;
+      if (submenu && submenu.length) {
+        const submenuItems = itemElement.querySelector('.popupmenu').children;
+        for (let j = 0; j < submenuItems.length; j++) {
+          doLinkSubmenuItem(submenu[i], submenuItems[i]);
+        }
+      }
+    }
+
+    this.predefinedItems.each(doLinkToolbarItems);
   },
 
   /**
@@ -566,7 +613,11 @@ ToolbarFlexItem.prototype = {
 
     if (this.type === 'menubutton') {
       // TODO: Need to convert a Popupmenu's contents to the object format with this method
+      const menuItems = this.componentAPI.menu.children('li');
       itemData.submenu = this.componentAPI.toData({ noMenuWrap: true });
+      itemData.submenu.forEach((item, i) => {
+        item.elementLink = menuItems[i];
+      });
     }
 
     return itemData;
@@ -634,6 +685,21 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
+   * @private
+   * @returns {void}
+   */
+  teardownPredefinedItems() {
+    if (this.type !== 'actionbutton') {
+      return;
+    }
+
+    this.unlinkToolbarItems();
+    if (this.predefinedItems && this.predefinedItems.length) {
+      this.predefinedItems.remove();
+    }
+  },
+
+  /**
    * Unbinds events and removes preset internal flags for this component.
    * @returns {void}
    */
@@ -641,6 +707,8 @@ ToolbarFlexItem.prototype = {
     $(this.element)
       .off(`selected.${COMPONENT_NAME}`)
       .off(`beforeopen.${COMPONENT_NAME}`);
+
+    this.teardownPredefinedItems();
 
     delete this.type;
     delete this.selected;

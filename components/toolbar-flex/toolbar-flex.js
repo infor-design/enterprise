@@ -477,6 +477,10 @@ ToolbarFlex.prototype = {
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
 
+    this.items.forEach((item) => {
+      item.teardown();
+    });
+
     delete this.items;
     delete this.sections;
   },
