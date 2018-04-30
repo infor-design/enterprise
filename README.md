@@ -1,3 +1,16 @@
+# :tada: Soho XI Has Moved to Github! :tada:
+
+On the release of `4.6.0` we have moved the Soho XI code base to github and opened it to everyone. What this means is now anyone can pull and contribute to the codebase.
+
+There are two ways to to do so:
+
+1. You can go to LINK-TO-SOHO-XI-GITHUB and download/clone/fork the repo.
+
+or
+
+2. If you already have our codebase locally, you can simply [change your remote's url](https://help.github.com/articles/changing-a-remote-s-url) to point to the new repository on github.
+
+
 # Welcome to Soho XI
 
 SoHo XI provides comprehensive tools for product development teams to create use experiences that are: Intuitive, Engaging, Purposeful, Relevant Functional and Beautiful.
