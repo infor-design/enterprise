@@ -195,7 +195,6 @@ function compileComponents() {
 
       componentDirs.forEach(compDir => {
         compName = deriveComponentName(compDir);
-        console.log(compName);
 
         // For testing to only get one or two components
         if (argv.testMode && !testComponents.includes(compName)) return;
