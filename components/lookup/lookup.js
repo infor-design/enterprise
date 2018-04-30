@@ -432,7 +432,7 @@ Lookup.prototype = {
     }
     search = null;
 
-    if (!this.grid) {
+    if (this.grid && this.grid.destroy) {
       this.grid.destroy();
     }
   },

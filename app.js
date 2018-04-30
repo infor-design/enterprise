@@ -123,7 +123,7 @@ const optionHandler = function (req, res, next) {
           'script-src': ['self', 'nonce-' + res.opts.nonce],
           'object-src': ['none'],
           'style-src': ['* data: http://* \'unsafe-inline\''],
-          'img-src': ['self', 'https://randomuser.me', 'http://placehold.it']
+          'img-src': ['self', 'https://randomuser.me', 'http://placehold.it', 'http://lorempixel.com']
         }
       }
     });
