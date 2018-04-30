@@ -43,6 +43,7 @@ const handlebars = require('handlebars');
 const hbsRegistrar = require('handlebars-registrar');
 const marked = require('marked');
 const path = require('path');
+const slash = require('slash');
 const vinylToString = require('vinyl-contents-tostring');
 const yaml = require('js-yaml');
 
@@ -59,7 +60,7 @@ marked.setOptions({
 // -------------------------------------
 //   Constants
 // -------------------------------------
-const rootPath = process.cwd();
+const rootPath = slash(process.cwd());
 const idsWebsitePath = 'docs/ids-website';
 const staticWebsitePath = 'docs/static-website';
 
@@ -389,7 +390,7 @@ function documentJsToHtml(componentName) {
  */
 function deriveComponentName(dirPath) {
   dirPath = removeTrailingSlash(dirPath);
-  const arr = dirPath.split(path.sep);
+  const arr = dirPath.split('/');
   return arr[arr.length - 1];
 }
 
