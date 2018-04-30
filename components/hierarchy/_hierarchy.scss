@@ -252,7 +252,7 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
       float: left;
       margin-left: 20px;
       margin-right: 10px;
-      max-width: 165px;
+      max-width: 178px;
       overflow: hidden;
       text-align: left;
     }
@@ -282,7 +282,6 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
     }
 
     .btn-icon {
-      float: right;
       left: 0;
       position: relative;
       top: -16px;
@@ -299,12 +298,14 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
 
     .btn-expand,
     .btn-collapse {
-      height: 50px;
-      left: -12px;
-      min-height: 50px;
-      min-width: 50px;
-      top: 11px;
-      width: 50px;
+      height: 30px;
+      left: initial;
+      min-height: 30px;
+      min-width: 30px;
+      position: absolute;
+      right: 13px;
+      top: 22px;
+      width: 30px;
 
       .icon {
         height: 24px;
@@ -614,7 +615,6 @@ html[dir='rtl'] {
       }
 
       .btn-icon {
-        float: left;
         left: auto;
         right: 0;
       }
@@ -693,6 +693,10 @@ html[dir='rtl'] {
           margin-left: inherit;
           margin-right: -205px;
         }
+      }
+
+      ul > li > .leaf {
+        margin: 0 20px;
       }
 
       //Top level attached to root

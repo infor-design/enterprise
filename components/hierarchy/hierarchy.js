@@ -744,6 +744,7 @@ Hierarchy.prototype = {
 
     // data has been loaded if it has children
     if ((data.children && data.children.length !== 0) || eventType === 'add') {
+      data.isExpanded = true;
       data.isLoaded = true;
     }
 

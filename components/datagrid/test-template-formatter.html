@@ -44,11 +44,11 @@
 
       //Define Columns for the Grid.
 
-      var cellTemplate = '<p class="datagrid-row-heading">{{productId}}</p>' +
-                        '<p class="datagrid-row-subheading">{{productName}}</p>';
+      var cellTemplate = '<p class="datagrid-row-heading"><a href="#">Link One</a>{{productId}}</p>' +
+                        '<p class="datagrid-row-subheading"><a href="#">Link Two</a>{{productName}}</p>';
 
       columns.push({ id: 'drilldown', name: 'Drill In', field: '', formatter: Formatters.Drilldown, cssClass: 'l-center-text', click: function (e, args) {console.log('clicked', args);}});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Template, template: cellTemplate});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Template, template: cellTemplate, click: function (e, args) {console.log('clicked', args);}});
       columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
       columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {console.log('link was clicked', args);}});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
