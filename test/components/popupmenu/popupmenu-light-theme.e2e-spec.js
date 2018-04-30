@@ -1,11 +1,11 @@
 const AxeBuilder = require('axe-webdriverjs');
-
-const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
-const rules = requireHelper('axe-rules');
-requireHelper('rejection');
 const popupmenuPageObject = require('./helpers/popupmenu-page-objects.js');
 
-const axeOptions = { rules: rules.axeRules };
+const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
+const utils = requireHelper('e2e-utils');
+const rules = requireHelper('default-axe-options');
+requireHelper('rejection');
+const axeOptions = { rules };
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -33,7 +33,7 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   // Exclude IE11: Async timeout errors
-  if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
+  if (!utils.isIE() && !utils.isSafari()) {
     it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
       await popupmenuPageObject.openSingleSelect();
       const res = await AxeBuilder(browser.driver)
@@ -109,7 +109,7 @@ describe('Popupmenu example-selectable-multiple tests', () => {
     await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple');
   });
 
-  if (browser.browserName !== 'ie' && browser.browserName !== 'safari') {
+  if (!utils.isIE() && !utils.isSafari()) {
     it('Should select first, and last item on spacebar, arrowing down', async () => {
       const bodyEl = await element(by.css('body'));
       const buttonTriggerEl = await element(by.id('multi-select-popupmenu-trigger'));

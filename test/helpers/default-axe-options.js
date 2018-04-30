@@ -1,4 +1,4 @@
-const axeRules = [
+module.exports = [
   {
     id: 'aria-allowed-attr',
     enabled: false
@@ -20,5 +20,3 @@ const axeRules = [
     enabled: false
   }
 ];
-
-module.exports.axeRules = axeRules;
