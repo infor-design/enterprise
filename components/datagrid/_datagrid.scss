@@ -824,14 +824,14 @@ $datagrid-short-row-height: 23px;
         }
 
         .row-btn {
-          height: 24px;
-          line-height: 24px;
+          height: 21px;
+          line-height: 18px;
           min-width: 80px;
-          top: -10px;
+          top: -2px;
           vertical-align: middle;
 
           span {
-            line-height: 26px;
+            line-height: 18px;
           }
 
           &.btn-icon {
