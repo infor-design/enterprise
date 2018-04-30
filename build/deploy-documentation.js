@@ -195,6 +195,7 @@ function compileComponents() {
 
       componentDirs.forEach(compDir => {
         compName = deriveComponentName(compDir);
+        console.log(compName);
 
         // For testing to only get one or two components
         if (argv.testMode && !testComponents.includes(compName)) return;
@@ -390,7 +391,7 @@ function documentJsToHtml(componentName) {
  */
 function deriveComponentName(dirPath) {
   dirPath = removeTrailingSlash(dirPath);
-  const arr = dirPath.split(path.sep);
+  const arr = dirPath.split('/');
   return arr[arr.length - 1];
 }
 
