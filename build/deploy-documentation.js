@@ -388,9 +388,9 @@ function documentJsToHtml(componentName) {
  * @returns {string} - the component's name
  */
 function deriveComponentName(dirPath) {
-  return dirPath
-    .replace(`${paths.components}/`, '')
-    .slice(0, -1);
+  dirPath = removeTrailingSlash(dirPath);
+  const arr = dirPath.split(path.sep);
+  return arr[arr.length - 1];
 }
 
 /**
@@ -466,6 +466,15 @@ function readSitemapYaml() {
     throw e;
   }
   return sitemap;
+}
+
+/**
+ * Remove trialing slash
+ * @param {string} uri - a uri/path
+ * @returns {string} - the path with a trailing slash
+ */
+function removeTrailingSlash(uri) {
+  return uri.replace(/\/$/, '');
 }
 
 /**
