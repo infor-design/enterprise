@@ -519,6 +519,20 @@ const formatters = {
     return html;
   },
 
+  Fileupload(row, cell, value, col) {
+    let html = ((value === null || value === undefined || value === '') ? '' : value.toString());
+
+    if (!col.inlineEditor) {
+      if ($.trim(html) === '') {
+        html = `<span class="trigger">${html}</span>${$.createIcon({ icon: 'folder', classes: ['icon-fileupload'] })}`;
+      } else {
+        html = `<span class="trigger is-clearable">${html}</span>${$.createIcon({ icon: 'close', classes: ['icon-close'] })}${$.createIcon({ icon: 'folder', classes: ['icon-fileupload'] })}`;
+      }
+    }
+
+    return html;
+  },
+
   Spinbox(row, cell, value, col) {
     let html = ((value === null || value === undefined || value === '') ? '' : value.toString());
 

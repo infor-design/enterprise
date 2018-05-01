@@ -673,7 +673,8 @@ $datagrid-short-row-height: 23px;
       min-height: 39px;
       padding: 4px 15px 0;
 
-      .icon-calendar {
+      .icon-calendar,
+      .icon-fileupload {
         // scss-lint:disable ImportantRule
         left: 0 !important;
         // scss-lint:enable ImportantRule
@@ -845,6 +846,7 @@ $datagrid-short-row-height: 23px;
           }
         }
 
+        // scss-lint:disable NestingDepth
         &.datagrid-trigger-cell {
 
           .icon {
@@ -852,8 +854,8 @@ $datagrid-short-row-height: 23px;
             margin-bottom: -1px;
             top: 3px;
 
-            // scss-lint:disable NestingDepth
-            &.icon-calendar {
+            &.icon-calendar,
+            &.icon-fileupload {
               height: 15px;
               left: -5px;
               top: 1px;
@@ -863,7 +865,11 @@ $datagrid-short-row-height: 23px;
               left: -8px;
               top: 1px;
             }
-            // scss-lint:enable NestingDepth
+
+            &.icon-close {
+              margin-left: -30px !important;
+              margin-right: 10px;
+            }
           }
 
           .colorpicker-container {
@@ -876,10 +882,25 @@ $datagrid-short-row-height: 23px;
             left: -3px;
           }
         }
+        // scss-lint:enable NestingDepth
 
         //Editing
         // scss-lint:disable NestingDepth
         &.is-editing {
+
+          &.is-fileupload {
+            .trigger,
+            .trigger-close {
+              .icon {
+                height: 15px;
+                width: 15px;
+              }
+            }
+
+            .trigger .icon {
+              top: 4px;
+            }
+          }
 
           .colorpicker-container {
             padding: 3px 10px 0;
@@ -1605,6 +1626,12 @@ $datagrid-short-row-height: 23px;
         left: 9px;
       }
 
+      &.is-fileupload {
+        label {
+          margin-bottom: 0;
+        }
+      }
+
       //Normal Input
       input {
         border: 1px solid transparent;
@@ -1637,6 +1664,47 @@ $datagrid-short-row-height: 23px;
             top: calc(50% - 16px);
           }
         }
+
+        &.fileupload-background-transparent {
+          background-color: transparent;
+        }
+
+        // scss-lint:disable NestingDepth
+        &.fileupload {
+          ~ .trigger,
+          ~ .trigger-close {
+            cursor: pointer;
+            display: inline-block;
+            margin-left: -36px;
+            outline: 0;
+            text-align: center;
+            width: 36px;
+
+            &.trigger-close {
+              display: none;
+              margin-left: -50px;
+            }
+
+            .icon {
+              height: 16px;
+              left: 1px;
+              top: 7px;
+              vertical-align: baseline;
+              width: 16px;
+            }
+          }
+        }
+
+        &.fileupload[type="file"] {
+          left: -10000px;
+          position: fixed;
+        }
+
+        &.fileupload[type="text"] {
+          padding-right: 56px;
+          text-overflow: ellipsis;
+        }
+        // scss-lint:enable NestingDepth
 
         &:focus {
           box-shadow: none;
@@ -2373,7 +2441,8 @@ td .btn-actions {
     left: -1px;
   }
 
-  .icon-calendar {
+  .icon-calendar,
+  .icon-fileupload {
     height: 16px;
     left: 5px;
     top: 3px;
@@ -2386,6 +2455,7 @@ td .btn-actions {
     text-align: left;
     width: calc(100% - 10px);
 
+    &.is-clearable,
     &.dropdown-trigger {
       &:not(.colorpicker-container) {
         overflow: hidden;
@@ -2395,12 +2465,20 @@ td .btn-actions {
       }
     }
 
+    &.is-clearable {
+      margin-right: 22px;
+      width: calc(100% - 32px);
+    }
   }
 
   &.has-editor:not(.is-readonly):not(.error):hover,
   &.has-editor:not(.is-readonly):not(.error):focus {
     .icon {
       visibility: visible;
+    }
+
+    .icon-close {
+      margin-left: -22px;
     }
   }
 
@@ -2789,7 +2867,8 @@ html[dir='rtl'] {
 
   //Datagrid Dropdown Formatter
   .datagrid-trigger-cell {
-    .icon-calendar {
+    .icon-calendar,
+    .icon-fileupload {
       left: auto;
       right: 3px;
     }
@@ -3324,9 +3403,9 @@ html[dir='rtl'] {
 }
 
 .table-errors {
+  display: inline-block;
   height: 35px;
   margin-left: 10px;
-  display: inline-block;
   position: relative;
   top: -9px;
 }
