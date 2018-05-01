@@ -1,8 +1,8 @@
-import { ToolbarFlex } from '../toolbar-flex';
-import { ToolbarFlexItem } from '../toolbar-flex.item';
+import { ToolbarFlex } from '../../../src/components/toolbar-flex/toolbar-flex';
+import { ToolbarFlexItem } from '../../../src/components/toolbar-flex/toolbar-flex.item';
 
-const toolbarFavorButtonsetHTML = require('../example-favor-buttonset.html');
-const svg = require('../../icons/svg.html');
+const toolbarFavorButtonsetHTML = require('../../../app/views/components/toolbar-flex/example-favor-buttonset.html');
+const svg = require('../../../app/views/components/icons/svg.html');
 
 let toolbarEl;
 let toolbarAPI;

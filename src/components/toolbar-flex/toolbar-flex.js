@@ -1,5 +1,5 @@
-import { utils } from '../utils/utils';
-import { log } from '../utils/debug';
+import { utils } from '../../utils/utils';
+import { log } from '../../utils/debug';
 import { ToolbarFlexItem, TOOLBAR_ELEMENTS } from './toolbar-flex.item';
 
 // jQuery Components

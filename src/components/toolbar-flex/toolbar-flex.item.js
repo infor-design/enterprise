@@ -1,5 +1,5 @@
-import { utils } from '../utils/utils';
-import { Environment as env } from '../utils/environment';
+import { utils } from '../../utils/utils';
+import { Environment as env } from '../../utils/environment';
 
 // Component Name
 const COMPONENT_NAME = 'toolbarflexitem';
