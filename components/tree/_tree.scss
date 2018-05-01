@@ -208,7 +208,7 @@
   }
 
   //Multi Select
-  &.is-muliselect {
+  &.is-multiselect {
     li {
       .tree-checkbox {
         margin-right: 25px;
@@ -370,7 +370,7 @@
 .is-firefox {
 
   .tree {
-    &.is-muliselect {
+    &.is-multiselect {
       li {
         .tree-checkbox::before {
           top: -2px;

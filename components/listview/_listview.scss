@@ -407,7 +407,7 @@
     }
   }
 
-  &.is-muliselect li {
+  &.is-multiselect li {
     padding-left: 45px;
     position: relative;
 
@@ -779,14 +779,14 @@ html[dir='rtl'] {
       }
     }
 
-    &.is-muliselect li::before {
+    &.is-multiselect li::before {
       left: auto;
       margin-left: inherit;
       margin-right: 0;
       right: 14px;
     }
 
-    &.is-muliselect li {
+    &.is-multiselect li {
       padding-left: inherit;
       padding-right: 43px;
 

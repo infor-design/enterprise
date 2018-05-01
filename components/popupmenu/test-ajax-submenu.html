@@ -1,0 +1,41 @@
+
+<div class="row">
+  <div class="six columns">
+
+    <button id="button1" class="btn-menu">
+      <span>Open Menu</span>
+    </button>
+    <ul id="popup-menu" class="popupmenu"></ul>
+
+  </div>
+</div>
+
+<script>
+  var MENU_RESPONSE_HTML = '' +
+    '<li><a href="#">Item One</a></li>' +
+    '<li><a href="#">Item Two</a></li>' +
+    '<li class="submenu">' +
+      '<a href="#">Item Three</a>' +
+      '<ul class="popupmenu">'
+      '</ul>' +
+    '</li>' +
+    '<li><a href="#">Item Four</a></li>' +
+  '';
+
+
+  function popupmenuTestBeforeOpen(response, options) {
+    if (options.isSubmenu) {
+      response('<li><a href="#">Sub-item One</a></li><li><a href="#">Sub-item Two</a></li>');
+      return;
+    }
+
+    setTimeout(function() {
+      response(MENU_RESPONSE_HTML);
+    }, 100);
+  }
+
+  $('#button1').popupmenu({
+    beforeOpen: popupmenuTestBeforeOpen,
+    menu: 'popup-menu'
+  });
+</script>

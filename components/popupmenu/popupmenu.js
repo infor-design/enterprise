@@ -1078,8 +1078,9 @@ PopupMenu.prototype = {
    * @param {boolean} [doOpen] causes the menu to re-open once the data has been reloaded.
    * @param {jQuery[]|HTMLElement} [contextElement] if passed, represents a submenu
    *  as the actionable, replaceable menu element instead of the main menu.
-   */
-  callSource(e, doOpen, contextElement) {
+   * @param {boolean} [isSubmenu] Note that the request is a submenu for the callback.
+  */
+  callSource(e, doOpen, contextElement, isSubmenu) {
     if (typeof this.settings.beforeOpen !== 'function') {
       return;
     }
@@ -1130,6 +1131,7 @@ PopupMenu.prototype = {
     }
 
     callbackOpts.element = this.element;
+    callbackOpts.isSubmenu = isSubmenu;
 
     if (typeof this.settings.beforeOpen === 'string') {
       window[this.settings.beforeOpen](response, callbackOpts);
@@ -1367,7 +1369,7 @@ PopupMenu.prototype = {
 
     // Check external AJAX source, if applicable
     if (!ajaxReturn) {
-      canOpen = this.callSource(null, true, submenu);
+      canOpen = this.callSource(null, true, submenu, true);
       if (this.settings.beforeOpen) {
         return;
       }
