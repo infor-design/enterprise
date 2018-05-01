@@ -35,8 +35,17 @@ export const enableConsoleLogging = false;
  * @returns {void}
  */
 export function log(type, message) {
+  if (!enableConsoleLogging) {
+    return;
+  }
+
   if (!console) { // eslint-disable-line
     return;
+  }
+
+  if (!message && typeof type === 'string') {
+    message = type;
+    type = 'log';
   }
 
   if (typeof !console[type] !== 'function') {  // eslint-disable-line

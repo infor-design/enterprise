@@ -49,6 +49,7 @@ export { Textarea } from './textarea/textarea';
 export { TimePicker } from './timepicker/timepicker';
 export { Toast } from './toast/toast';
 export { Toolbar } from './toolbar/toolbar';
+export { ToolbarFlex } from './toolbar-flex/toolbar-flex';
 export { ToolbarSearchfield } from './toolbarsearchfield/toolbarsearchfield';
 export { Tooltip } from './tooltip/tooltip';
 export { Tree } from './tree/tree';

@@ -234,7 +234,7 @@ const PLUGIN_MAPPINGS = [
 
       // Don't auto-invoke Toolbar's Popupmenus.
       // Toolbar needs to completely control its contents and invoke each one manually.
-      if (triggerButton.parents('.toolbar').length > 0) {
+      if (triggerButton.parents('.toolbar, .flex-toolbar').length > 0) {
         return;
       }
 
@@ -301,6 +301,9 @@ const PLUGIN_MAPPINGS = [
       invoke(t, 'toolbar');
     });
   }],
+
+  // Flex Toolbar
+  ['toolbarflex', '.flex-toolbar'],
 
   // Accordion components that are invoked by Application Menus should be excluded.
   ['accordion', '.accordion', function (rootElem, pluginName, selector) {

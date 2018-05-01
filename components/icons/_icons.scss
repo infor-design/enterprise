@@ -330,7 +330,6 @@ svg.icon-dirty {
 // Hamburger by default,
 // Has different modes based on CSS classes
 .icon.app-header {
-
   span:not(.audible) {
     @include css3(transform-origin, 50% 50% 0);
     @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s,
@@ -383,7 +382,17 @@ svg.icon-dirty {
       top: 12.5px;
     }
   }
+}
 
+[class^="btn"] {
+  .icon.app-header {
+    height: 32px;
+    width: 32px;
+
+    span:not(.audible) {
+      background-color: $tertiary-btn-color;
+    }
+  }
 }
 
 @mixin app-drawer-box() {

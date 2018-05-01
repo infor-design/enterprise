@@ -63,6 +63,7 @@ import './textarea/textarea.jquery';
 import './timepicker/timepicker.jquery';
 import './toast/toast.jquery';
 import './toolbar/toolbar.jquery';
+import './toolbar-flex/toolbar-flex.jquery';
 import './toolbarsearchfield/toolbarsearchfield.jquery';
 import './tooltip/tooltip.jquery';
 import './trackdirty/trackdirty.jquery';

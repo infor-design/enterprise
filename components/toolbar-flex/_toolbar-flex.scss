@@ -1,0 +1,120 @@
+// =======================================
+// Flexible Toolbar Component
+// ==================================== //
+
+.toolbar-container {
+  &.in-page {
+    height: 40px;
+  }
+}
+
+.flex-toolbar {
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.toolbar-section {
+  white-space: nowrap;
+
+  // Allows certain sections to collapse.
+  // NOTE: Not all sections are collapsible.
+  &.title,
+  &.buttonset {
+    flex-grow: 1;
+
+    &:not(.favor) {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+
+  &.title {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      display: inline;
+    }
+
+    .page-title,
+    .section-title {
+      display: block;
+      overflow-x: hidden;
+      padding: 0;
+      text-overflow: ellipsis;
+    }
+
+    .section-title {
+      @include font-size(12);
+    }
+
+    + .toolbar-section.buttonset {
+      text-align: right;
+    }
+
+    &:not(.favor) {
+      text-overflow: ellipsis;
+    }
+  }
+
+  + .toolbar-section.title {
+    padding-left: 10px;
+  }
+
+  &.buttonset {
+    padding: 4px;
+
+    [class^="btn"] {
+      margin-right: 0;
+    }
+  }
+
+  &.search {
+    padding: 0 10px;
+  }
+
+  .searchfield-wrapper {
+    margin-bottom: 0;
+  }
+
+  &.more {
+    button {
+      margin-right: 0;
+
+      &.no-overflowed-items {
+        display: none;
+      }
+    }
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+
+  .toolbar-section {
+    &.title + .toolbar-section.buttonset {
+      text-align: left;
+    }
+
+    + .toolbar-section.title {
+      padding-left: 0;
+      padding-right: 10px;
+    }
+
+    &.buttonset {
+      margin-left: 0;
+    }
+
+    &.more {
+      button {
+        margin-left: 0;
+      }
+    }
+  }
+
+}
