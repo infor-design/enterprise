@@ -82,6 +82,7 @@ function ToolbarFlexItem(element, settings) {
   this.section = this.element.parentElement;
   this.toolbar = this.section.parentElement;
   this.trueSelected = false;
+  this.rendered = false;
 
   this.init();
 }
@@ -114,6 +115,9 @@ ToolbarFlexItem.prototype = {
       return false;
     }
     if (this.overflowed === true) {
+      return false;
+    }
+    if (this.type === 'actionbutton' && this.hasNoOverflowedItems === true) {
       return false;
     }
 
@@ -338,6 +342,22 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
+   * @param {boolean} boolean whether or not the more actions menu has overflowed items, causing it to become displayed
+   * @returns {void}
+   */
+  set hasNoOverflowedItems(boolean) {
+    if (this.type !== 'actionbutton') {
+      return;
+    }
+
+    if (boolean) {
+      this.element.classList.add('no-overflowed-items');
+      return;
+    }
+    this.element.classList.remove('no-overflowed-items');
+  },
+
+  /**
    * Sets up all event listeners for this element.
    * @returns {void}
    */
@@ -385,6 +405,7 @@ ToolbarFlexItem.prototype = {
 
     if (this.type === 'actionbutton') {
       $element.on(`beforeopen.${COMPONENT_NAME}`, this.handleActionButtonBeforeOpen.bind(this));
+      $('body').on(`resize.${COMPONENT_NAME}`, this.handleActionButtonResize.bind(this));
     }
   },
 
@@ -395,6 +416,16 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   handleActionButtonBeforeOpen() {
+    this.refreshMoreActionsMenu();
+  },
+
+  /**
+   * If this element is an Action Button, this listener runs whenever Soho's custom resize event
+   * on the `<body>` tag fires, to determine which elements need to be shown/hidden.
+   * @private
+   * @returns {void}
+   */
+  handleActionButtonResize() {
     this.refreshMoreActionsMenu();
   },
 
@@ -427,10 +458,16 @@ ToolbarFlexItem.prototype = {
       return;
     }
     this.renderMoreActionsMenu();
+
+    if (!this.rendered) {
+      this.refreshMoreActionsMenu();
+      this.rendered = true;
+    }
   },
 
   /**
    * Uses data from Toolbar Items to build Toolbar-linked, pre-defined items for the More Actions menu.
+   * NOTE: This method only runs when this toolbar item is a "More Actions" button
    * @private
    * @returns {void}
    */
@@ -440,7 +477,11 @@ ToolbarFlexItem.prototype = {
       return;
     }
 
-    const $menu = menuAPI.menu;
+    // If the menu doesn't already exist, pre-define it.
+    let $menu = menuAPI.menu;
+    if (!$menu || !$menu.length) {
+      $menu = $('<ul class="popupmenu"></ul>').insertAfter(this.element);
+    }
 
     this.teardownPredefinedItems();
 
@@ -453,6 +494,7 @@ ToolbarFlexItem.prototype = {
     // Notify the Popupmenu of predefined items
     $menu.prepend(this.predefinedItems);
     menuAPI.updated({
+      menu: $menu,
       predefined: menuItems
     });
   },
@@ -477,6 +519,8 @@ ToolbarFlexItem.prototype = {
       this.renderMoreActionsMenu();
     }
 
+    let hasNoOverflowedItems = true;
+
     // Called at the end of the item refresh.
     // Uses the Popupmenu's API to add overflow information.
     function itemRefreshCallback(menuItem, data) {
@@ -490,6 +534,8 @@ ToolbarFlexItem.prototype = {
         if (data.visible) {
           menuItem.classList.remove('hidden');
         }
+
+        hasNoOverflowedItems = false;
         return;
       }
 
@@ -508,6 +554,9 @@ ToolbarFlexItem.prototype = {
 
       menuAPI.refreshMenuItem(item.actionButtonLink, itemData, itemRefreshCallback);
     });
+
+    // Set a record for display
+    this.hasNoOverflowedItems = hasNoOverflowedItems;
   },
 
   /**
@@ -729,6 +778,8 @@ ToolbarFlexItem.prototype = {
       .off(`selected.${COMPONENT_NAME}`)
       .off(`beforeopen.${COMPONENT_NAME}`);
 
+    $('body').off(`resize.${COMPONENT_NAME}`);
+
     this.teardownPredefinedItems();
 
     delete this.type;
@@ -737,6 +788,11 @@ ToolbarFlexItem.prototype = {
     delete this.visible;
     delete this.disabled;
     delete this.readOnly;
+
+    delete this.section;
+    delete this.toolbar;
+    delete this.trueSelected;
+    delete this.rendered;
   }
 
 };

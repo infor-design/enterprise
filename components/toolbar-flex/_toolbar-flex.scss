@@ -75,6 +75,16 @@
   .searchfield-wrapper {
     margin-bottom: 0;
   }
+
+  &.more {
+    button {
+      margin-right: 0;
+
+      &.no-overflowed-items {
+        display: none;
+      }
+    }
+  }
 }
 
 // RTL Styles
@@ -92,6 +102,12 @@ html[dir='rtl'] {
 
     &.buttonset {
       margin-left: 0;
+    }
+
+    &.more {
+      button {
+        margin-left: 0;
+      }
     }
   }
 

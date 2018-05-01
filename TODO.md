@@ -1,6 +1,7 @@
 # SOHO-7475 TODO List:
 
-- Toolbar with No More Actions items pre-defined (hide/show More Actions menu)
+- (DONE, REVIEW) Toolbar with No More Actions items pre-defined (hide/show More Actions menu)
+  - run `refreshMoreActionsMenu` at the end of rendering on all action buttons?
 - MaxVisibleButtons setting? (done per-section)
 - Figure out why all Popupmenus are set to "has-icons"
 - (DONE, REVIEW) Make clicking on `More Actions` menu items trigger selected events on Toolbar items, if applicable.
