@@ -232,7 +232,7 @@ SwapList.prototype = {
   },
 
   /**
-   * When list is Empty force to add css class "is-muliselect"
+   * When list is Empty force to add css class "is-multiselect"
    * @private
    */
   isMultiSelectClass() {
@@ -242,7 +242,7 @@ SwapList.prototype = {
     for (let i = 0, l = containers.length; i < l; i++) {
       const lv = $(`${containers[i]} .listview`, this.element);
       if (!$('li', lv).length) {
-        lv.addClass('is-muliselect');
+        lv.addClass('is-multiselect');
       }
     }
   },

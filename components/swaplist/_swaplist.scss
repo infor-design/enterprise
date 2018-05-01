@@ -194,7 +194,7 @@
     top: 0;
   }
 
-  .is-muliselect {
+  .is-multiselect {
     // scss-lint:disable NestingDepth
     ul {
       min-height: 100%;
@@ -292,7 +292,7 @@
   }
 
   &.is-touch {
-    .is-muliselect li:hover:not(.is-disabled):not(.is-selected) {
+    .is-multiselect li:hover:not(.is-disabled):not(.is-selected) {
       background-color: transparent;
 
       .handle {

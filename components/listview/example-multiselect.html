@@ -2,7 +2,7 @@
   <div class="one-third column">
    <div class="card">
       <div class="card-header">
-        <h2 class="card-title">My Tasks</h2>
+        <h2 class="card-title" id="task-label">My Tasks</h2>
         <button class="btn-actions" type="button">
           <span class="audible">Actions</span>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -21,7 +21,7 @@
             <button class="btn-tertiary" id="remove" title="Remove Selected Items" type="button">Remove</button>
           </div>
         </div>
-        <div class="listview" id="multiselect-listview" data-options="{ 'template': 'multiselect-tmpl', 'selectable': 'multiple', 'source': '{{basepath}}api/inventory-tasks' }"></div>
+        <div class="listview" aria-labelledby="task-label" id="multiselect-listview" data-options="{ 'template': 'multiselect-tmpl', 'selectable': 'multiple', 'source': '{{basepath}}api/inventory-tasks' }"></div>
       </div>
     </div>
   </div>

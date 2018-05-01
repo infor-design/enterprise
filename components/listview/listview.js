@@ -262,7 +262,7 @@ ListView.prototype = {
 
       if (isMultiselect) {
         // Add Selection Checkboxes
-        self.element.addClass('is-muliselect');
+        self.element.addClass('is-multiselect');
 
         // Create a Toolbar for the "Selected Items" area
         const selectedToolbar = self.element.prevAll('.toolbar');
