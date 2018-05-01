@@ -693,7 +693,7 @@ const editors = {
     this.init();
   },
 
-  Lookup(row, cell, value, container, column, event, grid) {
+  Lookup(row, cell, value, container, column, event, grid, rowData) {
     this.name = 'lookup';
     this.originalValue = value;
 
@@ -709,6 +709,19 @@ const editors = {
       }
 
       this.input.lookup(column.editorOptions);
+
+      // Append the Lookup's clickArguments with some row/col meta-data
+      const api = this.input.data('lookup');
+      api.settings.clickArguments = {
+        column,
+        container,
+        grid,
+        cell,
+        event,
+        row,
+        rowData,
+        value
+      };
     };
 
     this.val = function (v) {
