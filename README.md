@@ -1,10 +1,10 @@
 # :tada: Soho XI Has Moved to Github! :tada:
 
-On the release of `4.6.0` we have moved the Soho XI code base to github and opened it to everyone. What this means is now anyone can pull and contribute to the codebase.
+On the release of `4.6.0` we have moved the Soho XI code to Github and opened it to everyone! What this means is now anyone can view and contribute to the codebase.
 
-There are two ways to to do so:
+There are two ways to go about using Github for development (as the [Bitbucket](http://git.infor.com/projects/SOHO/repos/controls/browse) will eventually be deprecated):
 
-1. You can go to LINK-TO-SOHO-XI-GITHUB and download/clone/fork the repo.
+1. You can go to https://github.com/infor-design/enterprise and download/clone/fork the repo.
 
 or
 
