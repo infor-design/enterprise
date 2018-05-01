@@ -1198,13 +1198,21 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    &.is-active-row,
-    &.is-clickable {
-      cursor: pointer;
+    &.is-clickable,
+    &.is-active-row {
 
       td:focus .datagrid-cell-wrapper {
         border-color: transparent;
+        box-shadow: none;
       }
+
+      td {
+        box-shadow: none;
+      }
+    }
+
+    &.is-clickable {
+      cursor: pointer;
     }
 
     .icon.plus-minus::before,
