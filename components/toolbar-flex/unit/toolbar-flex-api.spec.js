@@ -88,6 +88,7 @@ describe('Flex Toolbar', () => {
   });
 
   it('Can check for which of its items belongs in an overflow menu', () => {
+    rowEl.style.width = '20000px';
     let overflow = toolbarAPI.overflowedItems;
 
     // Normal overflow situation should be that nothing is overflowed.
