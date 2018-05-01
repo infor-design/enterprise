@@ -1929,6 +1929,10 @@ router.get('/api/inventory-tasks', (req, res, next) => {
   sendJSONFile('inventory-tasks', req, res, next);
 });
 
+router.get('/api/org-chart', (req, res, next) => {
+  sendJSONFile('org-chart', req, res, next);
+});
+
 router.get('/api/jobs', (req, res, next) => {
   sendJSONFile('jobs', req, res, next);
 });
