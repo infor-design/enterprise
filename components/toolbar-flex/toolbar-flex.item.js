@@ -77,13 +77,6 @@ function ToolbarFlexItem(element, settings) {
   this.element = element;
   this.settings = utils.mergeSettings(this.element, settings, TOOLBAR_FLEX_ITEM_DEFAULTS);
 
-  // Internal flags
-  this.type = getToolbarItemType(element);
-  this.section = this.element.parentElement;
-  this.toolbar = this.section.parentElement;
-  this.trueSelected = false;
-  this.rendered = false;
-
   this.init();
 }
 
@@ -102,8 +95,11 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   init() {
-    this.render();
-    this.handleEvents();
+    // internal flags
+    this.type = getToolbarItemType(this.element);
+    this.section = this.element.parentElement;
+    this.toolbar = this.section.parentElement;
+    this.trueSelected = false;
   },
 
   /**
@@ -188,6 +184,9 @@ ToolbarFlexItem.prototype = {
    * @returns {ToolbarFlex} the parent toolbar API
    */
   get toolbarAPI() {
+    if (this.settings.toolbarAPI) {
+      return this.settings.toolbarAPI;
+    }
     return $(this.toolbar).data('toolbar-flex');
   },
 
@@ -342,19 +341,39 @@ ToolbarFlexItem.prototype = {
   },
 
   /**
-   * @param {boolean} boolean whether or not the more actions menu has overflowed items, causing it to become displayed
+   * @param {boolean} isTrue whether or not the more actions menu has overflowed items, causing it to become displayed
    * @returns {void}
    */
-  set hasNoOverflowedItems(boolean) {
+  set hasNoOverflowedItems(isTrue) {
     if (this.type !== 'actionbutton') {
       return;
     }
 
-    if (boolean) {
+    const popupmenuLength = this.componentAPI.toData({ noMenuWrap: true }).length;
+    const menuIsEmpty = (popupmenuLength - this.predefinedItems.length) < 1;
+
+    if (isTrue && menuIsEmpty) {
       this.element.classList.add('no-overflowed-items');
+      this.trueHasNoOverflowedItems = true;
+
+      if (this.focused) {
+        this.toolbarAPI.focusedItem = this;
+        this.toolbarAPI.navigate(-1, undefined, true);
+      }
       return;
     }
+    this.trueHasNoOverflowedItems = false;
     this.element.classList.remove('no-overflowed-items');
+  },
+
+  /**
+   *
+   */
+  get hasNoOverflowedItems() {
+    if (!this.componentAPI) {
+      return true;
+    }
+    return this.trueHasNoOverflowedItems;
   },
 
   /**
@@ -407,6 +426,8 @@ ToolbarFlexItem.prototype = {
       $element.on(`beforeopen.${COMPONENT_NAME}`, this.handleActionButtonBeforeOpen.bind(this));
       $('body').on(`resize.${COMPONENT_NAME}`, this.handleActionButtonResize.bind(this));
     }
+
+    $element.on(`focus.${COMPONENT_NAME}`, this.handleFocus.bind(this));
   },
 
   /**
@@ -427,6 +448,17 @@ ToolbarFlexItem.prototype = {
    */
   handleActionButtonResize() {
     this.refreshMoreActionsMenu();
+  },
+
+  /**
+   * @private
+   * @param {FocusEvent} e `focus`
+   * @returns {void}
+   */
+  handleFocus(e) {
+    if (e.target && e.target === this.element) {
+      this.toolbarAPI.focusedItem = this;
+    }
   },
 
   /**
@@ -458,11 +490,9 @@ ToolbarFlexItem.prototype = {
       return;
     }
     this.renderMoreActionsMenu();
+    this.refreshMoreActionsMenu();
 
-    if (!this.rendered) {
-      this.refreshMoreActionsMenu();
-      this.rendered = true;
-    }
+    this.handleEvents();
   },
 
   /**
@@ -508,6 +538,8 @@ ToolbarFlexItem.prototype = {
     if (this.type !== 'actionbutton') {
       return;
     }
+
+    this.hasNoOverflowedItems = true;
 
     const menuAPI = this.componentAPI;
     if (!menuAPI || !this.toolbarAPI) {
@@ -776,7 +808,8 @@ ToolbarFlexItem.prototype = {
   teardown() {
     $(this.element)
       .off(`selected.${COMPONENT_NAME}`)
-      .off(`beforeopen.${COMPONENT_NAME}`);
+      .off(`beforeopen.${COMPONENT_NAME}`)
+      .off(`focus.${COMPONENT_NAME}`);
 
     $('body').off(`resize.${COMPONENT_NAME}`);
 
@@ -792,7 +825,6 @@ ToolbarFlexItem.prototype = {
     delete this.section;
     delete this.toolbar;
     delete this.trueSelected;
-    delete this.rendered;
   }
 
 };

@@ -44,7 +44,9 @@ ToolbarFlex.prototype = {
   init() {
     this.sections = Array.from(this.element.querySelectorAll('.toolbar-section'));
     this.items = this.getElements().map((item) => {
-      $(item).toolbarflexitem();
+      $(item).toolbarflexitem({
+        toolbarAPI: this
+      });
       return $(item).data('toolbarflexitem');
     });
 
@@ -75,6 +77,9 @@ ToolbarFlex.prototype = {
    */
   render() {
     this.element.setAttribute('role', 'toolbar');
+    this.items.forEach((item) => {
+      item.render();
+    });
   },
 
   /**
@@ -181,7 +186,10 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   handleItemClick(e) {
-    this.select(e.target);
+    const item = this.getItemFromElement(e.target);
+
+    this.select(item);
+    this.focusedItem = item;
   },
 
   /**
