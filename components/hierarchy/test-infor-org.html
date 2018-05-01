@@ -1,0 +1,52 @@
+﻿<div class="twelve columns">
+  <figure class="hierarchy" id="hierarchy"></figure>
+</div>
+
+<script>
+  $(function () {
+
+    var legendData = [
+      { 'value': 'FT', 'label': 'Full Time' },
+      { 'value': 'PT', 'label': 'Part Time' },
+      { 'value': 'C', 'label': 'Contractor' },
+      { 'value': 'O', 'label': 'Open Position' }
+    ];
+
+    $.getJSON('{{basepath}}api/org-chart', function(data) {
+      $('#hierarchy').hierarchy({
+        templateId: 'hierarchy-template',
+        legendKey: 'EmploymentType',
+        legend: legendData,
+        dataset: data
+      });
+    });
+
+  });
+</script>
+
+
+{{={{{ }}}=}}
+<script type="text/html" id="hierarchy-template">
+  <div class="leaf {{colorClass}}" id="{{id}}">
+
+    {{#Picture}}
+    <img src="{{Picture}}" class="image" alt="Image of {{Name}}" />
+    {{/Picture}}
+    {{^Picture}}
+    <span class="image-placeholder"></span>
+    {{/Picture}}
+
+    <div class="detail">
+      <p class="heading">{{Name}}</p>
+      <p class="subheading">{{Position}}</p>
+      <p class="micro">{{EmploymentType}}</p>
+    </div>
+
+    <button class="btn btn-icon" type="button">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use xlink:href="#icon-caret-up" />
+      </svg>
+      <span class="audible">Expand/Collapse</span>
+    </button>
+  </div>
+</script>

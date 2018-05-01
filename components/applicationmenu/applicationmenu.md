@@ -9,8 +9,6 @@ demo:
     slug: example-different-header-types
   - name: As Shown on the Soho Site
     slug: example-soho-site
-  - name: Showing Top Level Buttons
-    slug: example-top-level-buttons
   - name: Showing Menubutton as a role switcher
     slug: example-menubutton
 tests:

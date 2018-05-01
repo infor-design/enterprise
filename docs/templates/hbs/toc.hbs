@@ -2,7 +2,6 @@
 <html>
 
 <head>
-
   <title>
     Sitemap | SoHo XI
   </title>
@@ -11,7 +10,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600|Source+Code+Pro" rel="stylesheet">
-  <link rel="stylesheet" href="http://localhost:4000/css/site.css" type="text/css">
+  <link rel="stylesheet" href="../css/site.css" type="text/css">
 </head>
 
 <body>
@@ -29,7 +28,7 @@
   <header class="doc-header">
     <div class="row">
       <div class="doc-header-logo">
-        <a href="http://localhost:4000/components" class="doc-logo">
+        <a href="./components/" class="doc-logo">
           <svg width="149px" height="48px" viewBox="0 0 149 48" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="header-bar-copy" transform="translate(-40.000000, -26.000000)">
@@ -55,7 +54,7 @@
 
       <div class="doc-header-links">
         <a href="https://design.infor.com/" class="doc-header-link">Infor Design System</a>
-        <a href="http://localhost:4000/components" class="doc-header-link is-active">Enterprise Components</a>
+        <a href="./components" class="doc-header-link is-active">Enterprise Components</a>
       </div>
 
       <div class="doc-header-secondary-links">
@@ -81,7 +80,7 @@
                 <div class="block">
                   <h1 class="fieldset-title">
                     {{#if slug}}
-                      <a href="/components/{{slug}}.html">{{name}}</a>
+                      <a href="../{{slug}}">{{name}}</a>
                     {{else}}
                       {{name}}
                     {{/if}}

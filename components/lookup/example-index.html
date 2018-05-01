@@ -4,18 +4,18 @@
 
     <div class="field">
       <label for="product-lookup" class="label required">Products</label>
-      <input id="product-lookup" data-init="false" data-validate="required" class="lookup" name="product-lookup" type="text">
+      <input id="product-lookup" data-init="false" data-validate="required" class="lookup" name="product-lookup" type="text"/>
     </div>
 
     <div class="field">
       <label for="lookup-field-small" class="label">Lookup Field (Xtra - Small)</label>
-      <input id="lookup-field-small" class="input-xs lookup" name="lookup-field-small" type="text" value="DA">
+      <input id="lookup-field-small" class="input-xs lookup" name="lookup-field-small" type="text" value="DA"/>
       <span class="data-description">Danonics 123 Group</span>
     </div>
 
     <div class="field">
       <label for="lookup-field-disabled" class="label">Lookup Field (Disabled)</label>
-      <input id="lookup-field-disabled" class="lookup" disabled name="lookup-field-disabled" type="text" value="2241202">
+      <input id="lookup-field-disabled" class="lookup" disabled="true" name="lookup-field-disabled" type="text" value="2241202"/>
     </div>
 
   </div>
@@ -65,7 +65,9 @@
         }
       }
     }).on('change', function (e, args) {
-      console.log(args[0]);
+      if (args) {
+        console.log(args[0]);
+      }
     });
 
 </script>

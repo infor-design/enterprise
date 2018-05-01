@@ -1150,6 +1150,9 @@ Datagrid.prototype = {
       filterMarkup += '</div>';
     }
 
+    if (!columnDef.filterType) {
+      filterMarkup = '<div class="datagrid-filter-wrapper"></div>';
+    }
     return filterMarkup;
   },
 
@@ -1172,7 +1175,7 @@ Datagrid.prototype = {
 
     // Attach Keyboard support
     this.headerRow.off('click.datagrid-filter').on('click.datagrid-filter', '.btn-filter', function () {
-      const popupOpts = { trigger: 'immediate', offset: { y: 15 }, attachToBody: $('html').hasClass('ios'), placementOpts: { strategies: ['flip', 'nudge'] } };
+      const popupOpts = { trigger: 'immediate', offset: { y: 15 }, placementOpts: { strategies: ['flip', 'nudge'] } };
       const popupmenu = $(this).data('popupmenu');
 
       if (popupmenu) {
@@ -1225,6 +1228,10 @@ Datagrid.prototype = {
       this.headerRow.off('keyup.datagrid').on('keyup.datagrid', '.datagrid-filter-wrapper input', (e) => {
         if (e.which === 13) {
           return;
+        }
+
+        if (this.activeCell && this.activeCell.isFocused) {
+          this.activeCell.isFocused = false;
         }
 
         clearTimeout(typingTimer);
@@ -2907,8 +2914,7 @@ Datagrid.prototype = {
       let renderedTmpl = '';
 
       if (Tmpl && item) {
-        const compiledTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`);
-        renderedTmpl = compiledTmpl.render({ dataset: item });
+        renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
       }
 
       rowHtml += `<tr class="datagrid-expandable-row"><td colspan="${this.visibleColumns().length}">` +
@@ -3007,7 +3013,7 @@ Datagrid.prototype = {
     context.font = '14px arial';
 
     const metrics = context.measureText(maxText);
-    let padding = chooseHeader ? 35 : 40;
+    let padding = chooseHeader ? 40 : 45;
 
     if (hasAlert && !chooseHeader) {
       padding += 20;
@@ -4105,6 +4111,10 @@ Datagrid.prototype = {
       countText = `(${Locale.formatNumber(count, { style: 'integer' })} ${Locale.translate(count === 1 ? 'Result' : 'Results')})`;
     }
 
+    if (!totals && this.settings.source) {
+      count = this.lastCount;
+    }
+
     if (self.settings.resultsText) {
       if (typeof self.settings.resultsText === 'function') {
         if (self.grandTotal) {
@@ -4124,6 +4134,7 @@ Datagrid.prototype = {
       self.toolbar.find('.datagrid-row-count').text(count);
     }
     self.element.closest('.modal').find('.datagrid-result-count').html(countText);
+    this.lastCount = count;
 
     this.checkEmptyMessage();
   },
@@ -4396,15 +4407,8 @@ Datagrid.prototype = {
 
       // Dont Expand rows or make cell editable when clicking expand button
       if (target.is('.datagrid-expand-btn')) {
-        const activePage = self.pager ? self.pager.activePage : 1;
         rowNode = $(this).closest('tr');
-        dataRowIdx = self.settings.treeGrid ?
-          self.actualRowIndex(rowNode) : self.visualRowIndex(rowNode);
-
-        if (!self.settings.treeGrid &&
-          self.settings.paging && !self.settings.source && activePage > 1) {
-          dataRowIdx = self.actualRowIndex(rowNode);
-        }
+        dataRowIdx = self.actualRowIndex(rowNode);
 
         self.toggleRowDetail(dataRowIdx);
         self.toggleGroupChildren(rowNode);
@@ -4425,6 +4429,11 @@ Datagrid.prototype = {
 
         // Then Activate
         if (!canSelect) {
+          if (e.shiftKey && self.activatedRow().length) {
+            self.selectRowsBetweenIndexes([self.activatedRow()[0].row, target.closest('tr').index()]);
+            e.preventDefault();
+          }
+
           self.toggleRowActivation(target.closest('tr'));
         }
       }
@@ -4479,6 +4488,7 @@ Datagrid.prototype = {
         setTimeout(() => {
           if ($('textarea, input', elem).length &&
               (!$('.dropdown,' +
+              '[type=file],' +
               '[type=image],' +
               '[type=button],' +
               '[type=submit],' +
@@ -6258,7 +6268,8 @@ Datagrid.prototype = {
       return false; // eslint-disable-line
     }
 
-    const idx = this.dataRowIndex(this.actualRowNode(row));
+    const thisRow = this.actualRowNode(row);
+    const idx = this.settings.treeGrid ? this.actualRowIndex(thisRow) : this.dataRowIndex(thisRow);
     const rowData = this.settings.treeGrid ?
       this.settings.treeDepth[idx].node :
       this.settings.dataset[idx];
@@ -6323,20 +6334,30 @@ Datagrid.prototype = {
   },
 
   commitCellEdit(input) {
-    let newValue;
-    let cellNode;
-    const isEditor = input.is('.editor');
-    const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
-
     if (!this.editor) {
       return;
     }
+
+    let newValue;
+    let cellNode;
+    const isEditor = this.editor.name === 'editor';
+    const isFileupload = this.editor.name === 'fileupload';
+    const isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
 
     // Editor.getValue
     newValue = this.editor.val();
 
     if (isEditor) {
       cellNode = this.editor.td;
+    } else if (isFileupload) {
+      if (this.editor.status === 'clear') {
+        newValue = '';
+      } else if (this.editor.status === 'init' || this.editor.status === 'cancel') {
+        newValue = this.editor.originalValue;
+      }
+      // Fix: Not sure why, but `input.closest('td')` did not work
+      cellNode = this.tableBody.find(`#${input.attr('id')}`).closest('td');
+      newValue = $.escapeHTML(newValue);
     } else {
       cellNode = input.closest('td');
       newValue = $.escapeHTML(newValue);
@@ -7126,7 +7147,8 @@ Datagrid.prototype = {
   // expand the tree rows
   toggleChildren(e, dataRowIndex) {
     const self = this;
-    let rowElement = this.visualRowNode(dataRowIndex);
+    let rowElement = this.settings.treeGrid ?
+      this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
     let expandButton = rowElement.find('.datagrid-expand-btn');
     const level = parseInt(rowElement.attr('aria-level'), 10);
     let children = rowElement.nextUntil(`[aria-level="${level}"]`);
@@ -7144,7 +7166,8 @@ Datagrid.prototype = {
     }
 
     const toggleExpanded = function () {
-      rowElement = self.visualRowNode(dataRowIndex);
+      rowElement = self.settings.treeGrid ?
+        self.actualRowNode(dataRowIndex) : self.visualRowNode(dataRowIndex);
       expandButton = rowElement.find('.datagrid-expand-btn');
       children = rowElement.nextUntil(`[aria-level="${level}"]`);
 
@@ -7228,7 +7251,7 @@ Datagrid.prototype = {
    */
   toggleRowDetail(dataRowIndex) {
     const self = this;
-    let rowElement = self.visualRowNode(dataRowIndex);
+    let rowElement = self.actualRowNode(dataRowIndex);
     if (!rowElement.length && self.settings.paging &&
       (self.settings.rowTemplate || self.settings.expandableRow)) {
       dataRowIndex += ((self.pager.activePage - 1) * self.settings.pagesize);

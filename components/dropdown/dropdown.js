@@ -241,7 +241,7 @@ Dropdown.prototype = {
     }
 
     // Persist sizing defintions
-    const sizingStrings = ['-xs', '-sm', '-md', '-lg'];
+    const sizingStrings = ['-xs', '-sm', '-mm', '-md', '-lg'];
     const classString = this.element.attr('class');
     let s = null;
 
@@ -1052,7 +1052,6 @@ Dropdown.prototype = {
         // If search mode is on, Tab should 'select' the currently highlighted
         // option in the list, update the SearchInput and close the list.
         if (self.isOpen()) {
-          self.selectOption($(options[selectedIndex])); // store the current selection
           self.closeList('tab');
           this.activate();
         }
@@ -1522,6 +1521,19 @@ Dropdown.prototype = {
       }
 
       self.activate(!self.settings.closeOnSelect);
+
+      // Check/uncheck select all depending on no. of selected items
+      if (self.settings.showSelectAll) {
+        const opts = self.element.find('option');
+        const selectedOpts = opts.filter(':selected');
+
+        if (opts.length > selectedOpts.length) {
+          self.list.find('.dropdown-select-all-list-item').removeClass('is-selected');
+        } else {
+          self.list.find('.dropdown-select-all-list-item').addClass('is-selected');
+        }
+      }
+
       return true;  //eslint-disable-line
     }
 

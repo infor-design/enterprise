@@ -82,11 +82,6 @@
       > .tab-container {
         height: 40px;
 
-        > .tab-list-container {
-          height: 40px;
-          overflow: hidden;
-        }
-
         + .tab-panel-container {
           height: calc(100% - 41px);
         }

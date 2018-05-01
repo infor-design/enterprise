@@ -37,6 +37,11 @@
   }
 
   .field {
+    &:first-child {
+      padding-bottom: 3px;
+      padding-top: 5px;
+    }
+
     [data-error-type="tooltip"] ~ .icon-error,
     [data-error-type="tooltip"] ~ .icon-confirm {
       top: -7px;

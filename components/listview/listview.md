@@ -1,20 +1,30 @@
 ---
 title: Listview
 description: This page describes Listview.
+system:
+  category: blocks
+  name: data-list
+demo:
+  pages:
+  - name: Default Listview Example
+    slug: example-index
+  - name: Alternate Row Colors
+    slug: example-alternate-row-color
+  - name: Multiple Selection
+    slug: example-multiselect
+  - name: Paging Server Side
+    slug: example-paging
+  - name: Paging Client Side
+    slug: example-paging-clientside
+  - name: Single Select
+    slug: example-singleselect.html
+  - name: Status Indicators
+    slug: example-status
+  - name: Click Events
+    slug: example-click-events
+  - name: Mixed Selection Mode
+    slug: example-mixed-selection
 ---
-
-## Configuration Options
-
-1. Default Listview Example [View Example]( ../components/listview/example-index)
-2. Alternate Row Colors [View Example]( ../components/listview/example-alternate-row-color)
-3. Multiple Selection [View Example]( ../components/listview/example-multiselect)
-4. Paging Server Side [View Example]( ../components/listview/example-paging)
-5. Paging Client Side [View Example]( ../components/listview/example-paging-clientside)
-6. Single Select [View Example]( ../components/listview/example-singleselect.html)
-7. Status Indicators [View Example]( ../components/listview/example-status)
-8. Click Events [View Example]( ../components/listview/example-click-events)
-9. Mixed Selection Mode [View Example]( ../components/listview/example-mixed-selection)
-
 ## Behavior Guidelines
 
 -   Lists may be single or multiple selected
@@ -28,7 +38,7 @@ description: This page describes Listview.
 
 This example shows using a list with a [mustache template](https://mustache.github.io/mustache.1.html). The list itself is the div with the listview class. This example is showing the list in a card but this is optional.
 
-The template shows the use of an if/else to show a is-disabled class. And also shows the use of the three text sizes available. Note that `dataset`}}` is required to loop over teh dataset option passed into the control.
+The template shows the use of an if/else to show a is-disabled class. And also shows the use of the three text sizes available. Note that `dataset` is required to loop over the dataset option passed into the control.
 
 ```html
 <div class="listview" id="id-to-list" data-tmpl="id-to-task-tmpl" data-dataset="array or url"></div>

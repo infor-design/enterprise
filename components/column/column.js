@@ -6,6 +6,8 @@ import { utils } from '../utils/utils';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
 
+import '../emptymessage/emptymessage.jquery';
+
 // Settings and Options
 const COMPONENT_NAME = 'column';
 
@@ -25,6 +27,9 @@ const COMPONENT_NAME = 'column';
 * @param {string} [settings.format = null] The d3 axis format
 * @param {string} [settings.formatterString] Use d3 format some examples can be found on http://bit.ly/1IKVhHh
 * @param {number} [settings.ticks = 9] The number of ticks to show.
+* @param {function} [settings.xAxis.formatText] A function that passes the text element and a counter.
+* You can return a formatted svg markup element to replace the current element.
+* For example you could use tspans to wrap the strings or color them.
 * @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
 * An empty message will be displayed when there is no chart data. This accepts an object of the form
 * `emptyMessage: {
@@ -405,6 +410,8 @@ Column.prototype = {
     let targetBars;
     let pnBars;
     const barMaxWidth = 35;
+    const barsInGroup = dataArray[0] && dataArray[0].values ? dataArray[0].values.length : 0;
+    const isGroupSmaller = ((width / dataArray.length) > (barMaxWidth * (barsInGroup + 1)));
     const color = function (colorStr) {
       return charts.chartColor(0, '', { color: colorStr });
     };
@@ -528,7 +535,13 @@ Column.prototype = {
             return i;
           })
           .attr('transform', function (d) {
-            return `translate(${x0(self.settings.isStacked ? xAxisValues[0] : d.name)},0)`;
+            let x = x0(self.settings.isStacked ? xAxisValues[0] : d.name);
+            const bandwidth = x0.bandwidth();
+            if (!self.settings.isStacked && isGroupSmaller &&
+              bandwidth > ((barMaxWidth * dataArray.length) * 2)) {
+              x += (((x0.bandwidth() / 2) / dataArray.length) / 2);
+            }
+            return `translate(${x},0)`;
           });
 
         bars = xValues.selectAll('rect')
@@ -848,6 +861,16 @@ Column.prototype = {
         charts.addLegend(self.settings.isStacked ? seriesStacked :
           series, self.settings.type, self.settings, self.element);
       }
+    }
+
+    if (self.settings.xAxis && self.settings.xAxis.formatText) {
+      self.svg.selectAll('.x.axis .tick text').each(function (m) {
+        const elem = d3.select(this);
+        const text = d3.select(this).text();
+        const markup = self.settings.xAxis.formatText(text, m);
+
+        elem.html(markup);
+      });
     }
 
     if (charts.isRTL && charts.isIE) {

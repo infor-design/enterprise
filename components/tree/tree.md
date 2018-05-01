@@ -1,21 +1,34 @@
 ---
-title: Tree Component 
+title: Tree Component
 description: This page describes Tree Component .
+demo:
+  pages:
+  - name: Common Configuration
+    slug: example-index
+  - name: Add Node
+    slug: example-add-node
+  - name: Ajax
+    slug: example-ajax
+  - name: Badges
+    slug: example-badges
+  - name: Context Menu
+    slug: example-context-menu
+  - name: Custom Folders
+    slug: example-custom-folders
+  - name: Destroy
+    slug: example-destroy
+  - name: Disabled
+    slug: example-disabled
+  - name: Enabled
+    slug: example-enabled
+  - name: Select By Id
+    slug: example-select-by-id
+  - name: Select Event
+    slug: example-select-event
+  - name: Select Multiple
+    slug: example-select-multiple
+  - name: Sortable
+    slug: example-sortable
+  - name: Update Node
+    slug: example-update-node
 ---
-
-## Configuration Options
-
-1. Common Configuration [View Example]( ../components/tree/example-index)
-2. Add Node [View Example]( ../components/tree/example-add-node)
-3. Ajax [View Example]( ../components/tree/example-ajax)
-4. Badges [View Example]( ../components/tree/example-badges)
-5. Context Menu [View Example]( ../components/tree/example-context-menu)
-6. Custom Folders [View Example]( ../components/tree/example-custom-folders)
-7. Destroy [View Example]( ../components/tree/example-destroy)
-8. Disabled [View Example]( ../components/tree/example-disabled)
-9. Enabled [View Example]( ../components/tree/example-enabled)
-10. Select By Id [View Example]( ../components/tree/example-select-by-id)
-11. Select Event [View Example]( ../components/tree/example-select-event)
-12. Select Multiple [View Example]( ../components/tree/example-select-multiple)
-13. Sortable [View Example]( ../components/tree/example-sortable)
-14. Update Node [View Example]( ../components/tree/example-update-node)

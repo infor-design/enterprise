@@ -1,9 +1,10 @@
 ---
-title: Step Process Component 
+title: Step Process Component
 description: This page describes Step Process Component .
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
+  - name: Markup-driven Example
+    slug: example-markup
 ---
-
-## Configuration Options
-
-1. [Main Example]( ../components/stepprocess/example-index)
-2. [Markup-driven Example]( ../components/stepprocess/example-markup)

@@ -202,8 +202,7 @@ const formatters = {
     let renderedTmpl = '';
 
     if (Tmpl && item && tmpl) {
-      const compiledTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`);
-      renderedTmpl = compiledTmpl.render({ dataset: item });
+      renderedTmpl = Tmpl.compile(`{{#dataset}}${tmpl}{{/dataset}}`, { dataset: item });
     }
 
     return renderedTmpl;
@@ -515,6 +514,20 @@ const formatters = {
           <use xlink:href="#icon-dropdown"></use>
         </svg>
       </div>`;
+    }
+
+    return html;
+  },
+
+  Fileupload(row, cell, value, col) {
+    let html = ((value === null || value === undefined || value === '') ? '' : value.toString());
+
+    if (!col.inlineEditor) {
+      if ($.trim(html) === '') {
+        html = `<span class="trigger">${html}</span>${$.createIcon({ icon: 'folder', classes: ['icon-fileupload'] })}`;
+      } else {
+        html = `<span class="trigger is-clearable">${html}</span>${$.createIcon({ icon: 'close', classes: ['icon-close'] })}${$.createIcon({ icon: 'folder', classes: ['icon-fileupload'] })}`;
+      }
     }
 
     return html;

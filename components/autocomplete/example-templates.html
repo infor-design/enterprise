@@ -16,20 +16,21 @@
   </div>
 </div>
 
-<!--This is only needed because it renders first on the server-->
-{{={{{ }}}=}}
+<!-- Switch Delimiter to prevent server side processing -->
+{{=<% %>=}}
 <script id="autocomplete-template-email" type="text/html">
   <li id="{{listItemId}}" {{#hasValue}} data-value="{{value}}" {{/hasValue}} role="listitem">
     <a href="#" tabindex="-1">
-       <span>{{& label}}</span>
-       <small>{{& email}}</small>
+       <span>{{{label}}}</span>
+       <small>{{{email}}}</small>
 
-       <span style="display: none;" class="display-value">{{& label}} - {{& email}}</span>
+       <span style="display: none;" class="display-value">{{{label}}} - {{{email}}}</span>
     </a>
   </li>
 </script>
+<%={{ }}=%>
 
-<script type="text/javascript">
+<script>
   $('body').on('initialized', function() {
 
   // Setup an alternate source for the templated Autocomplete.

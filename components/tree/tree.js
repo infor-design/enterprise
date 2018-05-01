@@ -90,7 +90,7 @@ Tree.prototype = {
     this.isMultiselect = s.selectable === 'multiple';
     s.hideCheckboxes = s.hideCheckboxes || !this.isMultiselect;
 
-    this.element.addClass(this.isMultiselect ? ' is-muliselect' : '');
+    this.element.addClass(this.isMultiselect ? ' is-multiselect' : '');
 
     links.each(function () {
       const a = $(this);

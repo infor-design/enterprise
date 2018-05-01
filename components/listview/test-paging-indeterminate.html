@@ -25,9 +25,9 @@
   </div>
 </div>
 
-<script type="text/javascript">
+<script>
   $('body').on('initialized', function() {
-    var statusCodes = $.get({url: '{{basepath}}api/general/status-codes'});
+    var statusCodes = $.get({url: '{{basepath}}api/status-codes'});
 
     function replaceStatus(dataObj) {
       var code = dataObj.status,

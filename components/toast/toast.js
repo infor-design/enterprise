@@ -1,5 +1,6 @@
 import * as debug from '../utils/debug';
 import { utils, math } from '../utils/utils';
+import { stringUtils } from '../utils/string';
 import { renderLoop, RenderLoopItem } from '../utils/renderloop';
 import { Locale } from '../locale/locale';
 
@@ -64,8 +65,8 @@ Toast.prototype = {
     let container = $('#toast-container');
     const toast = $(`
       <div class="toast">
-        <span class="toast-title">${settings.title}</span>
-        <span class="toast-message">${settings.message}</span>
+        <span class="toast-title">${stringUtils.stripHTML(settings.title)}</span>
+        <span class="toast-message">${stringUtils.stripHTML(settings.message)}</span>
       </div>`);
     const closeBtn = $(`
       <button type="button" class="btn-icon btn-close" title="${Locale.translate('Close')}" aria-hidden="true">
@@ -161,7 +162,7 @@ Toast.prototype = {
    */
   updated(settings) {
     if (settings) {
-      this.settings = utils.mergeSettings(this.element[0], settings, this.settings);
+      this.settings = utils.mergeSettings(this.element[0], settings, TOAST_DEFAULTS);
     }
     this.show();
   },

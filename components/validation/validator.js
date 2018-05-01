@@ -153,6 +153,11 @@ Validator.prototype = {
       }
 
       field.off(events).on(events, function (e) {
+        // Skip on Tab
+        if (e.type === 'keyup' && e.keyCode === 9) {
+          return;
+        }
+
         const thisField = $(this);
         const handleEventData = thisField.data(`handleEvent${[(e.type || '')]}`);
 
@@ -167,11 +172,6 @@ Validator.prototype = {
           return;
         }
         thisField.data(`handleEvent${[(e.type || '')]}`, e.handleObj);
-
-        // Skip on Tab
-        if (e.type === 'keyup' && e.keyCode === 9) {
-          return;
-        }
 
         setTimeout(() => {
           if (thisField.attr('data-disable-validation') === 'true' || thisField.hasClass('disable-validation') || thisField[0].style.visibility === 'is-hidden' || !thisField.is(':visible')) {

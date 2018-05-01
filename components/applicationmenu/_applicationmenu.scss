@@ -69,12 +69,14 @@
         .icon.avatar {
           border-radius: 24px;
           height: 48px;
+          vertical-align: top;
           width: 48px;
         }
 
         .content {
           @include font-size(14);
-          padding-left: 1em;
+          max-width: calc(100% - 52px);
+          padding-left: .5em;
 
           > * {
             display: block;
@@ -83,7 +85,7 @@
 
           > .name {
             @include font-size(20);
-            line-height: 2em;
+            // line-height: 2em;
           }
         }
 
@@ -301,6 +303,11 @@ html[dir='rtl'] {
     .accordion {
       margin-left: 0;
       margin-right: 1px;
+
+      .panel.logout .content {
+        padding-left: 0;
+        padding-right: .5em;
+      }
     }
 
     .branding {

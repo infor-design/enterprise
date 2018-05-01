@@ -473,8 +473,7 @@ Hierarchy.prototype = {
       rootNodeHTML.push(multiRootHTML);
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
     } else {
-      const leafTemplate = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`);
-      const leaf = leafTemplate.render({ dataset: data });
+      const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: data });
       rootNodeHTML.push(leaf);
 
       $(rootNodeHTML[0]).addClass('root').appendTo(chart);
@@ -623,8 +622,7 @@ Hierarchy.prototype = {
       /* global Tmpl */
       self.setColor(thisNodeData);
 
-      const leafTemplate = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`);
-      const leaf = leafTemplate.render({ dataset: thisNodeData });
+      const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData });
       let parent = el.length === 1 ? el : container;
       let branchState = thisNodeData.isExpanded || thisNodeData.isExpanded === undefined ? 'branch-expanded' : 'branch-collapsed';
 
@@ -639,7 +637,7 @@ Hierarchy.prototype = {
 
         for (let j = 0, l = thisNodeData.children.length; j < l; j++) {
           self.setColor(thisNodeData.children[j]);
-          const childLeaf = leafTemplate.render({ dataset: thisNodeData.children[j] });
+          const childLeaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData.children[j] });
 
           if (j === thisNodeData.children.length - 1) {
             childrenNodes += `<li>${$(childLeaf)[0].outerHTML}</li>`;
@@ -746,6 +744,7 @@ Hierarchy.prototype = {
 
     // data has been loaded if it has children
     if ((data.children && data.children.length !== 0) || eventType === 'add') {
+      data.isExpanded = true;
       data.isLoaded = true;
     }
 

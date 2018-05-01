@@ -19,31 +19,11 @@
       pagesize: 5,
       rowHeight: 'short',
       indeterminate: true,
-      source: datagridPagingFucntion
-    })
-    .on('selected', function(e, args) {
-      if (args && args.length > 1) {
-        var indexString = "";
-        for (var i = 0; i < args.length; i++) {
-          indexString += args[i].idx + (i < args.length - 1 ? ', ' : '');
-        }
-        console.log('selected row indexes', indexString);
-      } else if (args && args.length > 0) {
-        console.log('selected row index', args[0].idx);
-      }
-    })
-    .on('rowactivated', function(e, args) {
-      console.log('activated row index', args.row);
-    })
-    .on('dblclick', function(e, args) {
-      console.log('double clicked row index', args.row);
-    })
-    .on('contextmenu', function(e, args) {
-      console.log('contextmenu event', args.row);
+      source: datagridPagingFunction
     })
     .data('datagrid');
 
-    function datagridPagingFucntion(request, response) {
+    function datagridPagingFunction(request, response) {
       // -------------------------------------------------------------------------------------------------
       // call async function to get first/last/previous/next page of data.
       // -------------------------------------------------------------------------------------------------
@@ -80,16 +60,6 @@
         // put the new page of data back into the datagrid
         // -------------------------------------------------------------------------------------------------
         response(result.data, request);
-
-        if (activatedRow &&
-          activatedRow.length === 1 &&
-          activatedRow[0].row > -1) {
-          grid.activateRow(activateRowIndex);
-        }
-
-        if (selectedRow) {
-          grid.selectRow(selectedRow.idx);
-        }
       });
     }
 

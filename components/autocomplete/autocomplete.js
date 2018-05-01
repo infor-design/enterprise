@@ -287,9 +287,7 @@ Autocomplete.prototype = {
 
     filterResult.forEach((dataset) => {
       if (typeof Tmpl !== 'undefined') {
-        const compiledTmpl = Tmpl.compile(self.tmpl);
-        const renderedTmpl = compiledTmpl.render(dataset);
-
+        const renderedTmpl = Tmpl.compile(self.tmpl, dataset);
         self.list.append($.sanitizeHTML(renderedTmpl));
       } else {
         const listItem = $('<li role="listitem"></li>');

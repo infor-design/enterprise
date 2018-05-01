@@ -178,7 +178,7 @@ masks.numberMask = function sohoNumberMask(rawValue, options) {
       thisRawValue = thisRawValue.slice(0, suffixLength * -1);
     }
 
-    if (hasDecimal && (options.allowDecimal || options.requireDecimal)) {
+    if (hasDecimal) {
       integer = thisRawValue.slice(thisRawValue.slice(0, prefixLength) === PREFIX ?
         prefixLength : 0, indexOfLastDecimal);
 

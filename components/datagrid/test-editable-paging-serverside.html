@@ -35,7 +35,6 @@
               paging: true,
               pagesize: 10,
               resultsText: function (grid, count, filterCount) {
-                console.log(grid, count, filterCount);
                 if (filterCount > 0 ) {
                   return '(' + filterCount + ' of '+ count + ')';
                 }
@@ -69,6 +68,8 @@
                 });
               },
               toolbar: {title: 'Data Grid Header Title',filterRow: true, personalize: true, results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+            }).on('cellchange', function (e, args) {
+              console.log(args);
             });
         });
 

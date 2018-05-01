@@ -671,7 +671,7 @@ ApplicationMenu.prototype = {
     this.accordion.on('blur.applicationmenu', () => {
       self.closeMenu();
     }).on('selected.applicationmenu', (e, header) => {
-      const a = header.children('a');
+      const a = $(header).children('a');
       self.handleDismissOnClick(a);
     }).on('followlink.applicationmenu', (e, anchor) => {
       self.handleDismissOnClick(anchor);

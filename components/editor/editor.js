@@ -236,15 +236,6 @@ Editor.prototype = {
     return this;
   },
 
-  // Builds a fake element and gets the name of the event that will be used for "paste"
-  // Used for cross-browser compatability.
-  getPasteEvent() {
-    const el = document.createElement('input');
-    const name = 'onpaste';
-    el.setAttribute(name, '');
-    return `${((typeof el[name] === 'function') ? 'paste' : 'input')}.editor`;
-  },
-
   initToolbar() {
     if (this.toolbar) {
       return this;
@@ -350,10 +341,10 @@ Editor.prototype = {
     // fill the text area with any content that may already exist within the editor DIV
     this.textarea.text(this.element.html().toString());
 
-    this.element.on('input.editor keyup.editor', debounce(function () {
+    self.container.on('input.editor keyup.editor', self.element, debounce(() => {
       self.textarea.val(self.element.html().toString());
       // setting the value via .val doesn't trigger the change event
-      $(this).trigger('change');
+      self.element.trigger('change');
     }, 500));
 
     this.setupTextareaEvents();
@@ -1226,10 +1217,6 @@ Editor.prototype = {
     const self = this;
     const currentElement = self.getCurrentElement();
 
-    if (!self.pasteEvent) {
-      self.pasteEvent = self.getPasteEvent();
-    }
-
     this.pasteWrapper = function (e) {
       let paste;
       if (e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
@@ -1357,7 +1344,7 @@ Editor.prototype = {
       }
     };
 
-    currentElement.on(self.pasteEvent, (self.settings.pasteAsPlainText ?
+    currentElement.on('paste.editor', (self.settings.pasteAsPlainText ?
       self.pasteWrapper : self.pasteWrapperHtml));
 
     return this;
@@ -1842,7 +1829,8 @@ Editor.prototype = {
         color = cpApi.decimal2rgb(color);
       }
       color = cpApi.rgb2hex(color);
-      cpBtn.attr('data-value', color).find('.icon').css('fill', color);
+      cpBtn.attr('data-value', color)
+        .find('.icon').css('fill', color === 'transparent' ? '' : color);
     }
     return { cpBtn, cpApi, color };
   },
@@ -1854,11 +1842,16 @@ Editor.prototype = {
     const cpApi = state.cpApi;
 
     cpBtn.on('selected.editor', (e, item) => {
-      const value = (`#${item.data('value')}`).toLowerCase();
+      let value = (`#${item.data('value')}`).toLowerCase();
+      value = value !== '#' ? value : '';
       cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
       if (this.isIe || action === 'foreColor') {
-        document.execCommand(action, false, value);
+        if (value) {
+          document.execCommand(action, false, value);
+        } else {
+          document.execCommand('removeFormat', false, action);
+        }
       } else {
         // [action: backColor] - for Chrome/Firefox/Safari
         // Get selection parent element
@@ -1996,7 +1989,7 @@ Editor.prototype = {
     this.toolbar.off('touchstart.editor click.editor click.editor mousedown.editor');
     this.toolbar.remove();
     this.toolbar = undefined;
-    this.element.off(`mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor ${this.pasteEvent}`);
+    this.element.off('mouseup.editor keypress.editor input.editor keyup.editor keydown.editor focus.editor mousedown.editor DOMNodeInserted.editor updated.editor blur.editor paste.editor');
     this.textarea.off('mouseup.editor click.editor keyup.editor input.editor focus.editor blur.editor');
     this.element.prev('.label').off('click.editor');
 
@@ -2042,6 +2035,7 @@ Editor.prototype = {
   },
 
   teardown() {
+    this.container.off('input.editor keyup.editor', this.element);
     $('html').off('mouseup.editor');
 
     this.destroyToolbar();

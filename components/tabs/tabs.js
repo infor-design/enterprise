@@ -237,7 +237,7 @@ Tabs.prototype = {
 
     // Conditionally Change layout classes if veritcal tabs is in responsive
     // mode, and breakpoints match.
-    this.checkResponsive();
+    this.checkResponsive(false);
 
     // Handle Focus State, Animated Bar, More Button, Add Tabs Button, and
     // App Menu Button.
@@ -294,11 +294,17 @@ Tabs.prototype = {
       let panel;
 
       // Associated the current one
-      const href = a.attr('href');
+      let href = a.attr('href');
 
       if (href.substr(0, 1) !== '#') {
         // is an outbound Link
         return;
+      }
+
+      if (href.substr(0, 2) === '#/') {
+        // uses angular LocationStrategy
+        // Just to find the panel but these are handled by angular
+        href = href.replace('#/', '#');
       }
 
       if (href !== undefined && href !== '#') {
@@ -685,11 +691,7 @@ Tabs.prototype = {
     const dismissible = self.tablist.find('li').filter('.dismissible');
     dismissible.each(dismissibleTabEvents);
 
-    // Events specific to markup that can be re-rendered mid-lifecycle
-    // The responsive vertical tabs system will set this up automatically, so skip
-    if (!this.isResponsiveVerticalTabs()) {
-      this.setupHelperMarkupEvents();
-    }
+    this.setupHelperMarkupEvents();
 
     this.panels.on('keydown.tabs', (e) => {
       self.handlePanelKeydown(e);
@@ -902,7 +904,7 @@ Tabs.prototype = {
 
     this.moreButton.data('focused-by-click', true);
 
-    if (!(this.container.hasClass('has-more-button'))) {
+    if (!(this.hasMoreButton())) {
       e.stopPropagation();
     }
     if (this.moreButton.hasClass('popup-is-open')) {
@@ -1387,6 +1389,13 @@ Tabs.prototype = {
       return false;
     }
 
+    const validKeys = [13, 32, 37, 38, 39, 40];
+    const key = e.which;
+
+    if (validKeys.indexOf(key) < 0) {
+      return false;
+    }
+
     const self = this;
     const isRTL = Locale.isRTL();
     let targetLi;
@@ -1407,7 +1416,7 @@ Tabs.prototype = {
       targetLi = self.tablist.find(filter).first();
     }
 
-    switch (e.which) {
+    switch (key) {
       case 37: // left
         if (isRTL) {
           firstTab();
@@ -1459,7 +1468,7 @@ Tabs.prototype = {
    */
   handleResize(ignoreResponsiveCheck) {
     if (!ignoreResponsiveCheck) {
-      this.checkResponsive();
+      this.checkResponsive(true);
     }
 
     this.setOverflow();
@@ -1487,7 +1496,7 @@ Tabs.prototype = {
    * @private
    * @returns {void}
    */
-  checkResponsive() {
+  checkResponsive(handleRebuild) {
     const self = this;
     const classList = self.element[0].classList;
 
@@ -1503,7 +1512,9 @@ Tabs.prototype = {
         classList.add('header-tabs');
         classList.add('alternate');
         classList.remove('vertical');
-        rebuild();
+        if (handleRebuild) {
+          rebuild();
+        }
       }
     }
 
@@ -1513,7 +1524,9 @@ Tabs.prototype = {
         classList.remove('is-in-responsive-mode');
         classList.remove('header-tabs');
         classList.remove('alternate');
-        rebuild();
+        if (handleRebuild) {
+          rebuild();
+        }
       }
     }
 
@@ -1715,6 +1728,7 @@ Tabs.prototype = {
     if (href.indexOf('#') === -1 && href.charAt(0) !== '/') {
       href = `#${href}`;
     }
+
     return this.anchors.filter(`[href="${href}"]`);
   },
 
@@ -1736,6 +1750,10 @@ Tabs.prototype = {
       return $();
     }
 
+    // uses angular LocationStrategy
+    if (href.substr(0, 2) === '#/') {
+      href = href.replace('#/', '#');
+    }
     return this.panels.filter(`[id="${href.replace(/#/g, '')}"]`);
   },
 
@@ -3423,7 +3441,8 @@ Tabs.prototype = {
         cb();
       }
     }
-    this.animationTimeout = setTimeout(animationTimeout.apply(this, [callback]), 0);
+
+    animationTimeout(callback);
   },
 
   /**

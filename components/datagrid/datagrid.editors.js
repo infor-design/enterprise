@@ -511,6 +511,133 @@ const editors = {
     this.init();
   },
 
+  Fileupload(row, cell, value, container, column, event, grid) {
+    const s = utils.mergeSettings(undefined, column.editorOptions, {
+      allowedTypes: '*' // restrict file types(ie. 'jpg|png|gif') ['*' all types]
+    });
+    const fileExtensions = s.allowedTypes.split(/[\s|]+/g);
+    const id = $.fn.uniqueId(`fileupload-${row}-${cell}-`);
+    const multiple = s.useMultiple ? ' multiple' : '';
+    const disabled = s.isDisabled ? ' disabled' : '';
+    let types = '';
+
+    if (fileExtensions.length === 1) {
+      if (fileExtensions[0] !== '*') {
+        types = `.${fileExtensions[0]}`;
+      }
+    } else {
+      for (let i = 0, l = fileExtensions.length; i < l; i++) {
+        types += `.${(fileExtensions[i] + (i !== (l - 1) ? ',' : ''))}`;
+      }
+    }
+    if (types !== '') {
+      types = ` accept="${types}"`;
+    }
+
+    this.name = 'fileupload';
+    this.originalValue = value;
+    this.status = 'init';
+    this.useValue = true; // use the data set value not cell value
+
+    this.init = function () {
+      this.input = $(`<input id="${id}" name="${id}" class="fileupload" type="file" ${types}${multiple}${disabled} />`);
+      container.append(`<label>${this.input[0].outerHTML}</label>`);
+      this.api = this.input.fileupload(column.editorOptions).data('fileupload');
+      this.input.closest('td').addClass('is-fileupload').find('label:eq(1)').addClass('audible');
+    };
+
+    this.val = function (v) {
+      return v ? this.input.attr('value', v) : this.input.val();
+    };
+
+    this.focus = () => {
+      /**
+       * Handle cancel on file-input
+       * Bind body to listen one time only, right after file chooser window popup open
+       * Listen on body `focusin`(on close popup window),
+       * if no `change` event triggered means it canceled
+       * @private
+       * @returns {void}
+       */
+      const handleCancel = () => {
+        $('body').one('focusin.fileuploadeditor', () => {
+          setTimeout(() => {
+            if (this.status !== 'change') {
+              this.status = 'cancel';
+              grid.commitCellEdit(this.input);
+            }
+          }, 100);
+        });
+      };
+
+      /**
+       * Handle clear the value on file-input
+       * @private
+       * @returns {void}
+       */
+      const handleClear = () => {
+        if (this.originalValue !== '') {
+          this.status = 'clear';
+        }
+        grid.commitCellEdit(this.input);
+      };
+
+      /**
+       * Open file chooser popup window for file-input
+       * @private
+       * @returns {void}
+       */
+      const openFileChooserWindow = () => {
+        if (this.api) {
+          this.api.fileInput.trigger('click');
+          handleCancel();
+        }
+      };
+
+      // Using keyboard
+      if (event.type === 'keydown') {
+        const key = event.which || event.keyCode || event.charCode || 0;
+
+        if (key === 8 || key === 46) {
+          // Backspace: 8, Delete: 46
+          handleClear();
+        } else if (key === 13 || key === 10) {
+          // Enter (Some browser return keyCode: 10, not 13)
+          openFileChooserWindow();
+        } else {
+          grid.commitCellEdit(this.input);
+        }
+      }
+
+      // Check if isClick or cell touch
+      if (event.type === 'click') {
+        const target = $(event.target);
+        if (target.is('.icon-close')) {
+          handleClear();
+        } else if (target.is('.icon-fileupload')) {
+          openFileChooserWindow();
+        } else {
+          grid.commitCellEdit(this.input);
+        }
+      }
+
+      // Handle change for file-input
+      this.input.on('change', () => {
+        this.status = 'change';
+        grid.commitCellEdit(this.input);
+      });
+    };
+
+    this.destroy = () => {
+      grid.quickEditMode = false;
+      if (this.api) {
+        this.api.destroy();
+      }
+    };
+
+    this.init();
+  },
+
   Time(row, cell, value, container, column, event, grid) {
     this.name = 'time';
     this.originalValue = value;
