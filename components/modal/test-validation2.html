@@ -4,7 +4,7 @@
 
     <div class="field">
       <label for="test-1" class="required">Some value (click text box to open modal)</label>
-      <input type="text" id="test-1" name="test-1" aria-required="true" data-validate="required">
+      <input type="text" id="test-1" name="test-1" aria-required="true" data-validate="required"/>
     </div>
 
     <div class="modal" id="modal-1">
@@ -30,12 +30,17 @@
 
           <div class="field">
             <label for="context-name" class="required">Name</label>
-            <input type="text" id="context-name" name="context-name" aria-required="true" data-validate="required" placeholder="Example: Name One">
+            <input type="text" id="context-name" name="context-name" aria-required="true" data-validate="required" placeholder="Example: Name One"/>
           </div>
 
           <div class="field">
            <label for="context-desc" class="required">Description</label>
            <textarea id="context-desc" data-validate="required" name="context-desc" placeholder="Example: A description goes here"></textarea>
+          </div>
+          <div class="field" style="width: 300px">
+            <span class="label required">Editor <span class="audible">Required</span></span>
+            <div class="editor" data-validate="required" style="height: 100px;">
+            </div>
           </div>
 
           <div class="modal-buttonset">

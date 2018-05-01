@@ -78,11 +78,15 @@ function ValidationRules() {
         // Check all required fields filled on modal
 
         let allFilled = true;
-        field.closest('.modal').find('input.required, textarea.required, select.required').not(':hidden').each(function () {
-          if (!self.isNotEmpty($(this).val())) {
-            allFilled = false;
-          }
-        });
+        field.closest('.modal').find('input.required, textarea.required, .editor.required').not(':hidden').add('select.required')
+          .each(function () {
+            const elem = $(this);
+            const fieldValue = elem.is('.editor') ? elem.html() : elem.val();
+
+            if (!self.isNotEmpty(fieldValue)) {
+              allFilled = false;
+            }
+          });
 
         if (allFilled) {
           field.closest('.modal').find('.btn-modal-primary').not('.no-validation').removeAttr('disabled');
