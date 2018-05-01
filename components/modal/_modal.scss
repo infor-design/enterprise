@@ -82,6 +82,10 @@
   .field:last-child .spinbox-wrapper,
   .field:last-child .colorpicker-container {
     margin-bottom: 10px;
+
+    + .error-message {
+      margin-top: -10px;
+    }
   }
 
   .textarea-wordcount {
