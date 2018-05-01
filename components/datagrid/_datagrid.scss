@@ -70,6 +70,7 @@ $datagrid-short-row-height: 23px;
     .datagrid-header {
       .datagrid-column-wrapper {
         padding: 5px 20px 10px;
+
         .sort-indicator {
           vertical-align: baseline;
         }
@@ -1156,13 +1157,21 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    &.is-active-row,
-    &.is-clickable {
-      cursor: pointer;
+    &.is-clickable,
+    &.is-active-row {
 
       td:focus .datagrid-cell-wrapper {
         border-color: transparent;
+        box-shadow: none;
       }
+
+      td {
+        box-shadow: none;
+      }
+    }
+
+    &.is-clickable {
+      cursor: pointer;
     }
 
     .icon.plus-minus::before,
@@ -1320,7 +1329,7 @@ $datagrid-short-row-height: 23px;
     &:focus ,
     &.is-focused {
       box-shadow: $datagrid-cell-focus-box-shadow;
-      
+
       .datagrid-cell-wrapper {
         border: 1px solid $primary-color;
       }
@@ -3288,9 +3297,9 @@ html[dir='rtl'] {
 }
 
 .table-errors {
+  display: inline-block;
   height: 35px;
   margin-left: 10px;
-  display: inline-block;
   position: relative;
   top: -9px;
 }
