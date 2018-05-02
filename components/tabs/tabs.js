@@ -1495,6 +1495,7 @@ Tabs.prototype = {
    * Checks the window size to determine if a responsive-mode switch is needed.
    * @private
    * @returns {void}
+   * @param  {boolean} handleRebuild Do a rebuild after handling.
    */
   checkResponsive(handleRebuild) {
     const self = this;
