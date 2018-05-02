@@ -20,6 +20,8 @@ let LOOKUP_GRID_ID = 'lookup-datagrid';
  * @param {jquery[]|htmlelement} element the base element
  * @param {object} [settings] incoming settings
  * @param {function} [settings.click] Provide a special function to run when the dialog opens to customize the interaction entirely.
+ * @param {string} [settings.clickArguments={}] If a click method is defined, this flexible object can be passed
+ * into the click method, and augmented with parameters specific to the implementation.
  * @param {string} [settings.field='id'] Field name to return from the dataset or can be a function which returns a string on logic
  * @param {string} [settings.title] Dialog title to show, or befault shows  field label + "Lookup"
  * @param {array} [settings.buttons] Pass dialog buttons or Cancel / Apply
@@ -44,7 +46,8 @@ const LOOKUP_DEFAULTS = {
   typeahead: false, // Future TODO
   autoApply: true,
   validator: null,
-  autoWidth: false
+  autoWidth: false,
+  clickArguments: {}
 };
 
 function Lookup(element, settings) {
@@ -220,7 +223,7 @@ Lookup.prototype = {
     }
 
     if (self.settings.click) {
-      self.settings.click(e, this);
+      self.settings.click(e, this, self.settings.clickArguments);
       return;
     }
 

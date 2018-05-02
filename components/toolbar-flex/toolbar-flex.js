@@ -87,9 +87,14 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   handleEvents() {
-    this.element.addEventListener('keydown', this.handleKeydown.bind(this));
-    this.element.addEventListener('keyup', this.handleKeyup.bind(this));
-    this.element.addEventListener('click', this.handleClick.bind(this));
+    this.keydownListener = this.handleKeydown.bind(this);
+    this.element.addEventListener('keydown', this.keydownListener);
+
+    this.keyupListener = this.handleKeyup.bind(this);
+    this.element.addEventListener('keyup', this.keyupListener);
+
+    this.clickListener = this.handleClick.bind(this);
+    this.element.addEventListener('click', this.clickListener);
 
     $(this.element).on(`selected.${COMPONENT_NAME}`, (e, ...args) => {
       log('dir', args);
@@ -479,9 +484,9 @@ ToolbarFlex.prototype = {
    * @returns {void}
    */
   teardown() {
-    this.element.removeEventListener('keydown', this.handleKeydown.bind(this));
-    this.element.removeEventListener('keyup', this.handleKeyup.bind(this));
-    this.element.removeEventListener('click', this.handleClick.bind(this));
+    this.element.removeEventListener('keydown', this.keydownListener);
+    this.element.removeEventListener('keyup', this.keyupListener);
+    this.element.removeEventListener('click', this.clickListener);
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
 

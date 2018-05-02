@@ -88,6 +88,8 @@ describe('Flex Toolbar', () => {
   });
 
   it('Can check for which of its items belongs in an overflow menu', () => {
+    // Test doesn't pass unless we have an actual width on the toolbar
+    rowEl.style.width = '20000px';
     let overflow = toolbarAPI.overflowedItems;
 
     // Normal overflow situation should be that nothing is overflowed.
@@ -104,6 +106,9 @@ describe('Flex Toolbar', () => {
   });
 
   it('Can programmatically navigate toolbar items', () => {
+    // Test doesn't pass unless we have an actual width on the toolbar
+    rowEl.style.width = '20000px';
+
     const items = toolbarAPI.items;
     let focusedItem = toolbarAPI.focusedItem;
 
@@ -255,6 +260,8 @@ describe('Flex Toolbar', () => {
     });
 
     it('Can announce whether or not it can become the focused item', () => {
+      // Test doesn't pass unless we have an actual width on the toolbar
+      rowEl.style.width = '20000px';
       const menuButton = toolbarAPI.items[1];
 
       expect(menuButton.focusable).toBeTruthy();
