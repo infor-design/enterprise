@@ -17,14 +17,10 @@ sections:
   pages:
   - name: Elements
     pages:
-    - name: About
-      slug: about
     - name: Accordion
       slug: accordion
     - name: Alerts
       slug: alerts
-    - name: Application Menu
-      slug: applicationmenu
     - name: Autocomplete
       slug: autocomplete
     - name: Badges
@@ -41,10 +37,6 @@ sections:
       slug: circlepager
     - name: Color Picker
       slug: colorpicker
-    - name: Contextual Action Panel
-      slug: contextualactionpanel
-    - name: Context Menu
-      slug: contextmenu
     - name: Counts
       slug: counts
     - name: Datepicker
@@ -53,44 +45,22 @@ sections:
       slug: dropdown
     - name: Editor (RichText)
       slug: editor
-    - name: Empty Messages
-      slug: emptymessage
-    - name: Expandable Area
-      slug: expandablearea
     - name: Favorites
       slug: favorites
-    - name: Fieldset
-      slug: fieldset
     - name: Field Filter
       slug: field-filter
-    - name: Field Options
-      slug: field-options
     - name: File Upload
       slug: fileupload
     - name: File Upload (Advanced)
       slug: fileupload-advanced
-    - name: Form Functionality
-      slug: form
-    - name: Header
-      slug: header
-    - name: Hierarchy (Org Chart)
-      slug: hierarchy
-    - name: HomePage
-      slug: homepage
     - name: Hyperlinks
       slug: hyperlinks
     - name: Input (Text)
       slug: input
     - name: List Builder
       slug: listbuilder
-    - name: List Filter
-      slug: listfilter
-    - name: Lookup
-      slug: lookup
     - name: Menubutton
       slug: menubutton
-    - name: Message
-      slug: message
     - name: Modal
       slug: modal
     - name: Multiselect
@@ -113,8 +83,6 @@ sections:
       slug: slider
     - name: Spinbox
       slug: spinbox
-    - name: Step Process
-      slug: stepprocess
     - name: Swaplist
       slug: swaplist
     - name: Switch
@@ -141,10 +109,6 @@ sections:
       slug: toolbarsearchfield
     - name: Tooltip
       slug: tooltip
-    - name: Tree
-      slug: tree
-    - name: Wizard
-      slug: wizard
   - name: Blocks
     pages:
     - name: Data Tiles
@@ -153,6 +117,8 @@ sections:
       slug: datagrid
     - name: Data List
       slug: listview
+    - name: Header
+      slug: header
     - name: Toolbar
       slug: toolbar
 - name: Utilities
@@ -183,6 +149,18 @@ sections:
     slug: validation
   - name: Zoom
     slug: zoom
+- name: Patterns
+  pages:
+    - name: About
+      slug: about
+    - name: Application Menu
+      slug: applicationmenu
+    - name: Contextual Action Panel
+      slug: contextualactionpanel
+    - name: Signin
+      slug: signin
+    - name: Step Process
+      slug: stepprocess
 - name: Charts
   pages:
   - name: Getting Start with Charts
@@ -227,19 +205,43 @@ sections:
   pages:
   - name: Block Grid
     slug: blockgrid
+  - name: Context Menu
+    slug: contextmenu
   - name: Compositform
     slug: compositeform
+  - name: Empty Messages
+    slug: emptymessage
+  - name: Expandable Area
+    slug: expandablearea
+  - name: Fieldset
+    slug: fieldset
+  - name: Field Options
+    slug: field-options
+  - name: Form Functionality
+    slug: form
+  - name: Hierarchy (Org Chart)
+    slug: hierarchy
+  - name: HomePage
+    slug: homepage
   - name: Images
     slug: images
+  - name: List Filter
+    slug: listfilter
+  - name: Lookup
+    slug: lookup
   - name: Masthead
     slug: masthead
+  - name: Message
+    slug: message
   - name: Process Indicator
     slug: processindicator
   - name: Radios
     slug: radios
-  - name: Signin
-    slug: signin
   - name: Tabs-multi
     slug: tabs-multi
   - name: Textarea
     slug: textarea
+  - name: Tree
+    slug: tree
+  - name: Wizard
+    slug: wizard
