@@ -181,8 +181,12 @@ ContextualActionPanel.prototype = {
       this.toolbar = this.panel.find('.toolbar');
     }
 
-    if (this.toolbar.length) {
+    if (this.toolbar.length && this.toolbar.is('.toolbar')) {
       this.toolbar.toolbar();
+    }
+
+    if (this.toolbar.length && this.toolbar.is('.flex-toolbar')) {
+      this.toolbar.toolbarflex();
     }
 
     utils.fixSVGIcons(this.element);
@@ -232,7 +236,10 @@ ContextualActionPanel.prototype = {
               selected = selected.children('.searchfield');
             }
           }
-          self.toolbar.data('toolbar').setActiveButton(selected, true);
+          const toolbarData = self.toolbar.data('toolbar');
+          if (toolbarData) {
+            toolbarData.setActiveButton(selected, true);
+          }
         }
 
         // Focus the first focusable element inside the Contextual Panel's Body

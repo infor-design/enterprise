@@ -409,6 +409,10 @@ textarea {
       display: none;
     }
   }
+
+  &.taller {
+    min-height: 188px;  //height of three fields
+  }
 }
 
 .textarea-wordcount {
