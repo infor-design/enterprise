@@ -1298,7 +1298,11 @@ Datagrid.prototype = {
       }
 
       if (typeof elem.find('.datepicker').datepicker === 'function') {
-        elem.find('.datepicker').datepicker(col.editorOptions ? col.editorOptions : { dateFormat: col.dateFormat });
+        elem.find('.datepicker')
+          .datepicker(col.editorOptions ? col.editorOptions : { dateFormat: col.dateFormat })
+          .on('listclosed.datepicker', () => {
+            self.applyFilter(null, 'selected');
+          });
       }
 
       if (typeof elem.find('.timepicker').datepicker === 'function') {
