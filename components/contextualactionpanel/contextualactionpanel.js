@@ -116,7 +116,7 @@ ContextualActionPanel.prototype = {
       children = this.panel.children();
       if (children.is('iframe')) {
         contents = children.contents();
-        this.toolbar = contents.find('.toolbar');
+        this.toolbar = contents.find('.toolbar, .flex-toolbar');
         isIframe = true;
       }
 
@@ -131,7 +131,7 @@ ContextualActionPanel.prototype = {
       this.header.insertBefore(this.panel.find('.modal-body'));
 
       if (!this.toolbar) {
-        this.toolbar = this.panel.find('.toolbar');
+        this.toolbar = this.panel.find('.toolbar, .flex-toolbar');
       }
 
       if (!this.toolbar.length) {
@@ -181,8 +181,12 @@ ContextualActionPanel.prototype = {
       this.toolbar = this.panel.find('.toolbar');
     }
 
-    if (this.toolbar.length) {
+    if (this.toolbar.length && this.toolbar.is('.toolbar')) {
       this.toolbar.toolbar();
+    }
+
+    if (this.toolbar.length && this.toolbar.is('.flex-toolbar')) {
+      this.toolbar.toolbarflex();
     }
 
     utils.fixSVGIcons(this.element);
@@ -232,7 +236,15 @@ ContextualActionPanel.prototype = {
               selected = selected.children('.searchfield');
             }
           }
-          self.toolbar.data('toolbar').setActiveButton(selected, true);
+          if (!selected.length && self.toolbar.is('.flex-toolbar')) {
+            selected = self.toolbar.find('button').first();
+            selected.focus();
+            return;
+          }
+          const toolbarData = self.toolbar.data('toolbar');
+          if (toolbarData) {
+            toolbarData.setActiveButton(selected, true);
+          }
         }
 
         // Focus the first focusable element inside the Contextual Panel's Body

@@ -102,6 +102,7 @@ describe('Locale API', () => {
     Locale.set('in-ID');
 
     expect(Locale.currentLocale.name).toEqual('id-ID');
+    Locale.set('en-US');
   });
 
   it('Should map iw and iw-IL to he-IL', () => {
@@ -112,6 +113,7 @@ describe('Locale API', () => {
     Locale.set('iw');
 
     expect(Locale.currentLocale.name).toEqual('he-IL');
+    Locale.set('en-US');
   });
 
   it('Should format arabic month format', () => {

@@ -857,6 +857,21 @@ body.no-scroll {
   }
 }
 
+.header-section {
+  background-color: $body-bg-color;
+  border-bottom: 1px solid $panel-border-color;
+}
+
+.modal-body {
+  .header-section {
+    margin-top: -30px;
+  }
+}
+
+.detail-section {
+  background-color: $panel-bg-color;
+}
+
 // Scrollable Canvas
 //==============================================================
 .scrollable.canvas,

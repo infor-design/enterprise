@@ -37,10 +37,6 @@
   }
 
   .field {
-    &:first-child {
-      padding-bottom: 3px;
-      padding-top: 5px;
-    }
 
     [data-error-type="tooltip"] ~ .icon-error,
     [data-error-type="tooltip"] ~ .icon-confirm {
@@ -250,6 +246,14 @@
 
     + p {
       margin: 15px 0;
+    }
+
+    + img {
+      margin: 7px 0;
+    }
+
+    button {
+      margin: 2px;
     }
   }
 

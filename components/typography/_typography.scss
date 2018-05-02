@@ -342,12 +342,20 @@ small,
 
 // Left aligned fields
 .field.label-left {
+  @include font-size(14);
   display: flex;
+  margin: 5px 0;
 
   .label {
+    @include font-size(14);
+    color: $input-color;
+    line-height: normal;
     padding-right: 8px;
     position: relative;
-    top: 1px;
+
+    &::after {
+      content: ':';
+    }
   }
 }
 

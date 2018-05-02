@@ -120,10 +120,10 @@ const optionHandler = function (req, res, next) {
       policy: {
         directives: {
           'default-src': ['self'],
-          'script-src': ['self', 'nonce-' + res.opts.nonce],
+          'script-src': ['self', 'nonce-' + res.opts.nonce, 'http://squizlabs.github.io'],
           'object-src': ['none'],
           'style-src': ['* data: http://* \'unsafe-inline\''],
-          'img-src': ['self', 'https://randomuser.me', 'http://placehold.it', 'http://lorempixel.com']
+          'img-src': ['self', 'https://randomuser.me', 'http://placehold.it', 'http://lorempixel.com', 'http://squizlabs.github.io']
         }
       }
     });
