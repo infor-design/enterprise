@@ -2148,10 +2148,8 @@ Dropdown.prototype = {
     let totalMatches = 0;
 
     // Log search matches
-    if (!this.searchMatches) {
+    if (!this.searchMatches || !this.searchMatches[char]) {
       this.searchMatches = {};
-    }
-    if (!this.searchMatches[char]) {
       this.searchMatches[char] = [];
     }
 

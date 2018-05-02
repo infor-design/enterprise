@@ -104,6 +104,16 @@ describe('Locale API', () => {
     expect(Locale.currentLocale.name).toEqual('id-ID');
   });
 
+  it('Should map iw and iw-IL to he-IL', () => {
+    Locale.set('iw-IL');
+
+    expect(Locale.currentLocale.name).toEqual('he-IL');
+
+    Locale.set('iw');
+
+    expect(Locale.currentLocale.name).toEqual('he-IL');
+  });
+
   it('Should format arabic month format', () => {
     Locale.set('ar-SA');
     // Note date is year, month, day
