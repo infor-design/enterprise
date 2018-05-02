@@ -344,8 +344,6 @@
     height: 16px;
     margin-bottom: 1px;
     margin-right: 0;
-    right: inherit;
-    top: 0;
     width: 16px;
   }
 
@@ -452,8 +450,8 @@ html[dir='rtl'] {
 
     &.chart-targeted-achievement {
       .icon-error {
-        left: auto;
-        right: -5px;
+        left: -20px;
+        right: auto;
       }
     }
   }
