@@ -527,6 +527,8 @@ ToolbarFlexItem.prototype = {
       menu: $menu,
       predefined: menuItems
     });
+
+    this.menuRendered = true;
   },
 
   /**
@@ -597,7 +599,7 @@ ToolbarFlexItem.prototype = {
    * @returns {void}
    */
   unlinkToolbarItems() {
-    if (this.type !== 'actionbutton' || !this.predefinedItems || !this.predefinedItems.length) {
+    if (this.type !== 'actionbutton' || !this.menuRendered || !this.predefinedItems || !this.predefinedItems.length) {
       return;
     }
 
@@ -825,6 +827,7 @@ ToolbarFlexItem.prototype = {
     delete this.section;
     delete this.toolbar;
     delete this.trueSelected;
+    delete this.menuRendered;
   }
 
 };
