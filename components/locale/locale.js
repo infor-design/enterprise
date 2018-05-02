@@ -119,6 +119,7 @@ const Locale = {  // eslint-disable-line
       { lang: 'hu', default: 'hu-HU' },
       { lang: 'id', default: 'id-ID' },
       { lang: 'it', default: 'it-IT' },
+      { lang: 'iw', default: 'he-IL' },
       { lang: 'ja', default: 'ja-JP' },
       { lang: 'ko', default: 'ko-KR' },
       { lang: 'lt', default: 'lt-LT' },
@@ -208,6 +209,10 @@ const Locale = {  // eslint-disable-line
     // Map incorrect java locale to correct locale
     if (locale === 'in-ID') {
       locale = 'id-ID';
+    }
+
+    if (locale.substr(0, 2) === 'iw') {
+      locale = 'he-IL';
     }
 
     locale = this.defaultLocale(locale);
