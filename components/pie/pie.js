@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary, prefer-arrow-callback */
 // Other Shared Imports
 import * as debug from '../utils/debug';
+import { Environment as env } from '../utils/environment';
 import { utils } from '../utils/utils';
 import { charts } from '../charts/charts';
 import { Locale } from '../locale/locale';
@@ -88,6 +89,7 @@ Pie.prototype = {
    */
   init() {
     this.width = 0;
+    this.isFirefox = env.browser.name === 'firefox';
 
     this
       .build()
@@ -322,6 +324,25 @@ Pie.prototype = {
     const slice = self.svg.select('.slices').selectAll('path.slice')
       .data(self.pie(data), self.key);
 
+    const getOffset = (node) => {
+      const body = document.body;
+      let rect;
+
+      // Fix: With firefox `getBoundingClientRect` not working if node is hidden
+      if (self.isFirefox && self.settings.dotSize === 0) {
+        const dot = d3.select(node);
+        dot.attr('r', 2);
+        rect = node.getBoundingClientRect();
+        dot.attr('r', self.settings.dotSize);
+      } else {
+        rect = node.getBoundingClientRect();
+      }
+      return {
+        top: rect.top + body.scrollTop,
+        left: rect.left + body.scrollLeft
+      };
+    };
+
     self.isRTL = Locale.isRTL();
 
     slice.enter()
@@ -371,7 +392,7 @@ Pie.prototype = {
         }
         // See where to position
         const dot = self.svg.selectAll('circle').nodes()[i];
-        const offset = $(dot).offset();
+        const offset = getOffset(dot);
 
         // See where we want the arrow
         const rads = self.midAngle(d);
@@ -466,6 +487,8 @@ Pie.prototype = {
       shouldShow = !isMobile;
     }
 
+    self.settings.dotSize = shouldShow ? 2 : 0;
+
     // Text Labels
     if (shouldShow) {
       const padding = 20;
@@ -542,7 +565,7 @@ Pie.prototype = {
     dots.enter()
       .append('circle')
       .attr('class', 'circles')
-      .attr('r', shouldShow ? 2 : 0)
+      .attr('r', self.settings.dotSize)
       .merge(dots)
       .transition()
       .duration(self.settings.animationSpeed)
