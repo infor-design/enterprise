@@ -236,6 +236,11 @@ ContextualActionPanel.prototype = {
               selected = selected.children('.searchfield');
             }
           }
+          if (!selected.length && self.toolbar.is('.flex-toolbar')) {
+            selected = self.toolbar.find('button').first();
+            selected.focus();
+            return;
+          }
           const toolbarData = self.toolbar.data('toolbar');
           if (toolbarData) {
             toolbarData.setActiveButton(selected, true);

@@ -480,7 +480,7 @@ ToolbarFlex.prototype = {
    */
   teardown() {
     this.element.removeEventListener('keydown', this.handleKeydown.bind(this));
-    this.element.removeEventListener('up', this.handleKeyup.bind(this));
+    this.element.removeEventListener('keyup', this.handleKeyup.bind(this));
     this.element.removeEventListener('click', this.handleClick.bind(this));
 
     $(this.element).off(`selected.${COMPONENT_NAME}`);
