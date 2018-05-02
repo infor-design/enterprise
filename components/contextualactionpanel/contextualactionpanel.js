@@ -116,7 +116,7 @@ ContextualActionPanel.prototype = {
       children = this.panel.children();
       if (children.is('iframe')) {
         contents = children.contents();
-        this.toolbar = contents.find('.toolbar');
+        this.toolbar = contents.find('.toolbar, .flex-toolbar');
         isIframe = true;
       }
 
@@ -131,7 +131,7 @@ ContextualActionPanel.prototype = {
       this.header.insertBefore(this.panel.find('.modal-body'));
 
       if (!this.toolbar) {
-        this.toolbar = this.panel.find('.toolbar');
+        this.toolbar = this.panel.find('.toolbar, .flex-toolbar');
       }
 
       if (!this.toolbar.length) {

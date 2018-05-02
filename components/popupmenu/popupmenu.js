@@ -25,6 +25,7 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {function} [settings.beforeOpen]  Callback that can be used for populating the contents of the menu.
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
+ * @param {string} [settings.showArrow]  If true you can explicitely set an arrow on the menu.
  * @param {string} [settings.returnFocus]  If set to false, focus will not be
   returned to the calling element. It usually should be for accessibility purposes.
  * @param {object} [settings.placementOpts=new PlacementObject({
@@ -46,6 +47,7 @@ const POPUPMENU_DEFAULTS = {
   ariaListbox: false,
   eventObj: undefined,
   returnFocus: true,
+  showArrow: null,
   placementOpts: new PlacementObject({
     containerOffsetX: 10,
     containerOffsetY: 10,
@@ -236,7 +238,7 @@ PopupMenu.prototype = {
         this.element.closest('.masthead').length > 0 ||
         this.element.is('.searchfield-category-button') ||
         (containerClass && containerClass.indexOf('more') >= 0) ||
-        containerClass && containerClass.indexOf('btn-group') >= 0)) {
+        containerClass && containerClass.indexOf('btn-group') >= 0) || this.settings.showArrow) {
       const arrow = $('<div class="arrow"></div>');
       const wrapper = this.menu.parent('.popupmenu-wrapper');
 

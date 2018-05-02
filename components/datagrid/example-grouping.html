@@ -37,6 +37,8 @@
             aggregator: 'sum' //sum, averge, max ect
           },
           toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
+        }).on('click', function (e, args) {
+            console.log(args)
         });
       });
  });
