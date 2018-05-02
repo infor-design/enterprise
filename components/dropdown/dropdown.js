@@ -1196,14 +1196,14 @@ Dropdown.prototype = {
     }
 
     self.initialFilter = true;
-    self.filterTerm += $.actualChar(e);
+    self.filterTerm += e.key;
+
+    if (self.settings.noSearch) {
+      self.selectStartsWith(self.filterTerm);
+      return;
+    }
 
     this.timer = setTimeout(() => {
-      if (self.settings.noSearch) {
-        self.selectStartsWith(self.filterTerm);
-        return;
-      }
-
       if (!self.isOpen()) {
         self.searchInput.val(self.filterTerm);
         self.toggleList();
@@ -1232,6 +1232,7 @@ Dropdown.prototype = {
    * Focus the input element. Since the select is hidden this is needed over normal focus()
    * @private
    * @param  {boolean} [useSearchInput] If true the search is used.
+   * @param {boolean} [noFocus] if true, does not attempt to focus the input
    * @returns {void}
    */
   activate(useSearchInput) {
@@ -1260,15 +1261,20 @@ Dropdown.prototype = {
 
     selectText();
 
-    if (document.activeElement !== input[0] &&
-      $(document.activeElement).is('body, .dropdown.is-open')) {
+    function setFocus() {
+      if (document.activeElement === input[0] || !$(document.activeElement).is('body')) {
+        return;
+      }
       input[0].focus();
     }
 
+    // Set focus back to the element
     if (self.isIe10 || self.isIe11) {
       setTimeout(() => {
-        input[0].focus();
+        setFocus();
       }, 0);
+    } else {
+      setFocus();
     }
   },
 
@@ -2131,36 +2137,54 @@ Dropdown.prototype = {
    * @param {string} char - The starting letter to match for. (Case insensitive)
    */
   selectStartsWith(char) {
-    if (typeof char === 'string') {
-      const elem = this.element[0];
-      const selectedIndex = elem.selectedIndex;
-      this.filterTerm = '';
+    if (typeof char !== 'string') {
+      return;
+    }
 
-      let newIdx = -1;
+    const elem = this.element[0];
+    this.filterTerm = '';
 
-      for (let i = 0; i < elem.options.length; i++) {
-        const option = elem.options[i];
-        // Check if its a match (Case insensitive)
-        const isMatch = option.innerText.toLowerCase().indexOf(char) === 0;
+    let newIdx = -1;
+    let totalMatches = 0;
 
-        // If already a selected item that starts with it, find the next.
-        if (i === selectedIndex) {
-          continue;
-        }
+    // Log search matches
+    if (!this.searchMatches) {
+      this.searchMatches = {};
+    }
+    if (!this.searchMatches[char]) {
+      this.searchMatches[char] = [];
+    }
 
-        if (isMatch) {
+    for (let i = 0; i < elem.options.length; i++) {
+      const option = elem.options[i];
+      // Check if its a match (Case insensitive)
+      const isMatch = option.innerText.toLowerCase().indexOf(char) === 0;
+
+      if (isMatch) {
+        if (this.searchMatches[char].indexOf(i) === -1) {
+          this.searchMatches[char].push(i);
           newIdx = i;
           break;
         }
-      }
-
-      // Set the selected element
-      if (newIdx > -1) {
-        elem.selectedIndex = newIdx;
-        this.updated();
-        this.element.trigger('change');
+        totalMatches++;
+        continue;
       }
     }
+
+    if (newIdx === -1) {
+      if (!this.searchMatches[char].length) {
+        return;
+      }
+
+      if (totalMatches === this.searchMatches[char].length) {
+        newIdx = this.searchMatches[char][0];
+        this.searchMatches[char].length = 1; // reset
+      }
+    }
+
+    elem.selectedIndex = newIdx;
+    this.updated();
+    this.element.trigger('change');
   },
 
   /**

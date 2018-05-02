@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: No Searching/Filtering</h2>
+    <p>
+      The dropdown control can have it's autocomplete functionality disabled by way of setting
+      the "noSearch" option to true. In this mode you can type the first character to select.
+      Additionally, <a class="hyperlink" href="http://jira.infor.com/browse/HFC-3407" target="_blank">
+        there was a bug</a> in iOS that prevented this from working properly before
+    </p>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="nosearch-dropdown">No-Search Dropdown</label>
+      <select id="nosearch-dropdown" class="dropdown" data-options="{noSearch: true}">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="A">A - Avengers</option>
+        <option value="B">B - Black Widow</option>
+        <option value="C">C - Captain America</option>
+        <option value="D">D - Dr. Strange</option>
+        <option value="E">E - Ego</option>
+        <option value="F">F - Falcon</option>
+        <option value="G">G - Groot</option>
+        <option value="H">H - Hulk</option>
+        <option value="I">I - Iron Man</option>
+        <option value="J">J - Jarvis</option>
+        <option value="K">K - Kingpin</option>
+        <option value="L">L - Loki</option>
+        <option value="M">M - Mantis</option>
+        <option value="N">N - Nick Fury</option>
+        <option value="O">O - Odin</option>
+        <option value="P">P - Black Panther</option>
+        <option value="Q">Q - Quicksilver</option>
+        <option value="R">R - Rocket Raccoon</option>
+        <option value="S">S - Spider-Man</option>
+        <option value="T">T - Thor</option>
+        <option value="T2">T2 - Thanos</option>
+        <option value="T3">T3 - That other one that won't get selected</option>
+        <option value="U">U - Ultron</option>
+        <option value="V">V - Vision</option>
+        <option value="W">W - Wasp</option>
+        <option value="X">X - X-Men</option>
+        <option value="Y">Y - Yeeeeee</option>
+        <option value="Z">Z - Zoidberg</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="dummy-dropdown">For third problem</label>
+      <select id="dummy-dropdown" class="dropdown">
+        <option>These</option>
+        <option>don't</option>
+        <option>matter</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('#nosearch-dropdown').on('change', function () {
+    console.log($(this).val());
+  });
+</script>
