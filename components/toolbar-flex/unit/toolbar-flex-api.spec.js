@@ -88,6 +88,7 @@ describe('Flex Toolbar', () => {
   });
 
   it('Can check for which of its items belongs in an overflow menu', () => {
+    // Test doesn't pass unless we have an actual width on the toolbar
     rowEl.style.width = '20000px';
     let overflow = toolbarAPI.overflowedItems;
 
@@ -105,6 +106,7 @@ describe('Flex Toolbar', () => {
   });
 
   it('Can programmatically navigate toolbar items', () => {
+    // Test doesn't pass unless we have an actual width on the toolbar
     rowEl.style.width = '20000px';
 
     const items = toolbarAPI.items;
