@@ -618,10 +618,6 @@ ToolbarFlexItem.prototype = {
       const originalButton = $(itemElement).data('originalButton');
       const originalButtonAPI = $(originalButton).data('toolbarflexitem');
 
-      if (!originalButtonAPI) {
-        return;
-      }
-
       originalButtonAPI.actionButtonLink = null;
       $(itemElement).removeData('original-button');
 
