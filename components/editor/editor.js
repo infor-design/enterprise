@@ -2247,6 +2247,16 @@ Editor.prototype = {
       }
     }
     return result.trim();
+  },
+
+  /**
+   * Clear the editor of its contents.
+   */
+  clear() {
+    this.element.empty();
+    this.textarea.empty();
+    this.sourceView.find('.line-numbers').empty();
+    this.sourceView.find('.textarea-print').empty();
   }
 
 };
