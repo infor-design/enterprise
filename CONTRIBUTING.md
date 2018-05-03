@@ -43,7 +43,7 @@ Guidelines for bug reports:
     - Send a link to your application
     - Just send an image of the source code
 
-    If a video is useful to show the problem please use a cross platform format such as MP4 and .webm for the video. We have found [Chrome plugin Screencastify - Screen Video Recorder]https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en to be useful.
+    If a video is useful to show the problem please use a cross platform format such as MP4 and .webm for the video. We have found [Chrome plugin Screencastify - Screen Video Recorder](https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en) to be useful.
 
 4. Use the Bug Report template below
 
