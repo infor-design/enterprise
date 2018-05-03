@@ -618,7 +618,6 @@ function componentRoute(req, res, next) {
   opts = addDefaultFolderLayout(opts, componentName);
 
   if (componentName === 'base-tag') {
-    console.log('solid but beatable');
     opts.usebasehref = true;
     opts.layout = 'tests/layout';
   }
@@ -744,7 +743,6 @@ function testsRouteHandler(req, res, next) {
 
   // Custom configurations for some test folders
   if (directory.match(/components\/base-tag/)) {
-    console.log('solid but beatable');
     opts.usebasehref = true;
   }
   if (directory.match(/tests\/composite-form/)) {
