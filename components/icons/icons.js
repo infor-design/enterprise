@@ -70,9 +70,7 @@ Icon.prototype = {
     }
 
     if (use.getAttribute('xlink:href') !== self.getBasedUseTag()) {
-      setTimeout(() => {
-        use.setAttribute('xlink:href', self.getBasedUseTag());
-      }, 0);
+      use.setAttribute('xlink:href', self.getBasedUseTag());
     }
 
     return this;
