@@ -30,20 +30,20 @@ Guidelines for bug reports:
 
 3. **Isolate the problem** - create a [reduced test case](http://css-tricks.com/6263-reduced-test-cases/) and a live example.
 
-Examples of reduced test cases are:
+    Examples of reduced test cases are:
 
- - Take an existing example and modify it to resemble the issue, this is ideal as we can include this in our init tests to avoid future breakages
- - Create an example using a tool like https://jsfiddle.net/ - the enterprise scripts can be upload on this site
- - Any Other runnable code
+    - Take an existing example and modify it to resemble the issue, this is ideal as we can include this in our init tests to avoid future breakages
+    - Create an example using a tool like https://jsfiddle.net/ - the enterprise scripts can be upload on this site
+    - Any Other runnable code
 
-Spend a little time in recreating and isolating the issue and you might learn and discover the solution.
+    Spend a little time in recreating and isolating the issue and you might learn and discover the solution.
 
-  **:no_entry: Do not :no_entry:**
-  - Send a video in place of a reduced test case
-  - Send a link to your application
-  - Just send an image of the source code
+    **:no_entry: Do not :no_entry:**
+    - Send a video in place of a reduced test case
+    - Send a link to your application
+    - Just send an image of the source code
 
-If a video is useful to show the problem please use a cross platform format such as MP4 and .webm for the video. We have found [Chrome plugin Screencastify - Screen Video Recorder]https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en to be useful.
+    If a video is useful to show the problem please use a cross platform format such as MP4 and .webm for the video. We have found [Chrome plugin Screencastify - Screen Video Recorder]https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en to be useful.
 
 4. Use the Bug Report template below
 
