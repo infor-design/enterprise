@@ -513,15 +513,10 @@ Toolbar.prototype = {
     if (!item) {
       return '';
     }
-    let span = item.find('.audible');
+    const span = item.find('span').first();
     const title = item.attr('title');
     const tooltip = item.data('tooltip');
     const tooltipText = tooltip && typeof tooltip.content === 'string' ? tooltip.content : undefined;
-
-    if (item.is('.btn-icon')) {
-      // Icon buttons have implied audible text span can be used even tho not entirely valid
-      span = item.find('span');
-    }
     let popupLiText;
 
     if (span.length) {
