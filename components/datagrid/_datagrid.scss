@@ -2636,7 +2636,7 @@ td .btn-actions {
   }
 
   .datagrid-filter-wrapper .dropdown {
-    padding: 5px 0 2px 5px  !important;
+    padding: 1px 0 2px 5px  !important;
   }
 
   .short-rowheight {
@@ -3194,6 +3194,12 @@ html[dir='rtl'] {
       line-height: 24px;
     }
   }
+
+  // scss-lint:disable ImportantRule
+  .datagrid-filter-wrapper .dropdown {
+    padding-top: 4px !important;
+  }
+  // scss-lint:enable ImportantRule
 }
 
 //Contextual toolbar
