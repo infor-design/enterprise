@@ -617,6 +617,11 @@ function componentRoute(req, res, next) {
   // Double check this folder for an alternative layout file.
   opts = addDefaultFolderLayout(opts, componentName);
 
+  if (componentName === 'base-tag') {
+    opts.usebasehref = true;
+    opts.layout = 'tests/layout';
+  }
+
   if (componentName === 'applicationmenu' && (exampleName.indexOf('example-') > -1 || exampleName.indexOf('test-') > -1)) {
     opts.layout = null;
   }
