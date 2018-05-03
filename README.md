@@ -17,6 +17,26 @@ Infor Design System's Enterprise component library is a framework-independent UI
 
 For guidelines on when and where to use the components see the [design.infor.com](http://design.infor.com).
 
+<details><summary>**Table of Contents**</summary>
+<p>
+
+* [Key Features](#key-features)
+* [Browser Support](#browser-support)
+* [Getting the Code into your project](#getting-the-code-into-your-project)
+  + [`npm`](#npm)
+  + [CDN](#cdn)
+* [Running the Development Project](#running-the-development-project)
+  + [Manual Install](#manual-install)
+  + [Get The Code](#get-the-code)
+  + [Running The App](#running-the-app)
+  + [Running The Tests](#running-the-tests)
+  + [Editor Plugins](#editor-plugins)
+* [Documentation](#documentation)
+* [Contacting Us and Updates](#contacting-us-and-updates)
+
+</p>
+</details>
+
 ## Key Features
 
 * Themes
