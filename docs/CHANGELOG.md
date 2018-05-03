@@ -1,8 +1,8 @@
 ## <a name="version-4.6.0">4.6.0</a>
 
-Release Date: 2018-04-29
+Release Date: 2018-05-03
 
-Full Jira Release Notes: https://bit.ly/2GlnGJ1
+Full Jira Release Notes: https://bit.ly/2jodbem
 
 ### <a name="version-4.6.0-download-build-assets">Download Build Assets:</a>
 
@@ -16,10 +16,24 @@ http://usalvlhlpool1.infor.com/4.6.0/components/
 
 ### <a name="version-4.6.0-key-new-features">Key New Features</a>
 - Treemap Component Added
+- Launch of new docs site https://design.infor.com/code/ids-enterprise/latest
+- Now passes CSP - Content Security Policy Compliance for info see docs/SECURITY.md
+- New Flex Toolbar - We added an updated toolbar to eventually replace the current one. This toolbar is much faster as it uses mainly css http://usalvlhlpool1.infor.com/4.6.0/components/toolbar-flex this can be used now but note we will eventually replace so expect a future breaking change from flex-toolbar to toolbar when all features are implemented. As of now collapsible search is not supported yet.
 
 ### <a name="version-4.6.0-behavior-changes">Behavior Changes</a>
+- App Menu - Now automatically closes when items are clicked on mobile devices
 
 ### <a name="version-4.6.0-improvements">Improvements</a>
+- Angular - Validation now allows dynamic functions
+- Editor - Added a clear method
+- Locale - Map iw locale to Hebrew
+- Locale - Now defaults locals with no country. For example en maps to en-US es and es-ES.
+- Color Picker - Added option to clear the color
+- Angular - Allow Formatters, Editors to work with Soho. without the migration script.
+- Added a new labels example http://usalvlhlpool1.infor.com/4.6.0/components/form/example-labels.html
+- Angular - Added new Chart Wrappers (Line, Bar, Column ect )
+- Datagrid - Added file up load editor
+- Editor - Its possible to put a link on an image now
 
 ### <a name="version-4.6.0-breaking-changes">Code Updates / Breaking Changes</a>
 - The internal template engine changed for better XSS security as a result one feature is no longer supported.
@@ -28,6 +42,48 @@ If you have a delimiter syntax to embed html such as `{{& name}}` please change 
 
 ### <a name="version-4.5.0-bug-fixes">Bug Fixes</a>
 - Angular - Added fixes so that the soho.migrate script is no longer needed.
+- Angular Datagrid - Added filterWhenTyping option
+- Angular Popup - Expose close, isOpen and keepOpen
+- Angular Linechart - Added "xAxis" and "yAxis" options
+- Angular Treemap - Added new wrapper
+- Angular Rating - Added a rating wrapper.
+- Angular Circle Page - Added new wrapper
+- Checkbox - Fixed issue when you click the top left of the page, would toggle the last checkbox.
+- Composite Form - Fixed broken swipe.
+- Colorpicker - Fixed cases where change did not fire
+- Colorpicker - Added short field option
+- Completion Chart - Added more colors
+- Datagrid - Fixed some misaligned icons on short row height
+- Datagrid - Fixed issue that blank dropdown filter items would not show.
+- Datagrid - Added click arguments for more information on editor clicks and call back data.
+- Datagrid - Fixed wrong data on events on second page with expandable row
+- Datagrid - Fixed focus / filter bugs
+- Datagrid - Fixed bug with filter dropdowns on IOS
+- Datagrid - Fixed column alignment when scrolling and RTL
+- Datagrid - Fixed NaN error when using the colspan example
+- Datagrid - Made totals work correctly when filtering
+- Datagrid - Fixed issue with focus when multiple grids on a page
+- Datagrid - Removed extra rows from the grid export when using expandable rows
+- Datagrid - Fixed performance of select all on paging client side
+- Datagrid - Fixed text alignment on header when some columns are not filterable
+- Datagrid - Fixed wrong cursor on non actionable rows.
+- Hierarchy - Fixed layout issues
+- Mask - Fixed issue when not using decimals in the pattern option.
+- Modal - Allow editor and dropdown to properly block the submit button.
+- Menu Button - Fixed beforeOpen so it also runs on submenus.
+- Message - Fixed XSS vulnerability
+- Pager - Added fixes for RTL
+- List Detail - Improved amount of space the header takes
+- Multiselect - Fixed problems when using the tab key well manipulating the multiselect
+- Multiselect - Fixed bug with select all not working correctly
+- Multiselect - Fixed bug with required validation rule.
+- Spinbox - Fixed issue on short field versions
+- Textarea - Fixed issue with counter whenin angular and on a modal
+- Toast - Fixed XSS vulnerability
+- Tree - Fixed checkbox click issue
+- Lookup - Fixed issue in the example when running on Edge
+- Validation - Fixed broken form submit validation
+- Vertical Tabs - Fix cut off header
 
 (X Jira Issues Solved this release, Backlog Dev X, Design X, Unresolved X, Test Coverage X% )
 

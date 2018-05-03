@@ -43,7 +43,7 @@ git checkout master
 
 ## Documentation
 * Check ChangeLog.md is updated
-* Create new version in Jira and mark current as released https://jira/plugins/servlet/project-config/SOHO/versions
+* Create new version in Jira and mark current as released https://jira.infor.com/plugins/servlet/project-config/SOHO/versions
 * Generate Release Notes http://bit.ly/2w6X8Xw
 
 ## Git Operations
