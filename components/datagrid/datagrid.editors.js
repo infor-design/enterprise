@@ -589,10 +589,16 @@ const editors = {
        */
       const openFileChooserWindow = () => {
         if (this.api) {
-          this.api.fileInput.trigger('click');
           handleCancel();
+          this.api.fileInput.trigger('click');
         }
       };
+
+      // Handle change for file-input
+      this.input.on('change.fileuploadeditor', () => {
+        this.status = 'change';
+        grid.commitCellEdit(this.input);
+      });
 
       // Using keyboard
       if (event.type === 'keydown') {
@@ -620,15 +626,10 @@ const editors = {
           grid.commitCellEdit(this.input);
         }
       }
-
-      // Handle change for file-input
-      this.input.on('change', () => {
-        this.status = 'change';
-        grid.commitCellEdit(this.input);
-      });
     };
 
     this.destroy = () => {
+      this.input.off('change.fileuploadeditor');
       grid.quickEditMode = false;
       if (this.api) {
         this.api.destroy();
