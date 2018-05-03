@@ -55,7 +55,7 @@ We support the latest release and the release previous to the latest (R-1) for b
 | --------- | --------- | --------- | --------- | --------- |
 | IE11, Edge| R-1| R-1| R-1| R-1
 
-## Getting the Code into your project
+## Getting the code into your project
 
 ### `npm`
 
@@ -94,7 +94,7 @@ Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5
 
 Note: There may be a cost involved to using this with Infor's amazon s3 account so keep this in mind when using.
 
-## Running the Development Project
+## Running the development project
 
 ### Install pre-requisites
 
@@ -109,18 +109,18 @@ Note: There may be a cost involved to using this with Infor's amazon s3 account 
 * Then  `npm install` to install node packages. On macOS you may need `sudo npm install` as some packages require elevated permissions
 * Then `npm run install-globals` to install some global packages we use
 
-### Running The App
+### Running the app
 
 From within the project folder:
 
 * Run `npx grunt` to compile initial assets
 * Run `node server` to start the web server
 * Make a new terminal window and from within your project folder run `npx grunt watch` to watch for any file changes and rebuild
-* Open up `http://localhost:4000/` in a browser to see the local app
+* Open up [`localhost:4000`](http://localhost:4000) in a browser to see the local app
 
 Note that at this point any changes you make will cause SASS to recompile and the browser will reload.
 
-### Running The Tests
+### Running the tests
 
 Functional tests are the primary way we test the codebase. To run the tests, run `npm run functional:local`.
 
@@ -132,7 +132,7 @@ This project uses `eslint` and `editorconfig`. You may want to add the following
 
 Soho XI's current documentation can be found at [design.infor.com/code/ids-enterprise/latest](https://design.infor.com/code/ids-enterprise/latest).
 
-You can also find a subset of documentation at [http://localhost:4000/components] when running the project locally. To contribute you can edit the `readme.md` files for a component or add [JSDocs](http://usejsdoc.org/) comments to the source files for inline settings and events.
+You can also find a subset of documentation at [`localhost:4000/components`](http://localhost:4000/components) when running the project locally. To contribute you can edit the `readme.md` files for a component or add [JSDocs](http://usejsdoc.org/) comments to the source files for inline settings and events.
 
 ## Contacting Us and Updates
 
