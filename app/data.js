@@ -908,4 +908,8 @@ module.exports = function(router){
     res.end(JSON.stringify(data));
     next();
   });
+
+  router.get('/api/org-chart', (req, res, next) => {
+    sendJSONFile('org-chart', req, res, next);
+  });
 }
