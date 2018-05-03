@@ -850,6 +850,10 @@ $datagrid-short-row-height: 23px;
           top: -4px;
         }
 
+        .btn-secondary.row-btn {
+          top: -2px;
+        }
+
         // scss-lint:disable NestingDepth
         &.datagrid-trigger-cell {
 

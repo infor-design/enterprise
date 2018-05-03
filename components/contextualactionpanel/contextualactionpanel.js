@@ -15,6 +15,7 @@ const COMPONENT_NAME = 'contextualactionpanel';
 * @param {content} [settings.content = null] Pass content through to CAP.
 * @param {boolean} [settings.initializeContent = true] Initialize content before opening with defaults.
 * @param {string} [settings.trigger = 'click'] Can be 'click' or 'immediate'.
+* @param {boolean} [settings.centerTitle = false] If true the title will be centered.
 */
 const CONTEXTUALACTIONPANEL_DEFAULTS = {
   id: `contextual-action-modal-${parseInt($('.modal').length, 10) + 1}`,
@@ -23,7 +24,8 @@ const CONTEXTUALACTIONPANEL_DEFAULTS = {
   content: null, //
   initializeContent: true, // initialize content before opening
   trigger: 'click',
-  showCloseButton: false
+  showCloseButton: false,
+  centerTitle: true
 };
 
 function ContextualActionPanel(element, settings) {
@@ -135,11 +137,18 @@ ContextualActionPanel.prototype = {
       }
 
       if (!this.toolbar.length) {
-        this.toolbar = $('<div class="toolbar"></div>');
+        this.toolbar = $(this.settings.centerTitle ? '<div class="flex-toolbar"></div>' : '<div class="toolbar"></div>');
       }
 
       this.toolbar.appendTo(this.header);
+
       let toolbarTitle = this.toolbar.find('.title');
+
+      if (!toolbarTitle.length && this.settings.centerTitle) {
+        toolbarTitle = $(`<div class="toolbar-section"></div><div class="toolbar-section title center-text"><h2>${this.settings.title}</h2></div><div class="toolbar-section"></div>`);
+        this.toolbar.prepend(toolbarTitle);
+      }
+
       if (!toolbarTitle.length) {
         toolbarTitle = $(`<div class="title">${this.settings.title}</div>`);
         this.toolbar.prepend(toolbarTitle);
@@ -153,7 +162,7 @@ ContextualActionPanel.prototype = {
       }
 
       let toolbarButtonset = this.toolbar.find('.buttonset');
-      if (!toolbarButtonset.length) {
+      if (!toolbarButtonset.length && !this.settings.centerTitle) {
         toolbarButtonset = $('<div class="buttonset"></div>');
         toolbarButtonset.insertAfter(toolbarTitle);
       }
@@ -171,6 +180,7 @@ ContextualActionPanel.prototype = {
 
     this.panel.modal({
       buttons: this.settings.buttons,
+      useFlexToolbar: true,
       trigger: (this.settings.trigger ? this.settings.trigger : 'click')
     });
 

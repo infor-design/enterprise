@@ -21,11 +21,12 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {string} [settings.menu]  Menu's ID Selector, or a jQuery object representing a menu.
  * @param {string} [settings.trigger='click']  Action on which to trigger a menu can be: click, rightClick, immediate ect.
  * @param {boolean} [settings.autoFocus=true]  If false the focus will not focus the first list element. (At the cost of accessibility).
+ * @param {boolean} [settings.mouseFocus=true]  If false the focus will not highlight the first list element. (At the cost of accessibility).
  * @param {boolean} [settings.attachToBody=false]  If true the menu will be moved out to the body. To be used in certin overflow situations.
  * @param {function} [settings.beforeOpen]  Callback that can be used for populating the contents of the menu.
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
- * @param {string} [settings.showArrow]  If true you can explicitely set an arrow on the menu.
+ * @param {string} [settings.showArrow]  If true you can explicitly set an arrow on the menu.
  * @param {string} [settings.returnFocus]  If set to false, focus will not be
   returned to the calling element. It usually should be for accessibility purposes.
  * @param {object} [settings.placementOpts=new PlacementObject({

@@ -1,0 +1,138 @@
+
+<div class="row">
+  <div class="six columns">
+
+    <button type="button" id="trigger-1" class="btn-secondary">
+      Open Contextual Action Panel
+    </button>
+
+    <div id="panel-1" style="display:none">
+      <div class="header-section">
+        <div class="row top-padding bottom-padding">
+          <div class="twelve columns">
+            <h2>Pearl Reynolds Details</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="two columns">
+            <img alt="Placeholder Image" src="http://placehold.it/80x80/d8d8d8/ffffff"/>
+          </div>
+          <div class="five columns">
+            <div class="field label-left">
+              <span class="label">Role</span>
+              <span class="data">Nurse</span>
+            </div>
+            <div class="field label-left">
+              <span class="label">Employee Type</span>
+              <span class="data">Full Time</span>
+            </div>
+            <div class="field label-left">
+              <span class="label">Pay Rate</span>
+              <span class="data">$50/hour minimum</span>
+            </div>
+          </div>
+          <div class="five columns">
+            <div class="field label-left">
+              <span class="label">Date Hired</span>
+              <span class="data">01/10/10</span>
+            </div>
+            <div class="field label-left">
+              <span class="label">Manager</span>
+              <span class="data">Janice Brown</span>
+            </div>
+            <div class="field label-left">
+              <span class="label">Work Assignments</span>
+              <span class="data">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="detail-section">
+        <div class="row top-padding">
+          <div class="six columns">
+
+            <div class="field">
+              <label for="new-pay-rate">New Pay Rate Name</label>
+              <select id="new-pay-rate" name="new-pay-rate" class="dropdown">
+                <option value="">50$/hr</option>
+                <option value="60">60$/hr</option>
+                <option value="70">70$/hr</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="promo-reason">Promo Reason Code</label>
+              <select id="promo-reason" name="promo-reason" class="dropdown">
+                <option value="1">Performance</option>
+                <option value="2">Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="promo-no">Promo Number</label>
+              <select id="promo-no" name="promo-no" class="dropdown">
+                <option value="1">100</option>
+                <option value="2">200</option>
+                <option value="3">300</option>
+              </select>
+            </div>
+          </div>
+          <div class="six columns">
+            <div class="field">
+              <label for="description">Comment</label>
+              <textarea id="description" class="textarea taller" name="description" placeholder="Type your notes here..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+  var openPanel = function () {
+    $('body').contextualactionpanel({
+      title: 'Promote Pearl Reynolds',
+      centerTitle: true,
+      content: $('#panel-1').html(),
+      trigger: 'immediate',
+      buttons: [
+        {
+          text: 'Cancel',
+          cssClass: 'btn',
+          click: function() {
+            var api = $(this).data('modal');
+            api.close();
+          },
+          align: 'left'
+        },
+        {
+          cssClass: 'btn-icon',
+          icon: '#icon-launch',
+          click: function() {
+            var api = $(this).data('modal');
+            api.close();
+          },
+          align: 'center'
+        },
+        {
+          text: 'Submit',
+          cssClass: 'btn',
+          click: function() {
+            var api = $(this).data('modal');
+            api.close();
+          },
+          align: 'right'
+        }
+      ]
+    });
+  };
+
+  $('#trigger-1').on('click', function () {
+    openPanel();
+  });
+
+</script>

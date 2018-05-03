@@ -299,6 +299,10 @@ ToolbarFlex.prototype = {
    * @param {ToolbarFlexItem} item the item to be focused
    */
   set focusedItem(item) {
+    if (this.items.length === 0) {
+      return;
+    }
+
     for (let i = 0; i < this.items.length; i++) {
       this.items[i].focused = false;
     }

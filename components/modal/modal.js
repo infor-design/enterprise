@@ -22,6 +22,7 @@ const COMPONENT_NAME = 'modal';
 * @param {string} [settings.id=null] Optionally tag a dialog with an id.
 * @param {number} [settings.frameHeight=180] Optional extra height to add.
 * @param {number} [settings.frameWidth=46] Optional extra width to add.
+* @param {boolean} [settings.useFlexToolbar] If true the new flex toolbar will be used (For CAP)
 * @param {function} [settings.beforeShow=null] A call back function that can be used to return data for the modal.
 * return the markup in the response and this will be shown in the modal. The busy indicator will be shown while waiting for a response.
 */
@@ -35,7 +36,8 @@ const MODAL_DEFAULTS = {
   id: null,
   frameHeight: 180,
   frameWidth: 46,
-  beforeShow: null
+  beforeShow: null,
+  useFlexToolbar: false
 };
 
 function Modal(element, settings) {
@@ -235,6 +237,7 @@ Modal.prototype = {
     let btnWidth = 100;
     let isPanel = false;
     let buttonset;
+    let flexToolbar;
 
     this.modalButtons = buttons;
 
@@ -260,7 +263,11 @@ Modal.prototype = {
       isPanel = true;
       // construct the toolbar markup if a toolbar isn't found
       buttonset = this.element.find('.buttonset');
-      if (!buttonset.length) {
+      if (this.settings.useFlexToolbar) {
+        flexToolbar = this.element.find('.flex-toolbar');
+      }
+
+      if (!buttonset.length && !this.settings.useFlexToolbar) {
         const toolbar = this.element.find('.toolbar');
         if (!toolbar.length) {
           $('<div class="toolbar"></div>').appendTo(this.element.find('.modal-header'));
@@ -343,7 +350,21 @@ Modal.prototype = {
       }
 
       btn.button();
-      buttonset.append(btn);
+      if (self.settings.useFlexToolbar) {
+        if (props.align === 'left') {
+          flexToolbar.find('.toolbar-section').eq(0).append(btn);
+        }
+
+        if (props.align === 'center') {
+          flexToolbar.find('.toolbar-section').eq(1).find('h2').append(btn);
+        }
+
+        if (props.align === 'right') {
+          flexToolbar.find('.toolbar-section').eq(2).append(btn);
+        }
+      } else {
+        buttonset.append(btn);
+      }
     };
 
     for (let cnt = 0; cnt < buttons.length; cnt++) {
