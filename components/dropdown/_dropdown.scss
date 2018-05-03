@@ -353,6 +353,10 @@ div.multiselect {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: inherit;
+
+    &:empty {
+      height: 32px;
+    }
   }
 
   // Added to the dropdown list when doing a search
