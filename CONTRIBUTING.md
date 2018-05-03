@@ -1,4 +1,4 @@
-# Contributing to Soho XI
+# Contributing
 
 So you're interested in giving us a hand? That's awesome! We've put together some brief guidelines that should help you get started quickly and easily.
 
