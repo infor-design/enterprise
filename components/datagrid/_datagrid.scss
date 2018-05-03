@@ -828,7 +828,7 @@ $datagrid-short-row-height: 23px;
           height: 21px;
           line-height: 18px;
           min-width: 80px;
-          top: -2px;
+          top: -12px;
           vertical-align: middle;
 
           span {
@@ -844,6 +844,10 @@ $datagrid-short-row-height: 23px;
           .icon {
             margin-top: -3px;
           }
+        }
+
+        a.row-btn {
+          top: -4px;
         }
 
         // scss-lint:disable NestingDepth
