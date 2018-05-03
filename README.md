@@ -8,7 +8,7 @@ There are two ways to go about using Github for development (as the [Bitbucket](
 
 or
 
-2. If you already have our codebase locally, you can simply [change your remote's url](https://help.github.com/articles/changing-a-remote-s-url) to point to the new repository on github.
+2. If you already have our codebase locally, you can simply [change your remote's url](https://help.github.com/articles/changing-a-remote-s-url) to point to the new repository on Github.
 
 
 # Welcome to Soho XI
