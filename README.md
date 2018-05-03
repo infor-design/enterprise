@@ -136,7 +136,7 @@ You can also find a subset of documentation at [`localhost:4000/components`](htt
 
 ## Contacting Us and Updates
 
-This project is an open source project. Please see the [contribution guidelines for this project](CONTRIBUTING.md).
+This project is an open source project. Please see the [contribution guidelines for this project](docs/CONTRIBUTING.md).
 
 Please use the internal Infor [Jira issue tracker](http://jira.infor.com/browse/SOHO) to report all requests, bugs, questions, and feature requests.
 
