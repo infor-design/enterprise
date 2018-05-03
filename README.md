@@ -17,7 +17,7 @@ Infor Design System's Enterprise component library is a framework-independent UI
 
 For guidelines on when and where to use the components see the [design.infor.com](http://design.infor.com).
 
-<details><summary>**Table of Contents**</summary>
+<details><summary><b>Table of Contents</b></summary>
 <p>
 
 * [Key Features](#key-features)
@@ -96,16 +96,15 @@ Note: There may be a cost involved to using this with Infor's amazon s3 account 
 
 ## Running the Development Project
 
-### Manual Install
+### Install pre-requisites
 
-* (Windows) Install Python `>= v2.5.0 & < 3.0.0` from [python.org/downloads](https://www.python.org/downloads/)
 * Install `node` for following the [directions for your OS](http://nodejs.org/)
-* Install [`grunt`](http://gruntjs.com/) by running the command `npm install -g grunt-cli`
-* On Windows you should run `git config core.autocrlf false`
+* On Windows, you'll need to [install Python](https://www.python.org/downloads/). Make sure the version is at least `2.5.0` but not Python 3.
+* Also on Windows, you should run `git config core.autocrlf false`
 
-### Get The Code
+### Clone the repo
 
-* Clone the repo: `git clone https://github.com/infor-design/enterprise.git`
+* Clone the repo using `git`: `git clone https://github.com/infor-design/enterprise.git`
 * `cd` into the repo directory
 * Then  `npm install` to install node packages. On macOS you may need `sudo npm install` as some packages require elevated permissions
 * Then `npm run install-globals` to install some global packages we use
@@ -124,7 +123,6 @@ Note that at this point any changes you make will cause SASS to recompile and th
 ### Running The Tests
 
 Functional tests are the primary way we test the codebase. To run the tests, run `npm run functional:local`.
-
 
 ### Editor Plugins
 
