@@ -17,7 +17,8 @@ Infor Design System's Enterprise component library is a framework-independent UI
 
 For guidelines on when and where to use the components see the [design.infor.com](http://design.infor.com).
 
-<details><summary><b>Table of Contents</b></summary>
+<details>
+<summary><b>Table of Contents</b></summary>
 <p>
 
 * [Key Features](#key-features)
@@ -33,7 +34,6 @@ For guidelines on when and where to use the components see the [design.infor.com
   + [Editor Plugins](#editor-plugins)
 * [Documentation](#documentation)
 * [Contacting Us and Updates](#contacting-us-and-updates)
-
 </p>
 </details>
 
@@ -57,7 +57,7 @@ We support the latest release and the release previous to the latest (R-1) for b
 
 ## Getting the code into your project
 
-### `npm`
+### npmjs
 
 This node module is hosted on a private repo [npm.infor.com](http://npm.infor.com:4873). To be able to install it in your project you need to tell npm on your system to fetch packages with the `@infor` scope from the correct registry.
 
