@@ -129,3 +129,21 @@ describe('Dropdown example-ajax tests', () => {
     });
   }
 });
+
+describe('Dropdown No-Search Mode Tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search-lsf');
+  });
+
+  it('should select a Dropdown item when keying on a closed Dropdown component', async () => {
+    const dropdownPseudoEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
+
+    await dropdownPseudoEl.click();
+    await dropdownPseudoEl.sendKeys('r');
+
+    expect(dropdownPseudoEl.getText()).toEqual('R - Rocket Raccoon');
+  });
+});
