@@ -1,5 +1,5 @@
-import * as debug from '../../utils/debug'; // NOTE: fix this path when moving to a component folder
-import { utils } from '../../utils/utils'; // NOTE: fix this path when moving to a component folder
+import * as debug from '../utils/debug'; // NOTE: update this path when moving to a component folder
+import { utils } from '../utils/utils'; // NOTE: update this path when moving to a component folder
 
 // Settings and Options
 const COMPONENT_NAME = 'componentName';
