@@ -114,7 +114,7 @@ Note: There may be a cost involved to using this with Infor's amazon s3 account 
 From within the project folder:
 
 * Run `npx grunt` to compile initial assets
-* Run `node server` to start the web server
+* Run `npm run server` or `node app/server.js` to start the web server
 * Make a new terminal window and from within your project folder run `npx grunt watch` to watch for any file changes and rebuild
 * Open up [`localhost:4000`](http://localhost:4000) in a browser to see the local app
 
@@ -143,4 +143,3 @@ Please use the internal Infor [Jira issue tracker](http://jira.infor.com/browse/
 For release updates see our upcoming and past version in our [releases road map](http://jira.infor.com/projects/SOHO?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page).
 
 If you're an Infor employee, you can join our [MS Teams Group](https://teams.microsoft.com/l/team/19%3a2b0c9ce520b0481a9ce115f0ca4a326f%40thread.skype/conversations?groupId=4f50ef7d-e88d-4ccb-98ca-65f26e57fe35&tenantId=457d5685-0467-4d05-b23b-8f817adda47c) for updates.
-
