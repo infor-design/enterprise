@@ -1415,8 +1415,20 @@ Dropdown.prototype = {
     if (!this.settings.multiple && this.initialFilter) {
       setTimeout(() => {
         if (self.settings.noSearch) {
-          const selectedOptions = self.element[0].selectedOptions;
-          self.searchInput.val(selectedOptions.length > 0 ? selectedOptions[0].innerText : '');
+          let selectedOpt;
+          let selectedOptText = '';
+
+          // Set the text of the SearchInput.
+          // Use fallback for `HTMLSelectElement.selectedOptions` in IE
+          if (this.isIe10 || this.isIe11) {
+            selectedOpt = self.element[0].options[self.element[0].selectedIndex];
+            selectedOptText = selectedOpt ? selectedOpt.innerText : '';
+          } else {
+            selectedOpt = self.element[0].selectedOptions;
+            selectedOptText = selectedOpt.length > 0 ? selectedOpt[0].innerText : '';
+          }
+
+          self.searchInput.val(selectedOptText);
           return;
         }
 

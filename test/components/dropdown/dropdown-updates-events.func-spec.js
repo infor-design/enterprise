@@ -118,4 +118,12 @@ describe('Dropdown updates, events', () => {
 
     expect(spyEvent).toHaveBeenTriggered();
   });
+
+  it('should display the text of the first selected option when the list opens', (done) => {
+    dropdownObj.open();
+    const searchInput = dropdownObj.searchInput;
+
+    expect(searchInput[0].value).toBe('New Jersey');
+    done();
+  });
 });
