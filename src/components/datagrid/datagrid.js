@@ -6306,6 +6306,22 @@ Datagrid.prototype = {
       cellParent.addClass('is-editing-inline');
     }
 
+    /**
+    * Fires before a cell goes into edit mode. Giving you a chance to adjust column settings.
+    * @event entereditmode
+    * @memberof Datagrid
+    * @property {object} event The jquery event object
+    * @property {object} args Additional arguments
+    * @property {number} args.row An array of selected rows.
+    * @property {number} args.cell An array of selected rows.
+    * @property {object} args.item The current sort column.
+    * @property {HTMLElement} args.target The cell html element that was entered.
+    * @property {any} args.value The cell value.
+    * @property {object} args.column The column object
+    * @property {object} args.editor The editor object.
+    */
+    this.element.triggerHandler('beforeentereditmode', [{ row: idx, cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor }]);
+
     this.editor =  new col.editor(idx, cell, cellValue, cellNode, col, event, this, rowData); // eslint-disable-line
 
     if (this.settings.onEditCell) {

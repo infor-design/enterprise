@@ -18,7 +18,7 @@ http://usalvlhlpool1.infor.com/4.6.0/components/
 - Treemap Component Added
 - Launch of new docs site https://design.infor.com/code/ids-enterprise/latest
 - Now passes CSP - Content Security Policy Compliance for info see docs/SECURITY.md
-- New Flex Toolbar - We added an updated toolbar to eventually replace the current one. This toolbar is much faster as it uses mainly css http://usalvlhlpool1.infor.com/4.6.0/components/toolbar-flex this can be used now but note we will eventually replace so expect a future breaking change from flex-toolbar to toolbar when all features are implemented. As of now collapsible search is not supported yet.
+- New Flex Toolbar - We added an updated toolbar to eventually replace the current one. This toolbar is much faster as it uses mainly css http://usalvlhlpool1.infor.com/4.6.0/components/toolbar-flex/list this can be used now but note we will eventually replace so expect a future breaking change from flex-toolbar to toolbar when all features are implemented. As of now collapsible search is not supported yet.
 
 ### <a name="version-4.6.0-behavior-changes">Behavior Changes</a>
 - App Menu - Now automatically closes when items are clicked on mobile devices
@@ -78,14 +78,14 @@ If you have a delimiter syntax to embed html such as `{{& name}}` please change 
 - Multiselect - Fixed bug with select all not working correctly
 - Multiselect - Fixed bug with required validation rule.
 - Spinbox - Fixed issue on short field versions
-- Textarea - Fixed issue with counter whenin angular and on a modal
+- Textarea - Fixed issue with counter when in angular and on a modal
 - Toast - Fixed XSS vulnerability
 - Tree - Fixed checkbox click issue
 - Lookup - Fixed issue in the example when running on Edge
 - Validation - Fixed broken form submit validation
 - Vertical Tabs - Fix cut off header
 
-(X Jira Issues Solved this release, Backlog Dev X, Design X, Unresolved X, Test Coverage X% )
+(98 Jira Issues Solved this release, Backlog Dev 388, Design 105, Unresolved 595, Test Coverage 6.66%)
 
 ## <a name="version-4.5.0">4.5.0</a>
 
