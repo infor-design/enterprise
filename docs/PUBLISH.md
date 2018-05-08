@@ -14,15 +14,15 @@ The verdaccio username is admin and password is Ap5T7IPF2o, use your regular ema
 ## Check Published npm Tags
 
 ```bash
-npm info @infor/sohoxi dist-tags
-npm view @infor/sohoxi versions
+npm info ids-enterprise dist-tags
+npm view ids-enterprise versions
 ```
 
 ## Delete a npm Tag
 
 ```bash
 npm adduser --registry http://npm.infor.com:4873 --scope=@infor
-npm dist-tag rm @infor/sohoxi develop
+npm dist-tag rm ids-enterprise develop
 ```
 
 ## Merge a fix to a branch
@@ -70,7 +70,7 @@ git checkout master
   * change the versions in the build config
   * Label the build release-440 for example http://bamboo.infor.com/browse/label/release-440
 
-## Update version in @infor/sohoxi-angular
+## Update version in ids-enterprise-angular
 * Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
 * Edit version in `publish/package.json`
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and merge
@@ -90,11 +90,11 @@ git checkout master
 ## Test Out Stuff
 * Test Npm packages and rebuild if you got it wrong
 ```
-npm view @infor/sohoxi versions
-npm view @infor/sohoxi-angular versions
+npm view ids-enterprise versions
+npm view ids-enterprise-angular versions
 
-npm info @infor/sohoxi-angular dist-tags
-npm info @infor/sohoxi dist-tags
+npm info ids-enterprise-angular dist-tags
+npm info ids-enterprise dist-tags
 
 ```
 
