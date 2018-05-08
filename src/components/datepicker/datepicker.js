@@ -91,6 +91,7 @@ const DATEPICKER_DEFAULTS = {
   showLegend: false,
   customValidation: false,
   showMonthYearPicker: false,
+  retrictMonthSelection: false,
   hideDays: false,
   advanceMonths: 5,
   legend: [
@@ -183,6 +184,7 @@ DatePicker.prototype = {
    */
   handleKeys(elem) {
     const s = this.settings;
+    const self = this;
     // Handle Keys while popup is open
     if (elem.is('#calendar-popup')) {
       elem.off('keydown.datepicker').on('keydown.datepicker', '.calendar-table', (e) => {
@@ -193,6 +195,10 @@ DatePicker.prototype = {
         let idx = null;
         let selector = null;
         let handled = false;
+        let minDate = new Date(s.disable.minDate);
+        let maxDate = new Date(s.disable.maxDate);
+
+        self.validatePrevNext();
 
         // Arrow Down: select same day of the week in the next week
         if (key === 40) {
@@ -204,6 +210,15 @@ DatePicker.prototype = {
               this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
+          } else if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) { 
+            if (this.currentDate.getMonth() < maxDate.getMonth()) {
+              this.currentDate.setDate(this.currentDate.getDate() + 7);
+            } else {
+              if (maxDate.getDate() - 1 >= this.currentDate.getDate() + 7) {
+                this.currentDate.setDate(this.currentDate.getDate() + 7);
+              }
+            }
+            this.insertDate(this.currentDate);
           } else {
             this.currentDate.setDate(this.currentDate.getDate() + 7);
             this.insertDate(this.currentDate);
@@ -220,6 +235,15 @@ DatePicker.prototype = {
               this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
+          } else if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+            if (this.currentDate.getMonth() > minDate.getMonth()) {
+              this.currentDate.setDate(this.currentDate.getDate() - 7);
+            } else {
+              if (minDate.getDate() + 1 <= this.currentDate.getDate() - 7) {
+                this.currentDate.setDate(this.currentDate.getDate() - 7);
+              }
+            }
+            this.insertDate(this.currentDate);
           } else {
             this.currentDate.setDate(this.currentDate.getDate() - 7);
             this.insertDate(this.currentDate);
@@ -236,9 +260,18 @@ DatePicker.prototype = {
               this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
+          } else if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+            if (this.currentDate.getMonth() > minDate.getMonth()) {
+                this.currentDate.setDate(this.currentDate.getDate() - 1);
+            } else {
+              if (minDate.getDate() + 1 !== this.currentDate.getDate()) {
+                this.currentDate.setDate(this.currentDate.getDate() - 1);
+              }
+            }
+            this.insertDate(this.currentDate);
           } else {
             this.currentDate.setDate(this.currentDate.getDate() - 1);
-            this.insertDate(this.currentDate);
+            this.insertDate(this.currentDate);  
           }
         }
 
@@ -252,6 +285,15 @@ DatePicker.prototype = {
               this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
+          } else if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) { 
+            if (this.currentDate.getMonth() < maxDate.getMonth()) {
+              this.currentDate.setDate(this.currentDate.getDate() + 1);
+            } else {
+              if (maxDate.getDate() - 1 !== this.currentDate.getDate()) {
+                this.currentDate.setDate(this.currentDate.getDate() + 1);
+              }
+            }
+            this.insertDate(this.currentDate);
           } else {
             this.currentDate.setDate(this.currentDate.getDate() + 1);
             this.insertDate(this.currentDate);
@@ -261,15 +303,29 @@ DatePicker.prototype = {
         // Page Up Selects Same Day Prev Month
         if (key === 33 && !e.altKey) {
           handled = true;
-          this.currentDate.setMonth(this.currentDate.getMonth() - 1);
-          this.insertDate(this.currentDate);
+          if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+            if (minDate.getMonth() !== this.currentDate.getMonth()) {
+              this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+              this.insertDate(this.currentDate);
+            }
+          } else {
+            this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+            this.insertDate(this.currentDate);
+          }
         }
 
         // Page Down Selects Same Day Next Month
         if (key === 34 && !e.altKey) {
           handled = true;
-          this.currentDate.setMonth(this.currentDate.getMonth() + 1);
-          this.insertDate(this.currentDate);
+          if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+            if (this.currentDate.getMonth() !== maxDate.getMonth()) {
+              this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+              this.insertDate(this.currentDate);
+            }
+          } else {
+            this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+            this.insertDate(this.currentDate);
+          }
         }
 
         // ctrl + Page Up Selects Same Day Next Year
@@ -286,20 +342,43 @@ DatePicker.prototype = {
           this.insertDate(this.currentDate);
         }
 
-        // Home Moves to End of the month
-        if (key === 35) {
-          handled = true;
+        // Home Moves to Start of the month
+        if (key === 36) {
           const d = this.currentDate;
-          const lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0);
-          this.currentDate = lastDay;
+          let firstDay;
+
+          if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+            if (minDate.getMonth() !== this.currentDate.getMonth()) {
+              firstDay = new Date(d.getFullYear(), d.getMonth(), 1);
+            } else {
+              firstDay = new Date(minDate.getFullYear(), minDate.getMonth(), minDate.getDate());
+              firstDay.setDate(firstDay.getDate() + 1);
+            }
+          } else {
+            firstDay = new Date(d.getFullYear(), d.getMonth(), 1);
+          }
+
+          this.currentDate = firstDay;
           this.insertDate(this.currentDate);
         }
 
-        // End Moves to Start of the month
-        if (key === 36) {
+        // End Moves to End of the month
+        if (key === 35) {
+          handled = true;
           const d = this.currentDate;
-          const firstDay = new Date(d.getFullYear(), d.getMonth(), 1);
-          this.currentDate = firstDay;
+          let lastDay;
+          if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+            if (this.currentDate.getMonth() !== maxDate.getMonth()) {  
+              lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+            } else {
+              lastDay = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
+              lastDay.setDate(lastDay.getDate() - 1);
+            }
+          } else {
+            lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+          }
+
+          this.currentDate = lastDay;
           this.insertDate(this.currentDate);
         }
 
@@ -598,6 +677,35 @@ DatePicker.prototype = {
       elem.focus();
     }
     return elem;
+  },
+
+  validatePrevNext(isNext) {
+    let self = this;
+
+    let currMonth = self.currentMonth;
+    if (isNext !== 'start') {
+      currMonth = isNext ? self.currentMonth + 1 : self.currentMonth - 1;
+    }
+    
+    let minDate = new Date(self.settings.disable.minDate);
+    let maxDate = new Date(self.settings.disable.maxDate);
+
+    if (minDate.getFullYear() >= self.currentYear && self.currentYear <= maxDate.getFullYear()) {
+      if (minDate.getMonth() === currMonth) {
+        $('.prev').prop('disabled', true);
+      } else {
+        $('.prev').prop('disabled', false);
+      }
+
+      if (currMonth >= maxDate.getMonth()) {
+        $('.next').prop('disabled', true);
+      } else {
+        $('.next').prop('disabled', false);
+      }
+    } else {
+      $('.prev').prop('disabled', false);
+      $('.next').prop('disabled', false);
+    }
   },
 
   /**
@@ -976,6 +1084,10 @@ DatePicker.prototype = {
       const isNext = $(this).is('.next');
       const range = {};
 
+      if (self.settings.retrictMonthSelection && self.settings.disable.minDate && self.settings.disable.maxDate) {
+        self.validatePrevNext(isNext);
+      }
+
       if (s.range.useRange) {
         if (isNext) {
           range.date = new Date(self.currentYear, (self.currentMonth + 1), (self.days.find('.next-month:visible').length + 1));
@@ -1012,7 +1124,10 @@ DatePicker.prototype = {
 
     setTimeout(() => {
       self.setFocusAfterOpen();
-    }, 200);
+      if (self.settings.retrictMonthSelection && self.settings.disable.minDate && self.settings.disable.maxDate) {
+        self.validatePrevNext('start');
+      }
+    }, 50);
   },
 
   /**
