@@ -1,11 +1,5 @@
 {
   "private": true,
-  "name": "@infor/sohoxi",
-  "version": "4.6.0",
-  "shortName": "sohoxi",
-  "description": "Hook & Loop - SoHo XI Controls",
-  "author": "Hook & Loop",
-  "license": "Runtime License",
   "scripts": {
     "start": "npm run server",
     "stop": "./scripts/stop.sh",
@@ -31,15 +25,6 @@
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
     "lint-staged": "lint-staged"
-  },
-  "pre-commit": [],
-  "lint-staged": {
-    "src/**/*.js": [
-      "eslint -c .eslintrc.js"
-    ],
-    "test/**/*.js": [
-      "eslint -c .eslintrc.js"
-    ]
   },
   "dependencies": {
     "d3": "^4.13.0",
