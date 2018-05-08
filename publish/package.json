@@ -1,19 +1,24 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.6.0-alpha.1",
+  "version": "4.6.0-alpha.2",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
-  "author": "Hook & Loop",
-  "license": "Runtime License",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/infor-design/enterprise.git"
   },
+  "keywords": [
+    "infor design system",
+    "infor design system enterprise"
+  ],
+  "author": "Hook & Loop",
+  "license": "Runtime License",
   "bugs": {
     "url": "https://github.com/infor-design/enterprise/issues"
   },
   "homepage": "https://github.com/infor-design/enterprise",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "d3": "^4.13.0",
@@ -23,6 +28,8 @@
   "jspm": {
     "main": "dist/js/sohoxi.js"
   },
-  "devDependencies": {
-  }
+  "files": [
+    "dist",
+    "sass"
+  ]
 }
