@@ -10,10 +10,10 @@ To install the enterprise components into your project using NPM, run the follow
 
 ```sh
 npm config set @infor:registry=http://npm.infor.com:4873
-npm install --save @infor/sohoxi
+npm install --save ids-enterprise
 ```
 
-The files can be found in `/node_modules/@infor/sohoxi/dist`.
+The files can be found in `/node_modules/ids-enterprise/dist`.
 
 To install the code for development using `git`, run:
 

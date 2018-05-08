@@ -68,10 +68,10 @@ npm config set @infor:registry=http://npm.infor.com:4873
 Then to install, run:
 
 ```bash
-npm install --save @infor/sohoxi
+npm install --save ids-enterprise
 ```
 
-The files can then be seen in the folder `./node_modules/@infor/sohoxi/dist`
+The files can then be seen in the folder `./node_modules/ids-enterprise/dist`
 
 ### CDN
 

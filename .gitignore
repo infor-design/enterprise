@@ -44,6 +44,7 @@ docs/api
 eslint.log
 coverage
 .tmp/
+publish/LICENSE.MD
 
 # OS generated files #
 ############

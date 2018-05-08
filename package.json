@@ -13,7 +13,6 @@
     "url": "https://github.com/infor-design/enterprise/issues"
   },
   "homepage": "https://github.com/infor-design/enterprise",
-
   "scripts": {
     "start": "npx grunt clean:app && npx grunt sass:app && node app/server.js",
     "stop": "./scripts/stop.sh",
@@ -31,6 +30,7 @@
     "e2e:ci": "npm run e2e:ci:pre && protractor test/protractor.ci.conf.js || npm run stop",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
+    "prepublishOnly": "npx grunt publish",
     "publish-dev": "npx grunt publish && npm publish --tag dev",
     "publish-nightly": "npx grunt publish && npm publish --tag nightly",
     "publish-prod": "npx grunt publish && npm publish",
