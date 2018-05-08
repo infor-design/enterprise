@@ -17,7 +17,7 @@
   "scripts": {
     "start": "npm run server",
     "stop": "./scripts/stop.sh",
-    "server": "grunt clean:app && grunt sass:app && node app/server.js",
+    "server": "npx grunt clean:app && npx grunt sass:app && node app/server.js",
     "eslint": "eslint -c .eslintrc.js src",
     "eslint:log": "eslint -c .eslintrc.js src -o eslint.log",
     "eslint:error-only": "eslint -c .eslintrc.js --quiet src",
@@ -33,9 +33,9 @@
     "e2e:ci": "npm run e2e:ci:pre && protractor test/protractor.ci.conf.js || npm run stop",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
-    "publish-dev": "grunt publish && npm publish publish --tag dev --force",
-    "publish-nightly": "grunt publish && npm publish publish --tag nightly",
-    "publish-prod": "grunt publish && npm publish publish --force",
+    "publish-dev": "npx grunt publish && npm publish publish --tag dev --force",
+    "publish-nightly": "npx grunt publish && npm publish publish --tag nightly",
+    "publish-prod": "npx grunt publish && npm publish publish --force",
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
     "lint-staged": "lint-staged"
