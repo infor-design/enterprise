@@ -1,21 +1,27 @@
 {
-  "private": true,
-  "name": "@infor/sohoxi",
-  "version": "4.6.0",
-  "shortName": "sohoxi",
-  "description": "Hook & Loop - SoHo XI Controls",
+  "name": "ids-enterprise",
+  "slug": "ids-enterprise",
+  "version": "4.6.0-alpha.1",
+  "description": "Infor Design System (IDS) Enterprise Components for the web",
   "author": "Hook & Loop",
   "license": "Runtime License",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infor-design/enterprise.git"
+  },
+  "bugs": {
+    "url": "https://github.com/infor-design/enterprise/issues"
+  },
+  "homepage": "https://github.com/infor-design/enterprise",
+
   "scripts": {
-    "start": "npm run server",
+    "start": "npx grunt clean:app && npx grunt sass:app && node app/server.js",
     "stop": "./scripts/stop.sh",
-    "server": "grunt clean:app && grunt sass:app && node app/server.js",
     "eslint": "eslint -c .eslintrc.js src",
     "eslint:log": "eslint -c .eslintrc.js src -o eslint.log",
     "eslint:error-only": "eslint -c .eslintrc.js --quiet src",
-    "build": "rollup -c",
+    "build": "npx rollup -c",
     "minify": "node ./scripts/minify.js",
-    "install-globals": "npm install -g grunt-cli rollup",
     "functional:local": "npx karma start test/karma.conf.js",
     "functional:ci": "npx karma start test/karma.conf.js --single-run",
     "e2e:local:pre": "npm run webdriver:update && (npm run start & sleep 10)",
@@ -25,21 +31,11 @@
     "e2e:ci": "npm run e2e:ci:pre && protractor test/protractor.ci.conf.js || npm run stop",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
-    "publish-dev": "grunt publish && npm publish publish --tag dev --force",
-    "publish-nightly": "grunt publish && npm publish publish --tag nightly",
-    "publish-prod": "grunt publish && npm publish publish --force",
+    "publish-dev": "npx grunt publish && npm publish --tag dev",
+    "publish-nightly": "npx grunt publish && npm publish --tag nightly",
+    "publish-prod": "npx grunt publish && npm publish",
     "documentation": "node ./scripts/deploy-documentation.js",
-    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
-    "lint-staged": "lint-staged"
-  },
-  "pre-commit": [],
-  "lint-staged": {
-    "src/**/*.js": [
-      "eslint -c .eslintrc.js"
-    ],
-    "test/**/*.js": [
-      "eslint -c .eslintrc.js"
-    ]
+    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v"
   },
   "dependencies": {
     "d3": "^4.13.0",
@@ -125,5 +121,12 @@
     "vinyl-contents-tostring": "^1.0.0",
     "vinyl-write": "^0.2.2",
     "webpack": "^4.6.0"
-  }
+  },
+  "main": "dist/js/sohoxi.js",
+  "jspm": {
+    "main": "dist/js/sohoxi.js"
+  },
+  "files": [
+    "dist"
+  ]
 }
