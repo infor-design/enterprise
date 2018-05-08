@@ -1,11 +1,20 @@
 {
   "private": true,
-  "name": "@infor/sohoxi",
-  "version": "4.6.0",
-  "shortName": "sohoxi",
-  "description": "Hook & Loop - SoHo XI Controls",
+  "name": "ids-enterprise",
+  "slug": "ids-enterprise",
+  "version": "4.6.0-alpha.1",
+  "description": "Infor Design System (IDS) Enterprise Components for the web",
   "author": "Hook & Loop",
   "license": "Runtime License",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infor-design/enterprise.git"
+  },
+  "bugs": {
+    "url": "https://github.com/infor-design/enterprise/issues"
+  },
+  "homepage": "https://github.com/infor-design/enterprise",
+
   "scripts": {
     "start": "npm run server",
     "stop": "./scripts/stop.sh",
@@ -125,5 +134,12 @@
     "vinyl-contents-tostring": "^1.0.0",
     "vinyl-write": "^0.2.2",
     "webpack": "^4.6.0"
-  }
+  },
+  "main": "dist/js/sohoxi.js",
+  "jspm": {
+    "main": "dist/js/sohoxi.js"
+  },
+  "files": [
+    "dist"
+  ]
 }
