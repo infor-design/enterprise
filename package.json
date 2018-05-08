@@ -86,7 +86,6 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^3.0.0",
-    "lint-staged": "^7.1.0",
     "load-grunt-tasks": "^3.5.2",
     "marked": "^0.3.17",
     "mmm": "^0.2.2",
