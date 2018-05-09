@@ -38,6 +38,15 @@ module.exports = function generalRoute(req, res, next) {
     res.status(404).render(path.join(viewsRoot, 'error.html'), res.opts);
     return;
   }
+
+  // Check a friendly URL for a matching `.html` file.
+  const friendlyURLFilepath = `${viewsRoot}${req.originalUrl}.html`;
+  if (utils.hasFile(friendlyURLFilepath)) {
+    res.render(utils.getTemplateUrl(friendlyURLFilepath.replace(viewsRoot, '')), res.opts);
+    next();
+    return;
+  }
+
   // Render an index.html page if one exists.
   // Otherwise, render the directory listing.
   if (utils.hasIndexFile(directoryPath)) {

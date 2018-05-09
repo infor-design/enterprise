@@ -48,13 +48,14 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
 
     // Map with links, add to
     function pathMapper(link) {
-      const href = path.join('/', directory.replace(viewsRoot, ''), link);
+      let href = path.join('/', directory.replace(viewsRoot, ''), link);
       let icon;
       let type = 'file';
 
       if (utils.isType('directory', `${directory}${link}`)) {
         icon = '#icon-folder';
         type = 'folder';
+        href += '/list';
       } else {
         icon = '#icon-document';
       }

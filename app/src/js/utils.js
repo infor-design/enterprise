@@ -82,7 +82,7 @@ utils.removeLeadingSlash = function removeLeadingSlash(filePath) {
 };
 
 utils.hasLayoutFile = function (directory) {
-  return utils.hasFile(path.join(directory, '_layout.html'));
+  return utils.hasFile(path.join(directory, 'layout.html'));
 };
 
 utils.hasIndexFile = function (directory) {
@@ -110,10 +110,10 @@ utils.getLayout = function (directory, webroot) {
   while (!directoryHasLayout && directory.length > 1) {
     directoryHasLayout = utils.hasLayoutFile(directory);
     if (directoryHasLayout) {
-      filePath = path.join('.', utils.getDirectory(directory, webroot), '_layout.html');
+      filePath = path.join('.', utils.getDirectory(directory, webroot), 'layout.html');
 
       // If it ends up being the root layout, return nothing so the default takes place
-      if (filePath === '/_layout.html') {
+      if (filePath === '/layout.html') {
         return '';
       }
 

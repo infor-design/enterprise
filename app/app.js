@@ -370,46 +370,48 @@ function addDefaultFolderLayout(opts, component) {
 // Component Routes
 // =======================================
 
-router.get('/components', function(req, res, next) {
+router.get('/:type', function(req, res, next) {
   let opts = {
-    path: path.resolve(__dirname, 'docs', 'components', 'index.html')
+    path: path.resolve(__dirname, 'docs', req.params.type, 'index.html')
   };
   sendGeneratedDocPage(opts, req, res, next);
 });
 
-router.get('/components/', function(req, res, next) {
-  res.redirect(301, `${res.opts.basepath}components`);
+router.get('/:type/', function(req, res, next) {
+  res.redirect(`${res.opts.basepath}${req.params.type}`);
   next();
 });
 
-router.get('/components/list', function(req, res, next) {
+router.get('/:type/list', function(req, res, next) {
   generalRoute(req, res, next);
 });
 
-router.get('/components/:component', function(req, res, next) {
-  let component = req.params.component;
-  if (component === 'list') {
+router.get('/:type/:item', function(req, res, next) {
+  let item = req.params.item;
+  if (item === 'list') {
     next();
     return;
   }
 
   let opts = {
-    path: path.resolve(__dirname, 'docs', 'components', `${component}.html`)
+    path: path.resolve(__dirname, 'docs', req.params.type, `${item}.html`)
   };
   sendGeneratedDocPage(opts, req, res, next);
 });
 
-router.get('/components/:component/', function(req, res, next) {
-  res.redirect(301, `${res.opts.basepath}components/${req.params.component}`);
+router.get('/:type/:item/', function(req, res, next) {
+  res.redirect(301, `${res.opts.basepath}${req.params.type}/${req.params.item}`);
   next();
 });
 
-router.get('/components/:component/list', function(req, res, next) {
+router.get('/:type/:item/list', function(req, res, next) {
   generalRoute(req, res, next);
 });
 
-router.get('/components/:component/:example', function(req, res, next) {
-  let componentName = req.params.component;
+router.get('/:type/:item/:example', function(req, res, next) {
+  generalRoute(req, res, next);
+  /*
+  let itemName = req.params.item;
   let exampleName = stripHtml(req.params.example);
 
   if (exampleName === 'list') {
@@ -426,18 +428,18 @@ router.get('/components/:component/:example', function(req, res, next) {
   // Double check this folder for an alternative layout file.
   opts = addDefaultFolderLayout(opts, componentName);
 
-  if (componentName === 'base-tag') {
+  if (itemName === 'base-tag') {
     opts.usebasehref = true;
     opts.layout = 'tests/layout';
   }
 
-  if (componentName === 'applicationmenu' && (exampleName.indexOf('example-') > -1 || exampleName.indexOf('test-') > -1)) {
+  if (itemName === 'applicationmenu' && (exampleName.indexOf('example-') > -1 || exampleName.indexOf('test-') > -1)) {
     opts.layout = null;
   }
 
-  if (componentName === 'header') {
+  if (itemName === 'header') {
     if (exampleName.indexOf('test-header-gauntlet') > -1) {
-      opts.layout = 'components/header/layout-header-gauntlet';
+      opts.layout = `components/header/layout-header-gauntlet`;
     }
   }
 
@@ -447,16 +449,16 @@ router.get('/components/:component/:example', function(req, res, next) {
   }
 
   if (req.params.example !== undefined) {
-    res.render(`components/${componentName}/${req.params.example}`, opts);
+    res.render(`${req.params.type}/${req.params.item}/${req.params.example}`, opts);
   }
-
   next();
+  */
 });
 
+/**
 // ======================================
 //  Patterns Section
 // ======================================
-
 router.get('/patterns*', (req, res, next) => {
   let opts = extend({}, res.opts, {
       layout: 'patterns/layout',
@@ -569,7 +571,7 @@ function testsRouteHandler(req, res, next) {
   }
 
   // Handle Redirects to new Structure
-  let component = req.params.component,
+  let component = req.params.item,
     example = req.params.example;
 
   if (example && component) {
@@ -684,6 +686,7 @@ router.get('/examples/:folder/', exampleRouteHandler);
 router.get('/examples/:folder', exampleRouteHandler);
 router.get('/examples/', exampleRouteHandler);
 router.get('/examples', exampleRouteHandler);
+*/
 
 // =========================================
 // Collection of Performance Tests Pages
