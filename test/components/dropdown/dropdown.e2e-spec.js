@@ -18,7 +18,7 @@ const clickOnDropdown = async () => {
 describe('Dropdown example-index tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/dropdown/example-index');
+    await browser.driver.get(`${browser.baseUrl}/components/dropdown/example-index?theme=${browser.params.theme}`);
   });
 
   it('Should open dropdown list on click', async () => {
@@ -110,13 +110,11 @@ describe('Dropdown example-index tests', () => {
 describe('Dropdown example-ajax tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/dropdown/example-ajax');
+    await browser.driver.get(`${browser.baseUrl}/components/dropdown/example-ajax?theme=${browser.params.theme}`);
   });
 
   if (!utils.isSafari()) {
     it('Should make ajax request, and arrow down to New York, and focus', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/components/dropdown/example-ajax');
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);

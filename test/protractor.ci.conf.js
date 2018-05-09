@@ -13,6 +13,9 @@ const getSpecs = (listSpec) => {
 };
 
 exports.config = {
+  params: {
+    theme:  process.env.ENTERPRISE_THEME || 'light'
+  },
   allScriptsTimeout: 120000,
   specs: getSpecs(process.env.PROTRACTOR_SPECS),
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
