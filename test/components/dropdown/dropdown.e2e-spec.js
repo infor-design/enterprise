@@ -27,7 +27,7 @@ describe('Dropdown example-index tests', () => {
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should scroll down to end of list, and Vermont should be visible', async () => {
+  it('Should scroll down to end of list, and Vermont Should be visible', async () => {
     await clickOnDropdown();
     await browser.executeScript('document.querySelector("ul[role=\'listbox\']").scrollTop = 10000');
     const dropdownElList = await element(by.css('ul[role="listbox"]'));
@@ -128,11 +128,13 @@ describe('Dropdown example-ajax tests', () => {
   }
 });
 
-describe('Dropdown No-Search Mode Tests', () => {
-  it('should select a Dropdown item when keying on a closed Dropdown component', async () => {
+describe('Dropdown example-no-search-lsf tests', () => {
+  beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search-lsf');
+    await browser.driver.get(`${browser.baseUrl}/components/dropdown/example-no-search-lsf?theme=${browser.params.theme}`);
+  });
 
+  it('Should select a Dropdown item when keying on a closed Dropdown component', async () => {
     const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
@@ -144,10 +146,7 @@ describe('Dropdown No-Search Mode Tests', () => {
     expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('R - Rocket Raccoon');
   });
 
-  it('should cycle through dropdown options that begin with the same character', async () => {
-    await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search-lsf');
-
+  it('Should cycle through dropdown options that begin with the same character', async () => {
     const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
@@ -173,15 +172,18 @@ describe('Dropdown No-Search Mode Tests', () => {
 
     expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('T - Thor');
   });
+});
 
-  it('should properly filter when multiple characters are typed ahead', async () => {
+describe('Dropdown example-no-search-filtering tests', () => {
+  beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search-filtering');
+    await browser.driver.get(`${browser.baseUrl}/components/dropdown/example-no-search-filtering?theme=${browser.params.theme}`);
+  });
 
+  it('Should properly filter when multiple characters are typed ahead', async () => {
     const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
-
     await dropdownPseudoEl.click();
     await dropdownPseudoEl.sendKeys('15');
     await browser.driver.sleep(config.sleep);
@@ -209,10 +211,7 @@ describe('Dropdown No-Search Mode Tests', () => {
     expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual('56');
   });
 
-  it('should clear a previous dropdown selection when pressing DELETE', async () => {
-    await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search-filtering');
-
+  it('Should clear a previous dropdown selection when pressing DELETE', async () => {
     const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
@@ -225,7 +224,8 @@ describe('Dropdown No-Search Mode Tests', () => {
 
     await dropdownPseudoEl.sendKeys(protractor.Key.DELETE);
     await browser.driver.sleep(config.sleep);
+    const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").innerHTML');
 
-    expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual(' ');
+    expect(dropdownHTML).toEqual('<span>&nbsp;</span>');
   });
 });
