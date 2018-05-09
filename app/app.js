@@ -70,6 +70,7 @@ app.use(router);
 app.use(require('./src/js/middleware/error-handler')(app));
 
 const generalRoute = require('./src/js/routes/general');
+const sendGeneratedDocPage = require('./src/js/routes/docs');
 
 // Strips the '.html' from a file path and returns the target route name without it
 function stripHtml(routeParam) {
@@ -269,64 +270,6 @@ function getFolderContents(type, dir) { // type, dir, folderName
 }
 
 /**
- * Returns a listing of both "examples" and "tests" for a particular type of component.
- * @param {string} type - the component/layout/pattern type
- * @param {object} req
- * @param {object} res
- * @param {function} next
- * @param {array} [extraExcludes]
- * @returns {?}
- */
-function getFullListing(type, req, res, next, extraExcludes) {
-  let allPaths = [],
-    componentPaths,
-    testPaths;
-
-  if (!extraExcludes) {
-    extraExcludes = [];
-  }
-
-  // Add Component-specific file name filters
-  // (\D|\W|\S).*?('+ type +')\.(html)+ - pick up all files that end with 'type' before the extension.
-  extraExcludes = extraExcludes.concat([
-    new RegExp(`[^-](_)?(${type})\.(html)`),
-    new RegExp('(\d|\w|\s|-)*?\.(scss|js|md)')
-  ]);
-
-  function componentTextFormatter(path) {
-    path = path.replace('test-', '').replace('example-', '');
-    return formatPath(path);
-  }
-
-  // Search the "/components/<type>" folder for all tests/examples located here
-  componentPaths = getFolderContents(type, `app/views/components/${type}/`, 'Components');
-  componentPaths.forEach((path, i) => {
-    const isTest = path.substr(0, 5) === 'test-';
-
-    componentPaths[i] = {
-      text: componentTextFormatter(path),
-      link: `components/${type}/${path}`,
-      type: isTest ? 'test' : 'example',
-      labelColor: isTest ? 'azure07' : 'ruby07'
-    };
-  });
-  componentPaths = filterUnusablePaths(componentPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes).concat([
-    /[^-.]index\.html/,
-  ]));
-
-  // Combine the arrays and filter out the junk
-  allPaths = allPaths.concat(componentPaths).concat(testPaths);
-
-  const opts = extend({}, res.opts, {
-    subtitle: `All Examples & Tests for ${type}`,
-    paths: allPaths.map(pathMapper)
-  });
-
-  res.render('listing', opts);
-  next();
-}
-
-/**
  * Returns a directory listing as page content with working links
  * @param {string} directory
  * @param {object} req
@@ -388,7 +331,6 @@ router.get('/index', (req, res, next) => {
 });
 
 router.get('/kitchen-sink', (req, res, next) => {
-  const opts = res.opts;
   res.render('kitchen-sink', res.opts);
   next();
 });
@@ -422,24 +364,6 @@ function addDefaultFolderLayout(opts, component) {
   }
 
   return opts;
-}
-
-/**
- * Serve a generated documentation page from one of the express routes
- */
-function sendGeneratedDocPage(options, req, res, next) {
-  if (!options.path) {
-    next('No generated documentation page path was provided.');
-  }
-
-  let output = fs.readFileSync(options.path, 'utf8');
-  if (!output) {
-    logger('Could not read from the specified generated documentation file.');
-    next();
-    return;
-  }
-
-  res.send(output);
 }
 
 // =======================================
@@ -482,8 +406,6 @@ router.get('/components/:component/', function(req, res, next) {
 
 router.get('/components/:component/list', function(req, res, next) {
   generalRoute(req, res, next);
-
-  //getFullListing(`${req.params.component}`, req, res, next);
 });
 
 router.get('/components/:component/:example', function(req, res, next) {
