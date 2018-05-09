@@ -988,7 +988,8 @@ Dropdown.prototype = {
 
     if (blank.length > 0) {
       blank[0].selected = true;
-      this.element.triggerHandler('updated').triggerHandler('change');
+      this.element.triggerHandler('updated');
+      this.element.triggerHandler('change');
     }
   },
 

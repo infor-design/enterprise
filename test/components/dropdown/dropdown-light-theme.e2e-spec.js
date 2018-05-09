@@ -7,6 +7,8 @@ const config = requireHelper('e2e-config');
 requireHelper('rejection');
 const axeOptions = { rules };
 
+const NONBREAKING_SPACE = '\u00A0';
+
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 const clickOnDropdown = async () => {
@@ -213,6 +215,28 @@ describe('Dropdown No-Search Mode Tests', () => {
     await browser.driver.sleep(config.sleep);
 
     expect(dropdownPseudoEl.getText()).toEqual('56');
+
+    dropdownPseudoEl = null;
+  });
+
+  it('should clear a previous dropdown selection when pressing DELETE', async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search-filtering');
+
+    let dropdownPseudoEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
+
+    await dropdownPseudoEl.click();
+    await dropdownPseudoEl.sendKeys('15');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('15');
+
+    await dropdownPseudoEl.sendKeys(protractor.Key.DELETE);
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual(NONBREAKING_SPACE);
 
     dropdownPseudoEl = null;
   });
