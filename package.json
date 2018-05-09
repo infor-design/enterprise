@@ -3,9 +3,9 @@
   "scripts": {
     "start": "npx grunt clean:app && npx grunt sass:app && node app/server.js",
     "stop": "./scripts/stop.sh",
-    "eslint": "eslint -c .eslintrc.js src",
-    "eslint:log": "eslint -c .eslintrc.js src -o eslint.log",
-    "eslint:error-only": "eslint -c .eslintrc.js --quiet src",
+    "eslint": "npx eslint -c .eslintrc.js src",
+    "eslint:log": "npx eslint -c .eslintrc.js src -o eslint.log",
+    "eslint:error-only": "npx eslint -c .eslintrc.js --quiet src",
     "build": "npx rollup -c",
     "minify": "node ./scripts/minify.js",
     "functional:local": "npx karma start test/karma.conf.js",
