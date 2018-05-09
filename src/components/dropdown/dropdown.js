@@ -1198,12 +1198,12 @@ Dropdown.prototype = {
     self.initialFilter = true;
     self.filterTerm += e.key;
 
-    if (self.settings.noSearch) {
-      self.selectStartsWith(self.filterTerm);
-      return;
-    }
-
     this.timer = setTimeout(() => {
+      if (self.settings.noSearch) {
+        self.selectStartsWith(self.filterTerm);
+        return;
+      }
+
       if (!self.isOpen()) {
         self.searchInput.val(self.filterTerm);
         self.toggleList();
