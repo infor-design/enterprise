@@ -85,14 +85,6 @@ function toTitleCase(str) {
   return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
-// Adds a stored "nonce" attribute to all script tags to conform with security policy.
-function addNonceToScript(html, nonce) {
-  if (!html || !html.length) {
-    return '';
-  }
-  return html.replace(/<script/ig, `<script nonce="${nonce}"`);
-}
-
 /*
  * Checks the target file path for its type (is it a file, a directory, etc)
  * http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
@@ -445,10 +437,6 @@ function sendGeneratedDocPage(options, req, res, next) {
     logger('Could not read from the specified generated documentation file.');
     next();
     return;
-  }
-
-  if (res.opts.csp || req.query.csp) {
-    output = addNonceToScript(output, res.opts.nonce);
   }
 
   res.send(output);

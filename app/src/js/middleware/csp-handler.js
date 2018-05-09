@@ -22,7 +22,7 @@ module.exports = function () {
     res.send = function (...args) {
       // arguments[0] (or `data`) contains the response body
       if (typeof args[0] === 'string') {
-        logger('info', 'adding "nonce" attributes to script tags in this request.');
+        logger('info', 'adding "nonce" attributes to script tags on this response.');
         args[0] = addNonceToScript(args[0], res.opts.nonce);
       }
       oldSend.apply(res, args);
@@ -32,7 +32,6 @@ module.exports = function () {
     const oldRender = res.render;
     res.render = function (view, options, fn) {
       oldRender.call(this, view, options, (err, html) => {
-        logger('info', 'running a different `res.render()` call');
         if (typeof fn === 'function') {
           fn.call(fn, err, html);
         }
