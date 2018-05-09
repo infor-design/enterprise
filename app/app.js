@@ -65,8 +65,11 @@ app.use(require('./src/js/middleware/option-handler')(app, DEFAULT_RESPONSE_OPTS
 app.use(require('./src/js/middleware/basepath-handler')(app));
 app.use(require('./src/js/middleware/global-data-handler')(app));
 app.use(require('./src/js/middleware/response-throttler')(app));
+app.use(require('./src/js/middleware/csp-handler')(app));
 app.use(router);
 app.use(require('./src/js/middleware/error-handler')(app));
+
+const generalRoute = require('./src/js/routes/general');
 
 // Strips the '.html' from a file path and returns the target route name without it
 function stripHtml(routeParam) {
@@ -327,13 +330,7 @@ function getFullListing(type, req, res, next, extraExcludes) {
     paths: allPaths.map(pathMapper)
   });
 
-  res.render('listing', opts, function(err, html) {
-    if (res.opts.csp || req.query.csp) {
-      html = addNonceToScript(html, res.opts.nonce);
-    }
-    res.send(html);
-  });
-
+  res.render('listing', opts);
   next();
 }
 
@@ -377,12 +374,7 @@ function getDirectoryListing(directory, req, res, next, extraExcludes) {
       }).map(pathMapper)
     });
 
-    res.render('listing', opts, function(err, html) {
-      if (res.opts.csp || req.query.csp) {
-        html = addNonceToScript(html, res.opts.nonce);
-      }
-      res.send(html);
-    });
+    res.render('listing', opts);
     next();
   });
 }
@@ -405,12 +397,7 @@ router.get('/index', (req, res, next) => {
 
 router.get('/kitchen-sink', (req, res, next) => {
   const opts = res.opts;
-  res.render('kitchen-sink', res.opts, function(err, html) {
-    if (res.opts.csp || req.query.csp) {
-      html = addNonceToScript(html, res.opts.nonce);
-    }
-    res.send(html);
-  });
+  res.render('kitchen-sink', res.opts);
   next();
 });
 
@@ -455,8 +442,8 @@ function sendGeneratedDocPage(options, req, res, next) {
 
   let output = fs.readFileSync(options.path, 'utf8');
   if (!output) {
-    res.status(500);
-    next(options.error || 'Could not read from the specified generated documentation file.');
+    logger('Could not read from the specified generated documentation file.');
+    next();
     return;
   }
 
@@ -465,7 +452,6 @@ function sendGeneratedDocPage(options, req, res, next) {
   }
 
   res.send(output);
-  next();
 }
 
 // =======================================
@@ -485,7 +471,7 @@ router.get('/components/', function(req, res, next) {
 });
 
 router.get('/components/list', function(req, res, next) {
-  getDirectoryListing('components/', req, res, next);
+  generalRoute(req, res, next);
 });
 
 router.get('/components/:component', function(req, res, next) {
@@ -507,7 +493,9 @@ router.get('/components/:component/', function(req, res, next) {
 });
 
 router.get('/components/:component/list', function(req, res, next) {
-  getFullListing(`${req.params.component}`, req, res, next);
+  generalRoute(req, res, next);
+
+  //getFullListing(`${req.params.component}`, req, res, next);
 });
 
 router.get('/components/:component/:example', function(req, res, next) {
@@ -539,7 +527,7 @@ router.get('/components/:component/:example', function(req, res, next) {
 
   if (componentName === 'header') {
     if (exampleName.indexOf('test-header-gauntlet') > -1) {
-      opts.layout = 'header/layout-header-gauntlet';
+      opts.layout = 'components/header/layout-header-gauntlet';
     }
   }
 
@@ -549,12 +537,7 @@ router.get('/components/:component/:example', function(req, res, next) {
   }
 
   if (req.params.example !== undefined) {
-    res.render(`components/${componentName}/${req.params.example}`, opts, function(err, html) {
-      if (res.opts.csp || req.query.csp) {
-        html = addNonceToScript(html, res.opts.nonce);
-      }
-      res.send(html);
-    });
+    res.render(`components/${componentName}/${req.params.example}`, opts);
   }
 
   next();
@@ -830,6 +813,6 @@ router.get('/angular*', (req, res, next) => {
 // =========================================
 // Fake 'API' Calls for use with AJAX-ready Controls
 // =========================================
-require('./data')(app);
+require('./src/js/routes/data')(app);
 
 module.exports = app;
