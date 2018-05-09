@@ -131,19 +131,89 @@ describe('Dropdown example-ajax tests', () => {
 });
 
 describe('Dropdown No-Search Mode Tests', () => {
-  beforeEach(async () => {
+  it('should select a Dropdown item when keying on a closed Dropdown component', async () => {
     await browser.waitForAngularEnabled(false);
     await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search-lsf');
-  });
 
-  it('should select a Dropdown item when keying on a closed Dropdown component', async () => {
-    const dropdownPseudoEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+    let dropdownPseudoEl = await element(by.css('div[aria-controls="dropdown-list"]'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
 
     await dropdownPseudoEl.click();
     await dropdownPseudoEl.sendKeys('r');
+    await browser.driver.sleep(config.sleep);
 
     expect(dropdownPseudoEl.getText()).toEqual('R - Rocket Raccoon');
+
+    dropdownPseudoEl = null;
+  });
+
+  it('should cycle through dropdown options that begin with the same character', async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search-lsf');
+
+    let dropdownPseudoEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
+
+    await dropdownPseudoEl.click();
+    await dropdownPseudoEl.sendKeys('t');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('T - Thor');
+
+    await dropdownPseudoEl.sendKeys('t');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('T2 - Thanos');
+
+    await dropdownPseudoEl.sendKeys('t');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('T3 - That other one that won\'t get selected');
+
+    await dropdownPseudoEl.sendKeys('t');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('T - Thor');
+
+    dropdownPseudoEl = null;
+  });
+
+  it('should properly filter when multiple characters are typed ahead', async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search-filtering');
+
+    let dropdownPseudoEl = await element(by.css('div[aria-controls="dropdown-list"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
+
+    await dropdownPseudoEl.click();
+    await dropdownPseudoEl.sendKeys('15');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('15');
+
+    await dropdownPseudoEl.sendKeys('1');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('10');
+
+    await dropdownPseudoEl.sendKeys('1');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('11');
+
+    await dropdownPseudoEl.sendKeys('101');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('101');
+
+    await dropdownPseudoEl.sendKeys('56');
+    await browser.driver.sleep(config.sleep);
+
+    expect(dropdownPseudoEl.getText()).toEqual('56');
+
+    dropdownPseudoEl = null;
   });
 });
