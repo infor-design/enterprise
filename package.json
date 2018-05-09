@@ -91,7 +91,6 @@
     "mmm": "^0.2.2",
     "moment": "^2.19.2",
     "node-sass": "^4.8.3",
-    "pre-commit": "^1.2.2",
     "protractor": "^5.3.1",
     "protractor-image-comparison": "^1.7.0",
     "pygmentize-bundled": "^2.3.0",
