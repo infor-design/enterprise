@@ -2184,6 +2184,9 @@ Datagrid.prototype = {
   * @private
   */
   setTreeRootNodes() {
+    if (!this.settings.treeGrid) {
+      return;
+    }
     this.settings.treeRootNodes = this.settings.treeDepth
       .filter(node => node.depth === 1);
   },
@@ -2194,6 +2197,9 @@ Datagrid.prototype = {
    * @param {array} dataset The json array to use for calculating tree depth.
    */
   setTreeDepth(dataset) {
+    if (!this.settings.treeGrid) {
+      return;
+    }
     const self = this;
     let idx = 0;
     const iterate = function (node, depth) {
@@ -4185,8 +4191,9 @@ Datagrid.prototype = {
   triggerRowEvent(eventName, e, stopPropagation) {
     const self = this;
     const cell = $(e.target).closest('td').index();
-    const rowIndex = $(e.target).closest('tr');
-    let row = self.dataRowIndex(rowIndex);
+    const rowElem = $(e.target).closest('tr');
+    let row = self.dataRowIndex(rowElem);
+    let isTrigger = true;
 
     if ($(e.target).is('a')) {
       stopPropagation = false;
@@ -4197,17 +4204,24 @@ Datagrid.prototype = {
       e.preventDefault();
     }
 
-    if (self.settings.indeterminate) {
-      row = self.dataRowIndex(rowIndex);
+    let item = self.settings.dataset[row];
+
+    // Groupable
+    if (this.settings.groupable) {
+      if (rowElem.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer')) {
+        isTrigger = false; // No need to trigger if no data item
+      } else {
+        row = self.pagingRowIndex(self.actualRowIndex(rowElem));
+        item = self.settings.dataset[self.groupArray[row].group];
+        if (item && item.values) {
+          item = item.values[self.groupArray[row].node];
+        }
+      }
     }
 
-    const item = self.settings.dataset[row];
-    self.element.trigger(eventName, [{
-      row,
-      cell,
-      item,
-      originalEvent: e
-    }]);
+    if (isTrigger) {
+      self.element.trigger(eventName, [{ row, cell, item, originalEvent: e }]);
+    }
 
     return false;
   },
