@@ -76,8 +76,10 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
 
     const relativeDir = directory.replace(viewsRoot, '');
 
-    res.opts.layout = `${path.join(viewsRoot, '/layout.html')}`;
-    req.app.set('layout', res.opts.layout);
+    if (utils.canChangeLayout(req, res)) {
+      res.opts.layout = `${path.join(viewsRoot, '/layout.html')}`;
+      req.app.set('layout', res.opts.layout);
+    }
 
     res.opts.title = `Directory list: ${relativeDir}`;
     res.opts.directory = `${relativeDir}`;

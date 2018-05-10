@@ -7,6 +7,8 @@ const FILENAME_REGEX = /[\w-]+\.html/;
 
 //
 utils.getFileName = function getFileName(filePath) {
+  filePath = utils.getPathWithoutQuery(filePath);
+
   const match = FILENAME_REGEX.exec(filePath);
   if (!match || !match.length) {
     return '';
@@ -15,8 +17,18 @@ utils.getFileName = function getFileName(filePath) {
 };
 
 //
+utils.getPathWithoutQuery = function (filePath) {
+  const queryIndex = filePath.indexOf('?');
+  if (queryIndex > -1) {
+    filePath = filePath.substring(0, queryIndex);
+  }
+  return filePath;
+};
+
 //
 utils.hasFile = function (filePath) {
+  filePath = utils.getPathWithoutQuery(filePath);
+
   try {
     const file = fs.statSync(filePath);
     if (file && file.blocks) {
@@ -151,6 +163,15 @@ utils.getParentDirectory = function getParentDirectory(filePath) {
   let directory = utils.removeTrailingSlash(filePath);
   directory = utils.getDirectory(directory.substring(0, directory.lastIndexOf(path.sep === '\\' ? '\\' : '/') + 1));
   return directory;
+};
+
+// Returns a true/false value that determines whether or not the layout is allowed to change
+// (use this instead of hardcoding settings for layout changes in multiple spots)
+utils.canChangeLayout = function (req, res) {
+  if (res.opts.nofrillslayout) {
+    return false;
+  }
+  return true;
 };
 
 module.exports = utils;

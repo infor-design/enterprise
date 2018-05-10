@@ -18,9 +18,14 @@ module.exports = function generalRoute(req, res, next) {
     return;
   }
 
-  const layoutFilename = utils.getLayout(directoryPath, viewsRoot);
-  res.opts.layout = layoutFilename || res.opts.layout;
-  req.app.set('layout', res.opts.layout);
+  // Only change the layout if it hasn't been previously set by an option
+  // in another piece of middleware.  Generally, this will attempt to use the `layout.html` in
+  // the target view's directory, or the closest parent directory's `layout.html`.
+  if (utils.canChangeLayout(req, res)) {
+    const layoutFilename = utils.getLayout(directoryPath, viewsRoot);
+    res.opts.layout = layoutFilename || res.opts.layout;
+    req.app.set('layout', res.opts.layout);
+  }
 
   // If a filename was part of the path, attempt to render it.
   // Otherwise, try to render in a directory listing or default file.
@@ -40,7 +45,7 @@ module.exports = function generalRoute(req, res, next) {
   }
 
   // Check a friendly URL for a matching `.html` file.
-  const friendlyURLFilepath = `${viewsRoot}${req.originalUrl}.html`;
+  const friendlyURLFilepath = `${viewsRoot}${utils.getPathWithoutQuery(req.originalUrl)}.html`;
   if (utils.hasFile(friendlyURLFilepath)) {
     res.render(utils.getTemplateUrl(friendlyURLFilepath.replace(viewsRoot, '')), res.opts);
     next();
