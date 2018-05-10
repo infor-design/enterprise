@@ -3,6 +3,7 @@
 const path = require('path');
 const utils = require('../utils');
 const directoryListing = require('./directory-list');
+const customRouteOptions = require('../custom-route-options');
 
 module.exports = function generalRoute(req, res, next) {
   const viewsRoot = req.app.get('views');
@@ -26,6 +27,9 @@ module.exports = function generalRoute(req, res, next) {
     res.opts.layout = layoutFilename || res.opts.layout;
     req.app.set('layout', res.opts.layout);
   }
+
+  // In some rare cases, customize view options depending on the route
+  res.opts = customRouteOptions(req, res);
 
   // If a filename was part of the path, attempt to render it.
   // Otherwise, try to render in a directory listing or default file.
