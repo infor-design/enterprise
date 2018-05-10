@@ -55,19 +55,13 @@ We support the latest release and the release previous to the latest (R-1) for b
 
 ### npmjs
 
-This node module is hosted on a private repo [npm.infor.com](http://npm.infor.com:4873). To be able to install it in your project you need to tell npm on your system to fetch packages with the `@infor` scope from the correct registry.
+To install, run:
 
 ```bash
-npm config set @infor:registry=http://npm.infor.com:4873
+npm install --save ids-enterprise
 ```
 
-Then to install, run:
-
-```bash
-npm install --save @infor/sohoxi
-```
-
-The files can then be seen in the folder `./node_modules/@infor/sohoxi/dist`
+The files can then be seen in the folder `./node_modules/ids-enterprise/dist`
 
 ### CDN
 

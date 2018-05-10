@@ -1,28 +1,28 @@
 <div class="page-container scrollable" id="mainContainer" role="main">
   <div class="row">
-		  <div class="five columns">
-		  	<div class="contextual-toolbar toolbar is-hidden">
-				<div class="title selection-count">1 Selected</div>
-				<div class="buttonset">
-					<button class="btn" onclick="addToDatagridB()">
-	                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-	                      <use xlink:href="#icon-expand-app-tray"></use>
-	                    </svg>
-	                    <span>Add selected</span>
-					</button>
-				</div>
-			</div>
-		  	<div id="datagridA"></div>
-		  </div>
+    <div class="five columns">
+      <div class="contextual-toolbar toolbar is-hidden">
+        <div class="title selection-count">1 Selected</div>
+        <div class="buttonset">
+          <button class="btn" id="add">
+            <span>Add selected</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-expand-app-tray"></use>
+            </svg>
+          </button>
+        </div>
+        </div>
+        <div id="datagridA"></div>
+      </div>
 
-		  <div class="seven columns">
-		  	<div id="datagridB"></div>
-		  </div>
+      <div class="seven columns">
+        <div id="datagridB"></div>
+      </div>
 		</div>
 </div>
 
 <script>
-		function addToDatagridB(){
+		$('#add').on('click', function () {
 			let datagridAApi = $('#datagridA').data('datagrid');
 			let datagridBApi = $('#datagridB').data('datagrid');
 			let selectedRows = datagridAApi.selectedRows();
@@ -42,7 +42,7 @@
 				}
 		    }
 			datagridAApi.removeSelected();
-		}
+		});
 
         $('body').one('initialized', function () {
         	var gridApiA, columnsA = [], dataA = [];

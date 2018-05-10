@@ -12,7 +12,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable');
+    await browser.driver.get(`${browser.baseUrl}/components/popupmenu/example-selectable?theme=${browser.params.theme}`);
   });
 
   it('Should open on click, and close on click', async () => {
@@ -106,7 +106,7 @@ describe('Popupmenu example-selectable tests', () => {
 describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/popupmenu/example-selectable-multiple');
+    await browser.driver.get(`${browser.baseUrl}/components/popupmenu/example-selectable-multiple?theme=${browser.params.theme}`);
   });
 
   if (!utils.isIE() && !utils.isSafari()) {

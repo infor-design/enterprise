@@ -988,7 +988,8 @@ Dropdown.prototype = {
 
     if (blank.length > 0) {
       blank[0].selected = true;
-      this.element.triggerHandler('updated').triggerHandler('change');
+      this.element.triggerHandler('updated');
+      this.element.triggerHandler('change');
     }
   },
 
@@ -1198,12 +1199,12 @@ Dropdown.prototype = {
     self.initialFilter = true;
     self.filterTerm += e.key;
 
-    if (self.settings.noSearch) {
-      self.selectStartsWith(self.filterTerm);
-      return;
-    }
-
     this.timer = setTimeout(() => {
+      if (self.settings.noSearch) {
+        self.selectStartsWith(self.filterTerm);
+        return;
+      }
+
       if (!self.isOpen()) {
         self.searchInput.val(self.filterTerm);
         self.toggleList();

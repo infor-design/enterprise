@@ -164,9 +164,8 @@ label,
   @include font-size(12);
   color: $label-color;
   display: block;
-  line-height: 13px;
   margin-bottom: 8px;
-  min-height: 13px; //prevents need to use &nbsp;
+  min-height: 13px; //prevents need to use &nbsp; for blank labels
 }
 
 .is-disabled.label,

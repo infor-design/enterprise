@@ -11,7 +11,7 @@ const logger = require('../scripts/logger');
 
 const app = express();
 const BASE_PATH = process.env.BASEPATH || '/';
-const packageJSON = getJSONFile('../../../package.json');
+const packageJSON = getJSONFile('../../../publish/package.json');
 
 app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, 'views'));

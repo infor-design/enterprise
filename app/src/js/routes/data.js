@@ -880,14 +880,9 @@ module.exports = function(router){
 
   function sendJSONFile(filename, req, res, next) {
     const data = getJSONFile(path.resolve('app', 'data', `${filename}.json`));
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(data));
+    res.json(data);
     next();
   }
-
-  router.get('/api/:fileName', (req, res, next) => {
-    sendJSONFile(req.params.fileName, req, res, next);
-  });
 
   router.get('/api/my-projects', (req, res, next) => {
     sendJSONFile('projects', req, res, next);
@@ -903,13 +898,28 @@ module.exports = function(router){
   });
 
   router.get('/api/dummy-dropdown-data', (req, res, next) => {
-    const data = require(path.resolve('app', 'src', 'js', 'getJunkDropdownData'));
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(data));
+    const data = require(path.resolve('app', 'src', 'js', 'get-junk-dropdown-data'));
+    res.json(data);
     next();
   });
 
   router.get('/api/org-chart', (req, res, next) => {
     sendJSONFile('org-chart', req, res, next);
+  });
+
+  router.get('/api/:fileName', (req, res, next) => {
+    if (
+      [
+        'periods',
+        'product',
+        'states',
+        'colleagues',
+        'dummy-dropdown-data',
+        'my-projects',
+        'fruits',
+        'nav-items'
+      ].includes(req.params.fileName)
+    ) { return; }
+    sendJSONFile(req.params.fileName, req, res, next);
   });
 }
