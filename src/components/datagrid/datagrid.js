@@ -4206,7 +4206,7 @@ Datagrid.prototype = {
 
     let item = self.settings.dataset[row];
 
-    // Groupable
+    //  Groupable
     if (this.settings.groupable) {
       if (rowElem.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer')) {
         isTrigger = false; // No need to trigger if no data item
