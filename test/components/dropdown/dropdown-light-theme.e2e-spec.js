@@ -230,4 +230,19 @@ describe('Dropdown No-Search Mode Tests', () => {
 
     expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual(' ');
   });
+
+  it('should not change selection if a key is pressed that does not match a dropdown item', async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get('http://localhost:4000/components/dropdown/example-no-search');
+
+    const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
+
+    await dropdownPseudoEl.click();
+    await dropdownPseudoEl.sendKeys('z');
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('div[aria-controls="dropdown-list"]')).first().getText()).toEqual(' ');
+  });
 });
