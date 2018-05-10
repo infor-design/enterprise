@@ -72,252 +72,9 @@ app.use(require('./src/js/middleware/error-handler')(app));
 const generalRoute = require('./src/js/routes/general');
 const sendGeneratedDocPage = require('./src/js/routes/docs');
 
-// Strips the '.html' from a file path and returns the target route name without it
-function stripHtml(routeParam) {
-  const noHtml = routeParam.replace(/\.html/, '');
-  return noHtml;
-}
-
-function setHtml(routeParam) {
-  return `${stripHtml(routeParam)}.html`;
-}
-
-function toTitleCase(str) {
-  return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-}
-
-/*
- * Checks the target file path for its type (is it a file, a directory, etc)
- * http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
- * @param {string} type - 'file' or 'folder'
- * @param {string} filePath - a string representing the relative path of the item to be checked
- * @returns {boolean}
- */
-function is(type, filePath) {
-  let types = ['file', 'folder'],
-    defaultType = types[0],
-    mappings = {
-      file: { methodName: 'isFile' },
-      directory: { methodName: 'isDirectory' }
-      // TODO: Add More (symbolic link, etc)
-    };
-
-  if (!type) {
-    logger('alert', `No type defined. Using the default type of "${defaultType}".`);
-    type = defaultType;
-  }
-
-  if (!mappings[type]) {
-    logger('alert', `Provided type "${type}" is not in the list of valid types.`);
-    return false;
-  }
-
-  // Add beginning slash if it doesn't exist
-  if (filePath.indexOf('/') !== 0) {
-    filePath = `/${filePath}`;
-  }
-
-  let targetPath = `${__dirname}/views${filePath}`,
-    methodName = mappings[type].methodName;
-
-  try {
-    return fs.statSync(targetPath)[methodName]();
-  } catch (e) {
-    logger('info', `File Path "${targetPath}" is not a ${type}.`);
-    return false;
-  }
-}
-
-/**
-   * Checks a path to see if it has a trailing slash.
-   * @param {string} path
-   * @returns {boolean}
-   */
-function hasTrailingSlash(path) {
-  if (!path || typeof path !== 'string') {
-    return false;
-  }
-
-  return path.substr(path.length - 1) === '/';
-}
-
-/**
-   * Filters an array of paths and detects if they actually exist
-   * @private
-   * @param {Object[]} pathDefs -
-   * @param {string} link -
-   * @param {string} directoryPrepender - prepends the "link" portion with a directory that is not processed by the filter
-   */
-function filterUnusablePaths(pathDefs, excludes, directoryPrepender) {
-  const truePaths = [];
-  if (excludes === undefined) {
-    excludes = [];
-  }
-
-  pathDefs.forEach((pathDef) => {
-    pathDef.link = pathDef.link.replace(/\/\//g, '/');
-
-    let match = false;
-    excludes.forEach((exclude) => {
-      if (pathDef.link.match(exclude)) {
-        match = true;
-      }
-    });
-
-    if (match) {
-      return;
-    }
-
-    // Add the directory into the link.
-    if (directoryPrepender) {
-      pathDef.link = directoryPrepender + pathDef.link;
-    }
-
-    truePaths.push(pathDef);
-  });
-
-  return truePaths;
-}
-
-/**
- * @private
- * @param {string} text
- */
-function formatPath(text) {
-  return text.replace(/-/g, ' ').replace(/\.html/, '');
-}
-
-/**
- * @private
- * @param {object} pathDef
- * @param {string} pathDef.link
- * @param {string} pathDef.type
- * @param {string} pathDef.labelColor
- */
-function pathMapper(pathDef) {
-  if (!pathDef || !pathDef.link) {
-    return;
-  }
-
-  let href = pathDef.link.replace(/\\/g, '/').replace(/\/\//g, '/'),
-    icon;
-
-  if (href.indexOf(BASE_PATH) !== 0) {
-    href = BASE_PATH + href;
-  }
-
-  if (is('directory', href.replace(BASE_PATH, ''))) {
-    icon = '#icon-folder';
-
-    if (href.charAt(href.length - 1) !== '/') {
-      href = `${href}/`;
-    }
-  }
-
-  const mappedPath = {
-    href: stripHtml(href),
-    text: formatPath(pathDef.link)
-  };
-
-  if (pathDef.text) {
-    mappedPath.text = pathDef.text;
-  }
-
-  if (icon) {
-    mappedPath.icon = icon;
-  }
-
-  if (pathDef.type && pathDef.type.length) {
-    mappedPath.pageType = pathDef.type;
-    mappedPath.labelColor = pathDef.labelColor || 'graphite07';
-  }
-
-  return mappedPath;
-}
-
-/**
- * Excluded file names that should never appear in the DemoApp List Pages
- */
-const GENERAL_LISTING_EXCLUDES = [
-  /(_)?(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
-  /footer\.html/,
-  /_header\.html/,
-  /(api.md$)/,
-  /(api.html$)/,
-  /partial/,
-  /functional/,
-  /unit/,
-  /\.DS_Store/
-];
-
-/**
- * @private
- * @param {string} type
- */
-function getFolderContents(type, dir) { // type, dir, folderName
-  let paths = [];
-  try {
-    paths = fs.readdirSync(dir);
-  } catch (e) {
-    // Handle 'No Directory' errors
-    if (e.code === 'ENOENT') {
-      paths = [];
-    } else {
-      throw e;
-    }
-  }
-  return paths;
-}
-
-/**
- * Returns a directory listing as page content with working links
- * @param {string} directory
- * @param {object} req
- * @param {object} res
- * @param {function} next
- * @param {array} [extraExcludes] - List of files names to exclude
- */
-function getDirectoryListing(directory, req, res, next, extraExcludes) {
-  if (!extraExcludes) {
-    extraExcludes = [];
-  }
-
-  fs.readdir(`${__dirname}/views/${directory}`, (err, paths) => {
-    if (err) {
-      res.render(err);
-      return next();
-    }
-
-    const strippedDir = hasTrailingSlash(directory) ? directory.substring(0, (directory.length - 1)) : directory;
-
-    // Strip out paths that aren't going to ever work
-    paths.forEach((path, i) => {
-      paths[i] = {
-        text: path,
-        link: path
-      };
-    });
-
-    const directoryPrepender = `/${strippedDir}/`;
-
-    paths = filterUnusablePaths(paths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes), directoryPrepender);
-
-    const opts = extend({}, res.opts, {
-      subtitle: `Listing for ${directory}`,
-      paths: paths.filter((item) => {
-        return item !== undefined && item.link !== undefined;
-      }).map(pathMapper)
-    });
-
-    res.render('listing', opts);
-    next();
-  });
-}
-
 // ======================================
 //  Main Routing and Param Handling
 // ======================================
-
 router.get('/', (req, res, next) => {
   res.redirect(`${BASE_PATH}kitchen-sink`);
   next();
@@ -335,40 +92,24 @@ router.get('/kitchen-sink', (req, res, next) => {
   next();
 });
 
-// ======================================
-//  Components Section
-// ======================================
+// =========================================
+// Collection of Performance Tests Pages
+// =========================================
+router.get('/performance-tests', (req, res, next) => {
+  let performanceOpts = { subtitle: 'Performance Tests' },
+    opts = extend({}, res.opts, performanceOpts);
 
+  res.render('performance-tests/index.html', opts);
+  next();
+});
+
+// ======================================
+//  Components Routes
+// ======================================
 const componentOpts = {
   layout: 'layout',
   subtitle: 'Style',
 };
-
-/**
- * Detects the existence of a layout file inside of a subfolder that should be used
- * instead of the default layout file in the root.
- * @param {object} opts - Express's res.opts
- * @param {string} component - the name of the component
- * @returns {object}
- */
-function addDefaultFolderLayout(opts, component) {
-  let layoutFileNames = ['_layout.html', 'layout.html'],
-    layoutPath;
-
-  for (let i = 0; i < layoutFileNames.length; i++) {
-    layoutPath = `components/${component}/${layoutFileNames[i]}`;
-    if (fs.existsSync(layoutPath)) {
-      opts.layout = stripHtml(`${component}/${layoutFileNames[i]}`);
-      logger('info', `layout for this folder changed to "${opts.layout}".`);
-    }
-  }
-
-  return opts;
-}
-
-// =======================================
-// Component Routes
-// =======================================
 
 router.get('/:type', function(req, res, next) {
   const type = req.params.type;
@@ -422,41 +163,6 @@ router.get('/:type/:item/list', function(req, res, next) {
 router.get('/:type/:item/:example', function(req, res, next) {
   generalRoute(req, res, next);
 });
-
-// =========================================
-// Collection of Performance Tests Pages
-// =========================================
-
-router.get('/performance-tests', (req, res, next) => {
-  let performanceOpts = { subtitle: 'Performance Tests' },
-    opts = extend({}, res.opts, performanceOpts);
-
-  res.render('performance-tests/index.html', opts);
-  next();
-});
-
-// =========================================
-// Angular Support Test Pages
-// =========================================
-
-const angularOpts = {
-  subtitle: 'Angular',
-  layout: 'angular/layout'
-};
-
-router.get('/angular*', (req, res, next) => {
-  let opts = extend({}, res.opts, angularOpts),
-    end = req.url.replace(/\/angular(\/)?/, '');
-
-  if (!end || !end.length || end === '/') {
-    getDirectoryListing('angular/', req, res, next);
-    return;
-  }
-
-  res.render(`angular/${end}`, opts);
-  next();
-});
-
 
 // =========================================
 // Fake 'API' Calls for use with AJAX-ready Controls

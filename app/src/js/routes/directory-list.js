@@ -6,6 +6,21 @@ const path = require('path');
 const logger = require('../../../../scripts/logger');
 const utils = require('../utils');
 
+// Excluded file names that should never appear in the DemoApp List Pages
+const GENERAL_LISTING_EXCLUDES = [
+  /(_)?(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
+  /^_/, // anything beginning with an underscore
+  /listing\.html/,
+  /footer\.html/,
+  /_header\.html/,
+  /(api.md$)/,
+  /(api.html$)/,
+  /partial/,
+  /functional/,
+  /unit/,
+  /\.DS_Store/
+];
+
 // Format filenames
 function formatPath(filename) {
   return filename.replace(/-/g, ' ').replace(/\.html/, '').toLowerCase();
@@ -25,15 +40,9 @@ module.exports = function directoryList(directory, viewsRoot, req, res, next) {
 
     // Strip out paths that aren't going to ever work
     paths.forEach((val) => {
-      const excludes = [
-        /_layout\.html/,
-        /layout.html/,
-        /listing\.html/,
-        /\.DS_Store/
-      ];
       let match = false;
 
-      excludes.forEach((exclude) => {
+      GENERAL_LISTING_EXCLUDES.forEach((exclude) => {
         if (val.match(exclude)) {
           match = true;
         }
