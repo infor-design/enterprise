@@ -55,13 +55,7 @@ We support the latest release and the release previous to the latest (R-1) for b
 
 ### npmjs
 
-This node module is hosted on a private repo [npm.infor.com](http://npm.infor.com:4873). To be able to install it in your project you need to tell npm on your system to fetch packages with the `@infor` scope from the correct registry.
-
-```bash
-npm config set @infor:registry=http://npm.infor.com:4873
-```
-
-Then to install, run:
+To install, run:
 
 ```bash
 npm install --save ids-enterprise
