@@ -18,6 +18,10 @@ module.exports = function (config) {
       '**/components/*/*.js': ['webpack', 'sourcemap'],
     },
     webpack: {
+      optimization: {
+        minimize: false
+      },
+      devtool: 'sourcemap',
       module: {
         rules: [
           {
