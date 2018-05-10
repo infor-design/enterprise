@@ -371,6 +371,12 @@ function addDefaultFolderLayout(opts, component) {
 // =======================================
 
 router.get('/:type', function(req, res, next) {
+  const type = req.params.type;
+  if (type !== 'components') {
+    res.redirect(`${res.opts.basepath}${req.params.type}/list`);
+    return;
+  }
+
   let opts = {
     path: path.resolve(__dirname, 'docs', req.params.type, 'index.html')
   };
@@ -379,7 +385,6 @@ router.get('/:type', function(req, res, next) {
 
 router.get('/:type/', function(req, res, next) {
   res.redirect(`${res.opts.basepath}${req.params.type}`);
-  next();
 });
 
 router.get('/:type/list', function(req, res, next) {
@@ -387,7 +392,14 @@ router.get('/:type/list', function(req, res, next) {
 });
 
 router.get('/:type/:item', function(req, res, next) {
+  let type = req.params.type;
   let item = req.params.item;
+
+  if (type !== 'components') {
+    generalRoute(req, res, next);
+    return;
+  }
+
   if (item === 'list') {
     next();
     return;
@@ -400,8 +412,7 @@ router.get('/:type/:item', function(req, res, next) {
 });
 
 router.get('/:type/:item/', function(req, res, next) {
-  res.redirect(301, `${res.opts.basepath}${req.params.type}/${req.params.item}`);
-  next();
+  res.redirect(`${res.opts.basepath}${req.params.type}/${req.params.item}`);
 });
 
 router.get('/:type/:item/list', function(req, res, next) {
