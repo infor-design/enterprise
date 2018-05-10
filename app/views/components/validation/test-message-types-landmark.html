@@ -8,14 +8,13 @@
   <div class="row">
     <div class="full-width">
       <label>Type of Alert</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" onChange="onChange(event)"
-        checked/>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" checked/>
       <label for="option1" class="radio-label">Error</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option2" value="alert" onChange="onChange(event)"/>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option2" value="alert"/>
       <label for="option2" class="radio-label">Alert</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option3" value="confirm" onChange="onChange(event)"/>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option3" value="confirm"/>
       <label for="option3" class="radio-label">Confirm</label>
-      <input type="radio" class="radio" name="optionsGroupVWO" id="option4" value="info" onChange="onChange(event)"/>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option4" value="info"/>
       <label for="option4" class="radio-label">Info</label>
 
       <div class="field">
@@ -26,10 +25,10 @@
       </div>
 
       <div class="field">
-        <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
-        <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
-        <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
-        <button class="btn-primary" type="button" onClick="getMessage()">Get Message</button>
+        <button class="btn-primary" type="button" id="addMessage">Add Inline Message</button>
+        <button class="btn-primary" type="button" id="removeMessage">Remove Message</button>
+        <button class="btn-primary" type="button" id="clearAllMessages">Clear All Messages</button>
+        <button class="btn-primary" type="button" id="getMessage">Get Message</button>
       </div>
 
     </div>
@@ -63,10 +62,6 @@
 <script>
   var currentValidationType = 'error';
   var message = 'Message';
-
-  function onChange(evt) {
-    currentValidationType = evt.currentTarget.value;
-  }
 
   function addMessage() {
     var isAlert = $('#is-alert').prop('checked');
@@ -111,6 +106,27 @@
       type: 'info'
     });
   }
+
+  $('input[type="radio"]').on('change', function (e) {
+    currentValidationType = e.currentTarget.value;
+  });
+
+  $('button').on('click', function (e) {
+    switch (e.currentTarget.id) {
+      case "addMessage":
+        addMessage();
+        break;
+      case "removeMessage":
+        removeMessage();
+        break;
+      case "clearAllMessages":
+        clearAllMessages();
+        break;
+      case "getMessage":
+        getMessage();
+        break;
+    }
+  });
 
   $('form').on('valid', function (e, args) {
     console.log('valid', e, args);

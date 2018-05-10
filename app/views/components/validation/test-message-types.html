@@ -1,8 +1,7 @@
 <div class="row">
   <div class="full-width">
     <label>Type of Alert</label>
-    <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" onChange="onChange(event)"
-      checked/>
+    <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" onChange="onChange(event)" checked/>
     <label for="option1" class="radio-label">Error</label>
     <input type="radio" class="radio" name="optionsGroupVWO" id="option2" value="alert" onChange="onChange(event)"/>
     <label for="option2" class="radio-label">Alert</label>
@@ -22,10 +21,10 @@
   <div class="row">
     <div class="full-width">
       <div class="field">
-        <button class="btn-primary" type="button" onClick="addMessage()">Add Inline Message</button>
-        <button class="btn-primary" type="button" onClick="removeMessage()">Remove Message</button>
-        <button class="btn-primary" type="button" onClick="clearAllMessages()">Clear All Messages</button>
-        <button class="btn-primary" type="button" onClick="getMessage()">Get Message</button>
+        <button class="btn-primary" type="button" id="add-message">Add Inline Message</button>
+        <button class="btn-primary" type="button" id="remove-message">Remove Message</button>
+        <button class="btn-primary" type="button" id="clear-message">Clear All Messages</button>
+        <button class="btn-primary" type="button" id="get-message">Get Message</button>
       </div>
     </div>
   </div>
@@ -62,7 +61,7 @@
     currentValidationType = evt.currentTarget.value;
   }
 
-  function addMessage() {
+  $('#add-message').on('click', function() {
     var isAlert = $('#is-alert').prop('checked');
     var alertText = (isAlert) ? ' is alert,' : '';
 
@@ -73,16 +72,16 @@
       inline     : true,
       isAlert    : isAlert
     });
-  }
+  });
 
-  function removeMessage() {
+  $('#remove-message').on('click', function() {
     $('#text-field, #date-field').removeMessage({
       message: '',
       type   : currentValidationType
     });
   }
 
-  function getMessage() {
+  $('#get-message').on('click', function() {
     var options = {
       type: currentValidationType
     };
@@ -91,7 +90,7 @@
     $('#output-date-field').val($('#date-field').getMessage(options));
   }
 
-  function clearAllMessages() {
+  $('#clear-message').on('click', function() {
     $('#text-field, #date-field').removeMessage({
       type: 'error'
     });
