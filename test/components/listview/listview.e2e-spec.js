@@ -9,10 +9,10 @@ const axeOptions = { rules };
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-describe('Listview example-singleselect light theme tests', () => {
+describe('Listview example-singleselect tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/listview/example-singleselect');
+    await browser.driver.get(`${browser.baseUrl}/components/listview/example-singleselect?theme=${browser.params.theme}`);
     const listviewEl = await element(by.id('period-end'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
@@ -22,7 +22,6 @@ describe('Listview example-singleselect light theme tests', () => {
     xit('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
       await browser.driver.sleep(config.sleep);
       const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
         .exclude('header')
         .analyze();
 
@@ -74,10 +73,10 @@ describe('Listview example-singleselect light theme tests', () => {
   });
 });
 
-describe('Listview example-multiselect light theme tests', () => {
+describe('Listview example-multiselect tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/listview/example-multiselect');
+    await browser.driver.get(`${browser.baseUrl}/components/listview/example-multiselect?theme=${browser.params.theme}`);
     const listviewEl = await element(by.id('multiselect-listview'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
@@ -120,7 +119,7 @@ describe('Listview example-multiselect light theme tests', () => {
     expect(await element(by.css('li[aria-selected="false"]'))).toBeTruthy();
   });
 
-  if (utils.isChrome()) {
+  if (utils.isChrome() && browser.params.theme === 'light') {
     it('Should mouseover 1st, and change background-color', async () => {
       const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
       await browser.driver
@@ -167,10 +166,10 @@ describe('Listview example-multiselect light theme tests', () => {
   });
 });
 
-describe('Listview example-mixed selection light theme tests', () => {
+describe('Listview example-mixed selection tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/listview/example-mixed-selection');
+    await browser.driver.get(`${browser.baseUrl}/components/listview/example-mixed-selection?theme=${browser.params.theme}`);
     const listviewEl = await element(by.id('task-listview'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
@@ -235,10 +234,10 @@ describe('Listview example-mixed selection light theme tests', () => {
   });
 });
 
-describe('Listview example-search light theme tests', () => {
+describe('Listview example-search tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/listview/example-search');
+    await browser.driver.get(`${browser.baseUrl}/components/listview/example-search?theme=${browser.params.theme}`);
     const listviewEl = await element(by.id('search-listview'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
@@ -271,10 +270,10 @@ describe('Listview example-search light theme tests', () => {
   });
 });
 
-describe('Listview example-paging light theme tests', () => {
+describe('Listview example-paging tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/listview/example-paging');
+    await browser.driver.get(`${browser.baseUrl}/components/listview/example-paging?theme=${browser.params.theme}`);
     const listviewPagerEl = await element(by.css('.pager-toolbar.is-listview'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitsFor);
@@ -324,10 +323,10 @@ describe('Listview example-paging light theme tests', () => {
   });
 });
 
-describe('Listview example-index light theme tests', () => {
+describe('Listview example-index tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/listview/example-index');
+    await browser.driver.get(`${browser.baseUrl}/components/listview/example-index?theme=${browser.params.theme}`);
     const listviewEl = await element(by.id('task-listview'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewEl), config.waitsFor);
@@ -342,10 +341,10 @@ describe('Listview example-index light theme tests', () => {
   });
 });
 
-describe('Listview example-paging-clientside light theme tests', () => {
+describe('Listview example-paging-clientside tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/listview/example-paging-clientside');
+    await browser.driver.get(`${browser.baseUrl}/components/listview/example-paging-clientside?theme=${browser.params.theme}`);
     const listviewPagerEl = await element(by.css('.pager-toolbar.is-listview'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewPagerEl), config.waitsFor);
@@ -381,7 +380,7 @@ describe('Listview example-paging-clientside light theme tests', () => {
     expect(await element(by.css('li[aria-posinset="12"] .listview-heading')).getText()).toEqual('Maplewood St. Resurfacing');
   });
 
-  it('Should click page next two times, then prev once, and display correct listingsi, clientside', async () => {
+  it('Should click page next two times, then prev once, and display correct listing, clientside', async () => {
     const listviewPagerPrevEl = await element(by.css('.pager-prev'));
     const listviewPagerNextEl = await element(by.css('.pager-next'));
     await listviewPagerNextEl.click();
@@ -394,10 +393,10 @@ describe('Listview example-paging-clientside light theme tests', () => {
   });
 });
 
-describe('Listview remove-clear light theme tests', () => {
+describe('Listview remove-clear tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/listview/remove-clear');
+    await browser.driver.get(`${browser.baseUrl}/components/listview/remove-clear?theme=${browser.params.theme}`);
     const listviewMultiSelectEl = await element(by.id('multiselect-listview'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewMultiSelectEl), config.waitsFor);
@@ -432,10 +431,10 @@ describe('Listview remove-clear light theme tests', () => {
   });
 });
 
-describe('Listview example-header-totals` light theme tests', () => {
+describe('Listview example-header-totals` tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/listview/example-header-totals');
+    await browser.driver.get(`${browser.baseUrl}/components/listview/example-header-totals?theme=${browser.params.theme}`);
     const listviewButtonToggleEl = await element(by.css('.listview-header button'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(listviewButtonToggleEl), config.waitsFor);
