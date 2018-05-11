@@ -1,13 +1,10 @@
-/* eslint-disable */
+/* eslint-disable no-underscore-dangle */
 const csp = require('express-csp');
 const express = require('express');
 const extend = require('extend'); // equivalent of $.extend()
-const fs = require('fs');
 const mmm = require('mmm');
 const path = require('path');
-
 const getJSONFile = require('./src/js/get-json-file');
-const logger = require('../scripts/logger');
 
 const app = express();
 const BASE_PATH = process.env.BASEPATH || '/';
@@ -67,6 +64,7 @@ app.use(require('./src/js/middleware/basepath-handler')(app));
 app.use(require('./src/js/middleware/global-data-handler')(app));
 app.use(require('./src/js/middleware/response-throttler')(app));
 app.use(require('./src/js/middleware/csp-handler')(app));
+
 app.use(router);
 app.use(require('./src/js/middleware/error-handler')(app));
 
@@ -82,7 +80,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/index', (req, res, next) => {
-  let opts = {
+  const opts = {
     path: path.resolve(__dirname, 'docs', 'index.html')
   };
   sendGeneratedDocPage(opts, req, res, next);
@@ -97,8 +95,9 @@ router.get('/kitchen-sink', (req, res, next) => {
 // Collection of Performance Tests Pages
 // =========================================
 router.get('/performance-tests', (req, res, next) => {
-  let performanceOpts = { subtitle: 'Performance Tests' },
-    opts = extend({}, res.opts, performanceOpts);
+  const opts = extend({}, res.opts, {
+    subtitle: 'Performance Tests'
+  });
 
   res.render('performance-tests/index.html', opts);
   next();
