@@ -50,6 +50,7 @@ const DEFAULT_RESPONSE_OPTS = {
   layout: 'layout',
   locale: 'en-US',
   title: 'SoHo XI',
+  headerHambuger: false,
   basepath: BASE_PATH,
   version: packageJSON.version,
   csp: true,
