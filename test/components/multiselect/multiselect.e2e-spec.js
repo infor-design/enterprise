@@ -19,7 +19,7 @@ const clickOnMultiselect = async () => {
 describe('Multiselect example-states tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/multiselect/example-states');
+    await browser.driver.get(`${browser.baseUrl}/components/multiselect/example-states?theme=${browser.params.theme}`);
   });
 
   it('Should open multiselect list on click', async () => {
@@ -92,7 +92,7 @@ describe('Multiselect example-states tests', () => {
 describe('Multiselect example-index tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/multiselect/example-index');
+    await browser.driver.get(`${browser.baseUrl}/components/multiselect/example-index?theme=${browser.params.theme}`);
   });
 
   if (!utils.isSafari()) {
@@ -180,7 +180,7 @@ describe('Multiselect example-index tests', () => {
 describe('Multiselect example-clear-all tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/multiselect/example-clear-all');
+    await browser.driver.get(`${browser.baseUrl}/components/multiselect/example-clear-all?theme=${browser.params.theme}`);
   });
 
   if (!utils.isSafari()) {

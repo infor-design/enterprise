@@ -27,8 +27,6 @@ demo:
     slug: example-caret
   - name: Checkmarks
     slug: example-checks
-  - name: User Status
-    slug: example-user-status
 ---
 
 ## SVG Icons Support

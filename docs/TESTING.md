@@ -1,28 +1,50 @@
-## Running and Debugging Tests
+## Running Functional Tests
+`npm run functional:ci` to run all tests, and exit immediately
+
+To develop in watch mode, please run
+
+`npm run functional:local`
+
+For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
+## Running E2E Tests
 To run BrowserStack you need to place your copy the following configuration, and place the keys in your path.
 
-Run a specific functional test suite
- `env PROTRACTOR_SPECS='components/dropdown/dropdown.func-spec.js' npm run functional:local`
+Run a specific E2E component locally (Only Chrome)
+ `env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local`
 
 One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #followed by the command`
 ```sh
 export BROWSER_STACK_USERNAME=xxxxxxxxxxxxx
 export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 ```
+Run a specific E2E component on BrowserStack
+`env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local`
 
-## Debugging a Functional Test
-1. Put a debugger; statement at a place in the test/code.
+Run E2E locally on High Contrast Theme (defaults to light theme)
+`env ENTERPRISE_THEME='high-contrast' npm run e2e:local`
+`env ENTERPRISE_THEME='dark' npm run e2e:local`
+`npm run e2e:local`
+
+## Debugging Functional Tests
+1. Put a `debugger;` statement at a place in the test/code.
 2. Open Chrome Dev Tools
 3. Refresh the page and the debugger will pop up / or click the debugger button (had less luck with this.)
 
-## Debugging Functional Tests
-1. Put a debugger; statement at a place in the test/code for example under the `res = await AxeBuilder` command.
+## Debugging E2E Tests
+1. Put a `debugger;` statement at a place in the test/code for example under the `res = await AxeBuilder` command.
 2. Start the server normally with `node server`
-3. In another terminal run the functional test with `env PROTRACTOR_SPECS='kitchen-sink.func-spec.js' npx -n=--inspect-brk protractor test/protractor.conf.js` in watch mode
+3. In another terminal, run the functional test with `env PROTRACTOR_SPECS='kitchen-sink.e2e-spec.js' env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.conf.js` in watch mode
 4. In Chrome open `chrome://inspect` in a new tab.
 5. Click 'Open dedicated DevTools for Node.
 6. Hit Play on the debugger
 7. View `res.violations` in the console
+
+## Debugging Tests Tips
+If you want like to test a suite, or an individual spec (`it(`) statement append f to either describe, or it, like so, `fdescribe` or `fit`. This works for unit, functional, and E2E tests.
+
+https://jasmine.github.io/api/edge/global.html#fdescribe)
+
+https://jasmine.github.io/api/edge/global.html#fit
 
 ## Running all Functional Tests Silently for Continuous Integration
 `npm run functional:ci`
@@ -44,9 +66,6 @@ The test will rerun.
 - Themes
 - RTL
 
-## E2E Testing Coverage
-* Excluding screen reader (JAWS, etc) testing
-
 ##### Testing Coverage Rating Scale
 ☹️ 😕 🙂 😁
 
@@ -60,18 +79,22 @@ Button | 😁
 
 ## Testing Resources
 
-List of All "Matchers"
+**List of All "Matchers"**
+
 https://jasmine.github.io/api/3.0/matchers.html
 
-Karma Adaptors
-https://www.npmjs.com/browse/keyword/karma-adapter
+**Testing Overview**
 
-Testing Overview
 https://medium.com/powtoon-engineering/a-complete-guide-to-testing-javascript-in-2017-a217b4cd5a2a
+
 https://blog.kentcdodds.com/write-tests-not-too-many-mostly-integration-5e8c7fff591c
+
 http://jasonrudolph.com/blog/2008/10/07/testing-anti-patterns-potpourri-quotes-resources-and-collective-wisdom/
+
 https://marcysutton.github.io/a11y-and-ci/#/
+
 https://codecraft.tv/courses/angular/unit-testing/jasmine-and-karma/
+
 https://hackernoon.com/testing-your-frontend-code-part-ii-unit-testing-1d05f8d50859
 
 ## FAQ

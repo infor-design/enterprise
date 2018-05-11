@@ -29,7 +29,7 @@ module.exports = function (grunt) {
   }
 
   const config = {
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON('publish/package.json'),
 
     banner: bannerText,
 
