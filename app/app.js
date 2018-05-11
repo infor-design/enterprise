@@ -71,6 +71,7 @@ app.use(require('./src/js/middleware/error-handler')(app));
 
 const generalRoute = require('./src/js/routes/general');
 const sendGeneratedDocPage = require('./src/js/routes/docs');
+const dataRoute = require('./src/js/routes/data');
 
 // ======================================
 //  Main Routing and Param Handling
@@ -93,12 +94,6 @@ router.get('/kitchen-sink', (req, res, next) => {
 });
 
 // =========================================
-// Fake 'API' Calls for use with AJAX-ready Controls
-// provides routes for `/api/[whatever]`
-// =========================================
-require('./src/js/routes/data')(router);
-
-// =========================================
 // Collection of Performance Tests Pages
 // =========================================
 router.get('/performance-tests', (req, res, next) => {
@@ -112,62 +107,15 @@ router.get('/performance-tests', (req, res, next) => {
 // ======================================
 //  Components Routes
 // ======================================
-const componentOpts = {
-  layout: 'layout',
-  subtitle: 'Style',
-};
+app.use('/components', generalRoute);
+app.use('/patterns', generalRoute);
+app.use('/examples', generalRoute);
+app.use('/layouts', generalRoute);
+app.use('/tests', generalRoute);
 
-router.get('/:type', function(req, res, next) {
-  const type = req.params.type;
-  if (type !== 'components') {
-    res.redirect(`${res.opts.basepath}${req.params.type}/list`);
-    return;
-  }
-
-  let opts = {
-    path: path.resolve(__dirname, 'docs', req.params.type, 'index.html')
-  };
-  sendGeneratedDocPage(opts, req, res, next);
-});
-
-router.get('/:type/', function(req, res, next) {
-  res.redirect(`${res.opts.basepath}${req.params.type}`);
-});
-
-router.get('/:type/list', function(req, res, next) {
-  generalRoute(req, res, next);
-});
-
-router.get('/:type/:item', function(req, res, next) {
-  let type = req.params.type;
-  let item = req.params.item;
-
-  if (type !== 'components') {
-    generalRoute(req, res, next);
-    return;
-  }
-
-  if (item === 'list') {
-    next();
-    return;
-  }
-
-  let opts = {
-    path: path.resolve(__dirname, 'docs', req.params.type, `${item}.html`)
-  };
-  sendGeneratedDocPage(opts, req, res, next);
-});
-
-router.get('/:type/:item/', function(req, res, next) {
-  res.redirect(`${res.opts.basepath}${req.params.type}/${req.params.item}`);
-});
-
-router.get('/:type/:item/list', function(req, res, next) {
-  generalRoute(req, res, next);
-});
-
-router.get('/:type/:item/:example', function(req, res, next) {
-  generalRoute(req, res, next);
-});
+// =========================================
+// Fake 'API' Calls for use with AJAX-ready Controls
+// =========================================
+require('./src/js/routes/data')(app);
 
 module.exports = app;
