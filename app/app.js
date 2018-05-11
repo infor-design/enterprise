@@ -72,7 +72,6 @@ app.use(require('./src/js/middleware/error-handler')(app));
 
 const generalRoute = require('./src/js/routes/general');
 const sendGeneratedDocPage = require('./src/js/routes/docs');
-const dataRoute = require('./src/js/routes/data');
 
 // ======================================
 //  Main Routing and Param Handling
