@@ -10,36 +10,14 @@ const axeOptions = { rules };
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Kitchen-sink tests', () => {
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get(`${browser.baseUrl}/kitchen-sink?theme=${browser.params.theme}`);
+  });
+
   // Exclude IE11: Async timeout errors
   if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on light theme', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/kitchen-sink');
-
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
-
-      expect(res.violations.length).toEqual(0);
-    });
-
-    it('Should be accessible on init with no WCAG 2AA violations on high contrast theme', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/kitchen-sink?theme=high-contrast');
-
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
-
-      expect(res.violations.length).toEqual(0);
-    });
-
-    it('Should be accessible on init with no WCAG 2AA violations on dark theme', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/kitchen-sink?theme=dark');
-
+    it('Should be accessible on init with no WCAG 2AA violations', async () => {
       const res = await AxeBuilder(browser.driver)
         .configure(axeOptions)
         .exclude('header')
@@ -49,9 +27,6 @@ describe('Kitchen-sink tests', () => {
     });
 
     it('Should pass CSP', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/kitchen-sink');
-
       let errorLog = null;
       await browser.manage().logs().get('browser').then((browserLog) => {
         errorLog = browserLog;

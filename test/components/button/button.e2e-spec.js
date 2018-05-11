@@ -12,11 +12,11 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 describe('Button example-index tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/button/example-index.html');
+    await browser.driver.get(`${browser.baseUrl}/components/button/example-index.html?theme=${browser.params.theme}`);
   });
 
   if (!utils.isSafari() && !utils.isIE()) {
-    if (utils.isChrome()) {
+    if (utils.isChrome() && browser.params.theme === 'light') {
       it('Should mouseover "Primary Button", and change background-color', async () => {
         const buttonEl = await element.all(by.css('.btn-primary')).get(3);
         await browser.driver
@@ -188,7 +188,7 @@ describe('Button example-index tests', () => {
 describe('Button example-with-icons tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/button/example-with-icons');
+    await browser.driver.get(`${browser.baseUrl}/components/button/example-with-icons?theme=${browser.params.theme}`);
   });
 
   if (!utils.isSafari()) {
@@ -244,7 +244,7 @@ describe('Button example-with-icons tests', () => {
 describe('Button example-toggle-button tests', () => {
   beforeEach(async () => {
     await browser.waitForAngularEnabled(false);
-    await browser.driver.get('http://localhost:4000/components/button/example-toggle-button.html');
+    await browser.driver.get(`${browser.baseUrl}/components/button/example-toggle-button.html?theme=${browser.params.theme}`);
   });
 
   it('Should toggle', async () => {

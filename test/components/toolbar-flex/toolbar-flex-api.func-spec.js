@@ -2,7 +2,7 @@ import { ToolbarFlex } from '../../../src/components/toolbar-flex/toolbar-flex';
 import { ToolbarFlexItem } from '../../../src/components/toolbar-flex/toolbar-flex.item';
 
 const toolbarFavorButtonsetHTML = require('../../../app/views/components/toolbar-flex/example-favor-buttonset.html');
-const svg = require('../../../app/views/components/icons/svg.html');
+const svg = require('../../../src/components/icons/svg.html');
 
 let toolbarEl;
 let toolbarAPI;

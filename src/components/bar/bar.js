@@ -110,6 +110,7 @@ Bar.prototype = {
    */
   build() {
     const self = this;
+    const isRTL = Locale.isRTL();
     const isFormatter = !!this.settings.formatterString;
     const format = function (value) {
       return isFormatter ? d3.format(self.settings.formatterString)(value) : value;
@@ -519,10 +520,10 @@ Bar.prototype = {
       });
 
     // Adjust the labels
-    self.svg.selectAll('.axis.y text').attr({ x: charts.isRTL ? 15 : -15 });
+    self.svg.selectAll('.axis.y text').attr('x', () => (isRTL ? 15 : -15));
     self.svg.selectAll('.axis.x text').attr('class', d => (d < 0 ? 'negative-value' : 'positive-value'));
 
-    if (charts.isRTL && charts.isIE) {
+    if (isRTL && (charts.isIE || charts.isIEEdge)) {
       self.svg.selectAll('text').attr('transform', 'scale(-1, 1)');
       self.svg.selectAll('.y.axis text').style('text-anchor', 'start');
     }

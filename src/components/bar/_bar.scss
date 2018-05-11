@@ -26,3 +26,18 @@
 
   }
 }
+
+// RTL Styles
+html[dir='rtl'] {
+  .chart-container {
+    &.bar-chart {
+      svg {
+        transform: scale(-1, 1);
+
+        text {
+          transform: scale(-1, 1);
+        }
+      }
+    }
+  }
+}

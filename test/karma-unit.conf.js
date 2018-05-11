@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = function (config) {
   config.set({
     basePath: '..',
@@ -44,7 +42,7 @@ module.exports = function (config) {
     },
     reporters: ['mocha', 'coverage-istanbul'],
     coverageIstanbulReporter: {
-      reports: [ 'html', 'lcov', 'text-summary' ],
+      reports: ['html', 'lcov', 'text-summary'],
       fixWebpackSourcePaths: true
     },
     port: 9876,

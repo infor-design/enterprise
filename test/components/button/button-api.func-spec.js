@@ -1,7 +1,7 @@
 import { Button } from '../../../src/components/button/button';
 
 const buttonHTML = require('../../../app/views/components/button/example-index.html');
-const svg = require('../../../app/views/components/icons/svg.html');
+const svg = require('../../../src/components/icons/svg.html');
 
 let buttonEl;
 let svgEl;

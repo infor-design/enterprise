@@ -14,7 +14,7 @@
 				</div>
 			</div>
 		</div>
-    <button class="btn-primary" onClick="addItems();">Change Data</button>
+    <button class="btn-secondary" id="change">Change Data</button>
 
   </div>
 </div>
@@ -44,13 +44,13 @@
   		pagesize: 6
 		});
 
-	  function addItems() {
+	  $('#change').on('click', function() {
 			for (var i = itemsPerClick; i > 0; --i) {
 				demoTasks.push({ name: ('opt-' + count) });
 				count++;
 			}
 
       $('#task-listview').trigger('updated', [{ dataset: demoTasks }]);
-		}
+		});
 
 	</script>
