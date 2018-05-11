@@ -12,6 +12,9 @@ const getSpecs = (listSpec) => {
 };
 
 exports.config = {
+  params: {
+    theme:  process.env.ENTERPRISE_THEME || 'light'
+  },
   allScriptsTimeout: 120000,
   specs: getSpecs(process.env.PROTRACTOR_SPECS),
   SELENIUM_PROMISE_MANAGER: false,
@@ -19,7 +22,7 @@ exports.config = {
     browserName: 'chrome'
   },
   directConnect: true,
-  baseUrl: 'http://localhost:4000/',
+  baseUrl: 'http://localhost:4000',
   framework: 'jasmine2',
   jasmineNodeOpts: {
     showColors: true,

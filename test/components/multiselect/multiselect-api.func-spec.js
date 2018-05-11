@@ -1,7 +1,7 @@
 import { MultiSelect } from '../../../src/components/multiselect/multiselect';
 
 const multiSelectHTML = require('../../../app/views/components/multiselect/example-index.html');
-const svg = require('../../../app/views/components/icons/svg.html');
+const svg = require('../../../src/components/icons/svg.html');
 
 let multiSelectEl;
 let svgEl;

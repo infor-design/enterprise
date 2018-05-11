@@ -97,7 +97,7 @@ Creating a Multiselect Listview also uses the listview component. API guidelines
 -   The attribute aria-posinset should point to the position index for each item starting at 1
 -   The attribute aria-setsize - should be the list count
 -   The attribute aria-disabled should be added to any disabled items
--   The aria-selcted tag should be added to any selected entries
+-   The aria-selected tag should be added to any selected entries
 -   For multiselect note that aria-selected = "true" will set on the selected elements.
 
 ## Responsive Guidelines

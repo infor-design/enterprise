@@ -907,7 +907,7 @@ http://usalvlhlpool1.infor.com/4.3.0/controls
 
 ### <a name="version-4.3.0-notes">Notes</a>
 - Latest bleeding edge build is now available in NPM. Use at your own risk with command:
-`npm install @infor/sohoxi@dev`
+`npm install ids-enterprise@dev`
 
 ### <a name="version-4.3.0-breaking-changes">Breaking Changes</a>
 - Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.

@@ -81,7 +81,7 @@
     // On selection ============================================================
     listApi.element.on('selected', function (e, args) {
       clearDisplay();
-      showStatus(args.length);
+      showStatus(args.selectedItems.length);
     });
 
     // Remove selected items from list ========================================
