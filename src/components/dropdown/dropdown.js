@@ -38,6 +38,7 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width.
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
+* @param {boolean} [settings.enableTooltip = false] If true, display tooltip on the dropdown
 */
 
 const DROPDOWN_DEFAULTS = {
@@ -57,7 +58,8 @@ const DROPDOWN_DEFAULTS = {
   empty: false,
   delay: 300,
   maxWidth: null,
-  placementOpts: null
+  placementOpts: null,
+  enableTooltip: false
 };
 
 function Dropdown(element, settings) {
@@ -2111,6 +2113,16 @@ Dropdown.prototype = {
     if (!noTrigger) {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
+
+      if (this.settings.enableTooltip) {
+        const opts = this.element.find('option:selected');
+        const optText = this.getOptionText(opts);
+
+        this.pseudoElem.find('span').tooltip({
+          content: optText,
+          trigger: 'hover',
+        });
+      }
     }
 
     /**
