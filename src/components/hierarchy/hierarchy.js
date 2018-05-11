@@ -23,6 +23,7 @@ const COMPONENT_NAME = 'hierarchy';
 * @param {number} [settings.leafWidth=null] Set the width of the leaf
 * @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
 * @param {boolean} [settings.paging=false] If true show pagination.
+* @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
 */
 const HIERARCHY_DEFAULTS = {
   legend: [],
@@ -34,7 +35,8 @@ const HIERARCHY_DEFAULTS = {
   leafHeight: null,
   leafWidth: null,
   beforeExpand: null,
-  paging: false
+  paging: false,
+  renderSubLevel: false
 };
 
 function Hierarchy(element, settings) {
@@ -49,9 +51,9 @@ function Hierarchy(element, settings) {
 // Hierarchy Methods
 Hierarchy.prototype = {
   init() {
-    const isMobile = $(this.element).parent().width() < 610; // Phablet down
+    const isMobile = $(this.element).parent().width() < 610 || this.settings.mobileView;
     const s = this.settings;
-    this.mobileView = !!isMobile;
+    this.mobileView = isMobile;
     s.colorClass = [
       'azure08', 'turquoise02', 'amethyst06', 'slate06', 'amber06', 'emerald07', 'ruby06'
     ];
@@ -497,7 +499,7 @@ Hierarchy.prototype = {
         // If child has no children then render the element in the top level
         // If paging then render all children in the top level
         // If not paging and child has children then render in the sub level
-        if (this.isLeaf(thisChildren[i]) && !s.paging) {
+        if (this.isLeaf(thisChildren[i]) && !s.paging && s.renderSubLevel) {
           this.createLeaf(data.children[i], $(structure.toplevel));
         } else if (s.paging) {
           this.createLeaf(data.children[i], $(structure.toplevel));
@@ -744,7 +746,7 @@ Hierarchy.prototype = {
 
     // data has been loaded if it has children
     if ((data.children && data.children.length !== 0) || eventType === 'add') {
-      data.isExpanded = true;
+      // data.isExpanded = true;
       data.isLoaded = true;
     }
 

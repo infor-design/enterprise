@@ -477,8 +477,6 @@ module.exports = function(router){
         EmploymentType: 'FT',
         Picture: `${menPath}21.jpg`,
         children: [
-          { id: '1_1', Name: 'Partricia Clark', Position: 'Administration', EmploymentType: 'FT', Picture: `${womenPath}4.jpg`, isLeaf: true },
-          { id: '1_2', Name: 'Drew Buchanan', Position: 'Assistant Director', EmploymentType: 'FT', Picture: `${menPath}5.jpg`, isLeaf: true },
           {
             id: '1_3',
             Name: 'Kaylee Edwards',
@@ -542,7 +540,9 @@ module.exports = function(router){
               { id: '1_7_3', Name: 'OPEN', Position: 'Workers’ Compensation Specialist', EmploymentType: 'O', isLeaf: true },
               { id: '1_7_4', Name: 'John Johnson', Position: 'Workers’ Compensation Specialist', Initials: 'JJ', EmploymentType: 'FT', isLeaf: true }
             ]
-          }
+          },
+          { id: '1_1', Name: 'Partricia Clark', Position: 'Administration', EmploymentType: 'FT', Picture: `${womenPath}4.jpg`, isLeaf: true },
+          { id: '1_2', Name: 'Drew Buchanan', Position: 'Assistant Director', EmploymentType: 'FT', Picture: `${menPath}5.jpg`, isLeaf: true },
         ]
       }];
 
