@@ -83,7 +83,7 @@ module.exports = {
         { expand: true, flatten: true, src: ['dist/svg/*.*'], dest: 'publish/dist/svg/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['dist/css/*theme*.*'], dest: 'publish/dist/css/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['src/**/*.scss'], dest: 'publish/sass/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['LICENSE.MD'], dest: 'publish', filter: 'isFile' }
+        { expand: true, flatten: true, src: ['LICENSE'], dest: 'publish', filter: 'isFile' }
       ]
     }
   }
