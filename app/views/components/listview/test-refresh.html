@@ -5,7 +5,7 @@
     <div class="toolbar" role="toolbar">
       <div class="title"></div>
       <div class="buttonset">
-        <button type="button" class="btn" onclick="resetDisplaySettings_onclick();">
+        <button type="button" class="btn" id="refresh">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-refresh"></use>
           </svg>
@@ -46,7 +46,7 @@
   });
 
   // button click (after about 14 clicks my browser locks up)
-  function resetDisplaySettings_onclick() {
+  $('#refresh').on('click', function () {
     var tsdata;
     if (odd) {
       tsdata = getTSodd();
@@ -57,7 +57,7 @@
 
     // update the listview
     $('#travelSectionList').trigger('updated', [ {dataset: tsdata, template: $('#ts-list-template').html()} ]);
-  };
+  });
 
 // dummy data from app...
 function getTSeven() {

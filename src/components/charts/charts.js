@@ -1,11 +1,12 @@
+import { Environment as env } from '../../utils/environment';
 import { utils } from '../../utils/utils';
 
 const charts = {};
 
 // Reference to the tooltip
 charts.tooltip = {};
-charts.isIE = $('html').hasClass('ie');
-charts.isIEEdge = $('html').hasClass('ie-edge');
+charts.isIE = env.browser.name === 'ie';
+charts.isIEEdge = env.browser.name === 'edge';
 
 /**
  * Get the current height and widthe of the tooltip.
