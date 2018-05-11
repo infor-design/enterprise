@@ -1,11 +1,9 @@
-const AxeBuilder = require('axe-webdriverjs');
-
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
-const rules = requireHelper('default-axe-options');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-const axeOptions = { rules };
+
+const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -223,18 +221,13 @@ describe('Button example-with-icons tests', () => {
     });
   }
 
-  // Exclude IE11: Async timeout errors
   if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations', async () => {
+    it('Should be accessible on click with no WCAG 2AA violations', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
       await buttonEl.click();
-
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
