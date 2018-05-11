@@ -228,4 +228,20 @@ describe('Dropdown example-no-search-filtering tests', () => {
 
     expect(dropdownHTML).toEqual('<span>&nbsp;</span>');
   });
+
+  it('should not change selection if a key is pressed that does not match a dropdown item', async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get(`${browser.baseUrl}/components/dropdown/example-no-search?theme=${browser.params.theme}`);
+
+    const dropdownPseudoEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(dropdownPseudoEl), config.waitsFor);
+
+    await dropdownPseudoEl.click();
+    await dropdownPseudoEl.sendKeys('z');
+    await browser.driver.sleep(config.sleep);
+    const dropdownHTML = await browser.executeScript('return document.querySelector("div[aria-controls=\'dropdown-list\']").innerHTML');
+
+    expect(dropdownHTML).toEqual('<span>&nbsp;</span>');
+  });
 });

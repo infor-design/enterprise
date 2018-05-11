@@ -93,6 +93,12 @@ router.get('/kitchen-sink', (req, res, next) => {
 });
 
 // =========================================
+// Fake 'API' Calls for use with AJAX-ready Controls
+// provides routes for `/api/[whatever]`
+// =========================================
+require('./src/js/routes/data')(router);
+
+// =========================================
 // Collection of Performance Tests Pages
 // =========================================
 router.get('/performance-tests', (req, res, next) => {
@@ -163,10 +169,5 @@ router.get('/:type/:item/list', function(req, res, next) {
 router.get('/:type/:item/:example', function(req, res, next) {
   generalRoute(req, res, next);
 });
-
-// =========================================
-// Fake 'API' Calls for use with AJAX-ready Controls
-// =========================================
-require('./src/js/routes/data')(app);
 
 module.exports = app;
