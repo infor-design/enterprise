@@ -8,9 +8,90 @@
 
 const path = require('path');
 const getJSONFile = require('../get-json-file');
+const utils = require('../utils');
+const express = require('express');
+const generalRoute = require('./general');
 
+const router = express.Router();
+
+const JS_REGEX = /\.js$/i;
+const JSON_REGEX = /\.json$/i;
+
+// Handles the sending of an incoming JSON file
+function sendJSONFile(filepath, req, res, next) {
+  const data = getJSONFile(`${filepath}.json`);
+  res.setHeader('Content-Type', 'application/json');
+  res.json(data);
+  next();
+}
+
+// Gets an internally-corrected path to a specified file.
+function getDataFilePath(filename) {
+  return path.resolve(__dirname, '..', '..', '..', 'data', filename);
+}
+
+// Calls out to an external piece of middleware that will pass JS data.
+function handleJSFile(jsFilename, req, res, next) {
+  const middleware = require(jsFilename);
+  return middleware(req, res, next);
+}
+
+// ========================================
+// API Routes
+// ========================================
+router.get('/', (req, res, next) => {
+  generalRoute(req, res, next);
+});
+
+router.get('/:fileName', (req, res, next) => {
+  const filename = req.params.fileName;
+  let filepath = getDataFilePath(filename);
+  let isJSONFile = filename.match(JSON_REGEX);
+  let isJSFile = filename.match(JS_REGEX);
+
+  if (isJSONFile) {
+    if (utils.hasFile(filepath)) {
+      sendJSONFile(filepath.replace(JSON_REGEX, ''), req, res, next);
+      return;
+    }
+    res.status(404);
+    next(`No .JSON file named "${filename}" found`);
+    return;
+  }
+
+  if (isJSFile) {
+    if (utils.hasFile(filepath)) {
+      handleJSFile(filepath);
+      return;
+    }
+    res.status(404);
+    next(`No .JSON file named "${filename}" found`);
+    return;
+  }
+
+  // Check for JSON file
+  const jsonFilename = `${filename}.json`;
+  filepath = getDataFilePath(jsonFilename);
+  if (utils.hasFile(filepath)) {
+    sendJSONFile(filepath.replace(JSON_REGEX, ''), req, res, next);
+    return;
+  }
+
+  // Check for JS file
+  const jsFilename = `${filename}.js`;
+  filepath = getDataFilePath(jsFilename);
+  if (utils.hasFile(filepath)) {
+    handleJSFile(filepath, req, res, next);
+    return;
+  }
+
+  res.status(500);
+  next('Can\'t do anything with the data filename provided...');
+});
+
+/*
 module.exports = function(router){
-  router.get('/api/states', (req, res, next) => {
+  router.get('/states', (req, res, next) => {
     let states = [],
       allStates = getJSONFile(path.resolve('app', 'data', 'states.json'));
 
@@ -34,189 +115,9 @@ module.exports = function(router){
     done();
   });
 
-  // Sample Product
-  router.get('/api/product', (req, res, next) => {
-    let products = getJSONFile(path.resolve('app', 'data', 'products.json'));
 
-    if (req.query.limit) {
-      products = products.slice(0, req.query.limit);
-    }
 
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(products));
-    next();
-  });
-
-  // Sample Periods
-  router.get('/api/periods', (req, res, next) => {
-    const tasks = [{ id: 1, city: 'London', location: 'Corporate FY15', alert: true, alertClass: 'error', daysLeft: '3', hoursLeft: '23' },
-      { id: 1, city: 'New York', location: 'Corporate FY15', alert: true, alertClass: 'alert', daysLeft: '25', hoursLeft: '11' },
-      { id: 1, city: 'Vancouver', location: 'Corporate FY15', alert: false, alertClass: '', daysLeft: '30', hoursLeft: '23' },
-      { id: 1, city: 'Tokyo', location: 'Corporate FY15', alert: false, alertClass: '', daysLeft: '35', hoursLeft: '13' }
-    ];
-
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(tasks));
-    next();
-  });
-
-  // Sample Hierarchical Data
-  // Sample Tasks
-  router.get('/api/tree-tasks', (req, res, next) => {
-    const tasks = [
-      {
-        id: 1,
-        escalated: 2,
-        depth: 1,
-        expanded: false,
-        taskName: 'Follow up action with HMM Global',
-        desc: '',
-        comments: null,
-        orderDate: new Date(2014, 12, 8),
-        time: '',
-        children: [
-          {
-            id: 2, escalated: 1, depth: 2, taskName: 'Quotes due to expire', desc: 'Update pending quotes and send out again to customers.', comments: 3, orderDate: new Date(2015, 7, 3), time: '7:10 AM'
-          },
-          {
-            id: 3, escalated: 0, depth: 2, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2014, 6, 3), time: '9:10 AM'
-          },
-          {
-            id: 4, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Trucking', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2015, 3, 4), time: '14:10 PM'
-          },
-        ]
-      },
-      {
-        id: 5, escalated: 0, depth: 1, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2015, 5, 5), time: '18:10 PM'
-      },
-      {
-        id: 6, escalated: 0, depth: 1, taskName: 'Follow up action with HMM Global', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2014, 6, 9), time: '20:10 PM', portable: true
-      },
-      {
-        id: 7,
-        escalated: 0,
-        depth: 1,
-        expanded: true,
-        taskName: 'Follow up action with Residental Housing',
-        desc: 'Contact sales representative with the updated purchase order.',
-        comments: 2,
-        orderDate: new Date(2014, 6, 8),
-        time: '22:10 PM',
-        portable: true,
-        children: [
-          {
-            id: 8, escalated: 0, depth: 2, taskName: 'Follow up action with Universal HMM Logistics', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 5, 2), time: '22:10 PM'
-          },
-          {
-            id: 9, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Shipping', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 6, 9), time: '22:10 PM'
-          },
-          {
-            id: 10,
-            escalated: 0,
-            depth: 2,
-            expanded: true,
-            taskName: 'Follow up action with Residental Shipping Logistics ',
-            desc: 'Contact sales representative.',
-            comments: 2,
-            orderDate: new Date(2014, 2, 8),
-            time: '7:04 AM',
-            children: [
-              {
-                id: 11, escalated: 0, depth: 3, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2015, 10, 18), time: '14:10 PM', portable: true
-              },
-              {
-                id: 12,
-                escalated: 0,
-                depth: 3,
-                expanded: true,
-                taskName: 'Follow up action with Acme Universal Logistics Customers',
-                desc: 'Contact sales representative.',
-                comments: 2,
-                orderDate: new Date(2014, 3, 22),
-                time: '7:04 AM',
-                children: [
-                  {
-                    id: 13, escalated: 0, depth: 4, taskName: 'More Contact', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2015, 3, 8), time: '14:10 PM'
-                  },
-                  {
-                    id: 14, escalated: 0, depth: 4, taskName: 'More Follow up', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 3, 9), time: '7:04 AM'
-                  },
-                ]
-              },
-            ]
-          }
-        ]
-      },
-      {
-        id: 15,
-        escalated: 0,
-        depth: 1,
-        expanded: true,
-        taskName: 'Follow up action with Residental Housing',
-        desc: 'Contact sales representative with the updated purchase order.',
-        comments: 2,
-        orderDate: new Date(2015, 5, 23),
-        time: '22:10 PM',
-        children: [
-          {
-            id: 16, escalated: 0, depth: 2, taskName: 'Follow up action with Universal HMM Logistics', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 12, 18), time: '22:10 PM'
-          },
-          {
-            id: 17, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Shipping', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 4, 5), time: '22:10 PM', portable: true
-          },
-          {
-            id: 18,
-            escalated: 0,
-            depth: 2,
-            expanded: true,
-            taskName: 'Follow up action with Residental Shipping Logistics ',
-            desc: 'Contact sales representative.',
-            comments: 2,
-            orderDate: new Date(2015, 5, 5),
-            time: '7:04 AM',
-            children: [
-              {
-                id: 19, escalated: 0, depth: 3, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 5, 16), time: '14:10 PM'
-              },
-              {
-                id: 20,
-                escalated: 0,
-                depth: 3,
-                expanded: true,
-                taskName: 'Follow up action with Acme Universal Logistics Customers',
-                desc: 'Contact sales representative.',
-                comments: 2,
-                orderDate: new Date(2015, 5, 28),
-                time: '7:04 AM',
-                portable: true,
-                children: [
-                  {
-                    id: 21, escalated: 0, depth: 4, taskName: 'More Contact', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 1, 21), time: '14:10 PM'
-                  },
-                  {
-                    id: 22, escalated: 0, depth: 4, taskName: 'More Follow up', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 9, 3), time: '7:04 AM'
-                  },
-                ]
-              },
-            ]
-          }
-        ]
-      }
-
-    ];
-
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(tasks));
-    next();
-  });
-
-  // Ajax Accordion Contents
-  router.get('/api/nav-items', (req, res, next) => {
-    res.render('tests/accordion/_ajax-results.html');
-    next();
-  });
-
-  router.get('/api/fruits', (req, res, next) => {
+  router.get('/fruits', (req, res, next) => {
     let resData,
       fruits = {
         main: '' +
@@ -281,8 +182,8 @@ module.exports = function(router){
   });
 
   // Data Grid Paging Example
-  // Example Call: http://localhost:4000/api/compressors?pageNum=1&sort=productId&pageSize=100
-  router.get('/api/compressors', (req, res, next) => {
+  // Example Call: http://localhost:4000/compressors?pageNum=1&sort=productId&pageSize=100
+  router.get('/compressors', (req, res, next) => {
     let products = [],
       productsAll = [],
       term,
@@ -388,7 +289,7 @@ module.exports = function(router){
     next();
   });
 
-  router.get('/api/lookupInfo', (req, res, next) => {
+  router.get('/lookupInfo', (req, res, next) => {
     let columns = [],
       data = [];
 
@@ -432,7 +333,7 @@ module.exports = function(router){
   });
 
   // Used for Builder Pattern Example
-  router.get('/api/construction-orders', (req, res, next) => {
+  router.get('/construction-orders', (req, res, next) => {
     const companies = [
       { id: 1, orderId: '4231212-3', items: 0, companyName: 'John Smith Construction', total: '$0.00' },
       { id: 2, orderId: '1092212-3', items: 4, companyName: 'Top Grade Construction', total: '$10,000.00' },
@@ -449,7 +350,7 @@ module.exports = function(router){
     next();
   });
 
-  router.get('/api/construction-cart-items', (req, res, next) => {
+  router.get('/construction-cart-items', (req, res, next) => {
     const cartItems = [
       { id: 1, itemId: '#PMS0510', itemName: 'Masonry Bricks, Red Solid 6" Brick', itemPrice: '$12.00', quantifier: 'bag', quantity: '1,000', totalPrice: '$1,700.00' },
       { id: 2, itemId: '#PMS0640', itemName: 'Gravel, Gray Natural Stone', itemPrice: '$86.00', quantifier: 'stone', quantity: '19', totalPrice: '$1,634.00' },
@@ -466,7 +367,7 @@ module.exports = function(router){
     next();
   });
 
-  router.get('/api/orgstructure', (req, res, next) => {
+  router.get('/orgstructure', (req, res, next) => {
     let
       menPath = 'https://randomuser.me/api/portraits/med/men/',
       womenPath = 'https://randomuser.me/api/portraits/med/women/',
@@ -551,7 +452,7 @@ module.exports = function(router){
     next();
   });
 
-  router.get('/api/orgstructure-large', (req, res, next) => {
+  router.get('/orgstructure-large', (req, res, next) => {
     let
       menPath = 'https://randomuser.me/api/portraits/med/men/',
       womenPath = 'https://randomuser.me/api/portraits/med/women/',
@@ -643,7 +544,7 @@ module.exports = function(router){
     next();
   });
 
-  router.get('/api/orgstructure-lazy', (req, res, next) => {
+  router.get('/orgstructure-lazy', (req, res, next) => {
     let
       menPath = 'https://randomuser.me/api/portraits/med/men/',
       womenPath = 'https://randomuser.me/api/portraits/med/women/',
@@ -699,7 +600,7 @@ module.exports = function(router){
     next();
   });
 
-  router.get('/api/orgstructure-paging', (req, res, next) => {
+  router.get('/orgstructure-paging', (req, res, next) => {
     let
       menPath = 'https://randomuser.me/api/portraits/med/men/',
       womenPath = 'https://randomuser.me/api/portraits/med/women/',
@@ -723,7 +624,7 @@ module.exports = function(router){
     next();
   });
 
-  router.get('/api/orgstructure-children', (req, res, next) => {
+  router.get('/orgstructure-children', (req, res, next) => {
     let
       womenPath = 'https://randomuser.me/api/portraits/med/women/',
       orgdata = [
@@ -737,7 +638,7 @@ module.exports = function(router){
     next();
   });
 
-  router.get('/api/servicerequests', (req, res, next) => {
+  router.get('/servicerequests', (req, res, next) => {
     const cartItems = [
       {
         id: 1, type: 'Data Refresh', favorite: true, datetime: new Date(2014, 12, 8), requestor: 'Grant Lindsey', deployment: 'AutoSuite-PRD', scheduled: null, status: 'Success'
@@ -761,7 +662,7 @@ module.exports = function(router){
     next();
   });
 
-  router.get('/api/garbage', (req, res, next) => {
+  router.get('/garbage', (req, res, next) => {
     let amount = 25,
       paragraphs = 1,
       text = '',
@@ -884,11 +785,11 @@ module.exports = function(router){
     next();
   }
 
-  router.get('/api/my-projects', (req, res, next) => {
+  router.get('/my-projects', (req, res, next) => {
     sendJSONFile('projects', req, res, next);
   });
 
-  router.get('/api/colleagues', (req, res, next) => {
+  router.get('/colleagues', (req, res, next) => {
     if (req.query.favorites) {
       sendJSONFile('favorite-colleagues', req, res, next);
       return;
@@ -897,29 +798,16 @@ module.exports = function(router){
     sendJSONFile('colleagues', req, res, next);
   });
 
-  router.get('/api/dummy-dropdown-data', (req, res, next) => {
+  router.get('/dummy-dropdown-data', (req, res, next) => {
     const data = require(path.resolve('app', 'src', 'js', 'get-junk-dropdown-data'));
     res.json(data);
     next();
   });
 
-  router.get('/api/org-chart', (req, res, next) => {
+  router.get('/org-chart', (req, res, next) => {
     sendJSONFile('org-chart', req, res, next);
   });
-
-  router.get('/api/:fileName', (req, res, next) => {
-    if (
-      [
-        'periods',
-        'product',
-        'states',
-        'colleagues',
-        'dummy-dropdown-data',
-        'my-projects',
-        'fruits',
-        'nav-items'
-      ].includes(req.params.fileName)
-    ) { return; }
-    sendJSONFile(req.params.fileName, req, res, next);
-  });
 }
+*/
+
+module.exports = router;
