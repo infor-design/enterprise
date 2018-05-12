@@ -1,5 +1,8 @@
 // Ajax Accordion Contents
+const path = require('path');
+
 module.exports = (req, res, next) => {
-  res.render('tests/accordion/_ajax-results.html');
+  const viewsRoot = req.app.get('views');
+  res.render(path.join(viewsRoot, 'components', 'accordion', '_example-ajax-results.html'));
   next();
 };
