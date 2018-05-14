@@ -94,10 +94,14 @@ Button.prototype = {
       }
     }
 
-    if (!this.element.parent().is('.field') && this.element.hasClass('btn-actions') && !this.element.data('tooltip')) {
-      this.element.attr('title', Locale.translate('More')).tooltip({
-        content: Locale.translate('More')
-      });
+    // Standalone action buttons need a "More Actions" tooltip.
+    // This is handled internally on most components that implement an action button.
+    if (this.element.hasClass('btn-actions') && (!this.element.parents('.field').length && !this.element.parents('.toolbar').length)) {
+      if (!this.element.data('tooltip')) {
+        this.element.attr('title', Locale.translate('More')).tooltip({
+          content: Locale.translate('More')
+        });
+      }
     }
 
     this.element.hideFocus();
