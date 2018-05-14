@@ -171,6 +171,10 @@ Toolbar.prototype = {
       if (!buttonControl) {
         $(this).button();
       }
+
+      if ($(this).attr('title')) {
+        $(this).tooltip();
+      }
     });
 
     // Invoke searchfields
@@ -519,15 +523,17 @@ Toolbar.prototype = {
     const tooltipText = tooltip && typeof tooltip.content === 'string' ? tooltip.content : undefined;
     let popupLiText;
 
-    if (span.length) {
+    if (title !== '' && title !== undefined) {
+      popupLiText = title;
+    } else if (tooltipText) {
+      popupLiText = tooltipText;
+    } else if (span.length) {
       popupLiText = span.text();
-    } else if (title !== '' && title !== undefined) {
-      popupLiText = item.attr('title');
     } else {
-      popupLiText = stringUtils.stripHTML(tooltipText || item.text());
+      popupLiText = item.text();
     }
 
-    return popupLiText;
+    return stringUtils.stripHTML(popupLiText);
   },
 
   /**
