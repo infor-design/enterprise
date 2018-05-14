@@ -115,6 +115,6 @@ app.use('/tests', generalRoute);
 // =========================================
 // Fake 'API' Calls for use with AJAX-ready Controls
 // =========================================
-require('./src/js/routes/data')(app);
+app.use('/api', require('./src/js/routes/data'));
 
 module.exports = app;

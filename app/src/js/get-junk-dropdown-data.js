@@ -11,7 +11,7 @@ function addDropdown(count) {
   data.push({
     id: `dropdown-${count}`,
     name: `States Selector #${count}`,
-    data: getJSONFile(path.resolve(__dirname, '..', '..', 'data', 'states.json'))
+    data: getJSONFile(path.resolve(__dirname, '..', '..', 'data', 'states-all.json'))
   });
 }
 
