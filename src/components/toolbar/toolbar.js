@@ -172,7 +172,8 @@ Toolbar.prototype = {
         $(this).button();
       }
 
-      if ($(this).attr('title')) {
+      const tooltipControl = $(this).data('tooltip');
+      if (!tooltipControl && $(this).attr('title')) {
         $(this).tooltip();
       }
     });
