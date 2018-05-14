@@ -1,4 +1,4 @@
-const logger = require('../../../../scripts/logger');
+const logger = require('../logger');
 
 // Adds a stored "nonce" attribute to all script tags to conform with security policy.
 function addNonceToScript(html, nonce) {

@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const logger = require('../../../../scripts/logger');
+const logger = require('../logger');
 
 // Makes a simple timestamp log of each request in the console
 module.exports = function () {
