@@ -66,6 +66,8 @@ function ListView(element, settings) {
   debug.logTimeStart(COMPONENT_NAME);
   this.init();
   debug.logTimeEnd(COMPONENT_NAME);
+
+  return this;
 }
 
 ListView.prototype = {
@@ -474,14 +476,29 @@ ListView.prototype = {
   },
 
   /**
-  * For instances of Listview that are paired with a Searchfield
-  * NOTE: Search functionality is called from "js/listfilter.js"
-  * @private
-  * @param {jquery.event} e custom jQuery `contents-checked` event.
-  * @param {jquery[]} searchfield the element representing a searchfield.
-  * @returns {void}
-  */
+   * @private
+   * @param {jquery.event} e custom jQuery `contents-checked` event.
+   * @param {jquery[]} searchfield the element representing a searchfield.
+   * @returns {void}
+   */
   handleSearch(e, searchfield) {
+    this.filter(searchfield);
+  },
+
+  /**
+   * Filters the contents of Listviews that are paired with a Searchfield.
+   * @param {jquery[]} searchfield the element representing a searchfield.
+   * @returns {void}
+   */
+  filter(searchfield) {
+    if (!searchfield) {
+      return;
+    }
+
+    if (searchfield instanceof HTMLElement) {
+      searchfield = $(searchfield);
+    }
+
     const list = this.element.find('li, tbody > tr');
     const term = searchfield.val();
     let results;
