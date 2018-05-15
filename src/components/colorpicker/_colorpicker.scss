@@ -243,6 +243,12 @@
     }
   }
 
+  &.popupmenu-short.has-icons {
+    li a {
+      padding: 0;
+    }
+  }
+
   .swatch {
     background-color: $graphite04;
     display: block;

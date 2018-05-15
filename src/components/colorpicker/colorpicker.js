@@ -402,7 +402,10 @@ ColorPicker.prototype = {
     const isValidHex = /(^#[0-9a-fA-F]{6}$)|(^#[0-9a-fA-F]{3}$)/i.test(colorHex);
 
     // Simply return out if hex isn't valid
-    if (!isValidHex) {
+    if (s.showLabel && label === s.clearableText) {
+      this.setValueOnField({ hex: colorHex, label: s.clearableText, isEmpty: true });
+      return;
+    } else if (!isValidHex) {
       if (!s.showLabel) {
         colorHex = colorHex !== '#' ? colorHex : '';
         this.setValueOnField({ hex: colorHex, invalid: true });
@@ -448,9 +451,9 @@ ColorPicker.prototype = {
       }
     }
 
-    this.element[0].value = s.showLabel && !o.isEmpty ? o.label : hex;
+    this.element[0].value = s.showLabel ? o.label : hex;
     this.element[0].setAttribute(targetAttr, hex);
-    this.element[0].setAttribute('aria-describedby', o.isEmpty || !o.label ? '' : o.label);
+    this.element[0].setAttribute('aria-describedby', o.label || '');
   },
 
   /**
@@ -533,7 +536,7 @@ ColorPicker.prototype = {
       if (s.clearable) {
         const li = $('<li></li>');
         const a = $(`<a href="#" title="${s.clearableText}"><span class="swatch is-empty${isBorderAll ? ' is-border' : ''}"></span></a>`).appendTo(li);
-        a.data('label', '').data('value', '').tooltip();
+        a.data('label', s.clearableText).data('value', '').tooltip();
         menu.append(li);
       }
 
