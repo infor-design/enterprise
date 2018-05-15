@@ -5806,7 +5806,10 @@ Datagrid.prototype = {
   },
 
   /**
-   * Returns an array of row numbers for the rows containing the value for the field name.
+   * Returns an array of row numbers for the rows containing the value for the specified field.
+   * @param  {string} fieldName The field name to search.
+   * @param  {any} value The value to use in search.
+   * @returns {array} an array of row numbers.
    */
   findRowsByValue(fieldName, value) {
     const s = this.settings;
