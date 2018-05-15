@@ -5,7 +5,7 @@ DATE=$(date +%Y%m%d)
 
 echo "//registry.npmjs.org/:_authToken=\${NPM_AUTH_TOKEN}" > .npmrc
 
-npx gulp publish
+npx grunt publish
 cd publish
 npm version $PKG_VERSION.$DATE
 npm publish --tag dev
