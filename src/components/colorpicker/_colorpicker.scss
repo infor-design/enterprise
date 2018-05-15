@@ -209,6 +209,7 @@
 
     a {
       border: 1px solid $popupmenu-bg-color;
+      min-height: auto;
       padding: 0;
 
       &:focus {
