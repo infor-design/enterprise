@@ -16,16 +16,12 @@ script:
   - npx grunt
   - npm run functional:ci
   # - npm run report:coverage
-before_deploy:
-  - ./scripts/bump-nightly.sh
 deploy:
   - provider: script
     script: ./scripts/jenkins-deploy.sh master
     on:
       branch: master
-  - provider: npm
-    email: $NPM_USER_EMAIL
-    api_key: $NPM_AUTH_TOKEN
-    tag: nightly
+  - provider: script
+    script: ./scripts/publish-nightly.sh
     on:
       condition: $TRAVIS_EVENT_TYPE = cron
