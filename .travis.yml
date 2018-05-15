@@ -16,6 +16,8 @@ script:
   - npx grunt
   - npm run functional:ci
   # - npm run report:coverage
-after_success:
-  - test $TRAVIS_BRANCH = "master" &&
-    ./scripts/jenkins-deploy.sh $TRAVIS_BRANCH
+deploy:
+  - provider: script
+    script: ./scripts/jenkins-deploy.sh master
+    on:
+      branch: master
