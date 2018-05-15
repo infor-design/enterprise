@@ -1,0 +1,5 @@
+#!/bin/bash
+
+BRANCH=$1
+
+echo "TEST DEPLOY SCRIPT FROM $BRANCH"

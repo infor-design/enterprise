@@ -1,11 +1,8 @@
-const AxeBuilder = require('axe-webdriverjs');
-
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
-const rules = requireHelper('default-axe-options');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-const axeOptions = { rules };
+const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -19,11 +16,9 @@ describe('Listview example-singleselect tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-singleselect', async () => {
       await browser.driver.sleep(config.sleep);
-      const res = await AxeBuilder(browser.driver)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
@@ -83,12 +78,9 @@ describe('Listview example-multiselect tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-multiselect page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-multiselect page', async () => {
       await browser.driver.sleep(config.sleep);
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
@@ -176,12 +168,9 @@ describe('Listview example-mixed selection tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-mixed selection page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-mixed selection page', async () => {
       await browser.driver.sleep(config.sleep);
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
@@ -246,27 +235,26 @@ describe('Listview example-search tests', () => {
   if (!utils.isIE()) {
     it('Should be accessible on init with no WCAG 2AA violations on example-search page', async () => {
       await browser.driver.sleep(config.sleep);
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
   }
 
-  xit('Should highlight search terms', async () => {
+  it('Should hide unmatching items based on search term, and highlight pattern', async () => {
     const searchListviewEl = await element(by.id('gridfilter'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(searchListviewEl), config.waitsFor);
     await searchListviewEl.click();
     await browser.driver.switchTo().activeElement().clear();
-    await browser.driver.switchTo().activeElement().sendKeys('co');
+    await browser.driver.switchTo().activeElement().sendKeys('to');
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('li[aria-posinset="1"] .highlight')).getText()).toEqual('co');
-    expect(await element(by.css('li[aria-posinset="1"] .highlight')).isPresent()).toBeTruthy();
-    expect(await element(by.css('li[aria-posinset="1"]')).isPresent()).toBeTruthy();
+    expect(await element(by.css('li[aria-posinset="2"]')).getText()).toEqual('Update pending quotes and send out again to customers.');
+    expect(await element(by.css('li[aria-posinset="2"]')).isDisplayed()).toBeTruthy();
+    expect(await element(by.css('li[aria-posinset="2"] .highlight')).getText()).toEqual('to');
+    expect(await element(by.css('li[aria-posinset="1"]')).isDisplayed()).toBeFalsy();
+    expect(await element(by.css('li[aria-posinset="1"]')).getAttribute('class')).toContain('hidden');
   });
 });
 
@@ -280,12 +268,9 @@ describe('Listview example-paging tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-paging page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-paging page', async () => {
       await browser.driver.sleep(config.sleep);
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
@@ -353,10 +338,7 @@ describe('Listview example-paging-clientside tests', () => {
   if (!utils.isIE()) {
     it('Should be accessible on init with no WCAG 2AA violations on example-paging-clientside page', async () => {
       await browser.driver.sleep(config.sleep);
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
@@ -403,12 +385,9 @@ describe('Listview remove-clear tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on remove-clear page', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on remove-clear page', async () => {
       await browser.driver.sleep(config.sleep);
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
@@ -443,10 +422,7 @@ describe('Listview example-header-totals` tests', () => {
   if (!utils.isIE()) {
     it('Should be accessible on init with no WCAG 2AA violations on example-header-total', async () => {
       await browser.driver.sleep(config.sleep);
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });

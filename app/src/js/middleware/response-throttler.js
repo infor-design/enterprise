@@ -1,4 +1,4 @@
-const logger = require('../../../../scripts/logger');
+const logger = require('../logger');
 
 // Simple Middleware that simulates a delayed response by setting a timeout before returning the next middleware.
 module.exports = function () {
