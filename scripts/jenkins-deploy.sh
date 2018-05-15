@@ -61,7 +61,7 @@ then
     echo -n "Watching build #$CURRENT_BUILD_NUMBER to report on status..."
     while [[ "$BUILD_STATUS" == "None" ]]; do
         sleep 10
-        echo -n "."
+        printf "."
         BUILD_STATUS=`check_status`
     done
     if [[ "$BUILD_STATUS" == "SUCCESS" ]]; then
