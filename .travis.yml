@@ -17,5 +17,7 @@ script:
   - npm run functional:ci
   # - npm run report:coverage
 deploy:
-  - if [[ "$TRAVIS_BRANCH" = "master" ]] && if [[ "$TRAVIS_PULL_REQUEST" = false ]] &&
-    ./scripts/jenkins-deploy.sh $TRAVIS_BRANCH
+  - provider: script
+    script: if [[ "$TRAVIS_PULL_REQUEST" = false ]]; then ./scripts/jenkins-deploy.sh $TRAVIS_BRANCH; fi
+    on:
+      branch: master
