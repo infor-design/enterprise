@@ -17,7 +17,6 @@
     "e2e:ci": "npm run e2e:ci:pre && protractor test/protractor.ci.conf.js || npm run stop",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
-    "prepublishOnly": "npx grunt publish publish",
     "publish-dev": "npx grunt publish && npm publish publish/ --tag dev",
     "publish-nightly": "npx grunt publish && npm publish publish/ --tag nightly",
     "publish-prod": "npx grunt publish && npm publish publish/",
