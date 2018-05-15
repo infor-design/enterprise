@@ -18,6 +18,6 @@ script:
   # - npm run report:coverage
 deploy:
   - provider: script
-    script: if [[ "$TRAVIS_PULL_REQUEST" = false ]]; then ./scripts/jenkins-deploy.sh $TRAVIS_BRANCH; fi
+    script: ./scripts/jenkins-deploy.sh master
     on:
       branch: master
