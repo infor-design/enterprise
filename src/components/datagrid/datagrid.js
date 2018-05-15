@@ -7180,6 +7180,9 @@ Datagrid.prototype = {
 
   // expand the tree rows
   toggleChildren(e, dataRowIndex) {
+    if (this.settings.groupable) {
+      return;
+    }
     const self = this;
     let rowElement = this.settings.treeGrid ?
       this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
