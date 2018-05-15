@@ -22,13 +22,14 @@ describe('Listview with Searchfield', () => {
 
     svgEl = document.body.querySelector('.svg-icons');
     listviewEl = document.body.querySelector('.listview');
-    listviewTemplateScript = document.getElementById('task-tmpl').innerHTML;
+    listviewTemplateScript = document.getElementById('search-tmpl').innerHTML;
     listviewEl.removeAttribute('data-options');
     listviewEl.classList.add('no-init');
 
     listviewAPI = new ListView(listviewEl, {
       dataset: data,
-      template: listviewTemplateScript
+      searchable: true,
+      template: listviewTemplateScript,
     });
 
     listviewSearchEl = document.querySelector('#gridfilter');
@@ -40,11 +41,8 @@ describe('Listview with Searchfield', () => {
     listviewEl.parentNode.removeChild(listviewEl);
   });
 
-  // TODO: SOHO-7796
-  // EPC: Unsure why this doesn't pass...
-  // Recreating this test in the browser with the same markup works.
-  xit('Can filter items', () => {
-    listviewSearchEl.value = 'again';
+  it('Can filter items', () => {
+    listviewSearchEl.value = 'TMZ';
     listviewAPI.filter(listviewSearchEl);
     const filteredEls = listviewEl.querySelectorAll('li:not(.hidden)');
 
@@ -54,5 +52,6 @@ describe('Listview with Searchfield', () => {
     const markEls = filteredEls[0].querySelectorAll('mark');
 
     expect(markEls.length).toBe(1);
+    expect(markEls[0].innerText).toBe('TMZ');
   });
 });
