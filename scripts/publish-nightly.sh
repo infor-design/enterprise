@@ -1,6 +1,11 @@
 #!/bin/bash
 
-cd publish # Use publish/package.json for everything
+# install again for all packages to be
+# available from within travis `deploy`
+npm install
+
+# Use publish/package.json for everything
+cd publish
 
 PKG_NAME=$(node -p "require('./package.json').name")
 PKG_VERSION=$(node -p "require('./package.json').version")
