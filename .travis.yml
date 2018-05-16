@@ -8,17 +8,12 @@ cache:
   directories:
     - node_modules
 install:
-  # - npm install -g codecov
   - npm install
 before_script:
   - npm run eslint:error-only
 script:
   - npx grunt
   - npm run functional:ci
-  # - npm run report:coverage
-before_deploy:
-  # May not be necessary but a temp fix
-  - npm install -g grunt-cli
 deploy:
   - provider: script
     script: ./scripts/jenkins-deploy.sh master

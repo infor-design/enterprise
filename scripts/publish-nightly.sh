@@ -17,8 +17,6 @@ if [ "$TRAVIS" ]; then
         echo "Publishing $PKG_NAME@$PKG_NIGHTLY ..."
         echo $NPM_AUTH_TOKEN ~/.npmrc
 
-        which grunt
-        ./node_modules/.bin/grunt publish
         cd publish
         npm version $PKG_NIGHTLY
         npm publish --tag dev
