@@ -6775,7 +6775,7 @@ Datagrid.prototype = {
     let output = '';
     let divider = '';
     let hasDivider = false;
-    let sourceDate = new Date(value);
+    const sourceDate = new Date(value);
 
     if (sourceFormat.indexOf('/') > -1) {
       divider = '/';
@@ -6786,18 +6786,29 @@ Datagrid.prototype = {
     }
 
     if (hasDivider) {
-      let formatter = sourceFormat.split(divider);
+      const formatter = sourceFormat.split(divider);
 
       for (let i = 0; i < formatter.length; i++) {
         switch (formatter[i]) {
           case 'yyyy':
             output += sourceDate.getFullYear() + divider;
             break;
+          case 'YYYY':
+            output += sourceDate.getFullYear() + divider;
+            break;
           case 'MM':
+            output += (sourceDate.getMonth() + 1) + divider;
+            break;
+          case 'mm':
             output += (sourceDate.getMonth() + 1) + divider;
             break;
           case 'dd':
             output += sourceDate.getDay() + divider;
+            break;
+          case 'DD':
+            output += sourceDate.getDay() + divider;
+            break;
+          default:
             break;
         }
       }
@@ -6812,20 +6823,40 @@ Datagrid.prototype = {
           case 'y':
             if (!hasYear) {
               output += sourceDate.getFullYear();
+              hasYear = true;
             }
-            hasYear = true;
+            break;
+          case 'Y':
+            if (!hasYear) {
+              output += sourceDate.getFullYear();
+              hasYear = true;
+            }
             break;
           case 'M':
             if (!hasMonth) {
               output += (sourceDate.getMonth() + 1);
+              hasMonth = true;
             }
-            hasMonth = true;
+            break;
+          case 'm':
+            if (!hasMonth) {
+              output += (sourceDate.getMonth() + 1);
+              hasMonth = true;
+            }
             break;
           case 'd':
             if (!hasDay) {
               output += sourceDate.getDay();
+              hasDay = true;
             }
-            hasDay = true;
+            break;
+          case 'D':
+            if (!hasDay) {
+              output += sourceDate.getDay();
+              hasDay = true;
+            }
+            break;
+          default:
             break;
         }
 
@@ -6856,7 +6887,6 @@ Datagrid.prototype = {
       return newVal;
     } else if (col.sourceFormat) {
       newVal = this.parseDateToSource(value, col.sourceFormat);
-      console.log(newVal);
     } else if (typeof oldVal === 'number' && value) {
       newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
     }
@@ -6917,7 +6947,6 @@ Datagrid.prototype = {
     // Coerce/Serialize value if from cell edit
     if (!fromApiCall) {
       coercedVal = this.coerceValue(value, oldVal, col, row, cell);
-      console.log(coercedVal);
 
       // coerced value may be coerced to empty string, null, or 0
       if (coercedVal === undefined) {

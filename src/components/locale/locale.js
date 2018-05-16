@@ -488,6 +488,11 @@ const Locale = {  // eslint-disable-line
 
       for (i = 0, l = dateFormat.length; i < l; i++) {
         newFormat += (dateFormat[i] !== lastChar ? `/${dateFormat[i]}` : dateFormat[i]);
+
+        if (dateString[i] === '-' || dateString[i] === '/' || dateString[i] === '.') {
+          i++;
+        }
+
         newDateString += (dateFormat[i] !== lastChar ? `/${dateString[i]}` : dateString[i]);
 
         if (i > 1) {
