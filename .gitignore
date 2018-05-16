@@ -18,6 +18,7 @@ temp/
 views/docs
 publish/dist
 publish/sass
+publish/LICENSE
 templates/**/doc.html
 test-reports/
 
