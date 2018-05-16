@@ -26,7 +26,7 @@ if [ "$TRAVIS" ]; then
         echo "Publishing $PKG_NAME@$PKG_NIGHTLY ..."
 
         npm config set '//registry.npmjs.org/:_authToken' $NPM_AUTH_TOKEN
-        cat ~/.npmrc
+        npm config set loglevel warn
         npm version $PKG_NIGHTLY
         npm publish --tag dev
 
