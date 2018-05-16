@@ -8,19 +8,18 @@ cache:
   directories:
     - node_modules
 install:
-  # - npm install -g codecov
   - npm install
 before_script:
   - npm run eslint:error-only
 script:
   - npx grunt
   - npm run functional:ci
-  # - npm run report:coverage
 deploy:
   - provider: script
     script: ./scripts/jenkins-deploy.sh master
     on:
       branch: master
+      condition: $TRAVIS_EVENT_TYPE = push
   - provider: script
     script: ./scripts/publish-nightly.sh
     on:
