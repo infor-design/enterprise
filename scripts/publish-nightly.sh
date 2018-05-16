@@ -6,6 +6,8 @@ DATE=$(date +%Y%m%d)
 PKG_NIGHTLY=$PKG_VERSION.$DATE
 PKG_URL=https://registry.npmjs.org/$PKG_NAME/$PKG_NIGHTLY
 
+if [[ -z $NPM_AUTH_TOKEN ]]; then echo "NPM_AUTH_TOKEN must be defined in Travis"; exit 1; fi
+
 if [ "$TRAVIS" ]; then
     HTTP_RESP=`curl -s -o /dev/null -w "%{http_code}" $PKG_URL`
     echo "$PKG_URL ($HTTP_RESP)"
