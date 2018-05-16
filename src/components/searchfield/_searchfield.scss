@@ -198,6 +198,10 @@
       border-color: $input-focus-border-color;
     }
 
+    input:focus {
+      box-shadow: none;
+    }
+
     &.has-categories {
       .searchfield {
         border-left-color: transparent;
@@ -294,6 +298,9 @@
     width: 40px;
   }
 
+  + .error-message {
+    margin-top: -7px;
+  }
 }
 
 .inline.searchfield-wrapper:not(.toolbar-searchfield-wrapper) {
