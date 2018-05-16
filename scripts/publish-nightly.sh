@@ -24,10 +24,9 @@ if [ "$TRAVIS" ]; then
         exit 1
     elif [ "$HTTP_RESP" == 404 ]; then
         echo "Publishing $PKG_NAME@$PKG_NIGHTLY ..."
-        echo $NPM_AUTH_TOKEN ~/.npmrc
 
-        which grunt
-        ../node_modules/.bin/grunt --help
+        npm config set '//registry.npmjs.org/:_authToken' $NPM_AUTH_TOKEN
+        cat ~/.npmrc
         npm version $PKG_NIGHTLY
         npm publish --tag dev
 
