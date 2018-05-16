@@ -5819,6 +5819,36 @@ Datagrid.prototype = {
     return selectedRows;
   },
 
+  /**
+   * Returns an array of row numbers for the rows containing the value for the specified field.
+   * @param  {string} fieldName The field name to search.
+   * @param  {any} value The value to use in search.
+   * @returns {array} an array of row numbers.
+   */
+  findRowsByValue(fieldName, value) {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    let idx = -1;
+    const matchedRows = [];
+    for (let i = 0, data; i < dataset.length; i++) {
+      if (s.groupable) {
+        for (let k = 0; k < dataset[i].values.length; k++) {
+          idx++;
+          data = dataset[i].values[k];
+          if (data[fieldName] === value) {
+            matchedRows.push(idx); 
+          }
+        }
+      } else {
+        data = s.treeGrid ? dataset[i].node : dataset[i];
+        if (data[fieldName] === value) {
+          matchedRows.push(i); 
+        }
+      }
+    }
+    return matchedRows;
+  },
+
   // Set the row status
   rowStatus(idx, status, tooltip) {
     if (!status) {
@@ -7280,6 +7310,9 @@ Datagrid.prototype = {
 
   // expand the tree rows
   toggleChildren(e, dataRowIndex) {
+    if (this.settings.groupable) {
+      return;
+    }
     const self = this;
     let rowElement = this.settings.treeGrid ?
       this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
