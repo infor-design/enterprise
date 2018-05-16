@@ -1,7 +1,9 @@
 #!/bin/bash
 
-PKG_NAME=$(node -p "require('./publish/package.json').name")
-PKG_VERSION=$(node -p "require('./publish/package.json').version")
+cd publish # Use publish/package.json for everything
+
+PKG_NAME=$(node -p "require('./package.json').name")
+PKG_VERSION=$(node -p "require('./package.json').version")
 DATE=$(date +%Y%m%d)
 PKG_NIGHTLY=$PKG_VERSION.$DATE
 PKG_URL=https://registry.npmjs.org/$PKG_NAME/$PKG_NIGHTLY
@@ -19,7 +21,6 @@ if [ "$TRAVIS" ]; then
         echo "Publishing $PKG_NAME@$PKG_NIGHTLY ..."
         echo $NPM_AUTH_TOKEN ~/.npmrc
 
-        cd publish
         npm version $PKG_NIGHTLY
         npm publish --tag dev
 
