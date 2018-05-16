@@ -14,6 +14,9 @@ before_script:
 script:
   - npx grunt
   - npm run functional:ci
+before_deploy:
+  # May not be necessary but a temp fix
+  - npm install -g grunt-cli
 deploy:
   - provider: script
     script: ./scripts/jenkins-deploy.sh master
