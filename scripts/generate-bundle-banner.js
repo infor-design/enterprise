@@ -3,11 +3,11 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 const cp = require('child_process');
-const pjson = require('../package.json');
+const pjson = require('../publish/package.json');
 
 let commitHash = '';
 
-const license = fs.readFileSync(path.join(__dirname, '..', 'LICENSE.md'), ['utf-8']);
+const license = fs.readFileSync(path.join(__dirname, '..', 'LICENSE'), ['utf-8']);
 
 commitHash = cp.execSync('git rev-parse HEAD');
 

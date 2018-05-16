@@ -1,7 +1,7 @@
 import { Treemap } from '../../../src/components/treemap/treemap';
 
 const treemapHTML = require('../../../app/views/components/treemap/example-index.html');
-const svg = require('../../../app/views/components/icons/svg.html');
+const svg = require('../../../src/components/icons/svg.html');
 const data = require('../../../app/data/storage-usage.json');
 const dataUpdate = require('../../../app/data/file-usage.json');
 

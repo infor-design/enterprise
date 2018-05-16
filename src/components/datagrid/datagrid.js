@@ -2184,6 +2184,9 @@ Datagrid.prototype = {
   * @private
   */
   setTreeRootNodes() {
+    if (!this.settings.treeGrid) {
+      return;
+    }
     this.settings.treeRootNodes = this.settings.treeDepth
       .filter(node => node.depth === 1);
   },
@@ -2194,6 +2197,9 @@ Datagrid.prototype = {
    * @param {array} dataset The json array to use for calculating tree depth.
    */
   setTreeDepth(dataset) {
+    if (!this.settings.treeGrid) {
+      return;
+    }
     const self = this;
     let idx = 0;
     const iterate = function (node, depth) {
@@ -4185,8 +4191,9 @@ Datagrid.prototype = {
   triggerRowEvent(eventName, e, stopPropagation) {
     const self = this;
     const cell = $(e.target).closest('td').index();
-    const rowIndex = $(e.target).closest('tr');
-    let row = self.dataRowIndex(rowIndex);
+    const rowElem = $(e.target).closest('tr');
+    let row = self.dataRowIndex(rowElem);
+    let isTrigger = true;
 
     if ($(e.target).is('a')) {
       stopPropagation = false;
@@ -4197,17 +4204,24 @@ Datagrid.prototype = {
       e.preventDefault();
     }
 
-    if (self.settings.indeterminate) {
-      row = self.dataRowIndex(rowIndex);
+    let item = self.settings.dataset[row];
+
+    //  Groupable
+    if (this.settings.groupable) {
+      if (rowElem.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer')) {
+        isTrigger = false; // No need to trigger if no data item
+      } else {
+        row = self.pagingRowIndex(self.actualRowIndex(rowElem));
+        item = self.settings.dataset[self.groupArray[row].group];
+        if (item && item.values) {
+          item = item.values[self.groupArray[row].node];
+        }
+      }
     }
 
-    const item = self.settings.dataset[row];
-    self.element.trigger(eventName, [{
-      row,
-      cell,
-      item,
-      originalEvent: e
-    }]);
+    if (isTrigger) {
+      self.element.trigger(eventName, [{ row, cell, item, originalEvent: e }]);
+    }
 
     return false;
   },
@@ -5805,6 +5819,36 @@ Datagrid.prototype = {
     return selectedRows;
   },
 
+  /**
+   * Returns an array of row numbers for the rows containing the value for the specified field.
+   * @param  {string} fieldName The field name to search.
+   * @param  {any} value The value to use in search.
+   * @returns {array} an array of row numbers.
+   */
+  findRowsByValue(fieldName, value) {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    let idx = -1;
+    const matchedRows = [];
+    for (let i = 0, data; i < dataset.length; i++) {
+      if (s.groupable) {
+        for (let k = 0; k < dataset[i].values.length; k++) {
+          idx++;
+          data = dataset[i].values[k];
+          if (data[fieldName] === value) {
+            matchedRows.push(idx); 
+          }
+        }
+      } else {
+        data = s.treeGrid ? dataset[i].node : dataset[i];
+        if (data[fieldName] === value) {
+          matchedRows.push(i); 
+        }
+      }
+    }
+    return matchedRows;
+  },
+
   // Set the row status
   rowStatus(idx, status, tooltip) {
     if (!status) {
@@ -7166,6 +7210,9 @@ Datagrid.prototype = {
 
   // expand the tree rows
   toggleChildren(e, dataRowIndex) {
+    if (this.settings.groupable) {
+      return;
+    }
     const self = this;
     let rowElement = this.settings.treeGrid ?
       this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);

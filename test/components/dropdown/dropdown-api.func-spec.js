@@ -1,7 +1,7 @@
 import { Dropdown } from '../../../src/components/dropdown/dropdown';
 
 const dropdownHTML = require('../../../app/views/components/dropdown/example-index.html');
-const svg = require('../../../app/views/components/icons/svg.html');
+const svg = require('../../../src/components/icons/svg.html');
 
 let dropdownEl;
 let svgEl;
@@ -70,5 +70,28 @@ describe('Dropdown API', () => {
 
     expect(document.body.querySelector('.dropdown.is-readonly')).toBeTruthy();
     expect(dropdownObj.isDisabled()).toBeFalsy();
+  });
+
+  it('can have its value programmatically changed with a string value', () => {
+    // Default value is "NJ".
+    // Using the text value when there's a `data-value` shouldn't change the value.
+    dropdownObj.selectValue('New York');
+
+    expect(dropdownObj.element.val()).toBe('NJ');
+
+    // Use the `data-value`
+    dropdownObj.selectValue('NY');
+
+    expect(dropdownObj.element.val()).toBe('NY');
+  });
+
+  it('can have its value programmatically changed with a list item reference', () => {
+    dropdownObj.open();
+
+    // `targetEl` will be the list item for New Hampshire
+    const targetEl = document.querySelector('#dropdown-list > ul > li.dropdown-option:nth-child(0n+30');
+    dropdownObj.selectOption($(targetEl));
+
+    expect(dropdownObj.element.val()).toBe('NH');
   });
 });

@@ -990,7 +990,8 @@ Dropdown.prototype = {
 
     if (blank.length > 0) {
       blank[0].selected = true;
-      this.element.triggerHandler('updated').triggerHandler('change');
+      this.element.triggerHandler('updated');
+      this.element.triggerHandler('change');
     }
   },
 
@@ -1200,12 +1201,12 @@ Dropdown.prototype = {
     self.initialFilter = true;
     self.filterTerm += e.key;
 
-    if (self.settings.noSearch) {
-      self.selectStartsWith(self.filterTerm);
-      return;
-    }
-
     this.timer = setTimeout(() => {
+      if (self.settings.noSearch) {
+        self.selectStartsWith(self.filterTerm);
+        return;
+      }
+
       if (!self.isOpen()) {
         self.searchInput.val(self.filterTerm);
         self.toggleList();
@@ -2148,12 +2149,18 @@ Dropdown.prototype = {
    * @param {string} value - A string containing the value to look for. (Case insensitive)
    */
   selectValue(value) {
-    if (typeof value === 'string') {
-      const option = this.element.find(`option[value="${value}"]`);
-      this.element.find('option:selected').prop('selected', false);
-      option.prop('selected', true);
-      this.updated();
+    if (typeof value !== 'string') {
+      return;
     }
+
+    const option = this.element.find(`option[value="${value}"]`);
+    if (!option || !option.length) {
+      return;
+    }
+
+    this.element.find('option:selected').prop('selected', false);
+    option.prop('selected', true);
+    this.updated();
   },
 
   /**

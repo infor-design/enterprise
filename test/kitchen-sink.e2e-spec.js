@@ -1,57 +1,26 @@
-const AxeBuilder = require('axe-webdriverjs');
 const { browserStackErrorReporter } = require('./helpers/browserstack-error-reporter.js');
 const utils = require('./helpers/e2e-utils.js');
-const rules = require('./helpers/default-axe-options.js');
 const config = require('./helpers/e2e-config.js');
-require('./helpers/rejection.js');
+const axePageObjects = require('./helpers/axe-page-objects.js');
 
-const axeOptions = { rules };
+require('./helpers/rejection.js');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Kitchen-sink tests', () => {
-  // Exclude IE11: Async timeout errors
+  beforeEach(async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.driver.get(`${browser.baseUrl}/kitchen-sink?theme=${browser.params.theme}`);
+  });
+
   if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations on light theme', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/kitchen-sink');
-
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
-
-      expect(res.violations.length).toEqual(0);
-    });
-
-    it('Should be accessible on init with no WCAG 2AA violations on high contrast theme', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/kitchen-sink?theme=high-contrast');
-
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
-
-      expect(res.violations.length).toEqual(0);
-    });
-
-    it('Should be accessible on init with no WCAG 2AA violations on dark theme', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/kitchen-sink?theme=dark');
-
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+    it('Should be accessible on init with no WCAG 2AA violations', async () => {
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
 
     it('Should pass CSP', async () => {
-      await browser.waitForAngularEnabled(false);
-      await browser.driver.get('http://localhost:4000/kitchen-sink');
-
       let errorLog = null;
       await browser.manage().logs().get('browser').then((browserLog) => {
         errorLog = browserLog;

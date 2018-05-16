@@ -209,6 +209,7 @@
 
     a {
       border: 1px solid $popupmenu-bg-color;
+      min-height: auto;
       padding: 0;
 
       &:focus {
@@ -240,6 +241,12 @@
           border-color: $colorpicker-checkmark-two-color $colorpicker-checkmark-two-color $colorpicker-checkmark-two-color transparent;
         }
       }
+    }
+  }
+
+  &.popupmenu-short.has-icons {
+    li a {
+      padding: 0;
     }
   }
 

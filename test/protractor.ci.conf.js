@@ -13,10 +13,15 @@ const getSpecs = (listSpec) => {
 };
 
 exports.config = {
+  params: {
+    theme:  process.env.ENTERPRISE_THEME || 'light'
+  },
   allScriptsTimeout: 120000,
+  logLevel: 'ERROR',
   specs: getSpecs(process.env.PROTRACTOR_SPECS),
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
+  baseUrl: 'http://localhost:4000',
   commonCapabilities: {
     'browserstack.user': process.env.BROWSER_STACK_USERNAME,
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
