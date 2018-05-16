@@ -2137,12 +2137,18 @@ Dropdown.prototype = {
    * @param {string} value - A string containing the value to look for. (Case insensitive)
    */
   selectValue(value) {
-    if (typeof value === 'string') {
-      const option = this.element.find(`option[value="${value}"]`);
-      this.element.find('option:selected').prop('selected', false);
-      option.prop('selected', true);
-      this.updated();
+    if (typeof value !== 'string') {
+      return;
     }
+
+    const option = this.element.find(`option[value="${value}"]`);
+    if (!option || !option.length) {
+      return;
+    }
+
+    this.element.find('option:selected').prop('selected', false);
+    option.prop('selected', true);
+    this.updated();
   },
 
   /**

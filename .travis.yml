@@ -16,3 +16,12 @@ script:
   - npx grunt
   - npm run functional:ci
   # - npm run report:coverage
+deploy:
+  - provider: script
+    script: ./scripts/jenkins-deploy.sh master
+    on:
+      branch: master
+  - provider: script
+    script: ./scripts/publish-nightly.sh
+    on:
+      condition: $TRAVIS_EVENT_TYPE = cron

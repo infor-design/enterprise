@@ -494,7 +494,7 @@ Modal.prototype = {
 
     // Ensure aria-labelled by points to the id
     if (this.settings.isAlert) {
-      this.element.attr('aria-labeledby', 'message-title');
+      this.element.attr('aria-labelledby', 'message-title');
       this.element.attr('aria-describedby', 'message-text');
     } else {
       const h1 = this.element.find('h1:first');
@@ -508,7 +508,7 @@ Modal.prototype = {
       const body = this.element.find('.modal-body');
       const descById = `${this.element.attr('id') ? this.element.attr('id') : 'message'}-text`;
 
-      this.element.attr('aria-labeledby', id);
+      this.element.attr('aria-labelledby', id);
 
       // Contextual Action Panel Case - Has a toolbar
       if (this.element.find('.toolbar .title').length) {

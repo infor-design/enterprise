@@ -19,6 +19,7 @@ function innerHighlight(node, pat) {
       spannode = document.createElement('mark');
       spannode.className = 'highlight';
       middlebit = node.splitText(pos);
+      middlebit.splitText(pat.length);
       middleclone = middlebit.cloneNode(true);
       spannode.appendChild(middleclone);
       middlebit.parentNode.replaceChild(spannode, middlebit);
@@ -40,7 +41,7 @@ function innerHighlight(node, pat) {
  */
 $.fn.highlight = function (pat) {
   if (this.length && pat && pat.length) {
-    return this.each(() => {
+    return this.each(function () {
       innerHighlight(this, pat.toUpperCase());
     });
   }
@@ -52,7 +53,7 @@ $.fn.highlight = function (pat) {
  * @returns {this} this
  */
 $.fn.unhighlight = function () {
-  return this.find('mark.highlight').each(() => {
+  return this.find('mark.highlight').each(function () {
     const node = this.parentNode;
     node.replaceChild(this.firstChild, this);
     node.normalize();
