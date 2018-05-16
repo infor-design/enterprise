@@ -16,11 +16,15 @@ script:
   - npx grunt
   - npm run functional:ci
   # - npm run report:coverage
+before_deploy:
+  # May not be necessary but a temp fix
+  - npm install -g grunt-cli
 deploy:
   - provider: script
     script: ./scripts/jenkins-deploy.sh master
     on:
       branch: master
+      condition: $TRAVIS_EVENT_TYPE = push
   - provider: script
     script: ./scripts/publish-nightly.sh
     on:
