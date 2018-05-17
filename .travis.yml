@@ -23,5 +23,6 @@ deploy:
       condition: $TRAVIS_EVENT_TYPE = push
   - provider: script
     script: ./scripts/publish-nightly.sh
+    skip_cleanup: true
     on:
       condition: $TRAVIS_EVENT_TYPE = cron
