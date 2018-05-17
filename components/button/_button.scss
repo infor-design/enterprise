@@ -414,7 +414,6 @@ a.btn-menu {
 
 .btn-tertiary,
 .btn-menu {
-  padding: 0 10px;
 
   // Dark Ui on Light UI
   &.inverse {
@@ -436,6 +435,18 @@ a.btn-menu {
   }
 }
 
+.btn-tertiary {
+  padding: 0 10px;
+}
+
+.btn-menu {
+  padding: 0 10px;
+
+  &.btn-primary,
+  &.btn-secondary {
+    padding-right: 20px;
+  }
+}
 
 // Icon Buttons
 // Also see ./_icons.scss
@@ -711,6 +722,14 @@ html[dir='rtl'] {
           margin-right: 0;
         }
       }
+    }
+  }
+
+  .btn-menu {
+    &.btn-primary,
+    &.btn-secondary {
+      padding-left: 20px;
+      padding-right: 10px;
     }
   }
 }
