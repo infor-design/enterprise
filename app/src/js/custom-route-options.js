@@ -10,6 +10,13 @@ module.exports = function customRouteOptions(req, res) {
   const customOpts = {};
   const url = req.originalUrl;
 
+  // Application Menu
+  if (url.match(/components\/applicationmenu/)) {
+    if (url.indexOf('/list') === -1) {
+      customOpts.headerHambuger = true;
+    }
+  }
+
   // Base Tag
   if (url.match(/components\/base-tag/)) {
     customOpts.usebasehref = true;

@@ -17,6 +17,7 @@ exports.config = {
     theme:  process.env.ENTERPRISE_THEME || 'light'
   },
   allScriptsTimeout: 120000,
+  logLevel: 'ERROR',
   specs: getSpecs(process.env.PROTRACTOR_SPECS),
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,

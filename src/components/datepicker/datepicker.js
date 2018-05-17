@@ -45,6 +45,8 @@ const COMPONENT_NAME = 'datepicker';
  * @param {boolean} [settings.disable.isEnable=false] Inverse the disable settings.
  * If true all the disable settings will be enabled and the rest will be disabled.
  * So you can inverse the settings.
+ * @param {boolean} [settings.disable.retrictMonths=false] Restrict month selections on datepicker.
+ * It requires minDate and maxDate for the feature to activate.
  * For example if you have more non specific dates to disable then enable ect.
  * @param {boolean} [settings.showLegend=false] If true a legend is show to associate dates.
  * @param {boolean} [settings.customValidation=false] If true the internal validation is disabled.
@@ -86,12 +88,12 @@ const DATEPICKER_DEFAULTS = {
     minDate: '',
     maxDate: '',
     dayOfWeek: [],
-    isEnable: false
+    isEnable: false,
+    retrictMonths: false
   },
   showLegend: false,
   customValidation: false,
   showMonthYearPicker: false,
-  retrictMonthSelection: false,
   hideDays: false,
   advanceMonths: 5,
   legend: [
@@ -195,8 +197,8 @@ DatePicker.prototype = {
         let idx = null;
         let selector = null;
         let handled = false;
-        let minDate = new Date(s.disable.minDate);
-        let maxDate = new Date(s.disable.maxDate);
+        const minDate = new Date(s.disable.minDate);
+        const maxDate = new Date(s.disable.maxDate);
 
         self.validatePrevNext();
 
@@ -210,13 +212,11 @@ DatePicker.prototype = {
               this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
-          } else if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) { 
+          } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
             if (this.currentDate.getMonth() < maxDate.getMonth()) {
               this.currentDate.setDate(this.currentDate.getDate() + 7);
-            } else {
-              if (maxDate.getDate() - 1 >= this.currentDate.getDate() + 7) {
-                this.currentDate.setDate(this.currentDate.getDate() + 7);
-              }
+            } else if (maxDate.getDate() - 1 >= this.currentDate.getDate() + 7) {
+              this.currentDate.setDate(this.currentDate.getDate() + 7);
             }
             this.insertDate(this.currentDate);
           } else {
@@ -235,13 +235,11 @@ DatePicker.prototype = {
               this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
-          } else if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+          } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
             if (this.currentDate.getMonth() > minDate.getMonth()) {
               this.currentDate.setDate(this.currentDate.getDate() - 7);
-            } else {
-              if (minDate.getDate() + 1 <= this.currentDate.getDate() - 7) {
-                this.currentDate.setDate(this.currentDate.getDate() - 7);
-              }
+            } else if (minDate.getDate() + 1 <= this.currentDate.getDate() - 7) {
+              this.currentDate.setDate(this.currentDate.getDate() - 7);
             }
             this.insertDate(this.currentDate);
           } else {
@@ -260,18 +258,16 @@ DatePicker.prototype = {
               this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
-          } else if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+          } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
             if (this.currentDate.getMonth() > minDate.getMonth()) {
-                this.currentDate.setDate(this.currentDate.getDate() - 1);
-            } else {
-              if (minDate.getDate() + 1 !== this.currentDate.getDate()) {
-                this.currentDate.setDate(this.currentDate.getDate() - 1);
-              }
+              this.currentDate.setDate(this.currentDate.getDate() - 1);
+            } else if (minDate.getDate() + 1 !== this.currentDate.getDate()) {
+              this.currentDate.setDate(this.currentDate.getDate() - 1);
             }
             this.insertDate(this.currentDate);
           } else {
             this.currentDate.setDate(this.currentDate.getDate() - 1);
-            this.insertDate(this.currentDate);  
+            this.insertDate(this.currentDate);
           }
         }
 
@@ -285,13 +281,11 @@ DatePicker.prototype = {
               this.setRangeOnCell(selector.is('.is-selected') ? null : selector);
               this.activeTabindex(selector, true);
             }
-          } else if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) { 
+          } else if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
             if (this.currentDate.getMonth() < maxDate.getMonth()) {
               this.currentDate.setDate(this.currentDate.getDate() + 1);
-            } else {
-              if (maxDate.getDate() - 1 !== this.currentDate.getDate()) {
-                this.currentDate.setDate(this.currentDate.getDate() + 1);
-              }
+            } else if (maxDate.getDate() - 1 !== this.currentDate.getDate()) {
+              this.currentDate.setDate(this.currentDate.getDate() + 1);
             }
             this.insertDate(this.currentDate);
           } else {
@@ -303,7 +297,7 @@ DatePicker.prototype = {
         // Page Up Selects Same Day Prev Month
         if (key === 33 && !e.altKey) {
           handled = true;
-          if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+          if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
             if (minDate.getMonth() !== this.currentDate.getMonth()) {
               this.currentDate.setMonth(this.currentDate.getMonth() - 1);
               this.insertDate(this.currentDate);
@@ -317,7 +311,7 @@ DatePicker.prototype = {
         // Page Down Selects Same Day Next Month
         if (key === 34 && !e.altKey) {
           handled = true;
-          if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+          if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
             if (this.currentDate.getMonth() !== maxDate.getMonth()) {
               this.currentDate.setMonth(this.currentDate.getMonth() + 1);
               this.insertDate(this.currentDate);
@@ -347,7 +341,7 @@ DatePicker.prototype = {
           const d = this.currentDate;
           let firstDay;
 
-          if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
+          if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
             if (minDate.getMonth() !== this.currentDate.getMonth()) {
               firstDay = new Date(d.getFullYear(), d.getMonth(), 1);
             } else {
@@ -367,8 +361,8 @@ DatePicker.prototype = {
           handled = true;
           const d = this.currentDate;
           let lastDay;
-          if (s.retrictMonthSelection && s.disable.minDate && s.disable.maxDate) {
-            if (this.currentDate.getMonth() !== maxDate.getMonth()) {  
+          if (s.disable.restrictMonths && s.disable.minDate && s.disable.maxDate) {
+            if (this.currentDate.getMonth() !== maxDate.getMonth()) {
               lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0);
             } else {
               lastDay = new Date(maxDate.getFullYear(), maxDate.getMonth(), maxDate.getDate());
@@ -679,16 +673,21 @@ DatePicker.prototype = {
     return elem;
   },
 
+  /**
+   * Validate the Previous and Next Button availability.
+   * @private
+   * @param {string | boolean} isNext to validate the current selected.
+   */
   validatePrevNext(isNext) {
-    let self = this;
+    const self = this;
 
     let currMonth = self.currentMonth;
     if (isNext !== 'start') {
       currMonth = isNext ? self.currentMonth + 1 : self.currentMonth - 1;
     }
-    
-    let minDate = new Date(self.settings.disable.minDate);
-    let maxDate = new Date(self.settings.disable.maxDate);
+
+    const minDate = new Date(self.settings.disable.minDate);
+    const maxDate = new Date(self.settings.disable.maxDate);
 
     if (minDate.getFullYear() >= self.currentYear && self.currentYear <= maxDate.getFullYear()) {
       if (minDate.getMonth() === currMonth) {
@@ -1084,7 +1083,8 @@ DatePicker.prototype = {
       const isNext = $(this).is('.next');
       const range = {};
 
-      if (self.settings.retrictMonthSelection && self.settings.disable.minDate && self.settings.disable.maxDate) {
+      if (self.settings.disable.restrictMonths
+        && self.settings.disable.minDate && self.settings.disable.maxDate) {
         self.validatePrevNext(isNext);
       }
 
@@ -1124,7 +1124,8 @@ DatePicker.prototype = {
 
     setTimeout(() => {
       self.setFocusAfterOpen();
-      if (self.settings.retrictMonthSelection && self.settings.disable.minDate && self.settings.disable.maxDate) {
+      if (self.settings.disable.restrictMonths
+        && self.settings.disable.minDate && self.settings.disable.maxDate) {
         self.validatePrevNext('start');
       }
     }, 50);

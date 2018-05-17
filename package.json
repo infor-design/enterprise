@@ -17,10 +17,9 @@
     "e2e:ci": "npm run e2e:ci:pre && protractor test/protractor.ci.conf.js || npm run stop",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
-    "prepublishOnly": "npx grunt publish publish",
-    "publish-dev": "npx grunt publish && npm publish publish/ --tag dev",
-    "publish-nightly": "npx grunt publish && npm publish publish/ --tag nightly",
-    "publish-prod": "npx grunt publish && npm publish publish/",
+    "publish-setup": "cd ./publish && npm run prepublishOnly && cd ../",
+    "publish-dev": "npm publish publish/ --tag dev",
+    "publish-prod": "npm publish publish/",
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v"
   },
@@ -47,7 +46,7 @@
     "eslint": "^4.17.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jasmine": "^2.9.3",
+    "eslint-plugin-jasmine": "^2.10.0",
     "eslint-plugin-jasmine-jquery": "^1.0.0",
     "express": "^4.13.4",
     "express-csp": "^0.1.3",
@@ -91,8 +90,8 @@
     "mmm": "^0.2.2",
     "moment": "^2.19.2",
     "node-sass": "^4.8.3",
-    "protractor": "^5.3.1",
-    "protractor-image-comparison": "^1.7.0",
+    "protractor": "^5.3.2",
+    "protractor-image-comparison": "^1.7.2",
     "pygmentize-bundled": "^2.3.0",
     "r2": "^2.0.1",
     "rollup": "^0.55.3",
@@ -105,6 +104,7 @@
     "unoconv": "^0.1.2",
     "vinyl-contents-tostring": "^1.0.0",
     "vinyl-write": "^0.2.2",
-    "webpack": "^4.8.1"
+    "webpack": "^4.8.3",
+    "yargs": "^11.0.0"
   }
 }

@@ -1,11 +1,9 @@
-const AxeBuilder = require('axe-webdriverjs');
-
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
-const rules = requireHelper('default-axe-options');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-const axeOptions = { rules };
+
+const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -43,7 +41,7 @@ describe('Multiselect example-states tests', () => {
   });
 
   if (!utils.isSafari()) {
-    xit('Should show validation message error "Required" on tab out', async () => {
+    it('Should show validation message error "Required" on tab out', async () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).get(2);
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
@@ -74,15 +72,10 @@ describe('Multiselect example-states tests', () => {
     });
   }
 
-  // Exclude IE11: Async timeout errors
   if (!utils.isIE()) {
     it('Should be accessible on init with no WCAG 2AA violations', async () => {
       await clickOnMultiselect();
-
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
@@ -108,7 +101,7 @@ describe('Multiselect example-index tests', () => {
       expect(await element(by.className('is-focused')).getText()).toEqual('Arizona');
     });
 
-    xit('Should tab into deselect Alaska then tab out and input should be empty', async () => {
+    it('Should tab into deselect Alaska then tab out and input should be empty', async () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);

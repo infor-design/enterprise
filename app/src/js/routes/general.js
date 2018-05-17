@@ -3,9 +3,14 @@
 const path = require('path');
 const utils = require('../utils');
 const directoryListing = require('./directory-list');
+const sendGeneratedDocPage = require('./docs');
 const customRouteOptions = require('../custom-route-options');
+const express = require('express');
 
-module.exports = function generalRoute(req, res, next) {
+const router = express.Router();
+
+// General Route Def
+function generalRoute(req, res, next) {
   const viewsRoot = req.app.get('views');
   const directoryURL = utils.getDirectory(path.join(viewsRoot, req.originalUrl), viewsRoot);
   const filename = utils.getFileName(req.originalUrl);
@@ -40,12 +45,7 @@ module.exports = function generalRoute(req, res, next) {
       return;
     }
 
-    res.opts.error = {
-      code: 404,
-      message: 'File not found'
-    };
-    res.status(404).render(path.join(viewsRoot, 'error.html'), res.opts);
-    return;
+    next('file not found');
   }
 
   // Check a friendly URL for a matching `.html` file.
@@ -75,6 +75,63 @@ module.exports = function generalRoute(req, res, next) {
     code: 404,
     message: 'File not found'
   };
+  res.opts.layout = 'layout-nofrills';
   res.status(404).render(path.join(viewsRoot, 'error.html'), res.opts);
   next();
-};
+}
+
+// Removes '/' from the front of the BaseUrl
+function cleanBaseUrl(baseUrl) {
+  return baseUrl.substring(1);
+}
+
+router.get('/:item/:example', (req, res, next) => {
+  if (req.params.example === 'list') {
+    next();
+    return;
+  }
+  generalRoute(req, res, next);
+});
+
+router.get('/:item/list', (req, res, next) => {
+  generalRoute(req, res, next);
+});
+
+router.get('/:item', (req, res, next) => {
+  const type = cleanBaseUrl(req.baseUrl);
+  const item = req.params.item;
+
+  if (item === 'list') {
+    next();
+    return;
+  }
+
+  if (type !== 'components') {
+    generalRoute(req, res, next);
+    return;
+  }
+
+  const opts = {
+    path: path.resolve('app', 'docs', type, `${item}.html`)
+  };
+  sendGeneratedDocPage(opts, req, res, next);
+});
+
+router.get('/list', (req, res, next) => {
+  generalRoute(req, res, next);
+});
+
+router.get('/', (req, res, next) => {
+  const type = cleanBaseUrl(req.baseUrl);
+  if (type !== 'components') {
+    res.redirect(`${res.opts.basepath}${type}/list`);
+    return;
+  }
+
+  const opts = {
+    path: path.resolve('app', 'docs', type, 'index.html')
+  };
+  sendGeneratedDocPage(opts, req, res, next);
+});
+
+module.exports = router;

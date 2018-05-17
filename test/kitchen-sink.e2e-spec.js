@@ -1,11 +1,9 @@
-const AxeBuilder = require('axe-webdriverjs');
 const { browserStackErrorReporter } = require('./helpers/browserstack-error-reporter.js');
 const utils = require('./helpers/e2e-utils.js');
-const rules = require('./helpers/default-axe-options.js');
 const config = require('./helpers/e2e-config.js');
-require('./helpers/rejection.js');
+const axePageObjects = require('./helpers/axe-page-objects.js');
 
-const axeOptions = { rules };
+require('./helpers/rejection.js');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -15,13 +13,9 @@ describe('Kitchen-sink tests', () => {
     await browser.driver.get(`${browser.baseUrl}/kitchen-sink?theme=${browser.params.theme}`);
   });
 
-  // Exclude IE11: Async timeout errors
   if (!utils.isIE()) {
     it('Should be accessible on init with no WCAG 2AA violations', async () => {
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });

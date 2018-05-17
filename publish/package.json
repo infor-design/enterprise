@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.7.0-dev.180511",
+  "version": "4.7.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/infor-design/enterprise",
   "scripts": {
+    "prepublishOnly": "cd ../ && npx grunt publish && cd ./publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

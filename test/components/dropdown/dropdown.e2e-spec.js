@@ -1,11 +1,9 @@
-const AxeBuilder = require('axe-webdriverjs');
-
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
-const rules = requireHelper('default-axe-options');
 const config = requireHelper('e2e-config');
 requireHelper('rejection');
-const axeOptions = { rules };
+
+const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -29,7 +27,9 @@ describe('Dropdown example-index tests', () => {
 
   it('Should scroll down to end of list, and Vermont Should be visible', async () => {
     await clickOnDropdown();
+    await browser.driver.sleep(config.sleep);
     await browser.executeScript('document.querySelector("ul[role=\'listbox\']").scrollTop = 10000');
+    await browser.driver.sleep(config.sleep);
     const dropdownElList = await element(by.css('ul[role="listbox"]'));
     const vermontOption = await element(by.css('li[data-val="VT"]'));
     const posVT = await vermontOption.getLocation();
@@ -40,14 +40,10 @@ describe('Dropdown example-index tests', () => {
       posVT.y < (posDropdownElList.y + dropdownElListSize.height)).toBeTruthy();
   });
 
-  // Exclude IE11: Async timeout errors
   if (!utils.isIE()) {
-    it('Should be accessible on init with no WCAG 2AA violations', async () => {
+    it('Should be accessible on click, and open with no WCAG 2AA violations', async () => {
       await clickOnDropdown();
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });

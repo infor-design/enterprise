@@ -1,5 +1,5 @@
 const extend = require('extend');
-const logger = require('../../../../scripts/logger');
+const logger = require('../logger');
 const path = require('path');
 
 // Option Handling - Custom Middleware

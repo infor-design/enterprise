@@ -1,4 +1,5 @@
-const logger = require('../../../../scripts/logger');
+const path = require('path');
+const logger = require('../logger');
 
 // Simple Middleware for handling errors
 module.exports = function () {
@@ -15,6 +16,10 @@ module.exports = function () {
       return;
     }
 
-    res.status(500).send(`<h2>Internal Server Error</h2><p>${err.stack}</p>`);
+    const viewsRoot = req.app.get('views');
+
+    res.status(500);
+    res.opts.error = err;
+    res.render(path.join(viewsRoot, 'error.html'));
   };
 };

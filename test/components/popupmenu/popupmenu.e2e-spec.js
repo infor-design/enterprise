@@ -1,11 +1,9 @@
-const AxeBuilder = require('axe-webdriverjs');
 const popupmenuPageObject = require('./helpers/popupmenu-page-objects.js');
 
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const utils = requireHelper('e2e-utils');
-const rules = requireHelper('default-axe-options');
 requireHelper('rejection');
-const axeOptions = { rules };
+const axePageObjects = requireHelper('axe-page-objects');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
@@ -32,14 +30,10 @@ describe('Popupmenu example-selectable tests', () => {
     expect(await buttonTriggerEl.getAttribute('class')).toContain('is-open');
   });
 
-  // Exclude IE11: Async timeout errors
   if (!utils.isIE() && !utils.isSafari()) {
     it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
       await popupmenuPageObject.openSingleSelect();
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
@@ -47,11 +41,7 @@ describe('Popupmenu example-selectable tests', () => {
     it('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
       const buttonTriggerEl = await popupmenuPageObject.openSingleSelect();
       await buttonTriggerEl.sendKeys(protractor.Key.ESCAPE);
-
-      const res = await AxeBuilder(browser.driver)
-        .configure(axeOptions)
-        .exclude('header')
-        .analyze();
+      const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
