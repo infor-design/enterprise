@@ -17,9 +17,20 @@
         templateId: 'hierarchy-template',
         legendKey: 'EmploymentType',
         legend: legendData,
-        dataset: data
+        dataset: data,
+        mobileView: true
       });
     });
+
+  $('#hierarchy').on('selected', function(event, eventInfo) {
+    var hierarchyControl = $('#hierarchy').data('hierarchy');
+
+    if (eventInfo.allowLazyLoad) {
+      $.getJSON('{{basepath}}api/orgstructure-children', function(data) {
+        hierarchyControl.add(eventInfo.data.id, eventInfo.data, data);
+      });
+    }
+  });
 
   });
 </script>

@@ -1,5 +1,6 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Tmpl } from '../tmpl/tmpl';
 
 // Jquery Imports
 import '../../utils/animations';
@@ -36,7 +37,8 @@ const HIERARCHY_DEFAULTS = {
   leafWidth: null,
   beforeExpand: null,
   paging: false,
-  renderSubLevel: false
+  renderSubLevel: false,
+  rootClass: 'hierarchy'
 };
 
 function Hierarchy(element, settings) {
@@ -51,9 +53,10 @@ function Hierarchy(element, settings) {
 // Hierarchy Methods
 Hierarchy.prototype = {
   init() {
-    const isMobile = $(this.element).parent().width() < 610 || this.settings.mobileView;
+    const isMobile = this.settings.mobileView;
     const s = this.settings;
-    this.mobileView = isMobile;
+    this.settings.rootClass = 'hierarchy';
+
     s.colorClass = [
       'azure08', 'turquoise02', 'amethyst06', 'slate06', 'amber06', 'emerald07', 'ruby06'
     ];
@@ -74,6 +77,10 @@ Hierarchy.prototype = {
       const style = `'body .hierarchy .leaf,body .hierarchy .sublevel .leaf,body .hierarchy .container .root.leaf { width: ${s.leafWidth}px;  height: ${s.leafHeight}px;  }'`;
 
       $(`<style type="text/css" id="hierarchyLeafStyles">${style}</style>`).appendTo('body');
+    }
+
+    if (isMobile) {
+      this.element.addClass('is-mobile');
     }
   },
 
@@ -127,7 +134,7 @@ Hierarchy.prototype = {
     * @param {object} event - The jquery event object
     * @param {object} eventInfo - More info to identify the node.
     */
-    self.element.on('mousedown', '.leaf, .back button', function (e) {
+    self.element.on('mouseup', '.leaf, .back button', function (e) {
       const leaf = $(this);
       const target = $(e.target);
       const hierarchy = leaf.closest('.hierarchy').data('hierarchy');
@@ -162,6 +169,10 @@ Hierarchy.prototype = {
       // Is right click event
       if (e.which === 3) {
         eventType = 'rightClick';
+      }
+
+      if (!hierarchy) {
+        return;
       }
 
       const eventInfo = {
@@ -333,6 +344,11 @@ Hierarchy.prototype = {
       selectorObject.element = $(selectorObject.el);
     }
 
+    if (selectorObject.element.length === 0) {
+      selectorObject.el = parentContainer.append('<ul></ul>');
+      selectorObject.element = $(selectorObject.el).find('ul');
+    }
+
     if (!currentDataObject.isRootNode) {
       for (let i = 0, l = newDataObject.length; i < l; i++) {
         s.newData.push(newDataObject[i]);
@@ -453,7 +469,7 @@ Hierarchy.prototype = {
         '<div class="back">' +
           '<button type="button" class="btn-icon hide-focus btn-back">' +
             '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-              '<use xlink:href="#icon-caret-up"></use>' +
+              '<use xlink:href="#icon-caret-left"></use>' +
             '</svg>' +
             '<span>Back</span>' +
           '</button>' +
@@ -607,7 +623,7 @@ Hierarchy.prototype = {
   createLeaf(nodeData, container) {
     const self = this;
     const s = this.settings;
-    const chartClassName = self.element.attr('class');
+    const chartClassName = self.settings.rootClass;
     const chart = $(`.${chartClassName} .chart`, self.container);
     const elClassName = container.attr('class');
     const el = elClassName !== undefined ? $(`.${elClassName}`) : container;
@@ -621,7 +637,6 @@ Hierarchy.prototype = {
     }
 
     function processDataForLeaf(thisNodeData) {
-      /* global Tmpl */
       self.setColor(thisNodeData);
 
       const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData });
@@ -630,6 +645,10 @@ Hierarchy.prototype = {
 
       if (thisNodeData.isLeaf) {
         branchState = '';
+      }
+
+      if ($(`#${thisNodeData.id}`).length === 1) {
+        return;
       }
 
       parent.append(`<li class=${branchState}>${$(leaf)[0].outerHTML}</li>`);
@@ -746,7 +765,7 @@ Hierarchy.prototype = {
 
     // data has been loaded if it has children
     if ((data.children && data.children.length !== 0) || eventType === 'add') {
-      // data.isExpanded = true;
+      data.isExpanded = true;
       data.isLoaded = true;
     }
 
