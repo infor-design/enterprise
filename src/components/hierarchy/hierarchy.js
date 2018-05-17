@@ -1,6 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
 import { Tmpl } from '../tmpl/tmpl';
+import { Locale } from '../locale/locale';
 
 // Jquery Imports
 import '../../utils/animations';
@@ -25,6 +26,15 @@ const COMPONENT_NAME = 'hierarchy';
 * @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
 * @param {boolean} [settings.paging=false] If true show pagination.
 * @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
+* @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
+* An empty message will be displayed when there is no chart data. This accepts an object of the form
+* `emptyMessage: {
+*   title: 'No Data Available',
+*   info: 'Make a selection on the list above to see results',
+*   icon: 'icon-empty-no-data',
+*   button: {text: 'xxx', click: <function>
+*   }`
+* Set this to null for no message or will default to 'No Data Found with an icon.'
 */
 const HIERARCHY_DEFAULTS = {
   legend: [],
@@ -38,7 +48,8 @@ const HIERARCHY_DEFAULTS = {
   beforeExpand: null,
   paging: false,
   renderSubLevel: false,
-  rootClass: 'hierarchy'
+  rootClass: 'hierarchy',
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
 function Hierarchy(element, settings) {
@@ -64,7 +75,10 @@ Hierarchy.prototype = {
 
     // Safety check, check for data
     if (s.dataset) {
-      if (s.dataset[0] && s.dataset[0].children.length > 0) {
+      if (s.dataset.length === 0) {
+        this.element.emptymessage(s.emptyMessage);
+        return;
+      } else if (s.dataset[0] && s.dataset[0].children.length > 0) {
         this.render(s.dataset[0]);
       } else if (s.dataset && s.dataset.children.length > 0) {
         this.render(s.dataset);

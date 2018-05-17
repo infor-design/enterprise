@@ -88,7 +88,9 @@ $hierarchy-line-width: 1.34px; //Fixes zoom somewhat
         }
 
         .root {
-          margin-left: -30px;
+          // scss-lint:disable ImportantRule
+          margin-left: -30px !important;
+          // scss-lint:enable ImportantRule
           overflow: visible;
           position: relative;
 
