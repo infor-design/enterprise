@@ -161,12 +161,15 @@ Autocomplete.prototype = {
       this.settings.source = data;
     }
 
+    const listFilterSettings = {
+      filterMode: this.settings.filterMode,
+      highlightMatchedText: this.settings.highlightMatchedText,
+      searchableTextCallback: this.settings.searchableTextCallback
+    };
     if (!this.listFilter) {
-      this.listFilter = new ListFilter({
-        filterMode: this.settings.filterMode,
-        highlightMatchedText: this.settings.highlightMatchedText,
-        searchableTextCallback: this.settings.searchableTextCallback
-      });
+      this.listFilter = new ListFilter(listFilterSettings);
+    } else {
+      this.listFilter.updated(listFilterSettings);
     }
 
     this.addMarkup();
