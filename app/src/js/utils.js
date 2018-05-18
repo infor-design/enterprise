@@ -31,7 +31,7 @@ utils.hasFile = function (filePath) {
 
   try {
     const file = fs.statSync(filePath);
-    if (file && file.blocks) {
+    if (file && file.size) {
       return true;
     }
     return false;
