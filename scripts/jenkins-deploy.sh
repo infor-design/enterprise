@@ -5,11 +5,30 @@ JENKINS_DOMAIN="hl-jenkins-dev.us-east-1.elasticbeanstalk.com"
 JENKINS_JOB="soho4-swarm-deploy"
 JENKINS_URL="http://$JENKINS_USER:$JENKINS_SECRET@$JENKINS_DOMAIN"
 
-if [ -z "$1" ]; then
-    BRANCH="master"
-else
-    BRANCH=$1
-fi
+BUILD_FROM="master"
+GIT_TAG_OR_BRANCH="branch"
+BUILD_AS_LATEST=false
+
+while getopts "b:t:l" opt; do
+    case $opt in
+        b)
+            # the branch or tag name to build from
+            BUILD_FROM="${OPTARG}"
+            ;;
+        t)
+            # type - either `branch` or `tag`
+            # defaults to branch
+            GIT_TAG_OR_BRANCH="${OPTARG}"
+            ;;
+        l)
+            # latest? publishes to `latest-enterprise` demo server
+            BUILD_AS_LATEST=true
+            ;;
+        *)
+            echo "Invalid falg: -$opt"
+            ;;
+    esac
+done
 
 if [[ -z $JENKINS_SECRET ]]; then echo "JENKINS_SECRET must be defined"; exit 1; fi
 if [[ -z $JENKINS_JOB_TOKEN ]]; then echo "JENKINS_JOB_TOKEN must be defined"; exit 1; fi
@@ -27,12 +46,29 @@ get_build_number () {
     echo $build_number
 }
 
+stop_jenkins_build () {
+    response=$(curl --write-out "%{http_code}\n" --silent --output /dev/null -X POST \
+                "$JENKINS_URL/job/$JENKINS_JOB/$CURRENT_BUILD_NUMBER/stop"
+              )
+    echo $response
+}
+
+queue_jenkins_build () {
+    response=$(curl --write-out "%{http_code}\n" --silent --output /dev/null -X POST \
+                -H "Jenkins-Crumb:$JENKINS_CRUMB_TOKEN" \
+                "$JENKINS_URL/job/$JENKINS_JOB/buildWithParameters?CONTAINER=enterprise&GIT_BRANCH=$BUILD_FROM&GIT_TAG=$BUILD_FROM&GIT_TAG_OR_BRANCH=$GIT_TAG_OR_BRANCH&BUILD_AS_LATEST=$BUILD_AS_LATEST&token=$JENKINS_JOB_TOKEN"\
+              )
+    echo $response
+}
+
+echo "Building $BUILD_FROM $GIT_TAG_OR_BRANCH as $([ $BUILD_AS_LATEST = true ] && echo 'latest-enterprise' || echo $BUILD_FROM-enterprise)..."
+
 CURRENT_JOB_STATUS=`check_status`
 
 if [[ "$CURRENT_JOB_STATUS" == "None" ]]; then
     CURRENT_BUILD_NUMBER=`get_build_number`
     echo "Job #$CURRENT_BUILD_NUMBER is already running. Aborting that job now..."
-    RESP=$(curl --write-out "%{http_code}\n" --silent --output /dev/null -X POST "$JENKINS_URL/job/$JENKINS_JOB/$CURRENT_BUILD_NUMBER/stop")
+    RESP=`stop_jenkins_build`
     if [[ "$RESP" == "302" ]]; then
         echo "Successfully aborted job #$CURRENT_BUILD_NUMBER"
     else
@@ -40,11 +76,11 @@ if [[ "$CURRENT_JOB_STATUS" == "None" ]]; then
         echo "ERROR: Request to Jenkins returned $RESP"
     fi
 else
-    echo "Adding Jenkins build of $BRANCH branch to queue..."
+    echo "- adding Jenkins build to queue..."
 fi
 
 CRUMB=$(curl -s -X GET "$JENKINS_URL/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,%22:%22,//crumb)")
-RESP=$(curl --write-out "%{http_code}\n" --silent --output /dev/null -X POST -H "Jenkins-Crumb:$JENKINS_CRUMB_TOKEN" "$JENKINS_URL/job/$JENKINS_JOB/buildWithParameters?CONTAINER=enterprise&GIT_BRANCH=$BRANCH&GIT_TAG=4.6.0&GIT_TAG_OR_BRANCH=branch&token=$JENKINS_JOB_TOKEN")
+RESP=`queue_jenkins_build`
 
 if [[ "$RESP" == "201" ]]; then
     echo "SUCCESS: Jenkins sucessfully queued job"
