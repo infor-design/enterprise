@@ -18,6 +18,7 @@ script:
 deploy:
   - provider: script
     script: ./scripts/jenkins-deploy.sh master
+    skip_cleanup: true
     on:
       branch: master
       condition: $TRAVIS_EVENT_TYPE = push
