@@ -6,20 +6,14 @@ JENKINS_JOB="soho4-swarm-deploy"
 JENKINS_URL="http://$JENKINS_USER:$JENKINS_SECRET@$JENKINS_DOMAIN"
 
 BUILD_FROM="master"
-GIT_TAG_OR_BRANCH="branch"
 BUILD_AS_LATEST=false
 WATCH_FOR_BUILD_STATUS=false
 
-while getopts "b:t:lw" opt; do
+while getopts "b:lw" opt; do
     case $opt in
         b)
             # the branch or tag name to build from
             BUILD_FROM="${OPTARG}"
-            ;;
-        t)
-            # type - either `branch` or `tag`
-            # defaults to branch
-            GIT_TAG_OR_BRANCH="${OPTARG}"
             ;;
         l)
             # latest? publishes to `latest-enterprise` demo server
@@ -30,7 +24,7 @@ while getopts "b:t:lw" opt; do
             WATCH_FOR_BUILD_STATUS=true
             ;;
         *)
-            echo "Invalid falg: -$opt"
+            exit 1
             ;;
     esac
 done
@@ -61,12 +55,12 @@ stop_jenkins_build () {
 queue_jenkins_build () {
     response=$(curl --write-out "%{http_code}\n" --silent --output /dev/null -X POST \
                 -H "Jenkins-Crumb:$JENKINS_CRUMB_TOKEN" \
-                "$JENKINS_URL/job/$JENKINS_JOB/buildWithParameters?CONTAINER=enterprise&GIT_BRANCH=$BUILD_FROM&GIT_TAG=$BUILD_FROM&GIT_TAG_OR_BRANCH=$GIT_TAG_OR_BRANCH&BUILD_AS_LATEST=$BUILD_AS_LATEST&token=$JENKINS_JOB_TOKEN"\
+                "$JENKINS_URL/job/$JENKINS_JOB/buildWithParameters?CONTAINER=enterprise&BUILD_FROM=$BUILD_FROM&BUILD_AS_LATEST=$BUILD_AS_LATEST&token=$JENKINS_JOB_TOKEN"\
               )
     echo $response
 }
 
-echo "Building $BUILD_FROM $GIT_TAG_OR_BRANCH as $([ $BUILD_AS_LATEST = true ] && echo 'latest-enterprise' || echo $BUILD_FROM-enterprise)..."
+echo "Building $BUILD_FROM as $([ $BUILD_AS_LATEST = true ] && echo 'latest-enterprise' || echo $BUILD_FROM-enterprise)..."
 
 CURRENT_JOB_STATUS=`check_status`
 
