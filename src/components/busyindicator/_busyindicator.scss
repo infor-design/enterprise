@@ -233,6 +233,11 @@ input + .busy-indicator-container,
 
 //RTL Styles
 html[dir='rtl'] {
+
+  .busy-loading-locale {
+    opacity: 0;
+  }
+
   .busy-indicator {
     .bar {
       margin-left: 5px;
