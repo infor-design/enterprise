@@ -5836,13 +5836,13 @@ Datagrid.prototype = {
           idx++;
           data = dataset[i].values[k];
           if (data[fieldName] === value) {
-            matchedRows.push(idx); 
+            matchedRows.push(idx);
           }
         }
       } else {
         data = s.treeGrid ? dataset[i].node : dataset[i];
         if (data[fieldName] === value) {
-          matchedRows.push(i); 
+          matchedRows.push(i);
         }
       }
     }

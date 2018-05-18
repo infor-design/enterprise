@@ -15,7 +15,7 @@ let hierarchyAPI;
 let svgEl;
 const hierarchyId = '#hierarchy';
 
-fdescribe('hierarchy API', () => { //eslint-disable-line
+describe('hierarchy API', () => {
   beforeEach(() => {
     hierarchyEl = null;
     hierarchyAPI = null;
