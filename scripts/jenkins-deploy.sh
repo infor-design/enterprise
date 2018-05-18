@@ -8,8 +8,9 @@ JENKINS_URL="http://$JENKINS_USER:$JENKINS_SECRET@$JENKINS_DOMAIN"
 BUILD_FROM="master"
 GIT_TAG_OR_BRANCH="branch"
 BUILD_AS_LATEST=false
+WATCH_FOR_BUILD_STATUS=false
 
-while getopts "b:t:l" opt; do
+while getopts "b:t:lw" opt; do
     case $opt in
         b)
             # the branch or tag name to build from
@@ -23,6 +24,10 @@ while getopts "b:t:l" opt; do
         l)
             # latest? publishes to `latest-enterprise` demo server
             BUILD_AS_LATEST=true
+            ;;
+        w)
+            # watch build status to break build
+            WATCH_FOR_BUILD_STATUS=true
             ;;
         *)
             echo "Invalid falg: -$opt"
@@ -89,30 +94,32 @@ else
     echo "ERROR: Request to Jenkins returned $RESP"
 fi
 
-INITIAL_STATUS=`check_status`
-if [ -n "initial_status" ]
-then
-    BUILD_STATUS=`check_status`
-    CURRENT_BUILD_NUMBER=`get_build_number`
-    echo -n "Watching build #$CURRENT_BUILD_NUMBER to report on status..."
-    while [[ "$BUILD_STATUS" == "None" ]]; do
-        sleep 10
-        printf "."
+if [ $WATCH_FOR_BUILD_STATUS = true ]; then
+    INITIAL_STATUS=`check_status`
+    if [ -n $INITIAL_STATUS ]; then
         BUILD_STATUS=`check_status`
-    done
-    if [[ "$BUILD_STATUS" == "SUCCESS" ]]; then
-        echo "" # new line
-        echo "DEPLOY to http://$BRANCH-enterprise.demo.design.infor.com SUCCESSFUL."
-        exit
-    elif [[ "$BUILD_STATUS" == "ABORTED" ]]; then
-        echo "" # new line
-        echo "Build was $BUILD_STATUS. Exiting with 0 since this was likely intentional."
-        exit 0
+        CURRENT_BUILD_NUMBER=`get_build_number`
+        echo -n "Watching build #$CURRENT_BUILD_NUMBER to report on status..."
+        while [[ "$BUILD_STATUS" == "None" ]]; do
+            sleep 10
+            printf "."
+            BUILD_STATUS=`check_status`
+        done
+        if [[ "$BUILD_STATUS" == "SUCCESS" ]]; then
+            echo "" # new line
+            echo "DEPLOY to http://$BRANCH-enterprise.demo.design.infor.com SUCCESSFUL."
+            exit
+        elif [[ "$BUILD_STATUS" == "ABORTED" ]]; then
+            echo "" # new line
+            echo "Build was $BUILD_STATUS. Exiting with 0 since this was likely intentional."
+            exit 0
+        else
+            echo "" # new line
+            echo "Build was ended with status: $BUILD_STATUS!"
+            exit 1
+        fi
     else
-        echo "Build was ended with status: $BUILD_STATUS!"
-        exit 1
+      echo "BUILD FAILURE: Other build is unsuccessful or status could not be obtained."
+      exit 1
     fi
-else
-  echo "BUILD FAILURE: Other build is unsuccessful or status could not be obtained."
-  exit 1
 fi
