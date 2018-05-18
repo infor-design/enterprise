@@ -22,7 +22,7 @@ let timepickerEl;
 
 describe('TimePicker example-index tests', () => {
   beforeEach(async () => {
-    setPage('/components/timepicker/example-index');
+    await setPage('/components/timepicker/example-index');
     timepickerEl = await element(by.id('timepicker-main'));
   });
 
@@ -90,7 +90,7 @@ describe('TimePicker example-index tests', () => {
 
 describe('TimePicker 24 Hour tests', () => {
   beforeEach(async () => {
-    setPage('/components/timepicker/example-24-hour');
+    await setPage('/components/timepicker/example-24-hour');
     timepickerEl = await element(by.id('timepicker-24hrs'));
   });
 
@@ -134,7 +134,7 @@ describe('TimePicker 24 Hour tests', () => {
 
 describe('TimePicker with seconds example tests', () => {
   beforeEach(async () => {
-    setPage('/components/timepicker/example-seconds-picker');
+    await setPage('/components/timepicker/example-seconds-picker');
     timepickerEl = await element(by.id('time-field'));
   });
 
@@ -208,7 +208,7 @@ describe('TimePicker with seconds example tests', () => {
 
 describe('TimePicker Intervals tests', () => {
   beforeEach(async () => {
-    setPage('/components/timepicker/example-intervals');
+    await setPage('/components/timepicker/example-intervals');
     timepickerEl = await element(by.id('time-intervals'));
   });
 
@@ -258,7 +258,7 @@ describe('TimePicker Intervals tests', () => {
 
 describe('TimePicker states tests', () => {
   beforeEach(async () => {
-    setPage('/components/timepicker/example-states');
+    await setPage('/components/timepicker/example-states');
     timepickerEl = await element(by.id('timepicker-test'));
   });
 
@@ -301,7 +301,7 @@ describe('TimePicker states tests', () => {
 
 describe('TimePicker validation tests', () => {
   beforeEach(async () => {
-    setPage('/components/timepicker/example-with-validation');
+    await setPage('/components/timepicker/example-with-validation');
     timepickerEl = await element(by.id('timepicker-main'));
   });
 
