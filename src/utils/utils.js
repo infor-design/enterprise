@@ -288,6 +288,40 @@ $.fn.parseOptions = function (element, attr) {
 };
 
 /**
+ * Performs the usual Boolean coercion with the exception of the strings "false"
+ * (case insensitive) and "0"
+ * @private
+ * @param {boolean|string|number} b the value to be checked
+ * @returns {boolean} whether or not the value passed coerces to true.
+ */
+utils.coerceToBoolean = function (b) {
+  return !(/^(false|0)$/i).test(b) && !!b;
+};
+
+/**
+ * Coerces all properties inside of a settings object to a boolean.
+ * @param {Object} settings incoming settings
+ * @param {String[]} [targetPropsArr=undefined] optional array of specific settings keys to target.
+ *  If no keys are provided, all keys will be targeted.
+ * @returns {Object} modified settings.
+ */
+utils.coerceSettingsToBoolean = function (settings, targetPropsArr) {
+  if (!targetPropsArr || !Array.isArray(targetPropsArr)) {
+    Object.keys(settings).forEach((key) => {
+      targetPropsArr.push(key);
+    });
+  }
+
+  let i;
+  let l;
+  for (i = 0, l = targetPropsArr.length; i < l; i++) {
+    settings[targetPropsArr[i]] = utils.coerceToBoolean(settings[targetPropsArr[i]]);
+  }
+
+  return settings;
+};
+
+/**
  * Timer - can be used for play/pause or stop for given time.
  * Use as new instance [ var timer = new $.fn.timer(function() {}, 6000); ]
  * then can be listen events as:

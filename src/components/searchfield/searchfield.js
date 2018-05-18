@@ -62,11 +62,11 @@ SearchField.prototype = {
    * @returns {void}
    */
   init() {
-    this.inlineLabel = this.element.closest('label');
-    this.inlineLabelText = this.inlineLabel.find('.label-text');
-    this.isInlineLabel = this.element.parent().is('.inline');
-    this.isIe11 = env.browser.name === 'ie' && env.browser.version === '11';
-    this.build().setupEvents();
+    this.coerceBooleanSettings();
+
+    this
+      .build()
+      .setupEvents();
   },
 
   /**
@@ -75,8 +75,10 @@ SearchField.prototype = {
    * @returns {this} component instance
    */
   build() {
-    this.optionsParseBoolean();
     this.label = this.element.prev('label, .label');
+    this.inlineLabel = this.element.closest('label');
+    this.inlineLabelText = this.inlineLabel.find('.label-text');
+    this.isInlineLabel = this.element.parent().is('.inline');
 
     // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
     // Autocomplete settings are fed the same settings as Searchfield
@@ -226,18 +228,14 @@ SearchField.prototype = {
    * @private
    * @returns {void}
    */
-  optionsParseBoolean() {
-    let i;
-    let l;
+  coerceBooleanSettings() {
     const arr = [
       'showAllResults',
       'categoryMultiselect',
       'showCategoryText',
       'clearable'
     ];
-    for (i = 0, l = arr.length; i < l; i++) {
-      this.settings[arr[i]] = this.parseBoolean(this.settings[arr[i]]);
-    }
+    this.settings = utils.coerceSettingsToBoolean(this.settings, arr);
   },
 
   /**
@@ -266,8 +264,8 @@ SearchField.prototype = {
     const self = this;
 
     self.element
-      .on('updated.searchfield', () => {
-        self.updated();
+      .on('updated.searchfield', (e, settings) => {
+        self.updated(settings);
       })
       .on('focus.searchfield', (e) => {
         self.handleFocus(e);
@@ -491,7 +489,7 @@ SearchField.prototype = {
   handleKeydown(e) {
     const key = e.which;
 
-    if (key === 27 && this.isIe11) {
+    if (key === 27 && env.browser.isIE11()) {
       e.preventDefault();
     }
   },
@@ -898,17 +896,6 @@ SearchField.prototype = {
    */
   disable() {
     this.element.prop('disabled', true);
-  },
-
-  /**
-   * Performs the usual Boolean coercion with the exception of the strings "false"
-   * (case insensitive) and "0"
-   * @private
-   * @param {boolean|string|number} b the value to be checked
-   * @returns {boolean} whether or not the value passed coerces to true.
-   */
-  parseBoolean(b) {
-    return !(/^(false|0)$/i).test(b) && !!b;
   },
 
   /**
