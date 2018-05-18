@@ -17,7 +17,7 @@ script:
   - npm run functional:ci
 deploy:
   - provider: script
-    script: ./scripts/jenkins-deploy.sh master
+    script: ./scripts/jenkins-deploy.sh -b master -w
     skip_cleanup: true
     on:
       branch: master
