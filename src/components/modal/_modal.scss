@@ -70,9 +70,22 @@
         width: 400px;
       }
     }
+
+    &:first-child .audible ~ input:not(.spinbox):not(.colorpicker),
+    &:first-child .audible ~ .searchfield-wrapper {
+      margin-top: 4px;
+    }
+
+    &:first-child .checkbox-label {
+      margin-top: 2px;
+    }
+
+    &:last-child .checkbox-label {
+      margin-bottom: 1px;
+    }
   }
 
-  .field:last-child input:not(.spinbox):not(.colorpicker),
+  .field:last-child input:not(.spinbox):not(.colorpicker):not(.searchfield),
   .field:last-child .dropdown,
   .field:last-child textarea,
   .field:last-child .spinbox-wrapper,
