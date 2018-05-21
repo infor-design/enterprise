@@ -29,7 +29,7 @@ module.exports = function (grunt) {
   }
 
   const config = {
-    pkg: grunt.file.readJSON('publish/package.json'),
+    pkg: grunt.file.readJSON('ids-enterprise/package.json'),
     banner: bannerText,
     exec: {
       rollup: {

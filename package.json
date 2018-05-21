@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "npx grunt",
-    "start": "npx run build  && node app/server.js",
+    "start": "npm run build  && node app/server.js",
     "stop": "./scripts/stop.sh",
     "eslint": "npx eslint -c .eslintrc.js src test",
     "eslint:log": "npx eslint -c .eslintrc.js src test -o eslint.log",
@@ -16,9 +16,9 @@
     "e2e:ci": "npm run e2e:ci:pre && protractor test/protractor.ci.conf.js || npm run stop",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
-    "publish-setup": "cd ./publish && npm run prepublishOnly && cd ../",
-    "publish-dev": "npm publish publish/ --tag dev",
-    "publish-prod": "npm publish publish/",
+    "publish-setup": "cd ./ids-enterprise && npm run prepublishOnly && cd ../",
+    "publish-dev": "npm publish ids-enterprise/ --tag dev",
+    "publish-prod": "npm publish ids-enterprise/",
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v"
   },

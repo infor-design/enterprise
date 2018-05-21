@@ -47,7 +47,7 @@ git checkout master
 * Generate Release Notes http://bit.ly/2w6X8Xw
 
 ## Git Operations
-* Edit version `publish/package.json` (from 4.5.0-rc to 4.5.0 as an example)
+* Edit version `ids-enterprise/package.json` (from 4.5.0-rc to 4.5.0 as an example)
 * Push a PR
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests and make sure all merged
 * Merge  4.5.0-rc (the rc branch) back onto the 4.5.x (masterish branch) - Using a PR
@@ -65,14 +65,14 @@ git checkout master
 * Change the v-Next build http://bamboo.infor.com/chain/admin/config/editChainDetails.action?buildKey=SOHO-NEXT
   * change the name to 4.6.0-RC (Version Next)
   * change the repo it points to
-  * checkout 4.6.0-rc and bump the version `publish/package.json`
+  * checkout 4.6.0-rc and bump the version `ids-enterprise/package.json`
 * Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
   * change the versions in the build config
   * Label the build release-440 for example http://bamboo.infor.com/browse/label/release-440
 
 ## Update version in ids-enterprise-angular
 * Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
-* Edit version in `publish/package.json`
+* Edit version in `ids-package.json`
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and merge
 * Merge 4.5.0-rc (the rc branch) back onto the 4.5.x (masterish branch) - Using a PR or Git Merge
 * Git Tag the release from the 4.5.x branch
