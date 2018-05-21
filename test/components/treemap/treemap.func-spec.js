@@ -10,7 +10,7 @@ let treemapAPI;
 let svgEl;
 const treemapId = '#treemap-chart-example';
 
-describe('Treemap API', () => { //eslint-disable-line
+describe('Treemap API', () => {
   beforeEach(() => {
     treemapEl = null;
     treemapAPI = null;

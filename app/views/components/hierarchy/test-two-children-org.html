@@ -1,0 +1,71 @@
+<div class="twelve columns">
+  <figure class="hierarchy" id="hierarchy"></figure>
+</div>
+
+<script>
+
+  var
+    menPath = 'https://randomuser.me/api/portraits/med/men/',
+    womenPath = 'https://randomuser.me/api/portraits/med/women/',
+    orgdata = [{
+      id: '1', Name: 'Raj', Position: 'Director', EmploymentType: 'FT', Picture: '',
+      children: [
+        {
+          id: '1_2', Name: 'Sujit', Position: 'Records Manager', EmploymentType: 'FT', Picture: '',
+          children: [
+            { id: '1_2_1', Name: 'Tony Cleveland', Position: 'Records Clerk', EmploymentType: 'C', Picture: '', isLeaf: true, children: [] },
+            { id: '1_2_2', Name: 'Julie Dawes', Position: 'Records Clerk', EmploymentType: 'PT', Picture: '', isLeaf: true,
+            }
+          ]
+        }
+      ]
+    }];
+
+
+  $(function () {
+
+    var legendData = [
+      { 'value': 'FT', 'label': 'Full Time' },
+      { 'value': 'PT', 'label': 'Part Time' },
+      { 'value': 'C', 'label': 'Contractor' },
+      { 'value': 'O', 'label': 'Open Position' }
+    ];
+
+    $('#hierarchy').hierarchy({
+      templateId: 'hierarchyChartTemplate',
+      legendKey: 'EmploymentType',
+      legend: legendData,
+      dataset: orgdata
+    });
+
+  });
+</script>
+
+
+{{={{{ }}}=}}
+<script type="text/html" id="hierarchyChartTemplate">
+   <div class="leaf {{colorClass}}" id="{{id}}">
+      {{#Picture}}
+        <div class="image-user-status">
+            <img class="image-round" src="{{Picture}}" />
+        </div>
+      {{/Picture}}
+      {{^Picture}}
+        <div class="image-user-status">
+            <div class="image-initials">{{initials}}</div>
+        </div>
+      {{/Picture}}
+      <div class="detail">
+          <p class="heading">{{Name}}</p>
+          <p class="subheading">{{Position}}</p>
+      </div>
+      {{^isLeaf}}
+      <button class="btn btn-icon" type="button" id="btnShowChildren">
+          <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+              <use xlink:href="#icon-caret-up" />
+          </svg>
+          <span class="audible">Expand/Collapse</span>
+      </button>
+      {{/isLeaf}}
+    </div>
+</script>
