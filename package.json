@@ -21,11 +21,14 @@
     "publish-dev": "npm publish ids-enterprise/ --tag dev",
     "publish-prod": "npm publish ids-enterprise/",
     "documentation": "node ./scripts/deploy-documentation.js",
-    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v"
+    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
+    "pre-release": "npx release-it minor --preRelease=beta",
+    "release": "npx release-it minor"
   },
   "dependencies": {
     "d3": "^4.13.0",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "release-it": "^7.4.5"
   },
   "devDependencies": {
     "archiver": "^2.1.1",
