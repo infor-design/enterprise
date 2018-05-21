@@ -97,15 +97,37 @@ Textarea.prototype = {
    * Checks a keycode value and determines if it belongs to a printable character.
    * @private
    * @param {number} keycode - a number representing an ASCII keycode value
+   * @param {boolean} shiftKey - a boolean set to true if shift key is being pressed
    * @returns {boolean} Returns true if the key is a printable one.
    */
-  isPrintable(keycode) {
-    const valid =
-      (keycode > 47 && keycode < 58) || // number keys
-      (keycode > 64 && keycode < 91) || // letter keys
-      (keycode > 95 && keycode < 112) || // numpad keys
-      (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
-      (keycode > 218 && keycode < 223); // [\]' (in order)
+  isPrintable(keycode, shiftKey) {
+    // (keycode > 47 && keycode < 58) || // number keys
+    // (keycode > 64 && keycode < 91) || // letter keys
+    // (keycode > 95 && keycode < 112) || // numpad keys
+    // (keycode > 185 && keycode < 193) || // ;=,-./` (in order)
+    // (keycode > 218 && keycode < 223); // [\]' (in order)
+
+    let valid = false;
+
+    if (shiftKey) {
+      valid =
+        (keycode > 64 && keycode < 91) || // letter keys
+        (keycode >= 33 && keycode <= 38) ||
+        (keycode >= 40 && keycode <= 43) ||
+        (keycode === 126 || keycode === 58 || keycode === 60) ||
+        (keycode >= 123 && keycode <= 125) ||
+        (keycode === 94 || keycode === 95) ||
+        (keycode >= 62 && keycode <= 64);
+    } else {
+      valid =
+        keycode === 13 || // enter key
+        (keycode >= 48 && keycode <= 57) || // number keys
+        (keycode >= 97 && keycode <= 122) || // letter keys
+        (keycode === 59 || keycode === 61 ||
+        (keycode >= 44 && keycode <= 47) || keycode === 96) || // ;=,-./` (in order)
+        (keycode >= 91 && keycode <= 93) || keycode === 39; // [\]' (in order)
+    }
+
     return valid;
   },
 
@@ -189,7 +211,7 @@ Textarea.prototype = {
         Locale.translate('CharactersLeft'))).replace('{0}', remaining.toString());
 
     if (self.counter) {
-      if (length === max) {
+      if (length >= max) {
         text = (self.settings.charMaxText ? self.settings.charMaxText.replace('{0}', max) : Locale.translate('CharactersMax') + max);
         self.counter.text(text);
         self.counter.removeClass('almost-empty');
@@ -203,7 +225,7 @@ Textarea.prototype = {
       }
     }
 
-    if (self.printarea) {
+    if (self.printarea && length < max) {
       self.printarea.text(self.element.val());
     }
   },
@@ -276,11 +298,23 @@ Textarea.prototype = {
     const self = this;
 
     this.element.on('keyup.textarea', (e) => {
+      const value = self.element.val();
+      const isExtraLinebreaks = self.isChrome || self.isSafari;
+      const length = value.length + (isExtraLinebreaks ? self.countLinebreaks(value) : 0);
+      const max = parseInt(self.element.attr('maxlength'), 10);
+
       self.updateCounter();
+
+      if (length >= max) {
+        e.preventDefault();
+        return false;
+      }
 
       if (self.settings.autoGrow) {
         self.handleResize(self, e);
       }
+
+      return true;
     }).on('focus.textarea', () => {
       if (self.counter) {
         self.counter.addClass('focus');
@@ -288,15 +322,17 @@ Textarea.prototype = {
     }).on('updated.dropdown', () => {
       self.updated();
     }).on('keypress.textarea', function (e) {
-      const length = self.element.val().length;
-      const max = self.element.attr('maxlength');
+      const value = self.element.val();
+      const isExtraLinebreaks = self.isChrome || self.isSafari;
+      const length = value.length + (isExtraLinebreaks ? self.countLinebreaks(value) : 0);
+      const max = parseInt(self.element.attr('maxlength'), 10);
 
       if ([97, 99, 118, 120].indexOf(e.which) > -1 && (e.metaKey || e.ctrlKey)) {
         self.updateCounter();
         return;
       }
 
-      if (!self.isPrintable(e.which)) {
+      if (!self.isPrintable(e.which, e.shiftKey)) {
         return;
       }
 
