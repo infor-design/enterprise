@@ -13,7 +13,7 @@ install:
 before_script:
   - npm run eslint:error-only
 script:
-  - npx grunt
+  - npm run build
   - npm run functional:ci
 deploy:
   - provider: script

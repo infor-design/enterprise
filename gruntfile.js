@@ -30,23 +30,19 @@ module.exports = function (grunt) {
 
   const config = {
     pkg: grunt.file.readJSON('publish/package.json'),
-
     banner: bannerText,
-
     exec: {
-      build: {
-        cmd: 'npm run build'
+      rollup: {
+        cmd: 'npx rollup -c'
       },
-
       documentation: {
         cmd: (componentName) => {
           componentName = componentName || '';
           return `npm run documentation ${componentName}`;
         }
       },
-
       minify: {
-        cmd: 'npm run minify'
+        cmd: 'node ./scripts/minify.js'
       }
     },
   };
@@ -90,12 +86,12 @@ module.exports = function (grunt) {
   // Javascript Build Tasks
   // The first one doesn't minify (expensive, time-wise)
   grunt.registerTask('build:js', [
-    'exec:build',
+    'exec:rollup',
     'copy:main'
   ]);
 
   grunt.registerTask('build:js:min', [
-    'exec:build',
+    'exec:rollup',
     'exec:minify',
     'copy:main'
   ]);
@@ -108,7 +104,7 @@ module.exports = function (grunt) {
   ]);
 
   // Publish for NPM
-  grunt.registerTask('publish', [
+  grunt.registerTask('packup', [
     'default',
     'clean:publish',
     'copy:publish'
