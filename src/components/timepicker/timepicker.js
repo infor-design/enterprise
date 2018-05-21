@@ -800,7 +800,7 @@ TimePicker.prototype = {
 
     /**
     * Fires when the value is changed by typing or the picker.
-    * @event close
+    * @event change
     * @memberof TimePicker
     * @property {object} event - The jquery event object
     */
@@ -816,7 +816,7 @@ TimePicker.prototype = {
    * @returns {boolean} whether or not the Timepicker popup is open.
    */
   isOpen() {
-    return (this.popup && !this.popup.hasClass('is-hidden'));
+    return !!((this.popup && this.popup.is(':visible')));
   },
 
   /**
@@ -873,13 +873,30 @@ TimePicker.prototype = {
    */
   onPopupHide() {
     if (this.settings.mode === 'standard') {
-      $(`#timepicker-hours-${this.id}`).data('dropdown').destroy();
-      $(`#timepicker-minutes-${this.id}`).data('dropdown').destroy();
+      const ddHours = $(`#timepicker-hours-${this.id}`);
+      const ddMinutes = $(`#timepicker-minutes-${this.id}`);
+      const ddSeconds = $(`#timepicker-seconds-${this.id}`);
+      const ddPeriod = $(`#timepicker-period-${this.id}`);
+
+      if (ddHours && ddHours.data('dropdown') &&
+        typeof ddHours.data('dropdown').destroy === 'function') {
+        ddHours.data('dropdown').destroy();
+      }
+      if (ddMinutes && ddMinutes.data('dropdown') &&
+        typeof ddMinutes.data('dropdown').destroy === 'function') {
+        ddMinutes.data('dropdown').destroy();
+      }
       if (this.hasSeconds()) {
-        $(`#timepicker-seconds-${this.id}`).data('dropdown').destroy();
+        if (ddSeconds && ddSeconds.data('dropdown') &&
+          typeof ddSeconds.data('dropdown').destroy === 'function') {
+          ddSeconds.data('dropdown').destroy();
+        }
       }
       if (this.hasDayPeriods()) {
-        $(`#timepicker-period-${this.id}`).data('dropdown').destroy();
+        if (ddPeriod && ddPeriod.data('dropdown') &&
+          typeof ddPeriod.data('dropdown').destroy === 'function') {
+          ddPeriod.data('dropdown').destroy();
+        }
       }
       this.popup.off('click.timepicker touchend.timepicker touchcancel.timepicker keydown.timepicker');
     }

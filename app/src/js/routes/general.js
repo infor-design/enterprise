@@ -49,7 +49,7 @@ function generalRoute(req, res, next) {
   }
 
   // Check a friendly URL for a matching `.html` file.
-  const friendlyURLFilepath = `${viewsRoot}${utils.getPathWithoutQuery(req.originalUrl)}.html`;
+  const friendlyURLFilepath = path.resolve(`${viewsRoot}${utils.getPathWithoutQuery(req.originalUrl)}.html`);
   if (utils.hasFile(friendlyURLFilepath)) {
     res.render(utils.getTemplateUrl(friendlyURLFilepath.replace(viewsRoot, '')), res.opts);
     next();

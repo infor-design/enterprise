@@ -1,0 +1,8 @@
+[
+  "1. Raw html i onmouseover <i onmouseover='alert()'>THIS</i>",
+  "2. Escaped html i onmouseover &lt;i onmouseover='alert()'&gt;THIS&lt;/i&gt;",
+  "3. Raw html span onmouseover <span onmouseover='alert()'>THIS</span>",
+  "4. Escaped html span onmouseover &lt;span onmouseover='alert()'&gt;THIS&lt;/span&gt;",
+  "5. Raw html svg onload <svg onload='alert()' />",
+  "6. Escaped html svg onload &lt;svg onload='alert()' /&gt;"
+]

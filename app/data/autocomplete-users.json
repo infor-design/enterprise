@@ -1,0 +1,27 @@
+[
+  {
+    "label": "John Smith",
+    "email": "John.Smith@example.com",
+    "value": "0"
+  },
+  {
+    "label": "Alex Mills",
+    "email": "Alex.Mills@example.com",
+    "value": "1"
+  },
+  {
+    "label": "Steve Mills",
+    "email": "Steve.Mills@example.com",
+    "value": "2"
+  },
+  {
+    "label": "Quincy Adams",
+    "email": "Quincy.Adams@example.com",
+    "value": "3"
+  },
+  {
+    "label": "Paul Thompson",
+    "email": "Paul.Thompson@example.com",
+    "value": "4"
+  }
+]

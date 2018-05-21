@@ -1,18 +1,15 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2 class="fieldset-title">Autocomplete Example: Alternate Templates</h2>
+  </div>
+</div>
 
 <div class="row">
   <div class="twelve columns">
-    <h2 class="fieldset-title">Autocomplete - for search and textbox</h2>
-
     <div class="field">
-      <label for="auto-default">#auto-default (autocomplete with stock settings)</label>
-      <input data-autocomplete="{{basepath}}api/states?term=" id="auto-default" class="autocomplete" placeholder="Type to Search" type="text" />
+      <label for="auto-template">Users</label>
+      <input class="autocomplete" data-autocomplete="source" data-init="false" data-tmpl="#autocomplete-template-email" id="auto-template" placeholder="Type to Search" type="text">
     </div>
-
-    <div class="field">
-      <label for="auto-template">#auto-template (uses an alternate source and external template)</label>
-      <input data-autocomplete="source" data-init="false" dataclass="autocomplete" data-tmpl="#autocomplete-template-email" id="auto-template" placeholder="Type to Search" type="text">
-    </div>
-
   </div>
 </div>
 
@@ -30,7 +27,7 @@
 </script>
 <%={{ }}=%>
 
-<script>
+<script id="test-scripts">
   $('body').on('initialized', function() {
 
   // Setup an alternate source for the templated Autocomplete.
