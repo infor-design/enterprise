@@ -17,10 +17,9 @@
     "e2e:ci": "npm run e2e:ci:pre && protractor test/protractor.ci.conf.js || npm run stop",
     "webdriver": "webdriver-manager update --standalone false --gecko false --quiet",
     "webdriver:update": "webdriver-manager update",
-    "prepublishOnly": "npx grunt publish publish",
-    "publish-dev": "npx grunt publish && npm publish publish/ --tag dev",
-    "publish-nightly": "npx grunt publish && npm publish publish/ --tag nightly",
-    "publish-prod": "npx grunt publish && npm publish publish/",
+    "publish-setup": "cd ./publish && npm run prepublishOnly && cd ../",
+    "publish-dev": "npm publish publish/ --tag dev",
+    "publish-prod": "npm publish publish/",
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v"
   },
