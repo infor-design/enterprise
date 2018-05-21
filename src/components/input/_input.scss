@@ -50,7 +50,7 @@
     &.info {
       color: $info-color;
     }
-    }
+  }
 
   &:focus,
   &.is-focused {
@@ -181,8 +181,8 @@
   }
 
   > .field {
-    vertical-align: baseline;
     line-height: 37px;
+    vertical-align: baseline;
   }
 
   > .field-short {
@@ -842,6 +842,7 @@ label,
 }
 
 //Information Field
+.custom-icon-message,
 .info-message {
   $icon-width: 14px;
 

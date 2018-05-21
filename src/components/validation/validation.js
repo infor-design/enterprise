@@ -32,6 +32,13 @@ function ValidationRules() {
     pagingMessageID: 'InfoOnPage',
     errorsForm: false
   };
+  this.ValidationTypes.icon = {
+    type: 'icon',
+    titleMessageID: 'Icon',
+    pagingMessageID: 'IconOnPage',
+    errorsForm: false,
+    icon: 'user-profile'
+  };
 
   this.rules = {
     required: {

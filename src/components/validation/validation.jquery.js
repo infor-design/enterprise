@@ -23,7 +23,7 @@ $.fn.validation = Validation;
  * @returns {object} error message data
  */
 $.fn.getMessage = function (settings) {
-  const dataAttr = `data-${settings.type}message`;
+  const dataAttr = `${settings.type}message`;
 
   return this.each(function () {
     let instance = $.data(this, VALIDATOR_COMPONENT_NAME);
@@ -82,7 +82,8 @@ $.fn.addMessage = function (settings) {
       settings.type,
       settings.inline,
       settings.showTooltip,
-      settings.isAlert
+      settings.isAlert,
+      settings.icon
     );
   });
 };
