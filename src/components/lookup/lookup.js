@@ -403,7 +403,7 @@ Lookup.prototype = {
       self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count"></span>');
     }
 
-    self.modal.element.off('beforeclose.lookup').on('beforeclose.lookup', () => {
+    self.modal.element.off('afterclose.lookup').on('afterclose.lookup', () => {
       self.closeTearDown();
     });
 
@@ -437,6 +437,7 @@ Lookup.prototype = {
 
     if (this.grid && this.grid.destroy) {
       this.grid.destroy();
+      this.grid = null;
     }
   },
 
@@ -513,10 +514,8 @@ Lookup.prototype = {
         }
 
         if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
-          setTimeout(() => {
-            self.modal.close();
-            self.insertRows();
-          }, 100);
+          self.modal.close();
+          self.insertRows();
         }
       });
     }
