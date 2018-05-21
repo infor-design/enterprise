@@ -231,12 +231,19 @@ input + .busy-indicator-container,
   }
 }
 
+// Animate in the body if adding the class busy-loading-locale
+// It will cause the page and icons to flip visibilibly when using RTL so this is nice to do.
+body {
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+}
+
+.busy-loading-locale {
+  opacity: 0;
+}
+
 //RTL Styles
 html[dir='rtl'] {
-
-  .busy-loading-locale {
-    opacity: 0;
-  }
 
   .busy-indicator {
     .bar {
