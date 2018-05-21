@@ -725,8 +725,9 @@ Tabs.prototype = {
     });
     self.handleResize(true);
 
-    $('input').on('isvalid', () => {
-      const currentLi = $('li.is-selected');
+    // Resize the tab to show the error
+    $('.tab-panel input').on('isvalid.tabs', () => {
+      const currentLi = $('.tab.is-selected');
       self.focusBar(currentLi);
     });
 
@@ -3935,6 +3936,7 @@ Tabs.prototype = {
       this.animatedBar.remove();
       this.animatedBar = undefined;
     }
+    $('.tab-panel input').off('isvalid.tabs');
 
     return this;
   },
