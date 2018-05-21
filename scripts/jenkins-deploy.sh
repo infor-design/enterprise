@@ -101,7 +101,7 @@ if [ $WATCH_FOR_BUILD_STATUS = true ]; then
         done
         if [[ "$BUILD_STATUS" == "SUCCESS" ]]; then
             echo "" # new line
-            echo "DEPLOY to http://$BRANCH-enterprise.demo.design.infor.com SUCCESSFUL."
+            echo "DEPLOY to http://$BUILD_FROM-enterprise.demo.design.infor.com SUCCESSFUL."
             exit
         elif [[ "$BUILD_STATUS" == "ABORTED" ]]; then
             echo "" # new line

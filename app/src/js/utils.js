@@ -31,7 +31,7 @@ utils.hasFile = function (filePath) {
 
   try {
     const file = fs.statSync(filePath);
-    if (file && file.blocks) {
+    if (file && file.size) {
       return true;
     }
     return false;
@@ -71,10 +71,23 @@ utils.isType = function (type, filePath) {
   }
 };
 
+utils.hasTrailingSeparator = function (filePath) {
+  return filePath && filePath.length && filePath.charAt(filePath.length - 1) === path.sep;
+};
+
+// Use for file paths
+utils.removeTrailingSeparator = function (filePath) {
+  if (utils.hasTrailingSeparator(filePath)) {
+    filePath = filePath.slice(0, -1);
+  }
+  return filePath;
+};
+
 utils.hasTrailingSlash = function hasTrailingSlash(filePath) {
   return filePath && filePath.length && filePath.charAt(filePath.length - 1) === '/';
 };
 
+// Use for URLs
 utils.removeTrailingSlash = function removeTrailingSlash(filePath) {
   if (utils.hasTrailingSlash(filePath)) {
     filePath = filePath.slice(0, -1);
@@ -160,7 +173,7 @@ utils.getDirectory = function (filePath, webroot) {
 
 // Gets the path of the parent directory of a file
 utils.getParentDirectory = function getParentDirectory(filePath) {
-  let directory = utils.removeTrailingSlash(filePath);
+  let directory = utils.removeTrailingSeparator(filePath);
   directory = utils.getDirectory(directory.substring(0, directory.lastIndexOf(path.sep === '\\' ? '\\' : '/') + 1));
   return directory;
 };
