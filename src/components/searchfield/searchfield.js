@@ -62,16 +62,77 @@ function SearchField(element, settings) {
 SearchField.prototype = {
 
   /**
+   * @returns {HTMLElement} a toolbar parent element, or `undefined`
+   */
+  get toolbarParent() {
+    const toolbarParents = this.element.parents('.toolbar');
+    const toolbarFlexParents = this.element.parents('.flex-toolbar');
+
+    if (toolbarParents.add(toolbarFlexParents).length < 1) {
+      return undefined;
+    }
+
+    if (toolbarFlexParents.length > 0) {
+      return toolbarFlexParents.first()[0];
+    }
+
+    return toolbarParents.first()[0];
+  },
+
+  /**
+   * @returns {HTMLElement} a buttonset element, or `undefined`
+   */
+  get buttonsetElem() {
+    if (!this.toolbarParent) {
+      return undefined;
+    }
+    return this.toolbarParent.querySelector('.buttonset');
+  },
+
+  /**
+   * @returns {HTMLElement} a toolbar `.title` area, if one is present.
+   */
+  get titleElem() {
+    if (!this.toolbarParent) {
+      return undefined;
+    }
+    return this.toolbarParent.querySelector('.title');
+  },
+
+  /**
+   * @returns {HTMLElement} a toolbar parent element, or `undefined`
+   */
+  get containmentParent() {
+    const moduleTabs = this.element.closest('.module-tabs');
+    if (moduleTabs.length) {
+      return moduleTabs.first()[0];
+    }
+    return this.toolbarParent;
+  },
+
+  /**
+   * @returns {HTMLElement} a reference to the input field
+   */
+  get input() {
+    return this.element[0];
+  },
+
+  /**
+    @returns {HTMLElement} a reference to an optional button with an attached Category selection menu
+   */
+  get categoryButton() {
+    return this.wrapper.find('.searchfield-category-button');
+  },
+
+  /**
    * Initialization Kickoff
    * @private
    * @returns {void}
    */
   init() {
     this.coerceBooleanSettings();
-
-    this
-      .build()
-      .setupEvents();
+    this.build();
+    this.setupEvents();
   },
 
   /**
@@ -87,7 +148,6 @@ SearchField.prototype = {
 
     this.label = this.element.prev('label, .label');
     this.inlineLabel = this.element.closest('label');
-    this.inlineLabelText = this.inlineLabel.find('.label-text');
     this.isInlineLabel = this.element.parent().is('.inline');
 
     // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
@@ -100,6 +160,16 @@ SearchField.prototype = {
     // Prevent browser typahead
     this.element.attr('autocomplete', 'off');
 
+    // Setup ARIA
+    let label = this.element.attr('placeholder') || this.element.prev('label, .label').text().trim();
+    if (!label || label === '') {
+      label = Locale.translate('Keyword');
+    }
+    this.element.attr({
+      'aria-label': label,
+    });
+
+    // Build the wrapper
     this.wrapper = this.element.parent('.searchfield-wrapper');
     if (!this.wrapper || !this.wrapper.length) {
       if (this.isInlineLabel) {
@@ -126,29 +196,34 @@ SearchField.prototype = {
       }
     }
 
+    // Add/remove the collapsible functionality
+    this.wrapper[0].classList[this.settings.collapsible ? 'add' : 'remove']('non-collapsible');
+
+    // Add/remove `toolbar-searchfield-wrapper` class based on existence of Toolbar Parent
+    this.wrapper[0].classList[this.toolbarParent ? 'add' : 'remove']('toolbar-searchfield-wrapper');
+
+    // Initially disable animations on searchfields
+    this.element.add(this.wrapper).addClass('no-transition no-animation');
+
     // Add Icon
     let icon = this.wrapper.find('.icon:not(.icon-dropdown)');
-    const insertIconInFront = this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories');
-
     if (!icon || !icon.length) {
       icon = $.createIconElement('search');
     }
 
     // Swap icon position to in-front if we have "context/has-categories" CSS class.
+    const insertIconInFront = this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories');
     icon[insertIconInFront ? 'insertBefore' : 'insertAfter'](this.element).icon();
 
     // Change icon to a trigger button if we're dealing with categories
     if (this.hasCategories()) {
       this.wrapper.addClass('has-categories');
 
-      this.categoryButton = this.wrapper.find('.btn, .searchfield-category-button');
       if (!this.categoryButton.length) {
-        this.categoryButton = $('<button type="button" class="btn searchfield-category-button"></button>');
+        this.categoryButton = $('<button type="button" class="btn searchfield-category-button"></button>').insertBefore(this.element);
       }
       icon.appendTo(this.categoryButton);
       icon = this.categoryButton;
-
-      this.categoryButton.insertBefore(this.element);
 
       if (this.settings.showCategoryText) {
         this.wrapper.addClass('show-category');
@@ -226,7 +301,11 @@ SearchField.prototype = {
 
     if (this.settings.clearable) {
       this.element.clearable();
+      this.xButton = this.wrapper.children('.icon.close');
     }
+
+    const isNotCollapsible = (!this.settings.collapsible || !this.settings.collapsibleOnMobile);
+    this.wrapper[0].classList[isNotCollapsible ? 'add' : 'remove']('is-open');
 
     this.calculateSearchfieldWidth();
 
@@ -633,7 +712,7 @@ SearchField.prototype = {
    * @returns {boolean} whether or not this component is a Toolbar Searchfield
    */
   isToolbarSearchfield() {
-    return this.wrapper.is('.toolbar-searchfield-wrapper');
+    return this.toolbarParent !== undefined;
   },
 
   /**
@@ -845,6 +924,20 @@ SearchField.prototype = {
   },
 
   /**
+   *
+   */
+  expand() {
+
+  },
+
+  /**
+   *
+   */
+  collapse() {
+
+  },
+
+  /**
    * Adds a link at the bottom of a searchfield with more than (0) results that can be used to link out to a
    * larger display of search results.
    * @private
@@ -897,6 +990,7 @@ SearchField.prototype = {
    * @returns {void}
    */
   enable() {
+    this.wrapper.addClass('is-disabled');
     this.element.prop('disabled', false);
   },
 
@@ -905,6 +999,7 @@ SearchField.prototype = {
    * @returns {void}
    */
   disable() {
+    this.wrapper.removeClass('is-disabled');
     this.element.prop('disabled', true);
   },
 
