@@ -13,11 +13,17 @@ For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
 Run a specific E2E component locally (Only Chrome)
 
-`env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local`
+```sh
+npm start
+env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local
+```
 
 Isolate your tests then run with the keys in your path.
 
- `npm run e2e:bs`
+```sh
+npm start
+npm run e2e:bs
+ ```
 
 One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #followed by the command`
 
@@ -27,15 +33,27 @@ export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 ```
 #### Run a specific E2E component on BrowserStack
 
-`env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local`
+```sh
+npm start
+env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local
+```
 
-#### Run E2E locally on High Contrast Theme (defaults to light theme)
+#### Run E2E locally on High Contrast or Dark Theme (defaults to light theme)
 
-`env ENTERPRISE_THEME='high-contrast' npm run e2e:local`
+```sh
+npm start
+env ENTERPRISE_THEME='high-contrast' npm run e2e:local
+```
 
-`env ENTERPRISE_THEME='dark' npm run e2e:local`
+```sh
+npm start
+env ENTERPRISE_THEME='dark' npm run e2e:local
+```
 
-`npm run e2e:local`
+```sh
+npm start
+npm run e2e:local
+```
 
 ## Debugging Functional Tests
 For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
