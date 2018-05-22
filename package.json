@@ -1,8 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "build": "npx grunt",
     "start": "npm run build  && node app/server.js",
+    "quickstart": "npx grunt demo && node app/server.js",
+    "build": "npx grunt",
     "stop": "./scripts/stop.sh",
     "eslint": "npx eslint -c .eslintrc.js src test",
     "eslint:log": "npx eslint -c .eslintrc.js src test -o eslint.log",

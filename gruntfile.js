@@ -83,6 +83,12 @@ module.exports = function (grunt) {
     'build:sass'
   ]);
 
+  // Demo build tasks
+  grunt.registerTask('demo', [
+    'clean:app',
+    'sass:app'
+  ]);
+
   // Javascript Build Tasks
   // The first one doesn't minify (expensive, time-wise)
   grunt.registerTask('build:js', [
