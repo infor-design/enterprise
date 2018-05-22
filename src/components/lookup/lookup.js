@@ -429,8 +429,8 @@ Lookup.prototype = {
       search.data('searchfield').destroy();
     }
 
-    if (search.data() && search.data('toolbarsearchfield')) {
-      search.data('toolbarsearchfield').destroy();
+    if (search.data() && search.data('searchfield')) {
+      search.data('searchfield').destroy();
       search.removeData();
     }
     search = null;

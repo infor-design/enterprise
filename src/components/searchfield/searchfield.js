@@ -24,7 +24,9 @@ const SEARCHFIELD_DEFAULTS = {
   showCategoryText: false,
   source: undefined,
   template: undefined,
-  clearable: false
+  clearable: false,
+  collapsible: true,
+  collapsibleOnMobile: true
 };
 
 /**
@@ -44,7 +46,10 @@ const SEARCHFIELD_DEFAULTS = {
  * to the left of the Dropdown field.
  * @param {function} [settings.source] Callback function for getting type ahead results.
  * @param {string} [settings.template] The html template to use for the search list
- * @param {boolean} [settings.clearable = false]  Add an X to clear.
+ * @param {boolean} [settings.clearable = true] If "true", provides an "x" button on the right edge that clears the field
+ * @param {boolean} [settings.collapsible = true] If "true", allows the field to expand/collapse on larger breakpoints when
+ * focused/blurred respectively
+ * @param {boolean} [settings.collapsibleOnMobile = true] If true, overrides `collapsible` only on mobile settings.
  */
 function SearchField(element, settings) {
   this.settings = utils.mergeSettings(element, settings, SEARCHFIELD_DEFAULTS);
@@ -75,6 +80,11 @@ SearchField.prototype = {
    * @returns {this} component instance
    */
   build() {
+    // Used for managing events that are bound to $(document)
+    if (!this.id) {
+      this.id = this.element.uniqueId(COMPONENT_NAME);
+    }
+
     this.label = this.element.prev('label, .label');
     this.inlineLabel = this.element.closest('label');
     this.inlineLabelText = this.inlineLabel.find('.label-text');
@@ -264,53 +274,53 @@ SearchField.prototype = {
     const self = this;
 
     self.element
-      .on('updated.searchfield', (e, settings) => {
+      .on(`updated.${this.id}`, (e, settings) => {
         self.updated(settings);
       })
-      .on('focus.searchfield', (e) => {
+      .on(`focus.${this.id}`, (e) => {
         self.handleFocus(e);
       })
-      .on('blur.searchfield', (e) => {
+      .on(`blur.${this.id}`, (e) => {
         self.handleBlur(e);
       })
-      .on('click.searchfield', (e) => {
+      .on(`click.${this.id}`, (e) => {
         self.handleClick(e);
       })
-      .on('keydown.searchfield', (e) => {
+      .on(`keydown.${this.id}`, (e) => {
         self.handleKeydown(e);
       })
-      .on('beforeopen.searchfield', (e, menu) => { // propagates from Autocomplete's Popupmenu
+      .on(`beforeopen.${this.id}`, (e, menu) => { // propagates from Autocomplete's Popupmenu
         self.handlePopupBeforeOpen(e, menu);
       })
-      .on('safe-blur.searchfield listclose.searchfield', () => {
+      .on(`safe-blur.${this.id} listclose.${this.id}`, () => {
         self.wrapper.removeClass('popup-is-open');
       });
 
-    self.wrapper.on('mouseenter.searchfield', function () {
+    self.wrapper.on(`mouseenter.${this.id}`, function () {
       $(this).addClass('is-hovered');
-    }).on('mouseleave.searchfield', function () {
+    }).on(`mouseleave.${this.id}`, function () {
       $(this).removeClass('is-hovered');
     });
 
     if (this.hasCategories()) {
-      this.categoryButton.on('selected.searchfield', (e, anchor) => {
+      this.categoryButton.on(`selected.${this.id}`, (e, anchor) => {
         self.handleCategorySelected(e, anchor);
         self.element.trigger('selected', [anchor]);
-      }).on('focus.searchfield', (e) => {
+      }).on(`focus.${this.id}`, (e) => {
         self.handleCategoryFocus(e);
-      }).on('blur.searchfield', (e) => {
+      }).on(`blur.${this.id}`, (e) => {
         self.handleCategoryBlur(e);
-      }).on('close.searchfield', (e) => { // Popupmenu Close
+      }).on(`close.${this.id}`, (e) => { // Popupmenu Close
         self.handlePopupClose(e);
       });
     }
 
     if (self.hasGoButton()) {
-      self.goButton.on('click.searchfield', e => self.handleGoButtonClick(e));
+      self.goButton.on(`click.${this.id}`, e => self.handleGoButtonClick(e));
     }
 
     // Insert the "view more results" link on the Autocomplete control's "populated" event
-    self.element.off('populated.searchfield').on('populated.searchfield', (e, items) => {
+    self.element.off(`populated.${this.id}`).on(`populated.${this.id}`, (e, items) => {
       if (items.length > 0) {
         if (self.settings.showAllResults) {
           self.addMoreLink();
@@ -322,7 +332,7 @@ SearchField.prototype = {
 
     // Override the 'click' listener created by Autocomplete (which overrides the
     // default Popupmenu method) to act differntly when the More Results link is activated.
-    self.element.on('listopen.searchfield', (e, items) => {
+    self.element.on(`listopen.${this.id}`, (e, items) => {
       const list = $('#autocomplete-list');
 
       // Visual indicator class
@@ -904,7 +914,17 @@ SearchField.prototype = {
    * @returns {this} component instance
    */
   teardown() {
-    this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield listclose.searchfield safe-blur.searchfield cleared.searchfield');
+    this.element.off([
+      `updated.${this.id}`,
+      `focus.${this.id}`,
+      `blur.${this.id}`,
+      `click.${this.id}`,
+      `keydown.${this.id}`,
+      `beforeopen.${this.id}`,
+      `listopen.${this.id}`,
+      `listclose.${this.id}`,
+      `safe-blur.${this.id}`,
+      `cleared.${this.id}`].join(' '));
 
     if (this.autocomplete) {
       this.autocomplete.destroy();
@@ -925,19 +945,10 @@ SearchField.prototype = {
 
   /**
    * Destroys the Searchfield and removes all jQuery component instancing.
-   * @param {boolean} dontDestroyToolbarSearchfield if true, will not pass through
-   *  and destroy a linked instance of the Toolbar Searchfield component.
-   * @returns {undefined}
+   * @returns {void}
    */
-  destroy(dontDestroyToolbarSearchfield) {
+  destroy() {
     this.teardown();
-
-    // Destroy the linked Toolbar Searchfield instance
-    const tbsf = this.element.data('toolbarsearchfield');
-    if (!dontDestroyToolbarSearchfield && tbsf && typeof tbsf.destroy === 'function') {
-      tbsf.destroy(true);
-    }
-
     $.removeData(this.element[0], COMPONENT_NAME);
   }
 };

@@ -29,32 +29,6 @@ $.fn.bindFirst = function (name, fn) {
 export let uniqueIdCount = 0; // eslint-disable-line
 
 /**
- * Generates a unique ID for an element based on the element's configuration, any
- * Soho components that are generated against it, and provided prefixes/suffixes.
- * @private
- * @param {string} [className] CSS classname (will be interpreted automatically
- *  if it's not provided)
- * @param {string} [prefix] optional prefix
- * @param {string} [suffix] optional suffix
- * @returns {string} the compiled uniqueID
- */
-$.fn.uniqueId = function (className, prefix, suffix) {
-  const predefinedId = $(this).attr('id');
-
-  if (predefinedId && $(`#${predefinedId}`).length < 2) {
-    return predefinedId;
-  }
-
-  prefix = (!prefix ? '' : `${prefix}-`);
-  suffix = (!suffix ? '' : `-${suffix}`);
-  className = (!className ? $(this).attr('class') : className);
-
-  const str = prefix + className + uniqueIdCount + suffix;
-  uniqueIdCount += 1;
-  return str;
-};
-
-/**
  * Detect whether or not a text string represents a valid CSS property.  This check
  * includes an attempt at checking for vendor-prefixed versions of the CSS property
  * provided.
@@ -184,6 +158,37 @@ $.fn.listEvents = function () {
 };
 
 const utils = {};
+
+/**
+ * Generates a unique ID for an element based on the element's configuration, any
+ * Soho components that are generated against it, and provided prefixes/suffixes.
+ * @private
+ * @param {HTMLElement} element the element being used for uniqueId capture
+ * @param {string} [className] CSS classname (will be interpreted automatically
+ *  if it's not provided)
+ * @param {string} [prefix] optional prefix
+ * @param {string} [suffix] optional suffix
+ * @returns {string} the compiled uniqueID
+ */
+utils.uniqueId = function (element, className, prefix, suffix) {
+  const predefinedId = element.id;
+
+  if (predefinedId && $(`#${predefinedId}`).length < 2) {
+    return predefinedId;
+  }
+
+  prefix = (!prefix ? '' : `${prefix}-`);
+  suffix = (!suffix ? '' : `-${suffix}`);
+  className = (!className ? Array.from(element.classList).join('-') : className);
+
+  const str = `${prefix}${className}-${uniqueIdCount}${suffix}`;
+  uniqueIdCount += 1;
+  return str;
+};
+
+$.fn.uniqueId = function (className, prefix, suffix) {
+  return utils.uniqueId(this, className, prefix, suffix);
+};
 
 /**
  * Grabs an attribute from an HTMLElement containing stringified JSON syntax,

@@ -6,7 +6,7 @@ import { stringUtils } from '../../utils/string';
 // jQuery Components
 import '../button/button.jquery';
 import '../popupmenu/popupmenu.jquery';
-import '../toolbarsearchfield/toolbarsearchfield.jquery';
+import '../searchfield/searchfield.jquery';
 import '../tooltip/tooltip.jquery';
 
 // Component Name
@@ -189,7 +189,7 @@ Toolbar.prototype = {
 
         if (!sf.data('searchfield')) {
           const searchfieldOpts = $.extend({}, utils.parseSettings(sf[0]));
-          sf.toolbarsearchfield(searchfieldOpts);
+          sf.searchfield(searchfieldOpts);
         }
       });
     }
@@ -1521,8 +1521,8 @@ Toolbar.prototype = {
 
     if (this.buttonset.children('.searchfield-wrapper').length) {
       const searchFields = this.buttonset.children('.searchfield-wrapper').children('.searchfield');
-      if (searchFields.data('toolbarsearchfield')) {
-        searchFields.data('toolbarsearchfield').destroy();
+      if (searchFields.data('searchfield')) {
+        searchFields.data('searchfield').destroy();
       }
     }
 
