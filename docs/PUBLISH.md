@@ -61,16 +61,7 @@ git checkout master
   * set branch permissions
 * Delete the 4.5.0-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
 
-## Build Operations
-* Change the v-Next build http://bamboo.infor.com/chain/admin/config/editChainDetails.action?buildKey=SOHO-NEXT
-  * change the name to 4.6.0-RC (Version Next)
-  * change the repo it points to
-  * checkout 4.6.0-rc and bump the version `ids-enterprise/package.json`
-* Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
-  * change the versions in the build config
-  * Label the build release-440 for example http://bamboo.infor.com/browse/label/release-440
-
-## Update version in ids-enterprise-angular
+## Update version in ids-enterprise-ng
 * Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
 * Edit version in `ids-package.json`
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and merge
