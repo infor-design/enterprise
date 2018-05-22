@@ -97,7 +97,7 @@ MaskInput.prototype = {
           // Check for an instance of a Datepicker/Timepicker Component, and grab the date format
           const datepicker = $(this.element).data('datepicker');
           if ($.fn.datepicker && $(this.element).data('datepicker')) {
-            this.settings.patternOptions.format = datepicker.settings.format;
+            this.settings.patternOptions.format = datepicker.settings.dateFormat;
           }
           this.settings.pattern = masks.dateMask;
           break;
@@ -105,7 +105,7 @@ MaskInput.prototype = {
         case 'rangeDate': {
           const datepicker = $(this.element).data('datepicker');
           if ($.fn.datepicker && $(this.element).data('datepicker')) {
-            this.settings.patternOptions.format = datepicker.settings.format;
+            this.settings.patternOptions.format = datepicker.settings.dateFormat;
           }
           this.settings.pattern = masks.rangeDateMask;
           break;
