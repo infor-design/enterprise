@@ -11,7 +11,7 @@ For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
 ## Running E2E Tests
 
-Run a specific E2E component locally (Only Chrome)
+Run a specific E2E component locally (Only Chrome or Firefox)
 
 ```sh
 npm start
@@ -35,7 +35,7 @@ export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 
 ```sh
 npm start
-env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local
+env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:bs
 ```
 
 #### Run E2E locally on High Contrast or Dark Theme (defaults to light theme)
