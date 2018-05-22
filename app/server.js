@@ -35,5 +35,5 @@ console.log(chalk.blue(' |""""| |::|""|""""|:::::| |') + chalk.yellow('# # # #')
 console.log(chalk.blue(' |""""|_|  |""|""""|:::::| |') + chalk.yellow('# # # #') + chalk.blue('||"""|||::|"""|""""""""|'));
 console.log(chalk.blue(' |""""|::::|""|""""|:::::| |') + chalk.yellow('# # # #') + chalk.blue('||"""|||::|"""|""""""""|'));
 
-console.log('Soho server is running at http://localhost:%s/. Press Ctrl+C to stop.', port);
+console.log('IDS server is running at http://localhost:%s/. Press Ctrl+C to stop.', port);
 /* eslint-enable no-console */

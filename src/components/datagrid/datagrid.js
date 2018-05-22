@@ -2573,7 +2573,7 @@ Datagrid.prototype = {
   */
   isRowVisible(rowIndex) {
     if (!this.settings.virtualized) {
-      if (this.settings.paging && !this.settings.source && rowIndex) {
+      if (this.settings.paging && !this.settings.source && rowIndex && this.pager) {
         return (this.pager.activePage - 1) * this.settings.pagesize >= rowIndex &&
             (this.pager.activePage) * this.settings.pagesize <= rowIndex;
       }
@@ -5836,13 +5836,13 @@ Datagrid.prototype = {
           idx++;
           data = dataset[i].values[k];
           if (data[fieldName] === value) {
-            matchedRows.push(idx); 
+            matchedRows.push(idx);
           }
         }
       } else {
         data = s.treeGrid ? dataset[i].node : dataset[i];
         if (data[fieldName] === value) {
-          matchedRows.push(i); 
+          matchedRows.push(i);
         }
       }
     }
@@ -7681,6 +7681,11 @@ Datagrid.prototype = {
   * @returns {object} The plugin api for chaining.
   */
   destroy() {
+    // UnBind the pager
+    if (this.tableBody.data() && this.tableBody.data('pager')) {
+      this.tableBody.data('pager').destroy();
+    }
+
     // Remove the toolbar, clean the div out and remove the pager
     this.element.off().empty().removeClass('datagrid-container');
     const toolbar = this.element.prev('.toolbar');
@@ -7706,6 +7711,7 @@ Datagrid.prototype = {
       }
       toolbar.remove();
     }
+
     this.element.next('.pager-toolbar').remove();
     $.removeData(this.element[0], COMPONENT_NAME);
 

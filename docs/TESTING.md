@@ -71,11 +71,13 @@ The test will rerun.
 
 Component | Functional Test Coverage
 ------------- | :-------------:
-Dropdown | ☹️
-MultiSelect | 🙂
-Validation | ☹️
-Popupmenu | 😕
 Button | 😁
+Dropdown | ☹️
+Hierarchy | 😕
+MultiSelect | 🙂
+Popupmenu | 😕
+Treemap | 🙂
+Validation | ☹️
 
 ## Testing Resources
 
@@ -113,4 +115,3 @@ This a bit complex as the light theme is not completely WCAG AA... and per compo
  - Browser driver differences
     - Lack of process to automate a record of differences to to aid reduction of manual testing
     - Lack of process to check automated tests manually
-
