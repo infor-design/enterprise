@@ -42,8 +42,7 @@ describe('Dropdown updates, events', () => {
       reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {},
-      enableTooltip: false
+      sourceArguments: {}
     };
 
     expect(dropdownObj.settings).toEqual(settings);
@@ -64,8 +63,7 @@ describe('Dropdown updates, events', () => {
       reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {},
-      enableTooltip: false
+      sourceArguments: {}
     };
 
     dropdownObj.updated();
@@ -90,8 +88,7 @@ describe('Dropdown updates, events', () => {
       reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {},
-      enableTooltip: false
+      sourceArguments: {}
     };
     dropdownObj.updated(settings);
 
