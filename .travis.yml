@@ -16,12 +16,18 @@ script:
   - npm run build
   - npm run functional:ci
 deploy:
+    # DEPLOY BUILD TO DEMO SERVER
+    # this runs conditionally `on`
+    # "push" events to "master" branch
   - provider: script
     script: ./scripts/jenkins-deploy.sh -b master -w
     skip_cleanup: true
     on:
-      branch: master
       condition: $TRAVIS_EVENT_TYPE = push
+      branch: master
+    # NPM PUBLISH NIGHTLY DEV BUILD
+    # this runs conditionally on "cron" events
+    # and uses default branch "master"
   - provider: script
     script: ./scripts/publish-nightly.sh
     skip_cleanup: true
