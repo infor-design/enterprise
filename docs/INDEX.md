@@ -9,24 +9,25 @@ title: Enterprise Components for Infor Design System
 To install the enterprise components into your project using NPM, run the following:
 
 ```sh
-npm config set @infor:registry=http://npm.infor.com:4873
 npm install --save ids-enterprise
 ```
 
-The files can be found in `/node_modules/ids-enterprise/dist`.
+The files will then be found in `/node_modules/ids-enterprise/dist`.
 
 To install the code for development using `git`, run:
 
 ```sh
-git clone http://git.infor.com/scm/soho/controls.git
+mkdir enterprise
+cd enterprise
+git clone https://github.com/infor-design/enterprise.git .
 ```
 
-After you `cd` into the repo, you need to install, build, and serve:
+Then you just need to install, build, and serve the demo app up.
 
 ```sh
 npm install
 npx grunt
-node server
+npm start
 ```
 
 ## Recent Changes

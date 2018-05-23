@@ -64,6 +64,7 @@ module.exports = function (app, defaults) {
           directives: {
             'default-src': ['self'],
             'script-src': ['self', `nonce-${res.opts.nonce}`, 'http://squizlabs.github.io'],
+            'font-src': ['self', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'],
             'object-src': ['none'],
             'style-src': ['* data: http://* \'unsafe-inline\''],
             'img-src': ['self',

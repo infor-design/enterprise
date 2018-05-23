@@ -1,6 +1,7 @@
 /* eslint-disable */
 const basePath = __dirname;
 const { SpecReporter } = require('jasmine-spec-reporter');
+const browserstack = require('browserstack-local');
 const protractorImageComparison = require('protractor-image-comparison');
 
 const getSpecs = (listSpec) => {
@@ -18,11 +19,13 @@ exports.config = {
     theme
   },
   allScriptsTimeout: 12000,
-  logLevel: 'INFO',
+  getPageTimeout: 10000,
+  logLevel: 'DEBUG',
+  troubleshoot: true,
   specs: getSpecs(process.env.PROTRACTOR_SPECS),
   seleniumAddress: 'http://hub-cloud.browserstack.com/wd/hub',
   SELENIUM_PROMISE_MANAGER: false,
-  baseUrl: 'http://master-enterprise.demo.design.infor.com',
+  baseUrl: 'http://localhost:4000',
   jasmineNodeOpt: {
     defaultTimeoutInterval: 10000,
     showColors: true,
@@ -31,13 +34,12 @@ exports.config = {
   commonCapabilities: {
     'browserstack.user': process.env.BROWSER_STACK_USERNAME,
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
-    'browserstack.debug': false,
-    'browserstack.video' : 'false',
-    'browserstack.local': false,
+    'browserstack.debug': true,
+    'browserstack.local': true,
     'browserstack.selenium_version': '3.11.0',
-    'browserstack.networkLogs' : false,
-    build: `${theme} theme: ci e2e`,
-    name: `${theme} theme ci e2e tests`
+    'browserstack.networkLogs' : true,
+    build: `${theme} theme: local tunnel e2e`,
+    name: `${theme} theme local tunnel e2e tests`
   },
   multiCapabilities: [
     {
@@ -48,13 +50,38 @@ exports.config = {
       os: 'Windows'
     },
     {
-     browserName: 'Chrome',
-     browser_version : '66.0',
-     os: 'OS X',
-     os_version: 'High Sierra',
-     resolution: '1280x960'
+      browserName: 'Firefox',
+      browser_version: '59.0',
+      resolution: '1280x800',
+      os_version: '10',
+      os: 'Windows'
+    },
+    {
+      browserName: 'Edge',
+      resolution: '1280x800',
+      browser_version: '16.0',
+      os_version: '10',
+      os: 'Windows'
+    },
+    {
+      browserName: 'IE',
+      browser_version: '11.0',
+      resolution: '1280x800',
+      os_version: '10',
+      os: 'Windows'
     }
   ],
+  beforeLaunch: () => {
+    return new Promise((resolve, reject) => {
+      exports.bs_local = new browserstack.Local();
+      exports.bs_local.start({ key: exports.config.commonCapabilities['browserstack.key'] }, (error) => {
+        if (error) {
+          return reject(error);
+        }
+        resolve();
+      });
+    });
+  },
   onPrepare: () => {
     global.requireHelper = (filename) => require(`${basePath}/helpers/${filename}.js`);
     browser.ignoreSynchronization = true;
@@ -63,7 +90,7 @@ exports.config = {
       screenshotPath: `${basePath}/.tmp/`,
       autoSaveBaseline: false,
       ignoreAntialiasing: true,
-      debug: false
+      debug: true
     });
 
     jasmine.getEnv().addReporter(new SpecReporter({
@@ -75,6 +102,11 @@ exports.config = {
       if (browser.browserName === 'chrome') {
         return browser.driver.manage().window().setSize(1200, 800);
       }
+    });
+  },
+  afterLaunch: () => {
+    return new Promise((resolve) => {
+      exports.bs_local.stop(resolve);
     });
   }
 };
