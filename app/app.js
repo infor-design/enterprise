@@ -9,7 +9,7 @@ const getJSONFile = require('./src/js/get-json-file');
 
 const app = express();
 const BASE_PATH = process.env.BASEPATH || '/';
-const packageJSON = getJSONFile('../../../publish/package.json');
+const packageJSON = getJSONFile('../../../ids-enterprise/package.json');
 
 app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, 'views'));

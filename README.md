@@ -96,15 +96,12 @@ Note: There may be a cost involved to using this with Infor's amazon s3 account 
 
 * Clone the repo using `git`: `git clone https://github.com/infor-design/enterprise.git`
 * `cd` into the repo directory
-* Then  `npm install` to install node packages. On macOS you may need `sudo npm install` as some packages require elevated permissions
-* Then `npm run install-globals` to install some global packages we use
 
 ### Running the app
 
 From within the project folder:
 
-* Run `npx grunt` to compile initial assets
-* Run `npm start` to start the web server
+* Run `npm start` to build and start the web server
 * Make a new terminal window and from within your project folder run `npx grunt watch` to watch for any file changes and rebuild
 * Open up [`localhost:4000`](http://localhost:4000) in a browser to see the local app
 

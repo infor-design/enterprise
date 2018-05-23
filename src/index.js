@@ -8,7 +8,7 @@ import './components/initialize/initialize.jquery';
 // NOTE: Every item in the "Core" section is required for running the Soho library properly.
 // The Soho team will not support any custom builds where these packages are not included.
 // ============================================ /
-export { version } from '../publish/package.json';
+export { version } from '../ids-enterprise/package.json';
 export { debug };
 export { uniqueIdCount, utils } from './utils/utils';
 export { DOM } from './utils/dom';

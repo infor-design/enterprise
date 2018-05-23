@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/infor-design/enterprise",
   "scripts": {
-    "prepublishOnly": "cd ../ && npx grunt publish && cd ./publish",
+    "prepublishOnly": "cd ../ && npx grunt packup && cd ./publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

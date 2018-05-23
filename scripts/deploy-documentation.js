@@ -97,7 +97,7 @@ const serverURIs = {
   staging: 'https://staging.design.infor.com/api/docs/',
   prod: 'https://design.infor.com/api/docs/'
 };
-const packageJson = require(`${rootPath}/publish/package.json`);
+const packageJson = require(`${rootPath}/ids-enterprise/package.json`);
 const testComponents = [
   'button',
   'datagrid'
