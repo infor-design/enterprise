@@ -145,9 +145,19 @@ function ValidationRules() {
             let min;
             let max;
             const options = field.data('datepicker').settings;
-            let d2 = options.useUTC ? Locale.dateToUTC(new Date(value)) : new Date(value);
+            let dateObj = value;
+            if (typeof dateObj === 'string') {
+              let format = options.dateFormat !== 'locale' ?
+                options.dateFormat : Locale.calendar().dateFormat.short;
+              if (options.showTime) {
+                const timeFormat = options.timeFormat || Locale.calendar().timeFormat;
+                format += ` ${timeFormat}`;
+              }
+              dateObj = Locale.parseDate(dateObj, format);
+            }
+            let d2 = options.useUTC ? Locale.dateToUTC(dateObj) : dateObj;
 
-            if (options) {
+            if (d2 && options) {
               min = (options.useUTC ?
                 Locale.dateToUTC(new Date(options.disable.minDate)).setHours(0, 0, 0, 0) :
                 new Date(options.disable.minDate).setHours(0, 0, 0, 0));
