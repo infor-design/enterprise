@@ -4356,7 +4356,7 @@ Datagrid.prototype = {
     // Prevent redirects
     this.table
       .off('click.datagrid')
-      .on('click.datagrid', 'a', (e) => {
+      .on('click.datagrid', '.datagrid-row a', (e) => {
         e.preventDefault();
       });
 
