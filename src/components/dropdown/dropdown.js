@@ -1264,20 +1264,22 @@ Dropdown.prototype = {
 
     selectText();
 
+    /*
     function setFocus() {
       if (document.activeElement === input[0] || !$(document.activeElement).is('body')) {
         return;
       }
       input[0].focus();
     }
+    */
 
     // Set focus back to the element
     if (self.isIe10 || self.isIe11) {
       setTimeout(() => {
-        setFocus();
+        input[0].focus();
       }, 0);
     } else {
-      setFocus();
+      input[0].focus();
     }
   },
 
