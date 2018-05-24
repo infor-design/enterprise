@@ -35,7 +35,6 @@ describe('Spinbox example-index tests', () => {
 
   it('Should be set with up arrow', async () => {
     await spinboxEl.sendKeys(protractor.Key.ARROW_UP);
-
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.spinbox-wrapper.is-focused'))), config.waitsFor);
 
