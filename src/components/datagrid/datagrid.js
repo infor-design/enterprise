@@ -6801,104 +6801,6 @@ Datagrid.prototype = {
     return foundColumn || {};
   },
 
-  parseDateToSource(value, sourceFormat) {
-    let output = '';
-    let divider = '';
-    let hasDivider = false;
-    const sourceDate = new Date(value);
-
-    if (sourceFormat.indexOf('/') > -1) {
-      divider = '/';
-      hasDivider = true;
-    } else if (sourceFormat.indexOf('-') > -1) {
-      divider = '-';
-      hasDivider = true;
-    }
-
-    if (hasDivider) {
-      const formatter = sourceFormat.split(divider);
-
-      for (let i = 0; i < formatter.length; i++) {
-        switch (formatter[i]) {
-          case 'yyyy':
-            output += sourceDate.getFullYear() + divider;
-            break;
-          case 'YYYY':
-            output += sourceDate.getFullYear() + divider;
-            break;
-          case 'MM':
-            output += (sourceDate.getMonth() + 1) + divider;
-            break;
-          case 'mm':
-            output += (sourceDate.getMonth() + 1) + divider;
-            break;
-          case 'dd':
-            output += sourceDate.getDay() + divider;
-            break;
-          case 'DD':
-            output += sourceDate.getDay() + divider;
-            break;
-          default:
-            break;
-        }
-      }
-      output = output.substring(0, output.length - 1);
-    } else {
-      let hasYear = false;
-      let hasMonth = false;
-      let hasDay = false;
-
-      for (let i = 0; i < sourceFormat.length; i++) {
-        switch (sourceFormat.charAt(i)) {
-          case 'y':
-            if (!hasYear) {
-              output += sourceDate.getFullYear();
-              hasYear = true;
-            }
-            break;
-          case 'Y':
-            if (!hasYear) {
-              output += sourceDate.getFullYear();
-              hasYear = true;
-            }
-            break;
-          case 'M':
-            if (!hasMonth) {
-              output += (sourceDate.getMonth() + 1);
-              hasMonth = true;
-            }
-            break;
-          case 'm':
-            if (!hasMonth) {
-              output += (sourceDate.getMonth() + 1);
-              hasMonth = true;
-            }
-            break;
-          case 'd':
-            if (!hasDay) {
-              output += sourceDate.getDay();
-              hasDay = true;
-            }
-            break;
-          case 'D':
-            if (!hasDay) {
-              output += sourceDate.getDay();
-              hasDay = true;
-            }
-            break;
-          default:
-            break;
-        }
-
-        if (hasYear && hasMonth && hasDay) {
-          break;
-        }
-      }
-    }
-
-    return output;
-  },
-
   /**
   * Attempt to serialize the value back into the dataset
   * @private
@@ -6916,7 +6818,11 @@ Datagrid.prototype = {
       newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
       return newVal;
     } else if (col.sourceFormat) {
-      newVal = this.parseDateToSource(value, col.sourceFormat);
+      if (value instanceof Date) {
+        newVal = Locale.parseDate(value, col.sourceFormat);
+      } else {
+        newVal = Locale.parseDateToSource(value, col.sourceFormat);
+      }
     } else if (typeof oldVal === 'number' && value) {
       newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
     }

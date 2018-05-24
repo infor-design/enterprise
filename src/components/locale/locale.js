@@ -93,6 +93,108 @@ const Locale = {  // eslint-disable-line
     return isThere;
   },
 
+  parseDateToSource(value, sourceFormat) {
+    let output = '';
+    let divider = '';
+    let hasDivider = false;
+    const sourceDate = new Date(value);
+
+    if (sourceFormat.indexOf('/') > -1) {
+      divider = '/';
+      hasDivider = true;
+    } else if (sourceFormat.indexOf('-') > -1) {
+      divider = '-';
+      hasDivider = true;
+    }
+
+    if (hasDivider) {
+      const formatter = sourceFormat.split(divider);
+
+      for (let i = 0; i < formatter.length; i++) {
+        switch (formatter[i]) {
+          case 'yyyy':
+            output += sourceDate.getFullYear() + divider;
+            break;
+          case 'YYYY':
+            output += sourceDate.getFullYear() + divider;
+            break;
+          case 'MM':
+            output += (sourceDate.getMonth() + 1) + divider;
+            break;
+          case 'mm':
+            output += (sourceDate.getMonth() + 1) + divider;
+            break;
+          case 'dd':
+            output += sourceDate.getDate() + divider;
+            break;
+          case 'DD':
+            output += sourceDate.getDate() + divider;
+            break;
+          default:
+            break;
+        }
+      }
+      output = output.substring(0, output.length - 1);
+    } else {
+      let hasYear = false;
+      let hasMonth = false;
+      let hasDay = false;
+
+      for (let i = 0; i < sourceFormat.length; i++) {
+        switch (sourceFormat.charAt(i)) {
+          case 'y':
+            if (!hasYear) {
+              output += sourceDate.getFullYear();
+              hasYear = true;
+            }
+            break;
+          case 'Y':
+            if (!hasYear) {
+              output += sourceDate.getFullYear();
+              hasYear = true;
+            }
+            break;
+          case 'M':
+            if (!hasMonth) {
+              output += (sourceDate.getMonth() < 10 ? '0' : '');
+              output += (sourceDate.getMonth() + 1);
+              hasMonth = true;
+            }
+            break;
+          case 'm':
+            if (!hasMonth) {
+              output += (sourceDate.getMonth() < 10 ? '0' : '');
+              output += (sourceDate.getMonth() + 1);
+              hasMonth = true;
+            }
+            break;
+          case 'd':
+            if (!hasDay) {
+              output += (sourceDate.getDate() < 10 ? '0' : '');
+              output += sourceDate.getDate();
+              hasDay = true;
+            }
+            break;
+          case 'D':
+            if (!hasDay) {
+              output += (sourceDate.getDate() < 10 ? '0' : '');
+              output += sourceDate.getDate();
+              hasDay = true;
+            }
+            break;
+          default:
+            break;
+        }
+
+        if (hasYear && hasMonth && hasDay) {
+          break;
+        }
+      }
+    }
+
+    return output;
+  },
+
   /**
    * Internally stores a new culture file for future use.
    * @private
@@ -482,18 +584,24 @@ const Locale = {  // eslint-disable-line
     }
 
     if (dateFormat.indexOf(' ') === -1 && dateFormat.indexOf('.') === -1 && dateFormat.indexOf('/') === -1 && dateFormat.indexOf('-') === -1) {
+
+      if (dateString.indexOf(' ') !== -1) {
+        dateString = dateString.split(' ').join('')
+      } else if (dateString.indexOf('.') !== -1) {
+        dateString = dateString.split('.').join('')
+      } else if (dateString.indexOf('/') !== -1) {
+        dateString = dateString.split('/').join('')
+      } else if (dateString.indexOf('-') !== -1) {
+        dateString = dateString.split('-').join('')
+      }
+
       let lastChar = dateFormat[0];
       let newFormat = '';
       let newDateString = '';
 
       for (i = 0, l = dateFormat.length; i < l; i++) {
-        newFormat += (dateFormat[i] !== lastChar ? `/${dateFormat[i]}` : dateFormat[i]);
-
-        if (dateString[i] === '-' || dateString[i] === '/' || dateString[i] === '.') {
-          i++;
-        }
-
         newDateString += (dateFormat[i] !== lastChar ? `/${dateString[i]}` : dateString[i]);
+        newFormat += (dateFormat[i] !== lastChar ? `/${dateFormat[i]}` : dateFormat[i]);
 
         if (i > 1) {
           lastChar = dateFormat[i];
@@ -540,7 +648,7 @@ const Locale = {  // eslint-disable-line
     for (i = 0, l = dateStringParts.length; i < l; i++) {
       const pattern = `${formatParts[i]}`;
       const value = dateStringParts[i];
-      const numberValue = parseInt(value, 10);
+      const numberValue = parseInt(value);
 
       if (!hasDays) {
         hasDays = pattern.toLowerCase().indexOf('d') > -1;
