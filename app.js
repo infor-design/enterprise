@@ -10,7 +10,7 @@ let express = require('express'),
   http = require('http'),
   BASE_PATH = process.env.BASEPATH || '/',
   fullBasePath = function (req) {
-    const fullPath = (`${req.protocol}://${req.headers.host.replace('/', '')}${BASE_PATH}`);
+    const fullPath = (`//${req.headers.host.replace('/', '')}${BASE_PATH}`);
     return fullPath;
   },
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')),
