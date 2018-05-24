@@ -397,20 +397,48 @@ SearchField.prototype = {
   },
 
   /**
+   * If focused, we need to store a reference to the element with focus
+   * (for example: searchfield, internal buttons, etc) because once the element
+   * becomes removed from the DOM, focus is lost.
+   * @private
+   * @returns {void}
+   */
+  saveFocus() {
+    if (!this.hasFocus()) {
+      return;
+    }
+    this.focusElem = document.activeElement;
+  },
+
+  /**
+   * Restores focus to an element reference that was previously focused.
+   * @private
+   * @returns {void}
+   */
+  restoreFocus() {
+    if (!this.focusElem) {
+      return;
+    }
+
+    this.focusElem.focus();
+    this.focusElem = undefined;
+  },
+
+  /**
    * Appends this searchfield to the `containmentParent` element
    * Used when the small-form-factor searchfield needs to be established.
    * @private
    * @returns {void}
    */
   appendToParent() {
-    if (this.wrapper.parent().is(this.containmentParent)) {
+    if (this.wrapper.parent().is($(this.containmentParent))) {
       return;
     }
 
     this.saveFocus();
 
     this.elemBeforeWrapper = this.wrapper.prev();
-    this.wrapper.detach().prependTo(this.containmentParent);
+    this.wrapper.detach().prependTo($(this.containmentParent));
     utils.fixSVGIcons(this.wrapper);
 
     this.restoreFocus();
@@ -424,7 +452,7 @@ SearchField.prototype = {
    * @returns {void}
    */
   appendToButtonset() {
-    if (!this.wrapper.parent().is(this.containmentParent)) {
+    if (!this.wrapper.parent().is($(this.containmentParent))) {
       return;
     }
 
@@ -1503,15 +1531,13 @@ SearchField.prototype = {
     const self = this;
     const notFullWidth = !this.shouldBeFullWidth();
 
+    /*
     if (this.isActive()) {
       return;
     }
+    */
 
     let containerSizeSetters;
-
-    if (this.buttonsetElem === undefined) {
-      this.getToolbarElements();
-    }
 
     // Places the input wrapper into the toolbar on smaller breakpoints
     if (!notFullWidth) {
