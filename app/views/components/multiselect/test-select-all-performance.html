@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Multiselect Test: Select All</h2>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5911" target="_blank">Related JIRA Ticket</a>.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <div class="field">
+      <label for="bods-multi" class="label">Bods</label>
+      <select multiple="true" id="bods-multi" name="bods-multi" class="multiselect" data-init="false"></select>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#bods-multi').multiselect({
+    source: '{{basepath}}api/bods',
+    showSelectAll: true
+  });
+  $('#states-multi').on('change', function () {
+    console.log('change fired');
+  });
+  $('#states-multi').on('selected', function () {
+    console.log('selected fired');
+  });
+</script>
