@@ -94,9 +94,9 @@ const Locale = {  // eslint-disable-line
   },
 
   /**
-   * Transforms the date value into string format
-   * @param {string | Date} value 
-   * @param {string} sourceFormat 
+   * Transforms the date value into string with date format
+   * @param {string | Date} value The value that needs to be parsed.
+   * @param {string} sourceFormat The dateFormat specified for the dataset.
    * @returns {string} string format of the date value.
    */
   parseDateToSource(value, sourceFormat) {
@@ -590,15 +590,15 @@ const Locale = {  // eslint-disable-line
     }
 
     if (dateFormat.indexOf(' ') === -1 && dateFormat.indexOf('.') === -1 && dateFormat.indexOf('/') === -1 && dateFormat.indexOf('-') === -1) {
-
+      // Remove delimeter for the data string.
       if (dateString.indexOf(' ') !== -1) {
-        dateString = dateString.split(' ').join('')
+        dateString = dateString.split(' ').join('');
       } else if (dateString.indexOf('.') !== -1) {
-        dateString = dateString.split('.').join('')
+        dateString = dateString.split('.').join('');
       } else if (dateString.indexOf('/') !== -1) {
-        dateString = dateString.split('/').join('')
+        dateString = dateString.split('/').join('');
       } else if (dateString.indexOf('-') !== -1) {
-        dateString = dateString.split('-').join('')
+        dateString = dateString.split('-').join('');
       }
 
       let lastChar = dateFormat[0];
@@ -654,7 +654,7 @@ const Locale = {  // eslint-disable-line
     for (i = 0, l = dateStringParts.length; i < l; i++) {
       const pattern = `${formatParts[i]}`;
       const value = dateStringParts[i];
-      const numberValue = parseInt(value);
+      const numberValue = parseInt(value, 10);
 
       if (!hasDays) {
         hasDays = pattern.toLowerCase().indexOf('d') > -1;
