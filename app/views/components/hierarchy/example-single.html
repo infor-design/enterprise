@@ -15,15 +15,13 @@
           children: [
             { id: '1_3_1', Name: 'Tony Cleveland', Position: 'Records Clerk', EmploymentType: 'C', Picture: '', isLeaf: true},
             { id: '1_3_2', Name: 'Julie Dawes', Position: 'Records Clerk', EmploymentType: 'PT', Picture: '', isLeaf: true },
-            { id: '1_3_3', Name: 'Richard Fairbanks', Position: 'Records Clerk', EmploymentType: 'FT', Picture: '', isLeaf: false, children: []}
+            { id: '1_3_3', Name: 'Richard Fairbanks', Position: 'Records Clerk', EmploymentType: 'FT', Picture: ''}
           ]
         }
       ]
     }];
 
-
   $(function () {
-
 
     var legendData = [
       { 'value': 'FT', 'label': 'Full Time' },
@@ -31,7 +29,6 @@
       { 'value': 'C', 'label': 'Contractor' },
       { 'value': 'O', 'label': 'Open Position' }
     ];
-
 
     $('#hierarchy').hierarchy({
       templateId: 'hierarchyChartTemplate',
@@ -42,21 +39,12 @@
 
     var hierarchyControl = $('#hierarchy').data('hierarchy');
 
-
     $('#hierarchy').on('selected', function (event, eventInfo) {
-      console.log(event, eventInfo);
       var hierarchyControl = $('#hierarchy').data('hierarchy');
-      var orgdatachildren = [
-          { id: 'AA' + (Math.floor(Math.random() * 1000)), Name: 'Sujit Edwards', Position: 'Records Manager', EmploymentType: 'FT', Picture: '' },
-          { id: 'BB' + (Math.floor(Math.random() * 1000)), Name: 'Raji  Johnson', Position: 'Senior Software Engineer', EmploymentType: 'FT', Picture: '', isLeaf: true },
-          { id: 'CC' + (Math.floor(Math.random() * 1000)), Name: 'Mallory Anderson', Position: 'Principle Software Engineer', EmploymentType: 'FT', Picture: '', isLeaf: true }
-        ];
-
-
-      if (!eventInfo.data.isLoaded && !eventInfo.data.isLeaf) {
-
-        hierarchyControl.add(eventInfo.data.id, eventInfo.data, orgdatachildren);
-
+      if (eventInfo.allowLazyLoad) {
+        $.getJSON('{{basepath}}api/orgstructure-children', function(data) {
+          hierarchyControl.add(eventInfo.data.id, eventInfo.data, data);
+        });
       }
     });
   });

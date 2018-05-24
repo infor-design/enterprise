@@ -7222,7 +7222,7 @@ Datagrid.prototype = {
     const isExpanded = expandButton.hasClass('is-expanded');
     const args = [{ grid: self, row: dataRowIndex, item: rowElement, children }];
 
-    if (self.settings.treeDepth[dataRowIndex]) {
+    if (self.settings.treeDepth && self.settings.treeDepth[dataRowIndex]) {
       args[0].rowData = self.settings.treeDepth[dataRowIndex].node;
     }
 
