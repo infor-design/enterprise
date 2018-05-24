@@ -803,6 +803,7 @@ ListView.prototype = {
     const self = this;
     let isChecked = false;
     const isMixed = self.settings.selectable === 'mixed';
+    const isSingle = self.settings.selectable === 'single';
 
     // self.selectedItems = [];
     if (typeof li === 'number') {
@@ -822,8 +823,13 @@ ListView.prototype = {
     }
 
     if (!isChecked) {
-      li.addClass(`is-selected${isMixed ? ' hide-selected-color' : ''}`);
-      self.lastSelectedItem = li.index();// Rember index to use shift key
+      if (isSingle) {
+        li.siblings().removeClass('is-selected');
+        li.addClass('is-selected');
+      } else {
+        li.addClass(`is-selected${isMixed ? ' hide-selected-color' : ''}`);
+        self.lastSelectedItem = li.index();// Rember index to use shift key
+      }
     }
 
     li.parent().find('.is-selected').each(function (i) {
