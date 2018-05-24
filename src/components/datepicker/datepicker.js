@@ -89,7 +89,7 @@ const DATEPICKER_DEFAULTS = {
     maxDate: '',
     dayOfWeek: [],
     isEnable: false,
-    retrictMonths: false
+    restrictMonths: false
   },
   showLegend: false,
   customValidation: false,
