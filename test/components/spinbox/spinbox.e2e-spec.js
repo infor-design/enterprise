@@ -21,6 +21,8 @@ describe('Spinbox example-index tests', () => {
   beforeEach(async () => {
     await setPage('/components/spinbox/example-index');
     spinboxEl = await element(by.id(spinboxId));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id(spinboxId))), config.waitsFor);
   });
 
   it('Should be set with down arrow', async () => {
@@ -33,10 +35,9 @@ describe('Spinbox example-index tests', () => {
 
   it('Should be set with up arrow', async () => {
     await spinboxEl.sendKeys(protractor.Key.ARROW_UP);
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.id(spinboxId))), config.waitsFor);
 
-    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.spinbox-wrapper.is-focused'))), config.waitsFor);
 
     expect(await spinboxEl.getAttribute('value')).toEqual('1');
   });
