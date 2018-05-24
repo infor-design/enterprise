@@ -96,13 +96,21 @@ Spinbox.prototype = {
       this.element.attr('pattern', '\\d*');
     }
 
-    if (this.settings.max) {
+    if (this.element.attr('max')) {
+      this.settings.max = this.element.attr('max');
+    } else if (this.settings.max) {
       this.element.attr('max', this.settings.max);
     }
-    if (this.settings.step) {
+
+    if (this.element.attr('step')) {
+      this.settings.max = this.element.attr('step');
+    } else if (this.settings.step) {
       this.element.attr('step', this.settings.step);
     }
-    if (this.settings.min) {
+
+    if (this.element.attr('min')) {
+      this.settings.max = this.element.attr('min');
+    } else if (this.settings.min) {
       this.element.attr('min', this.settings.min);
     }
 
@@ -242,6 +250,10 @@ Spinbox.prototype = {
       this.disable();
     }
 
+    if (this.element.attr('readonly')) {
+      this.readonly();
+    }
+
     return this;
   },
 
@@ -281,7 +293,7 @@ Spinbox.prototype = {
    * @returns {void}
    */
   handleClick(e) {
-    if (this.isDisabled() || e.which !== 1) {
+    if (this.isDisabled() || e.which !== 1 || this.isReadonly()) {
       return;
     }
     const target = $(e.currentTarget);
@@ -360,7 +372,7 @@ Spinbox.prototype = {
    * @returns {void}
    */
   handleInput(e, self) {
-    if (self.isDisabled()) {
+    if (self.isDisabled() || this.isReadonly()) {
       return undefined;
     }
 
@@ -380,7 +392,7 @@ Spinbox.prototype = {
    * @returns {void}
    */
   handleKeyup(e, self) {
-    if (self.isDisabled()) {
+    if (self.isDisabled() || this.isReadonly()) {
       return;
     }
     const key = e.which;
@@ -544,7 +556,7 @@ Spinbox.prototype = {
    * @returns {void}
    */
   addButtonStyle(e) {
-    if (this.isDisabled()) {
+    if (this.isDisabled() || this.isReadonly()) {
       return;
     }
     let target = e;
@@ -561,7 +573,7 @@ Spinbox.prototype = {
    * @returns {void}
    */
   removeButtonStyle(e) {
-    if (this.isDisabled()) {
+    if (this.isDisabled() || this.isReadonly()) {
       return;
     }
     let target = e;
@@ -577,7 +589,7 @@ Spinbox.prototype = {
    */
   enable() {
     this.element.prop('disabled', false);
-    this.element.parent('.spinbox-wrapper').removeClass('is-disabled');
+    this.element.parent('.spinbox-wrapper').removeClass('is-disabled is-readonly');
   },
 
   /**
@@ -587,6 +599,23 @@ Spinbox.prototype = {
   disable() {
     this.element.prop('disabled', true);
     this.element.parent('.spinbox-wrapper').addClass('is-disabled');
+  },
+
+  /**
+   * Makes the Spinbox readonly
+   * @returns {void}
+   */
+  readonly() {
+    this.element.prop('readonly', true);
+    this.element.parent('.spinbox-wrapper').addClass('is-readonly');
+  },
+
+  /**
+   * Checks if the Spinbox is readonly
+   * @returns {void}
+   */
+  isReadonly() {
+    return this.element.prop('readonly');
   },
 
   /**
