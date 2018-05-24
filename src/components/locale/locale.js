@@ -93,6 +93,12 @@ const Locale = {  // eslint-disable-line
     return isThere;
   },
 
+  /**
+   * Transforms the date value into string format
+   * @param {string | Date} value 
+   * @param {string} sourceFormat 
+   * @returns {string} string format of the date value.
+   */
   parseDateToSource(value, sourceFormat) {
     let output = '';
     let divider = '';
