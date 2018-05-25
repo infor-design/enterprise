@@ -3,7 +3,7 @@
  */
 module.exports = function (app) {
   return function basepathHandler(req, res, next) {
-    res.opts.basepath = `${req.protocol}://${req.headers.host.replace('/', '')}${app.get('basepath')}`;
+    res.opts.basepath = `//${req.headers.host.replace('/', '')}${app.get('basepath')}`;
     next();
   };
 };

@@ -53,7 +53,7 @@ StepChart.prototype = {
       this.element = $(element);
     }
 
-    if (typeof settings === 'object') {
+    if (typeof settings === 'object' || this.settings === undefined) {
       const previousSettings = this.settings || DEFAULT_STEPCHART_OPTIONS;
       this.settings = utils.mergeSettings(this.element[0], settings, previousSettings);
     }

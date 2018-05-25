@@ -4,7 +4,7 @@
 # available from within travis `deploy`
 npm install
 
-# Use publish/package.json for everything
+# Use ids-enterprise/package.json for everything
 cd publish
 
 PKG_NAME=$(node -p "require('./package.json').name")
