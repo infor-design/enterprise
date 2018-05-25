@@ -22,12 +22,16 @@ cd enterprise
 git clone https://github.com/infor-design/enterprise.git .
 ```
 
-Then you just need to install, build, and serve the demo app up.
+Then you just need to install, build, and serve the demo app.
 
 ```sh
 npm install
-npx grunt
 npm start
+```
+Optionally, to see documentation pages for the components instead of directory lists, run:
+
+```sh
+npm run documentation
 ```
 
 ## Recent Changes
