@@ -1083,7 +1083,10 @@ Dropdown.prototype = {
 
           e.preventDefault();
 
-          self.selectOption($(options[selectedIndex])); // store the current selection
+          if (options.length && selectedIndex > -1) {
+            self.selectOption($(options[selectedIndex])); // store the current selection
+          }
+
           if (self.settings.closeOnSelect) {
             self.closeList('select'); // Close the option list
             self.activate();
@@ -1984,7 +1987,7 @@ Dropdown.prototype = {
    * fire on the list item.
    */
   selectOption(option, noTrigger) {
-    if (!option) {
+    if (!option || !option.length) {
       return;
     }
     let li;
