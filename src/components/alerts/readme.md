@@ -7,8 +7,6 @@ demo:
     slug: example-index
   - name: Alerts (Badges)
     slug: example-index
-  - name: More Badge Examples
-    slug: example-additional-badges
 ---
 
 ## Settings
@@ -28,6 +26,8 @@ Alerts are just specially classed icons. You can added alert icons by adding an 
 <span class="audible">Alert</span>
 
 ```
+
+Also see [Badges](./badges) for more options.
 
 ## Accessibility
 

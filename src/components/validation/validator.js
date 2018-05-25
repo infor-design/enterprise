@@ -488,8 +488,7 @@ Validator.prototype = {
            (rule.message !== Locale.translate('Required'))) {
           return;
         }
-
-        self.addMessage(field, rule.message, rule.type, field.attr(`data-${validationType.type}-type`) !== 'tooltip', showResultTooltip);
+        self.addMessage(field, rule.message, rule.type, field.attr(`data-${validationType.type}-type`) !== 'tooltip', showResultTooltip, false, rule.icon);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
@@ -504,7 +503,7 @@ Validator.prototype = {
           // FIX: In Contextual Action Panel control not sure why but need to add error,
           // otherwise "icon-confirm" get misaligned,
           // so for this fix adding and then removing error here
-          self.addMessage(field, rule.message, rule.type, rule.inline, showResultTooltip);
+          self.addMessage(field, rule.message, rule.type, rule.inline, showResultTooltip, false, rule.icon);// eslint-disable-line
           self.removeMessage(field, rule.type);
           dfd.resolve();
 
@@ -526,7 +525,7 @@ Validator.prototype = {
     validationTypes.forEach((prop) => {
       validationType = Validation.ValidationTypes[prop];
       self.removeMessage(field, validationType.type);
-      field.removeData(`data-${validationType.type}message`);
+      field.removeData(`${validationType.type}message`);
     });
 
     self.validationStatus = {};
@@ -586,8 +585,9 @@ Validator.prototype = {
    * @param {boolean} showTooltip whether or not the legacy validation Tooltip will contain the
    * message instead of placing it underneath
    * @param {boolean} isAlert whether or not this validation message type is "alert"
+   * @param {string} icon if type is icon then here pass icon string
    */
-  addMessage(field, message, type, inline, showTooltip, isAlert) {
+  addMessage(field, message, type, inline, showTooltip, isAlert, icon) {
     if (message === '') {
       return;
     }
@@ -595,12 +595,12 @@ Validator.prototype = {
     isAlert = isAlert || false;
 
     const loc = this.getField(field);
-    const dataMsg = loc.data(`data-${type}message`);
+    const dataMsg = loc.data(`${type}message`);
     let appendedMsg = message;
     const validationType = Validation.ValidationTypes[type] || Validation.ValidationTypes.error;
 
     if (!isAlert) {
-      loc.addClass(type);
+      loc.addClass(type === 'icon' ? 'custom-icon' : type);
     }
 
     if (dataMsg) {
@@ -608,7 +608,7 @@ Validator.prototype = {
       appendedMsg += `${dataMsg}<br>\u2022 ${message}`;
     }
 
-    loc.data(`data-${validationType.type}message`, appendedMsg);
+    loc.data(`${validationType.type}message`, appendedMsg);
 
     // Add Aria
     if ($.fn.toast !== undefined) {
@@ -632,7 +632,7 @@ Validator.prototype = {
       this.setModalPrimaryBtn(field, modalBtn);
     }
 
-    this.showInlineMessage(field, message, validationType.type, isAlert);
+    this.showInlineMessage(field, message, validationType.type, isAlert, icon);
   },
 
   /**
@@ -644,7 +644,7 @@ Validator.prototype = {
    * @returns {jQuery[]} the new icon's markup
    */
   showIcon(field, type) {
-    const loc = this.getField(field).addClass(type);
+    const loc = this.getField(field).addClass(type === 'icon' ? 'custom-icon' : type);
     let svg = $.createIconElement({ classes: [`icon-${type}`], icon: type });
     const closestField = loc.closest('.field, .field-short');
     const parent = field.parent();
@@ -701,7 +701,7 @@ Validator.prototype = {
     if (field.is('.dropdown, .multiselect') && field.data('dropdown') !== undefined) {
       const input = field.data('dropdown').pseudoElem;
       representationField = input;
-      input.addClass(type);
+      input.addClass(type === 'icon' ? 'custom-icon' : type);
     }
 
     let tooltipAPI = icon.data('tooltip');
@@ -785,7 +785,7 @@ Validator.prototype = {
         $(`:radio[name="${name}"]:last + label`);
 
       if (isShow) {
-        all.addClass(type);
+        all.addClass(type === 'icon' ? 'custom-icon' : type);
         $(markup).addClass(`radio-group-${type}`).insertAfter(loc);
       } else {
         all.removeClass(type);
@@ -802,29 +802,44 @@ Validator.prototype = {
    * @param {string} message text content containing the validation message
    * @param {string} type the validation type (error, warn, info, etc).
    * @param {boolean} isAlert whether or not the validation type is "alert"
+   * @param {string} icon if type is icon then here pass icon string
    */
-  showInlineMessage(field, message, type, isAlert) {
+  showInlineMessage(field, message, type, isAlert, icon) {
     isAlert = isAlert || false;
 
     const loc = this.getField(field);
     const validationType = Validation.ValidationTypes[type] || Validation.ValidationTypes.error;
-    const markup = `
-    <div class="${validationType.type}-message">
-      ${$.createIcon({ classes: [`icon-${validationType.type}`], icon: validationType.type })}
-      <pre class="audible">
-        ${Locale.translate(validationType.titleMessageID)}
-      </pre>
-      <p class="message-text">${message}</p>
-    </div>`;
+    icon = icon || validationType.icon;
+
+    let markup;
+    if (type === 'icon') {
+      markup = '' +
+        `<div class="custom-icon-message">
+          ${$.createIcon({ classes: ['icon-custom'], icon })}
+          <pre class="audible">
+            ${Locale.translate(validationType.titleMessageID)}
+          </pre>
+          <p class="message-text">${message}</p>
+        </div>`;
+    } else {
+      markup = '' +
+        `<div class="${validationType.type}-message">
+          ${$.createIcon({ classes: [`icon-${validationType.type}`], icon: validationType.type })}
+          <pre class="audible">
+            ${Locale.translate(validationType.titleMessageID)}
+          </pre>
+          <p class="message-text">${message}</p>
+        </div>`;
+    }
 
     if (!isAlert) {
-      loc.addClass(type);
+      loc.addClass(type === 'icon' ? 'custom-icon' : type);
     }
 
     if (field.is(':radio')) { // Radio button handler
       this.toggleRadioMessage(field, message, validationType.type, markup, true);
     } else { // All other components
-      loc.closest('.field, .field-short').find('.formatter-toolbar').addClass(validationType.type);
+      loc.closest('.field, .field-short').find('.formatter-toolbar').addClass(validationType.type === 'icon' ? 'custom-icon' : validationType.type);
       loc.closest('.field, .field-short').append(markup);
       loc.closest('.field, .field-short').find('.colorpicker-container').addClass('error');
     }
@@ -871,8 +886,8 @@ Validator.prototype = {
     if (this.inputs) {
       this.inputs.filter('input, textarea').off('focus.validate');
     }
-    field.removeClass(type);
-    field.removeData(`data-${type}message`);
+    field.removeClass(`${type} custom-icon`);
+    field.removeData(`${type}message`);
 
     if (hasTooltip) {
       tooltipAPI = field.find(`.icon.${type}`).data('tooltip') || tooltipAPI;
@@ -894,7 +909,7 @@ Validator.prototype = {
 
     if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
       field.next().next().removeClass(type); // #shdo
-      field.next().find('div.dropdown').removeClass(type).removeData(`data-${type}message`);
+      field.next().find('div.dropdown').removeClass(type).removeData(`${type}message`);
       field.parent().find(`.dropdown-wrapper > .icon-${type}`).off('click.validate').remove(); // SVG Error Icon
     }
 
@@ -926,8 +941,8 @@ Validator.prototype = {
     }
 
     // Stuff for the inline error
-    field.closest('.field, .field-short').find(`.${type}-message`).remove();
-    field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(type);
+    field.closest('.field, .field-short').find(`.${type}-message, .custom-icon-message`).remove();
+    field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(`${type} custom-icon`);
 
     if (type === 'error' && hasError) {
       field.triggerHandler('valid', { field, message: '' });

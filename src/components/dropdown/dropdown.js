@@ -259,6 +259,8 @@ Dropdown.prototype = {
       filterMode: this.settings.filterMode
     });
 
+    this.tooltipApi = null;
+
     this.setListIcon();
     this.setValue();
     this.setInitial();
@@ -1262,20 +1264,13 @@ Dropdown.prototype = {
 
     selectText();
 
-    function setFocus() {
-      if (document.activeElement === input[0] || !$(document.activeElement).is('body')) {
-        return;
-      }
-      input[0].focus();
-    }
-
     // Set focus back to the element
     if (self.isIe10 || self.isIe11) {
       setTimeout(() => {
-        setFocus();
+        input[0].focus();
       }, 0);
     } else {
-      setFocus();
+      input[0].focus();
     }
   },
 
@@ -2112,6 +2107,18 @@ Dropdown.prototype = {
     if (!noTrigger) {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
+
+      if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
+        const opts = this.element.find('option:selected');
+        const optText = this.getOptionText(opts);
+
+        this.tooltipApi = this.pseudoElem.find('span').tooltip({
+          content: optText,
+          trigger: 'hover',
+        });
+      } else if (this.tooltipApi) {
+        this.tooltipApi.destroy();
+      }
     }
 
     /**

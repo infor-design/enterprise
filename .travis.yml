@@ -8,11 +8,28 @@ cache:
   directories:
     - node_modules
 install:
-  # - npm install -g codecov
+  - npm install -g grunt-cli
   - npm install
 before_script:
   - npm run eslint:error-only
 script:
-  - npx grunt
+  - npm run build
   - npm run functional:ci
-  # - npm run report:coverage
+deploy:
+    # DEPLOY BUILD TO DEMO SERVER
+    # this runs conditionally `on`
+    # "push" events to "master" branch
+  - provider: script
+    script: ./scripts/jenkins-deploy.sh -b master -w
+    skip_cleanup: true
+    on:
+      condition: $TRAVIS_EVENT_TYPE = push
+      branch: master
+    # NPM PUBLISH NIGHTLY DEV BUILD
+    # this runs conditionally on "cron" events
+    # and uses default branch "master"
+  - provider: script
+    script: ./scripts/publish-nightly.sh
+    skip_cleanup: true
+    on:
+      condition: $TRAVIS_EVENT_TYPE = cron

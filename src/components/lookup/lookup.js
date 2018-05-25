@@ -32,6 +32,7 @@ let LOOKUP_GRID_ID = 'lookup-datagrid';
  * @param {boolean} [settings.autoApply=true] If set to false the dialog wont apply the value on clicking a value.
  * @param {function} [settings.validator] A function that fires to let you validate form items on open and select
  * @param {boolean} [settings.autoWidth=false] If true the field will grow/change in size based on the content selected.
+ * @param {char} [settings.delimiter=','] A character being used to separate data strings
  */
 
 const LOOKUP_DEFAULTS = {
@@ -47,7 +48,8 @@ const LOOKUP_DEFAULTS = {
   autoApply: true,
   validator: null,
   autoWidth: false,
-  clickArguments: {}
+  clickArguments: {},
+  delimiter: ','
 };
 
 function Lookup(element, settings) {
@@ -403,7 +405,7 @@ Lookup.prototype = {
       self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count"></span>');
     }
 
-    self.modal.element.off('beforeclose.lookup').on('beforeclose.lookup', () => {
+    self.modal.element.off('afterclose.lookup').on('afterclose.lookup', () => {
       self.closeTearDown();
     });
 
@@ -437,6 +439,7 @@ Lookup.prototype = {
 
     if (this.grid && this.grid.destroy) {
       this.grid.destroy();
+      this.grid = null;
     }
   },
 
@@ -513,10 +516,8 @@ Lookup.prototype = {
         }
 
         if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
-          setTimeout(() => {
-            self.modal.close();
-            self.insertRows();
-          }, 100);
+          self.modal.close();
+          self.insertRows();
         }
       });
     }
@@ -535,8 +536,8 @@ Lookup.prototype = {
     }
 
     // Multi Select
-    if (selectedId.indexOf(',') > 1) {
-      const selectedIds = selectedId.split(',');
+    if (selectedId.indexOf(this.settings.delimiter) > 1) {
+      const selectedIds = selectedId.split(this.settings.delimiter);
 
       for (let i = 0; i < selectedIds.length; i++) {
         this.selectRowByValue(this.settings.field, selectedIds[i]);
@@ -598,7 +599,7 @@ Lookup.prototype = {
         currValue = this.selectedRows[i].data[this.settings.field];
       }
 
-      value += (i !== 0 ? ',' : '') + currValue;
+      value += (i !== 0 ? this.settings.delimiter : '') + currValue;
     }
 
     /**

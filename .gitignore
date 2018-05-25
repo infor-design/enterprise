@@ -16,8 +16,9 @@ public/js/
 public/stylesheets/
 temp/
 views/docs
-publish/dist
-publish/sass
+ids-enterprise/dist
+ids-enterprise/sass
+ids-enterprise/LICENSE
 templates/**/doc.html
 test-reports/
 

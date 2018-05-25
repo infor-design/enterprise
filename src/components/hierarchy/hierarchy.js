@@ -1,5 +1,7 @@
 import * as debug from '../../utils/debug';
 import { utils } from '../../utils/utils';
+import { Tmpl } from '../tmpl/tmpl';
+import { Locale } from '../locale/locale';
 
 // Jquery Imports
 import '../../utils/animations';
@@ -23,6 +25,16 @@ const COMPONENT_NAME = 'hierarchy';
 * @param {number} [settings.leafWidth=null] Set the width of the leaf
 * @param {string} [settings.beforeExpand=null] A callback that fires before node expansion of a node.
 * @param {boolean} [settings.paging=false] If true show pagination.
+* @param {boolean} [settings.renderSubLevel=false] If true elements with no children will be rendered detached
+* @param {object} [settings.emptyMessage = { title: 'No Data', info: , icon: 'icon-empty-no-data' }]
+* An empty message will be displayed when there is no chart data. This accepts an object of the form
+* `emptyMessage: {
+*   title: 'No Data Available',
+*   info: 'Make a selection on the list above to see results',
+*   icon: 'icon-empty-no-data',
+*   button: {text: 'xxx', click: <function>
+*   }`
+* Set this to null for no message or will default to 'No Data Found with an icon.'
 */
 const HIERARCHY_DEFAULTS = {
   legend: [],
@@ -34,7 +46,10 @@ const HIERARCHY_DEFAULTS = {
   leafHeight: null,
   leafWidth: null,
   beforeExpand: null,
-  paging: false
+  paging: false,
+  renderSubLevel: false,
+  rootClass: 'hierarchy',
+  emptyMessage: { title: (Locale ? Locale.translate('NoData') : 'No Data Available'), info: '', icon: 'icon-empty-no-data' }
 };
 
 function Hierarchy(element, settings) {
@@ -49,9 +64,10 @@ function Hierarchy(element, settings) {
 // Hierarchy Methods
 Hierarchy.prototype = {
   init() {
-    const isMobile = $(this.element).parent().width() < 610; // Phablet down
+    const isMobile = this.settings.mobileView;
     const s = this.settings;
-    this.mobileView = !!isMobile;
+    this.settings.rootClass = 'hierarchy';
+
     s.colorClass = [
       'azure08', 'turquoise02', 'amethyst06', 'slate06', 'amber06', 'emerald07', 'ruby06'
     ];
@@ -59,7 +75,10 @@ Hierarchy.prototype = {
 
     // Safety check, check for data
     if (s.dataset) {
-      if (s.dataset[0] && s.dataset[0].children.length > 0) {
+      if (s.dataset.length === 0) {
+        this.element.emptymessage(s.emptyMessage);
+        return;
+      } else if (s.dataset[0] && s.dataset[0].children.length > 0) {
         this.render(s.dataset[0]);
       } else if (s.dataset && s.dataset.children.length > 0) {
         this.render(s.dataset);
@@ -72,6 +91,10 @@ Hierarchy.prototype = {
       const style = `'body .hierarchy .leaf,body .hierarchy .sublevel .leaf,body .hierarchy .container .root.leaf { width: ${s.leafWidth}px;  height: ${s.leafHeight}px;  }'`;
 
       $(`<style type="text/css" id="hierarchyLeafStyles">${style}</style>`).appendTo('body');
+    }
+
+    if (isMobile) {
+      this.element.addClass('is-mobile');
     }
   },
 
@@ -125,7 +148,7 @@ Hierarchy.prototype = {
     * @param {object} event - The jquery event object
     * @param {object} eventInfo - More info to identify the node.
     */
-    self.element.on('mousedown', '.leaf, .back button', function (e) {
+    self.element.on('mouseup', '.leaf, .back button', function (e) {
       const leaf = $(this);
       const target = $(e.target);
       const hierarchy = leaf.closest('.hierarchy').data('hierarchy');
@@ -160,6 +183,10 @@ Hierarchy.prototype = {
       // Is right click event
       if (e.which === 3) {
         eventType = 'rightClick';
+      }
+
+      if (!hierarchy) {
+        return;
       }
 
       const eventInfo = {
@@ -331,6 +358,11 @@ Hierarchy.prototype = {
       selectorObject.element = $(selectorObject.el);
     }
 
+    if (selectorObject.element.length === 0) {
+      selectorObject.el = parentContainer.append('<ul></ul>');
+      selectorObject.element = $(selectorObject.el).find('ul');
+    }
+
     if (!currentDataObject.isRootNode) {
       for (let i = 0, l = newDataObject.length; i < l; i++) {
         s.newData.push(newDataObject[i]);
@@ -451,7 +483,7 @@ Hierarchy.prototype = {
         '<div class="back">' +
           '<button type="button" class="btn-icon hide-focus btn-back">' +
             '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-              '<use xlink:href="#icon-caret-up"></use>' +
+              '<use xlink:href="#icon-caret-left"></use>' +
             '</svg>' +
             '<span>Back</span>' +
           '</button>' +
@@ -497,7 +529,7 @@ Hierarchy.prototype = {
         // If child has no children then render the element in the top level
         // If paging then render all children in the top level
         // If not paging and child has children then render in the sub level
-        if (this.isLeaf(thisChildren[i]) && !s.paging) {
+        if (this.isLeaf(thisChildren[i]) && !s.paging && s.renderSubLevel) {
           this.createLeaf(data.children[i], $(structure.toplevel));
         } else if (s.paging) {
           this.createLeaf(data.children[i], $(structure.toplevel));
@@ -605,7 +637,7 @@ Hierarchy.prototype = {
   createLeaf(nodeData, container) {
     const self = this;
     const s = this.settings;
-    const chartClassName = self.element.attr('class');
+    const chartClassName = self.settings.rootClass;
     const chart = $(`.${chartClassName} .chart`, self.container);
     const elClassName = container.attr('class');
     const el = elClassName !== undefined ? $(`.${elClassName}`) : container;
@@ -619,7 +651,6 @@ Hierarchy.prototype = {
     }
 
     function processDataForLeaf(thisNodeData) {
-      /* global Tmpl */
       self.setColor(thisNodeData);
 
       const leaf = Tmpl.compile(`{{#dataset}}${$(`#${s.templateId}`).html()}{{/dataset}}`, { dataset: thisNodeData });
@@ -628,6 +659,10 @@ Hierarchy.prototype = {
 
       if (thisNodeData.isLeaf) {
         branchState = '';
+      }
+
+      if ($(`#${thisNodeData.id}`).length === 1) {
+        return;
       }
 
       parent.append(`<li class=${branchState}>${$(leaf)[0].outerHTML}</li>`);

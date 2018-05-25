@@ -4,11 +4,12 @@ const express = require('express');
 const extend = require('extend'); // equivalent of $.extend()
 const mmm = require('mmm');
 const path = require('path');
+const utils = require('./src/js/utils');
 const getJSONFile = require('./src/js/get-json-file');
 
 const app = express();
 const BASE_PATH = process.env.BASEPATH || '/';
-const packageJSON = getJSONFile('../../../publish/package.json');
+const packageJSON = getJSONFile('../../../ids-enterprise/package.json');
 
 app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, 'views'));
@@ -83,7 +84,12 @@ router.get('/index', (req, res, next) => {
   const opts = {
     path: path.resolve(__dirname, 'docs', 'index.html')
   };
-  sendGeneratedDocPage(opts, req, res, next);
+
+  if (utils.hasFile(opts.path)) {
+    sendGeneratedDocPage(opts, req, res, next);
+  }
+
+  res.redirect(`${BASE_PATH}kitchen-sink`);
 });
 
 router.get('/kitchen-sink', (req, res, next) => {
@@ -115,6 +121,6 @@ app.use('/tests', generalRoute);
 // =========================================
 // Fake 'API' Calls for use with AJAX-ready Controls
 // =========================================
-require('./src/js/routes/data')(app);
+app.use('/api', require('./src/js/routes/data'));
 
 module.exports = app;

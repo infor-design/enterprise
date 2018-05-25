@@ -49,9 +49,9 @@ module.exports = {
 
     publish: {
       files: [
-        { expand: true, flatten: true, src: ['dist/js/sohoxi*.*'], dest: 'publish/dist/js/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['lib/sohoxi-migrate-4.4.0.js'], dest: 'publish/dist/js/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['src/*/*.js'], dest: 'publish/dist/js/all/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['dist/js/sohoxi*.*'], dest: 'ids-enterprise/dist/js/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['lib/sohoxi-migrate-4.4.0.js'], dest: 'ids-enterprise/dist/js/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['src/*/*.js'], dest: 'ids-enterprise/dist/js/all/', filter: 'isFile' },
         {
           expand: true,
           flatten: true,
@@ -60,7 +60,7 @@ module.exports = {
             'node_modules/jquery/dist/jquery.min.js',
             'node_modules/jquery/dist/jquery.min.map'
           ],
-          dest: 'publish/dist/js/',
+          dest: 'ids-enterprise/dist/js/',
           filter: 'isFile',
           rename(dest, src) {
             return dest + src.replace('jquery.', 'jquery-3.3.1.');
@@ -73,17 +73,17 @@ module.exports = {
             'node_modules/d3/build/d3.js',
             'node_modules/d3/build/d3.min.js'
           ],
-          dest: 'publish/dist/js/',
+          dest: 'ids-enterprise/dist/js/',
           filter: 'isFile',
           rename(dest, src) {
             return dest + src.replace('d3.', 'd3.v4.');
           }
         },
-        { expand: true, flatten: true, src: ['src/components/locale/cultures/*.*'], dest: 'publish/dist/js/cultures/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['dist/svg/*.*'], dest: 'publish/dist/svg/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['dist/css/*theme*.*'], dest: 'publish/dist/css/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['src/**/*.scss'], dest: 'publish/sass/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['LICENSE.MD'], dest: 'publish', filter: 'isFile' }
+        { expand: true, flatten: true, src: ['src/components/locale/cultures/*.*'], dest: 'ids-enterprise/dist/js/cultures/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['dist/svg/*.*'], dest: 'ids-enterprise/dist/svg/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['dist/css/*theme*.*'], dest: 'ids-enterprise/dist/css/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['src/**/*.scss'], dest: 'ids-enterprise/sass/', filter: 'isFile' },
+        { expand: true, flatten: true, src: ['LICENSE'], dest: 'publish', filter: 'isFile' }
       ]
     }
   }

@@ -1,5 +1,5 @@
 const path = require('path');
-const logger = require('../../../../scripts/logger');
+const logger = require('../logger');
 
 // Simple Middleware for handling errors
 module.exports = function () {

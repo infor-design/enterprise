@@ -297,7 +297,8 @@ small,
   text-align: right;
 }
 
-.align-text-enter {
+.align-text-enter, //typo backwards compat
+.align-text-center {
   text-align: center;
 }
 

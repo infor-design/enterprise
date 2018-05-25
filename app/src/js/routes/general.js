@@ -49,7 +49,7 @@ function generalRoute(req, res, next) {
   }
 
   // Check a friendly URL for a matching `.html` file.
-  const friendlyURLFilepath = `${viewsRoot}${utils.getPathWithoutQuery(req.originalUrl)}.html`;
+  const friendlyURLFilepath = path.resolve(`${viewsRoot}${utils.getPathWithoutQuery(req.originalUrl)}.html`);
   if (utils.hasFile(friendlyURLFilepath)) {
     res.render(utils.getTemplateUrl(friendlyURLFilepath.replace(viewsRoot, '')), res.opts);
     next();
@@ -106,15 +106,16 @@ router.get('/:item', (req, res, next) => {
     return;
   }
 
-  if (type !== 'components') {
-    generalRoute(req, res, next);
-    return;
-  }
-
   const opts = {
     path: path.resolve('app', 'docs', type, `${item}.html`)
   };
-  sendGeneratedDocPage(opts, req, res, next);
+
+  if (type === 'components' && utils.hasFile(opts.path)) {
+    sendGeneratedDocPage(opts, req, res, next);
+    return;
+  }
+
+  generalRoute(req, res, next);
 });
 
 router.get('/list', (req, res, next) => {
@@ -123,15 +124,16 @@ router.get('/list', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
   const type = cleanBaseUrl(req.baseUrl);
-  if (type !== 'components') {
-    res.redirect(`${res.opts.basepath}${type}/list`);
-    return;
-  }
-
   const opts = {
     path: path.resolve('app', 'docs', type, 'index.html')
   };
-  sendGeneratedDocPage(opts, req, res, next);
+
+  if (type === 'components' && utils.hasFile(opts.path)) {
+    sendGeneratedDocPage(opts, req, res, next);
+    return;
+  }
+
+  res.redirect(`${res.opts.basepath}${type}/list`);
 });
 
 module.exports = router;

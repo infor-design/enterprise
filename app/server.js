@@ -1,7 +1,20 @@
+#!/usr/bin/env node
+/**
+ * @fileoverview This script does:
+ * 1. starts the IDS Enterprise Components Development Server
+ *
+ * @example `node ./server.js`
+ * @example `node ./server.js --verbose`
+ *
+ * Flags:
+ * --verbose       - Log all details
+ *
+ * NOTE: More than likely there is a command in the package.json
+ * to run this script with NPM.
+ */
+
 const app = require('./app');
-/* eslint-disable import/no-extraneous-dependencies */
 const chalk = require('chalk');
-/* eslint-enable import/no-extraneous-dependencies */
 
 // With the express server and routes defined, we can start to listen for requests.
 const port = process.env.PORT || 4000;
@@ -22,5 +35,5 @@ console.log(chalk.blue(' |""""| |::|""|""""|:::::| |') + chalk.yellow('# # # #')
 console.log(chalk.blue(' |""""|_|  |""|""""|:::::| |') + chalk.yellow('# # # #') + chalk.blue('||"""|||::|"""|""""""""|'));
 console.log(chalk.blue(' |""""|::::|""|""""|:::::| |') + chalk.yellow('# # # #') + chalk.blue('||"""|||::|"""|""""""""|'));
 
-console.log('Soho server is running at http://localhost:%s/. Press Ctrl+C to stop.', port);
+console.log('IDS server is running at http://localhost:%s/. Press Ctrl+C to stop.', port);
 /* eslint-enable no-console */

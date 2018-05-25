@@ -2573,7 +2573,7 @@ Datagrid.prototype = {
   */
   isRowVisible(rowIndex) {
     if (!this.settings.virtualized) {
-      if (this.settings.paging && !this.settings.source && rowIndex) {
+      if (this.settings.paging && !this.settings.source && rowIndex && this.pager) {
         return (this.pager.activePage - 1) * this.settings.pagesize >= rowIndex &&
             (this.pager.activePage) * this.settings.pagesize <= rowIndex;
       }
@@ -4356,7 +4356,7 @@ Datagrid.prototype = {
     // Prevent redirects
     this.table
       .off('click.datagrid')
-      .on('click.datagrid', 'a', (e) => {
+      .on('click.datagrid', '.datagrid-row a', (e) => {
         e.preventDefault();
       });
 
@@ -4472,9 +4472,9 @@ Datagrid.prototype = {
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
         const rowElem = $(this).closest('tr');
-        const rowIdx = self.actualRowIndex(rowElem);
+        let rowIdx = self.actualRowIndex(rowElem);
         dataRowIdx = self.dataRowIndex(rowElem);
-        const item = self.settings.treeGrid ?
+        let item = self.settings.treeGrid ?
           self.settings.treeDepth[rowIdx].node :
           self.settings.dataset[dataRowIdx];
 
@@ -4482,6 +4482,16 @@ Datagrid.prototype = {
           if (!target.is(self.settings.buttonSelector)) {
             if (!target.parent('button').is(self.settings.buttonSelector)) {
               return;
+            }
+          }
+        }
+
+        if (self.settings.groupable) {
+          if (!rowElem.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer')) {
+            rowIdx = self.pagingRowIndex(self.actualRowIndex(rowElem));
+            item = self.settings.dataset[self.groupArray[rowIdx].group];
+            if (item && item.values) {
+              item = item.values[self.groupArray[rowIdx].node];
             }
           }
         }
@@ -5817,6 +5827,36 @@ Datagrid.prototype = {
     }
 
     return selectedRows;
+  },
+
+  /**
+   * Returns an array of row numbers for the rows containing the value for the specified field.
+   * @param  {string} fieldName The field name to search.
+   * @param  {any} value The value to use in search.
+   * @returns {array} an array of row numbers.
+   */
+  findRowsByValue(fieldName, value) {
+    const s = this.settings;
+    const dataset = s.treeGrid ? s.treeDepth : s.dataset;
+    let idx = -1;
+    const matchedRows = [];
+    for (let i = 0, data; i < dataset.length; i++) {
+      if (s.groupable) {
+        for (let k = 0; k < dataset[i].values.length; k++) {
+          idx++;
+          data = dataset[i].values[k];
+          if (data[fieldName] === value) {
+            matchedRows.push(idx);
+          }
+        }
+      } else {
+        data = s.treeGrid ? dataset[i].node : dataset[i];
+        if (data[fieldName] === value) {
+          matchedRows.push(i);
+        }
+      }
+    }
+    return matchedRows;
   },
 
   // Set the row status
@@ -7180,6 +7220,9 @@ Datagrid.prototype = {
 
   // expand the tree rows
   toggleChildren(e, dataRowIndex) {
+    if (this.settings.groupable) {
+      return;
+    }
     const self = this;
     let rowElement = this.settings.treeGrid ?
       this.actualRowNode(dataRowIndex) : this.visualRowNode(dataRowIndex);
@@ -7189,7 +7232,7 @@ Datagrid.prototype = {
     const isExpanded = expandButton.hasClass('is-expanded');
     const args = [{ grid: self, row: dataRowIndex, item: rowElement, children }];
 
-    if (self.settings.treeDepth[dataRowIndex]) {
+    if (self.settings.treeDepth && self.settings.treeDepth[dataRowIndex]) {
       args[0].rowData = self.settings.treeDepth[dataRowIndex].node;
     }
 
@@ -7648,6 +7691,11 @@ Datagrid.prototype = {
   * @returns {object} The plugin api for chaining.
   */
   destroy() {
+    // UnBind the pager
+    if (this.tableBody.data() && this.tableBody.data('pager')) {
+      this.tableBody.data('pager').destroy();
+    }
+
     // Remove the toolbar, clean the div out and remove the pager
     this.element.off().empty().removeClass('datagrid-container');
     const toolbar = this.element.prev('.toolbar');
@@ -7673,6 +7721,7 @@ Datagrid.prototype = {
       }
       toolbar.remove();
     }
+
     this.element.next('.pager-toolbar').remove();
     $.removeData(this.element[0], COMPONENT_NAME);
 

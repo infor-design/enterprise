@@ -3,7 +3,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const logger = require('../../../../scripts/logger');
+const logger = require('../logger');
 const utils = require('../utils');
 
 // Excluded file names that should never appear in the DemoApp List Pages

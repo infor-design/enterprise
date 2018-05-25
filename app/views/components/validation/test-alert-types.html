@@ -21,6 +21,16 @@
       <input type="text" id="test-info" name="test-info" data-validate="customInformationRule">
     </div>
 
+	  <div class="field">
+      <label for="test-icon-default">Test Icon (default icon)</label>
+      <input type="text" id="test-icon-default" name="test-icon-default" data-validate="customIconRule1">
+    </div>
+
+	  <div class="field">
+      <label for="test-icon-custom">Test Icon (custom icon)</label>
+      <input type="text" id="test-icon-custom" name="test-icon-custom" data-validate="customIconRule2">
+    </div>
+
   </div>
 </div>
 
@@ -56,6 +66,24 @@
       },
       message: 'Random information about this field',
       type: 'info'
+    };
+
+    $.fn.validation.rules.customIconRule1 = {
+      check: function (value) {
+        return (value !== '');
+      },
+      message: 'Something about your user profile',
+      type: 'icon',
+      icon: 'user-profile'
+    };
+
+    $.fn.validation.rules.customIconRule2 = {
+      check: function (value) {
+        return (value !== '');
+      },
+      message: 'Something about your mail information',
+      type: 'icon',
+      icon: 'mail'
     };
 
   });

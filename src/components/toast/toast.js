@@ -24,8 +24,8 @@ const TOAST_DEFAULTS = {
  * @param {HTMLElement} element the target location for the Toast message
  * @param {object} [settings] incoming settings
  * @param {string} [settings.title = '(Title)'] Text that is displayed in the Toast's title.
- * @param {string} [settings.message = '(Content)' ] Text/HTML that's displayed in the Toast's body.
- * @param {string} [settings.position = 'top right'] text that propagates into CSS classes that position the Toast in specific places
+ * @param {string} [settings.message = '(Content)' ] Text that's displayed in the Toast's body.
+ * @param {string} [settings.position = 'top right'] Text that propagates into CSS classes that position the Toast in specific places
  * Can be top left, bottom left, bottom rightx
  * @param {boolean} [settings.audibleOnly = false] if true, causes the toast to be invisble on the screen, but still read out lout by screen readers.
  * @param {boolean} [settings.progressBar = true] causes the toast to have a visible progress bar that will be completely
