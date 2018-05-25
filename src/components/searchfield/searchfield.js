@@ -431,14 +431,15 @@ SearchField.prototype = {
    * @returns {void}
    */
   appendToParent() {
-    if (this.wrapper.parent().is($(this.containmentParent))) {
+    if (!this.containmentParent || this.wrapper.parent().is($(this.containmentParent))) {
       return;
     }
 
     this.saveFocus();
 
     this.elemBeforeWrapper = this.wrapper.prev();
-    this.wrapper.detach().prependTo($(this.containmentParent));
+    $(this.containmentParent).prepend(this.wrapper);
+
     utils.fixSVGIcons(this.wrapper);
 
     this.restoreFocus();
@@ -452,21 +453,21 @@ SearchField.prototype = {
    * @returns {void}
    */
   appendToButtonset() {
-    if (!this.wrapper.parent().is($(this.containmentParent))) {
+    if (!this.containmentParent || !this.wrapper.parent().is($(this.containmentParent))) {
       return;
     }
 
     this.saveFocus();
 
     if (!(this.elemBeforeWrapper instanceof $) || !this.elemBeforeWrapper.length) {
-      this.wrapper.prependTo(this.toolbarParent.children('.buttonset'));
+      this.wrapper.prependTo($(this.buttonsetElem));
     } else {
-      this.wrapper.detach().insertAfter(this.elemBeforeWrapper);
+      this.wrapper.insertAfter(this.elemBeforeWrapper);
       this.elemBeforeWrapper = null;
     }
 
     this.removeDocumentDeactivationEvents();
-    this.toolbarParent.triggerHandler('scrollup');
+    $(this.toolbarParent).triggerHandler('scrollup');
     utils.fixSVGIcons(this.wrapper);
 
     this.restoreFocus();
