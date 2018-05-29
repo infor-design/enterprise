@@ -107,6 +107,8 @@ From within the project folder:
 
 Note that at this point any changes you make will cause SASS to recompile and the browser will reload.
 
+You’ll see documentation pages unless they aren’t generated, then you’ll see the demos and directory lists only.  You can optionally run `npm run documentation` to see the full component documentation.
+
 ### Running the tests
 
 Functional tests are the primary way we test the codebase. To run the tests, run `npm run functional:local`.

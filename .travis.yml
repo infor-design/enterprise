@@ -15,6 +15,7 @@ before_script:
 script:
   - npm run build
   - npm run functional:ci
+  - if [ $TRAVIS_EVENT_TYPE = cron ]; then npm run e2e:ci; fi
 deploy:
     # DEPLOY BUILD TO DEMO SERVER
     # this runs conditionally `on`
