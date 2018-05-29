@@ -1490,16 +1490,10 @@ Dropdown.prototype = {
       }
 
       // If this is the Select All option, select/deselect all.
-      if (self.settings.multiple && target.is('.dropdown-select-all-list-item')) {
-        const doSelectAll = !(target.is('.is-selected'));
-        if (doSelectAll) {
-          target.addClass('is-selected');
-          self.selectOptions(self.element.find('option:not(:selected)'), true);
-        } else {
-          target.removeClass('is-selected');
-          self.selectOptions(self.element.find('option:selected'), true);
-        }
-
+      if (self.settings.multiple && target[0].classList.contains('dropdown-select-all-list-item')) {
+        const doSelectAll = !(target[0].classList.contains('is-selected'));
+        target[0].classList[doSelectAll ? 'add' : 'remove']('is-selected');
+        self.toggleAllSelection(doSelectAll);
         return true;  //eslint-disable-line
       }
 
@@ -1951,6 +1945,58 @@ Dropdown.prototype = {
     if (!noScroll || noScroll === false || noScroll === undefined) {
       this.scrollToOption(listOptions.first());
     }
+  },
+
+  /**
+   * Toggle all selection for items.
+   * @private
+   * @param {boolean} doSelectAll true to select and false will clear selection for all items.
+   * @returns {void}
+   */
+  toggleAllSelection(doSelectAll) {
+    const selector = {
+      options: 'option:not(.is-disabled):not(:disabled)',
+      items: 'li.dropdown-option:not(.separator):not(.group-label):not(.is-disabled)'
+    };
+    const options = [].slice.call(this.element[0].querySelectorAll(selector.options));
+    const items = [].slice.call(this.listUl[0].querySelectorAll(selector.items));
+    const last = options[options.length - 1];
+    const val = [];
+    let text = '';
+
+    if (doSelectAll) {
+      // Select all
+      items.forEach(node => node.classList.add('is-selected'));
+      options.forEach((node) => {
+        val.push(node.value);
+        node.selected = true;
+      });
+
+      text = this.getOptionText($(options));
+      if (this.element.attr('maxlength')) {
+        text = text.substr(0, this.element.attr('maxlength'));
+      }
+    } else {
+      // Clear all
+      items.forEach(node => node.classList.remove('is-selected'));
+      options.forEach((node) => {
+        node.selected = false;
+      });
+    }
+
+    this.pseudoElem.find('span').text(text);
+    this.searchInput.val(text);
+    this.element.val(val);
+    this.updateItemIcon(last);
+
+    if (this.list.hasClass('search-mode')) {
+      this.resetList();
+    }
+    this.activate(true);
+    this.setBadge(last);
+    this.previousActiveDescendant = last.value || '';
+
+    this.element.trigger('change').triggerHandler('selected');
   },
 
   /**
