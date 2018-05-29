@@ -310,6 +310,7 @@
   .tab-list-container {
     display: inline-block;
     overflow-x: auto; // facilitates scrolling of the tabset
+    overflow-y: hidden; // prevents vertical scrolling
     position: relative;
     width: calc(100% - 51px);
   }
