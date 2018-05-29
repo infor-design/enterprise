@@ -5,7 +5,7 @@
 npm install
 
 # Use ids-enterprise/package.json for everything
-cd publish
+cd ids-enterprise
 
 PKG_NAME=$(node -p "require('./package.json').name")
 PKG_VERSION=$(node -p "require('./package.json').version")

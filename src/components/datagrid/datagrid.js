@@ -4356,7 +4356,7 @@ Datagrid.prototype = {
     // Prevent redirects
     this.table
       .off('click.datagrid')
-      .on('click.datagrid', 'a', (e) => {
+      .on('click.datagrid', '.datagrid-row a', (e) => {
         e.preventDefault();
       });
 
@@ -4472,9 +4472,9 @@ Datagrid.prototype = {
 
       if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a') || target.parent().is('button')) {   //eslint-disable-line
         const rowElem = $(this).closest('tr');
-        const rowIdx = self.actualRowIndex(rowElem);
+        let rowIdx = self.actualRowIndex(rowElem);
         dataRowIdx = self.dataRowIndex(rowElem);
-        const item = self.settings.treeGrid ?
+        let item = self.settings.treeGrid ?
           self.settings.treeDepth[rowIdx].node :
           self.settings.dataset[dataRowIdx];
 
@@ -4482,6 +4482,16 @@ Datagrid.prototype = {
           if (!target.is(self.settings.buttonSelector)) {
             if (!target.parent('button').is(self.settings.buttonSelector)) {
               return;
+            }
+          }
+        }
+
+        if (self.settings.groupable) {
+          if (!rowElem.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer')) {
+            rowIdx = self.pagingRowIndex(self.actualRowIndex(rowElem));
+            item = self.settings.dataset[self.groupArray[rowIdx].group];
+            if (item && item.values) {
+              item = item.values[self.groupArray[rowIdx].node];
             }
           }
         }
