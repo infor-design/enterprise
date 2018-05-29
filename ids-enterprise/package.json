@@ -12,7 +12,7 @@
     "infor design system enterprise"
   ],
   "author": "Hook & Loop",
-  "license": "Runtime License",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/infor-design/enterprise/issues"
   },
