@@ -631,7 +631,7 @@ Autocomplete.prototype = {
   select(anchorOrEvent, items) {
     let a;
     let li;
-    let ret;
+    let ret = {};
     let isEvent = false;
 
     // Initial Values
@@ -648,7 +648,7 @@ Autocomplete.prototype = {
     }
 
     li = a.parent('li');
-    ret = a.text().trim();
+    ret.value = a.text().trim();
     const dataIndex = li.attr('data-index');
     const dataValue = li.attr('data-value');
 
@@ -662,9 +662,14 @@ Autocomplete.prototype = {
       } else if (dataValue) {
         // Otherwise use data-value to get the item (a custom template may not supply data-index)
         for (let i = 0, value; i < items.length; i++) {
-          value = items[i].value.toString();
+          if (typeof items[i] === 'object' && items[i].value !== undefined) {
+            value = items[i].value.toString();
+          } else {
+            value = items[i].toString();
+          }
+
           if (value === dataValue) {
-            ret = items[i];
+            ret.value = value;
           }
         }
       }
