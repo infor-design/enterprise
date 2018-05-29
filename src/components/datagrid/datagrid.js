@@ -6821,7 +6821,7 @@ Datagrid.prototype = {
       if (value instanceof Date) {
         newVal = Locale.parseDate(value, col.sourceFormat);
       } else {
-        newVal = Locale.parseDateToSource(value, col.sourceFormat);
+        newVal = Locale.formatDate(value, { pattern: col.sourceFormat });
       }
     } else if (typeof oldVal === 'number' && value) {
       newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
