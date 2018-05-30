@@ -93,8 +93,8 @@ module.exports = (req, res, next) => {
     };
   };
 
-  if (req.query.sortId) {
-    productsAll.sort(sortBy(req.query.sortId, (req.query.sortAsc === 'true'), a => a.toString().toUpperCase()));
+  if (req.query.sortField) {
+    productsAll.sort(sortBy(req.query.sortField, (req.query.sortAsc === 'true'), a => a.toString().toUpperCase()));
   }
 
   for (i = start; i < end && i < total; i++) {

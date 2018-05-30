@@ -149,7 +149,12 @@ Treemap.prototype = {
       .style('top', d => `${d.y0}px`)
       .style('width', d => `${Math.max(0, d.x1 - d.x0 - 1)}px`)
       .style('height', d => `${Math.max(0, d.y1 - d.y0 - 1)}px`)
-      .style('background', d => color(d.parent.data.name))
+      .style('background', (d) => {
+        if (!d || !d.parent || !d.parent.data) {
+          return '';
+        }
+        return color(d.parent.data.name);
+      })
       .text(d => d.data.name);
 
     if (this.settings.showLabel) {

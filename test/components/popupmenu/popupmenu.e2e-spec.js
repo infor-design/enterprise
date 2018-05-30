@@ -9,8 +9,7 @@ jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Popupmenu example-selectable tests', () => {
   beforeEach(async () => {
-    await browser.waitForAngularEnabled(false);
-    await browser.driver.get(`${browser.baseUrl}/components/popupmenu/example-selectable?theme=${browser.params.theme}`);
+    await utils.setPage('/components/popupmenu/example-selectable');
   });
 
   it('Should open on click, and close on click', async () => {
@@ -31,16 +30,17 @@ describe('Popupmenu example-selectable tests', () => {
   });
 
   if (!utils.isIE() && !utils.isSafari()) {
-    it('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
+    xit('Should be accessible on open with no WCAG2AA violations on keypress(Spacebar)', async () => {
       await popupmenuPageObject.openSingleSelect();
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
     });
 
-    it('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
+    xit('Should be accessible on close with no WCAG2AA violations on keypress(Escape)', async () => {
       const buttonTriggerEl = await popupmenuPageObject.openSingleSelect();
       await buttonTriggerEl.sendKeys(protractor.Key.ESCAPE);
+
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
@@ -95,8 +95,7 @@ describe('Popupmenu example-selectable tests', () => {
 
 describe('Popupmenu example-selectable-multiple tests', () => {
   beforeEach(async () => {
-    await browser.waitForAngularEnabled(false);
-    await browser.driver.get(`${browser.baseUrl}/components/popupmenu/example-selectable-multiple?theme=${browser.params.theme}`);
+    await utils.setPage('/components/popupmenu/example-selectable-multiple');
   });
 
   if (!utils.isIE() && !utils.isSafari()) {

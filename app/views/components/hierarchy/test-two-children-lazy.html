@@ -11,28 +11,28 @@
       id: '1', Name: 'Raj', Position: 'Director', EmploymentType: 'FT', Picture: '',
       children: [
         {
-          id: '1_2', Name: 'Sujit', Position: 'Records Manager', EmploymentType: 'FT', Picture: '',
+          id: '1_2', Name: 'Samual Smith', Position: 'Records Manager', EmploymentType: 'FT', Picture: '',
           children: [
-            { id: '1_2_1', Name: 'Tony Cleveland', Position: 'Records Clerk', EmploymentType: 'C', Picture: '', isLeaf: true, children: [] },
-            { id: '1_2_2', Name: 'Julie Dawes', Position: 'Records Clerk', EmploymentType: 'PT', Picture: '', isLeaf: true,
+            { id: '1_2_2', Name: 'Tomas Dawes', Position: 'Records Clerk', EmploymentType: 'PT', Picture: '',
               children: [
                 {
-                  id: '1_3_2_0', Name: 'Sujit', Position: 'Records Manager', EmploymentType: 'FT', Picture: '',
+                  id: '1_2_2_1', Name: 'Sujit Paulo', Position: 'Records Manager', EmploymentType: 'FT', Picture: '',
                   children: [
-                    { id: '1_3_2_1', Name: 'Tony Cleveland', Position: 'Records Clerk', EmploymentType: 'C', Picture: '', isLeaf: true, children: [] },
-                    { id: '1_3_2_2', Name: 'Julie Dawes', Position: 'Records Clerk', EmploymentType: 'PT', Picture: '', isLeaf: true },
-                    { id: '1_3_2_3', Name: 'Richard Fairbanks', Position: 'Records Clerk', EmploymentType: 'FT', Picture: '' }
+                    { id: '1_2_2_1_1', Name: 'Tomas Cleveland', Position: 'Records Clerk', EmploymentType: 'C', Picture: '', isLeaf: true},
+                    { id: '1_2_2_1_2', Name: 'Sam Dawes', Position: 'Records Clerk', EmploymentType: 'PT', Picture: '', isLeaf: true },
+                    { id: '1_2_2_1_3', Name: 'Richard Fairbanks', Position: 'Records Clerk', EmploymentType: 'FT', Picture: '', isLeaf: true  }
                   ]
                 }
               ]
             },
-            { id: '1_2_3', Name: 'Richard Fairbanks', Position: 'Records Clerk', EmploymentType: 'FT', Picture: '',
+            { id: '1_2_3', Name: 'Paul Fairbanks', Position: 'Records Clerk', EmploymentType: 'FT', Picture: '',
               children: [
-                { id: '1_3_3_1', Name: 'Tony Cleveland', Position: 'Records Clerk', EmploymentType: 'C', Picture: '', isLeaf: true, children: [] },
-                { id: '1_3_3_2', Name: 'Julie Dawes', Position: 'Records Clerk', EmploymentType: 'PT', Picture: '', isLeaf: true },
-                { id: '1_3_3_3', Name: 'Richard Fairbanks', Position: 'Records Clerk', EmploymentType: 'FT', Picture: '' }
+                { id: '1_2_3_1', Name: 'Lebron Cleveland', Position: 'Records Clerk', EmploymentType: 'C', Picture: '', isLeaf: true},
+                { id: '1_2_3_2', Name: 'Amy Dawes', Position: 'Records Clerk', EmploymentType: 'PT', Picture: '', isLeaf: true },
+                { id: '1_2_3_3', Name: 'Dick Fairbanks', Position: 'Records Clerk', EmploymentType: 'FT', Picture: '', isLeaf: true  }
               ]
-            }
+            },
+            { id: '1_2_1', Name: 'Andy Cleveland', Position: 'Records Clerk', EmploymentType: 'C', Picture: '', isLeaf: true},
           ]
         }
       ]
@@ -55,24 +55,6 @@
       dataset: orgdata
     });
 
-    var hierarchyControl = $('#hierarchy').data('hierarchy');
-
-    $('#hierarchy').on('selected', function (event, eventInfo) {
-      console.log(event, eventInfo);
-      var hierarchyControl = $('#hierarchy').data('hierarchy');
-      var orgdatachildren = [
-          { id: 'AA' + (Math.floor(Math.random() * 1000)), Name: 'Sujit Edwards', Position: 'Records Manager', EmploymentType: 'FT', Picture: '' },
-          { id: 'BB' + (Math.floor(Math.random() * 1000)), Name: 'Raji  Johnson', Position: 'Senior Software Engineer', EmploymentType: 'FT', Picture: '', isLeaf: true },
-          { id: 'CC' + (Math.floor(Math.random() * 1000)), Name: 'Mallory Anderson', Position: 'Principle Software Engineer', EmploymentType: 'FT', Picture: '', isLeaf: true }
-        ];
-
-
-      if (!eventInfo.data.isLoaded && !eventInfo.data.isLeaf) {
-
-        hierarchyControl.add(eventInfo.data.id, eventInfo.data, orgdatachildren);
-
-      }
-    });
   });
 </script>
 

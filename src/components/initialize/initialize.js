@@ -4,6 +4,7 @@ import { Locale } from '../locale/locale';
 
 // jQuery components
 import '../components.jquery';
+import '../../patterns/patterns.jquery';
 
 // The name of this component
 const COMPONENT_NAME = 'initialize';

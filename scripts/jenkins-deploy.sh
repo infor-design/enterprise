@@ -45,6 +45,11 @@ get_build_number () {
     echo $build_number
 }
 
+get_build_log () {
+    build_log=$(curl -s $JENKINS_URL/job/$JENKINS_JOB/lastBuild/consoleText)
+    echo "$build_log"
+}
+
 stop_jenkins_build () {
     response=$(curl --write-out "%{http_code}\n" --silent --output /dev/null -X POST \
                 "$JENKINS_URL/job/$JENKINS_JOB/$CURRENT_BUILD_NUMBER/stop"
@@ -109,6 +114,11 @@ if [ $WATCH_FOR_BUILD_STATUS = true ]; then
             exit 0
         else
             echo "" # new line
+            echo "$BUILD_STATUS! See log for details:"
+            echo "" # new line
+            while IFS='\n' read -r line; do
+                printf "\t%s\n" "$line"
+            done <<< "$(get_build_log)"
             echo "Build was ended with status: $BUILD_STATUS!"
             exit 1
         fi
