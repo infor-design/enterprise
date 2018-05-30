@@ -38,7 +38,7 @@
 
 }
 
-@include respond-to(tabletdown) {
+@include respond-to(phone) {
   .form-responsive {
     .field .checkbox-label,
     .field .checkbox > label {
