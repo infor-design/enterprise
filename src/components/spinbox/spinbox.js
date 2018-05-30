@@ -312,6 +312,12 @@ Spinbox.prototype = {
       return;
     }
 
+    const isReadOnly = this.element.attr('readonly');
+
+    if (typeof isReadOnly !== typeof undefined && isReadOnly !== false) {
+      return;
+    }
+
     // If the keycode got this far, it's an arrow key, HOME, or END.
     switch (key) {
       case 35: // End key sets the spinbox to its minimum value
