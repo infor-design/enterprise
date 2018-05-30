@@ -678,7 +678,7 @@ ApplicationMenu.prototype = {
     });
 
     $(document).on('open-applicationmenu', () => {
-      self.openMenu();
+      self.openMenu(undefined, true);
     }).on('close-applicationmenu', () => {
       self.closeMenu();
     });
