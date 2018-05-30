@@ -1,8 +1,11 @@
 // Variables
 //================================================== //
 
-@import '../components/colors/colorpalette';
+// IDS Identity
 @import '../../node_modules/ids-identity/dist/tokens/web/theme-default.sass';
+
+// Color Palette
+@import '../components/colors/colorpalette';
 
 // Form Background Color
 $body-bg-color:  $graphite01;
