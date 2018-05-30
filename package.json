@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "d3": "^4.13.0",
-    "ids-identity": "1.0.8",
     "jquery": "^3.3.1"
   },
   "devDependencies": {
@@ -69,6 +68,7 @@
     "handlebars-registrar": "^1.5.2",
     "html-loader": "^0.5.5",
     "ids-css": "^1.0.0",
+    "ids-identity": "1.0.8",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jasmine-core": "^3.0.0",
     "jasmine-jquery": "^2.1.1",
