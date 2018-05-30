@@ -800,4 +800,17 @@ describe('Locale API', () => {
       expect(Locale.currentLocale.name).toEqual('fi-FI'); // not found so equals last one
     }
   });
+
+  it ('Should parse dates with and without spaces, dash, comma format', () => {
+    Locale.set('en_US');
+
+    // Date with spaces, dashes and comma
+    expect(Locale.parseDate('2014-12-11', 'yyyy-MM-dd').getTime()).toEqual(new Date(2014, 11, 11, 0, 0, 0).getTime());
+    expect(Locale.parseDate('2014/12/11', 'yyyy/MM/dd').getTime()).toEqual(new Date(2014, 11, 11, 0, 0, 0).getTime());
+    expect(Locale.parseDate('2014 12 11', 'yyyy MM dd').getTime()).toEqual(new Date(2014, 11, 11, 0, 0, 0).getTime());
+
+    // Date without spaces, dashes and comma
+    expect(Locale.parseDate('20141211', 'yyyyMMdd').getTime()).toEqual(new Date(2014, 11, 11, 0, 0, 0).getTime());
+
+  });
 });
