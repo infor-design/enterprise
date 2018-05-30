@@ -67,7 +67,12 @@ module.exports = function (app, defaults) {
             ],
             'script-src': ['self',
               `nonce-${res.opts.nonce}`,
-              'http://squizlabs.github.io'
+              'http://squizlabs.github.io',
+              'http://myserver.com'
+            ],
+            'connect-src': [
+              'self',
+              'http://myserver.com'
             ],
             'object-src': ['none'],
             'style-src': ['* data: http://* \'unsafe-inline\''],
