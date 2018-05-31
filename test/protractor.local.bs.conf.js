@@ -36,7 +36,6 @@ exports.config = {
     'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
     'browserstack.debug': true,
     'browserstack.local': true,
-    'browserstack.selenium_version': '3.11.0',
     'browserstack.networkLogs' : true,
     build: `${theme} theme: local tunnel e2e`,
     name: `${theme} theme local tunnel e2e tests`

@@ -55,6 +55,9 @@ npm start
 npm run e2e:local
 ```
 
+## Running E2E Tests Silently for Continuous Integration
+`npm run functional:ci`
+
 ## Debugging Functional Tests
 For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 - Isolate the test using `fdescribe` or `fit`
