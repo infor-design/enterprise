@@ -26,7 +26,6 @@ module.exports = (req, res, next) => {
   });
 
   // Define Columns for the Grid.
-  columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: 'SelectionCheckbox', align: 'center' });
   columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: 'Readonly' });
   columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: 'Hyperlink' });
   columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125 });
