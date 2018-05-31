@@ -148,6 +148,11 @@ ListFilter.prototype = {
         }
       }
 
+      // assume filtered server side
+      if (self.settings.filterMode === null) {
+        match = true;
+      }
+
       if (match) {
         items.push(item);
       }
