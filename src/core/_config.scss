@@ -1,6 +1,10 @@
 // Variables
 //================================================== //
 
+// IDS Identity
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-default.sass';
+
+// Color Palette
 @import '../components/colors/colorpalette';
 
 // Form Background Color
@@ -152,36 +156,36 @@ $popupmenu-dark-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-dark-hover-color: $slate06;
 
 // Form Buttons
-$primary-btn-bg-color: $primary-color;
-$primary-btn-color: $inverse-color;
-$primary-btn-hover-bg-color: $azure07;
-$primary-btn-focus-bg-color: $primary-color;
-$primary-btn-active-bg-color: $azure07;
-$primary-btn-disabled-color: $inverse-color;
-$primary-btn-disabled-bg-color: $primary-color; //Primary at 50%
-$primary-btn-disabled-border-color: $primary-color;
-$primary-btn-disabled-opacity: .5;
+$primary-btn-bg-color: $button-primary-bg-color;
+$primary-btn-color: $button-primary-text-color;
+$primary-btn-hover-bg-color: $button-primary-hover-bg-color;
+$primary-btn-focus-bg-color: $button-primary-text-color;
+$primary-btn-active-bg-color: $button-primary-active-bg-color;
+$primary-btn-disabled-color: $button-primary-text-color;
+$primary-btn-disabled-bg-color: $button-primary-disabled-bg-color; //Primary at 50%
+$primary-btn-disabled-border-color: $button-primary-disabled-border-color;
+$primary-btn-disabled-opacity: $button-disabled-opacity;
 
 // Secondary/Normal Buttons
-$btn-color: $graphite08;
-$btn-bg-color: $graphite03;
-$btn-hover-bg-color: $graphite04;
-$btn-focus-bg-color: $primary-color;
-$btn-focus-border-color: $primary-color;
-$btn-active-bg-color: $graphite04;
-$btn-disabled-bg-color: $graphite04;
-$btn-disabled-color: $graphite08;
-$btn-disabled-border-color: $graphite03;
-$btn-disabled-opacity: .5;
+$btn-color: $button-default-text-color;
+$btn-bg-color: $button-default-bg-color;
+$btn-hover-bg-color: $button-default-hover-bg-color;
+$btn-focus-bg-color: $button-default-focus-bg-color;
+$btn-focus-border-color: $button-default-focus-bg-color;
+$btn-active-bg-color: $button-default-active-bg-color;
+$btn-disabled-bg-color: $button-default-disabled-bg-color;
+$btn-disabled-color: $button-default-text-color;
+$btn-disabled-border-color: $button-default-disabled-border-color;
+$btn-disabled-opacity: $button-disabled-opacity;
 
 // Tertiary Buttons
-$tertiary-btn-color: $graphite06;
-$tertiary-btn-hover-color: $graphite10;
-$tertiary-btn-active-color: $graphite10;
+$tertiary-btn-color: $button-link-text-color;
+$tertiary-btn-hover-color: $button-link-hover-text-color;
+$tertiary-btn-active-color: $button-link-active-text-color;
 $tertiary-btn-open-color: $primary-color;
 $tertiary-btn-ripple-color: #8dc9e6;
-$tertiary-btn-disabled-color: $graphite06;
-$tertiary-btn-disabled-opacity: .5;
+$tertiary-btn-disabled-color: $button-link-disabled-text-color;
+$tertiary-btn-disabled-opacity: $button-disabled-opacity;
 
 // Tertiary Dark Buttons
 $tertiary-btn-dark-color: $slate03;
@@ -196,7 +200,7 @@ $secondary-border-btn-hover-border-color: $graphite10;
 $secondary-border-btn-ripple-color: #8dc9e6;
 
 // Buttons
-$button-font-size: 14;
+$button-font-size: $button-font-size;
 
 // Menu Button
 $menubutton-height: 34px;
