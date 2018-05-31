@@ -584,7 +584,7 @@ Hierarchy.prototype = {
   */
   isSingleChildWithChildren() {
     const s = this.settings;
-    if (s.dataset && s.dataset[0].children) {
+    if (s.dataset && (s.dataset[0] && s.dataset[0].children)) {
       let i = s.dataset[0].children.length;
       let count = 0;
 
