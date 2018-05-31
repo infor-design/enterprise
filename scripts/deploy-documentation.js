@@ -286,7 +286,7 @@ function cleanAll() {
       console.error(chalk.red('Error!'), err);
     })
     .then(() => {
-      logTaskAction('Cleaned', paths.idsWebsite.dist.replace(rootPath, '.'));
+      logTaskAction('Cleaned', `${deployTo} directories`);
       createDirs([
         paths.idsWebsite.root,
         paths.idsWebsite.dist,

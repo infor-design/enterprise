@@ -2020,7 +2020,7 @@ Dropdown.prototype = {
 
     const code = option.val();
     let val = this.element.val();
-    const oldText = this.pseudoElem.text();
+    const oldCode = this.element.find('option:selected').val();
     let text = '';
     let trimmed = '';
     let clearSelection = false;
@@ -2076,9 +2076,10 @@ Dropdown.prototype = {
         }
       });
     }
+
     // If we're working with a single select and the value hasn't changed, just return without
     // firing a change event
-    if (text === oldText) {
+    if (code === oldCode) {
       return;
     }
 

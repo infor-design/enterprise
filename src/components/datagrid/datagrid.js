@@ -3211,7 +3211,7 @@ Datagrid.prototype = {
       colWidth = Math.max(textWidth, colWidth || 0);
     }
 
-    lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
+    lastColumn = index === this.lastColumnIdx();
 
     // Simulate Auto Width Algorithm
     if ((!this.widthSpecified || col.width === undefined) && this.settings.sizeColumnsEqually &&

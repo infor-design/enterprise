@@ -5,6 +5,7 @@
     "quickstart": "npx grunt demo && node app/server.js",
     "build": "npx grunt",
     "stop": "./scripts/stop.sh",
+    "watch": "npm run build -- watch",
     "eslint": "npx eslint -c .eslintrc.js src test",
     "eslint:log": "npx eslint -c .eslintrc.js src test -o eslint.log",
     "eslint:error-only": "npx eslint -c .eslintrc.js --quiet src test",
