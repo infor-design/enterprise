@@ -38,9 +38,8 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width.
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
-* @param {object} [settings.onKeyDown = false]  If set to true, will prevent the default behavior of the up/down arrow
+* @param {object} [settings.onKeyDown = false]  If set to true, will provide a hook into to keydown behavior which can be cancelled.
 */
-
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
   cssClass: null,
@@ -59,7 +58,7 @@ const DROPDOWN_DEFAULTS = {
   delay: 300,
   maxWidth: null,
   placementOpts: null,
-  onKeyDown: false
+  onKeyDown: null
 };
 
 function Dropdown(element, settings) {
@@ -1016,6 +1015,15 @@ Dropdown.prototype = {
       return;
     }
 
+    if (self.settings.onKeyDown) {
+      const ret = self.settings.onKeyDown(e);
+      if (ret === false) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false; //eslint-disable-line
+      }
+    }
+
     // Down arrow, Up arrow, or Spacebar to open
     if (!self.isOpen() && (key === 38 || key === 40 || key === 32)) {
       self.toggleList();
@@ -1100,12 +1108,6 @@ Dropdown.prototype = {
         }
         this.searchKeyMode = false;
 
-        if (self.settings.onKeyDown === true) {
-          e.stopPropagation();
-          e.preventDefault();
-          return false; //eslint-disable-line
-        }
-
         if (selectedIndex > 0) {
           next = $(options[selectedIndex - 1]);
           this.highlightOption(next);
@@ -1126,12 +1128,6 @@ Dropdown.prototype = {
           return;
         }
         this.searchKeyMode = false;
-
-        if (self.settings.onKeyDown === true) {
-          e.stopPropagation();
-          e.preventDefault();
-          return false; //eslint-disable-line
-        }
 
         if (selectedIndex < options.length - 1) {
           next = $(options[selectedIndex + 1]);

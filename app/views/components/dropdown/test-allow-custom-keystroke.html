@@ -30,7 +30,12 @@
   $('body').one('initialized', function () {
 
     $('#dropdown').dropdown({
-      onKeyDown: true
+      onKeyDown: function(e) {
+        if (e.which === 40) {
+          alert('You customized the down key (:');
+          return false;
+        }
+      }
     })
 
   })
