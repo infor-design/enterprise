@@ -38,6 +38,7 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width.
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
+* @param {object} [settings.onKeyDown = false]  If set to true, will prevent the default behavior of the up/down arrow
 */
 
 const DROPDOWN_DEFAULTS = {
@@ -57,7 +58,8 @@ const DROPDOWN_DEFAULTS = {
   empty: false,
   delay: 300,
   maxWidth: null,
-  placementOpts: null
+  placementOpts: null,
+  onKeyDown: false
 };
 
 function Dropdown(element, settings) {
@@ -1098,6 +1100,12 @@ Dropdown.prototype = {
         }
         this.searchKeyMode = false;
 
+        if (self.settings.onKeyDown === true) {
+          e.stopPropagation();
+          e.preventDefault();
+          return false; //eslint-disable-line
+        }
+
         if (selectedIndex > 0) {
           next = $(options[selectedIndex - 1]);
           this.highlightOption(next);
@@ -1118,6 +1126,12 @@ Dropdown.prototype = {
           return;
         }
         this.searchKeyMode = false;
+
+        if (self.settings.onKeyDown === true) {
+          e.stopPropagation();
+          e.preventDefault();
+          return false; //eslint-disable-line
+        }
 
         if (selectedIndex < options.length - 1) {
           next = $(options[selectedIndex + 1]);
