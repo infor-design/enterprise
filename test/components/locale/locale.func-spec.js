@@ -801,7 +801,7 @@ describe('Locale API', () => {
     }
   });
 
-  it ('Should parse dates with and without spaces, dash, comma format', () => {
+  it('Should parse dates with and without spaces, dash, comma format', () => {
     Locale.set('en_US');
 
     // Date with spaces, dashes and comma
@@ -811,6 +811,5 @@ describe('Locale API', () => {
 
     // Date without spaces, dashes and comma
     expect(Locale.parseDate('20141211', 'yyyyMMdd').getTime()).toEqual(new Date(2014, 11, 11, 0, 0, 0).getTime());
-
   });
 });
