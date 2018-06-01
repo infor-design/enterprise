@@ -7,20 +7,20 @@ const exampleHTML = require('../../../app/views/components/autocomplete/example-
 const statesData = require('../../../app/data/states-all.json');
 
 // Modified states data (for augmented results test)
-const statesExtraData = (function(data) {
+const statesExtraData = (function (data) {
   const modified = [].concat(data);
   modified.forEach((item) => {
     item.addedValue = 'sandwich';
   });
   return modified;
-})(statesData);
+}(statesData));
 
 let autocompleteInputEl;
 let autocompleteLabelEl;
 let autocompleteAPI;
 let svgEl;
 
-fdescribe('Autocomplete API (select)', () => {
+describe('Autocomplete API (select)', () => {
   beforeEach(() => {
     autocompleteInputEl = null;
     autocompleteAPI = null;
