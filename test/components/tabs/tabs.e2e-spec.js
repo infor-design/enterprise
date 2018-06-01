@@ -90,6 +90,45 @@ describe('Tabs click example-index tests', () => {
   });
 });
 
+describe('Tabs click example-counts tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/example-counts');
+    const tabsEl = await element(by.id('tabs-counts'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+  });
+
+  if (!utils.isIE()) {
+    xit('Should be accessible on init with no WCAG 2AA violations on example-index', async () => {
+      const res = await axePageObjects(browser.params.theme);
+
+      expect(res.violations.length).toEqual(0);
+    });
+  }
+
+  it('Should open 5th tab, on click on count', async () => {
+    await clickTabTest('4');
+  });
+
+  it('Should open 5th tab, 3rd, then 2nd tab, on click screen width of 500px on count', async () => {
+    const windowSize = await browser.driver.manage().window().getSize();
+    await browser.driver.manage().window().setSize(500, 600);
+    await browser.driver.sleep(config.sleep);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.id('tabs-counts'))), config.waitsFor);
+    await clickTabTest('4');
+    await clickTabTest('2');
+    await clickTabTest('1');
+    await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+  });
+
+  it('Should open 5th, 3rd, then 2nd tab, on click on count', async () => {
+    await clickTabTest('4');
+    await clickTabTest('2');
+    await clickTabTest('1');
+  });
+});
+
 describe('Tabs keyboard example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/tabs/example-index');
