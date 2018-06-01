@@ -722,65 +722,8 @@ ListView.prototype = {
     if (typeof li === 'number') {
       li = $(this.element.children()[0]).children().eq(li);
     }
-
-    const self = this;
     if (li.is('.is-selected')) {
-      this.selectedItems = [];
-      li.removeClass('is-selected hide-selected-color');
-
-      li.attr('aria-selected', false);
-      li.find('.listview-selection-checkbox input').prop('checked', false);
-
-      li.parent().find('.is-selected').each(function (i) {
-        self.selectedItems[i] = $(this);
-      });
-
-      /**
-       * Fires when a item is deselected.
-       *
-       * @event deselected
-       * @memberof ListView
-       * @property {object} event - The jquery event object
-       * @property {object} selected items and item info
-       */
-      this.element.triggerHandler('deselected', { selectedItems: this.selectedItems, elem: li });
-    }
-
-    let parent = this.element.closest('.card, .widget');
-    if (!parent.length) {
-      parent = this.element.parent();
-    }
-
-    const toolbar = parent.find('.listview-toolbar, .contextual-toolbar');
-    const toolbarControl = toolbar.data('toolbar');
-
-    if (self.selectedItems.length > 0) {
-      if (toolbarControl) {
-        toolbarControl.toggleMoreMenu();
-      }
-      // Order of operations: set up event, change display prop, animate, toggle menu.
-      // Menu toggle takes place after the animation starts
-      toolbar.one('animateopencomplete', () => {
-        self.element.addClass('is-toolbar-open');
-        toolbar.trigger('recalculate-buttons').removeClass('is-hidden');
-      });
-      if (toolbar[0]) {
-        toolbar[0].style.display = 'block';
-      }
-      // toolbar.animateOpen({distance: 52});
-      toolbar.animateOpen({ distance: 40 });
-
-      let title = toolbar.find('.title, .selection-count');
-      if (!title || !title.length) {
-        title = $('<div class="title selection-count"></div>');
-        toolbar.prepend(title);
-      }
-      title.text(`${self.selectedItems.length} ${Locale ? Locale.translate('Selected') : 'Selected'}`);
-    } else {
-      toolbar.addClass('is-hidden').one('animateclosedcomplete', function (e) {
-        e.stopPropagation();
-        this.style.display = 'none';
-      }).animateClosed();
+      this.select(li);
     }
   },
 
@@ -803,9 +746,8 @@ ListView.prototype = {
     const self = this;
     let isChecked = false;
     const isMixed = self.settings.selectable === 'mixed';
-    const isSingle = self.settings.selectable === 'single';
 
-    // self.selectedItems = [];
+    self.selectedItems = [];
     if (typeof li === 'number') {
       li = $(this.element.children()[0]).children().eq(li);
     }
@@ -822,22 +764,27 @@ ListView.prototype = {
       return;
     }
 
-    if (!isChecked) {
-      if (isSingle) {
-        li.siblings().removeClass('is-selected');
-        li.addClass('is-selected');
-      } else {
-        li.addClass(`is-selected${isMixed ? ' hide-selected-color' : ''}`);
-        self.lastSelectedItem = li.index();// Rember index to use shift key
-      }
+    // Select
+    if (this.settings.selectable !== 'multiple' && this.settings.selectable !== 'mixed') {
+      li.parent().children().removeAttr('aria-selected');
+      li.parent().find('.is-selected').removeClass('is-selected');
+      self.selectedItems[0] = $(this);
+    }
+
+    if (isChecked) {
+      self.selectedItems = [];
+      li.removeClass('is-selected hide-selected-color');
+    } else if (this.settings.selectable) {
+      li.addClass(`is-selected${isMixed ? ' hide-selected-color' : ''}`);
+      self.lastSelectedItem = li.index();// Rember index to use shift key
     }
 
     li.parent().find('.is-selected').each(function (i) {
       self.selectedItems[i] = $(this);
     });
 
-    li.attr('aria-selected', true);
-    li.find('.listview-selection-checkbox input').prop('checked', true);
+    li.attr('aria-selected', !isChecked);
+    li.find('.listview-selection-checkbox input').prop('checked', !isChecked);
 
     if (!noTrigger) {
       const triggerStr = isChecked ? 'unselected' : 'selected';
@@ -850,6 +797,18 @@ ListView.prototype = {
        * @property {object} selected items and item info
        */
       this.element.triggerHandler(triggerStr, { selectedItems: this.selectedItems, elem: li });
+
+      if (triggerStr === 'unselected') {
+        /**
+         * Fires when a item is deselected.
+         *
+         * @event deselected
+         * @memberof ListView
+         * @property {object} event - The jquery event object
+         * @property {object} selected items and item info
+         */
+        this.element.triggerHandler('deselected', { selectedItems: this.selectedItems, elem: li });
+      }
     }
 
     let parent = this.element.closest('.card, .widget');
@@ -1189,12 +1148,9 @@ ListView.prototype = {
             if (isMultiple && e.shiftKey) {
               self.selectItemsBetweenIndexes([self.lastSelectedItem, item.index()]);
               e.preventDefault();
-            } else if (item.hasClass('is-selected')) {
-              self.deselect(item);
             } else {
               self.select(item);
             }
-
             item.focus();
           }
 
