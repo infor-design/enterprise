@@ -42,7 +42,8 @@ describe('Dropdown updates, events', () => {
       reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {}
+      sourceArguments: {},
+      onKeyDown: false
     };
 
     expect(dropdownObj.settings).toEqual(settings);
@@ -63,7 +64,8 @@ describe('Dropdown updates, events', () => {
       reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {}
+      sourceArguments: {},
+      onKeyDown: false
     };
 
     dropdownObj.updated();
@@ -88,7 +90,8 @@ describe('Dropdown updates, events', () => {
       reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {}
+      sourceArguments: {},
+      onKeyDown: false
     };
     dropdownObj.updated(settings);
 
@@ -110,7 +113,8 @@ describe('Dropdown updates, events', () => {
       reloadSourceOnOpen: false,
       showEmptyGroupHeaders: false,
       showSelectAll: false,
-      sourceArguments: {}
+      sourceArguments: {},
+      onKeyDown: false
     };
 
     const spyEvent = spyOnEvent('.dropdown', 'has-updated');
