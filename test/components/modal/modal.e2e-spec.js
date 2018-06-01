@@ -137,14 +137,6 @@ describe('Modal example-validation tests', () => {
 
       expect(await element(by.id('context-name')).getAttribute('class')).toContain('error');
       expect(await element.all(by.css('.message-text')).get(0).getText()).toEqual('Email address not valid');
-
-      await element(by.id('context-desc')).click();
-      await element(by.id('context-name')).click();
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element.all(by.className('error')).get(1)), config.waitsFor);
-
-      expect(await element(by.id('context-desc')).getAttribute('class')).toContain('error');
-      expect(await element.all(by.css('.message-text')).get(0).getText()).toEqual('Email address not valid');
     });
   }
 });
