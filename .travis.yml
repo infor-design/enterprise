@@ -1,11 +1,12 @@
-language:
-  node_js
-  - 9
+language: node_js
+node_js:
+  - "9"
 # @TODO: fix sudo workaround
 # https://github.com/travis-ci/travis-ci/issues/8836#issuecomment-356362524
 sudo: required
-addons:
-  chrome: stable
+# Run latest stable Chrome, and other packages
+before_install:
+  - sudo apt-get -qq update
 cache:
   directories:
     - node_modules
@@ -15,9 +16,11 @@ install:
 before_script:
   - npm run eslint:error-only
 script:
-  - npm run start
+  - npm run build
+  - npm run quickstart &
   - npm run functional:ci
   - npm run e2e:ci
+  - npm run stop
 deploy:
     # DEPLOY BUILD TO DEMO SERVER
     # this runs conditionally `on`

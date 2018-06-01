@@ -65,8 +65,7 @@ describe('Autocomplete example-index tests', () => {
     });
   }
 
-  it('Should clear a dirty autocomplete field with `alt + backspace/del`', async () => {
-    debugger;
+  xit('Should clear a dirty autocomplete field with `alt + backspace/del`', async () => {
     await clickOnAutocomplete();
     const autocompleteEl = await element(by.css('#autocomplete-default'));
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitFor);
@@ -75,7 +74,6 @@ describe('Autocomplete example-index tests', () => {
     await autocompleteEl.sendKeys('new');
     await browser.driver.wait(protractor.ExpectedConditions.presenceOf(await element(by.id('autocomplete-list'))), config.waitFor);
     await element(by.css('#autocomplete-default')).sendKeys(protractor.Key.chord(protractor.Key.ALT, protractor.Key.BACK_SPACE));
-    await browser.driver.switchTo().activeElement().clear();
     await browser.driver
       .wait(protractor.ExpectedConditions.stalenessOf(await element(by.id('autocomplete-list'))), config.waitsFor);
 
