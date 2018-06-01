@@ -253,7 +253,6 @@ describe('Timepicker states tests', () => {
 describe('Timepicker validation tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/timepicker/example-with-validation');
-    timepickerEl = await element(by.id('timepicker-main'));
   });
 
   it('Should have required css class in markup', async () => {
@@ -261,6 +260,7 @@ describe('Timepicker validation tests', () => {
   });
 
   it('Should check required rule', async () => {
+    const timepickerEl = await element(by.id('timepicker-main'));
     await timepickerEl.clear();
 
     expect(await timepickerEl.getAttribute('value')).toEqual('');
@@ -274,6 +274,7 @@ describe('Timepicker validation tests', () => {
   });
 
   it('Should check for invalid time rule', async () => {
+    const timepickerEl = await element(by.id('timepicker-main'));
     await timepickerEl.clear();
     await timepickerEl.sendKeys('1:00 A');
 
