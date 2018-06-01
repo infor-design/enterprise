@@ -38,7 +38,7 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width.
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
-* @param {object} [settings.onKeyDown = false]  If set to true, will provide a hook into to keydown behavior which can be cancelled.
+* @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
