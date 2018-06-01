@@ -324,9 +324,7 @@ Spinbox.prototype = {
       return;
     }
 
-    const isReadOnly = this.element.attr('readonly');
-
-    if (isReadOnly !== undefined && isReadOnly !== false) {
+    if (this.isReadonly()) {
       return;
     }
 
