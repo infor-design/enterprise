@@ -16,7 +16,7 @@ exports.config = {
     theme:  process.env.ENTERPRISE_THEME || 'light'
   },
   allScriptsTimeout: 120000,
-  logLevel: 'DEBUG',
+  logLevel: 'INFO',
   specs: getSpecs(process.env.PROTRACTOR_SPECS),
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
