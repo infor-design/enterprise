@@ -1,7 +1,7 @@
 #!/bin/bash
 
-JENKINS_USER="jeeves"
-JENKINS_DOMAIN="hl-jenkins-dev.us-east-1.elasticbeanstalk.com"
+JENKINS_USER="Jenkins"
+JENKINS_DOMAIN="jenkins.design.infor.com:8080"
 JENKINS_JOB="soho4-swarm-deploy"
 JENKINS_URL="http://$JENKINS_USER:$JENKINS_SECRET@$JENKINS_DOMAIN"
 
