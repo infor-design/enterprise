@@ -134,9 +134,10 @@ describe('Modal example-validation tests', () => {
       await element(by.id('context-desc')).click();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(element(by.className('error'))), config.waitsFor);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('message-text'))), config.waitsFor);
 
-      expect(await element(by.id('context-name')).getAttribute('class')).toContain('error');
-      expect(await element.all(by.css('.message-text')).get(0).getText()).toEqual('Email address not valid');
+      expect(await element(by.className('message-text')).getText()).toEqual('Email address not valid');
     });
   }
 });
