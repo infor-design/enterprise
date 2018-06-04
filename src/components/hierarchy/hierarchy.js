@@ -161,6 +161,7 @@ Hierarchy.prototype = {
       const svgHref = target.find('use').prop('href');
       const isCollapseButton = svgHref ? svgHref.baseVal === '#icon-caret-up' : false;
       const isExpandButton = svgHref ? svgHref.baseVal === '#icon-caret-down' : false;
+      const isForward = svgHref ? svgHref.baseVal === '#icon-caret-right' : false;
       let eventType = 'selected';
 
       $('.is-selected').removeClass('is-selected');
@@ -180,6 +181,10 @@ Hierarchy.prototype = {
         eventType = 'back';
       }
 
+      if (isButton && isForward && isNotBack) {
+        eventType = 'forward';
+      }
+
       // Is right click event
       if (e.which === 3) {
         eventType = 'rightClick';
@@ -193,6 +198,8 @@ Hierarchy.prototype = {
         data: nodeData,
         targetInfo,
         eventType,
+        isForwardEvent: hierarchy.isForwardEvent(eventType),
+        isBackEvent: hierarchy.isBackEvent(eventType),
         isAddEvent: hierarchy.isAddEvent(eventType),
         isExpandEvent: hierarchy.isExpandEvent(),
         isCollapseEvent: hierarchy.isCollapseEvent(),
@@ -202,6 +209,26 @@ Hierarchy.prototype = {
 
       leaf.trigger('selected', eventInfo);
     });
+  },
+
+  /**
+   * Check if event is back
+   * @private
+   * @param {string} eventType is back
+   * @returns {boolean} true if back event
+   */
+  isBackEvent(eventType) {
+    return eventType === 'back';
+  },
+
+  /**
+   * Check if event is forward
+   * @private
+   * @param {string} eventType is forward
+   * @returns {boolean} true if forward event
+   */
+  isForwardEvent(eventType) {
+    return eventType === 'forward';
   },
 
   /**
@@ -584,7 +611,7 @@ Hierarchy.prototype = {
   */
   isSingleChildWithChildren() {
     const s = this.settings;
-    if (s.dataset && s.dataset[0].children) {
+    if (s.dataset && (s.dataset[0] && s.dataset[0].children)) {
       let i = s.dataset[0].children.length;
       let count = 0;
 
