@@ -350,3 +350,26 @@ describe('Tabs click example-dropdown-tabs tests', () => {
     expect(await element(by.id('tabs-dropdown-paper-plates')).getAttribute('class')).toContain('is-visible');
   });
 });
+
+describe('Tabs click example-url-hash-change tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/example-url-hash-change');
+    const tabsContainerEl = await element(by.id('tabs'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should correctly updated url on tab click', async () => {
+    await element.all(by.className('tab')).get(1).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.urlContains('tab-number-two'), config.waitsFor);
+
+    expect(await element.all(by.className('tab')).get(1).getAttribute('class')).toContain('is-selected');
+
+    await element.all(by.className('tab')).get(3).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.urlContains('tab-number-four'), config.waitsFor);
+
+    expect(await element.all(by.className('tab')).get(3).getAttribute('class')).toContain('is-selected');
+  });
+});
