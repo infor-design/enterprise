@@ -2,6 +2,12 @@ import { ListFilter } from '../../../src/components/listfilter/listfilter';
 
 const statesStringData = require('../../../app/data/states-string.json');
 
+const caseSensitiveData = [
+  'CALIFORNIA',
+  'california',
+  'CaLiFoRnIa'
+];
+
 let listfilterArrayAPI;
 
 describe('Listfilter API (against arrays of strings)', () => {
@@ -18,6 +24,14 @@ describe('Listfilter API (against arrays of strings)', () => {
     expect(listfilterArrayAPI).toBeDefined();
     expect(typeof listfilterArrayAPI.filter).toEqual('function');
     expect(listfilterArrayAPI.settings.filterMode).toEqual('startsWith');
+  });
+
+  it('can be updated with new settings', () => {
+    listfilterArrayAPI.updated({
+      filterMode: 'contains'
+    });
+
+    expect(listfilterArrayAPI.settings.filterMode).toEqual('contains');
   });
 
   it('returns `false` if the incoming list is not an array or a jQuery Selector', () => {
@@ -45,5 +59,24 @@ describe('Listfilter API (against arrays of strings)', () => {
 
     expect(items).toBeDefined();
     expect(items).toEqual(false);
+  });
+
+  it('can implement case-agnostic filtering', () => {
+    const items = listfilterArrayAPI.filter(caseSensitiveData, 'calif');
+
+    expect(items).toBeDefined();
+    expect(items.length).toBe(3); // should get all results
+  });
+
+  // NOTE: test is skipped because this doesn't currently work.
+  // SOHO-8083 has been raised to address it.
+  xit('can implement case-sensitive filtering', () => {
+    listfilterArrayAPI.updated({
+      caseSensitive: true
+    });
+    const items = listfilterArrayAPI.filter(caseSensitiveData, 'calif');
+
+    expect(items).toBeDefined();
+    expect(items.length).toBe(1); // should ONLY get the lowercase result
   });
 });
