@@ -215,7 +215,7 @@ describe('Multiselect example-select-all-performance tests', () => {
     await utils.setPage('/components/multiselect/test-select-all-performance');
   });
 
-  it('Should select all performance test', async () => {
+  xit('Should select all performance test', async () => {
     const timer = setTimer();
     await clickOnMultiselect();
     await browser.driver
@@ -233,7 +233,7 @@ describe('Multiselect example-select-all-performance tests', () => {
     expect(timer.elapsed).toBeLessThan(1300);
   });
 
-  it('Should clear all selected performance test', async () => {
+  xit('Should clear all selected performance test', async () => {
     const timer = setTimer();
     await clickOnMultiselect();
     await browser.driver
