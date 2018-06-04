@@ -103,6 +103,8 @@ describe('Timepicker 24 Hour tests', () => {
 
     expect(await dropdownEl.getText()).toEqual('25');
     await element(by.css('.set-time')).sendKeys(protractor.Key.SPACE);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.stalenessOf(element(by.css('.timepicker.is-open'))), config.waitsFor);
 
     expect(await element(by.id('timepicker-24hrs')).getAttribute('value')).toEqual('21:25');
   });
