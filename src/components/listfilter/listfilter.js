@@ -162,6 +162,11 @@ ListFilter.prototype = {
       items = $(items);
     }
 
+    // If we're not dealing with jQuery, an empty array shouldn't be returned.
+    if (!isJQuery && !items.length) {
+      return false;
+    }
+
     return items;
   },
 
