@@ -555,7 +555,7 @@ Modal.prototype = {
     $(this.element).on('keypress.modal', (e) => {
       const target = $(e.target);
 
-      if (target.is('.searchfield') || target.is('textarea') || target.is(':button') || target.is('.dropdown') || target.closest('.tab-list').length) {
+      if (target.is('.dropdown, .editor, .searchfield, textarea, :button') || target.closest('.tab-list').length) {
         return;
       }
 
