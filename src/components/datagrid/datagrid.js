@@ -46,6 +46,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.saveUserSettings.pageSize=true]
  * @param {object}   [settings.saveUserSettings.activePage=true]
  * @param {object}   [settings.saveUserSettings.filter=true]
+ * @param {boolean}  [settings.focusAfterSort=false] If true will focus the active cell after sorting.
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
  * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
  * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
@@ -114,6 +115,7 @@ const DATAGRID_DEFAULTS = {
   columnReorder: false, // Allow Column reorder
   saveColumns: false, // Save Column Reorder and resize
   saveUserSettings: {},
+  focusAfterSort: false, // If true will focus the active cell after sorting.
   editable: false,
   isList: false, // Makes a readonly "list"
   menuId: null, // Id to the right click context menu
@@ -7476,6 +7478,10 @@ Datagrid.prototype = {
     // Do Sort on Data Set
     this.setSortIndicator(id, ascending);
     this.sortDataset();
+
+    if (!this.settings.focusAfterSort && this.activeCell && this.activeCell.isFocused) {
+      this.activeCell.isFocused = false;
+    }
 
     const wasFocused = this.activeCell.isFocused;
     this.setTreeDepth();
