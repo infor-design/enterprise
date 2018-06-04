@@ -4192,7 +4192,7 @@ Datagrid.prototype = {
     const self = this;
     const cell = $(e.target).closest('td').index();
     const rowElem = $(e.target).closest('tr');
-    let row = self.dataRowIndex(rowElem);
+    let row = this.settings.treeGrid ? this.actualRowIndex(rowElem) : this.dataRowIndex(rowElem);
     let isTrigger = true;
 
     if ($(e.target).is('a')) {
