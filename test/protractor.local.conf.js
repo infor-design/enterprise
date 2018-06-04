@@ -16,11 +16,11 @@ exports.config = {
     theme:  process.env.ENTERPRISE_THEME || 'light'
   },
   allScriptsTimeout: 120000,
-  logLevel: 'INFO',
+  logLevel: 'DEBUG',
   specs: getSpecs(process.env.PROTRACTOR_SPECS),
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
-    browserName: 'chrome'
+    browserName: 'chrome' || 'firefox' // Use Chrome or Firefox directly, defaults to Chrome
   },
   directConnect: true,
   baseUrl: 'http://localhost:4000',

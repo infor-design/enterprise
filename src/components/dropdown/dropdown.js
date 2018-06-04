@@ -38,8 +38,8 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width.
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
+* @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
 */
-
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
   cssClass: null,
@@ -57,7 +57,8 @@ const DROPDOWN_DEFAULTS = {
   empty: false,
   delay: 300,
   maxWidth: null,
-  placementOpts: null
+  placementOpts: null,
+  onKeyDown: null
 };
 
 function Dropdown(element, settings) {
@@ -258,6 +259,8 @@ Dropdown.prototype = {
     this.listfilter = new ListFilter({
       filterMode: this.settings.filterMode
     });
+
+    this.tooltipApi = null;
 
     this.setListIcon();
     this.setValue();
@@ -1012,6 +1015,15 @@ Dropdown.prototype = {
       return;
     }
 
+    if (self.settings.onKeyDown) {
+      const ret = self.settings.onKeyDown(e);
+      if (ret === false) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false; //eslint-disable-line
+      }
+    }
+
     // Down arrow, Up arrow, or Spacebar to open
     if (!self.isOpen() && (key === 38 || key === 40 || key === 32)) {
       self.toggleList();
@@ -1262,20 +1274,13 @@ Dropdown.prototype = {
 
     selectText();
 
-    function setFocus() {
-      if (document.activeElement === input[0] || !$(document.activeElement).is('body')) {
-        return;
-      }
-      input[0].focus();
-    }
-
     // Set focus back to the element
     if (self.isIe10 || self.isIe11) {
       setTimeout(() => {
-        setFocus();
+        input[0].focus();
       }, 0);
     } else {
-      setFocus();
+      input[0].focus();
     }
   },
 
@@ -2022,7 +2027,7 @@ Dropdown.prototype = {
 
     const code = option.val();
     let val = this.element.val();
-    const oldText = this.pseudoElem.text();
+    const oldCode = this.element.find('option:selected').val();
     let text = '';
     let trimmed = '';
     let clearSelection = false;
@@ -2078,9 +2083,10 @@ Dropdown.prototype = {
         }
       });
     }
+
     // If we're working with a single select and the value hasn't changed, just return without
     // firing a change event
-    if (text === oldText) {
+    if (code === oldCode) {
       return;
     }
 
@@ -2112,6 +2118,18 @@ Dropdown.prototype = {
     if (!noTrigger) {
       // Fire the change event with the new value if the noTrigger flag isn't set
       this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
+
+      if (this.pseudoElem.find('span').width() >= this.pseudoElem.width()) {
+        const opts = this.element.find('option:selected');
+        const optText = this.getOptionText(opts);
+
+        this.tooltipApi = this.pseudoElem.find('span').tooltip({
+          content: optText,
+          trigger: 'hover',
+        });
+      } else if (this.tooltipApi) {
+        this.tooltipApi.destroy();
+      }
     }
 
     /**

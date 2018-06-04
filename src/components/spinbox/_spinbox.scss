@@ -52,7 +52,7 @@ input::-webkit-inner-spin-button {
   height: 34px;
   line-height: normal;
   overflow: hidden;
-  padding: 9px 10px;
+  padding: 7px 10px;
   position: relative;
   resize: none;
   text-align: center;
@@ -136,6 +136,15 @@ input::-webkit-inner-spin-button {
       color: $disabled-color;
       cursor: default;
       -webkit-text-fill-color: $disabled-color;
+    }
+  }
+
+  &.is-readonly {
+    > .spinbox-control {
+      background-color: $input-readonly-bg-color;
+      color: $input-readonly-color;
+      cursor: default;
+      -webkit-text-fill-color: $input-readonly-color;
     }
   }
 

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 const cp = require('child_process');
-const pjson = require('../publish/package.json');
+const pjson = require('../ids-enterprise/package.json');
 
 let commitHash = '';
 

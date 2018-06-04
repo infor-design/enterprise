@@ -11,7 +11,7 @@
       { 'value' : 'O',  'label' : 'Open Position' }
     ];
 
-    $('#hierarchy').hierarchy({
+  $('#hierarchy').hierarchy({
       templateId: 'hierarchyChartTemplate',
       legendKey: 'EmploymentType',
       legend: legendData,
@@ -20,7 +20,6 @@
   });
 
   $('#hierarchy').on('selected', function(event, eventInfo) {
-    console.log(event, eventInfo);
     var hierarchyControl = $('#hierarchy').data('hierarchy');
 
     if (eventInfo.allowLazyLoad) {

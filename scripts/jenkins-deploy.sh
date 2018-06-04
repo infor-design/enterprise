@@ -1,7 +1,7 @@
 #!/bin/bash
 
-JENKINS_USER="jeeves"
-JENKINS_DOMAIN="hl-jenkins-dev.us-east-1.elasticbeanstalk.com"
+JENKINS_USER="Jenkins"
+JENKINS_DOMAIN="jenkins.design.infor.com:8080"
 JENKINS_JOB="soho4-swarm-deploy"
 JENKINS_URL="http://$JENKINS_USER:$JENKINS_SECRET@$JENKINS_DOMAIN"
 
@@ -43,6 +43,11 @@ get_build_number () {
     build_number=$(curl -s $JENKINS_URL/job/$JENKINS_JOB/lastBuild/api/json | \
         python -c "import sys, json; print json.load(sys.stdin)['number']")
     echo $build_number
+}
+
+get_build_log () {
+    build_log=$(curl -s $JENKINS_URL/job/$JENKINS_JOB/lastBuild/consoleText)
+    echo "$build_log"
 }
 
 stop_jenkins_build () {
@@ -109,6 +114,11 @@ if [ $WATCH_FOR_BUILD_STATUS = true ]; then
             exit 0
         else
             echo "" # new line
+            echo "$BUILD_STATUS! See log for details:"
+            echo "" # new line
+            while IFS='\n' read -r line; do
+                printf "\t%s\n" "$line"
+            done <<< "$(get_build_log)"
             echo "Build was ended with status: $BUILD_STATUS!"
             exit 1
         fi

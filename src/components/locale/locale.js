@@ -37,6 +37,10 @@ const Locale = {  // eslint-disable-line
     } else {
       html.removeAttr('dir');
     }
+
+    if (!Locale.isRTL()) { // Will remove it after flipping
+      $('body').removeClass('busy-loading-locale');
+    }
   },
 
   /**
@@ -175,15 +179,17 @@ const Locale = {  // eslint-disable-line
    */
   appendLocaleScript(locale, isCurrent) {
     const script = document.createElement('script');
-
     script.src = `${this.getCulturesPath() + locale}.js`;
+
     script.onload = () => {
       if (isCurrent) {
         this.setCurrentLocale(locale, this.cultures[locale]);
       }
       this.addCulture(locale, this.currentLocale.data);
 
-      this.dff.resolve(this.currentLocale.name);
+      if (isCurrent) {
+        this.dff.resolve(this.currentLocale.name);
+      }
     };
 
     script.onerror = () => {
@@ -222,17 +228,15 @@ const Locale = {  // eslint-disable-line
       return this.dff.promise();
     }
 
+    if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
+      this.appendLocaleScript('en-US', false);
+    }
+
     if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
       this.setCurrentLocale(locale);
       // Fetch the local and cache it
       this.appendLocaleScript(locale, true);
     }
-
-    setTimeout(() => {
-      if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
-        this.appendLocaleScript('en-US', false);
-      }
-    }, 0);
 
     if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
       self.dff.resolve(self.currentLocale.name);
@@ -981,7 +985,8 @@ const Locale = {  // eslint-disable-line
 
     if (this.currentLocale.data.messages[key] === undefined) {
       // Substitue English Expression if missing
-      if (!this.cultures['en-US'] || this.cultures['en-US'].messages[key] === undefined) {
+      if (!this.cultures || !this.cultures['en-US'] || !this.cultures['en-US'].messages
+          || this.cultures['en-US'].messages[key] === undefined) {
         return showAsUndefined ? undefined : `[${key}]`;
       }
       return this.cultures['en-US'].messages[key].value;
@@ -1282,6 +1287,7 @@ $(() => {
     // ICONS: Right to Left Direction
     if (Locale && Locale.isRTL()) {
       Locale.flipIconsHorizontally();
+      $('body').removeClass('busy-loading-locale');
     }
   }, 50);
 });

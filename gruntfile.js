@@ -19,34 +19,30 @@ module.exports = function (grunt) {
   const run = require('./scripts/configs/run.js');
 
   let selectedControls = dependencyBuilder(grunt);
-  let bannerText = '/**\n* Soho XI Controls v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/\n';
+  let bannerText = '/**\n* IDS Enterprise Components v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/\n';
 
   if (selectedControls) {
     const bannerList = strBanner(selectedControls);
-    bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* ${bannerList}\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/ \n`;
+    bannerText = `/**\n* IDS Enterprise Components v<%= pkg.version %>\n* ${bannerList}\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/ \n`;
   } else {
     selectedControls = controls;
   }
 
   const config = {
-    pkg: grunt.file.readJSON('publish/package.json'),
-
+    pkg: grunt.file.readJSON('ids-enterprise/package.json'),
     banner: bannerText,
-
     exec: {
-      build: {
-        cmd: 'npm run build'
+      rollup: {
+        cmd: 'npx rollup -c'
       },
-
       documentation: {
         cmd: (componentName) => {
           componentName = componentName || '';
           return `npm run documentation ${componentName}`;
         }
       },
-
       minify: {
-        cmd: 'npm run minify'
+        cmd: 'node ./scripts/minify.js'
       }
     },
   };
@@ -87,15 +83,21 @@ module.exports = function (grunt) {
     'build:sass'
   ]);
 
+  // Demo build tasks
+  grunt.registerTask('demo', [
+    'clean:app',
+    'sass:app'
+  ]);
+
   // Javascript Build Tasks
   // The first one doesn't minify (expensive, time-wise)
   grunt.registerTask('build:js', [
-    'exec:build',
+    'exec:rollup',
     'copy:main'
   ]);
 
   grunt.registerTask('build:js:min', [
-    'exec:build',
+    'exec:rollup',
     'exec:minify',
     'copy:main'
   ]);
@@ -108,7 +110,7 @@ module.exports = function (grunt) {
   ]);
 
   // Publish for NPM
-  grunt.registerTask('publish', [
+  grunt.registerTask('packup', [
     'default',
     'clean:publish',
     'copy:publish'
