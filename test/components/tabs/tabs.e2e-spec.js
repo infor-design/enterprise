@@ -231,7 +231,7 @@ describe('Tabs keyboard example-index tests', () => {
 
 describe('Tabs click example-add-tab button tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/tabs/example-add-tab-button.html');
+    await utils.setPage('/components/tabs/example-add-tab-button');
     const tabsEl = await element(by.id('tab1'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
@@ -320,5 +320,33 @@ describe('Tabs click example-add-tab button tests', () => {
 
     expect(await element.all(by.className('tab')).get(4).getAttribute('class')).toContain('is-selected');
     await browser.driver.manage().window().setSize(windowSize.width, windowSize.height);
+  });
+});
+
+describe('Tabs click example-dropdown-tabs tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/tabs/example-dropdown-tabs');
+    const tabsContainerEl = await element(by.className('tab-list-container'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
+  });
+
+  it('Should open dropdown tab', async () => {
+    await element.all(by.className('tab')).get(1).click();
+
+    expect(await element.all(by.className('tab')).get(1).getAttribute('class')).toContain('is-open');
+  });
+
+  it('Should select dropdown tab on click', async () => {
+    await element.all(by.className('tab')).get(1).click();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.is-open'))), config.waitsFor);
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('.dropdown-tab'))), config.waitsFor);
+    await element.all(by.css('.dropdown-tab li')).get(1).click();
+
+    expect(await element(by.id('tabs-dropdown-paper-plates')).getAttribute('class')).toContain('can-show');
+    expect(await element(by.id('tabs-dropdown-paper-plates')).getAttribute('class')).toContain('tab-panel');
+    expect(await element(by.id('tabs-dropdown-paper-plates')).getAttribute('class')).toContain('is-visible');
   });
 });
