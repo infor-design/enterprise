@@ -2071,7 +2071,7 @@ Dropdown.prototype = {
 
     const code = option.val();
     let val = this.element.val();
-    const oldCode = this.element.find('option:selected').val();
+    const oldCode = this.element.find('option.is-selected').val();
     let text = '';
     let trimmed = '';
     let clearSelection = false;
