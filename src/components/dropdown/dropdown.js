@@ -2590,6 +2590,7 @@ Dropdown.prototype = {
     this.wrapper.remove();
     this.listfilter.destroy();
     this.element.removeAttr('style');
+    $('#dropdown-list').remove();
   },
 
   /**
