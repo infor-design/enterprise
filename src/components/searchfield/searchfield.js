@@ -466,7 +466,6 @@ SearchField.prototype = {
       this.elemBeforeWrapper = null;
     }
 
-    this.removeDocumentDeactivationEvents();
     $(this.toolbarParent).triggerHandler('scrollup');
     utils.fixSVGIcons(this.wrapper);
 
