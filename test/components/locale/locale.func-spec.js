@@ -802,7 +802,7 @@ describe('Locale API', () => {
   });
 
   it('Should parse dates with and without spaces, dash, comma format', () => {
-    Locale.set('en_US');
+    Locale.set('en-US');
 
     // Date with spaces, dashes and comma
     expect(Locale.parseDate('2014-12-11', 'yyyy-MM-dd').getTime()).toEqual(new Date(2014, 11, 11, 0, 0, 0).getTime());
