@@ -427,10 +427,11 @@ Slider.prototype = {
 
     self.checkHandleDifference(targetHandle, targetOldVal, rangeVal);
 
+    const moveBy = self.settings.step ? self.settings.step : 0;
     if (rangeVal < targetOldVal) {
-      self.decreaseValue(e, targetHandle, rangeVal, 0);
+      self.decreaseValue(e, targetHandle, rangeVal, moveBy);
     } else {
-      self.increaseValue(e, targetHandle, rangeVal, 0);
+      self.increaseValue(e, targetHandle, rangeVal, moveBy);
     }
 
     // Tooltip repositioner will focus the handle after positioning occurs, but if
