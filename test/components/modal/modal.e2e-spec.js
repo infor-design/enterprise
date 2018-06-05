@@ -130,12 +130,11 @@ describe('Modal example-validation tests', () => {
 
     it('Should show validation errors in modal', async () => {
       await element(by.id('context-name')).click();
+      await browser.driver.sleep(config.sleep);
       await element(by.id('context-name')).sendKeys('to');
+      await browser.driver.sleep(config.sleep);
       await element(by.id('context-desc')).click();
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('error'))), config.waitsFor);
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('message-text'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
       expect(await element(by.className('message-text')).getText()).toEqual('Email address not valid');
     });
