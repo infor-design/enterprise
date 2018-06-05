@@ -5,11 +5,17 @@ demo:
   pages:
   - name: Rating Example
     slug: example-index
+  - name: Readonly Example
+    slug: example-readonly
+  - name: Rounding Decimals Up Example
+    slug: example-decimals
 ---
 
 ## Code Example
 
 The rating component can be used to either display a rating or allow the end user to select a rating. Half star ratings can be displayed but not set. You can implement the rating control by using the below markup consisting of a block element (a `<div>`) with `class="rating"`, then any number of `<inputs>` followed by `<labels>` for the stars. The `<label>` element should contain an SVG image with the star. An `audible` class should also be added for accessibility. Under the hood, the rating component is actually a set of radio buttons.
+
+Note that the name should be the same for all stars for it to function correctly.
 
 ```html
 <div class="rating">
