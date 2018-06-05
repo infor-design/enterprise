@@ -3414,7 +3414,7 @@ Datagrid.prototype = {
           cell.data('tooltip').settings.maxWidth = w;
 
           clonedEl.remove();
-          return text;
+          return stringUtils.stripHTML(text);
         }
 
         clonedEl.remove();
