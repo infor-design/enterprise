@@ -2590,7 +2590,11 @@ Dropdown.prototype = {
     this.wrapper.remove();
     this.listfilter.destroy();
     this.element.removeAttr('style');
-    $('#dropdown-list').remove();
+
+    const list = document.body.querySelector('#dropdown-list');
+    if (list) {
+      list.parentNode.removeChild(list);
+    }
   },
 
   /**
