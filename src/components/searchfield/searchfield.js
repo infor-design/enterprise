@@ -770,23 +770,6 @@ SearchField.prototype = {
   },
 
   /**
-   * If located inside a toolbar element, setup a timed event that will send a
-   * signal to the parent toolbar, telling it to recalculate which buttons are visible.
-   * Needs to be done after a CSS animation on the searchfield finishes.
-   * @private
-   * @returns {void}
-   */
-  recalculateParent() {
-    const toolbar = this.element.closest('.toolbar');
-    if (toolbar.length) {
-      // TODO: Bolster this to work with CSS TransitonEnd
-      setTimeout(() => {
-        toolbar.triggerHandler('recalculate-buttons');
-      }, 300);
-    }
-  },
-
-  /**
    * Activates a toolbar-based searchfield and keeps it "open".  Instead of closing
    * it on blur, sets up an explicit, out-of-bounds click/tap that will serve to close
    * it when the user acts.
@@ -1531,30 +1514,22 @@ SearchField.prototype = {
     const self = this;
     const notFullWidth = !this.shouldBeFullWidth();
 
-    /*
-    if (this.isActive()) {
-      return;
-    }
-    */
-
-    let containerSizeSetters;
-
     // Places the input wrapper into the toolbar on smaller breakpoints
     if (!notFullWidth) {
       this.appendToParent();
-    } else {
-      // Re-adjust the size of the buttonset element if the expanded searchfield would be
-      // too large to fit.
-      let buttonsetWidth = 0;
-      if (this.buttonsetElem) {
-        buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width, 10);
-      }
-
-      const buttonsetElemWidth = buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE;
-      containerSizeSetters = {
-        buttonset: buttonsetElemWidth
-      };
     }
+
+    // Re-adjust the size of the buttonset element if the expanded searchfield would be
+    // too large to fit.
+    let buttonsetWidth = 0;
+    if (this.buttonsetElem) {
+      buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width, 10);
+    }
+
+    const buttonsetElemWidth = buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE;
+    const containerSizeSetters = {
+      buttonset: buttonsetElemWidth
+    };
 
     this.addDocumentDeactivationEvents();
 
@@ -1580,7 +1555,6 @@ SearchField.prototype = {
     if (containerSizeSetters) {
       eventArgs.push(containerSizeSetters);
     }
-    $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
 
     self.wrapper.one($.fn.transitionEndName(), () => {
       if (!self.isFocused && self.hasFocus() && document.activeElement !== self.input[0]) {
