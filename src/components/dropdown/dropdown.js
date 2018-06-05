@@ -2069,9 +2069,8 @@ Dropdown.prototype = {
       return;
     }
 
-    const code = option.val();
+    const optionVal = option.val();
     let val = this.element.val();
-    const oldCode = this.element.find('option:selected').val();
     let text = '';
     let trimmed = '';
     let clearSelection = false;
@@ -2088,8 +2087,8 @@ Dropdown.prototype = {
       if (!val) {
         val = [];
       }
-      if ($.inArray(code, val) !== -1) {
-        val = $.grep(val, optionValue => optionValue !== code);
+      if ($.inArray(optionVal, val) !== -1) {
+        val = $.grep(val, optionValue => optionValue !== optionVal);
         li.removeClass('is-selected');
         this.previousActiveDescendant = undefined;
         isAdded = false;
@@ -2100,7 +2099,7 @@ Dropdown.prototype = {
         }
 
         val = typeof val === 'string' ? [val] : val;
-        val.push(code);
+        val.push(optionVal);
         li.addClass('is-selected');
         this.previousActiveDescendant = option.val();
       }
@@ -2111,7 +2110,7 @@ Dropdown.prototype = {
       text = this.getOptionText(newOptions);
     } else {
       // Working with a single select
-      val = code;
+      val = optionVal;
       this.listUl.find('li.is-selected').removeClass('is-selected');
       if (!clearSelection) {
         li.addClass('is-selected');
@@ -2121,17 +2120,11 @@ Dropdown.prototype = {
     }
     if (!clearSelection) {
       this.element.find('option').each(function () {  //eslint-disable-line
-        if (this.value === code) {
+        if (this.value === optionVal) {
           this.selected = true;
           return false;
         }
       });
-    }
-
-    // If we're working with a single select and the value hasn't changed, just return without
-    // firing a change event
-    if (code === oldCode) {
-      return;
     }
 
     // Change the values of both inputs and swap out the active descendant
@@ -2597,6 +2590,11 @@ Dropdown.prototype = {
     this.wrapper.remove();
     this.listfilter.destroy();
     this.element.removeAttr('style');
+
+    const list = document.body.querySelector('#dropdown-list');
+    if (list) {
+      list.parentNode.removeChild(list);
+    }
   },
 
   /**

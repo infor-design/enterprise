@@ -130,4 +130,38 @@ describe('Dropdown updates, events', () => {
     expect(searchInput[0].value).toBe('New Jersey');
     done();
   });
+
+  it('should trigger change event on click', () => {
+    const spyEvent = spyOnEvent('select.dropdown', 'change');
+    dropdownObj.open();
+    document.body.querySelectorAll('.dropdown-option')[0].click();
+
+    expect(spyEvent).toHaveBeenTriggered();
+  });
+
+  it('should trigger change event on duplicate label', () => {
+    // Make some dup labels
+    const options = document.body.querySelectorAll('option');
+    options[0].innerText = 'Dup';
+    options[1].innerText = 'Dup';
+
+    // Try to select them and make sure you always get an event
+    const spyEvent = spyOnEvent('select.dropdown', 'change');
+    dropdownObj.updated();
+    dropdownObj.open();
+    document.body.querySelectorAll('.dropdown-option')[0].click();
+
+    expect(spyEvent).toHaveBeenTriggered();
+
+    document.body.querySelectorAll('.dropdown-option')[1].click();
+
+    expect(spyEvent).toHaveBeenTriggered();
+
+    // Set back the output
+    options[0].innerText = 'Alabama';
+    options[1].innerText = 'Alaska';
+    dropdownObj.updated();
+    dropdownObj.open();
+    document.body.querySelectorAll('.dropdown-option')[0].click();
+  });
 });
