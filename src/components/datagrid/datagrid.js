@@ -6829,6 +6829,12 @@ Datagrid.prototype = {
     if (col.serialize) {
       newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
       return newVal;
+    } else if (col.sourceFormat) {
+      if (value instanceof Date) {
+        newVal = Locale.parseDate(value, col.sourceFormat);
+      } else {
+        newVal = Locale.formatDate(value, { pattern: col.sourceFormat });
+      }
     } else if (typeof oldVal === 'number' && value) {
       newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
     }

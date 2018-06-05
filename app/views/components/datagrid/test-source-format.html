@@ -53,6 +53,8 @@
         menuId: 'grid-actions-menu',
         editable: true,
         filterable: true
+      }).on('cellchange', function (e, args) {
+        alert("Source Format (" + args.column.sourceFormat + "): " + args.rowData.orderDate);
       });
 
     });
