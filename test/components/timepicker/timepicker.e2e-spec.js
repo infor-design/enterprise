@@ -84,7 +84,7 @@ describe('Timepicker 24 Hour tests', () => {
     expect(await element(by.className('is-open')).isDisplayed()).toBe(true);
   });
 
-  it('Should pick time from picker and set to field for 24 Hour', async () => {
+  xit('Should pick time from picker and set to field for 24 Hour', async () => {
     const timepickerEl = await element(by.id('timepicker-24hrs'));
     await timepickerEl.sendKeys('19:15');
     await element(by.css('.timepicker + .icon')).click();
