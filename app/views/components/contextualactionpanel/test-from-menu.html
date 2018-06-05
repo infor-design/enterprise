@@ -2,7 +2,6 @@
 <div class="row">
   <div class="six columns">
 
-    <span class="label">Contextual Action Panel from a Popup Menu</span>
     <button type="button" class="btn-menu">
       <span>Options</span>
     </button>
@@ -11,30 +10,98 @@
       <li><a href="#">...</a></li>
       <li><a href="#" class="contextual-action-panel-trigger">Open Contextual Action Panel</a></li>
     </ul>
-
-    <div class="contextual-action-panel">
+    <div class="contextual-action-panel" style="display: none;">
       <div class="toolbar">
-        <div class="title"></div>
+        <div class="title">Company Information</div>
         <div class="buttonset">
-          <button type="button" class="btn-secondary">
-            <svg class="icon" viewBox="0 0 32 32" focusable="false" aria-hidden="true" role="presentation">
+          <button class="btn" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-save"></use>
             </svg>
             <span>Save</span>
           </button>
           <div class="separator"></div>
-          <button type="button" class="btn-secondary btn-close">
-            <svg class="icon" viewBox="0 0 32 32" focusable="false" aria-hidden="true" role="presentation">
+          <button name="close" class="btn" type="button">
+            <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-close"></use>
             </svg>
             <span>Close</span>
           </button>
         </div>
       </div>
-      <div>
-        <p>Wikis tag engineer front-end world-class reinvent global, interfaces, "deliverables relationships customized user-centric, design enable, remix scalable, platforms e-tailers." Extensible enable vertical user-contributed web-readiness, create ecologies bleeding-edge granular, relationships incentivize long-tail integrate generate, niches reinvent scalable?</p>
-        <p>Syndicate granular Cluetrain embedded webservices wireless redefine, sexy compelling podcasts 24/7 post markets? Rss-capable mesh ROI; interactive, empower intuitive optimize. Widgets synergies world-class paradigms engage killer syndicate blogospheres, expedite tagclouds impactful clicks-and-mortar granular. Target, optimize efficient, "integrate efficient A-list extend compelling." Grow podcasting networking wikis deploy metrics holistic expedite engage world-class engage capture facilitate users content turn-key web-enabled, "synergistic deliverables."</p>
-        <p>Web-enabled semantic standards-compliant, blogospheres incubate enable 24/7 user-contributed intuitive." Grow addelivery, solutions scale long-tail niches reintermediate user-centred cutting-edge communities weblogs; holistic incubate, "disintermediate maximize streamline design systems systems compelling."</p>
+      <div class="row">
+        <div class="six columns">
+
+          <div class="field">
+            <label for="company-name">Company Name</label>
+            <select id="company-name" name="company-name" class="dropdown">
+              <option value="">None</option>
+              <option value="jawbone" selected>Jawbone, Inc.</option>
+              <option value="infor">Infor</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="purchase-form">Purchase Form</label>
+            <select id="purchase-form" name="purchase-form" class="dropdown">
+              <option value="">None</option>
+              <option value="3567" selected>3567</option>
+              <option value="3568">3568</option>
+              <option value="3569">3569</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="template">Template</label>
+            <select id="template" name="template" class="dropdown">
+              <option value="" selected>None</option>
+              <option value="1">Template #1</option>
+              <option value="2">Template #2</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes"></textarea>
+          </div>
+
+        </div>
+        <div class="six columns">
+
+          <div class="field">
+            <label for="ship-terms">Ship Terms</label>
+            <select id="ship-terms" name="ship-terms" class="dropdown">
+              <option value="">None</option>
+              <option value="default" selected>Default</option>
+              <option value="alternate">Alternate</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="ship-via">Ship Via</label>
+            <select id="ship-via" name="ship-via" class="dropdown">
+              <option value="">None</option>
+              <option value="freight" selected>Freight</option>
+              <option value="air">USPS Air</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="issue-method">Issue Method</label>
+            <select id="issue-method" name="issue-method" class="dropdown">
+              <option value="">None</option>
+              <option value="phone">Telephone</option>
+              <option value="email" selected>E-mail</option>
+              <option value="sms">SMS Message</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <input type="checkbox" id="po-box" name="po-box" class="checkbox" checked/>
+            <label for="po-box" class="checkbox-label">Freight</label>
+          </div>
+
+        </div>
       </div>
     </div>
 
