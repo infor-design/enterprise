@@ -72,7 +72,8 @@ module.exports = function (app, defaults) {
             ],
             'connect-src': [
               'self',
-              'http://myserver.com'
+              'http://myserver.com',
+              'ws://localhost:35729'
             ],
             'object-src': ['none'],
             'style-src': ['* data: http://* \'unsafe-inline\''],
@@ -94,9 +95,10 @@ module.exports = function (app, defaults) {
     // Disable live reload for IE
     const ua = req.headers['user-agent'];
     const isIE = /Windows NT/.test(ua) && (/Trident/.test(ua) || /Edge/.test(ua));
-    if (isIE || res.opts.csp || req.query.csp) {
+    if (isIE) {
       res.opts.enableLiveReload = false;
     }
+
     next();
   };
 };
