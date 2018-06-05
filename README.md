@@ -8,6 +8,7 @@ You can go to https://github.com/infor-design/enterprise and fork the repo.
 
 
 # Infor Design System's Enterprise Components
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=MmgvZ2tsa3pydTRlTklvNG9HZGYvMVlwdWRzWklWVWtXNEFFeVJXSG1raz0tLTZuR0J1Nllxd1pOTVJKaE4zRFVYUkE9PQ==--628ff7dc2ecde8982f3a89ad70cdcf252bdd8fba)](https://www.browserstack.com/automate/public-build/MmgvZ2tsa3pydTRlTklvNG9HZGYvMVlwdWRzWklWVWtXNEFFeVJXSG1raz0tLTZuR0J1Nllxd1pOTVJKaE4zRFVYUkE9PQ==--628ff7dc2ecde8982f3a89ad70cdcf252bdd8fba)
 
 Infor Design System's Enterprise component library is a framework-independent UI library consisting of CSS and JS that provides Infor product development teams, partners, and customers the tools to create user experiences that are approachable, focused, relevant, perceptive.
 
