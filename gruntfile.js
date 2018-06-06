@@ -10,7 +10,6 @@ module.exports = function (grunt) {
   const copy = require('./scripts/configs/copy.js');
   const cssmin = require('./scripts/configs/cssmin.js');
   const usebanner = require('./scripts/configs/usebanner.js');
-  const compress = require('./scripts/configs/compress.js');
   const meta = require('./scripts/configs/meta.js');
   const clean = require('./scripts/configs/clean.js');
   const dependencyBuilder = require('./scripts/dependencybuilder.js');
@@ -59,7 +58,6 @@ module.exports = function (grunt) {
     copy,
     cssmin,
     usebanner,
-    compress,
     run
   ));
 
@@ -70,11 +68,9 @@ module.exports = function (grunt) {
   // - Cleans up
   // - Builds
   // - Updates local documentation
-  // - Zips
   grunt.registerTask('default', [
     'clean',
-    'build',
-    'compress'
+    'build'
   ]);
 
   // Main build task (Gets everything)
