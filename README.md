@@ -1,12 +1,3 @@
-# :tada: Soho XI Has Moved to Github! :tada:
-
-Starting at the end of release `4.6.0`, we moved the Soho XI codebase to Github! What this means is now anyone can view and contribute to the codebase.
-
-There are two ways to go about using Github for development (as the [Bitbucket](http://git.infor.com/projects/SOHO/repos/controls/browse) will eventually be deprecated):
-
-You can go to https://github.com/infor-design/enterprise and fork the repo.
-
-
 # Infor Design System's Enterprise Components
 [![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=MmgvZ2tsa3pydTRlTklvNG9HZGYvMVlwdWRzWklWVWtXNEFFeVJXSG1raz0tLTZuR0J1Nllxd1pOTVJKaE4zRFVYUkE9PQ==--628ff7dc2ecde8982f3a89ad70cdcf252bdd8fba)](https://www.browserstack.com/automate/public-build/MmgvZ2tsa3pydTRlTklvNG9HZGYvMVlwdWRzWklWVWtXNEFFeVJXSG1raz0tLTZuR0J1Nllxd1pOTVJKaE4zRFVYUkE9PQ==--628ff7dc2ecde8982f3a89ad70cdcf252bdd8fba)
 
