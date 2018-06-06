@@ -36,7 +36,8 @@ exports.config = {
     'browserstack.local': false,
     'browserstack.networkLogs' : false,
     build: `${theme} theme: ci:bs e2e`,
-    name: `${theme} theme ci:bs e2e tests`
+    name: `${theme} theme ci:bs e2e tests`,
+    project: 'ids-enterprise-e2e-ci'
   },
   multiCapabilities: [
     {
