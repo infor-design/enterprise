@@ -115,6 +115,7 @@ ApplicationMenu.prototype = {
           '<input id="application-menu-searchfield" class="searchfield" /></div>').prependTo(this.element);
       }
 
+      this.element.addClass('has-searchfield');
       const self = this;
       this.searchfield.searchfield({
         clearable: true,

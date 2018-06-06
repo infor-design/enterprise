@@ -218,9 +218,13 @@ charts.addLegend = function (series, chartType, settings, container) {
   }
 
   const isTwoColumn = series[0].display && series[0].display === 'twocolumn';
-  const legend = isTwoColumn ? $(`<div class="chart-legend ${
+  let legend = isTwoColumn ? $(`<div class="chart-legend ${
     series[0].placement ? `is-${series[0].placement}` : 'is-bottom'}"></div>`) :
     $('<div class="chart-legend"></div>');
+
+  if ((chartType === 'pie' || chartType === 'donut') && settings.showMobile) {
+    legend = $('<div class="chart-legend"><div class="container"></div></div>');
+  }
 
   // Legend width
   let width = 0;
@@ -276,7 +280,11 @@ charts.addLegend = function (series, chartType, settings, container) {
     seriesLine = $(seriesLine);
     seriesLine.append(color, textBlock);
 
-    legend.append(seriesLine);
+    if ((chartType === 'pie' || chartType === 'donut') && settings.showMobile) {
+      legend.find('.container').append(seriesLine);
+    } else {
+      legend.append(seriesLine);
+    }
   }
 
   if (legend instanceof $) {
