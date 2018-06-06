@@ -291,12 +291,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.active {
       width: $toolbarsearchfield-max-width;
     }
-
-    &:not(.is-open) {
-      .searchfield {
-        padding-right: 0;
-      }
-    }
   }
 
   &.has-categories {
@@ -316,13 +310,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .searchfield {
       border: 1px solid transparent;
-      padding-right: 0;
       width: calc(100% - 39px);
     }
 
     &.show-category {
-      &.has-text {
-
+      .searchfield {
+        padding-left: 0;
       }
     }
 
@@ -585,7 +578,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
-    &.is-open.active {
+    &.is-open {
       .icon {
         fill: $searchfield-header-icon-color;
       }
@@ -593,7 +586,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   // Small adjustments for being the full-width toolbar searchfield
-  .toolbar > .toolbar-searchfield-wrapper.active {
+  .toolbar > .toolbar-searchfield-wrapper {
     .searchfield,
     .btn {
       // Don't be semi-transparent in this mode, since it sits over top of other things

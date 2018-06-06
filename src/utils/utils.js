@@ -466,9 +466,28 @@ $.fn.clearable = function () {
   this.element = $(this);
 
   // Create an X icon button styles in icons.scss
-  this.xButton = $.createIconElement({ classes: 'close is-empty', icon: 'close' }).icon();
+  this.xButton = this.element.find('.icon.close').first();
+  if (!this.xButton || !this.xButton.length) {
+    this.xButton = $.createIconElement({ classes: 'close is-empty', icon: 'close' }).icon();
+  }
 
-  // Create a function
+  // Clears the contents of the base element
+  this.clear = function () {
+    self.element.val('').trigger('change').focus().trigger('cleared');
+    self.checkContents();
+  };
+
+  // Event listener for the xButton's `keydown` event
+  this.handleKeydown = function (e) {
+    const key = e.key;
+
+    if (key === 'Enter' || (e.altKey && (key === 'Delete' || key === 'Backspace'))) {
+      e.preventDefault();
+      self.clear();
+    }
+  };
+
+  // Checks the contents of the base element (presumably an input field) for empty
   this.checkContents = function () {
     const text = self.element.val();
     if (!text || !text.length) {
@@ -482,16 +501,16 @@ $.fn.clearable = function () {
 
   // Add the button to field parent
   this.xButton.insertAfter(self.element);
+  this.xButton[0].tabIndex = 0;
+  this.xButton[0].setAttribute('focusable', true);
 
   // Handle Events
   this.xButton
     .off()
-    .on('click.clearable', () => {
-      self.element.val('').trigger('change').focus().trigger('cleared');
-      self.checkContents();
-    });
+    .on('click.clearable', this.clear)
+    .on('keydown.clearable', this.handleKeydown);
 
-  this.element.on('change.clearable, blur.clearable, keyup.clearable', () => {
+  this.element.off().on('change.clearable, blur.clearable, keyup.clearable', () => {
     self.checkContents();
   });
 

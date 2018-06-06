@@ -629,8 +629,11 @@ SearchField.prototype = {
       .on(`beforeopen.${this.id}`, (e, menu) => { // propagates from Autocomplete's Popupmenu
         self.handlePopupBeforeOpen(e, menu);
       })
-      .on(`safe-blur.${this.id} listclose.${this.id}`, () => {
-        self.wrapper.removeClass('popup-is-open');
+      .on(`safe-blur.${this.id}`, () => { // Triggered by Autocomplete
+        self.handleSafeBlur();
+      })
+      .on(`listclose.${this.id}`, () => { // Triggered by Autocomplete
+        self.handleSafeBlur();
       });
 
     self.wrapper.on(`mouseenter.${this.id}`, function () {
@@ -640,22 +643,28 @@ SearchField.prototype = {
     });
 
     if (this.hasCategories()) {
-      this.categoryButton.on(`selected.${this.id}`, (e, anchor) => {
-        self.handleCategorySelected(e, anchor);
-        /*self.element.trigger('selected', [anchor]);*/
-      }).on(`focus.${this.id}`, (e) => {
-        self.handleCategoryFocus(e);
-      }).on(`blur.${this.id}`, (e) => {
-        self.handleCategoryBlur(e);
-      }).on(`close.${this.id}`, (e) => { // Popupmenu Close
-        self.handlePopupClose(e);
-      }).on(`beforeopen.${this.id}`, (e, menu) => { // Popupmenu beforeOpen
-        self.handlePopupBeforeOpen(e, menu)
-      });
+      this.categoryButton
+        .on(`selected.${this.id}`, (e, anchor) => {
+          self.handleCategorySelected(e, anchor);
+        })
+        .on(`focus.${this.id}`, (e) => {
+          self.handleCategoryFocus(e);
+        })
+        .on(`blur.${this.id}`, (e) => {
+          self.handleCategoryBlur(e);
+        })
+        .on(`close.${this.id}`, () => { // Popupmenu Close
+          self.handleSafeBlur();
+        })
+        .on(`beforeopen.${this.id}`, (e, menu) => { // Popupmenu beforeOpen
+          self.handlePopupBeforeOpen(e, menu);
+        });
     }
 
     if (self.hasGoButton()) {
-      self.goButton.on(`click.${this.id}`, e => self.handleGoButtonClick(e));
+      self.goButton
+        .on(`click.${this.id}`, e => self.handleGoButtonClick(e))
+        .on(`blur.${this.id}`, () => self.handleSafeBlur());
     }
 
     if (this.isCollapsible) {
@@ -682,23 +691,18 @@ SearchField.prototype = {
 
     if (this.toolbarParent) {
       $(this.toolbarParent).on(`navigate.${this.id}`, () => {
-        if (!self.hasFocus()) {
-          self.collapse();
+        if (self.hasFocus() || !self.isCurrentlyCollapsible) {
+          return;
         }
+        self.collapse();
       }).on(`reanimate.${this.id}`, () => {
         self.element.removeClass('no-transition no-animation');
         self.wrapper.removeClass('no-transition no-animation');
       });
     }
 
-    if (env.os.name === 'ios') {
-      this.element.on(`blur.${this.id}`, () => {
-        $('head').triggerHandler('disable-zoom');
-      });
-    }
-
     // Insert the "view more results" link on the Autocomplete control's "populated" event
-    self.element.off(`populated.${this.id}`).on(`populated.${this.id}`, (e, items) => {
+    self.element.on(`populated.${this.id}`, (e, items) => {
       if (items.length > 0) {
         if (self.settings.showAllResults) {
           self.addMoreLink();
@@ -808,12 +812,23 @@ SearchField.prototype = {
    */
   hasFocus() {
     const active = document.activeElement;
+    const wrapperElem = this.wrapper[0];
 
-    if ($.contains(this.wrapper[0], active)) {
+    // If another element inside the Searchfield Wrapper is focused, the entire component
+    // is considered "focused".
+    if (wrapperElem.contains(active)) {
       return true;
     }
 
-    // Don't close if a category is being selected from a category menu
+    // Retain focus if the autocomplete menu is focused
+    if (this.autocomplete) {
+      const autocompleteListElem = this.autocomplete.list;
+      if (autocompleteListElem && autocompleteListElem[0].contains(active)) {
+        return true;
+      }
+    }
+
+    // Retain focus if a category is being selected from a category menu
     if (this.categoryButton && this.categoryButton.length) {
       const menu = this.categoryButton.data('popupmenu').menu;
       if (menu.has(active).length) {
@@ -843,9 +858,51 @@ SearchField.prototype = {
    * @returns {void}
    */
   handleBlur() {
-    if (!this.hasFocus()) {
-      this.wrapper.removeClass('has-focus active');
+    const self = this;
+
+    if (env.os.name === 'ios') {
+      $('head').triggerHandler('disable-zoom');
     }
+
+    self.handleSafeBlur();
+  },
+
+  /**
+   * Custom event handler for Autocomplete's `safe-blur` and `listclose` events.
+   * Fired on the base element when any Autocomplete-related focusable element loses focus to
+   * something outside the Autocomplete's wrapper
+   * @private
+   * @returns {void}
+   */
+  handleSafeBlur() {
+    const self = this;
+    function safeBlurHandler() {
+      // Do a check for searchfield-specific elements
+      if (self.hasFocus()) {
+        return;
+      }
+
+      const wrapperElem = self.wrapper[0];
+
+      if (!self.isActive()) {
+        wrapperElem.classList.remove('active');
+      }
+
+      if (!self.hasFocus()) {
+        wrapperElem.classList.remove('has-focus');
+      }
+
+      if (self.isCurrentlyCollapsible) {
+        self.collapse();
+      }
+    }
+
+    // Stagger the check for the activeElement on a timeout in order to accurately detect focus.
+    if (this.blurTimer) {
+      clearTimeout(this.blurTimer);
+      delete this.blurTimer;
+    }
+    setTimeout(safeBlurHandler, 0);
   },
 
   /**
@@ -957,7 +1014,7 @@ SearchField.prototype = {
    * @returns {boolean} the ability to cancel the menu's opening.
    */
   handlePopupBeforeOpen(e, menu) {
-    if (!menu) {
+    if (!this.isExpanded || !menu) {
       return false;
     }
 
@@ -1320,6 +1377,10 @@ SearchField.prototype = {
 
     this.setCategoryButtonText(e, anchor.text().trim());
     this.calculateSearchfieldWidth();
+
+    if (!this.settings.categoryMultiselect) {
+      this.setAsActive(true, true);
+    }
   },
 
   /**
@@ -1339,13 +1400,7 @@ SearchField.prototype = {
    * @returns {undefined}
    */
   handleCategoryBlur() {
-    const self = this;
-
-    setTimeout(() => {
-      if (!self.hasFocus()) {
-        self.wrapper.removeClass('has-focus');
-      }
-    }, 1);
+    this.handleSafeBlur();
   },
 
   /**
@@ -1511,8 +1566,14 @@ SearchField.prototype = {
    * @returns {void}
    */
   expand(noFocus) {
+    if (this.isExpanded || this.isExpanding) {
+      return;
+    }
+
     const self = this;
     const notFullWidth = !this.shouldBeFullWidth();
+
+    this.isExpanding = true;
 
     // Places the input wrapper into the toolbar on smaller breakpoints
     if (!notFullWidth) {
@@ -1565,6 +1626,7 @@ SearchField.prototype = {
 
       $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
       self.wrapper.triggerHandler('expanded');
+      delete self.isExpanding;
       self.isExpanded = true;
     });
   },
@@ -1574,8 +1636,14 @@ SearchField.prototype = {
    * @returns {void}
    */
   collapse() {
+    if (!this.isExpanded || this.isCollapsing) {
+      return;
+    }
+
     const self = this;
     let textMethod = 'removeClass';
+
+    this.isCollapsing = true;
 
     // Puts the input wrapper back where it should be if it's been moved due to small form factors.
     this.appendToButtonset();
@@ -1615,13 +1683,15 @@ SearchField.prototype = {
 
     self.removeDocumentDeactivationEvents();
 
-    self.isExpanded = false;
-
     if (env.os.name === 'ios') {
       $('head').triggerHandler('enable-zoom');
     }
 
+    delete this.isExpanded;
+    delete this.isExpanding;
+
     self.wrapper.one($.fn.transitionEndName(), () => {
+      delete this.isCollapsing;
       $(self.toolbarParent).triggerHandler('recalculate-buttons');
     });
   },
@@ -1708,6 +1778,7 @@ SearchField.prototype = {
       `listopen.${this.id}`,
       `listclose.${this.id}`,
       `safe-blur.${this.id}`,
+      `populated.${this.id}`,
       `cleared.${this.id}`].join(' '));
 
     // ToolbarSearchfield events
@@ -1720,6 +1791,14 @@ SearchField.prototype = {
 
     if (this.toolbarParent) {
       $(this.toolbarParent).off('navigate.toolbarsearchfield');
+    }
+
+    if (this.goButton && this.goButton.length) {
+      this.goButton.off(`click.${this.id} blur.${this.id}`);
+    }
+
+    if (this.categoryButton && this.categoryButton.length) {
+      this.categoryButton.off();
     }
 
     // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
