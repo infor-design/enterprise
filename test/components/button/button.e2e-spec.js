@@ -13,18 +13,6 @@ describe('Button example-index tests', () => {
   });
 
   if (!utils.isSafari() && !utils.isIE()) {
-    if (utils.isChrome() && browser.params.theme === 'light') {
-      it('Should mouseover "Primary Button", and change background-color', async () => {
-        const buttonEl = await element.all(by.css('.btn-primary')).get(3);
-        await browser.driver
-          .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
-        await browser.driver.actions().mouseMove(buttonEl).perform();
-        await browser.driver.sleep(config.sleep);
-        // Value returned will be as the browser interprets it, tricky to form a proper assertion
-        expect(await buttonEl.getCssValue('background-color')).toBe('rgba(37, 120, 169, 1)');
-      });
-    }
-
     it('Should tab to "Primary Button", and animate on enter', async () => {
       const buttonEl = await element.all(by.css('.btn-primary')).get(3);
       const svgEl = await element.all(by.css('.btn-primary')).get(3).element(by.css('.ripple-effect'));

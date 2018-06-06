@@ -6,8 +6,19 @@ To develop in watch mode, please run
 `npm run functional:local`
 
 For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
-## Running Functional Tests Silently for Continuous Integration
-`npm run functional:ci`
+
+## Running Tests Silently for Continuous Integration (CI)
+```sh
+npm run functional:ci
+npm quickstart #demo app server needed for e2e:ci
+npm run e2e:ci
+```
+Check out the `.travis.yml` at root for actual implementation on Travis CI
+
+## Running BrowserStack Tests for Continuous Integration (CI) (WIP)
+This will be ran in the evening (EST) in NYC, and tests http://master-enterprise.demo.design.infor.com by default
+
+`npm run e2e:ci:bs`
 
 ## Running E2E Tests
 
@@ -35,25 +46,26 @@ export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
 
 ```sh
 npm start
-env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:bs
+env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local:bs
 ```
 
 #### Run E2E locally on High Contrast or Dark Theme (defaults to light theme)
 
 ```sh
 npm start
-env ENTERPRISE_THEME='high-contrast' npm run e2e:local
+env ENTERPRISE_THEME='high-contrast' npm run e2e:local:debug
 ```
 
 ```sh
 npm start
-env ENTERPRISE_THEME='dark' npm run e2e:local
+env ENTERPRISE_THEME='dark' npm run e2e:local:debug
 ```
 
 ```sh
 npm start
-npm run e2e:local
+npm run e2e:local:debug
 ```
+
 
 ## Debugging Functional Tests
 For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
@@ -68,7 +80,7 @@ For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 - Put a `debugger;` statement at a place in the test/code for example under the `res = await AxeBuilder` command.
 - Start the server normally with `node server`
-- In another terminal, run the functional test with `env PROTRACTOR_SPECS='kitchen-sink.e2e-spec.js' env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.conf.js` in watch mode
+- In another terminal, run the functional test with `env PROTRACTOR_SPECS='kitchen-sink.e2e-spec.js' env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js` in watch mode
 - In Chrome open `chrome://inspect` in a new tab.
 - Click 'Open dedicated DevTools for Node.
 - Hit Play on the debugger
@@ -119,7 +131,7 @@ Each browser has a different Selenium driver with different capabilities. We pla
 
 This a bit complex as the light theme is not completely WCAG AA... and per component in various states (open/close) may not be WCAG 2AA as well. Additional various rules are at the application level and not suitable for review on this level. Currently, this is a @TODO, we hope to enable rules like "color-contrast" which are critical to various users.
 
-## Problems
+## E2E Problems
  - Visual Regression
      - Maintaining baseline screenshots across different environments is problematic, and not consistent. The same machines need to run comparisons. Different machines can be generated their own screenshots, and compare them to screenshots on other system.
  - Browser driver differences

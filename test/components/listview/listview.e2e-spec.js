@@ -29,6 +29,9 @@ describe('Listview example-singleselect tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.textToBePresentInElement(element(by.className('selection-count')), '1 Selected'), config.waitsFor);
+
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
   });
 
@@ -48,7 +51,7 @@ describe('Listview example-singleselect tests', () => {
     expect(await element(by.css('li[aria-selected="false"]')).isPresent()).toBeTruthy();
   });
 
-  it('Should tab into, and select, arrow key down over disabled item, and select item on space key, ', async () => {
+  it('Should tab into, and select, arrow key down over disabled item, and select item on space key', async () => {
     const listviewEl = await element(by.id('period-end'));
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
     const listviewItemElTwo = await element(by.css('li[aria-posinset="2"]'));
@@ -92,6 +95,9 @@ describe('Listview example-multiselect tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('selection-count'))), config.waitsFor);
+
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
   });
 
@@ -140,7 +146,7 @@ describe('Listview example-multiselect tests', () => {
     expect(await element(by.className('selection-count')).getText()).toContain('2 Selected');
   });
 
-  it('Should tab into, arrow key down over disabled item, and select each item on space key, ', async () => {
+  it('Should tab into, arrow key down over disabled item, and select each item on space key', async () => {
     const listviewEl = await element(by.id('multiselect-listview'));
     await listviewEl.sendKeys(protractor.Key.TAB);
     const listviewItemElOne = await element(by.css('li[aria-posinset="1"]'));
