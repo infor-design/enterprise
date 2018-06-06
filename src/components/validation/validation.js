@@ -90,8 +90,18 @@ function ValidationRules() {
             const elem = $(this);
             const fieldValue = elem.is('.editor') ? elem.html() : elem.val();
 
+            if (elem[0].getAttribute('data-validate').trim() !== 'required') {
+              const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,16}(?:\.[a-z]{2})?)$/i;
+
+              if (fieldValue.length && !regex.test(fieldValue)) {
+                allFilled = false;
+                return false;
+              }
+            }
+
             if (!self.isNotEmpty(fieldValue)) {
               allFilled = false;
+              return false;
             }
           });
 
