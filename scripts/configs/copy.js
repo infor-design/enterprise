@@ -5,7 +5,6 @@ module.exports = {
       files: [
         { expand: true, flatten: true, src: ['src/components/angular/sohoxi-angular.js'], dest: 'dist/js/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['lib/sohoxi-migrate-4.4.0.js'], dest: 'dist/js/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['src/*/*.js'], dest: 'dist/js/all/', filter: 'isFile' },
         {
           expand: true,
           flatten: true,
@@ -51,7 +50,6 @@ module.exports = {
       files: [
         { expand: true, flatten: true, src: ['dist/js/sohoxi*.*'], dest: 'ids-enterprise/dist/js/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['lib/sohoxi-migrate-4.4.0.js'], dest: 'ids-enterprise/dist/js/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['src/*/*.js'], dest: 'ids-enterprise/dist/js/all/', filter: 'isFile' },
         {
           expand: true,
           flatten: true,
@@ -82,7 +80,7 @@ module.exports = {
         { expand: true, flatten: true, src: ['src/components/locale/cultures/*.*'], dest: 'ids-enterprise/dist/js/cultures/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['dist/svg/*.*'], dest: 'ids-enterprise/dist/svg/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['dist/css/*theme*.*'], dest: 'ids-enterprise/dist/css/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['src/**/*.scss'], dest: 'ids-enterprise/sass/', filter: 'isFile' },
+        { expand: true, flatten: false, src: ['src/**/*.scss'], dest: 'ids-enterprise/sass/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['LICENSE'], dest: 'publish', filter: 'isFile' }
       ]
     }
