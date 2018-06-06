@@ -335,6 +335,7 @@ ColorPicker.prototype = {
       ariaListbox: true,
       menuId: 'colorpicker-menu',
       trigger: 'immediate',
+      attachToBody: true,
       placementOpts: {
         containerOffsetX: 10,
         containerOffsetY: 10,
