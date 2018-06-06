@@ -43,6 +43,48 @@
       opacity: .3;
     }
   }
+
+  &.has-right-legend .chart-legend {
+    border-top: 0;
+    margin: 0;
+    width: 30%;
+  }
+
+  // Adjust smaller bottom legend for the pie chart
+  &.is-mobile {
+
+    svg {
+      margin-top: -5px;
+    }
+
+    .chart-legend {
+      align-items: center;
+      border-top: 0;
+      display: flex;
+      height: 85px;
+      margin-left: 0;
+      margin-top: -20px;
+
+      .chart-legend-item {
+        // scss-lint:disable ImportantRule
+        display: inline-block !important;
+        padding: 2px 7px;
+        width: auto !important;
+        // scss-lint:enable ImportantRule
+      }
+
+      .chart-legend-color {
+        height: 15px;
+        top: 1px;
+        width: 15px;
+      }
+
+      .chart-legend-item-text {
+        position: relative;
+        top: 3px;
+      }
+    }
+  }
 }
 
 .auto-height .chart-pie svg {

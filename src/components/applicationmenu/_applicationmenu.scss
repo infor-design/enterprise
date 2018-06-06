@@ -31,11 +31,11 @@
 
   // Add animation to the page container when Nav is in use
   + .page-container {
-    right: 0;
     @include transition(height 300ms cubic-bezier(.17, .04, .03, .94),
       margin 300ms cubic-bezier(.17, .04, .03, .94),
       left 300ms cubic-bezier(.17, .04, .03, .94),
       width 300ms cubic-bezier(.17, .04, .03, .94));
+    right: 0;
   }
 
   .searchfield + .accoridon,
@@ -96,6 +96,10 @@
     }
   }
 
+  &.has-searchfield .accordion {
+    margin-bottom: calc(-2rem - 76px);
+  }
+
   .searchfield-wrapper {
     background-color: $accordion-inverse-pane-bg-color;
     margin-bottom: 0;
@@ -154,6 +158,10 @@
           border-left-color: $application-menu-border-color;
         }
       }
+    }
+
+    &.has-focus {
+      box-shadow: none;
     }
 
   }
@@ -333,12 +341,12 @@ html[dir='rtl'] {
   .application-menu {
 
     + .page-container {
+      @include css3(transform, none);
       left: 0;
       margin: 0 0 0 auto;
       width: 100%;
       //Effects menu calculation
       //@include css3(transform, translateZ(0));
-      @include css3(transform, none);
     }
 
     &.is-open {
@@ -362,18 +370,4 @@ html[dir='rtl'] {
     }
   }
 
-}
-
-@include respond-to(phabletdown) {
-  .application-menu {
-    &.no-transition.is-open {
-      display: none !important;
-
-      + .page-container {
-        @include css3(transform, translateZ(0));
-        margin: 0 0 0 auto;
-        width: 100% !important;
-      }
-    }
-  }
 }
