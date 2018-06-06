@@ -371,7 +371,7 @@ SearchField.prototype = {
         }
 
         this.expand(true);
-      } else if (this.settings.collapsibleOnMobile === true && this.isExpanded) {
+      } else if (this.isCollapsible && this.isExpanded) {
         this.collapse();
       }
 
@@ -381,7 +381,7 @@ SearchField.prototype = {
     // On larger form-factor (desktop)
     this.appendToButtonset();
 
-    if (!this.settings.collapsible) {
+    if (!this.isCollapsible) {
       this.calculateOpenWidth();
       this.setOpenWidth();
 
@@ -391,7 +391,7 @@ SearchField.prototype = {
       }
     }
 
-    if (!this.hasFocus() && this.settings.collapsible === true && this.isExpanded) {
+    if (!this.hasFocus() && this.isCollapsible && this.isExpanded) {
       this.collapse();
     }
   },
@@ -1556,6 +1556,7 @@ SearchField.prototype = {
       eventArgs.push(containerSizeSetters);
     }
 
+    $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
     self.wrapper.one($.fn.transitionEndName(), () => {
       if (!self.isFocused && self.hasFocus() && document.activeElement !== self.input[0]) {
         self.isFocused = true;
