@@ -424,7 +424,7 @@ ToolbarFlexItem.prototype = {
 
     if (this.type === 'actionbutton') {
       $element.on(`beforeopen.${COMPONENT_NAME}`, this.handleActionButtonBeforeOpen.bind(this));
-      $('body').on(`resize.${COMPONENT_NAME}`, this.handleActionButtonResize.bind(this));
+      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, this.handleActionButtonResize.bind(this));
     }
 
     $element.on(`focus.${COMPONENT_NAME}`, this.handleFocus.bind(this));

@@ -11,6 +11,10 @@ const router = express.Router();
 
 // General Route Def
 function generalRoute(req, res, next) {
+  if (req.query.headerHamburger === 'true') {
+    res.opts.headerHamburger = true;
+  }
+
   const viewsRoot = req.app.get('views');
   const directoryURL = utils.getDirectory(path.join(viewsRoot, req.originalUrl), viewsRoot);
   const filename = utils.getFileName(req.originalUrl);
