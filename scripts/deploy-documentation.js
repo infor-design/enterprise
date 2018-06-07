@@ -97,7 +97,7 @@ const serverURIs = {
   staging: 'https://staging.design.infor.com/api/docs/',
   prod: 'https://design.infor.com/api/docs/'
 };
-const packageJson = require(`${rootPath}/ids-enterprise/package.json`);
+const packageJson = require(`${rootPath}/package.json`);
 const testComponents = [
   'button',
   'datagrid'
@@ -433,7 +433,7 @@ function postZippedBundle() {
 
   const form = new FormData();
   form.append('file', fs.createReadStream(`${paths.idsWebsite.dist}.zip`));
-  form.append('root_path', `ids-enterprise/${packageJson.version}`);
+  form.append('root_path', packageJson.version);
   form.append('post_auth_key', process.env.DOCS_API_KEY ? process.env.DOCS_API_KEY : '');
   form.submit(serverURIs[deployTo], (err, res) => {
     logTaskEnd(`attempt publish to server "${deployTo}"`);

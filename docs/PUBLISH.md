@@ -30,7 +30,7 @@ git checkout master
 * Generate Release Notes http://bit.ly/2w6X8Xw
 
 ## Git Operations
-* Edit version `ids-enterprise/package.json` (from 4.7.0-rc to 4.7.0 as an example)
+* Edit version `package.json` (from 4.7.0-rc to 4.7.0 as an example)
 * Push a PR
 * Check for Last PR's https://github.com/infor-design/enterprise/pulls and make sure all merged
 * Merge  4.7.0-rc (the rc branch) back onto the 4.7.x (branch) - Using a PR

@@ -2,11 +2,8 @@
 ############
 designs/
 app/dist/css/*
-dist/css
-dist/js
-dist/svg
-dist/all.zip
 app/docs/*.html
+dist/
 app/docs/components/*.html
 docs/ids-website/dist/
 docs/ids-website/dist.zip
@@ -16,9 +13,6 @@ public/js/
 public/stylesheets/
 temp/
 views/docs
-ids-enterprise/dist
-ids-enterprise/sass
-ids-enterprise/LICENSE
 templates/**/doc.html
 test-reports/
 
@@ -27,7 +21,7 @@ test-reports/
 node_modules/
 
 # Misc #
-############
+########
 junit.xml
 junit-unit.xml
 junit-functional.xml
@@ -48,6 +42,11 @@ coverage
 dist.zip
 
 # OS generated files #
-############
+######################
 .DS_Store
 .vscode
+
+
+# Deprecated #
+##############
+ids-enterprise/

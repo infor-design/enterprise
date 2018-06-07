@@ -43,13 +43,13 @@
     "webdriver:update": "npx webdriver-manager update --standalone false --quiet",
     "zip-dist": "npx grunt zip-dist",
     "publish-setup": "cd ./ids-enterprise && npm run prepublishOnly && cd ../",
-    "publish-dev": "npm publish ids-enterprise/ --tag dev",
-    "publish-prod": "npm publish ids-enterprise/",
+    "publish-dev": "npm publish --tag dev",
+    "publish-prod": "npm publish",
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
     "pre-release": "npx release-it minor --preRelease=beta",
     "release": "npx release-it minor",
-    "prepublishOnly": "npx grunt packup",
+    "prepublishOnly": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

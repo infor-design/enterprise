@@ -29,7 +29,7 @@ module.exports = function (grunt) {
   }
 
   const config = {
-    pkg: grunt.file.readJSON('ids-enterprise/package.json'),
+    pkg: grunt.file.readJSON('package.json'),
     banner: bannerText,
     exec: {
       rollup: {
@@ -105,13 +105,6 @@ module.exports = function (grunt) {
     'sass',
     'cssmin',
     'usebanner'
-  ]);
-
-  // Publish for NPM
-  grunt.registerTask('packup', [
-    'default',
-    'clean:publish',
-    'copy:publish'
   ]);
 
   // Zip dist folder for download from the git releases page.
