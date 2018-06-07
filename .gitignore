@@ -14,7 +14,6 @@ documentation/
 public/svg/
 public/js/
 public/stylesheets/
-publish/
 temp/
 views/docs
 ids-enterprise/dist
@@ -22,7 +21,6 @@ ids-enterprise/sass
 ids-enterprise/LICENSE
 templates/**/doc.html
 test-reports/
-
 
 # Packages #
 ############
@@ -47,6 +45,7 @@ docs/api
 eslint.log
 coverage
 .tmp/
+dist.zip
 
 # OS generated files #
 ############

@@ -80,8 +80,7 @@ module.exports = {
         { expand: true, flatten: true, src: ['src/components/locale/cultures/*.*'], dest: 'ids-enterprise/dist/js/cultures/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['dist/svg/*.*'], dest: 'ids-enterprise/dist/svg/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['dist/css/*theme*.*'], dest: 'ids-enterprise/dist/css/', filter: 'isFile' },
-        { expand: true, flatten: false, src: ['src/**/*.scss'], dest: 'ids-enterprise/sass/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['LICENSE'], dest: 'publish', filter: 'isFile' }
+        { expand: true, flatten: false, src: ['src/**/*.scss'], dest: 'ids-enterprise/sass/', filter: 'isFile' }
       ]
     }
   }
