@@ -6,7 +6,6 @@ module.exports = function (grunt) {
 
   const sass = require('./scripts/configs/sass.js');
   const chokidar = require('./scripts/configs/watch.js');
-  const amdHeader = require('./scripts/configs/amdHeader.js');
   const copy = require('./scripts/configs/copy.js');
   const cssmin = require('./scripts/configs/cssmin.js');
   const usebanner = require('./scripts/configs/usebanner.js');
@@ -55,7 +54,6 @@ module.exports = function (grunt) {
     clean,
     sass,
     meta,
-    amdHeader,
     copy,
     cssmin,
     usebanner,

@@ -36,16 +36,9 @@ module.exports = {
         { expand: true, flatten: true, src: ['src/components/emptymessage/svg-empty.html'], dest: 'dist/svg/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['src/components/charts/svg-patterns.html'], dest: 'dist/svg/', filter: 'isFile' },
         { expand: true, flatten: true, src: ['src/components/icons/svg*.html'], dest: 'dist/svg/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['src/**/*.scss'], dest: 'dist/sass/', filter: 'isFile' }
+        { expand: true, flatten: false, src: ['src/**/*.scss'], dest: 'dist/sass/', filter: 'isFile' }
       ]
     },
-
-    amd: {
-      files: [
-        { expand: true, flatten: true, src: ['js/*.*'], dest: 'temp/amd/', filter: 'isFile' },
-        { expand: true, flatten: true, src: ['src/components/**/*.js'], dest: 'temp/amd/', filter: 'isFile' }
-      ]
-    }
   }
 
 };

@@ -46,7 +46,7 @@
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
     "release": "release-it minor",
     "prepublishOnly": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx karma start test/karma.conf.js --single-run"
   },
   "dependencies": {
     "d3": "^4.13.0",
