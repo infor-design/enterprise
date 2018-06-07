@@ -324,6 +324,10 @@ Spinbox.prototype = {
       return;
     }
 
+    if (this.isReadonly()) {
+      return;
+    }
+
     // If the keycode got this far, it's an arrow key, HOME, or END.
     switch (key) {
       case 35: // End key sets the spinbox to its minimum value

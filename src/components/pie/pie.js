@@ -30,6 +30,7 @@ const COMPONENT_NAME = 'pie';
  * @param {string} [settings.line.show='value'] Controls the line value, this can be value, label or percent or custom function.
  * @param {string} [settings.line.formatter='.0f'] The d3.formatter string.
  * @param {boolean} [settings.showLegend=true] If false the legend will not be shown.
+ * @param {boolean} [settings.showMobile=false] If true the chart is better formed to fit in a single widget.
  * @param {string} [settings.legendPlacement='right'] Where to locate the legend. This can be bottom or right at the moment.
  * @param {object} [settings.legend] A setting that controls the legend values and format.
  * @param {string} [settings.legend.show='label (percent)'] Controls what is visible
@@ -130,19 +131,29 @@ Pie.prototype = {
     self.mainGroup.append('g').attr('class', 'lines');
     this.element.addClass('chart-pie');
 
+    if (this.settings.showMobile) {
+      this.settings.legendPlacement = 'bottom';
+    }
+
     if (self.settings.legendPlacement) {
       this.element.addClass(`has-${self.settings.legendPlacement}-legend`);
     }
 
     const w = parseInt(this.element.width(), 10);
+    const h = parseInt(this.element.height(), 10);
 
     const dims = {
-      height: parseInt(this.element.height(), 10),
+      height: h,
       width: w
     };
 
     if (self.settings.legendPlacement === 'right') {
       dims.width = w * 0.75;
+    }
+
+    if (this.settings.showMobile) {
+      dims.height = h * 0.80; // make some more room for the legend
+      this.element.addClass('is-mobile');
     }
 
     dims.radius = Math.min(dims.width, dims.height) / 2;
@@ -165,7 +176,7 @@ Pie.prototype = {
 
     self.svg
       .attr('width', self.settings.legendPlacement === 'right' ? '75%' : '100%')
-      .attr('height', '100%');
+      .attr('height', self.settings.showMobile ? '80%' : '100%');
 
     self.mainGroup
       .attr('transform', `translate(${dims.width / 2},${dims.height / 2})`);
@@ -616,11 +627,11 @@ Pie.prototype = {
     });
 
     if (this.settings.redrawOnResize) {
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
         this.handleResize();
       });
 
-      this.element.on(`resize.${COMPONENT_NAME}`, () => {
+      this.element.off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
         this.handleResize();
       });
     }

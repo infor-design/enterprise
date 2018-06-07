@@ -57,33 +57,9 @@ module.exports = function (app, defaults) {
       logger('info', `Using the ${req.query.font} font`);
     }
 
-    if (res.opts.csp || req.query.csp) {
+    if (req.query.csp) {
+      res.opts.csp = req.query.csp === 'true';
       res.opts.nonce = Math.random().toString(12).replace(/[^a-z0-9]+/g, '').substr(0, 8);
-      res.setPolicy({
-        policy: {
-          directives: {
-            'default-src': ['self',
-              'https://*.infor.com'
-            ],
-            'script-src': ['self',
-              `nonce-${res.opts.nonce}`,
-              'http://squizlabs.github.io'
-            ],
-            'object-src': ['none'],
-            'style-src': ['* data: http://* \'unsafe-inline\''],
-            'font-src': ['self',
-              'https://fonts.googleapis.com',
-              'https://fonts.gstatic.com'
-            ],
-            'img-src': ['self',
-              'https://randomuser.me',
-              'http://placehold.it',
-              'http://lorempixel.com',
-              'http://squizlabs.github.io'
-            ]
-          }
-        }
-      });
     }
 
     // Disable live reload for IE

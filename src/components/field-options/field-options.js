@@ -254,7 +254,7 @@ FieldOptions.prototype = {
           doUnactive();
         }
       });
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
         setTriggerCssTop();
       });
     }
@@ -272,7 +272,7 @@ FieldOptions.prototype = {
         .on(`focusout.${COMPONENT_NAME}`, () => {
           removeFocused();
         });
-      $('body').on(`resize.${COMPONENT_NAME}`, () => {
+      $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
         setTriggerCssTop();
       });
     }
