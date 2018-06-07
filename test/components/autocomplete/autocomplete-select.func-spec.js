@@ -15,12 +15,21 @@ const statesExtraData = (function (data) {
   return modified;
 }(statesData));
 
+// Modified template that doesn't contain a `data-index`
+const modifiedTemplateHTML = `<script id="autocomplete-template-modified" type="text/html">
+<li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">
+ <a href="#" tabindex="-1">
+   <span>{{{label}}}</span>
+ </a>
+</li>
+</script>`;
+
 let autocompleteInputEl;
 let autocompleteLabelEl;
 let autocompleteAPI;
 let svgEl;
 
-describe('Autocomplete API (select)', () => {
+fdescribe('Autocomplete API (select)', () => {
   beforeEach(() => {
     autocompleteInputEl = null;
     autocompleteAPI = null;
@@ -64,7 +73,25 @@ describe('Autocomplete API (select)', () => {
     expect(selectedItem.value).toEqual('NJ'); // Should be retrieved from `data-value`
   });
 
-  it('returns an object with metadata about an item that was programmatically selected', () => {
+  it('retains extra information from the original data source inside its return object', () => {
+    autocompleteAPI.openList('new', statesExtraData);
+    const autocompleteListEl = document.querySelector('#autocomplete-list');
+    const resultItems = autocompleteListEl.querySelectorAll('li');
+    const selectedItem = autocompleteAPI.select($(resultItems[1]));
+
+    expect(selectedItem).toBeDefined();
+    expect(selectedItem.index).toEqual(1);
+    expect(selectedItem.value).toEqual('NJ');
+    expect(selectedItem.addedValue).toEqual('sandwich');
+  });
+
+  it('returns the correct item when selecting with a `data-value`', () => {
+    document.body.insertAdjacentHTML('afterbegin', modifiedTemplateHTML);
+
+    autocompleteAPI.updated({
+      template: '#autocomplete-template-modified'
+    });
+
     autocompleteAPI.openList('new', statesExtraData);
     const autocompleteListEl = document.querySelector('#autocomplete-list');
     const resultItems = autocompleteListEl.querySelectorAll('li');
