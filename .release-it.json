@@ -1,6 +1,7 @@
 {
-  "non-interactive": false,
   "dry-run": true,
+  "requireCleanWorkingDir": false,
+  "non-interactive": false,
   "verbose": false,
   "pkgFiles": ["package.json"],
   "increment": "patch",
@@ -8,10 +9,11 @@
   "src": {
     "commitMessage": "Release v%s",
     "tagAnnotation": "Release v%s",
-    "beforeStartCommand": "",
+    "beforeStartCommand": "npm run eslint:error-only",
     "afterReleaseCommand": "npm run documentation --site=prod"
   },
   "npm": {
+    "publish": true,
     "tag": "latest"
   },
   "github": {
