@@ -29,7 +29,7 @@ let autocompleteLabelEl;
 let autocompleteAPI;
 let svgEl;
 
-fdescribe('Autocomplete API (select)', () => {
+describe('Autocomplete API (select)', () => {
   beforeEach(() => {
     autocompleteInputEl = null;
     autocompleteAPI = null;
