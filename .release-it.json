@@ -4,11 +4,11 @@
   "verbose": false,
   "pkgFiles": ["package.json"],
   "increment": "patch",
-  "buildCommand": "npm run build",
+  "buildCommand": "npm run build && npm run zip-dist",
   "src": {
     "commitMessage": "Release v%s",
     "tagAnnotation": "Release v%s",
-    "beforeStartCommand": "npm run eslint && npm run functional:local",
+    "beforeStartCommand": "",
     "afterReleaseCommand": "npm run documentation --site=prod"
   },
   "npm": {
