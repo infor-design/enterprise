@@ -532,7 +532,17 @@ Validator.prototype = {
     for (i = 0, l = types.length; i < l; i++) {
       self.validationStatus[types[i]] = false;
       rule = Validation.rules[types[i]];
+
       dfd = $.Deferred();
+
+      if (rule.email) {
+        delete rule.email;
+      }
+
+      // Add email validation for input field that is email required.
+      if (field && field[0].getAttribute('data-validate').trim().indexOf('email') > -1) {
+        rule.email = Validation.rules.email.check;
+      }
 
       if (!rule) {
         continue;

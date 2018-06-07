@@ -82,37 +82,16 @@ function ValidationRules() {
       check(value, field) {
         let self = this; // eslint-disable-line
 
-        // Check all required fields filled on modal
+        this.message = Locale.translate('Required');
+        let valid = true;
 
-        let allFilled = true;
-        field.closest('.modal').find('input.required, textarea.required, .editor.required').not(':hidden').add('select.required')
-          .each(function () {
-            const elem = $(this);
-            const fieldValue = elem.is('.editor') ? elem.html() : elem.val();
+        valid = field.is(':radio') ? this.isRadioChecked(field) : this.isNotEmpty(value, field);
 
-            if (elem[0].getAttribute('data-validate').trim() !== 'required') {
-              const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,16}(?:\.[a-z]{2})?)$/i;
-
-              if (fieldValue.length && !regex.test(fieldValue)) {
-                allFilled = false;
-                return false;
-              }
-            }
-
-            if (!self.isNotEmpty(fieldValue)) {
-              allFilled = false;
-              return false;
-            }
-          });
-
-        if (allFilled) {
-          field.closest('.modal').find('.btn-modal-primary').not('.no-validation').removeAttr('disabled');
-        } else {
-          field.closest('.modal').find('.btn-modal-primary').not('.no-validation').attr('disabled', 'disabled');
+        if (this.email) {
+          valid = this.email(value);
         }
 
-        this.message = Locale.translate('Required');
-        return field.is(':radio') ? this.isRadioChecked(field) : this.isNotEmpty(value, field);
+        return valid;
       },
       message: 'Required',
       type: 'error'
