@@ -6,7 +6,6 @@ module.exports = function (grunt) {
 
   const sass = require('./scripts/configs/sass.js');
   const chokidar = require('./scripts/configs/watch.js');
-  const amdHeader = require('./scripts/configs/amdHeader.js');
   const copy = require('./scripts/configs/copy.js');
   const cssmin = require('./scripts/configs/cssmin.js');
   const usebanner = require('./scripts/configs/usebanner.js');
@@ -29,7 +28,7 @@ module.exports = function (grunt) {
   }
 
   const config = {
-    pkg: grunt.file.readJSON('ids-enterprise/package.json'),
+    pkg: grunt.file.readJSON('package.json'),
     banner: bannerText,
     exec: {
       rollup: {
@@ -55,7 +54,6 @@ module.exports = function (grunt) {
     clean,
     sass,
     meta,
-    amdHeader,
     copy,
     cssmin,
     usebanner,
@@ -105,13 +103,6 @@ module.exports = function (grunt) {
     'sass',
     'cssmin',
     'usebanner'
-  ]);
-
-  // Publish for NPM
-  grunt.registerTask('packup', [
-    'default',
-    'clean:publish',
-    'copy:publish'
   ]);
 
   // Zip dist folder for download from the git releases page.
