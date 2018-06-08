@@ -3,10 +3,10 @@
   <div class="twelve columns">
     <div class="field">
 
-      <div class="rating">
+      <div class="rating is-readonly">
         <fieldset>
           <legend class="audible">Rate Your Experience</legend>
-          <input type="radio" class="is-filled" name="rating-id1" id="one-star-id1"/>
+          <input type="radio" class="is-filled" name="rating-name" id="one-star-id1"/>
           <label for="one-star-id1">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-star-filled"></use>
@@ -14,7 +14,7 @@
             <span class="audible">1 out of 5 Stars</span>
           </label>
 
-          <input type="radio" class="is-filled" name="rating-id1" id="two-star-id1"/>
+          <input type="radio" class="is-filled" name="rating-name" id="two-star-id1"/>
           <label for="two-star-id1">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-star-filled"></use>
@@ -22,7 +22,7 @@
             <span class="audible">2 out of 5 Stars</span>
           </label>
 
-          <input type="radio" class="is-filled" name="rating-id1" id="three-star-id1"/>
+          <input type="radio" class="is-filled" name="rating-name" id="three-star-id1"/>
           <label for="three-star-id1">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-star-filled"></use>
@@ -30,7 +30,7 @@
             <span class="audible">3 out of 5 Stars</span>
           </label>
 
-          <input type="radio" class="is-half" checked="true" name="rating-id1" id="four-star-id1"/>
+          <input type="radio" class="is-half" checked="true" name="rating-name" id="four-star-id1"/>
           <label for="four-star-id1">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-star-half"></use>
@@ -38,7 +38,7 @@
             <span class="audible">4 out of 5 Stars</span>
           </label>
 
-          <input type="radio" name="rating-id1" id="five-star-id1"/>
+          <input type="radio" name="rating-name" id="five-star-id1"/>
           <label for="five-star-id1">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-star-filled"></use>
@@ -51,3 +51,10 @@
 
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    var ratingCtrl = $('.rating').rating().data('rating');
+    ratingCtrl.val(4.3);
+  });
+</script>

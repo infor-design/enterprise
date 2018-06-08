@@ -45,6 +45,7 @@ docs/api
 eslint.log
 coverage
 .tmp/
+dist.zip
 
 # OS generated files #
 ############

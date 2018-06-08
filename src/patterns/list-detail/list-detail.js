@@ -225,7 +225,7 @@ ListDetail.prototype = {
     }
 
     // Run certain responsive checks on page resize
-    $('body').on(`resize.${COMPONENT_NAME}`, () => {
+    $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, () => {
       this.handleResize();
     });
   },

@@ -1,18 +1,14 @@
 module.exports = {
-
   compress: {
     main: {
       options: {
-        archive: 'dist/all.zip'
+        archive: 'dist.zip'
       },
-
       files: [
         {
-          src: ['dist/**'],
-          dest: 'dist/'
+          src: ['dist/**']
         }
       ]
     }
   }
-
 };

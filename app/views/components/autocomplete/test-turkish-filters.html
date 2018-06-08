@@ -43,7 +43,7 @@
           return response(searchTerm, TEST_CACHE);
         }
 
-        $.getJSON('{{basepath}}api/autocomplete/turkish', function(data, term) {
+        $.getJSON('{{basepath}}api/turkish', function(data, term) {
           TEST_CACHE = data;
           response(searchTerm, data);
         });

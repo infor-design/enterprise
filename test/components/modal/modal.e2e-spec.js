@@ -130,21 +130,13 @@ describe('Modal example-validation tests', () => {
 
     it('Should show validation errors in modal', async () => {
       await element(by.id('context-name')).click();
+      await browser.driver.sleep(config.sleep);
       await element(by.id('context-name')).sendKeys('to');
+      await browser.driver.sleep(config.sleep);
       await element(by.id('context-desc')).click();
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('error'))), config.waitsFor);
+      await browser.driver.sleep(config.sleep);
 
-      expect(await element(by.id('context-name')).getAttribute('class')).toContain('error');
-      expect(await element.all(by.css('.message-text')).get(0).getText()).toEqual('Email address not valid');
-
-      await element(by.id('context-desc')).click();
-      await element(by.id('context-name')).click();
-      await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('required'))), config.waitsFor);
-
-      expect(await element(by.id('context-desc')).getAttribute('class')).toContain('error');
-      expect(await element.all(by.css('.message-text')).get(0).getText()).toEqual('Email address not valid');
+      expect(await element(by.className('message-text')).getText()).toEqual('Email address not valid');
     });
   }
 });

@@ -70,11 +70,9 @@ module.exports = function (grunt) {
   // - Cleans up
   // - Builds
   // - Updates local documentation
-  // - Zips
   grunt.registerTask('default', [
     'clean',
-    'build',
-    'compress'
+    'build'
   ]);
 
   // Main build task (Gets everything)
@@ -114,6 +112,11 @@ module.exports = function (grunt) {
     'default',
     'clean:publish',
     'copy:publish'
+  ]);
+
+  // Zip dist folder for download from the git releases page.
+  grunt.registerTask('zip-dist', [
+    'compress'
   ]);
 
   // Watch Task
