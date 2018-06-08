@@ -35,7 +35,7 @@
       </ul>
     </div>
   </div>
-  <div id="lookup-datagrid" ></div>
+  <div id="lookup-datagrid"></div>
 </div>
 
 <script>
@@ -57,17 +57,16 @@
     columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
     columns.push({ id: 'activity', name: 'Activity', sortable: false, field: 'activity', formatter: Formatters.Hyperlink});
 
-    //Init and get the api for the grid
-    $('#lookup-datagrid').datagrid({columns:columns, dataset:data, rowNavigation: true, selectable: 'single', isList: true});
-    $('#modal-contents').initialize();
-
     //Init the Lookup
     $('#custom').lookup({
       field: 'productId',
       modalContent: $('#modal-contents'),
       options: {
+        columns: columns,
+        dataset:data,
         selectable: 'single',
-        rowNavigation: true
+        rowNavigation: true,
+        isList: true
       }
     });
 
