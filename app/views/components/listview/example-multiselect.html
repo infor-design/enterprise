@@ -48,5 +48,10 @@
     $('#multiselect-listview').on('selected', function (e, args) {
      console.log(args);
     });
+
+    $('#remove').on('click', function () {
+      var api = $('#multiselect-listview').data('listview');
+      api.clearAllSelected();
+    });
   });
 </script>

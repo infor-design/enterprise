@@ -845,6 +845,7 @@ ListView.prototype = {
       toolbar.addClass('is-hidden').one('animateclosedcomplete', function (e) {
         e.stopPropagation();
         this.style.display = 'none';
+        self.element.removeClass('is-toolbar-open');
       }).animateClosed();
     }
   },
