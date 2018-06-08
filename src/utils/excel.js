@@ -82,7 +82,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
           content = cols[i2].innerText.replace(/"/g, '""');
 
           // Exporting data with trailing negative signs moved in front
-          if (self.settings.exportConvertNegative) {
+          if (self && self.settings.exportConvertNegative) {
             content = content.replace(/^(.+)(-$)/, '$2$1');
           }
           row.push(content);
@@ -92,10 +92,10 @@ excel.exportToCsv = function (fileName, customDs, self) {
     }
     return `"${csv.join('"\n"')}"`;
   };
-  let table = self.table.clone();
+  let table = [];
+  table = customDs || appendRows(self.settings.dataset, self.table.clone());
 
-  table = appendRows(customDs || self.settings.dataset, table);
-  if (!table.find('thead').length) {
+  if (!customDs && !table.find('thead').length) {
     self.headerRow.clone().insertBefore(table.find('tbody'));
   }
 
@@ -232,17 +232,17 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     return table;
   };
 
-  let table = self.table.clone();
-  table = appendRows(customDs || self.settings.dataset, table);
+  let table = [];
+  table = customDs || appendRows(self.settings.dataset, self.table.clone());
 
-  if (!table.find('thead').length) {
+  if (!customDs && !table.find('thead').length) {
     self.headerRow.clone().insertBefore(table.find('tbody'));
   }
 
   table = cleanExtra(table);
 
   // Exporting data with trailing negative signs moved in front
-  if (self.settings.exportConvertNegative) {
+  if (self && self.settings.exportConvertNegative) {
     table.find('td').each(function () {
       const td = $(this);
       const content = td.text();
@@ -251,7 +251,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     });
   }
 
-  const ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() };
+  const ctx = { worksheet: (worksheetName || 'Worksheet'), table: customDs || table.html() };
 
   fileName = `${fileName ||
     self.element.closest('.datagrid-container').attr('id') ||
