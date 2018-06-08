@@ -1062,7 +1062,7 @@ SearchField.prototype = {
    * @returns {undefined}
    */
   setCategoryButtonText(textContent) {
-    if (!this.settings.showCategoryText || !this.hasCategoryButton()) {
+    if (!this.settings.showCategoryText || !this.categoryButton.length) {
       return;
     }
 
@@ -1534,29 +1534,12 @@ SearchField.prototype = {
   },
 
   /**
-   * Determines whether or not a Category Trigger exists.
-   * @private
-   * @returns {boolean} whether or not a Category Trigger exists.
-   */
-  hasCategoryButton() {
-    return this.wrapper.find('.btn').length > 0;
-  },
-
-  /**
    * Category Button Close event handler
    * @private
    * @returns {void}
    */
   handlePopupClose() {
     return this.setAsActive(true, true);
-  },
-
-  /**
-   * Clears the contents of the searchfield
-   * @returns {void}
-   */
-  clear() {
-    this.element.val('').trigger('change').focus();
   },
 
   /**
@@ -1745,21 +1728,21 @@ SearchField.prototype = {
   },
 
   /**
-   * Enables the Searchfield
-   * @returns {void}
-   */
-  enable() {
-    this.wrapper.addClass('is-disabled');
-    this.element.prop('disabled', false);
-  },
-
-  /**
    * Disables the Searchfield
    * @returns {void}
    */
   disable() {
-    this.wrapper.removeClass('is-disabled');
+    this.wrapper.addClass('is-disabled');
     this.element.prop('disabled', true);
+  },
+
+  /**
+   * Enables the Searchfield
+   * @returns {void}
+   */
+  enable() {
+    this.wrapper.removeClass('is-disabled');
+    this.element.prop('disabled', false);
   },
 
   /**
