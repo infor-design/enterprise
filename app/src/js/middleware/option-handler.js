@@ -65,7 +65,8 @@ module.exports = function (app, defaults) {
     // Disable live reload for IE
     const ua = req.headers['user-agent'];
     const isIE = /Windows NT/.test(ua) && (/Trident/.test(ua) || /Edge/.test(ua));
-    if (isIE) {
+    if (isIE && req.hostname === '10.0.2.2') {
+      res.opts.enableLiveReloadVM = true;
       res.opts.enableLiveReload = false;
     }
     next();

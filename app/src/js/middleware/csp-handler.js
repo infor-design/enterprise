@@ -31,7 +31,8 @@ module.exports = function () {
           'connect-src': [
             'self',
             'http://myserver.com',
-            'ws://localhost:35729'
+            'ws://localhost:35729',
+            'ws://10.0.2.2:35729'
           ],
           'object-src': ['none'],
           'style-src': ['* data: http://* \'unsafe-inline\''],

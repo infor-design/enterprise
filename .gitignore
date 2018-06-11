@@ -2,10 +2,7 @@
 ############
 designs/
 app/dist/css/*
-dist/css
-dist/js
-dist/svg
-dist/all.zip
+dist/
 app/docs/*.html
 app/docs/components/*.html
 docs/ids-website/dist/
