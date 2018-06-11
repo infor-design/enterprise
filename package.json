@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
   "version": "4.8.0-dev",
@@ -44,7 +43,9 @@
     "zip-dist": "npx grunt zip-dist",
     "documentation": "node ./scripts/deploy-documentation.js",
     "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.4.0 -v",
-    "release": "release-it minor",
+    "release:beta": "release-it minor --preRelease=beta",
+    "release:rc": "release-it minor --preRelease=rc",
+    "release:final": "release-it minor",
     "prepublishOnly": "npm run build",
     "test": "npx karma start test/karma.conf.js --single-run"
   },
@@ -119,7 +120,6 @@
     "protractor-image-comparison": "^1.7.2",
     "pygmentize-bundled": "^2.3.0",
     "r2": "^2.0.1",
-    "release-it": "^7.4.5",
     "rollup": "^0.55.3",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-json": "^3.0.0",
