@@ -710,6 +710,13 @@ Autocomplete.prototype = {
       ret.hasValue = true;
     }
 
+    /**
+    *  Fires when an element is selected from the list.
+    *
+    * @event selected
+    * @memberof Autocomplete
+    * @param {array} args An array containing the link and the return object.
+    */
     this.element
       .trigger('selected', [a, ret])
       .focus();
