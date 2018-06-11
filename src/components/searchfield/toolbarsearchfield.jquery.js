@@ -1,4 +1,4 @@
-import '../searchfield/searchfield.jquery';
+import './searchfield.jquery';
 
 /**
  * jQuery Component Wrapper for Toolbar Searchfield
