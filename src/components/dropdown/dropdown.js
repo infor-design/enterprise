@@ -38,8 +38,8 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * @param {number} [settings.maxWidth = null] If set the width of the dropdown is limited to this pixel width.
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
+* @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
 */
-
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
   cssClass: null,
@@ -57,7 +57,8 @@ const DROPDOWN_DEFAULTS = {
   empty: false,
   delay: 300,
   maxWidth: null,
-  placementOpts: null
+  placementOpts: null,
+  onKeyDown: null
 };
 
 function Dropdown(element, settings) {
@@ -1014,6 +1015,15 @@ Dropdown.prototype = {
       return;
     }
 
+    if (self.settings.onKeyDown) {
+      const ret = self.settings.onKeyDown(e);
+      if (ret === false) {
+        e.stopPropagation();
+        e.preventDefault();
+        return false; //eslint-disable-line
+      }
+    }
+
     // Down arrow, Up arrow, or Spacebar to open
     if (!self.isOpen() && (key === 38 || key === 40 || key === 32)) {
       self.toggleList();
@@ -1493,16 +1503,10 @@ Dropdown.prototype = {
       }
 
       // If this is the Select All option, select/deselect all.
-      if (self.settings.multiple && target.is('.dropdown-select-all-list-item')) {
-        const doSelectAll = !(target.is('.is-selected'));
-        if (doSelectAll) {
-          target.addClass('is-selected');
-          self.selectOptions(self.element.find('option:not(:selected)'), true);
-        } else {
-          target.removeClass('is-selected');
-          self.selectOptions(self.element.find('option:selected'), true);
-        }
-
+      if (self.settings.multiple && target[0].classList.contains('dropdown-select-all-list-item')) {
+        const doSelectAll = !(target[0].classList.contains('is-selected'));
+        target[0].classList[doSelectAll ? 'add' : 'remove']('is-selected');
+        self.selectAll(doSelectAll);
         return true;  //eslint-disable-line
       }
 
@@ -1957,6 +1961,56 @@ Dropdown.prototype = {
   },
 
   /**
+   * Toggle all selection for items.
+   * @private
+   * @param {boolean} doSelectAll true to select and false will clear selection for all items.
+   * @returns {void}
+   */
+  selectAll(doSelectAll) {
+    const selector = {
+      options: 'option:not(.is-disabled):not(:disabled)',
+      items: 'li.dropdown-option:not(.separator):not(.group-label):not(.is-disabled)'
+    };
+    const options = [].slice.call(this.element[0].querySelectorAll(selector.options));
+    const items = [].slice.call(this.listUl[0].querySelectorAll(selector.items));
+    const last = options[options.length - 1];
+    let text = '';
+
+    if (doSelectAll) {
+      // Select all
+      items.forEach(node => node.classList.add('is-selected'));
+      options.forEach((node) => {
+        node.selected = true;
+      });
+
+      text = this.getOptionText($(options));
+      const maxlength = this.element[0].getAttribute('maxlength');
+      if (maxlength) {
+        text = text.substr(0, maxlength);
+      }
+    } else {
+      // Clear all
+      items.forEach(node => node.classList.remove('is-selected'));
+      options.forEach((node) => {
+        node.selected = false;
+      });
+    }
+    this.previousActiveDescendant = last.value || '';
+
+    this.pseudoElem[0].querySelector('span').textContent = text;
+    this.searchInput[0].value = text;
+    this.updateItemIcon(last);
+
+    if (this.list[0].classList.contains('search-mode')) {
+      this.resetList();
+    }
+    this.activate(true);
+    this.setBadge(last);
+
+    this.element.trigger('change').triggerHandler('selected');
+  },
+
+  /**
    * Convenience method for running _selectOption()_ on a set of list options.
    * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
    * @private
@@ -2018,9 +2072,8 @@ Dropdown.prototype = {
       return;
     }
 
-    const code = option.val();
+    const optionVal = option.val();
     let val = this.element.val();
-    const oldText = this.pseudoElem.text();
     let text = '';
     let trimmed = '';
     let clearSelection = false;
@@ -2037,8 +2090,8 @@ Dropdown.prototype = {
       if (!val) {
         val = [];
       }
-      if ($.inArray(code, val) !== -1) {
-        val = $.grep(val, optionValue => optionValue !== code);
+      if ($.inArray(optionVal, val) !== -1) {
+        val = $.grep(val, optionValue => optionValue !== optionVal);
         li.removeClass('is-selected');
         this.previousActiveDescendant = undefined;
         isAdded = false;
@@ -2049,7 +2102,7 @@ Dropdown.prototype = {
         }
 
         val = typeof val === 'string' ? [val] : val;
-        val.push(code);
+        val.push(optionVal);
         li.addClass('is-selected');
         this.previousActiveDescendant = option.val();
       }
@@ -2060,7 +2113,7 @@ Dropdown.prototype = {
       text = this.getOptionText(newOptions);
     } else {
       // Working with a single select
-      val = code;
+      val = optionVal;
       this.listUl.find('li.is-selected').removeClass('is-selected');
       if (!clearSelection) {
         li.addClass('is-selected');
@@ -2070,16 +2123,11 @@ Dropdown.prototype = {
     }
     if (!clearSelection) {
       this.element.find('option').each(function () {  //eslint-disable-line
-        if (this.value === code) {
+        if (this.value === optionVal) {
           this.selected = true;
           return false;
         }
       });
-    }
-    // If we're working with a single select and the value hasn't changed, just return without
-    // firing a change event
-    if (text === oldText) {
-      return;
     }
 
     // Change the values of both inputs and swap out the active descendant
@@ -2545,6 +2593,11 @@ Dropdown.prototype = {
     this.wrapper.remove();
     this.listfilter.destroy();
     this.element.removeAttr('style');
+
+    const list = document.body.querySelector('#dropdown-list');
+    if (list) {
+      list.parentNode.removeChild(list);
+    }
   },
 
   /**

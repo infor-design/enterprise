@@ -1,13 +1,5 @@
-# :tada: Soho XI Has Moved to Github! :tada:
-
-Starting at the end of release `4.6.0`, we moved the Soho XI codebase to Github! What this means is now anyone can view and contribute to the codebase.
-
-There are two ways to go about using Github for development (as the [Bitbucket](http://git.infor.com/projects/SOHO/repos/controls/browse) will eventually be deprecated):
-
-You can go to https://github.com/infor-design/enterprise and fork the repo.
-
-
 # Infor Design System's Enterprise Components
+[![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=MmgvZ2tsa3pydTRlTklvNG9HZGYvMVlwdWRzWklWVWtXNEFFeVJXSG1raz0tLTZuR0J1Nllxd1pOTVJKaE4zRFVYUkE9PQ==--628ff7dc2ecde8982f3a89ad70cdcf252bdd8fba)](https://www.browserstack.com/automate/public-build/MmgvZ2tsa3pydTRlTklvNG9HZGYvMVlwdWRzWklWVWtXNEFFeVJXSG1raz0tLTZuR0J1Nllxd1pOTVJKaE4zRFVYUkE9PQ==--628ff7dc2ecde8982f3a89ad70cdcf252bdd8fba)
 
 Infor Design System's Enterprise component library is a framework-independent UI library consisting of CSS and JS that provides Infor product development teams, partners, and customers the tools to create user experiences that are approachable, focused, relevant, perceptive.
 
@@ -106,6 +98,8 @@ From within the project folder:
 * Open up [`localhost:4000`](http://localhost:4000) in a browser to see the local app
 
 Note that at this point any changes you make will cause SASS to recompile and the browser will reload.
+
+You’ll see documentation pages unless they aren’t generated, then you’ll see the demos and directory lists only.  You can optionally run `npm run documentation` to see the full component documentation.
 
 ### Running the tests
 

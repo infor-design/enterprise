@@ -1,31 +1,38 @@
-<div class="row">
-  <div class="full-width">
-    <label>Type of Alert</label>
-    <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" checked/>
-    <label for="option1" class="radio-label">Error</label>
-    <input type="radio" class="radio" name="optionsGroupVWO" id="option2" value="alert"/>
-    <label for="option2" class="radio-label">Alert</label>
-    <input type="radio" class="radio" name="optionsGroupVWO" id="option3" value="confirm"/>
-    <label for="option3" class="radio-label">Confirm</label>
-    <input type="radio" class="radio" name="optionsGroupVWO" id="option4" value="info"/>
-    <label for="option4" class="radio-label">Info</label>
-  </div>
-</div>
-<div class="row">
-  <div class="full-width">
-    <div class="field">
-      <input type="checkbox" class="checkbox" id="is-alert">
-      <label for="is-alert" class="checkbox-label">Is Alert</label>
+<form>
+  <div class="row top-padding">
+    <div class="six columns">
+      <h3>Example of validation types introduced by the Landmark team</h3>
     </div>
   </div>
+
   <div class="row">
     <div class="full-width">
+      <label>Type of Alert</label>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option1" value="error" checked/>
+      <label for="option1" class="radio-label">Error</label>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option2" value="alert"/>
+      <label for="option2" class="radio-label">Alert</label>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option3" value="confirm"/>
+      <label for="option3" class="radio-label">Confirm</label>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option4" value="info"/>
+      <label for="option4" class="radio-label">Info</label>
+      <input type="radio" class="radio" name="optionsGroupVWO" id="option5" value="icon"/>
+      <label for="option5" class="radio-label">Icon</label>
+
       <div class="field">
-        <button class="btn-primary" type="button" id="add-message">Add Inline Message</button>
-        <button class="btn-primary" type="button" id="remove-message">Remove Message</button>
-        <button class="btn-primary" type="button" id="clear-message">Clear All Messages</button>
-        <button class="btn-primary" type="button" id="get-message">Get Message</button>
       </div>
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="is-alert">
+        <label for="is-alert" class="checkbox-label">Is Alert</label>
+      </div>
+
+      <div class="field">
+        <button class="btn-primary" type="button" id="addMessage">Add Inline Message</button>
+        <button class="btn-primary" type="button" id="removeMessage">Remove Message</button>
+        <button class="btn-primary" type="button" id="clearAllMessages">Clear All Messages</button>
+        <button class="btn-primary" type="button" id="getMessage">Get Message</button>
+      </div>
+
     </div>
   </div>
   <div class="row">
@@ -51,60 +58,84 @@
       </div>
     </div>
   </div>
-</div>
+
+</form>
 
 <script>
   var currentValidationType = 'error';
   var message = 'Message';
+  var fields = $('#text-field, #date-field');
+  var fieldsOutput = $('#output-text-field, #output-date-field');
 
-  function onChange(evt) {
-    currentValidationType = evt.currentTarget.value;
-  }
-
-  $('#add-message').on('click', function() {
+  function addMessage() {
     var isAlert = $('#is-alert').prop('checked');
     var alertText = (isAlert) ? ' is alert,' : '';
-
-    $('#text-field, #date-field').addMessage({
+    var options = {
       message    : message + alertText + ' type is ' + currentValidationType,
       type       : currentValidationType,
       showTooltip: false,
       inline     : true,
       isAlert    : isAlert
-    });
-  });
+    }
 
-  $('#remove-message').on('click', function() {
-    $('#text-field, #date-field').removeMessage({
+    if (currentValidationType === 'icon') {
+      options.icon = 'mail';
+    }
+
+    fields.addMessage(options);
+  }
+
+  function removeMessage() {
+    fields.removeMessage({
       message: '',
       type   : currentValidationType
     });
+  }
+
+  function getMessage() {
+    var dataAttr = currentValidationType + 'message';
+
+    $('#output-text-field').val($('#text-field').data(dataAttr));
+    $('#output-date-field').val($('#date-field').data(dataAttr));
+  }
+
+  function clearAllMessages() {
+    fieldsOutput.val('');
+    fields
+      .removeMessage({ type: 'error' })
+      .removeMessage({ type: 'alert' })
+      .removeMessage({ type: 'confirm' })
+      .removeMessage({ type: 'info' })
+      .removeMessage({ type: 'icon' });
+  }
+
+  $('input[type="radio"]').on('change', function (e) {
+    currentValidationType = e.currentTarget.value;
   });
 
-  $('#get-message').on('click', function() {
-    var options = {
-      type: currentValidationType
-    };
-
-    $('#output-text-field').val($('#text-field').getMessage(options));
-    $('#output-date-field').val($('#date-field').getMessage(options));
+  $('button').on('click', function (e) {
+    switch (e.currentTarget.id) {
+      case "addMessage":
+        addMessage();
+        break;
+      case "removeMessage":
+        removeMessage();
+        break;
+      case "clearAllMessages":
+        clearAllMessages();
+        break;
+      case "getMessage":
+        getMessage();
+        break;
+    }
   });
 
-  $('#clear-message').on('click', function() {
-    $('#text-field, #date-field').removeMessage({
-      type: 'error'
-    });
-    $('#text-field, #date-field').removeMessage({
-      type: 'alert'
-    });
-    $('#text-field, #date-field').removeMessage({
-      type: 'confirm'
-    });
-    $('#text-field, #date-field').removeMessage({
-      type: 'info'
-    });
+  $('form').on('valid', function (e, args) {
+    console.log('valid', e, args);
   });
 
-  // Fire on change events
-  $('[name="optionsGroupVWO"]').on('change.test', onChange);
+  $('form').on('error', function (e, args) {
+    console.log('error', e, args);
+  });
+
 </script>

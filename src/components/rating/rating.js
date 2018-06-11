@@ -60,7 +60,7 @@ Rating.prototype = {
     }
 
     this.currentValue = parseFloat(value, 10);
-    const chkIdx = Math.round(this.currentValue);
+    const chkIdx = Math.floor(this.currentValue);
 
     for (let i = 0, l = this.allInputs.length; i < l; i++) {
       const input = $(this.allInputs[i]);
@@ -79,7 +79,7 @@ Rating.prototype = {
         input.prop('checked', true);
       }
 
-      if (chkIdx !== this.currentValue && i + 1 === chkIdx) {
+      if (chkIdx !== this.currentValue && i === chkIdx) {
         input.addClass('is-half').next(svgSelector).find('svg').changeIcon('star-half');
       }
     }

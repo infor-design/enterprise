@@ -46,6 +46,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.saveUserSettings.pageSize=true]
  * @param {object}   [settings.saveUserSettings.activePage=true]
  * @param {object}   [settings.saveUserSettings.filter=true]
+ * @param {boolean}  [settings.focusAfterSort=false] If true will focus the active cell after sorting.
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
  * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
  * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
@@ -114,6 +115,7 @@ const DATAGRID_DEFAULTS = {
   columnReorder: false, // Allow Column reorder
   saveColumns: false, // Save Column Reorder and resize
   saveUserSettings: {},
+  focusAfterSort: false, // If true will focus the active cell after sorting.
   editable: false,
   isList: false, // Makes a readonly "list"
   menuId: null, // Id to the right click context menu
@@ -3211,7 +3213,7 @@ Datagrid.prototype = {
       colWidth = Math.max(textWidth, colWidth || 0);
     }
 
-    lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
+    lastColumn = index === this.lastColumnIdx();
 
     // Simulate Auto Width Algorithm
     if ((!this.widthSpecified || col.width === undefined) && this.settings.sizeColumnsEqually &&
@@ -4192,7 +4194,7 @@ Datagrid.prototype = {
     const self = this;
     const cell = $(e.target).closest('td').index();
     const rowElem = $(e.target).closest('tr');
-    let row = self.dataRowIndex(rowElem);
+    let row = this.settings.treeGrid ? this.actualRowIndex(rowElem) : this.dataRowIndex(rowElem);
     let isTrigger = true;
 
     if ($(e.target).is('a')) {
@@ -6827,6 +6829,12 @@ Datagrid.prototype = {
     if (col.serialize) {
       newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
       return newVal;
+    } else if (col.sourceFormat) {
+      if (value instanceof Date) {
+        newVal = Locale.parseDate(value, col.sourceFormat);
+      } else {
+        newVal = Locale.formatDate(value, { pattern: col.sourceFormat });
+      }
     } else if (typeof oldVal === 'number' && value) {
       newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
     }
@@ -7476,6 +7484,10 @@ Datagrid.prototype = {
     // Do Sort on Data Set
     this.setSortIndicator(id, ascending);
     this.sortDataset();
+
+    if (!this.settings.focusAfterSort && this.activeCell && this.activeCell.isFocused) {
+      this.activeCell.isFocused = false;
+    }
 
     const wasFocused = this.activeCell.isFocused;
     this.setTreeDepth();

@@ -15,9 +15,6 @@ const filterModes = ['startsWith', 'contains'];
  * @param {object} [settings] incoming settings
  * @param {boolean} [settings.caseSensitive=false]  Set to true if searches ARE case sensitive
  * @param {string} [settings.filterMode='startsWith']  Type of search can current be either 'startsWith' or 'contains'
- * @param {boolean} [settings.highlightMatchedText=false]  Inserts markup that appears to highlight text
- * @param {function} [settings.highlightCallback]  If defined, will execute this code for highlighting text
- * instead of the built-in highlighting code
  * @param {function} [settings.searchableTextCallback] If defined, will take each
   filterable item passed and return user-defined, searchable text content
  */
@@ -25,8 +22,6 @@ const filterModes = ['startsWith', 'contains'];
 const LISTFILTER_DEFAULTS = {
   caseSensitive: false,
   filterMode: filterModes[0],
-  highlightMatchedText: false,
-  highlightCallback: null,
   searchableTextCallback: undefined
 };
 
@@ -165,6 +160,11 @@ ListFilter.prototype = {
     // with the relevant results.
     if (isJQuery) {
       items = $(items);
+    }
+
+    // If we're not dealing with jQuery, an empty array shouldn't be returned.
+    if (!isJQuery && !items.length) {
+      return false;
     }
 
     return items;

@@ -14,6 +14,18 @@ const clickOnMultiselect = async () => {
   await multiselectEl.click();
 };
 
+const setTimer = () => {
+  let starttime = 0;
+  browser.controlFlow().execute(() => {
+    starttime = Date.now();
+  });
+  return {
+    get elapsed() {
+      return browser.controlFlow().execute(() => Date.now() - starttime);
+    }
+  };
+};
+
 describe('Multiselect example-states tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/multiselect/example-states');
@@ -55,6 +67,8 @@ describe('Multiselect example-states tests', () => {
       await multiselectEl.sendKeys(protractor.Key.ENTER);
       await multiselectEl.sendKeys(protractor.Key.ENTER);
       await multiselectEl.sendKeys(protractor.Key.TAB);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('message-text'))), config.waitsFor);
 
       expect(await element(by.css('.message-text')).getText()).toEqual('Required');
     });
@@ -70,6 +84,8 @@ describe('Multiselect example-states tests', () => {
       await multiselectEl.sendKeys(protractor.Key.ENTER);
       await multiselectEl.sendKeys(protractor.Key.ENTER);
       await element.all(by.css('.trigger')).first().click();
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(element(by.className('message-text'))), config.waitsFor);
 
       expect(await element(by.css('.message-text')).getText()).toEqual('Required');
     });
@@ -192,4 +208,51 @@ describe('Multiselect example-clear-all tests', () => {
       expect(await element(by.css('.dropdown span')).getText()).toEqual('');
     });
   }
+});
+
+describe('Multiselect example-select-all-performance tests', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/multiselect/test-select-all-performance');
+  });
+
+  xit('Should select all performance test', async () => {
+    const timer = setTimer();
+    await clickOnMultiselect();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
+
+    const all = await element.all(by.css('.dropdown-option')).count();
+    const selectAll = element(by.css('li.dropdown-select-all-list-item'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(selectAll), config.waitsFor);
+
+    await selectAll.click();
+    const selected = await element.all(by.css('.dropdown-option.is-selected')).count();
+
+    expect(selected).toEqual(all);
+    expect(timer.elapsed).toBeLessThan(1300);
+  });
+
+  xit('Should clear all selected performance test', async () => {
+    const timer = setTimer();
+    await clickOnMultiselect();
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-open'))), config.waitsFor);
+
+    const all = await element.all(by.css('.dropdown-option')).count();
+    const selectAll = element(by.css('li.dropdown-select-all-list-item'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(selectAll), config.waitsFor);
+
+    await selectAll.click();
+    let selected = await element.all(by.css('.dropdown-option.is-selected')).count();
+
+    expect(selected).toEqual(all);
+
+    await selectAll.click();
+    selected = await element.all(by.css('.dropdown-option.is-selected')).count();
+
+    expect(selected).toEqual(0);
+    expect(timer.elapsed).toBeLessThan(2200);
+  });
 });

@@ -1,4 +1,4 @@
-import { version as SOHO_XI_VERSION } from '../../ids-enterprise/package.json';
+import { version as SOHO_XI_VERSION } from '../../package.json';
 import { breakpoints } from './breakpoints';
 
 // jQuery Components
