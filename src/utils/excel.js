@@ -40,25 +40,7 @@ excel.exportToCsv = function (fileName, customDs, self) {
     });
     return table;
   };
-  const appendRows = function (dataset, table) {
-    let tableHtml;
-    const body = table.find('tbody').empty();
 
-    for (let i = 0; i < dataset.length; i++) {
-      if (!dataset[i].isFiltered) {
-        tableHtml += self.rowHtml(dataset[i], i, i);
-      }
-    }
-
-    body.append(tableHtml);
-    return table;
-  };
-  const base64 = function (s) {
-    if (window.btoa) {
-      return `data:application/csv;base64,${window.btoa(unescape(encodeURIComponent(s)))}`;
-    }
-    return `data:application/csv;,${unescape(encodeURIComponent(s))}`;
-  };
   const formatCsv = function (table) {
     const csv = [];
     const rows = table.find('tr');
@@ -68,11 +50,13 @@ excel.exportToCsv = function (fileName, customDs, self) {
 
     // CHECK EXPORTABLE
     const nonExportables = [];
-    $.each($('th', self.headerRow).not('.is-hidden'), (index, item) => {
-      if ($(item)[0].getAttribute('data-exportable') && $(item)[0].getAttribute('data-exportable') === 'no') {
-        nonExportables.push(index);
-      }
-    });
+    if (self) {
+      $.each($('th', self.headerRow).not('.is-hidden'), (index, item) => {
+        if ($(item)[0].getAttribute('data-exportable') && $(item)[0].getAttribute('data-exportable') === 'no') {
+          nonExportables.push(index);
+        }
+      });
+    }
 
     for (let i = 0, l = rows.length; i < l; i++) {
       row = [];
@@ -93,7 +77,11 @@ excel.exportToCsv = function (fileName, customDs, self) {
     return `"${csv.join('"\n"')}"`;
   };
   let table = [];
-  table = customDs || appendRows(self.settings.dataset, self.table.clone());
+  if (!self && customDs) {
+    table = this.datasetToHtml(customDs);
+  } else {
+    table = this.appendRows(self.settings.dataset, self.table.clone(), self);
+  }
 
   if (!customDs && !table.find('thead').length) {
     self.headerRow.clone().insertBefore(table.find('tbody'));
@@ -123,12 +111,69 @@ excel.exportToCsv = function (fileName, customDs, self) {
     URL.revokeObjectURL(objectUrl);
   } else {
     const link = document.createElement('a');
-    link.href = base64(csvData);
+    link.href = this.base64(csvData);
     link.download = fileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   }
+};
+
+/**
+* Convert a dataset to a html table for conversion to excel.
+* @private
+* @param {string} dataset The array of objects to convert
+* @returns {string} an html table as a string
+*/
+excel.datasetToHtml = function (dataset) {
+  let tableHtml = '<tbody>';
+  for (let i = 0; i < dataset.length; i++) {
+    tableHtml += '<tr>';
+    Object.keys(dataset[i]).forEach((key, index) => { //eslint-disable-line
+      if (dataset[i] && Object.prototype.hasOwnProperty.call(dataset[i], key)) {
+        tableHtml += `<td>${dataset[i][key]}</td>`;
+      }
+    });
+    tableHtml += '</tr>';
+  }
+
+  tableHtml += '</tbody>';
+  return $('<table></table>').append(tableHtml);
+};
+
+/**
+* Convert a dataset to a html table for conversion to excel.
+* @private
+* @param {array} dataset The array of objects to convert.
+* @param {object} table The table object.
+* @param {object} self The grid API.
+* @returns {object} The table with rows appended.
+*/
+excel.appendRows = function (dataset, table, self) {
+  let tableHtml;
+  const body = table.find('tbody').empty();
+
+  for (let i = 0; i < dataset.length; i++) {
+    if (!dataset[i].isFiltered) {
+      tableHtml += self.rowHtml(dataset[i], i, i);
+    }
+  }
+
+  body.append(tableHtml);
+  return table;
+};
+
+/**
+* Convert a excel string to base64 format for download.
+* @private
+* @param {string} s The string containing the document.
+* @returns {string} The excel doc as a base64 string.
+*/
+excel.base64 = function (s) {
+  if (window.btoa) {
+    return `data:application/vnd.ms-excel;base64,${window.btoa(unescape(encodeURIComponent(s)))}`;
+  }
+  return `data:application/vnd.ms-excel;,${unescape(encodeURIComponent(s))}`;
 };
 
 /**
@@ -207,33 +252,16 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     return table;
   };
 
-  const base64 = function (s) {
-    if (window.btoa) {
-      return `data:application/vnd.ms-excel;base64,${window.btoa(unescape(encodeURIComponent(s)))}`;
-    }
-    return `data:application/vnd.ms-excel;,${unescape(encodeURIComponent(s))}`;
-  };
-
   const format = function (s, c) {
     return s.replace(/{(\w+)}/g, (m, p) => c[p]);
   };
 
-  const appendRows = function (dataset, table) {
-    let tableHtml = '';
-    const body = table.find('tbody').empty();
-
-    for (let i = 0; i < dataset.length; i++) {
-      if (!dataset[i].isFiltered) {
-        tableHtml += self.rowHtml(dataset[i], i, i);
-      }
-    }
-
-    body.append(tableHtml);
-    return table;
-  };
-
   let table = [];
-  table = customDs || appendRows(self.settings.dataset, self.table.clone());
+  if (!self && customDs) {
+    table = this.datasetToHtml(customDs);
+  } else {
+    table = this.appendRows(self.settings.dataset, self.table.clone(), self);
+  }
 
   if (!customDs && !table.find('thead').length) {
     self.headerRow.clone().insertBefore(table.find('tbody'));
@@ -251,7 +279,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     });
   }
 
-  const ctx = { worksheet: (worksheetName || 'Worksheet'), table: customDs || table.html() };
+  const ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() };
 
   fileName = `${fileName ||
     self.element.closest('.datagrid-container').attr('id') ||
@@ -278,7 +306,7 @@ excel.exportToExcel = function (fileName, worksheetName, customDs, self) {
     URL.revokeObjectURL(objectUrl);
   } else {
     const link = document.createElement('a');
-    link.href = base64(format(template, ctx));
+    link.href = this.base64(format(template, ctx));
     link.download = fileName;
     document.body.appendChild(link);
     link.click();
