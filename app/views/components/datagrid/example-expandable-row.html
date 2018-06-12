@@ -47,10 +47,9 @@
         idProperty:'officeId',
         dataset: data,
         filterable: true,
-        isList: true,
         rowTemplate: rowTemplate,
         toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true,
-          results: true, keywordFilter: true, actions: true, exportToExcel: true, rowHeight: true}
+          results: true, keywordFilter: true, actions: true, exportToExcel: true, rowHeight: true, personalize: true}
       });
 
       grid.on('expandrow', function (e, args) {

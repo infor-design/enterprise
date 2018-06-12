@@ -52,7 +52,7 @@ describe('Autocomplete API (select)', () => {
     autocompleteInputEl.parentNode.removeChild(autocompleteInputEl);
   });
 
-  it('returns an object with metadata about an item that was programmatically selected', () => {
+  it('returns an object with index, label and value about an item that was programmatically selected', () => {
     autocompleteAPI.openList('new', statesData);
     const autocompleteListEl = document.querySelector('#autocomplete-list');
     const resultItems = autocompleteListEl.querySelectorAll('li');
@@ -64,7 +64,7 @@ describe('Autocomplete API (select)', () => {
     expect(selectedItem.value).toEqual('NJ'); // Should be retrieved from `data-value`
   });
 
-  it('returns an object with metadata about an item that was programmatically selected', () => {
+  it('returns an object with index, value and addedValue about an item that was programmatically selected', () => {
     autocompleteAPI.openList('new', statesExtraData);
     const autocompleteListEl = document.querySelector('#autocomplete-list');
     const resultItems = autocompleteListEl.querySelectorAll('li');
