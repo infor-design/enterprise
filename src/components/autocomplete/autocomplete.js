@@ -251,6 +251,8 @@ Autocomplete.prototype = {
       });
     }
 
+    this.currentDataSet = modifiedFilterResults;
+
     // If a "resultsCallback" method is defined, pipe the filtered items to that method and skip
     // building a popupmenu.
     if (typeof this.settings.displayResultsCallback === 'function') {
@@ -328,7 +330,7 @@ Autocomplete.prototype = {
     // Overrides the 'click' listener attached by the Popupmenu plugin
     self.list.off('click touchend')
       .on('touchend.autocomplete click.autocomplete', 'a', (e) => {
-        self.select(e, filterResult);
+        self.select(e);
       })
       .off('focusout.autocomplete').on('focusout.autocomplete', () => {
         self.checkActiveElement();
@@ -374,6 +376,7 @@ Autocomplete.prototype = {
       popup.close();
     }
 
+    this.currentDataSet = null;
     this.element.trigger('listclose');
     $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
     $('#autocomplete-list').remove();
@@ -443,7 +446,7 @@ Autocomplete.prototype = {
         e.stopPropagation();
         e.preventDefault();
         self.noSelect = true;
-        self.select(highlighted, this.currentDataSet);
+        self.select(highlighted);
       } else {
         self.closeList();
       }
@@ -612,6 +615,12 @@ Autocomplete.prototype = {
     }, 10);
   },
 
+  /**
+   * Highlights (and focuses) an Autocomplete list option
+   * @param {jQuery} anchor the anchor to be highlighted
+   * @param {jQuery[]} [allAnchors=null] optional list of anchors to deselect when the new one becomes selected.
+   * @returns {void}
+   */
   highlight(anchor, allAnchors) {
     let text = anchor.text().trim();
 
@@ -628,10 +637,16 @@ Autocomplete.prototype = {
     this.element.val(text).focus();
   },
 
+  /**
+   * Selects an Autocomplete result.
+   * @param {jQuery|jQuery.Event} anchorOrEvent either a reference to a jQuery-wrapped HTMLElement, or a jQuery Event object with a target.
+   * @param {object[]} [items=this.currentDataSet] an array of objects representing autocomplete options.
+   * @returns {object} contains information about the selected item.
+   */
   select(anchorOrEvent, items) {
     let a;
     let li;
-    let ret;
+    let ret = {};
     let isEvent = false;
 
     // Initial Values
@@ -648,26 +663,35 @@ Autocomplete.prototype = {
     }
 
     li = a.parent('li');
-    ret = a.text().trim();
     const dataIndex = li.attr('data-index');
     const dataValue = li.attr('data-value');
 
     this.element.attr('aria-activedescendant', li.attr('id'));
 
-    if (items && items.length) {
-      // If the data-index attr is supplied, use it to get the item
-      // (since two items could have same value)
-      if (dataIndex) {
-        ret = items[parseInt(dataIndex, 10)];
-      } else if (dataValue) {
-        // Otherwise use data-value to get the item (a custom template may not supply data-index)
-        for (let i = 0, value; i < items.length; i++) {
+    if (!items || !items.length) {
+      items = this.currentDataSet;
+    }
+
+    // If the data-index attr is supplied, use it to get the item
+    // (since two items could have same value)
+    if (dataIndex) {
+      ret = items[parseInt(dataIndex, 10)];
+    } else if (dataValue) {
+      // Otherwise use data-value to get the item (a custom template may not supply data-index)
+      for (let i = 0, value; i < items.length; i++) {
+        if (typeof items[i] === 'object' && items[i].value !== undefined) {
           value = items[i].value.toString();
-          if (value === dataValue) {
-            ret = items[i];
-          }
+          ret = items[i];
+        } else {
+          value = items[i].toString();
         }
+        ret.value = value;
       }
+    }
+
+    // Use the label as the value, if we're not working from a true dataset
+    if (!ret.value || !ret.value.length === 0) {
+      ret.value = a.text().trim();
     }
 
     this.closeList();
@@ -686,6 +710,13 @@ Autocomplete.prototype = {
       ret.hasValue = true;
     }
 
+    /**
+    *  Fires when an element is selected from the list.
+    *
+    * @event selected
+    * @memberof Autocomplete
+    * @param {array} args An array containing the link and the return object.
+    */
     this.element
       .trigger('selected', [a, ret])
       .focus();
@@ -694,7 +725,7 @@ Autocomplete.prototype = {
       anchorOrEvent.preventDefault();
     }
 
-    return false;
+    return ret;
   },
 
   /*
