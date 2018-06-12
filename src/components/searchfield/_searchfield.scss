@@ -17,10 +17,15 @@
   box-shadow: 0 3px 5px 0 rgba($searchfield-context-box-shadow-color, .7);
 }
 
+$cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
+
 .searchfield-wrapper {
   display: inline-block;
   margin-bottom: 20px;
   position: relative;
+  @include transition(width 300ms $cubic-bezier-ease,
+    left 300ms $cubic-bezier-ease,
+    right 300ms $cubic-bezier-ease);
 
   > .icon {
     background-color: rgba($white, 0); // IE 10
@@ -60,6 +65,8 @@
   .searchfield {
     padding-left: 34px;
     padding-right: 34px;
+    @include transition(background-color 300ms $cubic-bezier-ease,
+      border-color 300ms $cubic-bezier-ease);
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
@@ -183,7 +190,9 @@
   }
 
   &.has-focus {
-    box-shadow: $focus-box-shadow;
+    &:not(.toolbar-searchfield-wrapper) {
+      box-shadow: $focus-box-shadow;
+    }
 
     .btn {
       border-color: $input-focus-border-color;

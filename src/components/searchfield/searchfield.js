@@ -2,6 +2,7 @@ import { Environment as env } from '../../utils/environment';
 import * as debug from '../../utils/debug';
 import { breakpoints } from '../../utils/breakpoints';
 import { utils } from '../../utils/utils';
+import { renderLoop, RenderLoopItem } from '../../utils/renderloop';
 import { Locale } from '../locale/locale';
 
 // jQuery Components
@@ -154,7 +155,7 @@ SearchField.prototype = {
    * @returns {boolean} whether or not the searchfield is currently able to be collapsed.
    */
   get isCurrentlyCollapsible() {
-    return this.settings.collapsible || (this.settings.collapsibleOnMobile && breakpoints.isBelow('phone-to-tablet'));
+    return this.settings.collapsible || (this.settings.collapsibleOnMobile && this.shouldBeFullWidth());
   },
 
   /**
@@ -230,7 +231,7 @@ SearchField.prototype = {
     }
 
     // Add/remove the collapsible functionality
-    this.wrapper[0].classList[!this.isCollapsible ? 'add' : 'remove']('non-collapsible');
+    this.wrapper[0].classList[!this.settings.collapsible ? 'add' : 'remove']('non-collapsible');
 
     // Add/remove `toolbar-searchfield-wrapper` class based on existence of Toolbar Parent
     this.wrapper[0].classList[this.toolbarParent ? 'add' : 'remove']('toolbar-searchfield-wrapper');
@@ -342,7 +343,7 @@ SearchField.prototype = {
     this.calculateSearchfieldWidth();
 
     if (this.isCollapsible) {
-      this.adjustOnBreakpoint();
+      this.expand(true);
     }
 
     return this;
@@ -360,7 +361,7 @@ SearchField.prototype = {
       this.wrapper.removeAttr('style');
       this.input.removeAttribute('style');
 
-      if (this.hasFocus()) {
+      if (this.isFocused) {
         this.appendToParent();
 
         this.calculateOpenWidth();
@@ -391,7 +392,7 @@ SearchField.prototype = {
       }
     }
 
-    if (!this.hasFocus() && this.isCollapsible && this.isExpanded) {
+    if (!this.isFocused && this.isCollapsible && this.isExpanded) {
       this.collapse();
     }
   },
@@ -404,7 +405,7 @@ SearchField.prototype = {
    * @returns {void}
    */
   saveFocus() {
-    if (!this.hasFocus()) {
+    if (!this.isFocused) {
       return;
     }
     this.focusElem = document.activeElement;
@@ -614,12 +615,6 @@ SearchField.prototype = {
       .on(`updated.${this.id}`, (e, settings) => {
         self.updated(settings);
       })
-      .on(`focus.${this.id}`, (e) => {
-        self.handleFocus(e);
-      })
-      .on(`blur.${this.id}`, (e) => {
-        self.handleBlur(e);
-      })
       .on(`click.${this.id}`, (e) => {
         self.handleClick(e);
       })
@@ -650,8 +645,8 @@ SearchField.prototype = {
         .on(`focus.${this.id}`, (e) => {
           self.handleCategoryFocus(e);
         })
-        .on(`blur.${this.id}`, (e) => {
-          self.handleCategoryBlur(e);
+        .on(`blur.${this.id}`, () => {
+          self.handleSafeBlur();
         })
         .on(`close.${this.id}`, () => { // Popupmenu Close
           self.handleSafeBlur();
@@ -670,13 +665,14 @@ SearchField.prototype = {
     if (this.isCollapsible) {
       this.element.on(`cleared.${this.id}`, () => {
         self.element.addClass('active is-open has-focus');
-        self.isFocused = true;
       });
 
       this.wrapper.on(`mousedown.${this.id}`, () => {
         self.fastExpand = true;
       }).on(`focusin.${this.id}`, (e) => {
         self.handleFocus(e);
+      }).on(`focusout.${this.id}`, (e) => {
+        self.handleBlur(e);
       }).on(`keydown.${this.id}`, (e) => {
         self.handleKeydown(e);
       }).on(`collapse.${this.id}`, () => {
@@ -691,7 +687,7 @@ SearchField.prototype = {
 
     if (this.toolbarParent) {
       $(this.toolbarParent).on(`navigate.${this.id}`, () => {
-        if (self.hasFocus() || !self.isCurrentlyCollapsible) {
+        if (self.isFocused || !self.isCurrentlyCollapsible) {
           return;
         }
         self.collapse();
@@ -807,10 +803,9 @@ SearchField.prototype = {
   },
 
   /**
-   * Detects whether or not the Searchfield has focus.
-   * @returns {boolean} whether or not the Searchfield has focus.
+   * @returns {boolean} whether or not one of elements inside the Searchfield wrapper has focus.
    */
-  hasFocus() {
+  get isFocused() {
     const active = document.activeElement;
     const wrapperElem = this.wrapper[0];
 
@@ -837,6 +832,15 @@ SearchField.prototype = {
     }
 
     return false;
+  },
+
+  /**
+   * Detects whether or not the Searchfield has focus.
+   * @deprecated in v4.8.x
+   * @returns {boolean} whether or not the Searchfield has focus.
+   */
+  hasFocus() {
+    return this.isFocused;
   },
 
   /**
@@ -878,18 +882,15 @@ SearchField.prototype = {
     const self = this;
     function safeBlurHandler() {
       // Do a check for searchfield-specific elements
-      if (self.hasFocus()) {
+      if (self.isFocused) {
         return;
       }
 
       const wrapperElem = self.wrapper[0];
+      wrapperElem.classList.remove('has-focus');
 
       if (!self.isActive()) {
         wrapperElem.classList.remove('active');
-      }
-
-      if (!self.hasFocus()) {
-        wrapperElem.classList.remove('has-focus');
       }
 
       if (self.isCurrentlyCollapsible) {
@@ -954,20 +955,7 @@ SearchField.prototype = {
     }
 
     $(document).off(this.outsideEventStr);
-    this.collapse();
-  },
-
-  /**
-   * Handles the "focusout" event
-   * @private
-   * @returns {void}
-   */
-  handleFocusOut() {
-    if (this.isFocused || !this.settings.collapsible) {
-      return;
-    }
-
-    this.collapse();
+    this.handleSafeBlur();
   },
 
   /**
@@ -984,7 +972,7 @@ SearchField.prototype = {
     }
 
     if (key === 9) { // Tab
-      this.handleFocusOut(e);
+      this.handleSafeBlur();
     }
   },
 
@@ -1000,8 +988,7 @@ SearchField.prototype = {
     const target = e.target;
 
     if (key === 9 && !this.isSearchfieldElement(target)) {
-      this.isFocused = false;
-      this.handleFocusOut(e);
+      this.handleSafeBlur();
     }
   },
 
@@ -1334,16 +1321,6 @@ SearchField.prototype = {
    * @private
    */
   calculateSearchfieldWidth() {
-    /*
-    if (this.toolbarParent) {
-      // If this is a toolbar searchfield, run its internal size check that fixes the
-      // trigger button and input field size.
-      this.calculateOpenWidth();
-      this.setOpenWidth();
-      return;
-    }
-    */
-
     let subtractWidth = 0;
     let targetWidthProp;
 
@@ -1392,15 +1369,8 @@ SearchField.prototype = {
     this.wrapper
       .addClass('active')
       .addClass('has-focus');
-  },
 
-  /**
-   * Category Button Blur event handler
-   * @private
-   * @returns {undefined}
-   */
-  handleCategoryBlur() {
-    this.handleSafeBlur();
+    this.saveFocus();
   },
 
   /**
@@ -1534,15 +1504,6 @@ SearchField.prototype = {
   },
 
   /**
-   * Category Button Close event handler
-   * @private
-   * @returns {void}
-   */
-  handlePopupClose() {
-    return this.setAsActive(true, true);
-  },
-
-  /**
    * Expands the Searchfield
    * @param {boolean} [noFocus] If defined, causes the searchfield component not to become focused
    *  at the end of the expand method. Its default functionality is that it will become focused.
@@ -1577,13 +1538,6 @@ SearchField.prototype = {
 
     this.addDocumentDeactivationEvents();
 
-    // Don't continue if we shouldn't expand in a mobile setting.
-    if (this.shouldExpandOnMobile()) {
-      self.calculateOpenWidth();
-      self.setOpenWidth();
-      return;
-    }
-
     if (!self.isOpen()) {
       self.wrapper.addClass('is-open');
       self.calculateOpenWidth();
@@ -1601,17 +1555,22 @@ SearchField.prototype = {
     }
 
     $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
-    self.wrapper.one($.fn.transitionEndName(), () => {
-      if (!self.isFocused && self.hasFocus() && document.activeElement !== self.input[0]) {
-        self.isFocused = true;
-        self.input.focus();
-      }
 
-      $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
-      self.wrapper.triggerHandler('expanded');
-      delete self.isExpanding;
-      self.isExpanded = true;
+    const expandTimer = new RenderLoopItem({
+      duration: 30,
+      updateCallback() {}, // TODO: make this work without an empty function
+      timeoutCallback() {
+        $(self.toolbarParent).triggerHandler('recalculate-buttons', eventArgs);
+        self.wrapper.triggerHandler('expanded');
+        delete self.isExpanding;
+        self.isExpanded = true;
+
+        if (self.isCurrentlyCollapsible && !self.isFocused) {
+          self.collapse();
+        }
+      }
     });
+    renderLoop.register(expandTimer);
   },
 
   /**
@@ -1637,20 +1596,8 @@ SearchField.prototype = {
     this.wrapper[textMethod]('has-text');
 
     self.wrapper.removeClass('active');
-    if (!self.hasFocus()) {
+    if (!self.isFocused) {
       self.wrapper.removeClass('has-focus');
-      self.isFocused = false;
-    }
-
-    // Return out without collapsing or handling callbacks for the `collapse` event if:
-    // Searchfield is not collapsible in general -OR-
-    // Searchfield is only collapsible on mobile, and we aren't below the mobile breakpoint
-    if (!this.isCollapsible && !this.isCurrentlyCollapsible) {
-      return;
-    }
-
-    if (this.shouldExpandOnMobile()) {
-      return;
     }
 
     this.wrapper.removeAttr('style');
@@ -1673,10 +1620,15 @@ SearchField.prototype = {
     delete this.isExpanded;
     delete this.isExpanding;
 
-    self.wrapper.one($.fn.transitionEndName(), () => {
-      delete this.isCollapsing;
-      $(self.toolbarParent).triggerHandler('recalculate-buttons');
+    const collapseTimer = new RenderLoopItem({
+      duration: 30,
+      updateCallback() {}, // TODO: make this work without an empty function
+      timeoutCallback() {
+        delete self.isCollapsing;
+        $(self.toolbarParent).triggerHandler('recalculate-buttons');
+      }
     });
+    renderLoop.register(collapseTimer);
   },
 
   /**
@@ -1753,8 +1705,6 @@ SearchField.prototype = {
   teardown() {
     this.element.off([
       `updated.${this.id}`,
-      `focus.${this.id}`,
-      `blur.${this.id}`,
       `click.${this.id}`,
       `keydown.${this.id}`,
       `beforeopen.${this.id}`,
@@ -1768,6 +1718,7 @@ SearchField.prototype = {
     this.wrapper.off([
       `mousedown.${this.id}`,
       `focusin.${this.id}`,
+      `focusout.${this.id}`,
       `keydown.${this.id}`,
       `collapse.${this.id}`
     ].join(' '));

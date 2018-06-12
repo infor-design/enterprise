@@ -72,6 +72,17 @@ function PopupMenu(element, settings) {
 
 PopupMenu.prototype = {
 
+  get parentComponent() {
+    let parentComponent;
+
+    const searchfieldAPI = this.element.data('searchfield');
+    if (searchfieldAPI) {
+      parentComponent = searchfieldAPI;
+    }
+
+    return parentComponent;
+  },
+
   /**
    * @private
    * @returns {void}
@@ -2028,7 +2039,12 @@ PopupMenu.prototype = {
     }
 
     if (this.settings.returnFocus) {
-      self.element.removeClass('hide-focus').focus();
+      self.element.removeClass('hide-focus');
+      if (this.parentComponent && typeof this.parentComponent.restoreFocus === 'function') {
+        this.parentComponent.restoreFocus();
+        return;
+      }
+      self.element.focus();
     }
   },
 
