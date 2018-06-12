@@ -681,11 +681,16 @@ Autocomplete.prototype = {
       for (let i = 0, value; i < items.length; i++) {
         if (typeof items[i] === 'object' && items[i].value !== undefined) {
           value = items[i].value.toString();
-          ret = items[i];
         } else {
           value = items[i].toString();
         }
-        ret.value = value;
+
+        if (value === dataValue) {
+          if (typeof items[i] === 'object') {
+            ret = items[i];
+          }
+          ret.value = value;
+        }
       }
     }
 
