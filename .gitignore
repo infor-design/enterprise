@@ -2,6 +2,7 @@
 ############
 designs/
 app/dist/css/*
+dist/
 app/docs/*.html
 dist/
 app/docs/components/*.html
