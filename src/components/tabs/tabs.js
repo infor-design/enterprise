@@ -2251,10 +2251,6 @@ Tabs.prototype = {
           }
           // do nothing if it's just a string of text.
           break;
-        case 'object':
-          // jQuery object or HTML Element
-          sourceString = $(sourceString).clone();
-          break;
         default:
           break;
       }
