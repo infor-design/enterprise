@@ -1,4 +1,6 @@
-# Running Functional Tests
+# Tests
+
+## Running Functional Tests
 
 `npm run functional:ci` to run all tests, and exit immediately
 
