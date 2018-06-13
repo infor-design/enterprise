@@ -102,8 +102,8 @@ You can also find a subset of documentation at [`localhost:4000/components`](htt
 
 This project is an open source project. Please see the [contribution guidelines for this project](docs/CONTRIBUTING.md).
 
-Please use the internal Infor [Jira issue tracker](http://jira.infor.com/browse/SOHO) to report all requests, bugs, questions, and feature requests.
+Use  [Github Issues](https://github.com/infor-design/enterprise/issues) to report all requests, bugs, questions, and feature requests.
 
-For release updates see our upcoming and past version in our [releases road map](http://jira.infor.com/projects/SOHO?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page).
+For release updates see our upcoming and past version in our [releases](https://github.com/infor-design/enterprise/releases).
 
 If you're an Infor employee, you can join our [MS Teams Group](https://teams.microsoft.com/l/team/19%3a2b0c9ce520b0481a9ce115f0ca4a326f%40thread.skype/conversations?groupId=4f50ef7d-e88d-4ccb-98ca-65f26e57fe35&tenantId=457d5685-0467-4d05-b23b-8f817adda47c) for updates.
