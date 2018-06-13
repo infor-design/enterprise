@@ -5,7 +5,7 @@ description: This page describes Drag Behavior.
 
 ## Configuration Options
 
-1. Drag Examples [View Example]( ../components/drag/example-index)
+Drag Examples [View Example]( ../components/drag/example-index)
 
 ## Code Example
 
@@ -17,8 +17,7 @@ $(draggableThing).drag({containment: 'parent'});
 
 ## Accessibility
 
-- Dragging is NOT accessible. Try to provide alternate keyboard friendly ways to do the equivalent functionality.
-
+Dragging is NOT accessible. Try to provide alternate keyboard friendly ways to do the equivalent functionality.
 
 ## Keyboard Shortcuts
 
@@ -26,4 +25,4 @@ None.
 
 ## Upgrading from 3.X
 
-- The 3.X project had two drag components. This replaces both.
+The 3.X project had two drag components. This replaces both.

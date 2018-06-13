@@ -57,8 +57,8 @@ $('body').contextualactionpanel({
 
 The contextual action panel inherits the following keystrokes from other controls:
 
--   <kbd>Escape</kbd> closes the contextual action panel
--   When focused on elements inside the toolbar at the top of the contextual action panel, all [toolbar](./toolbar) keystrokes take effect
+- <kbd>Escape</kbd> closes the contextual action panel
+- When focused on elements inside the toolbar at the top of the contextual action panel, all [toolbar](./toolbar) keystrokes take effect
 - <kbd>Tab</kbd> should never tab off of the contextual action panel
 
 ## Responsive Guidelines
@@ -67,4 +67,4 @@ The contextual action panel responds similarly to a [modal](./modal), in that it
 
 ## Upgrading from 3.X
 
--   Did not exist in 3.X, but any complex modals should be changed to use this.
+- Did not exist in 3.X, but any complex modals should be changed to use this.

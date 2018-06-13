@@ -13,6 +13,11 @@
   "MD013": {
     "line_length": 800
   },
+  "MD033": {
+    "allowed_elements": [
+      "kbd"
+    ]
+  },
   "MD035": {
     "style": "---"
   }

@@ -52,8 +52,8 @@ Accessibility work is needed on this component.
 
 ## Responsive Guidelines
 
--   Will size to the parent's withd
+- Will size to the parent's withd
 
 ## Upgrading from 3.X
 
--   This did not exist but may be confused with the progress bar in 3.6
+- This did not exist but may be confused with the progress bar in 3.6

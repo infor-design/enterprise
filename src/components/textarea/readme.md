@@ -24,10 +24,10 @@ You can optionally set a maxlength attribute which is the maximum number of char
 
 Text areas support:
 
--   Dirty Indicator
--   Error validation
--   Required Validation
--   Disabled/Enabled
+- Dirty Indicator
+- Error validation
+- Required Validation
+- Disabled/Enabled
 
 ```html
 <div class="field">

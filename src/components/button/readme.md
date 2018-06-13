@@ -23,10 +23,10 @@ A button object should always use a `<button>` element. Also make sure to add `t
 
 There are four types of buttons, all controlled by class.
 
--   `btn-primary` - Primary action form button
--   `btn-secondary` - Secondary action form button
--   `btn-tertiary` or `btn` - Normal tertiary button
--   `btn-icon` - Icon only button
+- `btn-primary` - Primary action form button
+- `btn-secondary` - Secondary action form button
+- `btn-tertiary` or `btn` - Normal tertiary button
+- `btn-icon` - Icon only button
 
 All buttons are assumed to include an icon and a text label. An icon can be added by including the SVG icon element and use a span to hold the button text.
 
@@ -60,17 +60,17 @@ All buttons are assumed to include an icon and a text label. An icon can be adde
 
 ## Accessibility
 
--   Make sure form buttons have a succinctly descriptive value that indicates its purpose
+- Make sure form buttons have a succinctly descriptive value that indicates its purpose
 
 ## Keyboard Shortcuts
 
--   <kbd>Spacebar</kbd> or <kbd>Enter</kbd> keys execute the action for that button. If the button activation closes the containing entity or launches another entity, then focus moves to the newly-opened entity. If the button activation does not close or dismiss the containing entity, then focus remains on the button. An example might be an "Apply" or "Recalculate" button.
+- <kbd>Spacebar</kbd> or <kbd>Enter</kbd> keys execute the action for that button. If the button activation closes the containing entity or launches another entity, then focus moves to the newly-opened entity. If the button activation does not close or dismiss the containing entity, then focus remains on the button. An example might be an "Apply" or "Recalculate" button.
 
 ## Responsive Guidelines
 
--   Buttons can optionally be 100% width of their parent container on mobile breakpoints
+- Buttons can optionally be 100% width of their parent container on mobile breakpoints
 
 ## Upgrading from 3.X
 
--   Change class `inforFormButton default` to `btn-primary`
--   Change class `inforFormButton` to `btn-secondary`
+- Change class `inforFormButton default` to `btn-primary`
+- Change class `inforFormButton` to `btn-secondary`

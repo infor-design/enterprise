@@ -49,7 +49,7 @@ In addition, a wizard can be used for header navigation. This is a full page pat
 
 States apply to the individual steps of a wizard:
 
--   Available
--   Completed (Available + Completed)
--   Partially Completed (Available + Started + Not fully completed)
--   Disabled/Unavailable (Cannot be accessed until all previous steps are completed)
+- Available
+- Completed (Available + Completed)
+- Partially Completed (Available + Started + Not fully completed)
+- Disabled/Unavailable (Cannot be accessed until all previous steps are completed)
