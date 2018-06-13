@@ -16,6 +16,7 @@ install:
   - npm install
 before_script:
   - npm run eslint:error-only
+  - npm run mdlint
 script:
   - npm run build
   - npm run quickstart &
