@@ -18,7 +18,6 @@ For guidelines on when and where to use the components see the [design.infor.com
 
 ## Browser Support
 
-
 We support the latest release and the release previous to the latest (R-1) for browsers and OS versions. Which maps out as follows:
 
 <!-- markdownlint-disable MD013 MD033 -->
