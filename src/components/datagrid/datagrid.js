@@ -6185,7 +6185,7 @@ Datagrid.prototype = {
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
         if (!self.editor) {
-          self.makeCellEditable(row, cell, e);
+          self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
 
@@ -6207,7 +6207,7 @@ Datagrid.prototype = {
           self.commitCellEdit(self.editor.input);
           self.setNextActiveCell(e);
         } else {
-          self.makeCellEditable(row, cell, e);
+          self.makeCellEditable(self.activeCell.rowIndex, cell, e);
           if (self.isContainTextfield(node) && self.notContainTextfield(node)) {
             self.quickEditMode = true;
           }
@@ -6219,7 +6219,7 @@ Datagrid.prototype = {
       if ([9, 13, 32, 35, 36, 37, 38, 39, 40, 113].indexOf(key) === -1 &&
         !e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey && self.settings.editable) {
         if (!self.editor) {
-          self.makeCellEditable(row, cell, e);
+          self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
 
