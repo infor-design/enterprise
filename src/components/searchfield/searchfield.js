@@ -372,7 +372,10 @@ SearchField.prototype = {
         }
 
         this.expand(true);
-      } else if (this.isCollapsible && this.isExpanded) {
+        return;
+      }
+
+      if (this.isCurrentlyCollapsible && this.isExpanded) {
         this.collapse();
       }
 
@@ -382,17 +385,14 @@ SearchField.prototype = {
     // On larger form-factor (desktop)
     this.appendToButtonset();
 
-    if (!this.isCollapsible) {
-      this.calculateOpenWidth();
-      this.setOpenWidth();
-
+    if (this.isFocused) {
       if (!this.isExpanded) {
-        this.expand();
-        return;
+        this.expand(true);
       }
+      return;
     }
 
-    if (!this.isFocused && this.isCollapsible && this.isExpanded) {
+    if (this.isExpanded) {
       this.collapse();
     }
   },
@@ -538,23 +538,6 @@ SearchField.prototype = {
   },
 
   /**
-   * @private
-   * @returns {boolean} whether or not one of the components inside of this searchfield
-   *  is the document's "active" element.
-   */
-  isActive() {
-    return this.wrapper.hasClass('active');
-  },
-
-  /**
-   * @private
-   * @returns {boolean} whether or not this searchfield instance is currently expanded.
-   */
-  isOpen() {
-    return this.wrapper.hasClass('is-open');
-  },
-
-  /**
   * Fires when the searchfield is clicked (if enabled).
   * @event mousedown
   * @memberof ToolbarSearchfield
@@ -663,9 +646,11 @@ SearchField.prototype = {
     }
 
     if (this.isCollapsible) {
+      /*
       this.element.on(`cleared.${this.id}`, () => {
         self.element.addClass('active is-open has-focus');
       });
+      */
 
       this.wrapper.on(`mousedown.${this.id}`, () => {
         self.fastExpand = true;
@@ -887,11 +872,7 @@ SearchField.prototype = {
       }
 
       const wrapperElem = self.wrapper[0];
-      wrapperElem.classList.remove('has-focus');
-
-      if (!self.isActive()) {
-        wrapperElem.classList.remove('active');
-      }
+      wrapperElem.classList.remove('has-focus', 'active');
 
       if (self.isCurrentlyCollapsible) {
         self.collapse();
@@ -1011,7 +992,7 @@ SearchField.prototype = {
     menu[contextClassMethod]('context');
     menu[altClassMethod]('alternate');
 
-    if (!this.isOpen()) {
+    if (!this.isExpanded) {
       this.categoryButton.focus();
       return false;
     }
@@ -1265,6 +1246,8 @@ SearchField.prototype = {
     if (subtractWidth > 0) {
       this.input.style.width = `calc(100% - ${subtractWidth}px)`;
     }
+
+    delete this.openWidth;
   },
 
   /**
@@ -1538,11 +1521,9 @@ SearchField.prototype = {
 
     this.addDocumentDeactivationEvents();
 
-    if (!self.isOpen()) {
-      self.wrapper.addClass('is-open');
-      self.calculateOpenWidth();
-      self.setOpenWidth();
-    }
+    this.wrapper.addClass('is-open');
+    this.calculateOpenWidth();
+    this.setOpenWidth();
 
     if (!noFocus || env.os.name === 'ios') {
       self.input.focus();
@@ -1595,23 +1576,21 @@ SearchField.prototype = {
     }
     this.wrapper[textMethod]('has-text');
 
-    self.wrapper.removeClass('active');
-    if (!self.isFocused) {
-      self.wrapper.removeClass('has-focus');
+    this.wrapper[0].classList.remove('active', 'is-open');
+    if (!this.isFocused) {
+      this.wrapper[0].classList.remove('has-focus');
     }
 
     this.wrapper.removeAttr('style');
     this.input.removeAttribute('style');
 
-    if (self.categoryButton && self.categoryButton.length) {
-      self.categoryButton.data('popupmenu').close(false, true);
+    if (this.categoryButton && this.categoryButton.length) {
+      this.categoryButton.data('popupmenu').close(false, true);
     }
 
-    self.wrapper
-      .removeClass('is-open')
-      .triggerHandler('collapsed');
+    this.wrapper.triggerHandler('collapsed');
 
-    self.removeDocumentDeactivationEvents();
+    this.removeDocumentDeactivationEvents();
 
     if (env.os.name === 'ios') {
       $('head').triggerHandler('enable-zoom');
