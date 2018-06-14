@@ -54,8 +54,8 @@
 
       var url = '{{basepath}}api/tasks';
       $.getJSON(url, function(res) {
-        Soho.excel.exportToExcel('MyExport.xls', 'Worksheet1', res);
-        // Soho.excel.exportToCsv('MyExport.xls', res);
+        Soho.excel.exportToExcel('MyExport', 'Worksheet1', res);
+        // Soho.excel.exportToCsv('MyExport', res);
       });
 
     });
