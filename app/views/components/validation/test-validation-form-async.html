@@ -65,7 +65,7 @@
     <script>
       $(function() {
         $.fn.validation.rules.customAsyncRule = {
-          check: function (value, field, manageResult) {
+          check: function (value, field, manageResult, dfd) {
             var result;
             //do some sort of back end request...
             $.ajax({
@@ -74,12 +74,12 @@
               timeout: 5000,
               success: function (data) {
                 result = (value == "1"  || value =="" ? false : true); //normally would check some result on the ajax call.. contrived.
-                manageResult(result, true, 'customAsyncRule');
+                manageResult(result, true, 'customAsyncRule', dfd);
               },
               error: function (req, status, error) {
                 result = false;
                 $.fn.validation.rules.customAsyncRule.message = req.responseText;
-                manageResult(result, true, 'customAsyncRule');
+                manageResult(result, true, 'customAsyncRule', dfd);
               },
               async: true
             });

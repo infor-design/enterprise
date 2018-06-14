@@ -475,7 +475,7 @@ Validator.prototype = {
     const value = self.value(field);
     const placeholder = field.attr('placeholder');
 
-    function manageResult(result, showResultTooltip, type) {
+    function manageResult(result, showResultTooltip, type, dfd) {
       rule = Validation.rules[type];
       // Only remove if "false", not any other value ie.. undefined
       if (rule.positive === false) {
@@ -554,9 +554,9 @@ Validator.prototype = {
       }
 
       if (rule.async) {
-        rule.check(value, field, manageResult);
+        rule.check(value, field, manageResult, dfd);
       } else {
-        manageResult(rule.check(value, field), showTooltip, types[i]);
+        manageResult(rule.check(value, field), showTooltip, types[i], dfd);
       }
       dfds.push(dfd);
     }
