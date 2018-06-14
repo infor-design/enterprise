@@ -6,12 +6,12 @@ description: This page describes Validation.
 ## Configuration Options
 
 1. Validation Example [View Example]( ../components/validation/example-index)
-2. Disabled Form [View Example]( ../components/validation/example-form-disabled)
-3. Multiple Validation Errors on a Field [View Example]( ../components/validation/example-multiple-errors)
-4. Legacy Short Fields [View Example]( ../components/validation/example-short-fields)
-5. Manually adding an Error [View Example]( ../components/validation/example-standalone-error)
-6. Enabling a Button on Valid [View Example]( ../components/validation/example-validation-form)
-6. Validating on Form Submit [View Example]( ../components/validation/example-validation-on-submit)
+1. Disabled Form [View Example]( ../components/validation/example-form-disabled)
+1. Multiple Validation Errors on a Field [View Example]( ../components/validation/example-multiple-errors)
+1. Legacy Short Fields [View Example]( ../components/validation/example-short-fields)
+1. Manually adding an Error [View Example]( ../components/validation/example-standalone-error)
+1. Enabling a Button on Valid [View Example]( ../components/validation/example-validation-form)
+1. Validating on Form Submit [View Example]( ../components/validation/example-validation-on-submit)
 
 ## Code Example - Auto
 
@@ -67,8 +67,7 @@ There are a few built in validation rules you can use.
 - `availableDate` - Basic test for a date being withing a range of valid dates. Used internally for date range contraining.
 - `email` - Basic test for a valid email address.
 - `enableSubmit` - Used on the signing form to check if the submit button can be enabled.
-- `passwordReq` - Checks basic password rules. Must be at least 10 characters which contain at least
-One lowercase letter. One uppercase letter. One numeric digit and one special character.
+- `passwordReq` - Checks basic password rules. Must be at least 10 characters which contain at least one lowercase letter. One uppercase letter. One numeric digit and one special character.
 - `time` - Checks that the time is valid in the time picker.
 - `test` - Used for testing only will only be valid if the input === 1 exactly.
 
@@ -80,11 +79,10 @@ One lowercase letter. One uppercase letter. One numeric digit and one special ch
 <label class="required" for="email-address-ok">
   Email Address <span class="audible">Required</span>
 </label>
-
 ```
 
 - Errors will be read audibly by the API using an aria-alert (polite)
 
 ## Upgrading from 3.X
 
-- This api is backwards compatible.
+This api is backwards compatible.

@@ -52,4 +52,4 @@ Required template HTML markup:
 
 ## Upgrading from 3.X
 
--  This component was very similar in 3.5, just rename `inforHierarchy` to `hierarchy`
+- This component was very similar in 3.5, just rename `inforHierarchy` to `hierarchy`

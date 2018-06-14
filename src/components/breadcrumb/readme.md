@@ -34,15 +34,15 @@ This control is entirely HTML and CSS, to update you will need to implement the 
 
 ## Accessibility
 
--   Add an `aria-label` with the localized term for "breadcrumb"
--   `audible` spans may need to be added to indicate levels
+- Add an `aria-label` with the localized term for "breadcrumb"
+- `audible` spans may need to be added to indicate levels
 
 ## Keyboard Shortcuts
 
--   <kbd>Tab</kbd> moves focus to the link. A second <kbd>tab</kbd> moves focus to the next focusable item.
--   <kbd>Space</kbd> or <kbd>Enter</kbd> executes the link.
+- <kbd>Tab</kbd> moves focus to the link. A second <kbd>tab</kbd> moves focus to the next focusable item.
+- <kbd>Space</kbd> or <kbd>Enter</kbd> executes the link.
 
 ## Upgrading from 3.X
 
--   "Collapsing Lists" is Deprecated
--   Markup entirely changed, see updated example
+- "Collapsing Lists" is Deprecated
+- Markup entirely changed, see updated example

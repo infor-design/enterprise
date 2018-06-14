@@ -214,7 +214,6 @@ $('#line-example').chart({type: 'bubble', dataset: dataset});
 
 - The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
 
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> You can tab into the chart area and through the legend values as each has a focus state.
@@ -222,4 +221,4 @@ $('#line-example').chart({type: 'bubble', dataset: dataset});
 
 ## Upgrading from 3.X
 
--   The bubble chart is a new component.
+- The bubble chart is a new component.

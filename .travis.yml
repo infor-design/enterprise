@@ -16,13 +16,14 @@ install:
   - npm install
 before_script:
   - npm run eslint:error-only
+  - npm run mdlint
 script:
   - npm run build
   - npm run quickstart &
   - npm run functional:ci
   - npm run e2e:ci
   - npm run stop
-  - if [ $TRAVIS_EVENT_TYPE = cron ]; then npm run e2e:bs:ci; fi
+  - if [ $TRAVIS_EVENT_TYPE = cron ]; then npm run e2e:ci:bs; fi
 deploy:
     # DEPLOY BUILD TO DEMO SERVER
     # this runs conditionally `on`

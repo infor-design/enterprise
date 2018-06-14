@@ -57,6 +57,12 @@ ContextualActionPanel.prototype = {
   */
   setup() {
     this.panel = this.element.next('.contextual-action-panel');
+
+    // Handle case with popup triggered from a menu
+    if (this.element.closest('.popupmenu').length === 1) {
+      this.panel = this.element.closest('.popupmenu').next('.contextual-action-panel');
+    }
+
     if (this.panel[0]) {
       this.panel[0].style.display = 'none';
     }

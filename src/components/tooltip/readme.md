@@ -74,7 +74,6 @@ Another possible method of defining custom tooltips is to create a hidden HTML e
 
 The code above is demoed in the [icons in tooltips example]( ../components/tooltip/example-icon-in-tooltip).
 
-
 ## Accessibility
 
 - `aria-describedby` is added to the related element

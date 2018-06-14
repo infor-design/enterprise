@@ -97,6 +97,10 @@
     border-bottom: 0;
   }
 
+  .datagrid-result-count {
+    top: -2px;
+  }
+
   .toolbar {
     margin-bottom: 15px;
     padding: 0;
@@ -109,7 +113,9 @@
       margin-bottom: 10px;
       overflow: visible;
       padding-top: 7px;
-      width: calc(100% - 44px);
+      // scss-lint:disable ImportantRule
+      width: calc(100% - 44px) !important;
+      // scss-lint:enable ImportantRule
 
       + .more {
         padding-top: 10px;

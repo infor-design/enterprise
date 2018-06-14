@@ -13,7 +13,7 @@ module.exports = function customRouteOptions(req, res) {
   // Application Menu
   if (url.match(/components\/applicationmenu/)) {
     if (url.indexOf('/list') === -1) {
-      customOpts.headerHambuger = true;
+      customOpts.headerHamburger = true;
     }
   }
 

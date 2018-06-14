@@ -96,4 +96,4 @@ $('#area-example').chart({type: 'line', dataset: dataset});
 
 ## Upgrading from 3.X
 
--   The line chart was added after version 3.6
+- The line chart was added after version 3.6

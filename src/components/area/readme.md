@@ -99,9 +99,9 @@ name: 'Component C'
 
 ## Keyboard Shortcuts
 
-- <kbd>Tab:</kbd> You can tab into the chart area and through the legend values as each has a focus state.
-- <kbd>Enter/Space:</kbd> Will select the area the corresponds with the focus'd legend item.
+- <kbd>Tab</kbd> You can tab into the chart area and through the legend values as each has a focus state.
+- <kbd>Enter/Space</kbd> Will select the area the corresponds with the focus'd legend item.
 
 ## Upgrading from 3.X
 
--   The area chart was added after version 3.X
+- The area chart was added after version 3.X
