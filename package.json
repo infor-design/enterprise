@@ -90,7 +90,7 @@
     "moment": "^2.19.2",
     "node-sass": "^4.8.3",
     "protractor": "^5.3.2",
-    "protractor-image-comparison": "^1.7.2",
+    "protractor-image-comparison": "^2.0.0",
     "pygmentize-bundled": "^2.3.0",
     "r2": "^2.0.1",
     "rollup": "^0.55.3",

@@ -4,6 +4,8 @@ const config = require('../../helpers/e2e-config.js');
 
 requireHelper('rejection');
 
+const axePageObjects = requireHelper('axe-page-objects');
+
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
 describe('Textarea example-index tests', () => {
@@ -26,8 +28,26 @@ describe('Textarea example-index tests', () => {
   it('Should maintain counts', async () => {
     await element(by.id('description-max')).sendKeys('This is a test');
 
-    expect(await element(by.css('#description-max + span')).getText()).toBe('This is a test');
+    expect(await element(by.css('#description-max + span')).getText()).toBe('You can type 68 more characters.');
   });
+
+  if (!utils.isIE()) {
+    it('Should be accessible on click, and open with no WCAG 2AA violations', async () => {
+      const res = await axePageObjects(browser.params.theme);
+
+      expect(res.violations.length).toEqual(0);
+    });
+  }
+
+  if (utils.isChrome()) {
+    it('Should not visual regress', async () => {
+      const textareaEl = await element(by.id('description-max'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkScreen('textarea')).toEqual(0);
+    });
+  }
 });
 
 describe('Textarea size tests', () => {
@@ -85,7 +105,7 @@ describe('Textarea auto grow tests', () => {
   });
 });
 
-fdescribe('Textarea Modal Tests', () => { //eslint-disable-line
+describe('Textarea Modal Tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/textarea/test-modal');
   });
@@ -101,8 +121,9 @@ fdescribe('Textarea Modal Tests', () => { //eslint-disable-line
     await textareaEl.sendKeys('Test');
     await textareaEl.sendKeys(protractor.Key.ENTER);
 
-    debugger;
-    expect(await textareaEl.getText()).toBe('Test/nTest/n');
+    const text = await textareaEl.getAttribute('value');
+
+    expect(text.replace(/(\r\n\t|\n|\r\t)/gm, '')).toBe('TestTest');
     expect(await element(by.id('modal-1')).isDisplayed()).toBeTruthy();
   });
 });

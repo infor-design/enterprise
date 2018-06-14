@@ -78,13 +78,14 @@ For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
 ## Debugging E2E Tests
 For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
-- Put a `debugger;` statement at a place in the test/code for example under the `res = await AxeBuilder` command.
-- Start the server normally with `node server`
-- In another terminal, run the functional test with `env PROTRACTOR_SPECS='kitchen-sink.e2e-spec.js' env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js` in watch mode
+- Put a `debugger;` statement at a place in the test/code
+- If interested in the Axe results put it under the `res = await AxeBuilder` command.
+- Start the server normally with `npm run quickstart` or `npm run start`
+- In another terminal, run the functional test with for example `env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js` in watch mode
 - In Chrome open `chrome://inspect` in a new tab.
-- Click 'Open dedicated DevTools for Node.
-- Hit Play on the debugger
-- View `res.violations` in the console
+- Click on the 'Target' you will see generated under remote target
+- Hit go on the debugger
+- If interested in the Axe results you can view `res.violations` in the console
 
 ## Debugging Tests Tips
 If you want like to test a suite, or an individual spec (`it(`) statement append f to either describe, or it, like so, `fdescribe` or `fit`. This works for unit, functional, and E2E tests.
@@ -103,6 +104,7 @@ Dropdown | ☹️
 Hierarchy | 😕
 MultiSelect | 🙂
 Popupmenu | 😕
+Textarea | 😁
 Treemap | 🙂
 Validation | ☹️
 
