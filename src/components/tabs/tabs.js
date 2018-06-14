@@ -2826,7 +2826,7 @@ Tabs.prototype = {
   },
 
   /**
-   * returns a list of all tabs that are currenly in the "More Tabs" overflow menu.
+   * returns a list of all tabs that are currently in the "More..." overflow menu.
    * @returns {jQuery[]} all overflowed tabs
    */
   getOverflowTabs() {
