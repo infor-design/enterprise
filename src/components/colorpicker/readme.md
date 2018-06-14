@@ -6,10 +6,10 @@ description: This page describes Color Picker.
 ## Configuration Options
 
 1. Color Picker Example [View Example]( ../components/colorpicker/example-index)
-2. Showing Custom Colors [View Example]( ../components/colorpicker/example-custom-labels)
-2. Select the label not the Hex [View Example]( ../components/colorpicker/example-show-label)
-4. Test States [View Test]( ../components/colorpicker/test-states)
-5. Test it works on a Modal [View Test]( ../components/colorpicker/test-modal)
+1. Showing Custom Colors [View Example]( ../components/colorpicker/example-custom-labels)
+1. Select the label not the Hex [View Example]( ../components/colorpicker/example-show-label)
+1. Test States [View Test]( ../components/colorpicker/test-states)
+1. Test it works on a Modal [View Test]( ../components/colorpicker/test-modal)
 
 ## Code Example
 
@@ -24,12 +24,12 @@ The color picker is made from a text input with class="colorpicker". It can be i
 
 ## Behavior Guidelines
 
--   The Color Picker only supports colors within a pre-configured palette (specified by the developer). Users cannot manually enter values, but can only select from the Color Picker.
--   Some use cases require the ability to clear selection (i.e., remove color/restore default color).
+- The Color Picker only supports colors within a pre-configured palette (specified by the developer). Users cannot manually enter values, but can only select from the Color Picker.
+- Some use cases require the ability to clear selection (i.e., remove color/restore default color).
 
 ## Accessibility
 
--   Implemented similar to aria combobox
+Implemented similar to aria combobox
 
 ## Keyboard Shortcuts
 
@@ -41,15 +41,15 @@ The color picker is made from a text input with class="colorpicker". It can be i
 
 ## States and Variations
 
--   Disabled
--   Focus
+- Disabled
+- Focus
 
 ## Responsive Guidelines
 
--   Follows form guidelines
+Follows form guidelines
 
 ## Upgrading from 3.X
 
--   inforColorPicker class renamed to colorpicker
--   Plugin renamed from .inforColorPicker() to .colorpicker()
--   Options mode, and title depricated (never used)
+- inforColorPicker class renamed to colorpicker
+- Plugin renamed from .inforColorPicker() to .colorpicker()
+- Options mode, and title depricated (never used)

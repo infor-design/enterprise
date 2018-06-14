@@ -3,8 +3,6 @@ title: Mask
 description: This page describes Mask.
 ---
 
-# Masked Input [Learn More](#)
-
 ## Configuration Options
 
 1. Inputs with Masks [View Example]( ../components/mask/example-index)
@@ -40,8 +38,6 @@ const phoneNumberPattern = ['(', /\d/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '
 $('#my-phone-number').mask({
   pattern: phoneNumberPattern
 });
-
-
 ```
 
 #### Functions
@@ -53,42 +49,32 @@ Mask functions take two arguments.  The first one is a string containing the raw
 A mask function would be structured like this:
 
 ```javascript
-
 function customMaskFunction(rawValue, options) {
   let arr = [];
-
   // do some analysis on the raw value
   // ...
-
   return arr;
 }
-
-
 ```
 
 When using the mask process `date`, `time`, or `number`, the Masked Input field will automatically configure itself with built-in mask functions that handle these cases.  For example, to format a U.S. shorthand date, a user could define a mask field with the following:
 
 ```javascript
-
 $('#my-date-field').mask({
   process: 'date',
   patternOptions: {
     format: 'M/d/yyyy'
   }
 });
-
-
 ```
 
 ##### Dynamism of a mask function
 
 In the date mask function, detection is done on the incoming date format to figure out how many characters should be represented by the day, month, hours, or seconds.  For example, if a date's month is defined as `MM` and the raw value representing the month contains a single 3 thru 9, the Mask function will understand that a second character is not possible, and will eventually cause the masking process to prepend a zero.  However, if the number is 0 thru 2, the masking function will allow for another character to be typed before it adds a literal `/` to the array.
 
-
 ##### Replacing built-in mask functions
 
 When using any of the processes listed above, it's possible to override the built-in masking functions on each input field, if you desire. Simply add a `pattern` setting in addition to the settings above.
-
 
 #### Strings (Legacy Mask Patterns)
 
@@ -96,27 +82,21 @@ Legacy Mask Patterns are built in a string-based format.
 
 String-based patterns are built with two different types of characters:
 
-- **Pattern Characters** - These are characters replaceable by a pre-defined subset of other characters. For example, by default, a **\#** can only be replaced by any numeric character (0 through 9). One pattern character will always match one keyed character.
-- **Literal Characters** - These characters are "literal," meaning that they will only be represented in the text input by itself. When the cursor is placed at a literal character and any key is pressed, the Mask Component will find the next possible pattern character in the string and match the keyboard input against it. If it's a match, the pattern character and all literal characters preceding it will be filled in automatically. It's also possible to individually key in each literal character in the string.
+- Pattern Characters - These are characters replaceable by a pre-defined subset of other characters. For example, by default, a `\#` can only be replaced by any numeric character (0 through 9). One pattern character will always match one keyed character.
+- Literal Characters - These characters are "literal," meaning that they will only be represented in the text input by itself. When the cursor is placed at a literal character and any key is pressed, the Mask Component will find the next possible pattern character in the string and match the keyboard input against it. If it's a match, the pattern character and all literal characters preceding it will be filled in automatically. It's also possible to individually key in each literal character in the string.
 
 The string-based mask is best used when you need to define simple masks inline with HTML, or if your mask doesn't need to be highly configurable, like a number, date, etc.  Building a pattern mask inline could look like this in HTML:
 
 ```html
-
 <input id="my-masked-field" class="new-mask" data-options='{ "pattern": "####-####-####-####" }' />
-
-
 ```
 
 It's also possible to invoke a pattern mask with Javascript directly on an input field:
 
 ```javascript
-
 $('#my-masked-field').mask({
   pattern: '####-####-####-####'
 });
-
-
 ```
 
 **NOTE** If your project is making use of the Soho Standard `data.options` attribute, the legacy string style is still the best way to define simple mask patterns.  It will be converted to an array, converting any pattern characters found into a corresponding regular expression using the [Legacy Mask Pattern Characters](#available-mask-pattern-characters).  It's not possible to pass arrays or functions directly into the `data-options` attribute, so this remains the best way to handle populating masks through HTML.
@@ -125,23 +105,20 @@ $('#my-masked-field').mask({
 
 The following mask pattern characters are available by default:
 
-- **\#** - Replaces any number 0 through 9. In a number mask, represents an integer (full number before the decimal point)
-- **x** - Replaces any alphabetic character, capital or lowercase.
-- **\*** - Replaces any numeric (0 - 9) or alphabetic character (capital or lowercase).
-- **0** - Replaces any numeric (0 - 9) character. Only used in Number Mask to represent a decimal number (placed after the decimal point)
-- **a** - Represents the first character in the time period (am/pm). Can be replaced by **a**, **A**, **p**, or **P**.
-- **m** - Represents the second character in the time period (am/pm). Can be replaced by **m** or **M**.
+- `\#` - Replaces any number 0 through 9. In a number mask, represents an integer (full number before the decimal point)
+- `x` - Replaces any alphabetic character, capital or lowercase.
+- `\`* - Replaces any numeric (0 - 9) or alphabetic character (capital or lowercase).
+- `0` - Replaces any numeric (0 - 9) character. Only used in Number Mask to represent a decimal number (placed after the decimal point)
+- `a` - Represents the first character in the time period (am/pm). Can be replaced by `a`, `A`, `p`, or `P`.
+- `m` - Represents the second character in the time period (am/pm). Can be replaced by `m` or `M`.
 
 ##### Creating Custom Pattern Characters
 
 It's possible to create additional pattern characters by extending the Component's "definitions" option. The below example sets up a rule that will allow a pattern character of '=' to only be replaced by lowercase letters between **a** and **e** (See it in action [here]('./test-legacy-custom-definition.html')).
 
 ```javascript
-
 // Only allows lowercase "a" through "e".
 $('#my-strange-mask').data('mask').settings.definitions['='] = '[abcde]';
-
-
 ```
 
 **NOTE** You should choose custom pattern characters that are not going to clash with the type of input your field will be accepting.

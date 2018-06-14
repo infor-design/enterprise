@@ -29,4 +29,4 @@ This is done by using an HTML5 drag and drop feature, so is only supported well 
 
 ## Responsive Guidelines
 
--   The `<div>` will size to parent but recommend default size.
+- The `<div>` will size to parent but recommend default size.

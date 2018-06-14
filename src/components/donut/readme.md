@@ -13,7 +13,7 @@ description: This page describes Donut Chart.
 6. Example showing Get Selected value [View Example]( ../components/donut/example-get-selected)
 7. Example showing Set Selected value [View Example]( ../components/donut/example-set-selected)
 
-### Settings
+## Settings
 
 See the [Pie API]( ../components/pie) as this is just a pie setting.
 
@@ -55,4 +55,4 @@ None
 
 ## Upgrading from 3.X
 
--   The donut chart was added in 3.6. From 3.6 the api is mostly compatible.
+- The donut chart was added in 3.6. From 3.6 the api is mostly compatible.

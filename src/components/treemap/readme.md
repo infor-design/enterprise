@@ -20,62 +20,57 @@ Treemaps are used to display hierarchical data and are useful when space is cons
 Treemaps are not good when there is a big difference in the magnitude of the measure values. Nor is a treemap the right choice when mixing absolute and relative values. Negative values cannot be displayed in treemaps.
 
 ```javascript
-
-  var treeMapData = {
-   name: 'Storage Utilization (78 GB)',
-   children: [
-    {
-     name: "by type",
-     children: [
-      {
-       name: "type1",
-       children: [
-        {name: "JSON", value: 3400}
-       ]
-      },
-      {
-       name: "type2",
-       children: [
-        {name: "PDF", value: 2200}
-       ]
-      },
-      {
-       name: "type3",
-       children: [
-        {name: "BOD", value: 1000}
-       ]
-      },
-      {
-       name: "type4",
-       children: [
-        {name: "TXT", value: 1000}
-       ]
-      },
-      {
-       name: "type5",
-       children: [
-        {name: "CSV", value: 2000}
-       ]
-      },
-      {
-       name: "type6",
-       children: [
-        {name: "Assets", value: 800}
-       ]
-      },
-      {
-       name: "type7",
-       children: [
-        {name: "Others", value: 1700}
-       ]
-      }
-     ]
+var treeMapData = {
+    name: 'Storage Utilization (78 GB)',
+    children: [{
+        name: "by type",
+        children: [
+            {
+                name: "type1",
+                children: [
+                    {name: "JSON", value: 3400}
+                ]
+            },
+            {
+                name: "type2",
+                children: [
+                    {name: "PDF", value: 2200}
+                ]
+            },
+            {
+                name: "type3",
+                children: [
+                    {name: "BOD", value: 1000}
+                ]
+            },
+            {
+                name: "type4",
+                children: [
+                    {name: "TXT", value: 1000}
+                ]
+            },
+            {
+                name: "type5",
+                children: [
+                    {name: "CSV", value: 2000}
+                ]
+            },
+            {
+                name: "type6",
+                children: [
+                    {name: "Assets", value: 800}
+                ]
+            },
+            {
+                name: "type7",
+                children: [
+                    {name: "Others", value: 1700}
+                ]
+            }
+        ]
     }]
-  };
-
-  $('#treemap-chart-example').treemap({dataset: treeMapData});
-
-
+}
+$('#treemap-chart-example').treemap({dataset: treeMapData});
 ```
 
 ## Accessibility
@@ -84,28 +79,22 @@ The contrast and actual colors can be a concern for visibility impaired and colo
 
 ## Code Tips
 
-- You can control the size of the treemap by setting the size of the parent element the treemap lives in.
-  This may include possibly using an inset margin in some cases.
+- You can control the size of the treemap by setting the size of the parent element the treemap lives in. This may include possibly using an inset margin in some cases.
 - This component does not support drilldown at this time.
 - Using the data you can either show a single set or nested set of data (compare the two examples)
 
 ## Keyboard Shortcuts
 
-- None
-
-## Accessibility
-
-- Needs further testing
+None
 
 ## Testability
 
-- Needs further testing, but you can add a permanent data-automation-id or id to the chart container for scripting purposes.
+Needs further testing, but you can add a permanent data-automation-id or id to the chart container for scripting purposes.
 
 ## Responsive Information
 
-- As you resize the chart will redraw with in the width of the parent width and height. The nodes in the treemap
-are sized in proportion.
+As you resize the chart will redraw with in the width of the parent width and height. The nodes in the treemap are sized in proportion.
 
 ## Upgrading from 3.X
 
-- The treemap was added in 4.6.0
+The treemap was added in 4.6.0

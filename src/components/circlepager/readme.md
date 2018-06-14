@@ -53,15 +53,15 @@ Use the below markup to create a circle pager, then call `$(elem).circlepager()`
 
 ## Accessibility
 
--   [Carousel](https://www.w3.org/WAI/tutorials/carousels/) guidelines apply.
+- [Carousel](https://www.w3.org/WAI/tutorials/carousels/) guidelines apply.
 - We do not auto-move the carousel elements
 - User can <kbd>Tab</kbd> to the circles and activate
 
 ## Keyboard Shortcuts
 
--   <kbd>Tab</kbd> to move through the pages
--   <kbd>Enter</kbd> to activate a page
+- <kbd>Tab</kbd> to move through the pages
+- <kbd>Enter</kbd> to activate a page
 
 ## Upgrading from 3.X
 
--   Replaces `.inforCarousel()` in a more limited fashion
+- Replaces `.inforCarousel()` in a more limited fashion

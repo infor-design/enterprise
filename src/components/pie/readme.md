@@ -58,4 +58,4 @@ See also [Donut Chart Example]( ../components/donut/example-index)
 
 ## Upgrading from 3.X
 
--   The pie chart and dount chart was added in 3.6; so 3.6 the api is mostly compatible.
+- The pie chart and dount chart was added in 3.6; so 3.6 the api is mostly compatible.
