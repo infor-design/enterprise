@@ -99,8 +99,9 @@ For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
 ## Working With Visual Regression Tests
 
-- create a test like...
-```
+- Create a e2e2 test similar to the following...
+
+```javascript
 if (utils.isChrome()) {
     it('Should not visual regress', async () => {
         const textareaEl = await element(by.id('description-max'));
@@ -111,6 +112,7 @@ if (utils.isChrome()) {
     });
 }
 ```
+
 - run this test once and it will generate an error and create a baseline file (in tests/.tmp)
 - copy this file out to the baseline folder if it looks correct
 - next time you run it will compare this.
@@ -157,8 +159,5 @@ Validation | ☹️
 
 ## E2E Problems
 
-- Visual Regression
-    - Maintaining baseline screenshots across different environments is problematic, and not consistent. The same machines need to run comparisons. Different machines can be generated their own screenshots, and compare them to screenshots on other system.
-- Browser driver differences
-    - Lack of process to automate a record of differences to to aid reduction of manual testing
-    - Lack of process to check automated tests manually
+- `[Visual Regression]` Maintaining baseline screenshots across different environments is problematic, and not consistent. The same machines need to run comparisons. Different machines can be generated their own screenshots, and compare them to screenshots on other system.
+- `[Browser driver differences]` Lack of process to automate a record of differences to to aid reduction of manual testing. Lack of process to check automated tests manually
