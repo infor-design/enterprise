@@ -40,7 +40,7 @@ describe('Textarea example-index tests', () => {
   }
 
   if (utils.isChrome()) {
-    it('Should not visual regress', async () => {
+    xit('Should not visual regress', async () => {
       const textareaEl = await element(by.id('description-max'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
