@@ -3255,7 +3255,7 @@ Tabs.prototype = {
             self.addTabButton.focus();
             return;
           }
-          self.findFirstVisibleTab();
+          self.focusFirstVisibleTab();
         }
       }
 
@@ -3350,7 +3350,7 @@ Tabs.prototype = {
   /**
    * @returns {void}
    */
-  findFirstVisibleTab() {
+  focusFirstVisibleTab() {
     const tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)');
     tabs.eq(0).find('a').focus();
   },
