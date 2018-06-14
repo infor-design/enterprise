@@ -343,8 +343,6 @@ SearchField.prototype = {
       this.xButton = this.wrapper.children('.icon.close');
     }
 
-    //this.wrapper[0].classList[!this.isExpanded ? 'add' : 'remove']('is-open');
-
     this.calculateSearchfieldWidth();
 
     if (this.settings.collapsible === false || (this.settings.collapsible === 'mobile' && breakpoints.isAbove('phone-to-tablet'))) {
@@ -793,10 +791,12 @@ SearchField.prototype = {
    * @returns {boolean} whether or not one of elements inside the Searchfield wrapper has focus.
    */
   get isFocused() {
+    /*
     // if a focused element is stored (which should always be temporary), always return true
     if (this.focusElem) {
       return true;
     }
+    */
 
     const active = document.activeElement;
     const wrapperElem = this.wrapper[0];
@@ -891,7 +891,7 @@ SearchField.prototype = {
       clearTimeout(this.blurTimer);
       delete this.blurTimer;
     }
-    setTimeout(safeBlurHandler, 0);
+    this.blurTimer = setTimeout(safeBlurHandler, 0);
   },
 
   /**
@@ -1553,7 +1553,7 @@ SearchField.prototype = {
         delete self.isExpanding;
         self.isExpanded = true;
 
-        if (self.isCurrentlyCollapsible && !self.isFocused) {
+        if (self.isCurrentlyCollapsible && !self.isFocused && !self.focusElem) {
           self.handleSafeBlur();
         }
       }
