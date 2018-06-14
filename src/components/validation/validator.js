@@ -476,6 +476,7 @@ Validator.prototype = {
     const placeholder = field.attr('placeholder');
 
     function manageResult(result, showResultTooltip, type) {
+      rule = Validation.rules[type];
       // Only remove if "false", not any other value ie.. undefined
       if (rule.positive === false) {
         self.removePositive(field);
