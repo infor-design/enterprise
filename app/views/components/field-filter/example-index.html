@@ -1,4 +1,3 @@
-
 <div class="row top-padding">
   <div class="twelve columns">
 
@@ -13,8 +12,8 @@
     </div>
 
     <div class="field">
-       <label for="example-timepicker" class="label">Time Picker</label>
-       <input class="timepicker field-filter input-md" name="example-timepicker" type="text" id="example-timepicker">
+      <label for="example-timepicker" class="label">Time Picker</label>
+      <input class="timepicker field-filter input-md" name="example-timepicker" type="text" id="example-timepicker">
     </div>
 
     <div class="field">
@@ -22,6 +21,14 @@
       <input class="lookup field-filter input-md" name="example-lookup" type="text" id="example-lookup" data-init="false">
     </div>
 
+    <div class="field">
+      <label for="example-dropdown" class="label">Dropdown</label>
+      <select id="example-dropdown" class="dropdown field-filter input-md">
+        <option value=""></option>
+        <option value="1">Inquiry</option>
+        <option value="2">Setup</option>
+      </select>
+    </div>
 
   </div>
 </div>
@@ -102,8 +109,10 @@
         g.api.timepicker.destroy();
       } else if (g.api.lookup) {
         g.api.lookup.destroy();
+      } else if (g.api.dropdown) {
+        g.api.dropdown.destroy();
       }
-      g.elem.removeClass('datepicker timepicker lookup').val('');
+      g.elem.removeClass('datepicker timepicker lookup dropdown').val('');
     };
 
     // Toggle isRange
@@ -128,6 +137,7 @@
           datepicker: g.elem.data('datepicker'),
           timepicker: g.elem.data('timepicker'),
           lookup: g.elem.data('lookup'),
+          dropdown: g.elem.data('dropdown'),
         };
 
         // Range Datepicker
@@ -140,6 +150,8 @@
             initDatepicker('timepicker');
           } else if (g.elem.is('#example-lookup') && !g.isRange.lookup) {
             initDatepicker('lookup');
+          } else if (g.elem.is('#example-dropdown') && !g.isRange.dropdown) {
+            initDatepicker('dropdown');
           }
         }
         // All other controls
@@ -152,6 +164,9 @@
           } else if (g.elem.is('#example-timepicker') && g.isRange.timepicker) {
             toggleIsRange('timepicker', false);
             g.elem.addClass('timepicker').timepicker();
+          } else if (g.elem.is('#example-dropdown') && g.isRange.dropdown) {
+            toggleIsRange('dropdown', false);
+            g.elem.addClass('dropdown').dropdown();
           } else if (g.elem.is('#example-lookup') && g.isRange.lookup) {
             toggleIsRange('lookup', false);
             g.elem.addClass('lookup');

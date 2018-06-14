@@ -11,22 +11,22 @@ import '../dropdown/dropdown.jquery';
 const COMPONENT_NAME = 'fieldfilter';
 
 /**
-* Ability to have a dropdown next to the field.
-*
-* @class FieldFilter
-* @constructor
-*
-* @param {jQuery[]|HTMLElement} element The component element.
-* @param {object} [settings] The component settings.
-* @param {array} [settings.dataset]  Array of data
-* @param {object} [settings.dropdownOpts]  Gets passed to this control's dropdown
-* @param {string} [settings.template] An Html String with the mustache template for the view.
-*/
+ * Ability to have a dropdown next to the field.
+ *
+ * @class FieldFilter
+ * @constructor
+ *
+ * @param {jQuery[]|HTMLElement} element The component element.
+ * @param {object} [settings] The component settings.
+ * @param {array} [settings.dataset]  Array of data
+ * @param {object} [settings.dropdownOpts]  Gets passed to this control's dropdown
+ * @param {string} [settings.template] An Html String with the mustache template for the view.
+ */
 const FIELDFILTER_DEFAULTS = {
   dataset: [],
   dropdownOpts: {}, // Dropdown custom settings
   template: '' +
-    `<label>${Locale.translate('FieldFilter')}</label>
+  `<label>${Locale.translate('FieldFilter')}</label>
     <select class="dropdown no-init">
       {{#dataset}}
         <option
@@ -115,7 +115,7 @@ FieldFilter.prototype = {
       // Set Dropdown
       s.dropdownOpts.cssClass = s.dropdownOpts.cssClass ? `${s.dropdownOpts.cssClass} ffdropdown` : 'ffdropdown';
       s.dropdownOpts.noSearch = true;
-      this.ffdropdown = this.field.find('select.dropdown');
+      this.ffdropdown = this.field.find('select.dropdown.no-init');
       this.ffdropdown
         .attr({ id: ffId, named: ffId })
         .dropdown(s.dropdownOpts)
@@ -125,7 +125,7 @@ FieldFilter.prototype = {
 
       // Add css classes
       this.field.addClass('fieldfilter-wrapper')
-        .find('div.dropdown span').addClass('audible');
+        .find('div.dropdown.no-init span').addClass('audible');
 
       // Dropdown api
       this.ddApi = this.ffdropdown.data('dropdown');
@@ -173,12 +173,12 @@ FieldFilter.prototype = {
       })
       .on(`selected.${COMPONENT_NAME}`, (e, args) => {
         /**
-        * Fires after the value in the dropdown is selected.
-        * @event filtered
-        * @memberof FieldFilter
-        * @property {object} event The jquery event object.
-        * @property {object} data for selected item.
-        */
+         * Fires after the value in the dropdown is selected.
+         * @event filtered
+         * @memberof FieldFilter
+         * @property {object} event The jquery event object.
+         * @property {object} data for selected item.
+         */
         const triggerData = this.getTriggerData(args);
         this.element.triggerHandler('filtered', [triggerData]);
       });
@@ -187,27 +187,27 @@ FieldFilter.prototype = {
   }, // END: Handle Events -------------------------------------------------
 
   /**
-  * Set component to readonly.
-  * @returns {object} The api
-  */
+   * Set component to readonly.
+   * @returns {object} The api
+   */
   readonly() {
     this.ffdropdown.readonly();
     return this;
   },
 
   /**
-  * Set component to enabled.
-  * @returns {object} The api
-  */
+   * Set component to enabled.
+   * @returns {object} The api
+   */
   enable() {
     this.ffdropdown.enable();
     return this;
   },
 
   /**
-  * Set component to disabled.
-  * @returns {object} The api
-  */
+   * Set component to disabled.
+   * @returns {object} The api
+   */
   disable() {
     this.ffdropdown.disable();
     return this;
@@ -245,9 +245,9 @@ FieldFilter.prototype = {
   },
 
   /**
-  * Teardown process for this plugin
-  * @returns {void}
-  */
+   * Teardown process for this plugin
+   * @returns {void}
+   */
   destroy() {
     this.unbind();
     $.removeData(this.element[0], COMPONENT_NAME);
