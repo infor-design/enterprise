@@ -27,7 +27,7 @@ const FIELDFILTER_DEFAULTS = {
   dropdownOpts: {}, // Dropdown custom settings
   template: '' +
   `<label>${Locale.translate('FieldFilter')}</label>
-    <select class="dropdown no-init">
+    <select class="dropdown no-init field-filter-dropdown">
       {{#dataset}}
         <option
           {{#value}} value="{{value}}"{{/value}}
@@ -82,7 +82,7 @@ FieldFilter.prototype = {
         `<label for="ffdropdown-empty" class="audible">
           ${Locale.translate('FieldFilter')}
         </label>
-        <select id="ffdropdown-empty" name="ffdropdown-empty" class="dropdown no-init"></select>`;
+        <select id="ffdropdown-empty" name="ffdropdown-empty" class="dropdown no-init field-filter-dropdown"></select>`;
 
       if (dataset.length > 0) {
         this.element.before(renderedTmpl);
@@ -115,7 +115,7 @@ FieldFilter.prototype = {
       // Set Dropdown
       s.dropdownOpts.cssClass = s.dropdownOpts.cssClass ? `${s.dropdownOpts.cssClass} ffdropdown` : 'ffdropdown';
       s.dropdownOpts.noSearch = true;
-      this.ffdropdown = this.field.find('select.dropdown.no-init');
+      this.ffdropdown = this.field.find('select.dropdown.field-filter-dropdown');
       this.ffdropdown
         .attr({ id: ffId, named: ffId })
         .dropdown(s.dropdownOpts)
@@ -125,7 +125,7 @@ FieldFilter.prototype = {
 
       // Add css classes
       this.field.addClass('fieldfilter-wrapper')
-        .find('div.dropdown.no-init span').addClass('audible');
+        .find('div.dropdown.field-filter-dropdown span').addClass('audible');
 
       // Dropdown api
       this.ddApi = this.ffdropdown.data('dropdown');
