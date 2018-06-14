@@ -475,7 +475,7 @@ Validator.prototype = {
     const value = self.value(field);
     const placeholder = field.attr('placeholder');
 
-    function manageResult(result, showResultTooltip, type, dfd) {
+    function manageResult(result, showResultTooltip, type, dfrd) {
       rule = Validation.rules[type];
       // Only remove if "false", not any other value ie.. undefined
       if (rule.positive === false) {
@@ -493,12 +493,12 @@ Validator.prototype = {
         results.push(rule.type);
 
         if (validationType.errorsForm) {
-          dfd.reject();
+          dfrd.reject();
         } else {
-          dfd.resolve();
+          dfrd.resolve();
         }
       } else if ($.grep(results, res => res === validationType.type).length === 0) {
-        dfd.resolve();
+        dfrd.resolve();
 
         if (rule.positive) {
           // FIX: In Contextual Action Panel control not sure why but need to add error,
@@ -506,7 +506,7 @@ Validator.prototype = {
           // so for this fix adding and then removing error here
           self.addMessage(field, rule.message, rule.type, rule.inline, showResultTooltip, false, rule.icon);// eslint-disable-line
           self.removeMessage(field, rule.type);
-          dfd.resolve();
+          dfrd.resolve();
 
           self.addPositive(field);
         }
