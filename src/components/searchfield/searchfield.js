@@ -791,13 +791,6 @@ SearchField.prototype = {
    * @returns {boolean} whether or not one of elements inside the Searchfield wrapper has focus.
    */
   get isFocused() {
-    /*
-    // if a focused element is stored (which should always be temporary), always return true
-    if (this.focusElem) {
-      return true;
-    }
-    */
-
     const active = document.activeElement;
     const wrapperElem = this.wrapper[0];
 
