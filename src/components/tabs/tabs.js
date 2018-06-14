@@ -3017,7 +3017,7 @@ Tabs.prototype = {
   },
 
   /**
-   * Selects a Tab
+   * Builds tab popupmenu
    * @param {string} startingHref a string representing the HTML `href` attribute of the popupmenu item to be selected.
    * @returns {void}
    */
