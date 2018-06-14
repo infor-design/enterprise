@@ -1075,8 +1075,14 @@ Dropdown.prototype = {
         if (self.isOpen()) {
           // Close the option list
           self.element.closest('.modal.is-visible').data('listclosed', true);
+          const tdContainer = self.pseudoElem ? self.pseudoElem.parents('td') : null;
           self.closeList('cancel');
           self.activate();
+
+          if (tdContainer) {
+            tdContainer.focus();
+          }
+
           e.stopPropagation();
           return false;  //eslint-disable-line
         }
