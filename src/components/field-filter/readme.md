@@ -9,3 +9,5 @@ demo:
     slug: example-datepicker
 ---
 
+Filter fields can be added to forms that involve searching to add a customizable list of comparison options (greater than, less than equals, etc).
+You can use this information in addition to the field value to conduct form based searches.

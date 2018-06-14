@@ -67,8 +67,8 @@ Note that the name should be the same for all stars for it to function correctly
 
 ## Keyboard Shortcuts
 
--   <kbd>Tab</kbd> will enter the rating group
--   <kbd>Down</kbd> or <kbd>Right</kbd> decreases the rating
--   <kbd>Up</kbd> or <kbd>Left</kbd> increases the rating
--   <kbd>Space</kbd> toggles selected/unselected
--   <kbd>Control + Arrow</kbd> moves through the options without updating content or selecting the rating
+- <kbd>Tab</kbd> will enter the rating group
+- <kbd>Down</kbd> or <kbd>Right</kbd> decreases the rating
+- <kbd>Up</kbd> or <kbd>Left</kbd> increases the rating
+- <kbd>Space</kbd> toggles selected/unselected
+- <kbd>Control + Arrow</kbd> moves through the options without updating content or selecting the rating

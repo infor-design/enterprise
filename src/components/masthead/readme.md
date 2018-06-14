@@ -67,8 +67,8 @@ The masthead can be added to applications when not running inside mingle to add 
 
 ## Accessibility
 
--  Use the `role="banner"` Landmark role
--  Should use html5 section or nav type
+- Use the `role="banner"` Landmark role
+- Should use html5 section or nav type
 
 ## Keyboard Shortcuts
 

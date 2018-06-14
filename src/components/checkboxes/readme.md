@@ -49,24 +49,24 @@ The checkbox is a CSS-only control so principals of the `<input type="checkbox">
 
 ## Implementation Tips
 
--   The label element is used to style the checkbox while the element is off-screen
--   Users should be able to select or deselect an option by clicking either the checkbox itself or anywhere within the associated label
+- The label element is used to style the checkbox while the element is off-screen
+- Users should be able to select or deselect an option by clicking either the checkbox itself or anywhere within the associated label
 
 ## Accessibility
 
--   Make sure you have matching `for` and `id` values to associate the label with the appropriate form control. Make sure `id`s are unique on each page and only one label can be associated to each unique form element
+- Make sure you have matching `for` and `id` values to associate the label with the appropriate form control. Make sure `id`s are unique on each page and only one label can be associated to each unique form element
 
 ## Keyboard Shortcuts
 
--   For a two-State checkbox:
-    -   <kbd>Space Bar</kbd> toggles the selection, checking or unchecking the box.
--   For a three-State checkbox:
-    -   If not checked, <kbd>Space</kbd> checks the checkbox
-    -   If checked, <kbd>Space</kbd> unchecks the checkbox
-    -   If partially checked, <kbd>Space</kbd> unchecks the checkbox.
+- For a two-State checkbox:
+    - <kbd>Space Bar</kbd> toggles the selection, checking or unchecking the box.
+- For a three-State checkbox:
+    - If not checked, <kbd>Space</kbd> checks the checkbox
+    - If checked, <kbd>Space</kbd> unchecks the checkbox
+    - If partially checked, <kbd>Space</kbd> unchecks the checkbox.
 
 ## Upgrading from 3.X
 
--   Wrap the input in an element with the class `field`
--   Change class `inforCheckbox` to `checkbox`
--   Change class `inforCheckboxLabel` to `checkbox-label`
+- Wrap the input in an element with the class `field`
+- Change class `inforCheckbox` to `checkbox`
+- Change class `inforCheckboxLabel` to `checkbox-label`

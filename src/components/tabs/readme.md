@@ -118,13 +118,13 @@ This is an example of what the Tabs Control looks like when you use the `tabCoun
 It's possible to create tabs and panels that are dismissible. Dismissible tabs/panels will be removed from the tabs control when their close button is clicked/tapped.
 
 ```html
-      <ul class="tab-list">
-        <li><a href="#firefox">Firefox</a></li>
-        <li><a href="#chrome">Chrome</a></li>
-        <li class="dismissible"><a href="#ie">Internet Explorer</a></li>
-        <li class="dismissible"><a href="#opera">Opera</a></li>
-        <li class="dismissible"><a href="#safari">Safari</a></li>
-      </ul>
+<ul class="tab-list">
+    <li><a href="#firefox">Firefox</a></li>
+    <li><a href="#chrome">Chrome</a></li>
+    <li class="dismissible"><a href="#ie">Internet Explorer</a></li>
+    <li class="dismissible"><a href="#opera">Opera</a></li>
+    <li class="dismissible"><a href="#safari">Safari</a></li>
+</ul>
 ```
 
 ### Tabs - Dropdown Example
@@ -132,45 +132,45 @@ It's possible to create tabs and panels that are dismissible. Dismissible tabs/p
 It's possible to create a tab that contains a dropdown menu. In the case of a dropdown tab, the top-level "Tab" does not correspond to a Tab panel, but all of its children (any of the "dropdown" options) will be linked to a panel. When the tabs control's responsive design takes over and pushes a dropdown tab into the "More..." menu, the children of the dropdown tab will be pushed into a submenu.
 
 ```html
-    <ul class="tab-list">
-        <li><a href="#information">Information</a></li>
-        <li class="has-popupmenu">
-          <a href="#">Paper</a>
-          <ul>
+<ul class="tab-list">
+    <li><a href="#information">Information</a></li>
+    <li class="has-popupmenu">
+        <a href="#">Paper</a>
+        <ul>
             <li><a href="#paper-cash">Cash</a></li>
             <li><a href="#paper-plates">Plates</a></li>
             <li><a href="#paper-bags">Bags</a></li>
-          </ul>
-        </li>
-        <li class="has-popupmenu">
-          <a href="#">Plastic</a>
-          <ul>
+        </ul>
+    </li>
+    <li class="has-popupmenu">
+        <a href="#">Plastic</a>
+        <ul>
             <li><a href="#plastic-creditcards">Credit Cards</a></li>
             <li><a href="#plastic-plates">Plates</a></li>
             <li><a href="#plastic-bags">Bags</a></li>
-          </ul>
-        </li>
-    </ul>
+        </ul>
+    </li>
+</ul>
 ```
 
 ## Keyboard Shortcuts
 
 - <kbd>Down</kbd> and <kbd>Right</kbd> arrows:
-    -   When focus is on the tab, a press of down/right will move focus to the next logical Tab.
-    -   When focus reaches the last Tab, further key presses will wrap to the first Tab in the order.
-    -   In cases where responsive design collapses tabs into the "More..." menu:
-        -   Pressing down/right on the last available tab will cause the More Button to be selected, and cause its menu to open, focusing on the first available option
-        -   Subsequent down/right presses will navigate through the menu options
-        -   On the last menu option, pressing down/right will close the menu and focus the first Tab in the order
+    - When focus is on the tab, a press of down/right will move focus to the next logical Tab.
+    - When focus reaches the last Tab, further key presses will wrap to the first Tab in the order.
+    - In cases where responsive design collapses tabs into the "More..." menu:
+        - Pressing down/right on the last available tab will cause the More Button to be selected, and cause its menu to open, focusing on the first available option
+        - Subsequent down/right presses will navigate through the menu options
+        - On the last menu option, pressing down/right will close the menu and focus the first Tab in the order
 - <kbd>Up</kbd> and <kbd>Left</kbd> arrow is generally the reverse of down/right arrows:
-    -   When focus reaches the first tab, further key presses will either:
-        -   Wrap to the last available tab in the order
-        -   Select the "More..." button if responsive design causes the tabs to collapse. This will open the menu and focus the last option in the menu
-    -   If the "More..." button is open and the top option is focused, pressing up/left will close the menu and focus the last available tab in the order
+    - When focus reaches the first tab, further key presses will either:
+        - Wrap to the last available tab in the order
+        - Select the "More..." button if responsive design causes the tabs to collapse. This will open the menu and focus the last option in the menu
+    - If the "More..." button is open and the top option is focused, pressing up/left will close the menu and focus the last available tab in the order
 - <kbd>Enter</kbd> and <kbd>Space</kbd> causes the currently focused tab or "More..." menu option to be selected, causing its corresponding panel to become visible.
 - <kbd>Tab</kbd> - When focus is on a Tab, a TAB keystroke will move focus in the following manner:
-  -   If interactive glyphs or menus are present in the accordion header / tab, focus will move to each of these glyphs or menus in order.
-  -   When the corresponding tab panel is expanded (its `aria-expanded` state is `true`), then focus moves to the first focusable element in the panel
+    - If interactive glyphs or menus are present in the accordion header / tab, focus will move to each of these glyphs or menus in order.
+    - When the corresponding tab panel is expanded (its `aria-expanded` state is `true`), then focus moves to the first focusable element in the panel
 - <kbd>Shift + Tab</kbd> works similarly to the strategy for the tab key, but moves focus backwards instead of forwards
 - <kbd>Alt + Backspace</kbd> and <kbd>Alt + Delete</kbd> - If the tab is dismissible that tab will be closed. We use the alt combination because backspace can be used to go back a page.
 
@@ -196,7 +196,7 @@ In-page/horizontal tabs can be placed on a white background.In these cases, the 
 
 We currently supports four major types of Tabs:
 
-- **In-Page (Horizontal) Tabs** - This is the default type of tabset that will exist inside of pages/forms, and has a minimal style.  These will be used for switching between groups of content or form components that are related, but not necessarily important to show all at once
-- [**Header Tabs**]( ./tabs-header) - This tabset is inside of [Header Components]( ./header) to define a tab list that will appear to sit adjacently to a page container.  These will generally be used for contextual navigation of a major feature in your application
-- [**Vertical Tabs**]( ./tabs-vertical) - This tabset serves a similar purpose to header tabs, but instead displays the tab list vertically on the left edge of the tab content
-- [**Module Tabs**]( ./tabs-module) - Module tabs are another similar construct that are styled in a way that suits them for top-level application navigation.  Module tabs are built to contain a toolbar
+- In-Page (Horizontal) Tabs - This is the default type of tabset that will exist inside of pages/forms, and has a minimal style.  These will be used for switching between groups of content or form components that are related, but not necessarily important to show all at once
+- [Header Tabs]( ./tabs-header) - This tabset is inside of [Header Components]( ./header) to define a tab list that will appear to sit adjacently to a page container.  These will generally be used for contextual navigation of a major feature in your application
+- [Vertical Tabs]( ./tabs-vertical) - This tabset serves a similar purpose to header tabs, but instead displays the tab list vertically on the left edge of the tab content
+- [Module Tabs]( ./tabs-module) - Module tabs are another similar construct that are styled in a way that suits them for top-level application navigation.  Module tabs are built to contain a toolbar

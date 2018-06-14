@@ -30,10 +30,10 @@ It's possible to keep the area open by default by adding the class `is-expanded`
 
 ## Keyboard Shortcuts
 
--   Press <kbd>Tab</kbd> to focus the Expandable Area's link
--   Press <kbd>Enter</kbd> to expand the area or collapse it
--   If the content pane is open, pressing <kbd>Tab</kbd> or <kbd>Shift + Tab</kbd> will focus the next or previous focusable element inside the content pane
--   If the content pane is closed or focus is on the last focusable element inside the content pane, pressing <kbd>Tab</kbd> once more will leave the content pane and focus the next focusable element on the page. <kbd>Shift + Tab</kbd> will do the opposite
+- Press <kbd>Tab</kbd> to focus the Expandable Area's link
+- Press <kbd>Enter</kbd> to expand the area or collapse it
+- If the content pane is open, pressing <kbd>Tab</kbd> or <kbd>Shift + Tab</kbd> will focus the next or previous focusable element inside the content pane
+- If the content pane is closed or focus is on the last focusable element inside the content pane, pressing <kbd>Tab</kbd> once more will leave the content pane and focus the next focusable element on the page. <kbd>Shift + Tab</kbd> will do the opposite
 
 ## Responsive Guidelines
 
@@ -41,4 +41,4 @@ The Expandable Area will automatically stretch to fill 100% of its parent elemen
 
 ## Upgrading from 3.X
 
--   Expandable Area and Field Set are separated
+- Expandable Area and Field Set are separated

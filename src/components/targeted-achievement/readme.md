@@ -11,10 +11,11 @@ description: This page describes Targeted Achievement Chart.
 
 ### Dataset Settings
 
-* name - Applies a name label to the left most section of the chart.
-* completed - Gives a label, value, color and format to the completed bar of the chart.
-* remaining - (optional) shows a hatched section that shows the remaining bit to a set target
-* total - will be used on the top of the chart if applied. The total is used to set the total.
+- name - Applies a name label to the left most section of the chart.
+- completed - Gives a label, value, color and format to the completed bar of the chart.
+- remaining - (optional) shows a hatched section that shows the remaining bit to a set target
+- total - will be used on the top of the chart if applied. The total is used to set the total.
+
 ## Code Example
 
 This example shows how to invoke a simple target to achievement chart with a dataset with a value several of the key points of the chart.

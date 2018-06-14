@@ -26,8 +26,8 @@ When initialized with the `$elem.listbuilder()` plugin, you pass in a data set t
 
 ## Accessibility / Keyboard Shortcuts
 
--   [ListView](./listview) guidelines apply as this contains a listview
--   [Toolbar](./toolbar) guidelines apply as this contains a toolbar
+- [ListView](./listview) guidelines apply as this contains a listview
+- [Toolbar](./toolbar) guidelines apply as this contains a toolbar
 
 ## Upgrading from 3.X
 

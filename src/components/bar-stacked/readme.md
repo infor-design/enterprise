@@ -18,6 +18,7 @@ description: This page describes Bar Chart (Stacked).
 ## Code Example
 
 This example shows how to invoke the grouped bar chart in the charts component. We pass a dataset data points for each bar group we want to show.
+
 ```javascript
 var dataset = [{
     data: [{
@@ -86,4 +87,4 @@ $('#bar-grouped-example').chart({type: 'bar-stacked', dataset: dataset,
 
 ## Upgrading from 3.X
 
--   The stacked chart was added in 3.6. From 3.6 the api is compatible.
+- The stacked chart was added in 3.6. From 3.6 the api is compatible.

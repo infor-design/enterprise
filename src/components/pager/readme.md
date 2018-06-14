@@ -47,12 +47,12 @@ The auto initializer will search for `<ul>` elements with a `paginated` class an
 
 ## Accessibility
 
--   Since the buttons are arrows, we add an audible span with text like "next", "previous" so the user will know what these buttons are for
--   Icons have `role="presentation" aria-hidden="true" focusable="false"`
--   Selected page has `aria-selected = "true"`
--   Disabled pages (if exists) have `aria-disabled="true"`
+- Since the buttons are arrows, we add an audible span with text like "next", "previous" so the user will know what these buttons are for
+- Icons have `role="presentation" aria-hidden="true" focusable="false"`
+- Selected page has `aria-selected = "true"`
+- Disabled pages (if exists) have `aria-disabled="true"`
 
 ## Upgrading from 3.X
 
--   This did not exist as a standalone component
--   Datagrid paging has new options - [see datagrid docs]( ./datagrid)
+- This did not exist as a standalone component
+- Datagrid paging has new options - [see datagrid docs]( ./datagrid)
