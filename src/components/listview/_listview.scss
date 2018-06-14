@@ -591,14 +591,16 @@
 
 // Contextual Toolbar Positioning
 .contextual-toolbar {
-  + .listview {
-    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
-    height: calc(100% - 50px);
-  }
-
   &.is-hidden {
     + .listview {
       height: 100%;
+    }
+  }
+
+  + .listview {
+    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
+    &.is-toolbar-open {
+      height: calc(100% - 40px);
     }
   }
 }
