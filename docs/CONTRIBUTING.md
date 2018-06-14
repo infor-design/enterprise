@@ -15,9 +15,7 @@ There are several to get involved, this document covers:
 
 ## Reporting An Issue
 
-The [Jira issue tracker](http://jira.infor.com/browse/SOHO) is the preferred channel for [bug reports](#bugs), [feature requests](#features), [change requests](#changes).
-We know that not all of our possible contributors have access to this right now, but we are working on that.
-If you do have access to it, please search the issues/features before opening a new one and possibly creating duplicates.
+<https://github.com/infor-design/enterprise/issues>
 
 ### Bug Reports 🐞
 
@@ -25,10 +23,10 @@ A bug is a _demonstrable problem_ that is caused by the code in the repository. 
 
 Guidelines for bug reports:
 
-1. **Use the Jira and Git issue search** - check if the issue has already been
+1. **Git issue search** - check if the issue has already been
    reported.
 
-2. **Check if the issue has been fixed** - try to reproduce it using the latest `master` or look for [closed issues in the current milestone](http://jira.infor.com/secure/IssueNavigator.jspa?reset=true&jqlQuery=project+%3D+SOHO+AND+status+%3D+Resolved+ORDER+BY+priority+DESC&mode=hide).
+2. **Check if the issue has been fixed** - try to reproduce it using the latest `master`.
 
 3. **Isolate the problem** - create a [reduced test case](http://css-tricks.com/6263-reduced-test-cases/) and a live example.
 
@@ -48,44 +46,15 @@ Guidelines for bug reports:
     If a video is useful to show the problem please use a cross platform format such as `MP4` and `.webm` for the video.
     We have found [Chrome plugin Screencastify - Screen Video Recorder](https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en) to be useful.
 
-4. Use the Bug Report template below
-
-    A good bug report shouldn't leave others needing to chase you up for more information. Be sure to include the details of your environment.
-
-    ```text
-    Short and descriptive example bug report title
-
-    h3. Issue Summary
-
-    A summary of the issue and the browser/OS environment in which it occurs. If
-    suitable, include the steps required to reproduce the bug.
-
-    h3. Steps to Reproduce
-
-    1. This is the first step
-    2. This is the second step
-    3. Further steps, etc.
-
-    Any other information you want to share that is relevant to the issue being
-    reported. Especially, why do you consider this to be a bug? What do you expect to happen instead?
-
-    h3. Technical details:
-
-    - Script/Css Version: (See Head of the File)
-    - Client OS: Mac OS X 10.8.4
-    - Browser: Chrome 29.0.1547.57
-    ```
-
 ### Feature Requests
 
 Feature requests are welcome. Before you submit one be sure to have:
 
-1. Read the [Roadmap and Planned Features](http://jira.infor.com/browse/HFC#selectedTab=com.atlassian.jira.plugin.system.project%3Aroadmap-panel) and check the feature hasn't already been requested.
 1. Does your idea fits with the scope of the project? Might better fit being an app/plugin/extension?
 1. Would anyone else but your team would want this feature?
 1. Remember, it's up to *you* to make a strong case to convince the merits of this feature. "We did it before" isnt strong enough.
 
-### Submitting Pull Requests
+## Submitting Pull Requests
 
 Pull requests are awesome. If you're looking to raise a PR for something which doesn't have an open issue,
 please think carefully about [raising an issue](#raising-issues) which your PR can close, especially if you're fixing a bug.
@@ -97,13 +66,14 @@ If you'd like to submit a pull request you'll need to do the following:
 1. **[Clone the Repository](https://help.github.com/articles/cloning-a-repository/) to your machine.**.
 1. **Make your changes with the local copy of the code.**
 
-1. **Commit your changes locally.**  Use `git commit -am "[COMMIT MESSAGE]"` and type any related JIRA Ticket numbers into the message and try to follow [Github's commit message standards](https://github.com/erlang/otp/wiki/Writing-good-commit-messagesMore).
+1. **Commit your changes locally.**  Add any related JIRA Ticket numbers or Github issue numbers into the message
+    - Try to follow
+        - [Github's commit message standards](https://github.com/erlang/otp/wiki/Writing-good-commit-messagesMore)
+        - [Closing issues using keywords with commits and PRs](https://help.github.com/articles/closing-issues-using-keywords/)
     - For Example:
         ```bash
-        "ABBV-XXXX - Changed modal to implement the new design"
-        "ABBV-XXXX - Changed header markup to implement arrow keys treating it as a toolbar"
-        "Added api to the list view to add, 'remove, add' functions - ABBV-XXXX"
-        "Fixed issue in the xyz control as per ABBV-XXXX"
+        "Closes #00 - Changed modal to implement the new design"
+        "Closes #00 - Changed header markup to implement arrow keys treating it as a toolbar"
         ```
     - Repeat Steps 3 and 4 as many times as necessary to refine your code. Please try to stick to our coding standards and patterns that already exist in the code.
 
