@@ -13,6 +13,9 @@ import '../popupmenu/popupmenu.jquery';
 // Name of this component
 const COMPONENT_NAME = 'searchfield';
 
+// Types of collapse modes
+const SEARCHFIELD_COLLAPSE_MODES = [false, 'mobile', true];
+
 // Search Field Defaults
 const SEARCHFIELD_DEFAULTS = {
   resultsCallback: undefined,
@@ -27,8 +30,7 @@ const SEARCHFIELD_DEFAULTS = {
   source: undefined,
   template: undefined,
   clearable: false,
-  collapsible: false,
-  collapsibleOnMobile: false
+  collapsible: SEARCHFIELD_COLLAPSE_MODES[0]
 };
 
 // Used throughout:
@@ -67,9 +69,6 @@ function SearchField(element, settings) {
     }
     if (settings.collapsible === undefined) {
       settings.collapsible = true;
-    }
-    if (settings.collapsibleOnMobile === undefined) {
-      settings.collapsibleOnMobile = true;
     }
   }
 
@@ -148,14 +147,14 @@ SearchField.prototype = {
    * @returns {boolean} whether or not the searchfield can ever be collapsible.
    */
   get isCollapsible() {
-    return this.settings.collapsible || this.settings.collapsibleOnMobile;
+    return this.settings.collapsible !== false;
   },
 
   /**
    * @returns {boolean} whether or not the searchfield is currently able to be collapsed.
    */
   get isCurrentlyCollapsible() {
-    return this.settings.collapsible || (this.settings.collapsibleOnMobile && this.shouldBeFullWidth());
+    return this.settings.collapsible === true || (this.settings.collapsible === 'mobile' && this.shouldBeFullWidth());
   },
 
   /**
@@ -230,8 +229,14 @@ SearchField.prototype = {
       }
     }
 
+    // Backwards compatibility with collapsibleOnMobile
+    // TODO: Remove in v4.9.0
+    if (this.settings.collapsibleOnMobile === true) {
+      this.settings.collapsible = SEARCHFIELD_COLLAPSE_MODES[1];
+    }
+
     // Add/remove the collapsible functionality
-    this.wrapper[0].classList[!this.settings.collapsible ? 'add' : 'remove']('non-collapsible');
+    this.wrapper[0].classList[!this.settings.collapsible === true ? 'add' : 'remove']('non-collapsible');
 
     // Add/remove `toolbar-searchfield-wrapper` class based on existence of Toolbar Parent
     this.wrapper[0].classList[this.toolbarParent ? 'add' : 'remove']('toolbar-searchfield-wrapper');
@@ -338,11 +343,11 @@ SearchField.prototype = {
       this.xButton = this.wrapper.children('.icon.close');
     }
 
-    this.wrapper[0].classList[!this.isCurrentlyCollapsible ? 'add' : 'remove']('is-open');
+    //this.wrapper[0].classList[!this.isExpanded ? 'add' : 'remove']('is-open');
 
     this.calculateSearchfieldWidth();
 
-    if (this.isCollapsible) {
+    if (this.settings.collapsible === false || (this.settings.collapsible === 'mobile' && breakpoints.isAbove('phone-to-tablet'))) {
       this.expand(true);
     }
 
@@ -385,7 +390,7 @@ SearchField.prototype = {
     // On larger form-factor (desktop)
     this.appendToButtonset();
 
-    if (this.isFocused) {
+    if (this.isFocused || this.settings.collapsible === 'mobile') {
       if (!this.isExpanded) {
         this.expand(true);
       }
@@ -421,8 +426,10 @@ SearchField.prototype = {
       return;
     }
 
-    this.focusElem.focus();
-    this.focusElem = undefined;
+    setTimeout(() => {
+      this.focusElem.focus();
+      delete this.focusElem;
+    }, 0);
   },
 
   /**
@@ -499,7 +506,7 @@ SearchField.prototype = {
     if (this.settings.collapsible === true) {
       return false;
     }
-    if (this.settings.collapsibleOnMobile === true) {
+    if (this.settings.collapsible === 'mobile') {
       return true;
     }
     return this.shouldBeFullWidth();
@@ -646,11 +653,6 @@ SearchField.prototype = {
     }
 
     if (this.isCollapsible) {
-      /*
-      this.element.on(`cleared.${this.id}`, () => {
-        self.element.addClass('active is-open has-focus');
-      });
-      */
 
       this.wrapper.on(`mousedown.${this.id}`, () => {
         self.fastExpand = true;
@@ -701,7 +703,7 @@ SearchField.prototype = {
       // Visual indicator class
       self.wrapper.addClass('popup-is-open');
 
-      list.off('click').on('click.autocomplete', 'a', (thisE) => {
+      list.off('click').on(`click.${this.id}`, 'a', (thisE) => {
         const a = $(thisE.currentTarget);
         let ret = a.text().trim();
         const isMoreLink = a.hasClass('more-results');
@@ -736,7 +738,7 @@ SearchField.prototype = {
 
       // Override the focus event created by the Autocomplete control to make the more link
       // and no-results link blank out the text inside the input.
-      list.find('.more-results, .no-results').off('focus').on('focus.searchfield', function () {
+      list.find('.more-results, .no-results').off('focus').on(`focus.${this.id}`, function () {
         const anchor = $(this);
         list.find('li').removeClass('is-selected');
         anchor.parent('li').addClass('is-selected');
@@ -745,7 +747,7 @@ SearchField.prototype = {
 
       // Setup a listener for the Clearable behavior, if applicable
       if (self.settings.clearable) {
-        self.element.on('cleared.searchfield', () => {
+        self.element.on(`cleared.${this.id}`, () => {
           self.element.triggerHandler('resetfilter');
         });
       }
@@ -791,6 +793,11 @@ SearchField.prototype = {
    * @returns {boolean} whether or not one of elements inside the Searchfield wrapper has focus.
    */
   get isFocused() {
+    // if a focused element is stored (which should always be temporary), always return true
+    if (this.focusElem) {
+      return true;
+    }
+
     const active = document.activeElement;
     const wrapperElem = this.wrapper[0];
 
@@ -1547,7 +1554,7 @@ SearchField.prototype = {
         self.isExpanded = true;
 
         if (self.isCurrentlyCollapsible && !self.isFocused) {
-          self.collapse();
+          self.handleSafeBlur();
         }
       }
     });
@@ -1577,6 +1584,9 @@ SearchField.prototype = {
     this.wrapper[textMethod]('has-text');
 
     this.wrapper[0].classList.remove('active', 'is-open');
+    if (env.browser.isIE11) {
+      this.wrapper[0].classList.remove('is-open');
+    }
     if (!this.isFocused) {
       this.wrapper[0].classList.remove('has-focus');
     }
