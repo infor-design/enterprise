@@ -424,9 +424,13 @@ SearchField.prototype = {
       return;
     }
 
+    const self = this;
     setTimeout(() => {
-      this.focusElem.focus();
-      delete this.focusElem;
+      if (!self.focusElem) {
+        return;
+      }
+      self.focusElem.focus();
+      delete self.focusElem;
     }, 0);
   },
 
