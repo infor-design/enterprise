@@ -2247,7 +2247,7 @@ Tabs.prototype = {
           // Text Content or a Selector.
           if (hasId !== null) {
             const obj = $(sourceString);
-            sourceString = obj.length ? $(sourceString).clone() : sourceString;
+            sourceString = obj.length ? obj : sourceString;
           }
           // do nothing if it's just a string of text.
           break;
