@@ -29,7 +29,7 @@ Note: For details info and great tutorials on Git scenarios see <https://www.atl
 
 ### After QA (QA looked at branch `4.3.0-rc` and files bug tickets)
 
-- Developer chose a SOHO-001 jira ticket
+- Developer chose a SOHO-001 issue
 - Create new branch `soho-001` from branch `4.3.0-rc`
 - Write and commit code
 - PR `soho-001` into `4.3.0-rc`

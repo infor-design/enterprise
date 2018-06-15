@@ -19,8 +19,7 @@
 - verify no automated accessibility errors <http://squizlabs.github.io/HTML_CodeSniffer/>
 - test your page with voice over <https://www.apple.com/voiceover/info/guide/>
 - test your page with Jaws (download <http://www.freedomscientific.com/Downloads/ProductDemos>) <http://www.washington.edu/itconnect/learn/accessible/atc/quickstarts/jaws-2/>
-- commit and pull request
-- close jira and quote the Jira number on the commit message
+- commit (including issue number) and pull request
 - document on the cms site
 
 ## QA Documentation
@@ -31,7 +30,7 @@ Test Page:
 `<http://usalvlhlpool1.infor.com/4.4.0-rc/components/slider)`
 
 Jira: For Reporting Issues..
-<http://jira.infor.com/browse/SOHO>
+<https://github.com/infor-design/enterprise/issues>
 
 RoadMap:
 <https://docs.google.com/spreadsheets/d/1nxSEfNoKtQ9i3R7hgokj8VTdAJ95J8SXfhJ7IrtrOf0/edit?pli=1#gid=345637423>
@@ -65,6 +64,6 @@ The controls should be tested in several ways:
     1. Test with screen readers (voice over, nvda and jaws), If only one Jaws is most critical
      [Jaws](http://www.freedomscientific.com/Products/Blindness/JAWS) can be downloaded and used for 40 minutes before a reboot. It runs on windows and works best on newer IE browsers. This is the primary screen reader to learn and test.
      Secondary Screen readers are [Voice over](https://www.apple.com/voiceover/info/guide/) for use on IOS and Mac and [NVDA](http://www.nvaccess.org/) for use in windows Firefox.
-- Any issues or inconsistencies would be reported to <http://jira.infor.com/browse/HFC>
+- Any issues or inconsistencies would be reported to <https://github.com/infor-design/enterprise/issues>
 - Create Selenium (Javascript based) scripts or similar tests (see tests folder in git project)
 - Help contribute to questions on Jira and make test examples to test different scenarios like the current test examples.
