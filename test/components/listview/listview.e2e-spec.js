@@ -26,7 +26,7 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
     await browser.driver
@@ -39,7 +39,7 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-selected="true"]')).isPresent()).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
@@ -57,15 +57,15 @@ describe('Listview example-singleselect tests', () => {
     const listviewItemElTwo = await element(by.css('li[aria-posinset="2"]'));
     await listviewEl.sendKeys(protractor.Key.TAB);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-posinset="1"][aria-selected="true"]')).isPresent()).toBeTruthy();
     await listviewItemElOne.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
     await listviewItemElTwo.sendKeys(protractor.Key.ARROW_DOWN);
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-posinset="3"].is-selected')).isPresent()).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
@@ -92,7 +92,7 @@ describe('Listview example-multiselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
     await browser.driver
@@ -105,7 +105,7 @@ describe('Listview example-multiselect tests', () => {
     const listviewItemEl = await element(by.css('li[aria-posinset="1"]'));
     listviewItemEl.click();
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.className('is-selected'))), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(element(by.css('li[aria-selected="true"].is-selected'))), config.waitsFor);
 
     expect(await element(by.css('li[aria-selected="true"]'))).toBeTruthy();
     expect(await element(by.className('selection-count')).getText()).toContain('1 Selected');
