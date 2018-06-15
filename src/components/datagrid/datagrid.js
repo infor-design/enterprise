@@ -2858,7 +2858,7 @@ Datagrid.prototype = {
       // Set Width of table col / col group elements
       let colWidth = '';
 
-      if (this.recordCount === 0 || this.recordCount - ((activePage - 1) * pagesize) === 0) {
+      if (this.recordCount === 0) {
         colWidth = this.columnWidth(col, j);
 
         self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
