@@ -42,7 +42,7 @@ npm start
 npm run e2e:bs
  ```
 
-One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #followed by the command`
+One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #followed by the command`.
 
 ```sh
 export BROWSER_STACK_USERNAME=xxxxxxxxxxxxx
@@ -77,8 +77,7 @@ npm run e2e:local:debug
 
 For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
-- Isolate the test using `fdescribe` or `fit`
-- Put a `debugger;` statement in the test code
+- Isolate the test or suite using `fdescribe` or `fit` <https://jasmine.github.io/api/edge/global.html#fdescribe)> <https://jasmine.github.io/api/edge/global.html#fit>
 - Run `npm run functional:local`, wait for karma server to start, and to place tests in watch mode
 - Navigate to <http://localhost:9876/>
 - Open Chrome Dev Tools
@@ -88,21 +87,37 @@ For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
 For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
-- Put a `debugger;` statement at a place in the test/code for example under the `res = await AxeBuilder` command.
-- Start the server normally with `node server`
-- In another terminal, run the functional test with `env PROTRACTOR_SPECS='kitchen-sink.e2e-spec.js' env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js` in watch mode
+- Put a `debugger;` statement at a place in the test/code
+- Isolate the test or suite using `fdescribe` or `fit` <https://jasmine.github.io/api/edge/global.html#fdescribe)> <https://jasmine.github.io/api/edge/global.html#fit>
+- If interested in the Axe results put it under the `res = await AxeBuilder` command.
+- Start the server normally with `npm run quickstart` or `npm run start`
+- In another terminal, run the functional test with for example `env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js` in watch mode
 - In Chrome open `chrome://inspect` in a new tab.
-- Click 'Open dedicated DevTools for Node.
-- Hit Play on the debugger
-- View `res.violations` in the console
+- Click on the 'Target' you will see generated under remote target
+- Hit go on the debugger
+- If interested in the Axe results you can view `res.violations` in the console
 
-## Debugging Tests Tips
+## Working With Visual Regression Tests
 
-If you want like to test a suite, or an individual spec (`it()`) statement append f to either describe, or it, like so, `fdescribe` or `fit`. This works for unit, functional, and E2E tests.
+Currently On-Hold until running ci is figured out see: [SOHO-7464](https://jira.infor.com/browse/SOHO-7464)
 
-<https://jasmine.github.io/api/edge/global.html#fdescribe)>
+- Create a e2e test similar to the following...
 
-<https://jasmine.github.io/api/edge/global.html#fit>
+```javascript
+if (utils.isChrome()) {
+    it('Should not visual regress', async () => {
+        const textareaEl = await element(by.id('description-max'));
+        await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
+
+        expect(await browser.protractorImageComparison.checkScreen('textarea')).toEqual(0);
+    });
+}
+```
+
+- run this test once and it will generate an error and create a baseline file (in tests/.tmp)
+- copy this file out to the baseline folder if it looks correct
+- next time you run it will compare this.
 
 ### Testing Coverage Rating Scale
 
@@ -115,6 +130,7 @@ Dropdown | ☹️
 Hierarchy | 😕
 MultiSelect | 🙂
 Popupmenu | 😕
+Textarea | 😁
 Treemap | 🙂
 Validation | ☹️
 
@@ -145,8 +161,5 @@ Validation | ☹️
 
 ## E2E Problems
 
-- Visual Regression
-    - Maintaining baseline screenshots across different environments is problematic, and not consistent. The same machines need to run comparisons. Different machines can be generated their own screenshots, and compare them to screenshots on other system.
-- Browser driver differences
-    - Lack of process to automate a record of differences to to aid reduction of manual testing
-    - Lack of process to check automated tests manually
+- `[Visual Regression]` Maintaining baseline screenshots across different environments is problematic, and not consistent. The same machines need to run comparisons. Different machines can be generated their own screenshots, and compare them to screenshots on other system.
+- `[Browser driver differences]` Lack of process to automate a record of differences to to aid reduction of manual testing. Lack of process to check automated tests manually

@@ -225,9 +225,7 @@ Textarea.prototype = {
       }
     }
 
-    if (self.printarea && length < max) {
-      self.printarea.text(self.element.val());
-    }
+    self.printarea.text(self.element.val());
   },
 
   /**
@@ -287,12 +285,7 @@ Textarea.prototype = {
   },
 
   /**
-   *  This component fires the following events.
-   * @fires Textarea#events
-   * @param {object} keyup  Fires when the button is clicked (if enabled).
-   * @param {object} focus  Fires when the menu is focused.
-   * @param {object} keypress  Fires when pressing a key.
-   * @param {object} blur  Fires when leaving the field.
+   * Handle key events for functionality like counter and autoGrow.
    */
   handleEvents() {
     const self = this;

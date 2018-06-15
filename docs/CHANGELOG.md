@@ -99,8 +99,7 @@
 
 ### v4.6.0 Code Updates / Breaking Changes
 
-- `[Templates]` The internal template engine changed for better XSS security as a result one feature is no longer supported
-    - If you have a delimiter syntax to embed html like `{{& name}}`, change this to be `{{{name}}}`
+- `[Templates]` The internal template engine changed for better XSS security as a result one feature is no longer supported. If you have a delimiter syntax to embed html like `{{& name}}`, change this to be `{{{name}}}`
 - `[jQuery]` Updated from 3.1.1 to 3.3.1
 
 ### v4.6.0 Bug Fixes
@@ -166,9 +165,7 @@
 
 ### v4.5.0 Behavior Changes
 
-- `[Search Field]` `ESC` incorrectly cleared the field and was inconsistent
-    - The proper key is `ctrl + backspace` (PC )/ `alt + delete` (mac) to clear all field contents
-    - `ESC` no longer does anything
+- `[Search Field]` `ESC` incorrectly cleared the field and was inconsistent. The proper key is `ctrl + backspace` (PC )/ `alt + delete` (mac) to clear all field contents. `ESC` no longer does anything
 
 ### v4.5.0 Improvements
 
@@ -181,9 +178,7 @@
 
 ### v4.5.0 Code Updates / Breaking Changes
 
-- `[Swaplist]` changed custom events `beforeswap and swapupdate` data (SOHO-7407)
-    - From `Array: list-items-moved` to `Object: from: container-info, to: container-info and items: list-items-moved`
-    - It now uses data in a more reliable way
+- `[Swaplist]` changed custom events `beforeswap and swapupdate` data (SOHO-7407). From `Array: list-items-moved` to `Object: from: container-info, to: container-info and items: list-items-moved`. It now uses data in a more reliable way
 
 ### v4.5.0 Bug Fixes
 
@@ -218,9 +213,8 @@
 - `[Listview]` Removed redundant resize events
 - `[Line]` Fixed problems updating data
 - `[Mask]` Fixed bug on alpha masks that ignored the last character
-- `[Modal]`
-    - Allow enter key to be stopped for forms
-    - Allow filter row to work if a grid is on a modal
+- `[Modal]` Allow enter key to be stopped for forms
+- `[Modal]` Allow filter row to work if a grid is on a modal
 - `[Fileupload]` Fixed bug when running in Contextual Action Panel
 - `[Searchfield]` Fixed wrong width
 - `[Step Process]` Improved layout and responsive
