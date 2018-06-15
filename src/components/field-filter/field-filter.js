@@ -115,6 +115,8 @@ FieldFilter.prototype = {
       // Set Dropdown
       s.dropdownOpts.cssClass = s.dropdownOpts.cssClass ? `${s.dropdownOpts.cssClass} ffdropdown` : 'ffdropdown';
       s.dropdownOpts.noSearch = true;
+
+      // Find the field filter dropdown
       this.ffdropdown = this.field.find('select.dropdown.field-filter-dropdown');
       this.ffdropdown
         .attr({ id: ffId, named: ffId })
