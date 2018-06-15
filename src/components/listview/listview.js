@@ -79,12 +79,12 @@ ListView.prototype = {
    */
   init() {
     this.setup();
+    this.handleEvents();
     this.refresh();
     this.selectedItems = [];
     this.lastSelectedItem = 0; // Rember index to use shift key
     this.isSelectedAll = false; // Rember if all selected or not
     this.sortInit('listview', 'click.listview', 'data-sortlist');
-    this.handleEvents();
     this.handleResize();
   },
 
@@ -788,15 +788,25 @@ ListView.prototype = {
 
     if (!noTrigger) {
       const triggerStr = isChecked ? 'unselected' : 'selected';
+      const selectedData = [];
+
+      for (let i = 0; i < this.selectedItems.length; i++) {
+        const posinset = this.selectedItems[i][0].getAttribute('aria-posinset');
+        selectedData.push(this.settings.dataset[posinset - 1]);
+      }
+
       /**
        * Fires when a item is selected.
-       *
        * @event selected
        * @memberof ListView
        * @property {object} event - The jquery event object
-       * @property {object} selected items and item info
+       * @property {object} selected items and item info and item data
        */
-      this.element.triggerHandler(triggerStr, { selectedItems: this.selectedItems, elem: li });
+      this.element.triggerHandler(triggerStr, {
+        selectedItems: this.selectedItems,
+        elem: li,
+        selectedData
+      });
 
       if (triggerStr === 'unselected') {
         /**
@@ -807,7 +817,7 @@ ListView.prototype = {
          * @property {object} event - The jquery event object
          * @property {object} selected items and item info
          */
-        this.element.triggerHandler('deselected', { selectedItems: this.selectedItems, elem: li });
+        this.element.triggerHandler('deselected', { selectedItems: this.selectedItems, elem: li, selectedData });
       }
     }
 

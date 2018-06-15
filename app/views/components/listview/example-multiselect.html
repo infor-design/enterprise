@@ -46,7 +46,7 @@
 <script>
   $('body').on('initialized', function() {
     $('#multiselect-listview').on('selected', function (e, args) {
-     console.log(args);
+     console.log(args.selectedData);
     });
 
     $('#remove').on('click', function () {
