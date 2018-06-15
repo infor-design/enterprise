@@ -130,7 +130,7 @@
 
           // Do some stuff other than highlighting what's required and obviously cancel the submit.
 
-        }).on('error', function (e, args) {
+        }).on('error change', function (e, args) {
           console.log('error',args);
           $('#test1').prop('disabled', true);
         }).on('valid', function (e, args) {
