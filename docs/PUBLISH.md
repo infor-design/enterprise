@@ -26,7 +26,7 @@ git checkout master
 
 ## Documentation
 
-- Check ChangeLog.md is updated (we will soon use github change log)
+- Verify the [changelog](/changelog) is up-to-date
 - Generate Release Notes <http://bit.ly/2w6X8Xw>
 
 ## Steps using release-it
@@ -43,19 +43,6 @@ git checkout master
     - Once as a numberical version `4.7.0`
     - Once as that numberical version `4.7.0` aliased as “latest”
 - Merge back into `master`
-- PR the master version to `4.8.0-dev`
-
-## Update version in ids-enterprise-ng
-
-- <https://github.com/infor-design/enterprise-ng>
-- Make a final Pull Request for release
-    - bump publish/package.json to the release version
-    - `npm install ids-enterprise@latest` to update the root package.json
-    - manually update the `publish/package.json` dependency for ids-enterprise
-- Get PR merged in and pushed
-- [Create a release](https://github.com/infor-design/enterprise-ng/releases) for that branch
-- `npm publish --tag latest`
-- Merge back into `master
 - PR the master version to `4.8.0-dev`
 
 ## Test Npm packages
