@@ -99,7 +99,9 @@ For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
 ## Working With Visual Regression Tests
 
-- Create a e2e2 test similar to the following...
+Currently On-Hold until running ci is figured out see: [SOHO-7464](https://jira.infor.com/browse/SOHO-7464)
+
+- Create a e2e test similar to the following...
 
 ```javascript
 if (utils.isChrome()) {
