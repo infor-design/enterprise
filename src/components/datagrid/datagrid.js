@@ -2685,7 +2685,6 @@ Datagrid.prototype = {
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
     const activePage = self.pager ? self.pager.activePage : 1;
-    const pagesize = self.settings.pagesize;
     let rowHtml = '';
     let d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0;
     let depth = null;
