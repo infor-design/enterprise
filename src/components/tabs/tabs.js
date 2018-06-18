@@ -3626,22 +3626,6 @@ Tabs.prototype = {
   },
 
   /**
-   * @returns {void}
-   */
-  checkFocusedElements() {
-    const self = this;
-    const focusableItems = self.tablist;
-
-    if (focusableItems.find('.is-focused').length === 0 && !self.moreButton.hasClass('is-focused') && !self.moreButton.hasClass('popup-is-open')) {
-      self.focusState.removeClass('is-visible');
-    }
-
-    if (this.hasAnimatedBar() && focusableItems.find('.is-selected').length === 0 && !self.moreButton.hasClass('is-selected')) {
-      self.defocusBar();
-    }
-  },
-
-  /**
    * Causes the entire tabset to reset with new settings.
    * @param {object} [settings] incoming settings
    * @returns {this} component instance
