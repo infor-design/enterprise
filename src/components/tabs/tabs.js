@@ -3790,7 +3790,7 @@ Tabs.prototype = {
   /**
    * Pass-through for the `remove()` method, which gets used for removing a dismissible tab.
    * @param {string} tabId the ID of the target tab panel
-   * @returns {boolean} ?
+   * @returns {this} component instance
    */
   closeDismissibleTab(tabId) {
     return this.remove(tabId);
@@ -3799,7 +3799,7 @@ Tabs.prototype = {
   /**
    * Tears down this instance of the tabs component by removing events,
    * other components, and extraneous markup.
-   * @returns {this} ?
+   * @returns {this} component instance
    */
   teardown() {
     this.panels.removeAttr('style');
