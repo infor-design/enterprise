@@ -185,10 +185,15 @@ SearchField.prototype = {
 
     // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
     // Autocomplete settings are fed the same settings as Searchfield
-    if (this.settings.source || this.element.attr('data-autocomplete')) {
+    // NOTE: The `source` setting can be modified due to a conflict between a legacy Soho attribute,
+    // `data-autocomplete`, having the same value as jQuery's `$.data('autocomplete')`.
+    const autocompleteDataAttr = this.element.attr('data-autocomplete');
+    if (this.settings.source || autocompleteDataAttr) {
       this.autocomplete = this.element.data('autocomplete');
-      if (!this.autocomplete) {
-        this.element.autocomplete(this.settings);
+      if (!this.autocomplete || typeof this.autocomplete === 'string') {
+        this.element.autocomplete(utils.extend({}, this.settings, {
+          source: autocompleteDataAttr || this.settings.source
+        }));
       } else {
         this.autocomplete.updated(this.settings);
       }
