@@ -255,8 +255,11 @@ SearchField.prototype = {
     // Add/remove `toolbar-searchfield-wrapper` class based on existence of Toolbar Parent
     this.wrapper[0].classList[this.toolbarParent ? 'add' : 'remove']('toolbar-searchfield-wrapper');
 
-    // Initially disable animations on searchfields
-    this.element.add(this.wrapper).addClass('no-transition no-animation');
+    // Initially disable animations on toolbar searchfields
+    // An event listener on Toolbar's `rendered` event removes these at the correct time
+    if (this.toolbarParent) {
+      this.element.add(this.wrapper).addClass('no-transition no-animation');
+    }
 
     // Add Icon
     let icon = this.wrapper.find('.icon:not(.icon-dropdown)');
@@ -561,12 +564,6 @@ SearchField.prototype = {
   },
 
   /**
-  * Fires when the searchfield is clicked (if enabled).
-  * @event mousedown
-  * @memberof ToolbarSearchfield
-  * @property {object} event - The jquery event object
-  * /
-  /**
   * Fires when the searchfield is focused.
   * @event focusin
   * @memberof ToolbarSearchfield
@@ -621,6 +618,9 @@ SearchField.prototype = {
       .on(`updated.${this.id}`, (e, settings) => {
         self.updated(settings);
       })
+      .on(`focus.${this.id}`, (e) => {
+        self.handleFocus(e);
+      })
       .on(`click.${this.id}`, (e) => {
         self.handleClick(e);
       })
@@ -665,14 +665,12 @@ SearchField.prototype = {
     if (self.hasGoButton()) {
       self.goButton
         .on(`click.${this.id}`, e => self.handleGoButtonClick(e))
+        .on(`click.${this.id}`, e => self.handleGoButtonFocus(e))
         .on(`blur.${this.id}`, () => self.handleSafeBlur());
     }
 
     if (this.isCollapsible) {
-
-      this.wrapper.on(`mousedown.${this.id}`, () => {
-        self.fastExpand = true;
-      }).on(`focusin.${this.id}`, (e) => {
+      this.wrapper.on(`focusin.${this.id}`, (e) => {
         self.handleFocus(e);
       }).on(`focusout.${this.id}`, (e) => {
         self.handleBlur(e);
@@ -694,7 +692,7 @@ SearchField.prototype = {
           return;
         }
         self.collapse();
-      }).on(`reanimate.${this.id}`, () => {
+      }).on(`rendered.${this.id}`, () => {
         self.element.removeClass('no-transition no-animation');
         self.wrapper.removeClass('no-transition no-animation');
       });
@@ -852,11 +850,7 @@ SearchField.prototype = {
    * @returns {void}
    */
   handleFocus() {
-    if (this.isExpanded) {
-      return;
-    }
-
-    this.setAsActive();
+    this.setAsActive(true);
   },
 
   /**
@@ -894,6 +888,8 @@ SearchField.prototype = {
 
       if (self.isCurrentlyCollapsible) {
         self.collapse();
+      } else {
+        self.removeDocumentDeactivationEvents();
       }
     }
 
@@ -952,8 +948,6 @@ SearchField.prototype = {
     if (this.isSearchfieldElement(target)) {
       return;
     }
-
-    $(document).off(this.outsideEventStr);
     this.handleSafeBlur();
   },
 
@@ -1038,6 +1032,14 @@ SearchField.prototype = {
 
     // gives access to the current searchfield value, and category data if applicable.
     return action(e, searchfieldValue, categorySelection);
+  },
+
+  /**
+   * @private
+   * @returns {void}
+   */
+  handleGoButtonFocus() {
+    this.setAsActive(true);
   },
 
   /**
@@ -1367,11 +1369,8 @@ SearchField.prototype = {
    * @returns {undefined}
    */
   handleCategoryFocus() {
-    this.wrapper
-      .addClass('active')
-      .addClass('has-focus');
-
     this.saveFocus();
+    this.setAsActive(true);
   },
 
   /**
@@ -1511,6 +1510,7 @@ SearchField.prototype = {
    * @returns {void}
    */
   expand(noFocus) {
+    this.addDocumentDeactivationEvents();
     if (this.isExpanded || this.isExpanding) {
       return;
     }
@@ -1536,8 +1536,6 @@ SearchField.prototype = {
     const containerSizeSetters = {
       buttonset: buttonsetElemWidth
     };
-
-    this.addDocumentDeactivationEvents();
 
     this.wrapper.addClass('is-open');
     this.calculateOpenWidth();
@@ -1581,6 +1579,8 @@ SearchField.prototype = {
       return;
     }
 
+    this.removeDocumentDeactivationEvents();
+
     const self = this;
     let textMethod = 'removeClass';
 
@@ -1610,8 +1610,6 @@ SearchField.prototype = {
     }
 
     this.wrapper.triggerHandler('collapsed');
-
-    this.removeDocumentDeactivationEvents();
 
     if (env.os.name === 'ios') {
       $('head').triggerHandler('enable-zoom');
@@ -1716,7 +1714,6 @@ SearchField.prototype = {
 
     // ToolbarSearchfield events
     this.wrapper.off([
-      `mousedown.${this.id}`,
       `focusin.${this.id}`,
       `focusout.${this.id}`,
       `keydown.${this.id}`,

@@ -56,3 +56,7 @@ fdescribe('Searchfield example-index tests', () => {
     expect(await element(by.id(searchfieldId)).getAttribute('value')).toEqual('');
   });
 });
+
+fdescribe('Searchfield example-index tests', () => {
+
+});

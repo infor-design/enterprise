@@ -25,7 +25,8 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
   position: relative;
   @include transition(width 300ms $cubic-bezier-ease,
     left 300ms $cubic-bezier-ease,
-    right 300ms $cubic-bezier-ease);
+    right 300ms $cubic-bezier-ease,
+    box-shadow 300ms $cubic-bezier-ease);
 
   > .icon {
     background-color: rgba($white, 0); // IE 10
@@ -235,7 +236,7 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
   // Buttons inside of searchfields
   .btn {
-    @include css3(transition, border 300ms ease 0s); // Matches the one on inputs
+    @include transition(border 300ms $cubic-bezier-ease); // Matches the one on inputs
     background-color: transparent;
     border-bottom-right-radius: 0;
     border-color: $input-border-color;
