@@ -22,7 +22,7 @@ git push
 git checkout master
 ```
 
-## Steps for Cutting a Release
+## Steps Publishing a Release
 
 ## Documentation
 
@@ -36,12 +36,12 @@ git checkout master
     - `export GITHUB_ACCESS_TOKEN="{YOUR TOKEN}"` to set the token (its `export` for OSX)
 - Checkout the release branch and `git pull --tags`
 - Type of releases:
-    - `release-it minor --preRelease=beta`
-    - `release-it minor --preRelease=rc`
-    - `release-it minor`
+    - `npm run release:dev` or see scripts/publish-nightly-manual.js for more options
+    - `npm run release:beta --preRelease=beta`
+    - `npm run release:rc --preRelease=rc`
     - `release-it {version}`
     - **Always** verify the release the script asks you about
-- Deploy the demo app twice:
+- If you are deploying, deploy the demo app twice:
     - Once as a numberical version `4.7.0`
     - Once as that numberical version `4.7.0` aliased as “latest”
 - Merge back into `master`
