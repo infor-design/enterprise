@@ -188,17 +188,21 @@ SearchField.prototype = {
     // NOTE: The `source` setting can be modified due to a conflict between a legacy Soho attribute,
     // `data-autocomplete`, having the same value as jQuery's `$.data('autocomplete')`.
     const autocompleteDataAttr = this.element.attr('data-autocomplete');
-    if (this.settings.source || autocompleteDataAttr) {
+    if (autocompleteDataAttr) {
+      this.settings.source = autocompleteDataAttr;
+      this.element.removeAttr('data-autocomplete');
+      $.removeData(this.element, 'autocomplete');
+    }
+
+    if (this.settings.source) {
       this.autocomplete = this.element.data('autocomplete');
-      if (!this.autocomplete || typeof this.autocomplete === 'string') {
-        this.element.autocomplete(utils.extend({}, this.settings, {
-          source: autocompleteDataAttr || this.settings.source
-        }));
+      if (!this.autocomplete) {
+        this.element.autocomplete(this.settings);
+        this.autocomplete = this.element.data('autocomplete');
       } else {
         this.autocomplete.updated(this.settings);
       }
     }
-    this.autocomplete = this.element.data('autocomplete');
 
     // Prevent browser typahead
     this.element.attr('autocomplete', 'off');

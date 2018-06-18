@@ -12,13 +12,14 @@ $.fn.autocomplete = function (settings) {
 
     // NOTE: This is modified due to a conflict between a legacy Soho attribute, `data-autocomplete`,
     // having the same value as jQuery's `$.data('autocomplete')`.
-    if (!instance || typeof instance === 'string') {
+    if (typeof instance === 'string') {
       const stringSource = `${instance}`;
       const modifiedSettings = utils.extend({}, settings, {
         source: stringSource || settings.source
       });
-
       instance = $.data(this, COMPONENT_NAME, new Autocomplete(this, modifiedSettings));
+    } else if (!instance) {
+      instance = $.data(this, COMPONENT_NAME, new Autocomplete(this, settings));
     } else {
       instance.updated(settings);
     }

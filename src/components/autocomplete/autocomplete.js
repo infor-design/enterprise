@@ -159,6 +159,7 @@ Autocomplete.prototype = {
     const data = this.element.attr('data-autocomplete');
     if (data && data !== 'source') {
       this.settings.source = data;
+      this.element.removeAttr('data-autocomplete');
     }
 
     const listFilterSettings = {
