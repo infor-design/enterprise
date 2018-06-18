@@ -39,4 +39,4 @@ Not Applicable
 
 ## Upgrading from 3.X
 
--   This visualization did not exist in 3.X
+- This visualization did not exist in 3.X

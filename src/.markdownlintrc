@@ -1,0 +1,10 @@
+{
+  "comment": "Extra specific rules for the 'src/' documentation that goes into design.infor.com. Rules for the style guide at http://www.cirosantilli.com/markdown-style-guide/",
+  "default": true,
+  "MD002": {
+    "level": "2"
+  },
+  "MD041": {
+    "level": "2"
+  }
+}

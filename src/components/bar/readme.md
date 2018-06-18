@@ -80,4 +80,4 @@ $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset,
 
 ## Upgrading from 3.X
 
--   The bar chart was added in 3.6. From 3.6 the api is mostly compatible.
+- The bar chart was added in 3.6. From 3.6 the api is mostly compatible.

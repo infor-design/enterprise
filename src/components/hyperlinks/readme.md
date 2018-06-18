@@ -17,21 +17,21 @@ A hyperlink uses a standard anchor tag element and styles it with CSS. No JS is 
 
 ## Accessibility
 
--   Don't use the word "link" in the link as it is repetitive and doesn't describe what is being linked to
--   Don't use all capital letters in link text
--   Don't use ascii characters in links
--   Don't use the URL as the text in a link
--   Keep link text concise
--   You may use audible links if needed
--   Avoid [idioms](https://en.wikipedia.org/wiki/Idiom)
--   Be consistent; for example, use "Forward" and "Back" or "Next" and "Previous", but don't mix "Forward" and "Next"
+- Don't use the word "link" in the link as it is repetitive and doesn't describe what is being linked to
+- Don't use all capital letters in link text
+- Don't use ascii characters in links
+- Don't use the URL as the text in a link
+- Keep link text concise
+- You may use audible links if needed
+- Avoid [idioms](https://en.wikipedia.org/wiki/Idiom)
+- Be consistent; for example, use "Forward" and "Back" or "Next" and "Previous", but don't mix "Forward" and "Next"
 
 ## Keyboard Shortcuts
 
--   <kbd>Tab</kbd> moves focus to the Link. A second tab moves focus to the next focusable item
--   <kbd>Space</kbd> or <kbd>Enter</kbd> executes the link
--   <kbd>Shift + F10</kbd> is used to bring up an associated popup menu
+- <kbd>Tab</kbd> moves focus to the Link. A second tab moves focus to the next focusable item
+- <kbd>Space</kbd> or <kbd>Enter</kbd> executes the link
+- <kbd>Shift + F10</kbd> is used to bring up an associated popup menu
 
 ## Upgrading from 3.X
 
--   Replace `class="inforHyperlink"` with `hyperlink`
+- Replace `class="inforHyperlink"` with `hyperlink`

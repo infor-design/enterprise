@@ -68,26 +68,26 @@ The modal will animate from 90% to 100% and at the same time fades in.
 
 ## Accessibility
 
--   Ensure that `aria-labeled` by is used to point the dialog to the title of the page, this way you can get away with focusing the first field
--   Use `aria-hidden` and `display: none;` when the dialog is not visible
--   The user should not be able to tab out of the dialog back into the page
--   `aria-modal` can be added but this is a forward thinking approach, since `aria-modal` isn't actually supported by browsers yet
--   When the dialog is closed, focus should return to the element in the application which had focus before the dialog was invoked. This is usually the control which opened the dialog
--   When a modal dialog opens, focus goes to the first focusable item in the dialog. Determining the first focusable item must take into account elements which receive focus by default (form fields and links) as well as items which may have a `tabindex` attribute with a positive value. If there is no focusable item in the dialog, focus is placed on the dialog container element
+- Ensure that `aria-labeled` by is used to point the dialog to the title of the page, this way you can get away with focusing the first field
+- Use `aria-hidden` and `display: none;` when the dialog is not visible
+- The user should not be able to tab out of the dialog back into the page
+- `aria-modal` can be added but this is a forward thinking approach, since `aria-modal` isn't actually supported by browsers yet
+- When the dialog is closed, focus should return to the element in the application which had focus before the dialog was invoked. This is usually the control which opened the dialog
+- When a modal dialog opens, focus goes to the first focusable item in the dialog. Determining the first focusable item must take into account elements which receive focus by default (form fields and links) as well as items which may have a `tabindex` attribute with a positive value. If there is no focusable item in the dialog, focus is placed on the dialog container element
 
 ## Keyboard Shortcuts
 
--   <kbd>Enter</kbd> will execute the primary button action
--   <kbd>Esc</kbd> will close the dialog, effectively cancelling the action
--   <kbd>Tab</kbd> As the user presses tab to move within items in the dialog, pressing tab with focus on the last focusable item in the dialog will move focus back to the first focusable item in the dialog. Focus must be held within the dialog until it is cancelled or submitted
--   <kbd>Shift + Tab</kbd> Likewise, if the user is shift-tabbing through elements in the dialog, pressing it with focus on the first focusable item in the dialog will move focus to the last item in the dialog
+- <kbd>Enter</kbd> will execute the primary button action
+- <kbd>Esc</kbd> will close the dialog, effectively cancelling the action
+- <kbd>Tab</kbd> As the user presses tab to move within items in the dialog, pressing tab with focus on the last focusable item in the dialog will move focus back to the first focusable item in the dialog. Focus must be held within the dialog until it is cancelled or submitted
+- <kbd>Shift + Tab</kbd> Likewise, if the user is shift-tabbing through elements in the dialog, pressing it with focus on the first focusable item in the dialog will move focus to the last item in the dialog
 
 ## Responsive Guidelines
 
--   Modal will resize to fit the visible area with some padding.
+- Modal will resize to fit the visible area with some padding.
 
 ## Upgrading from 3.X
 
--   This control was added version 3.5. However the `infor` prefix is now removed in 4.0.
--   `inforMessageDialog` initialization is no longer supported. You need to use either the modal plugin or the message plugin. The message plugin is for small alert application type errors and the modal is for custom content
--   The markup for creating a modal by hand in the page has changed structurally to support the new UI
+- This control was added version 3.5. However the `infor` prefix is now removed in 4.0.
+- `inforMessageDialog` initialization is no longer supported. You need to use either the modal plugin or the message plugin. The message plugin is for small alert application type errors and the modal is for custom content
+- The markup for creating a modal by hand in the page has changed structurally to support the new UI

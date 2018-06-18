@@ -576,7 +576,8 @@ html[dir='rtl'] {
     background-color: transparent !important;
   }
 
-  header.header .title {
+  header.header .title,
+  header.header h1 {
     color: $graphite07 !important;
   }
 

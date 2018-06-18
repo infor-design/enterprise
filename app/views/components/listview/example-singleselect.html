@@ -46,8 +46,8 @@
                   <svg class="icon icon-{{alertClass}}" focusable="false" aria-hidden="true" role="presentation">
                     <use xlink:href="#icon-{{alertClass}}"/>
                   </svg>
-                  <span class="days">{{ daysLeft }}</span><span class="day-sign">d</span>
-                  <span class="hours">{{ hoursLeft }}</span><span class="hour-sign">h</span>
+                  <span class="days">{{daysLeft}}</span><span class="day-sign">d</span>
+                  <span class="hours">{{hoursLeft}}</span><span class="hour-sign">h</span>
               </div>
             </li>
           {{/alert}}
@@ -57,8 +57,8 @@
               <p class="listview-subheading">{{location}}</p>
 
               <div class="l-pull-right">
-                <span class="days">{{ daysLeft }}</span><span class="day-sign">d</span>
-                <span class="hours">{{ hoursLeft }}</span><span class="hour-sign">h</span>
+                <span class="days">{{daysLeft}}</span><span class="day-sign">d</span>
+                <span class="hours">{{hoursLeft}}</span><span class="hour-sign">h</span>
               </div>
             </li>
           {{/alert}}
@@ -68,3 +68,9 @@
 
   </div>
 </div>
+
+<script>
+  $('#period-end').on('selected', function (e, args) {
+    console.log(args.selectedData);
+  });
+</script>

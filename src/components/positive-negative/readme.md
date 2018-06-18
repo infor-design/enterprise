@@ -13,14 +13,14 @@ description: This page describes Positive-Negative Chart.
 
 ### Dataset Settings
 
-* `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - The name to show on the y axis for the bar
-* `value` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** - The raw data value for the bar.
-* `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** - Compare the value over this target
-* `tooltip`**[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  - The custom tooltip to show.
+- `name` [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) - The name to show on the y axis for the bar
+- `value` [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) - The raw data value for the bar.
+- `target` [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) - Compare the value over this target
+- `tooltip`[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)  - The custom tooltip to show.
 
 ### Extra Chart Settings
 
-* `formatterString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - the d3 formatter string to show
+- `formatterString` [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) - the d3 formatter string to show
 
 ## Code Example
 
@@ -106,4 +106,4 @@ $('#positive-negative-example').chart({
 
 ## Upgrading from 3.X
 
--   The chart was added in 4.2.5
+- The chart was added in 4.2.5

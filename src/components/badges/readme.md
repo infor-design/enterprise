@@ -21,8 +21,8 @@ A badge is a CSS only component that uses a `<span>` with the class `badge`. In 
 
 ## Accessibility
 
--   The traffic light colors are accessibility violations for contrast, however, the high contrast theme provides an alternative that passes. In addition, in context text should be used as color alone cannot provide the meaning. 
--   An audible span (`class="audible"`) should always be included for accessibility, it should describe the alert status and/or count value in a meaningful way to a non-visual user.
+- The traffic light colors are accessibility violations for contrast, however, the high contrast theme provides an alternative that passes. In addition, in context text should be used as color alone cannot provide the meaning.
+- An audible span (`class="audible"`) should always be included for accessibility, it should describe the alert status and/or count value in a meaningful way to a non-visual user.
 
 ## Keyboard Shortcuts
 
