@@ -38,7 +38,6 @@
     "eslint:error-only": "npx eslint -c .eslintrc.js --quiet src test",
     "functional:local": "npx karma start test/karma.conf.js",
     "functional:ci": "npx karma start test/karma.conf.js --single-run",
-    "all-checks": "npm run mdlint && npm run eslint && npm run functional:ci && npm run e2e:ci",
     "e2e:ci": "npm run webdriver:update && npx protractor test/protractor.ci.conf.js",
     "e2e:ci:bs": "npx protractor test/protractor.ci.bs.conf.js",
     "e2e:local:bs": "npm run webdriver:update && npx protractor test/protractor.local.bs.conf.js",
@@ -51,7 +50,7 @@
     "release:rc": "release-it minor --preRelease=rc",
     "release:final": "release-it minor",
     "prepublishOnly": "npm run build",
-    "test": "npx karma start test/karma.conf.js --single-run"
+    "test": "npm run mdlint && npm run eslint && npm run functional:ci && npm run e2e:ci"
   },
   "dependencies": {
     "d3": "^4.13.0",
