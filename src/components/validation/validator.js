@@ -597,7 +597,7 @@ Validator.prototype = {
    * @param {boolean} showTooltip whether or not the legacy validation Tooltip will contain the
    * message instead of placing it underneath
    * @param {boolean} isAlert whether or not this validation message type is "alert"
-   * @param (boolean) triggerEvents whether or not to trigger events
+   * @param {boolean} triggerEvents whether or not to trigger events
    * @param {string} icon if type is icon then here pass icon string
    */
   addMessage(field, message, type, inline, showTooltip, isAlert, triggerEvents = true, icon) {
@@ -815,7 +815,7 @@ Validator.prototype = {
    * @param {string} message text content containing the validation message
    * @param {string} type the validation type (error, warn, info, etc).
    * @param {boolean} isAlert whether or not the validation type is "alert"
-   * @param (boolean) triggerEvents whether or not to trigger events
+   * @param {boolean} triggerEvents whether or not to trigger events
    * @param {string} icon if type is icon then here pass icon string
    */
   showInlineMessage(field, message, type, isAlert, triggerEvents = true, icon) {
@@ -893,7 +893,7 @@ Validator.prototype = {
    * @private
    * @param {jQuery[]} field the field which is having its error removed
    * @param {string} type the type of message (error, alert, info, etc)
-   * @param (boolean) triggerEvents whether to trigger events
+   * @param {boolean} triggerEvents whether to trigger events
    */
   removeMessage(field, type, triggerEvents = true) {
     const loc = this.getField(field);
