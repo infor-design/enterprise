@@ -465,6 +465,8 @@ $.fn.clearable = function () {
   const self = this;
   this.element = $(this);
 
+  const COMPONENT_NAME = 'clearable';
+
   // Create an X icon button styles in icons.scss
   this.xButton = this.element.find('.icon.close').first();
   if (!this.xButton || !this.xButton.length) {
@@ -506,13 +508,24 @@ $.fn.clearable = function () {
 
   // Handle Events
   this.xButton
-    .off()
+    .off([
+      `click.${COMPONENT_NAME}`,
+      `keydown.${COMPONENT_NAME}`
+    ].join(' '))
     .on('click.clearable', this.clear)
     .on('keydown.clearable', this.handleKeydown);
 
-  this.element.off().on('change.clearable, blur.clearable, keyup.clearable', () => {
-    self.checkContents();
-  });
+  const elemEvents = [
+    `blur.${COMPONENT_NAME}`,
+    `change.${COMPONENT_NAME}`,
+    `keyup.${COMPONENT_NAME}`
+  ].join(' ');
+
+  this.element
+    .off(elemEvents)
+    .on(elemEvents, () => {
+      self.checkContents();
+    });
 
   // Set initial state
   this.checkContents();

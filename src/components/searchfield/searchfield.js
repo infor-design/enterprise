@@ -186,7 +186,12 @@ SearchField.prototype = {
     // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
     // Autocomplete settings are fed the same settings as Searchfield
     if (this.settings.source || this.element.attr('data-autocomplete')) {
-      this.element.autocomplete(this.settings);
+      this.autocomplete = this.element.data('autocomplete');
+      if (!this.autocomplete) {
+        this.element.autocomplete(this.settings);
+      } else {
+        this.autocomplete.updated(this.settings);
+      }
     }
     this.autocomplete = this.element.data('autocomplete');
 
