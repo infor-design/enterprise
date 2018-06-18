@@ -3657,7 +3657,7 @@ Tabs.prototype = {
   },
 
   /**
-   * Disables all tabs in the list
+   * Disables all non-active tabs in the list
    * @returns {void}
    */
   disableOtherTabs() {
