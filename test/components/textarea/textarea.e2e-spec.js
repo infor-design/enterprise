@@ -70,7 +70,9 @@ describe('Textarea size tests', () => {
 
     const responsiveEl = await element(by.id('responsive'));
 
-    expect(await responsiveEl.getCssValue('width')).toBe('1160px');
+    const h = parseInt(await responsiveEl.getCssValue('width'), 10);
+
+    expect(h).toBeGreaterThan(950);
   });
 });
 
