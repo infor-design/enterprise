@@ -463,7 +463,12 @@ ColorPicker.prototype = {
    * @returns {string} the translated text color
    */
   translateColorLabel(colorText) {
-    return Locale.translate(colorText, true);
+    if (!colorText) {
+      return '';
+    }
+    const translatedText = Locale.translate(colorText, true);
+    return typeof translatedText === 'string' ?
+      Locale.translate(colorText, true) : colorText;
   },
 
   /**
@@ -600,9 +605,7 @@ ColorPicker.prototype = {
     }
 
     /* eslint-disable no-bitwise */
-    return `rgb(${n & 0xFF},
-      ${(n & 0xFF00) >> 8},
-      ${(n & 0xFF0000) >> 16})`;
+    return `rgb(${n & 0xFF}, ${(n & 0xFF00) >> 8}, ${(n & 0xFF0000) >> 16})`;
     /* eslint-disable no-console */
   },
 
