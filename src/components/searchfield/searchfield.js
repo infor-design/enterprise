@@ -224,22 +224,22 @@ SearchField.prototype = {
       } else {
         this.wrapper = this.element.wrap('<span class="searchfield-wrapper"></span>').parent();
       }
+    }
 
-      // Label for toolbar-inlined searchfields needs to be inside the
-      // wrapper to help with positioning.
-      if (this.element.closest('.toolbar').length) {
-        this.label.prependTo(this.wrapper);
-      }
+    // Label for toolbar-inlined searchfields needs to be inside the
+    // wrapper to help with positioning.
+    if (this.toolbarParent) {
+      this.label.prependTo(this.wrapper);
+    }
 
-      const customClasses = ['context', 'alternate'];
-      let c;
+    const customClasses = ['context', 'alternate'];
+    let c;
 
-      for (let i = 0; i < customClasses.length; i++) {
-        if (this.element.hasClass(customClasses[i])) {
-          c = customClasses[i];
-          this.wrapper.addClass(c);
-          this.element.removeClass(c);
-        }
+    for (let i = 0; i < customClasses.length; i++) {
+      if (this.element.hasClass(customClasses[i])) {
+        c = customClasses[i];
+        this.wrapper.addClass(c);
+        this.element.removeClass(c);
       }
     }
 
@@ -358,9 +358,11 @@ SearchField.prototype = {
       this.wrapper.removeClass('has-go-button');
     }
 
+    /*
     // Hoist the 'alternate' CSS class to the wrapper, if applicable
     const isAlternate = this.element.hasClass('alternate');
     this.wrapper[isAlternate ? 'addClass' : 'removeClass']('alternate');
+    */
 
     if (this.settings.clearable) {
       this.element.clearable();
