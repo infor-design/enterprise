@@ -310,10 +310,17 @@ SearchField.prototype = {
         this.setCategories(this.settings.categories);
 
         this.list.insertAfter(this.element);
+
+        const self = this;
         this.categoryButton.popupmenu({
           menu: this.list,
           offset: {
             y: 10
+          },
+          returnFocus() {
+            if (self.isFocused) {
+              self.element.focus();
+            }
           }
         });
       } else {
@@ -784,6 +791,8 @@ SearchField.prototype = {
       return;
     }
 
+    this.addDocumentDeactivationEvents();
+
     this.wrapper.addClass('has-focus');
     this.expand(true);
 
@@ -886,10 +895,10 @@ SearchField.prototype = {
       const wrapperElem = self.wrapper[0];
       wrapperElem.classList.remove('has-focus', 'active');
 
+      self.removeDocumentDeactivationEvents();
+
       if (self.isCurrentlyCollapsible) {
         self.collapse();
-      } else {
-        self.removeDocumentDeactivationEvents();
       }
     }
 
@@ -917,8 +926,11 @@ SearchField.prototype = {
    * @returns {void}
    */
   addDocumentDeactivationEvents() {
-    const self = this;
+    if (this.hasDeactivationEvents === true) {
+      return;
+    }
 
+    const self = this;
     $(document)
       .on(`click.${this.id}`, (e) => {
         self.handleOutsideClick(e);
@@ -926,6 +938,8 @@ SearchField.prototype = {
       .on(`keydown.${this.id}`, (e) => {
         self.handleOutsideKeydown(e);
       });
+
+    this.hasDeactivationEvents = true;
   },
 
   /**
@@ -935,6 +949,7 @@ SearchField.prototype = {
    */
   removeDocumentDeactivationEvents() {
     $(document).off(`click.${this.id} keydown.${this.id}`);
+    this.hasDeactivationEvents = false;
   },
 
   /**
@@ -1510,7 +1525,6 @@ SearchField.prototype = {
    * @returns {void}
    */
   expand(noFocus) {
-    this.addDocumentDeactivationEvents();
     if (this.isExpanded || this.isExpanding) {
       return;
     }
@@ -1582,8 +1596,6 @@ SearchField.prototype = {
     if (!this.isExpanded || this.isCollapsing) {
       return;
     }
-
-    this.removeDocumentDeactivationEvents();
 
     const self = this;
     let textMethod = 'removeClass';
