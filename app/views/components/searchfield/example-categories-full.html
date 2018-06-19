@@ -23,23 +23,31 @@
 <script id="test-script">
   var singlesearchfield = $('#category-searchfield'),
   multisearchfield = $('#multi-category-searchfield'),
-  categoryData = [
-    {name: 'Animals', id: 'animals', value: 'an', checked: true},
-    {name: 'Baby', id: 'baby', value: 'ba', checked: false},
-    {name: 'Clothing', id: 'clothing', value: 'cl', checked: true},
-    {name: 'Images', id: 'images', value: 'im', checked: true},
-    {name: 'People', id: 'people', value: 'pe', checked: false},
-    {name: 'Places', id: 'places', value: 'pl', checked: false}
+  singleCategoryData = [
+    {name: 'Animals', id: 'animals-single', value: 'an', checked: false},
+    {name: 'Baby', id: 'baby-single', value: 'ba', checked: false},
+    {name: 'Clothing', id: 'clothing-single', value: 'cl', checked: false},
+    {name: 'Images', id: 'images-single', value: 'im', checked: true},
+    {name: 'People', id: 'people-single', value: 'pe', checked: false},
+    {name: 'Places', id: 'places-single', value: 'pl', checked: false}
+  ],
+  multiCategoryData = [
+    {name: 'Animals', id: 'animals-multi', value: 'an', checked: true},
+    {name: 'Baby', id: 'baby-multi', value: 'ba', checked: false},
+    {name: 'Clothing', id: 'clothing-multi', value: 'cl', checked: true},
+    {name: 'Images', id: 'images-multi', value: 'im', checked: true},
+    {name: 'People', id: 'people-multi', value: 'pe', checked: false},
+    {name: 'Places', id: 'places-multi', value: 'pl', checked: false}
   ];
 
   $('body').on('initialized', function() {
     singlesearchfield.searchfield({
-      categories: categoryData,
+      categories: singleCategoryData,
       showCategoryText: true
     })
 
     multisearchfield.searchfield({
-      categories: categoryData,
+      categories: multiCategoryData,
       categoryMultiselect: true,
       showCategoryText: true
     });

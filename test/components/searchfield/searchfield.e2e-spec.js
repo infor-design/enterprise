@@ -14,49 +14,125 @@ const setPage = async function (url) {
   await browser.driver.get(pageurl);
 };
 
-let searchfieldInputEl;
 const searchfieldId = 'searchfield';
-const searchfieldListId = 'autocomplete-list';
+const searchfieldGoButtonId = 'searchfield-go-button--1';
 
-fdescribe('Searchfield example-index tests', () => {
+describe('Searchfield example-index tests', () => {
   beforeEach(async () => {
     await setPage('/components/searchfield/example-index');
-    searchfieldInputEl = await element(by.id(searchfieldId));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(element(by.id(searchfieldId))), config.waitsFor);
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.id(searchfieldId))), config.waitFor);
   });
 
   it('Adds an "all results" link when results populate the Autocomplete list', async () => {
+    const searchfieldInputEl = await element(by.id(searchfieldId));
     await searchfieldInputEl.sendKeys('co');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitFor);
 
     // Identify the added "All Results" link
     expect(await element(by.linkText('All Results For "co"'))).toBeDefined();
   });
 
   it('Adds a "no results" link if an empty list is present', async () => {
+    const searchfieldInputEl = await element(by.id(searchfieldId));
     await searchfieldInputEl.sendKeys('not a state');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitFor);
 
     // Identify the added "No Results" link
     expect(await element(by.linkText('No Results'))).toBeDefined();
   });
+});
 
-  xit('can clear the filtered list with `alt + del/backspace`', async () => {
+describe('Searchfield go-button tests', () => {
+  beforeEach(async () => {
+    await setPage('/components/searchfield/example-go-button');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.id(searchfieldId))), config.waitFor);
+  });
+
+  it('fires a callback action when the Go Button is clicked', async () => {
+    const searchfieldInputEl = await element(by.id(searchfieldId));
     await searchfieldInputEl.click();
     await browser.driver.switchTo().activeElement().clear();
-    await searchfieldInputEl.sendKeys('Definitely not a real state');
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(await element(by.id(searchfieldListId))), config.waitFor);
-    await element(by.id(searchfieldId)).sendKeys(protractor.Key.chord(protractor.Key.ALT, protractor.Key.DELETE));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.stalenessOf(await element(by.id(searchfieldListEl))), config.waitFor);
+    await searchfieldInputEl.sendKeys('Nice Button');
 
-    expect(await element(by.id(searchfieldId)).getAttribute('value')).toEqual('');
+    const searchfieldGoButtonEl = await element(by.css(`#${searchfieldGoButtonId}`));
+    await searchfieldGoButtonEl.click();
+
+    const toastMessageSelector = '.toast-message';
+    const toastMessageEl = await element(by.css(toastMessageSelector));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(toastMessageEl), config.waitFor);
+
+    expect(await element(by.css(toastMessageSelector)).getText())
+      .toEqual('The searchfield\'s current value is "Nice Button".');
   });
 });
 
-fdescribe('Searchfield example-index tests', () => {
+const singleCategoryId = 'category-searchfield';
 
+describe('Searchfield full-text category tests', () => {
+  beforeEach(async () => {
+    await setPage('/components/searchfield/example-categories-full');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.id(singleCategoryId))), config.waitFor);
+  });
+
+  it('Can select a category from the list', async () => {
+    let searchfieldCategoryButtonEl = await element(by.css('[aria-controls="popupmenu-2"]'));
+    await searchfieldCategoryButtonEl.click();
+
+    const targetCategory = await element(by.id('clothing-single'));
+    await targetCategory.click();
+
+    searchfieldCategoryButtonEl = await element(by.css('[aria-controls="popupmenu-2"]'));
+    await browser.driver
+      .wait(protractor.ExpectedConditions.presenceOf(searchfieldCategoryButtonEl), config.waitFor);
+
+    expect(searchfieldCategoryButtonEl.getText()).toEqual('Clothing');
+  });
+});
+
+describe('Searchfield full-text category with go button tests', () => {
+  beforeEach(async () => {
+    await setPage('/components/searchfield/example-categories-and-go-button');
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(element(by.id(singleCategoryId))), config.waitFor);
+  });
+
+  // TODO: Not sure what the cause of the timeout here is...
+  // all these elements work everywhere else...
+  xit('Can pass a list of selected categories with the go button callback', async () => {
+    const categoryButtonSelector = '[aria-controls="popupmenu-1"]';
+    const searchfieldCategoryButtonEl = await element(by.css(categoryButtonSelector));
+    await searchfieldCategoryButtonEl.click();
+
+    const targetCategory = await element(by.id('baby-multi'));
+    await targetCategory.click();
+
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(await element(by.css(categoryButtonSelector))), config.waitFor);
+
+    expect(await element(by.css(categoryButtonSelector)).getText()).toEqual('5 Selected');
+
+    const searchfieldGoButtonEl = await element(by.css(`#${searchfieldGoButtonId}`));
+    await searchfieldGoButtonEl.click();
+
+    const toastMessageSelector = '.toast-message';
+    await browser.driver
+      .wait(protractor.ExpectedConditions
+        .presenceOf(await element(by.css(toastMessageSelector))), config.waitFor);
+
+    // EPC: NOTE: for some reason Protractor is adding spaces before the commas when using `getText()`.
+    // I've added them into the result for now, til we can track down the cause.
+    expect(await element(by.css(toastMessageSelector)).getText())
+      .toEqual('Animals , Baby , Clothing , Images , Places');
+  });
 });

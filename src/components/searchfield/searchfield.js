@@ -1542,7 +1542,11 @@ SearchField.prototype = {
     this.setOpenWidth();
 
     if (!noFocus || env.os.name === 'ios') {
-      self.input.focus();
+      if (self.focusedElem) {
+        self.focusedElem.focus();
+      } else {
+        self.input.focus();
+      }
     }
 
     // Recalculate the Toolbar Buttonset/Title sizes.
