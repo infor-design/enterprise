@@ -1979,7 +1979,6 @@ PopupMenu.prototype = {
       return;
     }
 
-    const self = this;
     const wrapper = this.menu.parent('.popupmenu-wrapper');
     const menu = this.menu.find('.popupmenu');
 
