@@ -2685,7 +2685,6 @@ Datagrid.prototype = {
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
     const activePage = self.pager ? self.pager.activePage : 1;
-    const pagesize = self.settings.pagesize;
     let rowHtml = '';
     let d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0;
     let depth = null;
@@ -2858,7 +2857,7 @@ Datagrid.prototype = {
       // Set Width of table col / col group elements
       let colWidth = '';
 
-      if (this.recordCount === 0 || this.recordCount - ((activePage - 1) * pagesize) === 0) {
+      if (this.recordCount === 0) {
         colWidth = this.columnWidth(col, j);
 
         self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
