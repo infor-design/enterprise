@@ -236,10 +236,7 @@ body.no-scroll {
     border-left: 1px solid $graphite02;
     border-right: 1px solid $graphite02;
     width: calc(60% - 3px);
-
-    p, h1, h2, h3, h4, h5, h6 {
-      color: $font-color-inverted;
-    }
+    background-color: $panel-bg-color;
 
     &.scrollable,
     &.scrollable-y {
