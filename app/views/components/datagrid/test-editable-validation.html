@@ -33,10 +33,36 @@
         	},
         	message: 'Incorrect Input'
         };
+        
+        
+        $.fn.validation.rules.customAsyncRule = {
+          check: function (value, field, grid, manageResult, dfd) {
+            var result;
+            //do some sort of back end request...
+            $.ajax({
+              url: "{{basepath}}api/compressors",
+              dataType: "json",
+              timeout: 5000,
+              success: function (data) {
+                result = (value == "1"  || value =="" ? false : true); //normally would check some result on the ajax call.. contrived.
+                manageResult(result, true, 'customAsyncRule', dfd);
+              },
+              error: function (req, status, error) {
+                result = false;
+                $.fn.validation.rules.customAsyncRule.message = req.responseText;
+                manageResult(result, true, 'customAsyncRule', dfd);
+              },
+              async: true
+            });
+          },
+          message: 'Async Error',
+		      type: 'error',
+          async: true
+        };
 
         //Define Columns for the Grid.
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, validate: 'required customRule', editor: Editors.Input});
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Input, editor: Editors.Input, validate: 'required'});
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Input, editor: Editors.Input, validate: 'required customAsyncRule'});
         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', editor: Editors.Input, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, validate: 'required date'});
 

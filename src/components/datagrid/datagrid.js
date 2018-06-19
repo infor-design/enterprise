@@ -6518,11 +6518,14 @@ Datagrid.prototype = {
     const column = this.columnSettings(cell);
     const validate = column.validate;
     let validationType;
+    
 
     if (!validate) {
       return;
     }
 
+    let dfd;
+    const dfds = [];
     const rules = column.validate.split(' ');
     const validator = $.fn.validation;
     const cellValue = this.fieldValue(this.settings.dataset[row], column.field);
@@ -6530,11 +6533,9 @@ Datagrid.prototype = {
     let messageText = '';
     let i;
 
-    for (i = 0; i < rules.length; i++) {
-      const rule = validator.rules[rules[i]];
-      const gridInfo = { row, cell, item: this.settings.dataset[row], column, grid: self };
-      const ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
-
+    function manageResult(result, displayMessage, ruleName, dfrd) {
+      const rule = validator.rules[ruleName];
+      
       validationType = $.fn.validation.ValidationTypes[rule.type] ||
         $.fn.validation.ValidationTypes.error;
       messageText = '';
@@ -6543,7 +6544,7 @@ Datagrid.prototype = {
         messageText = messages[validationType.type];
       }
 
-      if (!ruleValid) {
+      if (!result && displayMessage) {
         if (messageText) {
           messageText = ((/^\u2022/.test(messageText)) ? '' : '\u2022 ') + messageText;
           messageText += `<br/>${'\u2022 '}${rule.message}`;
@@ -6553,24 +6554,47 @@ Datagrid.prototype = {
 
         messages[validationType.type] = messageText;
       }
+      
+      dfrd.resolve();
+    }
+    
+    for (i = 0; i < rules.length; i++) {
+      const rule = validator.rules[rules[i]];
+      const gridInfo = { row, cell, item: this.settings.dataset[row], column, grid: self };
+      
+      
+      dfd = $.Deferred();
+      
+      if (rule.async) {
+        rule.check(cellValue, $('<input>').val(cellValue), gridInfo, manageResult, dfd);
+      } else {
+        manageResult(rule.check(cellValue, $('<input>').val(cellValue), gridInfo), true, rules[i], dfd);
+      }
+      dfds.push(dfd);
     }
 
-    const validationTypes = $.fn.validation.ValidationTypes;
-    for (const props in validationTypes) {  // eslint-disable-line
-      messageText = '';
-      validationType = validationTypes[props];
-      if (messages[validationType.type]) {
-        messageText = messages[validationType.type];
+    
+    $.when(...dfds).then(() => {
+      const validationTypes = $.fn.validation.ValidationTypes;
+      for (const props in validationTypes) {  // eslint-disable-line
+        messageText = '';
+        validationType = validationTypes[props];
+        if (messages[validationType.type]) {
+          messageText = messages[validationType.type];
+        }
+        if (messageText !== '') {
+          self.showCellError(row, cell, messageText, validationType.type);
+          const rowNode = this.dataRowNode(row);
+          self.element.trigger(`cell${validationType.type}`, { row, cell, message: messageText, target: this.cellNode(rowNode, cell), value: cellValue, column });
+        } else {
+          self.clearCellError(row, cell, validationType.type);
+        }
       }
-      if (messageText !== '') {
-        self.showCellError(row, cell, messageText, validationType.type);
-        const rowNode = this.dataRowNode(row);
-        self.element.trigger(`cell${validationType.type}`, { row, cell, message: messageText, target: this.cellNode(rowNode, cell), value: cellValue, column });
-      } else {
-        self.clearCellError(row, cell, validationType.type);
-      }
-    }
+    });
+    
+    
   },
+
 
   /**
   * Show the cell errors.
