@@ -103,10 +103,10 @@ $alert-info: $azure06;
 $alert-bg-info: rgba(54, 138, 192, .10);
 $alert-neutral: #dbdbdb;
 
-$alert01: #e84f4f;
-$alert02: #ff9426;
-$alert03: #ffd726;
-$alert04: #80ce4d;
+$alert01: $alert-red;
+$alert02: $alert-orange;
+$alert03: $alert-yellow;
+$alert04: $alert-green;
 
 // Generate Color Classes for The Sass Variables
 $color-names: ruby01 ruby02 ruby03 ruby04 ruby05 ruby06 ruby07 ruby08 ruby09 ruby10
