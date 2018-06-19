@@ -8,8 +8,6 @@ To develop in watch mode, please run
 
 `npm run functional:local`
 
-For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
-
 ## Running Tests Silently for Continuous Integration (CI)
 
 ```sh
@@ -32,17 +30,17 @@ Run a specific E2E component locally (Only Chrome or Firefox)
 
 ```sh
 npm start
-env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local
+env PROTRACTOR_SPECS='components/dropdown/dropdown.e2e-spec.js' npm run e2e:local:debug
 ```
 
 Isolate your tests then run with the keys in your path.
 
 ```sh
 npm start
-npm run e2e:bs
+npm run e2e:local:bs
  ```
 
-One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #followed by the command`.
+Update your .zprofile, .bashprofile, .bashrc, or .zshrc
 
 ```sh
 export BROWSERSTACK_USERNAME=<browserstack-username>
@@ -75,9 +73,7 @@ npm run e2e:local:debug
 
 ## Debugging Functional Tests
 
-For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
-
-- Isolate the test or suite using `fdescribe` or `fit` <https://jasmine.github.io/api/edge/global.html#fdescribe)> <https://jasmine.github.io/api/edge/global.html#fit>
+- Isolate the test or suite using [fdescribe](https://jasmine.github.io/api/edge/global.html#fdescribe) or [fit](https://jasmine.github.io/api/edge/global.html#fit)
 - Run `npm run functional:local`, wait for karma server to start, and to place tests in watch mode
 - Navigate to <http://localhost:9876/>
 - Open Chrome Dev Tools
@@ -85,10 +81,8 @@ For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
 ## Debugging E2E Tests
 
-For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
-
 - Put a `debugger;` statement at a place in the test/code
-- Isolate the test or suite using `fdescribe` or `fit` <https://jasmine.github.io/api/edge/global.html#fdescribe)> <https://jasmine.github.io/api/edge/global.html#fit>
+- Isolate the test or suite using [fdescribe](https://jasmine.github.io/api/edge/global.html#fdescribe) or [fit](https://jasmine.github.io/api/edge/global.html#fit)
 - If interested in the Axe results put it under the `res = await AxeBuilder` command.
 - Start the server normally with `npm run quickstart` or `npm run start`
 - In another terminal, run the functional test with for example `env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js` in watch mode
@@ -99,9 +93,9 @@ For test isolation, please see [Debugging Test Tips](#debugging-tests-tips)
 
 ## Working With Visual Regression Tests
 
-Currently On-Hold until running ci is figured out see: [SOHO-7464](https://jira.infor.com/browse/SOHO-7464)
+Currently on-hold until running w/CI is figured out. See: [SOHO-7464](https://jira.infor.com/browse/SOHO-7464)
 
-- Create a e2e test similar to the following...
+- Create an e2e test similar to the following...
 
 ```javascript
 if (utils.isChrome()) {
