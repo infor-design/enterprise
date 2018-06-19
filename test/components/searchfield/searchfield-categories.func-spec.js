@@ -12,7 +12,7 @@ let svgEl;
 let rowEls;
 let testScriptEl;
 
-fdescribe('Searchfield API (full categories)', () => {
+describe('Searchfield API (full categories)', () => {
   beforeEach(() => {
     searchfieldSingleInputEl = null;
     searchfieldSingleAPI = null;

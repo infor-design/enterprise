@@ -9,7 +9,7 @@ let searchfieldAPI;
 let svgEl;
 let rowEl;
 
-fdescribe('Searchfield API', () => {
+describe('Searchfield API', () => {
   beforeEach(() => {
     searchfieldInputEl = null;
     searchfieldAPI = null;
