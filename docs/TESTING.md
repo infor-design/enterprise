@@ -45,8 +45,8 @@ npm run e2e:bs
 One way to update your .zprofile, .bashprofile, .bashrc, or .zshrc, or append the value on the command by setting env, `env BROWSER_STACK_USERNAME=''... #followed by the command`.
 
 ```sh
-export BROWSER_STACK_USERNAME=xxxxxxxxxxxxx
-export BROWSER_STACK_ACCESS_KEY=yyyyyyyyyyy
+export BROWSERSTACK_USERNAME=<browserstack-username>
+export BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
 ```
 
 ### Run a specific E2E component on BrowserStack
