@@ -2088,7 +2088,9 @@ DatePicker.prototype = {
     }
 
     if (this.isIslamic) {
-      this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
+      const islamicDateParts = this.conversions.fromGregorian(this.currentDate);
+      this.currentDateIslamic =
+        new Date(islamicDateParts[0], islamicDateParts[1], islamicDateParts[2]);
     }
 
     if (this.isOpen()) {
@@ -2097,7 +2099,10 @@ DatePicker.prototype = {
       if (s.range.useRange) {
         this.setRangeToElem(this.currentDate);
       } else {
-        this.element.val(Locale.formatDate(this.currentDate, { pattern: this.pattern }));
+        const options = { pattern: this.pattern };
+        const islamicDateText =
+          Locale.formatDate(this.isIslamic ? this.currentDateIslamic : this.currentDate, options);
+        this.element.val(islamicDateText);
       }
       /**
       * Fires after the value in the input is changed by user interaction.
