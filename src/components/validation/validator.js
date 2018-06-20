@@ -189,18 +189,18 @@ Validator.prototype = {
       });
     });
 
-    this.inputs.filter('input[type=checkbox]').filter(attribs).on('click.validate', function (e) {
+    this.inputs.filter('input[type=checkbox]').filter(attribs).off('click.validate').on('click.validate', function (e) {
       self.validate($(this), true, e);
     });
 
-    this.inputs.filter(':radio').on('click.validate', function (e) {
+    this.inputs.filter(':radio').off('click.validate').on('click.validate', function (e) {
       self.validate($(this), true, e);
     });
 
     const selects = this.inputs.filter('select').filter(attribs);
 
     if (selects.length) {
-      selects.on('change.validate', function (e) {
+      selects.off('change.validate listopened.validate listclosed.validate').on('change.validate', function (e) {
         self.validate($(this), true, e);
       }).on('listopened.validate', function () {
         const thisField = $(this);
@@ -229,7 +229,7 @@ Validator.prototype = {
 
       selects.filter(function () {
         return $(this).data('dropdown') !== undefined;
-      }).data('dropdown').pseudoElem.on('blur.validate', function (e) {
+      }).data('dropdown').pseudoElem.off('blur.validate').on('blur.validate', function (e) {
         const select = $(this).closest('.field, .field-short').find('select');
         self.validate(select, true, e);
       });
@@ -248,7 +248,7 @@ Validator.prototype = {
         });
       };
 
-      this.element.on('submit.validate', submitHandler);
+      this.element.off('submit.validate').on('submit.validate', submitHandler);
     }
   },
 
