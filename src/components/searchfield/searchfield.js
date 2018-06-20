@@ -226,6 +226,8 @@ SearchField.prototype = {
       }
     }
 
+    this.checkContents();
+
     // Label for toolbar-inlined searchfields needs to be inside the
     // wrapper to help with positioning.
     if (this.toolbarParent) {
@@ -644,6 +646,9 @@ SearchField.prototype = {
       })
       .on(`listclose.${this.id}`, () => { // Triggered by Autocomplete
         self.handleSafeBlur();
+      })
+      .on(`input.${this.id}`, () => {
+        self.checkContents();
       });
 
     self.wrapper.on(`mouseenter.${this.id}`, function () {
@@ -1600,17 +1605,13 @@ SearchField.prototype = {
     }
 
     const self = this;
-    let textMethod = 'removeClass';
 
     this.isCollapsing = true;
 
     // Puts the input wrapper back where it should be if it's been moved due to small form factors.
     this.appendToButtonset();
 
-    if (this.input.value.trim() !== '') {
-      textMethod = 'addClass';
-    }
-    this.wrapper[textMethod]('has-text');
+    this.checkContents();
 
     this.wrapper[0].classList.remove('active', 'is-open');
     if (env.browser.isIE11) {
@@ -1645,6 +1646,20 @@ SearchField.prototype = {
       }
     });
     renderLoop.register(collapseTimer);
+  },
+
+  /**
+   * Adds/removes a CSS class to the searchfield wrapper depending on whether or not the input field is empty.
+   * Needed for expand/collapse scenarios, for proper searchfield resizing.
+   * @private
+   * @returns {void}
+   */
+  checkContents() {
+    let textMethod = 'removeClass';
+    if (this.input.value.trim() !== '') {
+      textMethod = 'addClass';
+    }
+    this.wrapper[textMethod]('has-text');
   },
 
   /**
