@@ -5,6 +5,7 @@
   @include font-size(12);
   .range {
     cursor: pointer;
+    -webkit-tap-highlight-color: $transparent;
   }
 
   .marker {
