@@ -7,7 +7,6 @@ description: This page describes Place.
 
 1. Test List [View Example]( ../components/place/list)
 
-
 ## Description
 
 The place component is an internal component that handles placing of objects relative to another. For example popups to buttons ect. It is mainly used internal but could be useful for its API.

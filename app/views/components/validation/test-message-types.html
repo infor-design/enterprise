@@ -24,6 +24,9 @@
       <div class="field">
         <input type="checkbox" class="checkbox" id="is-alert">
         <label for="is-alert" class="checkbox-label">Is Alert</label>
+
+        <input type="checkbox" class="checkbox" id="trigger-events" checked>
+        <label for="trigger-events" class="checkbox-label">Trigger Events</label>
       </div>
 
       <div class="field">
@@ -68,15 +71,17 @@
   var fieldsOutput = $('#output-text-field, #output-date-field');
 
   function addMessage() {
+    var triggerEvents = $('#trigger-events').prop('checked');
     var isAlert = $('#is-alert').prop('checked');
     var alertText = (isAlert) ? ' is alert,' : '';
     var options = {
-      message    : message + alertText + ' type is ' + currentValidationType,
-      type       : currentValidationType,
-      showTooltip: false,
-      inline     : true,
-      isAlert    : isAlert
-    }
+      message      : message + alertText + ' type is ' + currentValidationType,
+      type         : currentValidationType,
+      showTooltip  : false,
+      inline       : true,
+      triggerEvents: triggerEvents,
+      isAlert      : isAlert
+    };
 
     if (currentValidationType === 'icon') {
       options.icon = 'mail';
@@ -86,17 +91,33 @@
   }
 
   function removeMessage() {
+    var triggerEvents = $('#trigger-events').prop('checked');
     fields.removeMessage({
-      message: '',
-      type   : currentValidationType
+      message      : '',
+      type         : currentValidationType,
+      triggerEvents: triggerEvents
     });
   }
 
   function getMessage() {
-    var dataAttr = currentValidationType + 'message';
+    var types = ['error', 'alert', 'confirm', 'info', 'icon'];
+    var outputText = '';
+    var outputDate = '';
 
-    $('#output-text-field').val($('#text-field').data(dataAttr));
-    $('#output-date-field').val($('#date-field').data(dataAttr));
+    types.forEach( (type) => {
+      var value = $('#text-field').getMessage( {type: type} );
+      if (value) {
+        outputText += value + '; ';
+      }
+
+      value = $('#date-field').getMessage( {type: type} );
+      if (value) {
+        outputDate += value + '; ';
+      }
+    });
+
+    $('#output-text-field').val(outputText);
+    $('#output-date-field').val(outputDate);
   }
 
   function clearAllMessages() {
@@ -132,9 +153,7 @@
 
   $('form').on('valid', function (e, args) {
     console.log('valid', e, args);
-  });
-
-  $('form').on('error', function (e, args) {
+  }).on('error', function (e, args) {
     console.log('error', e, args);
   });
 

@@ -45,6 +45,7 @@ export { Tmpl } from './components/tmpl/tmpl';
 export { Formatters } from './components/datagrid/datagrid.formatters';
 export { Editors } from './components/datagrid/datagrid.editors';
 export { GroupBy } from './components/datagrid/datagrid.groupby';
+export { excel } from './utils/excel';
 
 // Components ================================= /
 import * as components from './components/components';

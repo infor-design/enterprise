@@ -49,8 +49,8 @@ See also the [Cards](./cards) documentation for widget structure.
 
 ## Keyboard Shortcuts
 
--   <kbd>Tab</kbd> Moves between the card sections
+- <kbd>Tab</kbd> Moves between the card sections
 
 ## Upgrading from 3.X
 
--  Replaces the Tiles layout and is not compatible
+- Replaces the Tiles layout and is not compatible

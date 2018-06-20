@@ -69,11 +69,11 @@ Displays one or more selectable values. A user can select exactly one value at a
 - Sigin uses a form to fire the form submit on enter.
 - Turn off autocomplete for better security.
 - Consider two factor authentication.
-- The forgot password page is also a pattern you can use. See page [the forgot password page ](../patterns/forgotpassword.html) and the [the forgot password sent page ](../patterns/forgotpassword-sent.html)
+- The forgot password page is also a pattern you can use. See page [the forgot password page](../patterns/forgotpassword.html) and the [the forgot password sent page](../patterns/forgotpassword-sent.html)
 
 ## Accessibility
 
--  Make sure all fields have id's that much the labels.
+- Make sure all fields have id's that much the labels.
 
 ## Keyboard Shortcuts
 

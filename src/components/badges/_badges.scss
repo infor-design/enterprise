@@ -232,4 +232,15 @@ html[dir='rtl'] {
     margin-left: inherit;
     margin-right: 10px;
   }
+
+  .tag,
+  .badge {
+    &.is-dismissible {
+      .dismissible-btn {
+        .icon {
+          left: -7px;
+        }
+      }
+    }
+  }
 }

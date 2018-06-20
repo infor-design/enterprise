@@ -25,6 +25,7 @@ Soho uses a 12 column grid for most designs. To setup a new 12 column grid, defi
   <div class="ten columns">Content</div>
 </div>
 ```
+
 ### Simplified Grid
 
 The simplified grid handles the basic 1,2,3,4 column layouts in a more semantic way. This example is the same as a six by six grid but uses the classes `one-half`, etc. The following are supported `full`, `full-width`, `one-half`, `one-third`, `two-thirds`, `one-fourth`, `one-fifth`.
@@ -47,17 +48,17 @@ You can also add class `one-half-mobile` and at the lowest breakpoint the grid w
 
 There are 7 breakpoint sizes you can target to tailor your layout to the specific device size:
 
-* `breakpoint-phone`, `breakpoint-slim`
-* `breakpoint-phablet`
-* `breakpoint-phone-to-tablet`
-* `breakpoint-wide-tablet`
-* `breakpoint-tablet-to-desktop`
-* `breakpoint-desktop-to-extralarge`
+- `breakpoint-phone`, `breakpoint-slim`
+- `breakpoint-phablet`
+- `breakpoint-phone-to-tablet`
+- `breakpoint-wide-tablet`
+- `breakpoint-tablet-to-desktop`
+- `breakpoint-desktop-to-extralarge`
 
-See [`sass/_config.scss`](http://git.infor.com/projects/SOHO/repos/controls/browse/sass/_config.scss#857-866) for the specific breakpoint sizes.
+See [`sass/_config.scss`](src/core/_config.scss) and search for "breakpoint sizes".
 
 For guidance on how to use the breakpoints to tailor your layout for different device sizes, see the [Grid & Breakpoints guidelines](/guidelines/page-structure/grid)
 
 ## Accessibility
 
--   No special requirements, but do watch that tab order is respected.
+- No special requirements, but do watch that tab order is respected.

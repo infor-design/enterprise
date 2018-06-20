@@ -4,7 +4,7 @@ title: Enterprise Components for Infor Design System
 
 ![IDS Enterprise Logo](https://ids-com.s3.amazonaws.com/images/enterprise-lib.original.png#logo-float-right)
 
-## Getting Started
+# Getting Started
 
 To install the enterprise components into your project using NPM, run the following:
 
@@ -28,6 +28,7 @@ Then you just need to install, build, and serve the demo app.
 npm install
 npm start
 ```
+
 Optionally, to see documentation pages for the components instead of directory lists, run:
 
 ```sh

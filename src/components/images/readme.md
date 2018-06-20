@@ -28,7 +28,7 @@ This example shows how to invoke a small sized placeholder image.
 
 ## Accessibility
 
--  For images always use an `alt` tag, which is read by screen readers
+- For images always use an `alt` tag, which is read by screen readers
 
 ## Code Tips
 
@@ -36,4 +36,4 @@ The [example image list pattern]( ../components/images/example-image-list) is cr
 
 ## Upgrading from 3.X
 
--   Block grid / Image List partially replaces the carousel in 3.x
+- Block grid / Image List partially replaces the carousel in 3.x

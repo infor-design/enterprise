@@ -66,10 +66,10 @@ The individual components (list boxes, move/reorganize controls) take the follow
 
 ## Responsive Guidelines
 
--   The swap list will be 50/50 size of the parent. On smaller break points the two lists (or 3) will stack to 100%
+- The swap list will be 50/50 size of the parent. On smaller break points the two lists (or 3) will stack to 100%
 
 ## Upgrading from 3.X
 
--   Replace `.inforSwapList()` with `.swaplist()` in the javascript
--   The `available` and `selected` options are the same
--   You must now pass markup as a template and place the markup in the DOM
+- Replace `.inforSwapList()` with `.swaplist()` in the javascript
+- The `available` and `selected` options are the same
+- You must now pass markup as a template and place the markup in the DOM

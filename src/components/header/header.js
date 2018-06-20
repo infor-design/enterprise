@@ -312,7 +312,11 @@ Header.prototype = {
     this.titlePopupMenu.addClass('is-selectable');
 
     // Set the text on the Title
-    this.titlePopup.children('h1').text(this.titlePopupMenu.children().first().text());
+    let selectedText = this.titlePopupMenu.children('.is-checked').first().text();
+    if (!selectedText) {
+      selectedText = this.titlePopupMenu.children().first().text();
+    }
+    this.titlePopup.children('h1').text(selectedText);
 
     // Invoke the Popupmenu on the Title
     this.titlePopup.button().popupmenu();

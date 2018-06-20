@@ -407,9 +407,7 @@ Tabs.prototype = {
 
     this.setOverflow();
 
-    if (this.hasSquareFocusState()) {
-      this.positionFocusState(selectedAnchor);
-    }
+    this.positionFocusState(selectedAnchor);
 
     if (this.hasAnimatedBar()) {
       this.animatedBar.addClass('no-transition');
@@ -443,15 +441,9 @@ Tabs.prototype = {
       auxilaryButtonLocation = this.tablist;
     }
 
-    // Square Focus State
-    if (this.hasSquareFocusState()) {
-      this.focusState = this.element.find('.tab-focus-indicator');
-      if (!this.focusState.length) {
-        this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
-      }
-    } else if (this.focusState && this.focusState.length) {
-      this.focusState.off().remove();
-      this.focusState = undefined;
+    this.focusState = this.element.find('.tab-focus-indicator');
+    if (!this.focusState.length) {
+      this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
     }
 
     // Animated Bar
@@ -660,9 +652,7 @@ Tabs.prototype = {
           return false;
         }
 
-        if (self.hasSquareFocusState()) {
-          self.positionFocusState(a);
-        }
+        self.positionFocusState(a);
 
         if (self.hasAnimatedBar()) {
           self.focusBar(popupLi);
@@ -869,9 +859,7 @@ Tabs.prototype = {
     }
     this.changeHash(href);
 
-    if (this.hasSquareFocusState()) {
-      this.focusState.removeClass('is-visible');
-    }
+    this.focusState.removeClass('is-visible');
 
     a.focus();
 
@@ -968,10 +956,8 @@ Tabs.prototype = {
 
     $.removeData(this.moreButton[0], 'focused-by-click');
 
-    if (this.hasSquareFocusState()) {
-      this.focusState.removeClass('is-visible');
-      this.positionFocusState(this.moreButton, focusedByKeyboard);
-    }
+    this.focusState.removeClass('is-visible');
+    this.positionFocusState(this.moreButton, focusedByKeyboard);
   },
 
   /**
@@ -1157,9 +1143,7 @@ Tabs.prototype = {
         this.scrollTabList(focusStateTarget);
       }
 
-      if (self.hasSquareFocusState()) {
-        self.positionFocusState(focusStateTarget, true);
-      }
+      self.positionFocusState(focusStateTarget, true);
     }
 
     return true;
@@ -1594,14 +1578,6 @@ Tabs.prototype = {
   },
 
   /**
-   * Determines whether or not this tabset's tab list should display a square focus state on a tab.
-   * @returns {boolean} whether or not the square focus state should display.
-   */
-  hasSquareFocusState() {
-    return true;
-  },
-
-  /**
    * Determines whether or not this tabset currently has a "More Tabs" spillover button.
    * @returns {boolean} whether or not the "More Tabs" button is currently displayed.
    */
@@ -1937,10 +1913,11 @@ Tabs.prototype = {
       // Update the currently-selected tab
       self.updateAria(a);
       oldTab.add(self.moreButton).removeClass('is-selected');
-
-      if (targetTab[0].classList.contains('tab')) {
-        selectedStateTarget = targetTab;
-        activeStateTarget = targetTab;
+      if (targetTab[0]) {
+        if (targetTab[0].classList.contains('tab')) {
+          selectedStateTarget = targetTab;
+          activeStateTarget = targetTab;
+        }
       }
 
       const ddMenu = targetTab.parents('.popupmenu');
@@ -1960,7 +1937,9 @@ Tabs.prototype = {
       }
       self.focusBar(activeStateTarget);
 
-      selectedStateTarget.addClass('is-selected');
+      if (selectedStateTarget) {
+        selectedStateTarget.addClass('is-selected');
+      }
 
       // Fires a resize on any invoked child toolbars inside the tab panel.
       // Needed to fix issues with Toolbar alignment, since we can't properly detect
@@ -2247,13 +2226,9 @@ Tabs.prototype = {
           // Text Content or a Selector.
           if (hasId !== null) {
             const obj = $(sourceString);
-            sourceString = obj.length ? $(sourceString).clone() : sourceString;
+            sourceString = obj.length ? obj : sourceString;
           }
           // do nothing if it's just a string of text.
-          break;
-        case 'object':
-          // jQuery object or HTML Element
-          sourceString = $(sourceString).clone();
           break;
         default:
           break;
@@ -2823,7 +2798,7 @@ Tabs.prototype = {
 
   /**
    * returns the currently active tab
-   * @returns {jQuery} the currently active tab
+   * @returns {jQuery} the currently active tab anchor
    */
   getActiveTab() {
     const visible = this.panels.filter(':visible');
@@ -2851,7 +2826,7 @@ Tabs.prototype = {
   },
 
   /**
-   * returns a list of all tabs that are currenly in the "More Tabs" overflow menu.
+   * returns a list of all tabs that are currently in the "More..." overflow menu.
    * @returns {jQuery[]} all overflowed tabs
    */
   getOverflowTabs() {
@@ -3042,7 +3017,7 @@ Tabs.prototype = {
   },
 
   /**
-   * Selects a Tab
+   * Builds tab popupmenu
    * @param {string} startingHref a string representing the HTML `href` attribute of the popupmenu item to be selected.
    * @returns {void}
    */
@@ -3162,9 +3137,7 @@ Tabs.prototype = {
     self.moreButton.addClass('popup-is-open');
     self.popupmenu = self.moreButton.data('popupmenu');
 
-    if (self.hasSquareFocusState()) {
-      self.positionFocusState(self.moreButton);
-    }
+    self.positionFocusState(self.moreButton);
 
     function closeMenu() {
       $(this).off('close.tabs selected.tabs');
@@ -3282,7 +3255,7 @@ Tabs.prototype = {
             self.addTabButton.focus();
             return;
           }
-          self.findFirstVisibleTab();
+          self.focusFirstVisibleTab();
         }
       }
 
@@ -3377,7 +3350,7 @@ Tabs.prototype = {
   /**
    * @returns {void}
    */
-  findFirstVisibleTab() {
+  focusFirstVisibleTab() {
     const tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)');
     tabs.eq(0).find('a').focus();
   },
@@ -3511,9 +3484,7 @@ Tabs.prototype = {
    * @returns {void}
    */
   hideFocusState() {
-    if (this.hasSquareFocusState()) {
-      this.focusState.removeClass('is-visible');
-    }
+    this.focusState.removeClass('is-visible');
   },
 
   /**
@@ -3523,10 +3494,6 @@ Tabs.prototype = {
    * @returns {void}
    */
   positionFocusState(target, unhide) {
-    if (!this.hasSquareFocusState()) {
-      return;
-    }
-
     const self = this;
 
     // TODO: Recheck this and improve
@@ -3659,25 +3626,6 @@ Tabs.prototype = {
   },
 
   /**
-   * @returns {void}
-   */
-  checkFocusedElements() {
-    const self = this;
-    const focusableItems = self.tablist;
-
-    if (this.hasSquareFocusState() &&
-      focusableItems.find('.is-focused').length === 0 &&
-      !self.moreButton.hasClass('is-focused') &&
-      !self.moreButton.hasClass('popup-is-open')) {
-      self.focusState.removeClass('is-visible');
-    }
-
-    if (this.hasAnimatedBar() && focusableItems.find('.is-selected').length === 0 && !self.moreButton.hasClass('is-selected')) {
-      self.defocusBar();
-    }
-  },
-
-  /**
    * Causes the entire tabset to reset with new settings.
    * @param {object} [settings] incoming settings
    * @returns {this} component instance
@@ -3693,7 +3641,7 @@ Tabs.prototype = {
   },
 
   /**
-   * Disables all tabs in the list
+   * Disables all non-active tabs in the list
    * @returns {void}
    */
   disableOtherTabs() {
@@ -3842,7 +3790,7 @@ Tabs.prototype = {
   /**
    * Pass-through for the `remove()` method, which gets used for removing a dismissible tab.
    * @param {string} tabId the ID of the target tab panel
-   * @returns {boolean} ?
+   * @returns {this} component instance
    */
   closeDismissibleTab(tabId) {
     return this.remove(tabId);
@@ -3851,7 +3799,7 @@ Tabs.prototype = {
   /**
    * Tears down this instance of the tabs component by removing events,
    * other components, and extraneous markup.
-   * @returns {this} ?
+   * @returns {this} component instance
    */
   teardown() {
     this.panels.removeAttr('style');
@@ -3927,10 +3875,8 @@ Tabs.prototype = {
       this.tablistContainer.off('mousewheel.tabs');
     }
 
-    if (this.hasSquareFocusState()) {
-      this.focusState.remove();
-      this.focusState = undefined;
-    }
+    this.focusState.remove();
+    this.focusState = undefined;
 
     if (this.hasAnimatedBar()) {
       this.animatedBar.remove();

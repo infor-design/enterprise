@@ -2705,7 +2705,6 @@ Datagrid.prototype = {
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
     const activePage = self.pager ? self.pager.activePage : 1;
-    const pagesize = self.settings.pagesize;
     let rowHtml = '';
     let d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0;
     let depth = null;
@@ -2878,7 +2877,7 @@ Datagrid.prototype = {
       // Set Width of table col / col group elements
       let colWidth = '';
 
-      if (this.recordCount === 0 || this.recordCount - ((activePage - 1) * pagesize) === 0) {
+      if (this.recordCount === 0) {
         colWidth = this.columnWidth(col, j);
 
         self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
@@ -3872,9 +3871,23 @@ Datagrid.prototype = {
       }
     }
 
+    // Handle expandable rows
+    if (this.settings.rowTemplate || this.settings.expandableRow) {
+      this.syncExpandableRowColspan();
+    }
+
     this.element.trigger('columnchange', [{ type: 'hidecolumn', index: idx, columns: this.settings.columns }]);
     this.saveColumns();
     this.saveUserSettings();
+  },
+
+  /**
+  * Sync the colspan on the expandable row. (When column count changes)
+  * @private
+  */
+  syncExpandableRowColspan() {
+    const visibleColumnCount = this.visibleColumns().length;
+    this.tableBody.find('.datagrid-expandable-row td').attr('colspan', visibleColumnCount);
   },
 
   /**
@@ -3911,6 +3924,11 @@ Datagrid.prototype = {
           this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
         }
       }
+    }
+
+    // Handle expandable rows
+    if (this.settings.rowTemplate || this.settings.expandableRow) {
+      this.syncExpandableRowColspan();
     }
 
     this.element.trigger('columnchange', [{ type: 'showcolumn', index: idx, columns: this.settings.columns }]);
@@ -6238,7 +6256,7 @@ Datagrid.prototype = {
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
         if (!self.editor) {
-          self.makeCellEditable(row, cell, e);
+          self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
 
@@ -6260,7 +6278,7 @@ Datagrid.prototype = {
           self.commitCellEdit(self.editor.input);
           self.setNextActiveCell(e);
         } else {
-          self.makeCellEditable(row, cell, e);
+          self.makeCellEditable(self.activeCell.rowIndex, cell, e);
           if (self.isContainTextfield(node) && self.notContainTextfield(node)) {
             self.quickEditMode = true;
           }
@@ -6272,7 +6290,7 @@ Datagrid.prototype = {
       if ([9, 13, 32, 35, 36, 37, 38, 39, 40, 113].indexOf(key) === -1 &&
         !e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey && self.settings.editable) {
         if (!self.editor) {
-          self.makeCellEditable(row, cell, e);
+          self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
 

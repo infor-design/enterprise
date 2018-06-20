@@ -38,7 +38,6 @@ Defining the `source` setting on Searchfield will cause it to invoke an [autocom
 </div>
 ```
 
-
 ## Keyboard Shortcuts
 
 - <kbd>Tab</kbd> will tab into the search field in a forward direction
@@ -48,4 +47,3 @@ Defining the `source` setting on Searchfield will cause it to invoke an [autocom
 - <kbd>Up</kbd> or <kbd>Down</kbd> arrows, when on a toolbar, will move to the next/previous object on the toolbar. This is done because the normal keys of <kbd>Left</kbd> and <kbd>Right</kbd> will navigate through the toolbar
 - <kbd>Left</kbd> or <kbd>Right Arrow</kbd> when on a toolbar will navigate through the next/previous object on the toolbar. When a list is open it will navigate up and down a list.
 - <kbd>Enter</kbd> should submit the search. You will need to handle this in your code
-

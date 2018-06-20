@@ -18,13 +18,15 @@ const COMPONENT_NAME = 'Validator';
  * @property {string} message
  * @property {string} type
  * @property {boolean} showTooltip
+ * @property (boolean) triggerEvents
  */
 const VALIDATION_MESSAGE_DEFAULTS = {
   inline: true,
   isAlert: false,
   message: '',
   type: 'error',
-  showTooltip: false
+  showTooltip: false,
+  triggerEvents: true
 };
 
 /**
@@ -475,7 +477,8 @@ Validator.prototype = {
     const value = self.value(field);
     const placeholder = field.attr('placeholder');
 
-    function manageResult(result, showResultTooltip, type) {
+    function manageResult(result, showResultTooltip, type, dfrd) {
+      rule = Validation.rules[type];
       // Only remove if "false", not any other value ie.. undefined
       if (rule.positive === false) {
         self.removePositive(field);
@@ -488,24 +491,25 @@ Validator.prototype = {
            (rule.message !== Locale.translate('Required'))) {
           return;
         }
-        self.addMessage(field, rule.message, rule.type, field.attr(`data-${validationType.type}-type`) !== 'tooltip', showResultTooltip, false, rule.icon);
+        self.addMessage(field, rule.message, rule.type, field.attr(`data-${validationType.type}-type`) !== 'tooltip', showResultTooltip, false, true, rule.icon);
         results.push(rule.type);
 
         if (validationType.errorsForm) {
-          dfd.reject();
+          dfrd.reject();
         } else {
-          dfd.resolve();
+          dfrd.resolve();
         }
       } else if ($.grep(results, res => res === validationType.type).length === 0) {
-        dfd.resolve();
+        dfrd.resolve();
 
         if (rule.positive) {
           // FIX: In Contextual Action Panel control not sure why but need to add error,
           // otherwise "icon-confirm" get misaligned,
           // so for this fix adding and then removing error here
-          self.addMessage(field, rule.message, rule.type, rule.inline, showResultTooltip, false, rule.icon);// eslint-disable-line
-          self.removeMessage(field, rule.type);
-          dfd.resolve();
+
+          self.addMessage(field, rule.message, rule.type, rule.inline, showResultTooltip, false, true, rule.icon);// eslint-disable-line
+          self.removeMessage(field, rule.type, true);
+          dfrd.resolve();
 
           self.addPositive(field);
         }
@@ -524,7 +528,7 @@ Validator.prototype = {
     const validationTypes = Object.keys(Validation.ValidationTypes);
     validationTypes.forEach((prop) => {
       validationType = Validation.ValidationTypes[prop];
-      self.removeMessage(field, validationType.type);
+      self.removeMessage(field, validationType.type, true);
       field.removeData(`${validationType.type}message`);
     });
 
@@ -553,9 +557,9 @@ Validator.prototype = {
       }
 
       if (rule.async) {
-        rule.check(value, field, manageResult);
+        rule.check(value, field, manageResult, dfd);
       } else {
-        manageResult(rule.check(value, field), showTooltip, types[i]);
+        manageResult(rule.check(value, field), showTooltip, types[i], dfd);
       }
       dfds.push(dfd);
     }
@@ -595,9 +599,10 @@ Validator.prototype = {
    * @param {boolean} showTooltip whether or not the legacy validation Tooltip will contain the
    * message instead of placing it underneath
    * @param {boolean} isAlert whether or not this validation message type is "alert"
+   * @param {boolean} triggerEvents whether or not to trigger events
    * @param {string} icon if type is icon then here pass icon string
    */
-  addMessage(field, message, type, inline, showTooltip, isAlert, icon) {
+  addMessage(field, message, type, inline, showTooltip, isAlert, triggerEvents = true, icon) {
     if (message === '') {
       return;
     }
@@ -642,7 +647,7 @@ Validator.prototype = {
       this.setModalPrimaryBtn(field, modalBtn);
     }
 
-    this.showInlineMessage(field, message, validationType.type, isAlert, icon);
+    this.showInlineMessage(field, message, validationType.type, isAlert, triggerEvents, icon);
   },
 
   /**
@@ -812,9 +817,10 @@ Validator.prototype = {
    * @param {string} message text content containing the validation message
    * @param {string} type the validation type (error, warn, info, etc).
    * @param {boolean} isAlert whether or not the validation type is "alert"
+   * @param {boolean} triggerEvents whether or not to trigger events
    * @param {string} icon if type is icon then here pass icon string
    */
-  showInlineMessage(field, message, type, isAlert, icon) {
+  showInlineMessage(field, message, type, isAlert, triggerEvents = true, icon) {
     isAlert = isAlert || false;
 
     const loc = this.getField(field);
@@ -858,6 +864,11 @@ Validator.prototype = {
     if (validationType.type === 'error') {
       field.parent().find('.icon-confirm').remove();
     }
+
+    if (!triggerEvents) {
+      return;
+    }
+
     // Trigger an event
     field.triggerHandler(validationType.type, { field, message });
     field.closest('form').triggerHandler(validationType.type, { field, message });
@@ -884,8 +895,9 @@ Validator.prototype = {
    * @private
    * @param {jQuery[]} field the field which is having its error removed
    * @param {string} type the type of message (error, alert, info, etc)
+   * @param {boolean} triggerEvents whether to trigger events
    */
-  removeMessage(field, type) {
+  removeMessage(field, type, triggerEvents = true) {
     const loc = this.getField(field);
     const isRadio = field.is(':radio');
     const errorIcon = field.closest('.field, .field-short').find('.icon-error');
@@ -954,7 +966,7 @@ Validator.prototype = {
     field.closest('.field, .field-short').find(`.${type}-message, .custom-icon-message`).remove();
     field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(`${type} custom-icon`);
 
-    if (type === 'error' && hasError) {
+    if (type === 'error' && hasError && triggerEvents) {
       field.triggerHandler('valid', { field, message: '' });
       field.closest('form').triggerHandler('valid', { field, message: '' });
     }
