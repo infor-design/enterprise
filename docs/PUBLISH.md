@@ -22,30 +22,66 @@ git push
 git checkout master
 ```
 
-## Steps Publishing a Release
+## Dev Releases
+
+To do a dev release, publish a dated semever to npm.
+
+1. Make sure you are on `master` and its clean
+1. Change the `package.json` version to append the date, i.e. `4.7.0-dev.YYYYMMDD`
+1. Save the `package.json` file (**DO NOT** commit it)
+1. `npm publish --tag=dev`
+1. Undo the version change/reset your branch
+
+## Official, Tagged Releases
 
 ## Documentation
 
 - Verify the [changelog](/changelog) is up-to-date
 - Generate Release Notes <http://bit.ly/2w6X8Xw>
 
-## Steps using release-it
+### Make sure you have [credential] setup in .gitconfig  (Windows Users Only)
 
-- `npm install release-it -g`
-- Export your existing token or [Generate a token](https://github.com/webpro/release-it#%EF%B8%8F-github-release) (save this tokens somewhere for future releases - do not commit it)
-    - `export GITHUB_ACCESS_TOKEN="{YOUR TOKEN}"` to set the token (its `export` for OSX)
-- Checkout the release branch and `git pull --tags`
-- Type of releases:
-    - `npm run release:dev` or see scripts/publish-nightly-manual.js for more options
-    - `npm run release:beta --preRelease=beta`
-    - `npm run release:rc --preRelease=rc`
-    - `release-it {version}`
-    - **Always** verify the release the script asks you about
-- If you are deploying, deploy the demo app twice:
-    - Once as a numberical version `4.7.0`
-    - Once as that numberical version `4.7.0` aliased as “latest”
-- Merge back into `master`
-- PR the master version to `4.8.0-dev`
+Try adding this into your git config
+
+```yml
+   [credential]
+       helper = wincred
+```
+
+or via console
+
+```sh
+   git config --global credential.helper wincred
+```
+
+### Make sure you have a GITHUB_ACCESS_TOKEN configured
+
+- Get a token <https://github.com/settings/tokens>
+    - click the `Generate new token` button
+    - click ONLY the repo scope
+    - scroll to the bottom and click the `Generate token` button
+    - NOTE: Save your token somewhere so it doesn't get lost.
+- Set your environment variable from your command window
+    - (mac) `export GITHUB_ACCESS_TOKEN="<your token here>"`
+    - (windows) `set GITHUB_ACCESS_TOKEN="<your token here>"`
+
+## Release
+
+1. Make sure you have release-it installed (`npm install release-it -g`)
+1. Checkout the release branch and `git pull --tags`
+1. Run a release cmd:
+    - `npm run release:beta` - beta
+    - `npm run release:rc` - release candidate normally the final testing branch before the release
+    - `release:final` - the release itself
+    - **Always** verify the release version when the script asks
+1. Deploy the demo app for the semver
+
+For a final release, finish with:
+
+1. Merge back into `master`
+1. PR the master version to the proper "dev" version
+    - i.e. if we just released `4.7.0`, master will now be `4.8.0-dev`
+1. Deploy the demo app for the semver AS "LATEST"
 
 ## Test Npm packages
 
