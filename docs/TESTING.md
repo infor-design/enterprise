@@ -99,6 +99,7 @@ https://jasmine.github.io/api/edge/global.html#fit
 Component | Functional Test Coverage
 ------------- | :-------------:
 Button | 😁
+Datagrid | 🙂
 Dropdown | ☹️
 Hierarchy | 😕
 MultiSelect | 🙂

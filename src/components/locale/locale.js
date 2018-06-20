@@ -832,16 +832,19 @@ const Locale = {  // eslint-disable-line
     if (options && options.style === 'currency') {
       const sign = options && options.currencySign ? options.currencySign :
         this.currentLocale.data.currencySign;
-      const format = options && options.currencyFormat ? options.currencyFormat :
+      let format = options && options.currencyFormat ? options.currencyFormat :
         this.currentLocale.data.currencyFormat;
 
+      if (!format) {
+        format = '¤#,##0.00'; // default to en-us
+      }
       curFormat = format.replace('¤', sign);
     }
 
     if (options && options.style === 'percent') {
-      const percentSign = this.currentLocale.data.numbers.percentSign;
+      const percentSign = !this.currentLocale.data.numbers ? '%' : this.currentLocale.data.numbers.percentSign;
 
-      percentFormat = this.currentLocale.data.numbers.percentFormat;
+      percentFormat = !this.currentLocale.data.numbers ? '#,##0 %' : this.currentLocale.data.numbers.percentFormat;
       percentFormat = percentFormat.replace('¤', percentSign);
     }
 

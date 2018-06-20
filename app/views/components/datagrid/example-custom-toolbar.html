@@ -9,7 +9,6 @@
       </div>
       <div class="buttonset">
 
-
         <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
         <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
 
@@ -82,9 +81,8 @@
                 idProperty:'officeId',
                 dataset: data,
                 selectable: 'single',
-                toolbar: {keyword: true, results: true}
+                toolbar: {keywordFilter: true, results: true}
             });
-
 
             $('#export').on('click', function () {
               grid.data('datagrid').exportToCsv();

@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [];
+
+      $.getJSON('{{basepath}}api/datagrid-sample-data', function(res) {
+
+        //Define Columns for the Grid.
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, filterType: 'text', textOverflow: 'ellipsis'});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+        columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
+
+        //Init and get the api for the grid
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          filterable: true,
+          expandableRow: true,
+          toolbar: {title: 'Data Grid Header Title', collapsibleFilter: true,
+            results: true, actions: true, exportToExcel: true, personalize: true, rowHeight: true}
+        });
+
+        grid.on('expandrow', function (e, args) {
+          args.detail.find('.datagrid-row-detail-padding').empty();
+
+          // Create Nested Grid
+          var datagridHtml = $('<div class="datagrid"></div>');
+          args.detail.find('.datagrid-row-detail-padding').append(datagridHtml);
+
+          var subColumns = [];
+          subColumns.push({ id: 'partId', name: 'Part Id', field: 'partId'});
+          subColumns.push({ id: 'partName', name: 'Part Name',field: 'partName', formatter: Formatters.Hyperlink});
+          subColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+
+          var subData = [];
+          subData.push({ partId: 121225, partName: 'Fan', quantity: 1});
+          subData.push({ partId: 121226, partName: 'Cooling', quantity: 1});
+          subData.push({ partId: 121227, partName: 'Electronics', quantity: 3});
+          subData.push({ partId: 121228, partName: 'Plug', quantity: 3});
+
+          datagridHtml.datagrid({filterable: false, columns: subColumns, dataset: subData});
+        });
+
+        grid.on('collapserow', function (e, args) {
+          // Destroy Nested Grid
+          var datagrid = args.detail.find('.datagrid');
+          if (datagrid.data('datagrid')) {
+            datagrid.data('datagrid').destroy();
+          }
+
+          args.detail.find('.datagrid-row-detail-padding').empty();
+        });
+
+      });
+  });
+</script>

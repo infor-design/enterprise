@@ -237,9 +237,7 @@ Datagrid.prototype = {
     * @property {object} event - The jquery event object
     * @property {array} ui - An array with references to the domElement, header and pagerBar
     */
-    setTimeout(() => {
-      this.element.trigger('rendered', [this.element, this.headerRow, this.pagerBar]);
-    }, 0);
+    this.element.trigger('rendered', [this.element, this.headerRow, this.pagerBar]);
   },
 
   /**
@@ -257,7 +255,7 @@ Datagrid.prototype = {
 
   /**
   * Render or render both the header and row area.
-  * @param {string} isToggleFilter Check if toggle filter row
+  * @param {string} isToggleFilter Check if filterrow type should be passed to the data source request
   */
   render(isToggleFilter) {
     if (isToggleFilter) {
@@ -326,8 +324,8 @@ Datagrid.prototype = {
       self.setEmptyMessage(this.settings.emptyMessage);
     }
 
-    self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
-    $(self.settings.buttonSelector, self.table).button();
+    self.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
+    $(self.buttonSelector, self.table).button();
   },
 
   /**
@@ -393,7 +391,7 @@ Datagrid.prototype = {
   /**
   * Add a row of data to the grid and dataset.
   * @param {object} data An data row object
-  * @param {string} location Where to add the row. This can be 'top' or leave off for 'bottom'
+  * @param {string} location Where to add the row. This can be 'bottom' or 'top', default is top.
   */
   addRow(data, location) {
     const self = this;
@@ -450,6 +448,7 @@ Datagrid.prototype = {
 
   /**
   * Refresh the pager based on the current page and dataset.
+  * @private
   * @param {object} location Deprecated - Can be set to 'top' or left off for bottom pager.
   */
   pagerRefresh(location) {
@@ -830,6 +829,7 @@ Datagrid.prototype = {
 
   /**
    * Test if the group header should be closed and close / open it.
+   * @private
    * @param {boolean} show Hide and show the column group if it should be.
    */
   hideShowColumnGroups(show) {
@@ -1119,7 +1119,9 @@ Datagrid.prototype = {
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+              if (option && optionValue) {
+                filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+              }
             }
           }
           filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
@@ -1135,7 +1137,9 @@ Datagrid.prototype = {
             for (let i = 0; i < col.options.length; i++) {
               const option = col.options[i];
               const optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-              filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+              if (option && optionValue) {
+                filterMarkup += `<option value = "${optionValue}">${option.label}</option>`;
+              }
             }
           }
           filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
@@ -1879,7 +1883,11 @@ Datagrid.prototype = {
     return self.filterExpr;
   },
 
-  // Get height for current target in header
+  /**
+  * Get height for current target in header
+  * @private
+  * @returns {number} the height of the rows depending on rowHeight setting.
+  */
   getTargetHeight() {
     const h = this.settings.filterable ?
       { short: 48, medium: 51, normal: 56 } : { short: 20, medium: 28, normal: 35 };
@@ -2161,6 +2169,7 @@ Datagrid.prototype = {
 
   /**
   * Return the value in a field, taking into account nested objects. Fx obj.field.id
+  * @private
   * @param {object} obj The object to use
   * @param {string} field The field as a string fx 'field' or 'obj.field.id'
   * @returns {any} The current value in the field.
@@ -2653,6 +2662,7 @@ Datagrid.prototype = {
 
   /**
    * The default cell formatters thats used when no formatter is provided.
+   * @private
    * @param  {function} formatter The formatter function.
    * @param  {number} row The row index.
    * @param  {number} cell The cell index.
@@ -2680,6 +2690,16 @@ Datagrid.prototype = {
     return formattedValue;
   },
 
+  /**
+   * Return the html markup for the row.
+   * @private
+   * @param  {object} rowData The data to use to render the row
+   * @param  {number} dataRowIdx The row index.
+   * @param  {number} actualIndex The actual data index
+   * @param  {boolean} isGroup If true we are building a group row.
+   * @param  {object} isFooter If true we are building a footer row.
+   * @returns {string} The html used to construct the row.
+   */
   rowHtml(rowData, dataRowIdx, actualIndex, isGroup, isFooter) {
     let isEven = false;
     const self = this;
@@ -2954,6 +2974,7 @@ Datagrid.prototype = {
   /**
    * This Function approximates the table auto widthing
    * Except use all column values and compare the text width of the header as max
+   * @private
    * @param  {object} columnDef The column to check.
    * @returns {number} The text width.
    */
@@ -3049,6 +3070,12 @@ Datagrid.prototype = {
     return Math.round(metrics.width + padding); // Add padding and borders
   },
 
+  /**
+   * Return the currently caached table width.
+   * Except use all column values and compare the text width of the header as max
+   * @private
+   * @returns {string} The css width.
+   */
   headerTableWidth() {
     const cacheWidths = this.headerWidths[this.settings.columns.length - 1];
 
@@ -3102,6 +3129,7 @@ Datagrid.prototype = {
   /**
    * Return the width for a column (upfront with no rendering)
    * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   * @private
    * @param  {[type]} col The column object to use
    * @param  {[type]} index The column index
    * @returns {void}
@@ -3140,6 +3168,7 @@ Datagrid.prototype = {
   /**
    * Calculate the width for all the columns
    * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   * @private
    */
   calculateColumnWidths() {
     for (let i = 0; i < this.settings.columns.length; i++) {
@@ -3151,6 +3180,7 @@ Datagrid.prototype = {
   /**
    * Calculate the width for a column (upfront with no rendering)
    * Simulates https://www.w3.org/TR/CSS21/tables.html#width-layout
+   * @private
    * @param {object} col The column object to use
    * @param {number} index The column index
    * @returns {void}
@@ -3353,18 +3383,34 @@ Datagrid.prototype = {
     return '';
   },
 
-  // Summary Row Totals use the aggregators
+  /**
+  * Summary Row Totals use the aggregators
+  * @private
+  * @returns {number} the total widths
+  */
   calculateTotals() {
     this.settings.totals = Aggregators.aggregate(this.settings.dataset, this.settings.columns);
     return this.settings.totals;
   },
 
-  // Set unit type (pixel or percent)
+  /**
+  * Set unit type (pixel or percent)
+  * @private
+  * @param  {any} v value to check
+  * @returns {number} the total widths
+  */
   setUnit(v) {
     return v + (/(px|%)/i.test(`${v}`) ? '' : 'px');
   },
 
-  // Content tooltip for rich text editor
+  /**
+  * Setup Content tooltip for the rich text editor
+  * @private
+  * @param  {object} elem The content element.
+  * @param  {number} width The current width.
+  * @param  {object} td The cell node
+  * @returns {void}
+  */
   setupContentTooltip(elem, width, td) {
     if (elem.text().length > 0) {
       const content = elem.clone();
@@ -3390,6 +3436,10 @@ Datagrid.prototype = {
     }
   },
 
+  /**
+   * Setup tooltips on the cells.
+   * @private
+   */
   setupTooltips() {
     if (!this.settings.enableTooltips) {
       return;
@@ -3799,7 +3849,7 @@ Datagrid.prototype = {
 
     this.settings.columns[idx].hidden = true;
     this.headerNodes().eq(idx).addClass('is-hidden');
-    this.tableBody.find(`td:nth-child(${idx + 1})`).addClass('is-hidden');
+    this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).addClass('is-hidden');
     this.headerColGroup.find('col').eq(idx).addClass('is-hidden');
 
     // Shrink or remove colgroups
@@ -3817,7 +3867,7 @@ Datagrid.prototype = {
         colSpan -= 1;
         for (let i = 0; i < colSpan; i++) {
           idx += colSpan;
-          this.tableBody.find(`td:nth-child(${idx + 1})`).addClass('is-hidden');
+          this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).addClass('is-hidden');
         }
       }
     }
@@ -3840,7 +3890,7 @@ Datagrid.prototype = {
 
     this.settings.columns[idx].hidden = false;
     this.headerNodes().eq(idx).removeClass('is-hidden');
-    this.tableBody.find(`td:nth-child(${idx + 1})`).removeClass('is-hidden');
+    this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
     this.headerColGroup.find('col').eq(idx).removeClass('is-hidden');
 
     if (this.bodyColGroup) {
@@ -3858,7 +3908,7 @@ Datagrid.prototype = {
         colSpan -= 1;
         for (let i = 0; i < colSpan; i++) {
           idx += colSpan;
-          this.tableBody.find(`td:nth-child(${idx + 1})`).removeClass('is-hidden');
+          this.tableBody.find(`> tr > td:nth-child(${idx + 1})`).removeClass('is-hidden');
         }
       }
     }
@@ -4347,7 +4397,7 @@ Datagrid.prototype = {
     // Handle Sorting
     this.element
       .off('click.datagrid')
-      .on('click.datagrid', 'th.is-sortable, th.btn-filter', function (e) {
+      .on('click.datagrid', '> .datagrid-header th.is-sortable, > .datagrid-header th.btn-filter', function (e) {
         if ($(e.target).parent().is('.datagrid-filter-wrapper')) {
           return;
         }
@@ -4481,8 +4531,8 @@ Datagrid.prototype = {
           self.settings.dataset[dataRowIdx];
 
         if (elem.hasClass('is-focusable')) {
-          if (!target.is(self.settings.buttonSelector)) {
-            if (!target.parent('button').is(self.settings.buttonSelector)) {
+          if (!target.is(self.buttonSelector)) {
+            if (!target.parent('button').is(self.buttonSelector)) {
               return;
             }
           }
@@ -5159,6 +5209,9 @@ Datagrid.prototype = {
     this.element.triggerHandler('selected', [this.selectedRows(), 'selectall']);
   },
 
+  /**
+  * Deselect all rows that are currently selected.
+  */
   unSelectAllRows() {
     const selectedRows = this.selectedRows();
     this.dontSyncUi = true;
@@ -7410,11 +7463,12 @@ Datagrid.prototype = {
       // Optionally Contstrain the width
       expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
 
+      const eventData = [{ grid: self, row: dataRowIndex, detail, item }];
+      self.element.triggerHandler('expandrow', eventData);
+
       if (self.settings.allowOneExpandedRow) {
         rowElement.addClass('is-rowactivated');
       }
-
-      const eventData = [{ grid: self, row: dataRowIndex, detail, item }];
 
       if (self.settings.onExpandRow) {
         const response = function (markup) {
@@ -7428,8 +7482,6 @@ Datagrid.prototype = {
       } else {
         detail.animateOpen();
       }
-
-      self.element.triggerHandler('expandrow', eventData);
     }
   },
 
@@ -7752,11 +7804,11 @@ Datagrid.prototype = {
   updated(settings) {
     this.settings = utils.mergeSettings(this.element, settings, this.settings);
 
-    if (settings.dataset) {
+    if (settings && settings.dataset) {
       this.settings.dataset = settings.dataset;
     }
 
-    if (settings.columns) {
+    if (settings && settings.columns) {
       this.settings.columns = settings.columns;
     }
 
