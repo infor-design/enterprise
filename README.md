@@ -43,22 +43,22 @@ The files can then be seen in the folder `./node_modules/ids-enterprise/dist`
 
 ### CDN
 
-You can now get the scripts and CSS from a CDN on AWS. For example, the paths for the 4.3.5 releases would be:
+You can now get the scripts and CSS from a CDN on AWS. For example, the paths for the 4.7.0 releases would be:
 
 ```html
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/js/sohoxi.js
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/js/sohoxi.min.js
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/dark-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/light-theme.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/css/light-theme.min.css
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/svg/svg.html
-https://cdn.hookandloop.infor.com/sohoxi/4.3.5/dist/svg/svg-extended.html
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/js/sohoxi.js
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/js/sohoxi.min.js
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/css/dark-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/css/dark-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/css/dark-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/css/light-theme.css
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/css/light-theme.min.css
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/svg/svg.html
+https://cdn.hookandloop.infor.com/sohoxi/4.7.0/dist/svg/svg-extended.html
 ```
 
-Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5
+Versions available on CDN are: 4.3.2, 4.3.3, 4.3.4, 4.3.5, 4.7.0
 
 Note: There may be a cost involved to using this with Infor's amazon s3 account so keep this in mind when using.
 
