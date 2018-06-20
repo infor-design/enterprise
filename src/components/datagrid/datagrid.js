@@ -6518,7 +6518,6 @@ Datagrid.prototype = {
     const column = this.columnSettings(cell);
     const validate = column.validate;
     let validationType;
-    
 
     if (!validate) {
       return;
@@ -6535,7 +6534,7 @@ Datagrid.prototype = {
 
     function manageResult(result, displayMessage, ruleName, dfrd) {
       const rule = validator.rules[ruleName];
-      
+
       validationType = $.fn.validation.ValidationTypes[rule.type] ||
         $.fn.validation.ValidationTypes.error;
       messageText = '';
@@ -6554,17 +6553,16 @@ Datagrid.prototype = {
 
         messages[validationType.type] = messageText;
       }
-      
+
       dfrd.resolve();
     }
-    
+
     for (i = 0; i < rules.length; i++) {
       const rule = validator.rules[rules[i]];
       const gridInfo = { row, cell, item: this.settings.dataset[row], column, grid: self };
-      
-      
+
       dfd = $.Deferred();
-      
+
       if (rule.async) {
         rule.check(cellValue, $('<input>').val(cellValue), gridInfo, manageResult, dfd);
       } else {
@@ -6573,7 +6571,6 @@ Datagrid.prototype = {
       dfds.push(dfd);
     }
 
-    
     $.when(...dfds).then(() => {
       const validationTypes = $.fn.validation.ValidationTypes;
       for (const props in validationTypes) {  // eslint-disable-line
@@ -6591,10 +6588,7 @@ Datagrid.prototype = {
         }
       }
     });
-    
-    
   },
-
 
   /**
   * Show the cell errors.
