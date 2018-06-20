@@ -13,10 +13,12 @@
     .dot {
       cursor: pointer;
       stroke: transparent;
+      -webkit-tap-highlight-color: $transparent;
     }
 
     .line-group .line {
       cursor: pointer;
+      -webkit-tap-highlight-color: $transparent;
     }
 
     .area {
