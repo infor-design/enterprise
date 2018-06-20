@@ -84,17 +84,11 @@ describe('Searchfield full-text category tests', () => {
   });
 
   it('Can select a category from the list', async () => {
-    let searchfieldCategoryButtonEl = await element(by.css('[aria-controls="popupmenu-2"]'));
-    await searchfieldCategoryButtonEl.click();
+    const categoryButtonSelector = '[aria-controls="popupmenu-2"]';
+    await element(by.css(categoryButtonSelector)).click();
+    await element(by.id('clothing-single')).click();
 
-    const targetCategory = await element(by.id('clothing-single'));
-    await targetCategory.click();
-
-    searchfieldCategoryButtonEl = await element(by.css('[aria-controls="popupmenu-2"]'));
-    await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(searchfieldCategoryButtonEl), config.waitFor);
-
-    expect(searchfieldCategoryButtonEl.getText()).toEqual('Clothing');
+    expect(await element(by.css(categoryButtonSelector)).getText()).toEqual('Clothing');
   });
 });
 
