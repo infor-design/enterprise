@@ -4053,7 +4053,6 @@ Datagrid.prototype = {
     this.saveColumns();
     this.saveUserSettings();
     this.headerWidths[idx].width = width;
-    this.setHeaderCenterTextAndSortIndicator();
   },
 
   /**
