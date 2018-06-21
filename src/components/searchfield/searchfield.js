@@ -776,7 +776,9 @@ SearchField.prototype = {
       // Setup a listener for the Clearable behavior, if applicable
       if (self.settings.clearable) {
         self.element.on(`cleared.${this.id}`, () => {
-          self.element.triggerHandler('resetfilter');
+          if (self.autocomplete) {
+            self.autocomplete.closeList();
+          }
         });
       }
     });
@@ -1562,12 +1564,12 @@ SearchField.prototype = {
     this.calculateOpenWidth();
     this.setOpenWidth();
 
-    if (!noFocus || env.os.name === 'ios') {
-      if (self.focusedElem) {
-        self.focusedElem.focus();
-      } else {
-        self.input.focus();
+    // Some situations require adjusting the focused element
+    if (!noFocus || env.os.name === 'ios' || (self.isFocused && document.activeElement !== self.input)) {
+      if (self.focusElem) {
+        self.focusElem = self.input;
       }
+      self.input.focus();
     }
 
     // Recalculate the Toolbar Buttonset/Title sizes.
