@@ -12,6 +12,12 @@ const getSpecs = (listSpec) => {
 };
 
 const theme = process.env.ENTERPRISE_THEME || 'light'
+let browserstackBuildID = `${theme} theme: ci:bs e2e ${Date.now()}`;
+
+if (process.env.TRAVIS_BUILD_NUMBER) {
+  browserstackBuildID = process.env.TRAVIS_BUILD_NUMBER;
+  browserstackBuildID = `${theme} theme: ci:bs e2e ${process.env.TRAVIS_BUILD_NUMBER}`;
+}
 
 exports.config = {
   params: {
@@ -35,7 +41,7 @@ exports.config = {
     'browserstack.video' : true,
     'browserstack.local': false,
     'browserstack.networkLogs' : false,
-    build: `${theme} theme: ci:bs e2e`,
+    build: browserstackBuildID,
     name: `${theme} theme ci:bs e2e tests`,
     project: 'ids-enterprise-e2e-ci'
   },
@@ -45,7 +51,8 @@ exports.config = {
       browser_version: '66.0',
       resolution: '1280x800',
       os_version: '10',
-      os: 'Windows'
+      os: 'Windows',
+      'browserstack.selenium_version': '3.11.0',
     }
   ],
   onPrepare: () => {
