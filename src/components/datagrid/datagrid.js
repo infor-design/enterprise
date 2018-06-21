@@ -928,7 +928,14 @@ Datagrid.prototype = {
       }${column.reorderable === false ? ' data-reorder="false"' : ''
       }${colGroups ? ` headers="${self.getColumnGroup(j)}"` : ''}${isExportable ? 'data-exportable="yes"' : 'data-exportable="no"'}>`;
 
-      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}</span>`;
+      let sortIndicator = '';
+      if (isSortable) {
+        sortIndicator = `${'<div class="sort-indicator">' +
+          '<span class="sort-asc">'}${$.createIcon({ icon: 'dropdown' })}</span>` +
+          `<span class="sort-desc">${$.createIcon({ icon: 'dropdown' })}</div>`;
+      }
+
+      headerRow += `<div class="${isSelection ? 'datagrid-checkbox-wrapper ' : 'datagrid-column-wrapper'}${column.align === undefined ? '' : ` l-${column.align}-text`}"><span class="datagrid-header-text${column.required ? ' required' : ''}">${self.headerText(this.settings.columns[j])}${column.align === 'center' ? sortIndicator : ''}</span>`;
       cols += `<col${this.columnWidth(column, j)}${column.hidden ? ' class="is-hidden"' : ''}>`;
 
       if (isSelection) {
@@ -939,10 +946,8 @@ Datagrid.prototype = {
         }
       }
 
-      if (isSortable) {
-        headerRow += `${'<div class="sort-indicator">' +
-          '<span class="sort-asc">'}${$.createIcon({ icon: 'dropdown' })}</span>` +
-          `<span class="sort-desc">${$.createIcon({ icon: 'dropdown' })}</div>`;
+      if (isSortable && column.align !== 'center') {
+        headerRow += sortIndicator;
       }
 
       headerRow += `</div>${self.filterRowHtml(column, j)}</th>`;
