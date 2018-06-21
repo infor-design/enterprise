@@ -371,7 +371,10 @@ SearchField.prototype = {
       this.xButton = this.wrapper.children('.icon.close');
     }
 
-    this.calculateSearchfieldWidth();
+    const self = this;
+    setTimeout(() => {
+      self.calculateSearchfieldWidth();
+    }, 0);
 
     if (this.settings.collapsible === false || (this.settings.collapsible === 'mobile' && breakpoints.isAbove('phone-to-tablet'))) {
       this.expand(true);

@@ -767,6 +767,24 @@ html[dir='rtl'] {
         left: 45px;
       }
     }
+
+    .searchfield {
+      border-color: transparent;
+    }
+    .btn {
+      border-color: transparent;
+    }
+
+    &.has-focus {
+      &.active {
+        .searchfield {
+          border-color: transparent transparent rgba($searchfield-border-color, 1);
+        }
+        .btn {
+          border-color: transparent transparent rgba($searchfield-border-color, 1);
+        }
+      }
+    }
   }
 }
 

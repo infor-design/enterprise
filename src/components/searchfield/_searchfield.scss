@@ -300,10 +300,14 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
       }
 
       .searchfield {
-        border-left: 1px solid $input-border-color;
-
         &:focus {
           box-shadow: none;
+        }
+      }
+
+      &:not(.context) {
+        .searchfield {
+          border-left: 1px solid $input-border-color;
         }
       }
     }
@@ -321,6 +325,17 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
 
   + .error-message {
     margin-top: -7px;
+  }
+}
+
+.searchfield-category-button {
+  .category {
+    padding-left: 0;
+    padding-right: 0;
+
+    + .icon {
+      margin-right: 0;
+    }
   }
 }
 
@@ -357,16 +372,84 @@ html[dir='rtl'] {
       }
     }
 
+    .icon-dropdown {
+      margin-left: 0;
+      margin-right: 5px;
+    }
+
+    .icon + .icon-dropdown {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .searchfield {
+      padding-left: 34px;
+      padding-right: 10px;
+    }
+
     &.has-categories {
-      &.show-category {
+      .btn {
+        border-left: 0;
+        padding-left: 0;
+        padding-right: 10px;
+      }
+
+      .searchfield {
+        border-right: 0;
+      }
+
+      &:not(.context) {
         .btn {
-          padding-left: 5px;
-          padding-right: 10px;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          border-top-right-radius: 3px;
+          border-bottom-right-radius: 3px;
+        }
+
+        .category:empty {
+          width: 0;
         }
 
         .searchfield {
-          border-left: 0;
+          border-top-left-radius: 3px;
+          border-bottom-left-radius: 3px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &.show-category {
+          .searchfield {
+            border-right: 1px solid $input-border-color;
+          }
+        }
+      }
+
+      &:not(.show-category) {
+        margin-left: 0;
+        margin-right: -1px;
+
+        .searchfield-category-button + .searchfield {
+          margin-left: 0;
+          margin-right: -1px;
+        }
+      }
+
+      &.show-category {
+        .btn {
+          padding-right: 10px;
+          padding-left: 10px;
+        }
+      }
+    }
+
+    &:not(.toolbar-searchfield-wrapper):not(.context) {
+      &.has-categories {
+        .btn {
           border-right: 1px solid $input-border-color;
+        }
+
+        .searchfield {
+          border-left: 1px solid $input-border-color;
         }
       }
     }
