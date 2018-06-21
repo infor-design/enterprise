@@ -148,11 +148,18 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
         }
       }
 
+      &.show-categories {
+        .searchfield {
+          border-color: $searchfield-context-border-color;
+        }
+      }
+
       > .searchfield {
         width: calc(100% - 39px);
       }
     }
 
+    /*
     &.is-hovered {
       .btn {
         border-color: $searchfield-context-border-color;
@@ -167,15 +174,15 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
         border-color: $searchfield-context-border-color;
       }
     }
+    */
 
     &.has-focus {
-
       .btn {
-        border-color: $searchfield-context-border-color;
+        border-color: $primary-color;
       }
 
       .searchfield {
-        border-color: $searchfield-context-border-color;
+        border-color: $primary-color;
       }
     }
 
@@ -213,6 +220,10 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
       &:focus,
       &:active {
         color: $input-focus-border-color;
+
+        .icon {
+          fill: $input-focus-border-color;
+        }
       }
     }
 
@@ -300,14 +311,10 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
       }
 
       .searchfield {
+        border-left: 1px solid $input-border-color;
+
         &:focus {
           box-shadow: none;
-        }
-      }
-
-      &:not(.context) {
-        .searchfield {
-          border-left: 1px solid $input-border-color;
         }
       }
     }

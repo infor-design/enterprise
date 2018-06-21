@@ -371,10 +371,16 @@ SearchField.prototype = {
       this.xButton = this.wrapper.children('.icon.close');
     }
 
+    // Stagger a calculation for setting the size of the Searchfield element, if applicable
     const self = this;
-    setTimeout(() => {
-      self.calculateSearchfieldWidth();
-    }, 0);
+    const resizeTimer = new RenderLoopItem({
+      duration: 1,
+      updateCallback() {}, // TODO: make this work without an empty function
+      timeoutCallback() {
+        self.calculateSearchfieldWidth();
+      }
+    });
+    renderLoop.register(resizeTimer);
 
     if (this.settings.collapsible === false || (this.settings.collapsible === 'mobile' && breakpoints.isAbove('phone-to-tablet'))) {
       this.expand(true);
@@ -456,13 +462,19 @@ SearchField.prototype = {
     }
 
     const self = this;
-    setTimeout(() => {
-      if (!self.focusElem) {
-        return;
+
+    const focusTimer = new RenderLoopItem({
+      duration: 1,
+      updateCallback() {}, // TODO: make this work without an empty function
+      timeoutCallback() {
+        if (!self.focusElem) {
+          return;
+        }
+        self.focusElem.focus();
+        delete self.focusElem;
       }
-      self.focusElem.focus();
-      delete self.focusElem;
-    }, 0);
+    });
+    renderLoop.register(focusTimer);
   },
 
   /**
@@ -916,10 +928,14 @@ SearchField.prototype = {
 
     // Stagger the check for the activeElement on a timeout in order to accurately detect focus.
     if (this.blurTimer) {
-      clearTimeout(this.blurTimer);
-      delete this.blurTimer;
+      this.blurTimer.destroy(true);
     }
-    this.blurTimer = setTimeout(safeBlurHandler, 0);
+    this.blurTimer = new RenderLoopItem({
+      duration: 1,
+      updateCallback() {}, // TODO: make this work without an empty function
+      timeoutCallback: safeBlurHandler
+    });
+    renderLoop.register(this.blurTimer);
   },
 
   /**
