@@ -500,13 +500,24 @@ const Locale = {  // eslint-disable-line
     }
 
     if (dateFormat.indexOf(' ') === -1 && dateFormat.indexOf('.') === -1 && dateFormat.indexOf('/') === -1 && dateFormat.indexOf('-') === -1) {
+      // Remove delimeter for the data string.
+      if (dateString.indexOf(' ') !== -1) {
+        dateString = dateString.split(' ').join('');
+      } else if (dateString.indexOf('.') !== -1) {
+        dateString = dateString.split('.').join('');
+      } else if (dateString.indexOf('/') !== -1) {
+        dateString = dateString.split('/').join('');
+      } else if (dateString.indexOf('-') !== -1) {
+        dateString = dateString.split('-').join('');
+      }
+
       let lastChar = dateFormat[0];
       let newFormat = '';
       let newDateString = '';
 
       for (i = 0, l = dateFormat.length; i < l; i++) {
-        newFormat += (dateFormat[i] !== lastChar ? `/${dateFormat[i]}` : dateFormat[i]);
         newDateString += (dateFormat[i] !== lastChar ? `/${dateString[i]}` : dateString[i]);
+        newFormat += (dateFormat[i] !== lastChar ? `/${dateFormat[i]}` : dateFormat[i]);
 
         if (i > 1) {
           lastChar = dateFormat[i];

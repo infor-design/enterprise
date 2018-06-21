@@ -1,9 +1,8 @@
 module.exports = {
   clean: {
     amd: ['temp'],
-    dist: ['dist/js/*', 'dist/svg/*', 'dist/css/*'],
+    dist: ['dist/js/**/**', 'dist/svg/**/**', 'dist/css/**/**', 'dist/all.zip', 'dist/sass/**/**'],
     app: ['app/dist/css/*'],
-    publish: ['ids-enterprise/dist', 'ids-enterprise/sass'],
     appDocs: ['app/docs/*.html', 'app/docs/components/*.html']
   }
 };

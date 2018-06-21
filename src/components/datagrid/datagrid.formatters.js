@@ -65,10 +65,10 @@ const formatters = {
         return '';
       }
 
-      if (!col.sourceFormat) {
-        value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
-      } else {
+      if (col.sourceFormat) {
         value2 = Locale.parseDate(value, (typeof col.sourceFormat === 'string' ? { pattern: col.sourceFormat } : col.sourceFormat));
+      } else {
+        value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? { pattern: col.dateFormat } : col.dateFormat));
       }
 
       if (value2) {

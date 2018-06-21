@@ -92,7 +92,7 @@ CompositeForm.prototype = {
   handleEvents() {
     const self = this;
 
-    $('body').on(`resize.${COMPONENT_NAME}`, (e) => {
+    $('body').off(`resize.${COMPONENT_NAME}`).on(`resize.${COMPONENT_NAME}`, (e) => {
       self.checkResponsive(e);
     });
 

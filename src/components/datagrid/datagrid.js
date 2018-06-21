@@ -46,6 +46,7 @@ const COMPONENT_NAME = 'datagrid';
  * @param {object}   [settings.saveUserSettings.pageSize=true]
  * @param {object}   [settings.saveUserSettings.activePage=true]
  * @param {object}   [settings.saveUserSettings.filter=true]
+ * @param {boolean}  [settings.focusAfterSort=false] If true will focus the active cell after sorting.
  * @param {boolean}  [settings.editable=false] Enable editing in the grid, requires column editors.
  * @param {boolean}  [settings.isList=false] Makes the grid have readonly "list" styling
  * @param {string}   [settings.menuId=null]  ID of the menu to use for a row level right click context menu
@@ -114,6 +115,7 @@ const DATAGRID_DEFAULTS = {
   columnReorder: false, // Allow Column reorder
   saveColumns: false, // Save Column Reorder and resize
   saveUserSettings: {},
+  focusAfterSort: false, // If true will focus the active cell after sorting.
   editable: false,
   isList: false, // Makes a readonly "list"
   menuId: null, // Id to the right click context menu
@@ -2683,7 +2685,6 @@ Datagrid.prototype = {
     const self = this;
     const isSummaryRow = this.settings.summaryRow && !isGroup && isFooter;
     const activePage = self.pager ? self.pager.activePage : 1;
-    const pagesize = self.settings.pagesize;
     let rowHtml = '';
     let d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0;
     let depth = null;
@@ -2856,7 +2857,7 @@ Datagrid.prototype = {
       // Set Width of table col / col group elements
       let colWidth = '';
 
-      if (this.recordCount === 0 || this.recordCount - ((activePage - 1) * pagesize) === 0) {
+      if (this.recordCount === 0) {
         colWidth = this.columnWidth(col, j);
 
         self.bodyColGroupHtml += `<col${colWidth}${col.hidden ? ' class="is-hidden"' : ''}></col>`;
@@ -3211,7 +3212,7 @@ Datagrid.prototype = {
       colWidth = Math.max(textWidth, colWidth || 0);
     }
 
-    lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
+    lastColumn = index === this.lastColumnIdx();
 
     // Simulate Auto Width Algorithm
     if ((!this.widthSpecified || col.width === undefined) && this.settings.sizeColumnsEqually &&
@@ -3412,7 +3413,7 @@ Datagrid.prototype = {
           cell.data('tooltip').settings.maxWidth = w;
 
           clonedEl.remove();
-          return text;
+          return stringUtils.stripHTML(text);
         }
 
         clonedEl.remove();
@@ -3820,9 +3821,23 @@ Datagrid.prototype = {
       }
     }
 
+    // Handle expandable rows
+    if (this.settings.rowTemplate || this.settings.expandableRow) {
+      this.syncExpandableRowColspan();
+    }
+
     this.element.trigger('columnchange', [{ type: 'hidecolumn', index: idx, columns: this.settings.columns }]);
     this.saveColumns();
     this.saveUserSettings();
+  },
+
+  /**
+  * Sync the colspan on the expandable row. (When column count changes)
+  * @private
+  */
+  syncExpandableRowColspan() {
+    const visibleColumnCount = this.visibleColumns().length;
+    this.tableBody.find('.datagrid-expandable-row td').attr('colspan', visibleColumnCount);
   },
 
   /**
@@ -3859,6 +3874,11 @@ Datagrid.prototype = {
           this.tableBody.find(`td:nth-child(${idx + 1})`).removeClass('is-hidden');
         }
       }
+    }
+
+    // Handle expandable rows
+    if (this.settings.rowTemplate || this.settings.expandableRow) {
+      this.syncExpandableRowColspan();
     }
 
     this.element.trigger('columnchange', [{ type: 'showcolumn', index: idx, columns: this.settings.columns }]);
@@ -4192,7 +4212,7 @@ Datagrid.prototype = {
     const self = this;
     const cell = $(e.target).closest('td').index();
     const rowElem = $(e.target).closest('tr');
-    let row = self.dataRowIndex(rowElem);
+    let row = this.settings.treeGrid ? this.actualRowIndex(rowElem) : this.dataRowIndex(rowElem);
     let isTrigger = true;
 
     if ($(e.target).is('a')) {
@@ -6183,7 +6203,7 @@ Datagrid.prototype = {
       // or click to activate using a mouse.
       if (self.settings.editable && key === 32) {
         if (!self.editor) {
-          self.makeCellEditable(row, cell, e);
+          self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
 
@@ -6205,7 +6225,7 @@ Datagrid.prototype = {
           self.commitCellEdit(self.editor.input);
           self.setNextActiveCell(e);
         } else {
-          self.makeCellEditable(row, cell, e);
+          self.makeCellEditable(self.activeCell.rowIndex, cell, e);
           if (self.isContainTextfield(node) && self.notContainTextfield(node)) {
             self.quickEditMode = true;
           }
@@ -6217,7 +6237,7 @@ Datagrid.prototype = {
       if ([9, 13, 32, 35, 36, 37, 38, 39, 40, 113].indexOf(key) === -1 &&
         !e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey && self.settings.editable) {
         if (!self.editor) {
-          self.makeCellEditable(row, cell, e);
+          self.makeCellEditable(self.activeCell.rowIndex, cell, e);
         }
       }
 
@@ -6503,6 +6523,8 @@ Datagrid.prototype = {
       return;
     }
 
+    let dfd;
+    const dfds = [];
     const rules = column.validate.split(' ');
     const validator = $.fn.validation;
     const cellValue = this.fieldValue(this.settings.dataset[row], column.field);
@@ -6510,10 +6532,8 @@ Datagrid.prototype = {
     let messageText = '';
     let i;
 
-    for (i = 0; i < rules.length; i++) {
-      const rule = validator.rules[rules[i]];
-      const gridInfo = { row, cell, item: this.settings.dataset[row], column, grid: self };
-      const ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
+    function manageResult(result, displayMessage, ruleName, dfrd) {
+      const rule = validator.rules[ruleName];
 
       validationType = $.fn.validation.ValidationTypes[rule.type] ||
         $.fn.validation.ValidationTypes.error;
@@ -6523,7 +6543,7 @@ Datagrid.prototype = {
         messageText = messages[validationType.type];
       }
 
-      if (!ruleValid) {
+      if (!result && displayMessage) {
         if (messageText) {
           messageText = ((/^\u2022/.test(messageText)) ? '' : '\u2022 ') + messageText;
           messageText += `<br/>${'\u2022 '}${rule.message}`;
@@ -6533,23 +6553,41 @@ Datagrid.prototype = {
 
         messages[validationType.type] = messageText;
       }
+
+      dfrd.resolve();
     }
 
-    const validationTypes = $.fn.validation.ValidationTypes;
-    for (const props in validationTypes) {  // eslint-disable-line
-      messageText = '';
-      validationType = validationTypes[props];
-      if (messages[validationType.type]) {
-        messageText = messages[validationType.type];
-      }
-      if (messageText !== '') {
-        self.showCellError(row, cell, messageText, validationType.type);
-        const rowNode = this.dataRowNode(row);
-        self.element.trigger(`cell${validationType.type}`, { row, cell, message: messageText, target: this.cellNode(rowNode, cell), value: cellValue, column });
+    for (i = 0; i < rules.length; i++) {
+      const rule = validator.rules[rules[i]];
+      const gridInfo = { row, cell, item: this.settings.dataset[row], column, grid: self };
+
+      dfd = $.Deferred();
+
+      if (rule.async) {
+        rule.check(cellValue, $('<input>').val(cellValue), gridInfo, manageResult, dfd);
       } else {
-        self.clearCellError(row, cell, validationType.type);
+        manageResult(rule.check(cellValue, $('<input>').val(cellValue), gridInfo), true, rules[i], dfd);
       }
+      dfds.push(dfd);
     }
+
+    $.when(...dfds).then(() => {
+      const validationTypes = $.fn.validation.ValidationTypes;
+      for (const props in validationTypes) {  // eslint-disable-line
+        messageText = '';
+        validationType = validationTypes[props];
+        if (messages[validationType.type]) {
+          messageText = messages[validationType.type];
+        }
+        if (messageText !== '') {
+          self.showCellError(row, cell, messageText, validationType.type);
+          const rowNode = this.dataRowNode(row);
+          self.element.trigger(`cell${validationType.type}`, { row, cell, message: messageText, target: this.cellNode(rowNode, cell), value: cellValue, column });
+        } else {
+          self.clearCellError(row, cell, validationType.type);
+        }
+      }
+    });
   },
 
   /**
@@ -6827,6 +6865,12 @@ Datagrid.prototype = {
     if (col.serialize) {
       newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
       return newVal;
+    } else if (col.sourceFormat) {
+      if (value instanceof Date) {
+        newVal = Locale.parseDate(value, col.sourceFormat);
+      } else {
+        newVal = Locale.formatDate(value, { pattern: col.sourceFormat });
+      }
     } else if (typeof oldVal === 'number' && value) {
       newVal = Locale.parseNumber(value); // remove thousands sep , keep a number a number
     }
@@ -7476,6 +7520,10 @@ Datagrid.prototype = {
     // Do Sort on Data Set
     this.setSortIndicator(id, ascending);
     this.sortDataset();
+
+    if (!this.settings.focusAfterSort && this.activeCell && this.activeCell.isFocused) {
+      this.activeCell.isFocused = false;
+    }
 
     const wasFocused = this.activeCell.isFocused;
     this.setTreeDepth();

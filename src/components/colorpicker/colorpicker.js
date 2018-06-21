@@ -113,7 +113,7 @@ const COLORPICKER_DEFAULTS = {
     { label: 'Azure', number: '06', value: '368AC0' },
     { label: 'Azure', number: '05', value: '4EA0D1' },
     { label: 'Azure', number: '04', value: '69B5DD' },
-    { label: 'Azure', number: '03', value: '8DC9E6' },
+    { label: 'Azure', number: '03', value: '8DC9A6' },
     { label: 'Azure', number: '02', value: 'ADD8EB' }
   ],
   placeIn: null, // null|'editor'
@@ -335,6 +335,7 @@ ColorPicker.prototype = {
       ariaListbox: true,
       menuId: 'colorpicker-menu',
       trigger: 'immediate',
+      attachToBody: true,
       placementOpts: {
         containerOffsetX: 10,
         containerOffsetY: 10,
@@ -462,7 +463,12 @@ ColorPicker.prototype = {
    * @returns {string} the translated text color
    */
   translateColorLabel(colorText) {
-    return Locale.translate(colorText, true);
+    if (!colorText) {
+      return '';
+    }
+    const translatedText = Locale.translate(colorText, true);
+    return typeof translatedText === 'string' ?
+      Locale.translate(colorText, true) : colorText;
   },
 
   /**
@@ -599,9 +605,7 @@ ColorPicker.prototype = {
     }
 
     /* eslint-disable no-bitwise */
-    return `rgb(${n & 0xFF},
-      ${(n & 0xFF00) >> 8},
-      ${(n & 0xFF0000) >> 16})`;
+    return `rgb(${n & 0xFF}, ${(n & 0xFF00) >> 8}, ${(n & 0xFF0000) >> 16})`;
     /* eslint-disable no-console */
   },
 

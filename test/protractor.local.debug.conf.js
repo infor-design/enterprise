@@ -20,7 +20,7 @@ exports.config = {
   specs: getSpecs(process.env.PROTRACTOR_SPECS),
   SELENIUM_PROMISE_MANAGER: false,
   capabilities: {
-    browserName: 'chrome' || 'firefox' // Use Chrome or Firefox directly, defaults to Chrome
+    browserName: 'chrome' || 'firefox',
   },
   directConnect: true,
   baseUrl: 'http://localhost:4000',

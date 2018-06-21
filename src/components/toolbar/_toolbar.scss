@@ -255,11 +255,6 @@ $toolbar-buttonset-height: 40px;
   // scss-lint:enable ImportantRule
   z-index: 20;
 
-  + .listview {
-    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
-    height: calc(100% - 44px);
-  }
-
   // Updated changes from listview button and font sizes
   // Override Toolbar styles
   &.toolbar {

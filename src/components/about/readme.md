@@ -20,8 +20,6 @@ $('body').about({
   version: 'ver. 1.0.0',
   content: '<p>Fashionable application for fashionable customers.</p>'
 });
-
-
 ```
 
 ## Accessibility

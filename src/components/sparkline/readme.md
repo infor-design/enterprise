@@ -11,11 +11,11 @@ description: This page describes Sparklines.
 
 ## Spark Line Chart Types
 
-* `sparkline-dots-n-peak` - Shows dots for each datapoint and highlights the top value as "peak".
-* `sparkline-peak` - Shows a continuous line changing at each datapoint and highlights the top value as "peak".
-* `sparkline-medianrange-n-peak` - Shows a continuous line changing at each datapoint and highlights the top value as "peak" and adds a median range display.
-* `sparkline-minmax` - Shows a continuous line changing at each datapoint and the min and max value.
-* `sparkline` - Shows just the line changing at each datapoint.
+- `sparkline-dots-n-peak` - Shows dots for each datapoint and highlights the top value as "peak".
+- `sparkline-peak` - Shows a continuous line changing at each datapoint and highlights the top value as "peak".
+- `sparkline-medianrange-n-peak` - Shows a continuous line changing at each datapoint and highlights the top value as "peak" and adds a median range display.
+- `sparkline-minmax` - Shows a continuous line changing at each datapoint and the min and max value.
+- `sparkline` - Shows just the line changing at each datapoint.
 
 ## Code Example
 
@@ -46,11 +46,10 @@ $('#sparkline-chart-example-1').chart({type: 'sparkline-dots-n-peak', dataset: s
 
 - A datagrid formatter for showing this data in lists
 
-
 ## Keyboard Shortcuts
 
--  None
+- None
 
 ## Upgrading from 3.X
 
--  This component is new in 4.x
+- This component is new in 4.x

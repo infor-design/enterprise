@@ -1946,10 +1946,11 @@ $datagrid-short-row-height: 23px;
 
     // Centering Text
     .datagrid-column-wrapper.l-center-text {
-      width: 100%;
+      width: calc(100% + 20px);
 
-      .sort-indicator {
-        display: none;
+      .datagrid-header-text {
+        display: inline-block;
+        margin-top: 10px;
       }
     }
 
@@ -2611,10 +2612,8 @@ td .btn-actions {
 .datagrid-result-count {
   @include font-size(14);
   display: inline-block;
-  margin-top: -1px;
-  // scss-lint:disable ImportantRule
-  vertical-align: middle !important;
-  // scss-lint:enable ImportantRule
+  position: relative;
+  top: 0;
 }
 
 .ie-edge {

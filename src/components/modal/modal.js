@@ -56,7 +56,8 @@ Modal.prototype = {
 
     // Used for tracking events tied to the Window object
     this.id = (parseInt($('.modal').length, 10) + 1);
-    this.trigger = $(`button[data-modal="${this.element.attr('id')}"]`); // Find the button with same dialog ID
+    // Find the button or anchor with same dialog ID
+    this.trigger = $(`button[data-modal="${this.element.attr('id')}"], a[data-modal="${this.element.attr('id')}"]`);
     this.overlay = $('<div class="overlay"></div>');
     this.oldActive = this.trigger;
 
@@ -555,7 +556,7 @@ Modal.prototype = {
     $(this.element).on('keypress.modal', (e) => {
       const target = $(e.target);
 
-      if (target.is('.searchfield') || target.is('textarea') || target.is(':button') || target.is('.dropdown') || target.closest('.tab-list').length) {
+      if (target.is('.dropdown, .editor, .searchfield, textarea, :button') || target.closest('.tab-list').length) {
         return;
       }
 

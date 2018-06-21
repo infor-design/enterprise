@@ -13,9 +13,9 @@ For all API information see the [popup menu](./popupmenu) as this component is u
 
 The context menu control is also referred to as a popup menu. It can be invoked in several ways:
 
-* as a right click menu; for example, on an input field, grid, or list row
-* as a click menu; for example, on a menu or action button
-* or manually, on demand, via the API
+- as a right click menu; for example, on an input field, grid, or list row
+- as a click menu; for example, on a menu or action button
+- or manually, on demand, via the API
 
 The structure of the menu is a `<ul>` element with `<li>` elements containing links for each of the rows in the menu. Another `<ul>` element can be added to create a sub-menu. Use only one level of sub-menus for accessibility and usability reasons.
 
@@ -53,8 +53,8 @@ The popup menu can be linked as a right-click menu item by adding the attribute 
 
 ## Coding Tips
 
--   If necessary, the options can be broken up into categories
--   The context menu should not be used as a navigation method
--   A right-click menu should never be the only method of performing specific actions as the actions are not easily discoverable by the user
+- If necessary, the options can be broken up into categories
+- The context menu should not be used as a navigation method
+- A right-click menu should never be the only method of performing specific actions as the actions are not easily discoverable by the user
 
 For all additional information, see the [popup menu](./popupmenu) as this component is used to make a context menu via it's option `trigger: 'right-click'`.

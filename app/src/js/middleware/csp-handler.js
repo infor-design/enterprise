@@ -12,10 +12,43 @@ function addNonceToScript(html, nonce) {
 // Content Security Policy (CSP).
 module.exports = function () {
   return function cspHandler(req, res, next) {
-    if (!res.opts.csp && !req.query.csp) {
+    if (!res.opts.csp) {
       next();
       return;
     }
+
+    res.setPolicy({
+      policy: {
+        directives: {
+          'default-src': ['self',
+            'https://*.infor.com'
+          ],
+          'script-src': ['self',
+            `nonce-${res.opts.nonce}`,
+            'http://squizlabs.github.io',
+            'http://myserver.com'
+          ],
+          'connect-src': [
+            'self',
+            'http://myserver.com',
+            'ws://localhost:35729',
+            'ws://10.0.2.2:35729'
+          ],
+          'object-src': ['none'],
+          'style-src': ['* data: http://* \'unsafe-inline\''],
+          'font-src': ['self',
+            'https://fonts.googleapis.com',
+            'https://fonts.gstatic.com'
+          ],
+          'img-src': ['self',
+            'https://randomuser.me',
+            'http://placehold.it',
+            'http://lorempixel.com',
+            'http://squizlabs.github.io'
+          ]
+        }
+      }
+    });
 
     // Modify `res.send()` to always patch the HTML contents with the `nonce` attribute.
     const oldSend = res.send;

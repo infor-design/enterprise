@@ -8,7 +8,7 @@ import './components/initialize/initialize.jquery';
 // NOTE: Every item in the "Core" section is required for running the Soho library properly.
 // The Soho team will not support any custom builds where these packages are not included.
 // ============================================ /
-export { version } from '../ids-enterprise/package.json';
+export { version } from '../package.json';
 export { debug };
 export { uniqueIdCount, utils } from './utils/utils';
 export { DOM } from './utils/dom';
@@ -45,6 +45,7 @@ export { Tmpl } from './components/tmpl/tmpl';
 export { Formatters } from './components/datagrid/datagrid.formatters';
 export { Editors } from './components/datagrid/datagrid.editors';
 export { GroupBy } from './components/datagrid/datagrid.groupby';
+export { excel } from './utils/excel';
 
 // Components ================================= /
 import * as components from './components/components';

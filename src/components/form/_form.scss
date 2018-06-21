@@ -22,7 +22,7 @@
   }
 
   .field-checkbox {
-    text-align: center;
+    text-align: left;
   }
 
   .lookup-wrapper {
@@ -38,16 +38,11 @@
 
 }
 
-@include respond-to(tabletdown) {
+@include respond-to(phone) {
   .form-responsive {
     .field .checkbox-label,
     .field .checkbox > label {
       margin-top: -10px;
     }
-
-    .field-checkbox {
-      text-align: left;
-    }
-
   }
 }

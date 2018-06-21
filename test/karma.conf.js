@@ -44,7 +44,7 @@ module.exports = function (config) {
       }
     },
     webpackMiddleware: {
-      stats: 'errors-only'
+      logLevel: 'error'
     },
     reporters: ['mocha', 'coverage'],
     // coverageReporter: {

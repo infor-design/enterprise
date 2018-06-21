@@ -83,4 +83,4 @@ Note that either the class `card` or `widget` can be used interchangeably. A car
 
 ## Responsive Guidelines
 
--   Either fluid based on parent grid, or uses masonry style layout
+- Either fluid based on parent grid, or uses masonry style layout

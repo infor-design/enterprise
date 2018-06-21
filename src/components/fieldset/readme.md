@@ -59,5 +59,5 @@ There are some added classes to style sections to look like `<fieldsets>` in cas
 
 ## Upgrading from 3.X
 
--   Remove the expand/collapse button
--   Remove class `inforFieldSetLabel` and `inforFieldSet`
+- Remove the expand/collapse button
+- Remove class `inforFieldSetLabel` and `inforFieldSet`

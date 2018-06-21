@@ -51,7 +51,13 @@ describe('Listview API', () => {
     expect(selectedEls.length).toBe(2);
   });
 
-  xit('Can retrieve references to more than one selected item', () => {
+  it('Can get selected nodes from getSelected', () => {
+    listviewAPI.select(3);
+    listviewAPI.select(4);
 
+    const selectedEls = listviewAPI.getSelected();
+
+    expect(selectedEls[0]).toBeTruthy();
+    expect(selectedEls[1]).toBeTruthy();
   });
 });

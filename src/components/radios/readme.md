@@ -50,11 +50,11 @@ Displays one or more selectable values. A user can select exactly one value at a
 
 ## Keyboard Shortcuts
 
--  <kbd>Tab</kbd> Will enter the radio group
--  <kbd>Shit + Tab</kbd> Will exit the radio group
--  <kbd>Down/Right</kbd> Changes the select to the next/previous element.
--  <kbd>Up/Left</kbd> Changes the select to the next/previous element.
--  <kbd>Space bar</kbd> Can work to select with limitations.
+- <kbd>Tab</kbd> Will enter the radio group
+- <kbd>Shit + Tab</kbd> Will exit the radio group
+- <kbd>Down/Right</kbd> Changes the select to the next/previous element.
+- <kbd>Up/Left</kbd> Changes the select to the next/previous element.
+- <kbd>Space bar</kbd> Can work to select with limitations.
 
 ## States and Variations
 

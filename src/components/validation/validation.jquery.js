@@ -20,18 +20,24 @@ $.fn.validation = Validation;
 /**
  * Returns the specific type message data object for a Field
  * @param {object} [settings] incoming settings
- * @returns {object} error message data
+ * @returns {object} message data for the specific type
  */
 $.fn.getMessage = function (settings) {
   const dataAttr = `${settings.type}message`;
+  return $.fn.getField($(this)).data(dataAttr);
+};
 
-  return this.each(function () {
-    let instance = $.data(this, VALIDATOR_COMPONENT_NAME);
-    if (!instance) {
-      instance = $.data(this, VALIDATOR_COMPONENT_NAME, new Validator(this, settings));
-    }
-    return instance.getField($(this)).data(dataAttr);
-  });
+/**
+ * Retrive the actionble element that should have an error class/icon appended to it.
+ * @private
+ * @param {jQuery[]} field the field being checked
+ * @returns {jQuery[]} the field to be checked
+ */
+$.fn.getField = function (field) {
+  if (field.is('select') && field.data('dropdown') !== undefined) {
+    field = field.data('dropdown').pseudoElem;
+  }
+  return field;
 };
 
 /**
@@ -67,7 +73,7 @@ $.fn.scrollIntoView = function (alignToTop, settings) {
 /**
  * Add a Message to a Field
  * @param {object} [settings] incoming settings
- * @returns {jQuery[]} elements receiving errors
+ * @returns {jQuery[]} elements receiving messages
  */
 $.fn.addMessage = function (settings) {
   return this.each(function () {
@@ -83,6 +89,7 @@ $.fn.addMessage = function (settings) {
       settings.inline,
       settings.showTooltip,
       settings.isAlert,
+      settings.triggerEvents,
       settings.icon
     );
   });
@@ -114,7 +121,7 @@ $.fn.removeMessage = function (settings) {
     }
 
     const field = $(this);
-    instance.removeMessage(field, settings.type);
+    instance.removeMessage(field, settings.type, settings.triggerEvents);
     instance.setIconOnParent(field, settings.type);
 
     $.removeData(this, VALIDATOR_COMPONENT_NAME);

@@ -338,6 +338,7 @@ DatePicker.prototype = {
 
         // Home Moves to Start of the month
         if (key === 36) {
+          handled = true;
           const d = this.currentDate;
           let firstDay;
 

@@ -80,6 +80,11 @@
         border-color: $input-border-color;
       }
 
+      input[readonly]:focus {
+        color: transparent;
+        text-shadow: 0px 0px 0px #666;
+      }
+
       .icon:not(.icon-error),
       .icon:hover {
         cursor: pointer;
