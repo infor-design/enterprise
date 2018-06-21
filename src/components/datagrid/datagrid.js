@@ -991,6 +991,28 @@ Datagrid.prototype = {
       this.restoreFilter = false;
       this.savedFilter = null;
     }
+    this.setHeaderCenterTextAndSortIndicator();
+  },
+
+  /**
+  * Set header center-text sort-indicator.
+  * @private
+  * @returns {void}
+  */
+  setHeaderCenterTextAndSortIndicator() {
+    const centerTextWrappers = this.headerRow.find('.datagrid-column-wrapper.l-center-text');
+    centerTextWrappers.each(function () {
+      this.style.width = 'auto';
+      const textWidth = this.getElementsByClassName('datagrid-header-text')[0].clientWidth;
+      const thWidth = this.parentNode.clientWidth;
+      this.style.width = '';
+
+      if ((thWidth - 35) > textWidth) {
+        this.classList.add('sort-indicator-can-fit');
+      } else {
+        this.classList.remove('sort-indicator-can-fit');
+      }
+    });
   },
 
   /**
@@ -4048,6 +4070,7 @@ Datagrid.prototype = {
     this.saveColumns();
     this.saveUserSettings();
     this.headerWidths[idx].width = width;
+    this.setHeaderCenterTextAndSortIndicator();
   },
 
   /**
