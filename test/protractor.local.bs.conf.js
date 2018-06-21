@@ -32,8 +32,8 @@ exports.config = {
     random: false
   },
   commonCapabilities: {
-    'browserstack.user': process.env.BROWSER_STACK_USERNAME,
-    'browserstack.key': process.env.BROWSER_STACK_ACCESS_KEY,
+    'browserstack.user': process.env.BROWSERSTACK_USERNAME,
+    'browserstack.key': process.env.BROWSERSTACK_ACCESS_KEY,
     'browserstack.debug': true,
     'browserstack.local': true,
     'browserstack.networkLogs' : true,
