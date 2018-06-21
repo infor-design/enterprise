@@ -136,6 +136,18 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
     }
 
     &.has-categories {
+      &:not(.show-category) {
+        margin-left: -1px;
+
+        .searchfield {
+          width: calc(100% - 37px);
+        }
+
+        .searchfield-category-button + .searchfield {
+          margin-left: -1px;
+        }
+      }
+
       > .searchfield {
         width: calc(100% - 39px);
       }
@@ -255,7 +267,6 @@ $cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
       border-bottom-left-radius: 0;
       border-left: 1px solid transparent;
       border-top-left-radius: 0;
-      margin-left: -1px;
       padding-left: 10px;
     }
 
