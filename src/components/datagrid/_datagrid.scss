@@ -349,12 +349,6 @@ $datagrid-short-row-height: 23px;
         }
       }
 
-      &.l-center-text.sort-indicator-can-fit {
-        .datagrid-header-text {
-          margin-top: 5px;
-        }
-      }
-
       .datagrid-checkbox {
         top: -13px;
       }
@@ -1950,28 +1944,6 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    // Centering Text
-    .datagrid-column-wrapper.l-center-text {
-      width: 100%;
-
-      .sort-indicator {
-        display: none;
-      }
-
-      &.sort-indicator-can-fit {
-        width: calc(100% + 20px);
-
-        .sort-indicator {
-          display: inline-block;
-        }
-
-        .datagrid-header-text {
-          display: inline-block;
-          margin-top: 10px;
-        }
-      }
-    }
-
     &.is-active {
       background-color: $datagrid-header-active-color;
     }
@@ -2317,6 +2289,15 @@ $datagrid-short-row-height: 23px;
     display: block;
     height: 10px;
     margin-left: 5px;
+  }
+}
+
+// Centered Columns
+.datagrid-column-wrapper.l-center-text {
+  width: 100%;
+
+  .sort-indicator {
+    margin: -6px -23px 0px 3px;
   }
 }
 
