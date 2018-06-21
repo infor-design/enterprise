@@ -1018,7 +1018,7 @@ SearchField.prototype = {
    * @returns {boolean} the ability to cancel the menu's opening.
    */
   handlePopupBeforeOpen(e, menu) {
-    if (!this.isExpanded || !menu) {
+    if ((this.isCollapsible && (this.isExpanding || !this.isExpanded)) || !menu) {
       return false;
     }
 
