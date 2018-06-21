@@ -342,7 +342,7 @@ const PLUGIN_MAPPINGS = [
 
   // Validation on individual fields (Should run last)
   ['validate', '[data-validate]', function (rootElem, pluginName, selector) {
-    matchedItems(rootElem, selector).parentsUntil('form, html').validate();
+    matchedItems(rootElem, selector).closest('form, body').validate();
   }],
 
   // Form validation
