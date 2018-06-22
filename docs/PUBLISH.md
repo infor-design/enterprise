@@ -34,7 +34,7 @@ To do a dev release, publish a dated semever to npm.
 
 ## Official, Tagged Releases
 
-## Documentation
+#### Documentation
 
 - Verify the [changelog](/changelog) is up-to-date
 - Generate Release Notes <http://bit.ly/2w6X8Xw>
