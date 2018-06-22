@@ -564,6 +564,11 @@ svg.icon-dirty {
 //RTL Styles
 html[dir='rtl'] {
   .field {
+    .icon + span {
+      padding-left: 0;
+      padding-right: 5px;
+    }
+
     .icon-error,
     .icon-confirm,
     .icon-alert,

@@ -62,7 +62,13 @@ RenderLoopItem.prototype = {
     this.paused = false;
   },
 
-  destroy() {
+  /**
+   * @param {boolean} noTimeout causes the item to be destroyed without triggering the `timeoutCallback` function
+   */
+  destroy(noTimeout) {
+    if (noTimeout) {
+      this.noTimeout = true;
+    }
     this.doRemoveOnNextTick = true;
   }
 };
@@ -350,7 +356,7 @@ RenderLoop.prototype = {
       });
     }
 
-    if (typeof removedItem.timeoutCallback === 'function') {
+    if (typeof removedItem.timeoutCallback === 'function' && !removedItem.noTimeout) {
       removedItem.timeoutCallback.apply(null, removedItem);
     }
 

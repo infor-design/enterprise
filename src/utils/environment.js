@@ -120,6 +120,13 @@ const Environment = {
 };
 
 /**
+ * @returns {boolean} whether or not the current browser is IE11
+ */
+Environment.browser.isIE11 = function () {
+  return Environment.browser.name === 'ie' && Environment.browser.version === '11';
+};
+
+/**
  * Automatically set up the environment by virtue of including this script
  */
 Environment.set();

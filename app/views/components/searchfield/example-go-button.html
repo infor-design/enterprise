@@ -1,35 +1,29 @@
 <div class="row">
   <div class="twelve columns">
-
-    <h2>Searchfield Test: Go Button</h2>
-
-    <p></p>
-
+    <h2>Searchfield Example: Go Button</h2>
   </div>
 </div>
 
-<div class="row">
+<div class="row top-padding">
   <div class="twelve columns">
-
     <div class="field">
-      <label for="has-go-button">Searchfield with a Go Button</label>
-      <input id="has-go-button" placeholder="Type to Search" type="text" class="searchfield"/>
-
+      <label for="searchfield">Searchfield with a Go Button</label>
+      <input id="searchfield" data-init="false" placeholder="Type to Search" type="text" class="searchfield"/>
       <button type="button" id="searchfield-go-button" class="btn-secondary go-button">
         <span>Go</span>
       </button>
     </div>
-
   </div>
 </div>
 
 <script>
-  $('body').on('initialized', function() {
-
-    var api = $('#has-go-button').data('searchfield');
-    $('#searchfield-go-button').on('click.test', function(e) {
-      alert('Searching for  ' + $('#has-go-button').val());
-    });
-
-  });
+  $('#searchfield').searchfield({
+    showGoButton: true,
+    goButtonAction: function(e, value, categories) {
+      $('body').toast({
+        title: 'Go Button Clicked!',
+        message: 'The searchfield\'s current value is <b>"'+ value +'"</b>.'
+      });
+    }
+  })
 </script>

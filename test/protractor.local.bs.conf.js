@@ -13,6 +13,12 @@ const getSpecs = (listSpec) => {
 };
 
 const theme = process.env.ENTERPRISE_THEME || 'light'
+let browserstackBuildID = `${theme} theme: ci:bs e2e ${Date.now()}`;
+
+if (process.env.TRAVIS_BUILD_NUMBER) {
+  browserstackBuildID = process.env.TRAVIS_BUILD_NUMBER;
+  browserstackBuildID = `${theme} theme: ci:bs e2e ${process.env.TRAVIS_BUILD_NUMBER}`;
+}
 
 exports.config = {
   params: {
@@ -37,7 +43,7 @@ exports.config = {
     'browserstack.debug': true,
     'browserstack.local': true,
     'browserstack.networkLogs' : true,
-    build: `${theme} theme: local tunnel e2e`,
+    build: browserstackBuildID,
     name: `${theme} theme local tunnel e2e tests`
   },
   multiCapabilities: [

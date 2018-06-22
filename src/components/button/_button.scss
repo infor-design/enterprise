@@ -699,7 +699,8 @@ html[dir='rtl'] {
     > .icon {
 
       + span:not(.audible):not(:empty) {
-        padding-right: 10px;
+        padding-left: 0;
+        padding-right: 5px;
       }
 
       + * + span {

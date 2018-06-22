@@ -70,7 +70,6 @@ module.exports = [
   'components/timepicker/timepicker.js',
   'components/tmpl/tmpl.js', // util?
   'components/toolbar/toolbar.js',
-  'components/toolbarsearchfield/toolbarsearchfield.js',
   'components/tooltip/tooltip.js',
   'components/tree/tree.js',
   'components/validation/validation.js',

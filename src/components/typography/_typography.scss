@@ -364,6 +364,14 @@ small,
   color: $font-color-extrahighcontrast;
 }
 
+// Specifically set Firefox's line-height to be base-16.
+.is-firefox {
+  input,
+  textarea {
+    line-height: 16px;
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
 

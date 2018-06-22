@@ -418,7 +418,7 @@ ToolbarFlex.prototype = {
   /**
    * Exports everything in the current `items` array as Popupmenu-friendly data to be
    * converted to menu items.
-   * NOTE: Searchfields, ToolbarSearchfields, and other Action Buttons are ignored
+   * NOTE: Searchfields and other Action Buttons are ignored
    * @returns {object} containing JSON-friendly Popupmenu data
    */
   toPopupmenuData() {
@@ -437,7 +437,7 @@ ToolbarFlex.prototype = {
     }
 
     data.menu = this.items.filter((item) => {
-      if (item.type === 'actionbutton' || item.type === 'searchfield' || item.type === 'toolbarsearchfield') {
+      if (item.type === 'actionbutton' || item.type === 'searchfield') {
         return false;
       }
       return true;

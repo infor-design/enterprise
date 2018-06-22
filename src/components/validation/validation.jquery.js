@@ -24,12 +24,20 @@ $.fn.validation = Validation;
  */
 $.fn.getMessage = function (settings) {
   const dataAttr = `${settings.type}message`;
+  return $.fn.getField($(this)).data(dataAttr);
+};
 
-  let instance = $.data(this, VALIDATOR_COMPONENT_NAME);
-  if (!instance) {
-    instance = $.data(this, VALIDATOR_COMPONENT_NAME, new Validator(this, settings));
+/**
+ * Retrive the actionble element that should have an error class/icon appended to it.
+ * @private
+ * @param {jQuery[]} field the field being checked
+ * @returns {jQuery[]} the field to be checked
+ */
+$.fn.getField = function (field) {
+  if (field.is('select') && field.data('dropdown') !== undefined) {
+    field = field.data('dropdown').pseudoElem;
   }
-  return instance.getField($(this)).data(dataAttr);
+  return field;
 };
 
 /**
