@@ -18,6 +18,7 @@
   .chart-radar-area,
   .chart-radar-circle {
     cursor: pointer;
+    -webkit-tap-highlight-color: $transparent;
 
     // scss-lint:disable ImportantRule
     &.is-selected {

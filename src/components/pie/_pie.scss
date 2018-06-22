@@ -38,6 +38,7 @@
 
   .slices path {
     cursor: pointer;
+    -webkit-tap-highlight-color: $transparent;
 
     &.is-not-selected {
       opacity: .3;
