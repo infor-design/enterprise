@@ -804,12 +804,14 @@ describe('Locale API', () => {
 
   it('Should convert date from Gregorian (if needed) before formatting date (when fromGregorian is true)', () => {
     Locale.set('ar-SA');
+
     expect(Locale.formatDate(new Date(2018, 5, 20), { pattern: 'yyyy/MM/dd', fromGregorian: true })).toEqual('1439/10/06');
     Locale.set('en-US');
   });
 
   it('Should convert date to Gregorian (if needed) before formatting date (when toGregorian is true)', () => {
     Locale.set('ar-SA');
+
     expect(Locale.formatDate(Locale.parseDate('1439/10/06', Locale.calendar().dateFormat.short, false), { pattern: 'yyyyMMdd', toGregorian: true })).toEqual('20180620');
     Locale.set('en-US');
   });
