@@ -78,6 +78,8 @@ git config --global credential.helper wincred
 
 For a final release, finish with:
 
+1. Upload documentation files
+    - `npm run documentation --site=prod`
 1. Merge back into `master`
 1. PR the master version to the proper "dev" version
     - i.e. if we just released `4.7.0`, master will now be `4.8.0-dev`
