@@ -1,14 +1,17 @@
 ---
 title: Mask
 description: This page describes Mask.
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
+  - name: Common Mask Patterns
+    slug: example-common-patterns
+  - name: Fields with Symbols
+    slug: example-fields-with-symbols
+  - name: The Number Mask Gauntlet
+    slug: test-number-mask-gauntlet
 ---
-
-## Configuration Options
-
-1. Inputs with Masks [View Example]( ../components/mask/example-index)
-2. Common Mask Patterns [View Example]( ../components/mask/example-common-patterns)
-3. Fields with Symbols [View Example]( ../components/mask/example-fields-with-symbols)
-4. Number Mask Gauntlet [View Example]( ../components/mask/test-number-mask-gauntlet)
 
 ## Behavior Guidelines
 

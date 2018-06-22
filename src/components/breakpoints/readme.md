@@ -1,11 +1,11 @@
 ---
 title: Favorites
 description: This page describes Favorites.
+demo:
+  pages:
+  - name: Breakpoint Event Change Detection
+    slug: example-change-detection
 ---
-
-## Configuration Options
-
-1. Breakpoint Event Change Detection [View Example](../components/breakpoints/example-change-detection)
 
 ## Code Example
 

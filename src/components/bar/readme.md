@@ -1,23 +1,35 @@
 ---
 title: Bar Chart
 description: This page describes Bar Chart.
+demo:
+  pages:
+  - name: Standard Bar Chart
+    slug: example-index
+  - name: Example with More Elements and Longer Text
+    slug: example-alignment
+  - name: Example showing how to set Colors
+    slug: example-colors
+  - name: Example showing the formatter
+    slug: example-formatter
+  - name: Example showing the option to hide the formatter
+    slug: example-hide-legend
+  - name: Example showing an edge case of longer text
+    slug: example-long-text
+  - name: Example showing with negative values
+    slug: example-negative-value
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing color patterns
+    slug: example-patterns
+  - name: Example showing defaulting a selected value
+    slug: example-selected
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
+  - name: Example showing empty data set
+    slug: test-empty
 ---
-
-## Configuration Options
-
-1. Bar Chart Main Example [View Example]( ../components/bar/example-index)
-2. Another Example with More Elements and Longer Text [View Example]( ../components/bar/example-alignment)
-3. Example showing how to set Colors [View Example]( ../components/bar/example-colors)
-4. Example showing the formatter [View Example]( ../components/bar/example-formatter)
-5. Example showing the option to hide the formatter [View Example]( ../components/bar/example-hide-legend)
-6. Example showing an edge case of longer text [View Example]( ../components/bar/example-long-text)
-7. Example showing with negative values [View Example]( ../components/bar/example-negative-value)
-8. Set animation speed [View Example]( ../components/bar/example-animation)
-9. Example showing color patterns [View Example]( ../components/bar/example-patterns)
-10. Example showing defaulting a selected value  [View Example]( ../components/bar/example-selected)
-11. Example showing Get Selected value [View Example]( ../components/bar/example-get-selected)
-12. Example showing Set Selected value [View Example]( ../components/bar/example-set-selected)
-13. Example showing empty data set [View Example]( ../components/bar/test-empty)
 
 ## Code Example
 

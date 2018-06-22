@@ -6,7 +6,7 @@ demo:
   - name: Main Switch Example
     slug: example-index
   - name: Alternate Alignment
-    slug: example-alignment)
+    slug: example-alignment
   - name: Two Column Layout
     slug: example-two-columns
 ---

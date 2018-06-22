@@ -1,23 +1,35 @@
 ---
 title: Column Chart
 description: This page describes Column Chart.
+demo:
+  pages:
+  - name: Standard Column Chart
+    slug: example-index
+  - name: Column Chart with Legend
+    slug: example-legend
+  - name: Balance Widget
+    slug: example-balance
+  - name: Changing Colors
+    slug: example-colors
+  - name: Changing the Y Domain
+    slug: example-domain-change
+  - name: Formatting the Values (Tooltip)
+    slug: example-formatter
+  - name: Negative Values
+    slug: example-negative-value
+  - name: Testing Date Values
+    slug: test-by-date
+  - name: Pattern Colors
+    slug: example-patterns
+  - name: Selecting a Section Colors
+    slug: example-selected
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
-
-## Configuration Options
-
-1. Column Chart Main Example [View Example]( ../components/column/example-index)
-1. Column Chart with Legend [View Example]( ../components/column/example-legend)
-1. Balance Widget [View Example]( ../components/column/example-balance)
-1. Changing Colors [View Example]( ../components/column/example-colors)
-1. Changing the Y Domain [View Example]( ../components/column/example-domain-change)
-1. Formatting the Values (Tooltip) [View Example]( ../components/column/example-formatter)
-1. Negative Values [View Example]( ../components/column/example-negative-value)
-1. Pattern Colors [View Example]( ../components/column/example-patterns)
-1. Selecting a Section Colors [View Example]( ../components/column/example-selected)
-1. Set animation speed [View Example]( ../components/column/example-animation)
-1. Testing Date Values [View Test]( ../components/column/test-by-date)
-1. Example showing Get Selected value [View Test]( ../components/column/example-get-selected)
-1. Example showing Set Selected value [View Test]( ../components/column/example-set-selected)
 
 ## Dataset Settings
 

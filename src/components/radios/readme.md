@@ -6,7 +6,7 @@ demo:
   - name: Radio Button Example
     slug: example-index
   - name: Horizontal Radio Button Example
-    slug: example-index
+    slug: example-horizontal
   - name: Dirty Flag
     slug: test-dirty
   - name: Validation

@@ -47,6 +47,11 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.layout = 'components/place/scrolling/layout-nested';
   }
 
+  // Searchfield in Headers (needs to load the Header layout)
+  if (url.match(/searchfield\/example-header/)) {
+    customOpts.layout = 'components/header/layout';
+  }
+
   // Sign-in Dialog
   if (url.match(/tests\/signin/)) {
     customOpts.layout = 'tests/layout-noheader';

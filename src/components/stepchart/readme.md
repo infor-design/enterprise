@@ -1,12 +1,13 @@
 ---
 title: Step Chart  
 description: This page describes Step Chart.
+demo:
+  pages:
+  - name: Standard Step Chart
+    slug: example-index
+  - name: Custom Colors
+    slug: example-colors
 ---
-
-## Configuration Options
-
-1. Step Chart Examples in a Card/Widget [View Example]( ../components/stepchart/example-index)
-1. Custom Colors [View Example]( ../components/stepchart/example-colors)
 
 ## Behavior Guidelines
 

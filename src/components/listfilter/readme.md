@@ -1,10 +1,6 @@
 ---
 title: List Filter
 description: This page describes List Filter.
-demo:
-  pages:
-  - name: Multiselect Filter Types
-    slug: test-filter-types
 ---
 
 ## Code Example

@@ -1,11 +1,11 @@
 ---
 title: Radar Chart
 description: This page describes Radar Chart.
+demo:
+  pages:
+  - name: Standard Radar Chart
+    slug: example-index
 ---
-
-## Configuration Options
-
-1. Radar Chart Main Example [View Example]( ../components/radar/example-index)
 
 ## Code Example
 

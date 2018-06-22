@@ -1,6 +1,20 @@
 ---
 title: Column Chart (Grouped)
 description: This page describes Column Chart (Grouped).
+demo:
+  pages:
+  - name: Standard Grouped Column Chart
+    slug: example-index
+  - name: Default a Selected Group
+    slug: example-selected
+  - name: Handle negative values
+    slug: example-negative
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
 
 ## Configuration Options
