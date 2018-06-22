@@ -27,8 +27,9 @@ const COMPONENT_NAME = 'popupmenu';
  * @param {string} [settings.ariaListbox=false]   Switches aria to use listbox construct instead of menu construct (internal).
  * @param {string} [settings.eventObj]  Can pass in the event object so you can do a right click with immediate.
  * @param {string} [settings.showArrow]  If true you can explicitly set an arrow on the menu.
- * @param {string} [settings.returnFocus]  If set to false, focus will not be
-  returned to the calling element. It usually should be for accessibility purposes.
+ * @param {boolean|function} [settings.returnFocus]  If set to false, focus will not be
+  returned to the calling element. Can also be defined as a callback that can determine how
+  to return focus.  It usually should be for accessibility purposes.
  * @param {object} [settings.placementOpts=new PlacementObject({
    containerOffsetX: 10,
    containerOffsetY: 10,
@@ -1978,7 +1979,6 @@ PopupMenu.prototype = {
       return;
     }
 
-    const self = this;
     const wrapper = this.menu.parent('.popupmenu-wrapper');
     const menu = this.menu.find('.popupmenu');
 
@@ -2028,7 +2028,14 @@ PopupMenu.prototype = {
     }
 
     if (this.settings.returnFocus) {
-      self.element.removeClass('hide-focus').focus();
+      if (typeof this.settings.returnFocus === 'function') {
+        this.settings.returnFocus(this, {
+          triggerElement: this.element[0],
+          menuElement: this.menu[0]
+        });
+      } else {
+        this.element.focus();
+      }
     }
   },
 

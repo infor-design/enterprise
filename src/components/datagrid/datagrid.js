@@ -7761,9 +7761,6 @@ Datagrid.prototype = {
       if (searchfield.data('searchfield')) {
         searchfield.data('searchfield').destroy();
       }
-      if (searchfield.data('toolbarsearchfield')) {
-        searchfield.data('toolbarsearchfield').destroy();
-      }
       searchfield.removeData('options');
     }
 

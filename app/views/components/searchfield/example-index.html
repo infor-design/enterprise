@@ -3,8 +3,15 @@
 
     <div class="field">
       <label for="searchfield">Search</label>
-      <input data-autocomplete="{{basepath}}api/states?term=" id="searchfield" name="searchfield" class="searchfield" data-options= "{'clearable': 'true'}" placeholder="Type a search term"/>
+      <input id="searchfield" data-init="false" class="searchfield" placeholder="Type a search term"/>
     </div>
 
   </div>
 </div>
+
+<script id="test-script">
+  $('#searchfield').searchfield({
+    clearable: true,
+    source: '{{basepath}}api/states?term='
+  });
+</script>

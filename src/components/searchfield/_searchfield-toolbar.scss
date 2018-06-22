@@ -8,7 +8,7 @@ $toolbarsearchfield-empty-width: 34px;
 $toolbarsearchfield-category-empty-width: 51px;
 
 .toolbar-searchfield-wrapper {
-  box-shadow: none !important;
+  box-shadow: none;
   cursor: pointer;
   display: inline-block;
   margin-bottom: 0;
@@ -26,11 +26,11 @@ $toolbarsearchfield-category-empty-width: 51px;
     @include font-size(12);
     background-color: transparent;
     border: 1px solid transparent;
-    box-shadow: none !important;
+    box-shadow: none;
     color: $searchfield-text-color;
     font-weight: 700;
     height: 34px;
-    outline: 0 !important;
+    outline: 0;
     padding-left: 34px;
     padding-right: 34px;
     text-overflow: ellipsis;
@@ -52,18 +52,6 @@ $toolbarsearchfield-category-empty-width: 51px;
       @include font-size(12);
       color: $searchfield-text-color;
       font-weight: 700;
-    }
-  }
-
-  // Animate Non-Collapsible Searchfields
-  &:not(.non-collapsible) {
-    @include transition(width 300ms cubic-bezier(.17, .04, .03, .94),
-      left 300ms cubic-bezier(.17, .04, .03, .94),
-      right 300ms cubic-bezier(.17, .04, .03, .94));
-
-    .searchfield {
-      @include transition(background-color 300ms cubic-bezier(.17, .04, .03, .94),
-        border-color 300ms cubic-bezier(.17, .04, .03, .94));
     }
   }
 
@@ -291,12 +279,6 @@ $toolbarsearchfield-category-empty-width: 51px;
     &.active {
       width: $toolbarsearchfield-max-width;
     }
-
-    &:not(.is-open) {
-      .searchfield {
-        padding-right: 0;
-      }
-    }
   }
 
   &.has-categories {
@@ -316,13 +298,12 @@ $toolbarsearchfield-category-empty-width: 51px;
 
     .searchfield {
       border: 1px solid transparent;
-      padding-right: 0;
       width: calc(100% - 39px);
     }
 
     &.show-category {
-      &.has-text {
-
+      .searchfield {
+        padding-left: 0;
       }
     }
 
@@ -585,7 +566,7 @@ $toolbarsearchfield-category-empty-width: 51px;
       }
     }
 
-    &.is-open.active {
+    &.is-open {
       .icon {
         fill: $searchfield-header-icon-color;
       }
@@ -593,7 +574,7 @@ $toolbarsearchfield-category-empty-width: 51px;
   }
 
   // Small adjustments for being the full-width toolbar searchfield
-  .toolbar > .toolbar-searchfield-wrapper.active {
+  .toolbar > .toolbar-searchfield-wrapper {
     .searchfield,
     .btn {
       // Don't be semi-transparent in this mode, since it sits over top of other things
@@ -784,6 +765,24 @@ html[dir='rtl'] {
 
       .icon.close {
         left: 45px;
+      }
+    }
+
+    .searchfield {
+      border-color: transparent;
+    }
+    .btn {
+      border-color: transparent;
+    }
+
+    &.has-focus {
+      &.active {
+        .searchfield {
+          border-color: transparent transparent rgba($searchfield-border-color, 1);
+        }
+        .btn {
+          border-color: transparent transparent rgba($searchfield-border-color, 1);
+        }
       }
     }
   }

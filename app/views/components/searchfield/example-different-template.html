@@ -5,28 +5,33 @@
   </div>
 </div>
 
+<style id="test-styles">
+  .popupmenu.has-icons .icon.for-template:not(.arrow) {
+    margin-left: auto;
+    margin-top: auto;
+    position: static;
+  }
+</style>
+
 <div class="row">
   <div class="twelve columns">
-
     <div class="field">
       <label for="searchfield-template">Templated Searchfield</label>
       <input id="searchfield-template" class="searchfield" placeholder="Type to Search" data-options='{ "template": "#searchfield-with-pic", "source": "{{basepath}}api/states?term=" }'>
     </div>
-
   </div>
 </div>
 
 <!--This is only needed because it renders first on the server-->
-{{={{{ }}}=}}
+{{=<% %>=}}
 <script id="searchfield-with-pic" type="text/html">
   <li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}" {{/hasValue}}role="listitem">
     <a href="#" tabindex="-1">
-      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+      <svg class="icon for-template" focusable="false" aria-hidden="true" role="presentation">
         <use xlink:href="#icon-logo" />
       </svg>
-      <span>
-        {{{label}}}
-      </span>
+      <span>{{{label}}}</span>
     </a>
   </li>
 </script>
+<%={{ }}=%>

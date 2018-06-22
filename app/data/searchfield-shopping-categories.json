@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Animals",
+    "id": "animals",
+    "value": "an",
+    "checked": true
+  },
+  {
+    "name": "Baby",
+    "id": "baby",
+    "value": "ba",
+    "checked": false
+  },
+  {
+    "name": "Clothing",
+    "id": "clothing",
+    "value": "cl",
+    "checked": true
+  },
+  {
+    "name": "Images",
+    "id": "images",
+    "value": "im",
+    "checked": true
+  },
+  {
+    "name": "People",
+    "id": "people",
+    "value": "pe",
+    "checked": false
+  },
+  {
+    "name": "Places",
+    "id": "places",
+    "value": "pl",
+    "checked": false
+  }
+]

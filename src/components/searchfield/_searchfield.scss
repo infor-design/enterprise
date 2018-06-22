@@ -17,10 +17,16 @@
   box-shadow: 0 3px 5px 0 rgba($searchfield-context-box-shadow-color, .7);
 }
 
+$cubic-bezier-ease: cubic-bezier(.17, .04, .03, .94);
+
 .searchfield-wrapper {
   display: inline-block;
   margin-bottom: 20px;
   position: relative;
+  @include transition(width 300ms $cubic-bezier-ease,
+    left 300ms $cubic-bezier-ease,
+    right 300ms $cubic-bezier-ease,
+    box-shadow 300ms $cubic-bezier-ease);
 
   > .icon {
     background-color: rgba($white, 0); // IE 10
@@ -60,6 +66,8 @@
   .searchfield {
     padding-left: 34px;
     padding-right: 34px;
+    @include transition(background-color 300ms $cubic-bezier-ease,
+      border-color 300ms $cubic-bezier-ease);
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)
@@ -128,11 +136,30 @@
     }
 
     &.has-categories {
+      &:not(.show-category) {
+        margin-left: -1px;
+
+        .searchfield {
+          width: calc(100% - 37px);
+        }
+
+        .searchfield-category-button + .searchfield {
+          margin-left: -1px;
+        }
+      }
+
+      &.show-categories {
+        .searchfield {
+          border-color: $searchfield-context-border-color;
+        }
+      }
+
       > .searchfield {
         width: calc(100% - 39px);
       }
     }
 
+    /*
     &.is-hovered {
       .btn {
         border-color: $searchfield-context-border-color;
@@ -147,15 +174,15 @@
         border-color: $searchfield-context-border-color;
       }
     }
+    */
 
     &.has-focus {
-
       .btn {
-        border-color: $searchfield-context-border-color;
+        border-color: $primary-color;
       }
 
       .searchfield {
-        border-color: $searchfield-context-border-color;
+        border-color: $primary-color;
       }
     }
 
@@ -183,7 +210,9 @@
   }
 
   &.has-focus {
-    box-shadow: $focus-box-shadow;
+    &:not(.toolbar-searchfield-wrapper) {
+      box-shadow: $focus-box-shadow;
+    }
 
     .btn {
       border-color: $input-focus-border-color;
@@ -191,6 +220,10 @@
       &:focus,
       &:active {
         color: $input-focus-border-color;
+
+        .icon {
+          fill: $input-focus-border-color;
+        }
       }
     }
 
@@ -226,7 +259,7 @@
 
   // Buttons inside of searchfields
   .btn {
-    @include css3(transition, border 300ms ease 0s); // Matches the one on inputs
+    @include transition(border 300ms $cubic-bezier-ease); // Matches the one on inputs
     background-color: transparent;
     border-bottom-right-radius: 0;
     border-color: $input-border-color;
@@ -245,7 +278,6 @@
       border-bottom-left-radius: 0;
       border-left: 1px solid transparent;
       border-top-left-radius: 0;
-      margin-left: -1px;
       padding-left: 10px;
     }
 
@@ -303,6 +335,17 @@
   }
 }
 
+.searchfield-category-button {
+  .category {
+    padding-left: 0;
+    padding-right: 0;
+
+    + .icon {
+      margin-right: 0;
+    }
+  }
+}
+
 .inline.searchfield-wrapper:not(.toolbar-searchfield-wrapper) {
   > .icon:not(.icon-error) {
     top: 30px;
@@ -336,16 +379,84 @@ html[dir='rtl'] {
       }
     }
 
+    .icon-dropdown {
+      margin-left: 0;
+      margin-right: 5px;
+    }
+
+    .icon + .icon-dropdown {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .searchfield {
+      padding-left: 34px;
+      padding-right: 10px;
+    }
+
     &.has-categories {
-      &.show-category {
+      .btn {
+        border-left: 0;
+        padding-left: 0;
+        padding-right: 10px;
+      }
+
+      .searchfield {
+        border-right: 0;
+      }
+
+      &:not(.context) {
         .btn {
-          padding-left: 5px;
-          padding-right: 10px;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+          border-top-right-radius: 3px;
+          border-bottom-right-radius: 3px;
+        }
+
+        .category:empty {
+          width: 0;
         }
 
         .searchfield {
-          border-left: 0;
+          border-top-left-radius: 3px;
+          border-bottom-left-radius: 3px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &.show-category {
+          .searchfield {
+            border-right: 1px solid $input-border-color;
+          }
+        }
+      }
+
+      &:not(.show-category) {
+        margin-left: 0;
+        margin-right: -1px;
+
+        .searchfield-category-button + .searchfield {
+          margin-left: 0;
+          margin-right: -1px;
+        }
+      }
+
+      &.show-category {
+        .btn {
+          padding-right: 10px;
+          padding-left: 10px;
+        }
+      }
+    }
+
+    &:not(.toolbar-searchfield-wrapper):not(.context) {
+      &.has-categories {
+        .btn {
           border-right: 1px solid $input-border-color;
+        }
+
+        .searchfield {
+          border-left: 1px solid $input-border-color;
         }
       }
     }
