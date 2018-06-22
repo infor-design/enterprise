@@ -7,21 +7,21 @@ All of the charts are documented separately by type. See the respective pages fo
 
 ## Chart Types
 
-1. Area [View Example]( ../components/area)
-1. Bar [View Example]( ../components/bar)
-1. Bar Grouped [View Example]( ../components/bar-grouped)
-1. Bar Stacked [View Example]( ../components/bar-stacked)
-1. Bubble [View Example]( ../components/bubble)
-1. Column [View Example]( ../components/column)
-1. Column Grouped [View Example]( ../components/column-grouped)
-1. Completion Chart [View Example]( ../components/completion-chart)
-1. Donut [View Example]( ../components/donut)
-1. Line [View Example]( ../components/line)
-1. Positive Negative [View Example]( ../components/positive-negative)
-1. Sparkline [View Example]( ../components/sparkline)
-1. Step Chart [View Example]( ../components/step-chart)
-1. Targeted Achievement [View Example]( ../components/targeted-achievement)
-1. Timeline [View Example]( ../components/timeline)
+1. Area [View Example]( ./area)
+1. Bar [View Example]( ./bar)
+1. Bar Grouped [View Example]( ./bar-grouped)
+1. Bar Stacked [View Example]( ./bar-stacked)
+1. Bubble [View Example]( ./bubble)
+1. Column [View Example]( ./column)
+1. Column Grouped [View Example]( ./column-grouped)
+1. Completion Chart [View Example]( ./completion-chart)
+1. Donut [View Example]( ./donut)
+1. Line [View Example]( ./line)
+1. Positive Negative [View Example]( ./positive-negative)
+1. Sparkline [View Example]( ./sparkline)
+1. Step Chart [View Example]( ./step-chart)
+1. Targeted Achievement [View Example]( ./targeted-achievement)
+1. Timeline [View Example]( ./timeline)
 
 ## Other Chart Use Cases
 

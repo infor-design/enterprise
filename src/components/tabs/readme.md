@@ -11,8 +11,6 @@ demo:
     slug: example-dismissible-tabs
   - name: Dropdown Tabs
     slug: example-dropdown-tabs
-  - name: "`updateCount()` Demo"
-    slug: example-update-count-api
   - name: "`changeTabOnHashChange` Setting with Callback Demo"
     slug: example-url-hash-change
   - name: "`beforeActivate` Callback example"

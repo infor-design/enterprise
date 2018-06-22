@@ -1,15 +1,19 @@
 ---
 title: Bullet Chart
 description: This page describes Bullet Chart.
+demo:
+  pages:
+  - name: Standard Bullet Chart
+    slug: example-index
+  - name: Shows Grouping a Series of Related Bullet Charts
+    slug: example-data-group
+  - name: Shows a Bullet Chart with Positive and Negative Values
+    slug: example-selected
+  - name: Shows a bullet with a negative value
+    slug: example-negative-value
+  - name: Set animation speed
+    slug: example-animation
 ---
-
-## Configuration Options
-
-1. Standard Bullet Chart [View Example]( ../components/bullet/example-index)
-2. Shows Grouping a Series of Related Bullet Charts [View Example]( ../components/bullet/example-data-group)
-3. Shows a Bullet Chart with Positive and Negative Values [View Example]( ../components/bullet/example-negative-positive-value)
-4. Shows a bullet with a negative value [View Example]( ../components/bullet/example-negative-value)
-5. Set animation speed [View Example]( ../components/bullet/example-animation)
 
 ## Code Example
 

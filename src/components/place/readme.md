@@ -1,11 +1,17 @@
 ---
 title: Place
 description: This page describes Place.
+demo:
+  pages:
+  - name: Place by Coordinate
+    slug: test-coordinates
+  - name: Place by Relative Parent
+    slug: test-relative-to-parent
+  - name: Place in a Nested Container
+    slug: test-container-is-nested
+  - name: Place in the document body
+    slug: test-container-is-body
 ---
-
-## Configuration Options
-
-1. Test List [View Example]( ../components/place/list)
 
 ## Description
 

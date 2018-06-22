@@ -6,25 +6,25 @@ demo:
   - name: Default Dropdown Example
     slug: example-index
   - name: Clearable Dropdown
-    slug: example-clearable.html
+    slug: example-clearable
   - name: Updating the Contents
-    slug: example-updating.html
+    slug: example-updating
   - name: Ajax Contents on Open
-    slug: example-ajax.html
+    slug: example-ajax
   - name: Section / Groups
-    slug: example-groups.html
+    slug: example-groups
   - name: Disable Search
-    slug: example-no-search.html
+    slug: example-no-search
   - name: States
-    slug: example-states.htm
+    slug: example-states
   - name: Validation
-    slug: example-validation.html
+    slug: example-validation
   - name: Widths
-    slug: example-widths.html
+    slug: example-widths
   - name: Data Attributes
-    slug: example-with-data-attribute.html
+    slug: example-with-data-attribute
   - name: Icons
-    slug: example-icons.html
+    slug: example-icons
 ---
 
 To distinguish between single and multi-select situations, use checkboxes in multi-select lists. See the live example for how multiple selections are handled in the field display and the list display. The field height is not dynamic so the height of the field should not be expanded to display multiple selections.

@@ -6,7 +6,7 @@ demo:
   - name: Org Chart Example
     slug: example-index
   - name: Lazy Loading Example
-    slug: example-lazy-loading
+    slug: example-lazy-load
   - name: Example Paging
     slug: example-paging
   - name: Example Single Manager/Subordinate

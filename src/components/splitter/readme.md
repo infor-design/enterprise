@@ -1,13 +1,15 @@
 ---
-title: Splitter Component 
+title: Splitter Component
 description: This page describes Splitter Component .
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
+  - name: Splitter Element in Left Pane
+    slug: example-splitter-left
+  - name: Events
+    slug: example-events
 ---
-
-## Configuration Examples
-
-1. Main [View Example](../components/splitter/example-index)
-2. Splitter Element in Left Pane [View Example](../components/splitter/example-splitter-left)
-3. Events [View Example](../components/splitter/example-events)
 
 ## Code Example
 

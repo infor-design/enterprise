@@ -1,11 +1,11 @@
 ---
 title: Arrange
 description: This page describes Arrange.
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
 ---
-
-## Configuration Options
-
-1. Default Arrange Example [View Example]( ../components/arrange/example-index)
 
 ## Code Example
 

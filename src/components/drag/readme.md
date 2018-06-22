@@ -1,11 +1,11 @@
 ---
 title: Drag Behavior
 description: This page describes Drag Behavior.
+demo:
+  pages:
+  - name: Basic Drag Examples
+    slug: example-index
 ---
-
-## Configuration Options
-
-Drag Examples [View Example]( ../components/drag/example-index)
 
 ## Code Example
 

@@ -1,17 +1,23 @@
 ---
 title: Validation
 description: This page describes Validation.
+demo:
+  pages:
+  - name: Main Validation Examples
+    slug: example-index
+  - name: Disabled Form
+    slug: example-form-disabled
+  - name: Multiple Validation Errors on a Field
+    slug: example-multiple-errors
+  - name: Legacy Short Fields
+    slug: example-short-fields
+  - name: Manually adding an Error
+    slug: example-standalone-error
+  - name: Enabling a Button on Valid
+    slug: example-validation-form
+  - name: Validating on Form Submit
+    slug: example-validation-on-submit
 ---
-
-## Configuration Options
-
-1. Validation Example [View Example]( ../components/validation/example-index)
-1. Disabled Form [View Example]( ../components/validation/example-form-disabled)
-1. Multiple Validation Errors on a Field [View Example]( ../components/validation/example-multiple-errors)
-1. Legacy Short Fields [View Example]( ../components/validation/example-short-fields)
-1. Manually adding an Error [View Example]( ../components/validation/example-standalone-error)
-1. Enabling a Button on Valid [View Example]( ../components/validation/example-validation-form)
-1. Validating on Form Submit [View Example]( ../components/validation/example-validation-on-submit)
 
 ## Code Example - Auto
 

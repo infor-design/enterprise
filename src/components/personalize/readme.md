@@ -1,14 +1,13 @@
 ---
 title: Personalize
 description: This page describes Personalize.
+demo:
+  pages:
+  - name: Themes Example
+    slug: example-index?colors=800000
+  - name: Property Page
+    slug: example-settings-page
 ---
-
-## Configuration Options
-
-1. Themes Example [View Example]( ../components/personalize/example-index?colors=800000)
-2. Module Tabs [View Example]( ../patterns/module-tabs?colors=800000)
-3. Sub Headers/Header [View Example](../patterns/builder?colors=800000)
-4. Property Page  [View Example]( ../components/personalize/example-settings-page)
 
 ## Code Example
 

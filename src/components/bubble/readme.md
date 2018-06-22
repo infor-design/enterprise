@@ -1,6 +1,18 @@
 ---
 title: Bubble Chart
 description: This page describes Bubble Chart.
+demo:
+  pages:
+  - name: Standard Bubble Chart
+    slug: example-index
+  - name: Defaulting a selected bubble
+    slug: example-selected
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
 
 ## Configuration Options

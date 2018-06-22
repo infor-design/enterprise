@@ -14,7 +14,7 @@ demo:
   - name: Input Widths (Sm, Md, Lg)
     slug: example-sizes
   - name: Text Area
-    slug: textarea
+    slug: example-textarea
   - name: Clearable Input (With an X)
     slug: example-clearable
   - name: Input with Right Click Context Menu

@@ -1,6 +1,18 @@
 ---
 title: Positive-Negative Chart
 description: This page describes Positive-Negative Chart.
+demo:
+  pages:
+  - name: Standard Positive/Negative Chart
+    slug: example-index
+  - name: Example showing color patterns
+    slug: example-patterns
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
 
 ## Configuration Options

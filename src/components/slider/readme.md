@@ -1,6 +1,6 @@
 ---
 title: Slider Component
-description: This page describes Slider Component .
+description: This page describes Slider Component.
 demo:
   pages:
   - name: Main Example

@@ -1,11 +1,11 @@
 ---
 title: Trackdirty
 description: This page describes Trackdirty.
+demo:
+  pages:
+  - name: Main Example
+    slug: example-index
 ---
-
-## Configuration Details
-
-1. Default Trackdirty Example [View Example]( ../components/trackdirty/example-index)
 
 ## Code Example
 

@@ -1,17 +1,23 @@
 ---
 title: Donut Chart
 description: This page describes Donut Chart.
+demo:
+  pages:
+  - name: Standard Donut Chart
+    slug: example-index
+  - name: Showing Slices as Alerts
+    slug: example-alerts
+  - name: With a Right Click Menu
+    slug: example-rightclick
+  - name: Longer and Zero Labels
+    slug: example-values
+  - name: Set animation speed
+    slug: example-animation
+  - name: Example showing Get Selected value
+    slug: example-get-selected
+  - name: Example showing Set Selected value
+    slug: example-set-selected
 ---
-
-## Configuration Options
-
-1. Donut Chart Main Example [View Example]( ../components/donut/example-index)
-2. Showing Slices as Alerts [View Example]( ../components/donut/example-alerts)
-3. With a Right Click Menu [View Example]( ../components/donut/example-rightclick)
-4. Longer and Zero Labels [View Example]( ../components/donut/example-values)
-5. Set animation speed [View Example]( ../components/donut/example-animation)
-6. Example showing Get Selected value [View Example]( ../components/donut/example-get-selected)
-7. Example showing Set Selected value [View Example]( ../components/donut/example-set-selected)
 
 ## Settings
 
