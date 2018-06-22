@@ -440,7 +440,7 @@ Pager.prototype = {
 
       for (i = pages; i > 0; i--) {
         if (i === (this.activePage || 1)) {
-          thisClass = 'class="selected"';
+          thisClass = 'class="selected is-focused"';
           thisText = Locale.translate('PageOn');
           isAriaSelected = 'aria-selected="true"';
           isAriaDisabled = 'aria-disabled="true"';
@@ -453,6 +453,11 @@ Pager.prototype = {
 
         $(`<li ${thisClass}${isAriaSelected}><a href="#" ${isAriaDisabled}><span class="audible">${thisText} </span>${i}</a></li>`).insertAfter(this.pagerBar.find('.pager-prev'));
       }
+      $(document).off('click').on('click', (e) => {
+        if (!$(e.target).parent().hasClass('pager-toolbar')) {
+          self.pagerBar.find(PAGER_NON_NUMBER_BUTTON_SELECTOR).removeClass('is-focused');
+        }
+      });
     }
 
     if (this.isTable && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
