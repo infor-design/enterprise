@@ -165,4 +165,5 @@ describe('Datagrid API', () => {
 
     expect(text).toEqual('test');
   });
+
 });

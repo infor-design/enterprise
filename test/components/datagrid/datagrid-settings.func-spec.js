@@ -24,7 +24,7 @@ columns.push({ id: 'percent', align: 'right', name: 'Actual %', field: 'percent'
 columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', reorderable: true, formatter: Formatters.Date, dateFormat: 'M/d/yyyy' });
 columns.push({ id: 'phone', name: 'Phone', field: 'phone', reorderable: true, filterType: 'Text', formatter: Formatters.Text });
 
-fdescribe('Datagrid Settings', () => { //eslint-disable-line
+describe('Datagrid Settings', () => {
   const Locale = window.Soho.Locale;
 
   beforeEach(() => {

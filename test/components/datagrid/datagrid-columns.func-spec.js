@@ -59,4 +59,21 @@ describe('Datagrid Columns API', () => {
   it('Should be able to call lastIndex', () => {
     expect(datagridObj.lastColumnIdx()).toEqual(8);
   });
+
+  fit('Should be able to call updateColumns', () => {
+    const newColumns = [];
+    columns.push({ id: 'productId', name: 'Id', field: 'productId', reorderable: true, formatter: Formatters.Text, width: 100, filterType: 'Text' });
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', reorderable: true, formatter: Formatters.Hyperlink, width: 300, filterType: 'Text' });
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', reorderable: true, filterType: 'Text' });
+
+    expect(datagridObj.visibleColumns().length).toEqual(7);
+
+    datagridObj.updateColumns(newColumns);
+
+    expect(datagridObj.visibleColumns().length).toEqual(3);
+
+    datagridObj.updateColumns(columns);
+
+    expect(datagridObj.visibleColumns().length).toEqual(7);
+  });
 });

@@ -5,7 +5,7 @@ requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
 
-fdescribe('Datagrid example-index tests', () => { //eslint-disable-line
+describe('Datagrid example-index tests', () => {
   beforeEach(async () => {
     await utils.setPage('/components/datagrid/example-index');
 
@@ -26,9 +26,23 @@ fdescribe('Datagrid example-index tests', () => { //eslint-disable-line
     await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
     await browser.driver.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
 
-    const cellEl = await browser.driver.switchTo().activeElement();
+    let cellEl = await browser.driver.switchTo().activeElement();
 
-    expect(cellEl.getAttribute('aria-colindex')).toBe('1');
-    expect(cellEl.parentElementArrayFinder.getAttribute('aria-colindex')).toBe(1);
+    expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
+
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_RIGHT).perform();
+    cellEl = await browser.driver.switchTo().activeElement();
+
+    expect(await cellEl.getAttribute('aria-colindex')).toBe('2');
+
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_LEFT).perform();
+    cellEl = await browser.driver.switchTo().activeElement();
+
+    expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
+
+    await browser.driver.actions().sendKeys(protractor.Key.ARROW_UP).perform();
+    cellEl = await browser.driver.switchTo().activeElement();
+
+    expect(await cellEl.getAttribute('aria-colindex')).toBe('1');
   });
 });

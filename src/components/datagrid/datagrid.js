@@ -3887,7 +3887,7 @@ Datagrid.prototype = {
   */
   syncExpandableRowColspan() {
     const visibleColumnCount = this.visibleColumns().length;
-    this.tableBody.find('.datagrid-expandable-row td').attr('colspan', visibleColumnCount);
+    this.tableBody.find('.datagrid-expandable-row > td').attr('colspan', visibleColumnCount);
   },
 
   /**
@@ -4475,7 +4475,7 @@ Datagrid.prototype = {
       let dataRowIdx = null;
       const target = $(e.target);
 
-      if (target.closest('.datagrid-row-detail').length === 1) {
+      if ($(e.currentTarget).parent().hasClass('.datagrid-row-detail')) {
         return;
       }
 

@@ -44,6 +44,7 @@ module.exports = function () {
             'https://randomuser.me',
             'http://placehold.it',
             'http://lorempixel.com',
+            'https://imgplaceholder.com',
             'http://squizlabs.github.io'
           ]
         }

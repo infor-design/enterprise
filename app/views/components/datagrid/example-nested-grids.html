@@ -38,17 +38,21 @@
           args.detail.find('.datagrid-row-detail-padding').append(datagridHtml);
 
           var subColumns = [];
-          subColumns.push({ id: 'partId', name: 'Part Id', field: 'partId'});
+          subColumns.push({ id: 'id', name: 'Part Id', field: 'id', width: 200});
           subColumns.push({ id: 'partName', name: 'Part Name',field: 'partName', formatter: Formatters.Hyperlink});
+          subColumns.push({ id: 'price', name: 'Price', field: 'price'});
+          subColumns.push({ id: 'amount', name: 'Amount', field: 'amount'});
           subColumns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+          subColumns.push({ id: 'action', name: 'Active', sortable: false, width: 80, formatter: Formatters.Button, icon: 'delete', tooltip: 'Delete', click: function (e, args) {console.log(args[0].cell, args[0].row, args[0].item.id);}});
 
           var subData = [];
-          subData.push({ partId: 121225, partName: 'Fan', quantity: 1});
-          subData.push({ partId: 121226, partName: 'Cooling', quantity: 1});
-          subData.push({ partId: 121227, partName: 'Electronics', quantity: 3});
-          subData.push({ partId: 121228, partName: 'Plug', quantity: 3});
 
-          datagridHtml.datagrid({filterable: false, columns: subColumns, dataset: subData});
+          subData.push({ id: args.row + '-121225', partName: 'Large Cooling Fan', quantity: 1*args.row, price: .34*args.row, amount: 1.34*args.row});
+          subData.push({ id: args.row + '-121226', partName: 'Extra Cooling System', quantity: 1*args.row, price: .04*args.row, amount: 1.14*args.row});
+          subData.push({ id: args.row + '-121227', partName: 'Electronics / Hardware', quantity: 1*args.row, price: .14*args.row, amount: 1.24*args.row});
+          subData.push({ id: args.row + '-121228', partName: 'Resilant Sub-Compressor', quantity: 1*args.row, price: .24*args.row, amount: 1.34*args.row});
+
+          datagridHtml.datagrid({stretchColumn: 'partName', filterable: false, columns: subColumns, dataset: subData});
         });
 
         grid.on('collapserow', function (e, args) {
