@@ -7395,6 +7395,7 @@ Datagrid.prototype = {
     if (self.settings.allowOneExpandedRow && self.settings.groupable === null) {
       // collapse any other expandable rows
       const prevExpandRow = self.tableBody.find('tr.is-expanded');
+      const prevExpandButton = prevExpandRow.prev().find('.datagrid-expand-btn');
       const parentRow = prevExpandRow.prev();
       const parentRowIdx = self.actualRowNode(parentRow);
       const parentdataRowIdx = self.dataRowIndex(parentRow);
@@ -7402,11 +7403,11 @@ Datagrid.prototype = {
       if (prevExpandRow.length && expandRow.index() !== prevExpandRow.index()) {
         const prevDetail = prevExpandRow.find('.datagrid-row-detail');
 
-        prevExpandRow.removeClass('is-expanded');
+        prevExpandRow.add(prevExpandButton).removeClass('is-expanded');
         parentRow.removeClass('is-rowactivated');
         parentRow.find('.plus-minus').removeClass('active');
         prevDetail.animateClosed().on('animateclosedcomplete', () => {
-          prevExpandRow.css('display', 'none').removeClass('is-expanded');
+          prevExpandRow.removeClass('is-expanded');
           self.element.triggerHandler('collapserow', [{ grid: self, row: parentRowIdx, detail: prevDetail, item: self.settings.dataset[parentdataRowIdx] }]);
         });
 
