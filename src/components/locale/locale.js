@@ -338,7 +338,7 @@ const Locale = {  // eslint-disable-line
     const hours = value.getHours();
     const seconds = value.getSeconds();
 
-    if (cal.conversions) {
+    if (cal && cal.conversions) {
       if (attribs.fromGregorian) {
         const islamicParts = cal.conversions.fromGregorian(value);
         day = islamicParts[2];
