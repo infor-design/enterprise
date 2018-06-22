@@ -34,7 +34,7 @@ To do a dev release, publish a dated semever to npm.
 
 ## Official, Tagged Releases
 
-#### Documentation
+### Documentation
 
 - Verify the [changelog](/changelog) is up-to-date
 - Generate Release Notes <http://bit.ly/2w6X8Xw>
@@ -44,14 +44,14 @@ To do a dev release, publish a dated semever to npm.
 Try adding this into your git config
 
 ```yaml
-   [credential]
-       helper = wincred
+[credential]
+    helper = wincred
 ```
 
 or via console
 
 ```sh
-   git config --global credential.helper wincred
+git config --global credential.helper wincred
 ```
 
 ### Make sure you have a GITHUB_ACCESS_TOKEN configured
