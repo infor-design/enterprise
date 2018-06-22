@@ -43,7 +43,7 @@ To do a dev release, publish a dated semever to npm.
 
 Try adding this into your git config
 
-```yml
+```yaml
    [credential]
        helper = wincred
 ```
