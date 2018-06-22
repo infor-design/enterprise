@@ -120,6 +120,7 @@ if (utils.isChrome()) {
 Component | Functional Test Coverage
 ------------- | :-------------:
 Button | 😁
+Datagrid | 🙂
 Dropdown | ☹️
 Hierarchy | 😕
 MultiSelect | 🙂

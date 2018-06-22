@@ -495,7 +495,7 @@ Pager.prototype = {
       }
       pageSize.insertAfter(last);
 
-      const menu = $('<ul class="popupmenu has-icons"></ul>');
+      const menu = $('<ul class="popupmenu is-selectable"></ul>');
 
       for (let k = 0; k < self.settings.pagesizes.length; k++) {
         const size = self.settings.pagesizes[k];

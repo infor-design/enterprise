@@ -68,11 +68,11 @@ $datagrid-short-row-height: 23px;
 
   &.has-filterable-columns {
     // Align filter column headings
-    .datagrid-filter-wrapper {
+    > .datagrid-header .datagrid-filter-wrapper {
       height: 22px;
     }
 
-    .datagrid-column-wrapper {
+    > .datagrid-header .datagrid-column-wrapper {
       position: relative;
       top: -4px;
     }
@@ -98,7 +98,7 @@ $datagrid-short-row-height: 23px;
     border-right-color: transparent;
   }
 
-  tr:last-child td {
+  tr:not(.datagrid-expandable-row):last-child td {
     border-bottom-color: transparent;
   }
 
@@ -373,11 +373,11 @@ $datagrid-short-row-height: 23px;
 
     &.has-filterable-columns {
       // Align filter column headings
-      .datagrid-filter-wrapper {
+      > .datagrid-header .datagrid-filter-wrapper {
         height: 20px;
       }
 
-      .datagrid-column-wrapper {
+      > .datagrid-header .datagrid-column-wrapper {
         margin-bottom: 4px;
         position: relative;
         top: -2px;
@@ -468,11 +468,11 @@ $datagrid-short-row-height: 23px;
 
     &.has-filterable-columns {
       // Align filter column headings
-      .datagrid-filter-wrapper {
+      > .datagrid-header .datagrid-filter-wrapper {
         height: 24px;
       }
 
-      .datagrid-column-wrapper {
+      > .datagrid-header .datagrid-column-wrapper {
         position: relative;
         top: -4px;
       }
@@ -1873,6 +1873,11 @@ $datagrid-short-row-height: 23px;
 
   }
 
+  // Nested Grids
+  .datagrid .datagrid-header th {
+    background-color: $datagrid-nested-header-bg-color;
+    border-right: 1px solid $datagrid-nested-header-border-color;
+  }
 }
 
 //Grid Headers
@@ -2534,6 +2539,12 @@ td .btn-actions {
     color: transparent;
   }
 
+  .plus-minus {
+    left: -8px;
+    position: relative;
+    top: -4px;
+  }
+
   + span {
     color: $datagrid-cell-color;
     margin-left: -10px;
@@ -2560,13 +2571,9 @@ td .btn-actions {
 
 }
 
-.ie9 .datagrid-expand-btn {
-  top: 5px;
-}
-
 //Grid Expandable Area
 .datagrid-expandable-row {
-  td {
+  > td {
     border-bottom: 0;
     height: auto;
     line-height: normal;
