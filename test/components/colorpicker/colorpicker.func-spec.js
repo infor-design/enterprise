@@ -43,33 +43,17 @@ describe('ColorPicker Methods', () => {
     expect(colorpickerEl.parentNode.style.width).toEqual('400px');
   });
 
-  it('Should get the current hex value', (done) => {
-    colorpickerObj.toggleList();
+  it('Should get the current hex value', () => {
+    colorpickerObj.setColor('#1a1a1a');
 
-    setTimeout(() => {
-      expect(colorpickerObj.isPickerOpen).toBeTruthy();
-      expect(document.body.querySelector('.colorpicker.is-open')).toBeTruthy();
-      const anchor = document.body.querySelector('#colorpicker-menu li a');
-      anchor.click();
-
-      expect(colorpickerObj.getHexValue()).toEqual('#1A1A1A');
-      done();
-    }, 300);
+    expect(colorpickerObj.getHexValue()).toEqual('#1A1A1A');
   });
 
-  it('Should get the current label value', (done) => {
+  it('Should get the current label value', () => {
     colorpickerObj.settings.showLabel = true;
-    colorpickerObj.toggleList();
+    colorpickerObj.setColor('#1a1a1a');
 
-    setTimeout(() => {
-      expect(colorpickerObj.isPickerOpen).toBeTruthy();
-      expect(document.body.querySelector('.colorpicker.is-open')).toBeTruthy();
-      const anchor = document.body.querySelector('#colorpicker-menu li a');
-      anchor.click();
-
-      expect(colorpickerObj.getLabelValue()).toEqual('Slate10');
-      done();
-    }, 300);
+    expect(colorpickerObj.getLabelValue()).toEqual('Slate10');
   });
 
   it('Should set the color/label on the field', () => {
