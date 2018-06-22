@@ -21,6 +21,8 @@ demo:
     slug: example-singular-set-selected
 ---
 
+## Settings
+
 ### Dataset Settings
 
 - name (data point) - this value will be used to stack/group the similar data points

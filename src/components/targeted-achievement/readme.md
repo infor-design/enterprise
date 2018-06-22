@@ -11,6 +11,8 @@ demo:
     slug: example-datagrid
 ---
 
+## Settings
+
 ### Dataset Settings
 
 - name - Applies a name label to the left most section of the chart.
