@@ -331,12 +331,26 @@ const Locale = {  // eslint-disable-line
       pattern = cal.dateFormat[attribs.date];
     }
 
-    const day = value.getDate();
-    const month = value.getMonth();
-    const year = value.getFullYear();
+    let day = value.getDate();
+    let month = value.getMonth();
+    let year = value.getFullYear();
     const mins = value.getMinutes();
     const hours = value.getHours();
     const seconds = value.getSeconds();
+
+    if (cal && cal.conversions) {
+      if (attribs.fromGregorian) {
+        const islamicParts = cal.conversions.fromGregorian(value);
+        day = islamicParts[2];
+        month = islamicParts[1];
+        year = islamicParts[0];
+      } else if (attribs.toGregorian) {
+        const gregorianDate = cal.conversions.toGregorian(year, month, day);
+        day = gregorianDate.getDate();
+        month = gregorianDate.getMonth();
+        year = gregorianDate.getFullYear();
+      }
+    }
 
     // Special
     pattern = pattern.replace('ngày', 'nnnn');

@@ -158,7 +158,7 @@ const formatters = {
         formatted !== null && formatted !== undefined && formatted !== '') {
       formatted = Locale.formatNumber(value, col.numberFormat);
     }
-    return ((formatted === null || formatted === undefined) ? '' : formatted);
+    return ((formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted);
   },
 
   Integer(row, cell, value, col) {
@@ -167,7 +167,7 @@ const formatters = {
         formatted !== null && formatted !== undefined && formatted !== '') {
       formatted = Locale.formatNumber(value, col.numberFormat || { style: 'integer' });
     }
-    return (formatted === null || formatted === undefined) ? '' : formatted;
+    return (formatted === null || formatted === undefined || formatted === 'NaN') ? '' : formatted;
   },
 
   Hyperlink(row, cell, value, col, item, api) {

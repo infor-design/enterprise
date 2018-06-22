@@ -716,6 +716,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber('3.01999', { maximumFractionDigits: 2, round: true })).toEqual('3.02');
+    expect(Locale.formatNumber('800.9905673502324', { round: true, minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' })).toEqual('$801');
     expect(Locale.formatNumber('4.1', { minimumFractionDigits: 0, maximumFractionDigits: 2 })).toEqual('4.1');
     expect(Locale.formatNumber('5.1', { minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('5.10');
     expect(Locale.formatNumber('12.341', { minimumFractionDigits: 0, maximumFractionDigits: 2, round: true })).toEqual('12.34');
@@ -800,6 +801,20 @@ describe('Locale API', () => {
 
       expect(Locale.currentLocale.name).toEqual('fi-FI'); // not found so equals last one
     }
+  });
+
+  it('Should convert date from Gregorian (if needed) before formatting date (when fromGregorian is true)', () => {
+    Locale.set('ar-SA');
+
+    expect(Locale.formatDate(new Date(2018, 5, 20), { pattern: 'yyyy/MM/dd', fromGregorian: true })).toEqual('1439/10/06');
+    Locale.set('en-US');
+  });
+
+  it('Should convert date to Gregorian (if needed) before formatting date (when toGregorian is true)', () => {
+    Locale.set('ar-SA');
+
+    expect(Locale.formatDate(Locale.parseDate('1439/10/06', Locale.calendar().dateFormat.short, false), { pattern: 'yyyyMMdd', toGregorian: true })).toEqual('20180620');
+    Locale.set('en-US');
   });
 
   it('Should parse dates with and without spaces, dash, comma format', () => {
