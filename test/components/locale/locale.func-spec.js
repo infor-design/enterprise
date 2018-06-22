@@ -716,6 +716,7 @@ describe('Locale API', () => {
     Locale.set('en-US');
 
     expect(Locale.formatNumber('3.01999', { maximumFractionDigits: 2, round: true })).toEqual('3.02');
+    expect(Locale.formatNumber('800.9905673502324', { round: true, minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$' })).toEqual('$801');
     expect(Locale.formatNumber('4.1', { minimumFractionDigits: 0, maximumFractionDigits: 2 })).toEqual('4.1');
     expect(Locale.formatNumber('5.1', { minimumFractionDigits: 2, maximumFractionDigits: 2 })).toEqual('5.10');
     expect(Locale.formatNumber('12.341', { minimumFractionDigits: 0, maximumFractionDigits: 2, round: true })).toEqual('12.34');
