@@ -6138,7 +6138,16 @@ Datagrid.prototype = {
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
         if (key === 9 && !self.settings.actionableMode) {
-          return;
+          if (self.settings.onKeyDown) {
+            const ret = self.settings.onKeyDown(e);
+            if (ret === false) {
+              e.stopPropagation();
+              e.preventDefault();
+              return;
+            }
+          } else {
+            return;
+          }
         }
 
         if (key !== 9 && e.altKey) {
