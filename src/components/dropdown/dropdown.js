@@ -2004,6 +2004,9 @@ Dropdown.prototype = {
     this.previousActiveDescendant = last.value || '';
 
     this.pseudoElem[0].querySelector('span').textContent = text;
+    if (text.length > 1000) {
+      text = `${text.substring(0, 1000)}...`;
+    }
     this.searchInput[0].value = text;
     this.updateItemIcon(last);
 
