@@ -7014,12 +7014,18 @@ Datagrid.prototype = {
     }
 
     // Update the value in the dataset
-    if (col.id === 'rowStatus' && rowData && rowData.rowStatus && rowData.rowStatus.tooltip) {
-      cellNode.attr('title', rowData.rowStatus.tooltip);
-      cellNode.tooltip({
-        placement: 'right',
-        isErrorColor: rowData.rowStatus.icon === 'error' || rowData.rowStatus.icon === 'dirtyerror'
-      });
+    if (col.id === 'rowStatus' && rowData && rowData.rowStatus) {
+      if (rowNode[0] && cellNode[0]) {
+        rowNode[0].classList.add(`rowstatus-row-${rowData.rowStatus.icon}`);
+        cellNode[0].classList.add('rowstatus-cell');
+      }
+      if (rowData.rowStatus.tooltip) {
+        cellNode.attr('title', rowData.rowStatus.tooltip);
+        cellNode.tooltip({
+          placement: 'right',
+          isErrorColor: rowData.rowStatus.icon === 'error' || rowData.rowStatus.icon === 'dirtyerror'
+        });
+      }
     }
 
     coercedVal = $.unescapeHTML(coercedVal);
