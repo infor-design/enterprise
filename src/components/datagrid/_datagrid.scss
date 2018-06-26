@@ -2101,7 +2101,7 @@ $datagrid-short-row-height: 23px;
 
         + .icon {
           right: 4px;
-          top: -2px;
+          top: -2px !important;
         }
 
         &.is-disabled {
@@ -2522,6 +2522,10 @@ td .btn-actions {
 .datagrid-checkbox-wrapper {
   @include font-size(12);
   position: relative;
+
+  & + .datagrid-filter-wrapper {
+    display: none;
+  }
 }
 
 //Grid Expand Button
@@ -3095,7 +3099,7 @@ html[dir='rtl'] {
     .handle,
     .is-draggable-target {
       display: none;
-      font-size: 2.6em;
+      font-size: 3.1rem;
       height: $datagrid-header-height;
       left: 0;
       margin: 0;
