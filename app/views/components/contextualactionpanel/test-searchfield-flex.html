@@ -6,12 +6,15 @@
       Contextual Action Panel (Uses Markup)
     </button>
     <div class="contextual-action-panel" style="display: none;">
-      <div class="toolbar">
-        <div class="title">Company Information</div>
-        <div class="buttonset">
-          <input class="searchfield" placeholder="keyword" id="toolbar-example-searchfield" name="toolbar-example-searchfield" />
-          <div class="separator"></div>
-          <button name="close" class="btn" type="button">
+      <div class="flex-toolbar">
+        <div class="toolbar-section title">
+          <h2>Company Information</h2>
+        </div>
+        <div class="toolbar-section search">
+          <input id="toolbar-example-searchfield" class="searchfield" data-options="{ clearable: true, collapsible: true }" placeholder="keyword" />
+        </div>
+        <div class="toolbar-section buttonset">
+          <button id="toolbar-close" class="btn close-button" type="button">
             <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-close"></use>
             </svg>
@@ -102,7 +105,5 @@
       </div>
     </div>
 
-
   </div>
-
 </div>
