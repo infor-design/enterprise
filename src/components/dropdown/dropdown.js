@@ -39,6 +39,7 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
 * @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
+* @param {object} [settings.clearable = false]  Adds empty option to clear selection
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
@@ -58,7 +59,8 @@ const DROPDOWN_DEFAULTS = {
   delay: 300,
   maxWidth: null,
   placementOpts: null,
-  onKeyDown: null
+  onKeyDown: null,
+  clearable: false
 };
 
 function Dropdown(element, settings) {
@@ -2353,6 +2355,11 @@ Dropdown.prototype = {
         // If the incoming dataset is different than the one we started with,
         // replace the contents of the list, and rerender it.
         if (!self.isFiltering && !utils.equals(data, self.dataset)) {
+          // If clearable, add new empty option to clear
+          if (self.settings.clearable) {
+            data.unshift({ id: '', value: '', label: '' });
+          }
+
           self.dataset = data;
 
           if (!isManagedByTemplate) {
