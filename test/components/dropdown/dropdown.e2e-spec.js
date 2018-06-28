@@ -79,13 +79,13 @@ describe('Dropdown example-index tests', () => {
     });
   }
 
-  if (utils.isChrome()) {
-    xit('Should not visual regress', async () => {
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress', async () => {
       const dropdownEl = element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('dropdownPage')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkScreen('dropdown-init')).toEqual(0);
     });
   }
 
