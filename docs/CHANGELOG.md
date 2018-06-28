@@ -14,6 +14,7 @@
 
 ### v4.8.0 Fixes
 
+- `[Searchfield / Toolbar Searchfield]` Merged code between them so there is just one component. This reduced code and fixed many bugs. ([#161](https://github.com/infor-design/enterprise/pull/161))
 - `[Datagrid]` Fixed issues using expand row after hiding/showing columns. ([#SOHO-8103](https://jira.infor.com/browse/SOHO-8103))
 - `[Datagrid]` Fixed issue that caused nested grids in expandable rows to hide after hiding/showing columns on the parent grid. ([#SOHO-8102](https://jira.infor.com/browse/SOHO-8102))
 - `[Datagrid]` Added an example showing Math rounding on numeric columns ([#SOHO-5168](https://jira.infor.com/browse/SOHO-5168))
@@ -61,7 +62,7 @@
 - `[Colorpicker]` Added Colorpicker functional and e2e tests ([#SOHO-8078](https://jira.infor.com/browse/SOHO-8078))
 - `[Site / Docs]` Fixed a few broken links ([#SOHO-7993](https://jira.infor.com/browse/SOHO-7993))
 
-(61 Jira Issues Solved this release, Backlog Dev 186, Design 110, Unresolved 349, Test Count 380 Functional, 178 e2e )
+(62 Jira Issues Solved this release, Backlog Dev 186, Design 110, Unresolved 349, Test Count 380 Functional, 178 e2e )
 
 ## v4.7.0
 
