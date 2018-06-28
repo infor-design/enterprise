@@ -3,6 +3,7 @@ module.exports = {
   isFF: () => browser.browserName === 'firefox',
   isSafari: () => browser.browserName === 'safari',
   isChrome: () => browser.browserName === 'chrome',
+  isCI: () => process.env.TRAVIS,
   setPage: async (url) => {
     const pageurl = `${browser.baseUrl + url}?theme=${browser.params.theme}`;
     await browser.waitForAngularEnabled(false);

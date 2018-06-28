@@ -42,13 +42,15 @@ exports.config = {
   onPrepare: () => {
     global.requireHelper = (filename) => require(`${basePath}/helpers/${filename}.js`);
     browser.ignoreSynchronization = true;
-    browser.protractorImageComparison = new protractorImageComparison({
-      baselineFolder: `${basePath}/baseline`,
-      screenshotPath: `${basePath}/.tmp/`,
-      autoSaveBaseline: false,
-      ignoreAntialiasing: true,
-      debug: false
-    });
+    if (process.env.TRAVIS) {
+      browser.protractorImageComparison = new protractorImageComparison({
+        baselineFolder: `${basePath}/baseline`,
+        screenshotPath: `${basePath}/.tmp/`,
+        autoSaveBaseline: false,
+        ignoreAntialiasing: true,
+        debug: false
+      });
+    }
 
     jasmine.getEnv().addReporter(new SpecReporter({
       spec: { displayStacktrace: false }
