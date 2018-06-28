@@ -16,7 +16,7 @@
     <h2 class="fieldset-title">Some Form</h2>
 
     <div class="field">
-      <button class="btn-secondary" type="button" id="goToError">Go to Error</button>
+      <button class="btn-secondary" type="button" id="goto">Go to Error</button>
     </div>
 
     <div class="field">
@@ -88,7 +88,7 @@
     }
   });
 
-  $('#goToError').button().on('click', function () {
+  $('#goto').button().on('click', function () {
     if ($('#username-display').getErrorMessage())
     {
       // should scroll the element into view at the bottom of the view port

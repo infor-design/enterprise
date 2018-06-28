@@ -28,37 +28,6 @@ $.fn.validateField = function () {
  * Clear out the stuff on the Form
  */
 $.fn.resetForm = function () {
-  const formFields = $(this).find('input, select, textarea');
-
-  // Clear Errors
-  formFields.removeClass('error');
-  $(this).find('.error').removeClass('error');
-  $(this).find('.icon-error').remove();
-  $(this).find('.icon-confirm').remove();
-  $(this).find('.error-message').remove();
-
-  // Clear Warnings
-  formFields.removeClass('alert');
-  $(this).find('.alert').removeClass('alert');
-  $(this).find('.icon-alert').remove();
-  $(this).find('.alert-message').remove();
-
-  // Clear Informations
-  formFields.removeClass('info');
-  $(this).find('.info').removeClass('info');
-  $(this).find('.icon-info').remove();
-  $(this).find('.info-message').remove();
-
-  setTimeout(() => {
-    $('#validation-errors').addClass('is-hidden');
-  }, 300);
-
-  // Remove Dirty
-  formFields.data('isDirty', false).removeClass('isDirty');
-  $(this).find('.isDirty').removeClass('isDirty');
-
-  // reset form data
-  if ($(this).is('form')) {
-    $(this)[0].reset();
-  }
+  const api = Soho.components.Validator.prototype;  //eslint-disable-line
+  api.resetForm(this);
 };

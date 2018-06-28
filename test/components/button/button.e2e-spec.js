@@ -208,7 +208,7 @@ describe('Button example-with-icons tests', () => {
   }
 
   if (!utils.isIE()) {
-    xit('Should be accessible on click with no WCAG 2AA violations', async () => {
+    it('Should be accessible on click with no WCAG 2AA violations', async () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
