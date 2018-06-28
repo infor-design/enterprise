@@ -5204,7 +5204,8 @@ Datagrid.prototype = {
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.pagingRowIndex(i);
-      if (this.filterRowRendered) {
+      if (this.filterRowRendered ||
+        (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
         if (!dataset[i].isFiltered) {
           rows.push(idx);
         }
