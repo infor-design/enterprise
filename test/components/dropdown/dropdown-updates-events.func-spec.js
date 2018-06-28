@@ -43,7 +43,8 @@ describe('Dropdown updates, events', () => {
       showEmptyGroupHeaders: false,
       showSelectAll: false,
       sourceArguments: {},
-      onKeyDown: null
+      onKeyDown: null,
+      clearable: false
     };
 
     expect(dropdownObj.settings).toEqual(settings);
@@ -65,7 +66,8 @@ describe('Dropdown updates, events', () => {
       showEmptyGroupHeaders: false,
       showSelectAll: false,
       sourceArguments: {},
-      onKeyDown: null
+      onKeyDown: null,
+      clearable: false
     };
 
     dropdownObj.updated();
@@ -91,7 +93,8 @@ describe('Dropdown updates, events', () => {
       showEmptyGroupHeaders: false,
       showSelectAll: false,
       sourceArguments: {},
-      onKeyDown: null
+      onKeyDown: null,
+      clearable: false
     };
     dropdownObj.updated(settings);
 
