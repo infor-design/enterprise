@@ -201,6 +201,7 @@ describe('Button example-with-icons tests', () => {
       const buttonEl = await element(by.id('menu-button-alone'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(buttonEl, 'button-init')).toEqual(0);
     });

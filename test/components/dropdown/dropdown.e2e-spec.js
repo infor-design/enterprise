@@ -84,6 +84,7 @@ describe('Dropdown example-index tests', () => {
       const dropdownEl = element(by.css('div[aria-controls="dropdown-list"]'));
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
     });

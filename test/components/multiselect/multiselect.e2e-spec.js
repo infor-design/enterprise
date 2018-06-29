@@ -157,6 +157,7 @@ describe('Multiselect example-index tests', () => {
       const multiselectEl = await element.all(by.css('div[aria-controls="dropdown-list"]')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
 
       expect(await browser.protractorImageComparison.checkElement(multiselectEl, 'multiselect-init')).toEqual(0);
     });

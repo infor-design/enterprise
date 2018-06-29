@@ -48,6 +48,7 @@ exports.config = {
         screenshotPath: `${basePath}/.tmp/`,
         autoSaveBaseline: false,
         ignoreAntialiasing: true,
+        disableCSSAnimation: true,
         debug: false
       });
     }
