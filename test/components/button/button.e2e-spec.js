@@ -202,7 +202,7 @@ describe('Button example-with-icons tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(buttonEl), config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('button-init')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(buttonEl, 'button-init')).toEqual(0);
     });
   }
 

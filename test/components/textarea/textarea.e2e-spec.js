@@ -45,7 +45,7 @@ describe('Textarea example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(textareaEl), config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('textarea-init')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(textareaEl, 'textarea-init')).toEqual(0);
     });
   }
 });

@@ -158,7 +158,7 @@ describe('Multiselect example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(multiselectEl), config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('multiselect-init')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(multiselectEl, 'multiselect-init')).toEqual(0);
     });
   }
 

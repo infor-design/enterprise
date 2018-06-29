@@ -85,7 +85,7 @@ describe('Dropdown example-index tests', () => {
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkScreen('dropdown-init')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(dropdownEl, 'dropdown-init')).toEqual(0);
     });
   }
 
