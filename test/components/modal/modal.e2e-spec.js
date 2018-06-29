@@ -140,7 +140,6 @@ describe('Modal example-validation tests', () => {
     });
 
     it('Should enable submit', async () => {
-      debugger;
       expect(await element(by.id('submit')).isEnabled()).toBe(false);
 
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
