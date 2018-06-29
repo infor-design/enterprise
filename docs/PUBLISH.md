@@ -50,7 +50,7 @@ git config --global credential.helper wincred
     - `npm run release:beta` - beta
     - `npm run release:rc` - release candidate normally the final testing branch before the release
     - `npm run release:final` - the release itself
-    - **Always** verify the release version when the script asks
+    - **Always** verify the release version when the script asks. You MAY have to use a different release-it command than what we provide with the NPM script.
 1. Deploy the demo app for the semver
 
 For a final release, finish with:
