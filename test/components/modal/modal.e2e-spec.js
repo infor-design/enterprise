@@ -140,6 +140,7 @@ describe('Modal example-validation tests', () => {
     });
 
     it('Should enable submit', async () => {
+      debugger;
       expect(await element(by.id('submit')).isEnabled()).toBe(false);
 
       const dropdownEl = await element(by.css('div[aria-controls="dropdown-list"]'));
@@ -153,8 +154,9 @@ describe('Modal example-validation tests', () => {
 
       await element(by.id('context-name')).sendKeys('test@test.com');
       await element(by.id('context-desc')).sendKeys('test description');
+      await browser.driver.sleep(config.sleep);
 
-      expect(await element(by.id('submit')).isEnabled()).toBe(false);
+      expect(await element(by.id('submit')).isEnabled()).toBe(true);
     });
   }
 });
@@ -185,7 +187,8 @@ describe('Modal example-validation-editor tests', () => {
     await element(by.id('context-name')).sendKeys('test@test.com');
     await element(by.id('context-desc')).sendKeys('test description');
     await element(by.css('.editor')).sendKeys('test description');
+    await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.id('submit')).isEnabled()).toBe(false);
+    expect(await element(by.id('submit')).isEnabled()).toBe(true);
   });
 });
