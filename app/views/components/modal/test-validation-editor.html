@@ -2,10 +2,7 @@
 <div class="row top-padding">
   <div class="twelve columns">
 
-    <div class="field">
-      <label for="test-1" class="required">Some value (click text box to open modal)</label>
-      <input type="text" id="test-1" name="test-1" aria-required="true" data-validate="required"/>
-    </div>
+    <button class="btn-secondary" type="button" data-modal="modal-1">Add Context</button>
 
     <div class="modal" id="modal-1">
       <div class="modal-content">
@@ -53,16 +50,3 @@
 
   </div>
 </div>
-
-<script>
-  var test1 = $('#test-1');
-
-  test1.on('click', function () {
-
-    $('body').modal({content: $('#modal-1')})
-      .on('afterclose', function() {
-        test1.focus();
-      });
-
-  });
-</script>

@@ -304,7 +304,10 @@ Validator.prototype = {
         }
         const isVisible = modalField[0].offsetParent !== null;
         if (modalField.is('.required')) {
-          if ((isVisible || modalField.is('select, :checkbox')) && !modalField.val()) {
+          if (isVisible && modalField.is('.editor') && !modalField.html()) {
+            allValid = false;
+          }
+          if ((isVisible || modalField.is('select, :checkbox')) && !modalField.val() && !modalField.is('.editor')) {
             allValid = false;
           }
         }
