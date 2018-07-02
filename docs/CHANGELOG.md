@@ -2,9 +2,9 @@
 
 ## v4.8.0
 
-[Full Jira Release Notes](https://bit.ly/2Ixwfkw)\
-[Npm Package](https://www.npmjs.com/package/ids-enterprise)\
-[Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
+- [Full Release Notes](https://bit.ly/2Ixwfkw)
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [IDS NG (Angular) Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
 
 ### v4.8.0 Features
 
@@ -66,9 +66,9 @@
 
 ## v4.7.0
 
-[Full Jira Release Notes](https://bit.ly/2HyT3zF)\
-[Npm Package](https://www.npmjs.com/package/ids-enterprise)\
-[Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
+- [Full Jira Release Notes](https://bit.ly/2HyT3zF)
+- [Npm Package](https://www.npmjs.com/package/ids-enterprise)
+- [Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
 
 ### v4.7.0 Features
 
@@ -129,10 +129,10 @@
 
 ## v4.6.0
 
-[Full Jira Release Notes](https://bit.ly/2jodbem)\
-[Npm Package](http://npm.infor.com)\
-[Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)\
-[Example Site](http://usalvlhlpool1.infor.com/4.6.0/components/)
+- [Full Jira Release Notes](https://bit.ly/2jodbem)
+- [Npm Package](http://npm.infor.com)
+- [Angular Components Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
+- [Example Site](http://usalvlhlpool1.infor.com/4.6.0/components/)
 
 ### v4.6.0 Key New Features
 
