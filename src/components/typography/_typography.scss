@@ -332,6 +332,9 @@ small,
 
   .data-description {
     flex-basis: auto;
+    line-height: 34px;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow: auto;
     white-space: nowrap;
   }
 

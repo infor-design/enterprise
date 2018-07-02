@@ -5204,7 +5204,8 @@ Datagrid.prototype = {
 
     for (let i = 0, l = dataset.length; i < l; i++) {
       const idx = this.pagingRowIndex(i);
-      if (this.filterRowRendered) {
+      if (this.filterRowRendered ||
+        (this.filterExpr && this.filterExpr[0] && this.filterExpr[0].keywordSearch)) {
         if (!dataset[i].isFiltered) {
           rows.push(idx);
         }
@@ -6137,6 +6138,15 @@ Datagrid.prototype = {
 
       // Tab, Left and Right arrow keys.
       if ([9, 37, 39].indexOf(key) !== -1) {
+        if (key === 9 && self.settings.onKeyDown) {
+          const ret = self.settings.onKeyDown(e);
+          if (ret === false) {
+            e.stopPropagation();
+            e.preventDefault();
+            return;
+          }
+        }
+
         if (key === 9 && !self.settings.actionableMode) {
           return;
         }

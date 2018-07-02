@@ -1,7 +1,7 @@
 {
   "name": "ids-enterprise",
   "slug": "ids-enterprise",
-  "version": "4.8.0",
+  "version": "4.9.0-dev",
   "description": "Infor Design System (IDS) Enterprise Components for the web",
   "repository": {
     "type": "git",
@@ -100,6 +100,7 @@
     "handlebars-registrar": "^1.5.2",
     "html-loader": "^0.5.5",
     "ids-css": "^1.2.8",
+    "ids-identity": "^1.1.0-dev.2",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jasmine-core": "^3.0.0",
     "jasmine-jquery": "^2.1.1",
