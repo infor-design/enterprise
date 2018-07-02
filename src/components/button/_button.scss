@@ -205,7 +205,8 @@ a.btn-icon,
 a.btn-primary,
 a.btn-secondary,
 a.btn-tertiary,
-a.btn-menu {
+a.btn-menu,
+a.btn-close {
   display: inline-block;
   line-height: 31px;
   margin-bottom: -2px;
@@ -252,7 +253,8 @@ a.btn-menu {
   a.btn-primary,
   a.btn-secondary,
   a.btn-tertiary,
-  a.btn-menu {
+  a.btn-menu,
+  a.btn-close {
     line-height: 32px;
     margin-bottom: -3px;
   }
@@ -329,6 +331,7 @@ a.btn-menu {
 .btn,
 .btn-tertiary,
 .btn-icon,
+.btn-close,
 .btn-actions,
 .btn-menu {
   border: 1px solid transparent;

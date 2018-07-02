@@ -24,8 +24,9 @@
     padding: 0;
   }
 
+
   .flex-toolbar {
-    margin: 0 5px;
+    margin: 0 16px;
   }
 
   .toolbar {
@@ -35,7 +36,7 @@
     .title {
       @include font-size(18);
       height: inherit;
-      padding-left: 8px;
+      margin-left: 15px;
     }
 
     .separator {
@@ -45,19 +46,30 @@
       top: 5px;
     }
 
-    .toolbar-searchfield-wrapper.active {
-
-      .searchfield {
-        background-color: $contextual-panel-searchfield-bg-color;
-        border-color: $contextual-panel-searchfield-border-color;
-      }
+    .has-close-button {
+      display: inline-block;
+      width: calc(100% - 105px);
     }
-
   }
 
-  .has-close-button {
-    display: inline-block;
-    width: calc(100% - 105px);
+  .toolbar-section {
+    &.buttonset,
+    &.search {
+      &:last-child {
+        padding-right: 0;
+      }
+
+      > *:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .toolbar-searchfield-wrapper.is-open {
+    .searchfield {
+      background-color: $contextual-panel-searchfield-bg-color;
+      border-color: $contextual-panel-searchfield-border-color;
+    }
   }
 
   .close-button {
@@ -88,11 +100,41 @@
     }
 
   }
+}
 
+html[dir='rtl'] {
+  .modal.contextual-action-panel {
+    .toolbar-section {
+      &.buttonset,
+      &.search {
+        &:last-child {
+          padding-left: 0;
+          padding-right: auto;
+        }
+
+        > *:last-child {
+          margin-left: 0;
+          margin-right: auto;
+        }
+      }
+    }
+  }
 }
 
 @include respond-to(phone) {
-  .modal.contextual-action-panel .btn-close .icon {
-    width: 16px;
+  .modal.contextual-action-panel {
+    .btn-close .icon {
+      width: 16px;
+    }
+
+    .toolbar {
+      height: 50px;
+      margin-bottom: 0;
+
+      .title {
+        margin-left: 0;
+        margin-right: 15px;
+      }
+    }
   }
 }

@@ -22,6 +22,13 @@ module.exports = function customRouteOptions(req, res) {
     customOpts.usebasehref = true;
   }
 
+  // Contextual Action Panel
+  if (url.match(/components\/contextualactionpanel/)) {
+    if (url.match(/partial-/)) {
+      customOpts.layout = 'layout-nofrills'; // No layout for this one on purpose.
+    }
+  }
+
   // Datagrid
   if (url.match(/datagrid-fixed-header/)) {
     customOpts.layout = 'tests/layout-noscroll';
