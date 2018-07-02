@@ -1393,6 +1393,8 @@ SearchField.prototype = {
    * @param  {object} anchor the link object
    */
   handleCategorySelected(e, anchor) {
+    this.element.trigger('selected', [anchor]);
+
     // Only change the text and searchfield size if we can
     if (!this.settings.showCategoryText) {
       return;
