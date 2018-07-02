@@ -2,7 +2,6 @@
 
 ## v4.8.0
 
-- [Full Release Notes](https://bit.ly/2Ixwfkw)
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
 - [IDS NG (Angular) Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
 
