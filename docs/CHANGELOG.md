@@ -3,7 +3,7 @@
 ## v4.8.0
 
 - [Npm Package](https://www.npmjs.com/package/ids-enterprise)
-- [IDS NG (Angular) Change Log](https://github.com/infor-design/enterprise-ng/blob/master/CHANGELOG.md)
+- [IDS NG (Angular) Change Log](https://github.com/infor-design/enterprise-ng/blob/master/docs/CHANGELOG.md)
 
 ### v4.8.0 Features
 
