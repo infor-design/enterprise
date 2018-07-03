@@ -207,7 +207,13 @@ Personalize.prototype = {
     ` .builder .sidebar .header {border-right: 1px solid ${colors.hover} !important}` +
     ` .module-tabs.is-personalizable .tab:hover { background-color: ${colors.hover} !important}` +
     ` .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar { border-left: ${colors.verticalBorder} !important}` +
-    ` .module-tabs.is-personalizable [class^="btn"] { background-color: ${colors.inactive} !important}` +
+    ` .module-tabs.is-personalizable [class^="btn"] { background-color: ${colors.inactive} !important; color: ${colors.text} !important}` +
+    ` .module-tabs.is-personalizable .tab.is-disabled { background-color: ${colors.inactive} !important; color: ${colors.text} !important}` +
+    ` .module-tabs.is-personalizable .tab.is-disabled > svg { fill: ${colors.text} !important}` +
+    ` .module-tabs.is-personalizable .add-tab-button { border-left: ${colors.verticalBorder} !important}` +
+    ` .module-tabs.is-personalizable .add-tab-button:hover { background-color: ${colors.inactive} !important}` +
+    ` .module-tabs.is-personalizable .toolbar-searchfield-wrapper > .searchfield { color: ${colors.text} !important}` +
+    ` .module-tabs.is-personalizable .toolbar-searchfield-wrapper > svg { fill: ${colors.text} !important}` +
     ` .hero-widget.is-personalizable { background-color: ${colors.subheader} }` +
     ` .hero-widget.is-personalizable .hero-bottom { background-color: ${colors.header} }` +
     ` .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before { color: ${colors.verticalBorder} }` +
