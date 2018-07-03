@@ -21,19 +21,12 @@
             <li><a href="#" data-action="cacr">Clear All Cells in Row</a></li>
             <li><a href="#" data-action="carc">Clear All Rows and Cells</a></li>
           </ul>
-          <button class="btn-icon" type="button" id="add-reset">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-reset"></use>
-            </svg>
-            <span class="audible">Reset</span>
-          </button>
         <button class="btn-icon" type="button" id="add-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-add"></use>
           </svg>
           <span class="audible">Add</span>
         </button>
-
       </div>
 
       <div class="more">
@@ -44,10 +37,7 @@
           <span class="audible">More Actions</span>
         </button>
         <ul class="popupmenu">
-          <li><a href="#">Option One</a></li>
-          <li><a href="#">Option Two</a></li>
-          <li><a href="#">Option Three</a></li>
-          <li class="separator single-selectable-section"></li>
+          <li class="single-selectable-section"></li>
           <li class="heading">Row Height</li>
           <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
           <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
@@ -69,9 +59,7 @@
       </div>
     </div>
 
-    <div id="datagrid">
-
-    </div>
+    <div id="datagrid"></div>
   </div>
 </div>
 
@@ -93,7 +81,7 @@
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 2});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center'});
+        // columns.push({ id: 'rowStatus', sortable: false, resizable: false, formatter: Formatters.Status, align: 'center'});
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
         columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
@@ -131,7 +119,6 @@
         gridApi = $('#datagrid').data('datagrid');
 
         //Example row status
-        gridApi.setActiveCell(1,2, 0);
         gridApi.rowStatus(0, 'error', 'Error');
         gridApi.rowStatus(0, 'error', 'Error 2');
         gridApi.rowStatus(0, 'error', 'Error 3');
@@ -139,8 +126,8 @@
         gridApi.rowStatus(2, 'info', 'Info');
         gridApi.rowStatus(3, 'in-progress', 'inProgress');
         gridApi.rowStatus(4, 'confirm', 'Confirm');
-        //gridApi.rowStatus(5, 'dirty');
-        //gridApi.rowStatus(6, 'new', 'new');
+        gridApi.rowStatus(5, 'dirty');
+        gridApi.rowStatus(6, 'new', 'new');
         gridApi.rowStatus(6, 'error', 'This row has errors');
 
       window.data = data;
@@ -156,11 +143,6 @@
   //Add Code for Add and icon-delete
   $('#remove-btn').on('click', function () {
     gridApi.removeSelected();
-  });
-
-  //Example of clearing all cell errors
-  $('#add-reset').on('click', function () {
-    gridApi.clearAllErrors();
   });
 
   //A few other ways

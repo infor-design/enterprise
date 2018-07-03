@@ -3514,10 +3514,6 @@ Datagrid.prototype = {
         continue;
       }
 
-      if (col.id && ['selectionCheckbox', 'expander'].indexOf(col.id) > -1) {
-        continue;
-      }
-
       this.updateCellNode(idx, j, this.fieldValue(rowData, col.field), true);
     }
   },
@@ -6804,24 +6800,21 @@ Datagrid.prototype = {
     this.rowStatus(row, '', '');
   },
 
+  /**
+   * Clear all errors, alerts, info messages and dirty indicators in entire datagrid.
+   */
   clearAllErrors() {
-    const self = this;
+    const errors = this.settings.dataset.filter(row => row.rowStatus);
 
-    this.tableBody.find('td.error').each(function () {
-      const node = $(this);
-      self.clearNodeErrors(node, 'error');
-      self.clearNodeErrors(node, 'dirtyerror');
-    });
+    for (let i = 0; i < errors.length; i++) {
+      delete errors[i].rowStatus;
+    }
 
-    this.tableBody.find('td.alert').each(function () {
-      const node = $(this);
-      self.clearNodeErrors(node, 'alert');
-    });
+    if (errors.length > 0) {
+      this.render();
+    }
 
-    this.tableBody.find('td.info').each(function () {
-      const node = $(this);
-      self.clearNodeErrors(node, 'info');
-    });
+    // TODO test that this clears dirty, alert, info
   },
 
   clearNodeErrors(node, type) {
@@ -7014,10 +7007,16 @@ Datagrid.prototype = {
     }
 
     // Update the value in the dataset
-    if (col.id === 'rowStatus' && rowData && rowData.rowStatus) {
+    if (cell === 0 && rowData && rowData.rowStatus) {
       if (rowNode[0] && cellNode[0]) {
         rowNode[0].classList.add(`rowstatus-row-${rowData.rowStatus.icon}`);
         cellNode[0].classList.add('rowstatus-cell');
+
+        if (rowData.rowStatus.icon === 'confirm') {
+          cellNode.prepend('<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-check"></use></svg>');
+        } else {
+          cellNode.prepend('<svg class="icon icon-rowstatus" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-exclamation"></use></svg>');
+        }
       }
       if (rowData.rowStatus.tooltip) {
         cellNode.attr('title', rowData.rowStatus.tooltip);

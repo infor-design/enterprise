@@ -3,45 +3,42 @@
 
 @mixin rowstatus($color) {
   td {
-    border-top: 2px solid $color;
-    border-bottom: 2px solid $color !important;
+    // scss-lint:disable ImportantRule
+    border-bottom: 1px solid $color !important;
+    border-top: 1px solid $color;
+    // scss-lint:enable ImportantRule
 
     &:first-child {
-      border-left: 2px solid $color;
+      border-left: 1px solid $color;
     }
 
     &:last-child {
-      border-right: 2px solid $color;
+      border-right: 1px solid $color;
     }
 
     &.rowstatus-cell {
-      // border: none;
-      // position: absolute;
       position: relative;
 
       &::before {
-        // border-style: solid;
-        // border-width: 20px 20px 0 0;
-        // border-color: $color transparent transparent transparent;
         background-color: $color;
         content: '';
         display: block;
-        height: 20px;
-        left: -10px;
+        height: 32px;
+        left: -11px;
         position: absolute;
+        top: -14px;
         transform: rotate(45deg);
-        top: -10px;
-        width: 20px;
+        width: 26px;
       }
 
-      // .datagrid-cell-wrapper {
-      //   border: none;
-      //   left: -7px;
-      //   padding: 0;
-      //   position: absolute;
-      //   top: -14px;
-      // }
-
+      .icon-rowstatus {
+        fill: $white;
+        height: 10px;
+        left: 1px;
+        position: absolute;
+        top: 2px;
+        width: 10px;
+      }
     }
   }
 }
@@ -1127,27 +1124,6 @@ $datagrid-short-row-height: 23px;
       td {
         border-bottom-color: transparent;
       }
-    }
-
-    //Validation
-    &.error td {
-      background-color: $alert-bg-red;
-      //border-color: $alert-red; - Use for focus state
-    }
-
-    &.alert td {
-      background-color: $alert-bg-orange;
-      //border-color: $alert-red; - Use for focus state
-    }
-
-    &.confirm td {
-      background-color: $alert-bg-green;
-      //border-color: $alert-red; - Use for focus state
-    }
-
-    &.info td {
-      background-color: $alert-bg-info;
-      //border-color: $alert-red; - Use for focus state
     }
 
     .is-editor {
