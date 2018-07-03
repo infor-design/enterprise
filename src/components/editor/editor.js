@@ -301,8 +301,13 @@ Editor.prototype = {
     buttonset += '</div>';
     toolbar += `${buttonset}</div>`;
 
-    this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
-      this.element.prev() : this.element);
+    if (this.element.prev().hasClass('icon-dirty')) {
+      this.toolbar = $(toolbar).insertBefore(this.element.prev().prev());
+      this.element.prev().prev().css({ position: 'absolute' });
+    } else {
+      this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
+        this.element.prev() : this.element);
+    }
     this.toolbar.toolbar();
 
     // Invoke Tooltips
