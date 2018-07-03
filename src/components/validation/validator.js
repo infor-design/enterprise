@@ -521,19 +521,15 @@ Validator.prototype = {
       self.setIconOnParent(field, rule.type);
       self.validationStatus[type] = result;
 
-      if (self.eventsStatus(types) && type !== 'required' && !self.validationStatus.triggerValid) {
-        self.validationStatus.triggerValid = true;
-        field.triggerHandler('valid', { field, message: '' });
+      if (result && $(field).getMessage({ type: 'error' }) === rule.message) {
+        const validationTypes = Object.keys(Validation.ValidationTypes);
+        validationTypes.forEach((prop) => {
+          validationType = Validation.ValidationTypes[prop];
+          self.removeMessage(field, validationType.type, true);
+          field.removeData(`${validationType.type}message`);
+        });
       }
-      field.triggerHandler('isvalid', [result]);
     }
-
-    const validationTypes = Object.keys(Validation.ValidationTypes);
-    validationTypes.forEach((prop) => {
-      validationType = Validation.ValidationTypes[prop];
-      self.removeMessage(field, validationType.type, true);
-      field.removeData(`${validationType.type}message`);
-    });
 
     self.validationStatus = {};
     for (i = 0, l = types.length; i < l; i++) {
@@ -541,6 +537,10 @@ Validator.prototype = {
       rule = Validation.rules[types[i]];
 
       dfd = $.Deferred();
+
+      if (!rule) {
+        continue;
+      }
 
       if (rule.email) {
         delete rule.email;
@@ -550,11 +550,6 @@ Validator.prototype = {
       if (field && field[0].getAttribute('data-validate').trim().indexOf('email') > -1) {
         rule.email = Validation.rules.email.check;
       }
-
-      if (!rule) {
-        continue;
-      }
-
       if ($('#calendar-popup').is(':visible')) {
         continue; // dont show validation message while selecting
       }
@@ -619,6 +614,11 @@ Validator.prototype = {
 
     if (!isAlert) {
       loc.addClass(type === 'icon' ? 'custom-icon' : type);
+    }
+
+    if (dataMsg === appendedMsg) {
+      // No need to add new message
+      return;
     }
 
     if (dataMsg) {
@@ -879,7 +879,6 @@ Validator.prototype = {
 
   /**
    * Shows an inline error message on a field
-   *
    * @private
    * @param {jQuery[]} field the field being modified
    */
@@ -894,7 +893,6 @@ Validator.prototype = {
   /**
    * Remove the message form the field if there is
    * one and mark the field valid.
-   *
    * @private
    * @param {jQuery[]} field the field which is having its error removed
    * @param {string} type the type of message (error, alert, info, etc)
@@ -907,6 +905,10 @@ Validator.prototype = {
     let tooltipAPI = errorIcon.data('tooltip');
     const hasTooltip = field.attr(`data-${type}-type`) || !!tooltipAPI;
     const hasError = field.getMessage({ type: 'error' });
+
+    if (type === 'error' && !hasError) { // nothing to remove
+      return;
+    }
 
     if (this.inputs) {
       this.inputs.filter('input, textarea').off('focus.validate');
@@ -939,7 +941,7 @@ Validator.prototype = {
     }
 
     if (!isRadio) {
-      field.next().next(`.icon-${type}`).remove();
+      field.parent('.field, .field-short').find(`.icon-${type}`).remove();
       field.next('.inforCheckboxLabel').next(`.icon-${type}`).remove();
       field.parent('.field, .field-short').find(`span.${type}`).remove();
       field.parent().find(`.icon-${type}`).remove();
@@ -966,10 +968,15 @@ Validator.prototype = {
     }
 
     // Stuff for the inline error
-    field.closest('.field, .field-short').find(`.${type}-message, .custom-icon-message`).remove();
-    field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(`${type} custom-icon`);
+    field.closest('.field, .field-short').find(`.${type}-message`).remove();
+    field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(`${type}`);
 
-    if (type === 'error' && hasError && triggerEvents) {
+    if (type === 'icon') {
+      field.closest('.field, .field-short').find('.custom-icon-message').remove();
+      field.parent('.field, .field-short').find('.formatter-toolbar').removeClass('custom-icon');
+    }
+
+    if (type === 'error' && triggerEvents) {
       field.triggerHandler('valid', { field, message: '' });
       field.closest('form').triggerHandler('valid', { field, message: '' });
     }
@@ -984,45 +991,75 @@ Validator.prototype = {
   },
 
   /**
-   * Check if all given events are true/valid
-   * @param {array} types a list of event types
-   * @returns {boolean} whether or not the types are valid
-   */
-  eventsStatus(types) {
-    let r;
-    const status = this.validationStatus;
-
-    if (status) {
-      r = true;
-
-      if (types) {
-        for (let i = 0, l = types.length; i < l; i++) {
-          if (!status[types[i]]) {
-            r = false;
-          }
-        }
-      } else {
-        const statusKeys = Object.prototype.hasOwnProperty.call(status);
-        statusKeys.forEach((key) => {
-          if (!status[key]) {
-            r = false;
-          }
-        });
-      }
-    } else {
-      r = false;
-    }
-    return r;
-  },
-
-  /**
    * Shows an inline error message on a field
-   *
    * @private
    * @param {jQuery[]} field the field being modified
    */
   removePositive(field) {
     $('.icon-confirm', field.parent('.field, .field-short')).remove();
+  },
+
+  /**
+   * Reset all form errors and values
+   * @param {jQuery[]} form The form to reset.
+   */
+  resetForm(form) {
+    const formFields = form.find('input, select, textarea');
+
+    // Clear Errors
+    formFields.removeClass('error');
+    form.find('.error').removeClass('error');
+    form.find('.icon-error').remove();
+    form.find('.icon-confirm').remove();
+    form.find('.error-message').remove();
+
+    // Clear Warnings
+    formFields.removeClass('alert');
+    form.find('.alert').removeClass('alert');
+    form.find('.icon-alert').remove();
+    form.find('.alert-message').remove();
+
+    // Clear Informations
+    formFields.removeClass('info');
+    form.find('.info').removeClass('info');
+    form.find('.icon-info').remove();
+    form.find('.info-message').remove();
+
+    setTimeout(() => {
+      $('#validation-errors').addClass('is-hidden');
+    }, 300);
+
+    // Remove Dirty
+    formFields.data('isDirty', false).removeClass('isDirty');
+    form.find('.isDirty').removeClass('isDirty');
+
+    // reset form data
+    if (form.is('form')) {
+      form[0].reset();
+    }
+  },
+
+  /**
+   * See if any form errors and check for any empty required fields.
+   * @param {jQuery[]} form The form to check.
+   * @returns {boolean} True if the form is valid, false otherwise.
+   */
+  isFormValid(form) {
+    if ($(form).find('.error-message').length > 0) {
+      return false;
+    }
+
+    const formFields = $(form).find('[data-validate*="required"]');
+    for (let i = 0; i < formFields.length; i++) {
+      const field = $(formFields[i]);
+      const value = this.value(field);
+
+      if (field.is(':visible') && !value) {
+        return false;
+      }
+    }
+
+    return true;
   },
 
   /**
