@@ -8,7 +8,8 @@
  * @returns {boolean} whether or not the field is valid
  */
 $.fn.isValid = function () {
-  return (!!$(this).data('isValid'));
+  const isValidAttr = $(this).data('isValid');
+  return isValidAttr === undefined || isValidAttr === null ? true : isValidAttr;
 };
 
 /**

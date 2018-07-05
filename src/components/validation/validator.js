@@ -519,7 +519,6 @@ Validator.prototype = {
       }
 
       self.setIconOnParent(field, rule.type);
-      self.validationStatus[type] = result;
 
       if (result && $(field).getMessage({ type: 'error' }) === rule.message) {
         const validationTypes = Object.keys(Validation.ValidationTypes);
@@ -529,11 +528,15 @@ Validator.prototype = {
           field.removeData(`${validationType.type}message`);
         });
       }
+
+      // Test Enabling primary button in modal
+      const modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
+      if (modalBtn.length) {
+        self.setModalPrimaryBtn(field, modalBtn);
+      }
     }
 
-    self.validationStatus = {};
     for (i = 0, l = types.length; i < l; i++) {
-      self.validationStatus[types[i]] = false;
       rule = Validation.rules[types[i]];
 
       dfd = $.Deferred();
@@ -542,14 +545,6 @@ Validator.prototype = {
         continue;
       }
 
-      if (rule.email) {
-        delete rule.email;
-      }
-
-      // Add email validation for input field that is email required.
-      if (field && field[0].getAttribute('data-validate').trim().indexOf('email') > -1) {
-        rule.email = Validation.rules.email.check;
-      }
       if ($('#calendar-popup').is(':visible')) {
         continue; // dont show validation message while selecting
       }
@@ -643,12 +638,6 @@ Validator.prototype = {
     }
 
     field.data('isValid', false);
-
-    // Disable primary button in modal
-    const modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
-    if (modalBtn.length) {
-      this.setModalPrimaryBtn(field, modalBtn);
-    }
 
     this.showInlineMessage(field, message, validationType.type, isAlert, triggerEvents, icon);
   },
@@ -982,12 +971,6 @@ Validator.prototype = {
     }
 
     field.data('isValid', true);
-
-    // Test Enabling primary button in modal
-    const modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
-    if (modalBtn.length) {
-      this.setModalPrimaryBtn(field, modalBtn);
-    }
   },
 
   /**
