@@ -301,9 +301,8 @@ Editor.prototype = {
     buttonset += '</div>';
     toolbar += `${buttonset}</div>`;
 
-    if (this.element.prev().hasClass('icon-dirty')) {
-      this.toolbar = $(toolbar).insertBefore(this.element.prev().prev());
-      this.element.prev().prev().css({ position: 'absolute' });
+    if (this.element.parent().find('.icon-dirty').length) {
+      this.toolbar = $(toolbar).insertBefore(this.element.parent().find('.icon-dirty'));
     } else {
       this.toolbar = $(toolbar).insertBefore(this.sourceViewActive() ?
         this.element.prev() : this.element);
