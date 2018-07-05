@@ -25,12 +25,14 @@ const COMPONENT_NAME = 'accordion';
  * side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.
  * @param {string} [settings.rerouteOnLinkClick=true]  Can be set to false if routing is externally handled
  * @param {boolean} [settings.source=null]  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
+ * @param {null|string} [settings.menuId] if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
  */
 const ACCORDION_DEFAULTS = {
   allowOnePane: true,
   displayChevron: true,
   rerouteOnLinkClick: true,
-  source: null
+  source: null,
+  menuId: null
 };
 
 function Accordion(element, settings) {
@@ -54,7 +56,8 @@ Accordion.prototype = {
   init(headers) {
     this
       .build(headers)
-      .handleEvents(headers);
+      .handleEvents(headers)
+      .attachMenu(this.settings.menuId);
   },
 
   /**
@@ -359,6 +362,48 @@ Accordion.prototype = {
     this.element.trigger('selected', header);
 
     return true;
+  },
+
+  // Attach Context Menus
+  attachMenu(menuId) {
+    const self = this;
+
+    if (!menuId) {
+      return;
+    }
+
+    this.element.off('contextmenu.tree').on('contextmenu.tree', 'a', function (e) {
+      const node = $(this);
+      e.preventDefault();
+      $(e.currentTarget).popupmenu({ menuId, eventObj: e, trigger: 'immediate', attachToBody: true }).off('selected').on('selected', (event, args) => {
+        /**
+        * Fires when the an attached context menu item is selected.
+        *
+        * @event menuselect
+        * @memberof Tree
+        * @type {object}
+        * @property {object} event - The jquery event object
+        * @property {object} args for node element, item
+        * @property {HTMLElement} args.node The DOM Element.
+        * @property {object} data.item The attached node data.
+        */
+        self.element.triggerHandler('menuselect', { node, item: args });
+      });
+
+      /**
+      * Fires when the attached context menu is opened. Use it to update the menu as needed
+      * @memberof Tree
+      * @event menuopen
+      * @type {object}
+      * @property {object} event - The jquery event object
+      * @property {object} args for node element, item
+      * @property {HTMLElement} args.menu The menu item
+      * @property {HTMLElement} args.node The DOM Element.
+      */
+      // self.element.triggerHandler('menuopen', { menu: $(`#${menuId}`), node });
+      self.element.triggerHandler('contextmenu', e);
+      return false;
+    });
   },
 
   /**
