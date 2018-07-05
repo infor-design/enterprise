@@ -273,6 +273,7 @@ describe('No Validation on Readonly', () => {
   it('Should not validate when readonly', async () => {
     const email = await element(by.id('ro-email-address-ok'));
 
+    await email.click();
     await email.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
@@ -281,7 +282,8 @@ describe('No Validation on Readonly', () => {
     const toggle = await element(by.id('toggle'));
     toggle.click();
 
-    await email.clear();
+    await browser.driver.sleep(config.sleep);
+    await email.click();
     await email.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
