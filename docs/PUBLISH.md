@@ -58,10 +58,10 @@ For a final release, finish with:
 1. Publish/upload the documentation to design.infor.com:
     - `export DOCS_API_KEY={API KEY}`
     - `npm run documentation -- --site=prod`
-1. Merge the version branch back into `master`
-1. PR the master version to the proper "dev" version
-    - i.e. if we just released `4.7.0`, master will now be `4.8.0-dev`
-1. Deploy the demo app for the semver AS "LATEST"
+1. Manually merge the version branch into `master`. Do **NOT** use a pull request. (You will need github push permissions for this)
+1. If needed, use a pull request to set the `master` branch's package.json version to the proper "dev" version
+    - i.e. if we just released `4.7.0`, master should be be `4.8.0-dev`
+1. Deploy the demo app for the specific releases's semver AS "LATEST"
 
 ## Setup tools for AWS CDN Publish
 

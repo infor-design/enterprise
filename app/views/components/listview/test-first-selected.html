@@ -24,34 +24,30 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" data-tmpl="employee-tmpl" id="list-one" data-dataset="{{basepath}}api/people"></div>
-
-        {{={{{ }}}=}}
-        <script id="employee-tmpl" type="text/html">
-          <ul>
-            {{#dataset}}
-               <li>
-                <p>{{firstName}} {{lastName}}, {{title}}</p>
-              </li>
-            {{/dataset}}
-          </ul>
-        </script>
-
-
+        <div class="listview" data-tmpl="employee-tmpl" id="list-one" data-options="{'source': '{{basepath}}api/people', 'template': 'employee-tmpl', 'selectable': 'single'}"></div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+  $('#list-one').on('rendered', function () {
+    var list = $(this);
 
-      $('#list-one').on('rendered', function () {
-        var list = $(this);
+    setTimeout(function () {
+      list.find('li').eq(0).trigger('click');
+    }, 10);
 
-        setTimeout(function () {
-          list.find('li').eq(0).trigger('click');
-        }, 10);
+  });
+</script>
 
-      });
-
+{{={{{ }}}=}}
+<script id="employee-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+       <li>
+        <p>{{firstName}} {{lastName}}, {{title}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
 </script>

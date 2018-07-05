@@ -15,7 +15,7 @@ describe('Modal init example-modal tests', () => {
   });
 
   if (!utils.isIE()) {
-    xit('Should be accessible on init with no WCAG 2AA violations on example-modal', async () => {
+    it('Should be accessible on init with no WCAG 2AA violations on example-modal', async () => {
       const res = await axePageObjects(browser.params.theme);
 
       expect(res.violations.length).toEqual(0);
@@ -120,7 +120,7 @@ describe('Modal example-validation tests', () => {
 
   if (utils.isChrome()) {
     it('Should focus on first focusable item in modal', async () => {
-      const dropdownEl = await element(by.css('div.dropdown'));
+      const dropdownEl = await element.all(by.css('div.dropdown')).first();
       await browser.driver
         .wait(protractor.ExpectedConditions.presenceOf(dropdownEl), config.waitsFor);
       await browser.driver.sleep(config.sleep);
@@ -136,7 +136,9 @@ describe('Modal example-validation tests', () => {
       await element(by.id('context-desc')).click();
       await browser.driver.sleep(config.sleep);
 
-      expect(await element(by.className('message-text')).getText()).toEqual('Email address not valid');
+      const messageEl = await element.all(by.className('message-text')).first();
+
+      expect(await messageEl.getText()).toEqual('Email address not valid');
     });
 
     it('Should enable submit', async () => {
