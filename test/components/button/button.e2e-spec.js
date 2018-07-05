@@ -192,8 +192,7 @@ describe('Button example-with-icons tests', () => {
     const buttonEl = await element(by.id('menu-button-alone'));
     await buttonEl.click();
 
-    expect(buttonEl.getAttribute('class')).toContain('is-open');
-
+    expect(await buttonEl.getAttribute('class')).toContain('is-open');
     expect(await element(by.css('button#menu-button-alone[aria-haspopup="true"]')).isDisplayed()).toBe(true);
   });
 

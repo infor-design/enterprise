@@ -310,3 +310,46 @@ describe('Validation Async', () => {
     expect(await messageList.get(1).getText()).toBe('Async Error');
   });
 });
+
+describe('Validation Emails', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/validation/test-email-validation');
+  });
+
+  it('can validate required with email', async () => {
+    const email = await element(by.id('email-address'));
+
+    await email.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(true);
+    const messageList = element.all(by.css('.message-text'));
+
+    expect(await messageList.get(0).getText()).toBe('Required');
+  });
+
+  it('can validate an invalid email', async () => {
+    const email = await element(by.id('email-address'));
+
+    await email.click();
+    await email.sendKeys('test@test');
+    await email.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(true);
+    const messageList = element.all(by.css('.message-text'));
+
+    expect(await messageList.get(0).getText()).toBe('Email address not valid');
+  });
+
+  it('can indicate a valid email', async () => {
+    const email = await element(by.id('email-address-ok'));
+
+    await email.sendKeys('test@test.com');
+    await email.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element(by.css('.error-message')).isPresent()).toBe(false);
+    expect(await element(by.css('.icon-confirm')).isPresent()).toBe(true);
+  });
+});
