@@ -104,7 +104,7 @@
     var outputText = '';
     var outputDate = '';
 
-    types.forEach( (type) => {
+    types.forEach(function(type) {
       var value = $('#text-field').getMessage( {type: type} );
       if (value) {
         outputText += value + '; ';

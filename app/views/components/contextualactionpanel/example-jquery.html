@@ -6,10 +6,14 @@
       Contextual Action Panel (Uses jQuery Settings)
     </button>
     <div class="contextual-action-panel">
-      <div class="datagrid"></div>
+      <div class="row">
+        <div class="twelve columns">
+          <div id="modal-datagrid" class="datagrid"></div>
+        </div>
+      </div>
     </div>
-
   </div>
+
 </div>
 
 
@@ -32,7 +36,7 @@
     data.push({ date: new Date(2015, 1, 24), description: 'Apple Computer INC', paidBy: 'AP', category: '2919 Supplies', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$1299.00' });
     data.push({ date: new Date(2015, 2, 02), description: 'PO #1292', paidBy: 'AP', category: '2244 Personnel', projectWork: 'Structural Design', resource: 'Vendor 3 Meylin Clark', amount: '$398.00' });
 
-    $('.contextual-action-panel > .datagrid').datagrid({
+    $('#modal-datagrid').datagrid({
       columns: columns,
       dataset: data
     });
@@ -40,6 +44,7 @@
     // Build the Settings-based Contextual Action Panel
     $('#js-contextual-panel').contextualactionpanel({
       title: 'Expenses: $50,000.00',
+      useFlexToolbar: true,
       buttons: [
         {
           text: 'Currency',
@@ -53,7 +58,7 @@
         },
         {
           text: 'Close',
-          cssClass: 'btn',
+          cssClass: 'btn close-button',
           icon: '#icon-close',
           click: function() {
             $(this).data('modal').close();

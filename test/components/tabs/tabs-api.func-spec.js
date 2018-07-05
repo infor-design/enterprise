@@ -378,26 +378,30 @@ describe('Tabs API', () => {
     expect(document.querySelectorAll('.tab')[2].innerText).toEqual('Contacts');
   });
 
-  it('Should teardown tabs', () => {
+  it('Should teardown tabs', (done) => {
     const tabs = tabsObj.teardown();
-
-    expect(tabs).toEqual(jasmine.any(Object));
-    expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
-    expect(document.querySelectorAll('[aria-expanded="true"]').length).toEqual(0);
-    expect(document.querySelectorAll('[aria-selected="true"]').length).toEqual(0);
-    // Teardown interferes with afterEach script, so we restore Tabs instance
-    tabsObj = new Tabs(tabsEl);
+    setTimeout(() => {
+      expect(tabs).toEqual(jasmine.any(Object));
+      expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
+      expect(document.querySelectorAll('[aria-expanded="true"]').length).toEqual(0);
+      expect(document.querySelectorAll('[aria-selected="true"]').length).toEqual(0);
+      // Teardown interferes with afterEach script, so we restore Tabs instance
+      tabsObj = new Tabs(tabsEl);
+      done();
+    }, 1000);
   });
 
-  it('Should destroy tabs', () => {
+  it('Should destroy tabs', (done) => {
     tabsObj.destroy();
     const empty = {};
-
-    expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
-    expect(document.querySelectorAll('[aria-expanded="true"]').length).toEqual(0);
-    expect(document.querySelectorAll('[aria-selected="true"]').length).toEqual(0);
-    expect(tabsObj.element.data()).toEqual(empty);
-    // Teardown interferes with afterEach script, so we restore Tabs instance
-    tabsObj = new Tabs(tabsEl);
+    setTimeout(() => {
+      expect(document.querySelectorAll('.tab')[2].classList).not.toContain('is-selected');
+      expect(document.querySelectorAll('[aria-expanded="true"]').length).toEqual(0);
+      expect(document.querySelectorAll('[aria-selected="true"]').length).toEqual(0);
+      expect(tabsObj.element.data()).toEqual(empty);
+      // Teardown interferes with afterEach script, so we restore Tabs instance
+      tabsObj = new Tabs(tabsEl);
+      done();
+    }, 1000);
   });
 });

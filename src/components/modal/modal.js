@@ -51,6 +51,14 @@ function Modal(element, settings) {
 
 // Actual Plugin Code
 Modal.prototype = {
+
+  /**
+   * @returns {boolean} whether or not the Modal is a Contextual Action Panel (CAP)
+   */
+  get isCAP() {
+    return this.element.is('.contextual-action-panel');
+  },
+
   init() {
     const self = this;
 
@@ -235,10 +243,10 @@ Modal.prototype = {
     const self = this;
     const body = this.element.find('.modal-body');
     const bodywrapper = body.parent();
+    const flexToolbar = this.element.find('.flex-toolbar');
     let btnWidth = 100;
     let isPanel = false;
     let buttonset;
-    let flexToolbar;
 
     this.modalButtons = buttons;
 
@@ -260,21 +268,11 @@ Modal.prototype = {
       return;
     }
 
-    if (this.element.is('.contextual-action-panel')) {
+    if (this.isCAP) {
+      // CAP is responsible for rendering this part, and will have done so by the
+      // time this code runs
       isPanel = true;
-      // construct the toolbar markup if a toolbar isn't found
       buttonset = this.element.find('.buttonset');
-      if (this.settings.useFlexToolbar) {
-        flexToolbar = this.element.find('.flex-toolbar');
-      }
-
-      if (!buttonset.length && !this.settings.useFlexToolbar) {
-        const toolbar = this.element.find('.toolbar');
-        if (!toolbar.length) {
-          $('<div class="toolbar"></div>').appendTo(this.element.find('.modal-header'));
-        }
-        buttonset = $('<div class="buttonset"></div>').appendTo(this.element.find('.toolbar'));
-      }
     } else {
       buttonset = this.element.find('.modal-buttonset');
       if (!buttonset.length) {
@@ -289,8 +287,12 @@ Modal.prototype = {
     }
 
     const decorateButtons = function (props, cnt) {
-      let btn = $('<button type="button"></button>');
-      btn.text(props.text);
+      let btn = $(`<button type="button">
+        <span></span>
+      </button>`);
+      const span = btn.find('span');
+
+      span.text(props.text);
       btn.attr('type', props.type || 'button');
 
       if (props.cssClass === 'separator') {
@@ -303,6 +305,10 @@ Modal.prototype = {
         btn.addClass('btn-modal-primary');
       } else {
         btn.addClass('btn-modal');
+      }
+
+      if (props.audible) {
+        span.addClass('audible');
       }
 
       if (props.validate !== undefined && !props.validate) {
@@ -322,12 +328,16 @@ Modal.prototype = {
         const label = $(`<label class="audible" for="filter">${props.text}</label>`);
         const input = $('<input class="searchfield">').attr(attrs);
 
-        buttonset.append(label, input);
+        if (flexToolbar.length) {
+          flexToolbar.find('.toolbar-section.search').append(label, input);
+        } else {
+          buttonset.append(label, input);
+        }
+        input.searchfield(props.searchfieldSettings);
         return;
       }
 
       if (props.icon && props.icon.charAt(0) === '#') {
-        btn.html(`<span>${btn.text()}</span>`);
         $.createIconElement({
           classes: [props.icon === '#icon-close' ? 'icon-close' : ''],
           icon: props.icon.substr('#icon-'.length)
@@ -351,7 +361,8 @@ Modal.prototype = {
       }
 
       btn.button();
-      if (self.settings.useFlexToolbar) {
+
+      if ((self.settings.useFlexToolbar || self.settings.centerTitle) && props.align) {
         if (props.align === 'left') {
           flexToolbar.find('.toolbar-section').eq(0).append(btn);
         }

@@ -86,11 +86,6 @@ function ValidationRules() {
         let valid = true;
 
         valid = field.is(':radio') ? this.isRadioChecked(field) : this.isNotEmpty(value, field);
-
-        if (this.email) {
-          valid = this.email(value);
-        }
-
         return valid;
       },
       message: 'Required',
@@ -237,7 +232,8 @@ function ValidationRules() {
 
         return (value.length) ? regex.test(value) : true;
       },
-      message: 'EmailValidation'
+      message: 'EmailValidation',
+      type: 'error'
     },
 
     enableSubmit: {
