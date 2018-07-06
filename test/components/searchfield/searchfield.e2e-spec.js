@@ -22,14 +22,14 @@ describe('Searchfield example-index tests', () => {
     await setPage('/components/searchfield/example-index');
     await browser.driver
       .wait(protractor.ExpectedConditions
-        .presenceOf(element(by.id(searchfieldId))), config.waitFor);
+        .presenceOf(element(by.id(searchfieldId))), config.waitsFor);
   });
 
   it('Adds an "all results" link when results populate the Autocomplete list', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
     await searchfieldInputEl.sendKeys('co');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitFor);
+      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
 
     // Identify the added "All Results" link
     expect(await element(by.linkText('All Results For "co"'))).toBeDefined();
@@ -39,7 +39,7 @@ describe('Searchfield example-index tests', () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
     await searchfieldInputEl.sendKeys('not a state');
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitFor);
+      .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
 
     // Identify the added "No Results" link
     expect(await element(by.linkText('No Results'))).toBeDefined();
@@ -51,7 +51,7 @@ describe('Searchfield go-button tests', () => {
     await setPage('/components/searchfield/example-go-button');
     await browser.driver
       .wait(protractor.ExpectedConditions
-        .presenceOf(element(by.id(searchfieldId))), config.waitFor);
+        .presenceOf(element(by.id(searchfieldId))), config.waitsFor);
   });
 
   it('fires a callback action when the Go Button is clicked', async () => {
@@ -66,7 +66,7 @@ describe('Searchfield go-button tests', () => {
     const toastMessageSelector = '.toast-message';
     const toastMessageEl = await element(by.css(toastMessageSelector));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(toastMessageEl), config.waitFor);
+      .wait(protractor.ExpectedConditions.presenceOf(toastMessageEl), config.waitsFor);
 
     expect(await element(by.css(toastMessageSelector)).getText())
       .toEqual('The searchfield\'s current value is "Nice Button".');
@@ -80,7 +80,7 @@ describe('Searchfield full-text category tests', () => {
     await setPage('/components/searchfield/example-categories-full');
     await browser.driver
       .wait(protractor.ExpectedConditions
-        .presenceOf(element(by.id(singleCategoryId))), config.waitFor);
+        .presenceOf(element(by.id(singleCategoryId))), config.waitsFor);
   });
 
   it('Can select a category from the list', async () => {
@@ -97,7 +97,7 @@ describe('Searchfield full-text category with go button tests', () => {
     await setPage('/components/searchfield/example-categories-and-go-button');
     await browser.driver
       .wait(protractor.ExpectedConditions
-        .presenceOf(element(by.id(singleCategoryId))), config.waitFor);
+        .presenceOf(element(by.id(singleCategoryId))), config.waitsFor);
   });
 
   // TODO: Not sure what the cause of the timeout here is...
@@ -112,7 +112,7 @@ describe('Searchfield full-text category with go button tests', () => {
 
     await browser.driver
       .wait(protractor.ExpectedConditions
-        .presenceOf(await element(by.css(categoryButtonSelector))), config.waitFor);
+        .presenceOf(await element(by.css(categoryButtonSelector))), config.waitsFor);
 
     expect(await element(by.css(categoryButtonSelector)).getText()).toEqual('5 Selected');
 
@@ -122,7 +122,7 @@ describe('Searchfield full-text category with go button tests', () => {
     const toastMessageSelector = '.toast-message';
     await browser.driver
       .wait(protractor.ExpectedConditions
-        .presenceOf(await element(by.css(toastMessageSelector))), config.waitFor);
+        .presenceOf(await element(by.css(toastMessageSelector))), config.waitsFor);
 
     // EPC: NOTE: for some reason Protractor is adding spaces before the commas when using `getText()`.
     // I've added them into the result for now, til we can track down the cause.

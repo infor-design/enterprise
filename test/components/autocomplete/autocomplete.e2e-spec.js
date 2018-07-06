@@ -21,10 +21,10 @@ describe('Autocomplete example-index tests', () => {
   it('Should open a filtered results list after focusing and keying text', async () => {
     await clickOnAutocomplete();
     const autocompleteEl = await element(by.css('#autocomplete-default'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
     await autocompleteEl.sendKeys('new');
     const autocompleteListEl = await element(by.id('autocomplete-list'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteListEl), config.waitFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteListEl), config.waitsFor);
 
     expect(await element(by.id('autocomplete-list')).isDisplayed()).toBe(true);
   });
@@ -32,14 +32,14 @@ describe('Autocomplete example-index tests', () => {
   it('Should fill the input field with the correct text contents when an item is clicked', async () => {
     await clickOnAutocomplete();
     const autocompleteEl = await element(by.css('#autocomplete-default'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
     await autocompleteEl.sendKeys('new');
 
     const autocompleteListEl = await element(by.css('#autocomplete-list'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteListEl), config.waitFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteListEl), config.waitsFor);
 
     const njOption = await element(by.css('li[data-value="NJ"]'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(njOption), config.waitFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(njOption), config.waitsFor);
     await njOption.click();
     await browser.driver
       .wait(protractor.ExpectedConditions.invisibilityOf(await element(by.id('autocomplete-list'))), config.waitsFor);
@@ -50,11 +50,11 @@ describe('Autocomplete example-index tests', () => {
   if (utils.isChrome()) {
     it('Should fill the input field with the correct text contents when an item is chosen with the keyboard', async () => {
       const autocompleteEl = await element(by.css('#autocomplete-default'));
-      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitFor);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
       await autocompleteEl.click();
       await browser.driver.switchTo().activeElement().clear();
       await browser.driver.switchTo().activeElement().sendKeys('new');
-      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('#ac-list-option0 span i'))), config.waitFor);
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(element(by.css('#ac-list-option0 span i'))), config.waitsFor);
       await autocompleteEl.sendKeys(protractor.Key.ARROW_DOWN);
       await autocompleteEl.sendKeys(protractor.Key.ARROW_DOWN);
       await autocompleteEl.sendKeys(protractor.Key.ENTER);
@@ -68,11 +68,11 @@ describe('Autocomplete example-index tests', () => {
   xit('Should clear a dirty autocomplete field with `alt + backspace/del`', async () => {
     await clickOnAutocomplete();
     const autocompleteEl = await element(by.css('#autocomplete-default'));
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
     await autocompleteEl.click();
     await browser.driver.switchTo().activeElement().clear();
     await autocompleteEl.sendKeys('new');
-    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(await element(by.id('autocomplete-list'))), config.waitFor);
+    await browser.driver.wait(protractor.ExpectedConditions.presenceOf(await element(by.id('autocomplete-list'))), config.waitsFor);
     await element(by.css('#autocomplete-default')).sendKeys(protractor.Key.chord(protractor.Key.ALT, protractor.Key.BACK_SPACE));
     await browser.driver
       .wait(protractor.ExpectedConditions.stalenessOf(await element(by.id('autocomplete-list'))), config.waitsFor);
