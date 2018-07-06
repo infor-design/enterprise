@@ -364,6 +364,17 @@ describe('Tabs click example-dropdown-tabs tests', () => {
       .wait(protractor.ExpectedConditions.presenceOf(tabsContainerEl), config.waitsFor);
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-dropdown-tabs', async () => {
+      const tabsEl = await element(by.id('tabs-dropdown'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(tabsEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(tabsEl, 'tabs-dropdown')).toEqual(0);
+    });
+  }
+
   it('Should open dropdown tab', async () => {
     await element.all(by.className('tab')).get(1).click();
 
