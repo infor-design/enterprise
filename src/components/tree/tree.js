@@ -168,7 +168,7 @@ Tree.prototype = {
     a.attr('aria-posinset', posinset + 1);
 
     // Set the current tree item aria-setsize
-    const listCount = a.closest('li').siblings().addBack().length;
+    const listCount = a.closest('li').siblings().length + 1;
     a.attr('aria-setsize', listCount);
 
     // Set the current tree item node expansion state
@@ -195,7 +195,9 @@ Tree.prototype = {
 
     // Inject checkbox
     if (this.isMultiselect && !this.settings.hideCheckboxes) {
-      a.append('<span class="tree-checkbox"></span>');
+      const span = document.createElement('span');
+      span.classList.add('tree-checkbox');
+      a[0].appendChild(span);
     }
 
     // Inject badge
@@ -233,7 +235,10 @@ Tree.prototype = {
       }
     }
 
-    a.append($('<span class="tree-text"></span>').text(text));
+    const span = document.createElement('span');
+    span.classList.add('tree-text');
+    span.textContent = text;
+    a[0].appendChild(span);
 
     if (a.is('[class^="icon"]')) {
       // CreateIconPath
@@ -255,7 +260,6 @@ Tree.prototype = {
       }
     }
 
-    a.addClass('hide-focus');
     a.hideFocus();
   },
 
@@ -1182,30 +1186,38 @@ Tree.prototype = {
    * @returns {object} li added
    */
   addNode(nodeData, location) {
-    let li = $('<li></li>');
-    const a = $('<a href="#"></a>').appendTo(li);
     const badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
+
+    nodeData.href = typeof nodeData.href !== 'undefined' ? nodeData.href : '#';
 
     location = (!location ? 'bottom' : location); // supports button or top or jquery node
 
-    a.attr({
-      id: nodeData.id,
-      href: nodeData.href,
-      'data-badge': badgeAttr,
-      'data-alert-icon': nodeData.alertIcon
-    }).text(nodeData.text);
-
-    if (nodeData.open) {
-      a.parent().addClass('is-open');
+    let a = document.createElement('a');
+    a.setAttribute('id', nodeData.id);
+    a.setAttribute('href', nodeData.href);
+    if (typeof badgeAttr !== 'undefined') {
+      a.setAttribute('data-badge', badgeAttr);
     }
+    if (typeof nodeData.alertIcon !== 'undefined') {
+      a.setAttribute('data-alert-icon', nodeData.alertIcon);
+    }
+
+    a.textContent = nodeData.text;
 
     if (nodeData.disabled) {
-      a.addClass('is-disabled');
+      a.classList.add('is-disabled');
+    }
+    if (nodeData.icon) {
+      a.classList.add(nodeData.icon);
     }
 
-    if (nodeData.icon) {
-      a.addClass(nodeData.icon);
+    let li = document.createElement('li');
+
+    if (nodeData.open) {
+      li.classList.add('is-open');
     }
+
+    li.appendChild(a);
 
     // Handle Location
     let found = this.loading ? true : this.addToDataset(nodeData, location);
@@ -1216,12 +1228,12 @@ Tree.prototype = {
 
     if (location instanceof jQuery &&
       (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)) {
-      location.append(li);
+      location[0].appendChild(li);
       found = true;
     }
 
     if (location === 'bottom' && (!nodeData.parent || !found)) {
-      this.element.append(li);
+      this.element[0].appendChild(li);
     }
 
     if (location === 'top' && (!nodeData.parent || !found)) {
@@ -1248,10 +1260,12 @@ Tree.prototype = {
       }
       nodeData.node = li.find(`ul li a#${nodeData.id}`);
     } else {
+      li = $(li);
       this.addChildNodes(nodeData, li);
       nodeData.node = li.children('a').first();
     }
 
+    a = $(a);
     this.decorateNode(a);
 
     if (nodeData.selected) {
@@ -1774,7 +1788,8 @@ Tree.prototype = {
 
   // Convert file node to folder type
   convertFileToFolder(node) {
-    const newFolder = $('<ul role="group"></ul>');
+    const newFolder = document.createElement('ul');
+    newFolder.setAttribute('role', 'group');
     const oldData = {
       icon: $('svg.icon-tree', node).getIconName(),
       type: 'file'
@@ -1785,7 +1800,11 @@ Tree.prototype = {
       node.removeClass(iconClass);
     }
     node.data('oldData', oldData);
-    node.parent('li').addClass('folder').append(newFolder);
+    const parent = node[0].parentNode;
+    if (parent.tagName === 'LI') {
+      parent.classList.add('folder');
+      parent.appendChild(newFolder);
+    }
     this.setTreeIcon($('svg.icon-tree', node), this.settings.folderIconClosed);
   },
 
