@@ -137,10 +137,10 @@ describe('Validation alert types', () => {
   });
 
   it('Should render different alert types', async () => {
+    await browser.driver.sleep(config.sleep);
     const elem = await element(by.css('.error-message'));
     await browser.driver
-      .wait(protractor.ExpectedConditions.presenceOf(elem), config.waitsFor);
-    await browser.driver.sleep(config.sleep);
+      .wait(protractor.ExpectedConditions.presenceOf(elem), config.waitFor);
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(true);
     expect(await element(by.css('.alert-message')).isPresent()).toBe(true);
