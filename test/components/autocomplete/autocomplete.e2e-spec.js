@@ -18,6 +18,22 @@ describe('Autocomplete example-index tests', () => {
     await browser.driver.get(`${browser.baseUrl}/components/autocomplete/example-index?theme=${browser.params.theme}`);
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      await clickOnAutocomplete();
+      const autocompleteEl = await element(by.id('autocomplete-default'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
+      await autocompleteEl.sendKeys('a');
+      const autocompleteListEl = await element(by.id('autocomplete-list'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteListEl), config.waitsFor);
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(autocompleteListEl), config.waitsFor);
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(autocompleteListEl, 'autocomplete-open')).toEqual(0);
+    });
+  }
+
   it('Should open a filtered results list after focusing and keying text', async () => {
     await clickOnAutocomplete();
     const autocompleteEl = await element(by.css('#autocomplete-default'));
