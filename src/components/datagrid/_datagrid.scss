@@ -1,48 +1,6 @@
 // Datagrid
 //================================================== //
 
-@mixin rowstatus($color) {
-  td {
-    // scss-lint:disable ImportantRule
-    border-bottom: 1px solid $color !important;
-    border-top: 1px solid $color;
-    // scss-lint:enable ImportantRule
-
-    &:first-child {
-      border-left: 1px solid $color;
-    }
-
-    &:last-child {
-      border-right: 1px solid $color;
-    }
-
-    &.rowstatus-cell {
-      position: relative;
-
-      &::before {
-        background-color: $color;
-        content: '';
-        display: block;
-        height: 32px;
-        left: -11px;
-        position: absolute;
-        top: -14px;
-        transform: rotate(45deg);
-        width: 26px;
-      }
-
-      .icon-rowstatus {
-        fill: $white;
-        height: 10px;
-        left: 1px;
-        position: absolute;
-        top: 2px;
-        width: 10px;
-      }
-    }
-  }
-}
-
 $datagrid-header-height: 39px;  //1px border in parent
 $datagrid-filterable-header-height: 61px;
 
@@ -1126,6 +1084,27 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    //Validation
+    &.error td {
+      background-color: $alert-bg-red;
+      //border-color: $alert-red; - Use for focus state
+    }
+
+    &.alert td {
+      background-color: $alert-bg-orange;
+      //border-color: $alert-red; - Use for focus state
+    }
+
+    &.confirm td {
+      background-color: $alert-bg-green;
+      //border-color: $alert-red; - Use for focus state
+    }
+
+    &.info td {
+      background-color: $alert-bg-info;
+      //border-color: $alert-red; - Use for focus state
+    }
+
     .is-editor {
       ul,
       ol {
@@ -1379,26 +1358,6 @@ $datagrid-short-row-height: 23px;
       height: 60px;
       margin-top: -7px;
       width: 60px;
-    }
-
-    &.rowstatus-row-error {
-      @include rowstatus($alert-red);
-    }
-
-    &.rowstatus-row-alert {
-      @include rowstatus($alert-color);
-    }
-
-    &.rowstatus-row-info {
-      @include rowstatus($primary-color);
-    }
-
-    &.rowstatus-row-in-progress {
-      @include rowstatus($trigger-icon-fill-color);
-    }
-
-    &.rowstatus-row-confirm {
-      @include rowstatus($alert-green);
     }
   }
 
