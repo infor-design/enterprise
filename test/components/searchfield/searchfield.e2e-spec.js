@@ -3,6 +3,7 @@
 
 const { browserStackErrorReporter } = requireHelper('browserstack-error-reporter');
 const config = requireHelper('e2e-config');
+const utils = requireHelper('e2e-utils');
 requireHelper('rejection');
 
 jasmine.getEnv().addReporter(browserStackErrorReporter);
@@ -24,6 +25,22 @@ describe('Searchfield example-index tests', () => {
       .wait(protractor.ExpectedConditions
         .presenceOf(element(by.id(searchfieldId))), config.waitsFor);
   });
+
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      await browser.driver.sleep(config.waitsFor);
+      const searchfieldInputEl = await element(by.id(searchfieldId));
+      const searchfieldSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(searchfieldInputEl), config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(searchfieldInputEl, 'searchfield-init')).toEqual(0);
+      await searchfieldInputEl.sendKeys('co');
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(searchfieldSection, 'searchfield-open')).toEqual(0);
+    });
+  }
 
   it('Adds an "all results" link when results populate the Autocomplete list', async () => {
     const searchfieldInputEl = await element(by.id(searchfieldId));
