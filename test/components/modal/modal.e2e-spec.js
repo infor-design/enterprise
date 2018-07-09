@@ -94,6 +94,15 @@ describe('Modal open example-modal tests on click', () => {
       .wait(protractor.ExpectedConditions.presenceOf(element(by.className('overlay'))), config.waitsFor);
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      await browser.driver.sleep(config.waitsFor);
+      const bodyEl = await element(by.className('modal-engaged'));
+
+      expect(await browser.protractorImageComparison.checkElement(bodyEl, 'modal-open')).toEqual(0);
+    });
+  }
+
   if (!utils.isIE()) {
     xit('Should be accessible on open with no WCAG 2AA violations on example-modal', async () => {
       const res = await axePageObjects(browser.params.theme);
