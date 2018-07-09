@@ -24,13 +24,13 @@ describe('Autocomplete example-index tests', () => {
       const autocompleteEl = await element(by.id('autocomplete-default'));
       await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteEl), config.waitsFor);
       await autocompleteEl.sendKeys('a');
-      const autocompleteListEl = await element(by.id('autocomplete-list'));
-      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteListEl), config.waitsFor);
+      const autocompleteListContainer = await element(by.id('maincontent'));
+      await browser.driver.wait(protractor.ExpectedConditions.presenceOf(autocompleteListContainer), config.waitsFor);
       await browser.driver
-        .wait(protractor.ExpectedConditions.presenceOf(autocompleteListEl), config.waitsFor);
+        .wait(protractor.ExpectedConditions.presenceOf(autocompleteListContainer), config.waitsFor);
       await browser.driver.sleep(config.waitsFor);
 
-      expect(await browser.protractorImageComparison.checkElement(autocompleteListEl, 'autocomplete-open')).toEqual(0);
+      expect(await browser.protractorImageComparison.checkElement(autocompleteListContainer, 'autocomplete-open')).toEqual(0);
     });
   }
 
