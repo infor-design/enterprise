@@ -7,7 +7,7 @@ let dropdownEl;
 let svgEl;
 let dropdownObj;
 
-describe('Dropdown API', () => {
+fdescribe('Dropdown API', () => {
   beforeEach(() => {
     dropdownEl = null;
     svgEl = null;

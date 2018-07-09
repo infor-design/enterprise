@@ -7,7 +7,7 @@ let dropdownEl;
 let svgEl;
 let dropdownObj;
 
-describe('Dropdown API (No Search Mode)', () => {
+fdescribe('Dropdown API (No Search Mode)', () => {
   beforeEach(() => {
     dropdownEl = null;
     svgEl = null;

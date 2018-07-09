@@ -46,7 +46,6 @@ const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
   cssClass: null,
   filterMode: 'contains',
-  filterStyle: 'local',
   maxSelected: undefined, // (multiselect) sets a limit on the number of items that can be selected
   moveSelected: 'none',
   moveSelectedToTop: undefined,
@@ -57,7 +56,6 @@ const DROPDOWN_DEFAULTS = {
   source: undefined,
   sourceArguments: {},
   reload: reloadSourceStyles[0],
-  reloadSourceOnOpen: false,
   empty: false,
   delay: 300,
   maxWidth: null,
@@ -75,6 +73,37 @@ function Dropdown(element, settings) {
 
 // Actual DropDown Code
 Dropdown.prototype = {
+
+  /**
+   * @returns {array|string} currently-selected options
+   */
+  get value() {
+    const reload = this.settings.reload;
+    const multiple = this.settings.multiple;
+
+    if (reload === 'typeahead') {
+      if (multiple) {
+        return this.selectedValues;
+      }
+      return this.element.val();
+    }
+
+    const result = [];
+    const options = this.element[0].options;
+    let opt;
+
+    for (let i = 0; i < options.length; i++) {
+      opt = options[i];
+      if (opt.selected) {
+        result.push(opt.value || opt.text);
+      }
+    }
+
+    if (!multiple && result.length === 1) {
+      return result[0];
+    }
+    return result;
+  },
 
   /**
    * Initialize the dropdown.
@@ -199,6 +228,17 @@ Dropdown.prototype = {
     if (this.element.prop('multiple') && !this.settings.multiple) {
       this.settings.multiple = true;
     }
+    if (this.settings.multiple && !this.element.prop('multiple')) {
+      this.element.prop('multiple', true);
+    }
+
+    // Add the internal hash for typeahead filtering, if applicable
+    if (this.settings.reload === 'typeahead') {
+      this.selectedValues = [];
+    } else {
+      delete this.selectedValues;
+    }
+
     const dataSource = this.element.attr('data-source');
     if (dataSource && dataSource !== 'source') {
       this.settings.source = dataSource;
@@ -561,8 +601,23 @@ Dropdown.prototype = {
     // If none are available, simply return out
     let opts = this.element.find('option');
     let groups = this.element.find('optgroup');
-    const selectedOpts = opts.filter(':selected');
+    let selectedFilterMethod = ':selected';
     const groupsSelectedOpts = [];
+
+    // For typeahead reloading, the <option> tags are not used for determining what's already
+    // selected.  Use the internal storage of selected values instead.
+    if (this.settings.reload === 'typeahead') {
+      selectedFilterMethod = function (i, opt) {
+        return self.selectedValues.indexOf(opt.value) > -1;
+      };
+    }
+
+    const selectedOpts = opts.filter(selectedFilterMethod);
+
+    // Re-inforce typeahead-reloaded options' `selected` properties
+    if (this.settings.reload === 'typeahead') {
+      selectedOpts.prop('selected', true);
+    }
 
     function buildLiHeader(textContent) {
       return `<li role="presentation" class="group-label" focusable="false">
@@ -846,9 +901,6 @@ Dropdown.prototype = {
    * @returns {void}
    */
   handleSearchEvents() {
-    const self = this;
-    let timer;
-
     if (this.settings.noSearch) {
       this.searchInput.prop('readonly', true);
     }
@@ -858,6 +910,7 @@ Dropdown.prototype = {
     // Space will add a space inside the search input.
     this.searchKeyMode = false;
 
+    /*
     this.searchInput.on('keydown.dropdown', function (e) {
       const searchInput = $(this);
 
@@ -879,10 +932,26 @@ Dropdown.prototype = {
           }
         }, 100);
       }
+      //self.handleAutocomplete(e);
     }).on('keypress.dropdown', (e) => {
       self.isFiltering = true;
       self.handleAutoComplete(e);
     });
+    */
+
+    this.searchInput
+      .on(`keydown.${COMPONENT_NAME}`, (e) => {
+        const searchInput = $(this);
+        if (!this.ignoreKeys(searchInput, e)) {
+          return false;
+        }
+
+        return this.handleKeyDown(searchInput, e);
+      })
+      .on(`input.${COMPONENT_NAME}`, (e) => {
+        this.isFiltering = true;
+        this.handleAutoComplete(e);
+      });
   },
 
   /**
@@ -891,10 +960,11 @@ Dropdown.prototype = {
    * @param  {string} term The search term
    */
   filterList(term) {
+    let typeahead = false;
     // 'typeahead' reloading skips client-side filtering in favor of server-side
     if (this.settings.source && this.settings.reload === 'typeahead') {
+      typeahead = true;
       this.callSource();
-      return;
     }
 
     const self = this;
@@ -911,8 +981,10 @@ Dropdown.prototype = {
       term = '';
     }
 
-    if (term && term.length) {
+    if (!typeahead && term && term.length) {
       results = this.listfilter.filter(list, term);
+    } else {
+      results = list;
     }
 
     this.list.addClass('search-mode');
@@ -938,7 +1010,7 @@ Dropdown.prototype = {
 
       // Highlight Term
       const exp = new RegExp(`(${term})`, 'i');
-      const text = li.text().replace(exp, '<i>$1</i>');
+      const text = li.text().replace(exp, '<i>$1</i>').trim();
       li.removeClass('hidden').children('a').html(text);
     });
 
@@ -958,13 +1030,13 @@ Dropdown.prototype = {
    * @private
    */
   resetList() {
-    if (!this.list || this.list && !this.list.length) {
-      return;
-    }
-
     // 'typeahead' reloading skips client-side filtering in favor of server-side
     if (this.settings.source && this.settings.reload === 'typeahead') {
       this.callSource();
+      return;
+    }
+
+    if (!this.list || this.list && !this.list.length) {
       return;
     }
 
@@ -1234,14 +1306,22 @@ Dropdown.prototype = {
     }
 
     const self = this;
-    clearTimeout(this.timer);
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
 
     if (!self.settings.source && !self.settings.noSearch) {
       return;
     }
 
-    self.initialFilter = true;
-    self.filterTerm += e.key;
+    const searchInput = this.searchInput;
+
+    this.initialFilter = true;
+    if (e.type === 'input') {
+      this.filterTerm = searchInput.val();
+    } else {
+      this.filterTerm += e.key;
+    }
 
     this.timer = setTimeout(() => {
       if (self.settings.noSearch) {
@@ -1250,10 +1330,15 @@ Dropdown.prototype = {
       }
 
       if (!self.isOpen()) {
-        self.searchInput.val(self.filterTerm);
+        searchInput.val(self.filterTerm);
         self.toggleList();
+        return;
+      }
+
+      if (searchInput.val() === '') {
+        self.resetList();
       } else {
-        self.filterList(self.searchInput.val().toLowerCase());
+        self.filterList(searchInput.val().toLowerCase());
       }
     }, self.settings.delay);
   },
@@ -2114,6 +2199,10 @@ Dropdown.prototype = {
     let trimmed = '';
     let clearSelection = false;
 
+    if (this.settings.reload === 'typeahead') {
+      val = this.selectedValues || [];
+    }
+
     // Sets to false if the option is being removed from a multi-select instead of added
     let isAdded = true;
 
@@ -2157,10 +2246,11 @@ Dropdown.prototype = {
       this.previousActiveDescendant = option.val();
       text = option.text();
     }
+
     if (!clearSelection) {
       this.element.find('option').each(function () {  //eslint-disable-line
         if (this.value === optionVal) {
-          this.selected = true;
+          $(this).prop('selected', true);
           return false;
         }
       });
@@ -2182,6 +2272,7 @@ Dropdown.prototype = {
     }
 
     // Set the new value on the <select>
+    this.selectedValues = val;
     this.element.val(val);
     this.updateItemIcon(option);
 
@@ -2328,7 +2419,7 @@ Dropdown.prototype = {
     const self = this;
     let searchTerm = '';
 
-    if (this.isOpen()) {
+    if (this.isOpen() && !this.element.hasClass('search-mode')) {
       searchTerm = this.searchInput.val();
     }
 
@@ -2384,7 +2475,7 @@ Dropdown.prototype = {
           textContent = option.label;
         }
 
-        if (!option.selected && option.value === val) {
+        if (option.value === val || (self.selectedValues && self.selectedValues.indexOf(val) > -1)) {
           option.selected = true;
           selected = ' selected';
         }
@@ -2638,6 +2729,10 @@ Dropdown.prototype = {
    * Tear down events and restore to original state.
    */
   destroy() {
+    if (this.selectedValues) {
+      delete this.selectedValues;
+    }
+
     $.removeData(this.element[0], COMPONENT_NAME);
     this.closeList('cancel');
     this.label.remove();
