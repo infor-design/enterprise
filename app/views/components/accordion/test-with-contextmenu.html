@@ -1,13 +1,21 @@
+<div class="row">
+  <div class="seven columns">
+    <h2>Accordion with Contextmenu Test</h2>
+    <p>This test is working if you right click the first item in the accordion and a context menu appears.
+    To close the contextmenu click on any item.</p>
+  </div>
+</div>
+
 <div class="row top-padding">
   <div class="four columns">
 
     <!-- Regular Panel Accordion Example -->
-    <div id="regular-panel-accordion-example" class="accordion panel" data-options="{ 'trigger': 'rightClick', menuId: 'action-popupmenu', closeElement: true }">
+    <div id="regular-panel-accordion-example" class="accordion panel">
       <div class="accordion-header">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-user"></use>
         </svg>
-        <a href="#"><span>Personal</span></a>
+        <a href="#" class="popup-trigger"><span>Personal</span></a>
       </div>
       <div class="accordion-pane">
         <div class="accordion-header">
@@ -22,7 +30,7 @@
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-roles"></use>
         </svg>
-        <a href="#"><span>Position</span></a>
+        <a href="#" class="xd2"><span>Position</span></a>
       </div>
       <div class="accordion-pane">
         <div class="accordion-header">
@@ -33,53 +41,6 @@
         </div>
         <div class="accordion-header">
           <a href="#"><span>Item 3</span></a>
-        </div>
-      </div>
-
-      <div class="accordion-header">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-quick-reference"></use>
-        </svg>
-        <a href="#"><span>Learning</span></a>
-      </div>
-      <div class="accordion-pane">
-        <div class="accordion-header">
-          <a href="#"><span>Education</span></a>
-        </div>
-        <div class="accordion-pane">
-          <div class="accordion-header">
-            <a href="#"><span>Undergraduate</span></a>
-          </div>
-          <div class="accordion-header">
-            <a href="#"><span>Graduate</span></a>
-          </div>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Skills</span></a>
-        </div>
-        <div class="accordion-pane">
-          <div class="accordion-content">
-            <p>Need some content here</p>
-          </div>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Certifications</span></a>
-        </div>
-        <div class="accordion-pane">
-          <div class="accordion-content">
-            <p>Need some content here</p>
-          </div>
-        </div>
-
-        <div class="accordion-header">
-          <a href="#"><span>Compliance Training</span></a>
-        </div>
-        <div class="accordion-pane">
-          <div class="accordion-content">
-            <p>Need some content here</p>
-          </div>
         </div>
       </div>
 
@@ -107,3 +68,27 @@
 
   </div>
 </div>
+
+<script>
+  var menu = $('#ction-popupmenu');
+
+  $('.popup-trigger').on('contextmenu', function(e, args) {
+    console.log('contextmenu fired', args);
+    e.preventDefault();
+    $(e.target).on('selected', function(args, a) {
+      console.log(args, a);
+    }).popupmenu({
+      menu: 'action-popupmenu',
+      trigger: 'immediate',
+      attached: 'body',
+      offset: {y: -15}
+    });
+  });
+
+  $('.accordion-header').children().click(function (e, args) {
+    var popup = $('.popup-trigger').data("popupmenu");
+    if (popup) {
+      popup.destroy();
+    }
+  });
+</script>
