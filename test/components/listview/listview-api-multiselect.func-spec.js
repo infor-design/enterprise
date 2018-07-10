@@ -6,7 +6,6 @@ const data = require('../../../app/data/inventory-tasks.json');
 
 let listviewEl;
 let listviewAPI;
-let listviewItemEls; //eslint-disable-line
 let listviewTemplateScript;
 let svgEl;
 
@@ -33,8 +32,6 @@ describe('Listview API', () => {
 
     settings.template = listviewTemplateScript;
     listviewAPI = new ListView(listviewEl, settings);
-
-    listviewItemEls = listviewEl.querySelectorAll('li');
   });
 
   afterEach(() => {

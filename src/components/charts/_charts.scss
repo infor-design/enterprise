@@ -531,3 +531,12 @@ html[dir='rtl'] {
     }
   }
 }
+
+.sparkline-tooltip {
+  // scss-lint:disable ImportantRule
+  line-height: 5px !important;
+  // scss-lint:enable ImportantRule
+  b {
+    line-height: 22px;
+  }
+}

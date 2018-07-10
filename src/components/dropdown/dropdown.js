@@ -39,6 +39,7 @@ const moveSelectedOpts = ['none', 'all', 'group'];
 * Fx 300 for the 300 px size fields. Default is size of the largest data.
 * @param {object} [settings.placementOpts = null]  Gets passed to this control's Place behavior
 * @param {function} [settings.onKeyDown = null]  Allows you to hook into the onKeyDown. If you do you can access the keydown event data. And optionally return false to cancel the keyDown action.
+* @param {boolean} [settings.clearable = false]  Adds empty option to clear selection
 */
 const DROPDOWN_DEFAULTS = {
   closeOnSelect: true,
@@ -58,7 +59,8 @@ const DROPDOWN_DEFAULTS = {
   delay: 300,
   maxWidth: null,
   placementOpts: null,
-  onKeyDown: null
+  onKeyDown: null,
+  clearable: false
 };
 
 function Dropdown(element, settings) {
@@ -319,78 +321,81 @@ Dropdown.prototype = {
    */
   setItemIcon(listIconItem) {
     const self = this;
-    if (self.listIcon.hasIcons) {
-      let specColor = null;
+    let specColor = null;
 
-      if (listIconItem.icon) {
-        // Set icon properties
-        if (typeof listIconItem.icon === 'object') {
-          listIconItem.obj = listIconItem.icon;
-          listIconItem.icon = listIconItem.icon.icon;
+    if (!listIconItem.icon) {
+      listIconItem.isIcon = false;
+      listIconItem.html = '';
+      self.listIcon.items.push(listIconItem);
+      return;
+    }
 
-          // Color
-          if (listIconItem.obj.color) {
-            specColor = listIconItem.obj.color.indexOf('#') === 0;
-            if (specColor) {
-              listIconItem.specColor = listIconItem.obj.color;
-            } else {
-              listIconItem.classList = ` ${listIconItem.obj.color}`;
-            }
-          } else if (listIconItem.obj.class) {
-            specColor = listIconItem.obj.class.indexOf('#') === 0;
-            if (specColor) {
-              listIconItem.specColor = listIconItem.obj.class;
-            } else {
-              listIconItem.classList = ` ${listIconItem.obj.class}`;
-            }
-          }
+    // Set icon properties
+    if (typeof listIconItem.icon === 'object') {
+      listIconItem.obj = listIconItem.icon;
+      listIconItem.icon = listIconItem.icon.icon;
 
-          // Color Over
-          if (listIconItem.obj.colorOver) {
-            specColor = listIconItem.obj.colorOver.indexOf('#') === 0;
-            if (specColor) {
-              listIconItem.specColorOver = listIconItem.obj.colorOver;
-            } else {
-              listIconItem.classListOver = ` ${listIconItem.obj.colorOver}`;
-            }
-          } else if (listIconItem.obj.classOver) {
-            specColor = listIconItem.obj.classOver.indexOf('#') === 0;
-            if (specColor) {
-              listIconItem.specColorOver = listIconItem.obj.classOver;
-            } else {
-              listIconItem.classListOver = ` ${listIconItem.obj.classOver}`;
-            }
-          }
+      // Color
+      if (listIconItem.obj.color) {
+        specColor = listIconItem.obj.color.indexOf('#') === 0;
+        if (specColor) {
+          listIconItem.specColor = listIconItem.obj.color;
+        } else {
+          listIconItem.classList = ` ${listIconItem.obj.color}`;
         }
-
-        // Set flags
-        if (listIconItem.icon && listIconItem.icon.length) {
-          listIconItem.isIcon = true;
-        }
-        if (listIconItem.specColor && listIconItem.specColor.length) {
-          listIconItem.isSpecColor = true;
-        }
-        if (listIconItem.classList && listIconItem.classList.length) {
-          listIconItem.isClassList = true;
-        }
-        if (listIconItem.specColorOver && listIconItem.specColorOver.length) {
-          listIconItem.isSpecColorOver = true;
-        }
-        if (listIconItem.classListOver && listIconItem.classListOver.length) {
-          listIconItem.isClassListOver = true;
+      } else if (listIconItem.obj.class) {
+        specColor = listIconItem.obj.class.indexOf('#') === 0;
+        if (specColor) {
+          listIconItem.specColor = listIconItem.obj.class;
+        } else {
+          listIconItem.classList = ` ${listIconItem.obj.class}`;
         }
       }
 
-      // Build icon
-      listIconItem.html = $.createIcon({
-        icon: listIconItem.isIcon ? listIconItem.icon : '',
-        class: `listoption-icon${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
-      });
-
-      if (listIconItem.isSpecColor) {
-        listIconItem.html = listIconItem.html.replace('<svg', (`${'<svg style="fill:'}${listIconItem.specColor};"`));
+      // Color Over
+      if (listIconItem.obj.colorOver) {
+        specColor = listIconItem.obj.colorOver.indexOf('#') === 0;
+        if (specColor) {
+          listIconItem.specColorOver = listIconItem.obj.colorOver;
+        } else {
+          listIconItem.classListOver = ` ${listIconItem.obj.colorOver}`;
+        }
+      } else if (listIconItem.obj.classOver) {
+        specColor = listIconItem.obj.classOver.indexOf('#') === 0;
+        if (specColor) {
+          listIconItem.specColorOver = listIconItem.obj.classOver;
+        } else {
+          listIconItem.classListOver = ` ${listIconItem.obj.classOver}`;
+        }
       }
     }
+
+    // Set flags
+    listIconItem.isIcon = (listIconItem.icon && listIconItem.icon.length);
+
+    if (listIconItem.specColor && listIconItem.specColor.length) {
+      listIconItem.isSpecColor = true;
+    }
+    if (listIconItem.classList && listIconItem.classList.length) {
+      listIconItem.isClassList = true;
+    }
+    if (listIconItem.specColorOver && listIconItem.specColorOver.length) {
+      listIconItem.isSpecColorOver = true;
+    }
+    if (listIconItem.classListOver && listIconItem.classListOver.length) {
+      listIconItem.isClassListOver = true;
+    }
+
+    // Build icon
+    listIconItem.html = $.createIcon({
+      icon: listIconItem.isIcon ? listIconItem.icon : '',
+      class: `listoption-icon${listIconItem.isClassList ? ` ${listIconItem.classList}` : ''}`
+    });
+
+    if (listIconItem.isSpecColor) {
+      listIconItem.html = listIconItem.html.replace('<svg', (`${'<svg style="fill:'}${listIconItem.specColor};"`));
+    }
+
     self.listIcon.items.push(listIconItem);
   },
 
@@ -412,7 +417,7 @@ Dropdown.prototype = {
         const iconAttr = $(this).attr('data-icon');
         let icon = null;
 
-        if (typeof iconAttr !== 'string') {
+        if (typeof iconAttr !== 'string' || !iconAttr.length) {
           return;
         }
 
@@ -423,7 +428,7 @@ Dropdown.prototype = {
         }
         self.setItemIcon({ html: '', icon });
 
-        if (self.listIcon.items[i].isIcon) {
+        if (self.listIcon.items[i] && self.listIcon.items[i].isIcon) {
           count++;
         }
       });
@@ -453,25 +458,30 @@ Dropdown.prototype = {
       self.list.find('li').each(function (i) {
         const li = $(this);
         const icon = li.find('.listoption-icon');
+        const iconRef = self.listIcon.items[i];
+
+        if (!iconRef) {
+          return;
+        }
 
         // make it on
         if (li.is('.is-focused')) {
-          if (self.listIcon.items[i].isClassListOver) {
-            icon.removeClass(self.listIcon.items[i].classListOver)
-              .addClass(self.listIcon.items[i].classList);
+          if (iconRef.isClassListOver) {
+            icon.removeClass(iconRef.classListOver)
+              .addClass(iconRef.classList);
           }
-          if (self.listIcon.items[i].isSpecColorOver) {
-            icon.css({ fill: self.listIcon.items[i].specColor });
+          if (iconRef.isSpecColorOver) {
+            icon.css({ fill: iconRef.specColor });
           }
         }
         // make it over
         if (targetIcon && li.is(target)) {
-          if (self.listIcon.items[i].isClassListOver) {
-            targetIcon.removeClass(self.listIcon.items[i].classList);
-            targetIcon.addClass(self.listIcon.items[i].classListOver);
+          if (iconRef.isClassListOver) {
+            targetIcon.removeClass(iconRef.classList);
+            targetIcon.addClass(iconRef.classListOver);
           }
-          if (self.listIcon.items[i].isSpecColorOver) {
-            targetIcon.css({ fill: self.listIcon.items[i].specColorOver });
+          if (iconRef.isSpecColorOver) {
+            targetIcon.css({ fill: iconRef.specColorOver });
           }
         }
       });
@@ -489,23 +499,31 @@ Dropdown.prototype = {
       const target = self.listIcon.pseudoElemIcon;
       const i = opt.index();
       const idx = self.listIcon.idx;
-      const icon = self.listIcon.items[i].isIcon ? self.listIcon.items[i].icon : '';
+      const iconRef = self.listIcon.items[i];
+      const icon = iconRef && iconRef.isIcon ? iconRef.icon : '';
+
+      // Return out if this item has no icon
+      if (!iconRef) {
+        return;
+      }
 
       // Reset class and color
       if (idx > -1) {
-        target.removeClass(`${self.listIcon.items[idx].classList} ${
-          self.listIcon.items[idx].classListOver}`);
-        target[0].style.fill = '';
+        const iconAtIndex = self.listIcon.items[idx];
+        if (iconAtIndex) {
+          target.removeClass(`${iconAtIndex.classList} ${iconAtIndex.classListOver}`);
+          target[0].style.fill = '';
+        }
       }
 
       // Update new stuff
       self.listIcon.idx = i;
       target.changeIcon(icon);
-      if (self.listIcon.items[i].isClassList) {
-        target.addClass(self.listIcon.items[i].classList);
+      if (iconRef.isClassList) {
+        target.addClass(iconRef.classList);
       }
-      if (self.listIcon.items[i].isSpecColor) {
-        target.css({ fill: self.listIcon.items[i].specColor });
+      if (iconRef.isSpecColor) {
+        target.css({ fill: iconRef.specColor });
       }
     }
   },
@@ -574,7 +592,11 @@ Dropdown.prototype = {
       const toExclude = ['data-badge', 'data-badge-color', 'data-val', 'data-icon'];
       const attributesToCopy = self.getDataAttributes(attributes, toExclude);
       const trueValue = value && 'value' in value ? value.value : text;
-      const iconHtml = self.listIcon.hasIcons ? self.listIcon.items[index].html : '';
+      let iconHtml = '';
+
+      if (self.listIcon.hasIcons && self.listIcon.items[index]) {
+        iconHtml = self.listIcon.items[index].html;
+      }
 
       if (cssClasses.indexOf('clear') > -1) {
         if (text === '') {
@@ -2004,6 +2026,9 @@ Dropdown.prototype = {
     this.previousActiveDescendant = last.value || '';
 
     this.pseudoElem[0].querySelector('span').textContent = text;
+    if (text.length > 1000) {
+      text = `${text.substring(0, 1000)}...`;
+    }
     this.searchInput[0].value = text;
     this.updateItemIcon(last);
 
@@ -2353,6 +2378,11 @@ Dropdown.prototype = {
         // If the incoming dataset is different than the one we started with,
         // replace the contents of the list, and rerender it.
         if (!self.isFiltering && !utils.equals(data, self.dataset)) {
+          // If clearable, add new empty option to clear
+          if (self.settings.clearable) {
+            data.unshift({ id: '', value: '', label: '' });
+          }
+
           self.dataset = data;
 
           if (!isManagedByTemplate) {

@@ -2546,11 +2546,9 @@ DatePicker.prototype = {
 
     // Fix two digit year for main input element
     self.element.on('blur.datepicker', () => {
-      self.element.one('isvalid.datepicker', (e, isValid) => {
-        if (isValid && self.element.val().trim() !== '') {
-          self.setValueFromField();
-        }
-      });
+      if (self.element.val().trim() !== '') {
+        self.setValueFromField();
+      }
     });
 
     // Set initialize value

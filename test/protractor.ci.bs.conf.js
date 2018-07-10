@@ -12,11 +12,10 @@ const getSpecs = (listSpec) => {
 };
 
 const theme = process.env.ENTERPRISE_THEME || 'light'
-let browserstackBuildID = `${theme} theme: ci:bs e2e ${Date.now()}`;
+let browserstackBuildID = `${Date.now()} : ${theme} theme: ci:bs e2e`;
 
 if (process.env.TRAVIS_BUILD_NUMBER) {
-  browserstackBuildID = process.env.TRAVIS_BUILD_NUMBER;
-  browserstackBuildID = `${theme} theme: ci:bs e2e ${process.env.TRAVIS_BUILD_NUMBER}`;
+  browserstackBuildID = `Travis Build No. ${process.env.TRAVIS_BUILD_NUMBER} : ${theme} theme: ci:bs e2e`;
 }
 
 exports.config = {

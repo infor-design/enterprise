@@ -59,13 +59,19 @@
           text: 'Keyword',
           id: 'filter',
           name: 'filter',
-          cssClass: 'searchfield'
-        },  {
+          cssClass: 'searchfield',
+          searchfieldSettings: {
+            clearable: true,
+            collapsible: true
+          }
+        },
+        {
           cssClass: 'separator'
         },
         {
           text: 'Close',
-          cssClass: 'btn',
+          cssClass: 'btn-icon',
+          audible: true,
           icon: '#icon-close',
           click: function() {
             var api = $(this).data('modal');

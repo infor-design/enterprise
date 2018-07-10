@@ -29,6 +29,10 @@
       overflow-x: hidden;
       overflow-y: auto;
     }
+
+    &.static {
+      flex-grow: 0;
+    }
   }
 
   &.title {
@@ -76,10 +80,34 @@
 
   &.search {
     padding: 0 10px;
+
+    + .buttonset {
+      flex-grow: 0;
+    }
   }
 
   .searchfield-wrapper {
-    margin-bottom: 0;
+    margin: 0 5px 0 0;
+  }
+
+  > .separator {
+    background-color: $formatter-toolbar-separator-color;
+    display: inline-block;
+    height: 20px;
+    margin: 3px 3px 0;
+    position: relative;
+    top: 6px;
+    width: 1px;
+  }
+
+  // Hide separators that come after "overflowed" elements
+  .is-overflowed,
+  .hidden {
+    + .separator,
+    + .popupmenu,
+    + .popupmenu-wrapper + .separator {
+      display: none;
+    }
   }
 
   &.more {
@@ -114,6 +142,10 @@ html[dir='rtl'] {
       button {
         margin-left: 0;
       }
+    }
+
+    .searchfield-wrapper {
+      margin: 0 0 0 5px;
     }
   }
 
