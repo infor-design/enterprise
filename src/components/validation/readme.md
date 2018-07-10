@@ -43,6 +43,14 @@ $('#username-field')
 $('#username-field').removeError()
 ```
 
+## Code Example - Skipping Fields from Validation
+
+Its possible to skip fields that are normally validated from validation. You can do this in one of three ways.
+
+1. Add a class of `disable-validation`  to the input.
+1. Add an attribute of `data-disable-validation="true"` to the input.
+1. Make the input disabled.
+
 ## Validation Types
 
 There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule, but error is used if it is not defined.

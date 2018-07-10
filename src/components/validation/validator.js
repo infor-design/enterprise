@@ -176,10 +176,6 @@ Validator.prototype = {
         thisField.data(`handleEvent${[(e.type || '')]}`, e.handleObj);
 
         setTimeout(() => {
-          if (thisField.attr('data-disable-validation') === 'true' || thisField.hasClass('disable-validation') || thisField[0].style.visibility === 'is-hidden' || !thisField.is(':visible')) {
-            return;
-          }
-
           if (thisField.closest('.modal-engaged').length && !thisField.closest('.modal-body').length) {
             return;
           }
@@ -236,10 +232,11 @@ Validator.prototype = {
     }
 
     // Attach to Form Submit and Validate
-    if (this.element.is('form')) {
+    if (this.element.is('form') && this.element.attr('data-validate-on')) {
       const submitHandler = function (e) {
         e.stopPropagation();
         e.preventDefault();
+
         self.validateForm((isValid) => {
           self.element.off('submit.validate');
           self.element.triggerHandler('validated', isValid);
@@ -466,6 +463,10 @@ Validator.prototype = {
    */
   validate(field, showTooltip, e) {
     field.data(`handleEvent${[(e.type || '')]}`, null);
+
+    if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field[0].hasAttribute('disabled')) {
+      return [];
+    }
 
     // call the validation function inline on the element
     const self = this;

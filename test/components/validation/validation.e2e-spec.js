@@ -27,41 +27,17 @@ describe('Validation example-index tests', () => {
 
 describe('Validation disabled form tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/validation/example-form-disabled');
+    await utils.setPage('/components/validation/test-validation-form-manual');
   });
 
   it('Should be able to disable validation', async () => {
-    const emailEl = await element(by.id('credit-code2'));
-    await emailEl.clear();
+    const submit = await element(by.id('submit'));
+    await submit.click();
 
-    expect(await emailEl.getAttribute('value')).toEqual('');
-
-    await emailEl.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);
 
-    expect(await element(by.css('.message-text')).getText()).toBe('Required');
-    expect(await element(by.css('.icon-error')).isPresent()).toBe(true);
-    expect(await emailEl.getAttribute('class')).toContain('error');
-
-    const resetEl = await element(by.id('reset-button'));
-    await resetEl.click();
-
-    expect(await element(by.css('.message-text')).isPresent()).toBe(false);
-    expect(await emailEl.getAttribute('class')).not.toContain('error');
-
-    const changeEl = await element(by.id('change-button'));
-    await changeEl.click();
-
-    expect(await element(by.css('.message-text')).isPresent()).toBe(false);
-    expect(await emailEl.getAttribute('class')).not.toContain('error');
-
-    await emailEl.clear();
-
-    await emailEl.sendKeys(protractor.Key.TAB);
-    await browser.driver.sleep(config.sleep);
-
-    expect(await element(by.css('.message-text')).isPresent()).toBe(false);
-    expect(await emailEl.getAttribute('class')).not.toContain('error');
+    expect(await element.all(by.css('.message-text')).count()).toEqual(1);
+    expect(await element.all(by.css('.icon-error')).count()).toEqual(1);
   });
 });
 
