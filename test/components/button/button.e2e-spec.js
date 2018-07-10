@@ -248,6 +248,14 @@ describe('Button example-100-percent tests', () => {
   });
 
   if (utils.isChrome() && utils.isCI()) {
+    it('Should tab onto button, show focus, and not visual regress', async () => {
+      const buttonElContainer = await element(by.id('maincontent'));
+      await element(by.id('one-hundred')).sendKeys(protractor.Key.TAB);
+      await browser.driver.sleep(config.sleep);
+
+      expect(await browser.protractorImageComparison.checkElement(buttonElContainer, 'button-width-focus')).toEqual(0);
+    });
+
     it('Should not visual regress on example-100-percent at 1280px', async () => {
       await browser.driver.manage().window().setSize(1280, 800);
       await browser.driver.sleep(config.sleep);
