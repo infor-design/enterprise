@@ -562,9 +562,10 @@ Dropdown.prototype = {
 
   /**
    * Update the visible list object.
+   * @param {string} [term = undefined] an optional search term that will cause highlighting of text
    * @private
    */
-  updateList() {
+  updateList(term) {
     const self = this;
     const isMobile = self.isMobile();
     const listExists = self.list !== undefined && self.list !== null && self.list.length > 0;
@@ -653,6 +654,12 @@ Dropdown.prototype = {
 
       if (liCssClasses.indexOf('clear') > -1 && text === '') {
         text = Locale.translate('ClearSelection');
+      }
+
+      // Highlight search term
+      if (term && term.length > 0) {
+        const exp = new RegExp(`(${term})`, 'i');
+        text = text.replace(exp, '<i>$1</i>').trim();
       }
 
       liMarkup += `<li class="dropdown-option${isSelected}${isDisabled}${liCssClasses}" data-val="${trueValue}" ${copiedDataAttrs}${tabIndex}${hasTitle} role="presentation">
@@ -780,6 +787,8 @@ Dropdown.prototype = {
     if ($.fn.tooltip) {
       this.listUl.find('[title]').addClass('has-tooltip').tooltip();
     }
+
+    this.position();
   },
 
   /**
@@ -1086,6 +1095,7 @@ Dropdown.prototype = {
 
     if (blank.length > 0) {
       blank[0].selected = true;
+      blank[0].setAttribute('selected', true);
       this.element.triggerHandler('updated');
       this.element.triggerHandler('change');
     }
@@ -1418,7 +1428,7 @@ Dropdown.prototype = {
       if (text.length > 0) {
         text += ', ';
       }
-      text += $(this).text();
+      text += $(this).text().trim();
     });
 
     return text;
@@ -2102,6 +2112,7 @@ Dropdown.prototype = {
       items.forEach(node => node.classList.add('is-selected'));
       options.forEach((node) => {
         node.selected = true;
+        node.setAttribute('selected', true);
       });
 
       text = this.getOptionText($(options));
@@ -2114,6 +2125,7 @@ Dropdown.prototype = {
       items.forEach(node => node.classList.remove('is-selected'));
       options.forEach((node) => {
         node.selected = false;
+        node.setAttribute('selected', true);
       });
     }
     this.previousActiveDescendant = last.value || '';
@@ -2511,7 +2523,7 @@ Dropdown.prototype = {
 
           self.element.append(list);
         }
-        self.updateList();
+        self.updateList(searchTerm);
       }
 
       self.element.triggerHandler('complete'); // For Busy Indicator
