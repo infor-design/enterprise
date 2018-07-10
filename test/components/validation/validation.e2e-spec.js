@@ -27,7 +27,7 @@ describe('Validation example-index tests', () => {
 
 describe('Validation disabled form tests', () => {
   beforeEach(async () => {
-    await utils.setPage('/components/validation/test-validation-form-manual');
+    await utils.setPage('/components/validation/test-disable-validation');
   });
 
   it('Should be able to disable validation', async () => {
@@ -329,5 +329,35 @@ describe('Validation Emails', () => {
 
     expect(await element(by.css('.error-message')).isPresent()).toBe(false);
     expect(await element(by.css('.icon-confirm')).isPresent()).toBe(true);
+  });
+});
+
+describe('Validation Manual', () => {
+  beforeEach(async () => {
+    await utils.setPage('/components/validation/test-validation-form-manual');
+  });
+
+  it('Should be able to handle submit manually', async () => {
+    const submit = await element(by.id('submit'));
+    await submit.click();
+
+    await browser.driver.sleep(config.sleep);
+
+    expect(await element.all(by.css('.message-text')).count()).toEqual(2);
+    expect(await element.all(by.css('.icon-error')).count()).toEqual(2);
+
+    const email = await element(by.id('email-address-ok'));
+    await email.sendKeys('test@test.com');
+    await email.sendKeys(protractor.Key.TAB);
+
+    const card = await element(by.id('credit-card'));
+    await card.sendKeys('1111-1111-1111-1111');
+    await card.sendKeys(protractor.Key.TAB);
+    await browser.driver.sleep(config.sleep);
+
+    await submit.click();
+
+    expect(await element.all(by.css('.message-text')).count()).toEqual(0);
+    expect(await element.all(by.css('.icon-error')).count()).toEqual(0);
   });
 });
