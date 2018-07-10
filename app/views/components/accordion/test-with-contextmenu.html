@@ -15,7 +15,7 @@
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-user"></use>
         </svg>
-        <a href="#" class="popup-trigger"><span>Personal</span></a>
+        <a href="#" class="menu-trigger"><span>Personal</span></a>
       </div>
       <div class="accordion-pane">
         <div class="accordion-header">
@@ -70,10 +70,8 @@
 </div>
 
 <script>
-  var menu = $('#ction-popupmenu');
 
-  $('.popup-trigger').on('contextmenu', function(e, args) {
-    console.log('contextmenu fired', args);
+  $('.menu-trigger').on('contextmenu', function(e, args) {
     e.preventDefault();
     $(e.target).on('selected', function(args, a) {
       console.log(args, a);
@@ -85,10 +83,4 @@
     });
   });
 
-  $('.accordion-header').children().click(function (e, args) {
-    var popup = $('.popup-trigger').data("popupmenu");
-    if (popup) {
-      popup.destroy();
-    }
-  });
 </script>
