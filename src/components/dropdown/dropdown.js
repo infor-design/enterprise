@@ -1032,7 +1032,7 @@ Dropdown.prototype = {
   resetList() {
     // 'typeahead' reloading skips client-side filtering in favor of server-side
     if (this.settings.source && this.settings.reload === 'typeahead') {
-      this.callSource();
+      this.callSource(null, true);
       return;
     }
 
@@ -2412,14 +2412,15 @@ Dropdown.prototype = {
   /**
    * Execute the source ajax option
    * @private
-   * @param {function} callback - The function call back.
+   * @param {function} callback  The function call back.
+   * @param {boolean} doReset  if defined, acts as a "reset" source call, where the search term will be ignored.
    * @returns {function} The callback for execution.
    */
-  callSource(callback) {
+  callSource(callback, doReset) {
     const self = this;
     let searchTerm = '';
 
-    if (this.isOpen() && !this.element.hasClass('search-mode')) {
+    if (!doReset && this.isOpen() && !this.element.hasClass('search-mode')) {
       searchTerm = this.searchInput.val();
     }
 
