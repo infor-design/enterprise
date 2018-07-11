@@ -85,7 +85,7 @@ npm run e2e:local:debug
 - Isolate the test or suite using [fdescribe](https://jasmine.github.io/api/edge/global.html#fdescribe) or [fit](https://jasmine.github.io/api/edge/global.html#fit)
 - If interested in the Axe results put it under the `res = await AxeBuilder` command.
 - Start the server normally with `npm run quickstart` or `npm run start`
-- In another terminal, run the functional test with for example `env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js` in watch mode
+- In another terminal, run the e2e test with for example `env ENTERPRISE_THEME='high-contrast' npx -n=--inspect-brk protractor test/protractor.local.debug.conf.js` in watch mode
 - In Chrome open `chrome://inspect` in a new tab.
 - Click on the 'Target' you will see generated under remote target
 - Hit go on the debugger
