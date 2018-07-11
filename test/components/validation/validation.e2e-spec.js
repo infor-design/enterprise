@@ -133,13 +133,13 @@ describe('Validation alert on parent', () => {
 
   it('Should render icon on parent', async () => {
     const expander = await element(by.css('.expandable-expander'));
-    expander.click();
+    await expander.click();
 
     const emailEl = await element(by.id('date-field'));
     await browser.driver
       .wait(protractor.ExpectedConditions.presenceOf(emailEl), config.waitsFor);
 
-    emailEl.click();
+    await emailEl.click();
     await emailEl.sendKeys('10');
     await emailEl.sendKeys(protractor.Key.TAB);
     await browser.driver.sleep(config.sleep);

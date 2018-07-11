@@ -51,7 +51,7 @@ Its possible to skip fields that are normally validated from validation. You can
 
 ## Validation Types
 
-There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule, but error is used if it is not defined.
+There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule or duplicate messages may appear.
 
 ```javascript
 $.fn.validation.rules.customWarningRule = {
@@ -64,7 +64,7 @@ $.fn.validation.rules.customWarningRule = {
 };
 ```
 
-Each type is style differntly and can be defined if the formValidation passes or errors based on the rules result. This is defined via the errorsForm on the validation type.
+Each type is style differently and can be defined if the formValidation passes or errors based on the rules result. This is defined via the errorsForm on the validation type.
 
 ```javascript
 $.fn.validation.ValidationTypes.alert = { type: 'alert', title: 'Alert', errorsForm: false };
@@ -97,4 +97,4 @@ There are a few built in validation rules you can use.
 
 ## Upgrading from 3.X
 
-This api is backwards compatible.
+This api is (mostly) backwards compatible.
