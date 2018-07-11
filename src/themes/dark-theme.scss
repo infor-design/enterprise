@@ -6,6 +6,9 @@
 @import '../core/mixins';
 @import '../core/config';
 
+// IDS-identity vars
+@import '../../node_modules/ids-identity/dist/tokens/web/theme-soho-dark.sass';
+
 //Override Config
 //================================================== //
 
@@ -346,17 +349,17 @@ $cardlist-actions-color: $slate03;
 
 // Checkboxes
 $checkbox-color: $primary-color;
-$checkbox-arrow-color: #ffffff;
-$checkbox-border-color: $slate04;
-$checkbox-bg-color: transparent;
-$checkbox-hover-border-color: $slate02;
-$checkbox-disabled-font-color: $slate05;
-$checkbox-disabled-border-color: $slate05;
-$checkbox-disabled-bg-color: transparent;
-$checkbox-disabled-select-bg-color: $slate05;
-$checkbox-disabled-arrow-color: $slate03;
-$checkbox-focus-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $checkbox-color;
-$checkbox-label-color: $input-color;
+$checkbox-arrow-color: $checkbox-arrow-color;
+$checkbox-border-color: $checkbox-border-color;
+$checkbox-bg-color: $checkbox-bg-color;
+$checkbox-hover-border-color: $checkbox-hover-border-color;
+$checkbox-disabled-font-color: $checkbox-disabled-text-color;
+$checkbox-disabled-border-color: $checkbox-disabled-border-color;
+$checkbox-disabled-bg-color: $checkbox-disabled-bg-color;
+$checkbox-disabled-select-bg-color: $checkbox-disabled-border-color;
+$checkbox-disabled-arrow-color: $checkbox-disabled-arrow-color;
+$checkbox-focus-shadow: $checkbox-focus-shadow;
+$checkbox-label-color: $checkbox-label-color;
 
 // Switch
 $switch-checked-color: $primary-color;
