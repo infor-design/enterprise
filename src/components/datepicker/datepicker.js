@@ -651,6 +651,7 @@ DatePicker.prototype = {
   /**
    * Open the Calendar Popup.
    * @private
+   * @deprecated
    * @returns {void}
    */
   open() {
@@ -1220,6 +1221,7 @@ DatePicker.prototype = {
   /**
    * Close the calendar popup.
    * @private
+   * @deprecated
    * @returns {void}
    */
   close() {
@@ -1784,17 +1786,6 @@ DatePicker.prototype = {
   },
 
   /**
-   * Convert a string to boolean
-   * @private
-   * @param {string} val .
-   * @returns {boolean} Converted value
-   */
-  getBoolean(val) {
-    const num = +val;
-    return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
-  },
-
-  /**
    * Find first day of the week for a given month
    * @private
    * @param {number} year .
@@ -2050,6 +2041,14 @@ DatePicker.prototype = {
   disable() {
     this.enable();
     this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
+  },
+
+  /**
+   * Detects whether or not the component is disabled
+   * @returns {boolean} whether or not the component is disabled
+   */
+  isDisabled() {
+    return this.element.prop('disabled');
   },
 
   /**
@@ -2444,29 +2443,6 @@ DatePicker.prototype = {
   },
 
   /**
-   * Change the order for execution jquery events were bound
-   * http://stackoverflow.com/questions/2360655/jquery-event-handlers-always-execute-in-order-they-were-bound-any-way-around-t
-   * @private
-   * @param {object} elements .
-   * @param {string} names .
-   * @param {number} newIndex .
-   * @returns {void}
-   */
-  changeEventOrder(elements, names, newIndex) {
-    // Allow for multiple events.
-    // eslint-disable-next-line
-    $.each(names.split(' '), function (idx, name) {
-      elements.each(function () {
-        // eslint-disable-next-line
-        const handlers = $._data(this, 'events')[name.split('.')[0]];
-        // Validate requested position.
-        newIndex = Math.min(newIndex, handlers.length - 1);
-        handlers.splice(newIndex, 0, handlers.pop());
-      });
-    });
-  },
-
-  /**
    * Updates the component instance. Can be used after being passed new settings.
    * @param {object} settings The settings to apply.
    * @returns {object} The api
@@ -2520,6 +2496,7 @@ DatePicker.prototype = {
    * @returns {void}
    */
   destroy() {
+    this.closeCalendar();
     this.teardown();
     $.removeData(this.element[0], COMPONENT_NAME);
   },
