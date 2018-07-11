@@ -5,8 +5,6 @@ demo:
   pages:
   - name: Main Validation Examples
     slug: example-index
-  - name: Disabled Form
-    slug: example-form-disabled
   - name: Multiple Validation Errors on a Field
     slug: example-multiple-errors
   - name: Legacy Short Fields
