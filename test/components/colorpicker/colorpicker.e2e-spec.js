@@ -10,6 +10,22 @@ describe('Colorpicker example-index tests', () => {
     await utils.setPage('/components/colorpicker/example-index');
   });
 
+  if (utils.isChrome() && utils.isCI()) {
+    it('Should not visual regress on example-index', async () => {
+      await browser.driver.sleep(config.waitsFor);
+      const colorpickerSection = await element(by.id('maincontent'));
+      await browser.driver
+        .wait(protractor.ExpectedConditions.presenceOf(colorpickerSection), config.waitsFor);
+      const colorpickerContainer = await element.all(by.className('colorpicker-container')).first();
+
+      expect(await browser.protractorImageComparison.checkElement(colorpickerContainer, 'colorpicker-init')).toEqual(0);
+      await element(by.css('#background-color + .trigger .icon')).click();
+      await browser.driver.sleep(config.waitsFor);
+
+      expect(await browser.protractorImageComparison.checkElement(colorpickerSection, 'colorpicker-open')).toEqual(0);
+    });
+  }
+
   it('Should open popup on icon click', async () => {
     await element(by.css('#background-color + .trigger .icon')).click();
 
